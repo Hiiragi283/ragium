@@ -13,6 +13,8 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
@@ -25,11 +27,11 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 import org.slf4j.Logger
 
-object HTMachineRecipeProvider : RecipeProviderChild {
+object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
-    override fun buildRecipes(output: RecipeOutput) {
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerComponents(output)
 
         registerMachines(output)

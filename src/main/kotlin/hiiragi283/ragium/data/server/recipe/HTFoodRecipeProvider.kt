@@ -8,6 +8,8 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.requiresFor
 import hiiragi283.ragium.data.savePrefixed
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
@@ -17,8 +19,8 @@ import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
-object HTFoodRecipeProvider : RecipeProviderChild {
-    override fun buildRecipes(output: RecipeOutput) {
+object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerVanilla(output)
 
         registerWheat(output)

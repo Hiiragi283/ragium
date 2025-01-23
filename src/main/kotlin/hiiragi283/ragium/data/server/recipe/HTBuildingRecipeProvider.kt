@@ -5,14 +5,16 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.savePrefixed
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.world.item.crafting.Ingredient
 
-object HTBuildingRecipeProvider : RecipeProviderChild {
-    override fun buildRecipes(output: RecipeOutput) {
+object HTBuildingRecipeProvider : RagiumRecipeProvider.Child {
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerDecorations(output)
         registerLEDs(output)
     }

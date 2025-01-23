@@ -12,9 +12,11 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
@@ -36,8 +38,8 @@ import net.neoforged.neoforge.common.crafting.BlockTagIngredient
 import net.neoforged.neoforge.fluids.FluidType
 import java.util.function.Supplier
 
-object HTIngredientRecipeProvider : RecipeProviderChild {
-    override fun buildRecipes(output: RecipeOutput) {
+object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerRaginite(output)
         registerSteels(output)
         registerEndContents(output)

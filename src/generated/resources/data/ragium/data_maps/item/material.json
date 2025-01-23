@@ -52,6 +52,10 @@
       "material": "cryolite",
       "prefix": "clump"
     },
+    "#c:clumps/dark": {
+      "material": "dark",
+      "prefix": "clump"
+    },
     "#c:clumps/deep_steel": {
       "material": "deep_steel",
       "prefix": "clump"
@@ -290,6 +294,10 @@
     },
     "#c:crystals/cryolite": {
       "material": "cryolite",
+      "prefix": "crystal"
+    },
+    "#c:crystals/dark": {
+      "material": "dark",
       "prefix": "crystal"
     },
     "#c:crystals/deep_steel": {
@@ -532,6 +540,10 @@
       "material": "cryolite",
       "prefix": "dirty_dust"
     },
+    "#c:dirty_dusts/dark": {
+      "material": "dark",
+      "prefix": "dirty_dust"
+    },
     "#c:dirty_dusts/deep_steel": {
       "material": "deep_steel",
       "prefix": "dirty_dust"
@@ -770,6 +782,10 @@
     },
     "#c:dusts/cryolite": {
       "material": "cryolite",
+      "prefix": "dust"
+    },
+    "#c:dusts/dark": {
+      "material": "dark",
       "prefix": "dust"
     },
     "#c:dusts/deep_steel": {
@@ -1012,6 +1028,10 @@
       "material": "cryolite",
       "prefix": "gear"
     },
+    "#c:gears/dark": {
+      "material": "dark",
+      "prefix": "gear"
+    },
     "#c:gears/deep_steel": {
       "material": "deep_steel",
       "prefix": "gear"
@@ -1250,6 +1270,10 @@
     },
     "#c:gems/cryolite": {
       "material": "cryolite",
+      "prefix": "gem"
+    },
+    "#c:gems/dark": {
+      "material": "dark",
       "prefix": "gem"
     },
     "#c:gems/deep_steel": {
@@ -1492,6 +1516,10 @@
       "material": "cryolite",
       "prefix": "ingot"
     },
+    "#c:ingots/dark": {
+      "material": "dark",
+      "prefix": "ingot"
+    },
     "#c:ingots/deep_steel": {
       "material": "deep_steel",
       "prefix": "ingot"
@@ -1730,6 +1758,10 @@
     },
     "#c:nuggets/cryolite": {
       "material": "cryolite",
+      "prefix": "nugget"
+    },
+    "#c:nuggets/dark": {
+      "material": "dark",
       "prefix": "nugget"
     },
     "#c:nuggets/deep_steel": {
@@ -1972,6 +2004,10 @@
       "material": "cryolite",
       "prefix": "ore"
     },
+    "#c:ores/dark": {
+      "material": "dark",
+      "prefix": "ore"
+    },
     "#c:ores/deep_steel": {
       "material": "deep_steel",
       "prefix": "ore"
@@ -2210,6 +2246,10 @@
     },
     "#c:plates/cryolite": {
       "material": "cryolite",
+      "prefix": "plate"
+    },
+    "#c:plates/dark": {
+      "material": "dark",
       "prefix": "plate"
     },
     "#c:plates/deep_steel": {
@@ -2452,6 +2492,10 @@
       "material": "cryolite",
       "prefix": "raw_material"
     },
+    "#c:raw_materials/dark": {
+      "material": "dark",
+      "prefix": "raw_material"
+    },
     "#c:raw_materials/deep_steel": {
       "material": "deep_steel",
       "prefix": "raw_material"
@@ -2690,6 +2734,10 @@
     },
     "#c:rods/cryolite": {
       "material": "cryolite",
+      "prefix": "rod"
+    },
+    "#c:rods/dark": {
+      "material": "dark",
       "prefix": "rod"
     },
     "#c:rods/deep_steel": {
@@ -2932,6 +2980,10 @@
       "material": "cryolite",
       "prefix": "shard"
     },
+    "#c:shards/dark": {
+      "material": "dark",
+      "prefix": "shard"
+    },
     "#c:shards/deep_steel": {
       "material": "deep_steel",
       "prefix": "shard"
@@ -3172,6 +3224,10 @@
       "material": "cryolite",
       "prefix": "storage_block"
     },
+    "#c:storage_blocks/dark": {
+      "material": "dark",
+      "prefix": "storage_block"
+    },
     "#c:storage_blocks/deep_steel": {
       "material": "deep_steel",
       "prefix": "storage_block"
@@ -3342,6 +3398,10 @@
     },
     "#c:storage_blocks/raw_cryolite": {
       "material": "cryolite",
+      "prefix": "raw_storage"
+    },
+    "#c:storage_blocks/raw_dark": {
+      "material": "dark",
       "prefix": "raw_storage"
     },
     "#c:storage_blocks/raw_deep_steel": {
@@ -3650,6 +3710,10 @@
     },
     "#c:wires/cryolite": {
       "material": "cryolite",
+      "prefix": "wire"
+    },
+    "#c:wires/dark": {
+      "material": "dark",
       "prefix": "wire"
     },
     "#c:wires/deep_steel": {

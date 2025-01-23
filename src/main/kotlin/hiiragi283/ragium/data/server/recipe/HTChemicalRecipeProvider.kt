@@ -9,6 +9,8 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
@@ -16,8 +18,8 @@ import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
-object HTChemicalRecipeProvider : RecipeProviderChild {
-    override fun buildRecipes(output: RecipeOutput) {
+object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerCarbon(output)
         registerNitrogen(output)
         registerFluorine(output)

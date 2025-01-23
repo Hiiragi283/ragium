@@ -3,11 +3,13 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.addElement
 import hiiragi283.ragium.data.addTag
+import hiiragi283.ragium.integration.mek.RagiumEvilIntegration
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -26,6 +28,14 @@ class RagiumItemTagProvider(
 ) : TagsProvider<Item>(output, Registries.ITEM, provider, RagiumAPI.MOD_ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
         // Materials
+        fun addMaterialTag(prefix: HTTagPrefix, material: HTMaterialKey, value: String) {
+            getOrCreateRawBuilder(prefix.commonTagKey)
+                .addTag(prefix.createTag(material))
+
+            getOrCreateRawBuilder(prefix.createTag(material))
+                .addOptionalElement(ResourceLocation.parse(value))
+        }
+
         RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
             getOrCreateRawBuilder(ore.tagPrefix.commonTagKey)
                 .addTag(ore.prefixedTagKey)
@@ -49,6 +59,15 @@ class RagiumItemTagProvider(
             getOrCreateRawBuilder(content.prefixedTagKey)
                 .addElement(content)
         }
+
+        addMaterialTag(HTTagPrefix.DUST, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_gem_crushed")
+
+        addMaterialTag(HTTagPrefix.GEM, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_gem")
+
+        addMaterialTag(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_ore")
+        addMaterialTag(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_ore_deepslate")
+
+        addMaterialTag(HTTagPrefix.STORAGE_BLOCK, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_block")
         // Parts
         RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
             getOrCreateRawBuilder(circuit.machineTier.getCircuitTag())

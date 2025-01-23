@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.add
-import hiiragi283.ragium.integration.mek.RagiumMekPlugin
+import hiiragi283.ragium.integration.mek.RagiumMekIntegration
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -220,9 +220,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterialKeys.WOOD, "木材")
         add(RagiumMaterialKeys.ZINC, "亜鉛")
 
-        add(RagiumMekPlugin.OSMIUM, "オスミウム")
-        add(RagiumMekPlugin.REFINED_GLOWSTONE, "精製グロウストーン")
-        add(RagiumMekPlugin.REFINED_OBSIDIAN, "精製黒曜石")
+        add(RagiumMekIntegration.OSMIUM, "オスミウム")
+        add(RagiumMekIntegration.REFINED_GLOWSTONE, "精製グロウストーン")
+        add(RagiumMekIntegration.REFINED_OBSIDIAN, "精製黒曜石")
         // Tag Prefix
         add(HTTagPrefix.CLUMP, "%sの凝塊")
         add(HTTagPrefix.CRYSTAL, "%sの結晶")

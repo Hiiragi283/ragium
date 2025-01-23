@@ -13,20 +13,29 @@ kff-version-range = "[5.7,)"
 ktlint = "12.1.2"
 
 aa = "1.3.13+mc1.21.1"
+ars = "5.4.0.902"
 curious = "9.2.2+1.21.1"
+cyclops = "6059640"
+delight = "1.21.1-1.2.6"
+evil = "6115798"
 jade = "15.9.2+neoforge"
 jei = "19.21.0.247"
 mek = "1.21.1-10.7.0.55"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.3"
 powah = "6.1.5-neoforge"
 rei = "18.0.796"
+theurgy = "1.58.2"
 
 [libraries]
 
 kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
+ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
 curious = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curious" }
+cyclops = { group = "curse.maven", name = "cyclops-core-232758", version.ref = "cyclops" }
+delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
+evil = { group = "curse.maven", name = "evilcraft-74610", version.ref = "evil" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
@@ -34,15 +43,23 @@ jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
 powah = { group = "maven.modrinth", name = "powah", version.ref = "powah" }
 rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-neoforge", version.ref = "rei" }
+theurgy = { group = "com.klikli_dev", name = "theurgy-1.21.1-neoforge", version.ref = "theurgy" }
 
 [bundles]
 
 mods-impl = [
     "aa",
     "curious",
+    "cyclops",
+    "delight",
+    "evil",
     "mek",
     "jade",
-    "patchouli-gen"
+    "patchouli-gen",
+]
+
+mods-transitive = [
+    
 ]
 
 mods-compile = [

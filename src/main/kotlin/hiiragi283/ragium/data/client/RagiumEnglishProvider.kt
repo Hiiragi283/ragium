@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.add
-import hiiragi283.ragium.integration.mek.RagiumMekPlugin
+import hiiragi283.ragium.integration.mek.RagiumMekIntegration
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -270,9 +270,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterialKeys.WOOD, "Wood")
         add(RagiumMaterialKeys.ZINC, "Zinc")
 
-        add(RagiumMekPlugin.OSMIUM, "Osmium")
-        add(RagiumMekPlugin.REFINED_GLOWSTONE, "Refined Glowstone")
-        add(RagiumMekPlugin.REFINED_OBSIDIAN, "Refined Obsidian")
+        add(RagiumMekIntegration.OSMIUM, "Osmium")
+        add(RagiumMekIntegration.REFINED_GLOWSTONE, "Refined Glowstone")
+        add(RagiumMekIntegration.REFINED_OBSIDIAN, "Refined Obsidian")
         // Tag Prefix
         add(HTTagPrefix.CLUMP, "%s Clump")
         add(HTTagPrefix.CRYSTAL, "%s Crystal")

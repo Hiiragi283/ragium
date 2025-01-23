@@ -2,32 +2,63 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.data.server.integration.HTAARecipeProvider
 import hiiragi283.ragium.data.server.recipe.*
+import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.advancements.Criterion
+import net.minecraft.advancements.critereon.InventoryChangeTrigger
+import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import java.util.*
 import java.util.concurrent.CompletableFuture
 
 class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     RecipeProvider(output, registries) {
-    override fun buildRecipes(recipeOutput: RecipeOutput) {
-        HTBuildingRecipeProvider.buildRecipes(recipeOutput)
-        HTChemicalRecipeProvider.buildRecipes(recipeOutput)
-        HTDistillationRecipeProvider.buildRecipes(recipeOutput)
-        HTFoodRecipeProvider.buildRecipes(recipeOutput)
-        HTIngredientRecipeProvider.buildRecipes(recipeOutput)
-        HTMachineRecipeProvider.buildRecipes(recipeOutput)
-        HTMaterialRecipeProvider.buildRecipes(recipeOutput)
+    fun interface Child {
+        fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
 
-        HTAARecipeProvider.buildRecipes(recipeOutput)
+        fun has(item: ItemLike): Criterion<InventoryChangeTrigger.TriggerInstance> = inventoryTrigger(ItemPredicate.Builder.item().of(item))
 
-        registerVanilla(recipeOutput)
+        fun has(prefix: HTTagPrefix, material: HTMaterialKey): Criterion<InventoryChangeTrigger.TriggerInstance> =
+            has(prefix.createTag(material))
+
+        fun has(tagKey: TagKey<Item>): Criterion<InventoryChangeTrigger.TriggerInstance> =
+            inventoryTrigger(ItemPredicate.Builder.item().of(tagKey))
+
+        private fun inventoryTrigger(builder: ItemPredicate.Builder): Criterion<InventoryChangeTrigger.TriggerInstance> =
+            CriteriaTriggers.INVENTORY_CHANGED.createCriterion(
+                InventoryChangeTrigger.TriggerInstance(
+                    Optional.empty(),
+                    InventoryChangeTrigger.TriggerInstance.Slots.ANY,
+                    listOf(builder.build()),
+                ),
+            )
+    }
+
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        HTBuildingRecipeProvider.buildRecipes(output, holderLookup)
+        HTChemicalRecipeProvider.buildRecipes(output, holderLookup)
+        HTDistillationRecipeProvider.buildRecipes(output, holderLookup)
+        HTFoodRecipeProvider.buildRecipes(output, holderLookup)
+        HTIngredientRecipeProvider.buildRecipes(output, holderLookup)
+        HTMachineRecipeProvider.buildRecipes(output, holderLookup)
+        HTMaterialRecipeProvider.buildRecipes(output, holderLookup)
+
+        HTAARecipeProvider.buildRecipes(output, holderLookup)
+
+        registerVanilla(output)
     }
 
     private fun registerVanilla(output: RecipeOutput) {

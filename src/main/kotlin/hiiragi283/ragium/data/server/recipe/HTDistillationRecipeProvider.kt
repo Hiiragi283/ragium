@@ -6,12 +6,14 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.fluids.FluidType
 
-object HTDistillationRecipeProvider : RecipeProviderChild {
-    override fun buildRecipes(output: RecipeOutput) {
+object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Crude Oil -> Refined Gas + Naphtha + Residual Oil
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)

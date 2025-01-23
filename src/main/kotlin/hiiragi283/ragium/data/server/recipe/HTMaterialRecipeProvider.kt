@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.extension.itemHolder
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -17,7 +18,9 @@ import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.requires
 import hiiragi283.ragium.data.savePrefixed
-import hiiragi283.ragium.integration.mek.RagiumMekPlugin
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import hiiragi283.ragium.integration.mek.RagiumEvilIntegration
+import hiiragi283.ragium.integration.mek.RagiumMekIntegration
 import mekanism.common.registration.impl.BlockRegistryObject
 import mekanism.common.registration.impl.ItemRegistryObject
 import mekanism.common.registries.MekanismBlocks
@@ -27,6 +30,7 @@ import mekanism.common.resource.PrimaryResource
 import mekanism.common.resource.ResourceType
 import mekanism.common.resource.ore.OreBlockType
 import mekanism.common.resource.ore.OreType
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
@@ -40,7 +44,7 @@ import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 
-object HTMaterialRecipeProvider : RecipeProviderChild {
+object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
@@ -115,27 +119,36 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
         putHolder(HTTagPrefix.DUST, RagiumMaterialKeys.SALT, MekanismItems.SALT)
         putHolder(HTTagPrefix.DUST, RagiumMaterialKeys.STEEL, MekanismItems.STEEL_DUST)
         putHolder(HTTagPrefix.DUST, RagiumMaterialKeys.SULFUR, MekanismItems.SULFUR_DUST)
-        putHolder(HTTagPrefix.DUST, RagiumMekPlugin.REFINED_OBSIDIAN, MekanismItems.REFINED_OBSIDIAN_DUST)
+        putHolder(HTTagPrefix.DUST, RagiumMekIntegration.REFINED_OBSIDIAN, MekanismItems.REFINED_OBSIDIAN_DUST)
 
         putHolder(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE, MekanismItems.FLUORITE_GEM)
 
         putHolder(HTTagPrefix.INGOT, RagiumMaterialKeys.BRONZE, MekanismItems.BRONZE_INGOT)
         putHolder(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL, MekanismItems.STEEL_INGOT)
-        putHolder(HTTagPrefix.INGOT, RagiumMekPlugin.REFINED_GLOWSTONE, MekanismItems.REFINED_GLOWSTONE_INGOT)
-        putHolder(HTTagPrefix.INGOT, RagiumMekPlugin.REFINED_OBSIDIAN, MekanismItems.REFINED_OBSIDIAN_INGOT)
+        putHolder(HTTagPrefix.INGOT, RagiumMekIntegration.REFINED_GLOWSTONE, MekanismItems.REFINED_GLOWSTONE_INGOT)
+        putHolder(HTTagPrefix.INGOT, RagiumMekIntegration.REFINED_OBSIDIAN, MekanismItems.REFINED_OBSIDIAN_INGOT)
 
         putHolder(HTTagPrefix.NUGGET, RagiumMaterialKeys.BRONZE, MekanismItems.BRONZE_NUGGET)
         putHolder(HTTagPrefix.NUGGET, RagiumMaterialKeys.STEEL, MekanismItems.STEEL_NUGGET)
-        putHolder(HTTagPrefix.NUGGET, RagiumMekPlugin.REFINED_GLOWSTONE, MekanismItems.REFINED_GLOWSTONE_NUGGET)
-        putHolder(HTTagPrefix.NUGGET, RagiumMekPlugin.REFINED_OBSIDIAN, MekanismItems.REFINED_OBSIDIAN_NUGGET)
+        putHolder(HTTagPrefix.NUGGET, RagiumMekIntegration.REFINED_GLOWSTONE, MekanismItems.REFINED_GLOWSTONE_NUGGET)
+        putHolder(HTTagPrefix.NUGGET, RagiumMekIntegration.REFINED_OBSIDIAN, MekanismItems.REFINED_OBSIDIAN_NUGGET)
 
         MekanismBlocks.ORES.forEach { (type: OreType, ore: OreBlockType) ->
             putHolder(HTTagPrefix.ORE, HTMaterialKey.of(type.serializedName), ore.stone)
             putHolder(HTTagPrefix.ORE, HTMaterialKey.of(type.serializedName), ore.deepslate)
         }
+        // Evil Craft
+        putHolder(HTTagPrefix.DUST, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_gem_crushed"))
+
+        putHolder(HTTagPrefix.GEM, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_gem"))
+
+        putHolder(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_ore"))
+        putHolder(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_ore_deepslate"))
+
+        putHolder(HTTagPrefix.STORAGE_BLOCK, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_block"))
     }
 
-    override fun buildRecipes(output: RecipeOutput) {
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         initTable()
         // Ingot/Gem -> Block
         RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->

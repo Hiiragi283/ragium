@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.server.recipe
+package hiiragi283.ragium.data.server.integration
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
@@ -7,11 +7,13 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
-object HTAARecipeProvider : RecipeProviderChild {
-    override fun buildRecipes(output: RecipeOutput) {
+object HTAARecipeProvider : RagiumRecipeProvider.Child {
+    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         buildRecipesInternal(output.withConditions(ModLoadedCondition("actually_additions")))
     }
 

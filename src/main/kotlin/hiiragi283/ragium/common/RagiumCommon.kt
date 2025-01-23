@@ -11,7 +11,8 @@ import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.DefaultMachinePlugin
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
-import hiiragi283.ragium.integration.mek.RagiumMekPlugin
+import hiiragi283.ragium.integration.mek.RagiumEvilIntegration
+import hiiragi283.ragium.integration.mek.RagiumMekIntegration
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -43,7 +44,10 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::commonSetup)
         eventBus.addListener(::sendMessage)
         if (isModLoaded("mekanism")) {
-            RagiumMekPlugin.init(eventBus)
+            RagiumMekIntegration.init(eventBus)
+        }
+        if (isModLoaded("evilcraft")) {
+            RagiumEvilIntegration.init(eventBus)
         }
 
         RagiumComponentTypes.REGISTER.register(eventBus)

@@ -79,16 +79,22 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         if (event.registryKey != Registries.ITEM) return
         // Reload material items
         tagItemCache.clear()
+        definitionCache.clear()
+
         val lookup: HolderLookup.RegistryLookup<Item> = event.registries.lookupOrThrow(Registries.ITEM)
         lookup.listElements().forEach { holder: Holder.Reference<Item> ->
             val definition: HTMaterialDefinition = holder.getData(HTMaterialDefinition.DATA_MAP_TYPE) ?: return@forEach
+            if (definitionCache.containsKey(holder.value())) {
+                LOGGER.warn("Item: ${holder.key} already has material data!")
+                return@forEach
+            }
+            definitionCache.put(holder.value(), definition)
             tagItemCache
                 .computeIfAbsent(
                     definition.tagPrefix,
                     definition.material,
                 ) { _: HTTagPrefix, _: HTMaterialKey -> mutableListOf() }
                 .add(holder)
-            check(definitionCache.put(holder.value(), definition)) { "Item: ${holder.key} already has material data!" }
         }
 
         LOGGER.info("Reloaded material items!")

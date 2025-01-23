@@ -2,6 +2,7 @@
   "values": [
     "#c:gems/ragi_crystal",
     "#c:gems/cryolite",
-    "#c:gems/fluorite"
+    "#c:gems/fluorite",
+    "#c:gems/dark"
   ]
 }

@@ -12,6 +12,7 @@
     "#c:storage_blocks/cryolite",
     "#c:storage_blocks/aluminum",
     "#c:storage_blocks/echorium",
-    "#c:storage_blocks/fierium"
+    "#c:storage_blocks/fierium",
+    "#c:storage_blocks/dark"
   ]
 }

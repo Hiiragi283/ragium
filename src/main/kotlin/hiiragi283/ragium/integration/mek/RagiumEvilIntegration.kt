@@ -7,29 +7,20 @@ import hiiragi283.ragium.api.material.HTRegisterMaterialEvent
 import net.neoforged.bus.api.IEventBus
 import org.slf4j.Logger
 
-object RagiumMekPlugin {
+object RagiumEvilIntegration {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
     @JvmField
-    val OSMIUM: HTMaterialKey = HTMaterialKey.of("osmium")
-
-    @JvmField
-    val REFINED_GLOWSTONE: HTMaterialKey = HTMaterialKey.of("refined_glowstone")
-
-    @JvmField
-    val REFINED_OBSIDIAN: HTMaterialKey = HTMaterialKey.of("refined_obsidian")
+    val DARK_GEM: HTMaterialKey = HTMaterialKey.of("dark")
 
     fun init(eventBus: IEventBus) {
         eventBus.addListener(::registerMaterial)
 
-        LOGGER.info("Enabled Mekanism Integration!")
+        LOGGER.info("Enabled Evil Craft Integration!")
     }
 
     private fun registerMaterial(event: HTRegisterMaterialEvent) {
-        event.register(REFINED_GLOWSTONE, HTMaterialType.ALLOY)
-        event.register(REFINED_OBSIDIAN, HTMaterialType.ALLOY)
-
-        event.register(OSMIUM, HTMaterialType.METAL)
+        event.register(DARK_GEM, HTMaterialType.GEM)
     }
 }
