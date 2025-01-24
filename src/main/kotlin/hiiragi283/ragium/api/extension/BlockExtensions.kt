@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
@@ -17,12 +15,6 @@ fun blockProperty(parent: Block): BlockBehaviour.Properties = BlockBehaviour.Pro
 fun blockProperty(parent: Supplier<Block>): BlockBehaviour.Properties = blockProperty(parent.get())
 
 //    BlockState    //
-
-val BlockState.machineTier: HTMachineTier
-    get() = (block as? HTMachineTierProvider)?.machineTier ?: getOrDefault(
-        HTMachineTier.PROPERTY,
-        HTMachineTier.BASIC,
-    )
 
 fun <T : Comparable<T>> BlockState.getOrNull(property: Property<T>): T? = when (this.hasProperty(property)) {
     true -> getValue(property)

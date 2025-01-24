@@ -131,7 +131,7 @@ class HTMachineRecipe(
         return list
     }
 
-    override fun getToastSymbol(): ItemStack = definition.getIconStack() ?: super.getToastSymbol()
+    override fun getToastSymbol(): ItemStack = machineKey.getEntryOrNull()?.get()?.let(::ItemStack) ?: super.getToastSymbol()
 
     override fun getSerializer(): RecipeSerializer<out Recipe<HTMachineInput>> = RagiumRecipes.MACHINE_SERIALIZER.get()
 

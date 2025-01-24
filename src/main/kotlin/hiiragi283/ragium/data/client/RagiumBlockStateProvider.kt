@@ -182,7 +182,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                         .getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER)
                         .apply(
                             key,
-                            state.getValue(HTMachineTier.PROPERTY),
                             state.getValue(RagiumBlockProperties.ACTIVE),
                         )
                     val rotation: Int = entry

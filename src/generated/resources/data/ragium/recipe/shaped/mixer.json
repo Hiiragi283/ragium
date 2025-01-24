@@ -3,27 +3,21 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/iron"
     },
     "B": {
       "tag": "c:circuits/basic"
     },
     "C": {
-      "item": "minecraft:cauldron"
-    },
-    "D": {
-      "item": "ragium:basic_casing"
+      "tag": "c:storage_blocks/copper"
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "A A",
+    "AAA",
+    "BCB"
   ],
   "result": {
-    "components": {
-      "ragium:tier": "basic"
-    },
     "count": 1,
     "id": "ragium:mixer"
   }

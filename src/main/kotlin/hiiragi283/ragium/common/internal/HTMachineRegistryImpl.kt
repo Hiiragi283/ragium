@@ -5,18 +5,14 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.toDataResult
-import hiiragi283.ragium.api.extension.validTiers
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -83,12 +79,5 @@ internal object HTMachineRegistryImpl : HTMachineRegistry {
 
     class Entry(override val type: HTMachineType, override val holder: DeferredBlock<out Block>, property: HTPropertyHolder) :
         HTMachineRegistry.Entry,
-        HTPropertyHolder by property {
-        override fun createItemStack(tier: HTMachineTier): ItemStack? {
-            if (tier !in validTiers) return null
-            val stack = ItemStack(this)
-            stack.set(RagiumComponentTypes.MACHINE_TIER, tier)
-            return stack
-        }
-    }
+        HTPropertyHolder by property
 }

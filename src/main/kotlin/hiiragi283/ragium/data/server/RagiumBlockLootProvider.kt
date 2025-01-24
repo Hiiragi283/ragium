@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -46,6 +45,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(RagiumBlocks.MANUAL_GRINDER)
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+
+            addAll(RagiumAPI.machineRegistry.blocks)
         }.map(Supplier<out Block>::get)
             .forEach(::dropSelf)
 
@@ -62,10 +63,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
         RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
             add(drum.get()) { copyComponent(it, RagiumComponentTypes.FLUID_CONTENT) }
-        }
-
-        RagiumAPI.machineRegistry.blocks.forEach { content: HTBlockContent ->
-            add(content.get()) { copyComponent(it, RagiumComponentTypes.MACHINE_TIER) }
         }
     }
 

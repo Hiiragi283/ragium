@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_casing": {
+    "has_circuit": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_casing"
+            "items": "#c:circuits/basic"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_casing"
+      "has_circuit"
     ]
   ],
   "rewards": {

@@ -5,19 +5,13 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.toDataResult
-import hiiragi283.ragium.api.util.DisableOverwriteMerger
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
-import net.neoforged.neoforge.registries.datamaps.DataMapType
 import java.util.function.Consumer
 
 /**
@@ -34,13 +28,6 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
         @JvmField
         val CODEC: Codec<HTMachineKey> =
             Codec.STRING.xmap(Companion::of, HTMachineKey::name).validate(::validate)
-
-        val DATA_MAP_TYPE: DataMapType<Item, HTMachineKey> =
-            AdvancedDataMapType
-                .builder(RagiumAPI.id("machine"), Registries.ITEM, CODEC)
-                .synced(CODEC, false)
-                .merger(DisableOverwriteMerger())
-                .build()
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineKey> =
@@ -109,15 +96,6 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
     fun isGenerator(): Boolean = getEntryOrNull()?.type == HTMachineType.GENERATOR
 
     fun isProcessor(): Boolean = getEntryOrNull()?.type == HTMachineType.PROCESSOR
-
-    /**
-     * 指定された[tier]から[ItemStack]を返します。
-     * @return [getEntryOrNull]がnull，または[HTMachinePropertyKeys.VALID_TIERS]に含まれない場合はnullを返す
-     */
-    fun createItemStack(tier: HTMachineTier): ItemStack? {
-        val entry: HTMachineRegistry.Entry = getEntryOrNull() ?: return null
-        return entry.createItemStack(tier)
-    }
 
     override fun toString(): String = "HTMachineKey[$name]"
 

@@ -83,7 +83,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
         val lookup: HolderLookup.RegistryLookup<Item> = event.registries.lookupOrThrow(Registries.ITEM)
         lookup.listElements().forEach { holder: Holder.Reference<Item> ->
-            val definition: HTMaterialDefinition = holder.getData(HTMaterialDefinition.DATA_MAP_TYPE) ?: return@forEach
+            val definition: HTMaterialDefinition = holder.getData(RagiumAPI.DataMapTypes.MATERIAL) ?: return@forEach
             if (definitionCache.containsKey(holder.value())) {
                 LOGGER.warn("Item: ${holder.key} already has material data!")
                 return@forEach

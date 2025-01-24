@@ -4,10 +4,10 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getBlockData
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.level.Level
@@ -35,7 +35,7 @@ data class HTCoolingCondition(val minTier: HTMachineTier, val maxTier: HTMachine
 
     override fun test(level: Level, pos: BlockPos): Boolean {
         val currentTier: HTMachineTier =
-            level.getCapability(RagiumAPI.BlockCapabilities.COOLING_TIER, pos.below(), Direction.UP) ?: return false
+            level.getBlockState(pos).getBlockData(RagiumAPI.DataMapTypes.COOLING_TIER) ?: return false
         LOGGER.debug("Found Cooling Tier: {} at {}", currentTier, pos)
         return currentTier >= minTier && currentTier <= maxTier
     }

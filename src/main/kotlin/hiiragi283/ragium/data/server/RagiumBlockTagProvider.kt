@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.data.addElement
+import hiiragi283.ragium.data.addElements
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -11,6 +12,7 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagBuilder
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
 
 class RagiumBlockTagProvider(
@@ -49,5 +51,8 @@ class RagiumBlockTagProvider(
         getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_HOE)
             .addElement(RagiumBlocks.SPONGE_CAKE)
             .addElement(RagiumBlocks.SWEET_BERRIES_CAKE)
+
+        // Farmer's Delight
+        getOrCreateRawBuilder(ModTags.HEAT_SOURCES).addElements(RagiumBlocks.Burners.entries)
     }
 }

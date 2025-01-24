@@ -21,9 +21,6 @@
     "ABA"
   ],
   "result": {
-    "components": {
-      "ragium:tier": "basic"
-    },
     "count": 1,
     "id": "ragium:blast_furnace"
   }

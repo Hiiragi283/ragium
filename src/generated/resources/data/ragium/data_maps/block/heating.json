@@ -1,0 +1,12 @@
+{
+  "values": {
+    "#minecraft:campfires": "basic",
+    "#minecraft:fire": "advanced",
+    "minecraft:lava": "advanced",
+    "minecraft:magma_block": "basic",
+    "ragium:advanced_burner": "advanced",
+    "ragium:basic_burner": "basic",
+    "ragium:elite_burner": "elite",
+    "ragium:ultimate_burner": "ultimate"
+  }
+}

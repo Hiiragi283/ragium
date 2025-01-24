@@ -2,9 +2,8 @@
 
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
@@ -13,14 +12,25 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 //    ItemLike    //
 
 fun ItemLike.asHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
 
+fun <T : Any> ItemLike.getItemData(type: DataMapType<Item, T>): T? = asHolder().getData(type)
+
+fun <T : Any> ItemStack.getItemData(type: DataMapType<Item, T>): T? = itemHolder.getData(type)
+
+fun <T : Any> BlockState.getItemData(type: DataMapType<Item, T>): T? = block.getItemData(type)
+
+fun <T : Any> BlockState.getBlockData(type: DataMapType<Block, T>): T? = blockHolder.getData(type)
+
 val ItemLike.machineKey: HTMachineKey?
-    get() = asHolder().getData(HTMachineKey.DATA_MAP_TYPE)
+    get() = getItemData(RagiumAPI.DataMapTypes.MACHINE_KEY)
 
 //    Item    //
 
@@ -49,9 +59,6 @@ val ItemStack.restDamage: Int
  */
 val ItemStack.isMaxCount: Boolean
     get() = count == maxStackSize
-
-val ItemStack.machineTier: HTMachineTier
-    get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.BASIC)
 
 //    IItemHandler    //
 

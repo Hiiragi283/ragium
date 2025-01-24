@@ -1,20 +1,29 @@
 package hiiragi283.ragium.api
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.util.DisableOverwriteMerger
 import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import net.minecraft.core.Direction
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.registries.RegistryBuilder
+import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
+import net.neoforged.neoforge.registries.datamaps.DataMapType
+import net.minecraft.core.registries.Registries as MCRegistries
 
 /**
  * RagiumのAPI
@@ -58,12 +67,39 @@ data object RagiumAPI {
             BlockCapability.createVoid(id("machine_tier"), HTMachineTier::class.java)
 
         @JvmField
-        val COOLING_TIER: BlockCapability<HTMachineTier, Direction?> =
-            BlockCapability.createSided(id("cooling_tier"), HTMachineTier::class.java)
-
-        @JvmField
         val HEATING_TIER: BlockCapability<HTMachineTier, Direction?> =
             BlockCapability.createSided(id("heating_tier"), HTMachineTier::class.java)
+    }
+
+    object DataMapTypes {
+        @JvmField
+        val MACHINE_KEY: DataMapType<Item, HTMachineKey> = createItem("machine", HTMachineKey.CODEC)
+
+        @JvmField
+        val MACHINE_TIER: DataMapType<Item, HTMachineTier> = createItem("machine_tier", HTMachineTier.CODEC)
+
+        @JvmField
+        val MATERIAL: DataMapType<Item, HTMaterialDefinition> = createItem("material", HTMaterialDefinition.CODEC)
+
+        @JvmField
+        val HEATING_TIER: DataMapType<Block, HTMachineTier> = createBlock("heating", HTMachineTier.CODEC)
+
+        @JvmField
+        val COOLING_TIER: DataMapType<Block, HTMachineTier> = createBlock("cooling", HTMachineTier.CODEC)
+
+        @JvmStatic
+        private fun <T : Any> createBlock(path: String, codec: Codec<T>): DataMapType<Block, T> = AdvancedDataMapType
+            .builder(id(path), MCRegistries.BLOCK, codec)
+            .synced(codec, false)
+            .merger(DisableOverwriteMerger())
+            .build()
+
+        @JvmStatic
+        private fun <T : Any> createItem(path: String, codec: Codec<T>): DataMapType<Item, T> = AdvancedDataMapType
+            .builder(id(path), MCRegistries.ITEM, codec)
+            .synced(codec, false)
+            .merger(DisableOverwriteMerger())
+            .build()
     }
 
     object Registries {

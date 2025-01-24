@@ -14,6 +14,8 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.datamaps.DataMapType
+import net.neoforged.neoforge.registries.datamaps.IWithData
 import kotlin.jvm.optionals.getOrNull
 
 fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath("c", path)
@@ -66,6 +68,8 @@ val <T : Any> Holder<T>.id: ResourceLocation?
  * 指定した[value]が一致するか判定します。
  */
 fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
+
+fun <R : Any, T : Any> IWithData<R>.getDataOrDefault(type: DataMapType<R, T>, defaultValue: T): T = getData(type) ?: defaultValue
 
 //    HolderSet    //
 

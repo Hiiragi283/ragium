@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.machine
 
-import com.mojang.datafixers.util.Function3
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
@@ -13,6 +12,7 @@ import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.Level
+import java.util.function.BiFunction
 import java.util.function.BiPredicate
 import java.util.function.UnaryOperator
 
@@ -20,19 +20,6 @@ object HTMachinePropertyKeys {
     @JvmField
     val MACHINE_FACTORY: HTPropertyKey<HTMachineEntityFactory> =
         HTPropertyKey.simple(RagiumAPI.id("machine_factory"))
-
-    @JvmField
-    val VALID_TIERS: HTPropertyKey<List<HTMachineTier>> =
-        HTPropertyKey
-            .builder<List<HTMachineTier>>(RagiumAPI.id("valid_tiers"))
-            .setDefaultValue { HTMachineTier.entries.toList() }
-            .setValidation { validTiers: List<HTMachineTier> ->
-                if (validTiers.toSet().isEmpty()) {
-                    DataResult.error { "Empty valid tiers" }
-                } else {
-                    DataResult.success(validTiers)
-                }
-            }.build()
 
     @JvmField
     val PARTICLE: HTPropertyKey<SimpleParticleType> =
@@ -45,11 +32,11 @@ object HTMachinePropertyKeys {
     //    Data Gen    //
 
     @JvmField
-    val MODEL_MAPPER: HTPropertyKey<Function3<HTMachineKey, HTMachineTier, Boolean, ResourceLocation>> =
+    val MODEL_MAPPER: HTPropertyKey<BiFunction<HTMachineKey, Boolean, ResourceLocation>> =
         HTPropertyKey
-            .builder<Function3<HTMachineKey, HTMachineTier, Boolean, ResourceLocation>>(RagiumAPI.id("model_mapper"))
+            .builder<BiFunction<HTMachineKey, Boolean, ResourceLocation>>(RagiumAPI.id("model_mapper"))
             .setDefaultValue {
-                Function3 { key: HTMachineKey, _: HTMachineTier?, isActive: Boolean ->
+                BiFunction { key: HTMachineKey, isActive: Boolean ->
                     var path = "block/"
                     if (isActive) {
                         path += "active_"

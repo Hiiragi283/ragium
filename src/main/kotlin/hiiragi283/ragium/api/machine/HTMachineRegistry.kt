@@ -6,7 +6,6 @@ import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import net.minecraft.world.item.ItemStack
 import java.util.stream.Stream
 
 interface HTMachineRegistry : Keyable {
@@ -72,7 +71,5 @@ interface HTMachineRegistry : Keyable {
         HTPropertyHolder,
         HTBlockContent {
         val type: HTMachineType
-
-        fun createItemStack(tier: HTMachineTier): ItemStack?
     }
 }

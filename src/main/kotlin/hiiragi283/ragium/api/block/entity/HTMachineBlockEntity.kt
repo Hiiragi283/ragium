@@ -14,10 +14,8 @@ import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.component.DataComponentMap
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -67,11 +65,13 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     val isActive: Boolean
         get() = blockState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
     override val machineTier: HTMachineTier
-        get() = blockState.machineTier
+        get() {
+            return HTMachineTier.BASIC
+        }
 
-    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
+    /*override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         components.set(RagiumComponentTypes.MACHINE_TIER, machineTier)
-    }
+    }*/
 
     @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
     override fun setBlockState(blockState: BlockState) {
@@ -132,10 +132,8 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         val stack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
         return if (stack.isOf(newTier.getHull()) && machineTier < newTier) {
             level.replaceBlockState(blockPos) { stateIn: BlockState ->
-                stateIn.setValue(
-                    HTMachineTier.PROPERTY,
-                    newTier,
-                )
+                // stateIn.setValue(HTMachineTier.PROPERTY, newTier)
+                null
             }
             level.playSound(null, blockPos, SoundEvents.PLAYER_LEVELUP, player.soundSource, 1f, 0.5f)
             stack.shrink(1)

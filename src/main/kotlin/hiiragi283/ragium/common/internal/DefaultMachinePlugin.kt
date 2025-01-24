@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.internal
 
-import com.mojang.datafixers.util.Function3
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
@@ -24,10 +23,8 @@ import net.minecraft.core.Direction
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.fluids.FluidType
-import java.util.function.BiConsumer
-import java.util.function.BiPredicate
+import java.util.function.*
 import java.util.function.Function
-import java.util.function.UnaryOperator
 
 object DefaultMachinePlugin : RagiumPlugin {
     override val priority: Int = -100
@@ -40,13 +37,6 @@ object DefaultMachinePlugin : RagiumPlugin {
         // processors
         RagiumMachineKeys.PROCESSORS.forEach { consumer.accept(it, HTMachineType.PROCESSOR) }
     }
-
-    @JvmField
-    val ADVANCED_TIERS: List<HTMachineTier> =
-        listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE, HTMachineTier.ULTIMATE)
-
-    @JvmField
-    val ELITE_TIERS: List<HTMachineTier> = listOf(HTMachineTier.ELITE, HTMachineTier.ULTIMATE)
 
     private fun HTPropertyHolderBuilder.putFactory(
         factory: BlockEntityType.BlockEntitySupplier<out HTMachineBlockEntity>,
@@ -71,7 +61,7 @@ object DefaultMachinePlugin : RagiumPlugin {
                     HTGeneratorFuel(RagiumFluidTags.NON_NITRO_FUEL, FluidType.BUCKET_VOLUME / 10),
                     HTGeneratorFuel(RagiumFluidTags.NITRO_FUEL, FluidType.BUCKET_VOLUME / 100),
                 ),
-            ).put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
+            )
 
         helper
             .apply(RagiumMachineKeys.GAS_TURBINE)
@@ -83,7 +73,7 @@ object DefaultMachinePlugin : RagiumPlugin {
                     HTGeneratorFuel(RagiumFluids.ETHENE, FluidType.BUCKET_VOLUME / 20),
                     HTGeneratorFuel(RagiumFluids.ACETYLENE, FluidType.BUCKET_VOLUME / 50),
                 ),
-            ).put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
+            )
 
         helper
             .apply(RagiumMachineKeys.NUCLEAR_REACTOR)
@@ -93,7 +83,7 @@ object DefaultMachinePlugin : RagiumPlugin {
                 setOf(
                     HTGeneratorFuel(RagiumFluidTags.NUCLEAR_FUEL, FluidType.BUCKET_VOLUME / 10),
                 ),
-            ).put(HTMachinePropertyKeys.VALID_TIERS, ELITE_TIERS)
+            )
 
         helper
             .apply(RagiumMachineKeys.SOLAR_GENERATOR)
@@ -103,12 +93,11 @@ object DefaultMachinePlugin : RagiumPlugin {
                 BiPredicate { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay },
             ).put(
                 HTMachinePropertyKeys.MODEL_MAPPER,
-                Function3 { key: HTMachineKey, _: HTMachineTier, _: Boolean -> RagiumAPI.id("block/solar_panel") },
+                BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/solar_panel") },
             ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
 
         helper
             .apply(RagiumMachineKeys.STEAM_GENERATOR)
-            .put(HTMachinePropertyKeys.VALID_TIERS, listOf(HTMachineTier.BASIC, HTMachineTier.ADVANCED))
 
         helper
             .apply(RagiumMachineKeys.THERMAL_GENERATOR)
@@ -118,11 +107,11 @@ object DefaultMachinePlugin : RagiumPlugin {
                 setOf(
                     HTGeneratorFuel(RagiumFluidTags.THERMAL_FUEL, FluidType.BUCKET_VOLUME / 10),
                 ),
-            ).put(HTMachinePropertyKeys.VALID_TIERS, listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE))
+            )
 
         helper
             .apply(RagiumMachineKeys.VIBRATION_GENERATOR)
-            .put(HTMachinePropertyKeys.VALID_TIERS, ELITE_TIERS)
+
         // Processor
         RagiumMachineKeys.PROCESSORS
             .map(helper::apply)
@@ -144,7 +133,6 @@ object DefaultMachinePlugin : RagiumPlugin {
 
         helper
             .apply(RagiumMachineKeys.CUTTING_MACHINE)
-            .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
 
         helper
             .apply(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -159,15 +147,13 @@ object DefaultMachinePlugin : RagiumPlugin {
                     recipe.getItemOutput(1) != null -> DataResult.error { "Distillation tower recipe should have one item output!" }
                     else -> DataResult.success(recipe)
                 }
-            }.put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
+            }
 
         helper
             .apply(RagiumMachineKeys.GROWTH_CHAMBER)
-            .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
 
         helper
             .apply(RagiumMachineKeys.LASER_TRANSFORMER)
-            .put(HTMachinePropertyKeys.VALID_TIERS, ELITE_TIERS)
 
         helper
             .apply(RagiumMachineKeys.MIXER)
@@ -175,7 +161,7 @@ object DefaultMachinePlugin : RagiumPlugin {
             .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
             .put(
                 HTMachinePropertyKeys.MODEL_MAPPER,
-                Function3 { key: HTMachineKey, _: HTMachineTier, _: Boolean -> RagiumAPI.id("block/mixer") },
+                BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/mixer") },
             ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
 
         helper
@@ -183,6 +169,5 @@ object DefaultMachinePlugin : RagiumPlugin {
             .putFactory(::HTMultiSmelterBlockEntity)
             .remove(HTMachinePropertyKeys.CATALYST_SLOT)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
-            .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
     }
 }

@@ -20,7 +20,6 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -48,8 +47,7 @@ enum class HTMachineTier(
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineTier> = stringStreamCodec(HTMachineTier.entries)
 
-        @JvmField
-        val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.create("tier", HTMachineTier::class.java)
+        // val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.create("tier", HTMachineTier::class.java)
     }
 
     val translationKey: String = "machine_tier.ragium.$serializedName"

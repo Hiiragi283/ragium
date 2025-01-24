@@ -4,13 +4,14 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.extension.firstTier
-import hiiragi283.ragium.api.extension.validTiers
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -20,11 +21,9 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 import org.slf4j.Logger
 
 object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
@@ -36,7 +35,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         registerMachines(output)
 
-        registerMachineUpdates(output)
+        // registerMachineUpdates(output)
     }
 
     private fun registerComponents(output: RecipeOutput) {
@@ -187,6 +186,18 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
             .savePrefixed(output)
 
+        // Processing Machine
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.MIXER.getEntry())
+            .pattern("A A")
+            .pattern("AAA")
+            .pattern("BCB")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .define('B', HTMachineTier.BASIC.getCircuitTag())
+            .define('C', HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER)
+            .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
+            .savePrefixed(output)
+
         mapOf(
             // consumer
             // generator
@@ -208,51 +219,20 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             RagiumMachineKeys.GRINDER to Items.GRINDSTONE,
             RagiumMachineKeys.GROWTH_CHAMBER to Items.IRON_HOE,
             RagiumMachineKeys.LASER_TRANSFORMER to RagiumItems.LASER_EMITTER,
-            RagiumMachineKeys.MIXER to Items.CAULDRON,
             RagiumMachineKeys.MULTI_SMELTER to Items.FURNACE,
         ).forEach { (key: HTMachineKey, input: ItemLike) ->
             val entry: HTMachineRegistry.Entry = key.getEntryOrNull() ?: return@forEach
-            runCatching {
-                val firstTier: HTMachineTier = entry.firstTier
-                ShapedRecipeBuilder
-                    .shaped(RecipeCategory.MISC, entry.createItemStack(firstTier)!!)
-                    .pattern("ABA")
-                    .pattern("CDC")
-                    .pattern("ABA")
-                    .define('A', HTTagPrefix.INGOT, firstTier.getMainMetal())
-                    .define('B', firstTier.getCircuitTag())
-                    .define('C', input)
-                    .define('D', firstTier.getCasing())
-                    .unlockedBy("has_casing", has(firstTier.getCasing()))
-                    .save(output, RagiumAPI.id("shaped/${key.name}"))
-            }.onFailure { throwable: Throwable -> LOGGER.error(throwable.localizedMessage) }
-        }
-    }
-
-    private fun registerMachineUpdates(output: RecipeOutput) {
-        RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
-            for (tier: HTMachineTier in entry.validTiers) {
-                val nextTier: HTMachineTier = tier.getNextTier() ?: continue
-                val nextMachine: ItemStack = key.createItemStack(nextTier) ?: continue
-                ShapedRecipeBuilder
-                    .shaped(RecipeCategory.MISC, nextMachine)
-                    .pattern("ABA")
-                    .pattern("CDC")
-                    .pattern("ABA")
-                    .define('A', HTTagPrefix.INGOT, nextTier.getMainMetal())
-                    .define('B', nextTier.getCircuitTag())
-                    .define('C', HTTagPrefix.INGOT, nextTier.getSteelMetal())
-                    .define(
-                        'D',
-                        DataComponentIngredient.of(
-                            false,
-                            RagiumComponentTypes.MACHINE_TIER.get(),
-                            tier,
-                            entry,
-                        ),
-                    ).unlockedBy("has_machine", has(entry))
-                    .save(output, RagiumAPI.id("shaped/${nextTier.serializedName}/${key.name}"))
-            }
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, entry)
+                .pattern("ABA")
+                .pattern("CDC")
+                .pattern("ABA")
+                .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+                .define('B', HTMachineTier.BASIC.getCircuitTag())
+                .define('C', input)
+                .define('D', RagiumBlocks.Casings.BASIC)
+                .unlockedBy("has_casing", has(RagiumBlocks.Casings.BASIC))
+                .save(output, RagiumAPI.id("shaped/${key.name}"))
         }
     }
 }

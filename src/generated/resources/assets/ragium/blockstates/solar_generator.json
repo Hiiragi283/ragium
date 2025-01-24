@@ -1,99 +1,27 @@
 {
   "variants": {
-    "active=false,facing=east,tier=advanced": {
+    "active=false,facing=east": {
       "model": "ragium:block/solar_panel"
     },
-    "active=false,facing=east,tier=basic": {
+    "active=false,facing=north": {
       "model": "ragium:block/solar_panel"
     },
-    "active=false,facing=east,tier=elite": {
+    "active=false,facing=south": {
       "model": "ragium:block/solar_panel"
     },
-    "active=false,facing=east,tier=ultimate": {
+    "active=false,facing=west": {
       "model": "ragium:block/solar_panel"
     },
-    "active=false,facing=north,tier=advanced": {
+    "active=true,facing=east": {
       "model": "ragium:block/solar_panel"
     },
-    "active=false,facing=north,tier=basic": {
+    "active=true,facing=north": {
       "model": "ragium:block/solar_panel"
     },
-    "active=false,facing=north,tier=elite": {
+    "active=true,facing=south": {
       "model": "ragium:block/solar_panel"
     },
-    "active=false,facing=north,tier=ultimate": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=false,facing=south,tier=advanced": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=false,facing=south,tier=basic": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=false,facing=south,tier=elite": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=false,facing=south,tier=ultimate": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=false,facing=west,tier=advanced": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=false,facing=west,tier=basic": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=false,facing=west,tier=elite": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=false,facing=west,tier=ultimate": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=east,tier=advanced": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=east,tier=basic": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=east,tier=elite": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=east,tier=ultimate": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=north,tier=advanced": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=north,tier=basic": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=north,tier=elite": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=north,tier=ultimate": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=south,tier=advanced": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=south,tier=basic": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=south,tier=elite": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=south,tier=ultimate": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=west,tier=advanced": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=west,tier=basic": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=west,tier=elite": {
-      "model": "ragium:block/solar_panel"
-    },
-    "active=true,facing=west,tier=ultimate": {
+    "active=true,facing=west": {
       "model": "ragium:block/solar_panel"
     }
   }

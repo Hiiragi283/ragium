@@ -126,3 +126,7 @@ fun TagBuilder.addTag(tagKey: TagKey<*>, optional: Boolean = false): TagBuilder 
     true -> addOptionalTag(tagKey.location)
     false -> addTag(tagKey.location)
 }
+
+fun TagBuilder.addElements(contents: Iterable<HTContent<*>>): TagBuilder = apply {
+    contents.forEach(this::addElement)
+}

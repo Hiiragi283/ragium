@@ -3,12 +3,12 @@ package hiiragi283.ragium.common.internal
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
-import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.common.init.*
@@ -21,11 +21,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.BlockCapability
@@ -97,11 +95,23 @@ internal object RagiumEvents {
             RagiumAPI.BlockCapabilities.CONTROLLER_HOLDER,
         ) { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction -> blockEntity as? HTControllerHolder }
 
-        registerForBlocks(
-            RagiumAPI.BlockCapabilities.MACHINE_TIER,
-        ) { _: Level, _: BlockPos, state: BlockState, blockEntity: BlockEntity?, _: Void? ->
-            (blockEntity as? HTMachineTierProvider)?.machineTier ?: state.machineTier
+        fun registerTier(contents: Iterable<HTBlockContent>) {
+            event.registerBlock(
+                RagiumAPI.BlockCapabilities.MACHINE_TIER,
+                { _: Level, _: BlockPos, state: BlockState, _: BlockEntity?, _: Void? ->
+                    state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER)
+                },
+                *contents.map(HTBlockContent::get).toTypedArray(),
+            )
         }
+
+        registerTier(RagiumBlocks.Grates.entries)
+        registerTier(RagiumBlocks.Casings.entries)
+        registerTier(RagiumBlocks.Hulls.entries)
+        registerTier(RagiumBlocks.Coils.entries)
+        registerTier(RagiumBlocks.Burners.entries)
+
+        registerTier(RagiumBlocks.Drums.entries)
 
         // from HTBlockEntityHandlerProvider
         fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTBlockEntityHandlerProvider {
@@ -135,55 +145,6 @@ internal object RagiumEvents {
 
         registerHandlers(RagiumBlockEntityTypes.DRUM)
 
-        // Heating Tier
-        event.registerBlock(
-            RagiumAPI.BlockCapabilities.HEATING_TIER,
-            staticProvider(HTMachineTier.BASIC),
-            Blocks.MAGMA_BLOCK,
-        )
-
-        event.registerBlock(
-            RagiumAPI.BlockCapabilities.HEATING_TIER,
-            { _: Level, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction ->
-                if (direction == Direction.UP && state.getValue(BlockStateProperties.LIT)) HTMachineTier.BASIC else null
-            },
-            Blocks.CAMPFIRE,
-        )
-
-        event.registerBlock(
-            RagiumAPI.BlockCapabilities.HEATING_TIER,
-            { _: Level, _: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction ->
-                when (direction) {
-                    Direction.UP -> HTMachineTier.ADVANCED
-                    else -> HTMachineTier.BASIC
-                }
-            },
-            Blocks.FIRE,
-        )
-
-        event.registerBlock(
-            RagiumAPI.BlockCapabilities.HEATING_TIER,
-            staticProvider(HTMachineTier.ADVANCED),
-            Blocks.LAVA,
-        )
-
-        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
-            event.registerBlock(
-                RagiumAPI.BlockCapabilities.HEATING_TIER,
-                staticProvider(burner.machineTier),
-                burner.get(),
-            )
-        }
-
-        // Cooling Tier
-        mapOf(
-            HTMachineTier.BASIC to arrayOf(Blocks.WATER, Blocks.SNOW, Blocks.POWDER_SNOW),
-            HTMachineTier.ADVANCED to arrayOf(Blocks.ICE, Blocks.PACKED_ICE),
-            HTMachineTier.ELITE to arrayOf(Blocks.BLUE_ICE),
-        ).forEach { (tier: HTMachineTier, blocks: Array<Block>) ->
-            event.registerBlock(RagiumAPI.BlockCapabilities.HEATING_TIER, staticProvider(tier), *blocks)
-        }
-
         // Other
         event.registerBlock(
             Capabilities.EnergyStorage.BLOCK,
@@ -201,11 +162,13 @@ internal object RagiumEvents {
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
             { stack: ItemStack, _: Void? ->
+                val tier: HTMachineTier =
+                    stack.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: return@registerItem null
                 FluidHandlerItemStack.SwapEmpty(
                     RagiumComponentTypes.FLUID_CONTENT,
                     stack,
                     ItemStack(stack.item),
-                    stack.machineTier.tankCapacity,
+                    tier.tankCapacity,
                 )
             },
             *RagiumBlocks.Drums.entries.toTypedArray(),
@@ -216,8 +179,12 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(HTMachineKey.DATA_MAP_TYPE)
-        event.register(HTMaterialDefinition.DATA_MAP_TYPE)
+        event.register(RagiumAPI.DataMapTypes.MACHINE_KEY)
+        event.register(RagiumAPI.DataMapTypes.MACHINE_TIER)
+        event.register(RagiumAPI.DataMapTypes.MATERIAL)
+
+        event.register(RagiumAPI.DataMapTypes.HEATING_TIER)
+        event.register(RagiumAPI.DataMapTypes.COOLING_TIER)
 
         LOGGER.info("Registered Data Map Types!")
     }

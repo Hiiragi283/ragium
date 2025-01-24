@@ -13,5 +13,8 @@ class DisableOverwriteMerger<T : Any, R : Any> : DataMapValueMerger<T, R> {
         firstValue: R,
         second: Either<TagKey<T>, ResourceKey<T>>,
         secondValue: R,
-    ): R = error("Overwriting value is not supported!")
+    ): R = when (firstValue) {
+        secondValue -> firstValue
+        else -> error("Overwriting value is not supported!")
+    }
 }

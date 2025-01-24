@@ -173,11 +173,11 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         val stack: ItemStack = if (iconCache != null) {
             iconCache!!
         } else {
-            for (tier: HTMachineTier in HTMachineTier.entries) {
-                iconCache = machine.createItemStack(tier)
-                if (iconCache != null) break
-            }
-            iconCache ?: return null
+            machine
+                .getEntryOrNull()
+                ?.let(::ItemStack)
+                ?.also { iconCache = it }
+                ?: return null
         }
         return guiHelper.createDrawableItemStack(stack)
     }

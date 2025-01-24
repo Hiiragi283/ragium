@@ -1,122 +1,32 @@
 {
   "variants": {
-    "active=false,facing=east,tier=advanced": {
+    "active=false,facing=east": {
       "model": "ragium:block/steam_generator",
       "y": 90
     },
-    "active=false,facing=east,tier=basic": {
-      "model": "ragium:block/steam_generator",
-      "y": 90
-    },
-    "active=false,facing=east,tier=elite": {
-      "model": "ragium:block/steam_generator",
-      "y": 90
-    },
-    "active=false,facing=east,tier=ultimate": {
-      "model": "ragium:block/steam_generator",
-      "y": 90
-    },
-    "active=false,facing=north,tier=advanced": {
+    "active=false,facing=north": {
       "model": "ragium:block/steam_generator"
     },
-    "active=false,facing=north,tier=basic": {
-      "model": "ragium:block/steam_generator"
-    },
-    "active=false,facing=north,tier=elite": {
-      "model": "ragium:block/steam_generator"
-    },
-    "active=false,facing=north,tier=ultimate": {
-      "model": "ragium:block/steam_generator"
-    },
-    "active=false,facing=south,tier=advanced": {
+    "active=false,facing=south": {
       "model": "ragium:block/steam_generator",
       "y": 180
     },
-    "active=false,facing=south,tier=basic": {
-      "model": "ragium:block/steam_generator",
-      "y": 180
-    },
-    "active=false,facing=south,tier=elite": {
-      "model": "ragium:block/steam_generator",
-      "y": 180
-    },
-    "active=false,facing=south,tier=ultimate": {
-      "model": "ragium:block/steam_generator",
-      "y": 180
-    },
-    "active=false,facing=west,tier=advanced": {
+    "active=false,facing=west": {
       "model": "ragium:block/steam_generator",
       "y": 270
     },
-    "active=false,facing=west,tier=basic": {
-      "model": "ragium:block/steam_generator",
-      "y": 270
-    },
-    "active=false,facing=west,tier=elite": {
-      "model": "ragium:block/steam_generator",
-      "y": 270
-    },
-    "active=false,facing=west,tier=ultimate": {
-      "model": "ragium:block/steam_generator",
-      "y": 270
-    },
-    "active=true,facing=east,tier=advanced": {
+    "active=true,facing=east": {
       "model": "ragium:block/active_steam_generator",
       "y": 90
     },
-    "active=true,facing=east,tier=basic": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 90
-    },
-    "active=true,facing=east,tier=elite": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 90
-    },
-    "active=true,facing=east,tier=ultimate": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 90
-    },
-    "active=true,facing=north,tier=advanced": {
+    "active=true,facing=north": {
       "model": "ragium:block/active_steam_generator"
     },
-    "active=true,facing=north,tier=basic": {
-      "model": "ragium:block/active_steam_generator"
-    },
-    "active=true,facing=north,tier=elite": {
-      "model": "ragium:block/active_steam_generator"
-    },
-    "active=true,facing=north,tier=ultimate": {
-      "model": "ragium:block/active_steam_generator"
-    },
-    "active=true,facing=south,tier=advanced": {
+    "active=true,facing=south": {
       "model": "ragium:block/active_steam_generator",
       "y": 180
     },
-    "active=true,facing=south,tier=basic": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 180
-    },
-    "active=true,facing=south,tier=elite": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 180
-    },
-    "active=true,facing=south,tier=ultimate": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 180
-    },
-    "active=true,facing=west,tier=advanced": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 270
-    },
-    "active=true,facing=west,tier=basic": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 270
-    },
-    "active=true,facing=west,tier=elite": {
-      "model": "ragium:block/active_steam_generator",
-      "y": 270
-    },
-    "active=true,facing=west,tier=ultimate": {
+    "active=true,facing=west": {
       "model": "ragium:block/active_steam_generator",
       "y": 270
     }

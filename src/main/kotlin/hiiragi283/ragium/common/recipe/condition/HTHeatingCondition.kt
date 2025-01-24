@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getBlockData
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import net.minecraft.core.BlockPos
@@ -43,7 +44,9 @@ data class HTHeatingCondition(
 
     override fun test(level: Level, pos: BlockPos): Boolean {
         val currentTier: HTMachineTier =
-            level.getCapability(RagiumAPI.BlockCapabilities.HEATING_TIER, pos.relative(targetSide.opposite), targetSide)
+            level
+                .getBlockState(pos.relative(targetSide.opposite))
+                .getBlockData(RagiumAPI.DataMapTypes.HEATING_TIER)
                 ?: return false
         LOGGER.debug("Found Heating Tier: {} at {}", currentTier, pos)
         return currentTier >= minTier && currentTier <= maxTier
