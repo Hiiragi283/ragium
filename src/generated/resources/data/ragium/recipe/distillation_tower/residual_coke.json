@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "ragium:advanced_circuit"
+    }
+  },
   "fluid_inputs": [
     {
       "amount": 8000,
@@ -16,14 +22,6 @@
     {
       "count": 4,
       "id": "ragium:residual_coke"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "ragium:advanced_circuit"
-      }
     }
   ],
   "machine_type": "distillation_tower"

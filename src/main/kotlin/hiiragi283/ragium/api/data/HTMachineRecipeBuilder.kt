@@ -32,6 +32,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import java.util.*
 import java.util.function.Supplier
 
 class HTMachineRecipeBuilder private constructor(private val definition: HTMachineDefinition) : RecipeBuilder {
@@ -43,10 +44,9 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     private val itemInputs: MutableMap<Ingredient, Int> = mutableMapOf()
     private val fluidInputs: MutableMap<FluidIngredient, Int> = mutableMapOf()
-    private var catalyst: Ingredient? = null
     private val itemOutputs: MutableList<ItemStack> = mutableListOf()
     private val fluidOutputs: MutableList<FluidStack> = mutableListOf()
-    private val machineConditions: MutableSet<HTMachineRecipeCondition> = mutableSetOf()
+    private var machineCondition: HTMachineRecipeCondition? = null
 
     private val conditions: MutableList<ICondition> = mutableListOf()
 
@@ -100,12 +100,8 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     fun catalyst(ingredient: Ingredient): HTMachineRecipeBuilder = machineConditions(HTProcessorCatalystCondition(ingredient))
 
-    fun machineConditions(conditions: Iterable<HTMachineRecipeCondition>): HTMachineRecipeBuilder = apply {
-        this.machineConditions.addAll(conditions)
-    }
-
-    fun machineConditions(vararg conditions: HTMachineRecipeCondition): HTMachineRecipeBuilder = apply {
-        this.machineConditions.addAll(conditions)
+    fun machineConditions(condition: HTMachineRecipeCondition): HTMachineRecipeBuilder = apply {
+        this.machineCondition = condition
     }
 
     //    Output    //
@@ -191,6 +187,6 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
         },
         itemOutputs,
         fluidOutputs,
-        machineConditions,
+        Optional.ofNullable(machineCondition),
     )
 }

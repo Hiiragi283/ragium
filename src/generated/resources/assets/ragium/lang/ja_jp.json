@@ -265,6 +265,9 @@
   "tag_prefix.ragium.shard": "%sの欠片",
   "tag_prefix.ragium.storage_block": "%sブロック",
   "tag_prefix.ragium.wire": "%sワイヤ",
+  "tooltip.ragium.condition.catalyst": "触媒アイテムが必要です",
+  "tooltip.ragium.condition.cooling": "次の範囲の冷却が必要です: %s - %s",
+  "tooltip.ragium.condition.heating": "次の範囲の加熱が必要です: %s - %s",
   "tooltip.ragium.machine.cost": "- 処理コスト: %s FE/回",
   "tooltip.ragium.machine.name": "- 機械: %s",
   "tooltip.ragium.machine.tier": "- ティア: %s"

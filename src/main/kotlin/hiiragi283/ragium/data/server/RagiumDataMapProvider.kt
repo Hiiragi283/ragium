@@ -28,6 +28,7 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(packOutput, lookupProvider) {
+    @Suppress("DEPRECATION")
     private fun <T : Any> Builder<T, Block>.addBlock(block: Block, value: T): Builder<T, Block> =
         add(block.builtInRegistryHolder(), value, false)
 

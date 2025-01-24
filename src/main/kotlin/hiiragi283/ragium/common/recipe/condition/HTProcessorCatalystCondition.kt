@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -22,7 +24,10 @@ data class HTProcessorCatalystCondition(val ingredient: Ingredient) : HTMachineR
     }
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
-    override val text: MutableComponent = Component.literal("")
+    override val text: MutableComponent =
+        Component
+            .translatable(RagiumTranslationKeys.CATALYST_CONDITION)
+            .withStyle(ChatFormatting.GREEN)
 
     override fun test(level: Level, pos: BlockPos): Boolean {
         val entry: HTMachineRegistry.Entry = level.getMachineEntity(pos)?.getEntryOrNull() ?: return false

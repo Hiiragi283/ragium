@@ -20,7 +20,9 @@ import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.helpers.IJeiHelpers
+import mezz.jei.api.ingredients.IIngredientType
 import mezz.jei.api.recipe.RecipeType
+import mezz.jei.api.registration.IModIngredientRegistration
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
@@ -49,6 +51,10 @@ class RagiumJEIPlugin : IModPlugin {
         val PLUGIN_ID: ResourceLocation = RagiumAPI.id("default")
 
         @JvmField
+        val MACHINE_TIER_TYPE: IIngredientType<HTMachineTier> =
+            IIngredientType<HTMachineTier> { HTMachineTier::class.java }
+
+        @JvmField
         val MATERIAL_INFO: RecipeType<HTMaterialRegistry.Entry> =
             RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTMaterialRegistry.Entry::class.java)
 
@@ -72,6 +78,16 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun getPluginUid(): ResourceLocation = PLUGIN_ID
+
+    override fun registerIngredients(registration: IModIngredientRegistration) {
+        registration.register(
+            MACHINE_TIER_TYPE,
+            HTMachineTier.entries.toList(),
+            HTMachineTierHelper,
+            HTMaterialTierRenderer,
+            HTMachineTier.CODEC,
+        )
+    }
 
     override fun registerCategories(registration: IRecipeCategoryRegistration) {
         val jeiHelper: IJeiHelpers = registration.jeiHelpers

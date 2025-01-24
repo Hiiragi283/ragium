@@ -265,6 +265,9 @@
   "tag_prefix.ragium.shard": "%s Shard",
   "tag_prefix.ragium.storage_block": "Block of %s",
   "tag_prefix.ragium.wire": "%s Wire",
+  "tooltip.ragium.condition.catalyst": "Required Catalyst Item",
+  "tooltip.ragium.condition.cooling": "Required Cooling Power: %s - %s",
+  "tooltip.ragium.condition.heating": "Required Heating Power: %s - %s",
   "tooltip.ragium.machine.cost": "- Process Cost: %s FE/times",
   "tooltip.ragium.machine.name": "- Machine Name: %s",
   "tooltip.ragium.machine.tier": "- Tier: %s"

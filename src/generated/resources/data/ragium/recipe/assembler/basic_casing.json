@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "ragium:basic_casing"
+    }
+  },
   "item_inputs": [
     {
       "count": 1,
@@ -18,14 +24,6 @@
     {
       "count": 2,
       "id": "ragium:basic_casing"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "ragium:basic_casing"
-      }
     }
   ],
   "machine_type": "assembler"

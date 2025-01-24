@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:dusts/sulfur"
+    }
+  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -14,14 +20,6 @@
     {
       "amount": 1000,
       "id": "minecraft:water"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "tag": "c:dusts/sulfur"
-      }
     }
   ],
   "machine_type": "chemical_reactor"

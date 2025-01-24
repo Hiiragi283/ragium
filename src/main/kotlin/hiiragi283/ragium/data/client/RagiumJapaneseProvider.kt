@@ -132,6 +132,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "機械の構造は有効です！")
+
+        add(RagiumTranslationKeys.COOLING_CONDITION, "次の範囲の冷却が必要です: %s - %s")
+        add(RagiumTranslationKeys.HEATING_CONDITION, "次の範囲の加熱が必要です: %s - %s")
+        add(RagiumTranslationKeys.CATALYST_CONDITION, "触媒アイテムが必要です")
         // Machine Type
         add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
         add(RagiumMachineKeys.BIOMASS_FERMENTER, "バイオマス発酵槽", "植物からバイオマスを生産する")

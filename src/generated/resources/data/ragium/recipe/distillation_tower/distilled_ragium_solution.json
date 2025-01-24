@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "ragium:elite_circuit"
+    }
+  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -14,14 +20,6 @@
     {
       "amount": 250,
       "id": "ragium:chemical_sludge"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "ragium:elite_circuit"
-      }
     }
   ],
   "machine_type": "distillation_tower",

@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "ragium:basic_circuit"
+    }
+  },
   "fluid_inputs": [
     {
       "amount": 2000,
@@ -14,14 +20,6 @@
     {
       "amount": 1000,
       "id": "ragium:alcohol"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "ragium:basic_circuit"
-      }
     }
   ],
   "machine_type": "distillation_tower"

@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:cooling",
+    "min_tier": "basic"
+  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -10,12 +14,6 @@
     {
       "count": 1,
       "id": "minecraft:snow_block"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:cooling",
-      "min_tier": "basic"
     }
   ],
   "machine_type": "compressor"

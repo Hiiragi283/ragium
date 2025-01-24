@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getBlockData
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -31,7 +33,10 @@ data class HTCoolingCondition(val minTier: HTMachineTier, val maxTier: HTMachine
     }
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
-    override val text: MutableComponent = Component.literal("Require cooling from $minTier to $maxTier tier")
+    override val text: MutableComponent =
+        Component
+            .translatable(RagiumTranslationKeys.COOLING_CONDITION, minTier.text, maxTier.text)
+            .withStyle(ChatFormatting.AQUA)
 
     override fun test(level: Level, pos: BlockPos): Boolean {
         val currentTier: HTMachineTier =

@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "minecraft:dragon_egg"
+    }
+  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -16,14 +22,6 @@
     {
       "count": 1,
       "id": "ragium:dragonium_ingot"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "minecraft:dragon_egg"
-      }
     }
   ],
   "machine_type": "blast_furnace",

@@ -9,7 +9,6 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import java.util.function.Function
 
 interface HTMachineRecipeCondition {
@@ -18,9 +17,6 @@ interface HTMachineRecipeCondition {
         val CODEC: Codec<HTMachineRecipeCondition> = RagiumAPI.Registries.RECIPE_CONDITION
             .byNameCodec()
             .dispatch(HTMachineRecipeCondition::codec, Function.identity())
-
-        @JvmField
-        val SET_CODEC: Codec<Set<HTMachineRecipeCondition>> = NeoForgeExtraCodecs.setOf(CODEC)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipeCondition> =

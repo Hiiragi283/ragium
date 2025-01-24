@@ -78,11 +78,10 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
             .setShadow(true)
             .setTextAlignment(HorizontalAlignment.RIGHT)
         // conditions
-        machineRecipe.conditions.forEachIndexed { index: Int, condition: HTMachineRecipeCondition ->
+        machineRecipe.condition.ifPresent { condition ->
             builder
                 .addText(condition.text, width - 4, 10)
-                .setPosition(getPosition(0), getPosition(2.75 + index))
-                .setColor(0xFFFFFF)
+                .setPosition(getPosition(0), getPosition(2.75))
                 .setShadow(true)
                 .setTextAlignment(HorizontalAlignment.LEFT)
         }
@@ -103,15 +102,15 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
     }
 
     private fun addCatalyst(builder: IRecipeLayoutBuilder, recipe: HTMachineRecipe, y: Int) {
-        val ingredient: Ingredient = recipe.conditions
-            .filterIsInstance<HTProcessorCatalystCondition>()
-            .firstOrNull()
-            ?.ingredient
-            ?: Ingredient.EMPTY
-        builder
-            .addInputSlot(5 + 9 + 3 * 18, getPosition(y))
-            .setStandardSlotBackground()
-            .addItemStacks(ingredient.items.toList())
+        recipe.condition.ifPresent { condition: HTMachineRecipeCondition ->
+            val ingredient: Ingredient = (condition as? HTProcessorCatalystCondition)
+                ?.ingredient
+                ?: Ingredient.EMPTY
+            builder
+                .addInputSlot(5 + 9 + 3 * 18, getPosition(y))
+                .setStandardSlotBackground()
+                .addItemStacks(ingredient.items.toList())
+        }
     }
 
     private fun addFluidInput(

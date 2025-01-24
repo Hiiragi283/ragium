@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "ragium:plate_press_mold"
+    }
+  },
   "item_inputs": [
     {
       "count": 1,
@@ -14,14 +20,6 @@
     {
       "count": 2,
       "id": "ragium:circuit_board"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "ragium:plate_press_mold"
-      }
     }
   ],
   "machine_type": "compressor",

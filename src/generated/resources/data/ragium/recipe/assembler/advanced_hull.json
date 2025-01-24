@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "ragium:advanced_hull"
+    }
+  },
   "item_inputs": [
     {
       "count": 3,
@@ -18,14 +24,6 @@
     {
       "count": 2,
       "id": "ragium:advanced_hull"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "ragium:advanced_hull"
-      }
     }
   ],
   "machine_type": "assembler",

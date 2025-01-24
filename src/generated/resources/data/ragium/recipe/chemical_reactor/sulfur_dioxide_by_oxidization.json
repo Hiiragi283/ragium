@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "ragium:oxidization_catalyst"
+    }
+  },
   "fluid_outputs": [
     {
       "amount": 1000,
@@ -10,14 +16,6 @@
     {
       "count": 1,
       "tag": "c:dusts/sulfur"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "ragium:oxidization_catalyst"
-      }
     }
   ],
   "machine_type": "chemical_reactor"

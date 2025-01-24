@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "ragium:basic_circuit"
+    }
+  },
   "fluid_inputs": [
     {
       "amount": 4000,
@@ -16,14 +22,6 @@
     {
       "count": 1,
       "id": "ragium:crimson_crystal"
-    }
-  ],
-  "machine_conditions": [
-    {
-      "type": "ragium:processor_catalyst",
-      "ingredient": {
-        "item": "ragium:basic_circuit"
-      }
     }
   ],
   "machine_type": "distillation_tower",

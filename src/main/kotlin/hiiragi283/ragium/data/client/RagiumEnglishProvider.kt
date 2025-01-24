@@ -130,6 +130,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
+
+        add(RagiumTranslationKeys.COOLING_CONDITION, "Required Cooling Power: %s - %s")
+        add(RagiumTranslationKeys.HEATING_CONDITION, "Required Heating Power: %s - %s")
+        add(RagiumTranslationKeys.CATALYST_CONDITION, "Required Catalyst Item")
         // Machine Type
         add(
             RagiumMachineKeys.BEDROCK_MINER,

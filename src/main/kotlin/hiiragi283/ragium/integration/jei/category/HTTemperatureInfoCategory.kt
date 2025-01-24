@@ -2,10 +2,9 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.integration.jei.HTTemperatureInfo
+import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.createEmptyBlockStack
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.gui.placement.HorizontalAlignment
-import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
@@ -32,6 +31,7 @@ class HTTemperatureInfoCategory(
     ),
     HTRecipeCategory<HTTemperatureInfo> {
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTTemperatureInfo, focuses: IFocusGroup) {
+        // Block
         var item = ItemStack(recipe.block.value())
         if (item.isEmpty) {
             item = createEmptyBlockStack(recipe.block)
@@ -40,15 +40,11 @@ class HTTemperatureInfoCategory(
             .addSlot(RecipeIngredientRole.INPUT, getPosition(0), getPosition(0))
             .setStandardSlotBackground()
             .addItemStack(item)
-    }
-
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTTemperatureInfo, focuses: IFocusGroup) {
         // Tier
         builder
-            .addText(recipe.machineTier.text, width - 4, 10)
-            .setPosition(getPosition(1), getPosition(0))
-            .setShadow(true)
-            .setTextAlignment(HorizontalAlignment.LEFT)
+            .addSlot(RecipeIngredientRole.OUTPUT, getPosition(1), getPosition(0))
+            .setStandardSlotBackground()
+            .addIngredient(RagiumJEIPlugin.MACHINE_TIER_TYPE, recipe.machineTier)
     }
 
     override fun getRegistryName(recipe: HTTemperatureInfo): ResourceLocation = recipe.block
