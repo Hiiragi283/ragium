@@ -1,14 +1,6 @@
 package hiiragi283.ragium.common.init
 
 object RagiumTranslationKeys {
-    const val FOR_INTEGRATION = "tooltip.ragium.for_integration"
-    const val PRESS_CTRL = "tooltip.ragium.press_ctrl"
-
-    //    Advancement    //
-
-    const val ADVANCEMENT_STELLA_SUIT = "advancement.ragium.stella_suit.title"
-    const val ADVANCEMENT_THIS_CAKE_IS_DIE = "advancement.ragium.this_cake_is_die.title"
-
     //    Block    //
 
     const val AUTO_ILLUMINATOR = "tooltip.ragium.block.auto_illuminator"

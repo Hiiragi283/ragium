@@ -201,11 +201,12 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER, HTMachineTier.ADVANCED)
-            .itemInput(Tags.Items.STRINGS)
-            .itemInput(Items.PAPER)
+            .itemInput(Tags.Items.STRINGS, 4)
+            .itemInput(Items.PAPER, 4)
             .fluidInput(RagiumFluids.GLYCEROL)
             .fluidInput(RagiumFluids.MIXTURE_ACID)
-        // .itemOutput()
+            .itemOutput(RagiumItems.DYNAMITE, 8)
+            .save(output)
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER, HTMachineTier.ADVANCED)

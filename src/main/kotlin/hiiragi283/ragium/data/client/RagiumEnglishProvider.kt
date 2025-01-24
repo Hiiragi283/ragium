@@ -98,6 +98,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.AMBROSIA, "Ambrosia")
 
         add(RagiumItems.FORGE_HAMMER, "Forge Hammer")
+        add(RagiumItems.DYNAMITE, "Dynamite")
         add(RagiumItems.SLOT_LOCK, "Slot Lock")
 
         add(RagiumItems.GEAR_PRESS_MOLD, "Press Mold (Gear)")

@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTCraftingToolItem
+import hiiragi283.ragium.common.item.HTDynamiteItem
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
@@ -367,6 +368,10 @@ object RagiumItems {
     @JvmField
     val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> =
         REGISTER.registerItem("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(63))
+
+    @JvmField
+    val DYNAMITE: DeferredItem<HTDynamiteItem> =
+        REGISTER.registerItem("dynamite", ::HTDynamiteItem)
 
     @JvmField
     val SLOT_LOCK: DeferredItem<Item> =

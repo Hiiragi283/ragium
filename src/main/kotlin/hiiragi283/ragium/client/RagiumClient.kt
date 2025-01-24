@@ -9,14 +9,12 @@ import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRendererRegist
 import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.client.screen.HTMachineContainerScreen
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumMenuTypes
-import hiiragi283.ragium.common.init.RagiumMultiblockComponentTypes
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
 import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTagMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
+import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -71,6 +69,8 @@ object RagiumClient {
         register(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         register(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         register(RagiumBlockEntityTypes.MULTI_SMELTER)
+
+        event.registerEntityRenderer(RagiumEntityTypes.DYNAMITE.get(), ::ThrownItemRenderer)
 
         LOGGER.info("Registered BlockEntityRenderers!")
     }

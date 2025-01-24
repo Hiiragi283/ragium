@@ -46,6 +46,7 @@ object RagiumCreativeTabs {
                     RagiumItems.FOODS.forEach(output::accept)
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
+                    output.accept(RagiumItems.DYNAMITE)
                     output.accept(RagiumItems.SLOT_LOCK)
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
                     RagiumItems.CATALYSTS.forEach(output::accept)

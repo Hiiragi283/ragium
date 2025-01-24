@@ -99,6 +99,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.AMBROSIA, "アンブロシア")
 
         add(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
+        add(RagiumItems.DYNAMITE, "ダイナマイト")
         add(RagiumItems.SLOT_LOCK, "スロットロック")
 
         add(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
