@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:gear_press_mold"
-  },
   "item_inputs": [
     {
       "count": 4,
@@ -13,6 +10,14 @@
     {
       "count": 1,
       "id": "ragium:copper_gear"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "item": "ragium:gear_press_mold"
+      }
     }
   ],
   "machine_type": "compressor"

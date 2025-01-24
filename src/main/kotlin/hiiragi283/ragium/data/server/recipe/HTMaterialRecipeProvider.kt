@@ -79,7 +79,7 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
             }
         }
         MATERIAL_ITEM_TABLE.put(prefix, material, SizedHolder(holder, count))
-        LOGGER.debug("Added prefix: $prefix, material: $material, item: ${holder.id}, count: $count")
+        LOGGER.debug("Added prefix: {}, material: {}, item: {}, count: {}", prefix, material, holder.id, count)
     }
 
     @JvmStatic

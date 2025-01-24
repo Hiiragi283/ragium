@@ -4,6 +4,7 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
+import hiiragi283.ragium.api.extension.toSet
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumItems
@@ -11,7 +12,6 @@ import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
@@ -22,15 +22,14 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import java.util.*
 
 class HTMachineRecipe(
     val definition: HTMachineDefinition,
     val itemInputs: List<SizedIngredient>,
     val fluidInputs: List<SizedFluidIngredient>,
-    val catalyst: Optional<Ingredient>,
     private val itemOutputs: List<ItemStack>,
     private val fluidOutputs: List<FluidStack>,
+    val conditions: Set<HTMachineRecipeCondition>,
 ) : Recipe<HTMachineInput> {
     companion object {
         @JvmField
@@ -47,7 +46,6 @@ class HTMachineRecipe(
                             .listOf()
                             .optionalFieldOf("fluid_inputs", listOf())
                             .forGetter(HTMachineRecipe::fluidInputs),
-                        Ingredient.CODEC.optionalFieldOf("catalyst").forGetter(HTMachineRecipe::catalyst),
                         ItemStack.CODEC
                             .listOf()
                             .optionalFieldOf("item_outputs", listOf())
@@ -56,6 +54,9 @@ class HTMachineRecipe(
                             .listOf()
                             .optionalFieldOf("fluid_outputs", listOf())
                             .forGetter(HTMachineRecipe::fluidOutputs),
+                        HTMachineRecipeCondition.SET_CODEC
+                            .optionalFieldOf("machine_conditions", setOf())
+                            .forGetter(HTMachineRecipe::conditions),
                     ).apply(instance, ::HTMachineRecipe)
             }.validate(::validate)
 
@@ -73,12 +74,12 @@ class HTMachineRecipe(
             HTMachineRecipe::itemInputs,
             SizedFluidIngredient.STREAM_CODEC.toList(),
             HTMachineRecipe::fluidInputs,
-            ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
-            HTMachineRecipe::catalyst,
             ItemStack.STREAM_CODEC.toList(),
             HTMachineRecipe::itemOutputs,
             FluidStack.STREAM_CODEC.toList(),
             HTMachineRecipe::fluidOutputs,
+            HTMachineRecipeCondition.STREAM_CODEC.toSet(),
+            HTMachineRecipe::conditions,
             ::HTMachineRecipe,
         )
     }
@@ -111,8 +112,11 @@ class HTMachineRecipe(
                 return false
             }
         }
-        // Catalyst
-        return catalyst.map { it.test(input.catalyst) }.orElse(input.catalyst.isEmpty)
+        // Condition
+        for (condition: HTMachineRecipeCondition in conditions) {
+            if (!condition.test(level, input.pos)) return false
+        }
+        return return true
     }
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = true

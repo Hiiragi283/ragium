@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:heating_catalyst"
-  },
   "fluid_outputs": [
     {
       "amount": 1000,
@@ -23,6 +20,12 @@
     {
       "count": 1,
       "id": "ragium:calcium_carbide"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:heating",
+      "min_tier": "advanced"
     }
   ],
   "machine_type": "chemical_reactor",

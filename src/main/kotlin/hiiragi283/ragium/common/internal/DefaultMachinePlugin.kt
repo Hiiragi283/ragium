@@ -121,15 +121,19 @@ object DefaultMachinePlugin : RagiumPlugin {
             .map(helper::apply)
             .forEach { builder: HTPropertyHolderBuilder ->
                 builder.putFactory(::HTDefaultProcessorBlockEntity)
+                builder.put(HTMachinePropertyKeys.CATALYST_SLOT, 2)
             }
 
         helper
             .apply(RagiumMachineKeys.BLAST_FURNACE)
             .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
 
         helper
             .apply(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
 
         helper
             .apply(RagiumMachineKeys.CUTTING_MACHINE)
@@ -138,12 +142,13 @@ object DefaultMachinePlugin : RagiumPlugin {
         helper
             .apply(RagiumMachineKeys.DISTILLATION_TOWER)
             .putFactory(::HTDistillationTowerBlockEntity)
+            .put(HTMachinePropertyKeys.CATALYST_SLOT, 1)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
             .putValidator { recipe: HTMachineRecipe ->
                 when {
                     recipe.itemInputs.isNotEmpty() -> DataResult.error { "Distillation tower recipe not accepts item inputs!" }
                     recipe.fluidInputs.size != 1 -> DataResult.error { "Distillation tower recipe should have only one fluid input!" }
-                    recipe.catalyst.isEmpty -> DataResult.error { "Distillation tower recipe requires catalyst!" }
+                    // recipe.catalyst.isEmpty -> DataResult.error { "Distillation tower recipe requires catalyst!" }
                     recipe.getItemOutput(1) != null -> DataResult.error { "Distillation tower recipe should have one item output!" }
                     else -> DataResult.success(recipe)
                 }
@@ -158,8 +163,14 @@ object DefaultMachinePlugin : RagiumPlugin {
             .put(HTMachinePropertyKeys.VALID_TIERS, ELITE_TIERS)
 
         helper
+            .apply(RagiumMachineKeys.MIXER)
+            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
+
+        helper
             .apply(RagiumMachineKeys.MULTI_SMELTER)
             .putFactory(::HTMultiSmelterBlockEntity)
+            .remove(HTMachinePropertyKeys.CATALYST_SLOT)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
             .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
     }

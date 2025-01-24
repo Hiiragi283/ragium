@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.common.recipe.condition.HTCoolingCondition
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -340,8 +341,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .savePrefixed(output)
         }
 
-        register(RagiumItems.HEATING_CATALYST, RagiumMaterialKeys.COPPER, Items.MAGMA_BLOCK)
-        register(RagiumItems.COOLING_CATALYST, RagiumMaterialKeys.ALUMINUM, Items.PACKED_ICE)
+        // register(RagiumItems.HEATING_CATALYST, RagiumMaterialKeys.COPPER, Items.MAGMA_BLOCK)
+        // register(RagiumItems.COOLING_CATALYST, RagiumMaterialKeys.ALUMINUM, Items.PACKED_ICE)
         register(RagiumItems.OXIDIZATION_CATALYST, RagiumMaterialKeys.IRON, Items.COAL_BLOCK)
         register(RagiumItems.REDUCTION_CATALYST, RagiumMaterialKeys.GOLD, Items.WATER_BUCKET)
         register(RagiumItems.DEHYDRATION_CATALYST, RagiumMaterialKeys.STEEL, Items.SOUL_SAND)
@@ -466,7 +467,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
             .waterInput()
-            .catalyst(RagiumItems.COOLING_CATALYST)
+            .machineConditions(HTCoolingCondition(HTMachineTier.BASIC))
             .itemOutput(Items.SNOW_BLOCK)
             .save(output)
 
@@ -487,7 +488,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER)
             .waterInput()
-            .catalyst(RagiumItems.COOLING_CATALYST)
+            .machineConditions(HTCoolingCondition(HTMachineTier.ADVANCED))
             .fluidOutput(RagiumFluids.SNOW)
             .saveSuffixed(output, "_from_water")
 

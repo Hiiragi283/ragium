@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "tag": "minecraft:crimson_stems"
-  },
   "fluid_outputs": [
     {
       "amount": 1000,
@@ -19,6 +16,14 @@
     {
       "count": 4,
       "id": "ragium:wood_dust"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "tag": "minecraft:crimson_stems"
+      }
     }
   ],
   "machine_type": "extractor",

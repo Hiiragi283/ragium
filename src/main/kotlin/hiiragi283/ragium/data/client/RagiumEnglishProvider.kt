@@ -81,8 +81,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
         add(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
 
-        add(RagiumItems.HEATING_CATALYST, "Heating Catalyst")
-        add(RagiumItems.COOLING_CATALYST, "Cooling Catalyst")
+        // add(RagiumItems.HEATING_CATALYST, "Heating Catalyst")
+        // add(RagiumItems.COOLING_CATALYST, "Cooling Catalyst")
         add(RagiumItems.OXIDIZATION_CATALYST, "Oxidization Catalyst")
         add(RagiumItems.REDUCTION_CATALYST, "Reduction Catalyst")
         add(RagiumItems.DEHYDRATION_CATALYST, "Dehydration Catalyst")

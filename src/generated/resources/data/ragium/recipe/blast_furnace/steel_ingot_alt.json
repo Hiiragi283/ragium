@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:reduction_catalyst"
-  },
   "item_inputs": [
     {
       "count": 1,
@@ -17,6 +14,14 @@
     {
       "count": 1,
       "id": "ragium:steel_ingot"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "item": "ragium:reduction_catalyst"
+      }
     }
   ],
   "machine_type": "blast_furnace",

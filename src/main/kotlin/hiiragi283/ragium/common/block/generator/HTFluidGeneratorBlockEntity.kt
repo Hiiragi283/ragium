@@ -26,7 +26,7 @@ class HTFluidGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val
     val fuelData: Set<HTGeneratorFuel>?
         get() = getEntryOrNull()?.get(HTMachinePropertyKeys.GENERATOR_FUEL)
 
-    private val tank: HTTieredFluidTank = object : HTTieredFluidTank(machineTier) {
+    private val tank: HTTieredFluidTank = object : HTTieredFluidTank(this@HTFluidGeneratorBlockEntity) {
         override fun isFluidValid(stack: FluidStack): Boolean {
             val fuelData: Set<HTGeneratorFuel> = fuelData ?: return super.isFluidValid(stack)
             return fuelData.any { it.isAcceptableWithoutAmount(stack) }

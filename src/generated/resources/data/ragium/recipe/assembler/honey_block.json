@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "tag": "c:glass_blocks"
-  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -13,6 +10,14 @@
     {
       "count": 1,
       "id": "minecraft:honey_block"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "tag": "c:glass_blocks"
+      }
     }
   ],
   "machine_type": "assembler"

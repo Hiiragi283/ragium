@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialProvider
@@ -20,9 +21,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.BlockCapability
@@ -45,6 +48,7 @@ internal object RagiumEvents {
     @SubscribeEvent
     fun createRegistry(event: NewRegistryEvent) {
         event.register(RagiumAPI.Registries.MULTIBLOCK_COMPONENT_TYPE)
+        event.register(RagiumAPI.Registries.RECIPE_CONDITION)
 
         LOGGER.info("Registered new registries!")
     }
@@ -66,8 +70,8 @@ internal object RagiumEvents {
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.THERMAL_GENERATOR)
 
         bindMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR, RagiumAPI.machineRegistry.keys)
+        bindMachines(RagiumBlockEntityTypes.LARGE_PROCESSOR, RagiumAPI.machineRegistry.keys)
         bindMachine(RagiumBlockEntityTypes.DISTILLATION_TOWER, RagiumMachineKeys.DISTILLATION_TOWER)
-        bindMachine(RagiumBlockEntityTypes.LARGE_PROCESSOR, RagiumMachineKeys.BLAST_FURNACE)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 
         LOGGER.info("Added external blocks to BlockEntityType!")
@@ -75,6 +79,9 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
+        fun <T : Any, C> staticProvider(value: T?): IBlockCapabilityProvider<T, C> =
+            IBlockCapabilityProvider { _: Level, _: BlockPos, _: BlockState, _: BlockEntity?, _: C? -> value }
+
         // All Blocks
         fun <T : Any, C> registerForBlocks(capability: BlockCapability<T, C>, provider: IBlockCapabilityProvider<T, C>) {
             for (block: Block in BuiltInRegistries.BLOCK) {
@@ -127,6 +134,37 @@ internal object RagiumEvents {
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         registerHandlers(RagiumBlockEntityTypes.DRUM)
+
+        // Heating Tier
+        event.registerBlock(
+            RagiumAPI.BlockCapabilities.HEATING_TIER,
+            staticProvider(HTMachineTier.BASIC),
+            Blocks.MAGMA_BLOCK,
+        )
+
+        event.registerBlock(
+            RagiumAPI.BlockCapabilities.HEATING_TIER,
+            { _: Level, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction ->
+                if (direction == Direction.UP && state.getValue(BlockStateProperties.LIT)) HTMachineTier.BASIC else null
+            },
+            Blocks.CAMPFIRE,
+        )
+
+        event.registerBlock(
+            RagiumAPI.BlockCapabilities.HEATING_TIER,
+            staticProvider(HTMachineTier.ADVANCED),
+            Blocks.LAVA,
+            Blocks.FIRE,
+        )
+
+        // Cooling Tier
+        mapOf(
+            HTMachineTier.BASIC to arrayOf(Blocks.SNOW, Blocks.ICE, Blocks.POWDER_SNOW),
+            HTMachineTier.ADVANCED to arrayOf(Blocks.PACKED_ICE),
+            HTMachineTier.ELITE to arrayOf(Blocks.BLUE_ICE),
+        ).forEach { (tier: HTMachineTier, blocks: Array<Block>) ->
+            event.registerBlock(RagiumAPI.BlockCapabilities.HEATING_TIER, staticProvider(tier), *blocks)
+        }
 
         // Other
         event.registerBlock(

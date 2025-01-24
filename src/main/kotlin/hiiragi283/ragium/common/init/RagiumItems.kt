@@ -396,11 +396,9 @@ object RagiumItems {
 
     //    Catalysts    //
 
-    @JvmField
-    val HEATING_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("heating_catalyst")
+    // val HEATING_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("heating_catalyst")
 
-    @JvmField
-    val COOLING_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("cooling_catalyst")
+    // val COOLING_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("cooling_catalyst")
 
     @JvmField
     val OXIDIZATION_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("oxidization_catalyst")
@@ -413,8 +411,6 @@ object RagiumItems {
 
     @JvmField
     val CATALYSTS: List<DeferredItem<Item>> = listOf(
-        HEATING_CATALYST,
-        COOLING_CATALYST,
         OXIDIZATION_CATALYST,
         REDUCTION_CATALYST,
         DEHYDRATION_CATALYST,

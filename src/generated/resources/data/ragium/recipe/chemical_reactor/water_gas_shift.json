@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:heating_catalyst"
-  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -21,6 +18,12 @@
     {
       "amount": 1000,
       "id": "ragium:carbon_dioxide"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:heating",
+      "min_tier": "elite"
     }
   ],
   "machine_type": "chemical_reactor"

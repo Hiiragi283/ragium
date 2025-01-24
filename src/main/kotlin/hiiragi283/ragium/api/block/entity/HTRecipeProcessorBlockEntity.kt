@@ -11,10 +11,13 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 import java.util.function.Supplier
 
@@ -33,6 +36,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
         fluidInputs: IntArray,
         fluidOutputs: IntArray,
     ): HTMachineRecipeProcessor = HTMachineRecipeProcessor(
+        blockPos,
         machineKey,
         itemHandler,
         itemInputs,
@@ -46,11 +50,13 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
         tag.put(ITEM_KEY, itemHandler.serializeNBT(registries))
+        HTTieredFluidTank.writeToNBT(tanks, tag, registries)
     }
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
         itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_KEY))
+        HTTieredFluidTank.readFromNBT(tanks, tag, registries)
     }
 
     override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {
@@ -65,8 +71,16 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
     }
 
     final override fun interactWithFluidStorage(player: Player): Boolean {
+        val heldItem: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
+        if (heldItem.isEmpty) return false
+        val playerInv: IItemHandler = player.getCapability(Capabilities.ItemHandler.ENTITY) ?: return false
+        // try to extract
+        for (tank: HTTieredFluidTank in tanks) {
+            if (FluidUtil.tryEmptyContainerAndStow(heldItem, tank, playerInv, Int.MAX_VALUE, player, true).isSuccess) return true
+        }
+        // try to insert
         for (tank: HTTieredFluidTank in tanks.reversed()) {
-            if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, tank)) return true
+            if (FluidUtil.tryFillContainerAndStow(heldItem, tank, playerInv, Int.MAX_VALUE, player, true).isSuccess) return true
         }
         return false
     }

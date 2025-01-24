@@ -24,7 +24,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     override val machineKey: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
     override val itemHandler: ItemStackHandler = ItemStackHandler(2)
-    override val tanks: Array<out HTTieredFluidTank> = Array(4) { HTTieredFluidTank(machineTier) }
+    override val tanks: Array<out HTTieredFluidTank> = Array(4) { HTTieredFluidTank(this) }
     override val processor: HTRecipeProcessor = createMachineProcessor(
         intArrayOf(),
         intArrayOf(1),

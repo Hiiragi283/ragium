@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
 
 object RagiumMultiblockComponentTypes {
     @JvmField
-    val REGISTRY: DeferredRegister<HTMultiblockComponent.Type<*>> =
+    val REGISTER: DeferredRegister<HTMultiblockComponent.Type<*>> =
         DeferredRegister.create(RagiumAPI.RegistryKeys.MULTIBLOCK_COMPONENT_TYPE, RagiumAPI.MOD_ID)
 
     val AXIS: DeferredHolder<HTMultiblockComponent.Type<*>, out HTMultiblockComponent.Type<HTAxisMultiblockComponent>> =
@@ -31,7 +31,7 @@ object RagiumMultiblockComponentTypes {
     @JvmStatic
     private fun <T : HTMultiblockComponent> register(
         name: String,
-    ): DeferredHolder<HTMultiblockComponent.Type<*>, out HTMultiblockComponent.Type<T>> = REGISTRY.register(name) { id: ResourceLocation ->
+    ): DeferredHolder<HTMultiblockComponent.Type<*>, out HTMultiblockComponent.Type<T>> = REGISTER.register(name) { id: ResourceLocation ->
         object : HTMultiblockComponent.Type<T> {
             override fun toString(): String = id.toString()
         }

@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:oxidization_catalyst"
-  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -13,6 +10,14 @@
     {
       "count": 2,
       "id": "ragium:basic_plastic"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "item": "ragium:oxidization_catalyst"
+      }
     }
   ],
   "machine_type": "chemical_reactor"

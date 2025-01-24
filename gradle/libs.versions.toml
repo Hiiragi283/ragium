@@ -59,7 +59,7 @@ mods-impl = [
 ]
 
 mods-transitive = [
-    
+    "ars"
 ]
 
 mods-compile = [

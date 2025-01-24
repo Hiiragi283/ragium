@@ -9,6 +9,7 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
+import org.slf4j.Logger
 import java.util.*
 import java.util.function.Function
 import kotlin.jvm.optionals.getOrNull
@@ -143,6 +144,8 @@ fun <T : Any> DataResult<T>.getOrNull(): T? = result().getOrNull()
  * @return 結果がない場合は[other]
  */
 fun <T : Any> DataResult<T>.orElse(other: T): T = result().orElse(other)
+
+fun <T : Any> DataResult<T>.logError(logger: Logger): DataResult<T> = ifError { logger.error(it.message()) }
 
 //    Pair    //
 

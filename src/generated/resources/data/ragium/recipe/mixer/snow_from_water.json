@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:cooling_catalyst"
-  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -13,6 +10,12 @@
     {
       "amount": 1000,
       "id": "ragium:snow"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:cooling",
+      "min_tier": "advanced"
     }
   ],
   "machine_type": "mixer"

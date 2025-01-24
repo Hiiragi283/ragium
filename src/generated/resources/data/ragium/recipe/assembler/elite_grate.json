@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:elite_grate"
-  },
   "item_inputs": [
     {
       "count": 4,
@@ -13,6 +10,14 @@
     {
       "count": 4,
       "id": "ragium:elite_grate"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "item": "ragium:elite_grate"
+      }
     }
   ],
   "machine_type": "assembler",

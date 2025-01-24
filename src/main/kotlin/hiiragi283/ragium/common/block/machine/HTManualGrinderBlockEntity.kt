@@ -74,7 +74,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
         recipeCache
             .getFirstMatch(
-                HTMachineInput.createSimple(RagiumMachineKeys.GRINDER, stackIn),
+                HTMachineInput.createSimple(pos, RagiumMachineKeys.GRINDER, stackIn),
                 level,
             ).onSuccess { recipe: HTMachineRecipe ->
                 // Drop output

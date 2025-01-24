@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.common.recipe.condition.HTHeatingCondition
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeBuilder
@@ -107,7 +108,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.METHANE)
             .waterInput()
-            .catalyst(RagiumItems.HEATING_CATALYST)
+            .machineConditions(HTHeatingCondition(HTMachineTier.ELITE))
             .fluidOutput(RagiumFluids.HYDROGEN)
             .fluidOutput(RagiumFluids.CARBON_MONOXIDE)
             .save(output, RagiumAPI.id("steam_reforming"))
@@ -116,7 +117,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.CARBON_MONOXIDE)
             .waterInput()
-            .catalyst(RagiumItems.HEATING_CATALYST)
+            .machineConditions(HTHeatingCondition(HTMachineTier.ELITE))
             .fluidOutput(RagiumFluids.HYDROGEN)
             .fluidOutput(RagiumFluids.CARBON_DIOXIDE)
             .save(output, RagiumAPI.id("water_gas_shift"))
@@ -142,7 +143,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .itemInput(RagiumItems.Dusts.ALKALI)
             .itemInput(RagiumItems.Dusts.CARBON, 3)
-            .catalyst(RagiumItems.HEATING_CATALYST)
+            .machineConditions(HTHeatingCondition(HTMachineTier.ADVANCED))
             .itemOutput(RagiumItems.CALCIUM_CARBIDE)
             .fluidOutput(RagiumFluids.CARBON_MONOXIDE)
             .save(output)
@@ -273,7 +274,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .itemInput(RagiumItems.Dusts.QUARTZ)
             .fluidInput(RagiumFluids.ALKALI_SOLUTION, FluidType.BUCKET_VOLUME * 2)
-            .catalyst(RagiumItems.HEATING_CATALYST)
+            .machineConditions(HTHeatingCondition(HTMachineTier.BASIC))
             .fluidOutput(RagiumFluids.SODIUM_SILICATE)
             .save(output)
         // Sodium Silicate -> Sponge

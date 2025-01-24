@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:elite_circuit"
-  },
   "fluid_inputs": [
     {
       "amount": 8000,
@@ -17,6 +14,14 @@
     {
       "amount": 5000,
       "id": "ragium:aromatic_compounds"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "item": "ragium:elite_circuit"
+      }
     }
   ],
   "machine_type": "distillation_tower"

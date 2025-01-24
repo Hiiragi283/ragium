@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
+import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -20,6 +21,7 @@ import net.neoforged.neoforge.items.IItemHandler
 import java.util.function.Function
 
 class HTMachineRecipeProcessor(
+    val pos: BlockPos,
     val machine: HTMachineKey,
     val itemHandler: IItemHandler,
     val itemInputs: IntArray,
@@ -32,12 +34,11 @@ class HTMachineRecipeProcessor(
     val cache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipes.MACHINE_TYPE)
 
     override fun process(level: ServerLevel, tier: HTMachineTier): Result<Unit> = runCatching {
-        val input: HTMachineInput = HTMachineInput.create(machine, tier) {
+        val input: HTMachineInput = HTMachineInput.create(pos, machine, tier) {
             itemInputs.map(itemHandler::getStackInSlot).forEach(this::add)
             fluidInputs
                 .map(fluidTanks::apply)
-                .filterNotNull()
-                .map(IFluidTank::getFluid)
+                .map { tank: IFluidTank? -> tank?.fluid ?: FluidStack.EMPTY }
                 .forEach(this::add)
             catalyst = itemHandler.getStackInSlot(catalystIndex)
         }
@@ -57,7 +58,7 @@ class HTMachineRecipeProcessor(
         // fluid
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
             val fluidOutput: FluidStack = recipe.getFluidOutput(index) ?: return@forEachIndexed
-            val tank: IFluidTank = fluidTanks.apply(slot) ?: return@forEachIndexed
+            val tank: IFluidTank = fluidTanks.apply(slot) ?: return false
             if (tank.fill(fluidOutput, IFluidHandler.FluidAction.SIMULATE) < fluidOutput.amount) return false
         }
         return true

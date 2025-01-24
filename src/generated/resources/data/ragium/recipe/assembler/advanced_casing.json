@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:advanced_casing"
-  },
   "item_inputs": [
     {
       "count": 1,
@@ -21,6 +18,14 @@
     {
       "count": 2,
       "id": "ragium:advanced_casing"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "item": "ragium:advanced_casing"
+      }
     }
   ],
   "machine_type": "assembler",

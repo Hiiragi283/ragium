@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.stacks
 import mezz.jei.api.constants.VanillaTypes
@@ -27,7 +28,6 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import kotlin.jvm.optionals.getOrNull
 
 class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelper) : HTRecipeCategory<RecipeHolder<HTMachineRecipe>> {
     companion object {
@@ -92,7 +92,11 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
     }
 
     private fun addCatalyst(builder: IRecipeLayoutBuilder, recipe: HTMachineRecipe, y: Int) {
-        val ingredient: Ingredient = recipe.catalyst.getOrNull() ?: Ingredient.EMPTY
+        val ingredient: Ingredient = recipe.conditions
+            .filterIsInstance<HTProcessorCatalystCondition>()
+            .firstOrNull()
+            ?.ingredient
+            ?: Ingredient.EMPTY
         builder
             .addInputSlot(5 + 9 + 3 * 18, getPosition(y))
             .setStandardSlotBackground()

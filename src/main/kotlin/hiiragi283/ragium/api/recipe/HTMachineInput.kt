@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.material.Fluid
@@ -9,6 +10,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 /**
  * [HTMachineRecipe]の判定に用いられるクラス
+ * @param pos 機械の座標
  * @param key 機械のキー
  * @param tier 機械のティア
  * @param itemInputs アイテムのインプットの一覧
@@ -16,6 +18,7 @@ import net.neoforged.neoforge.fluids.FluidStack
  * @param catalyst 触媒スロットの[ItemStack]
  */
 class HTMachineInput private constructor(
+    val pos: BlockPos,
     val key: HTMachineKey,
     val tier: HTMachineTier,
     val itemInputs: List<ItemStack>,
@@ -24,7 +27,13 @@ class HTMachineInput private constructor(
 ) : RecipeInput {
     companion object {
         @JvmStatic
-        fun createSimple(key: HTMachineKey, input: ItemStack, tier: HTMachineTier = HTMachineTier.BASIC): HTMachineInput = HTMachineInput(
+        fun createSimple(
+            pos: BlockPos,
+            key: HTMachineKey,
+            input: ItemStack,
+            tier: HTMachineTier = HTMachineTier.BASIC,
+        ): HTMachineInput = HTMachineInput(
+            pos,
             key,
             tier,
             listOf(input),
@@ -36,11 +45,17 @@ class HTMachineInput private constructor(
          * [HTMachineInput]を返します。
          */
         @JvmStatic
-        fun create(key: HTMachineKey, tier: HTMachineTier, builderAction: Builder.() -> Unit): HTMachineInput {
+        fun create(
+            pos: BlockPos,
+            key: HTMachineKey,
+            tier: HTMachineTier,
+            builderAction: Builder.() -> Unit,
+        ): HTMachineInput {
             val itemInputs: MutableList<ItemStack> = mutableListOf()
             val fluidInputs: MutableList<FluidStack> = mutableListOf()
             val catalyst: ItemStack = Builder(itemInputs, fluidInputs).apply(builderAction).catalyst
             return HTMachineInput(
+                pos,
                 key,
                 tier,
                 itemInputs,

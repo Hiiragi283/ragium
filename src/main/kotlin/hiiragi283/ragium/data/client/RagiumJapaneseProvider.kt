@@ -82,8 +82,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板）")
         add(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒）")
 
-        add(RagiumItems.HEATING_CATALYST, "加熱触媒")
-        add(RagiumItems.COOLING_CATALYST, "冷却触媒")
+        // add(RagiumItems.HEATING_CATALYST, "加熱触媒")
+        // add(RagiumItems.COOLING_CATALYST, "冷却触媒")
         add(RagiumItems.OXIDIZATION_CATALYST, "酸化触媒")
         add(RagiumItems.REDUCTION_CATALYST, "還元触媒")
         add(RagiumItems.DEHYDRATION_CATALYST, "脱水触媒")

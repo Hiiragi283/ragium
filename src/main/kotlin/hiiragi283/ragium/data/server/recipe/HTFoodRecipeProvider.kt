@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.recipe.condition.HTHeatingCondition
 import hiiragi283.ragium.data.requiresFor
 import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -111,7 +112,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.SUGAR, 2)
             .itemInput(RagiumItems.BUTTER)
             .milkInput()
-            .catalyst(RagiumItems.HEATING_CATALYST)
+            .machineConditions(HTHeatingCondition(HTMachineTier.BASIC, HTMachineTier.BASIC))
             .itemOutput(RagiumBlocks.SPONGE_CAKE, 4)
             .save(output)
 

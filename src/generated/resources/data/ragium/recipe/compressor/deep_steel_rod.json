@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:rod_press_mold"
-  },
   "item_inputs": [
     {
       "count": 1,
@@ -13,6 +10,14 @@
     {
       "count": 2,
       "id": "ragium:deep_steel_rod"
+    }
+  ],
+  "machine_conditions": [
+    {
+      "type": "ragium:processor_catalyst",
+      "ingredient": {
+        "item": "ragium:rod_press_mold"
+      }
     }
   ],
   "machine_type": "compressor"

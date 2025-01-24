@@ -28,7 +28,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val machineTi
     HTMachineTierProvider {
     constructor(pos: BlockPos, state: BlockState) : this(pos, state, state.machineTier)
 
-    private val fluidTank = HTTieredFluidTank(machineTier)
+    private val fluidTank = HTTieredFluidTank(machineTier, this::setChanged)
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
