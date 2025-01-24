@@ -3,22 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/ragi_steel"
     },
     "B": {
-      "tag": "c:circuits/basic"
-    },
-    "C": {
       "item": "minecraft:grindstone"
     },
-    "D": {
-      "item": "ragium:basic_casing"
+    "C": {
+      "item": "ragium:advanced_casing"
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "AAA",
+    " B ",
+    "CCC"
   ],
   "result": {
     "count": 1,

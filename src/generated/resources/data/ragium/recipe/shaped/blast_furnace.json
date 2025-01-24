@@ -6,7 +6,7 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "tag": "c:circuits/basic"
+      "item": "ragium:basic_coil"
     },
     "C": {
       "item": "minecraft:blast_furnace"
@@ -16,9 +16,9 @@
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "AAA",
+    "BCB",
+    "DDD"
   ],
   "result": {
     "count": 1,

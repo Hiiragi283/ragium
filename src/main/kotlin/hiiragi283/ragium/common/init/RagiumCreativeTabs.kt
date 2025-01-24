@@ -76,6 +76,7 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Burners.entries)
 
                         add(RagiumBlocks.SHAFT)
+                        add(RagiumBlocks.CHEMICAL_GLASS)
                         // Crate
                         // Drum
                         addAll(RagiumBlocks.Drums.entries)

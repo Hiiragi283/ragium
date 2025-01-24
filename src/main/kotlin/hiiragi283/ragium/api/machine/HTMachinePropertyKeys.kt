@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.client.renderer.HTMachineRenderer
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -29,12 +30,40 @@ object HTMachinePropertyKeys {
     val SOUND: HTPropertyKey<SoundEvent> =
         HTPropertyKey.simple(RagiumAPI.id("sound"))
 
+    @JvmField
+    val RENDERER_PRE: HTPropertyKey<HTMachineRenderer> =
+        HTPropertyKey
+            .builder<HTMachineRenderer>(RagiumAPI.id("renderer_pre"))
+            .setDefaultValue(HTMachineRenderer::EMPTY)
+            .build()
+
+    @JvmField
+    val RENDERER_POST: HTPropertyKey<HTMachineRenderer> =
+        HTPropertyKey
+            .builder<HTMachineRenderer>(RagiumAPI.id("renderer_post"))
+            .setDefaultValue(HTMachineRenderer::EMPTY)
+            .build()
+
     //    Data Gen    //
 
     @JvmField
-    val MODEL_MAPPER: HTPropertyKey<BiFunction<HTMachineKey, Boolean, ResourceLocation>> =
+    val BLOCK_MODEL_MAPPER: HTPropertyKey<BiFunction<HTMachineKey, Boolean, ResourceLocation>> =
         HTPropertyKey
-            .builder<BiFunction<HTMachineKey, Boolean, ResourceLocation>>(RagiumAPI.id("model_mapper"))
+            .builder<BiFunction<HTMachineKey, Boolean, ResourceLocation>>(RagiumAPI.id("block_model_mapper"))
+            .setDefaultValue {
+                BiFunction { key: HTMachineKey, isActive: Boolean ->
+                    var path = "block/"
+                    if (isActive) {
+                        path += "active_"
+                    }
+                    RagiumAPI.id(path + key.name)
+                }
+            }.build()
+
+    @JvmField
+    val ITEM_MODEL_MAPPER: HTPropertyKey<BiFunction<HTMachineKey, Boolean, ResourceLocation>> =
+        HTPropertyKey
+            .builder<BiFunction<HTMachineKey, Boolean, ResourceLocation>>(RagiumAPI.id("item_model_mapper"))
             .setDefaultValue {
                 BiFunction { key: HTMachineKey, isActive: Boolean ->
                     var path = "block/"

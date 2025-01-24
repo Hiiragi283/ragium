@@ -15,6 +15,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Block
         add(RagiumBlocks.SOUL_MAGMA_BLOCK, "ソウルマグマブロック")
 
+        add(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
         add(RagiumBlocks.SHAFT, "シャフト")
 
         add(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")

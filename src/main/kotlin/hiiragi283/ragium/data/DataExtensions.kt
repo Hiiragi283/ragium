@@ -73,6 +73,8 @@ fun <T : ModelBuilder<T>> T.blockTexture(key: String, id: ResourceLocation): T =
 
 fun <T : ModelBuilder<T>> T.itemTexture(key: String, id: ResourceLocation): T = texture(key, id.withPrefix("item/"))
 
+fun <T : ModelBuilder<T>> T.cutout(): T = renderType("cutout")
+
 //    RecipeBuilder    //
 
 private fun RecipeBuilder.savePrefixed(output: RecipeOutput, prefix: String) {

@@ -164,6 +164,10 @@ object RagiumBlocks {
     val SHAFT: DeferredBlock<RotatedPillarBlock> =
         REGISTER.registerBlock("shaft", ::RotatedPillarBlock, blockProperty(Blocks.CHAIN))
 
+    @JvmField
+    val CHEMICAL_GLASS: DeferredBlock<TransparentBlock> =
+        REGISTER.registerBlock("chemical_glass", ::TransparentBlock, blockProperty(Blocks.GLASS))
+
     //    Storage    //
 
     enum class Drums(override val machineTier: HTMachineTier) : HTBlockContent.Tier {

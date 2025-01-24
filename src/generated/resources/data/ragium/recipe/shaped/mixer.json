@@ -6,16 +6,13 @@
       "tag": "c:ingots/iron"
     },
     "B": {
-      "tag": "c:circuits/basic"
-    },
-    "C": {
       "tag": "c:storage_blocks/copper"
     }
   },
   "pattern": [
     "A A",
-    "AAA",
-    "BCB"
+    "A A",
+    "ABA"
   ],
   "result": {
     "count": 1,

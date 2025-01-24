@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.data.blockTexture
+import hiiragi283.ragium.data.cutout
 import hiiragi283.ragium.data.withExistingParent
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
@@ -55,7 +56,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                         .withExistingParent(ore, RagiumAPI.id("block/layered"))
                         .blockTexture("layer0", ore.oreVariant.baseStoneName)
                         .blockTexture("layer1", RagiumAPI.id(ore.material.name))
-                        .renderType("cutout"),
+                        .cutout(),
                 ),
             )
         }
@@ -71,7 +72,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                             ResourceLocation.withDefaultNamespace("block/cube_all"),
                             "all",
                             grate.blockId,
-                        ).renderType("cutout"),
+                        ).cutout(),
                 ),
             )
         }
@@ -88,7 +89,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                             .blockTexture("top", hull.machineTier.getStorageBlock().id)
                             .blockTexture("inside", hull.machineTier.getCasing().id)
                             .texture("side", id)
-                            .renderType("cutout"),
+                            .cutout(),
                     ),
                 )
         }
@@ -121,7 +122,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                         },
                     ).blockTexture("side", tier.getCoil().id.withSuffix("_side"))
                     .blockTexture("top", tier.getCoil().id.withSuffix("_top"))
-                    .renderType("cutout"),
+                    .cutout(),
             )
         }
 
@@ -171,6 +172,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         buildList {
+            add(RagiumBlocks.CHEMICAL_GLASS)
+
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
@@ -179,7 +182,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             getVariantBuilder(entry.get())
                 .forAllStates { state: BlockState ->
                     val modelId: ResourceLocation = entry
-                        .getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER)
+                        .getOrDefault(HTMachinePropertyKeys.BLOCK_MODEL_MAPPER)
                         .apply(
                             key,
                             state.getValue(RagiumBlockProperties.ACTIVE),

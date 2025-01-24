@@ -46,6 +46,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
             add(RagiumBlocks.SHAFT)
+            add(RagiumBlocks.CHEMICAL_GLASS)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
 
@@ -60,7 +61,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         // Machine
         RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
             val modelId: ResourceLocation =
-                entry.getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER).apply(key, false)
+                entry.getOrDefault(HTMachinePropertyKeys.ITEM_MODEL_MAPPER).apply(key, false)
             withUncheckedParent(entry, modelId)
         }
     }

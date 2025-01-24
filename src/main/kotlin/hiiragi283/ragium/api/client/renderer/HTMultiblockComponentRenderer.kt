@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.multiblock.renderer
+package hiiragi283.ragium.api.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.extension.translate
@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.client.model.data.ModelData
 
 fun interface HTMultiblockComponentRenderer<T : HTMultiblockComponent> {
     fun render(
@@ -24,10 +23,10 @@ fun interface HTMultiblockComponentRenderer<T : HTMultiblockComponent> {
         packedOverlay: Int,
     )
 
+    @Suppress("DEPRECATION")
     fun interface BlockRenderer<T : HTMultiblockComponent> : HTMultiblockComponentRenderer<T> {
         fun getBlockState(controller: HTControllerDefinition, level: Level, component: T): BlockState?
 
-        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         override fun render(
             controller: HTControllerDefinition,
             level: Level,
@@ -50,8 +49,6 @@ fun interface HTMultiblockComponentRenderer<T : HTMultiblockComponent> {
                     bufferSource,
                     packedLight,
                     packedOverlay,
-                    ModelData.EMPTY,
-                    null,
                 )
                 poseStack.popPose()
             }

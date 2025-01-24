@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
@@ -24,18 +23,12 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import org.slf4j.Logger
 
 object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
-
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerComponents(output)
 
         registerMachines(output)
-
-        // registerMachineUpdates(output)
     }
 
     private fun registerComponents(output: RecipeOutput) {
@@ -186,17 +179,9 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
             .savePrefixed(output)
 
-        // Processing Machine
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.MIXER.getEntry())
-            .pattern("A A")
-            .pattern("AAA")
-            .pattern("BCB")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
-            .define('B', HTMachineTier.BASIC.getCircuitTag())
-            .define('C', HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER)
-            .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
-            .savePrefixed(output)
+        basicMachines(output)
+        advancedMachines(output)
+        eliteMachines(output)
 
         mapOf(
             // consumer
@@ -209,16 +194,8 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             RagiumMachineKeys.THERMAL_GENERATOR to Items.LAVA_BUCKET,
             RagiumMachineKeys.VIBRATION_GENERATOR to Items.SCULK_SENSOR,
             // processor
-            RagiumMachineKeys.ASSEMBLER to Items.CRAFTER,
-            RagiumMachineKeys.BLAST_FURNACE to Items.BLAST_FURNACE,
-            RagiumMachineKeys.CHEMICAL_REACTOR to Items.GLASS,
-            RagiumMachineKeys.COMPRESSOR to Items.PISTON,
             RagiumMachineKeys.CUTTING_MACHINE to Items.STONECUTTER,
-            // RagiumMachineKeys.DISTILLATION_TOWER to Items.CRAFTER,
-            RagiumMachineKeys.EXTRACTOR to Items.HOPPER,
-            RagiumMachineKeys.GRINDER to Items.GRINDSTONE,
             RagiumMachineKeys.GROWTH_CHAMBER to Items.IRON_HOE,
-            RagiumMachineKeys.LASER_TRANSFORMER to RagiumItems.LASER_EMITTER,
             RagiumMachineKeys.MULTI_SMELTER to Items.FURNACE,
         ).forEach { (key: HTMachineKey, input: ItemLike) ->
             val entry: HTMachineRegistry.Entry = key.getEntryOrNull() ?: return@forEach
@@ -234,5 +211,105 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
                 .unlockedBy("has_casing", has(RagiumBlocks.Casings.BASIC))
                 .save(output, RagiumAPI.id("shaped/${key.name}"))
         }
+    }
+
+    private fun basicMachines(output: RecipeOutput) {
+        // Blast Furnace
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.BLAST_FURNACE.getEntry())
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', RagiumBlocks.Coils.BASIC)
+            .define('C', Items.BLAST_FURNACE)
+            .define('D', RagiumBlocks.Casings.BASIC)
+            .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
+            .savePrefixed(output)
+        // Compressor
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.COMPRESSOR.getEntry())
+            .pattern("AAA")
+            .pattern("B B")
+            .pattern("CCC")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', Items.PISTON)
+            .define('C', RagiumBlocks.Casings.BASIC)
+            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
+            .savePrefixed(output)
+        // Mixer
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.MIXER.getEntry())
+            .pattern("A A")
+            .pattern("A A")
+            .pattern("ABA")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .define('B', HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER)
+            .unlockedBy("has_iron", has(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON))
+            .savePrefixed(output)
+    }
+
+    private fun advancedMachines(output: RecipeOutput) {
+        // Assembler
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.ASSEMBLER.getEntry())
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('B', HTMachineTier.ADVANCED.getCircuitTag())
+            .define('C', Items.CRAFTER)
+            .define('D', RagiumBlocks.Casings.ADVANCED)
+            .unlockedBy("has_circuit", has(HTMachineTier.ADVANCED.getCircuitTag()))
+            .savePrefixed(output)
+        // Chemical Reactor
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.CHEMICAL_REACTOR.getEntry())
+            .pattern("AAA")
+            .pattern("B B")
+            .pattern("CCC")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('B', RagiumBlocks.CHEMICAL_GLASS)
+            .define('C', RagiumBlocks.Casings.ADVANCED)
+            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL))
+            .savePrefixed(output)
+        // Extractor
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.EXTRACTOR.getEntry())
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('B', Items.PISTON)
+            .define('C', RagiumBlocks.CHEMICAL_GLASS)
+            .define('D', RagiumBlocks.Casings.ADVANCED)
+            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL))
+            .savePrefixed(output)
+        // Grinder
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.GRINDER.getEntry())
+            .pattern("AAA")
+            .pattern(" B ")
+            .pattern("CCC")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('B', Items.GRINDSTONE)
+            .define('C', RagiumBlocks.Casings.ADVANCED)
+            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL))
+            .savePrefixed(output)
+    }
+
+    private fun eliteMachines(output: RecipeOutput) {
+        // Laser Transformer
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.LASER_TRANSFORMER.getEntry())
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL)
+            .define('B', Items.PISTON)
+            .define('C', Items.END_CRYSTAL)
+            .define('D', RagiumBlocks.Casings.ELITE)
+            .unlockedBy("has_refined_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL))
+            .savePrefixed(output)
     }
 }

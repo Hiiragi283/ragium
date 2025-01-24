@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.extension
 
 import com.mojang.blaze3d.vertex.PoseStack
+import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRendererRegistry
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
-import hiiragi283.ragium.api.multiblock.renderer.HTMultiblockComponentRendererRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.texture.TextureAtlasSprite

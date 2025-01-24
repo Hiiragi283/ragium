@@ -34,6 +34,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             addAll(RagiumBlocks.Coils.entries)
             addAll(RagiumBlocks.Burners.entries)
             add(RagiumBlocks.SHAFT)
+            add(RagiumBlocks.CHEMICAL_GLASS)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
             addAll(RagiumBlocks.Decorations.entries)

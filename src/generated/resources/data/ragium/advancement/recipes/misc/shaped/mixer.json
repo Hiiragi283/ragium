@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_circuit": {
+    "has_iron": {
       "conditions": {
         "items": [
           {
-            "items": "#c:circuits/basic"
+            "items": "#c:ingots/iron"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_circuit"
+      "has_iron"
     ]
   ],
   "rewards": {

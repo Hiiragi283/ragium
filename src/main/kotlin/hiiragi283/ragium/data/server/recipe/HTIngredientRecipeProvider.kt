@@ -468,6 +468,25 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('C', Items.MAGMA_BLOCK)
             .unlockedBy("has_carbide", has(RagiumItems.CALCIUM_CARBIDE))
             .savePrefixed(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.SHAFT, 6)
+            .pattern("A")
+            .pattern("A")
+            .define('A', HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON)
+            .unlockedBy("has_iron_block", has(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON))
+            .savePrefixed(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.CHEMICAL_GLASS)
+            .pattern("ABA")
+            .pattern("BCB")
+            .pattern("ABA")
+            .define('A', Tags.Items.DYES_YELLOW)
+            .define('B', Tags.Items.DYES_BLACK)
+            .define('C', Tags.Items.GLASS_BLOCKS)
+            .unlockedBy("has_glass", has(Tags.Items.GLASS_BLOCKS))
+            .savePrefixed(output)
     }
 
     private fun registerSnow(output: RecipeOutput) {

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.multiblock.renderer
+package hiiragi283.ragium.api.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition

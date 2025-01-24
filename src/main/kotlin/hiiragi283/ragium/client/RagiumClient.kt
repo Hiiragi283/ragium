@@ -3,11 +3,11 @@ package hiiragi283.ragium.client
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.client.renderer.HTMachineBlockEntityRenderer
+import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRenderer
+import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRendererRegistry
 import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
-import hiiragi283.ragium.api.multiblock.renderer.HTMachineBlockEntityRenderer
-import hiiragi283.ragium.api.multiblock.renderer.HTMultiblockComponentRenderer
-import hiiragi283.ragium.api.multiblock.renderer.HTMultiblockComponentRendererRegistry
 import hiiragi283.ragium.client.screen.HTMachineContainerScreen
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -62,7 +62,7 @@ object RagiumClient {
     @SubscribeEvent
     private fun registerBlockEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         fun register(type: Supplier<out BlockEntityType<out HTMachineBlockEntity>>) {
-            event.registerBlockEntityRenderer(type.get(), HTMachineBlockEntityRenderer.PROVIDER)
+            event.registerBlockEntityRenderer(type.get(), ::HTMachineBlockEntityRenderer)
         }
 
         register(RagiumBlockEntityTypes.DEFAULT_GENERATOR)

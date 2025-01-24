@@ -61,6 +61,7 @@ object RagiumItems {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
             add(RagiumBlocks.SHAFT)
+            add(RagiumBlocks.CHEMICAL_GLASS)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
 

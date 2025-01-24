@@ -15,6 +15,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Block
         add(RagiumBlocks.SOUL_MAGMA_BLOCK, "Soul Magma Block")
 
+        add(RagiumBlocks.CHEMICAL_GLASS, "Chemical Glass")
         add(RagiumBlocks.SHAFT, "Shaft")
 
         add(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")

@@ -92,7 +92,7 @@ object DefaultMachinePlugin : RagiumPlugin {
                 HTMachinePropertyKeys.GENERATOR_PREDICATE,
                 BiPredicate { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay },
             ).put(
-                HTMachinePropertyKeys.MODEL_MAPPER,
+                HTMachinePropertyKeys.BLOCK_MODEL_MAPPER,
                 BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/solar_panel") },
             ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
 
@@ -160,7 +160,7 @@ object DefaultMachinePlugin : RagiumPlugin {
             .putFactory(::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
             .put(
-                HTMachinePropertyKeys.MODEL_MAPPER,
+                HTMachinePropertyKeys.BLOCK_MODEL_MAPPER,
                 BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/mixer") },
             ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
 
