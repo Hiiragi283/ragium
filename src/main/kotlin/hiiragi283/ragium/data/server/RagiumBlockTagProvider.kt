@@ -29,11 +29,14 @@ class RagiumBlockTagProvider(
             addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Hulls.entries)
             addAll(RagiumBlocks.Coils.entries)
+            addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)
         }.forEach(pickaxe::addElement)
 
         buildList {
+            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+
             add(RagiumBlocks.SHAFT)
 
             add(RagiumBlocks.PLASTIC_BLOCK)

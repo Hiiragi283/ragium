@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:basic_grate"
+    },
+    "B": {
+      "item": "minecraft:coal_block"
+    },
+    "C": {
+      "item": "ragium:basic_coil"
+    }
+  },
+  "pattern": [
+    "A A",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_burner"
+  }
+}

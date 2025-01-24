@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.machine
 
+import com.mojang.datafixers.util.Function3
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
@@ -7,10 +8,13 @@ import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeValidator
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.Level
 import java.util.function.BiPredicate
+import java.util.function.UnaryOperator
 
 object HTMachinePropertyKeys {
     @JvmField
@@ -37,6 +41,29 @@ object HTMachinePropertyKeys {
     @JvmField
     val SOUND: HTPropertyKey<SoundEvent> =
         HTPropertyKey.simple(RagiumAPI.id("sound"))
+
+    //    Data Gen    //
+
+    @JvmField
+    val MODEL_MAPPER: HTPropertyKey<Function3<HTMachineKey, HTMachineTier, Boolean, ResourceLocation>> =
+        HTPropertyKey
+            .builder<Function3<HTMachineKey, HTMachineTier, Boolean, ResourceLocation>>(RagiumAPI.id("model_mapper"))
+            .setDefaultValue {
+                Function3 { key: HTMachineKey, _: HTMachineTier?, isActive: Boolean ->
+                    var path = "block/"
+                    if (isActive) {
+                        path += "active_"
+                    }
+                    RagiumAPI.id(path + key.name)
+                }
+            }.build()
+
+    @JvmField
+    val ROTATION_MAPPER: HTPropertyKey<UnaryOperator<Direction>> =
+        HTPropertyKey
+            .builder<UnaryOperator<Direction>>(RagiumAPI.id("rotation_mapper"))
+            .setDefaultValue(UnaryOperator<Direction>::identity)
+            .build()
 
     //    Generator    //
 

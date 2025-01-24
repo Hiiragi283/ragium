@@ -1,0 +1,10 @@
+{
+  "parent": "ragium:block/burner",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bars": "ragium:block/advanced_grate",
+    "core": "minecraft:block/magma",
+    "side": "ragium:block/advanced_coil_side",
+    "top": "ragium:block/advanced_coil_top"
+  }
+}

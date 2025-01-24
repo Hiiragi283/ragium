@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
+import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -63,13 +64,10 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, 
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(id: ResourceLocation): T = getBuilder(id.toString())
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(content: HTContent<*>, parent: ResourceLocation): T =
-    withExistingParent(content.id, parent)
+    withExistingParent(content.id.toString(), parent)
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(holder: DeferredHolder<*, *>, parent: ResourceLocation): T =
-    withExistingParent(holder.id, parent)
-
-fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(id: ResourceLocation, parent: ResourceLocation): T =
-    withExistingParent(id.toString(), parent)
+fun <T : ModelBuilder<T>> ModelProvider<T>.withUncheckedParent(content: HTContent<*>, parent: ResourceLocation): T =
+    getBuilder(content).parent(ModelFile.UncheckedModelFile(parent))
 
 fun <T : ModelBuilder<T>> T.blockTexture(key: String, id: ResourceLocation): T = texture(key, id.withPrefix("block/"))
 

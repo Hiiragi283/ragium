@@ -13,6 +13,8 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "en_us") {
     override fun addTranslations() {
         // Block
+        add(RagiumBlocks.SOUL_MAGMA_BLOCK, "Soul Magma Block")
+
         add(RagiumBlocks.SHAFT, "Shaft")
 
         add(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
@@ -32,6 +34,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.LEDBlocks.YELLOW, "Yellow LED Block")
         add(RagiumBlocks.LEDBlocks.WHITE, "LED Block")
         // Content
+        add(RagiumTranslationKeys.BURNER, "Burner")
         add(RagiumTranslationKeys.CASING, "Casing")
         add(RagiumTranslationKeys.CIRCUIT, "Circuit")
         add(RagiumTranslationKeys.COIL, "Coil")

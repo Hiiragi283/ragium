@@ -13,6 +13,8 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
     override fun addTranslations() {
         // Block
+        add(RagiumBlocks.SOUL_MAGMA_BLOCK, "ソウルマグマブロック")
+
         add(RagiumBlocks.SHAFT, "シャフト")
 
         add(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
@@ -33,6 +35,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumBlocks.LEDBlocks.WHITE, "LEDブロック")
 
         // Content
+        add(RagiumTranslationKeys.BURNER, "バーナー")
         add(RagiumTranslationKeys.CASING, "外装")
         add(RagiumTranslationKeys.CIRCUIT, "回路")
         add(RagiumTranslationKeys.COIL, "コイル")

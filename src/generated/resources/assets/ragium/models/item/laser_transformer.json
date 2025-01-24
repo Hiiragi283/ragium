@@ -1,29 +1,3 @@
 {
-  "parent": "ragium:block/machine_front",
-  "overrides": [
-    {
-      "model": "ragium:block/basic_hull",
-      "predicate": {
-        "ragium:machine_tier": 0.4
-      }
-    },
-    {
-      "model": "ragium:block/advanced_hull",
-      "predicate": {
-        "ragium:machine_tier": 0.6
-      }
-    },
-    {
-      "model": "ragium:block/elite_hull",
-      "predicate": {
-        "ragium:machine_tier": 0.8
-      }
-    },
-    {
-      "model": "ragium:block/ultimate_hull",
-      "predicate": {
-        "ragium:machine_tier": 1.0
-      }
-    }
-  ]
+  "parent": "ragium:block/laser_transformer"
 }

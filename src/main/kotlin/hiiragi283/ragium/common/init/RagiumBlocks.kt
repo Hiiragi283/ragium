@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
@@ -27,6 +28,7 @@ object RagiumBlocks {
         Casings.entries
         Hulls.entries
         Coils.entries
+        Burners.entries
 
         Drums.entries
 
@@ -61,6 +63,10 @@ object RagiumBlocks {
         override val holder: DeferredBlock<out Block> =
             REGISTER.registerSimpleBlock("${name.lowercase()}_ore", oreVariant.createProperty())
     }
+
+    @JvmField
+    val SOUL_MAGMA_BLOCK: DeferredBlock<HTSoulMagmaBlock> =
+        REGISTER.registerBlock("soul_magma_block", ::HTSoulMagmaBlock, blockProperty(Blocks.MAGMA_BLOCK))
 
     enum class StorageBlocks(isGem: Boolean, override val material: HTMaterialKey) : HTBlockContent.Material {
         // Ragium
@@ -141,6 +147,17 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<RotatedPillarBlock> =
             REGISTER.registerBlock("${name.lowercase()}_coil", ::RotatedPillarBlock, blockProperty(Blocks.COPPER_BLOCK))
+    }
+
+    enum class Burners(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
+        ULTIMATE(HTMachineTier.ULTIMATE),
+        ;
+
+        override val holder: DeferredBlock<Block> =
+            REGISTER.registerBlock("${name.lowercase()}_burner", ::Block, blockProperty(Blocks.COPPER_BLOCK))
     }
 
     @JvmField

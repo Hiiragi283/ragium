@@ -24,6 +24,7 @@ object RagiumCreativeTabs {
                 .icon { ItemStack(RagiumItems.Ingots.RAGIUM) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Material Blocks
+                    output.accept(RagiumBlocks.SOUL_MAGMA_BLOCK)
                     RagiumBlocks.Ores.entries.forEach(output::accept)
                     RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
                     // Material Items
@@ -72,6 +73,7 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Casings.entries)
                         addAll(RagiumBlocks.Hulls.entries)
                         addAll(RagiumBlocks.Coils.entries)
+                        addAll(RagiumBlocks.Burners.entries)
 
                         add(RagiumBlocks.SHAFT)
                         // Crate

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.stacks
@@ -62,7 +63,8 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         // Recipe Arrow
         builder.addRecipeArrow().setPosition(getPosition(3.5), getPosition(0))
         // Recipe Cost
-        val tier: HTMachineTier = recipe.value.machineTier
+        val machineRecipe: HTMachineRecipe = recipe.value
+        val tier: HTMachineTier = machineRecipe.machineTier
         builder
             .addText(Component.literal("Recipe Cost: ${tier.processCost} FE"), width - 4, 10)
             .setPosition(getPosition(0), getPosition(2.25))
@@ -72,9 +74,18 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         // Recipe tier
         builder
             .addText(tier.text, width - 4, 10)
-            .setPosition(getPosition(0), getPosition(2.75))
+            .setPosition(getPosition(0), getPosition(2.25))
             .setShadow(true)
-            .setTextAlignment(HorizontalAlignment.LEFT)
+            .setTextAlignment(HorizontalAlignment.RIGHT)
+        // conditions
+        machineRecipe.conditions.forEachIndexed { index: Int, condition: HTMachineRecipeCondition ->
+            builder
+                .addText(condition.text, width - 4, 10)
+                .setPosition(getPosition(0), getPosition(2.75 + index))
+                .setColor(0xFFFFFF)
+                .setShadow(true)
+                .setTextAlignment(HorizontalAlignment.LEFT)
+        }
     }
 
     private fun addItemInput(

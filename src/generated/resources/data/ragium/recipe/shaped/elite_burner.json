@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:elite_grate"
+    },
+    "B": {
+      "item": "ragium:soul_magma_block"
+    },
+    "C": {
+      "item": "ragium:elite_coil"
+    }
+  },
+  "pattern": [
+    "A A",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:elite_burner"
+  }
+}

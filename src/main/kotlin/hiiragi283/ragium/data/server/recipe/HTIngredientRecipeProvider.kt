@@ -6,10 +6,7 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.condition.HTCoolingCondition
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
@@ -51,7 +48,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         registerCatalysts(output)
         registerPressMolds(output)
 
-        registerParts(output)
+        registerMisc(output)
 
         registerSnow(output)
     }
@@ -367,7 +364,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         register(RagiumItems.PLATE_PRESS_MOLD, HTTagPrefix.PLATE)
     }
 
-    private fun registerParts(output: RecipeOutput) {
+    private fun registerMisc(output: RecipeOutput) {
         ShapedRecipeBuilder
             .shaped(RecipeCategory.TOOLS, RagiumItems.FORGE_HAMMER)
             .pattern(" AA")
@@ -460,6 +457,17 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.LUMINESCENCE_DUST)
             .itemOutput(Items.INK_SAC)
             .save(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumBlocks.SOUL_MAGMA_BLOCK)
+            .pattern("ABA")
+            .pattern("BCB")
+            .pattern("ABA")
+            .define('A', ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .define('B', RagiumItems.CALCIUM_CARBIDE)
+            .define('C', Items.MAGMA_BLOCK)
+            .unlockedBy("has_carbide", has(RagiumItems.CALCIUM_CARBIDE))
+            .savePrefixed(output)
     }
 
     private fun registerSnow(output: RecipeOutput) {

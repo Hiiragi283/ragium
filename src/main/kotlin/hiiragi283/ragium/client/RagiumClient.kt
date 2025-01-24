@@ -3,9 +3,7 @@ package hiiragi283.ragium.client
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.renderer.HTMachineBlockEntityRenderer
 import hiiragi283.ragium.api.multiblock.renderer.HTMultiblockComponentRenderer
@@ -19,11 +17,7 @@ import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
 import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTagMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
-import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.client.renderer.item.ItemProperties
-import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.inventory.MenuType
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.api.distmarker.Dist
@@ -83,7 +77,7 @@ object RagiumClient {
 
     @SubscribeEvent
     fun clientSetup(event: FMLClientSetupEvent) {
-        ItemProperties.registerGeneric(
+        /*ItemProperties.registerGeneric(
             RagiumAPI.id("machine_tier"),
         ) { stack: ItemStack, level: ClientLevel?, player: LivingEntity?, seed: Int ->
             when (stack.machineTier) {
@@ -92,7 +86,7 @@ object RagiumClient {
                 HTMachineTier.ELITE -> 0.8f
                 HTMachineTier.ULTIMATE -> 1f
             }
-        }
+        }*/
 
         HTMultiblockComponentRendererRegistry.register(
             RagiumMultiblockComponentTypes.SIMPLE.get(),

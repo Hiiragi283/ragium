@@ -2,8 +2,11 @@ package hiiragi283.ragium.data.client
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.data.blockTexture
@@ -13,11 +16,11 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
-import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
@@ -33,6 +36,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildList {
+            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+
             addAll(RagiumBlocks.StorageBlocks.entries)
             addAll(RagiumBlocks.Casings.entries)
 
@@ -47,7 +52,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 ore.get(),
                 ConfiguredModel(
                     models()
-                        .withExistingParent(ore.id, RagiumAPI.id("block/layered"))
+                        .withExistingParent(ore, RagiumAPI.id("block/layered"))
                         .blockTexture("layer0", ore.oreVariant.baseStoneName)
                         .blockTexture("layer1", RagiumAPI.id(ore.material.name))
                         .renderType("cutout"),
@@ -79,7 +84,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 .setModels(
                     ConfiguredModel(
                         models()
-                            .withExistingParent(id, RagiumAPI.id("block/hull"))
+                            .withExistingParent(hull, RagiumAPI.id("block/hull"))
                             .blockTexture("top", hull.machineTier.getStorageBlock().id)
                             .blockTexture("inside", hull.machineTier.getCasing().id)
                             .texture("side", id)
@@ -95,6 +100,28 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 block,
                 coil.blockId.withSuffix("_side"),
                 coil.blockId.withSuffix("_top"),
+            )
+        }
+
+        // Burner
+        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
+            val tier: HTMachineTier = burner.machineTier
+            simpleBlock(
+                burner.get(),
+                models()
+                    .withExistingParent(burner, RagiumAPI.id("block/burner"))
+                    .blockTexture("bars", tier.getGrate().id)
+                    .blockTexture(
+                        "core",
+                        when (tier) {
+                            HTMachineTier.BASIC -> ResourceLocation.withDefaultNamespace("coal_block")
+                            HTMachineTier.ADVANCED -> ResourceLocation.withDefaultNamespace("magma")
+                            HTMachineTier.ELITE -> RagiumAPI.id("soul_magma_block")
+                            HTMachineTier.ULTIMATE -> ResourceLocation.withDefaultNamespace("nether_portal")
+                        },
+                    ).blockTexture("side", tier.getCoil().id.withSuffix("_side"))
+                    .blockTexture("top", tier.getCoil().id.withSuffix("_top"))
+                    .renderType("cutout"),
             )
         }
 
@@ -148,7 +175,30 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
         // Machine
-        RagiumAPI.machineRegistry.blocks.forEach { content: HTBlockContent ->
+        RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+            getVariantBuilder(entry.get())
+                .forAllStates { state: BlockState ->
+                    val modelId: ResourceLocation = entry
+                        .getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER)
+                        .apply(
+                            key,
+                            state.getValue(HTMachineTier.PROPERTY),
+                            state.getValue(RagiumBlockProperties.ACTIVE),
+                        )
+                    val rotation: Int = entry
+                        .getOrDefault(HTMachinePropertyKeys.ROTATION_MAPPER)
+                        .apply(state.getValue(BlockStateProperties.HORIZONTAL_FACING))
+                        .getRotationY()
+
+                    ConfiguredModel
+                        .builder()
+                        .modelFile(ModelFile.UncheckedModelFile(modelId))
+                        .rotationY(rotation)
+                        .build()
+                }
+        }
+
+        /*RagiumAPI.machineRegistry.blocks.forEach { content: HTBlockContent ->
             val builder: ConfiguredModel.Builder<MultiPartBlockStateBuilder.PartBuilder> =
                 getMultipartBuilder(content.get()).part()
 
@@ -186,19 +236,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .condition(BlockStateProperties.HORIZONTAL_FACING, front)
                     .condition(RagiumBlockProperties.ACTIVE, true)
             }
-        }
-
-        // Fluid Block
-        /*RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            getVariantBuilder(fluid.blockHolder.get())
-                .partialState()
-                .setModels(
-                    ConfiguredModel(
-                        models()
-                            .getBuilder(fluid.blockHolder.id.withPrefix("block/"))
-                            .texture("particle", fluid.stillTexture),
-                    ),
-                )
         }*/
     }
 

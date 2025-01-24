@@ -152,15 +152,33 @@ internal object RagiumEvents {
 
         event.registerBlock(
             RagiumAPI.BlockCapabilities.HEATING_TIER,
-            staticProvider(HTMachineTier.ADVANCED),
-            Blocks.LAVA,
+            { _: Level, _: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction ->
+                when (direction) {
+                    Direction.UP -> HTMachineTier.ADVANCED
+                    else -> HTMachineTier.BASIC
+                }
+            },
             Blocks.FIRE,
         )
 
+        event.registerBlock(
+            RagiumAPI.BlockCapabilities.HEATING_TIER,
+            staticProvider(HTMachineTier.ADVANCED),
+            Blocks.LAVA,
+        )
+
+        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
+            event.registerBlock(
+                RagiumAPI.BlockCapabilities.HEATING_TIER,
+                staticProvider(burner.machineTier),
+                burner.get(),
+            )
+        }
+
         // Cooling Tier
         mapOf(
-            HTMachineTier.BASIC to arrayOf(Blocks.SNOW, Blocks.ICE, Blocks.POWDER_SNOW),
-            HTMachineTier.ADVANCED to arrayOf(Blocks.PACKED_ICE),
+            HTMachineTier.BASIC to arrayOf(Blocks.WATER, Blocks.SNOW, Blocks.POWDER_SNOW),
+            HTMachineTier.ADVANCED to arrayOf(Blocks.ICE, Blocks.PACKED_ICE),
             HTMachineTier.ELITE to arrayOf(Blocks.BLUE_ICE),
         ).forEach { (tier: HTMachineTier, blocks: Array<Block>) ->
             event.registerBlock(RagiumAPI.BlockCapabilities.HEATING_TIER, staticProvider(tier), *blocks)
@@ -230,6 +248,7 @@ internal object RagiumEvents {
         modifyAll(RagiumBlocks.Casings.entries, tieredText(RagiumTranslationKeys.CASING))
         modifyAll(RagiumBlocks.Hulls.entries, tieredText(RagiumTranslationKeys.HULL))
         modifyAll(RagiumBlocks.Coils.entries, tieredText(RagiumTranslationKeys.COIL))
+        modifyAll(RagiumBlocks.Burners.entries, tieredText(RagiumTranslationKeys.BURNER))
 
         modifyAll(RagiumBlocks.Drums.entries, tieredText(RagiumTranslationKeys.DRUM))
         // Item

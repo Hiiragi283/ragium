@@ -25,12 +25,15 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
     override fun generate() {
         buildList {
+            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+
             addAll(RagiumBlocks.StorageBlocks.entries)
 
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Hulls.entries)
             addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Coils.entries)
+            addAll(RagiumBlocks.Burners.entries)
             add(RagiumBlocks.SHAFT)
 
             add(RagiumBlocks.PLASTIC_BLOCK)

@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.internal
 
+import com.mojang.datafixers.util.Function3
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.*
@@ -18,12 +20,14 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.fluids.FluidType
 import java.util.function.BiConsumer
 import java.util.function.BiPredicate
 import java.util.function.Function
+import java.util.function.UnaryOperator
 
 object DefaultMachinePlugin : RagiumPlugin {
     override val priority: Int = -100
@@ -97,7 +101,10 @@ object DefaultMachinePlugin : RagiumPlugin {
             .put(
                 HTMachinePropertyKeys.GENERATOR_PREDICATE,
                 BiPredicate { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay },
-            )
+            ).put(
+                HTMachinePropertyKeys.MODEL_MAPPER,
+                Function3 { key: HTMachineKey, _: HTMachineTier, _: Boolean -> RagiumAPI.id("block/solar_panel") },
+            ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
 
         helper
             .apply(RagiumMachineKeys.STEAM_GENERATOR)
@@ -166,6 +173,10 @@ object DefaultMachinePlugin : RagiumPlugin {
             .apply(RagiumMachineKeys.MIXER)
             .putFactory(::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
+            .put(
+                HTMachinePropertyKeys.MODEL_MAPPER,
+                Function3 { key: HTMachineKey, _: HTMachineTier, _: Boolean -> RagiumAPI.id("block/mixer") },
+            ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
 
         helper
             .apply(RagiumMachineKeys.MULTI_SMELTER)

@@ -1,7 +1,0 @@
-{
-  "parent": "ragium:block/machine_front",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "front": "ragium:block/machine/mixer"
-  }
-}

@@ -2,16 +2,19 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.getBuilder
 import hiiragi283.ragium.data.itemTexture
-import hiiragi283.ragium.data.withExistingParent
+import hiiragi283.ragium.data.withUncheckedParent
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -33,6 +36,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Hulls.entries)
             addAll(RagiumBlocks.Coils.entries)
+            addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)
 
@@ -40,6 +44,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         }.map(HTBlockContent::id).forEach(::simpleBlockItem)
 
         buildList {
+            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+
             add(RagiumBlocks.SHAFT)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
@@ -52,21 +58,11 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
-        RagiumAPI.machineRegistry.blocks.forEach { content: HTBlockContent ->
-            val id: ResourceLocation = content.id
-            val modelBuilder: ItemModelBuilder = withExistingParent(id, RagiumAPI.id("block/machine_front"))
-            HTMachineTier.entries.forEach { tier: HTMachineTier ->
-                val value: Float = when (tier) {
-                    HTMachineTier.BASIC -> 0.4f
-                    HTMachineTier.ADVANCED -> 0.6f
-                    HTMachineTier.ELITE -> 0.8f
-                    HTMachineTier.ULTIMATE -> 1f
-                }
-                modelBuilder
-                    .override()
-                    .predicate(RagiumAPI.id("machine_tier"), value)
-                    .model(ModelFile.UncheckedModelFile(tier.getHull().blockId))
-            }
+        // Machine
+        RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+            val modelId: ResourceLocation =
+                entry.getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER).apply(key, HTMachineTier.BASIC, false)
+            withUncheckedParent(entry, modelId)
         }
     }
 

@@ -48,6 +48,7 @@ object RagiumItems {
             addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Hulls.entries)
             addAll(RagiumBlocks.Coils.entries)
+            addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)
 
@@ -57,6 +58,8 @@ object RagiumItems {
             .forEach(REGISTER::registerSimpleBlockItem)
 
         buildList {
+            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+
             add(RagiumBlocks.SHAFT)
 
             add(RagiumBlocks.PLASTIC_BLOCK)

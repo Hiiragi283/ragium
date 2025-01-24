@@ -134,6 +134,28 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
                 .itemOutput(coil, 2)
                 .save(output)
         }
+        // Burner
+        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
+            val tier: HTMachineTier = burner.machineTier
+            // Shaped Crafting
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, burner)
+                .pattern("A A")
+                .pattern("ABA")
+                .pattern("CCC")
+                .define('A', tier.getGrate())
+                .define(
+                    'B',
+                    when (tier) {
+                        HTMachineTier.BASIC -> Items.COAL_BLOCK
+                        HTMachineTier.ADVANCED -> Items.MAGMA_BLOCK
+                        HTMachineTier.ELITE -> RagiumBlocks.SOUL_MAGMA_BLOCK
+                        HTMachineTier.ULTIMATE -> Items.END_CRYSTAL
+                    },
+                ).define('C', tier.getCoil())
+                .unlockedBy("has_coil", has(tier.getCoil()))
+                .savePrefixed(output)
+        }
 
         // Drum
         RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
