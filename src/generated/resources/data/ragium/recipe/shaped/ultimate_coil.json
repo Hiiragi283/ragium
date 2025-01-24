@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_alloy"
+    },
+    "B": {
+      "item": "ragium:shaft"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:ultimate_coil"
+  }
+}

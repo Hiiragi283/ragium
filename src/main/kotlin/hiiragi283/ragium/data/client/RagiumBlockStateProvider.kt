@@ -132,6 +132,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             simpleBlock(drum.get(), models().cubeTop(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
         }
 
+        // Decoration
+        RagiumBlocks.Decorations.entries.forEach { decoration: RagiumBlocks.Decorations ->
+            simpleBlock(decoration.get(), ModelFile.UncheckedModelFile(decoration.parent.blockId))
+        }
+
         // Food
         simpleBlock(RagiumBlocks.SPONGE_CAKE.get())
 

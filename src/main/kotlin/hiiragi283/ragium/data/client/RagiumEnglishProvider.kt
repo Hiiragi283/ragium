@@ -27,6 +27,25 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
 
+        add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "Block of Ragi-Alloy (Decoration)")
+        add(RagiumBlocks.Decorations.RAGI_STEEL_BLOCK, "Block of Ragi-Steel (Decoration)")
+        add(RagiumBlocks.Decorations.REFINED_RAGI_STEEL_BLOCK, "Block of Refined Ragi-Steel (Decoration)")
+
+        add(RagiumBlocks.Decorations.BASIC_CASING, "Basic Casing (Decoration)")
+        add(RagiumBlocks.Decorations.ADVANCED_CASING, "Advanced Casing (Decoration)")
+        add(RagiumBlocks.Decorations.ELITE_CASING, "Elite Casing (Decoration)")
+        add(RagiumBlocks.Decorations.ULTIMATE_CASING, "Ultimate Casing (Decoration)")
+
+        add(RagiumBlocks.Decorations.BASIC_HULL, "Basic Hull (Decoration)")
+        add(RagiumBlocks.Decorations.ADVANCED_HULL, "Advanced Hull (Decoration)")
+        add(RagiumBlocks.Decorations.ELITE_HULL, "Elite Hull (Decoration)")
+        add(RagiumBlocks.Decorations.ULTIMATE_HULL, "Ultimate Hull (Decoration)")
+
+        add(RagiumBlocks.Decorations.BASIC_COIL, "Basic Coil (Decoration)")
+        add(RagiumBlocks.Decorations.ADVANCED_COIL, "Advanced Coil (Decoration)")
+        add(RagiumBlocks.Decorations.ELITE_COIL, "Elite Coil (Decoration)")
+        add(RagiumBlocks.Decorations.ULTIMATE_COIL, "Ultimate Coil (Decoration)")
+
         add(RagiumBlocks.LEDBlocks.RED, "Red LED Block")
         add(RagiumBlocks.LEDBlocks.GREEN, "Green LED Block")
         add(RagiumBlocks.LEDBlocks.BLUE, "Blue LED Block")
@@ -99,7 +118,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.DEEPANT, "Deepant")
         add(RagiumItems.ENGINE, "V8 Engine")
         add(RagiumItems.GLASS_SHARD, "Glass Shard")
-        add(RagiumItems.LASER_EMITTER, "Laser Emitter")
         add(RagiumItems.LED, "L.E.D.")
         add(RagiumItems.LUMINESCENCE_DUST, "Luminescence Dust")
         add(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")
@@ -108,7 +126,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.SLAG, "Slag")
         add(RagiumItems.SOAP, "Soap")
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
-        add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A. Plate")
+        // add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A. Plate")
         add(RagiumItems.TALLOW, "Tallow")
         add(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
 

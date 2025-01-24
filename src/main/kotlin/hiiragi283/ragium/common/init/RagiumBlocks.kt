@@ -134,8 +134,8 @@ object RagiumBlocks {
         ULTIMATE(HTMachineTier.ULTIMATE),
         ;
 
-        override val holder: DeferredBlock<TransparentBlock> =
-            REGISTER.registerBlock("${name.lowercase()}_hull", ::TransparentBlock, blockProperty(Blocks.IRON_BLOCK))
+        override val holder: DeferredBlock<Block> =
+            REGISTER.registerBlock("${name.lowercase()}_hull", ::Block, blockProperty(Blocks.IRON_BLOCK))
     }
 
     enum class Coils(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -190,12 +190,7 @@ object RagiumBlocks {
     val PLASTIC_BLOCK: DeferredBlock<Block> =
         REGISTER.registerSimpleBlock("plastic_block", blockProperty(Blocks.SMOOTH_STONE))
 
-    enum class Decorations(
-        val parent: HTBlockContent,
-        factory: (BlockBehaviour.Properties) -> Block = ::Block,
-        val cutout: Boolean = false,
-        val isPillar: Boolean = false,
-    ) : HTBlockContent {
+    enum class Decorations(val parent: HTBlockContent) : HTBlockContent {
         // storage
         RAGI_ALLOY_BLOCK(StorageBlocks.RAGI_ALLOY),
         RAGI_STEEL_BLOCK(StorageBlocks.RAGI_STEEL),
@@ -208,21 +203,21 @@ object RagiumBlocks {
         ULTIMATE_CASING(Casings.ULTIMATE),
 
         // hull
-        BASIC_HULL(Hulls.BASIC, ::TransparentBlock, true),
-        ADVANCED_HULL(Hulls.ADVANCED, ::TransparentBlock, true),
-        ELITE_HULL(Hulls.ELITE, ::TransparentBlock, true),
-        ULTIMATE_HULL(Hulls.ULTIMATE, ::TransparentBlock, true),
+        BASIC_HULL(Hulls.BASIC),
+        ADVANCED_HULL(Hulls.ADVANCED),
+        ELITE_HULL(Hulls.ELITE),
+        ULTIMATE_HULL(Hulls.ULTIMATE),
 
         // coil
-        BASIC_COIL(Coils.BASIC, ::RotatedPillarBlock, isPillar = true),
-        ADVANCED_COIL(Coils.ADVANCED, ::RotatedPillarBlock, isPillar = true),
-        ELITE_COIL(Coils.ELITE, ::RotatedPillarBlock, isPillar = true),
-        ULTIMATE_COIL(Coils.ULTIMATE, ::RotatedPillarBlock, isPillar = true),
+        BASIC_COIL(Coils.BASIC),
+        ADVANCED_COIL(Coils.ADVANCED),
+        ELITE_COIL(Coils.ELITE),
+        ULTIMATE_COIL(Coils.ULTIMATE),
         ;
 
         override val holder: DeferredBlock<Block> = REGISTER.registerBlock(
             "${name.lowercase()}_decoration",
-            factory,
+            ::Block,
             blockProperty(Blocks.SMOOTH_STONE),
         )
     }

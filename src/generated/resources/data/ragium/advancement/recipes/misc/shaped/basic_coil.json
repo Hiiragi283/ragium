@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_deep_steel": {
+    "has_shaft": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/deep_steel"
+            "items": "ragium:shaft"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/laser_emitter"
+        "recipe": "ragium:shaped/basic_coil"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_deep_steel"
+      "has_shaft"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/laser_emitter"
+      "ragium:shaped/basic_coil"
     ]
   }
 }

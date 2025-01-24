@@ -42,6 +42,10 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumBlocks.LEDBlocks.entries)
         }.map(HTBlockContent::id).forEach(::simpleBlockItem)
 
+        RagiumBlocks.Decorations.entries.forEach { decoration: RagiumBlocks.Decorations ->
+            withUncheckedParent(decoration, decoration.parent.blockId)
+        }
+
         buildList {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 

@@ -421,18 +421,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.ENGINE)
             .save(output)
 
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.LASER_EMITTER)
-            .pattern("AAB")
-            .pattern("CDA")
-            .pattern("BCA")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .define('B', HTMachineTier.ADVANCED.getCircuitTag())
-            .define('C', HTTagPrefix.INGOT, RagiumMaterialKeys.ALUMINUM)
-            .define('D', HTTagPrefix.GEM, RagiumMaterialKeys.DIAMOND)
-            .unlockedBy("has_deep_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL))
-            .savePrefixed(output)
-
         HTCookingRecipeBuilder
             .create(
                 Ingredient.of(RagiumItems.CRIMSON_CRYSTAL),

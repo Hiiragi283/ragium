@@ -118,12 +118,22 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         // Coil
         RagiumBlocks.Coils.entries.forEach { coil: RagiumBlocks.Coils ->
             val previousTier: HTMachineTier = coil.machineTier.getPreviousTier() ?: HTMachineTier.BASIC
+            // Shaped Crafting
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, coil, 2)
+                .pattern("AAA")
+                .pattern("ABA")
+                .pattern("AAA")
+                .define('A', HTTagPrefix.INGOT, coil.machineTier.getSubMetal())
+                .define('B', RagiumBlocks.SHAFT)
+                .unlockedBy("has_shaft", has(RagiumBlocks.SHAFT))
+                .savePrefixed(output)
             // Assembler
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.ASSEMBLER, previousTier)
                 .itemInput(HTTagPrefix.INGOT, coil.machineTier.getSubMetal(), 8)
                 .itemInput(RagiumBlocks.SHAFT)
-                .itemOutput(coil, 2)
+                .itemOutput(coil, 4)
                 .save(output)
         }
         // Burner

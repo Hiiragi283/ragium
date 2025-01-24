@@ -27,6 +27,25 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
 
+        add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "ラギ合金ブロック（装飾）")
+        add(RagiumBlocks.Decorations.RAGI_STEEL_BLOCK, "ラギスチールブロック（装飾）")
+        add(RagiumBlocks.Decorations.REFINED_RAGI_STEEL_BLOCK, "精製ラギスチールブロック（装飾）")
+
+        add(RagiumBlocks.Decorations.BASIC_CASING, "基本外装（装飾）")
+        add(RagiumBlocks.Decorations.ADVANCED_CASING, "発展外装（装飾）")
+        add(RagiumBlocks.Decorations.ELITE_CASING, "精鋭外装（装飾）")
+        add(RagiumBlocks.Decorations.ULTIMATE_CASING, "究極外装（装飾）")
+
+        add(RagiumBlocks.Decorations.BASIC_HULL, "基本筐体（装飾）")
+        add(RagiumBlocks.Decorations.ADVANCED_HULL, "発展筐体（装飾）")
+        add(RagiumBlocks.Decorations.ELITE_HULL, "精鋭筐体（装飾）")
+        add(RagiumBlocks.Decorations.ULTIMATE_HULL, "究極筐体（装飾）")
+
+        add(RagiumBlocks.Decorations.BASIC_COIL, "基本コイル（装飾）")
+        add(RagiumBlocks.Decorations.ADVANCED_COIL, "発展コイル（装飾）")
+        add(RagiumBlocks.Decorations.ELITE_COIL, "精鋭コイル（装飾）")
+        add(RagiumBlocks.Decorations.ULTIMATE_COIL, "究極コイル（装飾）")
+
         add(RagiumBlocks.LEDBlocks.RED, "LEDブロック（赤）")
         add(RagiumBlocks.LEDBlocks.GREEN, "LEDブロック（緑）")
         add(RagiumBlocks.LEDBlocks.BLUE, "LEDブロック（青）")
@@ -100,7 +119,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.DEEPANT, "ディーパント")
         add(RagiumItems.ENGINE, "V8エンジン")
         add(RagiumItems.GLASS_SHARD, "ガラスの破片")
-        add(RagiumItems.LASER_EMITTER, "レーザーエミッタ")
         add(RagiumItems.LED, "L.E.D.")
         add(RagiumItems.LUMINESCENCE_DUST, "ルミネッセンスダスト")
         add(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")
@@ -109,7 +127,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.SLAG, "スラグ")
         add(RagiumItems.SOAP, "石鹸")
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
-        add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A.板")
+        // add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A.板")
         add(RagiumItems.TALLOW, "獣脂")
         add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
 

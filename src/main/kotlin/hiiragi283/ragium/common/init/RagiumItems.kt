@@ -400,10 +400,6 @@ object RagiumItems {
 
     //    Catalysts    //
 
-    // val HEATING_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("heating_catalyst")
-
-    // val COOLING_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("cooling_catalyst")
-
     @JvmField
     val OXIDIZATION_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("oxidization_catalyst")
 
@@ -441,16 +437,12 @@ object RagiumItems {
     val ENGINE: DeferredItem<Item> = REGISTER.registerSimpleItem("engine")
 
     @JvmField
-    val LASER_EMITTER: DeferredItem<Item> = REGISTER.registerSimpleItem("laser_emitter")
-
-    @JvmField
     val LED: DeferredItem<Item> = REGISTER.registerSimpleItem("led")
 
     @JvmField
     val SOLAR_PANEL: DeferredItem<Item> = REGISTER.registerSimpleItem("solar_panel")
 
-    @JvmField
-    val STELLA_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("stella_plate")
+    // val STELLA_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("stella_plate")
 
     @JvmField
     val RAGI_TICKET: DeferredItem<Item> = REGISTER.registerSimpleItem("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
@@ -460,10 +452,9 @@ object RagiumItems {
         // parts
         add(CIRCUIT_BOARD)
         add(ENGINE)
-        add(LASER_EMITTER)
         add(LED)
         add(SOLAR_PANEL)
-        add(STELLA_PLATE)
+        // add(STELLA_PLATE)
         // misc
         add(RAGI_TICKET)
     }
