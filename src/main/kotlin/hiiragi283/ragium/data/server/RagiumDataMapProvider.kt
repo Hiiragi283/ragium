@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -48,8 +47,8 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         // Machine
         val machineBuilder: Builder<HTMachineKey, Item> = builder(RagiumAPI.DataMapTypes.MACHINE_KEY)
 
-        RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
-            machineBuilder.addContent(entry, key)
+        RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: HTBlockContent) ->
+            machineBuilder.addContent(content, key)
         }
         // Machine Tier
         val tierBuilder: Builder<HTMachineTier, Item> = builder(RagiumAPI.DataMapTypes.MACHINE_TIER)

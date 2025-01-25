@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -208,9 +207,9 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             RagiumMachineKeys.GROWTH_CHAMBER to Items.IRON_HOE,
             RagiumMachineKeys.MULTI_SMELTER to Items.FURNACE,
         ).forEach { (key: HTMachineKey, input: ItemLike) ->
-            val entry: HTMachineRegistry.Entry = key.getEntryOrNull() ?: return@forEach
+            val content: HTBlockContent = key.getBlockOrNull() ?: return@forEach
             ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, entry)
+                .shaped(RecipeCategory.MISC, content)
                 .pattern("ABA")
                 .pattern("CDC")
                 .pattern("ABA")
@@ -226,7 +225,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun basicMachines(output: RecipeOutput) {
         // Blast Furnace
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.BLAST_FURNACE.getEntry())
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.BLAST_FURNACE.getBlock())
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
@@ -238,7 +237,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
         // Compressor
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.COMPRESSOR.getEntry())
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.COMPRESSOR.getBlock())
             .pattern("AAA")
             .pattern("B B")
             .pattern("CCC")
@@ -249,7 +248,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
         // Mixer
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.MIXER.getEntry())
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.MIXER.getBlock())
             .pattern("A A")
             .pattern("A A")
             .pattern("ABA")
@@ -262,7 +261,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun advancedMachines(output: RecipeOutput) {
         // Assembler
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.ASSEMBLER.getEntry())
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.ASSEMBLER.getBlock())
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
@@ -274,7 +273,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
         // Chemical Reactor
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.CHEMICAL_REACTOR.getEntry())
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.CHEMICAL_REACTOR.getBlock())
             .pattern("AAA")
             .pattern("B B")
             .pattern("CCC")
@@ -285,7 +284,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
         // Extractor
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.EXTRACTOR.getEntry())
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.EXTRACTOR.getBlock())
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
@@ -297,7 +296,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
         // Grinder
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.GRINDER.getEntry())
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.GRINDER.getBlock())
             .pattern("AAA")
             .pattern(" B ")
             .pattern("CCC")
@@ -311,7 +310,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun eliteMachines(output: RecipeOutput) {
         // Laser Transformer
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.LASER_TRANSFORMER.getEntry())
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.LASER_TRANSFORMER.getBlock())
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")

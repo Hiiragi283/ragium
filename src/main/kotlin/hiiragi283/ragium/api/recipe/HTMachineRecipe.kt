@@ -4,7 +4,10 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineDefinition
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
@@ -62,10 +65,10 @@ class HTMachineRecipe(
             }.validate(::validate)
 
         @JvmStatic
-        private fun validate(recipe: HTMachineRecipe): DataResult<HTMachineRecipe> =
-            recipe.machineKey.getEntryData().flatMap { entry: HTMachineRegistry.Entry ->
-                entry.getOrDefault(HTMachinePropertyKeys.RECIPE_VALIDATOR).validate(recipe)
-            }
+        private fun validate(recipe: HTMachineRecipe): DataResult<HTMachineRecipe> = recipe.machineKey
+            .getProperty()
+            .getOrDefault(HTMachinePropertyKeys.RECIPE_VALIDATOR)
+            .validate(recipe)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipe> = StreamCodec.composite(
@@ -129,7 +132,7 @@ class HTMachineRecipe(
         return list
     }
 
-    override fun getToastSymbol(): ItemStack = machineKey.getEntryOrNull()?.get()?.let(::ItemStack) ?: super.getToastSymbol()
+    override fun getToastSymbol(): ItemStack = machineKey.getBlockOrNull()?.get()?.let(::ItemStack) ?: super.getToastSymbol()
 
     override fun getSerializer(): RecipeSerializer<out Recipe<HTMachineInput>> = RagiumRecipes.MACHINE_SERIALIZER.get()
 

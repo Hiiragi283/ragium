@@ -39,7 +39,7 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
     companion object {
         @JvmStatic
         fun create(machine: HTMachineKey, tier: HTMachineTier = HTMachineTier.BASIC): HTMachineRecipeBuilder =
-            HTMachineRecipeBuilder(HTMachineDefinition(HTMachineKey.validate(machine).orThrow, tier))
+            HTMachineRecipeBuilder(HTMachineDefinition(machine, tier))
     }
 
     private val itemInputs: MutableMap<Ingredient, Int> = mutableMapOf()

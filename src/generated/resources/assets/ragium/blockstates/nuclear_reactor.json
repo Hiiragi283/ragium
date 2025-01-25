@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "active=false,facing=east": {
+      "model": "ragium:block/nuclear_reactor",
+      "y": 90
+    },
+    "active=false,facing=north": {
+      "model": "ragium:block/nuclear_reactor"
+    },
+    "active=false,facing=south": {
+      "model": "ragium:block/nuclear_reactor",
+      "y": 180
+    },
+    "active=false,facing=west": {
+      "model": "ragium:block/nuclear_reactor",
+      "y": 270
+    },
+    "active=true,facing=east": {
+      "model": "ragium:block/active_nuclear_reactor",
+      "y": 90
+    },
+    "active=true,facing=north": {
+      "model": "ragium:block/active_nuclear_reactor"
+    },
+    "active=true,facing=south": {
+      "model": "ragium:block/active_nuclear_reactor",
+      "y": 180
+    },
+    "active=true,facing=west": {
+      "model": "ragium:block/active_nuclear_reactor",
+      "y": 270
+    }
+  }
+}

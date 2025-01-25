@@ -140,22 +140,6 @@ enum class RagiumFluids(
                         ),
                     )
                 }
-                /*REGISTER.register("flowing_" + fluid.serializedName) { _: ResourceLocation ->
-                    BaseFlowingFluid.Flowing(fluid.property)
-                }
-                // Block
-                RagiumBlocks.REGISTER.registerBlock(fluid.serializedName) { prop: BlockBehaviour.Properties ->
-                    LiquidBlock(
-                        fluid.stillHolder.get(),
-                        prop
-                            .noCollission()
-                            .strength(100f)
-                            .noLootTable()
-                            .replaceable()
-                            .pushReaction(PushReaction.DESTROY)
-                            .liquid(),
-                    )
-                }*/
             }
 
             TYPE_REGISTER.register(eventBus)
@@ -179,7 +163,6 @@ enum class RagiumFluids(
         val floatingTex: ResourceLocation = stillTex,
         val overTex: ResourceLocation? = null,
     ) {
-        EXPLOSIVE,
         GASEOUS(ResourceLocation.withDefaultNamespace("block/white_concrete")),
         HONEY(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
         LIQUID,

@@ -7,6 +7,13 @@ import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.DeferredBlock
 
 interface HTBlockContent : HTContent<Block> {
+    companion object {
+        @JvmStatic
+        fun of(holder: DeferredBlock<*>): HTBlockContent = object : HTBlockContent {
+            override val holder: DeferredBlock<out Block> = holder
+        }
+    }
+
     val blockId: ResourceLocation
         get() = id.withPrefix("block/")
 

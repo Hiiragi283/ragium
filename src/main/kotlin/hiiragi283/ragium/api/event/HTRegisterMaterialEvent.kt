@@ -1,5 +1,7 @@
-package hiiragi283.ragium.api.material
+package hiiragi283.ragium.api.event
 
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialType
 import net.neoforged.bus.api.Event
 import net.neoforged.fml.event.IModBusEvent
 import java.util.function.BiConsumer

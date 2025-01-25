@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe.condition
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -30,8 +30,8 @@ data class HTProcessorCatalystCondition(val ingredient: Ingredient) : HTMachineR
             .withStyle(ChatFormatting.GREEN)
 
     override fun test(level: Level, pos: BlockPos): Boolean {
-        val entry: HTMachineRegistry.Entry = level.getMachineEntity(pos)?.getEntryOrNull() ?: return false
-        val catalystSlot: Int = entry[HTMachinePropertyKeys.CATALYST_SLOT] ?: return false
+        val propertyHolder: HTPropertyHolder = level.getMachineEntity(pos)?.machineKey?.getProperty() ?: return false
+        val catalystSlot: Int = propertyHolder[HTMachinePropertyKeys.CATALYST_SLOT] ?: return false
         val stackIn: ItemStack =
             level.getMachineEntity(pos)?.getItemHandler(null)?.getStackInSlot(catalystSlot) ?: return false
         return ingredient.test(stackIn)

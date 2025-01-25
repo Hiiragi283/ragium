@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "active=false,facing=east": {
+      "model": "ragium:block/rock_generator",
+      "y": 90
+    },
+    "active=false,facing=north": {
+      "model": "ragium:block/rock_generator"
+    },
+    "active=false,facing=south": {
+      "model": "ragium:block/rock_generator",
+      "y": 180
+    },
+    "active=false,facing=west": {
+      "model": "ragium:block/rock_generator",
+      "y": 270
+    },
+    "active=true,facing=east": {
+      "model": "ragium:block/active_rock_generator",
+      "y": 90
+    },
+    "active=true,facing=north": {
+      "model": "ragium:block/active_rock_generator"
+    },
+    "active=true,facing=south": {
+      "model": "ragium:block/active_rock_generator",
+      "y": 180
+    },
+    "active=true,facing=west": {
+      "model": "ragium:block/active_rock_generator",
+      "y": 270
+    }
+  }
+}

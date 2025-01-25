@@ -65,10 +65,6 @@ data object RagiumAPI {
         @JvmField
         val MACHINE_TIER: BlockCapability<HTMachineTier, Void?> =
             BlockCapability.createVoid(id("machine_tier"), HTMachineTier::class.java)
-
-        @JvmField
-        val HEATING_TIER: BlockCapability<HTMachineTier, Direction?> =
-            BlockCapability.createSided(id("heating_tier"), HTMachineTier::class.java)
     }
 
     object DataMapTypes {

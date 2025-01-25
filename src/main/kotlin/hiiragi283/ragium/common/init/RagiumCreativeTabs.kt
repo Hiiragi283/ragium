@@ -91,7 +91,8 @@ object RagiumCreativeTabs {
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
                         RagiumAPI
                             .machineRegistry
-                            .blocks
+                            .blockMap
+                            .values
                             .forEach(output::accept)
                     }
 

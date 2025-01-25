@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialProvider
@@ -54,21 +53,21 @@ internal object RagiumEvents {
     @SubscribeEvent
     fun addBlockToBlockEntity(event: BlockEntityTypeAddBlocksEvent) {
         fun bindMachine(type: Supplier<out BlockEntityType<*>>, machine: HTMachineKey) {
-            val entry: HTMachineRegistry.Entry = machine.getEntryOrNull() ?: return
-            event.modify(type.get(), entry.get())
+            val content: HTBlockContent = machine.getBlockOrNull() ?: return
+            event.modify(type.get(), content.get())
         }
 
-        fun bindMachines(type: Supplier<out BlockEntityType<*>>, machines: Collection<HTMachineKey>) {
-            machines.forEach { machine: HTMachineKey -> bindMachine(type, machine) }
+        fun bindAllMachines(type: Supplier<out BlockEntityType<*>>) {
+            HTMachineKey.allKeys.forEach { machine: HTMachineKey -> bindMachine(type, machine) }
         }
 
-        bindMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR, RagiumAPI.machineRegistry.keys)
+        bindAllMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.COMBUSTION_GENERATOR)
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.GAS_TURBINE)
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.THERMAL_GENERATOR)
 
-        bindMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR, RagiumAPI.machineRegistry.keys)
-        bindMachines(RagiumBlockEntityTypes.LARGE_PROCESSOR, RagiumAPI.machineRegistry.keys)
+        bindAllMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
+        bindAllMachines(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         bindMachine(RagiumBlockEntityTypes.DISTILLATION_TOWER, RagiumMachineKeys.DISTILLATION_TOWER)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 

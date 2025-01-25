@@ -47,7 +47,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
 
-            addAll(RagiumAPI.machineRegistry.blocks)
+            addAll(RagiumAPI.machineRegistry.blockMap.values)
         }.map(Supplier<out Block>::get)
             .forEach(::dropSelf)
 

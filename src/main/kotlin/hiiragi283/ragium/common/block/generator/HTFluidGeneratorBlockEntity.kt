@@ -24,7 +24,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 class HTFluidGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.FLUID_GENERATOR, pos, state) {
     val fuelData: Set<HTGeneratorFuel>?
-        get() = getEntryOrNull()?.get(HTMachinePropertyKeys.GENERATOR_FUEL)
+        get() = machineKey.getProperty()[HTMachinePropertyKeys.GENERATOR_FUEL]
 
     private val tank: HTTieredFluidTank = object : HTTieredFluidTank(this@HTFluidGeneratorBlockEntity) {
         override fun isFluidValid(stack: FluidStack): Boolean {

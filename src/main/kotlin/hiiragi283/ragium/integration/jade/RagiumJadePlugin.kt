@@ -1,7 +1,18 @@
 package hiiragi283.ragium.integration.jade
 
+import com.mojang.logging.LogUtils
+import org.slf4j.Logger
 import snownee.jade.api.IWailaPlugin
 import snownee.jade.api.WailaPlugin
 
 @WailaPlugin
-class RagiumJadePlugin : IWailaPlugin
+class RagiumJadePlugin : IWailaPlugin {
+    companion object {
+        @JvmStatic
+        private val LOGGER: Logger = LogUtils.getLogger()
+    }
+
+    init {
+        LOGGER.info("Jade integration enabled!")
+    }
+}

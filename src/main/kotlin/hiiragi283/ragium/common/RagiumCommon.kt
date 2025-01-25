@@ -1,16 +1,37 @@
 package hiiragi283.ragium.common
 
 import com.mojang.logging.LogUtils
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.event.HTModifyPropertyEvent
+import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.isModLoaded
+import hiiragi283.ragium.api.machine.HTGeneratorFuel
+import hiiragi283.ragium.api.machine.HTMachineEntityFactory
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTRegisterMaterialEvent
+import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeValidator
+import hiiragi283.ragium.api.tag.RagiumFluidTags
+import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
+import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
+import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity
+import hiiragi283.ragium.common.block.processor.HTLargeProcessorBlockEntity
+import hiiragi283.ragium.common.block.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.integration.RagiumEvilIntegration
 import hiiragi283.ragium.integration.RagiumMekIntegration
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -19,7 +40,11 @@ import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent
+import net.neoforged.neoforge.fluids.FluidType
 import org.slf4j.Logger
+import java.util.function.BiFunction
+import java.util.function.BiPredicate
+import java.util.function.UnaryOperator
 
 @Mod(RagiumAPI.MOD_ID)
 class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
@@ -29,7 +54,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     }
 
     init {
+        eventBus.addListener(EventPriority.HIGHEST, ::modifyMachineProperties)
         eventBus.addListener(EventPriority.HIGHEST, ::registerMaterial)
+
         eventBus.addListener(::construct)
         eventBus.addListener(::commonSetup)
         eventBus.addListener(::sendMessage)
@@ -42,7 +69,10 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
         RagiumComponentTypes.REGISTER.register(eventBus)
 
-        HTMachineRegistryImpl.initRegistry()
+        RagiumMachineKeys
+        RagiumMaterialKeys
+
+        HTMachineRegistryImpl.registerBlocks()
 
         RagiumFluids.register(eventBus)
         RagiumBlocks.REGISTER.register(eventBus)
@@ -63,6 +93,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun construct(event: FMLConstructModEvent) {
+        HTMachineRegistryImpl.modifyProperties()
+        
         HTMaterialRegistryImpl.initRegistry()
     }
 
@@ -74,9 +106,130 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         LOGGER.info("Sent IMC Messages!")
     }
 
+    //    Machine    //
+
+    private fun modifyMachineProperties(event: HTModifyPropertyEvent.Machine) {
+        fun HTPropertyHolderBuilder.putFactory(
+            factory: BlockEntityType.BlockEntitySupplier<out HTMachineBlockEntity>,
+        ): HTPropertyHolderBuilder =
+            put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(factory::create))
+
+        fun HTPropertyHolderBuilder.putFactory(factory: HTMachineEntityFactory): HTPropertyHolderBuilder =
+            put(HTMachinePropertyKeys.MACHINE_FACTORY, factory)
+
+        fun HTPropertyHolderBuilder.putValidator(validator: HTMachineRecipeValidator): HTPropertyHolderBuilder =
+            put(HTMachinePropertyKeys.RECIPE_VALIDATOR, validator)
+
+        // Consumer
+
+        // Generator
+        event.getBuilder(RagiumMachineKeys.COMBUSTION_GENERATOR)
+            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(
+                HTMachinePropertyKeys.GENERATOR_FUEL,
+                setOf(
+                    HTGeneratorFuel(RagiumFluidTags.NON_NITRO_FUEL, FluidType.BUCKET_VOLUME / 10),
+                    HTGeneratorFuel(RagiumFluidTags.NITRO_FUEL, FluidType.BUCKET_VOLUME / 100),
+                ),
+            )
+
+        event.getBuilder(RagiumMachineKeys.GAS_TURBINE)
+            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(
+                HTMachinePropertyKeys.GENERATOR_FUEL,
+                setOf(
+                    HTGeneratorFuel(RagiumFluids.METHANE, FluidType.BUCKET_VOLUME / 10),
+                    HTGeneratorFuel(RagiumFluids.ETHENE, FluidType.BUCKET_VOLUME / 20),
+                    HTGeneratorFuel(RagiumFluids.ACETYLENE, FluidType.BUCKET_VOLUME / 50),
+                ),
+            )
+
+        event.getBuilder(RagiumMachineKeys.NUCLEAR_REACTOR)
+            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(
+                HTMachinePropertyKeys.GENERATOR_FUEL,
+                setOf(
+                    HTGeneratorFuel(RagiumFluidTags.NUCLEAR_FUEL, FluidType.BUCKET_VOLUME / 10),
+                ),
+            )
+
+        event.getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
+            .putFactory(::HTDefaultGeneratorBlockEntity)
+            .put(
+                HTMachinePropertyKeys.GENERATOR_PREDICATE,
+                BiPredicate { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay },
+            ).put(
+                HTMachinePropertyKeys.BLOCK_MODEL_MAPPER,
+                BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/solar_panel") },
+            ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
+
+        event.getBuilder(RagiumMachineKeys.STEAM_GENERATOR)
+
+        event.getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
+            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(
+                HTMachinePropertyKeys.GENERATOR_FUEL,
+                setOf(
+                    HTGeneratorFuel(RagiumFluidTags.THERMAL_FUEL, FluidType.BUCKET_VOLUME / 10),
+                ),
+            )
+
+        event.getBuilder(RagiumMachineKeys.VIBRATION_GENERATOR)
+
+        // Processor
+        RagiumMachineKeys.PROCESSORS
+            .map(event::getBuilder)
+            .forEach { builder: HTPropertyHolderBuilder ->
+                builder.putFactory(::HTDefaultProcessorBlockEntity)
+                builder.put(HTMachinePropertyKeys.CATALYST_SLOT, 2)
+            }
+
+        event.getBuilder(RagiumMachineKeys.BLAST_FURNACE)
+            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
+
+        event.getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
+
+        event.getBuilder(RagiumMachineKeys.CUTTING_MACHINE)
+
+        event.getBuilder(RagiumMachineKeys.DISTILLATION_TOWER)
+            .putFactory(::HTDistillationTowerBlockEntity)
+            .put(HTMachinePropertyKeys.CATALYST_SLOT, 1)
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
+            .putValidator { recipe: HTMachineRecipe ->
+                when {
+                    recipe.itemInputs.isNotEmpty() -> DataResult.error { "Distillation tower recipe not accepts item inputs!" }
+                    recipe.fluidInputs.size != 1 -> DataResult.error { "Distillation tower recipe should have only one fluid input!" }
+                    // recipe.catalyst.isEmpty -> DataResult.error { "Distillation tower recipe requires catalyst!" }
+                    recipe.getItemOutput(1) != null -> DataResult.error { "Distillation tower recipe should have one item output!" }
+                    else -> DataResult.success(recipe)
+                }
+            }
+
+        event.getBuilder(RagiumMachineKeys.GROWTH_CHAMBER)
+
+        event.getBuilder(RagiumMachineKeys.LASER_TRANSFORMER)
+
+        event.getBuilder(RagiumMachineKeys.MIXER)
+            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
+            .put(
+                HTMachinePropertyKeys.BLOCK_MODEL_MAPPER,
+                BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/mixer") },
+            ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
+
+        event.getBuilder(RagiumMachineKeys.MULTI_SMELTER)
+            .putFactory(::HTMultiSmelterBlockEntity)
+            .remove(HTMachinePropertyKeys.CATALYST_SLOT)
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
+    }
+
     //    Material    //
 
-    fun registerMaterial(event: HTRegisterMaterialEvent) {
+    private fun registerMaterial(event: HTRegisterMaterialEvent) {
         // Alloy
         event.register(RagiumMaterialKeys.DEEP_STEEL, HTMaterialType.ALLOY)
         event.register(RagiumMaterialKeys.NETHERITE, HTMaterialType.ALLOY)

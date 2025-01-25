@@ -3,6 +3,8 @@ package hiiragi283.ragium.common.internal
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.event.HTModifyPropertyEvent
+import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.mutableMultiMapOf
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.toDataResult
@@ -64,7 +66,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
     private fun modifyProperties() {
         val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()
-        ModLoader.postEvent(HTModifyPropertyEvent { propertyCache.computeIfAbsent(it) { HTPropertyHolderBuilder() } })
+        ModLoader.postEvent(HTModifyPropertyEvent.Material { propertyCache.computeIfAbsent(it) { HTPropertyHolderBuilder() } })
         this.propertyMap = propertyCache.mapValues { (_, builder: HTPropertyHolderBuilder) -> builder.build() }
         LOGGER.info("Modified material properties!")
     }

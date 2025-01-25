@@ -2,9 +2,13 @@ package hiiragi283.ragium.integration.jei
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.buildMultiMap
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTGeneratorFuel
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -92,7 +96,7 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerCategories(registration: IRecipeCategoryRegistration) {
         val jeiHelper: IJeiHelpers = registration.jeiHelpers
         val guiHelper: IGuiHelper = jeiHelper.guiHelper
-        RagiumAPI.machineRegistry.keys.forEach { key: HTMachineKey ->
+        HTMachineKey.allKeys.forEach { key: HTMachineKey ->
             registration.addRecipeCategories(HTMachineRecipeCategory(key, guiHelper))
         }
 
@@ -113,8 +117,9 @@ class RagiumJEIPlugin : IModPlugin {
             // Process Recipe
             recipes.forEach { holder: RecipeHolder<HTMachineRecipe> -> put(holder.value.machineKey, holder) }
             // Generator Fuel
-            RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
-                val fuelData: Set<HTGeneratorFuel> = entry[HTMachinePropertyKeys.GENERATOR_FUEL] ?: return@forEach
+            HTMachineKey.allKeys.forEach { key: HTMachineKey ->
+                val fuelData: Set<HTGeneratorFuel> =
+                    key.getProperty()[HTMachinePropertyKeys.GENERATOR_FUEL] ?: return@forEach
                 putAll(
                     key,
                     fuelData.map { (fuel: TagKey<Fluid>, amount: Int) ->
@@ -167,8 +172,8 @@ class RagiumJEIPlugin : IModPlugin {
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         // Machine
-        RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
-            val stack = ItemStack(entry)
+        RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: HTBlockContent) ->
+            val stack = ItemStack(content)
             registration.addRecipeCatalysts(getRecipeType(key), stack)
             if (key == RagiumMachineKeys.MULTI_SMELTER) {
                 registration.addRecipeCatalysts(RecipeTypes.SMELTING, stack)

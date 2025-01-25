@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.common.init.RagiumBlockProperties
@@ -82,7 +81,6 @@ class HTMachineBlock(properties: Properties) : HTEntityBlock(properties) {
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
         val machineKey: HTMachineKey = machineKey ?: return null
-        val entry: HTMachineRegistry.Entry = machineKey.getEntryOrNull() ?: return null
-        return entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, machineKey)
+        return machineKey.getProperty()[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, machineKey)
     }
 }

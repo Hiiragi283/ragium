@@ -1,10 +1,11 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
+import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.intText
-import hiiragi283.ragium.api.extension.toDataResult
+import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
@@ -16,18 +17,16 @@ import java.util.function.Consumer
 
 /**
  * 機械の種類を管理するキー
- *
- * すべてのキーは[HTMachineRegistry]に登録される必要があります。
- *
- * @see [hiiragi283.ragium.api.RagiumPlugin.registerMachine]
  */
 class HTMachineKey private constructor(val name: String) : Comparable<HTMachineKey> {
     companion object {
         private val instances: MutableMap<String, HTMachineKey> = mutableMapOf()
 
         @JvmField
-        val CODEC: Codec<HTMachineKey> =
-            Codec.STRING.xmap(Companion::of, HTMachineKey::name).validate(::validate)
+        val CODEC: Codec<HTMachineKey> = Codec.STRING.xmap(Companion::of, HTMachineKey::name)
+
+        @JvmField
+        val KEYABLE: Keyable = Keyable.forStrings { allKeys.stream().map(HTMachineKey::name) }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineKey> =
@@ -40,9 +39,8 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
         fun of(name: String): HTMachineKey = instances.computeIfAbsent(name, ::HTMachineKey)
 
         @JvmStatic
-        fun validate(key: HTMachineKey): DataResult<HTMachineKey> = key
-            .takeIf(RagiumAPI.machineRegistry::contains)
-            .toDataResult { "Unknown machine key: $key" }
+        val allKeys: List<HTMachineKey>
+            get() = instances.values.toList()
     }
 
     val translationKey: String = "machine_type.$name"
@@ -53,15 +51,11 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
     val descriptionText: MutableComponent
         get() = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
 
-    fun getEntry(): HTMachineRegistry.Entry = RagiumAPI.machineRegistry.getEntry(this)
+    fun getBlockOrNull(): HTBlockContent? = RagiumAPI.machineRegistry.getBlockOrNull(this)
 
-    /**
-     * [HTMachineRegistry.Entry]を返します。
-     * @return このキーが登録されていない場合はnullを返す
-     */
-    fun getEntryOrNull(): HTMachineRegistry.Entry? = RagiumAPI.machineRegistry.getEntryOrNull(this)
+    fun getBlock(): HTBlockContent = RagiumAPI.machineRegistry.getBlock(this)
 
-    fun getEntryData(): DataResult<HTMachineRegistry.Entry> = getEntryOrNull().toDataResult { "Unknown machine key: $name" }
+    fun getProperty(): HTPropertyHolder = RagiumAPI.machineRegistry.getProperty(this)
 
     fun appendTooltip(consumer: Consumer<Component>, tier: HTMachineTier, allowDescription: Boolean = true) {
         consumer.accept(
@@ -90,12 +84,6 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
             consumer.accept(descriptionText)
         }
     }
-
-    fun isConsumer(): Boolean = getEntryOrNull()?.type == HTMachineType.CONSUMER
-
-    fun isGenerator(): Boolean = getEntryOrNull()?.type == HTMachineType.GENERATOR
-
-    fun isProcessor(): Boolean = getEntryOrNull()?.type == HTMachineType.PROCESSOR
 
     override fun toString(): String = "HTMachineKey[$name]"
 

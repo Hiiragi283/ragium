@@ -173,7 +173,7 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
             iconCache!!
         } else {
             machine
-                .getEntryOrNull()
+                .getBlockOrNull()
                 ?.let(::ItemStack)
                 ?.also { iconCache = it }
                 ?: return null

@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -63,10 +63,11 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
         // Machine
-        RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+        RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, content: HTBlockContent?, property: HTPropertyHolder ->
+            if (content == null) return@forEachEntries
             val modelId: ResourceLocation =
-                entry.getOrDefault(HTMachinePropertyKeys.ITEM_MODEL_MAPPER).apply(key, false)
-            withUncheckedParent(entry, modelId)
+                key.getProperty().getOrDefault(HTMachinePropertyKeys.ITEM_MODEL_MAPPER).apply(key, false)
+            withUncheckedParent(content, modelId)
         }
     }
 

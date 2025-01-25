@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
 import com.mojang.logging.LogUtils
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
@@ -53,12 +52,6 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     val definition: HTMachineDefinition
         get() = HTMachineDefinition(machineKey, machineTier)
-
-    fun getEntry(): HTMachineRegistry.Entry = machineKey.getEntry()
-
-    fun getEntryOrNull(): HTMachineRegistry.Entry? = machineKey.getEntryOrNull()
-
-    fun getEntryData(): DataResult<HTMachineRegistry.Entry> = machineKey.getEntryData()
 
     val front: Direction
         get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
@@ -183,7 +176,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
                     return
                 }
             }.onSuccess {
-                getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
+                machineKey.getProperty().ifPresent(HTMachinePropertyKeys.SOUND) {
                     serverLevel.playSound(null, pos, it, SoundSource.BLOCKS, 0.2f, 1.0f)
                 }
                 activateState(serverLevel, pos, true)
@@ -233,7 +226,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     final override var showPreview: Boolean = false
 
-    override fun getMultiblockMap(): HTMultiblockMap.Relative? = getEntryOrNull()?.get(HTMachinePropertyKeys.MULTIBLOCK_MAP)
+    override fun getMultiblockMap(): HTMultiblockMap.Relative? = machineKey.getProperty()[HTMachinePropertyKeys.MULTIBLOCK_MAP]
 
     final override fun getController(): HTControllerDefinition? = ifPresentWorld { HTControllerDefinition(it, blockPos, front) }
 

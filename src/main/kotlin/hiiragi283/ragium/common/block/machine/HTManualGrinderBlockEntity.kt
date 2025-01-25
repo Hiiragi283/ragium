@@ -83,7 +83,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                 stackIn.shrink(recipe.itemInputs.getOrNull(0)?.count() ?: 0)
                 // Play sound if present
                 RagiumMachineKeys.GRINDER
-                    .getEntry()
+                    .getProperty()
                     .ifPresent(HTMachinePropertyKeys.SOUND) { level.playSound(null, pos, it, SoundSource.BLOCKS) }
             }.onFailure { _: Throwable ->
                 // Drop input

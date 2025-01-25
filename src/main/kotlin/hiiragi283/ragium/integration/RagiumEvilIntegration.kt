@@ -1,9 +1,9 @@
 package hiiragi283.ragium.integration
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTRegisterMaterialEvent
 import net.neoforged.bus.api.IEventBus
 import org.slf4j.Logger
 

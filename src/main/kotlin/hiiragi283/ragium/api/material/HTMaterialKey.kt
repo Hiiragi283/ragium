@@ -15,7 +15,7 @@ import net.minecraft.network.codec.StreamCodec
  *
  * すべてのキーは[HTMaterialRegistry]に登録される必要があります。
  *
- * @see [HTRegisterMaterialEvent]
+ * @see [hiiragi283.ragium.api.event.HTRegisterMaterialEvent]
  */
 class HTMaterialKey private constructor(val name: String) : Comparable<HTMaterialKey> {
     companion object {
