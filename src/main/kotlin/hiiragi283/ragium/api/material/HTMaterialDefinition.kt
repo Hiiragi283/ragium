@@ -12,8 +12,8 @@ data class HTMaterialDefinition(val tagPrefix: HTTagPrefix, val material: HTMate
         val CODEC: Codec<HTMaterialDefinition> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    HTTagPrefix.CODEC.fieldOf("prefix").forGetter(HTMaterialDefinition::tagPrefix),
-                    HTMaterialKey.CODEC.fieldOf("material").forGetter(HTMaterialDefinition::material),
+                    HTTagPrefix.FIELD_CODEC.forGetter(HTMaterialDefinition::tagPrefix),
+                    HTMaterialKey.FIELD_CODEC.forGetter(HTMaterialDefinition::material),
                 ).apply(instance, ::HTMaterialDefinition)
         }
     }

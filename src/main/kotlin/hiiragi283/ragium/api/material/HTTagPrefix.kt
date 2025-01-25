@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
@@ -46,6 +47,9 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     companion object {
         @JvmField
         val CODEC: Codec<HTTagPrefix> = stringCodec(HTTagPrefix.entries)
+
+        @JvmField
+        val FIELD_CODEC: MapCodec<HTTagPrefix> = CODEC.fieldOf("prefix")
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTTagPrefix> = stringStreamCodec(HTTagPrefix.entries)

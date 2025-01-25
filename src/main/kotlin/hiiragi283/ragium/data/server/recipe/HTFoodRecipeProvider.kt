@@ -86,7 +86,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             ).unlockedBy("has_dough", has(RagiumItems.DOUGH))
             .save(output)
     }
-    
+
     private fun registerPlant(output: RecipeOutput) {
         mapOf(
             ItemTags.LEAVES to 50,

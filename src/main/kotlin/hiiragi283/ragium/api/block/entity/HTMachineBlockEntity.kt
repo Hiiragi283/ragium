@@ -61,7 +61,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
             machineTier = defaultTier
         }
     }
-    
+
     val front: Direction
         get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
 
@@ -226,7 +226,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     ) {
         super.onRemove(state, level, pos, newState, movedByPiston)
     }
-    
+
     val containerData: ContainerData = object : ContainerData {
         override fun get(index: Int): Int = when (index) {
             0 -> ticks

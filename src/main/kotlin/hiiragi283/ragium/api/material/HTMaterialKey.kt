@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toDataResult
 import io.netty.buffer.ByteBuf
@@ -27,6 +28,9 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
                     .takeIf(RagiumAPI.materialRegistry::contains)
                     .toDataResult { "Unknown material key: $key" }
             }
+
+        @JvmField
+        val FIELD_CODEC: MapCodec<HTMaterialKey> = CODEC.fieldOf("material")
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTMaterialKey> =

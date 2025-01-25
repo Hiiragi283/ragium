@@ -41,7 +41,7 @@ class HTMachineBlock(properties: Properties) : HTEntityBlock(properties) {
     ) {
         machineKey?.appendTooltip(
             tooltipComponents::add,
-            stack.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC
+            stack.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC,
         )
     }
 

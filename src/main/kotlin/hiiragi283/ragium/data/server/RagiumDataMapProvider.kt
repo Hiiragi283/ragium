@@ -76,7 +76,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         tierBuilder.addContent(RagiumMachineKeys.EXTRACTOR.getBlock(), HTMachineTier.ADVANCED)
         tierBuilder.addContent(RagiumMachineKeys.GRINDER.getBlock(), HTMachineTier.ADVANCED)
         tierBuilder.addContent(RagiumMachineKeys.GROWTH_CHAMBER.getBlock(), HTMachineTier.ADVANCED)
-        
+
         tierBuilder.addContent(RagiumMachineKeys.LASER_TRANSFORMER.getBlock(), HTMachineTier.ELITE)
         tierBuilder.addContent(RagiumMachineKeys.MULTI_SMELTER.getBlock(), HTMachineTier.ELITE)
         // Temperature

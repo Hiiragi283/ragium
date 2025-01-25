@@ -86,7 +86,7 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
                 ?: listOf(
                     ItemStack(Items.BOOK).apply {
                         set(DataComponents.CUSTOM_NAME, condition.text)
-                    }
+                    },
                 )
             builder
                 .addInputSlot(5 + 9 + 3 * 18, getPosition(y))
