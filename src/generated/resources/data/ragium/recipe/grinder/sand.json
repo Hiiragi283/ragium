@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:sandstone/uncolored_blocks"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "minecraft:sand"
+    },
+    {
+      "count": 1,
+      "id": "ragium:niter_dust"
+    }
+  ],
+  "machine_type": "grinder"
+}

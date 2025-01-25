@@ -46,8 +46,11 @@ object RagiumCreativeTabs {
                     RagiumItems.FOODS.forEach(output::accept)
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
+                    output.accept(RagiumItems.SILKY_PICKAXE)
+
                     output.accept(RagiumItems.DYNAMITE)
                     output.accept(RagiumItems.SLOT_LOCK)
+
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
                     RagiumItems.CATALYSTS.forEach(output::accept)
                     // Circuits
@@ -78,12 +81,12 @@ object RagiumCreativeTabs {
 
                         add(RagiumBlocks.SHAFT)
                         add(RagiumBlocks.CHEMICAL_GLASS)
-                        // Crate
-                        // Drum
+                        // Storage
                         addAll(RagiumBlocks.Drums.entries)
                         // Manual Machines
                         add(RagiumBlocks.MANUAL_GRINDER)
                         // Utilities
+                        add(RagiumBlocks.CATALYST_ADDON)
                         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
                     }.forEach(output::accept)
 

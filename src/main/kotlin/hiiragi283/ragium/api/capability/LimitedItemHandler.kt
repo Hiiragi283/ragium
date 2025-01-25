@@ -25,9 +25,8 @@ class LimitedItemHandler(private val ioProvider: Function<Int, HTStorageIO>, del
             mapOf(
                 0 to HTStorageIO.INPUT,
                 1 to HTStorageIO.INPUT,
-                2 to HTStorageIO.INTERNAL,
+                2 to HTStorageIO.OUTPUT,
                 3 to HTStorageIO.OUTPUT,
-                4 to HTStorageIO.OUTPUT,
             ),
             Suppliers.ofInstance(delegate),
         )
@@ -38,10 +37,9 @@ class LimitedItemHandler(private val ioProvider: Function<Int, HTStorageIO>, del
                 0 to HTStorageIO.INPUT,
                 1 to HTStorageIO.INPUT,
                 2 to HTStorageIO.INPUT,
-                3 to HTStorageIO.INTERNAL,
+                3 to HTStorageIO.OUTPUT,
                 4 to HTStorageIO.OUTPUT,
                 5 to HTStorageIO.OUTPUT,
-                6 to HTStorageIO.OUTPUT,
             ),
             Suppliers.ofInstance(delegate),
         )

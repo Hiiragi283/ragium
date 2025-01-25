@@ -48,6 +48,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         registerCatalysts(output)
         registerPressMolds(output)
 
+        registerTool(output)
         registerMisc(output)
 
         registerSnow(output)
@@ -364,7 +365,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         register(RagiumItems.PLATE_PRESS_MOLD, HTTagPrefix.PLATE)
     }
 
-    private fun registerMisc(output: RecipeOutput) {
+    private fun registerTool(output: RecipeOutput) {
         ShapedRecipeBuilder
             .shaped(RecipeCategory.TOOLS, RagiumItems.FORGE_HAMMER)
             .pattern(" AA")
@@ -376,6 +377,27 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
 
         ShapedRecipeBuilder
+            .shaped(RecipeCategory.TOOLS, RagiumItems.SILKY_CRYSTAL)
+            .pattern("ABA")
+            .pattern("BCB")
+            .pattern("ABA")
+            .define('A', ItemTags.WOOL)
+            .define('B', Items.PAPER)
+            .define('C', HTTagPrefix.GEM, RagiumMaterialKeys.EMERALD)
+            .unlockedBy("has_emerald", has(HTTagPrefix.GEM, RagiumMaterialKeys.EMERALD))
+            .savePrefixed(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.TOOLS, RagiumItems.SILKY_PICKAXE)
+            .pattern("AAA")
+            .pattern(" B ")
+            .pattern(" B ")
+            .define('A', RagiumItems.SILKY_CRYSTAL)
+            .define('B', Tags.Items.RODS_WOODEN)
+            .unlockedBy("has_crystal", has(RagiumItems.SILKY_CRYSTAL))
+            .savePrefixed(output)
+
+        ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumItems.SLOT_LOCK, 3)
             .pattern("AAA")
             .pattern("BBB")
@@ -384,7 +406,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('B', Tags.Items.DYES_WHITE)
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
             .savePrefixed(output)
+    }
 
+    private fun registerMisc(output: RecipeOutput) {
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumItems.SOLAR_PANEL)
             .pattern("AAA")

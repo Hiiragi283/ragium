@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "ragium:silky_crystal"
+    },
+    "B": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " B ",
+    " B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:silky_pickaxe"
+  }
+}

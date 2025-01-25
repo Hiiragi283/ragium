@@ -1,14 +1,12 @@
 package hiiragi283.ragium.common.recipe.condition
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.common.block.machine.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.ItemStack
@@ -30,10 +28,14 @@ data class HTProcessorCatalystCondition(val ingredient: Ingredient) : HTMachineR
             .withStyle(ChatFormatting.GREEN)
 
     override fun test(level: Level, pos: BlockPos): Boolean {
-        val propertyHolder: HTPropertyHolder = level.getMachineEntity(pos)?.machineKey?.getProperty() ?: return false
-        val catalystSlot: Int = propertyHolder[HTMachinePropertyKeys.CATALYST_SLOT] ?: return false
-        val stackIn: ItemStack =
-            level.getMachineEntity(pos)?.getItemHandler(null)?.getStackInSlot(catalystSlot) ?: return false
-        return ingredient.test(stackIn)
+        for (direction: Direction in Direction.entries) {
+            val posTo: BlockPos = pos.relative(direction)
+            val catalystStack: ItemStack =
+                (level.getBlockEntity(posTo) as? HTCatalystAddonBlockEntity)?.catalystStack ?: continue
+            if (ingredient.test(catalystStack)) {
+                return true
+            }
+        }
+        return false
     }
 }

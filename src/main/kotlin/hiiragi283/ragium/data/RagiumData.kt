@@ -33,7 +33,7 @@ object RagiumData {
         val provider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
         // server
         generator.addProvider(event.includeServer(), AdvancementProviderImpl(output, provider, helper))
-        
+
         generator.addProvider(
             event.includeServer(),
             LootTableProvider(

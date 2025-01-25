@@ -25,6 +25,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
 
+        add(RagiumBlocks.CATALYST_ADDON, "触媒アドオン")
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
 
         add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "ラギ合金ブロック（装飾）")
@@ -99,6 +100,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.AMBROSIA, "アンブロシア")
 
         add(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
+        add(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
+
         add(RagiumItems.DYNAMITE, "ダイナマイト")
         add(RagiumItems.SLOT_LOCK, "スロットロック")
 
@@ -119,12 +122,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumItems.DEEPANT, "ディーパント")
         add(RagiumItems.ENGINE, "V8エンジン")
-        add(RagiumItems.GLASS_SHARD, "ガラスの破片")
+        // add(RagiumItems.GLASS_SHARD, "ガラスの破片")
         add(RagiumItems.LED, "L.E.D.")
         add(RagiumItems.LUMINESCENCE_DUST, "ルミネッセンスダスト")
         add(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RESIDUAL_COKE, "残渣油コークス")
+        add(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
         add(RagiumItems.SLAG, "スラグ")
         add(RagiumItems.SOAP, "石鹸")
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")

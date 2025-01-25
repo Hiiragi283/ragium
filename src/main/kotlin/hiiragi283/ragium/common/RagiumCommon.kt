@@ -185,26 +185,22 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
             .map(event::getBuilder)
             .forEach { builder: HTPropertyHolderBuilder ->
                 builder.putFactory(::HTDefaultProcessorBlockEntity)
-                builder.put(HTMachinePropertyKeys.CATALYST_SLOT, 2)
             }
 
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
             .putFactory(::HTLargeProcessorBlockEntity)
-            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
 
         event
             .getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
             .putFactory(::HTLargeProcessorBlockEntity)
-            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
 
         event.getBuilder(RagiumMachineKeys.CUTTING_MACHINE)
 
         event
             .getBuilder(RagiumMachineKeys.DISTILLATION_TOWER)
             .putFactory(::HTDistillationTowerBlockEntity)
-            .put(HTMachinePropertyKeys.CATALYST_SLOT, 1)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
             .putValidator { recipe: HTMachineRecipe ->
                 when {
@@ -223,7 +219,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         event
             .getBuilder(RagiumMachineKeys.MIXER)
             .putFactory(::HTLargeProcessorBlockEntity)
-            .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
             .put(
                 HTMachinePropertyKeys.BLOCK_MODEL_MAPPER,
                 BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/mixer") },
@@ -232,7 +227,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         event
             .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
             .putFactory(::HTMultiSmelterBlockEntity)
-            .remove(HTMachinePropertyKeys.CATALYST_SLOT)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
     }
 

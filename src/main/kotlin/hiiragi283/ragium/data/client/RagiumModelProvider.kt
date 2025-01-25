@@ -59,6 +59,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             add(RagiumBlocks.MANUAL_GRINDER)
 
+            add(RagiumBlocks.CATALYST_ADDON)
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
@@ -82,6 +83,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             remove(RagiumItems.CHOCOLATE_APPLE)
 
             add(RagiumItems.FORGE_HAMMER)
+            add(RagiumItems.SILKY_PICKAXE)
+
             add(RagiumItems.DYNAMITE)
             add(RagiumItems.SLOT_LOCK)
 

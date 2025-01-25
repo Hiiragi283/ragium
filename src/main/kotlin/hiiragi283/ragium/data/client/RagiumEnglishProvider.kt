@@ -25,6 +25,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
 
+        add(RagiumBlocks.CATALYST_ADDON, "Catalyst Addon")
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
 
         add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "Block of Ragi-Alloy (Decoration)")
@@ -98,6 +99,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.AMBROSIA, "Ambrosia")
 
         add(RagiumItems.FORGE_HAMMER, "Forge Hammer")
+        add(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
+
         add(RagiumItems.DYNAMITE, "Dynamite")
         add(RagiumItems.SLOT_LOCK, "Slot Lock")
 
@@ -118,12 +121,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumItems.DEEPANT, "Deepant")
         add(RagiumItems.ENGINE, "V8 Engine")
-        add(RagiumItems.GLASS_SHARD, "Glass Shard")
+        // add(RagiumItems.GLASS_SHARD, "Glass Shard")
         add(RagiumItems.LED, "L.E.D.")
         add(RagiumItems.LUMINESCENCE_DUST, "Luminescence Dust")
         add(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RESIDUAL_COKE, "Residual Coke")
+        add(RagiumItems.SILKY_CRYSTAL, "Silky Crystal")
         add(RagiumItems.SLAG, "Slag")
         add(RagiumItems.SOAP, "Soap")
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")

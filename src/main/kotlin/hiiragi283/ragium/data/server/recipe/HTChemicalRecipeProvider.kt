@@ -158,6 +158,13 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerNitrogen(output: RecipeOutput) {
+        // Sandstone -> KNO3
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
+            .itemOutput(Items.SAND, 4)
+            .itemOutput(RagiumItems.Dusts.NITER)
+            .save(output)
         // 2x KNO3 + H2SO4 -> 2x HNO3 + K2SO4
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)

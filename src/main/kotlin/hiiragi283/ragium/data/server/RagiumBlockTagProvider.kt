@@ -34,7 +34,7 @@ class RagiumBlockTagProvider(
             addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)
-            
+
             addAll(RagiumAPI.machineRegistry.blockMap.values)
         }.forEach(pickaxe::addElement)
 
@@ -48,6 +48,7 @@ class RagiumBlockTagProvider(
 
             add(RagiumBlocks.MANUAL_GRINDER)
 
+            add(RagiumBlocks.CATALYST_ADDON)
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.forEach(pickaxe::addElement)
 

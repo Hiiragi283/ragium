@@ -28,7 +28,8 @@ data class HTTemperatureCondition private constructor(
         val CODEC: MapCodec<HTTemperatureCondition> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTTemperatureType.CODEC.fieldOf("temperature_type")
+                    HTTemperatureType.CODEC
+                        .fieldOf("temperature_type")
                         .forGetter(HTTemperatureCondition::temperatureType),
                     HTMachineTier.CODEC.fieldOf("min_tier").forGetter(HTTemperatureCondition::minTier),
                     HTMachineTier.CODEC
@@ -39,7 +40,7 @@ data class HTTemperatureCondition private constructor(
                         .forGetter(HTTemperatureCondition::targetSide),
                 ).apply(instance, ::HTTemperatureCondition)
         }
-        
+
         @JvmStatic
         fun heating(
             minTier: HTMachineTier,

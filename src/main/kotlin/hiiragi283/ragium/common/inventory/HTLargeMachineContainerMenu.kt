@@ -10,7 +10,7 @@ import net.neoforged.neoforge.items.ItemStackHandler
 class HTLargeMachineContainerMenu(
     syncId: Int,
     playerInv: Inventory,
-    itemHandler: IItemHandler = ItemStackHandler(7),
+    itemHandler: IItemHandler = ItemStackHandler(6),
     machineEntity: HTMachineBlockEntity? = null,
 ) : HTMachineContainerMenu(
         RagiumMenuTypes.LARGE_MACHINE,
@@ -26,12 +26,10 @@ class HTLargeMachineContainerMenu(
         addSlot(2, 3, 1)
         addFluidSlot(0, 2, 2)
         addFluidSlot(1, 3, 2)
-        // catalyst
-        addSlot(3, 4, 2)
         // outputs
-        addOutputSlot(4, 5, 1)
-        addOutputSlot(5, 6, 1)
-        addOutputSlot(6, 7, 1)
+        addOutputSlot(3, 5, 1)
+        addOutputSlot(4, 6, 1)
+        addOutputSlot(5, 7, 1)
         addFluidSlot(2, 5, 2)
         addFluidSlot(3, 6, 2)
         // player inventory
@@ -41,5 +39,5 @@ class HTLargeMachineContainerMenu(
     }
 
     override val inputSlots: IntRange = (0..2)
-    override val outputSlots: IntRange = (4..6)
+    override val outputSlots: IntRange = (3..5)
 }

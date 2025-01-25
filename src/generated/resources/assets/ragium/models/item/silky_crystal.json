@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/glass_shard"
+    "layer0": "ragium:item/silky_crystal"
   }
 }

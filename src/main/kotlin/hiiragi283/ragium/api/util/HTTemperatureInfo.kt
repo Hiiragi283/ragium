@@ -8,12 +8,13 @@ data class HTTemperatureInfo(val type: HTTemperatureType, val tier: HTMachineTie
     companion object {
         @JvmField
         val CODEC: Codec<HTTemperatureInfo> = RecordCodecBuilder.create { instance ->
-            instance.group(
-                HTTemperatureType.CODEC.fieldOf("type").forGetter(HTTemperatureInfo::type),
-                HTMachineTier.FIELD_CODEC.forGetter(HTTemperatureInfo::tier)
-            ).apply(instance, ::HTTemperatureInfo)
+            instance
+                .group(
+                    HTTemperatureType.CODEC.fieldOf("type").forGetter(HTTemperatureInfo::type),
+                    HTMachineTier.FIELD_CODEC.forGetter(HTTemperatureInfo::tier),
+                ).apply(instance, ::HTTemperatureInfo)
         }
-        
+
         @JvmStatic
         fun heating(tier: HTMachineTier): HTTemperatureInfo = HTTemperatureInfo(HTTemperatureType.HEATING, tier)
 

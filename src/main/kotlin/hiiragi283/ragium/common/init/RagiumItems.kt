@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTCraftingToolItem
 import hiiragi283.ragium.common.item.HTDynamiteItem
+import hiiragi283.ragium.common.item.HTSilkyPickaxeItem
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
@@ -71,6 +72,7 @@ object RagiumItems {
 
             add(RagiumBlocks.MANUAL_GRINDER)
 
+            add(RagiumBlocks.CATALYST_ADDON)
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.forEach(REGISTER::registerSimpleBlockItem)
     }
@@ -167,8 +169,10 @@ object RagiumItems {
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase())
     }
 
+    // val GLASS_SHARD: DeferredItem<Item> = REGISTER.registerSimpleItem("glass_shard")
+
     @JvmField
-    val GLASS_SHARD: DeferredItem<Item> = REGISTER.registerSimpleItem("glass_shard")
+    val SILKY_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("silky_crystal")
 
     @JvmField
     val CRIMSON_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("crimson_crystal")
@@ -193,7 +197,8 @@ object RagiumItems {
 
     @JvmField
     val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
-        GLASS_SHARD,
+        // GLASS_SHARD,
+        SILKY_CRYSTAL,
         CRIMSON_CRYSTAL,
         WARPED_CRYSTAL,
         OBSIDIAN_TEAR,
@@ -368,6 +373,10 @@ object RagiumItems {
     @JvmField
     val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> =
         REGISTER.registerItem("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(63))
+
+    @JvmField
+    val SILKY_PICKAXE: DeferredItem<HTSilkyPickaxeItem> =
+        REGISTER.registerItem("silky_pickaxe", ::HTSilkyPickaxeItem)
 
     @JvmField
     val DYNAMITE: DeferredItem<HTDynamiteItem> =

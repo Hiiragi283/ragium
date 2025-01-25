@@ -1,0 +1,58 @@
+package hiiragi283.ragium.common.block.machine
+
+import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.items.ItemStackHandler
+
+class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity(RagiumBlockEntityTypes.CATALYST_ADDON, pos, state) {
+    private val itemHandler: ItemStackHandler = object : ItemStackHandler(1) {
+        override fun getSlotLimit(slot: Int): Int = 1
+    }
+
+    val catalystStack: ItemStack
+        get() = itemHandler.getStackInSlot(0)
+
+    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        tag.put(ITEM_KEY, itemHandler.serializeNBT(registries))
+    }
+
+    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_KEY))
+    }
+
+    override fun onRightClicked(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult,
+    ): InteractionResult {
+        val stack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
+        if (stack.isEmpty) {
+            // drop catalyst
+            dropStackAt(player, itemHandler.getStackInSlot(0))
+            itemHandler.setStackInSlot(0, ItemStack.EMPTY)
+        } else {
+            // insert catalyst
+            val stackIn: ItemStack = itemHandler.getStackInSlot(0)
+            if (stackIn.isEmpty) {
+                itemHandler.setStackInSlot(0, stack.copy())
+                stack.count = 0
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide)
+    }
+}

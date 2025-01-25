@@ -11,13 +11,14 @@ enum class HTTemperatureType : StringRepresentable {
     HEATING,
     COOLING,
     ;
+
     companion object {
         @JvmField
         val CODEC: Codec<HTTemperatureType> = stringCodec(HTTemperatureType.entries)
-        
+
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTTemperatureType> = stringStreamCodec(HTTemperatureType.entries)
     }
-    
+
     override fun getSerializedName(): String = name.lowercase()
 }

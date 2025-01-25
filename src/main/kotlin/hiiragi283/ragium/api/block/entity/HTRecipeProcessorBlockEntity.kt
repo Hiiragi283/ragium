@@ -32,7 +32,6 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
     protected fun createMachineProcessor(
         itemInputs: IntArray,
         itemOutputs: IntArray,
-        catalystIndex: Int,
         fluidInputs: IntArray,
         fluidOutputs: IntArray,
     ): HTMachineRecipeProcessor = HTMachineRecipeProcessor(
@@ -41,7 +40,6 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
         itemHandler,
         itemInputs,
         itemOutputs,
-        catalystIndex,
         tanks::getOrNull,
         fluidInputs,
         fluidOutputs,

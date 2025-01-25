@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:silky_crystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:shaped/silky_pickaxe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_crystal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:shaped/silky_pickaxe"
+    ]
+  }
+}

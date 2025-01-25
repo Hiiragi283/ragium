@@ -26,9 +26,8 @@ class LimitedFluidHandler(private val ioProvider: Function<Int, HTStorageIO>, pr
             mapOf(
                 0 to HTStorageIO.INPUT,
                 1 to HTStorageIO.INPUT,
-                2 to HTStorageIO.INTERNAL,
+                2 to HTStorageIO.OUTPUT,
                 3 to HTStorageIO.OUTPUT,
-                4 to HTStorageIO.OUTPUT,
             ),
             arrayToMap(delegate),
         )

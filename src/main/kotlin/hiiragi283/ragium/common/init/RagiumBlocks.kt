@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
+import hiiragi283.ragium.common.block.machine.HTCatalystAddonBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.*
@@ -264,6 +265,10 @@ object RagiumBlocks {
         REGISTER.registerBlock("manual_grinder", ::HTManualGrinderBlock, blockProperty(Blocks.BRICKS))
 
     //    Utility    //
+
+    @JvmField
+    val CATALYST_ADDON: DeferredBlock<HTCatalystAddonBlock> =
+        REGISTER.registerBlock("catalyst_addon", ::HTCatalystAddonBlock, blockProperty(Blocks.SMOOTH_STONE))
 
     @JvmField
     val ENERGY_NETWORK_INTERFACE: DeferredBlock<Block> =

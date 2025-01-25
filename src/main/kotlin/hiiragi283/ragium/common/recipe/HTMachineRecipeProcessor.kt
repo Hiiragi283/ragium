@@ -26,7 +26,6 @@ class HTMachineRecipeProcessor(
     val itemHandler: IItemHandler,
     val itemInputs: IntArray,
     val itemOutputs: IntArray,
-    val catalystIndex: Int,
     val fluidTanks: Function<Int, out IFluidTank?>,
     val fluidInputs: IntArray,
     val fluidOutputs: IntArray,
@@ -40,7 +39,6 @@ class HTMachineRecipeProcessor(
                 .map(fluidTanks::apply)
                 .map { tank: IFluidTank? -> tank?.fluid ?: FluidStack.EMPTY }
                 .forEach(this::add)
-            catalyst = itemHandler.getStackInSlot(catalystIndex)
         }
         val recipe: HTMachineRecipe = cache.getFirstMatch(input, level).getOrThrow()
         if (!canAccentOutputs(recipe)) throw HTMachineException.MergeResult(false)

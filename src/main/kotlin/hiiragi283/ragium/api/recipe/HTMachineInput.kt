@@ -15,7 +15,6 @@ import net.neoforged.neoforge.fluids.FluidStack
  * @param tier 機械のティア
  * @param itemInputs アイテムのインプットの一覧
  * @param fluidInputs 液体のインプットの一覧
- * @param catalyst 触媒スロットの[ItemStack]
  */
 class HTMachineInput private constructor(
     val pos: BlockPos,
@@ -23,7 +22,6 @@ class HTMachineInput private constructor(
     val tier: HTMachineTier,
     val itemInputs: List<ItemStack>,
     val fluidInputs: List<FluidStack>,
-    val catalyst: ItemStack,
 ) : RecipeInput {
     companion object {
         @JvmStatic
@@ -38,7 +36,6 @@ class HTMachineInput private constructor(
             tier,
             listOf(input),
             listOf(),
-            ItemStack.EMPTY,
         )
 
         /**
@@ -53,14 +50,13 @@ class HTMachineInput private constructor(
         ): HTMachineInput {
             val itemInputs: MutableList<ItemStack> = mutableListOf()
             val fluidInputs: MutableList<FluidStack> = mutableListOf()
-            val catalyst: ItemStack = Builder(itemInputs, fluidInputs).apply(builderAction).catalyst
+            Builder(itemInputs, fluidInputs).apply(builderAction)
             return HTMachineInput(
                 pos,
                 key,
                 tier,
                 itemInputs,
                 fluidInputs,
-                catalyst,
             )
         }
     }
@@ -79,7 +75,7 @@ class HTMachineInput private constructor(
     override fun isEmpty(): Boolean {
         val bool1: Boolean = itemInputs.isEmpty() || itemInputs.all(ItemStack::isEmpty)
         val bool2: Boolean = fluidInputs.isEmpty() || fluidInputs.all(FluidStack::isEmpty)
-        return bool1 && bool2 && catalyst.isEmpty
+        return bool1 && bool2
     }
 
     //    Builder    //

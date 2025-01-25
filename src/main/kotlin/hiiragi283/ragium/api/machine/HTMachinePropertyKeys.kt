@@ -121,9 +121,6 @@ object HTMachinePropertyKeys {
                 }
             }.build()
 
-    @JvmField
-    val CATALYST_SLOT: HTPropertyKey<Int> = HTPropertyKey.simple(RagiumAPI.id("catalyst_slot"))
-
     //    Multiblock    //
 
     @JvmField

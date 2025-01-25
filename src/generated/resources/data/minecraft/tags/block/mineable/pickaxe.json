@@ -79,6 +79,7 @@
     "ragium:chemical_glass",
     "ragium:plastic_block",
     "ragium:manual_grinder",
+    "ragium:catalyst_addon",
     "ragium:energy_network_interface"
   ]
 }

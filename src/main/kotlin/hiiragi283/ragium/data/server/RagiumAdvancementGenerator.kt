@@ -24,18 +24,15 @@ import java.util.function.Consumer
 
 object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     @JvmStatic
-    private lateinit var ROOT: AdvancementHolder
+    private lateinit var root: AdvancementHolder
 
     @JvmStatic
-    private lateinit var OUTPUT: Consumer<AdvancementHolder>
+    private lateinit var output: Consumer<AdvancementHolder>
 
-    override fun generate(
-        registries: HolderLookup.Provider,
-        saver: Consumer<AdvancementHolder>,
-        existingFileHelper: ExistingFileHelper,
-    ) {
-        OUTPUT = saver
-        ROOT = Advancement.Builder.advancement()
+    override fun generate(registries: HolderLookup.Provider, saver: Consumer<AdvancementHolder>, existingFileHelper: ExistingFileHelper) {
+        output = saver
+        root = Advancement.Builder
+            .advancement()
             .display(
                 DisplayInfo(
                     ItemStack(RagiumItems.RawResources.RAW_CRUDE_RAGINITE),
@@ -45,10 +42,9 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
                     AdvancementType.TASK,
                     true,
                     true,
-                    false
-                )
-            )
-            .hasItem("has_raginite", RagiumItems.RawResources.RAW_CRUDE_RAGINITE)
+                    false,
+                ),
+            ).hasItem("has_raginite", RagiumItems.RawResources.RAW_CRUDE_RAGINITE)
             .save("root")
 
         registerTier1()
@@ -59,7 +55,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
 
     private fun registerTier1() {
         val ragiAlloy: AdvancementHolder = createSimple(
-            ROOT,
+            root,
             RagiumItems.Ingots.RAGI_ALLOY,
             Component.empty(),
         )
@@ -90,7 +86,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             blastFurnace,
             RagiumItems.Ingots.DRAGONIUM,
             Component.empty(),
-            type = AdvancementType.GOAL
+            type = AdvancementType.GOAL,
         )
 
         val compressor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COMPRESSOR)
@@ -98,7 +94,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
 
     private fun registerTier2() {
         val ragiSteel: AdvancementHolder = createSimple(
-            ROOT,
+            root,
             RagiumItems.Ingots.RAGI_STEEL,
             Component.empty(),
         )
@@ -128,7 +124,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             eliteCircuit,
             RagiumItems.Circuits.ULTIMATE,
             Component.empty(),
-            type = AdvancementType.GOAL
+            type = AdvancementType.GOAL,
         )
 
         val chemicalReactor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.CHEMICAL_REACTOR)
@@ -140,7 +136,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
 
     private fun registerTier3() {
         val refinedRagiSteel: AdvancementHolder = createSimple(
-            ROOT,
+            root,
             RagiumItems.Ingots.REFINED_RAGI_STEEL,
             Component.empty(),
         )
@@ -155,10 +151,10 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
 
     private fun registerTier4() {
         val ragium: AdvancementHolder = createSimple(
-            ROOT,
+            root,
             RagiumItems.Ingots.RAGIUM,
             Component.empty(),
-            type = AdvancementType.GOAL
+            type = AdvancementType.GOAL,
         )
         val casing: AdvancementHolder = createSimple(
             ragium,
@@ -168,8 +164,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     }
 
     @JvmStatic
-    private fun create(parent: AdvancementHolder): Advancement.Builder =
-        Advancement.Builder.advancement().parent(parent)
+    private fun create(parent: AdvancementHolder): Advancement.Builder = Advancement.Builder.advancement().parent(parent)
 
     @JvmStatic
     private fun <T> createSimple(
@@ -181,22 +176,20 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         showToast: Boolean = true,
         showChat: Boolean = true,
         hidden: Boolean = false,
-    ): AdvancementHolder where T : DeferredHolder<*, *>, T : ItemLike =
-        create(parent)
-            .display(
-                DisplayInfo(
-                    ItemStack(holder),
-                    title,
-                    desc,
-                    Optional.empty(),
-                    type,
-                    showToast,
-                    showChat,
-                    hidden
-                )
-            )
-            .hasItem("has_${holder.id.path}", holder)
-            .save(holder.id.path)
+    ): AdvancementHolder where T : DeferredHolder<*, *>, T : ItemLike = create(parent)
+        .display(
+            DisplayInfo(
+                ItemStack(holder),
+                title,
+                desc,
+                Optional.empty(),
+                type,
+                showToast,
+                showChat,
+                hidden,
+            ),
+        ).hasItem("has_${holder.id.path}", holder)
+        .save(holder.id.path)
 
     @JvmStatic
     private fun createSimple(
@@ -208,22 +201,20 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         showToast: Boolean = true,
         showChat: Boolean = true,
         hidden: Boolean = false,
-    ): AdvancementHolder =
-        create(parent)
-            .display(
-                DisplayInfo(
-                    ItemStack(content),
-                    title,
-                    desc,
-                    Optional.empty(),
-                    type,
-                    showToast,
-                    showChat,
-                    hidden
-                )
-            )
-            .hasItem("has_${content.id.path}", content)
-            .save(content.id.path)
+    ): AdvancementHolder = create(parent)
+        .display(
+            DisplayInfo(
+                ItemStack(content),
+                title,
+                desc,
+                Optional.empty(),
+                type,
+                showToast,
+                showChat,
+                hidden,
+            ),
+        ).hasItem("has_${content.id.path}", content)
+        .save(content.id.path)
 
     @JvmStatic
     private fun createMachine(
@@ -233,27 +224,25 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         showToast: Boolean = true,
         showChat: Boolean = true,
         hidden: Boolean = false,
-    ): AdvancementHolder =
-        create(parent)
-            .display(
-                DisplayInfo(
-                    ItemStack(machine.getBlock()),
-                    machine.text,
-                    machine.descriptionText,
-                    Optional.empty(),
-                    type,
-                    showToast,
-                    showChat,
-                    hidden
-                )
-            )
-            .hasItem("has_${machine.name}", machine.getBlock())
-            .save(machine.name)
+    ): AdvancementHolder = create(parent)
+        .display(
+            DisplayInfo(
+                ItemStack(machine.getBlock()),
+                machine.text,
+                machine.descriptionText,
+                Optional.empty(),
+                type,
+                showToast,
+                showChat,
+                hidden,
+            ),
+        ).hasItem("has_${machine.name}", machine.getBlock())
+        .save(machine.name)
 
     @JvmStatic
     private fun Advancement.Builder.hasItem(key: String, item: ItemLike): Advancement.Builder =
         addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(item))
 
     @JvmStatic
-    private fun Advancement.Builder.save(path: String): AdvancementHolder = save(OUTPUT, RagiumAPI.id(path).toString())
+    private fun Advancement.Builder.save(path: String): AdvancementHolder = save(output, RagiumAPI.id(path).toString())
 }

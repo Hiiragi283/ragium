@@ -100,6 +100,8 @@ class RagiumItemTagProvider(
     private fun toolTags() {
         getOrCreateRawBuilder(ItemTags.DURABILITY_ENCHANTABLE).addElement(RagiumItems.FORGE_HAMMER)
 
+        getOrCreateRawBuilder(ItemTags.PICKAXES).addElement(RagiumItems.SILKY_PICKAXE)
+
         getOrCreateRawBuilder(
             itemTagKey(ResourceLocation.fromNamespaceAndPath("modern_industrialization", "forge_hammer_tools")),
         ).addElement(RagiumItems.FORGE_HAMMER)

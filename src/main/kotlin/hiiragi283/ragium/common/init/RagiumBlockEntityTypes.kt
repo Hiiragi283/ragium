@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
+import hiiragi283.ragium.common.block.machine.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity
@@ -97,6 +98,10 @@ object RagiumBlockEntityTypes {
         register("multi_smelter", ::HTMultiSmelterBlockEntity)
 
     //    Storage    //
+
+    @JvmField
+    val CATALYST_ADDON: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCatalystAddonBlockEntity>> =
+        register("catalyst_addon", ::HTCatalystAddonBlockEntity, listOf(RagiumBlocks.CATALYST_ADDON))
 
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =

@@ -18,12 +18,11 @@ import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTDefaultProcessorBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
     HTRecipeProcessorBlockEntity(RagiumBlockEntityTypes.DEFAULT_PROCESSOR, pos, state) {
-    override val itemHandler: ItemStackHandler = ItemStackHandler(5)
+    override val itemHandler: ItemStackHandler = ItemStackHandler(4)
     override val tanks: Array<out HTTieredFluidTank> = Array(2) { HTTieredFluidTank(this) }
     override val processor: HTRecipeProcessor = createMachineProcessor(
         intArrayOf(0, 1),
-        intArrayOf(3, 4),
-        2,
+        intArrayOf(2, 3),
         intArrayOf(0),
         intArrayOf(1),
     )

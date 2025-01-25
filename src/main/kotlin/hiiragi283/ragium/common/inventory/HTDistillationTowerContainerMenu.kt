@@ -10,7 +10,7 @@ import net.neoforged.neoforge.items.ItemStackHandler
 class HTDistillationTowerContainerMenu(
     syncId: Int,
     playerInv: Inventory,
-    itemHandler: IItemHandler = ItemStackHandler(2),
+    itemHandler: IItemHandler = ItemStackHandler(1),
     machineEntity: HTMachineBlockEntity? = null,
 ) : HTMachineContainerMenu(
         RagiumMenuTypes.DISTILLATION_TOWER,
@@ -22,10 +22,8 @@ class HTDistillationTowerContainerMenu(
     init {
         // inputs
         addFluidSlot(0, 3, 2)
-        // catalyst
-        addSlot(0, 4, 2)
         // outputs
-        addOutputSlot(1, 5, 1)
+        addOutputSlot(0, 5, 1)
         addFluidSlot(1, 5, 2)
         addFluidSlot(2, 6, 2)
         addFluidSlot(3, 7, 2)
@@ -36,5 +34,5 @@ class HTDistillationTowerContainerMenu(
     }
 
     override val inputSlots: IntRange = IntRange.EMPTY
-    override val outputSlots: IntRange = (1..1)
+    override val outputSlots: IntRange = (0..0)
 }

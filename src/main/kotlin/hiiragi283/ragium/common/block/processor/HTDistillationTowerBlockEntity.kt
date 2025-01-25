@@ -23,12 +23,11 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntity(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state) {
     override val machineKey: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
-    override val itemHandler: ItemStackHandler = ItemStackHandler(2)
+    override val itemHandler: ItemStackHandler = ItemStackHandler(1)
     override val tanks: Array<out HTTieredFluidTank> = Array(4) { HTTieredFluidTank(this) }
     override val processor: HTRecipeProcessor = createMachineProcessor(
         intArrayOf(),
-        intArrayOf(1),
-        0,
+        intArrayOf(0),
         intArrayOf(0),
         intArrayOf(1, 2, 3),
     )

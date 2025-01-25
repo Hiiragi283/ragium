@@ -180,6 +180,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         buildList {
             add(RagiumBlocks.CHEMICAL_GLASS)
 
+            add(RagiumBlocks.CATALYST_ADDON)
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
