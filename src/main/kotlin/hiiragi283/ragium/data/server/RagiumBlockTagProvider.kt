@@ -34,6 +34,8 @@ class RagiumBlockTagProvider(
             addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)
+            
+            addAll(RagiumAPI.machineRegistry.blockMap.values)
         }.forEach(pickaxe::addElement)
 
         buildList {

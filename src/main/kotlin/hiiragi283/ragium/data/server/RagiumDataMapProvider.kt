@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.HTTemperatureInfo
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -66,27 +67,25 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         registerTier(RagiumBlocks.Burners.entries)
 
         registerTier(RagiumBlocks.Drums.entries)
-        // Heating
-        val heatingBuilder: Builder<HTMachineTier, Block> = builder(RagiumAPI.DataMapTypes.HEATING_TIER)
+        // Temperature
+        val tempBuilder: Builder<HTTemperatureInfo, Block> = builder(RagiumAPI.DataMapTypes.TEMP_TIER)
 
-        heatingBuilder
-            .addBlock(Blocks.MAGMA_BLOCK, HTMachineTier.BASIC)
-            .add(BlockTags.CAMPFIRES, HTMachineTier.BASIC, false)
-            .add(BlockTags.FIRE, HTMachineTier.ADVANCED, false)
-            .addBlock(Blocks.LAVA, HTMachineTier.ADVANCED)
+        tempBuilder
+            .addBlock(Blocks.MAGMA_BLOCK, HTTemperatureInfo.heating(HTMachineTier.BASIC))
+            .add(BlockTags.CAMPFIRES, HTTemperatureInfo.heating(HTMachineTier.BASIC), false)
+            .add(BlockTags.FIRE, HTTemperatureInfo.heating(HTMachineTier.ADVANCED), false)
+            .addBlock(Blocks.LAVA, HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
 
         RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
-            heatingBuilder.addBlock(burner.get(), burner.machineTier)
+            tempBuilder.addBlock(burner.get(), HTTemperatureInfo.heating(burner.machineTier))
         }
-        // Cooling
-        val coolingBuilder: Builder<HTMachineTier, Block> = builder(RagiumAPI.DataMapTypes.COOLING_TIER)
 
-        coolingBuilder
-            .addBlock(Blocks.WATER, HTMachineTier.BASIC)
-            .add(BlockTags.SNOW, HTMachineTier.BASIC, false)
-            .addBlock(Blocks.ICE, HTMachineTier.BASIC)
-            .addBlock(Blocks.PACKED_ICE, HTMachineTier.ADVANCED)
-            .addBlock(Blocks.BLUE_ICE, HTMachineTier.ELITE)
+        tempBuilder
+            .addBlock(Blocks.WATER, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
+            .add(BlockTags.SNOW, HTTemperatureInfo.cooling(HTMachineTier.BASIC), false)
+            .addBlock(Blocks.ICE, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
+            .addBlock(Blocks.PACKED_ICE, HTTemperatureInfo.cooling(HTMachineTier.ADVANCED))
+            .addBlock(Blocks.BLUE_ICE, HTTemperatureInfo.cooling(HTMachineTier.ELITE))
 
         // Material
         val materialBuilder: Builder<HTMaterialDefinition, Item> = builder(RagiumAPI.DataMapTypes.MATERIAL)

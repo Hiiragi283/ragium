@@ -3,10 +3,9 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
-import hiiragi283.ragium.common.recipe.condition.HTCoolingCondition
-import hiiragi283.ragium.common.recipe.condition.HTHeatingCondition
 import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
 import hiiragi283.ragium.common.recipe.condition.HTRockGeneratorCondition
+import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -16,12 +15,8 @@ object RagiumMachineRecipeConditions {
         DeferredRegister.create(RagiumAPI.RegistryKeys.RECIPE_CONDITION, RagiumAPI.MOD_ID)
 
     @JvmField
-    val COOLING: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTCoolingCondition>> =
-        REGISTER.register("cooling", HTCoolingCondition::CODEC)
-
-    @JvmField
-    val HEATING: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTHeatingCondition>> =
-        REGISTER.register("heating", HTHeatingCondition::CODEC)
+    val TEMPERATURE: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTTemperatureCondition>> =
+        REGISTER.register("temperature", HTTemperatureCondition::CODEC)
 
     @JvmField
     val PROCESSOR_CATALYST: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTProcessorCatalystCondition>> =

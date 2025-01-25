@@ -1,0 +1,50 @@
+{
+  "values": {
+    "#minecraft:campfires": {
+      "type": "heating"
+    },
+    "#minecraft:fire": {
+      "type": "heating",
+      "tier": "advanced"
+    },
+    "#minecraft:snow": {
+      "type": "cooling"
+    },
+    "minecraft:blue_ice": {
+      "type": "cooling",
+      "tier": "elite"
+    },
+    "minecraft:ice": {
+      "type": "cooling"
+    },
+    "minecraft:lava": {
+      "type": "heating",
+      "tier": "advanced"
+    },
+    "minecraft:magma_block": {
+      "type": "heating"
+    },
+    "minecraft:packed_ice": {
+      "type": "cooling",
+      "tier": "advanced"
+    },
+    "minecraft:water": {
+      "type": "cooling"
+    },
+    "ragium:advanced_burner": {
+      "type": "heating",
+      "tier": "advanced"
+    },
+    "ragium:basic_burner": {
+      "type": "heating"
+    },
+    "ragium:elite_burner": {
+      "type": "heating",
+      "tier": "elite"
+    },
+    "ragium:ultimate_burner": {
+      "type": "heating",
+      "tier": "ultimate"
+    }
+  }
+}

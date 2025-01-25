@@ -8,15 +8,15 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.world.level.block.Block
 
-data class HTTemperatureInfo(val machineTier: HTMachineTier, val block: Holder<Block>) {
+data class JEITemperatureInfo(val machineTier: HTMachineTier, val block: Holder<Block>) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTTemperatureInfo> = RecordCodecBuilder.create<HTTemperatureInfo> { instance ->
+        val CODEC: Codec<JEITemperatureInfo> = RecordCodecBuilder.create<JEITemperatureInfo> { instance ->
             instance
                 .group(
-                    HTMachineTier.FIELD_CODEC.forGetter(HTTemperatureInfo::machineTier),
-                    RegistryFixedCodec.create(Registries.BLOCK).fieldOf("block").forGetter(HTTemperatureInfo::block),
-                ).apply(instance, ::HTTemperatureInfo)
+                    HTMachineTier.FIELD_CODEC.forGetter(JEITemperatureInfo::machineTier),
+                    RegistryFixedCodec.create(Registries.BLOCK).fieldOf("block").forGetter(JEITemperatureInfo::block),
+                ).apply(instance, ::JEITemperatureInfo)
         }
     }
 }

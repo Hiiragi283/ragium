@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:elite_casing",
+  "criteria": {
+    "has_laser_transformer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:laser_transformer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.laser_transformer.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:laser_transformer"
+    },
+    "title": {
+      "translate": "machine_type.laser_transformer"
+    }
+  },
+  "requirements": [
+    [
+      "has_laser_transformer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

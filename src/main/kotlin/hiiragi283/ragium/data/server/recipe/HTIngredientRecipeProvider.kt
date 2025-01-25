@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.recipe.condition.HTCoolingCondition
+import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -482,7 +482,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
             .waterInput()
-            .machineConditions(HTCoolingCondition(HTMachineTier.BASIC))
+            .machineConditions(HTTemperatureCondition.cooling(HTMachineTier.BASIC))
             .itemOutput(Items.SNOW_BLOCK)
             .save(output)
 
@@ -503,7 +503,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER)
             .waterInput()
-            .machineConditions(HTCoolingCondition(HTMachineTier.ADVANCED))
+            .machineConditions(HTTemperatureCondition.cooling(HTMachineTier.ADVANCED))
             .fluidOutput(RagiumFluids.SNOW)
             .saveSuffixed(output, "_from_water")
 

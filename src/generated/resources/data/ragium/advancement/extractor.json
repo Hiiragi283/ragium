@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:advanced_casing",
+  "criteria": {
+    "has_extractor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:extractor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.extractor.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:extractor"
+    },
+    "title": {
+      "translate": "machine_type.extractor"
+    }
+  },
+  "requirements": [
+    [
+      "has_extractor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.api.util.DisableOverwriteMerger
+import hiiragi283.ragium.api.util.HTTemperatureInfo
 import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import net.minecraft.core.Direction
@@ -78,10 +79,7 @@ data object RagiumAPI {
         val MATERIAL: DataMapType<Item, HTMaterialDefinition> = createItem("material", HTMaterialDefinition.CODEC)
 
         @JvmField
-        val HEATING_TIER: DataMapType<Block, HTMachineTier> = createBlock("heating", HTMachineTier.CODEC)
-
-        @JvmField
-        val COOLING_TIER: DataMapType<Block, HTMachineTier> = createBlock("cooling", HTMachineTier.CODEC)
+        val TEMP_TIER: DataMapType<Block, HTTemperatureInfo> = createBlock("temperature", HTTemperatureInfo.CODEC)
 
         @JvmStatic
         private fun <T : Any> createBlock(path: String, codec: Codec<T>): DataMapType<Block, T> = AdvancedDataMapType

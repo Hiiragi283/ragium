@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:ragium_ingot",
+  "criteria": {
+    "has_ultimate_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ultimate_casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ultimate_casing"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "machine_tier.ragium.ultimate.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.casing"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_ultimate_casing"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

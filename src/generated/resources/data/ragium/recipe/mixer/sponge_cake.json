@@ -1,9 +1,10 @@
 {
   "type": "ragium:machine",
   "condition": {
-    "type": "ragium:heating",
+    "type": "ragium:temperature",
     "max_tier": "basic",
-    "min_tier": "basic"
+    "min_tier": "basic",
+    "temperature_type": "heating"
   },
   "fluid_inputs": [
     {

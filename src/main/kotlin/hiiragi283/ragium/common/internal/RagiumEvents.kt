@@ -182,8 +182,7 @@ internal object RagiumEvents {
         event.register(RagiumAPI.DataMapTypes.MACHINE_TIER)
         event.register(RagiumAPI.DataMapTypes.MATERIAL)
 
-        event.register(RagiumAPI.DataMapTypes.HEATING_TIER)
-        event.register(RagiumAPI.DataMapTypes.COOLING_TIER)
+        event.register(RagiumAPI.DataMapTypes.TEMP_TIER)
 
         LOGGER.info("Registered Data Map Types!")
     }

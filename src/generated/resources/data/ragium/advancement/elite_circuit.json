@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:advanced_circuit",
+  "criteria": {
+    "has_elite_circuit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:elite_circuit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:elite_circuit"
+    },
+    "title": {
+      "color": "aqua",
+      "translate": "machine_tier.ragium.elite.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.circuit"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_elite_circuit"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:ragi_alloy_ingot",
+  "criteria": {
+    "has_manual_grinder": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:manual_grinder"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:manual_grinder"
+    },
+    "title": {
+      "translate": "block.ragium.manual_grinder"
+    }
+  },
+  "requirements": [
+    [
+      "has_manual_grinder"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

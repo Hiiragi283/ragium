@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_ragi_alloy_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ragi_alloy_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_alloy_ingot"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.ingot",
+      "with": [
+        {
+          "translate": "material.ragium.ragi_alloy"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_ragi_alloy_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

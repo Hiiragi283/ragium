@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:basic_casing",
+  "criteria": {
+    "has_blast_furnace": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:blast_furnace"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.blast_furnace.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:blast_furnace"
+    },
+    "title": {
+      "translate": "machine_type.blast_furnace"
+    }
+  },
+  "requirements": [
+    [
+      "has_blast_furnace"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

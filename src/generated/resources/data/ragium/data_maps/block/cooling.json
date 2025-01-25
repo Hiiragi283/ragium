@@ -1,9 +1,0 @@
-{
-  "values": {
-    "#minecraft:snow": "basic",
-    "minecraft:blue_ice": "elite",
-    "minecraft:ice": "basic",
-    "minecraft:packed_ice": "advanced",
-    "minecraft:water": "basic"
-  }
-}

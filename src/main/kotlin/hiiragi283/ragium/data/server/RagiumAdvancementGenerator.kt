@@ -1,0 +1,259 @@
+package hiiragi283.ragium.data.server
+
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMachineKeys
+import net.minecraft.advancements.Advancement
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.DisplayInfo
+import net.minecraft.advancements.critereon.InventoryChangeTrigger
+import net.minecraft.core.HolderLookup
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.data.AdvancementProvider
+import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredHolder
+import java.util.*
+import java.util.function.Consumer
+
+object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
+    @JvmStatic
+    private lateinit var ROOT: AdvancementHolder
+
+    @JvmStatic
+    private lateinit var OUTPUT: Consumer<AdvancementHolder>
+
+    override fun generate(
+        registries: HolderLookup.Provider,
+        saver: Consumer<AdvancementHolder>,
+        existingFileHelper: ExistingFileHelper,
+    ) {
+        OUTPUT = saver
+        ROOT = Advancement.Builder.advancement()
+            .display(
+                DisplayInfo(
+                    ItemStack(RagiumItems.RawResources.RAW_CRUDE_RAGINITE),
+                    Component.literal(RagiumAPI.MOD_NAME),
+                    Component.literal("Welcome to Ragium!"),
+                    Optional.of(ResourceLocation.withDefaultNamespace("textures/block/bricks.png")),
+                    AdvancementType.TASK,
+                    true,
+                    true,
+                    false
+                )
+            )
+            .hasItem("has_raginite", RagiumItems.RawResources.RAW_CRUDE_RAGINITE)
+            .save("root")
+
+        registerTier1()
+        registerTier2()
+        registerTier3()
+        registerTier4()
+    }
+
+    private fun registerTier1() {
+        val ragiAlloy: AdvancementHolder = createSimple(
+            ROOT,
+            RagiumItems.Ingots.RAGI_ALLOY,
+            Component.empty(),
+        )
+        val grinder: AdvancementHolder = createSimple(
+            ragiAlloy,
+            RagiumBlocks.MANUAL_GRINDER,
+            Component.empty(),
+        )
+        val mixer: AdvancementHolder = createMachine(ragiAlloy, RagiumMachineKeys.MIXER)
+
+        val casing: AdvancementHolder = createSimple(
+            ragiAlloy,
+            RagiumBlocks.Casings.BASIC,
+            Component.empty(),
+        )
+        val blastFurnace: AdvancementHolder = createMachine(casing, RagiumMachineKeys.BLAST_FURNACE)
+        val steel: AdvancementHolder = createSimple(
+            blastFurnace,
+            RagiumItems.Ingots.STEEL,
+            Component.empty(),
+        )
+        val deepSteel: AdvancementHolder = createSimple(
+            blastFurnace,
+            RagiumItems.Ingots.DEEP_STEEL,
+            Component.empty(),
+        )
+        val dragonium: AdvancementHolder = createSimple(
+            blastFurnace,
+            RagiumItems.Ingots.DRAGONIUM,
+            Component.empty(),
+            type = AdvancementType.GOAL
+        )
+
+        val compressor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COMPRESSOR)
+    }
+
+    private fun registerTier2() {
+        val ragiSteel: AdvancementHolder = createSimple(
+            ROOT,
+            RagiumItems.Ingots.RAGI_STEEL,
+            Component.empty(),
+        )
+        val casing: AdvancementHolder = createSimple(
+            ragiSteel,
+            RagiumBlocks.Casings.ADVANCED,
+            Component.empty(),
+        )
+
+        val assembler: AdvancementHolder = createMachine(casing, RagiumMachineKeys.ASSEMBLER)
+        val basicCircuit: AdvancementHolder = createSimple(
+            assembler,
+            RagiumItems.Circuits.BASIC,
+            Component.empty(),
+        )
+        val advancedCircuit: AdvancementHolder = createSimple(
+            basicCircuit,
+            RagiumItems.Circuits.ADVANCED,
+            Component.empty(),
+        )
+        val eliteCircuit: AdvancementHolder = createSimple(
+            advancedCircuit,
+            RagiumItems.Circuits.ELITE,
+            Component.empty(),
+        )
+        val ultimateCircuit: AdvancementHolder = createSimple(
+            eliteCircuit,
+            RagiumItems.Circuits.ULTIMATE,
+            Component.empty(),
+            type = AdvancementType.GOAL
+        )
+
+        val chemicalReactor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.CHEMICAL_REACTOR)
+
+        val extractor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.EXTRACTOR)
+
+        val grinder: AdvancementHolder = createMachine(casing, RagiumMachineKeys.GRINDER)
+    }
+
+    private fun registerTier3() {
+        val refinedRagiSteel: AdvancementHolder = createSimple(
+            ROOT,
+            RagiumItems.Ingots.REFINED_RAGI_STEEL,
+            Component.empty(),
+        )
+        val casing: AdvancementHolder = createSimple(
+            refinedRagiSteel,
+            RagiumBlocks.Casings.ELITE,
+            Component.empty(),
+        )
+
+        val laserTransformer: AdvancementHolder = createMachine(casing, RagiumMachineKeys.LASER_TRANSFORMER)
+    }
+
+    private fun registerTier4() {
+        val ragium: AdvancementHolder = createSimple(
+            ROOT,
+            RagiumItems.Ingots.RAGIUM,
+            Component.empty(),
+            type = AdvancementType.GOAL
+        )
+        val casing: AdvancementHolder = createSimple(
+            ragium,
+            RagiumBlocks.Casings.ULTIMATE,
+            Component.empty(),
+        )
+    }
+
+    @JvmStatic
+    private fun create(parent: AdvancementHolder): Advancement.Builder =
+        Advancement.Builder.advancement().parent(parent)
+
+    @JvmStatic
+    private fun <T> createSimple(
+        parent: AdvancementHolder,
+        holder: T,
+        desc: Component,
+        title: Component = ItemStack(holder.asItem()).hoverName,
+        type: AdvancementType = AdvancementType.TASK,
+        showToast: Boolean = true,
+        showChat: Boolean = true,
+        hidden: Boolean = false,
+    ): AdvancementHolder where T : DeferredHolder<*, *>, T : ItemLike =
+        create(parent)
+            .display(
+                DisplayInfo(
+                    ItemStack(holder),
+                    title,
+                    desc,
+                    Optional.empty(),
+                    type,
+                    showToast,
+                    showChat,
+                    hidden
+                )
+            )
+            .hasItem("has_${holder.id.path}", holder)
+            .save(holder.id.path)
+
+    @JvmStatic
+    private fun createSimple(
+        parent: AdvancementHolder,
+        content: HTContent<*>,
+        desc: Component,
+        title: Component = ItemStack(content.asItem()).hoverName,
+        type: AdvancementType = AdvancementType.TASK,
+        showToast: Boolean = true,
+        showChat: Boolean = true,
+        hidden: Boolean = false,
+    ): AdvancementHolder =
+        create(parent)
+            .display(
+                DisplayInfo(
+                    ItemStack(content),
+                    title,
+                    desc,
+                    Optional.empty(),
+                    type,
+                    showToast,
+                    showChat,
+                    hidden
+                )
+            )
+            .hasItem("has_${content.id.path}", content)
+            .save(content.id.path)
+
+    @JvmStatic
+    private fun createMachine(
+        parent: AdvancementHolder,
+        machine: HTMachineKey,
+        type: AdvancementType = AdvancementType.TASK,
+        showToast: Boolean = true,
+        showChat: Boolean = true,
+        hidden: Boolean = false,
+    ): AdvancementHolder =
+        create(parent)
+            .display(
+                DisplayInfo(
+                    ItemStack(machine.getBlock()),
+                    machine.text,
+                    machine.descriptionText,
+                    Optional.empty(),
+                    type,
+                    showToast,
+                    showChat,
+                    hidden
+                )
+            )
+            .hasItem("has_${machine.name}", machine.getBlock())
+            .save(machine.name)
+
+    @JvmStatic
+    private fun Advancement.Builder.hasItem(key: String, item: ItemLike): Advancement.Builder =
+        addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(item))
+
+    @JvmStatic
+    private fun Advancement.Builder.save(path: String): AdvancementHolder = save(OUTPUT, RagiumAPI.id(path).toString())
+}

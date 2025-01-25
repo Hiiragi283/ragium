@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:blast_furnace",
+  "criteria": {
+    "has_dragonium_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:dragonium_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:dragonium_ingot"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.ingot",
+      "with": [
+        {
+          "translate": "material.ragium.dragonium"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_dragonium_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

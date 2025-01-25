@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:advanced_casing",
+  "criteria": {
+    "has_chemical_reactor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:chemical_reactor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.chemical_reactor.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:chemical_reactor"
+    },
+    "title": {
+      "translate": "machine_type.chemical_reactor"
+    }
+  },
+  "requirements": [
+    [
+      "has_chemical_reactor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

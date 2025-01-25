@@ -1,0 +1,38 @@
+{
+  "parent": "ragium:elite_circuit",
+  "criteria": {
+    "has_ultimate_circuit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ultimate_circuit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ultimate_circuit"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "machine_tier.ragium.ultimate.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.circuit"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_ultimate_circuit"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

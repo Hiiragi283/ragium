@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_ragium_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ragium_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragium_ingot"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.ingot",
+      "with": [
+        {
+          "translate": "material.ragium.ragium"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_ragium_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

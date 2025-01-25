@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:blast_furnace",
+  "criteria": {
+    "has_deep_steel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:deep_steel_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:deep_steel_ingot"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.ingot",
+      "with": [
+        {
+          "translate": "material.ragium.deep_steel"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_deep_steel_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.integration.jei.HTTemperatureInfo
+import hiiragi283.ragium.integration.jei.JEITemperatureInfo
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.createEmptyBlockStack
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -19,18 +19,18 @@ import net.minecraft.world.level.ItemLike
 
 class HTTemperatureInfoCategory(
     guiHelper: IGuiHelper,
-    recipeType: RecipeType<HTTemperatureInfo>,
+    recipeType: RecipeType<JEITemperatureInfo>,
     title: Component,
     icon: ItemLike,
-) : AbstractRecipeCategory<HTTemperatureInfo>(
+) : AbstractRecipeCategory<JEITemperatureInfo>(
         recipeType,
         title,
         guiHelper.createDrawableItemLike(icon),
         18 * 3 + 8,
         18 * 1 + 8,
     ),
-    HTRecipeCategory<HTTemperatureInfo> {
-    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTTemperatureInfo, focuses: IFocusGroup) {
+    HTRecipeCategory<JEITemperatureInfo> {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: JEITemperatureInfo, focuses: IFocusGroup) {
         // Block
         var item = ItemStack(recipe.block.value())
         if (item.isEmpty) {
@@ -47,10 +47,10 @@ class HTTemperatureInfoCategory(
             .addIngredient(RagiumJEIPlugin.MACHINE_TIER_TYPE, recipe.machineTier)
     }
 
-    override fun getRegistryName(recipe: HTTemperatureInfo): ResourceLocation = recipe.block
+    override fun getRegistryName(recipe: JEITemperatureInfo): ResourceLocation = recipe.block
         .unwrapKey()
         .orElseThrow()
         .location()
 
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTTemperatureInfo> = HTTemperatureInfo.CODEC
+    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<JEITemperatureInfo> = JEITemperatureInfo.CODEC
 }

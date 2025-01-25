@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "has_raginite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:raw_crude_raginite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/block/bricks.png",
+    "description": "Welcome to Ragium!",
+    "icon": {
+      "count": 1,
+      "id": "ragium:raw_crude_raginite"
+    },
+    "title": "Ragium"
+  },
+  "requirements": [
+    [
+      "has_raginite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.util.HTTemperatureInfo
+import hiiragi283.ragium.api.util.HTTemperatureType
 import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -63,12 +65,12 @@ class RagiumJEIPlugin : IModPlugin {
             RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTMaterialKey::class.java)
 
         @JvmField
-        val HEATING_INFO: RecipeType<HTTemperatureInfo> =
-            RecipeType.create(RagiumAPI.MOD_ID, "heating_info", HTTemperatureInfo::class.java)
+        val HEATING_INFO: RecipeType<JEITemperatureInfo> =
+            RecipeType.create(RagiumAPI.MOD_ID, "heating_info", JEITemperatureInfo::class.java)
 
         @JvmField
-        val COOLING_INFO: RecipeType<HTTemperatureInfo> =
-            RecipeType.create(RagiumAPI.MOD_ID, "cooling_info", HTTemperatureInfo::class.java)
+        val COOLING_INFO: RecipeType<JEITemperatureInfo> =
+            RecipeType.create(RagiumAPI.MOD_ID, "cooling_info", JEITemperatureInfo::class.java)
 
         @JvmStatic
         private val RECIPE_TYPE_MAP: MutableMap<HTMachineKey, RecipeType<RecipeHolder<HTMachineRecipe>>> =
@@ -150,9 +152,10 @@ class RagiumJEIPlugin : IModPlugin {
                 .holders()
                 .asSequence()
                 .mapNotNull { holder: Holder.Reference<Block> ->
-                    val tier: HTMachineTier =
-                        holder.getData(RagiumAPI.DataMapTypes.HEATING_TIER) ?: return@mapNotNull null
-                    HTTemperatureInfo(tier, holder)
+                    val tempInfo: HTTemperatureInfo =
+                        holder.getData(RagiumAPI.DataMapTypes.TEMP_TIER) ?: return@mapNotNull null
+                    if (tempInfo.type != HTTemperatureType.HEATING) return@mapNotNull null
+                    JEITemperatureInfo(tempInfo.tier, holder)
                 }.toList(),
         )
         // Cooling
@@ -162,9 +165,10 @@ class RagiumJEIPlugin : IModPlugin {
                 .holders()
                 .asSequence()
                 .mapNotNull { holder: Holder.Reference<Block> ->
-                    val tier: HTMachineTier =
-                        holder.getData(RagiumAPI.DataMapTypes.COOLING_TIER) ?: return@mapNotNull null
-                    HTTemperatureInfo(tier, holder)
+                    val tempInfo: HTTemperatureInfo =
+                        holder.getData(RagiumAPI.DataMapTypes.TEMP_TIER) ?: return@mapNotNull null
+                    if (tempInfo.type != HTTemperatureType.COOLING) return@mapNotNull null
+                    JEITemperatureInfo(tempInfo.tier, holder)
                 }.toList(),
         )
     }

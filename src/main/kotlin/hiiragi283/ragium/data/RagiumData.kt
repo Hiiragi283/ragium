@@ -14,6 +14,7 @@ import net.minecraft.data.loot.LootTableProvider
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.data.AdvancementProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import org.slf4j.Logger
@@ -31,6 +32,8 @@ object RagiumData {
         val helper: ExistingFileHelper = event.existingFileHelper
         val provider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
         // server
+        generator.addProvider(event.includeServer(), AdvancementProviderImpl(output, provider, helper))
+        
         generator.addProvider(
             event.includeServer(),
             LootTableProvider(
@@ -56,4 +59,10 @@ object RagiumData {
 
         LOGGER.info("Gathered client resources!")
     }
+
+    private class AdvancementProviderImpl(
+        output: PackOutput,
+        registries: CompletableFuture<HolderLookup.Provider>,
+        existingFileHelper: ExistingFileHelper,
+    ) : AdvancementProvider(output, registries, existingFileHelper, listOf(RagiumAdvancementGenerator))
 }
