@@ -5,7 +5,7 @@
         "model": "ragium:block/manual_grinder"
       },
       "when": {
-        "level": "0"
+        "age": "0"
       }
     },
     {
@@ -13,7 +13,7 @@
         "model": "ragium:block/manual_grinder_diagonal"
       },
       "when": {
-        "level": "1"
+        "age": "1"
       }
     },
     {
@@ -22,7 +22,7 @@
         "y": 90
       },
       "when": {
-        "level": "2"
+        "age": "2"
       }
     },
     {
@@ -31,7 +31,7 @@
         "y": 90
       },
       "when": {
-        "level": "3"
+        "age": "3"
       }
     },
     {
@@ -40,7 +40,7 @@
         "y": 180
       },
       "when": {
-        "level": "4"
+        "age": "4"
       }
     },
     {
@@ -49,7 +49,7 @@
         "y": 180
       },
       "when": {
-        "level": "5"
+        "age": "5"
       }
     },
     {
@@ -58,7 +58,7 @@
         "y": 270
       },
       "when": {
-        "level": "6"
+        "age": "6"
       }
     },
     {
@@ -67,7 +67,7 @@
         "y": 270
       },
       "when": {
-        "level": "7"
+        "age": "7"
       }
     }
   ]

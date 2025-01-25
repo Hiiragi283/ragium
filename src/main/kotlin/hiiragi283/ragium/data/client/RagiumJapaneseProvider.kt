@@ -154,6 +154,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.MACHINE_NAME, "- 機械: %s")
         add(RagiumTranslationKeys.MACHINE_TIER, "- ティア: %s")
 
+        add(RagiumTranslationKeys.MACHINE_PREVIEW, "- プレビューの表示: %s")
+        add(RagiumTranslationKeys.MACHINE_WORKING, "- 稼働中: %s")
+
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "機械の構造は有効です！")
 
@@ -276,5 +279,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.FLUID_CAPACITY, "容量: %s mb")
 
         add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")
+        add("config.jade.plugin_ragium.machine_info", "機械の情報")
     }
 }

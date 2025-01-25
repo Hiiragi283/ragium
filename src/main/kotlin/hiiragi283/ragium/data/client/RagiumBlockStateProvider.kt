@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.getOrDefault
-import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.data.blockTexture
 import hiiragi283.ragium.data.cutout
@@ -148,7 +147,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Manual Machine
         getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
-            RagiumBlockProperties.LEVEL_7.possibleValues.forEach { step: Int ->
+            BlockStateProperties.AGE_7.possibleValues.forEach { step: Int ->
                 val modelId: ResourceLocation = RagiumAPI.id(
                     when (step % 2 == 0) {
                         true -> "block/manual_grinder"
@@ -167,7 +166,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .modelFile(ModelFile.UncheckedModelFile(modelId))
                     .rotationY(direction.getRotationY())
                     .addModel()
-                    .condition(RagiumBlockProperties.LEVEL_7, step)
+                    .condition(BlockStateProperties.AGE_7, step)
             }
         }
 
@@ -180,8 +179,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         buildList {
             add(RagiumBlocks.CHEMICAL_GLASS)
 
-            add(RagiumBlocks.CATALYST_ADDON)
-            add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+            addAll(RagiumBlocks.ADDONS)
         }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
         // Machine

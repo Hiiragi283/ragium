@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.BlockPos
@@ -27,6 +26,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.items.ItemStackHandler
 
@@ -58,13 +58,13 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         player: Player,
         hitResult: BlockHitResult,
     ): InteractionResult {
-        val step: Int = state.getOrNull(RagiumBlockProperties.LEVEL_7) ?: return InteractionResult.FAIL
+        val step: Int = state.getOrNull(BlockStateProperties.AGE_7) ?: return InteractionResult.FAIL
         if (step == 7) {
             process(level, pos, player)
         }
         if (!level.isClientSide) {
             level.replaceBlockState(pos) { stateIn: BlockState ->
-                stateIn.setValue(RagiumBlockProperties.LEVEL_7, (step + 1) % 8)
+                stateIn.setValue(BlockStateProperties.AGE_7, (step + 1) % 8)
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide)

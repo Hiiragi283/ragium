@@ -72,8 +72,7 @@ object RagiumItems {
 
             add(RagiumBlocks.MANUAL_GRINDER)
 
-            add(RagiumBlocks.CATALYST_ADDON)
-            add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+            addAll(RagiumBlocks.ADDONS)
         }.forEach(REGISTER::registerSimpleBlockItem)
     }
 

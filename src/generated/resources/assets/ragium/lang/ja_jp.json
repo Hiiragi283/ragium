@@ -31,6 +31,7 @@
   "block.ragium.white_led_block": "LEDブロック",
   "block.ragium.yellow_led_block": "LEDブロック（黄色）",
   "config.jade.plugin_ragium.energy_network": "エネルギーネットワーク",
+  "config.jade.plugin_ragium.machine_info": "機械の情報",
   "content.ragium.burner": "バーナー",
   "content.ragium.casing": "外装",
   "content.ragium.circuit": "回路",
@@ -290,5 +291,7 @@
   "tooltip.ragium.fluid.capacity": "容量: %s mb",
   "tooltip.ragium.machine.cost": "- 処理コスト: %s FE/回",
   "tooltip.ragium.machine.name": "- 機械: %s",
-  "tooltip.ragium.machine.tier": "- ティア: %s"
+  "tooltip.ragium.machine.preview": "- プレビューの表示: %s",
+  "tooltip.ragium.machine.tier": "- ティア: %s",
+  "tooltip.ragium.machine.working": "- 稼働中: %s"
 }

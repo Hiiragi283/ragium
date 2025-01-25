@@ -86,8 +86,7 @@ object RagiumCreativeTabs {
                         // Manual Machines
                         add(RagiumBlocks.MANUAL_GRINDER)
                         // Utilities
-                        add(RagiumBlocks.CATALYST_ADDON)
-                        add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+                        addAll(RagiumBlocks.ADDONS)
                     }.forEach(output::accept)
 
                     // Machines

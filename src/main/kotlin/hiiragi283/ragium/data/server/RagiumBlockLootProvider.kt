@@ -45,8 +45,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             add(RagiumBlocks.MANUAL_GRINDER)
 
-            add(RagiumBlocks.CATALYST_ADDON)
-            add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+            addAll(RagiumBlocks.ADDONS)
 
             addAll(RagiumAPI.machineRegistry.blockMap.values)
         }.map(Supplier<out Block>::get)

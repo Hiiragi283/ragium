@@ -14,7 +14,6 @@ import hiiragi283.ragium.common.block.machine.HTCatalystAddonBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.*
-import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -183,11 +182,8 @@ object RagiumBlocks {
         ULTIMATE(HTMachineTier.ULTIMATE),
         ;
 
-        override val holder: DeferredBlock<Block> = REGISTER.registerBlock(
-            "${name.lowercase()}_drum",
-            { prop: BlockBehaviour.Properties -> HTDrumBlock(machineTier, prop) },
-            blockProperty(Blocks.SMOOTH_STONE),
-        )
+        override val holder: DeferredBlock<Block> =
+            REGISTER.registerBlock("${name.lowercase()}_drum", ::HTDrumBlock, blockProperty(Blocks.SMOOTH_STONE))
     }
 
     //    Buildings    //
@@ -221,11 +217,8 @@ object RagiumBlocks {
         ULTIMATE_COIL(Coils.ULTIMATE),
         ;
 
-        override val holder: DeferredBlock<Block> = REGISTER.registerBlock(
-            "${name.lowercase()}_decoration",
-            ::Block,
-            blockProperty(Blocks.SMOOTH_STONE),
-        )
+        override val holder: DeferredBlock<Block> =
+            REGISTER.registerSimpleBlock("${name.lowercase()}_decoration", blockProperty(Blocks.SMOOTH_STONE))
     }
 
     enum class LEDBlocks(val baseBlock: Block) : HTBlockContent {
@@ -278,4 +271,10 @@ object RagiumBlocks {
     @JvmField
     val ENERGY_NETWORK_INTERFACE: DeferredBlock<HTEnergyNetworkBlock> =
         REGISTER.registerBlock("energy_network_interface", ::HTEnergyNetworkBlock, blockProperty(Blocks.SMOOTH_STONE))
+
+    @JvmField
+    val ADDONS: List<DeferredBlock<out Block>> = listOf(
+        CATALYST_ADDON,
+        ENERGY_NETWORK_INTERFACE,
+    )
 }

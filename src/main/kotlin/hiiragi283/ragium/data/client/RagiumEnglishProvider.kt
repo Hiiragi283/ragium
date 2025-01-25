@@ -152,6 +152,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")
         add(RagiumTranslationKeys.MACHINE_TIER, "- Tier: %s")
 
+        add(RagiumTranslationKeys.MACHINE_PREVIEW, "- Show Preview: %s")
+        add(RagiumTranslationKeys.MACHINE_WORKING, "- Working: %s")
+
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
 
@@ -326,5 +329,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.FLUID_CAPACITY, "Capacity: %s mb")
 
         add("config.jade.plugin_ragium.energy_network", "Energy Network")
+        add("config.jade.plugin_ragium.machine_info", "Machine Info")
     }
 }

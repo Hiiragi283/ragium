@@ -12,7 +12,7 @@ data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
             RecordCodecBuilder.mapCodec { instance ->
                 instance
                     .group(
-                        HTMachineKey.CODEC.fieldOf("machine_type").forGetter(HTMachineDefinition::key),
+                        HTMachineKey.FIELD_CODEC.forGetter(HTMachineDefinition::key),
                         HTMachineTier.FIELD_CODEC.forGetter(HTMachineDefinition::tier),
                     ).apply(instance, ::HTMachineDefinition)
             }

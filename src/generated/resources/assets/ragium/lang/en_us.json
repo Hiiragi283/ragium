@@ -31,6 +31,7 @@
   "block.ragium.white_led_block": "LED Block",
   "block.ragium.yellow_led_block": "Yellow LED Block",
   "config.jade.plugin_ragium.energy_network": "Energy Network",
+  "config.jade.plugin_ragium.machine_info": "Machine Info",
   "content.ragium.burner": "Burner",
   "content.ragium.casing": "Casing",
   "content.ragium.circuit": "Circuit",
@@ -290,5 +291,7 @@
   "tooltip.ragium.fluid.capacity": "Capacity: %s mb",
   "tooltip.ragium.machine.cost": "- Process Cost: %s FE/times",
   "tooltip.ragium.machine.name": "- Machine Name: %s",
-  "tooltip.ragium.machine.tier": "- Tier: %s"
+  "tooltip.ragium.machine.preview": "- Show Preview: %s",
+  "tooltip.ragium.machine.tier": "- Tier: %s",
+  "tooltip.ragium.machine.working": "- Working: %s"
 }

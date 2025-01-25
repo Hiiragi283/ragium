@@ -2,6 +2,7 @@ package hiiragi283.ragium.integration.jade
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.common.block.HTEnergyNetworkBlock
+import hiiragi283.ragium.common.block.HTMachineBlock
 import org.slf4j.Logger
 import snownee.jade.api.IWailaClientRegistration
 import snownee.jade.api.IWailaCommonRegistration
@@ -21,9 +22,11 @@ class RagiumJadePlugin : IWailaPlugin {
 
     override fun register(registration: IWailaCommonRegistration) {
         registration.registerBlockDataProvider(HTEnergyNetworkProvider, HTEnergyNetworkBlock::class.java)
+        registration.registerBlockDataProvider(HTMachineInfoProvider, HTMachineBlock::class.java)
     }
 
     override fun registerClient(registration: IWailaClientRegistration) {
         registration.registerBlockComponent(HTEnergyNetworkProvider, HTEnergyNetworkBlock::class.java)
+        registration.registerBlockComponent(HTMachineInfoProvider, HTMachineBlock::class.java)
     }
 }

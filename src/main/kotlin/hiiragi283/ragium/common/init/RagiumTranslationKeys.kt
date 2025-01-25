@@ -4,15 +4,11 @@ object RagiumTranslationKeys {
     //    Block    //
 
     const val AUTO_ILLUMINATOR = "tooltip.ragium.block.auto_illuminator"
-    const val LARGE_PROCESSOR = "tooltip.ragium.block.large_processor"
-    const val MACHINE_INTERFACE = "tooltip.ragium.block.machine_interface"
     const val MANUAL_GRINDER = "tooltip.ragium.block.manual_grinder"
     const val MUTATED_SOIL = "tooltip.ragium.block.mutated_soil"
     const val NETWORK_INTERFACE = "tooltip.ragium.block.network_interface"
     const val OBSIDIAN_GLASS = "tooltip.ragium.block.obsidian_glass"
     const val OPEN_CRATE = "tooltip.ragium.block.open_crate"
-    const val PIPE_STATION = "tooltip.ragium.block.pipe_station"
-    const val POROUS_NETHERRACK = "tooltip.ragium.block.porous_netherrack"
     const val RAGIUM_GLASS = "tooltip.ragium.block.ragium_glass"
     const val SPONGE_CAKE = "tooltip.ragium.block.sponge_cake"
     const val STEEL_GLASS = "tooltip.ragium.block.steel_glass"
@@ -41,12 +37,7 @@ object RagiumTranslationKeys {
 
     const val ANVIL_DYNAMITE = "tooltip.ragium.item.anvil_dynamite"
     const val BACKPACK = "tooltip.ragium.item.backpack"
-    const val BLAZING_DYNAMITE = "tooltip.ragium.item.blazing_dynamite"
-    const val BEDROCK_DYNAMITE = "tooltip.ragium.item.bedrock_dynamite"
-    const val FLATTENING_DYNAMITE = "tooltip.ragium.item.flatten_dynamite"
-    const val FROSTING_DYNAMITE = "tooltip.ragium.item.frosting_dynamite"
     const val RAGI_WRENCH = "tooltip.ragium.item.ragi_wrench"
-    const val ROPE = "tooltip.ragium.item.rope"
     const val TRADER_CATALOG = "tooltip.ragium.item.trader_catalog"
     const val WARPED_CRYSTAL = "tooltip.ragium.item.warped_crystal"
 
@@ -61,6 +52,9 @@ object RagiumTranslationKeys {
     const val MACHINE_NAME = "tooltip.ragium.machine.name"
     const val MACHINE_NETWORK_ENERGY = "tooltip.ragium.machine.network_energy"
     const val MACHINE_TIER = "tooltip.ragium.machine.tier"
+
+    const val MACHINE_PREVIEW = "tooltip.ragium.machine.preview"
+    const val MACHINE_WORKING = "tooltip.ragium.machine.working"
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
     const val MULTI_SHAPE_SUCCESS = "message.ragium.multi_shape.success"
