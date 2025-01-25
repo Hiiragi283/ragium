@@ -12,6 +12,5 @@
       "id": "ragium:destabilized_ragium_solution"
     }
   ],
-  "machine_type": "laser_transformer",
-  "tier": "elite"
+  "machine_type": "laser_transformer"
 }

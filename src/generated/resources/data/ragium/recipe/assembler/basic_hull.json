@@ -8,11 +8,11 @@
   },
   "item_inputs": [
     {
-      "count": 3,
+      "count": 5,
       "tag": "c:ingots/ragi_alloy"
     },
     {
-      "count": 2,
+      "count": 3,
       "item": "ragium:basic_casing"
     },
     {
@@ -22,7 +22,7 @@
   ],
   "item_outputs": [
     {
-      "count": 2,
+      "count": 6,
       "id": "ragium:basic_hull"
     }
   ],

@@ -24,6 +24,5 @@
       "id": "ragium:warped_crystal"
     }
   ],
-  "machine_type": "distillation_tower",
-  "tier": "advanced"
+  "machine_type": "distillation_tower"
 }

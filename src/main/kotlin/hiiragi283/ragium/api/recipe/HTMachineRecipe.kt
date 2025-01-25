@@ -4,10 +4,8 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
-import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
@@ -28,7 +26,7 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
 class HTMachineRecipe(
-    val definition: HTMachineDefinition,
+    val machineKey: HTMachineKey,
     val itemInputs: List<SizedIngredient>,
     val fluidInputs: List<SizedFluidIngredient>,
     private val itemOutputs: List<ItemStack>,
@@ -41,7 +39,7 @@ class HTMachineRecipe(
             .mapCodec { instance ->
                 instance
                     .group(
-                        HTMachineDefinition.CODEC.forGetter(HTMachineRecipe::definition),
+                        HTMachineKey.FIELD_CODEC.forGetter(HTMachineRecipe::machineKey),
                         SizedIngredient.FLAT_CODEC
                             .listOf()
                             .optionalFieldOf("item_inputs", listOf())
@@ -72,8 +70,8 @@ class HTMachineRecipe(
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipe> = StreamCodec.composite(
-            HTMachineDefinition.STREAM_CODEC,
-            HTMachineRecipe::definition,
+            HTMachineKey.STREAM_CODEC,
+            HTMachineRecipe::machineKey,
             SizedIngredient.STREAM_CODEC.toList(),
             HTMachineRecipe::itemInputs,
             SizedFluidIngredient.STREAM_CODEC.toList(),
@@ -88,9 +86,6 @@ class HTMachineRecipe(
         )
     }
 
-    val machineKey: HTMachineKey = definition.key
-    val machineTier: HTMachineTier = definition.tier
-
     fun getItemOutput(index: Int): ItemStack? = itemOutputs.getOrNull(index)?.copy()
 
     fun getFluidOutput(index: Int): FluidStack? = fluidOutputs.getOrNull(index)?.copy()
@@ -100,7 +95,6 @@ class HTMachineRecipe(
     override fun matches(input: HTMachineInput, level: Level): Boolean {
         // Machine Definition
         if (input.key != this.machineKey) return false
-        if (input.tier < this.machineTier) return false
         // Item
         input.itemInputs.forEachIndexed { slot: Int, stack: ItemStack ->
             if (stack.`is`(RagiumItems.SLOT_LOCK)) return@forEachIndexed

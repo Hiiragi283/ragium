@@ -22,6 +22,5 @@
       "id": "ragium:ammonia"
     }
   ],
-  "machine_type": "chemical_reactor",
-  "tier": "advanced"
+  "machine_type": "chemical_reactor"
 }

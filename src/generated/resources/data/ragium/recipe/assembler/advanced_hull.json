@@ -8,11 +8,11 @@
   },
   "item_inputs": [
     {
-      "count": 3,
+      "count": 5,
       "tag": "c:ingots/ragi_steel"
     },
     {
-      "count": 2,
+      "count": 3,
       "item": "ragium:advanced_casing"
     },
     {
@@ -22,10 +22,9 @@
   ],
   "item_outputs": [
     {
-      "count": 2,
+      "count": 6,
       "id": "ragium:advanced_hull"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "advanced"
+  "machine_type": "assembler"
 }

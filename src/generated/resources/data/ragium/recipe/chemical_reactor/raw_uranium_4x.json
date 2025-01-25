@@ -6,6 +6,10 @@
     }
   ],
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "elite"
+  },
   "fluid_inputs": [
     {
       "amount": 200,
@@ -30,6 +34,5 @@
       "id": "mekanism:raw_uranium"
     }
   ],
-  "machine_type": "chemical_reactor",
-  "tier": "elite"
+  "machine_type": "chemical_reactor"
 }

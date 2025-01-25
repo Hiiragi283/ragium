@@ -18,6 +18,5 @@
       "id": "ragium:acetylene"
     }
   ],
-  "machine_type": "chemical_reactor",
-  "tier": "elite"
+  "machine_type": "chemical_reactor"
 }

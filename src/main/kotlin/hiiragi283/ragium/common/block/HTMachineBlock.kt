@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
+import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -37,7 +39,10 @@ class HTMachineBlock(properties: Properties) : HTEntityBlock(properties) {
         tooltipComponents: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        machineKey?.appendTooltip(tooltipComponents::add, HTMachineTier.BASIC)
+        machineKey?.appendTooltip(
+            tooltipComponents::add,
+            stack.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC
+        )
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {

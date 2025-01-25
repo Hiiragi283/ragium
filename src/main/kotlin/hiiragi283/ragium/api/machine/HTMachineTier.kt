@@ -117,13 +117,6 @@ enum class HTMachineTier(
         ULTIMATE -> RagiumBlocks.Coils.ULTIMATE
     }
 
-    fun getBurner(): HTBlockContent.Tier = when (this) {
-        BASIC -> RagiumBlocks.Burners.BASIC
-        ADVANCED -> RagiumBlocks.Burners.ADVANCED
-        ELITE -> RagiumBlocks.Burners.ELITE
-        ULTIMATE -> RagiumBlocks.Burners.ULTIMATE
-    }
-
     //    Item    //
 
     fun getCircuit(): HTItemContent.Tier = when (this) {

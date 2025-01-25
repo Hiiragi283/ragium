@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "ultimate"
+  },
   "fluid_inputs": [
     {
       "amount": 64000,
@@ -22,6 +26,5 @@
       "id": "ragium:ambrosia"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "ultimate"
+  "machine_type": "assembler"
 }

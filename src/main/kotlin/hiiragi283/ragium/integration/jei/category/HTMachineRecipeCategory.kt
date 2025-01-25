@@ -2,7 +2,6 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
@@ -12,7 +11,6 @@ import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
-import mezz.jei.api.gui.placement.HorizontalAlignment
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
@@ -21,10 +19,11 @@ import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
+import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
@@ -62,29 +61,6 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<HTMachineRecipe>, focuses: IFocusGroup) {
         // Recipe Arrow
         builder.addRecipeArrow().setPosition(getPosition(3.5), getPosition(0))
-        // Recipe Cost
-        val machineRecipe: HTMachineRecipe = recipe.value
-        val tier: HTMachineTier = machineRecipe.machineTier
-        builder
-            .addText(Component.literal("Recipe Cost: ${tier.processCost} FE"), width - 4, 10)
-            .setPosition(getPosition(0), getPosition(2.25))
-            .setColor(0xFFFFFF)
-            .setShadow(true)
-            .setTextAlignment(HorizontalAlignment.LEFT)
-        // Recipe tier
-        builder
-            .addText(tier.text, width - 4, 10)
-            .setPosition(getPosition(0), getPosition(2.25))
-            .setShadow(true)
-            .setTextAlignment(HorizontalAlignment.RIGHT)
-        // conditions
-        machineRecipe.condition.ifPresent { condition ->
-            builder
-                .addText(condition.text, width - 4, 10)
-                .setPosition(getPosition(0), getPosition(2.75))
-                .setShadow(true)
-                .setTextAlignment(HorizontalAlignment.LEFT)
-        }
     }
 
     private fun addItemInput(
@@ -103,13 +79,19 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
 
     private fun addCatalyst(builder: IRecipeLayoutBuilder, recipe: HTMachineRecipe, y: Int) {
         recipe.condition.ifPresent { condition: HTMachineRecipeCondition ->
-            val ingredient: Ingredient = (condition as? HTProcessorCatalystCondition)
+            val stacks: List<ItemStack> = (condition as? HTProcessorCatalystCondition)
                 ?.ingredient
-                ?: Ingredient.EMPTY
+                ?.items
+                ?.toList()
+                ?: listOf(
+                    ItemStack(Items.BOOK).apply {
+                        set(DataComponents.CUSTOM_NAME, condition.text)
+                    }
+                )
             builder
                 .addInputSlot(5 + 9 + 3 * 18, getPosition(y))
                 .setStandardSlotBackground()
-                .addItemStacks(ingredient.items.toList())
+                .addItemStacks(stacks)
         }
     }
 
@@ -164,7 +146,7 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
 
     override fun getWidth(): Int = 18 * 8 + 8
 
-    override fun getHeight(): Int = 18 * 3 + 8
+    override fun getHeight(): Int = 18 * 2 + 8
 
     private var iconCache: ItemStack? = null
 

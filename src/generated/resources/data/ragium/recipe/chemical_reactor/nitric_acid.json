@@ -1,10 +1,8 @@
 {
   "type": "ragium:machine",
   "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "item": "ragium:oxidization_catalyst"
-    }
+    "type": "ragium:min_tier",
+    "tier": "advanced"
   },
   "fluid_inputs": [
     {
@@ -22,6 +20,5 @@
       "id": "ragium:hydrogen"
     }
   ],
-  "machine_type": "chemical_reactor",
-  "tier": "advanced"
+  "machine_type": "chemical_reactor"
 }

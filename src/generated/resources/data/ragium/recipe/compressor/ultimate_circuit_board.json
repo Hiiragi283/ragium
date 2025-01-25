@@ -22,6 +22,5 @@
       "id": "ragium:circuit_board"
     }
   ],
-  "machine_type": "compressor",
-  "tier": "ultimate"
+  "machine_type": "compressor"
 }

@@ -33,7 +33,7 @@ class HTMachineRecipeProcessor(
     val cache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipes.MACHINE_TYPE)
 
     override fun process(level: ServerLevel, tier: HTMachineTier): Result<Unit> = runCatching {
-        val input: HTMachineInput = HTMachineInput.create(pos, machine, tier) {
+        val input: HTMachineInput = HTMachineInput.create(pos, machine) {
             itemInputs.map(itemHandler::getStackInSlot).forEach(this::add)
             fluidInputs
                 .map(fluidTanks::apply)

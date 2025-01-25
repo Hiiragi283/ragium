@@ -8,7 +8,7 @@
   },
   "item_inputs": [
     {
-      "count": 1,
+      "count": 4,
       "item": "ragium:elite_grate"
     },
     {
@@ -22,10 +22,9 @@
   ],
   "item_outputs": [
     {
-      "count": 2,
+      "count": 6,
       "id": "ragium:elite_casing"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "elite"
+  "machine_type": "assembler"
 }

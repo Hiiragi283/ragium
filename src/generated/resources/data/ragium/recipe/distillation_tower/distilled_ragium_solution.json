@@ -22,6 +22,5 @@
       "id": "ragium:chemical_sludge"
     }
   ],
-  "machine_type": "distillation_tower",
-  "tier": "elite"
+  "machine_type": "distillation_tower"
 }

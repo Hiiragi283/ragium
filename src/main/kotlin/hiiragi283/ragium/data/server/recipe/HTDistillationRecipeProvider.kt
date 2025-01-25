@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -123,7 +122,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
 
         // Crimson Stem -> Crimson Sap
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.CRIMSON_STEMS)
             .catalyst(ItemTags.CRIMSON_STEMS)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
@@ -131,7 +130,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output, "crimson_")
         // Crimson Sap -> Crimson Crystal
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.CRIMSON_SAP, FluidType.BUCKET_VOLUME * 4)
             .catalyst(RagiumItems.Circuits.BASIC)
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
@@ -140,7 +139,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
 
         // Warped Stem -> Warped Sap
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.WARPED_STEMS)
             .catalyst(ItemTags.WARPED_STEMS)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
@@ -148,7 +147,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output, "warped_")
         // Warped Sap -> Warped Crystal
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.WARPED_SAP, FluidType.BUCKET_VOLUME * 4)
             .catalyst(RagiumItems.Circuits.BASIC)
             .itemOutput(RagiumItems.WARPED_CRYSTAL)

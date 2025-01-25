@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "advanced"
+  },
   "item_inputs": [
     {
       "count": 4,
@@ -20,6 +24,5 @@
       "id": "ragium:engine"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "advanced"
+  "machine_type": "assembler"
 }

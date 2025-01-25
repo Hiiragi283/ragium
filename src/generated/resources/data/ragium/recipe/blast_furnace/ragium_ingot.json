@@ -18,6 +18,5 @@
       "id": "ragium:ragium_ingot"
     }
   ],
-  "machine_type": "blast_furnace",
-  "tier": "elite"
+  "machine_type": "blast_furnace"
 }

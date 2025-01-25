@@ -8,7 +8,7 @@
   },
   "item_inputs": [
     {
-      "count": 1,
+      "count": 4,
       "item": "ragium:basic_grate"
     },
     {
@@ -22,7 +22,7 @@
   ],
   "item_outputs": [
     {
-      "count": 2,
+      "count": 6,
       "id": "ragium:basic_casing"
     }
   ],

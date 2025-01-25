@@ -18,6 +18,5 @@
       "id": "minecraft:glass_bottle"
     }
   ],
-  "machine_type": "extractor",
-  "tier": "elite"
+  "machine_type": "extractor"
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
@@ -55,6 +56,12 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     abstract val machineKey: HTMachineKey
     override var machineTier: HTMachineTier = HTMachineTier.BASIC
 
+    init {
+        state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER)?.let { defaultTier: HTMachineTier ->
+            machineTier = defaultTier
+        }
+    }
+    
     val front: Direction
         get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
 
@@ -210,6 +217,16 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     open fun onFailed(level: ServerLevel, pos: BlockPos) {
     }
 
+    override fun onRemove(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        newState: BlockState,
+        movedByPiston: Boolean,
+    ) {
+        super.onRemove(state, level, pos, newState, movedByPiston)
+    }
+    
     val containerData: ContainerData = object : ContainerData {
         override fun get(index: Int): Int = when (index) {
             0 -> ticks

@@ -22,6 +22,5 @@
       "id": "ragium:steel_ingot"
     }
   ],
-  "machine_type": "blast_furnace",
-  "tier": "advanced"
+  "machine_type": "blast_furnace"
 }

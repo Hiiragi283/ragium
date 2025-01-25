@@ -151,7 +151,6 @@ object RagiumBlocks {
     }
 
     enum class Burners(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
         ELITE(HTMachineTier.ELITE),
         ULTIMATE(HTMachineTier.ULTIMATE),

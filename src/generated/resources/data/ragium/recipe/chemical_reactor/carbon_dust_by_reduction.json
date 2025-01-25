@@ -18,6 +18,5 @@
       "id": "ragium:carbon_dust"
     }
   ],
-  "machine_type": "chemical_reactor",
-  "tier": "elite"
+  "machine_type": "chemical_reactor"
 }

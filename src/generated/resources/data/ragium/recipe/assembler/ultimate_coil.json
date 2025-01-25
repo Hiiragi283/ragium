@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "elite"
+  },
   "item_inputs": [
     {
       "count": 8,
@@ -16,6 +20,5 @@
       "id": "ragium:ultimate_coil"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "elite"
+  "machine_type": "assembler"
 }

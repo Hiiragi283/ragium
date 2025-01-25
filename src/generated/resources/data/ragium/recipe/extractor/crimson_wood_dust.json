@@ -24,6 +24,5 @@
       "id": "ragium:wood_dust"
     }
   ],
-  "machine_type": "extractor",
-  "tier": "advanced"
+  "machine_type": "extractor"
 }

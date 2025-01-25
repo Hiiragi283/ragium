@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "advanced"
+  },
   "item_inputs": [
     {
       "count": 8,
@@ -16,6 +20,5 @@
       "id": "ragium:sulfur_dust"
     }
   ],
-  "machine_type": "grinder",
-  "tier": "advanced"
+  "machine_type": "grinder"
 }

@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/ragi_steel"
     },
     "B": {
-      "tag": "c:circuits/basic"
+      "tag": "c:circuits/advanced"
     },
     "C": {
       "item": "minecraft:stonecutter"
     },
     "D": {
-      "item": "ragium:basic_casing"
+      "item": "ragium:advanced_casing"
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "AAA",
+    "BCB",
+    "DDD"
   ],
   "result": {
     "count": 1,

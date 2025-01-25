@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "ultimate"
+  },
   "fluid_inputs": [
     {
       "amount": 500,
@@ -24,6 +28,5 @@
       "id": "minecraft:emerald"
     }
   ],
-  "machine_type": "chemical_reactor",
-  "tier": "ultimate"
+  "machine_type": "chemical_reactor"
 }

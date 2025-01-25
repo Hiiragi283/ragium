@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "elite"
+  },
   "fluid_outputs": [
     {
       "amount": 1000,
@@ -18,6 +22,5 @@
       "id": "ragium:alkali_dust"
     }
   ],
-  "machine_type": "extractor",
-  "tier": "elite"
+  "machine_type": "extractor"
 }

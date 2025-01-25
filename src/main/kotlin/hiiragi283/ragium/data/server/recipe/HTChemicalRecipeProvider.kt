@@ -86,7 +86,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .saveSuffixed(output, "_by_oxidization")
         // Reduction
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(oxide)
             .catalyst(RagiumItems.REDUCTION_CATALYST)
             .itemOutput(solid)
@@ -132,7 +132,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
         // C2H4 -> C2H2
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.ETHENE)
             .catalyst(RagiumItems.REDUCTION_CATALYST)
             .fluidOutput(RagiumFluids.ACETYLENE)
@@ -140,7 +140,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
         // CaO + 3C -> CaC2 + CO
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumItems.Dusts.ALKALI)
             .itemInput(RagiumItems.Dusts.CARBON, 3)
             .machineConditions(HTTemperatureCondition.heating(HTMachineTier.ADVANCED))
@@ -176,7 +176,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
         // N2 + 3x H2 -> 2x NH3
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.NITROGEN)
             .fluidInput(RagiumFluids.HYDROGEN, FluidType.BUCKET_VOLUME * 3)
             .catalyst(HTTagPrefix.DUST, RagiumMaterialKeys.IRON)
@@ -186,7 +186,6 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .fluidInput(RagiumFluids.AMMONIA)
-            .catalyst(RagiumItems.OXIDIZATION_CATALYST)
             .fluidOutput(RagiumFluids.NITRIC_ACID)
             .fluidOutput(RagiumFluids.HYDROGEN, FluidType.BUCKET_VOLUME * 4)
             .save(output)
@@ -279,7 +278,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         solidSolution(output, RagiumItems.Dusts.ALKALI, RagiumFluids.ALKALI_SOLUTION)
         // Alkali Solution + SiO2 -> Sodium Silicate
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumItems.Dusts.QUARTZ)
             .fluidInput(RagiumFluids.ALKALI_SOLUTION, FluidType.BUCKET_VOLUME * 2)
             .machineConditions(HTTemperatureCondition.heating(HTMachineTier.BASIC))

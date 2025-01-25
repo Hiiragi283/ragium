@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "minecraft:basalt"
+    }
+  },
+  "fluid_inputs": [
+    {
+      "amount": 1,
+      "tag": "c:water"
+    },
+    {
+      "amount": 1,
+      "tag": "c:lava"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 8,
+      "id": "minecraft:basalt"
+    }
+  ],
+  "machine_type": "mixer"
+}

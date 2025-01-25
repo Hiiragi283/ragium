@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "elite"
+  },
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -18,6 +22,5 @@
       "tag": "c:dusts/ragi_crystal"
     }
   ],
-  "machine_type": "mixer",
-  "tier": "elite"
+  "machine_type": "mixer"
 }

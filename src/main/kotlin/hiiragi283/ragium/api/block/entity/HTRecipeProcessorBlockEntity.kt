@@ -90,6 +90,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
+        super.onRemove(state, level, pos, newState, movedByPiston)
         itemHandler.dropStacks(level, pos)
     }
 }

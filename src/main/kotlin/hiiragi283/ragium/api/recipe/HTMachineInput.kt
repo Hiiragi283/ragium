@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
@@ -12,28 +11,20 @@ import net.neoforged.neoforge.fluids.FluidStack
  * [HTMachineRecipe]の判定に用いられるクラス
  * @param pos 機械の座標
  * @param key 機械のキー
- * @param tier 機械のティア
  * @param itemInputs アイテムのインプットの一覧
  * @param fluidInputs 液体のインプットの一覧
  */
 class HTMachineInput private constructor(
     val pos: BlockPos,
     val key: HTMachineKey,
-    val tier: HTMachineTier,
     val itemInputs: List<ItemStack>,
     val fluidInputs: List<FluidStack>,
 ) : RecipeInput {
     companion object {
         @JvmStatic
-        fun createSimple(
-            pos: BlockPos,
-            key: HTMachineKey,
-            input: ItemStack,
-            tier: HTMachineTier = HTMachineTier.BASIC,
-        ): HTMachineInput = HTMachineInput(
+        fun createSimple(pos: BlockPos, key: HTMachineKey, input: ItemStack): HTMachineInput = HTMachineInput(
             pos,
             key,
-            tier,
             listOf(input),
             listOf(),
         )
@@ -42,19 +33,13 @@ class HTMachineInput private constructor(
          * [HTMachineInput]を返します。
          */
         @JvmStatic
-        fun create(
-            pos: BlockPos,
-            key: HTMachineKey,
-            tier: HTMachineTier,
-            builderAction: Builder.() -> Unit,
-        ): HTMachineInput {
+        fun create(pos: BlockPos, key: HTMachineKey, builderAction: Builder.() -> Unit): HTMachineInput {
             val itemInputs: MutableList<ItemStack> = mutableListOf()
             val fluidInputs: MutableList<FluidStack> = mutableListOf()
             Builder(itemInputs, fluidInputs).apply(builderAction)
             return HTMachineInput(
                 pos,
                 key,
-                tier,
                 itemInputs,
                 fluidInputs,
             )

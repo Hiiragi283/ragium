@@ -8,11 +8,11 @@
   },
   "item_inputs": [
     {
-      "count": 3,
+      "count": 5,
       "tag": "c:ingots/ragium"
     },
     {
-      "count": 2,
+      "count": 3,
       "item": "ragium:ultimate_casing"
     },
     {
@@ -22,10 +22,9 @@
   ],
   "item_outputs": [
     {
-      "count": 2,
+      "count": 6,
       "id": "ragium:ultimate_hull"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "ultimate"
+  "machine_type": "assembler"
 }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -11,6 +10,7 @@ import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
+import hiiragi283.ragium.common.recipe.condition.HTTierCondition
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.recipes.RecipeBuilder
@@ -35,11 +35,15 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 import java.util.function.Supplier
 
-class HTMachineRecipeBuilder private constructor(private val definition: HTMachineDefinition) : RecipeBuilder {
+class HTMachineRecipeBuilder private constructor(private val machine: HTMachineKey) : RecipeBuilder {
     companion object {
         @JvmStatic
-        fun create(machine: HTMachineKey, tier: HTMachineTier = HTMachineTier.BASIC): HTMachineRecipeBuilder =
-            HTMachineRecipeBuilder(HTMachineDefinition(machine, tier))
+        fun create(machine: HTMachineKey, tier: HTMachineTier): HTMachineRecipeBuilder = create(machine).apply {
+            if (tier != HTMachineTier.BASIC) machineConditions(HTTierCondition(tier))
+        }
+
+        @JvmStatic
+        fun create(machine: HTMachineKey): HTMachineRecipeBuilder = HTMachineRecipeBuilder(machine)
     }
 
     private val itemInputs: MutableMap<Ingredient, Int> = mutableMapOf()
@@ -101,6 +105,7 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
     fun catalyst(ingredient: Ingredient): HTMachineRecipeBuilder = machineConditions(HTProcessorCatalystCondition(ingredient))
 
     fun machineConditions(condition: HTMachineRecipeCondition): HTMachineRecipeBuilder = apply {
+        check(this.machineCondition == null) { "Machine condition is already registered!" }
         this.machineCondition = condition
     }
 
@@ -175,10 +180,10 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     fun export(id: ResourceLocation): RecipeHolder<HTMachineRecipe> = RecipeHolder(fixId(id), createRecipe())
 
-    private fun fixId(id: ResourceLocation): ResourceLocation = RagiumAPI.wrapId(id.withPrefix(definition.key.name + '/'))
+    private fun fixId(id: ResourceLocation): ResourceLocation = RagiumAPI.wrapId(id.withPrefix(machine.name + '/'))
 
     private fun createRecipe(): HTMachineRecipe = HTMachineRecipe(
-        definition,
+        machine,
         itemInputs.map { (ingredient: Ingredient, count: Int) ->
             SizedIngredient(ingredient, count)
         },

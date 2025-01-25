@@ -18,6 +18,5 @@
       "id": "ragium:advanced_grate"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "advanced"
+  "machine_type": "assembler"
 }

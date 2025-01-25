@@ -18,6 +18,5 @@
       "id": "ragium:refined_ragium_solution"
     }
   ],
-  "machine_type": "chemical_reactor",
-  "tier": "elite"
+  "machine_type": "chemical_reactor"
 }

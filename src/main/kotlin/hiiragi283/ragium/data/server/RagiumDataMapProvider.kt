@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTTemperatureInfo
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -37,7 +38,8 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     private fun <T : Any> Builder<T, Item>.addContent(content: HTContent<out ItemLike>, value: T): Builder<T, Item> =
         add(content.id, value, false)
 
-    private fun Builder<FurnaceFuel, Item>.addFuel(item: ItemLike, second: Int) = addItem(item, FurnaceFuel(second * 200))
+    private fun Builder<FurnaceFuel, Item>.addFuel(item: ItemLike, second: Int): Builder<FurnaceFuel, Item> =
+        addItem(item, FurnaceFuel(second * 200))
 
     override fun gather() {
         // Fuel
@@ -67,6 +69,16 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         registerTier(RagiumBlocks.Burners.entries)
 
         registerTier(RagiumBlocks.Drums.entries)
+
+        tierBuilder.addContent(RagiumMachineKeys.ASSEMBLER.getBlock(), HTMachineTier.ADVANCED)
+        tierBuilder.addContent(RagiumMachineKeys.CHEMICAL_REACTOR.getBlock(), HTMachineTier.ADVANCED)
+        tierBuilder.addContent(RagiumMachineKeys.CUTTING_MACHINE.getBlock(), HTMachineTier.ELITE)
+        tierBuilder.addContent(RagiumMachineKeys.EXTRACTOR.getBlock(), HTMachineTier.ADVANCED)
+        tierBuilder.addContent(RagiumMachineKeys.GRINDER.getBlock(), HTMachineTier.ADVANCED)
+        tierBuilder.addContent(RagiumMachineKeys.GROWTH_CHAMBER.getBlock(), HTMachineTier.ADVANCED)
+        
+        tierBuilder.addContent(RagiumMachineKeys.LASER_TRANSFORMER.getBlock(), HTMachineTier.ELITE)
+        tierBuilder.addContent(RagiumMachineKeys.MULTI_SMELTER.getBlock(), HTMachineTier.ELITE)
         // Temperature
         val tempBuilder: Builder<HTTemperatureInfo, Block> = builder(RagiumAPI.DataMapTypes.TEMP_TIER)
 
@@ -75,6 +87,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             .add(BlockTags.CAMPFIRES, HTTemperatureInfo.heating(HTMachineTier.BASIC), false)
             .add(BlockTags.FIRE, HTTemperatureInfo.heating(HTMachineTier.ADVANCED), false)
             .addBlock(Blocks.LAVA, HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
+            .addBlock(RagiumBlocks.SOUL_MAGMA_BLOCK.get(), HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
 
         RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
             tempBuilder.addBlock(burner.get(), HTTemperatureInfo.heating(burner.machineTier))

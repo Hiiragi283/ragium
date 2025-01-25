@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "elite"
+  },
   "item_inputs": [
     {
       "count": 1,
@@ -16,6 +20,5 @@
       "id": "minecraft:wither_skeleton_skull"
     }
   ],
-  "machine_type": "laser_transformer",
-  "tier": "elite"
+  "machine_type": "laser_transformer"
 }

@@ -1,5 +1,9 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "elite"
+  },
   "item_inputs": [
     {
       "count": 1,
@@ -20,6 +24,5 @@
       "id": "ragium:elite_circuit"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "elite"
+  "machine_type": "assembler"
 }
