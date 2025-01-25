@@ -8,10 +8,11 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.isModLoaded
-import hiiragi283.ragium.api.machine.HTGeneratorFuel
-import hiiragi283.ragium.api.machine.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.property.HTGeneratorFuel
+import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
+import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -30,6 +31,8 @@ import hiiragi283.ragium.integration.RagiumEvilIntegration
 import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.EventPriority
@@ -42,8 +45,8 @@ import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent
 import net.neoforged.neoforge.fluids.FluidType
 import org.slf4j.Logger
-import java.util.function.BiFunction
 import java.util.function.BiPredicate
+import java.util.function.Function
 import java.util.function.UnaryOperator
 
 @Mod(RagiumAPI.MOD_ID)
@@ -131,7 +134,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                     HTGeneratorFuel(RagiumFluidTags.NON_NITRO_FUEL, FluidType.BUCKET_VOLUME / 10),
                     HTGeneratorFuel(RagiumFluidTags.NITRO_FUEL, FluidType.BUCKET_VOLUME / 100),
                 ),
-            )
+            ).put(HTMachinePropertyKeys.SOUND, SoundEvents.FIRE_EXTINGUISH)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ASH))
 
         event
             .getBuilder(RagiumMachineKeys.GAS_TURBINE)
@@ -163,7 +167,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                 BiPredicate { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay },
             ).put(
                 HTMachinePropertyKeys.BLOCK_MODEL_MAPPER,
-                BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/solar_panel") },
+                Function { key: HTMachineKey -> RagiumAPI.id("block/solar_panel") },
             ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
 
         event.getBuilder(RagiumMachineKeys.STEAM_GENERATOR)
@@ -184,17 +188,30 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumMachineKeys.PROCESSORS
             .map(event::getBuilder)
             .forEach { builder: HTPropertyHolderBuilder ->
-                builder.putFactory(::HTDefaultProcessorBlockEntity)
+                builder
+                    .putFactory(::HTDefaultProcessorBlockEntity)
+                    .put(
+                        HTMachinePropertyKeys.PARTICLE,
+                        HTMachineParticleHandler.ofSimple(ParticleTypes.ELECTRIC_SPARK),
+                    )
             }
+
+        event
+            .getBuilder(RagiumMachineKeys.ASSEMBLER)
+            .putFactory(::HTLargeProcessorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
             .putFactory(::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.FLAME))
 
         event
             .getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
             .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BREWING_STAND_BREW)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.BUBBLE_POP))
 
         event.getBuilder(RagiumMachineKeys.CUTTING_MACHINE)
 
@@ -212,6 +229,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                 }
             }
 
+        event
+            .getBuilder(RagiumMachineKeys.GRINDER)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.GRINDSTONE_USE)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
+
         event.getBuilder(RagiumMachineKeys.GROWTH_CHAMBER)
 
         event.getBuilder(RagiumMachineKeys.LASER_TRANSFORMER)
@@ -219,15 +241,16 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         event
             .getBuilder(RagiumMachineKeys.MIXER)
             .putFactory(::HTLargeProcessorBlockEntity)
-            .put(
-                HTMachinePropertyKeys.BLOCK_MODEL_MAPPER,
-                BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/mixer") },
-            ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
+            .put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
 
         event
             .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
             .putFactory(::HTMultiSmelterBlockEntity)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
     }
 
     //    Material    //

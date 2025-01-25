@@ -3,7 +3,10 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import net.minecraft.core.BlockPos
+import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
@@ -13,6 +16,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.phys.Vec3
 
 //    BlockGetter    //
@@ -40,7 +44,7 @@ fun CommonLevelAccessor.replaceBlockState(pos: BlockPos, doBreak: Boolean = fals
 
 //    Level    //
 
-fun Level.asServerLevel(): ServerLevel? = this as? ServerLevel
+fun Level?.asServerLevel(): ServerLevel? = this as? ServerLevel
 
 /**
  * 指定した[item]を[entity]の足元にドロップします。
@@ -102,3 +106,12 @@ fun dropStackAt(
  * @return [action]を実行した場合はその戻り値を，それ以外の場合はnull
  */
 fun <T : Any> BlockEntity.ifPresentWorld(action: (Level) -> T): T? = level?.let(action)
+
+fun BlockEntity.sendUpdatePacket() {
+    val serverLevel: ServerLevel = level.asServerLevel() ?: return
+    val packet: Packet<ClientGamePacketListener> = this.updatePacket ?: return
+    val chunk: ChunkAccess = serverLevel.getChunk(blockPos)
+    serverLevel.chunkSource.chunkMap.getPlayers(chunk.pos, false).forEach { player: ServerPlayer ->
+        player.connection.send(packet)
+    }
+}

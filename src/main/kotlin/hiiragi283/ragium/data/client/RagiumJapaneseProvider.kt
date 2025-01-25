@@ -271,5 +271,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTTagPrefix.SHARD, "%sの欠片")
         add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
         add(HTTagPrefix.WIRE, "%sワイヤ")
+        // Misc
+        add(RagiumTranslationKeys.FORMATTED_FLUID, "液体量: %s mb")
+
+        add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")
     }
 }

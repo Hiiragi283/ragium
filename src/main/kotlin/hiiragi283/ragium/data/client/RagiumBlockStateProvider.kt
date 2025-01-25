@@ -190,12 +190,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             val properties: HTPropertyHolder = key.getProperty()
             getVariantBuilder(block)
                 .forAllStates { state: BlockState ->
-                    val modelId: ResourceLocation = properties
-                        .getOrDefault(HTMachinePropertyKeys.BLOCK_MODEL_MAPPER)
-                        .apply(
-                            key,
-                            state.getValue(RagiumBlockProperties.ACTIVE),
-                        )
+                    val modelId: ResourceLocation =
+                        properties.getOrDefault(HTMachinePropertyKeys.BLOCK_MODEL_MAPPER).apply(key)
                     val rotation: Int = properties
                         .getOrDefault(HTMachinePropertyKeys.ROTATION_MAPPER)
                         .apply(state.getValue(BlockStateProperties.HORIZONTAL_FACING))

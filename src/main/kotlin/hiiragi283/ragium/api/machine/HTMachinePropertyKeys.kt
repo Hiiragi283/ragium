@@ -3,18 +3,20 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.client.renderer.HTMachineRenderer
+import hiiragi283.ragium.api.machine.property.HTGeneratorFuel
+import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
+import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeValidator
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.Level
-import java.util.function.BiFunction
 import java.util.function.BiPredicate
+import java.util.function.Function
 import java.util.function.UnaryOperator
 
 object HTMachinePropertyKeys {
@@ -23,7 +25,7 @@ object HTMachinePropertyKeys {
         HTPropertyKey.simple(RagiumAPI.id("machine_factory"))
 
     @JvmField
-    val PARTICLE: HTPropertyKey<SimpleParticleType> =
+    val PARTICLE: HTPropertyKey<HTMachineParticleHandler> =
         HTPropertyKey.simple(RagiumAPI.id("particle"))
 
     @JvmField
@@ -47,32 +49,18 @@ object HTMachinePropertyKeys {
     //    Data Gen    //
 
     @JvmField
-    val BLOCK_MODEL_MAPPER: HTPropertyKey<BiFunction<HTMachineKey, Boolean, ResourceLocation>> =
+    val BLOCK_MODEL_MAPPER: HTPropertyKey<Function<HTMachineKey, ResourceLocation>> =
         HTPropertyKey
-            .builder<BiFunction<HTMachineKey, Boolean, ResourceLocation>>(RagiumAPI.id("block_model_mapper"))
-            .setDefaultValue {
-                BiFunction { key: HTMachineKey, isActive: Boolean ->
-                    var path = "block/"
-                    if (isActive) {
-                        path += "active_"
-                    }
-                    RagiumAPI.id(path + key.name)
-                }
-            }.build()
+            .builder<Function<HTMachineKey, ResourceLocation>>(RagiumAPI.id("block_model_mapper"))
+            .setDefaultValue { Function { key: HTMachineKey -> RagiumAPI.id("block/${key.name}") } }
+            .build()
 
     @JvmField
-    val ITEM_MODEL_MAPPER: HTPropertyKey<BiFunction<HTMachineKey, Boolean, ResourceLocation>> =
+    val ITEM_MODEL_MAPPER: HTPropertyKey<Function<HTMachineKey, ResourceLocation>> =
         HTPropertyKey
-            .builder<BiFunction<HTMachineKey, Boolean, ResourceLocation>>(RagiumAPI.id("item_model_mapper"))
-            .setDefaultValue {
-                BiFunction { key: HTMachineKey, isActive: Boolean ->
-                    var path = "block/"
-                    if (isActive) {
-                        path += "active_"
-                    }
-                    RagiumAPI.id(path + key.name)
-                }
-            }.build()
+            .builder<Function<HTMachineKey, ResourceLocation>>(RagiumAPI.id("item_model_mapper"))
+            .setDefaultValue { Function { key: HTMachineKey -> RagiumAPI.id("block/${key.name}") } }
+            .build()
 
     @JvmField
     val ROTATION_MAPPER: HTPropertyKey<UnaryOperator<Direction>> =

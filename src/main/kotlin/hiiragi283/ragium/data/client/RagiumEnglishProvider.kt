@@ -321,5 +321,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTTagPrefix.SHARD, "%s Shard")
         add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
         add(HTTagPrefix.WIRE, "%s Wire")
+        // Misc
+        add(RagiumTranslationKeys.FORMATTED_FLUID, "Amount: %s mb")
+
+        add("config.jade.plugin_ragium.energy_network", "Energy Network")
     }
 }

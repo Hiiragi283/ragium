@@ -12,6 +12,10 @@ class LimitedItemHandler(private val ioProvider: Function<Int, HTStorageIO>, del
     ForwardingItemHandler(delegate) {
     companion object {
         @JvmStatic
+        fun dummy(delegate: IItemHandler): LimitedItemHandler =
+            LimitedItemHandler(Function { HTStorageIO.INTERNAL }, Suppliers.ofInstance(delegate))
+
+        @JvmStatic
         fun small(delegate: IItemHandler): LimitedItemHandler = LimitedItemHandler(
             mapOf(
                 0 to HTStorageIO.INPUT,

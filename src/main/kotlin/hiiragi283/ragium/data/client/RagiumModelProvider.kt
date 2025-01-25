@@ -67,7 +67,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, content: HTBlockContent?, property: HTPropertyHolder ->
             if (content == null) return@forEachEntries
             val modelId: ResourceLocation =
-                key.getProperty().getOrDefault(HTMachinePropertyKeys.ITEM_MODEL_MAPPER).apply(key, false)
+                key.getProperty().getOrDefault(HTMachinePropertyKeys.ITEM_MODEL_MAPPER).apply(key)
             withUncheckedParent(content, modelId)
         }
     }

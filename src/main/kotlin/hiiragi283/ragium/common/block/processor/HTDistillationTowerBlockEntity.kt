@@ -33,7 +33,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     )
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTDistillationTowerContainerMenu(containerId, playerInventory, itemHandler, this)
+        HTDistillationTowerContainerMenu(containerId, playerInventory, blockPos, itemHandler)
 
     //    HTBlockEntityHandlerProvider    //
 

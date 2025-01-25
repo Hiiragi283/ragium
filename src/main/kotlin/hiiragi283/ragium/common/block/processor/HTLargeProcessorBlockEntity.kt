@@ -28,7 +28,7 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState, override val
     )
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTLargeMachineContainerMenu(containerId, playerInventory, itemHandler, this)
+        HTLargeMachineContainerMenu(containerId, playerInventory, blockPos, itemHandler)
 
     override fun getItemHandler(direction: Direction?): LimitedItemHandler = LimitedItemHandler.large(itemHandler)
 

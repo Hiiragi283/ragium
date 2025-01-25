@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.common.block.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.machine.HTCatalystAddonBlock
@@ -158,7 +159,11 @@ object RagiumBlocks {
         ;
 
         override val holder: DeferredBlock<Block> =
-            REGISTER.registerBlock("${name.lowercase()}_burner", ::Block, blockProperty(Blocks.COPPER_BLOCK))
+            REGISTER.registerBlock(
+                "${name.lowercase()}_burner",
+                ::Block,
+                blockProperty(Blocks.COPPER_BLOCK).noOcclusion(),
+            )
     }
 
     @JvmField
@@ -271,6 +276,6 @@ object RagiumBlocks {
         REGISTER.registerBlock("catalyst_addon", ::HTCatalystAddonBlock, blockProperty(Blocks.SMOOTH_STONE))
 
     @JvmField
-    val ENERGY_NETWORK_INTERFACE: DeferredBlock<Block> =
-        REGISTER.registerSimpleBlock("energy_network_interface", blockProperty(Blocks.SMOOTH_STONE))
+    val ENERGY_NETWORK_INTERFACE: DeferredBlock<HTEnergyNetworkBlock> =
+        REGISTER.registerBlock("energy_network_interface", ::HTEnergyNetworkBlock, blockProperty(Blocks.SMOOTH_STONE))
 }

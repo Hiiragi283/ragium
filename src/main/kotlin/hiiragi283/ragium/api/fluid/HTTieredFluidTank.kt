@@ -33,14 +33,23 @@ open class HTTieredFluidTank(override var machineTier: HTMachineTier, val callba
         }
 
         @JvmStatic
-        fun readFromNBT(tanks: Array<out HTTieredFluidTank>, nbt: CompoundTag, provider: HolderLookup.Provider) {
+        fun readFromNBT(
+            tanks: Array<out HTTieredFluidTank>,
+            nbt: CompoundTag,
+            provider: HolderLookup.Provider,
+            newTier: HTMachineTier,
+        ) {
             FluidStack.OPTIONAL_CODEC
                 .listOf()
                 .parse(
                     provider.createSerializationContext(NbtOps.INSTANCE),
                     nbt.get("Fluids"),
                 ).ifSuccess { stacks: List<FluidStack> ->
-                    stacks.forEachIndexed { index: Int, stack: FluidStack -> tanks[index].fluid = stack }
+                    stacks.forEachIndexed { index: Int, stack: FluidStack ->
+                        val tank: HTTieredFluidTank = tanks[index]
+                        tank.onUpdateTier(HTMachineTier.BASIC, newTier)
+                        tanks[index].fluid = stack
+                    }
                 }.logError(LOGGER)
         }
     }

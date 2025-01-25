@@ -76,9 +76,6 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        fun <T : Any, C> staticProvider(value: T?): IBlockCapabilityProvider<T, C> =
-            IBlockCapabilityProvider { _: Level, _: BlockPos, _: BlockState, _: BlockEntity?, _: C? -> value }
-
         // All Blocks
         fun <T : Any, C> registerForBlocks(capability: BlockCapability<T, C>, provider: IBlockCapabilityProvider<T, C>) {
             for (block: Block in BuiltInRegistries.BLOCK) {
@@ -90,9 +87,20 @@ internal object RagiumEvents {
             }
         }
 
-        registerForBlocks(
-            RagiumAPI.BlockCapabilities.CONTROLLER_HOLDER,
-        ) { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction -> blockEntity as? HTControllerHolder }
+        RagiumAPI.machineRegistry.blockMap.values.forEach { content: HTBlockContent ->
+            event.registerBlock(
+                RagiumAPI.BlockCapabilities.MACHINE_TIER,
+                { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Void? ->
+                    (blockEntity as? HTMachineTierProvider)?.machineTier
+                },
+                content.get(),
+            )
+            event.registerBlock(
+                RagiumAPI.BlockCapabilities.CONTROLLER_HOLDER,
+                { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction -> blockEntity as? HTControllerHolder },
+                content.get(),
+            )
+        }
 
         fun registerTier(contents: Iterable<HTBlockContent>) {
             event.registerBlock(
@@ -132,6 +140,8 @@ internal object RagiumEvents {
             )
         }
 
+        registerHandlers(RagiumBlockEntityTypes.CATALYST_ADDON)
+        registerHandlers(RagiumBlockEntityTypes.DRUM)
         registerHandlers(RagiumBlockEntityTypes.MANUAL_GRINDER)
 
         registerHandlers(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
@@ -141,8 +151,6 @@ internal object RagiumEvents {
         registerHandlers(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         registerHandlers(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
-
-        registerHandlers(RagiumBlockEntityTypes.DRUM)
 
         // Other
         event.registerBlock(

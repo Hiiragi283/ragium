@@ -1,25 +1,22 @@
 package hiiragi283.ragium.client.screen
 
-import hiiragi283.ragium.api.extension.fluidAmountText
-import hiiragi283.ragium.api.extension.getSpriteAndColor
-import hiiragi283.ragium.api.extension.id
-import hiiragi283.ragium.api.extension.toFloatColor
+import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.inventory.HTContainerMenu
+import hiiragi283.ragium.api.world.HTEnergyNetwork
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
-abstract class HTContainerScreen<T : AbstractContainerMenu>(menu: T, playerInventory: Inventory, title: Component) :
+abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: Inventory, title: Component) :
     AbstractContainerScreen<T>(menu, playerInventory, title) {
     override fun render(
         guiGraphics: GuiGraphics,
@@ -43,17 +40,17 @@ abstract class HTContainerScreen<T : AbstractContainerMenu>(menu: T, playerInven
 
     protected fun getSlotPosY(index: Int): Int = 18 + index * 18
 
-    protected fun drawFluid(
+    protected fun renderFluid(
         guiGraphics: GuiGraphics,
         stack: FluidStack,
         x: Int,
         y: Int,
     ) {
         if (stack.isEmpty) return
-        drawFluid(guiGraphics, stack.fluid, x, y)
+        renderFluid(guiGraphics, stack.fluid, x, y)
     }
 
-    protected fun drawFluid(
+    protected fun renderFluid(
         guiGraphics: GuiGraphics,
         fluid: Fluid,
         x: Int,
@@ -76,7 +73,7 @@ abstract class HTContainerScreen<T : AbstractContainerMenu>(menu: T, playerInven
         )
     }
 
-    protected fun drawTooltip(
+    protected fun renderTooltip(
         x: Int,
         y: Int,
         mouseX: Int,
@@ -92,17 +89,16 @@ abstract class HTContainerScreen<T : AbstractContainerMenu>(menu: T, playerInven
         }
     }
 
-    protected fun drawFluidTooltip(
+    protected fun renderFluidTooltip(
         guiGraphics: GuiGraphics,
         stack: FluidStack,
-        amount: Long,
         x: Int,
         y: Int,
         mouseX: Int,
         mouseY: Int,
     ) {
-        drawTooltip(x, y, mouseX, mouseY) {
-            if (stack.isEmpty) return@drawTooltip
+        renderTooltip(x, y, mouseX, mouseY) {
+            if (stack.isEmpty) return@renderTooltip
             val fluidType: FluidType = stack.fluidType
             guiGraphics.renderComponentTooltip(
                 font,
@@ -110,7 +106,7 @@ abstract class HTContainerScreen<T : AbstractContainerMenu>(menu: T, playerInven
                     // Tooltips
                     add(fluidType.description)
                     // Fluid Amount
-                    add(fluidAmountText(amount).withStyle(ChatFormatting.GRAY))
+                    add(fluidAmountText(stack.amount).withStyle(ChatFormatting.GRAY))
                     // Mod Name
                     val fluidId: ResourceLocation = stack.fluidHolder.id ?: return@buildList
                     ModList.get().getModFileById(fluidId.namespace)?.moduleName()?.let { name: String ->
@@ -123,31 +119,25 @@ abstract class HTContainerScreen<T : AbstractContainerMenu>(menu: T, playerInven
         }
     }
 
-    protected fun drawEnergyTooltip(
+    protected fun renderEnergyTooltip(
         guiGraphics: GuiGraphics,
-        key: ResourceKey<Level>,
         x: Int,
         y: Int,
         mouseX: Int,
         mouseY: Int,
     ) {
-        drawTooltip(x, y, mouseX, mouseY) {
-            /*CLIENT_NETWORK_MAP[key]?.let {
-                context.drawTooltip(
-                    textRenderer,
-                    buildList {
-                        add(
-                            Text
-                                .translatable(
-                                    RagiumTranslationKeys.MACHINE_NETWORK_ENERGY,
-                                    longText(it.amount).formatted(Formatting.RED),
-                                ).formatted(Formatting.GRAY),
-                        )
-                    },
-                    mouseX,
-                    mouseY,
-                )
-            }*/
+        val network: HTEnergyNetwork = menu.level.getEnergyNetwork().getOrNull() ?: return
+        renderTooltip(x, y, mouseX, mouseY) {
+            guiGraphics.renderTooltip(
+                font,
+                Component
+                    .translatable(
+                        RagiumTranslationKeys.MACHINE_NETWORK_ENERGY,
+                        intText(network.energyStored).withStyle(ChatFormatting.RED),
+                    ).withStyle(ChatFormatting.GRAY),
+                mouseX,
+                mouseY,
+            )
         }
     }
 }

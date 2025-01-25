@@ -28,7 +28,7 @@ class HTDefaultProcessorBlockEntity(pos: BlockPos, state: BlockState, override v
     )
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTDefaultMachineContainerMenu(containerId, playerInventory, itemHandler, this)
+        HTDefaultMachineContainerMenu(containerId, playerInventory, blockPos, itemHandler)
 
     override fun getItemHandler(direction: Direction?): LimitedItemHandler = LimitedItemHandler.basic(itemHandler)
 

@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.get
-import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -26,11 +25,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 class HTMachineBlock(properties: Properties) : HTEntityBlock(properties) {
     init {
         registerDefaultState(
-            stateDefinition
-                .any()
-                .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-                .setValue(RagiumBlockProperties.ACTIVE, false),
-            // .setValue(HTMachineTier.PROPERTY, HTMachineTier.BASIC),
+            stateDefinition.any().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH),
         )
     }
 
@@ -45,24 +40,12 @@ class HTMachineBlock(properties: Properties) : HTEntityBlock(properties) {
         machineKey?.appendTooltip(tooltipComponents::add, HTMachineTier.BASIC)
     }
 
-    /*override fun getCloneItemStack(
-        state: BlockState,
-        target: HitResult,
-        level: LevelReader,
-        pos: BlockPos,
-        player: Player,
-    ): ItemStack {
-        val tier: HTMachineTier = state.machineTier
-        return machineKey?.createItemStack(tier) ?: super.getCloneItemStack(state, target, level, pos, player)
-    }*/
-
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        builder.add(BlockStateProperties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE)
+        builder.add(BlockStateProperties.HORIZONTAL_FACING)
     }
 
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState? = defaultBlockState()
         .setValue(BlockStateProperties.HORIZONTAL_FACING, context.horizontalDirection.opposite)
-    // .setValue(HTMachineTier.PROPERTY, context.itemInHand.machineTier)
 
     override fun rotate(
         state: BlockState,

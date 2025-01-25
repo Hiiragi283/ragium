@@ -1,9 +1,19 @@
 package hiiragi283.ragium.api.extension
 
 import net.minecraft.core.BlockPos
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.chat.Component
+import net.minecraft.world.SimpleMenuProvider
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerLevelAccess
+import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
+import java.util.function.Consumer
+
+fun Player.openMenu(factory: MenuConstructor, title: Component, consumer: Consumer<RegistryFriendlyByteBuf>) {
+    openMenu(SimpleMenuProvider(factory, title), consumer)
+}
 
 //    ContainerLevelAccess    //
 

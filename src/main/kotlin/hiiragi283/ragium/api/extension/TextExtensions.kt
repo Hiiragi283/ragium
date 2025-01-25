@@ -9,7 +9,6 @@ import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.fluids.FluidType
 import java.text.NumberFormat
 
 //    Text    //
@@ -62,8 +61,7 @@ fun worldText(value: ResourceKey<Level>): MutableComponent = Component.translata
  *
  * フォーマットは次に従います: `Amount: x B, y mb`
  */
-fun fluidAmountText(value: Long): MutableComponent = Component.translatable(
+fun fluidAmountText(value: Int): MutableComponent = Component.translatable(
     RagiumTranslationKeys.FORMATTED_FLUID,
-    NumberFormat.getNumberInstance().format(value / FluidType.BUCKET_VOLUME),
-    NumberFormat.getNumberInstance().format(value % FluidType.BUCKET_VOLUME),
+    NumberFormat.getNumberInstance().format(value),
 )

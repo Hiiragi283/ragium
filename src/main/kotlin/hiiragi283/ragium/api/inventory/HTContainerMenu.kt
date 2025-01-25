@@ -1,10 +1,9 @@
 package hiiragi283.ragium.api.inventory
 
-import hiiragi283.ragium.api.extension.getBlockEntity
+import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.ContainerLevelAccess
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
@@ -18,14 +17,15 @@ abstract class HTContainerMenu(
     menuType: Supplier<out MenuType<*>>,
     containerId: Int,
     val playerInv: Inventory,
+    val pos: BlockPos,
     val itemHandler: IItemHandler,
-    val access: ContainerLevelAccess,
 ) : AbstractContainerMenu(menuType.get(), containerId) {
     val player: Player = playerInv.player
     val level: Level
         get() = player.level()
+
     val blockEntity: BlockEntity?
-        get() = access.getBlockEntity()
+        get() = level.getBlockEntity(pos)
 
     override fun stillValid(player: Player): Boolean = true
 

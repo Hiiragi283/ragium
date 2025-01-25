@@ -7,12 +7,34 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
+import net.neoforged.neoforge.fluids.FluidStack
 
 open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerInventory: Inventory, title: Component) :
     HTContainerScreen<T>(menu, playerInventory, title) {
     companion object {
         @JvmField
         val TEXTURE: ResourceLocation = RagiumAPI.id("textures/gui/machine.png")
+    }
+
+    private fun getFluidStack(index: Int): FluidStack = menu.machineEntity?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
+
+    override fun render(
+        guiGraphics: GuiGraphics,
+        mouseX: Int,
+        mouseY: Int,
+        partialTick: Float,
+    ) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick)
+        menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
+            renderFluidTooltip(
+                guiGraphics,
+                getFluidStack(index),
+                slotX,
+                slotY,
+                mouseX,
+                mouseY,
+            )
+        }
     }
 
     override fun renderBg(
@@ -23,6 +45,8 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
     ) {
         // background
         guiGraphics.blit(TEXTURE, startX, startY, 0, 0, imageWidth, imageHeight)
+        // energy amount
+        renderEnergyTooltip(guiGraphics, getSlotPosX(4), getSlotPosY(0), mouseX, mouseY)
         // progress bar
         guiGraphics.blitSprite(
             RagiumAPI.id("progress_bar"),
@@ -54,7 +78,7 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
                 18,
                 18,
             )
-            // drawFluid(guiGraphics, fluidCache[index], slotX, slotY)
+            renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
         }
     }
 }

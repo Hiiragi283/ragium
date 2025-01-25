@@ -1,33 +1,18 @@
 {
   "variants": {
-    "active=false,facing=east": {
+    "facing=east": {
       "model": "ragium:block/drain",
       "y": 90
     },
-    "active=false,facing=north": {
+    "facing=north": {
       "model": "ragium:block/drain"
     },
-    "active=false,facing=south": {
+    "facing=south": {
       "model": "ragium:block/drain",
       "y": 180
     },
-    "active=false,facing=west": {
+    "facing=west": {
       "model": "ragium:block/drain",
-      "y": 270
-    },
-    "active=true,facing=east": {
-      "model": "ragium:block/active_drain",
-      "y": 90
-    },
-    "active=true,facing=north": {
-      "model": "ragium:block/active_drain"
-    },
-    "active=true,facing=south": {
-      "model": "ragium:block/active_drain",
-      "y": 180
-    },
-    "active=true,facing=west": {
-      "model": "ragium:block/active_drain",
       "y": 270
     }
   }

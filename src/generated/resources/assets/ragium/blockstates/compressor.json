@@ -1,33 +1,18 @@
 {
   "variants": {
-    "active=false,facing=east": {
+    "facing=east": {
       "model": "ragium:block/compressor",
       "y": 90
     },
-    "active=false,facing=north": {
+    "facing=north": {
       "model": "ragium:block/compressor"
     },
-    "active=false,facing=south": {
+    "facing=south": {
       "model": "ragium:block/compressor",
       "y": 180
     },
-    "active=false,facing=west": {
+    "facing=west": {
       "model": "ragium:block/compressor",
-      "y": 270
-    },
-    "active=true,facing=east": {
-      "model": "ragium:block/active_compressor",
-      "y": 90
-    },
-    "active=true,facing=north": {
-      "model": "ragium:block/active_compressor"
-    },
-    "active=true,facing=south": {
-      "model": "ragium:block/active_compressor",
-      "y": 180
-    },
-    "active=true,facing=west": {
-      "model": "ragium:block/active_compressor",
       "y": 270
     }
   }

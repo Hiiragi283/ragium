@@ -30,6 +30,7 @@
   "block.ragium.ultimate_hull_decoration": "究極筐体（装飾）",
   "block.ragium.white_led_block": "LEDブロック",
   "block.ragium.yellow_led_block": "LEDブロック（黄色）",
+  "config.jade.plugin_ragium.energy_network": "エネルギーネットワーク",
   "content.ragium.burner": "バーナー",
   "content.ragium.casing": "外装",
   "content.ragium.circuit": "回路",
@@ -285,6 +286,7 @@
   "tooltip.ragium.condition.catalyst": "触媒アイテムが必要です",
   "tooltip.ragium.condition.cooling": "次の範囲の冷却が必要です: %s - %s",
   "tooltip.ragium.condition.heating": "次の範囲の加熱が必要です: %s - %s",
+  "tooltip.ragium.fluid.formatted": "液体量: %s mb",
   "tooltip.ragium.machine.cost": "- 処理コスト: %s FE/回",
   "tooltip.ragium.machine.name": "- 機械: %s",
   "tooltip.ragium.machine.tier": "- ティア: %s"

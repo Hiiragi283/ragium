@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.extension.sendUpdatePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -20,7 +21,9 @@ import java.util.function.Supplier
 abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state) {
     companion object {
+        const val ACTIVE_KEY = "isActive"
         const val ITEM_KEY = "Items"
+        const val TIER_KEY = "tier"
     }
 
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag =
@@ -30,6 +33,12 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
         super.handleUpdateTag(tag, lookupProvider)
+        loadAdditional(tag, lookupProvider)
+    }
+
+    override fun setChanged() {
+        super.setChanged()
+        sendUpdatePacket()
     }
 
     //    Extension    //

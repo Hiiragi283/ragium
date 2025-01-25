@@ -54,7 +54,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
         itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_KEY))
-        HTTieredFluidTank.readFromNBT(tanks, tag, registries)
+        HTTieredFluidTank.readFromNBT(tanks, tag, registries, machineTier)
     }
 
     override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {

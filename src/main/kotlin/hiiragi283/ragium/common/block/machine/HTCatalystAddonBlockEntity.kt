@@ -1,9 +1,12 @@
 package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.capability.LimitedItemHandler
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.InteractionHand
@@ -15,7 +18,9 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity(RagiumBlockEntityTypes.CATALYST_ADDON, pos, state) {
+class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) :
+    HTBlockEntity(RagiumBlockEntityTypes.CATALYST_ADDON, pos, state),
+    HTBlockEntityHandlerProvider {
     private val itemHandler: ItemStackHandler = object : ItemStackHandler(1) {
         override fun getSlotLimit(slot: Int): Int = 1
     }
@@ -55,4 +60,8 @@ class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEnti
         }
         return InteractionResult.sidedSuccess(level.isClientSide)
     }
+
+    //    HTBlockEntityHandlerProvider    //
+
+    override fun getItemHandler(direction: Direction?): LimitedItemHandler = LimitedItemHandler.dummy(itemHandler)
 }

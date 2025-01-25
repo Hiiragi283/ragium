@@ -12,11 +12,15 @@ import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
+import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
@@ -49,35 +53,31 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     }
 
     abstract val machineKey: HTMachineKey
-
-    val definition: HTMachineDefinition
-        get() = HTMachineDefinition(machineKey, machineTier)
+    override var machineTier: HTMachineTier = HTMachineTier.BASIC
 
     val front: Direction
         get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-    val isActive: Boolean
-        get() = blockState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
-    override val machineTier: HTMachineTier
-        get() {
-            return HTMachineTier.BASIC
-        }
 
-    /*override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        components.set(RagiumComponentTypes.MACHINE_TIER, machineTier)
-    }*/
+    var isActive: Boolean = false
+        protected set
 
-    @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
-    override fun setBlockState(blockState: BlockState) {
-        val oldTier: HTMachineTier = machineTier
-        super.setBlockState(blockState)
-        ifPresentWorld { level: Level ->
-            if (!level.isClientSide && oldTier != machineTier) {
-                onUpdateTier(oldTier, machineTier)
-                // RagiumAPI.LOGGER.info("Machine tier updated: $oldTier -> $tier")
-            }
-        }
+    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        HTMachineTier.CODEC
+            .encodeStart(NbtOps.INSTANCE, machineTier)
+            .ifSuccess { tag.put(TIER_KEY, it) }
+        tag.putBoolean(ACTIVE_KEY, isActive)
     }
 
+    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        HTMachineTier.CODEC
+            .parse(NbtOps.INSTANCE, tag.get(TIER_KEY))
+            .ifSuccess { machineTier = it }
+        isActive = tag.getBoolean(ACTIVE_KEY)
+    }
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     final override fun onRightClicked(
         state: BlockState,
         level: Level,
@@ -91,14 +91,10 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
             return InteractionResult.SUCCESS
         }
         // Upgrade machine when clicked with machine hull
-        if (upgrade(level, player, HTMachineTier.ADVANCED)) {
-            return InteractionResult.SUCCESS
-        }
-        if (upgrade(level, player, HTMachineTier.ELITE)) {
-            return InteractionResult.SUCCESS
-        }
-        if (upgrade(level, player, HTMachineTier.ULTIMATE)) {
-            return InteractionResult.SUCCESS
+        for (tier: HTMachineTier in HTMachineTier.entries) {
+            if (upgrade(level, player, tier)) {
+                return InteractionResult.SUCCESS
+            }
         }
         // Insert fluid from holding stack
         if (interactWithFluidStorage(player)) {
@@ -113,7 +109,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
                     // init multiblock data
                     processData(data)
                     // open machine screen
-                    player.openMenu(state.getMenuProvider(level, pos))
+                    player.openMenu(::createMenu, displayName, ::writeExtraData)
                     // HTInteractMachineCriterion.trigger(player, machineKey, tier)
                 }
                 InteractionResult.SUCCESS
@@ -121,13 +117,15 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         }
     }
 
+    protected open fun writeExtraData(registryBuf: RegistryFriendlyByteBuf) {
+        BlockPos.STREAM_CODEC.encode(registryBuf, blockPos)
+    }
+
     private fun upgrade(level: Level, player: Player, newTier: HTMachineTier): Boolean {
         val stack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
         return if (stack.isOf(newTier.getHull()) && machineTier < newTier) {
-            level.replaceBlockState(blockPos) { stateIn: BlockState ->
-                // stateIn.setValue(HTMachineTier.PROPERTY, newTier)
-                null
-            }
+            onUpdateTier(machineTier, newTier)
+            this.machineTier = newTier
             level.playSound(null, blockPos, SoundEvents.PLAYER_LEVELUP, player.soundSource, 1f, 0.5f)
             stack.shrink(1)
             true
@@ -142,48 +140,51 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         }
     }
 
-    protected fun activateState(level: Level, pos: BlockPos, newState: Boolean) {
-        if (!level.isClientSide) {
-            level.replaceBlockState(pos) { stateIn: BlockState ->
-                if (stateIn.hasProperty(RagiumBlockProperties.ACTIVE)) {
-                    if (stateIn.getValue(RagiumBlockProperties.ACTIVE) == newState) {
-                        null
-                    } else {
-                        stateIn.setValue(RagiumBlockProperties.ACTIVE, newState)
-                    }
-                } else {
-                    null
-                }
-            }
+    //    Ticking    //
+
+    final override val tickRate: Int
+        get() = machineTier.tickRate
+
+    override fun tickEach(
+        level: Level,
+        pos: BlockPos,
+        state: BlockState,
+        ticks: Int,
+    ) {
+        if (isActive) {
+            // spawn particles
+            machineKey.getProperty()[HTMachinePropertyKeys.PARTICLE]?.addParticle(level, pos, level.random, front)
         }
     }
 
-    //    Ticking    //
-
-    final override val tickRate: Int = machineTier.tickRate
-
     final override fun tickSecond(level: Level, pos: BlockPos, state: BlockState) {
-        val serverLevel: ServerLevel = level.asServerLevel() ?: return
-        val network: HTEnergyNetwork = serverLevel.getEnergyNetwork().getOrNull() ?: return
+        if (!level.isClientSide) {
+            tickOnServer(level as ServerLevel, pos)
+        }
+        setChanged()
+    }
+
+    private fun tickOnServer(level: ServerLevel, pos: BlockPos) {
+        val network: HTEnergyNetwork = level.getEnergyNetwork().getOrNull() ?: return
         if (energyFlag == HTEnergyNetwork.Flag.CONSUME && !network.canConsume(machineTier.processCost)) {
             LOGGER.error("Failed to extract required energy from network!")
             return
         }
-        runCatching { process(serverLevel, pos) }
+        runCatching { process(level, pos) }
             .onSuccess {
                 if (!energyFlag.processAmount(network, machineTier.processCost, true)) {
                     LOGGER.error("Failed to interact energy network")
                     return
                 }
             }.onSuccess {
-                machineKey.getProperty().ifPresent(HTMachinePropertyKeys.SOUND) {
-                    serverLevel.playSound(null, pos, it, SoundSource.BLOCKS, 0.2f, 1.0f)
+                isActive = true
+                machineKey.getProperty().ifPresent(HTMachinePropertyKeys.SOUND) { soundEvent: SoundEvent ->
+                    level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 0.5f, 1.0f)
                 }
-                activateState(serverLevel, pos, true)
-                onSucceeded(serverLevel, pos)
+                onSucceeded(level, pos)
             }.onFailure { throwable: Throwable ->
-                activateState(serverLevel, pos, false)
-                onFailed(serverLevel, pos)
+                isActive = false
+                onFailed(level, pos)
                 val throwable1: Throwable =
                     when (throwable) {
                         is HTMachineException -> throwable.takeIf { it.showInLog || !FMLLoader.isProduction() }
@@ -191,7 +192,6 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
                     } ?: return@onFailure
                 LOGGER.error("Error on {} at {}: {}", machineKey, blockPosText(pos).string, throwable1.message)
             }
-        setChanged()
     }
 
     open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME

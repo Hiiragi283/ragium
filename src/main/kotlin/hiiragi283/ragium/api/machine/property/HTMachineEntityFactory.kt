@@ -1,6 +1,7 @@
-package hiiragi283.ragium.api.machine
+package hiiragi283.ragium.api.machine.property
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.machine.HTMachineKey
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 

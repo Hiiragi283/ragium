@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.machine
+package hiiragi283.ragium.api.machine.property
 
 import hiiragi283.ragium.common.init.RagiumFluids
 import net.minecraft.tags.TagKey

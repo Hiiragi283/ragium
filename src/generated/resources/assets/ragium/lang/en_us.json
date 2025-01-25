@@ -30,6 +30,7 @@
   "block.ragium.ultimate_hull_decoration": "Ultimate Hull (Decoration)",
   "block.ragium.white_led_block": "LED Block",
   "block.ragium.yellow_led_block": "Yellow LED Block",
+  "config.jade.plugin_ragium.energy_network": "Energy Network",
   "content.ragium.burner": "Burner",
   "content.ragium.casing": "Casing",
   "content.ragium.circuit": "Circuit",
@@ -285,6 +286,7 @@
   "tooltip.ragium.condition.catalyst": "Required Catalyst Item",
   "tooltip.ragium.condition.cooling": "Required Cooling Power: %s - %s",
   "tooltip.ragium.condition.heating": "Required Heating Power: %s - %s",
+  "tooltip.ragium.fluid.formatted": "Amount: %s mb",
   "tooltip.ragium.machine.cost": "- Process Cost: %s FE/times",
   "tooltip.ragium.machine.name": "- Machine Name: %s",
   "tooltip.ragium.machine.tier": "- Tier: %s"

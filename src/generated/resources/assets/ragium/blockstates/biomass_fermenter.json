@@ -1,33 +1,18 @@
 {
   "variants": {
-    "active=false,facing=east": {
+    "facing=east": {
       "model": "ragium:block/biomass_fermenter",
       "y": 90
     },
-    "active=false,facing=north": {
+    "facing=north": {
       "model": "ragium:block/biomass_fermenter"
     },
-    "active=false,facing=south": {
+    "facing=south": {
       "model": "ragium:block/biomass_fermenter",
       "y": 180
     },
-    "active=false,facing=west": {
+    "facing=west": {
       "model": "ragium:block/biomass_fermenter",
-      "y": 270
-    },
-    "active=true,facing=east": {
-      "model": "ragium:block/active_biomass_fermenter",
-      "y": 90
-    },
-    "active=true,facing=north": {
-      "model": "ragium:block/active_biomass_fermenter"
-    },
-    "active=true,facing=south": {
-      "model": "ragium:block/active_biomass_fermenter",
-      "y": 180
-    },
-    "active=true,facing=west": {
-      "model": "ragium:block/active_biomass_fermenter",
       "y": 270
     }
   }

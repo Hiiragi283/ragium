@@ -30,7 +30,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         HTCookingRecipeProcessor(itemHandler, 0, 1, RecipeType<SmeltingRecipe>::SMELTING)
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTMultiSmelterContainerMenu(containerId, playerInventory, itemHandler, this)
+        HTMultiSmelterContainerMenu(containerId, playerInventory, blockPos, itemHandler)
 
     override fun getItemHandler(direction: Direction?): IItemHandler = LimitedItemHandler.small(itemHandler)
 }
