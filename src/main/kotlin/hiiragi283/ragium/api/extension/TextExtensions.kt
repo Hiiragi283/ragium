@@ -58,10 +58,16 @@ fun worldText(value: ResourceKey<Level>): MutableComponent = Component.translata
 
 /**
  * フォーマットされた液体量の[Component]を返します。
- *
- * フォーマットは次に従います: `Amount: x B, y mb`
  */
 fun fluidAmountText(value: Int): MutableComponent = Component.translatable(
-    RagiumTranslationKeys.FORMATTED_FLUID,
+    RagiumTranslationKeys.FLUID_AMOUNT,
+    NumberFormat.getNumberInstance().format(value),
+)
+
+/**
+ * フォーマットされた容量の[Component]を返します。
+ */
+fun fluidCapacityText(value: Int): MutableComponent = Component.translatable(
+    RagiumTranslationKeys.FLUID_CAPACITY,
     NumberFormat.getNumberInstance().format(value),
 )

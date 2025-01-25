@@ -272,7 +272,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
         add(HTTagPrefix.WIRE, "%sワイヤ")
         // Misc
-        add(RagiumTranslationKeys.FORMATTED_FLUID, "液体量: %s mb")
+        add(RagiumTranslationKeys.FLUID_AMOUNT, "液体量: %s mb")
+        add(RagiumTranslationKeys.FLUID_CAPACITY, "容量: %s mb")
 
         add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")
     }

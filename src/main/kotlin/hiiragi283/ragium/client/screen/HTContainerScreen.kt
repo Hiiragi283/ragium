@@ -92,6 +92,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
     protected fun renderFluidTooltip(
         guiGraphics: GuiGraphics,
         stack: FluidStack,
+        capacity: Int,
         x: Int,
         y: Int,
         mouseX: Int,
@@ -107,6 +108,8 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
                     add(fluidType.description)
                     // Fluid Amount
                     add(fluidAmountText(stack.amount).withStyle(ChatFormatting.GRAY))
+                    // Fluid Capacity
+                    add(fluidCapacityText(capacity).withStyle(ChatFormatting.GRAY))
                     // Mod Name
                     val fluidId: ResourceLocation = stack.fluidHolder.id ?: return@buildList
                     ModList.get().getModFileById(fluidId.namespace)?.moduleName()?.let { name: String ->

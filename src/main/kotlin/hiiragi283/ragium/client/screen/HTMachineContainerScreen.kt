@@ -18,6 +18,8 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
 
     private fun getFluidStack(index: Int): FluidStack = menu.machineEntity?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
 
+    private fun getFluidCapacity(index: Int): Int = menu.machineEntity?.getFluidHandler(null)?.getTankCapacity(index) ?: 0
+
     override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,
@@ -29,6 +31,7 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
             renderFluidTooltip(
                 guiGraphics,
                 getFluidStack(index),
+                getFluidCapacity(index),
                 slotX,
                 slotY,
                 mouseX,
