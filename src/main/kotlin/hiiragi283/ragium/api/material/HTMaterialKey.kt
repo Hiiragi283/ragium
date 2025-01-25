@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toDataResult
 import io.netty.buffer.ByteBuf
@@ -43,19 +42,6 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
     val translationKey: String = "material.${RagiumAPI.MOD_ID}.$name"
     val text: MutableComponent
         get() = Component.translatable(translationKey)
-
-    /**
-     * [HTMaterialRegistry.Entry]を返します。
-     * @return このキーが登録されていない場合はnullを返す
-     */
-    fun getEntryOrNull(): HTMaterialRegistry.Entry? = RagiumAPI.materialRegistry.getEntryOrNull(this)
-
-    /**
-     * [getEntryOrNull]がnullでない場合に[action]を実行します。
-     * @return [action]の戻り値を[DataResult]で包みます
-     */
-    fun <T : Any> useEntry(action: (HTMaterialRegistry.Entry) -> T): DataResult<T> =
-        getEntryOrNull()?.let(action).toDataResult { "Unknown machine key: $this" }
 
     //    Comparable    //
 

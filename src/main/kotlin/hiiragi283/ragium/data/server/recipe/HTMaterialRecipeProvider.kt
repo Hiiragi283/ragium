@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.api.util.collection.HTWrappedTable
@@ -301,9 +301,9 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerToDust(output: RecipeOutput, material: HTMaterialKey, dust: SizedHolder) {
-        val entry: HTMaterialRegistry.Entry = material.getEntryOrNull() ?: return
+        val type: HTMaterialType = RagiumAPI.materialRegistry.getType(material)
         // Raw -> Dust
-        if (entry.type.isValidPrefix(HTTagPrefix.RAW_MATERIAL)) {
+        if (type.isValidPrefix(HTTagPrefix.RAW_MATERIAL)) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.GRINDER)
                 .itemInput(HTTagPrefix.RAW_MATERIAL, material)
@@ -312,7 +312,7 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
                 .saveSuffixed(output, "_from_raw")
         }
         // Gem/Ingot -> Dust
-        val mainPrefix: HTTagPrefix = entry.type.getMainPrefix() ?: return
+        val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.GRINDER)
             .itemInput(mainPrefix, material)

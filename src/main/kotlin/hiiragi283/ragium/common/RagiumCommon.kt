@@ -94,7 +94,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
     private fun construct(event: FMLConstructModEvent) {
         HTMachineRegistryImpl.modifyProperties()
-        
+
         HTMaterialRegistryImpl.initRegistry()
     }
 
@@ -111,8 +111,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     private fun modifyMachineProperties(event: HTModifyPropertyEvent.Machine) {
         fun HTPropertyHolderBuilder.putFactory(
             factory: BlockEntityType.BlockEntitySupplier<out HTMachineBlockEntity>,
-        ): HTPropertyHolderBuilder =
-            put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(factory::create))
+        ): HTPropertyHolderBuilder = put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(factory::create))
 
         fun HTPropertyHolderBuilder.putFactory(factory: HTMachineEntityFactory): HTPropertyHolderBuilder =
             put(HTMachinePropertyKeys.MACHINE_FACTORY, factory)
@@ -123,7 +122,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         // Consumer
 
         // Generator
-        event.getBuilder(RagiumMachineKeys.COMBUSTION_GENERATOR)
+        event
+            .getBuilder(RagiumMachineKeys.COMBUSTION_GENERATOR)
             .putFactory(::HTFluidGeneratorBlockEntity)
             .put(
                 HTMachinePropertyKeys.GENERATOR_FUEL,
@@ -133,7 +133,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                 ),
             )
 
-        event.getBuilder(RagiumMachineKeys.GAS_TURBINE)
+        event
+            .getBuilder(RagiumMachineKeys.GAS_TURBINE)
             .putFactory(::HTFluidGeneratorBlockEntity)
             .put(
                 HTMachinePropertyKeys.GENERATOR_FUEL,
@@ -144,7 +145,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                 ),
             )
 
-        event.getBuilder(RagiumMachineKeys.NUCLEAR_REACTOR)
+        event
+            .getBuilder(RagiumMachineKeys.NUCLEAR_REACTOR)
             .putFactory(::HTFluidGeneratorBlockEntity)
             .put(
                 HTMachinePropertyKeys.GENERATOR_FUEL,
@@ -153,7 +155,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                 ),
             )
 
-        event.getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
+        event
+            .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
             .putFactory(::HTDefaultGeneratorBlockEntity)
             .put(
                 HTMachinePropertyKeys.GENERATOR_PREDICATE,
@@ -165,7 +168,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
         event.getBuilder(RagiumMachineKeys.STEAM_GENERATOR)
 
-        event.getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
+        event
+            .getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
             .putFactory(::HTFluidGeneratorBlockEntity)
             .put(
                 HTMachinePropertyKeys.GENERATOR_FUEL,
@@ -184,18 +188,21 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                 builder.put(HTMachinePropertyKeys.CATALYST_SLOT, 2)
             }
 
-        event.getBuilder(RagiumMachineKeys.BLAST_FURNACE)
+        event
+            .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
             .putFactory(::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
 
-        event.getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
+        event
+            .getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
             .putFactory(::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
 
         event.getBuilder(RagiumMachineKeys.CUTTING_MACHINE)
 
-        event.getBuilder(RagiumMachineKeys.DISTILLATION_TOWER)
+        event
+            .getBuilder(RagiumMachineKeys.DISTILLATION_TOWER)
             .putFactory(::HTDistillationTowerBlockEntity)
             .put(HTMachinePropertyKeys.CATALYST_SLOT, 1)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
@@ -213,7 +220,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
         event.getBuilder(RagiumMachineKeys.LASER_TRANSFORMER)
 
-        event.getBuilder(RagiumMachineKeys.MIXER)
+        event
+            .getBuilder(RagiumMachineKeys.MIXER)
             .putFactory(::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.CATALYST_SLOT, 3)
             .put(
@@ -221,7 +229,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                 BiFunction { key: HTMachineKey, _: Boolean -> RagiumAPI.id("block/mixer") },
             ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
 
-        event.getBuilder(RagiumMachineKeys.MULTI_SMELTER)
+        event
+            .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
             .putFactory(::HTMultiSmelterBlockEntity)
             .remove(HTMachinePropertyKeys.CATALYST_SLOT)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)

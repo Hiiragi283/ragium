@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.machine.HTGeneratorFuel
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.collection.HTMultiMap
@@ -59,8 +59,8 @@ class RagiumJEIPlugin : IModPlugin {
             IIngredientType<HTMachineTier> { HTMachineTier::class.java }
 
         @JvmField
-        val MATERIAL_INFO: RecipeType<HTMaterialRegistry.Entry> =
-            RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTMaterialRegistry.Entry::class.java)
+        val MATERIAL_INFO: RecipeType<HTMaterialKey> =
+            RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTMaterialKey::class.java)
 
         @JvmField
         val HEATING_INFO: RecipeType<HTTemperatureInfo> =
@@ -140,8 +140,7 @@ class RagiumJEIPlugin : IModPlugin {
             MATERIAL_INFO,
             RagiumAPI
                 .materialRegistry
-                .entryMap
-                .values
+                .keys
                 .toList(),
         )
         // Heating

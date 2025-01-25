@@ -1,8 +1,9 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.createEmptyMaterialStack
@@ -19,21 +20,21 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
 class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
-    AbstractRecipeCategory<HTMaterialRegistry.Entry>(
+    AbstractRecipeCategory<HTMaterialKey>(
         RagiumJEIPlugin.MATERIAL_INFO,
         Component.literal("Material Info"),
         guiHelper.createDrawableItemLike(Items.BOOK),
         18 * 9 + 8,
         18 * 3 + 8,
     ),
-    HTRecipeCategory<HTMaterialRegistry.Entry> {
-    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMaterialRegistry.Entry, focuses: IFocusGroup) {
+    HTRecipeCategory<HTMaterialKey> {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMaterialKey, focuses: IFocusGroup) {
         for (prefix: HTTagPrefix in HTTagPrefix.entries) {
-            val stacks: List<ItemStack> = recipe
-                .getItems(prefix)
+            val stacks: List<ItemStack> = RagiumAPI.materialRegistry
+                .getItems(prefix, recipe)
                 .map(::ItemStack)
                 .takeIf(List<ItemStack>::isNotEmpty)
-                ?: listOf(createEmptyMaterialStack(prefix, recipe.key))
+                ?: listOf(createEmptyMaterialStack(prefix, recipe))
             val x: Int = prefix.ordinal % 9
             val y: Int = prefix.ordinal / 9
             builder
@@ -43,8 +44,7 @@ class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
         }
     }
 
-    override fun getRegistryName(recipe: HTMaterialRegistry.Entry): ResourceLocation = commonId(recipe.key.name)
+    override fun getRegistryName(recipe: HTMaterialKey): ResourceLocation = commonId(recipe.name)
 
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTMaterialRegistry.Entry> =
-        HTMaterialRegistry.ENTRY_CODEC
+    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTMaterialKey> = HTMaterialKey.CODEC
 }

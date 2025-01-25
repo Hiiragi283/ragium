@@ -1,11 +1,9 @@
 package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.extension.blockProperty
-import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.property.HTPropertyHolder
@@ -49,9 +47,6 @@ internal object HTMachineRegistryImpl : HTMachineRegistry {
     }
 
     //    HTMachineRegistry    //
-
-    override fun getBlockData(key: HTMachineKey): DataResult<HTBlockContent> =
-        blockMap[key].toDataResult { "Machine key: $key is not bound to any block!" }
 
     override fun getProperty(key: HTMachineKey): HTPropertyHolder = propertyMap[key] ?: HTPropertyHolder.Empty
 }
