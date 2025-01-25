@@ -21,7 +21,7 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-libs.versions.ragium.map(project::setVersion)
+version = libs.versions.ragium.get()
 group = "hiiragi283.ragium"
 
 repositories {
