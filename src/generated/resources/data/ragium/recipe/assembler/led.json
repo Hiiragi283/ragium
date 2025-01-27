@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "condition": {
-    "type": "ragium:min_tier",
-    "tier": "advanced"
-  },
   "item_inputs": [
     {
       "count": 1,

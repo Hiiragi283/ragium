@@ -37,6 +37,8 @@ interface HTMaterialRegistry : Keyable {
      */
     fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): List<Holder<Item>>
 
+    fun getFirstItem(prefix: HTTagPrefix, key: HTMaterialKey): Holder<Item>? = getItems(prefix, key).firstOrNull()
+
     /**
      * 指定された[item]に紐づいた素材のデータを返します。
      * @return 値がない場合は[emptyList]

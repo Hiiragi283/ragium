@@ -23,11 +23,6 @@ fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAnd
 //    Registry    //
 
 /**
- * [ResourceLocation]をベースとした[Comparator]を返します。
- */
-fun <T : Any> idComparator(registry: Registry<T>): Comparator<T> = compareBy(registry::getId)
-
-/**
  * 指定した[entry]から[ResourceKey]を返します。
  * @return [entry]が紐づいていない場合はnull
  */
@@ -60,6 +55,8 @@ fun <T : Any> ResourceKey<T>.withSuffix(suffix: String): ResourceKey<T> =
     ResourceKey.create(this.registryKey(), this.location().withSuffix(suffix))
 
 //    Holder    //
+
+fun <T : Any> createHolderSorter(): Comparator<Holder<T>> = compareBy { holder: Holder<T> -> holder.unwrapKey().orElseThrow().location() }
 
 val <T : Any> Holder<T>.id: ResourceLocation?
     get() = key?.location()

@@ -49,7 +49,7 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         recipe.value.condition.ifPresent { condition: HTMachineRecipeCondition ->
             builder
                 .addText(condition.text, width - 4, 10)
-                .setPosition(getPosition(2), getPosition(0))
+                .setPosition(getPosition(0), getPosition(2))
                 .setShadow(true)
                 .setTextAlignment(HorizontalAlignment.LEFT)
         }

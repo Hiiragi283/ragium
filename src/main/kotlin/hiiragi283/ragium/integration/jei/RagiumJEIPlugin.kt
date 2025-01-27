@@ -112,7 +112,9 @@ class RagiumJEIPlugin : IModPlugin {
         RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, _: HTBlockContent?, properties: HTPropertyHolder ->
             properties
                 .getOrDefault(HTMachinePropertyKeys.RECIPE_PROXY)
-                .getRecipes(level) { recipeCache.put(key, it) }
+                .getRecipes(level) { holder: RecipeHolder<HTMachineRecipe> ->
+                    if (holder.value.machineKey == key) recipeCache.put(key, holder)
+                }
         }
 
         recipeCache.map.forEach { machine: HTMachineKey, holders: Collection<RecipeHolder<HTMachineRecipe>> ->

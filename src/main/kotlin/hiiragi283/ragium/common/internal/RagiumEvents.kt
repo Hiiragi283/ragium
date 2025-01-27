@@ -177,12 +177,34 @@ internal object RagiumEvents {
             .putFactory(::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BREWING_STAND_BREW)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.BUBBLE_POP))
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.material(
+                    true,
+                    HTMachineConverters::chemicalOre3x,
+                    HTMachineConverters::chemicalOre4x,
+                    HTMachineConverters::chemicalOre5x,
+                ),
+            )
+
+        event
+            .getBuilder(RagiumMachineKeys.COMPRESSOR)
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.material(
+                    true,
+                    HTMachineConverters::compressorGear,
+                    HTMachineConverters::compressorGem,
+                    HTMachineConverters::compressorPlate,
+                    HTMachineConverters::compressorRod,
+                ),
+            )
 
         event
             .getBuilder(RagiumMachineKeys.CUTTING_MACHINE)
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.convert(RecipeType.STONECUTTING, HTMachineConverters::fromCutting),
+                HTMachineRecipeProxy.convert(true, RecipeType.STONECUTTING, HTMachineConverters::fromCutting),
             )
 
         event
@@ -203,6 +225,17 @@ internal object RagiumEvents {
             .getBuilder(RagiumMachineKeys.GRINDER)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.GRINDSTONE_USE)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.material(
+                    true,
+                    HTMachineConverters::grinderMainToDust,
+                    HTMachineConverters::grinderGearToDust,
+                    HTMachineConverters::grinderPlateToDust,
+                    HTMachineConverters::grinderRawToDust,
+                    HTMachineConverters::grinderOreToRaw,
+                ),
+            )
 
         event.getBuilder(RagiumMachineKeys.GROWTH_CHAMBER)
 
@@ -223,7 +256,7 @@ internal object RagiumEvents {
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.convert(RecipeType.SMELTING, HTMachineConverters::fromCooking),
+                HTMachineRecipeProxy.convert(false, RecipeType.SMELTING, HTMachineConverters::fromCooking),
             )
     }
 

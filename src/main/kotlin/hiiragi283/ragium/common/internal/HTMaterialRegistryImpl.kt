@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
+import hiiragi283.ragium.api.extension.createHolderSorter
 import hiiragi283.ragium.api.extension.mutableMultiMapOf
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.*
@@ -88,6 +89,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
                 ) { _: HTTagPrefix, _: HTMaterialKey -> mutableListOf() }
                 .add(holder)
         }
+        tagItemCache.values.forEach { it.sortWith(createHolderSorter()) }
 
         LOGGER.info("Reloaded material items!")
     }
