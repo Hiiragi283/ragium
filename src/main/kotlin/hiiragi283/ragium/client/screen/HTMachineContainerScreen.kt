@@ -27,6 +27,9 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
         partialTick: Float,
     ) {
         super.render(guiGraphics, mouseX, mouseY, partialTick)
+        // energy amount
+        renderEnergyTooltip(guiGraphics, getSlotPosX(4), getSlotPosY(0), mouseX, mouseY)
+        // fluid tooltip
         menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             renderFluidTooltip(
                 guiGraphics,
@@ -48,8 +51,6 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
     ) {
         // background
         guiGraphics.blit(TEXTURE, startX, startY, 0, 0, imageWidth, imageHeight)
-        // energy amount
-        renderEnergyTooltip(guiGraphics, getSlotPosX(4), getSlotPosY(0), mouseX, mouseY)
         // progress bar
         guiGraphics.blitSprite(
             RagiumAPI.id("progress_bar"),

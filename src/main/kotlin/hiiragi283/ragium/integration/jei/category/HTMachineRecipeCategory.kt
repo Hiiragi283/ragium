@@ -4,40 +4,24 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
-import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
-import hiiragi283.ragium.integration.jei.stacks
-import mezz.jei.api.constants.VanillaTypes
+import hiiragi283.ragium.integration.jei.addFluidStack
+import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
+import mezz.jei.api.gui.placement.HorizontalAlignment
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
-import mezz.jei.api.ingredients.IIngredientTypeWithSubtypes
-import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
-import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelper) : HTRecipeCategory<RecipeHolder<HTMachineRecipe>> {
-    companion object {
-        @JvmField
-        val ITEM_TYPE: IIngredientTypeWithSubtypes<Item, ItemStack> = VanillaTypes.ITEM_STACK
-
-        @JvmField
-        val FLUID_TYPE: IIngredientTypeWithSubtypes<Fluid, FluidStack> = NeoForgeTypes.FLUID_STACK
-    }
-
     override fun setRecipe(builder: IRecipeLayoutBuilder, holder: RecipeHolder<HTMachineRecipe>, focuses: IFocusGroup) {
         val recipe: HTMachineRecipe = holder.value
         // inputs
@@ -61,6 +45,14 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<HTMachineRecipe>, focuses: IFocusGroup) {
         // Recipe Arrow
         builder.addRecipeArrow().setPosition(getPosition(3.5), getPosition(0))
+        // Condition Info
+        recipe.value.condition.ifPresent { condition: HTMachineRecipeCondition ->
+            builder
+                .addText(condition.text, width - 4, 10)
+                .setPosition(getPosition(2), getPosition(0))
+                .setShadow(true)
+                .setTextAlignment(HorizontalAlignment.LEFT)
+        }
     }
 
     private fun addItemInput(
@@ -70,28 +62,27 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         y: Int,
         index: Int,
     ) {
-        val stacks: List<ItemStack> = recipe.itemInputs.getOrNull(index)?.stacks ?: listOf()
         builder
             .addInputSlot(getPosition(x), getPosition(y))
             .setStandardSlotBackground()
-            .addIngredients(ITEM_TYPE, stacks)
+            .addIngredients(recipe.itemInputs.getOrNull(index))
     }
 
     private fun addCatalyst(builder: IRecipeLayoutBuilder, recipe: HTMachineRecipe, y: Int) {
+        val slotBuilder: IRecipeSlotBuilder = builder
+            .addInputSlot(5 + 9 + 3 * 18, getPosition(y))
+            .setStandardSlotBackground()
+
         recipe.condition.ifPresent { condition: HTMachineRecipeCondition ->
-            val stacks: List<ItemStack> = (condition as? HTProcessorCatalystCondition)
-                ?.ingredient
-                ?.items
-                ?.toList()
-                ?: listOf(
-                    ItemStack(Items.BOOK).apply {
-                        set(DataComponents.CUSTOM_NAME, condition.text)
-                    },
-                )
-            builder
-                .addInputSlot(5 + 9 + 3 * 18, getPosition(y))
-                .setStandardSlotBackground()
-                .addItemStacks(stacks)
+            when (condition) {
+                is HTMachineRecipeCondition.ItemBased ->
+                    slotBuilder.addIngredients(condition.itemIngredient)
+
+                is HTMachineRecipeCondition.FluidBased ->
+                    slotBuilder.addIngredients(condition.fluidIngredient)
+
+                else -> {}
+            }
         }
     }
 
@@ -102,11 +93,10 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         y: Int,
         index: Int,
     ) {
-        val builder1: IRecipeSlotBuilder =
-            builder.addInputSlot(getPosition(x), getPosition(y)).setStandardSlotBackground()
-        val ingredient: SizedFluidIngredient = recipe.fluidInputs.getOrNull(index) ?: return
-        builder1.addIngredients(FLUID_TYPE, ingredient.stacks)
-        builder1.setFluidRenderer(ingredient.amount().toLong(), false, 16, 16)
+        builder
+            .addInputSlot(getPosition(x), getPosition(y))
+            .setStandardSlotBackground()
+            .addIngredients(recipe.fluidInputs.getOrNull(index))
     }
 
     private fun addItemOutput(
@@ -116,11 +106,10 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         y: Int,
         index: Int,
     ) {
-        val stack: ItemStack = recipe.getItemOutput(index) ?: ItemStack.EMPTY
         builder
             .addOutputSlot(getPosition(x), getPosition(y))
             .setStandardSlotBackground()
-            .addItemStack(stack)
+            .addItemStack(recipe.getItemOutput(index) ?: ItemStack.EMPTY)
     }
 
     private fun addFluidOutput(
@@ -130,12 +119,10 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         y: Int,
         index: Int,
     ) {
-        val builder1: IRecipeSlotBuilder =
-            builder.addOutputSlot(getPosition(x), getPosition(y)).setStandardSlotBackground()
-        val stack: FluidStack = recipe.getFluidOutput(index) ?: return
-        val amount: Long = stack.amount.toLong()
-        builder1.addFluidStack(stack.fluid, amount.toLong())
-        builder1.setFluidRenderer(amount, false, 16, 16)
+        builder
+            .addOutputSlot(getPosition(x), getPosition(y))
+            .setStandardSlotBackground()
+            .addFluidStack(recipe.getFluidOutput(index))
     }
 
     //    IRecipeCategory    //

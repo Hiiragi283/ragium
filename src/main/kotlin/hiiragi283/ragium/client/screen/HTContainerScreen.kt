@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.inventory.HTContainerMenu
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -129,7 +130,9 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
         mouseX: Int,
         mouseY: Int,
     ) {
-        val network: HTEnergyNetwork = menu.level.getEnergyNetwork().getOrNull() ?: return
+        val network: HTEnergyNetwork =
+            Minecraft.getInstance().getClientSavedDataMap(HTEnergyNetwork.DATA_FACTORY)[menu.level.dimension()]
+                ?: return
         renderTooltip(x, y, mouseX, mouseY) {
             guiGraphics.renderTooltip(
                 font,

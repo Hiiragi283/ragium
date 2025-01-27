@@ -22,7 +22,7 @@ object RagiumMachineRecipeConditions {
 
     @JvmField
     val ROCK_GENERATOR: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTRockGeneratorCondition>> =
-        REGISTER.register("rock_generator", HTRockGeneratorCondition::codec)
+        REGISTER.register("rock_generator", HTRockGeneratorCondition::CODEC)
 
     @JvmField
     val TEMPERATURE: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTTemperatureCondition>> =

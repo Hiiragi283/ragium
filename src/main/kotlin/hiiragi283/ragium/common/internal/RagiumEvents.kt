@@ -4,12 +4,16 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.asServerLevel
+import hiiragi283.ragium.api.extension.getItemData
+import hiiragi283.ragium.api.extension.name
+import hiiragi283.ragium.api.extension.set
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
+import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -156,7 +160,7 @@ internal object RagiumEvents {
         event.registerBlock(
             Capabilities.EnergyStorage.BLOCK,
             { level: Level, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction ->
-                level.getEnergyNetwork().getOrNull()
+                level.asServerLevel()?.energyNetwork
             },
             RagiumBlocks.ENERGY_NETWORK_INTERFACE.get(),
         )

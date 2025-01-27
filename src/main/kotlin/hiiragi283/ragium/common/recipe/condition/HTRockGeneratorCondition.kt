@@ -7,19 +7,29 @@ import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.tags.FluidTags
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.FluidState
 
-object HTRockGeneratorCondition : HTMachineRecipeCondition {
-    override val codec: MapCodec<HTRockGeneratorCondition> = MapCodec.unit(HTRockGeneratorCondition)
+data class HTRockGeneratorCondition(override val itemIngredient: Ingredient) : HTMachineRecipeCondition.ItemBased {
+    companion object {
+        @JvmField
+        val CODEC: MapCodec<HTRockGeneratorCondition> = Ingredient.CODEC_NONEMPTY
+            .fieldOf("ingredient")
+            .xmap(::HTRockGeneratorCondition, HTRockGeneratorCondition::itemIngredient)
+    }
+
+    override val codec: MapCodec<HTRockGeneratorCondition> = CODEC
     override val text: MutableComponent = Component.literal("Require water and lava blocks around the machine")
 
     override fun test(level: Level, pos: BlockPos): Boolean {
         val aroundFluids: List<FluidState> = Direction.entries.map(pos::relative).map(level::getFluidState)
-        return when {
-            !aroundFluids.any { stateIn: FluidState -> stateIn.`is`(FluidTags.WATER) } -> false
-            !aroundFluids.any { stateIn: FluidState -> stateIn.`is`(FluidTags.LAVA) } -> false
-            else -> true
+        if (aroundFluids.none { stateIn: FluidState -> stateIn.`is`(FluidTags.WATER) }) {
+            return false
         }
+        if (aroundFluids.none { stateIn: FluidState -> stateIn.`is`(FluidTags.LAVA) }) {
+            return false
+        }
+        return HTProcessorCatalystCondition(itemIngredient).test(level, pos)
     }
 }

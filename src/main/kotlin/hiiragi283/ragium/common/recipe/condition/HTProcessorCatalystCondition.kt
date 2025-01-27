@@ -13,12 +13,12 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 
-data class HTProcessorCatalystCondition(val ingredient: Ingredient) : HTMachineRecipeCondition {
+data class HTProcessorCatalystCondition(override val itemIngredient: Ingredient) : HTMachineRecipeCondition.ItemBased {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTProcessorCatalystCondition> = Ingredient.CODEC_NONEMPTY
             .fieldOf("ingredient")
-            .xmap(::HTProcessorCatalystCondition, HTProcessorCatalystCondition::ingredient)
+            .xmap(::HTProcessorCatalystCondition, HTProcessorCatalystCondition::itemIngredient)
     }
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
@@ -32,7 +32,7 @@ data class HTProcessorCatalystCondition(val ingredient: Ingredient) : HTMachineR
             val posTo: BlockPos = pos.relative(direction)
             val catalystStack: ItemStack =
                 (level.getBlockEntity(posTo) as? HTCatalystAddonBlockEntity)?.catalystStack ?: continue
-            if (ingredient.test(catalystStack)) {
+            if (itemIngredient.test(catalystStack)) {
                 return true
             }
         }

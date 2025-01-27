@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.recipe.condition.HTRockGeneratorCondition
 import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
@@ -551,9 +552,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         fun registerRock(rock: ItemLike) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.MIXER)
-                .waterInput(1)
-                .fluidInput(Tags.Fluids.LAVA, 1)
-                .catalyst(rock)
+                .machineConditions(HTRockGeneratorCondition(Ingredient.of(rock)))
                 .itemOutput(rock, 8)
                 .save(output)
         }
@@ -577,9 +576,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER)
-            .waterInput()
             .fluidInput(Tags.Fluids.LAVA)
-            .catalyst(Items.OBSIDIAN)
+            .machineConditions(HTRockGeneratorCondition(Ingredient.of(Items.OBSIDIAN)))
             .itemOutput(Items.OBSIDIAN)
             .save(output)
     }

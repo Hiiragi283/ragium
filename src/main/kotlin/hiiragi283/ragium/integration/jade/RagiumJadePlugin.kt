@@ -22,11 +22,13 @@ class RagiumJadePlugin : IWailaPlugin {
 
     override fun register(registration: IWailaCommonRegistration) {
         registration.registerBlockDataProvider(HTEnergyNetworkProvider, HTEnergyNetworkBlock::class.java)
+        registration.registerBlockDataProvider(HTEnergyNetworkProvider, HTMachineBlock::class.java)
         registration.registerBlockDataProvider(HTMachineInfoProvider, HTMachineBlock::class.java)
     }
 
     override fun registerClient(registration: IWailaClientRegistration) {
         registration.registerBlockComponent(HTEnergyNetworkProvider, HTEnergyNetworkBlock::class.java)
+        registration.registerBlockComponent(HTEnergyNetworkProvider, HTMachineBlock::class.java)
         registration.registerBlockComponent(HTMachineInfoProvider, HTMachineBlock::class.java)
     }
 }

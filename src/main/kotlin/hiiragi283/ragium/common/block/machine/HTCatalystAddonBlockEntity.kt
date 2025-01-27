@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.capability.LimitedItemHandler
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -59,6 +60,16 @@ class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) :
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide)
+    }
+
+    override fun onRemove(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        newState: BlockState,
+        movedByPiston: Boolean,
+    ) {
+        itemHandler.dropStacks(level, pos)
     }
 
     //    HTBlockEntityHandlerProvider    //

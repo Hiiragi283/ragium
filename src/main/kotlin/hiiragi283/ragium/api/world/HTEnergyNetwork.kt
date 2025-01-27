@@ -3,12 +3,16 @@ package hiiragi283.ragium.api.world
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.getServerSavedData
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.saveddata.SavedData
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
+
+val ServerLevel.energyNetwork: HTEnergyNetwork
+    get() = getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
 
 class HTEnergyNetwork(amount: Int) :
     SavedData(),
@@ -17,16 +21,12 @@ class HTEnergyNetwork(amount: Int) :
         const val KEY = "network"
 
         @JvmField
-        val ID: ResourceLocation = RagiumAPI.id(KEY)
-
-        @JvmField
-        val FACTORY: Factory<HTEnergyNetwork> = Factory(::HTEnergyNetwork, Companion::fromNbt, null)
-
-        @JvmStatic
-        fun fromNbt(tag: CompoundTag, registries: HolderLookup.Provider): HTEnergyNetwork = HTEnergyNetwork(tag.getInt(KEY))
+        val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> = HTSavedDataType(RagiumAPI.id(KEY), ::HTEnergyNetwork, ::HTEnergyNetwork)
     }
 
     constructor() : this(0)
+
+    constructor(tag: CompoundTag) : this(tag.getInt(KEY))
 
     override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag =
         CompoundTag().apply { putInt(KEY, delegated.energyStored) }

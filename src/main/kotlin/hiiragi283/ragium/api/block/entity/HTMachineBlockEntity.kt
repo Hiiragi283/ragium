@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.world.HTEnergyNetwork
+import hiiragi283.ragium.api.world.energyNetwork
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -172,7 +173,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     }
 
     private fun tickOnServer(level: ServerLevel, pos: BlockPos) {
-        val network: HTEnergyNetwork = level.getEnergyNetwork().getOrNull() ?: return
+        val network: HTEnergyNetwork = level.energyNetwork
         if (energyFlag == HTEnergyNetwork.Flag.CONSUME && !network.canConsume(machineTier.processCost)) {
             LOGGER.error("Failed to extract required energy from network!")
             return
@@ -254,5 +255,5 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     //    HTBlockEntityHandlerProvider    //
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
-        level?.getEnergyNetwork()?.getOrNull()?.let(HTStorageIO.INPUT::wrapEnergyStorage)
+        level?.asServerLevel()?.energyNetwork?.let(HTStorageIO.INPUT::wrapEnergyStorage)
 }

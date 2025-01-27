@@ -8,7 +8,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.function.Function
 
 interface HTMachineRecipeCondition {
@@ -31,4 +33,12 @@ interface HTMachineRecipeCondition {
     val text: MutableComponent
 
     fun test(level: Level, pos: BlockPos): Boolean
+
+    interface ItemBased : HTMachineRecipeCondition {
+        val itemIngredient: Ingredient
+    }
+
+    interface FluidBased : HTMachineRecipeCondition {
+        val fluidIngredient: FluidIngredient
+    }
 }
