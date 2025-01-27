@@ -48,6 +48,9 @@ object RagiumMaterialKeys {
     val CARBON: HTMaterialKey = HTMaterialKey.of("carbon")
 
     @JvmField
+    val OBSIDIAN: HTMaterialKey = HTMaterialKey.of("obsidian")
+
+    @JvmField
     val WOOD: HTMaterialKey = HTMaterialKey.of("wood")
 
     //    Gem    //

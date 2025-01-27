@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -310,7 +311,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Alumina Solution + 4x Coal -> Aluminum Ingot
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(ItemTags.COALS, 4)
+            .itemInput(RagiumItemTags.COAL_COKES, 2)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumItems.Ingots.ALUMINUM)
             .itemOutput(RagiumItems.SLAG, 2)

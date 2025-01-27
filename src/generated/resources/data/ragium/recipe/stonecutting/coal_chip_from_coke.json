@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "tag": "c:coal_cokes"
+  },
+  "result": {
+    "count": 16,
+    "id": "ragium:coal_chip"
+  }
+}

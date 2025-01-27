@@ -12,8 +12,8 @@
       "tag": "c:ingots/iron"
     },
     {
-      "count": 2,
-      "tag": "minecraft:coals"
+      "count": 1,
+      "tag": "c:coal_cokes"
     }
   ],
   "item_outputs": [

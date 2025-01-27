@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:water"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:dirt"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:mud"
+    }
+  ],
+  "machine_type": "mixer"
+}

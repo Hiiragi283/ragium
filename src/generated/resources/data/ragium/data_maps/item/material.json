@@ -132,6 +132,10 @@
       "material": "niter",
       "prefix": "clump"
     },
+    "#c:clumps/obsidian": {
+      "material": "obsidian",
+      "prefix": "clump"
+    },
     "#c:clumps/osmium": {
       "material": "osmium",
       "prefix": "clump"
@@ -374,6 +378,10 @@
     },
     "#c:crystals/niter": {
       "material": "niter",
+      "prefix": "crystal"
+    },
+    "#c:crystals/obsidian": {
+      "material": "obsidian",
       "prefix": "crystal"
     },
     "#c:crystals/osmium": {
@@ -620,6 +628,10 @@
       "material": "niter",
       "prefix": "dirty_dust"
     },
+    "#c:dirty_dusts/obsidian": {
+      "material": "obsidian",
+      "prefix": "dirty_dust"
+    },
     "#c:dirty_dusts/osmium": {
       "material": "osmium",
       "prefix": "dirty_dust"
@@ -862,6 +874,10 @@
     },
     "#c:dusts/niter": {
       "material": "niter",
+      "prefix": "dust"
+    },
+    "#c:dusts/obsidian": {
+      "material": "obsidian",
       "prefix": "dust"
     },
     "#c:dusts/osmium": {
@@ -1108,6 +1124,10 @@
       "material": "niter",
       "prefix": "gear"
     },
+    "#c:gears/obsidian": {
+      "material": "obsidian",
+      "prefix": "gear"
+    },
     "#c:gears/osmium": {
       "material": "osmium",
       "prefix": "gear"
@@ -1350,6 +1370,10 @@
     },
     "#c:gems/niter": {
       "material": "niter",
+      "prefix": "gem"
+    },
+    "#c:gems/obsidian": {
+      "material": "obsidian",
       "prefix": "gem"
     },
     "#c:gems/osmium": {
@@ -1596,6 +1620,10 @@
       "material": "niter",
       "prefix": "ingot"
     },
+    "#c:ingots/obsidian": {
+      "material": "obsidian",
+      "prefix": "ingot"
+    },
     "#c:ingots/osmium": {
       "material": "osmium",
       "prefix": "ingot"
@@ -1838,6 +1866,10 @@
     },
     "#c:nuggets/niter": {
       "material": "niter",
+      "prefix": "nugget"
+    },
+    "#c:nuggets/obsidian": {
+      "material": "obsidian",
       "prefix": "nugget"
     },
     "#c:nuggets/osmium": {
@@ -2084,6 +2116,10 @@
       "material": "niter",
       "prefix": "ore"
     },
+    "#c:ores/obsidian": {
+      "material": "obsidian",
+      "prefix": "ore"
+    },
     "#c:ores/osmium": {
       "material": "osmium",
       "prefix": "ore"
@@ -2326,6 +2362,10 @@
     },
     "#c:plates/niter": {
       "material": "niter",
+      "prefix": "plate"
+    },
+    "#c:plates/obsidian": {
+      "material": "obsidian",
       "prefix": "plate"
     },
     "#c:plates/osmium": {
@@ -2572,6 +2612,10 @@
       "material": "niter",
       "prefix": "raw_material"
     },
+    "#c:raw_materials/obsidian": {
+      "material": "obsidian",
+      "prefix": "raw_material"
+    },
     "#c:raw_materials/osmium": {
       "material": "osmium",
       "prefix": "raw_material"
@@ -2814,6 +2858,10 @@
     },
     "#c:rods/niter": {
       "material": "niter",
+      "prefix": "rod"
+    },
+    "#c:rods/obsidian": {
+      "material": "obsidian",
       "prefix": "rod"
     },
     "#c:rods/osmium": {
@@ -3060,6 +3108,10 @@
       "material": "niter",
       "prefix": "shard"
     },
+    "#c:shards/obsidian": {
+      "material": "obsidian",
+      "prefix": "shard"
+    },
     "#c:shards/osmium": {
       "material": "osmium",
       "prefix": "shard"
@@ -3304,6 +3356,10 @@
       "material": "niter",
       "prefix": "storage_block"
     },
+    "#c:storage_blocks/obsidian": {
+      "material": "obsidian",
+      "prefix": "storage_block"
+    },
     "#c:storage_blocks/osmium": {
       "material": "osmium",
       "prefix": "storage_block"
@@ -3478,6 +3534,10 @@
     },
     "#c:storage_blocks/raw_niter": {
       "material": "niter",
+      "prefix": "raw_storage"
+    },
+    "#c:storage_blocks/raw_obsidian": {
+      "material": "obsidian",
       "prefix": "raw_storage"
     },
     "#c:storage_blocks/raw_osmium": {
@@ -3790,6 +3850,10 @@
     },
     "#c:wires/niter": {
       "material": "niter",
+      "prefix": "wire"
+    },
+    "#c:wires/obsidian": {
+      "material": "obsidian",
       "prefix": "wire"
     },
     "#c:wires/osmium": {

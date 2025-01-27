@@ -90,6 +90,8 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
 
         val compressor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COMPRESSOR)
+
+        val cokeOven: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COKE_OVEN)
     }
 
     private fun registerTier2() {

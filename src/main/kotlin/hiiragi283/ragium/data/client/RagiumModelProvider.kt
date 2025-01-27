@@ -90,7 +90,6 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumItems.Circuits.entries)
             addAll(RagiumItems.PRESS_MOLDS)
             addAll(RagiumItems.CATALYSTS)
-            addAll(RagiumItems.Plastics.entries)
             addAll(RagiumItems.Radioactives.entries)
 
             addAll(RagiumItems.INGREDIENTS)

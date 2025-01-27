@@ -29,7 +29,6 @@ object RagiumItems {
         registerBlockItems()
 
         Circuits.entries
-        Plastics.entries
         Radioactives.entries
     }
 
@@ -106,6 +105,8 @@ object RagiumItems {
 
         BAUXITE(RagiumMaterialKeys.BAUXITE),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM, HTTagPrefix.INGOT),
+
+        OBSIDIAN(RagiumMaterialKeys.OBSIDIAN),
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_dust")
@@ -168,8 +169,6 @@ object RagiumItems {
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase())
     }
 
-    // val GLASS_SHARD: DeferredItem<Item> = REGISTER.registerSimpleItem("glass_shard")
-
     @JvmField
     val SILKY_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("silky_crystal")
 
@@ -189,6 +188,9 @@ object RagiumItems {
     val COAL_CHIP: DeferredItem<Item> = REGISTER.registerSimpleItem("coal_chip")
 
     @JvmField
+    val COKE: DeferredItem<Item> = REGISTER.registerSimpleItem("coke")
+
+    @JvmField
     val RESIDUAL_COKE: DeferredItem<Item> = REGISTER.registerSimpleItem("residual_coke")
 
     @JvmField
@@ -196,13 +198,13 @@ object RagiumItems {
 
     @JvmField
     val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
-        // GLASS_SHARD,
         SILKY_CRYSTAL,
         CRIMSON_CRYSTAL,
         WARPED_CRYSTAL,
         OBSIDIAN_TEAR,
         SLAG,
         COAL_CHIP,
+        COKE,
         RESIDUAL_COKE,
         CALCIUM_CARBIDE,
     )
@@ -429,19 +431,10 @@ object RagiumItems {
         DEHYDRATION_CATALYST,
     )
 
-    //    Plastics    //
-
-    enum class Plastics(override val machineTier: HTMachineTier) : HTItemContent.Tier {
-        BASIC(HTMachineTier.BASIC),
-        ADVANCED(HTMachineTier.ADVANCED),
-        ELITE(HTMachineTier.ELITE),
-        ULTIMATE(HTMachineTier.ULTIMATE),
-        ;
-
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_plastic")
-    }
-
     //    Ingredients    //
+
+    @JvmField
+    val PLASTIC_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("plastic_plate")
 
     @JvmField
     val CIRCUIT_BOARD: DeferredItem<Item> = REGISTER.registerSimpleItem("circuit_board")
@@ -455,19 +448,17 @@ object RagiumItems {
     @JvmField
     val SOLAR_PANEL: DeferredItem<Item> = REGISTER.registerSimpleItem("solar_panel")
 
-    // val STELLA_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("stella_plate")
-
     @JvmField
     val RAGI_TICKET: DeferredItem<Item> = REGISTER.registerSimpleItem("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
 
     @JvmField
     val INGREDIENTS: List<DeferredItem<Item>> = buildList {
         // parts
+        add(PLASTIC_PLATE)
         add(CIRCUIT_BOARD)
         add(ENGINE)
         add(LED)
         add(SOLAR_PANEL)
-        // add(STELLA_PLATE)
         // misc
         add(RAGI_TICKET)
     }

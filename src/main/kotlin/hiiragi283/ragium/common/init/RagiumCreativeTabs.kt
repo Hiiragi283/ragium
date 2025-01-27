@@ -54,8 +54,6 @@ object RagiumCreativeTabs {
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
                     RagiumItems.CATALYSTS.forEach(output::accept)
                     // Circuits
-                    RagiumItems.Plastics.entries.forEach(output::accept)
-                    output.accept(RagiumItems.CIRCUIT_BOARD)
                     RagiumItems.Circuits.entries.forEach(output::accept)
                     // Ingredients
                     RagiumItems.INGREDIENTS.forEach(output::accept)

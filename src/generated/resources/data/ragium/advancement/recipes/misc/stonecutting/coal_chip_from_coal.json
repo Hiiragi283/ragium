@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:stonecutting/coal_chip"
+        "recipe": "ragium:stonecutting/coal_chip_from_coal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:stonecutting/coal_chip"
+      "ragium:stonecutting/coal_chip_from_coal"
     ]
   }
 }

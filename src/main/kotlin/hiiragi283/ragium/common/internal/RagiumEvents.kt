@@ -159,6 +159,12 @@ internal object RagiumEvents {
             )
 
         event
+            .getBuilder(RagiumMachineKeys.COKE_OVEN)
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.COKE_OVEN)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.SMOKER_SMOKE)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.LARGE_SMOKE))
+
+        event
             .getBuilder(RagiumMachineKeys.COMPRESSOR)
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
@@ -253,6 +259,7 @@ internal object RagiumEvents {
         event.register(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
         event.register(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
         event.register(RagiumMaterialKeys.CARBON, HTMaterialType.DUST)
+        event.register(RagiumMaterialKeys.OBSIDIAN, HTMaterialType.DUST)
         event.register(RagiumMaterialKeys.WOOD, HTMaterialType.DUST)
         // Gem
         event.register(RagiumMaterialKeys.AMETHYST, HTMaterialType.GEM)
@@ -494,7 +501,6 @@ internal object RagiumEvents {
         modifyAll(RagiumItems.MATERIALS, materialText)
 
         modifyAll(RagiumItems.Circuits.entries, tieredText(RagiumTranslationKeys.CIRCUIT))
-        modifyAll(RagiumItems.Plastics.entries, tieredText(RagiumTranslationKeys.PLASTIC))
 
         modifyAll(RagiumItems.Radioactives.entries) { builder: DataComponentPatch.Builder, radioactive: RagiumItems.Radioactives ->
             builder.set(RagiumComponentTypes.RADIOACTIVE, radioactive.level)

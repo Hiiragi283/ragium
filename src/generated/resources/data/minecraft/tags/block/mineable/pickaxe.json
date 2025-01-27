@@ -64,6 +64,7 @@
     "ragium:assembler",
     "ragium:blast_furnace",
     "ragium:chemical_reactor",
+    "ragium:coke_oven",
     "ragium:compressor",
     "ragium:cutting_machine",
     "ragium:distillation_tower",

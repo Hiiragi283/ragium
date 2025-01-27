@@ -115,11 +115,9 @@ class RagiumItemTagProvider(
                 .addElement(circuit)
         }
 
-        val plates: TagBuilder = getOrCreateRawBuilder(HTTagPrefix.PLATE.commonTagKey)
-        RagiumItems.Plastics.entries.forEach { plastic: RagiumItems.Plastics ->
-            plates.addElement(plastic)
-        }
-
+        getOrCreateRawBuilder(HTTagPrefix.PLATE.commonTagKey).addTag(RagiumItemTags.PLASTIC_PLATES)
         getOrCreateRawBuilder(ItemTags.COALS).addElement(RagiumItems.RESIDUAL_COKE)
+        getOrCreateRawBuilder(RagiumItemTags.COAL_COKES).addElement(RagiumItems.COKE)
+        getOrCreateRawBuilder(RagiumItemTags.PLASTIC_PLATES).addElement(RagiumItems.PLASTIC_PLATE)
     }
 }

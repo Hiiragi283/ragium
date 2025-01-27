@@ -12,8 +12,8 @@
   ],
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:advanced_plastic"
+      "count": 2,
+      "id": "ragium:plastic_plate"
     }
   ],
   "machine_type": "chemical_reactor"

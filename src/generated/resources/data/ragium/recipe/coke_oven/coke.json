@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    {
+      "amount": 100,
+      "id": "ragium:creosote"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "minecraft:coals"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:coke"
+    }
+  ],
+  "machine_type": "coke_oven"
+}

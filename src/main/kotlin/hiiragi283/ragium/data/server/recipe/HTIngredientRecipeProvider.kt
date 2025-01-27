@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
@@ -130,7 +131,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
-            .itemInput(ItemTags.COALS, 2)
+            .itemInput(RagiumItemTags.COAL_COKES)
             .catalyst(RagiumItems.REDUCTION_CATALYST)
             .itemOutput(RagiumItems.Ingots.STEEL)
             .saveSuffixed(output, "_alt")
@@ -380,7 +381,16 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 RagiumItems.COAL_CHIP,
                 8,
             ).unlockedBy("has_coal", has(ItemTags.COALS))
-            .savePrefixed(output)
+            .save(output, RagiumAPI.id("stonecutting/coal_chip_from_coal"))
+
+        SingleItemRecipeBuilder
+            .stonecutting(
+                Ingredient.of(RagiumItemTags.COAL_COKES),
+                RecipeCategory.MISC,
+                RagiumItems.COAL_CHIP,
+                16,
+            ).unlockedBy("has_coke", has(RagiumItemTags.COAL_COKES))
+            .save(output, RagiumAPI.id("stonecutting/coal_chip_from_coke"))
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)

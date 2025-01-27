@@ -168,6 +168,20 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             .itemOutput(Items.PUMPKIN_PIE, 2)
             .save(output)
 
+        // Mud
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER)
+            .itemInput(Items.DIRT)
+            .waterInput()
+            .itemOutput(Items.MUD)
+            .save(output)
+        // Packed Mud
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(Items.MUD)
+            .itemOutput(Items.PACKED_MUD)
+            .save(output)
+
         registerSnow(output)
         registerStone(output)
     }

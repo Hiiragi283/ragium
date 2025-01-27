@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "ragium:basic_plastic"
+      "tag": "c:plates/plastic"
     }
   },
   "pattern": [

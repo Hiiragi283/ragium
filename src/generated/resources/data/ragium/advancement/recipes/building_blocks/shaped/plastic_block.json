@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ultimate_plastic"
+            "items": "#c:plates/plastic"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/ultimate_plastic_block"
+        "recipe": "ragium:shaped/plastic_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/ultimate_plastic_block"
+      "ragium:shaped/plastic_block"
     ]
   }
 }

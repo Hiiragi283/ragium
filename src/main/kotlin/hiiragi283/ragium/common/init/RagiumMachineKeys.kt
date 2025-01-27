@@ -79,6 +79,9 @@ object RagiumMachineKeys {
     val CHEMICAL_REACTOR: HTMachineKey = HTMachineKey.of("chemical_reactor")
 
     @JvmField
+    val COKE_OVEN: HTMachineKey = HTMachineKey.of("coke_oven")
+
+    @JvmField
     val COMPRESSOR: HTMachineKey = HTMachineKey.of("compressor")
 
     @JvmField
@@ -111,6 +114,7 @@ object RagiumMachineKeys {
             ASSEMBLER,
             BLAST_FURNACE,
             CHEMICAL_REACTOR,
+            COKE_OVEN,
             COMPRESSOR,
             CUTTING_MACHINE,
             DISTILLATION_TOWER,

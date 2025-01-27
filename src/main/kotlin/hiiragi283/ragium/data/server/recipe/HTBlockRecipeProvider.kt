@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -171,19 +172,14 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     //    Decorations    //
 
     private fun registerDecorations(output: RecipeOutput) {
-        // Plastic Decoration
-        RagiumItems.Plastics.entries.forEach { plastic: RagiumItems.Plastics ->
-            val tier: HTMachineTier = plastic.machineTier
-            val count: Int = (tier.ordinal + 1) * 4
-            // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.PLASTIC_BLOCK, count)
-                .pattern("AA")
-                .pattern("AA")
-                .define('A', plastic)
-                .unlockedBy("has_plastic", has(plastic))
-                .save(output, RagiumAPI.id("shaped/${tier.serializedName}_plastic_block"))
-        }
+        // Shaped Crafting
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.PLASTIC_BLOCK, 4)
+            .pattern("AA")
+            .pattern("AA")
+            .define('A', RagiumItemTags.PLASTIC_PLATES)
+            .unlockedBy("has_plastic", has(RagiumItemTags.PLASTIC_PLATES))
+            .savePrefixed(output)
 
         RagiumBlocks.Decorations.entries.forEach { decoration: RagiumBlocks.Decorations ->
             // Stone Cutting
@@ -245,6 +241,16 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .define('C', Items.BLAST_FURNACE)
             .define('D', RagiumBlocks.Casings.BASIC)
             .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
+            .savePrefixed(output)
+        // Coke Oven
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.COKE_OVEN.getBlock())
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', Items.MUD_BRICKS)
+            .define('B', Items.FURNACE)
+            .unlockedBy("has_mud_bricks", has(Items.MUD_BRICKS))
             .savePrefixed(output)
         // Compressor
         ShapedRecipeBuilder

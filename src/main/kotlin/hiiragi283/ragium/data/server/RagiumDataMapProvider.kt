@@ -61,6 +61,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     private fun furnaceFuel(builder: Builder<FurnaceFuel, Item>) {
         builder.addFuel(RagiumItems.COAL_CHIP, 1)
         builder.addFuel(RagiumItems.RESIDUAL_COKE, 8)
+        builder.addFuel(RagiumItems.COKE, 16)
     }
 
     private fun machineKey(builder: Builder<HTMachineKey, Item>) {

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_plastic": {
+    "has_coke": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_plastic"
+            "items": "#c:coal_cokes"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/basic_plastic_block"
+        "recipe": "ragium:stonecutting/coal_chip_from_coke"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_plastic"
+      "has_coke"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/basic_plastic_block"
+      "ragium:stonecutting/coal_chip_from_coke"
     ]
   }
 }
