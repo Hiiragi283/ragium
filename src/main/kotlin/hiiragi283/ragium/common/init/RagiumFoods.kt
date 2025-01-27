@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.init
 
-import com.google.common.base.Suppliers
 import hiiragi283.ragium.api.extension.foodComponent
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.Items
+import thedarkcolour.kotlinforforge.neoforge.kotlin.supply
 
 object RagiumFoods {
     @JvmField
@@ -28,7 +28,7 @@ object RagiumFoods {
         alwaysEat = true,
         eatSeconds = 0.8f,
         effects = mapOf(
-            Suppliers.ofInstance(MobEffectInstance(MobEffects.DAMAGE_BOOST, 10 * 20, 0)) to 1f,
+            supply(MobEffectInstance(MobEffects.DAMAGE_BOOST, 10 * 20, 0)) to 1f,
         ),
     )
 
@@ -42,7 +42,7 @@ object RagiumFoods {
 
     @JvmField
     val YELLOW_CAKE_PIECE: FoodProperties = foodComponent(
-        effects = mapOf(Suppliers.ofInstance(MobEffectInstance(MobEffects.WITHER, -1, 1)) to 1f),
+        effects = mapOf(supply(MobEffectInstance(MobEffects.WITHER, -1, 1)) to 1f),
     )
 
     @JvmStatic

@@ -8,14 +8,19 @@ import net.neoforged.neoforge.registries.DeferredBlock
 
 interface HTBlockContent : HTContent<Block> {
     companion object {
+        /**
+         * 指定した[holder]から[HTBlockContent]を返します。
+         */
         @JvmStatic
         fun of(holder: DeferredBlock<*>): HTBlockContent = object : HTBlockContent {
             override val holder: DeferredBlock<out Block> = holder
         }
     }
 
-    val blockId: ResourceLocation
-        get() = id.withPrefix("block/")
+    /**
+     * `block/`で前置された[id]
+     */
+    val blockId: ResourceLocation get() = id.withPrefix("block/")
 
     override val holder: DeferredBlock<out Block>
 

@@ -65,8 +65,7 @@ class HTMachineRecipe(
         @JvmStatic
         private fun validate(recipe: HTMachineRecipe): DataResult<HTMachineRecipe> = recipe.machineKey
             .getProperty()
-            .getOrDefault(HTMachinePropertyKeys.RECIPE_VALIDATOR)
-            .validate(recipe)
+            .getOrDefault(HTMachinePropertyKeys.RECIPE_VALIDATOR)(recipe)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipe> = StreamCodec.composite(

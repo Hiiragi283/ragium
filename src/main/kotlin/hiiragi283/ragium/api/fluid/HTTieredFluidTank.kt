@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.fluid
 
-import com.google.common.util.concurrent.Runnables
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.logError
+import hiiragi283.ragium.api.extension.runNothing
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierUpgradable
 import net.minecraft.core.HolderLookup
@@ -14,13 +14,20 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 import org.slf4j.Logger
 
-open class HTTieredFluidTank(override var machineTier: HTMachineTier, val callback: Runnable = Runnables.doNothing()) :
+/**
+ * [HTMachineTier]に容量を依存した[FluidTank]
+ * @param callback [FluidTank.onContentsChanged]で呼び出されるブロック
+ */
+open class HTTieredFluidTank(override var machineTier: HTMachineTier, val callback: () -> Unit = runNothing()) :
     FluidTank(machineTier.tankCapacity),
     HTMachineTierUpgradable {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
 
+        /**
+         * 指定した[tanks]の値を[nbt]に書き込みます。
+         */
         @JvmStatic
         fun writeToNBT(tanks: Array<out HTTieredFluidTank>, nbt: CompoundTag, provider: HolderLookup.Provider) {
             FluidStack.OPTIONAL_CODEC
@@ -32,6 +39,9 @@ open class HTTieredFluidTank(override var machineTier: HTMachineTier, val callba
                 .logError(LOGGER)
         }
 
+        /**
+         * 指定した[tanks]の容量を[newTier]で更新しつつ，[nbt]から読み取ります。
+         */
         @JvmStatic
         fun readFromNBT(
             tanks: Array<out HTTieredFluidTank>,
@@ -57,7 +67,7 @@ open class HTTieredFluidTank(override var machineTier: HTMachineTier, val callba
     constructor(machine: HTMachineBlockEntity) : this(machine.machineTier, machine::setChanged)
 
     override fun onContentsChanged() {
-        callback.run()
+        callback()
     }
 
     override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {

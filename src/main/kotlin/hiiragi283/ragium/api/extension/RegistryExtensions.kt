@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.extension
 
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
-import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -14,67 +13,44 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.datamaps.DataMapType
-import net.neoforged.neoforge.registries.datamaps.IWithData
-import kotlin.jvm.optionals.getOrNull
 
+/**
+ * 名前空間が`c`となる[ResourceLocation]を返します。
+ */
 fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath("c", path)
-
-//    Registry    //
-
-/**
- * 指定した[entry]から[ResourceKey]を返します。
- * @return [entry]が紐づいていない場合はnull
- */
-fun <T : Any> Registry<T>.getKeyOrNull(entry: T): ResourceKey<T>? = getResourceKey(entry).getOrNull()
-
-/**
- * 指定した[entry]から[ResourceKey]を返します。
- * @throws [entry]が紐づいていない場合
- */
-fun <T : Any> Registry<T>.getKeyOrThrow(entry: T): ResourceKey<T> = getResourceKey(entry).orElseThrow()
-
-/**
- * 指定した[key]から[Holder.Reference]を返します。
- * @return [key]が紐づいていない場合はnull
- */
-fun <T : Any> Registry<T>.getHolderOrNull(key: ResourceKey<T>): Holder.Reference<T>? = getHolder(key).getOrNull()
-
-/**
- * 指定した[key]から[Holder.Reference]を返します。
- * @throws [key]が紐づいていない場合
- */
-fun <T : Any> Registry<T>.getHolderOrThrow(key: ResourceKey<T>): Holder.Reference<T> = getHolder(key).orElseThrow()
-
-//    ResourceKey    //
-
-fun <T : Any> ResourceKey<T>.withPrefix(prefix: String): ResourceKey<T> =
-    ResourceKey.create(this.registryKey(), this.location().withPrefix(prefix))
-
-fun <T : Any> ResourceKey<T>.withSuffix(suffix: String): ResourceKey<T> =
-    ResourceKey.create(this.registryKey(), this.location().withSuffix(suffix))
 
 //    Holder    //
 
-fun <T : Any> createHolderSorter(): Comparator<Holder<T>> = compareBy { holder: Holder<T> -> holder.unwrapKey().orElseThrow().location() }
+/**
+ * [Holder.idOrThrow]に基づいた[Comparator]を返します。
+ */
+fun <T : Any> createHolderSorter(): Comparator<Holder<T>> = compareBy(Holder<T>::keyOrThrow)
 
-val <T : Any> Holder<T>.id: ResourceLocation?
-    get() = key?.location()
+/**
+ * [Holder]から[ResourceKey]を返します。
+ * @throws [Holder.unwrapKey]が空の場合
+ */
+val <T : Any> Holder<T>.keyOrThrow: ResourceKey<T> get() = unwrapKey().orElseThrow()
+
+/**
+ * [Holder]から[ResourceLocation]を返します。
+ * @throws [Holder.unwrapKey]が空の場合
+ */
+val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = keyOrThrow.location()
 
 /**
  * 指定した[value]が一致するか判定します。
  */
 fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
 
-fun <R : Any, T : Any> IWithData<R>.getDataOrDefault(type: DataMapType<R, T>, defaultValue: T): T = getData(type) ?: defaultValue
-
 //    HolderSet    //
 
 /**
  * この[HolderSet]に要素が含まれているか判定します。
  */
-val <T : Any> HolderSet<T>.isEmpty: Boolean
-    get() = size() == 0
+val <T : Any> HolderSet<T>.isEmpty: Boolean get() = size() == 0
+
+operator fun <T : Any> HolderSet<T>.contains(value: T): Boolean = any { it.isOf(value) }
 
 /**
  * この[HolderSet]を[Component]に変換します。
@@ -93,4 +69,7 @@ fun fluidTagKey(id: ResourceLocation): TagKey<Fluid> = TagKey.create(Registries.
 
 fun itemTagKey(id: ResourceLocation): TagKey<Item> = TagKey.create(Registries.ITEM, id)
 
+/**
+ * [TagKey]の名前を返します。
+ */
 fun TagKey<*>.getName(): MutableComponent = Component.translatableWithFallback(Tags.getTagTranslationKey(this), "#${this.location}")

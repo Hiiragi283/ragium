@@ -3,10 +3,8 @@ package hiiragi283.ragium.api.util.collection
 import com.google.common.collect.Multimap
 
 open class HTWrappedMultiMap<K : Any, V : Any>(protected val delegated: Multimap<K, V>) : HTMultiMap<K, V> {
-    override val size: Int
-        get() = delegated.size()
-    override val isEmpty: Boolean
-        get() = delegated.isEmpty
+    override val size: Int get() = delegated.size()
+    override val isEmpty: Boolean get() = delegated.isEmpty
 
     override fun containsKey(key: K): Boolean = delegated.containsKey(key)
 
@@ -14,14 +12,10 @@ open class HTWrappedMultiMap<K : Any, V : Any>(protected val delegated: Multimap
 
     override fun get(key: K): Collection<V> = delegated[key]
 
-    override val keys: Set<K>
-        get() = delegated.keySet()
-    override val values: Collection<V>
-        get() = delegated.values()
-    override val entries: Set<Pair<K, V>>
-        get() = delegated.entries().map { (key: K, value: V) -> key to value }.toSet()
-    override val map: Map<K, Collection<V>>
-        get() = delegated.asMap()
+    override val keys: Set<K> get() = delegated.keySet()
+    override val values: Collection<V> get() = delegated.values()
+    override val entries: Set<Pair<K, V>> get() = delegated.entries().map { (key: K, value: V) -> key to value }.toSet()
+    override val map: Map<K, Collection<V>> get() = delegated.asMap()
 
     //    Mutable    //
 

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.content
 
+import hiiragi283.ragium.api.extension.keyOrThrow
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -15,9 +16,12 @@ import java.util.function.Supplier
 sealed interface HTContent<T : ItemLike> :
     Supplier<T>,
     ItemLike {
+    /**
+     * [HTContent]の値を移譲する[DeferredHolder]
+     */
     val holder: DeferredHolder<T, out T>
 
-    val key: ResourceKey<T> get() = holder.key!!
+    val key: ResourceKey<T> get() = holder.keyOrThrow
     val id: ResourceLocation get() = holder.id
 
     override fun get(): T = holder.get()

@@ -4,8 +4,10 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.extension.blockProperty
+import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.property.EmptyPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.common.block.HTMachineBlock
@@ -41,12 +43,19 @@ internal object HTMachineRegistryImpl : HTMachineRegistry {
 
     fun modifyProperties() {
         val propertyCache: MutableMap<HTMachineKey, HTPropertyHolderBuilder> = mutableMapOf()
-        ModLoader.postEvent(HTModifyPropertyEvent.Machine { propertyCache.computeIfAbsent(it) { HTPropertyHolderBuilder() } })
+        ModLoader.postEvent(
+            HTModifyPropertyEvent.Machine {
+                propertyCache.computeIfAbsent(
+                    it,
+                    constFunction2(HTPropertyHolderBuilder()),
+                )
+            },
+        )
         this.propertyMap = propertyCache.mapValues { (_, builder: HTPropertyHolderBuilder) -> builder.build() }
         LOGGER.info("Modified machine properties!")
     }
 
     //    HTMachineRegistry    //
 
-    override fun getProperty(key: HTMachineKey): HTPropertyHolder = propertyMap[key] ?: HTPropertyHolder.Empty
+    override fun getProperty(key: HTMachineKey): HTPropertyHolder = propertyMap[key] ?: EmptyPropertyHolder
 }

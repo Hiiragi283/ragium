@@ -24,7 +24,7 @@ fun HTMutablePropertyHolder.add(vararg keys: HTPropertyKey<Unit>) {
 }
 
 /**
- * 指定した[key]と[value]を，[value]がnullでない場合はセットします。
+ * 指定した[key]と[value]を，[value]が`null`でない場合はセットします。
  */
 fun <T : Any> HTMutablePropertyHolder.setIfNonNull(key: HTPropertyKey<T>, value: T?) {
     value?.let { set(key, it) }

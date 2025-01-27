@@ -13,20 +13,11 @@ import hiiragi283.ragium.api.extension.orElse
  */
 interface HTPropertyHolder {
     fun <T : Any> getResult(key: HTPropertyKey<T>): DataResult<T>
-
-    //    Empty    //
-
-    /**
-     * 空で不変な[HTPropertyHolder]の実装
-     */
-    object Empty : HTPropertyHolder {
-        override fun <T : Any> getResult(key: HTPropertyKey<T>): DataResult<T> = DataResult.error { "Empty Property Holder" }
-    }
 }
 
 /**
  * 指定された[key]から[T]を返します。
- * @return [key]に紐づいた値がない場合はnull
+ * @return [key]に紐づいた値がない場合は`null`
  */
 operator fun <T : Any> HTPropertyHolder.get(key: HTPropertyKey<T>): T? = getResult(key).getOrNull()
 
@@ -49,7 +40,7 @@ operator fun <T : Any> HTPropertyHolder.contains(key: HTPropertyKey<T>): Boolean
 
 /**
  * 指定された[key]に紐づいた値を[transform]で変換します。
- * @return [key]に紐づいた値がない場合はnull
+ * @return [key]に紐づいた値がない場合は`null`
  */
 fun <T : Any, R : Any> HTPropertyHolder.map(key: HTPropertyKey<T>, transform: (T) -> R): R? = get(key)?.let(transform)
 

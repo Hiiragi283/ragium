@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -39,7 +40,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         add(content.id, value, false)
 
     private fun Builder<Map<HTMachineKey, Int>, Fluid>.addFuel(
-        fluid: RagiumFluids,
+        fluid: HTFluidContent,
         machine: HTMachineKey,
         value: Int,
     ): Builder<Map<HTMachineKey, Int>, Fluid> = add(fluid.commonTag, mapOf(machine to value), false)

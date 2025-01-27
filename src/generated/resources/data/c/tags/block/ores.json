@@ -1,0 +1,16 @@
+{
+  "values": [
+    "ragium:crude_raginite_ore",
+    "ragium:raginite_ore",
+    "ragium:ragi_crystal_ore",
+    "ragium:deepslate_crude_raginite_ore",
+    "ragium:deepslate_raginite_ore",
+    "ragium:deepslate_ragi_crystal_ore",
+    "ragium:nether_crude_raginite_ore",
+    "ragium:nether_raginite_ore",
+    "ragium:nether_ragi_crystal_ore",
+    "ragium:end_crude_raginite_ore",
+    "ragium:end_raginite_ore",
+    "ragium:end_ragi_crystal_ore"
+  ]
+}

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.integration.jei
 
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import mezz.jei.api.constants.VanillaTypes
@@ -26,8 +27,7 @@ fun createEmptyStack(name: Component): ItemStack {
     return stack
 }
 
-fun createEmptyBlockStack(block: Holder<Block>): ItemStack =
-    createEmptyStack(Component.literal("Block: " + block.unwrapKey().orElseThrow().location()))
+fun createEmptyBlockStack(block: Holder<Block>): ItemStack = createEmptyStack(Component.literal("Block: " + block.idOrThrow))
 
 fun createEmptyTagStack(tagKey: TagKey<*>): ItemStack = createEmptyStack(Component.literal("Empty Tag: " + tagKey.location()))
 
@@ -52,11 +52,9 @@ fun IRecipeSlotBuilder.addIngredients(ingredient: SizedFluidIngredient?): IRecip
 
 //    SizedIngredient    //
 
-val SizedIngredient.stacks: List<ItemStack>
-    get() = items.toList()
+val SizedIngredient.stacks: List<ItemStack> get() = items.toList()
 
-val SizedFluidIngredient.stacks: List<FluidStack>
-    get() = fluids.toList()
+val SizedFluidIngredient.stacks: List<FluidStack> get() = fluids.toList()
 
 fun <T : IIngredientAcceptor<*>> T.addIngredients(ingredient: SizedIngredient?): IIngredientAcceptor<*> =
     addIngredients(VanillaTypes.ITEM_STACK, ingredient?.stacks ?: listOf())

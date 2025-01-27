@@ -42,6 +42,9 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import org.slf4j.Logger
 import java.util.function.Supplier
 
+/**
+ * 機械のベースとなる[HTBlockEntity]
+ */
 abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),
     MenuProvider,
@@ -63,8 +66,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         }
     }
 
-    val front: Direction
-        get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+    val front: Direction get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
 
     var isActive: Boolean = false
         protected set
@@ -150,8 +152,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     //    Ticking    //
 
-    final override val tickRate: Int
-        get() = machineTier.tickRate
+    final override val tickRate: Int get() = machineTier.tickRate
 
     override fun tickEach(
         level: Level,
@@ -244,7 +245,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     final override var showPreview: Boolean = false
 
-    override fun getMultiblockMap(): HTMultiblockMap.Relative? = machineKey.getProperty()[HTMachinePropertyKeys.MULTIBLOCK_MAP]
+    final override fun getMultiblockMap(): HTMultiblockMap.Relative? = machineKey.getProperty()[HTMachinePropertyKeys.MULTIBLOCK_MAP]
 
     final override fun getController(): HTControllerDefinition? = ifPresentWorld { HTControllerDefinition(it, blockPos, front) }
 

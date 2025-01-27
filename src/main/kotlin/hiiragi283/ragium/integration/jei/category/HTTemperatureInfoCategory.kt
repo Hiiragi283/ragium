@@ -1,6 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.integration.jei.JEITemperatureInfo
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.createEmptyBlockStack
@@ -47,10 +48,7 @@ class HTTemperatureInfoCategory(
             .addIngredient(RagiumJEIPlugin.MACHINE_TIER_TYPE, recipe.machineTier)
     }
 
-    override fun getRegistryName(recipe: JEITemperatureInfo): ResourceLocation = recipe.block
-        .unwrapKey()
-        .orElseThrow()
-        .location()
+    override fun getRegistryName(recipe: JEITemperatureInfo): ResourceLocation = recipe.block.idOrThrow
 
     override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<JEITemperatureInfo> = JEITemperatureInfo.CODEC
 }

@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTDefaultGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.DEFAULT_GENERATOR, pos, state) {
     override fun process(level: ServerLevel, pos: BlockPos) {
-        if (!machineKey.getProperty().getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE).test(level, pos)) {
+        if (!machineKey.getProperty().getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(level, pos)) {
             throw HTMachineException.GenerateEnergy(false)
         }
     }

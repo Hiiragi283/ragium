@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -64,7 +65,7 @@ object HTMachineConverters {
                     .itemInput(holder.value())
                     .catalyst(Items.COMPOSTER)
                     .fluidOutput(RagiumFluids.BIOMASS, (1000 * chance).toInt())
-                    .exportSuffixed("_from_${holder.unwrapKey().orElseThrow().location().path}")
+                    .exportSuffixed("_from_${holder.idOrThrow.path}")
                     .let(consumer::accept)
             }
     }

@@ -74,7 +74,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .fluidInput(solution)
             .fluidOutput(gas)
             .waterOutput()
-            .save(output, gas.id.withSuffix("_from_solution"))
+            .save(output, gas.fluidHolder.id.withSuffix("_from_solution"))
     }
 
     private fun solidRedox(output: RecipeOutput, solid: HTMaterialProvider, oxide: RagiumFluids) {

@@ -43,10 +43,21 @@ object RagiumData {
                 provider,
             ),
         )
+        /*generator.addProvider(
+            event.includeServer(),
+            DatapackBuiltinEntriesProvider(
+                output,
+                provider,
+                RegistrySetBuilder()
+                    .add(Registries.CONFIGURED_FEATURE, RagiumConfiguredFeatures::boostrap)
+                    .add(Registries.PLACED_FEATURE, RagiumPlacedFeatures::boostrap)
+                    .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifiers::boostrap),
+                setOf(RagiumAPI.MOD_ID)
+            )
+        )*/
 
         generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
-        generator.addProvider(event.includeServer(), RagiumWorldGenProvider(output, provider))
 
         generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))

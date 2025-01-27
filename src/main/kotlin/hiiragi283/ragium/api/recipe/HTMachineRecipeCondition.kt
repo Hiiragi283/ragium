@@ -13,6 +13,9 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.function.Function
 
+/**
+ * [HTMachineRecipe]に追加できる条件を表すインターフェース
+ */
 interface HTMachineRecipeCondition {
     companion object {
         @JvmField
@@ -30,14 +33,29 @@ interface HTMachineRecipeCondition {
     }
 
     val codec: MapCodec<out HTMachineRecipeCondition>
+
+    /**
+     * JEI上での説明文
+     */
     val text: MutableComponent
 
+    /**
+     * 指定した[level]と[pos]が条件を満たしているか判定します。
+     * @param level 機械のワールド
+     * @param pos 機械の座標
+     */
     fun test(level: Level, pos: BlockPos): Boolean
 
+    /**
+     * [Ingredient]をベースとした[HTMachineRecipeCondition]
+     */
     interface ItemBased : HTMachineRecipeCondition {
         val itemIngredient: Ingredient
     }
 
+    /**
+     * [FluidIngredient]をベースとした[HTMachineRecipeCondition]
+     */
     interface FluidBased : HTMachineRecipeCondition {
         val fluidIngredient: FluidIngredient
     }

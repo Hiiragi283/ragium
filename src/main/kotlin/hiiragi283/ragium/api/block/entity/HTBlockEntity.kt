@@ -31,7 +31,7 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     final override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
 
-    override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
+    final override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
         super.handleUpdateTag(tag, lookupProvider)
         loadAdditional(tag, lookupProvider)
     }

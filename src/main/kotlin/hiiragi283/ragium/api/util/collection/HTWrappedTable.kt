@@ -15,20 +15,13 @@ open class HTWrappedTable<R : Any, C : Any, V : Any>(protected val delegated: Ta
 
     override fun isEmpty(): Boolean = delegated.isEmpty
 
-    override val size: Int
-        get() = delegated.size()
-    override val rowKeys: Set<R>
-        get() = delegated.rowKeySet()
-    override val columnKeys: Set<C>
-        get() = delegated.columnKeySet()
-    override val values: Collection<V>
-        get() = delegated.values()
-    override val entries: Set<Triple<R, C, V>>
-        get() = delegated.cellSet().map { Triple(it.rowKey, it.columnKey, it.value) }.toSet()
-    override val rowMap: Map<R, Map<C, V>>
-        get() = delegated.rowMap()
-    override val columnMap: Map<C, Map<R, V>>
-        get() = delegated.columnMap()
+    override val size: Int get() = delegated.size()
+    override val rowKeys: Set<R> get() = delegated.rowKeySet()
+    override val columnKeys: Set<C> get() = delegated.columnKeySet()
+    override val values: Collection<V> get() = delegated.values()
+    override val entries: Set<Triple<R, C, V>> get() = delegated.cellSet().map { Triple(it.rowKey, it.columnKey, it.value) }.toSet()
+    override val rowMap: Map<R, Map<C, V>> get() = delegated.rowMap()
+    override val columnMap: Map<C, Map<R, V>> get() = delegated.columnMap()
 
     override fun column(column: C): Map<R, V> = delegated.column(column)
 

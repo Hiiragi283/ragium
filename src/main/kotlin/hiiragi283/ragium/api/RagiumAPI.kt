@@ -60,23 +60,44 @@ data object RagiumAPI {
     @JvmField
     val materialRegistry: HTMaterialRegistry = HTMaterialRegistryImpl
 
+    /**
+     * Ragiumが追加する[BlockCapability]
+     */
     object BlockCapabilities {
+        /**
+         * [HTControllerHolder]を返す[BlockCapability]
+         */
         @JvmField
         val CONTROLLER_HOLDER: BlockCapability<HTControllerHolder, Direction?> =
             BlockCapability.createSided(id("controller_holder"), HTControllerHolder::class.java)
 
+        /**
+         * [HTMachineTier]を返す[BlockCapability]
+         */
         @JvmField
         val MACHINE_TIER: BlockCapability<HTMachineTier, Void?> =
             BlockCapability.createVoid(id("machine_tier"), HTMachineTier::class.java)
     }
 
+    /**
+     * Ragiumが追加する[DataMapType]
+     */
     object DataMapTypes {
+        /**
+         * [HTMachineKey]を返す[DataMapType]
+         */
         @JvmField
         val MACHINE_KEY: DataMapType<Item, HTMachineKey> = createItem("machine", HTMachineKey.CODEC)
 
+        /**
+         * [HTMachineTier]を返す[DataMapType]
+         */
         @JvmField
         val MACHINE_TIER: DataMapType<Item, HTMachineTier> = createItem("machine_tier", HTMachineTier.CODEC)
 
+        /**
+         * [Map]を返す[DataMapType]
+         */
         @JvmField
         val MACHINE_FUEL: DataMapType<Fluid, Map<HTMachineKey, Int>> =
             AdvancedDataMapType
@@ -86,9 +107,15 @@ data object RagiumAPI {
                 .remover(HTMachineFuel.Remover.CODEC)
                 .build()
 
+        /**
+         * [HTMaterialDefinition]を返す[DataMapType]
+         */
         @JvmField
         val MATERIAL: DataMapType<Item, HTMaterialDefinition> = createItem("material", HTMaterialDefinition.CODEC)
 
+        /**
+         * [HTTemperatureInfo]を返す[DataMapType]
+         */
         @JvmField
         val TEMP_TIER: DataMapType<Block, HTTemperatureInfo> = createBlock("temperature", HTTemperatureInfo.CODEC)
 
@@ -107,16 +134,28 @@ data object RagiumAPI {
             .build()
     }
 
+    /**
+     * Ragiumが追加する[Registry]
+     */
     object Registries {
+        /**
+         * [HTMultiblockComponent.Type]の[Registry]
+         */
         @JvmField
         val MULTIBLOCK_COMPONENT_TYPE: Registry<HTMultiblockComponent.Type<*>> =
             RegistryBuilder(RegistryKeys.MULTIBLOCK_COMPONENT_TYPE).sync(true).create()
 
+        /**
+         * [HTMachineRecipeCondition]の[MapCodec]の[Registry]
+         */
         @JvmField
         val RECIPE_CONDITION: Registry<MapCodec<out HTMachineRecipeCondition>> =
             RegistryBuilder(RegistryKeys.RECIPE_CONDITION).sync(true).create()
     }
 
+    /**
+     * Ragiumが追加する[Registry]の[ResourceKey]
+     */
     object RegistryKeys {
         @JvmField
         val MULTIBLOCK_COMPONENT_TYPE: ResourceKey<Registry<HTMultiblockComponent.Type<*>>> =

@@ -10,7 +10,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import org.slf4j.Logger
 
@@ -23,7 +22,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
     init {
         eventBus.addListener(::construct)
-        eventBus.addListener(::commonSetup)
 
         RagiumComponentTypes.REGISTER.register(eventBus)
 
@@ -53,9 +51,5 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     private fun construct(event: FMLConstructModEvent) {
         event.enqueueWork(HTMachineRegistryImpl::modifyProperties)
         event.enqueueWork(HTMaterialRegistryImpl::initRegistry)
-    }
-
-    private fun commonSetup(event: FMLCommonSetupEvent) {
-        LOGGER.info("Loaded common setup!")
     }
 }

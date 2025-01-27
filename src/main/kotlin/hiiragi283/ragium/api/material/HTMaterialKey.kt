@@ -43,9 +43,15 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
         fun of(name: String): HTMaterialKey = instances.computeIfAbsent(name, ::HTMaterialKey)
     }
 
+    /**
+     * 素材の名前の翻訳キー
+     */
     val translationKey: String = "material.${RagiumAPI.MOD_ID}.$name"
-    val text: MutableComponent
-        get() = Component.translatable(translationKey)
+
+    /**
+     * 素材の名前の[MutableComponent]
+     */
+    val text: MutableComponent = Component.translatable(translationKey)
 
     //    Comparable    //
 

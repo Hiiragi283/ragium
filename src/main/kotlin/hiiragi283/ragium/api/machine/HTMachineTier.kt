@@ -20,7 +20,6 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.material.MapColor
 import net.neoforged.neoforge.fluids.FluidType
 
 enum class HTMachineTier(
@@ -50,7 +49,14 @@ enum class HTMachineTier(
         // val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.create("tier", HTMachineTier::class.java)
     }
 
+    /**
+     * ティアの名前の翻訳キー
+     */
     val translationKey: String = "machine_tier.ragium.$serializedName"
+
+    /**
+     * ティアの名前を保持する[MutableComponent]
+     */
     val text: MutableComponent = Component.translatable(translationKey).withStyle(color)
 
     val prefixKey = "$translationKey.prefix"
@@ -74,13 +80,6 @@ enum class HTMachineTier(
     }
 
     //    Block    //
-
-    fun getMapColor(): MapColor = when (this) {
-        BASIC -> MapColor.COLOR_ORANGE
-        ADVANCED -> MapColor.GOLD
-        ELITE -> MapColor.SNOW
-        ULTIMATE -> MapColor.COLOR_RED
-    }
 
     fun getStorageBlock(): HTBlockContent.Material = when (this) {
         BASIC -> RagiumBlocks.StorageBlocks.RAGI_ALLOY

@@ -44,7 +44,7 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
 
     /**
      * 指定した[HTTagPrefix]をインゴットや宝石といったメインの[HTTagPrefix]に変換します。
-     * @return 対応する値がなければnull
+     * @return 対応する値がなければ`null`
      */
     fun getMainPrefix(): HTTagPrefix? = when (this) {
         ALLOY -> HTTagPrefix.INGOT
@@ -56,7 +56,7 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
 
     /**
      * 指定した[HTTagPrefix]を原石や宝石といった鉱石ドロップの[HTTagPrefix]に変換します。
-     * @return 対応する値がなければnull
+     * @return 対応する値がなければ`null`
      */
     fun getRawPrefix(): HTTagPrefix? = when (this) {
         ALLOY -> null

@@ -10,7 +10,6 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
@@ -31,11 +30,9 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
 
     //    Extensions    //
 
-    protected val startX: Int
-        get() = (width - imageWidth) / 2
+    protected val startX: Int get() = (width - imageWidth) / 2
 
-    protected val startY: Int
-        get() = (height - imageHeight) / 2
+    protected val startY: Int get() = (height - imageHeight) / 2
 
     protected fun getSlotPosX(index: Int): Int = 8 + index * 18
 
@@ -112,10 +109,15 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
                     // Fluid Capacity
                     add(fluidCapacityText(capacity).withStyle(ChatFormatting.GRAY))
                     // Mod Name
-                    val fluidId: ResourceLocation = stack.fluidHolder.id ?: return@buildList
-                    ModList.get().getModFileById(fluidId.namespace)?.moduleName()?.let { name: String ->
-                        add(Component.literal(name).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
-                    }
+                    ModList
+                        .get()
+                        .getModFileById(stack.fluidHolder.idOrThrow.namespace)
+                        ?.moduleName()
+                        ?.let { name: String ->
+                            add(
+                                Component.literal(name).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC),
+                            )
+                        }
                 },
                 mouseX,
                 mouseY,

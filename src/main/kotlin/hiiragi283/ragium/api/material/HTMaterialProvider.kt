@@ -12,12 +12,18 @@ interface HTMaterialProvider : ItemLike {
     val material: HTMaterialKey
     val tagPrefix: HTTagPrefix
 
-    val prefixedTagKey: TagKey<Item>
-        get() = tagPrefix.createTag(material)
+    /**
+     * [tagPrefix]で[material]を修飾した[TagKey]
+     */
+    val prefixedTagKey: TagKey<Item> get() = tagPrefix.createTag(material)
 
-    val parentPrefix: HTTagPrefix?
-        get() = null
+    /**
+     * [tagPrefix]で[material]を修飾した[MutableComponent]
+     */
+    val prefixedText: MutableComponent get() = tagPrefix.createText(material)
 
-    val prefixedText: MutableComponent
-        get() = tagPrefix.createText(material)
+    /**
+     * 元となる[HTTagPrefix]
+     */
+    val parentPrefix: HTTagPrefix? get() = null
 }

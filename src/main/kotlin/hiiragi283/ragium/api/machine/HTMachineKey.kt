@@ -44,22 +44,44 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
         fun of(name: String): HTMachineKey = instances.computeIfAbsent(name, ::HTMachineKey)
 
         @JvmStatic
-        val allKeys: List<HTMachineKey>
-            get() = instances.values.toList()
+        val allKeys: List<HTMachineKey> get() = instances.values.toList()
     }
 
+    /**
+     * 機械の名前の翻訳キー
+     */
     val translationKey: String = "machine_type.$name"
-    val text: MutableComponent
-        get() = Component.translatable(translationKey)
 
+    /**
+     * 機械の名前を保持する[MutableComponent]
+     */
+    val text: MutableComponent = Component.translatable(translationKey)
+
+    /**
+     * 機械の説明文の翻訳キー
+     */
     val descriptionKey = "$translationKey.description"
-    val descriptionText: MutableComponent
-        get() = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
 
+    /**
+     * 機械の説明文を保持する[MutableComponent]
+     */
+    val descriptionText: MutableComponent = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
+
+    /**
+     * このキーに紐づいたブロックを返します。
+     * @return 値がない場合はnull
+     */
     fun getBlockOrNull(): HTBlockContent? = RagiumAPI.machineRegistry.getBlockOrNull(this)
 
+    /**
+     * このキーに紐づいたブロックを返します。
+     * @throws IllegalStateException このキーにブロックが登録されていない場合
+     */
     fun getBlock(): HTBlockContent = RagiumAPI.machineRegistry.getBlock(this)
 
+    /**
+     * このキーに紐づいた[HTPropertyHolder]を返します。
+     */
     fun getProperty(): HTPropertyHolder = RagiumAPI.machineRegistry.getProperty(this)
 
     fun appendTooltip(consumer: Consumer<Component>, tier: HTMachineTier, allowDescription: Boolean = true) {

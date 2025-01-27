@@ -6,8 +6,14 @@ import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
 
+/**
+ * 稼働中の機械が発生するパーティクルの処理を行うインターフェース
+ */
 fun interface HTMachineParticleHandler {
     companion object {
+        /**
+         * ブロック全体にランダムにパーティクルを表示します。
+         */
         @JvmStatic
         fun ofSimple(type: SimpleParticleType): HTMachineParticleHandler =
             HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, _: Direction ->
@@ -22,6 +28,9 @@ fun interface HTMachineParticleHandler {
                 )
             }
 
+        /**
+         * ブロックの上部にランダムにパーティクルを表示します。
+         */
         @JvmStatic
         fun ofTop(type: SimpleParticleType): HTMachineParticleHandler =
             HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, _: Direction ->
@@ -36,6 +45,9 @@ fun interface HTMachineParticleHandler {
                 )
             }
 
+        /**
+         * ブロックの中央にランダムにパーティクルを表示します。
+         */
         @JvmStatic
         fun ofMiddle(type: SimpleParticleType): HTMachineParticleHandler =
             HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, _: Direction ->
@@ -50,6 +62,9 @@ fun interface HTMachineParticleHandler {
                 )
             }
 
+        /**
+         * ブロックの正面にランダムにパーティクルを表示します。
+         */
         @JvmStatic
         fun ofFront(type: SimpleParticleType): HTMachineParticleHandler =
             HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, front: Direction ->

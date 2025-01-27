@@ -8,10 +8,7 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
-import hiiragi283.ragium.api.extension.asServerLevel
-import hiiragi283.ragium.api.extension.getItemData
-import hiiragi283.ragium.api.extension.name
-import hiiragi283.ragium.api.extension.set
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -24,7 +21,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeValidator
+import hiiragi283.ragium.api.util.DataFunction
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
@@ -62,10 +59,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
-import java.util.function.BiPredicate
-import java.util.function.Function
 import java.util.function.Supplier
-import java.util.function.UnaryOperator
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 internal object RagiumEvents {
@@ -81,7 +75,7 @@ internal object RagiumEvents {
         fun HTPropertyHolderBuilder.putFactory(factory: HTMachineEntityFactory): HTPropertyHolderBuilder =
             put(HTMachinePropertyKeys.MACHINE_FACTORY, factory)
 
-        fun HTPropertyHolderBuilder.putValidator(validator: HTMachineRecipeValidator): HTPropertyHolderBuilder =
+        fun HTPropertyHolderBuilder.putValidator(validator: DataFunction<HTMachineRecipe>): HTPropertyHolderBuilder =
             put(HTMachinePropertyKeys.RECIPE_VALIDATOR, validator)
 
         // Consumer
@@ -104,13 +98,9 @@ internal object RagiumEvents {
         event
             .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
             .putFactory(::HTDefaultGeneratorBlockEntity)
-            .put(
-                HTMachinePropertyKeys.GENERATOR_PREDICATE,
-                BiPredicate { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay },
-            ).put(
-                HTMachinePropertyKeys.BLOCK_MODEL_MAPPER,
-                Function { key: HTMachineKey -> RagiumAPI.id("block/solar_panel") },
-            ).put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
+            .put(HTMachinePropertyKeys.GENERATOR_PREDICATE) { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay }
+            .put(HTMachinePropertyKeys.MODEL_MAPPER) { key: HTMachineKey -> RagiumAPI.id("block/solar_panel") }
+            .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
 
         event.getBuilder(RagiumMachineKeys.STEAM_GENERATOR)
 
@@ -225,7 +215,7 @@ internal object RagiumEvents {
         event
             .getBuilder(RagiumMachineKeys.MIXER)
             .putFactory(::HTLargeProcessorBlockEntity)
-            .put(HTMachinePropertyKeys.ROTATION_MAPPER, UnaryOperator { Direction.NORTH })
+            .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
 

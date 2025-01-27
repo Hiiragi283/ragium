@@ -21,19 +21,15 @@ abstract class HTContainerMenu(
     val itemHandler: IItemHandler,
 ) : AbstractContainerMenu(menuType.get(), containerId) {
     val player: Player = playerInv.player
-    val level: Level
-        get() = player.level()
-
-    val blockEntity: BlockEntity?
-        get() = level.getBlockEntity(pos)
+    val level: Level get() = player.level()
+    val blockEntity: BlockEntity? get() = level.getBlockEntity(pos)
 
     override fun stillValid(player: Player): Boolean = true
 
     abstract val inputSlots: IntRange
     abstract val outputSlots: IntRange
 
-    private val playerStartIndex: Int
-        get() = outputSlots.last + 1
+    private val playerStartIndex: Int get() = outputSlots.last + 1
 
     override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY

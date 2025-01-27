@@ -1,8 +1,6 @@
 package hiiragi283.ragium.api.world
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.getServerSavedData
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -11,8 +9,7 @@ import net.minecraft.world.level.saveddata.SavedData
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-val ServerLevel.energyNetwork: HTEnergyNetwork
-    get() = getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
+val ServerLevel.energyNetwork: HTEnergyNetwork get() = getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
 
 class HTEnergyNetwork(amount: Int) :
     SavedData(),
@@ -62,9 +59,6 @@ class HTEnergyNetwork(amount: Int) :
         ;
 
         abstract fun processAmount(network: HTEnergyNetwork?, amount: Int, simulate: Boolean): Boolean
-
-        fun processAmount(network: DataResult<HTEnergyNetwork>, amount: Int, simulate: Boolean): Boolean =
-            processAmount(network.getOrNull(), amount, simulate)
     }
 
     //    IEnergyStorage    //

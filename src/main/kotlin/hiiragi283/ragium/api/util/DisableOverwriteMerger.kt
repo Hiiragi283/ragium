@@ -6,6 +6,9 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.registries.datamaps.DataMapValueMerger
 
+/**
+ * 値の上書きを禁止する[DataMapValueMerger]
+ */
 class DisableOverwriteMerger<T : Any, R : Any> : DataMapValueMerger<T, R> {
     override fun merge(
         registry: Registry<T>,

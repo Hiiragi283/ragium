@@ -3,21 +3,20 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.client.renderer.HTMachineRenderer
+import hiiragi283.ragium.api.extension.constFunction3
+import hiiragi283.ragium.api.extension.identifyFunction
 import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeValidator
+import hiiragi283.ragium.api.util.DataFunction
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.Level
-import java.util.function.BiPredicate
-import java.util.function.Function
-import java.util.function.UnaryOperator
 
 object HTMachinePropertyKeys {
     @JvmField
@@ -49,43 +48,36 @@ object HTMachinePropertyKeys {
     //    Data Gen    //
 
     @JvmField
-    val BLOCK_MODEL_MAPPER: HTPropertyKey<Function<HTMachineKey, ResourceLocation>> =
+    val MODEL_MAPPER: HTPropertyKey<(HTMachineKey) -> ResourceLocation> =
         HTPropertyKey
-            .builder<Function<HTMachineKey, ResourceLocation>>(RagiumAPI.id("block_model_mapper"))
-            .setDefaultValue { Function { key: HTMachineKey -> RagiumAPI.id("block/${key.name}") } }
+            .builder<(HTMachineKey) -> ResourceLocation>(RagiumAPI.id("block_model_mapper"))
+            .setDefaultValue { { key: HTMachineKey -> RagiumAPI.id("block/${key.name}") } }
             .build()
 
     @JvmField
-    val ITEM_MODEL_MAPPER: HTPropertyKey<Function<HTMachineKey, ResourceLocation>> =
+    val ROTATION_MAPPER: HTPropertyKey<(Direction) -> Direction> =
         HTPropertyKey
-            .builder<Function<HTMachineKey, ResourceLocation>>(RagiumAPI.id("item_model_mapper"))
-            .setDefaultValue { Function { key: HTMachineKey -> RagiumAPI.id("block/${key.name}") } }
-            .build()
-
-    @JvmField
-    val ROTATION_MAPPER: HTPropertyKey<UnaryOperator<Direction>> =
-        HTPropertyKey
-            .builder<UnaryOperator<Direction>>(RagiumAPI.id("rotation_mapper"))
-            .setDefaultValue(UnaryOperator<Direction>::identity)
+            .builder<(Direction) -> Direction>(RagiumAPI.id("rotation_mapper"))
+            .setDefaultValue(::identifyFunction)
             .build()
 
     //    Generator    //
 
     @JvmField
-    val GENERATOR_PREDICATE: HTPropertyKey<BiPredicate<Level, BlockPos>> =
+    val GENERATOR_PREDICATE: HTPropertyKey<(Level, BlockPos) -> Boolean> =
         HTPropertyKey
-            .builder<BiPredicate<Level, BlockPos>>(RagiumAPI.id("generator_predicate"))
-            .setDefaultValue { BiPredicate { _: Level, _: BlockPos -> false } }
+            .builder<(Level, BlockPos) -> Boolean>(RagiumAPI.id("generator_predicate"))
+            .setDefaultValue { constFunction3(false) }
             .build()
 
     //    Processor    //
 
     @JvmField
-    val RECIPE_VALIDATOR: HTPropertyKey<HTMachineRecipeValidator> =
+    val RECIPE_VALIDATOR: HTPropertyKey<DataFunction<HTMachineRecipe>> =
         HTPropertyKey
-            .builder<HTMachineRecipeValidator>(RagiumAPI.id("recipe_validator"))
+            .builder<DataFunction<HTMachineRecipe>>(RagiumAPI.id("recipe_validator"))
             .setDefaultValue {
-                HTMachineRecipeValidator { recipe: HTMachineRecipe ->
+                DataFunction<HTMachineRecipe> { recipe: HTMachineRecipe ->
                     when {
                         recipe.itemInputs.size > 3 -> DataResult.error { "Machine recipe accepts 3 or less item input!" }
                         recipe.fluidInputs.size > 3 -> DataResult.error { "Machine recipe accepts 3 or less fluid input!" }

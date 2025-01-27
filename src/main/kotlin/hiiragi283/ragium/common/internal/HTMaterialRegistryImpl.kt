@@ -4,9 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
-import hiiragi283.ragium.api.extension.createHolderSorter
-import hiiragi283.ragium.api.extension.mutableMultiMapOf
-import hiiragi283.ragium.api.extension.mutableTableOf
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
@@ -57,7 +55,14 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
     private fun modifyProperties() {
         val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()
-        ModLoader.postEvent(HTModifyPropertyEvent.Material { propertyCache.computeIfAbsent(it) { HTPropertyHolderBuilder() } })
+        ModLoader.postEvent(
+            HTModifyPropertyEvent.Material {
+                propertyCache.computeIfAbsent(
+                    it,
+                    constFunction2(HTPropertyHolderBuilder()),
+                )
+            },
+        )
         this.propertyMap = propertyCache.mapValues { (_, builder: HTPropertyHolderBuilder) -> builder.build() }
         LOGGER.info("Modified material properties!")
     }
@@ -78,15 +83,12 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         lookup.listElements().forEach { holder: Holder.Reference<Item> ->
             val definition: HTMaterialDefinition = holder.getData(RagiumAPI.DataMapTypes.MATERIAL) ?: return@forEach
             if (definitionCache.containsKey(holder.value())) {
-                LOGGER.warn("Item: ${holder.key} already has material data!")
+                LOGGER.warn("Item: ${holder.keyOrThrow} already has material data!")
                 return@forEach
             }
             definitionCache.put(holder.value(), definition)
             tagItemCache
-                .computeIfAbsent(
-                    definition.tagPrefix,
-                    definition.material,
-                ) { _: HTTagPrefix, _: HTMaterialKey -> mutableListOf() }
+                .computeIfAbsent(definition.tagPrefix, definition.material, constFunction3(mutableListOf()))
                 .add(holder)
         }
         tagItemCache.values.forEach { it.sortWith(createHolderSorter()) }

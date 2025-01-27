@@ -16,10 +16,16 @@ import java.util.function.Consumer
 
 private typealias MaterialFactory = BiFunction<HTMaterialKey, HTMaterialRegistry, RecipeHolder<HTMachineRecipe>?>
 
+/**
+ * [HTMachineRecipe]を取得するインターフェース
+ */
 fun interface HTMachineRecipeProxy {
     fun getRecipes(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>)
 
     companion object {
+        /**
+         * [RecipeType]に基づいてすべてのレシピを返します。
+         */
         @JvmField
         val DEFAULT = HTMachineRecipeProxy { level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>> ->
             level.recipeManager
@@ -28,6 +34,12 @@ fun interface HTMachineRecipeProxy {
                 .forEach(consumer)
         }
 
+        /**
+         * 指定した既存のレシピを[HTMachineRecipe]に変換します。
+         * @param I [RecipeInput]を継承したクラス
+         * @param T [Recipe]を継承したクラス
+         * @param converter [T]を[HTMachineRecipe]に変換するブロック
+         */
         @JvmStatic
         fun <I : RecipeInput, T : Recipe<I>> convert(
             allowFromManager: Boolean,
@@ -43,6 +55,9 @@ fun interface HTMachineRecipeProxy {
                 .forEach(consumer)
         }
 
+        /**
+         * 素材データに基づいた[HTMachineRecipeProxy]を返します。
+         */
         @JvmStatic
         fun material(allowFromManager: Boolean, vararg builders: MaterialFactory): HTMachineRecipeProxy =
             HTMachineRecipeProxy { level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>> ->

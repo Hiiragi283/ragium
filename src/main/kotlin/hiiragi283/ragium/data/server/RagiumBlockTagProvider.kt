@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.data.addElement
 import hiiragi283.ragium.data.addElements
@@ -11,6 +12,7 @@ import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagBuilder
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
@@ -57,5 +59,15 @@ class RagiumBlockTagProvider(
 
         // Farmer's Delight
         getOrCreateRawBuilder(ModTags.HEAT_SOURCES).addElements(RagiumBlocks.Burners.entries)
+
+        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
+            getOrCreateRawBuilder(Tags.Blocks.ORES).addElement(ore)
+            when (ore.oreVariant) {
+                HTOreVariant.OVERWORLD -> Tags.Blocks.ORES_IN_GROUND_STONE
+                HTOreVariant.DEEP -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
+                HTOreVariant.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
+                HTOreVariant.END -> null
+            }?.let(::getOrCreateRawBuilder)?.addElement(ore)
+        }
     }
 }

@@ -11,6 +11,9 @@ import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 
+/**
+ * 鉱石の母岩部分を管理するクラス
+ */
 enum class HTOreVariant(baseStoneName: String) {
     OVERWORLD("stone") {
         override fun createProperty(): BlockBehaviour.Properties = blockProperty()
@@ -52,7 +55,6 @@ enum class HTOreVariant(baseStoneName: String) {
     interface Content : HTBlockContent.Material {
         val oreVariant: HTOreVariant
 
-        override val tagPrefix: HTTagPrefix
-            get() = HTTagPrefix.ORE
+        override val tagPrefix: HTTagPrefix get() = HTTagPrefix.ORE
     }
 }

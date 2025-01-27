@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.block.entity
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.fluid.HTTieredFluidTank
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import net.minecraft.core.BlockPos
@@ -21,6 +22,9 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 import java.util.function.Supplier
 
+/**
+ * [HTMachineRecipe]を処理する[HTMachineBlockEntity]
+ */
 abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
     protected abstract val itemHandler: ItemStackHandler

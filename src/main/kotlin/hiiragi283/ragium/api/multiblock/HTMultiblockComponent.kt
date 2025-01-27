@@ -1,11 +1,8 @@
 package hiiragi283.ragium.api.multiblock
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Registry
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.block.state.BlockState
 
 /**
@@ -14,21 +11,30 @@ import net.minecraft.world.level.block.state.BlockState
 interface HTMultiblockComponent {
     fun getType(): Type<*>
 
+    /**
+     * 指定した[controller]からこの要素の名前を返します。
+     */
     fun getBlockName(controller: HTControllerDefinition): Component
 
+    /**
+     * 指定した[controller]と[pos]から，この要素が条件を満たしているか判定します。
+     * @param pos この要素の座標
+     */
     fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean
 
+    /**
+     * 指定した[controller]から，この要素がコマンドから設置可能かどうか判定します。
+     */
     fun getPlacementState(controller: HTControllerDefinition): BlockState?
 
+    /**
+     * 指定した値からデータを処理します。
+     * @param pos この要素の座標
+     * @param holder データを渡す先
+     */
     fun collectData(controller: HTControllerDefinition, pos: BlockPos, holder: HTPropertyHolderBuilder) {}
 
     //    Type    //
 
-    interface Type<T : HTMultiblockComponent> {
-        companion object {
-            @JvmField
-            val REGISTRY_KEY: ResourceKey<Registry<Type<*>>> =
-                ResourceKey.createRegistryKey<Type<*>>(RagiumAPI.id("multiblock_component_type"))
-        }
-    }
+    interface Type<T : HTMultiblockComponent>
 }

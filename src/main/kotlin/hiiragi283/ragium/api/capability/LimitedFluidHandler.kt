@@ -1,13 +1,11 @@
 package hiiragi283.ragium.api.capability
 
-import com.google.common.base.Functions
+import hiiragi283.ragium.api.extension.mapFunction
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import java.util.function.Function
 
-class LimitedFluidHandler(private val ioProvider: Function<Int, HTStorageIO>, private val delegate: Map<Int, IFluidTank>) :
-    IFluidHandler {
+class LimitedFluidHandler(private val ioProvider: (Int) -> HTStorageIO, private val delegate: Map<Int, IFluidTank>) : IFluidHandler {
     companion object {
         private fun arrayToMap(delegate: Array<out IFluidTank>): Map<Int, IFluidTank> =
             delegate.mapIndexed { index: Int, tank: IFluidTank -> index to tank }.toMap()
@@ -34,12 +32,12 @@ class LimitedFluidHandler(private val ioProvider: Function<Int, HTStorageIO>, pr
     }
 
     constructor(map: Map<Int, HTStorageIO>, array: Array<out IFluidTank>) : this(
-        Functions.forMap(map, HTStorageIO.INTERNAL),
+        mapFunction(map, HTStorageIO.INTERNAL),
         arrayToMap(array),
     )
 
     constructor(map: Map<Int, HTStorageIO>, delegate: Map<Int, IFluidTank>) : this(
-        Functions.forMap(map, HTStorageIO.INTERNAL),
+        mapFunction(map, HTStorageIO.INTERNAL),
         delegate,
     )
 
@@ -53,7 +51,7 @@ class LimitedFluidHandler(private val ioProvider: Function<Int, HTStorageIO>, pr
 
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int {
         for ((index: Int, tank: IFluidTank) in delegate.entries) {
-            if (!ioProvider.apply(index).canInsert) continue
+            if (!ioProvider(index).canInsert) continue
             return tank.fill(resource, action)
         }
         return 0
@@ -61,7 +59,7 @@ class LimitedFluidHandler(private val ioProvider: Function<Int, HTStorageIO>, pr
 
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
         for ((index: Int, tank: IFluidTank) in delegate.entries) {
-            if (!ioProvider.apply(index).canExtract) continue
+            if (!ioProvider(index).canExtract) continue
             return tank.drain(resource, action)
         }
         return FluidStack.EMPTY
@@ -69,7 +67,7 @@ class LimitedFluidHandler(private val ioProvider: Function<Int, HTStorageIO>, pr
 
     override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack {
         for ((index: Int, tank: IFluidTank) in delegate.entries) {
-            if (!ioProvider.apply(index).canExtract) continue
+            if (!ioProvider(index).canExtract) continue
             return tank.drain(maxDrain, action)
         }
         return FluidStack.EMPTY
