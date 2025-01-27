@@ -25,8 +25,6 @@ import net.neoforged.neoforge.fluids.FluidType
 
 object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        registerVanilla(output)
-
         registerWheat(output)
         registerPlant(output)
 
@@ -36,30 +34,6 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
         registerCinnamon(output)
 
         registerMeat(output)
-    }
-
-    private fun registerVanilla(output: RecipeOutput) {
-        // Melon
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CUTTING_MACHINE)
-            .itemInput(Tags.Items.CROPS_MELON)
-            .itemOutput(Items.MELON_SLICE, 9)
-            .save(output)
-        // Pumpkin Pie
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
-            .itemInput(Tags.Items.CROPS_PUMPKIN)
-            .itemInput(RagiumBlocks.SPONGE_CAKE)
-            .itemOutput(Items.PUMPKIN_PIE, 2)
-            .save(output)
-        // Mushroom Stew
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .itemInput(Tags.Items.MUSHROOMS, 2)
-            .milkInput()
-            .itemInput(Items.BOWL, 2)
-            .itemOutput(Items.MUSHROOM_STEW, 2)
-            .save(output)
     }
 
     private fun registerWheat(output: RecipeOutput) {

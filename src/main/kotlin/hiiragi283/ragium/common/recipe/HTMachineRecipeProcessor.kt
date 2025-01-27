@@ -3,12 +3,10 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTMachineRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
@@ -30,17 +28,18 @@ class HTMachineRecipeProcessor(
     val fluidInputs: IntArray,
     val fluidOutputs: IntArray,
 ) : HTRecipeProcessor {
-    val cache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipes.MACHINE_TYPE)
+    val cache: HTMachineRecipeCache = HTMachineRecipeCache.of(machine)
 
     override fun process(level: ServerLevel, tier: HTMachineTier): Result<Unit> = runCatching {
-        val input: HTMachineInput = HTMachineInput.create(pos, machine) {
-            itemInputs.map(itemHandler::getStackInSlot).forEach(this::add)
-            fluidInputs
-                .map(fluidTanks::apply)
-                .map { tank: IFluidTank? -> tank?.fluid ?: FluidStack.EMPTY }
-                .forEach(this::add)
-        }
-        val recipe: HTMachineRecipe = cache.getFirstMatch(input, level).getOrThrow()
+        val recipe: HTMachineRecipe = cache
+            .getFirstMatch(level, pos) {
+                itemInputs.map(itemHandler::getStackInSlot).forEach(this::add)
+                fluidInputs
+                    .map(fluidTanks::apply)
+                    .map { tank: IFluidTank? -> tank?.fluid ?: FluidStack.EMPTY }
+                    .forEach(this::add)
+            }.getOrThrow()
+            .value
         if (!canAccentOutputs(recipe)) throw HTMachineException.MergeResult(false)
 
         growOutputs(recipe)

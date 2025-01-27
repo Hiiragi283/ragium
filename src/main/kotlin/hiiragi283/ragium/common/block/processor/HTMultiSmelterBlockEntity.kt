@@ -8,14 +8,11 @@ import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.inventory.HTMultiSmelterContainerMenu
-import hiiragi283.ragium.common.recipe.HTCookingRecipeProcessor
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
@@ -27,7 +24,12 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override val itemHandler: ItemStackHandler = ItemStackHandler(2)
     override val tanks: Array<out HTTieredFluidTank> = arrayOf()
     override val processor: HTRecipeProcessor =
-        HTCookingRecipeProcessor(itemHandler, 0, 1, RecipeType<SmeltingRecipe>::SMELTING)
+        createMachineProcessor(
+            intArrayOf(0),
+            intArrayOf(1),
+            intArrayOf(),
+            intArrayOf(),
+        )
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTMultiSmelterContainerMenu(containerId, playerInventory, blockPos, itemHandler)

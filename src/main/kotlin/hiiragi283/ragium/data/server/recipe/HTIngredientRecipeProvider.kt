@@ -7,8 +7,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.recipe.condition.HTRockGeneratorCondition
-import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -35,7 +33,6 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.BlockTagIngredient
 import net.neoforged.neoforge.fluids.FluidType
-import java.util.function.Supplier
 
 object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -43,7 +40,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         registerSteels(output)
         registerEndContents(output)
 
-        registerPlastics(output)
         registerCircuits(output)
 
         registerCatalysts(output)
@@ -51,9 +47,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         registerTool(output)
         registerMisc(output)
-
-        registerSnow(output)
-        registerStone(output)
     }
 
     private fun registerRaginite(output: RecipeOutput) {
@@ -236,54 +229,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Fierium
     }
 
-    private fun registerPlastics(output: RecipeOutput) {
-        fun register(result: ItemLike, builder: Supplier<HTMachineRecipeBuilder>) {
-            builder
-                .get()
-                .itemOutput(result)
-                .save(output)
-            builder
-                .get()
-                .catalyst(RagiumItems.OXIDIZATION_CATALYST)
-                .itemOutput(result, 2)
-                .saveSuffixed(output, "_alt")
-        }
-
-        register(RagiumItems.Plastics.BASIC) {
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .fluidInput(RagiumFluids.ETHENE)
-        }
-        register(RagiumItems.Plastics.ADVANCED) {
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .fluidInput(RagiumFluids.ACETYLENE)
-                .fluidInput(RagiumFluids.CHLORINE)
-        }
-        register(RagiumItems.Plastics.ELITE) {
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .fluidInput(RagiumFluids.PROPENE)
-        }
-        register(RagiumItems.Plastics.ULTIMATE) {
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .fluidInput(RagiumFluids.AROMATIC_COMPOUNDS)
-                .fluidInput(RagiumFluids.NITRIC_ACID)
-        }
-
-        RagiumItems.Plastics.entries.forEach { plastic: RagiumItems.Plastics ->
-            // Circuit Board
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.COMPRESSOR)
-                .itemInput(plastic)
-                .itemInput(RagiumItems.Dusts.QUARTZ)
-                .catalyst(RagiumItems.PLATE_PRESS_MOLD)
-                .itemOutput(RagiumItems.CIRCUIT_BOARD, plastic.ordinal + 1)
-                .savePrefixed(output, "${plastic.machineTier.serializedName}_")
-        }
-    }
-
     private fun registerCircuits(output: RecipeOutput) {
         RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
             // Assembler
@@ -341,8 +286,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .savePrefixed(output)
         }
 
-        // register(RagiumItems.HEATING_CATALYST, RagiumMaterialKeys.COPPER, Items.MAGMA_BLOCK)
-        // register(RagiumItems.COOLING_CATALYST, RagiumMaterialKeys.ALUMINUM, Items.PACKED_ICE)
         register(RagiumItems.OXIDIZATION_CATALYST, RagiumMaterialKeys.IRON, Items.COAL_BLOCK)
         register(RagiumItems.REDUCTION_CATALYST, RagiumMaterialKeys.GOLD, Items.WATER_BUCKET)
         register(RagiumItems.DEHYDRATION_CATALYST, RagiumMaterialKeys.STEEL, Items.SOUL_SAND)
@@ -423,7 +366,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
 
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(RagiumItems.LUMINESCENCE_DUST)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
@@ -445,24 +388,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL, 4)
             .itemInput(Items.PISTON, 2)
             .itemOutput(RagiumItems.ENGINE)
-            .save(output)
-
-        HTCookingRecipeBuilder
-            .create(
-                Ingredient.of(RagiumItems.CRIMSON_CRYSTAL),
-                Items.BLAZE_POWDER,
-                time = 500,
-                types = HTCookingRecipeBuilder.BLASTING_TYPES,
-            ).unlockedBy("has_crystal", has(RagiumItems.CRIMSON_CRYSTAL))
-            .save(output)
-
-        HTCookingRecipeBuilder
-            .create(
-                Ingredient.of(RagiumItems.WARPED_CRYSTAL),
-                Items.ENDER_PEARL,
-                time = 500,
-                types = HTCookingRecipeBuilder.BLASTING_TYPES,
-            ).unlockedBy("has_crystal", has(RagiumItems.WARPED_CRYSTAL))
             .save(output)
 
         HTMachineRecipeBuilder
@@ -501,84 +426,5 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('C', Tags.Items.GLASS_BLOCKS)
             .unlockedBy("has_glass", has(Tags.Items.GLASS_BLOCKS))
             .savePrefixed(output)
-    }
-
-    private fun registerSnow(output: RecipeOutput) {
-        // Water -> Ice
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COMPRESSOR)
-            .waterInput()
-            .machineConditions(HTTemperatureCondition.cooling(HTMachineTier.BASIC))
-            .itemOutput(Items.SNOW_BLOCK)
-            .save(output)
-
-        // Snow Block -> 4x Snow Ball
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.GRINDER)
-            .itemInput(Items.SNOW_BLOCK)
-            .itemOutput(Items.SNOWBALL, 4)
-            .saveSuffixed(output, "_from_block")
-        // Ice -> 4x Snow Ball
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.GRINDER)
-            .itemInput(Items.ICE)
-            .itemOutput(Items.SNOWBALL, 4)
-            .saveSuffixed(output, "_from_ice")
-
-        // Powder Snow
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .waterInput()
-            .machineConditions(HTTemperatureCondition.cooling(HTMachineTier.ADVANCED))
-            .fluidOutput(RagiumFluids.SNOW)
-            .saveSuffixed(output, "_from_water")
-
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.EXTRACTOR)
-            .itemInput(Tags.Items.BUCKETS_POWDER_SNOW)
-            .itemOutput(Items.BUCKET)
-            .fluidOutput(RagiumFluids.SNOW)
-            .save(output, RagiumAPI.id("powder_snow_from_bucket"))
-
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
-            .itemInput(Items.BUCKET)
-            .fluidInput(RagiumFluids.SNOW)
-            .itemOutput(Items.POWDER_SNOW_BUCKET)
-            .save(output)
-    }
-
-    private fun registerStone(output: RecipeOutput) {
-        fun registerRock(rock: ItemLike) {
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.MIXER)
-                .machineConditions(HTRockGeneratorCondition(Ingredient.of(rock)))
-                .itemOutput(rock, 8)
-                .save(output)
-        }
-
-        registerRock(Items.STONE)
-        registerRock(Items.COBBLESTONE)
-        registerRock(Items.GRANITE)
-        registerRock(Items.DIORITE)
-        registerRock(Items.ANDESITE)
-
-        registerRock(Items.DEEPSLATE)
-        registerRock(Items.COBBLED_DEEPSLATE)
-        registerRock(Items.CALCITE)
-        registerRock(Items.TUFF)
-        registerRock(Items.DRIPSTONE_BLOCK)
-        registerRock(Items.NETHERRACK)
-        registerRock(Items.BASALT)
-        registerRock(Items.BLACKSTONE)
-
-        registerRock(Items.END_STONE)
-
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .fluidInput(Tags.Fluids.LAVA)
-            .machineConditions(HTRockGeneratorCondition(Ingredient.of(Items.OBSIDIAN)))
-            .itemOutput(Items.OBSIDIAN)
-            .save(output)
     }
 }

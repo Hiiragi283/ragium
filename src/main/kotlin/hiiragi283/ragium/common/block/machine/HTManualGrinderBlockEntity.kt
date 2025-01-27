@@ -10,12 +10,10 @@ import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.replaceBlockState
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.ifPresent
-import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTMachineRecipeCache
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -24,6 +22,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -39,7 +38,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             setChanged()
         }
     }
-    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipes.MACHINE_TYPE)
+    private val recipeCache: HTMachineRecipeCache = HTMachineRecipeCache.of(RagiumMachineKeys.GRINDER)
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -73,10 +72,9 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     private fun process(level: Level, pos: BlockPos, player: Player) {
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
         recipeCache
-            .getFirstMatch(
-                HTMachineInput.createSimple(pos, RagiumMachineKeys.GRINDER, stackIn),
-                level,
-            ).onSuccess { recipe: HTMachineRecipe ->
+            .getFirstMatch(level, pos, stackIn)
+            .map(RecipeHolder<HTMachineRecipe>::value)
+            .onSuccess { recipe: HTMachineRecipe ->
                 // Drop output
                 dropStackAt(player, recipe.getResultItem(level.registryAccess()))
                 // Shrink input

@@ -3,27 +3,24 @@ package hiiragi283.ragium.integration.jei
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.extension.buildMultiMap
+import hiiragi283.ragium.api.extension.mutableMultiMapOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.property.HTGeneratorFuel
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.property.get
+import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.HTTemperatureInfo
 import hiiragi283.ragium.api.util.HTTemperatureType
 import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.integration.jei.category.HTMachineRecipeCategory
 import hiiragi283.ragium.integration.jei.category.HTMaterialInfoCategory
 import hiiragi283.ragium.integration.jei.category.HTTemperatureInfoCategory
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
-import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.helpers.IJeiHelpers
 import mezz.jei.api.ingredients.IIngredientType
@@ -38,12 +35,10 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.material.Fluid
 import org.slf4j.Logger
 import kotlin.streams.asSequence
 
@@ -112,29 +107,15 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Machine
         val level: ClientLevel = Minecraft.getInstance().level ?: return
-        val recipes: List<RecipeHolder<HTMachineRecipe>> =
-            level.recipeManager.getAllRecipesFor(RagiumRecipes.MACHINE_TYPE.get())
+        val recipeCache: HTMultiMap.Mutable<HTMachineKey, RecipeHolder<HTMachineRecipe>> = mutableMultiMapOf()
 
-        val multiMap: HTMultiMap<HTMachineKey, RecipeHolder<HTMachineRecipe>> = buildMultiMap {
-            // Process Recipe
-            recipes.forEach { holder: RecipeHolder<HTMachineRecipe> -> put(holder.value.machineKey, holder) }
-            // Generator Fuel
-            HTMachineKey.allKeys.forEach { key: HTMachineKey ->
-                val fuelData: Set<HTGeneratorFuel> =
-                    key.getProperty()[HTMachinePropertyKeys.GENERATOR_FUEL] ?: return@forEach
-                putAll(
-                    key,
-                    fuelData.map { (fuel: TagKey<Fluid>, amount: Int) ->
-                        HTMachineRecipeBuilder
-                            .create(key)
-                            .fluidInput(fuel, amount)
-                            .export(fuel.location)
-                    },
-                )
-            }
+        RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, _: HTBlockContent?, properties: HTPropertyHolder ->
+            properties
+                .getOrDefault(HTMachinePropertyKeys.RECIPE_PROXY)
+                .getRecipes(level) { recipeCache.put(key, it) }
         }
 
-        multiMap.map.forEach { machine: HTMachineKey, holders: Collection<RecipeHolder<HTMachineRecipe>> ->
+        recipeCache.map.forEach { machine: HTMachineKey, holders: Collection<RecipeHolder<HTMachineRecipe>> ->
             registration.addRecipes(getRecipeType(machine), holders.toList())
         }
         // Material Info
@@ -178,9 +159,6 @@ class RagiumJEIPlugin : IModPlugin {
         RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: HTBlockContent) ->
             val stack = ItemStack(content)
             registration.addRecipeCatalysts(getRecipeType(key), stack)
-            if (key == RagiumMachineKeys.MULTI_SMELTER) {
-                registration.addRecipeCatalysts(RecipeTypes.SMELTING, stack)
-            }
         }
 
         registration.addRecipeCatalysts(getRecipeType(RagiumMachineKeys.GRINDER), RagiumBlocks.MANUAL_GRINDER)

@@ -180,6 +180,10 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
 
     fun export(id: ResourceLocation): RecipeHolder<HTMachineRecipe> = RecipeHolder(fixId(id), createRecipe())
 
+    fun exportPrefixed(prefix: String): RecipeHolder<HTMachineRecipe> = export(getPrimalId().withPrefix(prefix))
+
+    fun exportSuffixed(suffix: String): RecipeHolder<HTMachineRecipe> = export(getPrimalId().withSuffix(suffix))
+
     private fun fixId(id: ResourceLocation): ResourceLocation = RagiumAPI.wrapId(id.withPrefix(machine.name + '/'))
 
     private fun createRecipe(): HTMachineRecipe = HTMachineRecipe(

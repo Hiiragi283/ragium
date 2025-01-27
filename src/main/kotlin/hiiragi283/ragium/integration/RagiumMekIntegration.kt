@@ -4,9 +4,11 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
-import net.neoforged.bus.api.IEventBus
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
 import org.slf4j.Logger
 
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 object RagiumMekIntegration {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
@@ -20,16 +22,13 @@ object RagiumMekIntegration {
     @JvmField
     val REFINED_OBSIDIAN: HTMaterialKey = HTMaterialKey.Companion.of("refined_obsidian")
 
-    fun init(eventBus: IEventBus) {
-        eventBus.addListener(::registerMaterial)
-
-        LOGGER.info("Enabled Mekanism Integration!")
-    }
-
-    private fun registerMaterial(event: HTRegisterMaterialEvent) {
+    @SubscribeEvent
+    fun registerMaterial(event: HTRegisterMaterialEvent) {
         event.register(REFINED_GLOWSTONE, HTMaterialType.ALLOY)
         event.register(REFINED_OBSIDIAN, HTMaterialType.ALLOY)
 
         event.register(OSMIUM, HTMaterialType.METAL)
+
+        LOGGER.info("Enabled Mekanism Integration!")
     }
 }

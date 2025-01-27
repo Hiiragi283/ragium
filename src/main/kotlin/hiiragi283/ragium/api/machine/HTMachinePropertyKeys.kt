@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.client.renderer.HTMachineRenderer
 import hiiragi283.ragium.api.machine.property.HTGeneratorFuel
 import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
+import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -108,6 +109,13 @@ object HTMachinePropertyKeys {
                     }
                 }
             }.build()
+
+    @JvmField
+    val RECIPE_PROXY: HTPropertyKey<HTMachineRecipeProxy> =
+        HTPropertyKey
+            .builder<HTMachineRecipeProxy>(RagiumAPI.id("recipe_proxy"))
+            .setDefaultValue(HTMachineRecipeProxy::DEFAULT)
+            .build()
 
     //    Multiblock    //
 

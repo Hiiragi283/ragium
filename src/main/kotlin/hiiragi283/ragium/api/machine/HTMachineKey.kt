@@ -21,6 +21,7 @@ import java.util.function.Consumer
  */
 class HTMachineKey private constructor(val name: String) : Comparable<HTMachineKey> {
     companion object {
+        @JvmStatic
         private val instances: MutableMap<String, HTMachineKey> = mutableMapOf()
 
         @JvmField
