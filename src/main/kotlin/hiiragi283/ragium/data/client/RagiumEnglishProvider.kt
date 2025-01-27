@@ -108,12 +108,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
         add(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
 
-        // add(RagiumItems.HEATING_CATALYST, "Heating Catalyst")
-        // add(RagiumItems.COOLING_CATALYST, "Cooling Catalyst")
-        add(RagiumItems.OXIDIZATION_CATALYST, "Oxidization Catalyst")
-        add(RagiumItems.REDUCTION_CATALYST, "Reduction Catalyst")
-        add(RagiumItems.DEHYDRATION_CATALYST, "Dehydration Catalyst")
-
         add(RagiumItems.BEE_WAX, "Bee Wax")
         add(RagiumItems.CALCIUM_CARBIDE, "Calcium Carbide")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
@@ -158,9 +152,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
 
+        add(RagiumTranslationKeys.CATALYST_CONDITION, "Required Catalyst Item")
         add(RagiumTranslationKeys.COOLING_CONDITION, "Required Cooling Power: %s - %s")
         add(RagiumTranslationKeys.HEATING_CONDITION, "Required Heating Power: %s - %s")
-        add(RagiumTranslationKeys.CATALYST_CONDITION, "Required Catalyst Item")
+        add(
+            RagiumTranslationKeys.ROCK_GENERATOR_CONDITION,
+            "Require Water and Lava Source around the machine, and Catalyst Item",
+        )
+        add(RagiumTranslationKeys.TIER_CONDITION, "Required Minimum Tier: %s")
         // Machine Type
         add(
             RagiumMachineKeys.BEDROCK_MINER,

@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.recipe.condition
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -20,7 +22,8 @@ data class HTRockGeneratorCondition(override val itemIngredient: Ingredient) : H
     }
 
     override val codec: MapCodec<HTRockGeneratorCondition> = CODEC
-    override val text: MutableComponent = Component.literal("Require water and lava blocks around the machine")
+    override val text: MutableComponent =
+        Component.translatable(RagiumTranslationKeys.ROCK_GENERATOR_CONDITION).withStyle(ChatFormatting.DARK_GRAY)
 
     override fun test(level: Level, pos: BlockPos): Boolean {
         val aroundFluids: List<FluidState> = Direction.entries.map(pos::relative).map(level::getFluidState)

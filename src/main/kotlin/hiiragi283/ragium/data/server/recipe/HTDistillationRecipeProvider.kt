@@ -9,7 +9,6 @@ import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.item.Items
 import net.neoforged.neoforge.fluids.FluidType
 
 object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
@@ -68,7 +67,6 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
 
         registerBio(output)
         registerSaps(output)
-        registerCokes(output)
     }
 
     private fun registerBio(output: RecipeOutput) {
@@ -109,7 +107,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         // XX Log -> Sap + Pulp
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
-            .itemInput(ItemTags.LOGS)
+            .itemInput(ItemTags.LOGS_THAT_BURN)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
             .fluidOutput(RagiumFluids.SAP)
             .save(output)
@@ -126,7 +124,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.CRIMSON_STEMS)
-            .catalyst(ItemTags.CRIMSON_STEMS)
+            .catalyst(RagiumItems.Circuits.ADVANCED)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
             .fluidOutput(RagiumFluids.CRIMSON_SAP)
             .savePrefixed(output, "crimson_")
@@ -134,7 +132,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.CRIMSON_SAP, FluidType.BUCKET_VOLUME * 4)
-            .catalyst(RagiumItems.Circuits.BASIC)
+            .catalyst(RagiumItems.Circuits.ADVANCED)
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumFluids.SAP, FluidType.BUCKET_VOLUME * 3)
             .save(output, RagiumAPI.id("crimson_sap"))
@@ -143,7 +141,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.WARPED_STEMS)
-            .catalyst(ItemTags.WARPED_STEMS)
+            .catalyst(RagiumItems.Circuits.ADVANCED)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
             .fluidOutput(RagiumFluids.WARPED_SAP)
             .savePrefixed(output, "warped_")
@@ -151,33 +149,9 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.WARPED_SAP, FluidType.BUCKET_VOLUME * 4)
-            .catalyst(RagiumItems.Circuits.BASIC)
+            .catalyst(RagiumItems.Circuits.ADVANCED)
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
             .fluidOutput(RagiumFluids.SAP, FluidType.BUCKET_VOLUME * 3)
             .save(output, RagiumAPI.id("warped_sap"))
-    }
-
-    private fun registerCokes(output: RecipeOutput) {
-        // Log -> Charcoal + Creosote
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COKE_OVEN)
-            .itemInput(ItemTags.LOGS)
-            .itemOutput(Items.CHARCOAL)
-            .fluidOutput(RagiumFluids.CREOSOTE, 50)
-            .save(output)
-        // Coal -> Coke + Creosote
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COKE_OVEN)
-            .itemInput(ItemTags.COALS)
-            .itemOutput(RagiumItems.COKE)
-            .fluidOutput(RagiumFluids.CREOSOTE, 100)
-            .save(output)
-        // Creosote -> Aromatic Compound
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.DISTILLATION_TOWER)
-            .fluidInput(RagiumFluids.CREOSOTE, FluidType.BUCKET_VOLUME * 4)
-            .fluidOutput(RagiumFluids.AROMATIC_COMPOUNDS, FluidType.BUCKET_VOLUME * 3)
-            .fluidOutput(RagiumFluids.ALCOHOL)
-            .saveSuffixed(output, "_from_creosote")
     }
 }

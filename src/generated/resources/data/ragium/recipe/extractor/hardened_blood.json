@@ -7,10 +7,9 @@
   ],
   "type": "ragium:machine",
   "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "item": "ragium:dehydration_catalyst"
-    }
+    "type": "ragium:temperature",
+    "min_tier": "basic",
+    "temperature_type": "heating"
   },
   "fluid_inputs": [
     {

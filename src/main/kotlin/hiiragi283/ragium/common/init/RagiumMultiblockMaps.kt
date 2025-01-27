@@ -67,9 +67,9 @@ object RagiumMultiblockMaps {
     @JvmField
     val COKE_OVEN: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
-        .addLayer(-1..1, 0, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
-        .addHollow(-1..1, 1, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
-        .addLayer(-1..1, 2, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
+        .addLayer(-1..1, -1, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
+        .addHollow(-1..1, 0, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
+        .addLayer(-1..1, 1, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
         .build()
 
     @JvmField

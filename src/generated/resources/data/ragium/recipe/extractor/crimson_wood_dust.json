@@ -3,7 +3,7 @@
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
-      "tag": "minecraft:crimson_stems"
+      "item": "ragium:advanced_circuit"
     }
   },
   "fluid_outputs": [

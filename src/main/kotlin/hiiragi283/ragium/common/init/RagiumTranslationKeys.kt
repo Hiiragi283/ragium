@@ -59,7 +59,9 @@ object RagiumTranslationKeys {
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
     const val MULTI_SHAPE_SUCCESS = "message.ragium.multi_shape.success"
 
+    const val CATALYST_CONDITION = "tooltip.ragium.condition.catalyst"
     const val COOLING_CONDITION = "tooltip.ragium.condition.cooling"
     const val HEATING_CONDITION = "tooltip.ragium.condition.heating"
-    const val CATALYST_CONDITION = "tooltip.ragium.condition.catalyst"
+    const val ROCK_GENERATOR_CONDITION = "tooltip.ragium.condition.rock_generator"
+    const val TIER_CONDITION = "tooltip.ragium.condition.tier"
 }

@@ -131,8 +131,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
-            .itemInput(RagiumItemTags.COAL_COKES)
-            .catalyst(RagiumItems.REDUCTION_CATALYST)
+            .itemInput(RagiumItemTags.COAL_COKE)
             .itemOutput(RagiumItems.Ingots.STEEL)
             .saveSuffixed(output, "_alt")
         // Deep Steel
@@ -172,7 +171,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
-            .catalyst(RagiumItems.REDUCTION_CATALYST)
+            .catalyst(Items.NETHER_STAR)
             .fluidOutput(RagiumFluids.REFINED_RAGIUM_SOLUTION, 500)
             .save(output)
 
@@ -286,10 +285,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .unlockedBy("has_iron_bars", has(Items.IRON_BARS))
                 .savePrefixed(output)
         }
-
-        register(RagiumItems.OXIDIZATION_CATALYST, RagiumMaterialKeys.IRON, Items.COAL_BLOCK)
-        register(RagiumItems.REDUCTION_CATALYST, RagiumMaterialKeys.GOLD, Items.WATER_BUCKET)
-        register(RagiumItems.DEHYDRATION_CATALYST, RagiumMaterialKeys.STEEL, Items.SOUL_SAND)
     }
 
     private fun registerPressMolds(output: RecipeOutput) {
@@ -385,11 +380,11 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         SingleItemRecipeBuilder
             .stonecutting(
-                Ingredient.of(RagiumItemTags.COAL_COKES),
+                Ingredient.of(RagiumItemTags.COAL_COKE),
                 RecipeCategory.MISC,
                 RagiumItems.COAL_CHIP,
                 16,
-            ).unlockedBy("has_coke", has(RagiumItemTags.COAL_COKES))
+            ).unlockedBy("has_coke", has(RagiumItemTags.COAL_COKE))
             .save(output, RagiumAPI.id("stonecutting/coal_chip_from_coke"))
 
         HTMachineRecipeBuilder

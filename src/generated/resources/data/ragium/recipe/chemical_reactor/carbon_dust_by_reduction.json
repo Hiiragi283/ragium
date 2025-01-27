@@ -3,7 +3,7 @@
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
-      "item": "ragium:reduction_catalyst"
+      "item": "minecraft:heart_of_the_sea"
     }
   },
   "fluid_inputs": [

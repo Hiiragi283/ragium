@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/reduction_catalyst"
+    "layer0": "ragium:item/raw_sulfur"
   }
 }

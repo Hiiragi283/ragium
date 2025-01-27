@@ -109,12 +109,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板）")
         add(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒）")
 
-        // add(RagiumItems.HEATING_CATALYST, "加熱触媒")
-        // add(RagiumItems.COOLING_CATALYST, "冷却触媒")
-        add(RagiumItems.OXIDIZATION_CATALYST, "酸化触媒")
-        add(RagiumItems.REDUCTION_CATALYST, "還元触媒")
-        add(RagiumItems.DEHYDRATION_CATALYST, "脱水触媒")
-
         add(RagiumItems.BEE_WAX, "蜜蠟")
         add(RagiumItems.CALCIUM_CARBIDE, "炭化カルシウム")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
@@ -160,9 +154,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "機械の構造は有効です！")
 
+        add(RagiumTranslationKeys.CATALYST_CONDITION, "触媒アイテムが必要です")
         add(RagiumTranslationKeys.COOLING_CONDITION, "次の範囲の冷却が必要です: %s - %s")
         add(RagiumTranslationKeys.HEATING_CONDITION, "次の範囲の加熱が必要です: %s - %s")
-        add(RagiumTranslationKeys.CATALYST_CONDITION, "触媒アイテムが必要です")
+        add(RagiumTranslationKeys.ROCK_GENERATOR_CONDITION, "周囲に水源と溶岩源，そして触媒アイテムが必要です")
+        add(RagiumTranslationKeys.TIER_CONDITION, "最低でも次のティアが必要です: %s")
         // Machine Type
         add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
         add(RagiumMachineKeys.BIOMASS_FERMENTER, "バイオマス発酵槽", "植物からバイオマスを生産する")

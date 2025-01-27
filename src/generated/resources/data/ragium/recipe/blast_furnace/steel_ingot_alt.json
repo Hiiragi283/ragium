@@ -1,11 +1,5 @@
 {
   "type": "ragium:machine",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "item": "ragium:reduction_catalyst"
-    }
-  },
   "item_inputs": [
     {
       "count": 1,
@@ -13,7 +7,7 @@
     },
     {
       "count": 1,
-      "tag": "c:coal_cokes"
+      "tag": "c:coal_coke"
     }
   ],
   "item_outputs": [

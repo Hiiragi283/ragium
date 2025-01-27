@@ -46,6 +46,7 @@ object RagiumData {
 
         generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
+        generator.addProvider(event.includeServer(), RagiumWorldGenProvider(output, provider))
 
         generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))

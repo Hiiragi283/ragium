@@ -82,14 +82,14 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(solid)
-            .catalyst(RagiumItems.OXIDIZATION_CATALYST)
+            .machineConditions(HTTemperatureCondition.heating(HTMachineTier.ADVANCED))
             .fluidOutput(oxide)
             .saveSuffixed(output, "_by_oxidization")
         // Reduction
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(oxide)
-            .catalyst(RagiumItems.REDUCTION_CATALYST)
+            .catalyst(Items.HEART_OF_THE_SEA)
             .itemOutput(solid)
             .saveSuffixed(output, "_by_reduction")
     }
@@ -135,7 +135,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.ETHENE)
-            .catalyst(RagiumItems.REDUCTION_CATALYST)
+            .catalyst(Items.BLAZE_POWDER)
             .fluidOutput(RagiumFluids.ACETYLENE)
             .saveSuffixed(output, "_from_ethylene")
 
@@ -311,7 +311,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Alumina Solution + 4x Coal -> Aluminum Ingot
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(RagiumItemTags.COAL_COKES, 2)
+            .itemInput(RagiumItemTags.COAL_COKE, 2)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumItems.Ingots.ALUMINUM)
             .itemOutput(RagiumItems.SLAG, 2)
@@ -370,7 +370,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.SULFUR_DIOXIDE)
             .waterInput()
-            .catalyst(RagiumItems.OXIDIZATION_CATALYST)
+            .catalyst(Items.BLAZE_POWDER)
             .fluidOutput(RagiumFluids.SULFURIC_ACID)
             .save(output)
     }

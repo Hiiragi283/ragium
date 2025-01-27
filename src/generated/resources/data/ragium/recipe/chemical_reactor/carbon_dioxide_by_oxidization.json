@@ -1,10 +1,9 @@
 {
   "type": "ragium:machine",
   "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "item": "ragium:oxidization_catalyst"
-    }
+    "type": "ragium:temperature",
+    "min_tier": "advanced",
+    "temperature_type": "heating"
   },
   "fluid_outputs": [
     {

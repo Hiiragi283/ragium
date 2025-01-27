@@ -1,7 +1,7 @@
 {
   "type": "minecraft:stonecutting",
   "ingredient": {
-    "tag": "c:coal_cokes"
+    "tag": "c:coal_coke"
   },
   "result": {
     "count": 16,

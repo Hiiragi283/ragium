@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import aztech.modern_industrialization.MI
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.itemTagKey
@@ -11,6 +12,7 @@ import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.addElement
 import hiiragi283.ragium.data.addTag
 import hiiragi283.ragium.integration.RagiumEvilIntegration
+import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
@@ -117,7 +119,12 @@ class RagiumItemTagProvider(
 
         getOrCreateRawBuilder(HTTagPrefix.PLATE.commonTagKey).addTag(RagiumItemTags.PLASTIC_PLATES)
         getOrCreateRawBuilder(ItemTags.COALS).addElement(RagiumItems.RESIDUAL_COKE)
-        getOrCreateRawBuilder(RagiumItemTags.COAL_COKES).addElement(RagiumItems.COKE)
-        getOrCreateRawBuilder(RagiumItemTags.PLASTIC_PLATES).addElement(RagiumItems.PLASTIC_PLATE)
+        getOrCreateRawBuilder(RagiumItemTags.COAL_COKE)
+            .addElement(RagiumItems.COKE)
+            .addOptionalElement(ResourceLocation.fromNamespaceAndPath(MI.ID, "coke"))
+
+        getOrCreateRawBuilder(RagiumItemTags.PLASTIC_PLATES)
+            .addElement(RagiumItems.PLASTIC_PLATE)
+            .addElement(MekanismItems.HDPE_SHEET, true)
     }
 }

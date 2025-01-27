@@ -138,11 +138,6 @@ object RagiumItems {
         DIAMOND(RagiumMaterialKeys.DIAMOND, HTTagPrefix.GEM),
         EMERALD(RagiumMaterialKeys.EMERALD, HTTagPrefix.GEM),
 
-        // Ragium
-        // RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
-        // RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
-        // REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
-
         // Steel
         STEEL(RagiumMaterialKeys.STEEL),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
@@ -154,13 +149,18 @@ object RagiumItems {
     }
 
     enum class RawResources(override val tagPrefix: HTTagPrefix, override val material: HTMaterialKey) : HTItemContent.Material {
-        // tier 1
+        // Raw
         RAW_CRUDE_RAGINITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE),
-
-        // tier2
         RAW_RAGINITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.RAGINITE),
 
-        // tier 3
+        // Raw for Integration
+        RAW_BAUXITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.BAUXITE),
+        RAW_NITER(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.NITER),
+        RAW_REDSTONE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.REDSTONE),
+        RAW_SALT(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.SALT),
+        RAW_SULFUR(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.SULFUR),
+
+        // Gem
         RAGI_CRYSTAL(HTTagPrefix.GEM, RagiumMaterialKeys.RAGI_CRYSTAL),
         CRYOLITE(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE),
         FLUORITE(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE),
@@ -412,24 +412,6 @@ object RagiumItems {
 
     @JvmField
     val PRESS_MOLDS: List<DeferredItem<Item>> = listOf(GEAR_PRESS_MOLD, PLATE_PRESS_MOLD, ROD_PRESS_MOLD)
-
-    //    Catalysts    //
-
-    @JvmField
-    val OXIDIZATION_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("oxidization_catalyst")
-
-    @JvmField
-    val REDUCTION_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("reduction_catalyst")
-
-    @JvmField
-    val DEHYDRATION_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("dehydration_catalyst")
-
-    @JvmField
-    val CATALYSTS: List<DeferredItem<Item>> = listOf(
-        OXIDIZATION_CATALYST,
-        REDUCTION_CATALYST,
-        DEHYDRATION_CATALYST,
-    )
 
     //    Ingredients    //
 

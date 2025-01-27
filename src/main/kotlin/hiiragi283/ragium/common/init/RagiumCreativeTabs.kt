@@ -52,7 +52,6 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.SLOT_LOCK)
 
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
-                    RagiumItems.CATALYSTS.forEach(output::accept)
                     // Circuits
                     RagiumItems.Circuits.entries.forEach(output::accept)
                     // Ingredients
