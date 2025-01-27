@@ -3,14 +3,14 @@ package hiiragi283.ragium.data.server
 import aztech.modern_industrialization.MI
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.api.extension.addElement
+import hiiragi283.ragium.api.extension.addTag
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.data.addElement
-import hiiragi283.ragium.data.addTag
 import hiiragi283.ragium.integration.RagiumEvilIntegration
 import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup

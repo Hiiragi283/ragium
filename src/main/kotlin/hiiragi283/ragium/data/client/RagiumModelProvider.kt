@@ -2,15 +2,15 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.extension.getBuilder
+import hiiragi283.ragium.api.extension.itemTexture
+import hiiragi283.ragium.api.extension.withUncheckedParent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.data.getBuilder
-import hiiragi283.ragium.data.itemTexture
-import hiiragi283.ragium.data.withUncheckedParent
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike

@@ -3,6 +3,9 @@ package hiiragi283.ragium.integration.jei
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.extension.isSource
 import hiiragi283.ragium.api.extension.mutableMultiMapOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -33,12 +36,14 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 import org.slf4j.Logger
 import kotlin.streams.asSequence
 
@@ -116,6 +121,26 @@ class RagiumJEIPlugin : IModPlugin {
                     if (holder.value.machineKey == key) recipeCache.put(key, holder)
                 }
         }
+
+        level
+            .registryAccess()
+            .lookupOrThrow(Registries.FLUID)
+            .listElements()
+            .forEach { holder: Holder.Reference<Fluid> ->
+                val fluid: Fluid = holder.value()
+                if (!fluid.isSource) return@forEach
+                val fuelMap: Map<HTMachineKey, Int> =
+                    holder.getData(RagiumAPI.DataMapTypes.MACHINE_FUEL) ?: return@forEach
+                fuelMap.forEach { (key: HTMachineKey, amount: Int) ->
+                    recipeCache.put(
+                        key,
+                        HTMachineRecipeBuilder
+                            .create(key)
+                            .fluidInput(fluid, amount)
+                            .export(holder.idOrThrow.withSuffix("_from_fuel_map")),
+                    )
+                }
+            }
 
         recipeCache.map.forEach { machine: HTMachineKey, holders: Collection<RecipeHolder<HTMachineRecipe>> ->
             registration.addRecipes(getRecipeType(machine), holders.toList())

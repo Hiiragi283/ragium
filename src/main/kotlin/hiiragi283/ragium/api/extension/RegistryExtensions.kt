@@ -57,8 +57,8 @@ operator fun <T : Any> HolderSet<T>.contains(value: T): Boolean = any { it.isOf(
  * @param transform 値を[Component]に変換するブロック
  * @return [TagKey]の場合は[getName]，それ以外の場合は[transform]を連結
  */
-fun <T : Any> HolderSet<T>.asText(transform: (T) -> Component): MutableComponent = unwrap()
-    .map(TagKey<T>::getName) { ComponentUtils.formatList(this.map(Holder<T>::value), transform) }
+fun <T : Any> HolderSet<T>.asHolderText(transform: (Holder<T>) -> Component): MutableComponent = unwrap()
+    .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
 
 //    TagKey    //

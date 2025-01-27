@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.data.add
 import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -161,36 +161,31 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.TIER_CONDITION, "最低でも次のティアが必要です: %s")
         // Machine Type
         add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
-        add(RagiumMachineKeys.BIOMASS_FERMENTER, "バイオマス発酵槽", "植物からバイオマスを生産する")
         add(RagiumMachineKeys.DRAIN, "排水溝", "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る")
-        add(RagiumMachineKeys.FLUID_DRILL, "液体採掘機", "特定のバイオームから液体を汲み上げる")
-        add(RagiumMachineKeys.GAS_PLANT, "ガス採集機", "特定のバイオームからガスを集める")
-        add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "水と溶岩を少なくとも一つずつ隣接させる")
 
         add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
         add(RagiumMachineKeys.GAS_TURBINE, "ガスタービン", "気体燃料から発電する")
         add(RagiumMachineKeys.NUCLEAR_REACTOR, "原子炉", "放射性燃料から発電する")
         add(RagiumMachineKeys.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")
-        add(RagiumMachineKeys.STEAM_GENERATOR, "蒸気発電機", "水と石炭類から発電する")
+        add(RagiumMachineKeys.STEAM_TURBINE, "蒸気タービン", "蒸気から発電する")
         add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
         add(RagiumMachineKeys.VIBRATION_GENERATOR, "音波発電機", "エッチなのはダメ!死刑!")
 
-        add(RagiumMachineKeys.ASSEMBLER, "組立機", "おれぁ悪魔博士だよ")
+        add(RagiumMachineKeys.ASSEMBLER, "組立機", "君こそが天才だ!")
         add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
         add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽", "Are You Ready?")
         add(RagiumMachineKeys.COKE_OVEN, "コークス炉", "コーク・コーラ")
         add(RagiumMachineKeys.COMPRESSOR, "圧縮機", "saves.zip.zip")
-        add(RagiumMachineKeys.CUTTING_MACHINE, "裁断機", "")
+        add(RagiumMachineKeys.CUTTING_MACHINE, "裁断機", "コストカットさえすればいい")
         add(RagiumMachineKeys.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
-        // add(RagiumMachineKeys.ELECTROLYZER, "電解槽", "エレキ オン")
         add(RagiumMachineKeys.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
-        add(RagiumMachineKeys.GRINDER, "粉砕機", "クラッシュ・アップ")
-        add(RagiumMachineKeys.GROWTH_CHAMBER, "成長チャンバー")
-        // add(RagiumMachineKeys.INFUSER, "注入機", "遠心分離機じゃないみたいなやつ")
-        // add(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR, "大型化学反応槽", "大は小を兼ねません")
-        add(RagiumMachineKeys.LASER_TRANSFORMER, "レーザー変換機")
+        add(RagiumMachineKeys.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
+        add(RagiumMachineKeys.GROWTH_CHAMBER, "成長チャンバー", "成長バーチャン")
+        add(RagiumMachineKeys.LASER_TRANSFORMER, "レーザー変換機", "レーザーオン…")
         add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
-        add(RagiumMachineKeys.MIXER, "ミキサー", "ゲノミクス...")
+        add(RagiumMachineKeys.MIXER, "ミキサー", "ベストマッチ!")
+        add(RagiumMachineKeys.RESOURCE_PLANT, "資源プラント", "チョコレートファウンテンのように")
+        add(RagiumMachineKeys.STEAM_BOILER, "蒸気ボイラー", "スチールホッパー!")
         // Material
         add(RagiumMaterialKeys.ALKALI, "アルカリ")
         add(RagiumMaterialKeys.ALUMINUM, "アルミニウム")

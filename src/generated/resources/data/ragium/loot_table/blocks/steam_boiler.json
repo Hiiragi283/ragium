@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:rock_generator"
+          "name": "ragium:steam_boiler"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/rock_generator"
+  "random_sequence": "ragium:blocks/steam_boiler"
 }

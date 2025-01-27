@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "ragium:block/fluid_drill",
+      "model": "ragium:block/steam_turbine",
       "y": 90
     },
     "facing=north": {
-      "model": "ragium:block/fluid_drill"
+      "model": "ragium:block/steam_turbine"
     },
     "facing=south": {
-      "model": "ragium:block/fluid_drill",
+      "model": "ragium:block/steam_turbine",
       "y": 180
     },
     "facing=west": {
-      "model": "ragium:block/fluid_drill",
+      "model": "ragium:block/steam_turbine",
       "y": 270
     }
   }

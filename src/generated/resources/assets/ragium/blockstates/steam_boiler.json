@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "ragium:block/gas_plant",
+      "model": "ragium:block/steam_boiler",
       "y": 90
     },
     "facing=north": {
-      "model": "ragium:block/gas_plant"
+      "model": "ragium:block/steam_boiler"
     },
     "facing=south": {
-      "model": "ragium:block/gas_plant",
+      "model": "ragium:block/steam_boiler",
       "y": 180
     },
     "facing=west": {
-      "model": "ragium:block/gas_plant",
+      "model": "ragium:block/steam_boiler",
       "y": 270
     }
   }

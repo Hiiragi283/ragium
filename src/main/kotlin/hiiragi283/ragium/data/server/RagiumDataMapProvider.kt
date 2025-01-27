@@ -98,6 +98,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     }
 
     private fun machineFuel(builder: Builder<Map<HTMachineKey, Int>, Fluid>) {
+        // Combustion
         builder.add(
             RagiumFluidTags.NON_NITRO_FUEL,
             mapOf(RagiumMachineKeys.COMBUSTION_GENERATOR to FluidType.BUCKET_VOLUME / 10),
@@ -108,11 +109,13 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             mapOf(RagiumMachineKeys.COMBUSTION_GENERATOR to FluidType.BUCKET_VOLUME / 100),
             false,
         )
-
-        builder.addFuel(RagiumFluids.METHANE, RagiumMachineKeys.COMBUSTION_GENERATOR, FluidType.BUCKET_VOLUME / 100)
-        builder.addFuel(RagiumFluids.ETHENE, RagiumMachineKeys.COMBUSTION_GENERATOR, FluidType.BUCKET_VOLUME / 20)
-        builder.addFuel(RagiumFluids.ACETYLENE, RagiumMachineKeys.COMBUSTION_GENERATOR, FluidType.BUCKET_VOLUME / 50)
-
+        // Gas Turbine
+        builder.addFuel(RagiumFluids.METHANE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 100)
+        builder.addFuel(RagiumFluids.ETHENE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 20)
+        builder.addFuel(RagiumFluids.ACETYLENE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 50)
+        // Steam
+        builder.addFuel(RagiumFluids.STEAM, RagiumMachineKeys.STEAM_TURBINE, FluidType.BUCKET_VOLUME / 10)
+        // Thermal
         builder.add(
             RagiumFluidTags.THERMAL_FUEL,
             mapOf(RagiumMachineKeys.THERMAL_GENERATOR to FluidType.BUCKET_VOLUME / 10),

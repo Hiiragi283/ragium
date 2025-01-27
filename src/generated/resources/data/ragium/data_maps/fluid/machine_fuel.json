@@ -1,13 +1,16 @@
 {
   "values": {
     "#c:acetylene": {
-      "combustion_generator": 20
+      "gas_turbine": 20
     },
     "#c:ethene": {
-      "combustion_generator": 50
+      "gas_turbine": 50
     },
     "#c:methane": {
-      "combustion_generator": 10
+      "gas_turbine": 10
+    },
+    "#c:steam": {
+      "steam_turbine": 100
     },
     "#ragium:fuels/nitro": {
       "combustion_generator": 10

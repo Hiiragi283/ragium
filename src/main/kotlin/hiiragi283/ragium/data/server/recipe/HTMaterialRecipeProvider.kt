@@ -1,12 +1,12 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.extension.define
+import hiiragi283.ragium.api.extension.requires
+import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.data.define
-import hiiragi283.ragium.data.requires
-import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "A A",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:steam_boiler"
+  }
+}

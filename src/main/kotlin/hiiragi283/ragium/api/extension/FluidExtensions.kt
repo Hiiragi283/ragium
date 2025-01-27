@@ -21,3 +21,5 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
  * [Fluid]の名前を[net.neoforged.neoforge.fluids.FluidType.getDescription]から返します。
  */
 val Fluid.name: Component get() = fluidType.description
+
+val Fluid.isSource: Boolean get() = isSource(defaultFluidState())

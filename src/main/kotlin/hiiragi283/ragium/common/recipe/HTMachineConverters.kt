@@ -70,6 +70,28 @@ object HTMachineConverters {
             }
     }
 
+    @JvmStatic
+    fun fromFuel(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>) {
+        level
+            .registryAccess()
+            .lookupOrThrow(Registries.ITEM)
+            .listElements()
+            .forEach { holder: Holder.Reference<Item> ->
+                val fuel: Int = holder.getData(NeoForgeDataMaps.FURNACE_FUELS)?.burnTime ?: return@forEach
+                var water: Int = fuel / 100
+                if (water <= 0) {
+                    water = 1
+                }
+                HTMachineRecipeBuilder
+                    .create(RagiumMachineKeys.STEAM_BOILER)
+                    .itemInput(holder.value())
+                    .waterInput(water)
+                    .fluidOutput(RagiumFluids.STEAM, water * 100)
+                    .exportSuffixed("_from_${holder.idOrThrow.path}")
+                    .let(consumer::accept)
+            }
+    }
+
     //    Material    //
 
     @JvmStatic

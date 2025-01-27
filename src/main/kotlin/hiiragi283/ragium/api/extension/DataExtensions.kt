@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data
+package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -102,10 +102,6 @@ fun ShapelessRecipeBuilder.requiresFor(times: Int, ingredient: Ingredient): Shap
 
 fun ShapelessRecipeBuilder.savePrefixed(output: RecipeOutput) {
     savePrefixed(output, "shapeless/")
-}
-
-fun SimpleCookingRecipeBuilder.savePrefixed(output: RecipeOutput) {
-    savePrefixed(output, "cooking/")
 }
 
 fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {

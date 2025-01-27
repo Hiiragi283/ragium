@@ -3,12 +3,12 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.extension.requiresFor
+import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
-import hiiragi283.ragium.data.requiresFor
-import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory

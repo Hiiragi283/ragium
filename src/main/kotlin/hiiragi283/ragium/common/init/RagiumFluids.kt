@@ -47,6 +47,8 @@ enum class RagiumFluids(
     CHLORINE(Color(0xccff33), "Chlorine", "塩素", TextureType.GASEOUS),
 
     // Non-organic Chemical Compounds
+    STEAM("Steam", "蒸気", TextureType.GASEOUS),
+
     CARBON_MONOXIDE(Color(0x6699cc), "Carbon Monoxide", "一酸化炭素", TextureType.GASEOUS),
     CARBON_DIOXIDE(Color(0x99ccff), "Carbon Dioxide", "二酸化炭素", TextureType.GASEOUS),
 

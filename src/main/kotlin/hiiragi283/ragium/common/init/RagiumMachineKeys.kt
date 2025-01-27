@@ -8,29 +8,12 @@ object RagiumMachineKeys {
     val BEDROCK_MINER: HTMachineKey = HTMachineKey.of("bedrock_miner")
 
     @JvmField
-    val BIOMASS_FERMENTER: HTMachineKey = HTMachineKey.of("biomass_fermenter")
-
-    @JvmField
     val DRAIN: HTMachineKey = HTMachineKey.of("drain")
-
-    @JvmField
-    val FLUID_DRILL: HTMachineKey = HTMachineKey.of("fluid_drill")
-
-    @JvmField
-    val GAS_PLANT: HTMachineKey = HTMachineKey.of("gas_plant")
-
-    @JvmField
-    val ROCK_GENERATOR: HTMachineKey = HTMachineKey.of("rock_generator")
 
     @JvmField
     val CONSUMERS: List<HTMachineKey> =
         listOf(
             BEDROCK_MINER,
-            BIOMASS_FERMENTER,
-            // DRAIN,
-            FLUID_DRILL,
-            // GAS_PLANT,
-            // ROCK_GENERATOR,
         )
 
     //    Generator    //
@@ -48,7 +31,7 @@ object RagiumMachineKeys {
     val SOLAR_GENERATOR: HTMachineKey = HTMachineKey.of("solar_generator")
 
     @JvmField
-    val STEAM_GENERATOR: HTMachineKey = HTMachineKey.of("steam_generator")
+    val STEAM_TURBINE: HTMachineKey = HTMachineKey.of("steam_turbine")
 
     @JvmField
     val THERMAL_GENERATOR: HTMachineKey = HTMachineKey.of("thermal_generator")
@@ -61,11 +44,9 @@ object RagiumMachineKeys {
         listOf(
             COMBUSTION_GENERATOR,
             GAS_TURBINE,
-            // NUCLEAR_REACTOR,
             SOLAR_GENERATOR,
-            STEAM_GENERATOR,
+            STEAM_TURBINE,
             THERMAL_GENERATOR,
-            // VIBRATION_GENERATOR,
         )
 
     //    Processor    //
@@ -109,6 +90,12 @@ object RagiumMachineKeys {
     val MULTI_SMELTER: HTMachineKey = HTMachineKey.of("multi_smelter")
 
     @JvmField
+    val RESOURCE_PLANT: HTMachineKey = HTMachineKey.of("resource_plant")
+
+    @JvmField
+    val STEAM_BOILER: HTMachineKey = HTMachineKey.of("steam_boiler")
+
+    @JvmField
     val PROCESSORS: List<HTMachineKey> =
         listOf(
             ASSEMBLER,
@@ -124,5 +111,7 @@ object RagiumMachineKeys {
             LASER_TRANSFORMER,
             MIXER,
             MULTI_SMELTER,
+            RESOURCE_PLANT,
+            STEAM_BOILER,
         )
 }

@@ -99,10 +99,11 @@ internal object RagiumEvents {
             .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
             .putFactory(::HTDefaultGeneratorBlockEntity)
             .put(HTMachinePropertyKeys.GENERATOR_PREDICATE) { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay }
-            .put(HTMachinePropertyKeys.MODEL_MAPPER) { key: HTMachineKey -> RagiumAPI.id("block/solar_panel") }
             .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
 
-        event.getBuilder(RagiumMachineKeys.STEAM_GENERATOR)
+        event
+            .getBuilder(RagiumMachineKeys.STEAM_TURBINE)
+            .putFactory(::HTFluidGeneratorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
@@ -229,6 +230,10 @@ internal object RagiumEvents {
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.convert(false, RecipeType.SMELTING, HTMachineConverters::fromCooking),
             )
+
+        event
+            .getBuilder(RagiumMachineKeys.STEAM_BOILER)
+            .put(HTMachinePropertyKeys.RECIPE_PROXY, HTMachineRecipeProxy(HTMachineConverters::fromFuel))
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

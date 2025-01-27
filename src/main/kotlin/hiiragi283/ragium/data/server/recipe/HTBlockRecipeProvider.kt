@@ -3,6 +3,8 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.extension.define
+import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -10,8 +12,6 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import hiiragi283.ragium.data.define
-import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -273,9 +273,30 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .define('B', HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER)
             .unlockedBy("has_iron", has(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON))
             .savePrefixed(output)
+        // Steam Boiler
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.STEAM_BOILER.getBlock())
+            .pattern("AAA")
+            .pattern("A A")
+            .pattern("BBB")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
+            .define('B', Items.BRICKS)
+            .unlockedBy("has_copper", has(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER))
+            .savePrefixed(output)
     }
 
     private fun advancedMachines(output: RecipeOutput) {
+        // Solar Generator
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.SOLAR_GENERATOR.getBlock(), 2)
+            .pattern("AAA")
+            .pattern("BCB")
+            .define('A', RagiumItems.SOLAR_PANEL)
+            .define('B', RagiumBlocks.Casings.ADVANCED)
+            .define('C', HTMachineTier.ADVANCED.getCircuitTag())
+            .unlockedBy("has_solar_panel", has(RagiumItems.SOLAR_PANEL))
+            .savePrefixed(output)
+
         // Assembler
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumMachineKeys.ASSEMBLER.getBlock())

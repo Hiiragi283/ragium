@@ -1,10 +1,10 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.addElement
+import hiiragi283.ragium.api.extension.addElements
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.data.addElement
-import hiiragi283.ragium.data.addElements
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput

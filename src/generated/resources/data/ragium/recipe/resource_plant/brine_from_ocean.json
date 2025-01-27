@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:biome",
+    "biome": "#minecraft:is_ocean"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "id": "ragium:brine"
+    }
+  ],
+  "machine_type": "resource_plant"
+}

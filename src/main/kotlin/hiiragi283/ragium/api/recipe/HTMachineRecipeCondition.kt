@@ -28,7 +28,7 @@ interface HTMachineRecipeCondition {
             ByteBufCodecs
                 .registry(RagiumAPI.RegistryKeys.RECIPE_CONDITION)
                 .dispatch(HTMachineRecipeCondition::codec) { codec: MapCodec<out HTMachineRecipeCondition> ->
-                    ByteBufCodecs.fromCodec(codec.codec())
+                    ByteBufCodecs.fromCodecWithRegistries(codec.codec())
                 }
     }
 

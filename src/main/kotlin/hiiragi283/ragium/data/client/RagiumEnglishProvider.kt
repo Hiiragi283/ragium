@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.data.add
 import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -167,29 +167,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Collect minerals from Bedrock",
         )
         add(
-            RagiumMachineKeys.BIOMASS_FERMENTER,
-            "Biomass Fermenter",
-            "Produce Biomass from Composter inputs",
-        )
-        add(
             RagiumMachineKeys.DRAIN,
             "Drain",
             "Drains fluids from front, experience from up, and fluid cube in slot",
-        )
-        add(
-            RagiumMachineKeys.FLUID_DRILL,
-            "Fluid Drill",
-            "Pump up fluids from specified biomes",
-        )
-        add(
-            RagiumMachineKeys.GAS_PLANT,
-            "Gas Plant",
-            "Collect gases from specified biomes",
-        )
-        add(
-            RagiumMachineKeys.ROCK_GENERATOR,
-            "Rock Generator",
-            "Require water and lava source around",
         )
 
         add(
@@ -213,9 +193,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Generate energy in daytime",
         )
         add(
-            RagiumMachineKeys.STEAM_GENERATOR,
-            "Steam Generator",
-            "Generate energy from water and coal like fuels",
+            RagiumMachineKeys.STEAM_TURBINE,
+            "Steam Turbine",
+            "Generate energy from steam",
         )
         add(
             RagiumMachineKeys.THERMAL_GENERATOR,
@@ -228,19 +208,21 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Augh! Pervert! Death penalty!",
         )
 
-        add(RagiumMachineKeys.ASSEMBLER, "Assembler", "I am Dr.Doom")
+        add(RagiumMachineKeys.ASSEMBLER, "Assembler", "You are the genius!")
         add(RagiumMachineKeys.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
         add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor", "Are You Ready?")
         add(RagiumMachineKeys.COKE_OVEN, "Coke Oven", "Coke Cola")
         add(RagiumMachineKeys.COMPRESSOR, "Compressor", "saves.zip.zip")
-        add(RagiumMachineKeys.CUTTING_MACHINE, "Cutting Machine", "Process Logs more efficiently")
+        add(RagiumMachineKeys.CUTTING_MACHINE, "Cutting Machine", "All you need is cost cut")
         add(RagiumMachineKeys.DISTILLATION_TOWER, "Distillation Tower", "Process Crude Oil")
         add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Something like Centrifuge")
-        add(RagiumMachineKeys.GRINDER, "Grinder", "Crush Up")
-        add(RagiumMachineKeys.GROWTH_CHAMBER, "Growth Chamber")
-        add(RagiumMachineKeys.LASER_TRANSFORMER, "Laser Transformer")
-        add(RagiumMachineKeys.MIXER, "Mixer", "Genomix...")
+        add(RagiumMachineKeys.GRINDER, "Grinder", "Unbreakable Diamond")
+        add(RagiumMachineKeys.GROWTH_CHAMBER, "Growth Chamber", "Growth Gran-ma")
+        add(RagiumMachineKeys.LASER_TRANSFORMER, "Laser Transformer", "Laser On...")
+        add(RagiumMachineKeys.MIXER, "Mixer", "Best Match!")
         add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
+        add(RagiumMachineKeys.RESOURCE_PLANT, "Resource Plant", "Like a Chocolate Fountain")
+        add(RagiumMachineKeys.STEAM_BOILER, "Steam Boiler", "Steam Hopper!")
         // Material
         add(RagiumMaterialKeys.ALKALI, "Alkali")
         add(RagiumMaterialKeys.ALUMINUM, "Aluminum")

@@ -6,12 +6,17 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.recipe.condition.HTBiomeCondition
 import hiiragi283.ragium.common.recipe.condition.HTTierCondition
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biomes
 import net.neoforged.neoforge.fluids.FluidType
 import java.util.function.Supplier
 import kotlin.math.pow
@@ -21,6 +26,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         chemicalReactor(output)
         compressor(output)
         cokeOven(output)
+        resourcePlant(output, holderLookup.lookupOrThrow(Registries.BIOME))
     }
 
     //    Chemical Reactor    //
@@ -105,5 +111,36 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.AROMATIC_COMPOUNDS, FluidType.BUCKET_VOLUME * 3)
             .fluidOutput(RagiumFluids.ALCOHOL)
             .saveSuffixed(output, "_from_creosote")
+    }
+
+    //    Resource Plant    //
+
+    private fun resourcePlant(output: RecipeOutput, lookup: HolderLookup.RegistryLookup<Biome>) {
+        // Brine from Ocean
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.RESOURCE_PLANT)
+            .machineConditions(HTBiomeCondition(lookup.getOrThrow(BiomeTags.IS_OCEAN)))
+            .fluidOutput(RagiumFluids.BRINE, FluidType.BUCKET_VOLUME / 4)
+            .saveSuffixed(output, "_from_ocean")
+        // Brine from Beach
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.RESOURCE_PLANT)
+            .machineConditions(HTBiomeCondition(lookup.getOrThrow(BiomeTags.IS_BEACH)))
+            .fluidOutput(RagiumFluids.BRINE, FluidType.BUCKET_VOLUME / 4)
+            .saveSuffixed(output, "_from_beach")
+
+        // Oil from Nether
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.RESOURCE_PLANT)
+            .machineConditions(HTBiomeCondition(lookup.getOrThrow(Biomes.SOUL_SAND_VALLEY)))
+            .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 4)
+            .save(output)
+
+        // Air from Overworld
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.RESOURCE_PLANT)
+            .machineConditions(HTBiomeCondition(lookup.getOrThrow(BiomeTags.IS_OVERWORLD)))
+            .fluidOutput(RagiumFluids.AIR, FluidType.BUCKET_VOLUME / 4)
+            .save(output)
     }
 }

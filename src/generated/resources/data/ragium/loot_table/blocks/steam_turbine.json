@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:gas_plant"
+          "name": "ragium:steam_turbine"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/gas_plant"
+  "random_sequence": "ragium:blocks/steam_turbine"
 }

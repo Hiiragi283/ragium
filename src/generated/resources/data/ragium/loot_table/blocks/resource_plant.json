@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:fluid_drill"
+          "name": "ragium:resource_plant"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/fluid_drill"
+  "random_sequence": "ragium:blocks/resource_plant"
 }
