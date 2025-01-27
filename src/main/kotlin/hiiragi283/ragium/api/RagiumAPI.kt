@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.property.HTMachineFuel
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
@@ -20,6 +21,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.registries.RegistryBuilder
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
@@ -74,6 +76,15 @@ data object RagiumAPI {
 
         @JvmField
         val MACHINE_TIER: DataMapType<Item, HTMachineTier> = createItem("machine_tier", HTMachineTier.CODEC)
+
+        @JvmField
+        val MACHINE_FUEL: DataMapType<Fluid, Map<HTMachineKey, Int>> =
+            AdvancedDataMapType
+                .builder(id("machine_fuel"), MCRegistries.FLUID, HTMachineFuel.CODEC)
+                .synced(HTMachineFuel.CODEC, false)
+                .merger(HTMachineFuel.Merger)
+                .remover(HTMachineFuel.Remover.CODEC)
+                .build()
 
         @JvmField
         val MATERIAL: DataMapType<Item, HTMaterialDefinition> = createItem("material", HTMaterialDefinition.CODEC)

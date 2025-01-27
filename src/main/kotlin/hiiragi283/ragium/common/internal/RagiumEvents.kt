@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
-import hiiragi283.ragium.api.machine.property.HTGeneratorFuel
 import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
@@ -26,7 +25,6 @@ import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeValidator
-import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
@@ -60,7 +58,6 @@ import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
@@ -93,36 +90,16 @@ internal object RagiumEvents {
         event
             .getBuilder(RagiumMachineKeys.COMBUSTION_GENERATOR)
             .putFactory(::HTFluidGeneratorBlockEntity)
-            .put(
-                HTMachinePropertyKeys.GENERATOR_FUEL,
-                setOf(
-                    HTGeneratorFuel(RagiumFluidTags.NON_NITRO_FUEL, FluidType.BUCKET_VOLUME / 10),
-                    HTGeneratorFuel(RagiumFluidTags.NITRO_FUEL, FluidType.BUCKET_VOLUME / 100),
-                ),
-            ).put(HTMachinePropertyKeys.SOUND, SoundEvents.FIRE_EXTINGUISH)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.FIRE_EXTINGUISH)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ASH))
 
         event
             .getBuilder(RagiumMachineKeys.GAS_TURBINE)
             .putFactory(::HTFluidGeneratorBlockEntity)
-            .put(
-                HTMachinePropertyKeys.GENERATOR_FUEL,
-                setOf(
-                    HTGeneratorFuel(RagiumFluids.METHANE, FluidType.BUCKET_VOLUME / 10),
-                    HTGeneratorFuel(RagiumFluids.ETHENE, FluidType.BUCKET_VOLUME / 20),
-                    HTGeneratorFuel(RagiumFluids.ACETYLENE, FluidType.BUCKET_VOLUME / 50),
-                ),
-            )
 
         event
             .getBuilder(RagiumMachineKeys.NUCLEAR_REACTOR)
             .putFactory(::HTFluidGeneratorBlockEntity)
-            .put(
-                HTMachinePropertyKeys.GENERATOR_FUEL,
-                setOf(
-                    HTGeneratorFuel(RagiumFluidTags.NUCLEAR_FUEL, FluidType.BUCKET_VOLUME / 10),
-                ),
-            )
 
         event
             .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
@@ -140,12 +117,6 @@ internal object RagiumEvents {
         event
             .getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
             .putFactory(::HTFluidGeneratorBlockEntity)
-            .put(
-                HTMachinePropertyKeys.GENERATOR_FUEL,
-                setOf(
-                    HTGeneratorFuel(RagiumFluidTags.THERMAL_FUEL, FluidType.BUCKET_VOLUME / 10),
-                ),
-            )
 
         event.getBuilder(RagiumMachineKeys.VIBRATION_GENERATOR)
 
@@ -220,6 +191,10 @@ internal object RagiumEvents {
                     else -> DataResult.success(recipe)
                 }
             }
+
+        event
+            .getBuilder(RagiumMachineKeys.EXTRACTOR)
+            .put(HTMachinePropertyKeys.RECIPE_PROXY, HTMachineRecipeProxy(HTMachineConverters::fromComposting))
 
         event
             .getBuilder(RagiumMachineKeys.GRINDER)
@@ -477,6 +452,8 @@ internal object RagiumEvents {
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(RagiumAPI.DataMapTypes.MACHINE_KEY)
         event.register(RagiumAPI.DataMapTypes.MACHINE_TIER)
+        event.register(RagiumAPI.DataMapTypes.MACHINE_FUEL)
+
         event.register(RagiumAPI.DataMapTypes.MATERIAL)
 
         event.register(RagiumAPI.DataMapTypes.TEMP_TIER)

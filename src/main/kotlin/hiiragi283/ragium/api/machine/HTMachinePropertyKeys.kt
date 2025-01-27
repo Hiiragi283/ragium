@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.client.renderer.HTMachineRenderer
-import hiiragi283.ragium.api.machine.property.HTGeneratorFuel
 import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
@@ -78,19 +77,6 @@ object HTMachinePropertyKeys {
             .builder<BiPredicate<Level, BlockPos>>(RagiumAPI.id("generator_predicate"))
             .setDefaultValue { BiPredicate { _: Level, _: BlockPos -> false } }
             .build()
-
-    @JvmField
-    val GENERATOR_FUEL: HTPropertyKey<Set<HTGeneratorFuel>> =
-        HTPropertyKey
-            .builder<Set<HTGeneratorFuel>>(RagiumAPI.id("fuel_tag"))
-            .setValidation { fuels: Set<HTGeneratorFuel> ->
-                val nonEmpty: Set<HTGeneratorFuel> = fuels.filterNot(HTGeneratorFuel::isEmpty).toSet()
-                if (nonEmpty.isEmpty()) {
-                    DataResult.error { "There is no valid fuel data!" }
-                } else {
-                    DataResult.success(nonEmpty)
-                }
-            }.build()
 
     //    Processor    //
 

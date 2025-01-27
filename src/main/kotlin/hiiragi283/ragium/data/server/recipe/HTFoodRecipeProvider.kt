@@ -14,9 +14,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
-import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -26,7 +23,6 @@ import net.neoforged.neoforge.fluids.FluidType
 object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerWheat(output)
-        registerPlant(output)
 
         registerMilk(output)
         registerHoney(output)
@@ -59,21 +55,6 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
                 types = HTCookingRecipeBuilder.SMOKING_TYPES,
             ).unlockedBy("has_dough", has(RagiumItems.DOUGH))
             .save(output)
-    }
-
-    private fun registerPlant(output: RecipeOutput) {
-        mapOf(
-            ItemTags.LEAVES to 50,
-            ItemTags.SAPLINGS to 50,
-            Tags.Items.SEEDS to 10,
-        ).forEach { (input: TagKey<Item>, amount: Int) ->
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.EXTRACTOR)
-                .itemInput(input)
-                .catalyst(Items.COMPOSTER)
-                .fluidOutput(RagiumFluids.PLANT_OIL, amount)
-                .saveSuffixed(output, "_from_${input.location.path}")
-        }
     }
 
     private fun registerMilk(output: RecipeOutput) {

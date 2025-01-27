@@ -1,12 +1,13 @@
 package hiiragi283.ragium.common.block.generator
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.capability.LimitedFluidHandler
 import hiiragi283.ragium.api.fluid.HTTieredFluidTank
-import hiiragi283.ragium.api.machine.*
-import hiiragi283.ragium.api.machine.property.HTGeneratorFuel
-import hiiragi283.ragium.api.property.get
+import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -24,14 +25,10 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTFluidGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.FLUID_GENERATOR, pos, state) {
-    val fuelData: Set<HTGeneratorFuel>?
-        get() = machineKey.getProperty()[HTMachinePropertyKeys.GENERATOR_FUEL]
+    fun getFuelData(stack: FluidStack): Map<HTMachineKey, Int> = stack.fluidHolder.getData(RagiumAPI.DataMapTypes.MACHINE_FUEL) ?: mapOf()
 
     private val tank: HTTieredFluidTank = object : HTTieredFluidTank(this@HTFluidGeneratorBlockEntity) {
-        override fun isFluidValid(stack: FluidStack): Boolean {
-            val fuelData: Set<HTGeneratorFuel> = fuelData ?: return super.isFluidValid(stack)
-            return fuelData.any { it.isAcceptableWithoutAmount(stack) }
-        }
+        override fun isFluidValid(stack: FluidStack): Boolean = machineKey in getFuelData(stack)
     }
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -46,15 +43,11 @@ class HTFluidGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         if (tank.isEmpty) throw HTMachineException.EmptyFluid(false)
-        val fuelData: Set<HTGeneratorFuel> = fuelData ?: throw HTMachineException.FindFuel(false)
         val stackIn: FluidStack = tank.fluid
-        for (generatorFuel: HTGeneratorFuel in fuelData) {
-            if (!generatorFuel.isAcceptable(stackIn)) continue
-            val amount: Int = generatorFuel.amount
-            if (tank.drain(amount, IFluidHandler.FluidAction.SIMULATE).amount == amount) {
-                tank.drain(amount, IFluidHandler.FluidAction.EXECUTE)
-                return
-            }
+        val amount: Int = getFuelData(stackIn)[machineKey] ?: throw HTMachineException.FindFuel(false)
+        if (tank.drain(amount, IFluidHandler.FluidAction.SIMULATE).amount == amount) {
+            tank.drain(amount, IFluidHandler.FluidAction.EXECUTE)
+            return
         }
         throw throw HTMachineException.ConsumeFuel(false)
     }

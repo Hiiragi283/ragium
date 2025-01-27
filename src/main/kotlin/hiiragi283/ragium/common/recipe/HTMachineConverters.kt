@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -11,13 +12,18 @@ import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.StonecutterRecipe
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
+import java.util.function.Consumer
 
 object HTMachineConverters {
     //    Vanilla    //
@@ -42,6 +48,25 @@ object HTMachineConverters {
             .catalyst(output.item)
             .itemOutput(recipe.getResultItem(provider))
             .export(holder.id.withSuffix("_from_cutting"))
+    }
+
+    @JvmStatic
+    fun fromComposting(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>) {
+        HTMachineRecipeProxy.DEFAULT.getRecipes(level, consumer)
+        level
+            .registryAccess()
+            .lookupOrThrow(Registries.ITEM)
+            .listElements()
+            .forEach { holder: Holder.Reference<Item> ->
+                val chance: Float = holder.getData(NeoForgeDataMaps.COMPOSTABLES)?.chance ?: return@forEach
+                HTMachineRecipeBuilder
+                    .create(RagiumMachineKeys.EXTRACTOR)
+                    .itemInput(holder.value())
+                    .catalyst(Items.COMPOSTER)
+                    .fluidOutput(RagiumFluids.BIOMASS, (1000 * chance).toInt())
+                    .exportSuffixed("_from_${holder.unwrapKey().orElseThrow().location().path}")
+                    .let(consumer::accept)
+            }
     }
 
     //    Material    //

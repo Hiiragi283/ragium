@@ -1,0 +1,22 @@
+{
+  "values": {
+    "#c:acetylene": {
+      "combustion_generator": 20
+    },
+    "#c:ethene": {
+      "combustion_generator": 50
+    },
+    "#c:methane": {
+      "combustion_generator": 10
+    },
+    "#ragium:fuels/nitro": {
+      "combustion_generator": 10
+    },
+    "#ragium:fuels/non_nitro": {
+      "combustion_generator": 100
+    },
+    "#ragium:fuels/thermal": {
+      "thermal_generator": 100
+    }
+  }
+}
