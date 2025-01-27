@@ -159,6 +159,26 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerNitrogen(output: RecipeOutput) {
+        // Air
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .catalyst(Items.IRON_BARS)
+            .fluidOutput(RagiumFluids.AIR)
+            .save(output)
+        // Air -> Nitrogen
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .fluidInput(RagiumFluids.AIR)
+            .fluidOutput(RagiumFluids.NITROGEN, 800)
+            .save(output)
+        // N2 -> N2 liq.
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .fluidInput(RagiumFluids.NITROGEN)
+            .machineConditions(HTTemperatureCondition.cooling(HTMachineTier.ELITE))
+            .fluidOutput(RagiumFluids.LIQUID_NITROGEN, 10)
+            .save(output)
+
         // Sandstone -> KNO3
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.GRINDER)

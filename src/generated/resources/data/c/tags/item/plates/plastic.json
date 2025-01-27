@@ -1,9 +1,0 @@
-{
-  "values": [
-    "ragium:plastic_plate",
-    {
-      "id": "mekanism:hdpe_sheet",
-      "required": false
-    }
-  ]
-}

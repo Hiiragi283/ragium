@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.integration.RagiumMekIntegration
@@ -303,6 +304,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTTagPrefix.SHARD, "%s Shard")
         add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
         add(HTTagPrefix.WIRE, "%s Wire")
+        // Tags
+        add(RagiumItemTags.DOUGH, "Doughs")
+        add(RagiumItemTags.COAL_COKE, "Coal Cokes")
+        add(RagiumItemTags.PLASTICS, "Plastics")
+
+        add(RagiumItemTags.SOLAR_PANELS, "Solar Panels")
         // Misc
         add(RagiumTranslationKeys.FLUID_AMOUNT, "Amount: %s mb")
         add(RagiumTranslationKeys.FLUID_CAPACITY, "Capacity: %s mb")

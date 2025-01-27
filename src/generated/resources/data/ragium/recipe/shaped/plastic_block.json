@@ -3,12 +3,16 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:plates/plastic"
+      "tag": "c:plastics"
+    },
+    "B": {
+      "item": "ragium:forge_hammer"
     }
   },
   "pattern": [
-    "AA",
-    "AA"
+    " A ",
+    "ABA",
+    " A "
   ],
   "result": {
     "count": 4,

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:air"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 800,
+      "id": "ragium:nitrogen"
+    }
+  ],
+  "machine_type": "extractor"
+}

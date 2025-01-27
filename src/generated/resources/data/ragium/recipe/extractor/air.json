@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:air"
+    }
+  ],
+  "machine_type": "extractor"
+}

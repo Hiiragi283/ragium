@@ -6,10 +6,10 @@
       "tag": "c:ingots/refined_ragi_steel"
     },
     "B": {
-      "tag": "c:circuits/elite"
+      "item": "ragium:shaft"
     },
     "C": {
-      "item": "ragium:blast_furnace"
+      "item": "minecraft:heavy_core"
     },
     "D": {
       "item": "ragium:elite_casing"
@@ -22,6 +22,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:multi_smelter"
+    "id": "ragium:bedrock_miner"
   }
 }

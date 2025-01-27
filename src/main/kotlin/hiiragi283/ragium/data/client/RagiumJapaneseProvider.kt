@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.integration.RagiumMekIntegration
@@ -266,6 +267,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTTagPrefix.SHARD, "%sの欠片")
         add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
         add(HTTagPrefix.WIRE, "%sワイヤ")
+        // Tags
+        add(RagiumItemTags.DOUGH, "生地")
+        add(RagiumItemTags.COAL_COKE, "石炭コークス")
+        add(RagiumItemTags.PLASTICS, "プラスチック")
+
+        add(RagiumItemTags.SOLAR_PANELS, "太陽光パネル")
         // Misc
         add(RagiumTranslationKeys.FLUID_AMOUNT, "液体量: %s mb")
         add(RagiumTranslationKeys.FLUID_CAPACITY, "容量: %s mb")

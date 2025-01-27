@@ -1,0 +1,9 @@
+{
+  "values": [
+    "ragium:solar_panel",
+    {
+      "id": "mekanismgenerators:solar_panel",
+      "required": false
+    }
+  ]
+}

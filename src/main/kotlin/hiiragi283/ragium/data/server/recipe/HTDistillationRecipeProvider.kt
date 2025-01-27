@@ -9,10 +9,18 @@ import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
 import net.neoforged.neoforge.fluids.FluidType
 
 object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        // Soul XX -> Crude Oil
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .itemOutput(Items.SAND)
+            .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 2)
+            .save(output, RagiumAPI.id("crude_oil"))
         // Crude Oil -> Refined Gas + Naphtha + Residual Oil
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)

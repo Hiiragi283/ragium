@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import aztech.modern_industrialization.MI
+import com.buuz135.industrial.utils.IndustrialTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.addElement
@@ -12,7 +13,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.integration.RagiumEvilIntegration
-import mekanism.common.registries.MekanismItems
+import mekanism.generators.common.registries.GeneratorsItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
@@ -117,14 +118,26 @@ class RagiumItemTagProvider(
                 .addElement(circuit)
         }
 
-        getOrCreateRawBuilder(HTTagPrefix.PLATE.commonTagKey).addTag(RagiumItemTags.PLASTIC_PLATES)
-        getOrCreateRawBuilder(ItemTags.COALS).addElement(RagiumItems.RESIDUAL_COKE)
+        getOrCreateRawBuilder(ItemTags.COALS)
+            .addElement(RagiumItems.RESIDUAL_COKE)
         getOrCreateRawBuilder(RagiumItemTags.COAL_COKE)
             .addElement(RagiumItems.COKE)
             .addOptionalElement(ResourceLocation.fromNamespaceAndPath(MI.ID, "coke"))
 
-        getOrCreateRawBuilder(RagiumItemTags.PLASTIC_PLATES)
+        getOrCreateRawBuilder(RagiumItemTags.PLASTICS)
             .addElement(RagiumItems.PLASTIC_PLATE)
-            .addElement(MekanismItems.HDPE_SHEET, true)
+
+        getOrCreateRawBuilder(RagiumItemTags.SOLAR_PANELS)
+            .addElement(RagiumItems.SOLAR_PANEL)
+            .addElement(GeneratorsItems.SOLAR_PANEL, true)
+
+        getOrCreateRawBuilder(IndustrialTags.Items.MACHINE_FRAME_PITY)
+            .addElement(RagiumBlocks.Casings.BASIC)
+        getOrCreateRawBuilder(IndustrialTags.Items.MACHINE_FRAME_SIMPLE)
+            .addElement(RagiumBlocks.Casings.ADVANCED)
+        getOrCreateRawBuilder(IndustrialTags.Items.MACHINE_FRAME_ADVANCED)
+            .addElement(RagiumBlocks.Casings.ELITE)
+        getOrCreateRawBuilder(IndustrialTags.Items.MACHINE_FRAME_SUPREME)
+            .addElement(RagiumBlocks.Casings.ULTIMATE)
     }
 }

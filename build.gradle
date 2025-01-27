@@ -167,6 +167,9 @@ dependencies {
 
     implementation(libs.kff)
 
+    implementation("mekanism:Mekanism:${libs.versions.mek.get()}:additions")
+    implementation("mekanism:Mekanism:${libs.versions.mek.get()}:generators")
+    
     implementation(libs.bundles.mods.impl)
     implementation(libs.bundles.mods.transitive) { transitive = false }
     compileOnly(libs.bundles.mods.compile)

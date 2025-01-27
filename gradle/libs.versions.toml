@@ -18,9 +18,10 @@ curious = "9.2.2+1.21.1"
 cyclops = "6059640"
 delight = "1.21.1-1.2.6"
 evil = "6115798"
+if = "1.21-3.6.22"
 jade = "15.9.2+neoforge"
 jei = "19.21.0.247"
-mek = "1.21.1-10.7.0.55"
+mek = "1.21.1-10.7.8.70"
 mi = "2.2.32"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.3"
 powah = "6.1.5-neoforge"
@@ -39,6 +40,7 @@ cyclops = { group = "curse.maven", name = "cyclops-core-232758", version.ref = "
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 evil = { group = "curse.maven", name = "evilcraft-74610", version.ref = "evil" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+if = { group = "maven.modrinth", name = "industrial-foregoing", version.ref = "if" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 mi = { group = "aztech", name = "Modern-Industrialization", version.ref = "mi" }
 jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
@@ -57,11 +59,12 @@ mods-impl = [
     "cyclops",
     "delight",
     "evil",
+    "if",
+    "jade",
     "mek",
     "mi",
-    "jade",
     "patchouli-gen",
-    "rc"
+    "rc",
 ]
 
 mods-transitive = [

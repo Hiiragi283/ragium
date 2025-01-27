@@ -71,7 +71,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         // Circuit Board
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
-            .itemInput(RagiumItemTags.PLASTIC_PLATES)
+            .itemInput(RagiumItemTags.PLASTICS)
             .itemInput(RagiumItems.Dusts.QUARTZ)
             .catalyst(RagiumItems.PLATE_PRESS_MOLD)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
@@ -134,13 +134,6 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumMachineKeys.RESOURCE_PLANT)
             .machineConditions(HTBiomeCondition(lookup.getOrThrow(Biomes.SOUL_SAND_VALLEY)))
             .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 4)
-            .save(output)
-
-        // Air from Overworld
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.RESOURCE_PLANT)
-            .machineConditions(HTBiomeCondition(lookup.getOrThrow(BiomeTags.IS_OVERWORLD)))
-            .fluidOutput(RagiumFluids.AIR, FluidType.BUCKET_VOLUME / 4)
             .save(output)
     }
 }

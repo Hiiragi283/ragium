@@ -88,13 +88,19 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         builder.addContent(RagiumMachineKeys.ASSEMBLER.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.CHEMICAL_REACTOR.getBlock(), HTMachineTier.ADVANCED)
+        builder.addContent(RagiumMachineKeys.COMBUSTION_GENERATOR.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.CUTTING_MACHINE.getBlock(), HTMachineTier.ELITE)
         builder.addContent(RagiumMachineKeys.EXTRACTOR.getBlock(), HTMachineTier.ADVANCED)
+        builder.addContent(RagiumMachineKeys.GAS_TURBINE.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.GRINDER.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.GROWTH_CHAMBER.getBlock(), HTMachineTier.ADVANCED)
 
+        builder.addContent(RagiumMachineKeys.BEDROCK_MINER.getBlock(), HTMachineTier.ELITE)
+        builder.addContent(RagiumMachineKeys.DISTILLATION_TOWER.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.LASER_TRANSFORMER.getBlock(), HTMachineTier.ELITE)
         builder.addContent(RagiumMachineKeys.MULTI_SMELTER.getBlock(), HTMachineTier.ELITE)
+        builder.addContent(RagiumMachineKeys.RESOURCE_PLANT.getBlock(), HTMachineTier.ELITE)
+        builder.addContent(RagiumMachineKeys.VIBRATION_GENERATOR.getBlock(), HTMachineTier.ELITE)
     }
 
     private fun machineFuel(builder: Builder<Map<HTMachineKey, Int>, Fluid>) {

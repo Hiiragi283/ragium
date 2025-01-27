@@ -175,10 +175,12 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         // Shaped Crafting
         ShapedRecipeBuilder
             .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.PLASTIC_BLOCK, 4)
-            .pattern("AA")
-            .pattern("AA")
-            .define('A', RagiumItemTags.PLASTIC_PLATES)
-            .unlockedBy("has_plastic", has(RagiumItemTags.PLASTIC_PLATES))
+            .pattern(" A ")
+            .pattern("ABA")
+            .pattern(" A ")
+            .define('A', RagiumItemTags.PLASTICS)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .unlockedBy("has_plastic", has(RagiumItemTags.PLASTICS))
             .savePrefixed(output)
 
         RagiumBlocks.Decorations.entries.forEach { decoration: RagiumBlocks.Decorations ->
@@ -291,10 +293,10 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .shaped(RecipeCategory.MISC, RagiumMachineKeys.SOLAR_GENERATOR.getBlock(), 2)
             .pattern("AAA")
             .pattern("BCB")
-            .define('A', RagiumItems.SOLAR_PANEL)
+            .define('A', RagiumItemTags.SOLAR_PANELS)
             .define('B', RagiumBlocks.Casings.ADVANCED)
             .define('C', HTMachineTier.ADVANCED.getCircuitTag())
-            .unlockedBy("has_solar_panel", has(RagiumItems.SOLAR_PANEL))
+            .unlockedBy("has_solar_panel", has(RagiumItemTags.SOLAR_PANELS))
             .savePrefixed(output)
 
         // Assembler
@@ -369,6 +371,19 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun eliteMachines(output: RecipeOutput) {
+        // Bedrock Miner
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.BEDROCK_MINER.getBlock())
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL)
+            .define('B', RagiumBlocks.SHAFT)
+            .define('C', Items.HEAVY_CORE)
+            .define('D', RagiumBlocks.Casings.ELITE)
+            .unlockedBy("has_circuit", has(HTMachineTier.ELITE.getCircuitTag()))
+            .savePrefixed(output)
+
         // Laser Transformer
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumMachineKeys.LASER_TRANSFORMER.getBlock())
@@ -389,7 +404,19 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("DDD")
             .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL)
             .define('B', HTMachineTier.ELITE.getCircuitTag())
-            .define('C', Items.FURNACE)
+            .define('C', RagiumMachineKeys.BLAST_FURNACE.getBlock())
+            .define('D', RagiumBlocks.Casings.ELITE)
+            .unlockedBy("has_circuit", has(HTMachineTier.ELITE.getCircuitTag()))
+            .savePrefixed(output)
+        // Resource Plant
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.RESOURCE_PLANT.getBlock())
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL)
+            .define('B', RagiumBlocks.SHAFT)
+            .define('C', RagiumMachineKeys.EXTRACTOR.getBlock())
             .define('D', RagiumBlocks.Casings.ELITE)
             .unlockedBy("has_circuit", has(HTMachineTier.ELITE.getCircuitTag()))
             .savePrefixed(output)

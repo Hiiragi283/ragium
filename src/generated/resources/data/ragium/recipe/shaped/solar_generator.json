@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "ragium:solar_panels"
+    },
+    "B": {
+      "item": "ragium:advanced_casing"
+    },
+    "C": {
+      "tag": "c:circuits/advanced"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB"
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:solar_generator"
+  }
+}

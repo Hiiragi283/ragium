@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_plastic": {
+    "has_solar_panel": {
       "conditions": {
         "items": [
           {
-            "items": "#c:plastics"
+            "items": "#ragium:solar_panels"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/plastic_block"
+        "recipe": "ragium:shaped/solar_generator"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_plastic"
+      "has_solar_panel"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/plastic_block"
+      "ragium:shaped/solar_generator"
     ]
   }
 }

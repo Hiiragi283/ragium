@@ -12,8 +12,11 @@
     "ragium:basic_drum": "basic",
     "ragium:basic_grate": "basic",
     "ragium:basic_hull": "basic",
+    "ragium:bedrock_miner": "elite",
     "ragium:chemical_reactor": "advanced",
+    "ragium:combustion_generator": "advanced",
     "ragium:cutting_machine": "elite",
+    "ragium:distillation_tower": "advanced",
     "ragium:elite_burner": "elite",
     "ragium:elite_casing": "elite",
     "ragium:elite_coil": "elite",
@@ -21,15 +24,18 @@
     "ragium:elite_grate": "elite",
     "ragium:elite_hull": "elite",
     "ragium:extractor": "advanced",
+    "ragium:gas_turbine": "advanced",
     "ragium:grinder": "advanced",
     "ragium:growth_chamber": "advanced",
     "ragium:laser_transformer": "elite",
     "ragium:multi_smelter": "elite",
+    "ragium:resource_plant": "elite",
     "ragium:ultimate_burner": "ultimate",
     "ragium:ultimate_casing": "ultimate",
     "ragium:ultimate_coil": "ultimate",
     "ragium:ultimate_drum": "ultimate",
     "ragium:ultimate_grate": "ultimate",
-    "ragium:ultimate_hull": "ultimate"
+    "ragium:ultimate_hull": "ultimate",
+    "ragium:vibration_generator": "elite"
   }
 }
