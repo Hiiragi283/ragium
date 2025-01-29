@@ -118,7 +118,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                             HTMachineTier.BASIC -> ResourceLocation.withDefaultNamespace("coal_block")
                             HTMachineTier.ADVANCED -> ResourceLocation.withDefaultNamespace("magma")
                             HTMachineTier.ELITE -> RagiumAPI.id("soul_magma_block")
-                            HTMachineTier.ULTIMATE -> ResourceLocation.withDefaultNamespace("nether_portal")
+                            HTMachineTier.ULTIMATE -> RagiumAPI.id("fierium_block")
                         },
                     ).blockTexture("side", tier.getCoil().id.withSuffix("_side"))
                     .blockTexture("top", tier.getCoil().id.withSuffix("_top"))

@@ -28,6 +28,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumBlocks.CATALYST_ADDON, "触媒アドオン")
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
+        add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, "超伝導冷却材")
 
         add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "ラギ合金ブロック（装飾）")
         add(RagiumBlocks.Decorations.RAGI_STEEL_BLOCK, "ラギスチールブロック（装飾）")

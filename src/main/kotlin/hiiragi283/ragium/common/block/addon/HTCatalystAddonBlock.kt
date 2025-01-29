@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.machine
+package hiiragi283.ragium.common.block.addon
 
 import hiiragi283.ragium.api.block.HTEntityBlock
 import net.minecraft.core.BlockPos

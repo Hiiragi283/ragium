@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -23,6 +24,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.FluidType
 
 object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -35,6 +37,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         registerDecorations(output)
         registerLEDs(output)
 
+        registerAddons(output)
         registerMachines(output)
     }
 
@@ -229,6 +232,38 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         basicMachines(output)
         advancedMachines(output)
         eliteMachines(output)
+    }
+
+    private fun registerAddons(output: RecipeOutput) {
+        // Catalyst Addon
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumBlocks.CATALYST_ADDON)
+            .pattern(" A ")
+            .pattern("ABA")
+            .pattern(" A ")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .define('B', Items.ITEM_FRAME)
+            .unlockedBy("has_iron", has(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON))
+            .savePrefixed(output)
+        // E.N.I.
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+            .pattern("ABA")
+            .pattern("BCB")
+            .pattern("ABA")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+            .define('B', HTMachineTier.ELITE.getCircuitTag())
+            .define('C', Tags.Items.OBSIDIANS_CRYING)
+            .unlockedBy("has_circuit", has(HTMachineTier.ELITE.getCircuitTag()))
+            .savePrefixed(output)
+        // Superconductive Coolant
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ELITE)
+            .itemInput(RagiumBlocks.Casings.ELITE, 4)
+            .itemInput(RagiumBlocks.CHEMICAL_GLASS, 4)
+            .fluidInput(RagiumFluids.LIQUID_NITROGEN, FluidType.BUCKET_VOLUME * 8)
+            .itemOutput(RagiumBlocks.SUPERCONDUCTIVE_COOLANT)
+            .save(output)
     }
 
     private fun basicMachines(output: RecipeOutput) {

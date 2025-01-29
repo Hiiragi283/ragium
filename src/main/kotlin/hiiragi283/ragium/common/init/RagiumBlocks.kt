@@ -7,10 +7,11 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.common.block.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
-import hiiragi283.ragium.common.block.machine.HTCatalystAddonBlock
+import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlock
+import hiiragi283.ragium.common.block.addon.HTCoolantBlock
+import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.*
@@ -272,8 +273,13 @@ object RagiumBlocks {
         REGISTER.registerBlock("energy_network_interface", ::HTEnergyNetworkBlock, blockProperty(Blocks.SMOOTH_STONE))
 
     @JvmField
+    val SUPERCONDUCTIVE_COOLANT: DeferredBlock<HTCoolantBlock> =
+        REGISTER.registerBlock("superconductive_coolant", ::HTCoolantBlock, blockProperty().sound(SoundType.GLASS))
+
+    @JvmField
     val ADDONS: List<DeferredBlock<out Block>> = listOf(
         CATALYST_ADDON,
         ENERGY_NETWORK_INTERFACE,
+        SUPERCONDUCTIVE_COOLANT,
     )
 }

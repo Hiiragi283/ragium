@@ -28,6 +28,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumBlocks.CATALYST_ADDON, "Catalyst Addon")
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
+        add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, "Superconductive Coolant")
 
         add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "Block of Ragi-Alloy (Decoration)")
         add(RagiumBlocks.Decorations.RAGI_STEEL_BLOCK, "Block of Ragi-Steel (Decoration)")

@@ -111,7 +111,7 @@ data object RagiumAPI {
          * [HTMaterialDefinition]を返す[DataMapType]
          */
         @JvmField
-        val MATERIAL: DataMapType<Item, HTMaterialDefinition> = createItem("material", HTMaterialDefinition.CODEC)
+        val MATERIAL: DataMapType<Item, HTMaterialDefinition> = createItem("material", HTMaterialDefinition.FLAT_CODEC)
 
         /**
          * [HTTemperatureInfo]を返す[DataMapType]

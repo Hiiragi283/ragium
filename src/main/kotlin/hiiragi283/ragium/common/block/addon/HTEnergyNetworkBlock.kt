@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.common.block.addon
 
 import net.minecraft.world.level.block.Block
 

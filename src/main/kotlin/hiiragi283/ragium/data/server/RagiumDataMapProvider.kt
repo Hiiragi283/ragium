@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.util.HTTemperatureInfo
@@ -36,8 +37,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
     private fun <T : Any> Builder<T, Item>.addItem(item: ItemLike, value: T): Builder<T, Item> = add(item.asHolder(), value, false)
 
-    private fun <T : Any> Builder<T, Item>.addContent(content: HTContent<out ItemLike>, value: T): Builder<T, Item> =
-        add(content.id, value, false)
+    private fun <T : Any> Builder<T, Item>.addContent(content: HTContent<*>, value: T): Builder<T, Item> = add(content.id, value, false)
 
     private fun Builder<Map<HTMachineKey, Int>, Fluid>.addFuel(
         fluid: HTFluidContent,
@@ -145,11 +145,12 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         builder.addBlock(Blocks.ICE, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
         builder.addBlock(Blocks.PACKED_ICE, HTTemperatureInfo.cooling(HTMachineTier.ADVANCED))
         builder.addBlock(Blocks.BLUE_ICE, HTTemperatureInfo.cooling(HTMachineTier.ELITE))
+        builder.add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, HTTemperatureInfo.cooling(HTMachineTier.ULTIMATE), false)
     }
 
     private fun material(builder: Builder<HTMaterialDefinition, Item>) {
-        HTTagPrefix.entries.forEach { prefix: HTTagPrefix ->
-            RagiumAPI.materialRegistry.keys.forEach { key: HTMaterialKey ->
+        RagiumAPI.materialRegistry.typeMap.forEach { (key: HTMaterialKey, type: HTMaterialType) ->
+            type.validPrefixes.forEach { prefix: HTTagPrefix ->
                 builder.add(prefix.createTag(key), HTMaterialDefinition(prefix, key), false)
             }
         }

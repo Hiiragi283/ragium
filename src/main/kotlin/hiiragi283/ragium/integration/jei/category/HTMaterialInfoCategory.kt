@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.createEmptyMaterialStack
@@ -29,7 +30,8 @@ class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
     ),
     HTRecipeCategory<HTMaterialKey> {
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMaterialKey, focuses: IFocusGroup) {
-        for (prefix: HTTagPrefix in HTTagPrefix.entries) {
+        val type: HTMaterialType = RagiumAPI.materialRegistry.getType(recipe)
+        for (prefix: HTTagPrefix in type.validPrefixes) {
             val stacks: List<ItemStack> = RagiumAPI.materialRegistry
                 .getItems(prefix, recipe)
                 .map(::ItemStack)

@@ -78,6 +78,7 @@
     "ragium:plastic_block",
     "ragium:manual_grinder",
     "ragium:catalyst_addon",
-    "ragium:energy_network_interface"
+    "ragium:energy_network_interface",
+    "ragium:superconductive_coolant"
   ]
 }

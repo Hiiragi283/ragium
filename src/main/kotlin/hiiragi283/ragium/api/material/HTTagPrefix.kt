@@ -1,16 +1,12 @@
 package hiiragi283.ragium.api.material
 
-import com.mojang.serialization.Codec
-import com.mojang.serialization.MapCodec
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.extension.stringCodec
-import hiiragi283.ragium.api.extension.stringStreamCodec
-import io.netty.buffer.ByteBuf
+import hiiragi283.ragium.api.extension.toDataResult
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
@@ -45,20 +41,9 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     ;
 
     companion object {
-        @JvmField
-        val CODEC: Codec<HTTagPrefix> = stringCodec(HTTagPrefix.entries)
-
-        @JvmField
-        val FIELD_CODEC: MapCodec<HTTagPrefix> = CODEC.fieldOf("prefix")
-
-        @JvmField
-        val STREAM_CODEC: StreamCodec<ByteBuf, HTTagPrefix> = stringStreamCodec(HTTagPrefix.entries)
-
         @JvmStatic
-        fun fromSerializedName(name: String): HTTagPrefix? = HTTagPrefix.entries.firstOrNull { it.serializedName == name }
-
-        @JvmStatic
-        fun fromCommonName(name: String): HTTagPrefix? = HTTagPrefix.entries.firstOrNull { it.commonName == name }
+        fun fromSerializedName(name: String): DataResult<HTTagPrefix> =
+            HTTagPrefix.entries.firstOrNull { it.serializedName == name }.toDataResult { "Unknown prefix: $name" }
     }
 
     //    Id    //

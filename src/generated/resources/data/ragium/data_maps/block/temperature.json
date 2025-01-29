@@ -43,6 +43,10 @@
       "type": "heating",
       "tier": "advanced"
     },
+    "ragium:superconductive_coolant": {
+      "type": "cooling",
+      "tier": "ultimate"
+    },
     "ragium:ultimate_burner": {
       "type": "heating",
       "tier": "ultimate"

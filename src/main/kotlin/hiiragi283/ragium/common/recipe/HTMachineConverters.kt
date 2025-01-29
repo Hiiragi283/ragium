@@ -34,8 +34,8 @@ object HTMachineConverters {
         val recipe: AbstractCookingRecipe = holder.value
         return HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MULTI_SMELTER)
-            .itemInput(recipe.ingredients[0])
-            .itemOutput(recipe.getResultItem(provider))
+            .itemInput(recipe.ingredients[0], 64)
+            .itemOutput(recipe.getResultItem(provider).item, 64)
             .export(holder.id.withSuffix("_from_smelting"))
     }
 

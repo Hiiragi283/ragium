@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
-import hiiragi283.ragium.common.block.machine.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity

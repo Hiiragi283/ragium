@@ -3,7 +3,7 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "bars": "ragium:block/ultimate_grate",
-    "core": "minecraft:block/nether_portal",
+    "core": "ragium:block/fierium_block",
     "side": "ragium:block/ultimate_coil_side",
     "top": "ragium:block/ultimate_coil_top"
   }

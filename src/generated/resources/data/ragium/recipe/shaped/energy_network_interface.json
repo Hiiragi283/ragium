@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/deep_steel"
+    },
+    "B": {
+      "tag": "c:circuits/elite"
+    },
+    "C": {
+      "tag": "c:obsidians/crying"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:energy_network_interface"
+  }
+}
