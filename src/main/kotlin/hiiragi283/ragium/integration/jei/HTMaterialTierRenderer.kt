@@ -10,7 +10,7 @@ import net.minecraft.world.item.TooltipFlag
 object HTMaterialTierRenderer : IIngredientRenderer<HTMachineTier> {
     override fun render(guiGraphics: GuiGraphics, ingredient: HTMachineTier) {
         guiGraphics.renderFakeItem(
-            ingredient.getCircuit().asItem().defaultInstance,
+            ingredient.getCircuit().toStack(),
             0,
             0,
         )

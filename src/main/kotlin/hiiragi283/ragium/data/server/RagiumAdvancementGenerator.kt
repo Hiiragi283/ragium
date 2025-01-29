@@ -2,23 +2,31 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
+import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.AdvancementProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.registries.DeferredItem
 import java.util.*
 import java.util.function.Consumer
 
@@ -31,11 +39,13 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
 
     override fun generate(registries: HolderLookup.Provider, saver: Consumer<AdvancementHolder>, existingFileHelper: ExistingFileHelper) {
         output = saver
+        val crudeRaginite: ItemLike =
+            RagiumItems.getMaterialItem(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE)
         root = Advancement.Builder
             .advancement()
             .display(
                 DisplayInfo(
-                    ItemStack(RagiumItems.RawResources.RAW_CRUDE_RAGINITE),
+                    crudeRaginite.toStack(),
                     Component.literal(RagiumAPI.MOD_NAME),
                     Component.literal("Welcome to Ragium!"),
                     Optional.of(ResourceLocation.withDefaultNamespace("textures/block/bricks.png")),
@@ -44,7 +54,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
                     true,
                     false,
                 ),
-            ).hasItem("has_raginite", RagiumItems.RawResources.RAW_CRUDE_RAGINITE)
+            ).hasItem("has_raginite", crudeRaginite)
             .save("root")
 
         registerTier1()
@@ -54,9 +64,10 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     }
 
     private fun registerTier1() {
-        val ragiAlloy: AdvancementHolder = createSimple(
+        val ragiAlloy: AdvancementHolder = createMaterial(
             root,
-            RagiumItems.Ingots.RAGI_ALLOY,
+            HTTagPrefix.INGOT,
+            RagiumMaterialKeys.RAGI_ALLOY,
             Component.empty(),
         )
         val grinder: AdvancementHolder = createSimple(
@@ -72,19 +83,22 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             Component.empty(),
         )
         val blastFurnace: AdvancementHolder = createMachine(casing, RagiumMachineKeys.BLAST_FURNACE)
-        val steel: AdvancementHolder = createSimple(
+        val steel: AdvancementHolder = createMaterial(
             blastFurnace,
-            RagiumItems.Ingots.STEEL,
+            HTTagPrefix.INGOT,
+            RagiumMaterialKeys.STEEL,
             Component.empty(),
         )
-        val deepSteel: AdvancementHolder = createSimple(
+        val deepSteel: AdvancementHolder = createMaterial(
             blastFurnace,
-            RagiumItems.Ingots.DEEP_STEEL,
+            HTTagPrefix.INGOT,
+            RagiumMaterialKeys.DEEP_STEEL,
             Component.empty(),
         )
-        val dragonium: AdvancementHolder = createSimple(
+        val dragonium: AdvancementHolder = createMaterial(
             blastFurnace,
-            RagiumItems.Ingots.DRAGONIUM,
+            HTTagPrefix.INGOT,
+            RagiumMaterialKeys.DRAGONIUM,
             Component.empty(),
             type = AdvancementType.GOAL,
         )
@@ -95,9 +109,10 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     }
 
     private fun registerTier2() {
-        val ragiSteel: AdvancementHolder = createSimple(
+        val ragiSteel: AdvancementHolder = createMaterial(
             root,
-            RagiumItems.Ingots.RAGI_STEEL,
+            HTTagPrefix.INGOT,
+            RagiumMaterialKeys.RAGI_STEEL,
             Component.empty(),
         )
         val casing: AdvancementHolder = createSimple(
@@ -137,9 +152,10 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     }
 
     private fun registerTier3() {
-        val refinedRagiSteel: AdvancementHolder = createSimple(
+        val refinedRagiSteel: AdvancementHolder = createMaterial(
             root,
-            RagiumItems.Ingots.REFINED_RAGI_STEEL,
+            HTTagPrefix.INGOT,
+            RagiumMaterialKeys.REFINED_RAGI_STEEL,
             Component.empty(),
         )
         val casing: AdvancementHolder = createSimple(
@@ -152,9 +168,10 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     }
 
     private fun registerTier4() {
-        val ragium: AdvancementHolder = createSimple(
+        val ragium: AdvancementHolder = createMaterial(
             root,
-            RagiumItems.Ingots.RAGIUM,
+            HTTagPrefix.INGOT,
+            RagiumMaterialKeys.RAGIUM,
             Component.empty(),
             type = AdvancementType.GOAL,
         )
@@ -173,7 +190,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         parent: AdvancementHolder,
         holder: T,
         desc: Component,
-        title: Component = ItemStack(holder.asItem()).hoverName,
+        title: Component = holder.toStack().hoverName,
         type: AdvancementType = AdvancementType.TASK,
         showToast: Boolean = true,
         showChat: Boolean = true,
@@ -198,7 +215,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         parent: AdvancementHolder,
         content: HTContent<*>,
         desc: Component,
-        title: Component = ItemStack(content.asItem()).hoverName,
+        title: Component = content.toStack().hoverName,
         type: AdvancementType = AdvancementType.TASK,
         showToast: Boolean = true,
         showChat: Boolean = true,
@@ -217,6 +234,35 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             ),
         ).hasItem("has_${content.id.path}", content)
         .save(content.id.path)
+
+    @JvmStatic
+    private fun createMaterial(
+        parent: AdvancementHolder,
+        prefix: HTTagPrefix,
+        material: HTMaterialKey,
+        desc: Component,
+        title: Component = prefix.createText(material),
+        type: AdvancementType = AdvancementType.TASK,
+        showToast: Boolean = true,
+        showChat: Boolean = true,
+        hidden: Boolean = false,
+    ): AdvancementHolder {
+        val item: DeferredItem<out Item> = RagiumItems.getMaterialItem(prefix, material)
+        return create(parent)
+            .display(
+                DisplayInfo(
+                    item.toStack(),
+                    title,
+                    desc,
+                    Optional.empty(),
+                    type,
+                    showToast,
+                    showChat,
+                    hidden,
+                ),
+            ).hasItemTag("has_${item.id.path}", prefix.createTag(material))
+            .save(item.id.path)
+    }
 
     @JvmStatic
     private fun createMachine(
@@ -244,6 +290,12 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     @JvmStatic
     private fun Advancement.Builder.hasItem(key: String, item: ItemLike): Advancement.Builder =
         addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(item))
+
+    @JvmStatic
+    private fun Advancement.Builder.hasItemTag(key: String, tagKey: TagKey<Item>): Advancement.Builder = addCriterion(
+        key,
+        InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(tagKey)),
+    )
 
     @JvmStatic
     private fun Advancement.Builder.save(path: String): AdvancementHolder = save(output, RagiumAPI.id(path).toString())

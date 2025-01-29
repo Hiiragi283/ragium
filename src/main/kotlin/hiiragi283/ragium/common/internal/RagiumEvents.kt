@@ -42,7 +42,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -455,24 +454,19 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumAPI.DataMapTypes.MACHINE_KEY)
-        event.register(RagiumAPI.DataMapTypes.MACHINE_TIER)
+        event.register(RagiumAPI.DataMapTypes.TEMP_TIER)
         event.register(RagiumAPI.DataMapTypes.MACHINE_FUEL)
 
+        event.register(RagiumAPI.DataMapTypes.MACHINE_KEY)
+        event.register(RagiumAPI.DataMapTypes.MACHINE_TIER)
         event.register(RagiumAPI.DataMapTypes.MATERIAL)
-
-        event.register(RagiumAPI.DataMapTypes.TEMP_TIER)
+        event.register(RagiumAPI.DataMapTypes.RADIOACTIVES)
 
         LOGGER.info("Registered Data Map Types!")
     }
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
-        fun <T : ItemLike> modifyAll(items: Collection<T>, patch: (DataComponentPatch.Builder, T) -> Unit) {
-            items.forEach { itemLike: T ->
-                event.modify(itemLike.asItem()) { builder: DataComponentPatch.Builder -> patch(builder, itemLike) }
-            }
-        }
         // Item
         RagiumItems.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
             event.modify(holder) { builder: DataComponentPatch.Builder ->
@@ -481,10 +475,6 @@ internal object RagiumEvents {
                     builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                 }
             }
-        }
-
-        modifyAll(RagiumItems.Radioactives.entries) { builder: DataComponentPatch.Builder, radioactive: RagiumItems.Radioactives ->
-            builder.set(RagiumComponentTypes.RADIOACTIVE, radioactive.level)
         }
 
         LOGGER.info("Modified item components!")

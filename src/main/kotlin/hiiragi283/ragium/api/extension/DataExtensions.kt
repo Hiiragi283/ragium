@@ -8,11 +8,12 @@ import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.data.recipes.*
+import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagBuilder
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
@@ -110,21 +111,29 @@ fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
 
 //    TagBuilder    //
 
-fun TagBuilder.addElement(holder: DeferredHolder<*, *>, optional: Boolean = false): TagBuilder = when (optional) {
-    true -> addOptionalElement(holder.id)
-    false -> addElement(holder.id)
-}
+fun <T : Any> TagsProvider.TagAppender<T>.add(holder: DeferredHolder<T, out T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
+    when (optional) {
+        true -> addOptional(holder.id)
+        false -> add(holder.keyOrThrow)
+    }
 
-fun TagBuilder.addElement(content: HTContent<*>, optional: Boolean = false): TagBuilder = when (optional) {
-    true -> addOptionalElement(content.id)
-    false -> addElement(content.id)
-}
+fun <T : ItemLike> TagsProvider.TagAppender<T>.add(content: HTContent<T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
+    when (optional) {
+        true -> addOptional(content.id)
+        false -> add(content.key)
+    }
 
-fun TagBuilder.addTag(tagKey: TagKey<*>, optional: Boolean = false): TagBuilder = when (optional) {
-    true -> addOptionalTag(tagKey.location)
-    false -> addTag(tagKey.location)
-}
+fun TagsProvider.TagAppender<Item>.addItem(content: HTContent<Block>, optional: Boolean = false): TagsProvider.TagAppender<Item> =
+    when (optional) {
+        true -> addOptional(content.id)
+        false -> add(content.asHolder().keyOrThrow)
+    }
 
-fun TagBuilder.addElements(contents: Iterable<HTContent<*>>): TagBuilder = apply {
-    contents.forEach(this::addElement)
-}
+fun <T : Any> TagsProvider.TagAppender<T>.addTag(tagKey: TagKey<T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
+    when (optional) {
+        true -> addOptionalTag(tagKey.location)
+        false -> addTag(tagKey)
+    }
+
+fun <T : ItemLike> TagsProvider.TagAppender<T>.addAll(contents: Iterable<HTContent<T>>): TagsProvider.TagAppender<T> =
+    addAll(contents.map(HTContent<T>::key))

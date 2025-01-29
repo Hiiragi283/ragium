@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.component.HTRadioactivity
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTFluidContent
@@ -49,15 +50,69 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         addItem(item, FurnaceFuel(second * 200))
 
     override fun gather() {
+        // block
+        temperature(builder(RagiumAPI.DataMapTypes.TEMP_TIER))
+        // fluid
+        machineFuel(builder(RagiumAPI.DataMapTypes.MACHINE_FUEL))
+        // item
         furnaceFuel(builder(NeoForgeDataMaps.FURNACE_FUELS))
 
         machineKey(builder(RagiumAPI.DataMapTypes.MACHINE_KEY))
         machineTier(builder(RagiumAPI.DataMapTypes.MACHINE_TIER))
-        machineFuel(builder(RagiumAPI.DataMapTypes.MACHINE_FUEL))
-
-        temperature(builder(RagiumAPI.DataMapTypes.TEMP_TIER))
         material(builder(RagiumAPI.DataMapTypes.MATERIAL))
+        radioactivity(builder(RagiumAPI.DataMapTypes.RADIOACTIVES))
     }
+
+    //    Block    //
+
+    private fun temperature(builder: Builder<HTTemperatureInfo, Block>) {
+        builder.addBlock(Blocks.MAGMA_BLOCK, HTTemperatureInfo.heating(HTMachineTier.BASIC))
+        builder.add(BlockTags.CAMPFIRES, HTTemperatureInfo.heating(HTMachineTier.BASIC), false)
+        builder.add(BlockTags.FIRE, HTTemperatureInfo.heating(HTMachineTier.ADVANCED), false)
+        builder.addBlock(Blocks.LAVA, HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
+        builder.addBlock(RagiumBlocks.SOUL_MAGMA_BLOCK.get(), HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
+
+        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
+            builder.addBlock(burner.get(), HTTemperatureInfo.heating(burner.machineTier))
+        }
+
+        builder.addBlock(Blocks.WATER, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
+        builder.add(BlockTags.SNOW, HTTemperatureInfo.cooling(HTMachineTier.BASIC), false)
+        builder.addBlock(Blocks.ICE, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
+        builder.addBlock(Blocks.PACKED_ICE, HTTemperatureInfo.cooling(HTMachineTier.ADVANCED))
+        builder.addBlock(Blocks.BLUE_ICE, HTTemperatureInfo.cooling(HTMachineTier.ELITE))
+        builder.add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, HTTemperatureInfo.cooling(HTMachineTier.ULTIMATE), false)
+    }
+
+    //    Fluid    //
+
+    private fun machineFuel(builder: Builder<Map<HTMachineKey, Int>, Fluid>) {
+        // Combustion
+        builder.add(
+            RagiumFluidTags.NON_NITRO_FUEL,
+            mapOf(RagiumMachineKeys.COMBUSTION_GENERATOR to FluidType.BUCKET_VOLUME / 10),
+            false,
+        )
+        builder.add(
+            RagiumFluidTags.NITRO_FUEL,
+            mapOf(RagiumMachineKeys.COMBUSTION_GENERATOR to FluidType.BUCKET_VOLUME / 100),
+            false,
+        )
+        // Gas Turbine
+        builder.addFuel(RagiumFluids.METHANE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 100)
+        builder.addFuel(RagiumFluids.ETHENE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 20)
+        builder.addFuel(RagiumFluids.ACETYLENE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 50)
+        // Steam
+        builder.addFuel(RagiumFluids.STEAM, RagiumMachineKeys.STEAM_TURBINE, FluidType.BUCKET_VOLUME / 10)
+        // Thermal
+        builder.add(
+            RagiumFluidTags.THERMAL_FUEL,
+            mapOf(RagiumMachineKeys.THERMAL_GENERATOR to FluidType.BUCKET_VOLUME / 10),
+            false,
+        )
+    }
+
+    //    Item    //
 
     private fun furnaceFuel(builder: Builder<FurnaceFuel, Item>) {
         builder.addFuel(RagiumItems.COAL_CHIP, 1)
@@ -103,51 +158,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         builder.addContent(RagiumMachineKeys.VIBRATION_GENERATOR.getBlock(), HTMachineTier.ELITE)
     }
 
-    private fun machineFuel(builder: Builder<Map<HTMachineKey, Int>, Fluid>) {
-        // Combustion
-        builder.add(
-            RagiumFluidTags.NON_NITRO_FUEL,
-            mapOf(RagiumMachineKeys.COMBUSTION_GENERATOR to FluidType.BUCKET_VOLUME / 10),
-            false,
-        )
-        builder.add(
-            RagiumFluidTags.NITRO_FUEL,
-            mapOf(RagiumMachineKeys.COMBUSTION_GENERATOR to FluidType.BUCKET_VOLUME / 100),
-            false,
-        )
-        // Gas Turbine
-        builder.addFuel(RagiumFluids.METHANE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 100)
-        builder.addFuel(RagiumFluids.ETHENE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 20)
-        builder.addFuel(RagiumFluids.ACETYLENE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 50)
-        // Steam
-        builder.addFuel(RagiumFluids.STEAM, RagiumMachineKeys.STEAM_TURBINE, FluidType.BUCKET_VOLUME / 10)
-        // Thermal
-        builder.add(
-            RagiumFluidTags.THERMAL_FUEL,
-            mapOf(RagiumMachineKeys.THERMAL_GENERATOR to FluidType.BUCKET_VOLUME / 10),
-            false,
-        )
-    }
-
-    private fun temperature(builder: Builder<HTTemperatureInfo, Block>) {
-        builder.addBlock(Blocks.MAGMA_BLOCK, HTTemperatureInfo.heating(HTMachineTier.BASIC))
-        builder.add(BlockTags.CAMPFIRES, HTTemperatureInfo.heating(HTMachineTier.BASIC), false)
-        builder.add(BlockTags.FIRE, HTTemperatureInfo.heating(HTMachineTier.ADVANCED), false)
-        builder.addBlock(Blocks.LAVA, HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
-        builder.addBlock(RagiumBlocks.SOUL_MAGMA_BLOCK.get(), HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
-
-        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
-            builder.addBlock(burner.get(), HTTemperatureInfo.heating(burner.machineTier))
-        }
-
-        builder.addBlock(Blocks.WATER, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
-        builder.add(BlockTags.SNOW, HTTemperatureInfo.cooling(HTMachineTier.BASIC), false)
-        builder.addBlock(Blocks.ICE, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
-        builder.addBlock(Blocks.PACKED_ICE, HTTemperatureInfo.cooling(HTMachineTier.ADVANCED))
-        builder.addBlock(Blocks.BLUE_ICE, HTTemperatureInfo.cooling(HTMachineTier.ELITE))
-        builder.add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, HTTemperatureInfo.cooling(HTMachineTier.ULTIMATE), false)
-    }
-
     private fun material(builder: Builder<HTMaterialDefinition, Item>) {
         RagiumAPI.materialRegistry.typeMap.forEach { (key: HTMaterialKey, type: HTMaterialType) ->
             type.validPrefixes.forEach { prefix: HTTagPrefix ->
@@ -159,5 +169,12 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             Items.NETHERITE_SCRAP,
             HTMaterialDefinition(HTTagPrefix.GEM, RagiumMaterialKeys.NETHERITE_SCRAP),
         )
+    }
+
+    private fun radioactivity(builder: Builder<HTRadioactivity, Item>) {
+        builder
+            .addItem(RagiumItems.URANIUM_FUEL, HTRadioactivity.MEDIUM)
+            .addItem(RagiumItems.NUCLEAR_WASTE, HTRadioactivity.LOW)
+            .addItem(RagiumItems.PLUTONIUM_FUEL, HTRadioactivity.HIGH)
     }
 }

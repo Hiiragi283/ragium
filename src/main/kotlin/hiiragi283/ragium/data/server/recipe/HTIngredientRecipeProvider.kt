@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.*
@@ -42,8 +41,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         registerEndContents(output)
 
         registerCircuits(output)
-
-        registerCatalysts(output)
         registerPressMolds(output)
 
         registerTool(output)
@@ -205,7 +202,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         // Unbreakable Elytra
         val elytraId: ResourceLocation = RagiumAPI.id("smithing/dragonium_elytra")
-        val ingotDragonium: TagKey<Item> = RagiumItems.Ingots.DRAGONIUM.prefixedTagKey
+        val ingotDragonium: TagKey<Item> = HTTagPrefix.INGOT.createTag(RagiumMaterialKeys.DRAGONIUM)
         output.accept(
             elytraId,
             SmithingTransformRecipe(
@@ -218,7 +215,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             ),
             output
                 .advancement()
-                .addCriterion("has_dragonium", HTMaterialRecipeProvider.has(ingotDragonium))
+                .addCriterion("has_dragonium", has(ingotDragonium))
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(elytraId))
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .rewards(AdvancementRewards.Builder.recipe(elytraId))
@@ -270,21 +267,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('D', HTMachineTier.BASIC.getCircuitTag())
             .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
             .savePrefixed(output)
-    }
-
-    private fun registerCatalysts(output: RecipeOutput) {
-        fun register(catalyst: ItemLike, corner: HTMaterialKey, edge: ItemLike) {
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, catalyst)
-                .pattern("ABA")
-                .pattern("BCB")
-                .pattern("ABA")
-                .define('A', HTTagPrefix.STORAGE_BLOCK, corner)
-                .define('B', edge)
-                .define('C', Items.IRON_BARS)
-                .unlockedBy("has_iron_bars", has(Items.IRON_BARS))
-                .savePrefixed(output)
-        }
     }
 
     private fun registerPressMolds(output: RecipeOutput) {

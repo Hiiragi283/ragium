@@ -1,11 +1,7 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCache
-import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -27,10 +23,10 @@ class HTMachineRecipeProcessor(
     val fluidTanks: Function<Int, out IFluidTank?>,
     val fluidInputs: IntArray,
     val fluidOutputs: IntArray,
-) : HTRecipeProcessor {
+) {
     val cache: HTMachineRecipeCache = HTMachineRecipeCache.of(machine)
 
-    override fun process(level: ServerLevel, tier: HTMachineTier): Result<Unit> = runCatching {
+    fun process(level: ServerLevel): Result<Unit> = runCatching {
         val recipe: HTMachineRecipe = cache
             .getFirstMatch(level, pos) {
                 itemInputs.map(itemHandler::getStackInSlot).forEach(this::add)

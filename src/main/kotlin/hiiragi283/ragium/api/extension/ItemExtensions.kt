@@ -25,6 +25,8 @@ import net.neoforged.neoforge.registries.datamaps.IWithData
  */
 fun ItemLike.asHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
 
+fun ItemLike.toStack(count: Int = 1): ItemStack = ItemStack(asItem(), count)
+
 /**
  * 指定した[type]で[ItemLike]から[T]を返します。
  * @return [IWithData.getData]が`null`の場合は`null`

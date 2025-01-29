@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "elite"
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:yellow_cake"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 8,
+      "id": "ragium:yellow_cake_piece"
+    }
+  ],
+  "machine_type": "cutting_machine"
+}

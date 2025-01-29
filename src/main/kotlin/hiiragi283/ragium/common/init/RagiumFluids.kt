@@ -95,10 +95,6 @@ enum class RagiumFluids(
     FUEL(Color(0xcc6633), "Fuel", "燃料"),
     NITRO_FUEL(Color(0xff33333), "Nitro Fuel", "ニトロ燃料"),
 
-    // Radioactive
-    URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Uranium Hexafluoride", "六フッ化ウラン", TextureType.RADIOACTIVE),
-    ENRICHED_URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Enriched Uranium Hexafluoride", "濃縮六フッ化ウラン"),
-
     // Ragium
     RAGIUM_SOLUTION(Color(0x330000), "Ragium Solution", "ラギウム溶液"),
     DISTILLED_RAGIUM_SOLUTION(Color(0x990033), "Distilled Ragium Solution", "蒸留ラギウム溶液"),

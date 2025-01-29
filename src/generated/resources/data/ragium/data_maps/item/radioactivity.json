@@ -1,0 +1,7 @@
+{
+  "values": {
+    "ragium:nuclear_waste": "low",
+    "ragium:plutonium_fuel": "high",
+    "ragium:uranium_fuel": "medium"
+  }
+}

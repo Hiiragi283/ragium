@@ -75,6 +75,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         buildList {
             addAll(RagiumItems.materialItems.values)
             addAll(RagiumItems.OTHER_DUSTS)
+            addAll(RagiumItems.OTHER_GEMS)
             addAll(RagiumItems.OTHER_RESOURCES)
             addAll(RagiumItems.OTHER_INGOTS)
 
@@ -89,7 +90,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             addAll(RagiumItems.CIRCUITS)
             addAll(RagiumItems.PRESS_MOLDS)
-            addAll(RagiumItems.Radioactives.entries)
+            addAll(RagiumItems.RADIOACTIVES)
 
             addAll(RagiumItems.INGREDIENTS)
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)

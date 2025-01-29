@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:dragonium_ingot"
+            "items": "#c:ingots/dragonium"
           }
         ]
       },

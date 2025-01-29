@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.itemProperty
@@ -32,11 +31,18 @@ object RagiumItems {
     lateinit var materialItems: HTTable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>>
         private set
 
+    @JvmStatic
+    fun getMaterialMap(prefix: HTTagPrefix): Map<HTMaterialKey, DeferredItem<out Item>> = materialItems.row(prefix)
+
+    @JvmStatic
+    fun getMaterialItems(prefix: HTTagPrefix): Collection<DeferredItem<out Item>> = getMaterialMap(prefix).values
+
+    @JvmStatic
+    fun getMaterialItem(prefix: HTTagPrefix, material: HTMaterialKey): DeferredItem<out Item> =
+        getMaterialMap(prefix)[material] ?: error("Unregistered material item: ${prefix.createPath(material)}")
+
     init {
         registerBlockItems()
-
-        Radioactives.entries
-
         registerMaterialItems()
     }
 
@@ -105,35 +111,78 @@ object RagiumItems {
     @JvmStatic
     fun registerMaterialItems() {
         val builder: HTTable.Mutable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>> = mutableTableOf()
+
+        fun register(prefix: HTTagPrefix, material: HTMaterialKey) {
+            builder.put(
+                prefix,
+                material,
+                REGISTER.registerSimpleItem(
+                    prefix.createPath(material),
+                    itemProperty().name(prefix.createText(material)),
+                ),
+            )
+        }
+
         buildList {
             addAll(Dusts.entries)
-            addAll(Gears.entries)
-            addAll(RawResources.entries)
             addAll(Ingots.entries)
-            addAll(Rods.entries)
         }.forEach { content: HTItemContent.Material ->
             builder.put(content.tagPrefix, content.material, content.holder)
         }
+
+        // Raws
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE)
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.RAGINITE)
+
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.REDSTONE)
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.NITER)
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.SALT)
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.SULFUR)
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.BAUXITE)
+        // Ingots
+
+        // Gems
+        register(HTTagPrefix.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+        register(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE)
+        register(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE)
+        // Gears
+        register(HTTagPrefix.GEAR, RagiumMaterialKeys.COPPER)
+        register(HTTagPrefix.GEAR, RagiumMaterialKeys.IRON)
+        register(HTTagPrefix.GEAR, RagiumMaterialKeys.GOLD)
+        register(HTTagPrefix.GEAR, RagiumMaterialKeys.DIAMOND)
+        register(HTTagPrefix.GEAR, RagiumMaterialKeys.EMERALD)
+
+        register(HTTagPrefix.GEAR, RagiumMaterialKeys.STEEL)
+        register(HTTagPrefix.GEAR, RagiumMaterialKeys.DEEP_STEEL)
+        register(HTTagPrefix.GEAR, RagiumMaterialKeys.DRAGONIUM)
+        // Rods
+        register(HTTagPrefix.ROD, RagiumMaterialKeys.COPPER)
+        register(HTTagPrefix.ROD, RagiumMaterialKeys.IRON)
+        register(HTTagPrefix.ROD, RagiumMaterialKeys.GOLD)
+
+        register(HTTagPrefix.ROD, RagiumMaterialKeys.STEEL)
+        register(HTTagPrefix.ROD, RagiumMaterialKeys.DEEP_STEEL)
+        register(HTTagPrefix.ROD, RagiumMaterialKeys.DRAGONIUM)
+
         this.materialItems = builder
     }
 
     //    Materials    //
 
-    enum class Dusts(override val material: HTMaterialKey, override val parentPrefix: HTTagPrefix? = null) :
-        HTItemContent.Material {
+    enum class Dusts(override val material: HTMaterialKey) : HTItemContent.Material {
         // Vanilla
-        COPPER(RagiumMaterialKeys.COPPER, HTTagPrefix.INGOT),
-        IRON(RagiumMaterialKeys.IRON, HTTagPrefix.INGOT),
-        LAPIS(RagiumMaterialKeys.LAPIS, HTTagPrefix.GEM),
-        QUARTZ(RagiumMaterialKeys.QUARTZ, HTTagPrefix.GEM),
-        GOLD(RagiumMaterialKeys.GOLD, HTTagPrefix.INGOT),
-        DIAMOND(RagiumMaterialKeys.DIAMOND, HTTagPrefix.GEM),
-        EMERALD(RagiumMaterialKeys.EMERALD, HTTagPrefix.GEM),
+        COPPER(RagiumMaterialKeys.COPPER),
+        IRON(RagiumMaterialKeys.IRON),
+        LAPIS(RagiumMaterialKeys.LAPIS),
+        QUARTZ(RagiumMaterialKeys.QUARTZ),
+        GOLD(RagiumMaterialKeys.GOLD),
+        DIAMOND(RagiumMaterialKeys.DIAMOND),
+        EMERALD(RagiumMaterialKeys.EMERALD),
 
         // Ragium
         CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
         RAGINITE(RagiumMaterialKeys.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL, HTTagPrefix.GEM),
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
 
         // Other
         WOOD(RagiumMaterialKeys.WOOD),
@@ -146,13 +195,13 @@ object RagiumItems {
         SULFUR(RagiumMaterialKeys.SULFUR),
 
         BAUXITE(RagiumMaterialKeys.BAUXITE),
-        ALUMINUM(RagiumMaterialKeys.ALUMINUM, HTTagPrefix.INGOT),
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
 
         OBSIDIAN(RagiumMaterialKeys.OBSIDIAN),
         ;
 
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_dust")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(tagPrefix.createPath(material))
     }
 
     @JvmField
@@ -171,46 +220,6 @@ object RagiumItems {
         LUMINESCENCE_DUST,
     )
 
-    enum class Gears(override val material: HTMaterialKey, override val parentPrefix: HTTagPrefix = HTTagPrefix.INGOT) :
-        HTItemContent.Material {
-        // Vanilla
-        COPPER(RagiumMaterialKeys.COPPER),
-        IRON(RagiumMaterialKeys.IRON),
-        GOLD(RagiumMaterialKeys.GOLD),
-        DIAMOND(RagiumMaterialKeys.DIAMOND, HTTagPrefix.GEM),
-        EMERALD(RagiumMaterialKeys.EMERALD, HTTagPrefix.GEM),
-
-        // Steel
-        STEEL(RagiumMaterialKeys.STEEL),
-        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
-        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
-        ;
-
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_gear")
-        override val tagPrefix: HTTagPrefix = HTTagPrefix.GEAR
-    }
-
-    enum class RawResources(override val tagPrefix: HTTagPrefix, override val material: HTMaterialKey) : HTItemContent.Material {
-        // Raw
-        RAW_CRUDE_RAGINITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE),
-        RAW_RAGINITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.RAGINITE),
-
-        // Raw for Integration
-        RAW_BAUXITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.BAUXITE),
-        RAW_NITER(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.NITER),
-        RAW_REDSTONE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.REDSTONE),
-        RAW_SALT(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.SALT),
-        RAW_SULFUR(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.SULFUR),
-
-        // Gem
-        RAGI_CRYSTAL(HTTagPrefix.GEM, RagiumMaterialKeys.RAGI_CRYSTAL),
-        CRYOLITE(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE),
-        FLUORITE(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE),
-        ;
-
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase())
-    }
-
     @JvmField
     val SILKY_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("silky_crystal")
 
@@ -222,6 +231,14 @@ object RagiumItems {
 
     @JvmField
     val OBSIDIAN_TEAR: DeferredItem<Item> = REGISTER.registerSimpleItem("obsidian_tear")
+
+    @JvmField
+    val OTHER_GEMS: List<DeferredItem<Item>> = listOf(
+        SILKY_CRYSTAL,
+        CRIMSON_CRYSTAL,
+        WARPED_CRYSTAL,
+        OBSIDIAN_TEAR,
+    )
 
     @JvmField
     val SLAG: DeferredItem<Item> = REGISTER.registerSimpleItem("slag")
@@ -240,10 +257,6 @@ object RagiumItems {
 
     @JvmField
     val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
-        SILKY_CRYSTAL,
-        CRIMSON_CRYSTAL,
-        WARPED_CRYSTAL,
-        OBSIDIAN_TEAR,
         SLAG,
         COAL_CHIP,
         COKE,
@@ -271,8 +284,8 @@ object RagiumItems {
         FIERIUM(RagiumMaterialKeys.FIERIUM),
         ;
 
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_ingot")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(tagPrefix.createPath(material))
     }
 
     @JvmField
@@ -286,23 +299,6 @@ object RagiumItems {
         RAGI_ALLOY_COMPOUND,
         SOAP,
     )
-
-    enum class Rods(override val material: HTMaterialKey) : HTItemContent.Material {
-        // Vanilla
-        COPPER(RagiumMaterialKeys.COPPER),
-        IRON(RagiumMaterialKeys.IRON),
-        GOLD(RagiumMaterialKeys.GOLD),
-
-        // Steel
-        STEEL(RagiumMaterialKeys.STEEL),
-        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
-        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
-        ;
-
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_rod")
-        override val tagPrefix: HTTagPrefix = HTTagPrefix.ROD
-        override val parentPrefix: HTTagPrefix = HTTagPrefix.INGOT
-    }
 
     //    Foods    //
 
@@ -498,22 +494,27 @@ object RagiumItems {
 
     //    Radioactives    //
 
-    enum class Radioactives(val level: HTRadioactiveComponent) : HTItemContent {
-        URANIUM_FUEL(HTRadioactiveComponent.MEDIUM) {
-            override fun getProperty(): Item.Properties = itemProperty().durability(1024)
-        },
-        PLUTONIUM_FUEL(HTRadioactiveComponent.HIGH) {
-            override fun getProperty(): Item.Properties = itemProperty().durability(1024)
-        },
-        YELLOW_CAKE(HTRadioactiveComponent.MEDIUM),
-        YELLOW_CAKE_PIECE(HTRadioactiveComponent.LOW) {
-            override fun getProperty(): Item.Properties = itemProperty().food(RagiumFoods.YELLOW_CAKE_PIECE)
-        },
-        NUCLEAR_WASTE(HTRadioactiveComponent.LOW),
-        ;
+    val YELLOW_CAKE: DeferredItem<Item> =
+        REGISTER.registerSimpleItem("yellow_cake")
 
-        protected open fun getProperty(): Item.Properties = itemProperty()
+    val YELLOW_CAKE_PIECE: DeferredItem<Item> =
+        registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
 
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase(), getProperty())
-    }
+    val URANIUM_FUEL: DeferredItem<Item> =
+        REGISTER.registerSimpleItem("uranium_fuel", itemProperty().durability(255))
+
+    val NUCLEAR_WASTE: DeferredItem<Item> =
+        REGISTER.registerSimpleItem("nuclear_waste")
+
+    val PLUTONIUM_FUEL: DeferredItem<Item> =
+        REGISTER.registerSimpleItem("plutonium_fuel", itemProperty().durability(1023))
+
+    @JvmField
+    val RADIOACTIVES: List<DeferredItem<Item>> = listOf(
+        YELLOW_CAKE,
+        YELLOW_CAKE_PIECE,
+        URANIUM_FUEL,
+        NUCLEAR_WASTE,
+        PLUTONIUM_FUEL,
+    )
 }

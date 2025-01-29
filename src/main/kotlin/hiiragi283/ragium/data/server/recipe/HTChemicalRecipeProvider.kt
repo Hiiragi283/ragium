@@ -16,9 +16,11 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.registries.DeferredItem
 
 object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -31,6 +33,9 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         registerSludge(output)
         registerSulfur(output)
         registerChlorine(output)
+
+        registerUranium(output)
+        registerPlutonium(output)
     }
 
     private fun solidSolution(
@@ -245,24 +250,25 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerFluorine(output: RecipeOutput) {
+        val fluorite: DeferredItem<out Item> = RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE)
         // Glowstone -> 4x CaF2
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(Items.GLOWSTONE)
-            .itemOutput(RagiumItems.RawResources.FLUORITE, 4)
+            .itemOutput(fluorite, 4)
             .itemOutput(Items.GOLD_NUGGET)
             .saveSuffixed(output, "_from_glowstone")
         // Sea Lantern -> 4x CaF2
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(Items.SEA_LANTERN)
-            .itemOutput(RagiumItems.RawResources.FLUORITE, 6)
+            .itemOutput(fluorite, 6)
             .saveSuffixed(output, "_from_sea_lantern")
 
         // CaF2 + H2SO4 -> CaSO4 + 2x HF
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
-            .itemInput(RagiumItems.RawResources.FLUORITE)
+            .itemInput(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE)
             .fluidInput(RagiumFluids.SULFURIC_ACID)
             .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE)
             .save(output)
@@ -343,13 +349,13 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(RagiumItems.Dusts.ALKALI, 3)
             .itemInput(RagiumItems.Dusts.ALUMINUM)
             .fluidInput(RagiumFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
-            .itemOutput(RagiumItems.RawResources.CRYOLITE)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE))
             .fluidOutput(RagiumFluids.HYDROGEN, FluidType.BUCKET_VOLUME * 3)
             .save(output)
         // Alumina Solution + Cryolite -> 3x Aluminum Ingot
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ELITE)
-            .itemInput(RagiumItems.RawResources.CRYOLITE)
+            .itemInput(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumItems.Ingots.ALUMINUM, 3)
             .itemOutput(RagiumItems.SLAG)
@@ -435,5 +441,28 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerUranium(output: RecipeOutput) {
         // Poisonous Potato + H2SO4 -> Yellow Cake
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .itemInput(Items.POISONOUS_POTATO, 8)
+            .fluidInput(RagiumFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME * 8)
+            .itemOutput(RagiumItems.YELLOW_CAKE)
+            .save(output)
+        // Cutting Yellow Cake
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CUTTING_MACHINE, HTMachineTier.ELITE)
+            .itemInput(RagiumItems.YELLOW_CAKE)
+            .itemOutput(RagiumItems.YELLOW_CAKE_PIECE, 8)
+            .save(output)
+        // Uranium Fuel
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .itemInput(RagiumItems.YELLOW_CAKE_PIECE, 16)
+            .fluidInput(RagiumFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 8)
+            .itemOutput(RagiumItems.URANIUM_FUEL)
+            .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, FluidType.BUCKET_VOLUME * 12)
+            .save(output)
+    }
+
+    private fun registerPlutonium(output: RecipeOutput) {
     }
 }

@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.server
 import aztech.modern_industrialization.MI
 import com.buuz135.industrial.utils.IndustrialTags
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addElement
-import hiiragi283.ragium.api.extension.addTag
+import hiiragi283.ragium.api.extension.add
+import hiiragi283.ragium.api.extension.addItem
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.integration.RagiumEvilIntegration
 import mekanism.generators.common.registries.GeneratorsItems
 import net.minecraft.core.HolderLookup
@@ -22,7 +23,6 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagBuilder
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.common.Tags
@@ -46,29 +46,29 @@ class RagiumItemTagProvider(
 
     private fun materialTags() {
         RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
-            getOrCreateRawBuilder(ore.tagPrefix.commonTagKey)
+            tag(ore.tagPrefix.commonTagKey)
                 .addTag(ore.prefixedTagKey)
 
-            getOrCreateRawBuilder(ore.prefixedTagKey)
-                .addElement(ore)
+            tag(ore.prefixedTagKey)
+                .addItem(ore)
         }
 
         RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
-            getOrCreateRawBuilder(storage.tagPrefix.commonTagKey)
+            tag(storage.tagPrefix.commonTagKey)
                 .addTag(storage.prefixedTagKey)
 
-            getOrCreateRawBuilder(storage.prefixedTagKey)
-                .addElement(storage)
+            tag(storage.prefixedTagKey)
+                .addItem(storage)
         }
 
         RagiumItems.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
             val tagKey: TagKey<Item> = prefix.createTag(key)
 
-            getOrCreateRawBuilder(prefix.commonTagKey)
+            tag(prefix.commonTagKey)
                 .addTag(tagKey)
 
-            getOrCreateRawBuilder(tagKey)
-                .addElement(holder)
+            tag(tagKey)
+                .add(holder)
         }
 
         addMaterialTag(HTTagPrefix.DUST, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_gem_crushed")
@@ -82,66 +82,74 @@ class RagiumItemTagProvider(
     }
 
     private fun addMaterialTag(prefix: HTTagPrefix, material: HTMaterialKey, value: String) {
-        getOrCreateRawBuilder(prefix.commonTagKey)
+        tag(prefix.commonTagKey)
             .addTag(prefix.createTag(material))
 
-        getOrCreateRawBuilder(prefix.createTag(material))
-            .addOptionalElement(ResourceLocation.parse(value))
+        tag(prefix.createTag(material))
+            .addOptional(ResourceLocation.parse(value))
     }
 
     //    Food    //
 
     private fun foodTags() {
-        val foods: TagBuilder = getOrCreateRawBuilder(Tags.Items.FOODS)
+        val foods: TagAppender<Item> = tag(Tags.Items.FOODS)
         RagiumItems.FOODS.forEach { foodItem: DeferredItem<Item> ->
             if (foodItem.get().components().has(DataComponents.FOOD)) {
-                foods.addElement(foodItem)
+                foods.add(foodItem)
             }
         }
 
-        getOrCreateRawBuilder(RagiumItemTags.DOUGH).addElement(RagiumItems.DOUGH)
+        tag(RagiumItemTags.DOUGH).add(RagiumItems.DOUGH)
     }
 
     //    Tool    //
 
     private fun toolTags() {
-        getOrCreateRawBuilder(ItemTags.DURABILITY_ENCHANTABLE).addElement(RagiumItems.FORGE_HAMMER)
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(RagiumItems.FORGE_HAMMER)
 
-        getOrCreateRawBuilder(ItemTags.PICKAXES).addElement(RagiumItems.SILKY_PICKAXE)
+        tag(ItemTags.PICKAXES).add(RagiumItems.SILKY_PICKAXE)
 
-        getOrCreateRawBuilder(
+        tag(
             itemTagKey(ResourceLocation.fromNamespaceAndPath("modern_industrialization", "forge_hammer_tools")),
-        ).addElement(RagiumItems.FORGE_HAMMER)
+        ).add(RagiumItems.FORGE_HAMMER)
     }
 
     //    Part    //
 
     private fun partTags() {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            getOrCreateRawBuilder(tier.getCircuitTag())
-                .addElement(tier.getCircuit())
+            tag(tier.getCircuitTag())
+                .add(tier.getCircuit())
         }
 
-        getOrCreateRawBuilder(ItemTags.COALS)
-            .addElement(RagiumItems.RESIDUAL_COKE)
-        getOrCreateRawBuilder(RagiumItemTags.COAL_COKE)
-            .addElement(RagiumItems.COKE)
-            .addOptionalElement(ResourceLocation.fromNamespaceAndPath(MI.ID, "coke"))
+        tag(ItemTags.COALS)
+            .add(RagiumItems.RESIDUAL_COKE)
+        tag(RagiumItemTags.COAL_COKE)
+            .add(RagiumItems.COKE)
+            .addOptional(ResourceLocation.fromNamespaceAndPath(MI.ID, "coke"))
 
-        getOrCreateRawBuilder(RagiumItemTags.PLASTICS)
-            .addElement(RagiumItems.PLASTIC_PLATE)
+        tag(RagiumItemTags.PLASTICS)
+            .add(RagiumItems.PLASTIC_PLATE)
 
-        getOrCreateRawBuilder(RagiumItemTags.SOLAR_PANELS)
-            .addElement(RagiumItems.SOLAR_PANEL)
-            .addElement(GeneratorsItems.SOLAR_PANEL, true)
+        tag(RagiumItemTags.SOLAR_PANELS)
+            .add(RagiumItems.SOLAR_PANEL)
+            .add(GeneratorsItems.SOLAR_PANEL, true)
 
-        getOrCreateRawBuilder(IndustrialTags.Items.MACHINE_FRAME_PITY)
-            .addElement(RagiumBlocks.Casings.BASIC)
-        getOrCreateRawBuilder(IndustrialTags.Items.MACHINE_FRAME_SIMPLE)
-            .addElement(RagiumBlocks.Casings.ADVANCED)
-        getOrCreateRawBuilder(IndustrialTags.Items.MACHINE_FRAME_ADVANCED)
-            .addElement(RagiumBlocks.Casings.ELITE)
-        getOrCreateRawBuilder(IndustrialTags.Items.MACHINE_FRAME_SUPREME)
-            .addElement(RagiumBlocks.Casings.ULTIMATE)
+        // Industrial Foregoing
+        tag(IndustrialTags.Items.MACHINE_FRAME_PITY)
+            .addItem(RagiumBlocks.Casings.BASIC)
+        tag(IndustrialTags.Items.MACHINE_FRAME_SIMPLE)
+            .addItem(RagiumBlocks.Casings.ADVANCED)
+        tag(IndustrialTags.Items.MACHINE_FRAME_ADVANCED)
+            .addItem(RagiumBlocks.Casings.ELITE)
+        tag(IndustrialTags.Items.MACHINE_FRAME_SUPREME)
+            .addItem(RagiumBlocks.Casings.ULTIMATE)
+
+        // Mekanism
+        tag(HTTagPrefix.PELLET.createTag(RagiumMaterialKeys.URANIUM))
+            .add(RagiumItems.URANIUM_FUEL)
+
+        tag(HTTagPrefix.PELLET.createTag(RagiumMaterialKeys.PLUTONIUM))
+            .add(RagiumItems.PLUTONIUM_FUEL)
     }
 }

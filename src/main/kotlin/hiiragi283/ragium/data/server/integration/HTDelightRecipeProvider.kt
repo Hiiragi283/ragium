@@ -26,6 +26,15 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
                 RagiumItems.SWEET_BERRIES_CAKE_PIECE,
                 8,
             ).save(output)
+        // Yellow Cake Piece
+        CuttingBoardRecipeBuilder
+            .cuttingRecipe(
+                Ingredient.of(RagiumItems.YELLOW_CAKE),
+                Ingredient.of(CommonTags.TOOLS_KNIFE),
+                RagiumItems.YELLOW_CAKE_PIECE,
+                8,
+            ).save(output)
+
         // Minced Beef
         CuttingBoardRecipeBuilder
             .cuttingRecipe(

@@ -4,8 +4,7 @@ import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.fluid.HTTieredFluidTank
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeProcessor
-import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
+import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -31,7 +30,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
 
     protected abstract val tanks: Array<out HTTieredFluidTank>
 
-    protected abstract val processor: HTRecipeProcessor
+    protected abstract val processor: HTMachineRecipeProcessor
 
     protected fun createMachineProcessor(
         itemInputs: IntArray,
@@ -69,7 +68,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()
-        processor.process(level, machineTier).getOrThrow()
+        processor.process(level).getOrThrow()
     }
 
     final override fun interactWithFluidStorage(player: Player): Boolean {

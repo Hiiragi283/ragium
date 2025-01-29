@@ -132,11 +132,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.TALLOW, "獣脂")
         add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
 
-        add(RagiumItems.Radioactives.URANIUM_FUEL, "ウラン燃料")
-        add(RagiumItems.Radioactives.PLUTONIUM_FUEL, "プルトニウム燃料")
-        add(RagiumItems.Radioactives.YELLOW_CAKE, "イエローケーキ")
-        add(RagiumItems.Radioactives.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
-        add(RagiumItems.Radioactives.NUCLEAR_WASTE, "核廃棄物")
+        add(RagiumItems.NUCLEAR_WASTE, "核廃棄物")
+        add(RagiumItems.PLUTONIUM_FUEL, "プルトニウム燃料")
+        add(RagiumItems.URANIUM_FUEL, "ウラン燃料")
+        add(RagiumItems.YELLOW_CAKE, "イエローケーキ")
+        add(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 
         add(RagiumItems.RAGI_TICKET, "らぎチケット")
 
@@ -261,6 +261,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTTagPrefix.INGOT, "%sインゴット")
         add(HTTagPrefix.NUGGET, "%sのナゲット")
         add(HTTagPrefix.ORE, "%s鉱石")
+        add(HTTagPrefix.PELLET, "%sペレット")
         add(HTTagPrefix.PLATE, "%s板")
         add(HTTagPrefix.RAW_MATERIAL, "%sの原石")
         add(HTTagPrefix.RAW_STORAGE, "%sの原石ブロック")

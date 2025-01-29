@@ -2,6 +2,7 @@ package hiiragi283.ragium.api
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.component.HTRadioactivity
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -83,17 +84,15 @@ data object RagiumAPI {
      * Ragiumが追加する[DataMapType]
      */
     object DataMapTypes {
-        /**
-         * [HTMachineKey]を返す[DataMapType]
-         */
-        @JvmField
-        val MACHINE_KEY: DataMapType<Item, HTMachineKey> = createItem("machine", HTMachineKey.CODEC)
+        //    Block    //
 
         /**
-         * [HTMachineTier]を返す[DataMapType]
+         * [HTTemperatureInfo]を返す[DataMapType]
          */
         @JvmField
-        val MACHINE_TIER: DataMapType<Item, HTMachineTier> = createItem("machine_tier", HTMachineTier.CODEC)
+        val TEMP_TIER: DataMapType<Block, HTTemperatureInfo> = createBlock("temperature", HTTemperatureInfo.CODEC)
+
+        //    Fluid    //
 
         /**
          * [Map]を返す[DataMapType]
@@ -107,6 +106,20 @@ data object RagiumAPI {
                 .remover(HTMachineFuel.Remover.CODEC)
                 .build()
 
+        //    Item    //
+
+        /**
+         * [HTMachineKey]を返す[DataMapType]
+         */
+        @JvmField
+        val MACHINE_KEY: DataMapType<Item, HTMachineKey> = createItem("machine", HTMachineKey.CODEC)
+
+        /**
+         * [HTMachineTier]を返す[DataMapType]
+         */
+        @JvmField
+        val MACHINE_TIER: DataMapType<Item, HTMachineTier> = createItem("machine_tier", HTMachineTier.CODEC)
+
         /**
          * [HTMaterialDefinition]を返す[DataMapType]
          */
@@ -114,10 +127,10 @@ data object RagiumAPI {
         val MATERIAL: DataMapType<Item, HTMaterialDefinition> = createItem("material", HTMaterialDefinition.FLAT_CODEC)
 
         /**
-         * [HTTemperatureInfo]を返す[DataMapType]
+         * [HTRadioactivity]を返す[DataMapType]
          */
         @JvmField
-        val TEMP_TIER: DataMapType<Block, HTTemperatureInfo> = createBlock("temperature", HTTemperatureInfo.CODEC)
+        val RADIOACTIVES: DataMapType<Item, HTRadioactivity> = createItem("radioactivity", HTRadioactivity.CODEC)
 
         @JvmStatic
         private fun <T : Any> createBlock(path: String, codec: Codec<T>): DataMapType<Block, T> = AdvancedDataMapType

@@ -27,6 +27,7 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     INGOT("ingots"),
     NUGGET("nuggets"),
     ORE("ores"),
+    PELLET("pellets"),
     PLATE("plates"),
     RAW_MATERIAL("raw_materials") {
         override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"

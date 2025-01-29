@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.capability.LimitedFluidHandler
 import hiiragi283.ragium.api.capability.LimitedItemHandler
 import hiiragi283.ragium.api.fluid.HTTieredFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.recipe.HTRecipeProcessor
+import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.inventory.HTDistillationTowerContainerMenu
@@ -25,7 +25,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val itemHandler: ItemStackHandler = ItemStackHandler(1)
     override val tanks: Array<out HTTieredFluidTank> = Array(4) { HTTieredFluidTank(this) }
-    override val processor: HTRecipeProcessor = createMachineProcessor(
+    override val processor: HTMachineRecipeProcessor = createMachineProcessor(
         intArrayOf(),
         intArrayOf(0),
         intArrayOf(0),

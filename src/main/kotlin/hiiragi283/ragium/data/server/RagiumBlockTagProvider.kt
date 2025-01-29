@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addElement
-import hiiragi283.ragium.api.extension.addElements
+import hiiragi283.ragium.api.extension.add
+import hiiragi283.ragium.api.extension.addAll
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.HolderLookup
@@ -10,7 +10,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.BlockTags
-import net.minecraft.tags.TagBuilder
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -24,7 +23,7 @@ class RagiumBlockTagProvider(
 ) : TagsProvider<Block>(output, Registries.BLOCK, provider, RagiumAPI.MOD_ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
         // Mineable
-        val pickaxe: TagBuilder = getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
+        val pickaxe: TagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
         buildList {
             addAll(RagiumBlocks.Ores.entries)
             addAll(RagiumBlocks.StorageBlocks.entries)
@@ -38,7 +37,7 @@ class RagiumBlockTagProvider(
             addAll(RagiumBlocks.Drums.entries)
 
             addAll(RagiumAPI.machineRegistry.blockMap.values)
-        }.forEach(pickaxe::addElement)
+        }.forEach(pickaxe::add)
 
         buildList {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
@@ -51,23 +50,23 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.MANUAL_GRINDER)
 
             addAll(RagiumBlocks.ADDONS)
-        }.forEach(pickaxe::addElement)
+        }.forEach(pickaxe::add)
 
-        getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_HOE)
-            .addElement(RagiumBlocks.SPONGE_CAKE)
-            .addElement(RagiumBlocks.SWEET_BERRIES_CAKE)
+        tag(BlockTags.MINEABLE_WITH_HOE)
+            .add(RagiumBlocks.SPONGE_CAKE)
+            .add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Farmer's Delight
-        getOrCreateRawBuilder(ModTags.HEAT_SOURCES).addElements(RagiumBlocks.Burners.entries)
+        tag(ModTags.HEAT_SOURCES).addAll(RagiumBlocks.Burners.entries)
 
         RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
-            getOrCreateRawBuilder(Tags.Blocks.ORES).addElement(ore)
+            tag(Tags.Blocks.ORES).add(ore)
             when (ore.oreVariant) {
                 HTOreVariant.OVERWORLD -> Tags.Blocks.ORES_IN_GROUND_STONE
                 HTOreVariant.DEEP -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
                 HTOreVariant.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
                 HTOreVariant.END -> null
-            }?.let(::getOrCreateRawBuilder)?.addElement(ore)
+            }?.let(::tag)?.add(ore)
         }
     }
 }

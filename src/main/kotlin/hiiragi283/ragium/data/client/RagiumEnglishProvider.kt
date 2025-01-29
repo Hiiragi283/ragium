@@ -131,11 +131,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.TALLOW, "Tallow")
         add(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
 
-        add(RagiumItems.Radioactives.URANIUM_FUEL, "Uranium Fuel")
-        add(RagiumItems.Radioactives.PLUTONIUM_FUEL, "Plutonium Fuel")
-        add(RagiumItems.Radioactives.YELLOW_CAKE, "Yellow Cake")
-        add(RagiumItems.Radioactives.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
-        add(RagiumItems.Radioactives.NUCLEAR_WASTE, "Nuclear Waste")
+        add(RagiumItems.NUCLEAR_WASTE, "Nuclear Waste")
+        add(RagiumItems.PLUTONIUM_FUEL, "Plutonium Fuel")
+        add(RagiumItems.URANIUM_FUEL, "Uranium Fuel")
+        add(RagiumItems.YELLOW_CAKE, "Yellow Cake")
+        add(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
 
         add(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Machine
@@ -298,6 +298,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTTagPrefix.INGOT, "%s Ingot")
         add(HTTagPrefix.NUGGET, "%s Nugget")
         add(HTTagPrefix.ORE, "%s Ore")
+        add(HTTagPrefix.PELLET, "%s Pellet")
         add(HTTagPrefix.PLATE, "%s Plate")
         add(HTTagPrefix.RAW_MATERIAL, "Raw %s")
         add(HTTagPrefix.RAW_STORAGE, "Block of Raw %s")

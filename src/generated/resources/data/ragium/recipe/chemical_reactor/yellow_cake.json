@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:min_tier",
+    "tier": "elite"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 8000,
+      "tag": "c:sulfuric_acid"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 8,
+      "item": "minecraft:poisonous_potato"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:yellow_cake"
+    }
+  ],
+  "machine_type": "chemical_reactor"
+}

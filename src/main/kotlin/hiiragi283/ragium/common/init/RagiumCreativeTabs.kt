@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -28,10 +29,21 @@ object RagiumCreativeTabs {
                     RagiumBlocks.Ores.entries.forEach(output::accept)
                     RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
                     // Material Items
-                    RagiumItems.materialItems.values.forEach(output::accept)
+                    RagiumItems.getMaterialItems(HTTagPrefix.DUST).forEach(output::accept)
                     RagiumItems.OTHER_DUSTS.forEach(output::accept)
+
+                    RagiumItems.getMaterialItems(HTTagPrefix.RAW_MATERIAL).forEach(output::accept)
                     RagiumItems.OTHER_RESOURCES.forEach(output::accept)
+
+                    RagiumItems.getMaterialItems(HTTagPrefix.GEM).forEach(output::accept)
+                    RagiumItems.OTHER_GEMS.forEach(output::accept)
+
+                    RagiumItems.getMaterialItems(HTTagPrefix.INGOT).forEach(output::accept)
                     RagiumItems.OTHER_INGOTS.forEach(output::accept)
+
+                    RagiumItems.getMaterialItems(HTTagPrefix.GEAR).forEach(output::accept)
+
+                    RagiumItems.getMaterialItems(HTTagPrefix.ROD).forEach(output::accept)
                     // Foods
                     output.accept(RagiumBlocks.SPONGE_CAKE)
                     output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -48,7 +60,7 @@ object RagiumCreativeTabs {
                     RagiumItems.CIRCUITS.forEach(output::accept)
                     // Ingredients
                     RagiumItems.INGREDIENTS.forEach(output::accept)
-                    RagiumItems.Radioactives.entries.forEach(output::accept)
+                    RagiumItems.RADIOACTIVES.forEach(output::accept)
                 }.build()
         }
 

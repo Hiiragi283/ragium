@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -17,11 +16,5 @@ object RagiumComponentTypes {
     val FLUID_CONTENT: DeferredHolder<DataComponentType<*>, DataComponentType<SimpleFluidContent>> =
         REGISTER.registerComponentType("fluid_content") { builder: DataComponentType.Builder<SimpleFluidContent> ->
             builder.persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC)
-        }
-
-    @JvmField
-    val RADIOACTIVE: DeferredHolder<DataComponentType<*>, DataComponentType<HTRadioactiveComponent>> =
-        REGISTER.registerComponentType("radioactive") { builder: DataComponentType.Builder<HTRadioactiveComponent> ->
-            builder.persistent(HTRadioactiveComponent.CODEC).networkSynchronized(HTRadioactiveComponent.STREAM_CODEC)
         }
 }

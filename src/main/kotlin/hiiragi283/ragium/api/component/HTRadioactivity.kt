@@ -2,12 +2,9 @@ package hiiragi283.ragium.api.component
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.stringCodec
-import hiiragi283.ragium.api.extension.stringStreamCodec
-import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
@@ -15,7 +12,7 @@ import net.minecraft.world.entity.LivingEntity
 /**
  * 放射能レベルを管理するクラス
  */
-enum class HTRadioactiveComponent(color: ChatFormatting) : StringRepresentable {
+enum class HTRadioactivity(color: ChatFormatting) : StringRepresentable {
     LOW(ChatFormatting.YELLOW),
     MEDIUM(ChatFormatting.RED),
     HIGH(ChatFormatting.DARK_PURPLE),
@@ -23,11 +20,7 @@ enum class HTRadioactiveComponent(color: ChatFormatting) : StringRepresentable {
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTRadioactiveComponent> = stringCodec(HTRadioactiveComponent.entries)
-
-        @JvmField
-        val STREAM_CODEC: StreamCodec<ByteBuf, HTRadioactiveComponent> =
-            stringStreamCodec(HTRadioactiveComponent.entries)
+        val CODEC: Codec<HTRadioactivity> = stringCodec(HTRadioactivity.entries)
     }
 
     val text: MutableComponent = Component.literal(name).withStyle(color)
