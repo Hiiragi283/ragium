@@ -116,6 +116,7 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<TransparentBlock> =
             REGISTER.registerBlock("${name.lowercase()}_grate", ::TransparentBlock, blockProperty(Blocks.COPPER_GRATE))
+        override val translationKey: String = RagiumTranslationKeys.GRATE
     }
 
     enum class Casings(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -127,6 +128,7 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<Block> =
             REGISTER.registerSimpleBlock("${name.lowercase()}_casing", blockProperty(Blocks.SMOOTH_STONE))
+        override val translationKey: String = RagiumTranslationKeys.CASING
     }
 
     enum class Hulls(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -138,6 +140,7 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<Block> =
             REGISTER.registerBlock("${name.lowercase()}_hull", ::Block, blockProperty(Blocks.IRON_BLOCK))
+        override val translationKey: String = RagiumTranslationKeys.HULL
     }
 
     enum class Coils(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -149,6 +152,7 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<RotatedPillarBlock> =
             REGISTER.registerBlock("${name.lowercase()}_coil", ::RotatedPillarBlock, blockProperty(Blocks.COPPER_BLOCK))
+        override val translationKey: String = RagiumTranslationKeys.COIL
     }
 
     enum class Burners(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -163,6 +167,7 @@ object RagiumBlocks {
                 ::Block,
                 blockProperty(Blocks.COPPER_BLOCK).noOcclusion(),
             )
+        override val translationKey: String = RagiumTranslationKeys.BURNER
     }
 
     @JvmField
@@ -184,6 +189,7 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<Block> =
             REGISTER.registerBlock("${name.lowercase()}_drum", ::HTDrumBlock, blockProperty(Blocks.SMOOTH_STONE))
+        override val translationKey: String = RagiumTranslationKeys.DRUM
     }
 
     //    Buildings    //

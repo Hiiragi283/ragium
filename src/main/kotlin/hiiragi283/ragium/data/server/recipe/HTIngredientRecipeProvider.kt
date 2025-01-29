@@ -163,7 +163,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.RAGIUM_SOLUTION)
-            .catalyst(RagiumItems.Circuits.ELITE)
+            .catalyst(HTMachineTier.ELITE.getCircuitTag())
             .fluidOutput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
             .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, 250)
             .save(output)
@@ -230,26 +230,26 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerCircuits(output: RecipeOutput) {
-        RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
+        HTMachineTier.entries.forEach { tier: HTMachineTier ->
             // Assembler
-            val dust: ItemLike = when (circuit) {
-                RagiumItems.Circuits.BASIC -> Items.REDSTONE
-                RagiumItems.Circuits.ADVANCED -> Items.GLOWSTONE_DUST
-                RagiumItems.Circuits.ELITE -> RagiumItems.LUMINESCENCE_DUST
-                RagiumItems.Circuits.ULTIMATE -> RagiumItems.Dusts.RAGI_CRYSTAL
+            val dust: ItemLike = when (tier) {
+                HTMachineTier.BASIC -> Items.REDSTONE
+                HTMachineTier.ADVANCED -> Items.GLOWSTONE_DUST
+                HTMachineTier.ELITE -> RagiumItems.LUMINESCENCE_DUST
+                HTMachineTier.ULTIMATE -> RagiumItems.Dusts.RAGI_CRYSTAL
             }
 
             HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.ASSEMBLER, circuit.machineTier)
+                .create(RagiumMachineKeys.ASSEMBLER, tier)
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
-                .itemInput(HTTagPrefix.INGOT, circuit.machineTier.getSubMetal())
+                .itemInput(HTTagPrefix.INGOT, tier.getSubMetal())
                 .itemInput(dust)
-                .itemOutput(circuit)
+                .itemOutput(tier.getCircuit())
                 .save(output)
         }
 
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.Circuits.BASIC)
+            .shaped(RecipeCategory.MISC, RagiumItems.BASIC_CIRCUIT)
             .pattern(" A ")
             .pattern("BCB")
             .pattern(" A ")
@@ -260,15 +260,15 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
 
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.Circuits.ADVANCED)
+            .shaped(RecipeCategory.MISC, RagiumItems.ADVANCED_CIRCUIT)
             .pattern("ABA")
             .pattern("CDC")
             .pattern("ABA")
             .define('A', Tags.Items.GEMS_LAPIS)
             .define('B', Tags.Items.DUSTS_REDSTONE)
             .define('C', Tags.Items.DUSTS_GLOWSTONE)
-            .define('D', RagiumItems.Circuits.BASIC)
-            .unlockedBy("has_circuit", has(RagiumItems.Circuits.BASIC))
+            .define('D', HTMachineTier.BASIC.getCircuitTag())
+            .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
             .savePrefixed(output)
     }
 

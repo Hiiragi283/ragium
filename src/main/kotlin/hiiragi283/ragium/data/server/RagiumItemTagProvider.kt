@@ -3,10 +3,11 @@ package hiiragi283.ragium.data.server
 import aztech.modern_industrialization.MI
 import com.buuz135.industrial.utils.IndustrialTags
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.addElement
 import hiiragi283.ragium.api.extension.addTag
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -22,6 +23,7 @@ import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagBuilder
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -59,12 +61,14 @@ class RagiumItemTagProvider(
                 .addElement(storage)
         }
 
-        RagiumItems.MATERIALS.forEach { content: HTItemContent.Material ->
-            getOrCreateRawBuilder(content.tagPrefix.commonTagKey)
-                .addTag(content.prefixedTagKey)
+        RagiumItems.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
+            val tagKey: TagKey<Item> = prefix.createTag(key)
 
-            getOrCreateRawBuilder(content.prefixedTagKey)
-                .addElement(content)
+            getOrCreateRawBuilder(prefix.commonTagKey)
+                .addTag(tagKey)
+
+            getOrCreateRawBuilder(tagKey)
+                .addElement(holder)
         }
 
         addMaterialTag(HTTagPrefix.DUST, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_gem_crushed")
@@ -113,9 +117,9 @@ class RagiumItemTagProvider(
     //    Part    //
 
     private fun partTags() {
-        RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
-            getOrCreateRawBuilder(circuit.machineTier.getCircuitTag())
-                .addElement(circuit)
+        HTMachineTier.entries.forEach { tier: HTMachineTier ->
+            getOrCreateRawBuilder(tier.getCircuitTag())
+                .addElement(tier.getCircuit())
         }
 
         getOrCreateRawBuilder(ItemTags.COALS)

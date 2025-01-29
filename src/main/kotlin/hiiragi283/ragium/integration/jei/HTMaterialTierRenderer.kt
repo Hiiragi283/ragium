@@ -5,13 +5,12 @@ import mezz.jei.api.gui.builder.ITooltipBuilder
 import mezz.jei.api.ingredients.IIngredientRenderer
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
 object HTMaterialTierRenderer : IIngredientRenderer<HTMachineTier> {
     override fun render(guiGraphics: GuiGraphics, ingredient: HTMachineTier) {
         guiGraphics.renderFakeItem(
-            ingredient.getCircuit().let(::ItemStack),
+            ingredient.getCircuit().asItem().defaultInstance,
             0,
             0,
         )

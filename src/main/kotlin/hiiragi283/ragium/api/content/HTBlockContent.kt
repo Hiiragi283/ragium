@@ -30,5 +30,7 @@ interface HTBlockContent : HTContent<Block> {
 
     interface Tier :
         HTBlockContent,
-        HTMachineTierProvider
+        HTMachineTierProvider {
+        val translationKey: String
+    }
 }

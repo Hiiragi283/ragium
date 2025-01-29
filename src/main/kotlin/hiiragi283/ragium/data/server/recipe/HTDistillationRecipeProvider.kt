@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -25,7 +26,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME * 6)
-            .catalyst(RagiumItems.Circuits.BASIC)
+            .catalyst(HTMachineTier.BASIC.getCircuitTag())
             .fluidOutput(RagiumFluids.REFINED_GAS, FluidType.BUCKET_VOLUME * 2)
             .fluidOutput(RagiumFluids.NAPHTHA, FluidType.BUCKET_VOLUME * 3)
             .fluidOutput(RagiumFluids.RESIDUAL_OIL, FluidType.BUCKET_VOLUME * 1)
@@ -35,7 +36,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.REFINED_GAS, FluidType.BUCKET_VOLUME * 8)
-            .catalyst(RagiumItems.Circuits.BASIC)
+            .catalyst(HTMachineTier.BASIC.getCircuitTag())
             .fluidOutput(RagiumFluids.METHANE, FluidType.BUCKET_VOLUME * 2)
             .fluidOutput(RagiumFluids.ETHENE, FluidType.BUCKET_VOLUME * 4)
             .fluidOutput(RagiumFluids.PROPENE, FluidType.BUCKET_VOLUME * 2)
@@ -45,7 +46,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.NAPHTHA, FluidType.BUCKET_VOLUME * 8)
-            .catalyst(RagiumItems.Circuits.BASIC)
+            .catalyst(HTMachineTier.BASIC.getCircuitTag())
             .fluidOutput(RagiumFluids.FUEL, FluidType.BUCKET_VOLUME * 6)
             .save(output, RagiumAPI.id("naphtha"))
 
@@ -53,14 +54,14 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.RESIDUAL_OIL, FluidType.BUCKET_VOLUME * 8)
-            .catalyst(RagiumItems.Circuits.BASIC)
+            .catalyst(HTMachineTier.BASIC.getCircuitTag())
             .fluidOutput(RagiumFluids.FUEL, FluidType.BUCKET_VOLUME * 3)
             .save(output, RagiumAPI.id("asphalt"))
         // Residual Oil -> Residual Coke + Fuel
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.RESIDUAL_OIL, FluidType.BUCKET_VOLUME * 8)
-            .catalyst(RagiumItems.Circuits.ADVANCED)
+            .catalyst(HTMachineTier.ADVANCED.getCircuitTag())
             .itemOutput(RagiumItems.RESIDUAL_COKE, 4)
             .fluidOutput(RagiumFluids.FUEL, FluidType.BUCKET_VOLUME * 4)
             .save(output)
@@ -68,7 +69,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.RESIDUAL_OIL, FluidType.BUCKET_VOLUME * 8)
-            .catalyst(RagiumItems.Circuits.ELITE)
+            .catalyst(HTMachineTier.ELITE.getCircuitTag())
             .fluidOutput(RagiumFluids.FUEL, FluidType.BUCKET_VOLUME * 3)
             .fluidOutput(RagiumFluids.AROMATIC_COMPOUNDS, FluidType.BUCKET_VOLUME * 5)
             .save(output, RagiumAPI.id("aromatic_compounds"))
@@ -82,7 +83,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.BIOMASS)
-            .catalyst(RagiumItems.Circuits.BASIC)
+            .catalyst(HTMachineTier.BASIC.getCircuitTag())
             .fluidOutput(RagiumFluids.ALCOHOL)
             .saveSuffixed(output, "_from_biomass")
 
@@ -90,7 +91,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.BIOMASS)
-            .catalyst(RagiumItems.Circuits.ADVANCED)
+            .catalyst(HTMachineTier.ADVANCED.getCircuitTag())
             .fluidOutput(RagiumFluids.BIO_FUEL)
             .saveSuffixed(output, "_from_biomass")
         // Alcohol + Plant Oil -> Bio Fuel + Glycerol
@@ -123,7 +124,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.SAP, FluidType.BUCKET_VOLUME * 2)
-            .catalyst(RagiumItems.Circuits.BASIC)
+            .catalyst(HTMachineTier.BASIC.getCircuitTag())
             .fluidOutput(RagiumFluids.REFINED_GAS)
             .fluidOutput(RagiumFluids.ALCOHOL)
             .save(output, RagiumAPI.id("sap"))
@@ -132,7 +133,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.CRIMSON_STEMS)
-            .catalyst(RagiumItems.Circuits.ADVANCED)
+            .catalyst(HTMachineTier.ADVANCED.getCircuitTag())
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
             .fluidOutput(RagiumFluids.CRIMSON_SAP)
             .savePrefixed(output, "crimson_")
@@ -140,7 +141,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.CRIMSON_SAP, FluidType.BUCKET_VOLUME * 4)
-            .catalyst(RagiumItems.Circuits.ADVANCED)
+            .catalyst(HTMachineTier.ADVANCED.getCircuitTag())
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumFluids.SAP, FluidType.BUCKET_VOLUME * 3)
             .save(output, RagiumAPI.id("crimson_sap"))
@@ -149,7 +150,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.WARPED_STEMS)
-            .catalyst(RagiumItems.Circuits.ADVANCED)
+            .catalyst(HTMachineTier.ADVANCED.getCircuitTag())
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
             .fluidOutput(RagiumFluids.WARPED_SAP)
             .savePrefixed(output, "warped_")
@@ -157,7 +158,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.WARPED_SAP, FluidType.BUCKET_VOLUME * 4)
-            .catalyst(RagiumItems.Circuits.ADVANCED)
+            .catalyst(HTMachineTier.ADVANCED.getCircuitTag())
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
             .fluidOutput(RagiumFluids.SAP, FluidType.BUCKET_VOLUME * 3)
             .save(output, RagiumAPI.id("warped_sap"))

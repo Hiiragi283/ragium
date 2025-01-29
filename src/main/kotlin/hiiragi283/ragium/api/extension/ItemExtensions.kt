@@ -55,6 +55,8 @@ val ItemLike.machineKey: HTMachineKey? get() = getItemData(RagiumAPI.DataMapType
 
 fun itemProperty(): Item.Properties = Item.Properties()
 
+fun itemProperty(builderAction: Item.Properties.() -> Unit): Item.Properties = Item.Properties().apply(builderAction)
+
 /**
  * 指定した[text]をアイテムの名前に設定します。
  */

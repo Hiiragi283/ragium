@@ -5,14 +5,17 @@ import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.itemProperty
+import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTCraftingToolItem
 import hiiragi283.ragium.common.item.HTDynamiteItem
 import hiiragi283.ragium.common.item.HTSilkyPickaxeItem
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
@@ -25,11 +28,16 @@ object RagiumItems {
     @JvmField
     val REGISTER: DeferredRegister.Items = DeferredRegister.createItems(RagiumAPI.MOD_ID)
 
+    @JvmStatic
+    lateinit var materialItems: HTTable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>>
+        private set
+
     init {
         registerBlockItems()
 
-        Circuits.entries
         Radioactives.entries
+
+        registerMaterialItems()
     }
 
     @JvmStatic
@@ -42,9 +50,20 @@ object RagiumItems {
             )
         }
 
-        buildList {
-            addAll(RagiumBlocks.StorageBlocks.entries)
+        RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
+            REGISTER.registerSimpleBlockItem(
+                storage.id.path,
+                storage,
+                itemProperty {
+                    name(storage.prefixedText)
+                    if (storage.material in RagiumMaterialKeys.END_CONTENTS) {
+                        component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                    }
+                },
+            )
+        }
 
+        buildList {
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Hulls.entries)
@@ -52,7 +71,15 @@ object RagiumItems {
             addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)
+        }.forEach { content: HTBlockContent.Tier ->
+            REGISTER.registerSimpleBlockItem(
+                content.id.path,
+                content,
+                itemProperty().name(content.machineTier.createPrefixedText(content.translationKey)),
+            )
+        }
 
+        buildList {
             addAll(RagiumBlocks.Decorations.entries)
             addAll(RagiumBlocks.LEDBlocks.entries)
         }.map(HTBlockContent::holder)
@@ -73,6 +100,21 @@ object RagiumItems {
 
             addAll(RagiumBlocks.ADDONS)
         }.forEach(REGISTER::registerSimpleBlockItem)
+    }
+
+    @JvmStatic
+    fun registerMaterialItems() {
+        val builder: HTTable.Mutable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>> = mutableTableOf()
+        buildList {
+            addAll(Dusts.entries)
+            addAll(Gears.entries)
+            addAll(RawResources.entries)
+            addAll(Ingots.entries)
+            addAll(Rods.entries)
+        }.forEach { content: HTItemContent.Material ->
+            builder.put(content.tagPrefix, content.material, content.holder)
+        }
+        this.materialItems = builder
     }
 
     //    Materials    //
@@ -262,15 +304,6 @@ object RagiumItems {
         override val parentPrefix: HTTagPrefix = HTTagPrefix.INGOT
     }
 
-    @JvmField
-    val MATERIALS: List<HTItemContent.Material> = buildList {
-        addAll(Dusts.entries)
-        addAll(Gears.entries)
-        addAll(RawResources.entries)
-        addAll(Ingots.entries)
-        addAll(Rods.entries)
-    }
-
     //    Foods    //
 
     @JvmStatic
@@ -389,15 +422,33 @@ object RagiumItems {
 
     //    Circuits    //
 
-    enum class Circuits(override val machineTier: HTMachineTier) : HTItemContent.Tier {
-        BASIC(HTMachineTier.BASIC),
-        ADVANCED(HTMachineTier.ADVANCED),
-        ELITE(HTMachineTier.ELITE),
-        ULTIMATE(HTMachineTier.ULTIMATE),
-        ;
+    val BASIC_CIRCUIT: DeferredItem<Item> = REGISTER.registerSimpleItem(
+        "basic_circuit",
+        itemProperty().name(HTMachineTier.BASIC.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
+    )
 
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_circuit")
-    }
+    val ADVANCED_CIRCUIT: DeferredItem<Item> = REGISTER.registerSimpleItem(
+        "advanced_circuit",
+        itemProperty().name(HTMachineTier.ADVANCED.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
+    )
+
+    val ELITE_CIRCUIT: DeferredItem<Item> = REGISTER.registerSimpleItem(
+        "elite_circuit",
+        itemProperty().name(HTMachineTier.ELITE.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
+    )
+
+    val ULTIMATE_CIRCUIT: DeferredItem<Item> = REGISTER.registerSimpleItem(
+        "ultimate_circuit",
+        itemProperty().name(HTMachineTier.ULTIMATE.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
+    )
+
+    @JvmField
+    val CIRCUITS: List<DeferredItem<Item>> = listOf(
+        BASIC_CIRCUIT,
+        ADVANCED_CIRCUIT,
+        ELITE_CIRCUIT,
+        ULTIMATE_CIRCUIT,
+    )
 
     //    Press Molds    //
 

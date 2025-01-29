@@ -16,8 +16,9 @@ import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
-import hiiragi283.ragium.api.material.HTMaterialProvider
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -38,6 +39,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
@@ -56,6 +58,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
+import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -470,32 +473,15 @@ internal object RagiumEvents {
                 event.modify(itemLike.asItem()) { builder: DataComponentPatch.Builder -> patch(builder, itemLike) }
             }
         }
-
-        fun tieredText(translationKey: String): (DataComponentPatch.Builder, HTMachineTierProvider) -> Unit =
-            { builder: DataComponentPatch.Builder, provider: HTMachineTierProvider ->
-                builder.name(provider.machineTier.createPrefixedText(translationKey))
-            }
-
-        val materialText: (DataComponentPatch.Builder, HTMaterialProvider) -> Unit =
-            { builder: DataComponentPatch.Builder, provider: HTMaterialProvider ->
-                builder.name(provider.prefixedText)
-                if (provider.material in RagiumMaterialKeys.END_CONTENTS) {
+        // Item
+        RagiumItems.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
+            event.modify(holder) { builder: DataComponentPatch.Builder ->
+                builder.name(prefix.createText(key))
+                if (key in RagiumMaterialKeys.END_CONTENTS) {
                     builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                 }
             }
-        // Block
-        modifyAll(RagiumBlocks.StorageBlocks.entries, materialText)
-        modifyAll(RagiumBlocks.Grates.entries, tieredText(RagiumTranslationKeys.GRATE))
-        modifyAll(RagiumBlocks.Casings.entries, tieredText(RagiumTranslationKeys.CASING))
-        modifyAll(RagiumBlocks.Hulls.entries, tieredText(RagiumTranslationKeys.HULL))
-        modifyAll(RagiumBlocks.Coils.entries, tieredText(RagiumTranslationKeys.COIL))
-        modifyAll(RagiumBlocks.Burners.entries, tieredText(RagiumTranslationKeys.BURNER))
-
-        modifyAll(RagiumBlocks.Drums.entries, tieredText(RagiumTranslationKeys.DRUM))
-        // Item
-        modifyAll(RagiumItems.MATERIALS, materialText)
-
-        modifyAll(RagiumItems.Circuits.entries, tieredText(RagiumTranslationKeys.CIRCUIT))
+        }
 
         modifyAll(RagiumItems.Radioactives.entries) { builder: DataComponentPatch.Builder, radioactive: RagiumItems.Radioactives ->
             builder.set(RagiumComponentTypes.RADIOACTIVE, radioactive.level)

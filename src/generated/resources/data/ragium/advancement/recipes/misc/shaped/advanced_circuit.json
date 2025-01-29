@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_circuit"
+            "items": "#c:circuits/basic"
           }
         ]
       },

@@ -28,18 +28,10 @@ object RagiumCreativeTabs {
                     RagiumBlocks.Ores.entries.forEach(output::accept)
                     RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
                     // Material Items
-                    RagiumItems.Dusts.entries.forEach(output::accept)
+                    RagiumItems.materialItems.values.forEach(output::accept)
                     RagiumItems.OTHER_DUSTS.forEach(output::accept)
-
-                    RagiumItems.Gears.entries.forEach(output::accept)
-
-                    RagiumItems.RawResources.entries.forEach(output::accept)
                     RagiumItems.OTHER_RESOURCES.forEach(output::accept)
-
-                    RagiumItems.Ingots.entries.forEach(output::accept)
                     RagiumItems.OTHER_INGOTS.forEach(output::accept)
-
-                    RagiumItems.Rods.entries.forEach(output::accept)
                     // Foods
                     output.accept(RagiumBlocks.SPONGE_CAKE)
                     output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -53,7 +45,7 @@ object RagiumCreativeTabs {
 
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
                     // Circuits
-                    RagiumItems.Circuits.entries.forEach(output::accept)
+                    RagiumItems.CIRCUITS.forEach(output::accept)
                     // Ingredients
                     RagiumItems.INGREDIENTS.forEach(output::accept)
                     RagiumItems.Radioactives.entries.forEach(output::accept)

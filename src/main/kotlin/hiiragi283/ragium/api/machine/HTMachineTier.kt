@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.stringCodec
@@ -21,6 +20,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.registries.DeferredItem
 
 enum class HTMachineTier(
     private val idPattern: String,
@@ -118,11 +118,11 @@ enum class HTMachineTier(
 
     //    Item    //
 
-    fun getCircuit(): HTItemContent.Tier = when (this) {
-        BASIC -> RagiumItems.Circuits.BASIC
-        ADVANCED -> RagiumItems.Circuits.ADVANCED
-        ELITE -> RagiumItems.Circuits.ELITE
-        ULTIMATE -> RagiumItems.Circuits.ULTIMATE
+    fun getCircuit(): DeferredItem<Item> = when (this) {
+        BASIC -> RagiumItems.BASIC_CIRCUIT
+        ADVANCED -> RagiumItems.ADVANCED_CIRCUIT
+        ELITE -> RagiumItems.ELITE_CIRCUIT
+        ULTIMATE -> RagiumItems.ULTIMATE_CIRCUIT
     }
 
     fun getCircuitTag(): TagKey<Item> = itemTagKey(commonId("circuits/$serializedName"))

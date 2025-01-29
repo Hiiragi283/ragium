@@ -3,7 +3,7 @@
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
-      "item": "ragium:elite_circuit"
+      "tag": "c:circuits/elite"
     }
   },
   "fluid_inputs": [

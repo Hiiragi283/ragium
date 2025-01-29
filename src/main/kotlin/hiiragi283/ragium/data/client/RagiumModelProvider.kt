@@ -73,7 +73,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     private fun registerItems() {
         buildList {
-            addAll(RagiumItems.MATERIALS)
+            addAll(RagiumItems.materialItems.values)
             addAll(RagiumItems.OTHER_DUSTS)
             addAll(RagiumItems.OTHER_RESOURCES)
             addAll(RagiumItems.OTHER_INGOTS)
@@ -87,7 +87,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumItems.DYNAMITE)
             add(RagiumItems.SLOT_LOCK)
 
-            addAll(RagiumItems.Circuits.entries)
+            addAll(RagiumItems.CIRCUITS)
             addAll(RagiumItems.PRESS_MOLDS)
             addAll(RagiumItems.Radioactives.entries)
 

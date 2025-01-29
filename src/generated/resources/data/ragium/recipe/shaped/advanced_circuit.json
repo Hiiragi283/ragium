@@ -12,7 +12,7 @@
       "tag": "c:dusts/glowstone"
     },
     "D": {
-      "item": "ragium:basic_circuit"
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
