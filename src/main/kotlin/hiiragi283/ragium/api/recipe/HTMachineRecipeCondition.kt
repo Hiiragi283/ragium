@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.toRegistryStream
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.MutableComponent
@@ -27,9 +28,7 @@ interface HTMachineRecipeCondition {
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipeCondition> =
             ByteBufCodecs
                 .registry(RagiumAPI.RegistryKeys.RECIPE_CONDITION)
-                .dispatch(HTMachineRecipeCondition::codec) { codec: MapCodec<out HTMachineRecipeCondition> ->
-                    ByteBufCodecs.fromCodecWithRegistries(codec.codec())
-                }
+                .dispatch(HTMachineRecipeCondition::codec, MapCodec<out HTMachineRecipeCondition>::toRegistryStream)
     }
 
     val codec: MapCodec<out HTMachineRecipeCondition>
