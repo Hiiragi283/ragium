@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -18,7 +19,6 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
@@ -87,7 +87,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Ragi-Steel
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER)
-            .itemInput(RagiumItems.Dusts.CRUDE_RAGINITE, 8)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.CRUDE_RAGINITE, 8)
             .itemInput(RagiumItems.SOAP)
             .waterInput()
             .itemOutput(RagiumItems.Dusts.RAGINITE, 6)
@@ -103,7 +103,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Refined Ragi-Steel
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(RagiumItems.Dusts.RAGINITE, 4)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGINITE, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 5)
             .itemOutput(RagiumItems.Dusts.RAGI_CRYSTAL)
             .save(output)
@@ -152,7 +152,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Ragium
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER, HTMachineTier.ELITE)
-            .itemInput(RagiumItems.Dusts.RAGI_CRYSTAL, 4)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGI_CRYSTAL, 4)
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .fluidOutput(RagiumFluids.RAGIUM_SOLUTION)
             .save(output)
@@ -194,7 +194,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(RagiumItems.Ingots.DEEP_STEEL)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL)
             .fluidInput(RagiumFluids.DRAGON_BREATH)
             .catalyst(Items.DRAGON_EGG)
             .itemOutput(RagiumItems.Ingots.DRAGONIUM)
@@ -350,24 +350,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
             .itemOutput(RagiumItems.LED, 4)
             .save(output)
-
-        SingleItemRecipeBuilder
-            .stonecutting(
-                Ingredient.of(ItemTags.COALS),
-                RecipeCategory.MISC,
-                RagiumItems.COAL_CHIP,
-                8,
-            ).unlockedBy("has_coal", has(ItemTags.COALS))
-            .save(output, RagiumAPI.id("stonecutting/coal_chip_from_coal"))
-
-        SingleItemRecipeBuilder
-            .stonecutting(
-                Ingredient.of(RagiumItemTags.COAL_COKE),
-                RecipeCategory.MISC,
-                RagiumItems.COAL_CHIP,
-                16,
-            ).unlockedBy("has_coke", has(RagiumItemTags.COAL_COKE))
-            .save(output, RagiumAPI.id("stonecutting/coal_chip_from_coke"))
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)

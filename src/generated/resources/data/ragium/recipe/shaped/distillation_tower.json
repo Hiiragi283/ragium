@@ -6,22 +6,19 @@
       "item": "ragium:chemical_glass"
     },
     "B": {
-      "tag": "c:circuits/advanced"
+      "tag": "c:gears/diamond"
     },
     "C": {
-      "item": "minecraft:stonecutter"
-    },
-    "D": {
       "item": "ragium:advanced_casing"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DDD"
+    "A A",
+    "BAB",
+    "CCC"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:cutting_machine"
+    "id": "ragium:distillation_tower"
   }
 }

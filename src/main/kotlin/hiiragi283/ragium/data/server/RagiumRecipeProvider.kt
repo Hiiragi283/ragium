@@ -3,6 +3,8 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.extension.cooling
+import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -11,7 +13,6 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.condition.HTRockGeneratorCondition
-import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
 import hiiragi283.ragium.data.server.integration.HTAARecipeProvider
 import hiiragi283.ragium.data.server.integration.HTDelightRecipeProvider
 import hiiragi283.ragium.data.server.integration.HTEvilRecipeProvider
@@ -117,9 +118,10 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         tier: HTMachineTier = HTMachineTier.ADVANCED,
     ) {
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.LASER_TRANSFORMER, tier)
+            .create(RagiumMachineKeys.LASER_TRANSFORMER)
             .itemInput(Items.SKELETON_SKULL)
             .itemInput(input)
+            .tier(tier)
             .itemOutput(skull)
             .save(output)
     }
@@ -191,7 +193,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
             .waterInput()
-            .machineConditions(HTTemperatureCondition.cooling(HTMachineTier.BASIC))
+            .cooling(HTMachineTier.BASIC)
             .itemOutput(Items.SNOW_BLOCK)
             .save(output)
 
@@ -212,7 +214,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER)
             .waterInput()
-            .machineConditions(HTTemperatureCondition.cooling(HTMachineTier.ADVANCED))
+            .cooling(HTMachineTier.ADVANCED)
             .fluidOutput(RagiumFluids.SNOW)
             .saveSuffixed(output, "_from_water")
 
@@ -235,7 +237,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         fun registerRock(rock: ItemLike) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.MIXER)
-                .machineConditions(HTRockGeneratorCondition(Ingredient.of(rock)))
+                .condition(HTRockGeneratorCondition(Ingredient.of(rock)))
                 .itemOutput(rock, 8)
                 .save(output)
         }
@@ -260,7 +262,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER)
             .fluidInput(Tags.Fluids.LAVA)
-            .machineConditions(HTRockGeneratorCondition(Ingredient.of(Items.OBSIDIAN)))
+            .condition(HTRockGeneratorCondition(Ingredient.of(Items.OBSIDIAN)))
             .itemOutput(Items.OBSIDIAN)
             .save(output)
     }

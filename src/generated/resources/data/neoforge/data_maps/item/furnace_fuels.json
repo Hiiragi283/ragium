@@ -1,8 +1,5 @@
 {
   "values": {
-    "ragium:coal_chip": {
-      "burn_time": 200
-    },
     "ragium:coke": {
       "burn_time": 3200
     },

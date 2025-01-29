@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/basic"
+    }
+  },
   "fluid_inputs": [
     {
       "amount": 4000,

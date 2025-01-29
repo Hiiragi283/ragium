@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
@@ -13,7 +12,6 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
-import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -70,46 +68,41 @@ internal object RagiumEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun modifyMachineProperties(event: HTModifyPropertyEvent.Machine) {
-        fun HTPropertyHolderBuilder.putFactory(
-            factory: BlockEntityType.BlockEntitySupplier<out HTMachineBlockEntity>,
-        ): HTPropertyHolderBuilder = put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(factory::create))
-
-        fun HTPropertyHolderBuilder.putFactory(factory: HTMachineEntityFactory): HTPropertyHolderBuilder =
-            put(HTMachinePropertyKeys.MACHINE_FACTORY, factory)
-
         fun HTPropertyHolderBuilder.putValidator(validator: DataFunction<HTMachineRecipe>): HTPropertyHolderBuilder =
             put(HTMachinePropertyKeys.RECIPE_VALIDATOR, validator)
 
         // Consumer
+        event
+            .getBuilder(RagiumMachineKeys.BEDROCK_MINER)
 
         // Generator
         event
             .getBuilder(RagiumMachineKeys.COMBUSTION_GENERATOR)
-            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.FIRE_EXTINGUISH)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ASH))
 
         event
             .getBuilder(RagiumMachineKeys.GAS_TURBINE)
-            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.NUCLEAR_REACTOR)
-            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
-            .putFactory(::HTDefaultGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTDefaultGeneratorBlockEntity)
             .put(HTMachinePropertyKeys.GENERATOR_PREDICATE) { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay }
             .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
 
         event
             .getBuilder(RagiumMachineKeys.STEAM_TURBINE)
-            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
-            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
 
         event.getBuilder(RagiumMachineKeys.VIBRATION_GENERATOR)
 
@@ -118,7 +111,7 @@ internal object RagiumEvents {
             .map(event::getBuilder)
             .forEach { builder: HTPropertyHolderBuilder ->
                 builder
-                    .putFactory(::HTDefaultProcessorBlockEntity)
+                    .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTDefaultProcessorBlockEntity)
                     .put(
                         HTMachinePropertyKeys.PARTICLE,
                         HTMachineParticleHandler.ofSimple(ParticleTypes.ELECTRIC_SPARK),
@@ -127,18 +120,18 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.ASSEMBLER)
-            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
-            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.FLAME))
 
         event
             .getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BREWING_STAND_BREW)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.BUBBLE_POP))
             .put(
@@ -155,6 +148,7 @@ internal object RagiumEvents {
             .getBuilder(RagiumMachineKeys.COKE_OVEN)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.COKE_OVEN)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.SMOKER_SMOKE)
+            .put(HTMachinePropertyKeys.TICK_RATE) { tier: HTMachineTier -> tier.tickRate * 2 }
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.LARGE_SMOKE))
 
         event
@@ -179,13 +173,14 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.DISTILLATION_TOWER)
-            .putFactory(::HTDistillationTowerBlockEntity)
-            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
+                HTDistillationTowerBlockEntity(pos, state)
+            }.put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
             .putValidator { recipe: HTMachineRecipe ->
                 when {
                     recipe.itemInputs.isNotEmpty() -> DataResult.error { "Distillation tower recipe not accepts item inputs!" }
                     recipe.fluidInputs.size != 1 -> DataResult.error { "Distillation tower recipe should have only one fluid input!" }
-                    // recipe.catalyst.isEmpty -> DataResult.error { "Distillation tower recipe requires catalyst!" }
+                    recipe.condition.isEmpty -> DataResult.error { "Distillation tower recipe requires condition!" }
                     recipe.getItemOutput(1) != null -> DataResult.error { "Distillation tower recipe should have one item output!" }
                     else -> DataResult.success(recipe)
                 }
@@ -217,21 +212,26 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.MIXER)
-            .putFactory(::HTLargeProcessorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
 
         event
             .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
-            .putFactory(::HTMultiSmelterBlockEntity)
-            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
+                HTMultiSmelterBlockEntity(pos, state)
+            }.put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.convert(false, RecipeType.SMELTING, HTMachineConverters::fromCooking),
             )
+
+        event
+            .getBuilder(RagiumMachineKeys.RESOURCE_PLANT)
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.RESOURCE_PLANT)
 
         event
             .getBuilder(RagiumMachineKeys.STEAM_BOILER)

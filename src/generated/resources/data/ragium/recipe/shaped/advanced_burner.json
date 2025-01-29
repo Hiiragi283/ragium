@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:mud_bricks"
+      "item": "ragium:advanced_grate"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "item": "minecraft:magma_block"
     },
     "C": {
-      "item": "minecraft:bricks"
+      "item": "ragium:advanced_coil"
     }
   },
   "pattern": [
-    "AAA",
+    "A A",
     "ABA",
     "CCC"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:coke_oven"
+    "id": "ragium:advanced_burner"
   }
 }

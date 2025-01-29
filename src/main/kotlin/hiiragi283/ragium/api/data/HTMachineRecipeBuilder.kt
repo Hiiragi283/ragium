@@ -2,15 +2,13 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTFluidContent
+import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
-import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
-import hiiragi283.ragium.common.recipe.condition.HTTierCondition
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.recipes.RecipeBuilder
@@ -25,7 +23,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
@@ -38,9 +35,7 @@ import java.util.function.Supplier
 class HTMachineRecipeBuilder private constructor(private val machine: HTMachineKey) : RecipeBuilder {
     companion object {
         @JvmStatic
-        fun create(machine: HTMachineKey, tier: HTMachineTier): HTMachineRecipeBuilder = create(machine).apply {
-            if (tier != HTMachineTier.BASIC) machineConditions(HTTierCondition(tier))
-        }
+        fun create(machine: HTMachineKey, tier: HTMachineTier): HTMachineRecipeBuilder = create(machine).tier(tier)
 
         @JvmStatic
         fun create(machine: HTMachineKey): HTMachineRecipeBuilder = HTMachineRecipeBuilder(machine)
@@ -50,20 +45,14 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
     private val fluidInputs: MutableMap<FluidIngredient, Int> = mutableMapOf()
     private val itemOutputs: MutableList<ItemStack> = mutableListOf()
     private val fluidOutputs: MutableList<FluidStack> = mutableListOf()
-    private var machineCondition: HTMachineRecipeCondition? = null
-
-    private val conditions: MutableList<ICondition> = mutableListOf()
+    private var condition: HTMachineRecipeCondition? = null
 
     //    Input    //
-
-    // fun itemInput(item: Supplier<out ItemLike>, count: Int = 1): HTMachineRecipeBuilder = itemInput(item.get(), count)
 
     fun itemInput(item: ItemLike, count: Int = 1): HTMachineRecipeBuilder = itemInput(Ingredient.of(item), count)
 
     fun itemInput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): HTMachineRecipeBuilder =
         itemInput(prefix.createTag(material), count)
-
-    fun itemInput(provider: HTMaterialProvider, count: Int = 1): HTMachineRecipeBuilder = itemInput(provider.prefixedTagKey, count)
 
     fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeBuilder = itemInput(Ingredient.of(tagKey), count)
 
@@ -74,8 +63,6 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
     fun itemInput(ingredient: Ingredient, count: Int = 1): HTMachineRecipeBuilder = apply {
         check(itemInputs.put(ingredient, count) == null) { "Same ingredient is not supported!" }
     }
-
-    // fun fluidInput(fluid: Supplier<out Fluid>, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidInput(fluid.get(), count)
 
     fun fluidInput(content: HTFluidContent, amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
         fluidInput(content.commonTag, amount)
@@ -96,17 +83,9 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
 
     //    Machine Condition    //
 
-    fun catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeBuilder = catalyst(prefix.createTag(material))
-
-    fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeBuilder = catalyst(Ingredient.of(tagKey))
-
-    fun catalyst(item: ItemLike): HTMachineRecipeBuilder = catalyst(Ingredient.of(item))
-
-    fun catalyst(ingredient: Ingredient): HTMachineRecipeBuilder = machineConditions(HTProcessorCatalystCondition(ingredient))
-
-    fun machineConditions(condition: HTMachineRecipeCondition): HTMachineRecipeBuilder = apply {
-        check(this.machineCondition == null) { "Machine condition is already registered!" }
-        this.machineCondition = condition
+    fun condition(condition: HTMachineRecipeCondition): HTMachineRecipeBuilder = apply {
+        check(this.condition == null) { "Machine condition is already registered!" }
+        this.condition = condition
     }
 
     //    Output    //
@@ -129,16 +108,6 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
     }
 
     fun waterOutput(amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidOutput(Fluids.WATER, amount)
-
-    //    Condition    //
-
-    fun conditions(conditions: Iterable<ICondition>): HTMachineRecipeBuilder = apply {
-        this.conditions.addAll(conditions)
-    }
-
-    fun conditions(vararg conditions: ICondition): HTMachineRecipeBuilder = apply {
-        this.conditions.addAll(conditions)
-    }
 
     //    RecipeBuilder    //
 
@@ -173,7 +142,7 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
     }
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        recipeOutput.accept(fixId(id), createRecipe(), null, *conditions.toTypedArray())
+        recipeOutput.accept(fixId(id), createRecipe(), null)
     }
 
     fun export(): RecipeHolder<HTMachineRecipe> = export(getPrimalId())
@@ -196,6 +165,6 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
         },
         itemOutputs,
         fluidOutputs,
-        Optional.ofNullable(machineCondition),
+        Optional.ofNullable(condition),
     )
 }

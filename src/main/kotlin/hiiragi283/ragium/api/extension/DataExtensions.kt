@@ -1,19 +1,28 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.api.util.HTTemperatureType
+import hiiragi283.ragium.common.recipe.condition.HTBiomeCondition
+import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
+import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
+import hiiragi283.ragium.common.recipe.condition.HTTierCondition
+import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.*
 import net.minecraft.data.tags.TagsProvider
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
@@ -76,14 +85,19 @@ fun <T : ModelBuilder<T>> T.itemTexture(key: String, id: ResourceLocation): T = 
 
 fun <T : ModelBuilder<T>> T.cutout(): T = renderType("cutout")
 
+fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(name: String, texture: ResourceLocation): T =
+    withExistingParent(name, "block/cube_all")
+        .texture("all", texture)
+        .cutout()
+
+fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(content: HTContent<*>, texture: ResourceLocation): T =
+    cutoutSimpleBlock(content.id.toString(), texture)
+
 //    RecipeBuilder    //
 
 private fun RecipeBuilder.savePrefixed(output: RecipeOutput, prefix: String) {
     save(output, RecipeBuilder.getDefaultRecipeId(result).withPrefix(prefix))
 }
-
-fun ShapedRecipeBuilder.defineMaterial(symbol: Char, provider: HTMaterialProvider): ShapedRecipeBuilder =
-    define(symbol, provider.prefixedTagKey)
 
 fun ShapedRecipeBuilder.define(symbol: Char, prefix: HTTagPrefix, material: HTMaterialKey): ShapedRecipeBuilder =
     define(symbol, prefix.createTag(material))
@@ -91,8 +105,6 @@ fun ShapedRecipeBuilder.define(symbol: Char, prefix: HTTagPrefix, material: HTMa
 fun ShapedRecipeBuilder.savePrefixed(output: RecipeOutput) {
     savePrefixed(output, "shaped/")
 }
-
-fun ShapelessRecipeBuilder.requiresMaterial(provider: HTMaterialProvider): ShapelessRecipeBuilder = requires(provider.prefixedTagKey)
 
 fun ShapelessRecipeBuilder.requires(prefix: HTTagPrefix, material: HTMaterialKey): ShapelessRecipeBuilder =
     requires(prefix.createTag(material))
@@ -108,6 +120,39 @@ fun ShapelessRecipeBuilder.savePrefixed(output: RecipeOutput) {
 fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
     savePrefixed(output, "stonecutting/")
 }
+
+//    HTMachineRecipeBuilder    //
+
+fun HTMachineRecipeBuilder.tier(tier: HTMachineTier): HTMachineRecipeBuilder = apply {
+    if (tier != HTMachineTier.BASIC) condition(HTTierCondition(tier))
+}
+
+fun HTMachineRecipeBuilder.catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeBuilder =
+    catalyst(prefix.createTag(material))
+
+fun HTMachineRecipeBuilder.catalyst(tagKey: TagKey<Item>): HTMachineRecipeBuilder = catalyst(Ingredient.of(tagKey))
+
+fun HTMachineRecipeBuilder.catalyst(item: ItemLike): HTMachineRecipeBuilder = catalyst(Ingredient.of(item))
+
+fun HTMachineRecipeBuilder.catalyst(ingredient: Ingredient): HTMachineRecipeBuilder = condition(HTProcessorCatalystCondition(ingredient))
+
+fun HTMachineRecipeBuilder.heating(
+    minTier: HTMachineTier,
+    maxTier: HTMachineTier = HTMachineTier.ULTIMATE,
+    targetSide: Direction = Direction.UP,
+): HTMachineRecipeBuilder = condition(HTTemperatureCondition(HTTemperatureType.HEATING, minTier, maxTier, targetSide))
+
+fun HTMachineRecipeBuilder.cooling(
+    minTier: HTMachineTier,
+    maxTier: HTMachineTier = HTMachineTier.ULTIMATE,
+    targetSide: Direction = Direction.UP,
+): HTMachineRecipeBuilder = condition(HTTemperatureCondition(HTTemperatureType.COOLING, minTier, maxTier, targetSide))
+
+fun HTMachineRecipeBuilder.biome(tagKey: TagKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTMachineRecipeBuilder =
+    condition(HTBiomeCondition(lookup.getOrThrow(tagKey)))
+
+fun HTMachineRecipeBuilder.biome(resourceKey: ResourceKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTMachineRecipeBuilder =
+    condition(HTBiomeCondition(lookup.getOrThrow(resourceKey)))
 
 //    TagBuilder    //
 

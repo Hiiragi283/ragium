@@ -82,8 +82,8 @@ object RagiumMultiblockMaps {
         .add(1, 0, 2, HTSimpleMultiblockComponent(Blocks::STONE_SLAB))
         .addLayer(-1..1, 0, 3..3, HULL)
         // middle
-        // .addLayer(-1..1, 1, 1..1, HTTieredMultiblockComponent(HTMachineTier::getGlassBlock))
-        // .addLayer(-1..1, 1, 3..3, HTTieredMultiblockComponent(HTMachineTier::getGlassBlock))
+        .addLayer(-1..1, 1, 1..1, HTSimpleMultiblockComponent(RagiumBlocks.CHEMICAL_GLASS))
+        .addLayer(-1..1, 1, 3..3, HTSimpleMultiblockComponent(RagiumBlocks.CHEMICAL_GLASS))
         // top
         .addLayer(-1..1, 2, 1..3, STORAGE_BLOCK)
         .build()
@@ -100,28 +100,6 @@ object RagiumMultiblockMaps {
         .build()
 
     @JvmField
-    val FLUID_DRILL: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        .addLayer(-1..1, 0, 1..3, HULL)
-        .addCross4(-1..1, 1, 1..3, GRATE)
-        .addCross4(-1..1, 2, 1..3, GRATE)
-        .add(0, 3, 2, GRATE)
-        .add(0, 4, 2, GRATE)
-        .build()
-
-    @JvmField
-    val GAS_PLANT: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        .addLayer(-1..1, 0, 1..3, HULL)
-        .addPillar(-1, 1..2, 1, GRATE)
-        .addPillar(-1, 1..2, 3, GRATE)
-        .addPillar(1, 1..2, 1, GRATE)
-        .addPillar(1, 1..2, 3, GRATE)
-        .add(0, 3, 2, GRATE)
-        .add(0, 4, 2, GRATE)
-        .build()
-
-    @JvmField
     val MULTI_SMELTER: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
         .addLayer(-1..1, -1, 1..3, CASING)
@@ -135,5 +113,15 @@ object RagiumMultiblockMaps {
         .addLayer(-1..1, -1, 1..3, CASING)
         .addHollow(-1..1, 0, 1..3, HULL)
         .addLayer(-1..1, 1, 1..3, STORAGE_BLOCK)
+        .build()
+
+    @JvmField
+    val RESOURCE_PLANT: HTMultiblockMap.Relative = HTMultiblockMap
+        .builder()
+        .addLayer(-1..1, 0, 1..3, HULL)
+        .addCross4(-1..1, 1, 1..3, GRATE)
+        .addCross4(-1..1, 2, 1..3, GRATE)
+        .add(0, 3, 2, GRATE)
+        .add(0, 4, 2, GRATE)
         .build()
 }

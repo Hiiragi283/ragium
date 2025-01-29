@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.get
+import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.energyNetwork
@@ -59,6 +60,11 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     abstract val machineKey: HTMachineKey
     override var machineTier: HTMachineTier = HTMachineTier.BASIC
+        set(value) {
+            val oldTier: HTMachineTier = field
+            field = value
+            onUpdateTier(oldTier, value)
+        }
 
     init {
         state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER)?.let { defaultTier: HTMachineTier ->
@@ -150,9 +156,14 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         }
     }
 
+    override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        tickRate = machineKey.getProperty().getOrDefault(HTMachinePropertyKeys.TICK_RATE)(newTier)
+    }
+
     //    Ticking    //
 
-    final override val tickRate: Int get() = machineTier.tickRate
+    final override var tickRate: Int = machineTier.tickRate
+        private set
 
     override fun tickEach(
         level: Level,

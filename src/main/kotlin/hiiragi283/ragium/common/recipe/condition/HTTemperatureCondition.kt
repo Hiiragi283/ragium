@@ -16,8 +16,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.level.Level
 
-@ConsistentCopyVisibility
-data class HTTemperatureCondition private constructor(
+data class HTTemperatureCondition(
     val temperatureType: HTTemperatureType,
     val minTier: HTMachineTier,
     val maxTier: HTMachineTier,
@@ -40,20 +39,6 @@ data class HTTemperatureCondition private constructor(
                         .forGetter(HTTemperatureCondition::targetSide),
                 ).apply(instance, ::HTTemperatureCondition)
         }
-
-        @JvmStatic
-        fun heating(
-            minTier: HTMachineTier,
-            maxTier: HTMachineTier = HTMachineTier.ULTIMATE,
-            targetSide: Direction = Direction.UP,
-        ): HTTemperatureCondition = HTTemperatureCondition(HTTemperatureType.HEATING, minTier, maxTier, targetSide)
-
-        @JvmStatic
-        fun cooling(
-            minTier: HTMachineTier,
-            maxTier: HTMachineTier = HTMachineTier.ULTIMATE,
-            targetSide: Direction = Direction.UP,
-        ): HTTemperatureCondition = HTTemperatureCondition(HTTemperatureType.COOLING, minTier, maxTier, targetSide)
     }
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC

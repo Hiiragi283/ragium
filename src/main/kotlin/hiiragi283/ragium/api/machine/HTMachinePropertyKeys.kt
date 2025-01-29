@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.client.renderer.HTMachineRenderer
 import hiiragi283.ragium.api.extension.constFunction3
 import hiiragi283.ragium.api.extension.identifyFunction
-import hiiragi283.ragium.api.machine.property.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
@@ -17,6 +17,9 @@ import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
+
+typealias HTMachineEntityFactory = (BlockPos, BlockState, HTMachineKey) -> HTMachineBlockEntity?
 
 object HTMachinePropertyKeys {
     @JvmField
@@ -30,6 +33,13 @@ object HTMachinePropertyKeys {
     @JvmField
     val SOUND: HTPropertyKey<SoundEvent> =
         HTPropertyKey.simple(RagiumAPI.id("sound"))
+
+    @JvmField
+    val TICK_RATE: HTPropertyKey<(HTMachineTier) -> Int> =
+        HTPropertyKey
+            .builder<(HTMachineTier) -> Int>(RagiumAPI.id("tick_rate"))
+            .setDefaultValue { HTMachineTier::tickRate }
+            .build()
 
     @JvmField
     val RENDERER_PRE: HTPropertyKey<HTMachineRenderer> =

@@ -3,12 +3,10 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.extension.requiresFor
-import hiiragi283.ragium.api.extension.savePrefixed
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -86,7 +84,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.SUGAR, 2)
             .itemInput(RagiumItems.BUTTER)
             .milkInput()
-            .machineConditions(HTTemperatureCondition.heating(HTMachineTier.BASIC, HTMachineTier.BASIC))
+            .heating(HTMachineTier.BASIC, HTMachineTier.BASIC)
             .itemOutput(RagiumBlocks.SPONGE_CAKE, 4)
             .save(output)
 
@@ -202,10 +200,11 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
         // Ambrosia
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ULTIMATE)
+            .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(RagiumItems.CHOCOLATE, 64)
             .itemInput(RagiumItems.CINNAMON_POWDER, 64)
             .fluidInput(Tags.Fluids.HONEY, FluidType.BUCKET_VOLUME * 64)
+            .tier(HTMachineTier.ULTIMATE)
             .itemOutput(RagiumItems.AMBROSIA)
             .save(output)
     }

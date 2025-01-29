@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -28,7 +27,4 @@ class HTDefaultGeneratorBlockEntity(pos: BlockPos, state: BlockState, override v
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 
     override fun interactWithFluidStorage(player: Player): Boolean = false
-
-    override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {
-    }
 }

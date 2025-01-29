@@ -58,6 +58,7 @@ class HTFluidGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val
         FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, tank)
 
     override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        super.onUpdateTier(oldTier, newTier)
         tank.onUpdateTier(oldTier, newTier)
     }
 

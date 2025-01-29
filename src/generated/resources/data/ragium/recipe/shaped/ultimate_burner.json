@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:mud_bricks"
+      "item": "ragium:ultimate_grate"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "item": "ragium:fierium_block"
     },
     "C": {
-      "item": "minecraft:bricks"
+      "item": "ragium:ultimate_coil"
     }
   },
   "pattern": [
-    "AAA",
+    "A A",
     "ABA",
     "CCC"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:coke_oven"
+    "id": "ragium:ultimate_burner"
   }
 }

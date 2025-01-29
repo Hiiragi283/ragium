@@ -61,6 +61,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
     }
 
     override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        super.onUpdateTier(oldTier, newTier)
         for (tank: HTTieredFluidTank in tanks) {
             tank.onUpdateTier(oldTier, newTier)
         }

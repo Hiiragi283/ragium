@@ -44,6 +44,16 @@ fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V
     entries.forEach(action)
 }
 
+fun <R : Any, C : Any, V : Any> HTTable.Mutable<R, C, V>.computeIfAbsent(row: R, column: C, mapper: (R, C) -> V): V {
+    val value: V? = get(row, column)
+    if (value == null) {
+        val newValue: V = mapper(row, column)
+        put(row, column, newValue)
+        return newValue
+    }
+    return value
+}
+
 fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.asPairMap(): Map<Pair<R, C>, V> =
     entries.associate { (row: R, column: C, value: V) -> (row to column) to value }
 

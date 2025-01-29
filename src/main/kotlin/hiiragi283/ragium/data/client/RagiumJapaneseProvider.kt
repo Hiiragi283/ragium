@@ -114,7 +114,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.BEE_WAX, "蜜蠟")
         add(RagiumItems.CALCIUM_CARBIDE, "炭化カルシウム")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
-        add(RagiumItems.COAL_CHIP, "石炭チップ")
         add(RagiumItems.COKE, "コークス")
         add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumItems.DEEPANT, "ディーパント")
@@ -151,6 +150,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.MACHINE_TIER, "- ティア: %s")
 
         add(RagiumTranslationKeys.MACHINE_PREVIEW, "- プレビューの表示: %s")
+        add(RagiumTranslationKeys.MACHINE_TICK_RATE, "- 処理時間: %s ティック（%s秒）")
         add(RagiumTranslationKeys.MACHINE_WORKING, "- 稼働中: %s")
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")

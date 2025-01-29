@@ -115,7 +115,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     //    Item    //
 
     private fun furnaceFuel(builder: Builder<FurnaceFuel, Item>) {
-        builder.addFuel(RagiumItems.COAL_CHIP, 1)
         builder.addFuel(RagiumItems.RESIDUAL_COKE, 8)
         builder.addFuel(RagiumItems.COKE, 16)
     }
@@ -145,21 +144,22 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         builder.addContent(RagiumMachineKeys.CHEMICAL_REACTOR.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.COMBUSTION_GENERATOR.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.CUTTING_MACHINE.getBlock(), HTMachineTier.ELITE)
+        builder.addContent(RagiumMachineKeys.DISTILLATION_TOWER.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.EXTRACTOR.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.GAS_TURBINE.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.GRINDER.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.GROWTH_CHAMBER.getBlock(), HTMachineTier.ADVANCED)
 
-        builder.addContent(RagiumMachineKeys.BEDROCK_MINER.getBlock(), HTMachineTier.ELITE)
-        builder.addContent(RagiumMachineKeys.DISTILLATION_TOWER.getBlock(), HTMachineTier.ADVANCED)
         builder.addContent(RagiumMachineKeys.LASER_TRANSFORMER.getBlock(), HTMachineTier.ELITE)
         builder.addContent(RagiumMachineKeys.MULTI_SMELTER.getBlock(), HTMachineTier.ELITE)
         builder.addContent(RagiumMachineKeys.RESOURCE_PLANT.getBlock(), HTMachineTier.ELITE)
         builder.addContent(RagiumMachineKeys.VIBRATION_GENERATOR.getBlock(), HTMachineTier.ELITE)
+
+        builder.addContent(RagiumMachineKeys.BEDROCK_MINER.getBlock(), HTMachineTier.ULTIMATE)
     }
 
     private fun material(builder: Builder<HTMaterialDefinition, Item>) {
-        RagiumAPI.materialRegistry.typeMap.forEach { (key: HTMaterialKey, type: HTMaterialType) ->
+        RagiumAPI.materialRegistry.typedMaterials.forEach { (type: HTMaterialType, key: HTMaterialKey) ->
             type.validPrefixes.forEach { prefix: HTTagPrefix ->
                 builder.add(prefix.createTag(key), HTMaterialDefinition(prefix, key), false)
             }

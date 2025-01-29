@@ -28,7 +28,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
     //    Init    //
 
-    override lateinit var typeMap: Map<HTMaterialKey, HTMaterialType>
+    private lateinit var typeMap: Map<HTMaterialKey, HTMaterialType>
     private lateinit var propertyMap: Map<HTMaterialKey, HTPropertyHolder>
 
     private var definitionCache: HTMultiMap.Mutable<Item, HTMaterialDefinition> = mutableMultiMapOf()
@@ -95,6 +95,10 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
         LOGGER.info("Reloaded material items!")
     }
+
+    override val keys: Set<HTMaterialKey> get() = typeMap.keys
+
+    override fun getType(key: HTMaterialKey): HTMaterialType = typeMap[key] ?: error("Unknown material key: $key")
 
     override fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): List<Holder<Item>> = tagItemCache.get(prefix, key) ?: listOf()
 

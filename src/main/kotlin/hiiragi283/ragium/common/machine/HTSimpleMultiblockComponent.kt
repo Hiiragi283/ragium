@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Supplier
 
-class HTSimpleMultiblockComponent(val block: Supplier<Block>) : HTMultiblockComponent {
+class HTSimpleMultiblockComponent(val block: Supplier<out Block>) : HTMultiblockComponent {
     override fun getType(): HTMultiblockComponent.Type<*> = RagiumMultiblockComponentTypes.SIMPLE.get()
 
     override fun getBlockName(controller: HTControllerDefinition): Component = ItemStack(block.get()).displayName

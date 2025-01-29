@@ -107,7 +107,6 @@
   "item.ragium.cinnamon_roll": "シナモンロール",
   "item.ragium.cinnamon_stick": "シナモンスティック",
   "item.ragium.circuit_board": "回路基板",
-  "item.ragium.coal_chip": "石炭チップ",
   "item.ragium.coke": "コークス",
   "item.ragium.cooked_meat_ingot": "焼肉インゴット",
   "item.ragium.crimson_crystal": "深紅の結晶",
@@ -298,6 +297,7 @@
   "tooltip.ragium.machine.cost": "- 処理コスト: %s FE/回",
   "tooltip.ragium.machine.name": "- 機械: %s",
   "tooltip.ragium.machine.preview": "- プレビューの表示: %s",
+  "tooltip.ragium.machine.tick_rate": "- 処理時間: %s ティック（%s秒）",
   "tooltip.ragium.machine.tier": "- ティア: %s",
   "tooltip.ragium.machine.working": "- 稼働中: %s"
 }

@@ -244,9 +244,6 @@ object RagiumItems {
     val SLAG: DeferredItem<Item> = REGISTER.registerSimpleItem("slag")
 
     @JvmField
-    val COAL_CHIP: DeferredItem<Item> = REGISTER.registerSimpleItem("coal_chip")
-
-    @JvmField
     val COKE: DeferredItem<Item> = REGISTER.registerSimpleItem("coke")
 
     @JvmField
@@ -258,7 +255,6 @@ object RagiumItems {
     @JvmField
     val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
         SLAG,
-        COAL_CHIP,
         COKE,
         RESIDUAL_COKE,
         CALCIUM_CARBIDE,

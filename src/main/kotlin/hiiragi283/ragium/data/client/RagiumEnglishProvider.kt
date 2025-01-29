@@ -113,7 +113,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.BEE_WAX, "Bee Wax")
         add(RagiumItems.CALCIUM_CARBIDE, "Calcium Carbide")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        add(RagiumItems.COAL_CHIP, "Coal Chip")
         add(RagiumItems.COKE, "Coke")
         add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumItems.DEEPANT, "Deepant")
@@ -149,6 +148,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MACHINE_TIER, "- Tier: %s")
 
         add(RagiumTranslationKeys.MACHINE_PREVIEW, "- Show Preview: %s")
+        add(RagiumTranslationKeys.MACHINE_TICK_RATE, "- Tick Rate: %s ticks (%s sec)")
         add(RagiumTranslationKeys.MACHINE_WORKING, "- Working: %s")
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")

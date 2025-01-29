@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.createEmptyMaterialStack
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -21,22 +22,22 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
 class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
-    AbstractRecipeCategory<HTMaterialKey>(
+    AbstractRecipeCategory<HTTypedMaterial>(
         RagiumJEIPlugin.MATERIAL_INFO,
         Component.literal("Material Info"),
         guiHelper.createDrawableItemLike(Items.BOOK),
         18 * 9 + 8,
         18 * 3 + 8,
     ),
-    HTRecipeCategory<HTMaterialKey> {
-    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMaterialKey, focuses: IFocusGroup) {
-        val type: HTMaterialType = RagiumAPI.materialRegistry.getType(recipe)
-        for (prefix: HTTagPrefix in type.validPrefixes) {
+    HTRecipeCategory<HTTypedMaterial> {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTTypedMaterial, focuses: IFocusGroup) {
+        val (_: HTMaterialType, key: HTMaterialKey) = recipe
+        for (prefix: HTTagPrefix in HTTagPrefix.entries) {
             val stacks: List<ItemStack> = RagiumAPI.materialRegistry
-                .getItems(prefix, recipe)
+                .getItems(prefix, key)
                 .map(::ItemStack)
                 .takeIf(List<ItemStack>::isNotEmpty)
-                ?: listOf(createEmptyMaterialStack(prefix, recipe))
+                ?: listOf(createEmptyMaterialStack(prefix, key))
             val x: Int = prefix.ordinal % 9
             val y: Int = prefix.ordinal / 9
             builder
@@ -46,7 +47,8 @@ class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
         }
     }
 
-    override fun getRegistryName(recipe: HTMaterialKey): ResourceLocation = commonId(recipe.name)
+    override fun getRegistryName(recipe: HTTypedMaterial): ResourceLocation = commonId(recipe.material.name)
 
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTMaterialKey> = HTMaterialKey.CODEC
+    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTTypedMaterial> =
+        RagiumAPI.materialRegistry.createTypedCodec()
 }

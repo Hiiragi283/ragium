@@ -54,6 +54,7 @@ object RagiumTranslationKeys {
     const val MACHINE_TIER = "tooltip.ragium.machine.tier"
 
     const val MACHINE_PREVIEW = "tooltip.ragium.machine.preview"
+    const val MACHINE_TICK_RATE = "tooltip.ragium.machine.tick_rate"
     const val MACHINE_WORKING = "tooltip.ragium.machine.working"
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"

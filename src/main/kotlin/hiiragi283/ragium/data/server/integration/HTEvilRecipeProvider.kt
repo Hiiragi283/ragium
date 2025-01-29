@@ -1,9 +1,9 @@
 package hiiragi283.ragium.data.server.integration
 
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.extension.heating
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -22,7 +22,7 @@ object HTEvilRecipeProvider : RagiumRecipeProvider.ModChild("evilcraft") {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .fluidInput(blood)
-            .machineConditions(HTTemperatureCondition.heating(HTMachineTier.BASIC))
+            .heating(HTMachineTier.BASIC)
             .itemOutput(RegistryEntries.BLOCK_HARDENED_BLOOD.get())
             .save(output)
     }

@@ -2,8 +2,7 @@
   "parent": "ragium:block/hull",
   "render_type": "minecraft:cutout",
   "textures": {
-    "inside": "ragium:block/basic_casing",
-    "side": "ragium:block/basic_hull",
+    "bottom": "ragium:block/basic_casing",
     "top": "ragium:block/ragi_alloy_block"
   }
 }

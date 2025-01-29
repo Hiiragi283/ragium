@@ -69,6 +69,6 @@ class HTMachineBlock(properties: Properties) : HTEntityBlock(properties) {
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
         val machineKey: HTMachineKey = machineKey ?: return null
-        return machineKey.getProperty()[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, machineKey)
+        return machineKey.getProperty()[HTMachinePropertyKeys.MACHINE_FACTORY]?.invoke(pos, state, machineKey)
     }
 }

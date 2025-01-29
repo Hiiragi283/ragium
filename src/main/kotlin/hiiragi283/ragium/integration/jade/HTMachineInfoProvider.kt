@@ -5,6 +5,8 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.boolText
+import hiiragi283.ragium.api.extension.floatText
+import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -23,12 +25,16 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     val IS_ACTIVE: MapCodec<Boolean> = Codec.BOOL.fieldOf("is_active")
 
     @JvmField
+    val TICK_RATE: MapCodec<Int> = Codec.INT.fieldOf("tick_rate")
+
+    @JvmField
     val SHOW_PREVIEW: MapCodec<Boolean> = Codec.BOOL.fieldOf("show_preview")
 
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
         val machineEntity: HTMachineBlockEntity = accessor.blockEntity as? HTMachineBlockEntity ?: return
         accessor.writeData(HTMachineKey.FIELD_CODEC, machineEntity.machineKey)
         accessor.writeData(HTMachineTier.FIELD_CODEC, machineEntity.machineTier)
+        accessor.writeData(TICK_RATE, machineEntity.tickRate)
         accessor.writeData(IS_ACTIVE, machineEntity.isActive)
         accessor.writeData(SHOW_PREVIEW, machineEntity.showPreview)
     }
@@ -41,8 +47,19 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
         val machineKey: HTMachineKey = accessor.readData(HTMachineKey.FIELD_CODEC).getOrNull() ?: return
         val tier: HTMachineTier = accessor.readData(HTMachineTier.FIELD_CODEC).getOrNull() ?: return
         machineKey.appendTooltip(tooltip::add, tier, false)
+
         val isActive: Boolean = accessor.readData(IS_ACTIVE).orElse(false)
         tooltip.add(Component.translatable(RagiumTranslationKeys.MACHINE_WORKING, boolText(isActive)))
+
+        val tickRate: Int = accessor.readData(TICK_RATE).orElse(tier.tickRate)
+        tooltip.add(
+            Component.translatable(
+                RagiumTranslationKeys.MACHINE_TICK_RATE,
+                intText(tickRate),
+                floatText(tickRate / 20f),
+            ),
+        )
+
         val showPreview: Boolean = accessor.readData(SHOW_PREVIEW).orElse(false)
         tooltip.add(Component.translatable(RagiumTranslationKeys.MACHINE_PREVIEW, boolText(showPreview)))
     }

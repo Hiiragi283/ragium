@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.blockTexture
 import hiiragi283.ragium.api.extension.cutout
+import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.withExistingParent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -79,7 +80,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Hull
         RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
-            val id: ResourceLocation = hull.blockId
             getVariantBuilder(hull.get())
                 .partialState()
                 .setModels(
@@ -87,8 +87,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                         models()
                             .withExistingParent(hull, RagiumAPI.id("block/hull"))
                             .blockTexture("top", hull.machineTier.getStorageBlock().id)
-                            .blockTexture("inside", hull.machineTier.getCasing().id)
-                            .texture("side", id)
+                            .blockTexture("bottom", hull.machineTier.getCasing().id)
                             .cutout(),
                     ),
                 )
@@ -118,7 +117,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                             HTMachineTier.BASIC -> ResourceLocation.withDefaultNamespace("coal_block")
                             HTMachineTier.ADVANCED -> ResourceLocation.withDefaultNamespace("magma")
                             HTMachineTier.ELITE -> RagiumAPI.id("soul_magma_block")
-                            HTMachineTier.ULTIMATE -> RagiumAPI.id("fierium_block")
+                            HTMachineTier.ULTIMATE -> RagiumAPI.id("ultimate_burner")
                         },
                     ).blockTexture("side", tier.getCoil().id.withSuffix("_side"))
                     .blockTexture("top", tier.getCoil().id.withSuffix("_top"))
@@ -176,11 +175,15 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             axisBlock(holder.get(), model, model)
         }
 
-        buildList {
-            add(RagiumBlocks.CHEMICAL_GLASS)
+        simpleBlock(
+            RagiumBlocks.CHEMICAL_GLASS.get(),
+            models().cutoutSimpleBlock("block/chemical_glass", RagiumAPI.id("block/chemical_glass")),
+        )
 
+        buildList {
             addAll(RagiumBlocks.ADDONS)
-        }.map(Supplier<out Block>::get).forEach(::simpleBlock)
+        }.map(Supplier<out Block>::get)
+            .forEach(::simpleBlock)
 
         // Machine
         RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, content: HTBlockContent?, property: HTPropertyHolder ->

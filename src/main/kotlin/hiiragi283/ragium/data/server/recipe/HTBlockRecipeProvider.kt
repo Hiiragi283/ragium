@@ -3,16 +3,14 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
+import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -23,6 +21,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -32,6 +31,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         registerCasings(output)
         registerHulls(output)
         registerCoils(output)
+        registerBurners(output)
         registerDrums(output)
 
         registerDecorations(output)
@@ -147,11 +147,33 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .savePrefixed(output)
             // Assembler
             HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.ASSEMBLER, previousTier)
+                .create(RagiumMachineKeys.ASSEMBLER)
                 .itemInput(HTTagPrefix.INGOT, coil.machineTier.getSubMetal(), 8)
                 .itemInput(RagiumBlocks.SHAFT)
+                .tier(previousTier)
                 .itemOutput(coil, 4)
                 .save(output)
+        }
+    }
+
+    private fun registerBurners(output: RecipeOutput) {
+        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
+            val core: ItemLike = when (burner) {
+                RagiumBlocks.Burners.ADVANCED -> Items.MAGMA_BLOCK
+                RagiumBlocks.Burners.ELITE -> RagiumBlocks.SOUL_MAGMA_BLOCK
+                RagiumBlocks.Burners.ULTIMATE -> RagiumBlocks.StorageBlocks.FIERIUM
+            }
+            // Shaped Crafting
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, burner)
+                .pattern("A A")
+                .pattern("ABA")
+                .pattern("CCC")
+                .define('A', burner.machineTier.getGrate())
+                .define('B', core)
+                .define('C', burner.machineTier.getCoil())
+                .unlockedBy("has_core", has(core))
+                .savePrefixed(output)
         }
     }
 
@@ -232,6 +254,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         basicMachines(output)
         advancedMachines(output)
         eliteMachines(output)
+        ultimateMachines(output)
     }
 
     private fun registerAddons(output: RecipeOutput) {
@@ -258,10 +281,11 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
         // Superconductive Coolant
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ELITE)
+            .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(RagiumBlocks.Casings.ELITE, 4)
             .itemInput(RagiumBlocks.CHEMICAL_GLASS, 4)
             .fluidInput(RagiumFluids.LIQUID_NITROGEN, FluidType.BUCKET_VOLUME * 8)
+            .tier(HTMachineTier.ELITE)
             .itemOutput(RagiumBlocks.SUPERCONDUCTIVE_COOLANT)
             .save(output)
     }
@@ -284,9 +308,10 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .shaped(RecipeCategory.MISC, RagiumMachineKeys.COKE_OVEN.getBlock())
             .pattern("AAA")
             .pattern("ABA")
-            .pattern("AAA")
+            .pattern("CCC")
             .define('A', Items.MUD_BRICKS)
             .define('B', Items.FURNACE)
+            .define('C', Items.BRICKS)
             .unlockedBy("has_mud_bricks", has(Items.MUD_BRICKS))
             .savePrefixed(output)
         // Compressor
@@ -363,11 +388,22 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('A', RagiumBlocks.CHEMICAL_GLASS)
             .define('B', HTMachineTier.ADVANCED.getCircuitTag())
             .define('C', Items.STONECUTTER)
             .define('D', RagiumBlocks.Casings.ADVANCED)
             .unlockedBy("has_circuit", has(HTMachineTier.ADVANCED.getCircuitTag()))
+            .savePrefixed(output)
+        // Distillation Tower
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.DISTILLATION_TOWER.getBlock())
+            .pattern("A A")
+            .pattern("BAB")
+            .pattern("CCC")
+            .define('A', RagiumBlocks.CHEMICAL_GLASS)
+            .define('B', HTTagPrefix.GEAR, RagiumMaterialKeys.DIAMOND)
+            .define('C', RagiumBlocks.Casings.ADVANCED)
+            .unlockedBy("has_casing", has(RagiumBlocks.Casings.ADVANCED))
             .savePrefixed(output)
         // Extractor
         ShapedRecipeBuilder
@@ -406,19 +442,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun eliteMachines(output: RecipeOutput) {
-        // Bedrock Miner
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.BEDROCK_MINER.getBlock())
-            .pattern("AAA")
-            .pattern("BCB")
-            .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL)
-            .define('B', RagiumBlocks.SHAFT)
-            .define('C', Items.HEAVY_CORE)
-            .define('D', RagiumBlocks.Casings.ELITE)
-            .unlockedBy("has_circuit", has(HTMachineTier.ELITE.getCircuitTag()))
-            .savePrefixed(output)
-
         // Laser Transformer
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumMachineKeys.LASER_TRANSFORMER.getBlock())
@@ -454,6 +477,21 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .define('C', RagiumMachineKeys.EXTRACTOR.getBlock())
             .define('D', RagiumBlocks.Casings.ELITE)
             .unlockedBy("has_circuit", has(HTMachineTier.ELITE.getCircuitTag()))
+            .savePrefixed(output)
+    }
+
+    private fun ultimateMachines(output: RecipeOutput) {
+        // Bedrock Miner
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumMachineKeys.BEDROCK_MINER.getBlock())
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGIUM)
+            .define('B', RagiumBlocks.SHAFT)
+            .define('C', Items.NETHER_STAR)
+            .define('D', RagiumBlocks.Casings.ULTIMATE)
+            .unlockedBy("has_star", has(Items.NETHER_STAR))
             .savePrefixed(output)
     }
 }

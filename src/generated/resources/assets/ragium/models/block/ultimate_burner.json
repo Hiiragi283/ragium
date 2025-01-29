@@ -3,7 +3,7 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "bars": "ragium:block/ultimate_grate",
-    "core": "ragium:block/fierium_block",
+    "core": "ragium:block/ultimate_burner",
     "side": "ragium:block/ultimate_coil_side",
     "top": "ragium:block/ultimate_coil_top"
   }

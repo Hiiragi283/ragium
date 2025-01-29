@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.machine.property
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level
 import java.util.function.BiFunction
 import java.util.function.Consumer
 
-private typealias MaterialFactory = BiFunction<HTMaterialKey, HTMaterialRegistry, RecipeHolder<HTMachineRecipe>?>
+private typealias MaterialFactory = BiFunction<HTTypedMaterial, HTMaterialRegistry, RecipeHolder<HTMachineRecipe>?>
 
 /**
  * [HTMachineRecipe]を取得するインターフェース
@@ -65,9 +65,10 @@ fun interface HTMachineRecipeProxy {
                     DEFAULT.getRecipes(level, consumer)
                 }
                 val registry: HTMaterialRegistry = RagiumAPI.materialRegistry
-                registry.keys
-                    .flatMap { key: HTMaterialKey ->
-                        builders.mapNotNull { builder: MaterialFactory -> builder.apply(key, registry) }
+                registry
+                    .typedMaterials
+                    .flatMap { material: HTTypedMaterial ->
+                        builders.mapNotNull { builder: MaterialFactory -> builder.apply(material, registry) }
                     }.forEach(consumer)
             }
     }
