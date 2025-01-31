@@ -59,12 +59,14 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     }
 
     abstract val machineKey: HTMachineKey
-    override var machineTier: HTMachineTier = HTMachineTier.BASIC
-        set(value) {
-            val oldTier: HTMachineTier = field
-            field = value
-            onUpdateTier(oldTier, value)
-        }
+    final override var machineTier: HTMachineTier = HTMachineTier.BASIC
+        private set
+
+    protected fun setAndUpdateTier(newTier: HTMachineTier) {
+        val oldTier: HTMachineTier = machineTier
+        onUpdateTier(oldTier, newTier)
+        machineTier = newTier
+    }
 
     init {
         state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER)?.let { defaultTier: HTMachineTier ->
@@ -89,7 +91,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         super.loadAdditional(tag, registries)
         HTMachineTier.CODEC
             .parse(NbtOps.INSTANCE, tag.get(TIER_KEY))
-            .ifSuccess { machineTier = it }
+            .ifSuccess(::setAndUpdateTier)
         isActive = tag.getBoolean(ACTIVE_KEY)
     }
 
@@ -140,8 +142,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     private fun upgrade(level: Level, player: Player, newTier: HTMachineTier): Boolean {
         val stack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
         return if (stack.isOf(newTier.getHull()) && machineTier < newTier) {
-            onUpdateTier(machineTier, newTier)
-            this.machineTier = newTier
+            setAndUpdateTier(newTier)
             level.playSound(null, blockPos, SoundEvents.PLAYER_LEVELUP, player.soundSource, 1f, 0.5f)
             stack.shrink(1)
             true

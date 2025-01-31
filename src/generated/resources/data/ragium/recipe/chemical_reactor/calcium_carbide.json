@@ -14,7 +14,7 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/alkali"
+      "item": "ragium:alkali_reagent"
     },
     {
       "count": 3,

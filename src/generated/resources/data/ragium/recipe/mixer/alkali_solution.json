@@ -15,7 +15,7 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/alkali"
+      "tag": "c:reagents/alkali"
     }
   ],
   "machine_type": "mixer"

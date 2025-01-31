@@ -2,20 +2,24 @@
   "type": "ragium:machine",
   "fluid_inputs": [
     {
-      "amount": 1000,
-      "tag": "c:alkali_solution"
+      "amount": 2000,
+      "tag": "c:brine"
     }
   ],
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "minecraft:water"
+      "id": "ragium:hydrogen"
+    },
+    {
+      "amount": 1000,
+      "id": "ragium:chlorine"
     }
   ],
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:alkali_dust"
+      "count": 2,
+      "id": "ragium:alkali_reagent"
     }
   ],
   "machine_type": "extractor"

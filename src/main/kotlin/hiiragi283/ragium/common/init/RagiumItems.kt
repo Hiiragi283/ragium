@@ -9,6 +9,9 @@ import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTCraftingToolItem
@@ -62,7 +65,7 @@ object RagiumItems {
                 storage,
                 itemProperty {
                     name(storage.prefixedText)
-                    if (storage.material in RagiumMaterialKeys.END_CONTENTS) {
+                    if (storage.material in RagiumMaterials.END_CONTENTS) {
                         component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                     }
                 },
@@ -131,38 +134,38 @@ object RagiumItems {
         }
 
         // Raws
-        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE)
-        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.RAGINITE)
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
+        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
 
-        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.REDSTONE)
-        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.NITER)
-        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.SALT)
-        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.SULFUR)
-        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.BAUXITE)
+        register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
+        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.NITER)
+        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALT)
+        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SULFUR)
+        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)
         // Ingots
 
         // Gems
-        register(HTTagPrefix.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-        register(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE)
-        register(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE)
+        register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+        register(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
+        register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
         // Gears
-        register(HTTagPrefix.GEAR, RagiumMaterialKeys.COPPER)
-        register(HTTagPrefix.GEAR, RagiumMaterialKeys.IRON)
-        register(HTTagPrefix.GEAR, RagiumMaterialKeys.GOLD)
-        register(HTTagPrefix.GEAR, RagiumMaterialKeys.DIAMOND)
-        register(HTTagPrefix.GEAR, RagiumMaterialKeys.EMERALD)
+        register(HTTagPrefix.GEAR, VanillaMaterials.COPPER)
+        register(HTTagPrefix.GEAR, VanillaMaterials.IRON)
+        register(HTTagPrefix.GEAR, VanillaMaterials.GOLD)
+        register(HTTagPrefix.GEAR, VanillaMaterials.DIAMOND)
+        register(HTTagPrefix.GEAR, VanillaMaterials.EMERALD)
 
-        register(HTTagPrefix.GEAR, RagiumMaterialKeys.STEEL)
-        register(HTTagPrefix.GEAR, RagiumMaterialKeys.DEEP_STEEL)
-        register(HTTagPrefix.GEAR, RagiumMaterialKeys.DRAGONIUM)
+        register(HTTagPrefix.GEAR, CommonMaterials.STEEL)
+        register(HTTagPrefix.GEAR, RagiumMaterials.DEEP_STEEL)
+        register(HTTagPrefix.GEAR, RagiumMaterials.DRAGONIUM)
         // Rods
-        register(HTTagPrefix.ROD, RagiumMaterialKeys.COPPER)
-        register(HTTagPrefix.ROD, RagiumMaterialKeys.IRON)
-        register(HTTagPrefix.ROD, RagiumMaterialKeys.GOLD)
+        register(HTTagPrefix.ROD, VanillaMaterials.COPPER)
+        register(HTTagPrefix.ROD, VanillaMaterials.IRON)
+        register(HTTagPrefix.ROD, VanillaMaterials.GOLD)
 
-        register(HTTagPrefix.ROD, RagiumMaterialKeys.STEEL)
-        register(HTTagPrefix.ROD, RagiumMaterialKeys.DEEP_STEEL)
-        register(HTTagPrefix.ROD, RagiumMaterialKeys.DRAGONIUM)
+        register(HTTagPrefix.ROD, CommonMaterials.STEEL)
+        register(HTTagPrefix.ROD, RagiumMaterials.DEEP_STEEL)
+        register(HTTagPrefix.ROD, RagiumMaterials.DRAGONIUM)
 
         this.materialItems = builder
     }
@@ -171,33 +174,30 @@ object RagiumItems {
 
     enum class Dusts(override val material: HTMaterialKey) : HTItemContent.Material {
         // Vanilla
-        COPPER(RagiumMaterialKeys.COPPER),
-        IRON(RagiumMaterialKeys.IRON),
-        LAPIS(RagiumMaterialKeys.LAPIS),
-        QUARTZ(RagiumMaterialKeys.QUARTZ),
-        GOLD(RagiumMaterialKeys.GOLD),
-        DIAMOND(RagiumMaterialKeys.DIAMOND),
-        EMERALD(RagiumMaterialKeys.EMERALD),
+        COPPER(VanillaMaterials.COPPER),
+        IRON(VanillaMaterials.IRON),
+        LAPIS(VanillaMaterials.LAPIS),
+        QUARTZ(VanillaMaterials.QUARTZ),
+        GOLD(VanillaMaterials.GOLD),
+        DIAMOND(VanillaMaterials.DIAMOND),
+        EMERALD(VanillaMaterials.EMERALD),
 
         // Ragium
-        CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
-        RAGINITE(RagiumMaterialKeys.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
+        CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE),
+        RAGINITE(RagiumMaterials.RAGINITE),
+        RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
 
         // Other
-        WOOD(RagiumMaterialKeys.WOOD),
-        ASH(RagiumMaterialKeys.ASH),
-        CARBON(RagiumMaterialKeys.CARBON),
-        ALKALI(RagiumMaterialKeys.ALKALI),
+        WOOD(CommonMaterials.WOOD),
+        ASH(CommonMaterials.ASH),
+        CARBON(CommonMaterials.CARBON),
 
-        NITER(RagiumMaterialKeys.NITER),
-        SALT(RagiumMaterialKeys.SALT),
-        SULFUR(RagiumMaterialKeys.SULFUR),
+        NITER(CommonMaterials.NITER),
+        SALT(CommonMaterials.SALT),
+        SULFUR(CommonMaterials.SULFUR),
 
-        BAUXITE(RagiumMaterialKeys.BAUXITE),
-        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
-
-        OBSIDIAN(RagiumMaterialKeys.OBSIDIAN),
+        BAUXITE(CommonMaterials.BAUXITE),
+        ALUMINUM(CommonMaterials.ALUMINUM),
         ;
 
         override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
@@ -263,21 +263,21 @@ object RagiumItems {
     enum class Ingots(override val material: HTMaterialKey) : HTItemContent.Material {
         // Vanilla
         // Ragium
-        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
-        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
-        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
-        RAGIUM(RagiumMaterialKeys.RAGIUM),
+        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+        RAGIUM(RagiumMaterials.RAGIUM),
 
         // Steel
-        STEEL(RagiumMaterialKeys.STEEL),
-        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
-        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
+        STEEL(CommonMaterials.STEEL),
+        DEEP_STEEL(RagiumMaterials.DEEP_STEEL),
+        DRAGONIUM(RagiumMaterials.DRAGONIUM),
 
         // Other
-        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        ALUMINUM(CommonMaterials.ALUMINUM),
 
-        ECHORIUM(RagiumMaterialKeys.ECHORIUM),
-        FIERIUM(RagiumMaterialKeys.FIERIUM),
+        ECHORIUM(RagiumMaterials.ECHORIUM),
+        FIERIUM(RagiumMaterials.FIERIUM),
         ;
 
         override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
@@ -459,6 +459,9 @@ object RagiumItems {
     //    Ingredients    //
 
     @JvmField
+    val ALKALI_REAGENT: DeferredItem<Item> = REGISTER.registerSimpleItem("alkali_reagent")
+
+    @JvmField
     val PLASTIC_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("plastic_plate")
 
     @JvmField
@@ -478,6 +481,8 @@ object RagiumItems {
 
     @JvmField
     val INGREDIENTS: List<DeferredItem<Item>> = buildList {
+        // compound
+        add(ALKALI_REAGENT)
         // parts
         add(PLASTIC_PLATE)
         add(CIRCUIT_BOARD)

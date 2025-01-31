@@ -10,11 +10,11 @@ import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.IntegrationMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import hiiragi283.ragium.integration.RagiumEvilIntegration
 import mekanism.generators.common.registries.GeneratorsItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
@@ -71,22 +71,25 @@ class RagiumItemTagProvider(
                 .add(holder)
         }
 
-        addMaterialTag(HTTagPrefix.DUST, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_gem_crushed")
-
-        addMaterialTag(HTTagPrefix.GEM, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_gem")
-
-        addMaterialTag(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_ore")
-        addMaterialTag(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_ore_deepslate")
-
-        addMaterialTag(HTTagPrefix.STORAGE_BLOCK, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_block")
+        addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem_crushed")
+        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem")
+        addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, "netherite_scrap", false)
+        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore")
+        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore_deepslate")
+        addMaterialTag(HTTagPrefix.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, "evilcraft:dark_block")
     }
 
-    private fun addMaterialTag(prefix: HTTagPrefix, material: HTMaterialKey, value: String) {
+    private fun addMaterialTag(
+        prefix: HTTagPrefix,
+        material: HTMaterialKey,
+        value: String,
+        optional: Boolean = true,
+    ) {
         tag(prefix.commonTagKey)
             .addTag(prefix.createTag(material))
 
         tag(prefix.createTag(material))
-            .addOptional(ResourceLocation.parse(value))
+            .add(DeferredItem.createItem(ResourceLocation.parse(value)), optional)
     }
 
     //    Food    //
@@ -122,6 +125,9 @@ class RagiumItemTagProvider(
                 .add(tier.getCircuit())
         }
 
+        tag(RagiumItemTags.ALKALI_REAGENTS)
+            .add(RagiumItems.ALKALI_REAGENT)
+
         tag(ItemTags.COALS)
             .add(RagiumItems.RESIDUAL_COKE)
         tag(RagiumItemTags.COAL_COKE)
@@ -144,12 +150,5 @@ class RagiumItemTagProvider(
             .addItem(RagiumBlocks.Casings.ELITE)
         tag(IndustrialTags.Items.MACHINE_FRAME_SUPREME)
             .addItem(RagiumBlocks.Casings.ULTIMATE)
-
-        // Mekanism
-        tag(HTTagPrefix.PELLET.createTag(RagiumMaterialKeys.URANIUM))
-            .add(RagiumItems.URANIUM_FUEL)
-
-        tag(HTTagPrefix.PELLET.createTag(RagiumMaterialKeys.PLUTONIUM))
-            .add(RagiumItems.PLUTONIUM_FUEL)
     }
 }

@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachineFuel
-import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
@@ -119,12 +118,6 @@ data object RagiumAPI {
          */
         @JvmField
         val MACHINE_TIER: DataMapType<Item, HTMachineTier> = createItem("machine_tier", HTMachineTier.CODEC)
-
-        /**
-         * [HTMaterialDefinition]を返す[DataMapType]
-         */
-        @JvmField
-        val MATERIAL: DataMapType<Item, HTMaterialDefinition> = createItem("material", HTMaterialDefinition.FLAT_CODEC)
 
         /**
          * [HTRadioactivity]を返す[DataMapType]

@@ -6,10 +6,11 @@ import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
@@ -40,7 +41,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     override fun generate(registries: HolderLookup.Provider, saver: Consumer<AdvancementHolder>, existingFileHelper: ExistingFileHelper) {
         output = saver
         val crudeRaginite: ItemLike =
-            RagiumItems.getMaterialItem(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE)
+            RagiumItems.getMaterialItem(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
         root = Advancement.Builder
             .advancement()
             .display(
@@ -67,7 +68,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val ragiAlloy: AdvancementHolder = createMaterial(
             root,
             HTTagPrefix.INGOT,
-            RagiumMaterialKeys.RAGI_ALLOY,
+            RagiumMaterials.RAGI_ALLOY,
             Component.empty(),
         )
         val grinder: AdvancementHolder = createSimple(
@@ -86,19 +87,19 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val steel: AdvancementHolder = createMaterial(
             blastFurnace,
             HTTagPrefix.INGOT,
-            RagiumMaterialKeys.STEEL,
+            CommonMaterials.STEEL,
             Component.empty(),
         )
         val deepSteel: AdvancementHolder = createMaterial(
             blastFurnace,
             HTTagPrefix.INGOT,
-            RagiumMaterialKeys.DEEP_STEEL,
+            RagiumMaterials.DEEP_STEEL,
             Component.empty(),
         )
         val dragonium: AdvancementHolder = createMaterial(
             blastFurnace,
             HTTagPrefix.INGOT,
-            RagiumMaterialKeys.DRAGONIUM,
+            RagiumMaterials.DRAGONIUM,
             Component.empty(),
             type = AdvancementType.GOAL,
         )
@@ -112,7 +113,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val ragiSteel: AdvancementHolder = createMaterial(
             root,
             HTTagPrefix.INGOT,
-            RagiumMaterialKeys.RAGI_STEEL,
+            RagiumMaterials.RAGI_STEEL,
             Component.empty(),
         )
         val casing: AdvancementHolder = createSimple(
@@ -155,7 +156,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val refinedRagiSteel: AdvancementHolder = createMaterial(
             root,
             HTTagPrefix.INGOT,
-            RagiumMaterialKeys.REFINED_RAGI_STEEL,
+            RagiumMaterials.REFINED_RAGI_STEEL,
             Component.empty(),
         )
         val casing: AdvancementHolder = createSimple(
@@ -171,7 +172,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val ragium: AdvancementHolder = createMaterial(
             root,
             HTTagPrefix.INGOT,
-            RagiumMaterialKeys.RAGIUM,
+            RagiumMaterials.RAGIUM,
             Component.empty(),
             type = AdvancementType.GOAL,
         )

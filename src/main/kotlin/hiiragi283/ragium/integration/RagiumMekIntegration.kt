@@ -2,8 +2,8 @@ package hiiragi283.ragium.integration
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import org.slf4j.Logger
@@ -13,21 +13,10 @@ object RagiumMekIntegration {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
-    @JvmField
-    val OSMIUM: HTMaterialKey = HTMaterialKey.Companion.of("osmium")
-
-    @JvmField
-    val REFINED_GLOWSTONE: HTMaterialKey = HTMaterialKey.Companion.of("refined_glowstone")
-
-    @JvmField
-    val REFINED_OBSIDIAN: HTMaterialKey = HTMaterialKey.Companion.of("refined_obsidian")
-
     @SubscribeEvent
     fun registerMaterial(event: HTRegisterMaterialEvent) {
-        event.register(REFINED_GLOWSTONE, HTMaterialType.ALLOY)
-        event.register(REFINED_OBSIDIAN, HTMaterialType.ALLOY)
-
-        event.register(OSMIUM, HTMaterialType.METAL)
+        event.register(IntegrationMaterials.REFINED_GLOWSTONE, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.REFINED_OBSIDIAN, HTMaterialType.ALLOY)
 
         LOGGER.info("Enabled Mekanism Integration!")
     }

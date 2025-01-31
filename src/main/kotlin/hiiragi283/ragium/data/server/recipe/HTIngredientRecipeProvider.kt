@@ -8,6 +8,9 @@ import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -54,9 +57,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("ABA")
             .pattern("AAA")
-            .define('A', HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE)
-            .define('B', HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
-            .unlockedBy("has_crude_raginite", has(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE))
+            .define('A', HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
+            .define('B', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .unlockedBy("has_crude_raginite", has(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE))
             .savePrefixed(output)
 
         ShapedRecipeBuilder
@@ -64,9 +67,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern(" A ")
             .pattern("ABA")
             .pattern(" A ")
-            .define('A', HTTagPrefix.DUST, RagiumMaterialKeys.CRUDE_RAGINITE)
-            .define('B', HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
-            .unlockedBy("has_crude_raginite", has(HTTagPrefix.DUST, RagiumMaterialKeys.CRUDE_RAGINITE))
+            .define('A', HTTagPrefix.DUST, RagiumMaterials.CRUDE_RAGINITE)
+            .define('B', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .unlockedBy("has_crude_raginite", has(HTTagPrefix.DUST, RagiumMaterials.CRUDE_RAGINITE))
             .save(output, RagiumAPI.id("shaped/ragi_alloy_compound_alt"))
 
         HTCookingRecipeBuilder
@@ -80,14 +83,14 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGINITE)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .itemOutput(RagiumItems.Ingots.RAGI_ALLOY)
             .save(output)
         // Ragi-Steel
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.CRUDE_RAGINITE, 8)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterials.CRUDE_RAGINITE, 8)
             .itemInput(RagiumItems.SOAP)
             .waterInput()
             .itemOutput(RagiumItems.Dusts.RAGINITE, 6)
@@ -96,22 +99,22 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGINITE, 4)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
             .itemOutput(RagiumItems.Ingots.RAGI_STEEL)
             .save(output)
         // Refined Ragi-Steel
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGINITE, 4)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 5)
             .itemOutput(RagiumItems.Dusts.RAGI_CRYSTAL)
             .save(output)
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGI_CRYSTAL, 4)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 4)
             .itemOutput(RagiumItems.Ingots.REFINED_RAGI_STEEL)
             .save(output)
     }
@@ -120,14 +123,14 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Steel
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(ItemTags.COALS, 4)
             .itemOutput(RagiumItems.Ingots.STEEL)
             .save(output)
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(RagiumItemTags.COAL_COKE)
             .itemOutput(RagiumItems.Ingots.STEEL)
             .saveSuffixed(output, "_alt")
@@ -142,7 +145,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .itemInput(RagiumItems.DEEPANT, 4)
             .itemOutput(RagiumItems.Ingots.DEEP_STEEL)
             .save(output)
@@ -152,7 +155,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Ragium
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER, HTMachineTier.ELITE)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGI_CRYSTAL, 4)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 4)
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .fluidOutput(RagiumFluids.RAGIUM_SOLUTION)
             .save(output)
@@ -180,7 +183,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .fluidInput(RagiumFluids.DESTABILIZED_RAGIUM_SOLUTION)
             .itemOutput(RagiumItems.Ingots.RAGIUM)
             .save(output)
@@ -194,7 +197,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
             .fluidInput(RagiumFluids.DRAGON_BREATH)
             .catalyst(Items.DRAGON_EGG)
             .itemOutput(RagiumItems.Ingots.DRAGONIUM)
@@ -202,7 +205,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         // Unbreakable Elytra
         val elytraId: ResourceLocation = RagiumAPI.id("smithing/dragonium_elytra")
-        val ingotDragonium: TagKey<Item> = HTTagPrefix.INGOT.createTag(RagiumMaterialKeys.DRAGONIUM)
+        val ingotDragonium: TagKey<Item> = HTTagPrefix.INGOT.createTag(RagiumMaterials.DRAGONIUM)
         output.accept(
             elytraId,
             SmithingTransformRecipe(
@@ -276,10 +279,10 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .pattern("AA")
                 .pattern("AA")
                 .pattern("BC")
-                .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL)
+                .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
                 .define('B', RagiumItems.FORGE_HAMMER)
                 .define('C', prefix.commonTagKey)
-                .unlockedBy("has_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL))
+                .unlockedBy("has_steel", has(HTTagPrefix.INGOT, CommonMaterials.STEEL))
                 .savePrefixed(output)
         }
 
@@ -294,9 +297,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern(" AA")
             .pattern("BBA")
             .pattern(" AA")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
-            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
+            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
             .savePrefixed(output)
 
         ShapedRecipeBuilder
@@ -306,8 +309,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("ABA")
             .define('A', ItemTags.WOOL)
             .define('B', Items.PAPER)
-            .define('C', HTTagPrefix.GEM, RagiumMaterialKeys.EMERALD)
-            .unlockedBy("has_emerald", has(HTTagPrefix.GEM, RagiumMaterialKeys.EMERALD))
+            .define('C', HTTagPrefix.GEM, VanillaMaterials.EMERALD)
+            .unlockedBy("has_emerald", has(HTTagPrefix.GEM, VanillaMaterials.EMERALD))
             .savePrefixed(output)
 
         ShapedRecipeBuilder
@@ -325,9 +328,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BBB")
             .pattern("AAA")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Tags.Items.DYES_WHITE)
-            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
+            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
             .savePrefixed(output)
     }
 
@@ -338,23 +341,23 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("BBB")
             .pattern("CCC")
             .define('A', Tags.Items.GLASS_PANES)
-            .define('B', HTTagPrefix.DUST, RagiumMaterialKeys.LAPIS)
-            .define('C', HTTagPrefix.INGOT, RagiumMaterialKeys.ALUMINUM)
-            .unlockedBy("has_aluminum", has(HTTagPrefix.INGOT, RagiumMaterialKeys.ALUMINUM))
+            .define('B', HTTagPrefix.DUST, VanillaMaterials.LAPIS)
+            .define('C', HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+            .unlockedBy("has_aluminum", has(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM))
             .savePrefixed(output)
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(RagiumItems.LUMINESCENCE_DUST)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
             .itemOutput(RagiumItems.LED, 4)
             .save(output)
 
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL, 4)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL, 4)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL, 4)
             .itemInput(Items.PISTON, 2)
             .itemOutput(RagiumItems.ENGINE)
             .save(output)
@@ -381,8 +384,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.SHAFT, 6)
             .pattern("A")
             .pattern("A")
-            .define('A', HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON)
-            .unlockedBy("has_iron_block", has(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON))
+            .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
+            .unlockedBy("has_iron_block", has(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
             .savePrefixed(output)
 
         ShapedRecipeBuilder

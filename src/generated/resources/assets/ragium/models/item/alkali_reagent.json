@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/obsidian_dust"
+    "layer0": "ragium:item/alkali_reagent"
   }
 }

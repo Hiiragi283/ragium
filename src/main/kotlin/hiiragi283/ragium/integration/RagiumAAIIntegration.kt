@@ -9,14 +9,14 @@ import net.neoforged.fml.common.EventBusSubscriber
 import org.slf4j.Logger
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
-object RagiumEvilIntegration {
+object RagiumAAIIntegration {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
     @SubscribeEvent
     fun registerMaterial(event: HTRegisterMaterialEvent) {
-        event.register(IntegrationMaterials.DARK_GEM, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.BLACK_QUARTZ, HTMaterialType.GEM)
 
-        LOGGER.info("Enabled Evil Craft Integration!")
+        LOGGER.info("Enabled AA Integration!")
     }
 }

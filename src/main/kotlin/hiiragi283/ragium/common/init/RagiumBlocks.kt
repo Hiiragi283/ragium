@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
@@ -42,24 +44,24 @@ object RagiumBlocks {
 
     enum class Ores(override val oreVariant: HTOreVariant, override val material: HTMaterialKey) : HTOreVariant.Content {
         // overworld
-        CRUDE_RAGINITE(HTOreVariant.OVERWORLD, RagiumMaterialKeys.CRUDE_RAGINITE),
-        RAGINITE(HTOreVariant.OVERWORLD, RagiumMaterialKeys.RAGINITE),
-        RAGI_CRYSTAL(HTOreVariant.OVERWORLD, RagiumMaterialKeys.RAGI_CRYSTAL),
+        CRUDE_RAGINITE(HTOreVariant.OVERWORLD, RagiumMaterials.CRUDE_RAGINITE),
+        RAGINITE(HTOreVariant.OVERWORLD, RagiumMaterials.RAGINITE),
+        RAGI_CRYSTAL(HTOreVariant.OVERWORLD, RagiumMaterials.RAGI_CRYSTAL),
 
         // deepslate
-        DEEPSLATE_CRUDE_RAGINITE(HTOreVariant.DEEP, RagiumMaterialKeys.CRUDE_RAGINITE),
-        DEEPSLATE_RAGINITE(HTOreVariant.DEEP, RagiumMaterialKeys.RAGINITE),
-        DEEPSLATE_RAGI_CRYSTAL(HTOreVariant.DEEP, RagiumMaterialKeys.RAGI_CRYSTAL),
+        DEEPSLATE_CRUDE_RAGINITE(HTOreVariant.DEEP, RagiumMaterials.CRUDE_RAGINITE),
+        DEEPSLATE_RAGINITE(HTOreVariant.DEEP, RagiumMaterials.RAGINITE),
+        DEEPSLATE_RAGI_CRYSTAL(HTOreVariant.DEEP, RagiumMaterials.RAGI_CRYSTAL),
 
         // nether
-        NETHER_CRUDE_RAGINITE(HTOreVariant.NETHER, RagiumMaterialKeys.CRUDE_RAGINITE),
-        NETHER_RAGINITE(HTOreVariant.NETHER, RagiumMaterialKeys.RAGINITE),
-        NETHER_RAGI_CRYSTAL(HTOreVariant.NETHER, RagiumMaterialKeys.RAGI_CRYSTAL),
+        NETHER_CRUDE_RAGINITE(HTOreVariant.NETHER, RagiumMaterials.CRUDE_RAGINITE),
+        NETHER_RAGINITE(HTOreVariant.NETHER, RagiumMaterials.RAGINITE),
+        NETHER_RAGI_CRYSTAL(HTOreVariant.NETHER, RagiumMaterials.RAGI_CRYSTAL),
 
         // end
-        END_CRUDE_RAGINITE(HTOreVariant.END, RagiumMaterialKeys.CRUDE_RAGINITE),
-        END_RAGINITE(HTOreVariant.END, RagiumMaterialKeys.RAGINITE),
-        END_RAGI_CRYSTAL(HTOreVariant.END, RagiumMaterialKeys.RAGI_CRYSTAL),
+        END_CRUDE_RAGINITE(HTOreVariant.END, RagiumMaterials.CRUDE_RAGINITE),
+        END_RAGINITE(HTOreVariant.END, RagiumMaterials.RAGINITE),
+        END_RAGI_CRYSTAL(HTOreVariant.END, RagiumMaterials.RAGI_CRYSTAL),
         ;
 
         override val holder: DeferredBlock<out Block> =
@@ -72,25 +74,25 @@ object RagiumBlocks {
 
     enum class StorageBlocks(isGem: Boolean, override val material: HTMaterialKey) : HTBlockContent.Material {
         // Ragium
-        RAGI_ALLOY(false, RagiumMaterialKeys.RAGI_ALLOY),
-        RAGI_STEEL(false, RagiumMaterialKeys.RAGI_STEEL),
-        REFINED_RAGI_STEEL(false, RagiumMaterialKeys.REFINED_RAGI_STEEL),
-        RAGIUM(false, RagiumMaterialKeys.RAGIUM),
+        RAGI_ALLOY(false, RagiumMaterials.RAGI_ALLOY),
+        RAGI_STEEL(false, RagiumMaterials.RAGI_STEEL),
+        REFINED_RAGI_STEEL(false, RagiumMaterials.REFINED_RAGI_STEEL),
+        RAGIUM(false, RagiumMaterials.RAGIUM),
 
         // Steel
-        STEEL(false, RagiumMaterialKeys.STEEL),
-        DEEP_STEEL(false, RagiumMaterialKeys.DEEP_STEEL),
-        DRAGONIUM(false, RagiumMaterialKeys.DRAGONIUM),
+        STEEL(false, CommonMaterials.STEEL),
+        DEEP_STEEL(false, RagiumMaterials.DEEP_STEEL),
+        DRAGONIUM(false, RagiumMaterials.DRAGONIUM),
 
         // Crystal
-        RAGI_CRYSTAL(true, RagiumMaterialKeys.RAGI_CRYSTAL),
-        FLUORITE(true, RagiumMaterialKeys.FLUORITE),
-        CRYOLITE(true, RagiumMaterialKeys.CRYOLITE),
+        RAGI_CRYSTAL(true, RagiumMaterials.RAGI_CRYSTAL),
+        FLUORITE(true, CommonMaterials.FLUORITE),
+        CRYOLITE(true, CommonMaterials.CRYOLITE),
 
         // Other
-        ALUMINUM(false, RagiumMaterialKeys.ALUMINUM),
-        ECHORIUM(false, RagiumMaterialKeys.ECHORIUM),
-        FIERIUM(false, RagiumMaterialKeys.FIERIUM),
+        ALUMINUM(false, CommonMaterials.ALUMINUM),
+        ECHORIUM(false, RagiumMaterials.ECHORIUM),
+        FIERIUM(false, RagiumMaterials.FIERIUM),
         ;
 
         override val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(

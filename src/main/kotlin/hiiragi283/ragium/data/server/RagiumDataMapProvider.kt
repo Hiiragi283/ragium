@@ -8,18 +8,16 @@ import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.material.HTMaterialDefinition
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.util.HTTemperatureInfo
-import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -59,7 +57,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         machineKey(builder(RagiumAPI.DataMapTypes.MACHINE_KEY))
         machineTier(builder(RagiumAPI.DataMapTypes.MACHINE_TIER))
-        material(builder(RagiumAPI.DataMapTypes.MATERIAL))
         radioactivity(builder(RagiumAPI.DataMapTypes.RADIOACTIVES))
     }
 
@@ -156,19 +153,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         builder.addContent(RagiumMachineKeys.VIBRATION_GENERATOR.getBlock(), HTMachineTier.ELITE)
 
         builder.addContent(RagiumMachineKeys.BEDROCK_MINER.getBlock(), HTMachineTier.ULTIMATE)
-    }
-
-    private fun material(builder: Builder<HTMaterialDefinition, Item>) {
-        RagiumAPI.materialRegistry.typedMaterials.forEach { (type: HTMaterialType, key: HTMaterialKey) ->
-            type.validPrefixes.forEach { prefix: HTTagPrefix ->
-                builder.add(prefix.createTag(key), HTMaterialDefinition(prefix, key), false)
-            }
-        }
-
-        builder.addItem(
-            Items.NETHERITE_SCRAP,
-            HTMaterialDefinition(HTTagPrefix.GEM, RagiumMaterialKeys.NETHERITE_SCRAP),
-        )
     }
 
     private fun radioactivity(builder: Builder<HTRadioactivity, Item>) {

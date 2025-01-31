@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.toDataResult
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
@@ -16,9 +15,7 @@ import net.minecraft.world.item.Item
  * Represent [TagKey] prefixes
  */
 enum class HTTagPrefix(private val commonName: String, private val tagPrefix: String = "$commonName/") : StringRepresentable {
-    CLUMP("clumps"),
-    CRYSTAL("crystals"),
-    DIRTY_DUST("dirty_dusts"),
+    // Common
     DUST("dusts"),
     GEAR("gears"),
     GEM("gems") {
@@ -27,21 +24,52 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     INGOT("ingots"),
     NUGGET("nuggets"),
     ORE("ores"),
-    PELLET("pellets"),
     PLATE("plates"),
     RAW_MATERIAL("raw_materials") {
         override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"
     },
     RAW_STORAGE("storage_blocks", "storage_blocks/raw_"),
     ROD("rods"),
-    SHARD("shards"),
     STORAGE_BLOCK("storage_blocks") {
         override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
     },
-    WIRE("wires"),
+
+    // Mekanism
+    DIRTY_DUST("dirty_dusts"),
+    CLUMP("clumps"),
+    SHARD("shards"),
+    CRYSTAL("crystals"),
+
+    // MI
+    TINY_DUST("tiny_dusts"),
     ;
 
     companion object {
+        @JvmField
+        val ORE_PARTS: List<HTTagPrefix> = listOf(
+            ORE,
+            RAW_MATERIAL,
+            RAW_STORAGE,
+        )
+
+        @JvmField
+        val METAL_PARTS: List<HTTagPrefix> = listOf(
+            DUST,
+            GEAR,
+            INGOT,
+            PLATE,
+            ROD,
+            STORAGE_BLOCK,
+        )
+
+        @JvmField
+        val MEKANISM_PARTS: List<HTTagPrefix> = listOf(
+            DIRTY_DUST,
+            CLUMP,
+            SHARD,
+            CRYSTAL,
+        )
+
         @JvmStatic
         fun fromSerializedName(name: String): DataResult<HTTagPrefix> =
             HTTagPrefix.entries.firstOrNull { it.serializedName == name }.toDataResult { "Unknown prefix: $name" }
@@ -50,9 +78,6 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     //    Id    //
 
     open fun createPath(key: HTMaterialKey): String = "${key.name}_$serializedName"
-
-    fun createId(key: HTMaterialKey, namespace: String = RagiumAPI.MOD_ID): ResourceLocation =
-        ResourceLocation.fromNamespaceAndPath(namespace, createPath(key))
 
     //    TagKey    //
 

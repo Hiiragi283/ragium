@@ -9,6 +9,8 @@ import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -49,9 +51,9 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("ABA")
             .pattern("AAA")
-            .define('A', HTTagPrefix.ROD, RagiumMaterialKeys.COPPER)
+            .define('A', HTTagPrefix.ROD, VanillaMaterials.COPPER)
             .define('B', RagiumItems.FORGE_HAMMER)
-            .unlockedBy("has_rod", has(HTTagPrefix.ROD, RagiumMaterialKeys.COPPER))
+            .unlockedBy("has_rod", has(HTTagPrefix.ROD, VanillaMaterials.COPPER))
             .save(output, RagiumAPI.id("shaped/copper_grate"))
 
         RagiumBlocks.Grates.entries.forEach { grate: RagiumBlocks.Grates ->
@@ -246,9 +248,9 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("BBB")
             .pattern("CCC")
             .define('A', Tags.Items.RODS_WOODEN)
-            .define('B', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('C', Items.BRICKS)
-            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
+            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
             .savePrefixed(output)
 
         basicMachines(output)
@@ -264,9 +266,9 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern(" A ")
             .pattern("ABA")
             .pattern(" A ")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .define('A', HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .define('B', Items.ITEM_FRAME)
-            .unlockedBy("has_iron", has(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON))
+            .unlockedBy("has_iron", has(HTTagPrefix.INGOT, VanillaMaterials.IRON))
             .savePrefixed(output)
         // E.N.I.
         ShapedRecipeBuilder
@@ -274,7 +276,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("ABA")
             .pattern("BCB")
             .pattern("ABA")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
             .define('B', HTMachineTier.ELITE.getCircuitTag())
             .define('C', Tags.Items.OBSIDIANS_CRYING)
             .unlockedBy("has_circuit", has(HTMachineTier.ELITE.getCircuitTag()))
@@ -297,7 +299,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', RagiumBlocks.Coils.BASIC)
             .define('C', Items.BLAST_FURNACE)
             .define('D', RagiumBlocks.Casings.BASIC)
@@ -320,10 +322,10 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("B B")
             .pattern("CCC")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Items.PISTON)
             .define('C', RagiumBlocks.Casings.BASIC)
-            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
+            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
             .savePrefixed(output)
         // Mixer
         ShapedRecipeBuilder
@@ -331,9 +333,9 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("A A")
             .pattern("A A")
             .pattern("ABA")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
-            .define('B', HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER)
-            .unlockedBy("has_iron", has(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON))
+            .define('A', HTTagPrefix.INGOT, VanillaMaterials.IRON)
+            .define('B', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.COPPER)
+            .unlockedBy("has_iron", has(HTTagPrefix.INGOT, VanillaMaterials.IRON))
             .savePrefixed(output)
         // Steam Boiler
         ShapedRecipeBuilder
@@ -341,9 +343,9 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("A A")
             .pattern("BBB")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
+            .define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .define('B', Items.BRICKS)
-            .unlockedBy("has_copper", has(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER))
+            .unlockedBy("has_copper", has(HTTagPrefix.INGOT, VanillaMaterials.COPPER))
             .savePrefixed(output)
     }
 
@@ -365,7 +367,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
             .define('B', HTMachineTier.ADVANCED.getCircuitTag())
             .define('C', Items.CRAFTER)
             .define('D', RagiumBlocks.Casings.ADVANCED)
@@ -377,10 +379,10 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("B B")
             .pattern("CCC")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
             .define('B', RagiumBlocks.CHEMICAL_GLASS)
             .define('C', RagiumBlocks.Casings.ADVANCED)
-            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL))
+            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL))
             .savePrefixed(output)
         // Cutting Machine
         ShapedRecipeBuilder
@@ -401,7 +403,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("BAB")
             .pattern("CCC")
             .define('A', RagiumBlocks.CHEMICAL_GLASS)
-            .define('B', HTTagPrefix.GEAR, RagiumMaterialKeys.DIAMOND)
+            .define('B', HTTagPrefix.GEAR, VanillaMaterials.DIAMOND)
             .define('C', RagiumBlocks.Casings.ADVANCED)
             .unlockedBy("has_casing", has(RagiumBlocks.Casings.ADVANCED))
             .savePrefixed(output)
@@ -411,11 +413,11 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
             .define('B', Items.PISTON)
             .define('C', RagiumBlocks.CHEMICAL_GLASS)
             .define('D', RagiumBlocks.Casings.ADVANCED)
-            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL))
+            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL))
             .savePrefixed(output)
         // Grinder
         ShapedRecipeBuilder
@@ -423,10 +425,10 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern(" B ")
             .pattern("CCC")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
             .define('B', Items.GRINDSTONE)
             .define('C', RagiumBlocks.Casings.ADVANCED)
-            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL))
+            .unlockedBy("has_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL))
             .savePrefixed(output)
         // Growth Chamber
         ShapedRecipeBuilder
@@ -448,11 +450,11 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.REFINED_RAGI_STEEL)
             .define('B', Items.PISTON)
             .define('C', Items.END_CRYSTAL)
             .define('D', RagiumBlocks.Casings.ELITE)
-            .unlockedBy("has_refined_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL))
+            .unlockedBy("has_refined_ragi_steel", has(HTTagPrefix.INGOT, RagiumMaterials.REFINED_RAGI_STEEL))
             .savePrefixed(output)
         // Multi Smelter
         ShapedRecipeBuilder
@@ -460,7 +462,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.REFINED_RAGI_STEEL)
             .define('B', HTMachineTier.ELITE.getCircuitTag())
             .define('C', RagiumMachineKeys.BLAST_FURNACE.getBlock())
             .define('D', RagiumBlocks.Casings.ELITE)
@@ -472,7 +474,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.REFINED_RAGI_STEEL)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.REFINED_RAGI_STEEL)
             .define('B', RagiumBlocks.SHAFT)
             .define('C', RagiumMachineKeys.EXTRACTOR.getBlock())
             .define('D', RagiumBlocks.Casings.ELITE)
@@ -487,7 +489,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGIUM)
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .define('B', RagiumBlocks.SHAFT)
             .define('C', Items.NETHER_STAR)
             .define('D', RagiumBlocks.Casings.ULTIMATE)

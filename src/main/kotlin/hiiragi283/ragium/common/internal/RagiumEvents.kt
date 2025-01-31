@@ -17,6 +17,9 @@ import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -240,74 +243,66 @@ internal object RagiumEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun registerMaterial(event: HTRegisterMaterialEvent) {
-        // Alloy
-        event.register(RagiumMaterialKeys.DEEP_STEEL, HTMaterialType.ALLOY)
-        event.register(RagiumMaterialKeys.NETHERITE, HTMaterialType.ALLOY)
-        event.register(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialType.ALLOY)
-        event.register(RagiumMaterialKeys.RAGI_STEEL, HTMaterialType.ALLOY)
-        event.register(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialType.ALLOY)
-        event.register(RagiumMaterialKeys.STEEL, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.ALUMINUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.ANTIMONY, HTMaterialType.METAL)
+        event.register(CommonMaterials.BERYLLIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.ASH, HTMaterialType.DUST)
+        event.register(CommonMaterials.BAUXITE, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.BRASS, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.BRONZE, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.CADMIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.CARBON, HTMaterialType.DUST)
+        event.register(CommonMaterials.CHROMIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.CRYOLITE, HTMaterialType.GEM)
+        event.register(CommonMaterials.ELECTRUM, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.FLUORITE, HTMaterialType.GEM)
+        event.register(CommonMaterials.INVAR, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.IRIDIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.LEAD, HTMaterialType.METAL)
+        event.register(CommonMaterials.NICKEL, HTMaterialType.METAL)
+        event.register(CommonMaterials.NITER, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.OSMIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.PERIDOT, HTMaterialType.GEM)
+        event.register(CommonMaterials.PLATINUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.PLUTONIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.RUBY, HTMaterialType.GEM)
+        event.register(CommonMaterials.SALT, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.SAPPHIRE, HTMaterialType.GEM)
+        event.register(CommonMaterials.SILICON, HTMaterialType.METAL)
+        event.register(CommonMaterials.SILVER, HTMaterialType.METAL)
+        event.register(CommonMaterials.STEEL, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.SULFUR, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.TIN, HTMaterialType.METAL)
+        event.register(CommonMaterials.TITANIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.TUNGSTEN, HTMaterialType.METAL)
+        event.register(CommonMaterials.URANIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.WOOD, HTMaterialType.DUST)
+        event.register(CommonMaterials.ZINC, HTMaterialType.METAL)
 
-        event.register(RagiumMaterialKeys.BRASS, HTMaterialType.ALLOY)
-        event.register(RagiumMaterialKeys.BRONZE, HTMaterialType.ALLOY)
-        event.register(RagiumMaterialKeys.ELECTRUM, HTMaterialType.ALLOY)
-        event.register(RagiumMaterialKeys.INVAR, HTMaterialType.ALLOY)
-        // Dust
-        event.register(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
-        event.register(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
-        event.register(RagiumMaterialKeys.CARBON, HTMaterialType.DUST)
-        event.register(RagiumMaterialKeys.OBSIDIAN, HTMaterialType.DUST)
-        event.register(RagiumMaterialKeys.WOOD, HTMaterialType.DUST)
-        // Gem
-        event.register(RagiumMaterialKeys.AMETHYST, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.CINNABAR, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.COAL, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.CRYOLITE, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.DIAMOND, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.EMERALD, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.FLUORITE, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.LAPIS, HTMaterialType.GEM)
+        event.register(RagiumMaterials.CRUDE_RAGINITE, HTMaterialType.MINERAL)
+        event.register(RagiumMaterials.DEEP_STEEL, HTMaterialType.ALLOY)
+        event.register(RagiumMaterials.DRAGONIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.ECHORIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.FIERIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.RAGI_ALLOY, HTMaterialType.ALLOY)
+        event.register(RagiumMaterials.RAGI_CRYSTAL, HTMaterialType.GEM)
+        event.register(RagiumMaterials.RAGI_STEEL, HTMaterialType.ALLOY)
+        event.register(RagiumMaterials.RAGINITE, HTMaterialType.MINERAL)
+        event.register(RagiumMaterials.RAGIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.REFINED_RAGI_STEEL, HTMaterialType.ALLOY)
 
-        event.register(RagiumMaterialKeys.NETHERITE_SCRAP, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.PERIDOT, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.QUARTZ, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.RUBY, HTMaterialType.GEM)
-        event.register(RagiumMaterialKeys.SAPPHIRE, HTMaterialType.GEM)
-        // Metal
-        event.register(RagiumMaterialKeys.ALUMINUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.COPPER, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.GOLD, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.IRON, HTMaterialType.METAL)
-
-        event.register(RagiumMaterialKeys.RAGIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.ECHORIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.FIERIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.DRAGONIUM, HTMaterialType.METAL)
-
-        event.register(RagiumMaterialKeys.IRIDIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.NICKEL, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.PLATINUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.PLUTONIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.SILVER, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.TIN, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.TITANIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.TUNGSTEN, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.URANIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterialKeys.ZINC, HTMaterialType.METAL)
-        // Mineral
-        event.register(RagiumMaterialKeys.BAUXITE, HTMaterialType.MINERAL)
-        event.register(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialType.MINERAL)
-        event.register(RagiumMaterialKeys.NITER, HTMaterialType.MINERAL)
-        event.register(RagiumMaterialKeys.RAGINITE, HTMaterialType.MINERAL)
-        event.register(RagiumMaterialKeys.REDSTONE, HTMaterialType.MINERAL)
-        event.register(RagiumMaterialKeys.SALT, HTMaterialType.MINERAL)
-        event.register(RagiumMaterialKeys.SULFUR, HTMaterialType.MINERAL)
-
-        event.register(RagiumMaterialKeys.GALENA, HTMaterialType.MINERAL)
-        event.register(RagiumMaterialKeys.PYRITE, HTMaterialType.MINERAL)
-        event.register(RagiumMaterialKeys.SPHALERITE, HTMaterialType.MINERAL)
+        event.register(VanillaMaterials.AMETHYST, HTMaterialType.GEM)
+        event.register(VanillaMaterials.COAL, HTMaterialType.GEM)
+        event.register(VanillaMaterials.COPPER, HTMaterialType.METAL)
+        event.register(VanillaMaterials.DIAMOND, HTMaterialType.GEM)
+        event.register(VanillaMaterials.EMERALD, HTMaterialType.GEM)
+        event.register(VanillaMaterials.GOLD, HTMaterialType.METAL)
+        event.register(VanillaMaterials.IRON, HTMaterialType.METAL)
+        event.register(VanillaMaterials.LAPIS, HTMaterialType.GEM)
+        event.register(VanillaMaterials.NETHERITE, HTMaterialType.ALLOY)
+        event.register(VanillaMaterials.NETHERITE_SCRAP, HTMaterialType.GEM)
+        event.register(VanillaMaterials.QUARTZ, HTMaterialType.GEM)
+        event.register(VanillaMaterials.REDSTONE, HTMaterialType.MINERAL)
     }
 
     @SubscribeEvent
@@ -459,7 +454,6 @@ internal object RagiumEvents {
 
         event.register(RagiumAPI.DataMapTypes.MACHINE_KEY)
         event.register(RagiumAPI.DataMapTypes.MACHINE_TIER)
-        event.register(RagiumAPI.DataMapTypes.MATERIAL)
         event.register(RagiumAPI.DataMapTypes.RADIOACTIVES)
 
         LOGGER.info("Registered Data Map Types!")
@@ -471,7 +465,7 @@ internal object RagiumEvents {
         RagiumItems.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
             event.modify(holder) { builder: DataComponentPatch.Builder ->
                 builder.name(prefix.createText(key))
-                if (key in RagiumMaterialKeys.END_CONTENTS) {
+                if (key in RagiumMaterials.END_CONTENTS) {
                     builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                 }
             }

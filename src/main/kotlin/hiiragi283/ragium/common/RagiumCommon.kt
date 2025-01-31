@@ -26,7 +26,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumComponentTypes.REGISTER.register(eventBus)
 
         RagiumMachineKeys
-        RagiumMaterialKeys
 
         HTMachineRegistryImpl.registerBlocks()
 

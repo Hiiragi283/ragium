@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
@@ -80,16 +81,18 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         definitionCache.clear()
 
         val lookup: HolderLookup.RegistryLookup<Item> = event.registries.lookupOrThrow(Registries.ITEM)
-        lookup.listElements().forEach { holder: Holder.Reference<Item> ->
-            val definition: HTMaterialDefinition = holder.getData(RagiumAPI.DataMapTypes.MATERIAL) ?: return@forEach
-            if (definitionCache.containsKey(holder.value())) {
-                LOGGER.warn("Item: ${holder.keyOrThrow} already has material data!")
-                return@forEach
+        for (material: HTMaterialKey in keys) {
+            for (prefix: HTTagPrefix in HTTagPrefix.entries) {
+                val definition = HTMaterialDefinition(prefix, material)
+                lookup.get(prefix.createTag(material)).ifPresent { holderSet: HolderSet.Named<Item> ->
+                    for (holder: Holder<Item> in holderSet) {
+                        definitionCache.put(holder.value(), definition)
+                        tagItemCache
+                            .computeIfAbsent(definition.prefix, definition.material, constFunction3(mutableListOf()))
+                            .add(holder)
+                    }
+                }
             }
-            definitionCache.put(holder.value(), definition)
-            tagItemCache
-                .computeIfAbsent(definition.tagPrefix, definition.material, constFunction3(mutableListOf()))
-                .add(holder)
         }
         tagItemCache.values.forEach { it.sortWith(createHolderSorter()) }
 

@@ -6,11 +6,11 @@ import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -75,7 +75,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
             .itemInput(RagiumItemTags.PLASTICS)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.QUARTZ)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
             .catalyst(RagiumItems.PLATE_PRESS_MOLD)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
             .save(output)

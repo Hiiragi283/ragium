@@ -3,15 +3,8 @@ package hiiragi283.ragium.api.material
 /**
  * 素材のタイプを管理するクラス
  */
-enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
-    ALLOY(
-        HTTagPrefix.DUST,
-        HTTagPrefix.GEAR,
-        HTTagPrefix.INGOT,
-        HTTagPrefix.PLATE,
-        HTTagPrefix.STORAGE_BLOCK,
-        HTTagPrefix.WIRE,
-    ),
+enum class HTMaterialType(val validPrefixes: Set<HTTagPrefix>) {
+    ALLOY(HTTagPrefix.METAL_PARTS),
     DUST(HTTagPrefix.DUST),
     GEM(
         HTTagPrefix.DUST,
@@ -20,25 +13,13 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.ORE,
         HTTagPrefix.STORAGE_BLOCK,
     ),
-    METAL(
-        HTTagPrefix.DUST,
-        HTTagPrefix.GEAR,
-        HTTagPrefix.INGOT,
-        HTTagPrefix.ORE,
-        HTTagPrefix.PLATE,
-        HTTagPrefix.RAW_MATERIAL,
-        HTTagPrefix.ROD,
-        HTTagPrefix.STORAGE_BLOCK,
-        HTTagPrefix.WIRE,
-    ),
-    MINERAL(
-        HTTagPrefix.DUST,
-        HTTagPrefix.ORE,
-        HTTagPrefix.RAW_MATERIAL,
-    ),
+    METAL(HTTagPrefix.METAL_PARTS, HTTagPrefix.ORE_PARTS, HTTagPrefix.MEKANISM_PARTS),
+    MINERAL(listOf(HTTagPrefix.DUST), HTTagPrefix.ORE_PARTS, HTTagPrefix.MEKANISM_PARTS),
     ;
 
-    constructor(vararg prefixed: HTTagPrefix) : this(prefixed.toList())
+    constructor(vararg prefixed: HTTagPrefix) : this(prefixed.toSortedSet())
+
+    constructor(vararg lists: List<HTTagPrefix>) : this(lists.toList().flatten().toSortedSet())
 
     fun isValidPrefix(prefix: HTTagPrefix): Boolean = prefix in validPrefixes
 

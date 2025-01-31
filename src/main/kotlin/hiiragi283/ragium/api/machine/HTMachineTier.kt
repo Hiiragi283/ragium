@@ -8,9 +8,11 @@ import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.stringCodec
 import hiiragi283.ragium.api.extension.stringStreamCodec
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
@@ -130,24 +132,24 @@ enum class HTMachineTier(
     //    Material    //
 
     fun getMainMetal(): HTMaterialKey = when (this) {
-        BASIC -> RagiumMaterialKeys.RAGI_ALLOY
-        ADVANCED -> RagiumMaterialKeys.RAGI_STEEL
-        ELITE -> RagiumMaterialKeys.REFINED_RAGI_STEEL
-        ULTIMATE -> RagiumMaterialKeys.RAGIUM
+        BASIC -> RagiumMaterials.RAGI_ALLOY
+        ADVANCED -> RagiumMaterials.RAGI_STEEL
+        ELITE -> RagiumMaterials.REFINED_RAGI_STEEL
+        ULTIMATE -> RagiumMaterials.RAGIUM
     }
 
     fun getSubMetal(): HTMaterialKey = when (this) {
-        BASIC -> RagiumMaterialKeys.COPPER
-        ADVANCED -> RagiumMaterialKeys.GOLD
-        ELITE -> RagiumMaterialKeys.ALUMINUM
-        ULTIMATE -> RagiumMaterialKeys.RAGI_ALLOY
+        BASIC -> VanillaMaterials.COPPER
+        ADVANCED -> VanillaMaterials.GOLD
+        ELITE -> CommonMaterials.ALUMINUM
+        ULTIMATE -> RagiumMaterials.RAGI_ALLOY
     }
 
     fun getSteelMetal(): HTMaterialKey = when (this) {
-        BASIC -> RagiumMaterialKeys.IRON
-        ADVANCED -> RagiumMaterialKeys.STEEL
-        ELITE -> RagiumMaterialKeys.DEEP_STEEL
-        ULTIMATE -> RagiumMaterialKeys.DRAGONIUM
+        BASIC -> VanillaMaterials.IRON
+        ADVANCED -> CommonMaterials.STEEL
+        ELITE -> RagiumMaterials.DEEP_STEEL
+        ULTIMATE -> RagiumMaterials.DRAGONIUM
     }
 
     //    StringRepresentable    //

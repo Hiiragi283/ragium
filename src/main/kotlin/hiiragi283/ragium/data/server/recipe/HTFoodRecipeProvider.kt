@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
@@ -249,7 +250,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(RagiumItems.COOKED_MEAT_INGOT, 8)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemOutput(RagiumItems.CANNED_COOKED_MEAT, 8)
             .save(output)
     }

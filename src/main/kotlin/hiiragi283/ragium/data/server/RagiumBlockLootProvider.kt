@@ -2,10 +2,10 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.loot.BlockLootSubProvider
@@ -54,9 +54,9 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
         RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
             val prefix: HTTagPrefix = when (ore.material) {
-                RagiumMaterialKeys.CRUDE_RAGINITE -> HTTagPrefix.RAW_MATERIAL
-                RagiumMaterialKeys.RAGINITE -> HTTagPrefix.RAW_MATERIAL
-                RagiumMaterialKeys.RAGI_CRYSTAL -> HTTagPrefix.GEM
+                RagiumMaterials.CRUDE_RAGINITE -> HTTagPrefix.RAW_MATERIAL
+                RagiumMaterials.RAGINITE -> HTTagPrefix.RAW_MATERIAL
+                RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
                 else -> return@forEach
             }
             val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, ore.material)

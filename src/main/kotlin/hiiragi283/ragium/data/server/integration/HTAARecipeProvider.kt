@@ -5,8 +5,8 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
@@ -60,7 +60,7 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(ActuallyItems.BASIC_COIL)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.GOLD)
             .itemOutput(ActuallyItems.ADVANCED_COIL, 2)
             .saveSuffixed(output, "_aa")
     }
