@@ -2,13 +2,13 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTFluidContent
-import hiiragi283.ragium.api.extension.tier
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.recipe.HTMachineRecipeType
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.registries.BuiltInRegistries
@@ -33,13 +33,13 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 import java.util.function.Supplier
 
-class HTMachineRecipeBuilder private constructor(private val machine: HTMachineKey) : RecipeBuilder {
+class HTMachineRecipeBuilder private constructor(private val recipeType: HTMachineRecipeType) : RecipeBuilder {
     companion object {
         @JvmStatic
-        fun create(machine: HTMachineKey, tier: HTMachineTier): HTMachineRecipeBuilder = create(machine).tier(tier)
+        fun create(recipeType: HTMachineRecipeType, tier: HTMachineTier): HTMachineRecipeBuilder = create(recipeType).catalyst(tier)
 
         @JvmStatic
-        fun create(machine: HTMachineKey): HTMachineRecipeBuilder = HTMachineRecipeBuilder(machine)
+        fun create(recipeType: HTMachineRecipeType): HTMachineRecipeBuilder = HTMachineRecipeBuilder(recipeType)
     }
 
     private val itemInputs: MutableMap<Ingredient, Int> = mutableMapOf()
@@ -157,10 +157,10 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
 
     fun exportSuffixed(suffix: String): RecipeHolder<HTMachineRecipe> = export(getPrimalId().withSuffix(suffix))
 
-    private fun fixId(id: ResourceLocation): ResourceLocation = RagiumAPI.wrapId(id.withPrefix(machine.name + '/'))
+    private fun fixId(id: ResourceLocation): ResourceLocation = RagiumAPI.wrapId(id.withPrefix(recipeType.machine.name + '/'))
 
     private fun createRecipe(): HTMachineRecipe = HTMachineRecipe(
-        machine,
+        recipeType,
         itemInputs.map { (ingredient: Ingredient, count: Int) ->
             SizedIngredient(ingredient, count)
         },

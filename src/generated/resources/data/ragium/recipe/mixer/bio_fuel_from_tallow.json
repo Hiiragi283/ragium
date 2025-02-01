@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:mixer",
   "fluid_inputs": [
     {
       "amount": 4000,
@@ -21,6 +21,5 @@
       "count": 1,
       "item": "ragium:tallow"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

@@ -1,9 +1,5 @@
 {
-  "type": "ragium:machine",
-  "condition": {
-    "type": "ragium:min_tier",
-    "tier": "elite"
-  },
+  "type": "ragium:mixer",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -19,6 +15,5 @@
       "amount": 1000,
       "id": "ragium:hydrochloric_acid"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

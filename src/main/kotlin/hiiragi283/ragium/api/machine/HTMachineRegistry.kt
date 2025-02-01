@@ -10,7 +10,7 @@ import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 interface HTMachineRegistry {
     fun forEachEntries(action: (HTMachineKey, HTBlockContent?, HTPropertyHolder) -> Unit) {
         HTMachineKey.allKeys.forEach { key: HTMachineKey ->
-            action(key, getBlock(key), HTMachineRegistryImpl.getProperty(key))
+            action(key, getBlockOrNull(key), HTMachineRegistryImpl.getProperty(key))
         }
     }
 

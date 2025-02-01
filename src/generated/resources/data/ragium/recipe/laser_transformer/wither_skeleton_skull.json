@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:laser_transformer",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "elite"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/elite"
+    }
   },
   "item_inputs": [
     {
@@ -19,6 +21,5 @@
       "count": 1,
       "id": "minecraft:wither_skeleton_skull"
     }
-  ],
-  "machine_type": "laser_transformer"
+  ]
 }

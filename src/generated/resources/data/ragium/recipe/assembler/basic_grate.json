@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -17,6 +17,5 @@
       "count": 4,
       "id": "ragium:basic_grate"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

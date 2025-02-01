@@ -159,13 +159,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
 
         add(RagiumTranslationKeys.CATALYST_CONDITION, "Required Catalyst Item")
-        add(RagiumTranslationKeys.COOLING_CONDITION, "Required Cooling Power: %s - %s")
-        add(RagiumTranslationKeys.HEATING_CONDITION, "Required Heating Power: %s - %s")
         add(
             RagiumTranslationKeys.ROCK_GENERATOR_CONDITION,
             "Require Water and Lava Source around the machine, and Catalyst Item",
         )
-        add(RagiumTranslationKeys.TIER_CONDITION, "Required Minimum Tier: %s")
+        add(RagiumTranslationKeys.SOURCE_CONDITION, "Required Source %s from %s side")
         // Machine Type
         add(
             RagiumMachineKeys.BEDROCK_MINER,

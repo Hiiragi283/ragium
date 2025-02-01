@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:cutting_machine",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "elite"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/elite"
+    }
   },
   "item_inputs": [
     {
@@ -15,6 +17,5 @@
       "count": 8,
       "id": "ragium:yellow_cake_piece"
     }
-  ],
-  "machine_type": "cutting_machine"
+  ]
 }

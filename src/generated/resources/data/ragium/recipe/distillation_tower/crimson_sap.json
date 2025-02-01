@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:distillation_tower",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -23,6 +23,5 @@
       "count": 1,
       "id": "ragium:crimson_crystal"
     }
-  ],
-  "machine_type": "distillation_tower"
+  ]
 }

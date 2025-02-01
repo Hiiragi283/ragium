@@ -5,7 +5,7 @@
       "modid": "farmersdelight"
     }
   ],
-  "type": "ragium:machine",
+  "type": "ragium:grinder",
   "item_inputs": [
     {
       "count": 1,
@@ -21,6 +21,5 @@
       "count": 1,
       "id": "farmersdelight:straw"
     }
-  ],
-  "machine_type": "grinder"
+  ]
 }

@@ -73,7 +73,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     private fun registerItems() {
         buildList {
-            addAll(RagiumItems.materialItems.values)
+            addAll(RagiumItems.MATERIAL_ITEMS.values)
             addAll(RagiumItems.OTHER_DUSTS)
             addAll(RagiumItems.OTHER_GEMS)
             addAll(RagiumItems.OTHER_RESOURCES)

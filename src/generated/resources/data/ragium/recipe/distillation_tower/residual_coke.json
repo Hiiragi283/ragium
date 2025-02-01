@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:distillation_tower",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -23,6 +23,5 @@
       "count": 4,
       "id": "ragium:residual_coke"
     }
-  ],
-  "machine_type": "distillation_tower"
+  ]
 }

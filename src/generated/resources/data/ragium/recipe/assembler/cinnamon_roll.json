@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -21,6 +21,5 @@
       "count": 1,
       "id": "ragium:cinnamon_roll"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

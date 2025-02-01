@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.content.HTBlockContent
@@ -7,11 +9,9 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.api.util.HTTemperatureType
 import hiiragi283.ragium.common.recipe.condition.HTBiomeCondition
 import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
-import hiiragi283.ragium.common.recipe.condition.HTTemperatureCondition
-import hiiragi283.ragium.common.recipe.condition.HTTierCondition
+import hiiragi283.ragium.common.recipe.condition.HTSourceCondition
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.*
@@ -123,12 +123,10 @@ fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
 
 //    HTMachineRecipeBuilder    //
 
-fun HTMachineRecipeBuilder.tier(tier: HTMachineTier): HTMachineRecipeBuilder = apply {
-    if (tier != HTMachineTier.BASIC) condition(HTTierCondition(tier))
-}
-
 fun HTMachineRecipeBuilder.catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeBuilder =
     catalyst(prefix.createTag(material))
+
+fun HTMachineRecipeBuilder.catalyst(tier: HTMachineTier): HTMachineRecipeBuilder = catalyst(tier.getCircuitTag())
 
 fun HTMachineRecipeBuilder.catalyst(tagKey: TagKey<Item>): HTMachineRecipeBuilder = catalyst(Ingredient.of(tagKey))
 
@@ -136,17 +134,8 @@ fun HTMachineRecipeBuilder.catalyst(item: ItemLike): HTMachineRecipeBuilder = ca
 
 fun HTMachineRecipeBuilder.catalyst(ingredient: Ingredient): HTMachineRecipeBuilder = condition(HTProcessorCatalystCondition(ingredient))
 
-fun HTMachineRecipeBuilder.heating(
-    minTier: HTMachineTier,
-    maxTier: HTMachineTier = HTMachineTier.ULTIMATE,
-    targetSide: Direction = Direction.UP,
-): HTMachineRecipeBuilder = condition(HTTemperatureCondition(HTTemperatureType.HEATING, minTier, maxTier, targetSide))
-
-fun HTMachineRecipeBuilder.cooling(
-    minTier: HTMachineTier,
-    maxTier: HTMachineTier = HTMachineTier.ULTIMATE,
-    targetSide: Direction = Direction.UP,
-): HTMachineRecipeBuilder = condition(HTTemperatureCondition(HTTemperatureType.COOLING, minTier, maxTier, targetSide))
+fun HTMachineRecipeBuilder.sources(source: TagKey<Block>, targetSide: Direction = Direction.DOWN): HTMachineRecipeBuilder =
+    condition(HTSourceCondition(source, targetSide))
 
 fun HTMachineRecipeBuilder.biome(tagKey: TagKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTMachineRecipeBuilder =
     condition(HTBiomeCondition(lookup.getOrThrow(tagKey)))
@@ -156,17 +145,20 @@ fun HTMachineRecipeBuilder.biome(resourceKey: ResourceKey<Biome>, lookup: Holder
 
 //    TagBuilder    //
 
-fun <T : Any> TagsProvider.TagAppender<T>.add(holder: DeferredHolder<T, out T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
+fun <T : Any> TagsProvider.TagAppender<T>.add(id: ResourceLocation, optional: Boolean = false): TagsProvider.TagAppender<T> =
     when (optional) {
-        true -> addOptional(holder.id)
-        false -> add(holder.keyOrThrow)
+        true -> addOptional(id)
+        false -> apply { internalBuilder.addElement(id) }
     }
 
+fun <T : Any> TagsProvider.TagAppender<T>.add(holder: DeferredHolder<T, out T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
+    add(holder.id, optional)
+
 fun TagsProvider.TagAppender<Block>.add(content: HTBlockContent, optional: Boolean = false): TagsProvider.TagAppender<Block> =
-    when (optional) {
-        true -> addOptional(content.id)
-        false -> add(content.key)
-    }
+    add(content.id, optional)
+
+fun TagsProvider.TagAppender<Block>.add(block: Supplier<Block>, optional: Boolean = false): TagsProvider.TagAppender<Block> =
+    add(block.get().builtInRegistryHolder().idOrThrow, optional)
 
 fun TagsProvider.TagAppender<Item>.addItem(content: HTBlockContent, optional: Boolean = false): TagsProvider.TagAppender<Item> =
     when (optional) {

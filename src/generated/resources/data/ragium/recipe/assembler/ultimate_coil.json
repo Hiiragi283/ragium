@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "elite"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/elite"
+    }
   },
   "item_inputs": [
     {
@@ -19,6 +21,5 @@
       "count": 4,
       "id": "ragium:ultimate_coil"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "elite"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/elite"
+    }
   },
   "fluid_inputs": [
     {
@@ -27,6 +29,5 @@
       "count": 1,
       "id": "ragium:uranium_fuel"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

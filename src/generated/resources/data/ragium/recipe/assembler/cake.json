@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "fluid_inputs": [
     {
       "amount": 3000,
@@ -25,6 +25,5 @@
       "count": 1,
       "id": "minecraft:cake"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

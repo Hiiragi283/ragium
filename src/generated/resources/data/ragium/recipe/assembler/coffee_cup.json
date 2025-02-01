@@ -5,7 +5,7 @@
       "modid": "actuallyadditions"
     }
   ],
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -27,6 +27,5 @@
       "count": 1,
       "id": "actuallyadditions:coffee_cup"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

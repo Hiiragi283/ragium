@@ -17,6 +17,9 @@ object RagiumMultiblockMaps {
     private val SHAFT_VERTICAL = HTAxisMultiblockComponent.FrontVertical { RagiumBlocks.SHAFT }
     private val STORAGE_BLOCK = HTTieredMultiblockComponent(HTMachineTier::getStorageBlock)
 
+    private val DEEP_WALL = HTSimpleMultiblockComponent(Blocks::POLISHED_DEEPSLATE_WALL)
+    private val DEEP_TILE = HTSimpleMultiblockComponent(Blocks::DEEPSLATE_TILES)
+    
     @JvmField
     val BEDROCK_MINER: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
@@ -58,18 +61,15 @@ object RagiumMultiblockMaps {
     @JvmField
     val BLAST_FURNACE: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
-        .addLayer(-1..1, 0, 1..3, HULL)
-        .addHollow(-1..1, 1, 1..3, COIL_Y)
-        .addHollow(-1..1, 2, 1..3, COIL_Y)
-        .addLayer(-1..1, 3, 1..3, CASING)
-        .build()
-
-    @JvmField
-    val COKE_OVEN: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        .addLayer(-1..1, -1, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
-        .addHollow(-1..1, 0, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
-        .addLayer(-1..1, 1, 1..3, HTSimpleMultiblockComponent(Blocks::MUD_BRICKS))
+        .addLayer(-1..1, 0, 1..3, HTSimpleMultiblockComponent(Blocks::DEEPSLATE_BRICKS))
+        .addPillar(0, 1..3, 1, DEEP_TILE)
+        .addPillar(0, 1..3, 3, DEEP_TILE)
+        .addPillar(1, 1..3, 2, DEEP_TILE)
+        .addPillar(1, 1..3, 1, DEEP_WALL)
+        .addPillar(1, 1..3, 3, DEEP_WALL)
+        .addPillar(-1, 1..3, 2, DEEP_TILE)
+        .addPillar(-1, 1..3, 1, DEEP_WALL)
+        .addPillar(-1, 1..3, 3, DEEP_WALL)
         .build()
 
     @JvmField

@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -26,7 +25,7 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
 class HTMachineRecipe(
-    val machineKey: HTMachineKey,
+    private val type: HTMachineRecipeType,
     val itemInputs: List<SizedIngredient>,
     val fluidInputs: List<SizedFluidIngredient>,
     private val itemOutputs: List<ItemStack>,
@@ -39,7 +38,7 @@ class HTMachineRecipe(
             .mapCodec { instance ->
                 instance
                     .group(
-                        HTMachineKey.FIELD_CODEC.forGetter(HTMachineRecipe::machineKey),
+                        HTMachineRecipeType.CODEC.fieldOf("type").forGetter(HTMachineRecipe::type),
                         SizedIngredient.FLAT_CODEC
                             .listOf()
                             .optionalFieldOf("item_inputs", listOf())
@@ -69,8 +68,8 @@ class HTMachineRecipe(
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipe> = StreamCodec.composite(
-            HTMachineKey.STREAM_CODEC,
-            HTMachineRecipe::machineKey,
+            HTMachineRecipeType.STREAM_CODEC,
+            HTMachineRecipe::type,
             SizedIngredient.STREAM_CODEC.toList(),
             HTMachineRecipe::itemInputs,
             SizedFluidIngredient.STREAM_CODEC.toList(),
@@ -84,6 +83,8 @@ class HTMachineRecipe(
             ::HTMachineRecipe,
         )
     }
+
+    private val machineKey: HTMachineKey = type.machine
 
     fun getItemOutput(index: Int): ItemStack? = itemOutputs.getOrNull(index)?.copy()
 
@@ -127,7 +128,7 @@ class HTMachineRecipe(
 
     override fun getToastSymbol(): ItemStack = machineKey.getBlockOrNull()?.get()?.let(::ItemStack) ?: super.getToastSymbol()
 
-    override fun getSerializer(): RecipeSerializer<out Recipe<HTMachineInput>> = RagiumRecipes.MACHINE_SERIALIZER.get()
+    override fun getSerializer(): RecipeSerializer<out Recipe<HTMachineInput>> = type
 
-    override fun getType(): RecipeType<out Recipe<HTMachineInput>> = RagiumRecipes.MACHINE_TYPE.get()
+    override fun getType(): RecipeType<out Recipe<HTMachineInput>> = type
 }

@@ -102,7 +102,6 @@ object HTMachinePropertyKeys {
     val RECIPE_PROXY: HTPropertyKey<HTMachineRecipeProxy> =
         HTPropertyKey
             .builder<HTMachineRecipeProxy>(RagiumAPI.id("recipe_proxy"))
-            .setDefaultValue(HTMachineRecipeProxy::DEFAULT)
             .build()
 
     //    Multiblock    //

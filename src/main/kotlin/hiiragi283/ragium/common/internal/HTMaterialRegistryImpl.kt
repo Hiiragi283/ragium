@@ -5,17 +5,18 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.material.*
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.ModLoader
 import net.neoforged.fml.common.EventBusSubscriber
@@ -31,8 +32,6 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
     private lateinit var typeMap: Map<HTMaterialKey, HTMaterialType>
     private lateinit var propertyMap: Map<HTMaterialKey, HTPropertyHolder>
-
-    private var definitionCache: HTMultiMap.Mutable<Item, HTMaterialDefinition> = mutableMultiMapOf()
 
     fun initRegistry() {
         registerMaterials()
@@ -78,17 +77,14 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         if (event.registryKey != Registries.ITEM) return
         // Reload material items
         tagItemCache.clear()
-        definitionCache.clear()
 
         val lookup: HolderLookup.RegistryLookup<Item> = event.registries.lookupOrThrow(Registries.ITEM)
         for (material: HTMaterialKey in keys) {
             for (prefix: HTTagPrefix in HTTagPrefix.entries) {
-                val definition = HTMaterialDefinition(prefix, material)
                 lookup.get(prefix.createTag(material)).ifPresent { holderSet: HolderSet.Named<Item> ->
                     for (holder: Holder<Item> in holderSet) {
-                        definitionCache.put(holder.value(), definition)
                         tagItemCache
-                            .computeIfAbsent(definition.prefix, definition.material, constFunction3(mutableListOf()))
+                            .computeIfAbsent(prefix, material, constFunction3(mutableListOf()))
                             .add(holder)
                     }
                 }
@@ -104,6 +100,4 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     override fun getType(key: HTMaterialKey): HTMaterialType = typeMap[key] ?: error("Unknown material key: $key")
 
     override fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): List<Holder<Item>> = tagItemCache.get(prefix, key) ?: listOf()
-
-    override fun getDefinitions(item: ItemLike): List<HTMaterialDefinition> = definitionCache[item.asItem()].toList()
 }

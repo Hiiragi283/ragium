@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -25,6 +25,5 @@
       "count": 6,
       "id": "ragium:elite_casing"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

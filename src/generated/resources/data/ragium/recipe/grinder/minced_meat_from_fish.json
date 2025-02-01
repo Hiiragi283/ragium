@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:grinder",
   "item_inputs": [
     {
       "count": 1,
@@ -15,6 +15,5 @@
       "count": 1,
       "id": "ragium:tallow"
     }
-  ],
-  "machine_type": "grinder"
+  ]
 }

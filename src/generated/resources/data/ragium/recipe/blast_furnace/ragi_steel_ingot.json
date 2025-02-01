@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:blast_furnace",
   "item_inputs": [
     {
       "count": 1,
@@ -15,6 +15,5 @@
       "count": 1,
       "id": "ragium:ragi_steel_ingot"
     }
-  ],
-  "machine_type": "blast_furnace"
+  ]
 }

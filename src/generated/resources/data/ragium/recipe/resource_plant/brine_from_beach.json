@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:resource_plant",
   "condition": {
     "type": "ragium:biome",
     "biome": "#minecraft:is_beach"
@@ -9,6 +9,5 @@
       "amount": 250,
       "id": "ragium:brine"
     }
-  ],
-  "machine_type": "resource_plant"
+  ]
 }

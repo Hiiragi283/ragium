@@ -1,9 +1,9 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:mixer",
   "condition": {
-    "type": "ragium:temperature",
-    "min_tier": "advanced",
-    "temperature_type": "cooling"
+    "type": "ragium:source",
+    "source": "ragium:sources/cooling",
+    "target_side": "down"
   },
   "fluid_inputs": [
     {
@@ -16,6 +16,5 @@
       "amount": 1000,
       "id": "ragium:snow"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

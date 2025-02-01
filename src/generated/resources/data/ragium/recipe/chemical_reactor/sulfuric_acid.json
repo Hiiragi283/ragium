@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -21,6 +21,5 @@
       "amount": 1000,
       "id": "ragium:sulfuric_acid"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

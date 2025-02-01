@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -23,6 +23,5 @@
       "count": 4,
       "id": "ragium:wood_dust"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

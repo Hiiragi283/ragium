@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:blast_furnace",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -23,6 +23,5 @@
       "count": 1,
       "id": "ragium:dragonium_ingot"
     }
-  ],
-  "machine_type": "blast_furnace"
+  ]
 }

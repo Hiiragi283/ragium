@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "elite"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/elite"
+    }
   },
   "fluid_inputs": [
     {
@@ -21,6 +23,5 @@
       "count": 1,
       "tag": "c:gems/fluorite"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

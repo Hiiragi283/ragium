@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -23,6 +23,5 @@
       "count": 1,
       "id": "ragium:alkali_reagent"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

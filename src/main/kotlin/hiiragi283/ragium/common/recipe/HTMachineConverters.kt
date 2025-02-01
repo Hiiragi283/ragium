@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -32,7 +32,7 @@ object HTMachineConverters {
     fun fromCooking(holder: RecipeHolder<SmeltingRecipe>, provider: HolderLookup.Provider): RecipeHolder<HTMachineRecipe> {
         val recipe: AbstractCookingRecipe = holder.value
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MULTI_SMELTER)
+            .create(RagiumRecipes.MULTI_SMELTER)
             .itemInput(recipe.ingredients[0], 64)
             .itemOutput(recipe.getResultItem(provider).item, 64)
             .export(holder.id.withSuffix("_from_smelting"))
@@ -43,7 +43,7 @@ object HTMachineConverters {
         val recipe: StonecutterRecipe = holder.value
         val output: ItemStack = recipe.getResultItem(provider)
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CUTTING_MACHINE)
+            .create(RagiumRecipes.CUTTING_MACHINE)
             .itemInput(recipe.ingredients[0])
             .catalyst(output.item)
             .itemOutput(recipe.getResultItem(provider))
@@ -52,7 +52,7 @@ object HTMachineConverters {
 
     @JvmStatic
     fun fromComposting(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>) {
-        HTMachineRecipeProxy.DEFAULT.getRecipes(level, consumer)
+        HTMachineRecipeProxy.default(RagiumRecipes.EXTRACTOR).getRecipes(level, consumer)
         level
             .registryAccess()
             .lookupOrThrow(Registries.ITEM)
@@ -60,7 +60,7 @@ object HTMachineConverters {
             .forEach { holder: Holder.Reference<Item> ->
                 val chance: Float = holder.getData(NeoForgeDataMaps.COMPOSTABLES)?.chance ?: return@forEach
                 HTMachineRecipeBuilder
-                    .create(RagiumMachineKeys.EXTRACTOR)
+                    .create(RagiumRecipes.EXTRACTOR)
                     .itemInput(holder.value())
                     .catalyst(Items.COMPOSTER)
                     .fluidOutput(RagiumFluids.BIOMASS, (1000 * chance).toInt())
@@ -82,7 +82,7 @@ object HTMachineConverters {
                     water = 1
                 }
                 HTMachineRecipeBuilder
-                    .create(RagiumMachineKeys.STEAM_BOILER)
+                    .create(RagiumRecipes.STEAM_BOILER)
                     .itemInput(holder.value())
                     .waterInput(water)
                     .fluidOutput(RagiumFluids.STEAM, water * 100)
@@ -99,7 +99,7 @@ object HTMachineConverters {
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.GEAR, key) ?: return null
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COMPRESSOR)
+            .create(RagiumRecipes.COMPRESSOR)
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItems.GEAR_PRESS_MOLD)
             .itemOutput(output.value())
@@ -111,7 +111,7 @@ object HTMachineConverters {
         val (_: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.GEM, key) ?: return null
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COMPRESSOR)
+            .create(RagiumRecipes.COMPRESSOR)
             .itemInput(HTTagPrefix.DUST, key)
             .itemOutput(output.value())
             .export(RagiumAPI.id("${key.name}_gem"))
@@ -123,7 +123,7 @@ object HTMachineConverters {
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.PLATE, key) ?: return null
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COMPRESSOR)
+            .create(RagiumRecipes.COMPRESSOR)
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItems.PLATE_PRESS_MOLD)
             .itemOutput(output.value())
@@ -136,7 +136,7 @@ object HTMachineConverters {
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.ROD, key) ?: return null
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COMPRESSOR)
+            .create(RagiumRecipes.COMPRESSOR)
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItems.ROD_PRESS_MOLD)
             .itemOutput(output.value())
@@ -172,7 +172,7 @@ object HTMachineConverters {
         val (_: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.DUST, key) ?: return null
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.GRINDER)
+            .create(RagiumRecipes.GRINDER)
             .itemInput(inputPrefix, key)
             .itemOutput(output.value(), baseCount)
             .export(RagiumAPI.id("${key.name}_dust_from${inputPrefix.serializedName}"))
@@ -184,7 +184,7 @@ object HTMachineConverters {
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return null
         val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return null
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.GRINDER)
+            .create(RagiumRecipes.GRINDER)
             .itemInput(HTTagPrefix.ORE, key)
             .itemOutput(output.value(), 2)
             .itemOutput(RagiumItems.SLAG)
@@ -215,7 +215,7 @@ object HTMachineConverters {
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return null
         val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return null
         return HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .create(RagiumRecipes.CHEMICAL_REACTOR)
             .itemInput(HTTagPrefix.ORE, key)
             .fluidInput(chemical, fluidAmount)
             .itemOutput(output.value(), count)

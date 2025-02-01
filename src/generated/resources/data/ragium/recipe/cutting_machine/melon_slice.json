@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:cutting_machine",
   "item_inputs": [
     {
       "count": 1,
@@ -11,6 +11,5 @@
       "count": 9,
       "id": "minecraft:melon_slice"
     }
-  ],
-  "machine_type": "cutting_machine"
+  ]
 }

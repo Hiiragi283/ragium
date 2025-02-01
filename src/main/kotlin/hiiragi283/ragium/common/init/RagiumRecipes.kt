@@ -1,48 +1,70 @@
 package hiiragi283.ragium.common.init
 
-import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.recipe.HTMachineRecipeType
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object RagiumRecipes {
-    //    Serializer    //
-
     @JvmField
     val SERIALIZER: DeferredRegister<RecipeSerializer<*>> =
         DeferredRegister.create(Registries.RECIPE_SERIALIZER, RagiumAPI.MOD_ID)
-
-    @JvmStatic
-    private fun <T : Recipe<*>> serializer(
-        mapCodec: MapCodec<T>,
-        streamCodec: StreamCodec<RegistryFriendlyByteBuf, T>,
-    ): RecipeSerializer<T> = object : RecipeSerializer<T> {
-        override fun codec(): MapCodec<T> = mapCodec
-
-        override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, T> = streamCodec
-    }
-
-    @JvmField
-    val MACHINE_SERIALIZER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTMachineRecipe>> =
-        SERIALIZER.register("machine") { _: ResourceLocation ->
-            serializer(HTMachineRecipe.CODEC, HTMachineRecipe.STREAM_CODEC)
-        }
-
-    //    Type    //
 
     @JvmField
     val TYPE: DeferredRegister<RecipeType<*>> =
         DeferredRegister.create(Registries.RECIPE_TYPE, RagiumAPI.MOD_ID)
 
+    @JvmField
+    val ASSEMBLER: HTMachineRecipeType = create(RagiumMachineKeys.ASSEMBLER)
+
+    @JvmField
+    val BLAST_FURNACE: HTMachineRecipeType = create(RagiumMachineKeys.BLAST_FURNACE)
+
+    @JvmField
+    val CHEMICAL_REACTOR: HTMachineRecipeType = create(RagiumMachineKeys.CHEMICAL_REACTOR)
+
+    @JvmField
+    val COMPRESSOR: HTMachineRecipeType = create(RagiumMachineKeys.COMPRESSOR)
+
+    @JvmField
+    val CUTTING_MACHINE: HTMachineRecipeType = create(RagiumMachineKeys.CUTTING_MACHINE)
+
+    @JvmField
+    val DISTILLATION_TOWER: HTMachineRecipeType = create(RagiumMachineKeys.DISTILLATION_TOWER)
+
+    @JvmField
+    val EXTRACTOR: HTMachineRecipeType = create(RagiumMachineKeys.EXTRACTOR)
+
+    @JvmField
+    val GRINDER: HTMachineRecipeType = create(RagiumMachineKeys.GRINDER)
+
+    @JvmField
+    val LASER_TRANSFORMER: HTMachineRecipeType = create(RagiumMachineKeys.LASER_TRANSFORMER)
+
+    @JvmField
+    val MIXER: HTMachineRecipeType = create(RagiumMachineKeys.MIXER)
+
+    @JvmField
+    val MULTI_SMELTER: HTMachineRecipeType = create(RagiumMachineKeys.MULTI_SMELTER)
+
+    @JvmField
+    val RESOURCE_PLANT: HTMachineRecipeType = create(RagiumMachineKeys.RESOURCE_PLANT)
+
+    @JvmField
+    val STEAM_BOILER: HTMachineRecipeType = create(RagiumMachineKeys.STEAM_BOILER)
+
+    @JvmField
+    val FUEL: HTMachineRecipeType = create(HTMachineKey.of("fuel"))
+
     @JvmStatic
-    val MACHINE_TYPE: DeferredHolder<RecipeType<*>?, RecipeType<HTMachineRecipe>> =
-        TYPE.register("machine", RecipeType<HTMachineRecipe>::simple)
+    private fun create(machine: HTMachineKey): HTMachineRecipeType {
+        val type = HTMachineRecipeType(machine)
+        SERIALIZER.register(machine.name) { _: ResourceLocation -> type }
+        TYPE.register(machine.name) { _: ResourceLocation -> type }
+        return type
+    }
 }

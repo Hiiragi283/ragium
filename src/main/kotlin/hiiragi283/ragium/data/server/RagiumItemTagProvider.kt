@@ -68,7 +68,7 @@ class RagiumItemTagProvider(
                 .addItem(HTBlockContent.of(storage))
         }
 
-        RagiumItems.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
+        RagiumItems.MATERIAL_ITEMS.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
             val tagKey: TagKey<Item> = prefix.createTag(key)
 
             tag(prefix.commonTagKey)

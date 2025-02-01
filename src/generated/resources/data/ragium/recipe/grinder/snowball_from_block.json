@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:grinder",
   "item_inputs": [
     {
       "count": 1,
@@ -11,6 +11,5 @@
       "count": 4,
       "id": "minecraft:snowball"
     }
-  ],
-  "machine_type": "grinder"
+  ]
 }

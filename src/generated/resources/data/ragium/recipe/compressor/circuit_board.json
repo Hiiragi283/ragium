@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:compressor",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -21,6 +21,5 @@
       "count": 1,
       "id": "ragium:circuit_board"
     }
-  ],
-  "machine_type": "compressor"
+  ]
 }

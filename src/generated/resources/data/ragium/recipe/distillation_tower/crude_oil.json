@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:distillation_tower",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -25,6 +25,5 @@
       "amount": 1000,
       "id": "ragium:residual_oil"
     }
-  ],
-  "machine_type": "distillation_tower"
+  ]
 }

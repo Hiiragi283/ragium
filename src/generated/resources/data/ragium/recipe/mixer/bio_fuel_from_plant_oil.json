@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:mixer",
   "fluid_inputs": [
     {
       "amount": 4000,
@@ -19,6 +19,5 @@
       "amount": 1000,
       "id": "ragium:glycerol"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

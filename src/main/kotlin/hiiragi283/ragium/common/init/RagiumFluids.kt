@@ -88,8 +88,6 @@ enum class RagiumFluids(
     ALCOHOL(Color(0x99ffff), "Alcohol", "アルコール"),
     AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
 
-    CREOSOTE(Color(0x666600), "Creosote", "クレオソート"),
-
     // Fuels
     BIO_FUEL(Color(0x99ff00), "Bio Fuel", "バイオ燃料"),
     FUEL(Color(0xcc6633), "Fuel", "燃料"),

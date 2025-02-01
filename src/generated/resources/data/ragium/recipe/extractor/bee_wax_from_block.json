@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "fluid_outputs": [
     {
       "amount": 1000,
@@ -17,6 +17,5 @@
       "count": 4,
       "id": "ragium:bee_wax"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

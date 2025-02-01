@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "item_inputs": [
     {
       "count": 1,
@@ -15,6 +15,5 @@
       "count": 2,
       "id": "minecraft:pumpkin_pie"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

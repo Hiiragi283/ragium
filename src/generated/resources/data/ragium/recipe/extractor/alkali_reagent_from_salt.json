@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "elite"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/elite"
+    }
   },
   "fluid_outputs": [
     {
@@ -21,6 +23,5 @@
       "count": 2,
       "id": "ragium:alkali_reagent"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

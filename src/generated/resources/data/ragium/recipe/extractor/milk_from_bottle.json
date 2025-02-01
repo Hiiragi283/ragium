@@ -5,7 +5,7 @@
       "modid": "farmersdelight"
     }
   ],
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "fluid_outputs": [
     {
       "amount": 250,
@@ -17,6 +17,5 @@
       "count": 1,
       "item": "farmersdelight:milk_bottle"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

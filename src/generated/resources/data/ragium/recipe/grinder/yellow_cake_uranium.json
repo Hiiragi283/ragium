@@ -5,7 +5,7 @@
       "modid": "mekanism"
     }
   ],
-  "type": "ragium:machine",
+  "type": "ragium:grinder",
   "item_inputs": [
     {
       "count": 1,
@@ -17,6 +17,5 @@
       "count": 8,
       "id": "mekanism:yellow_cake_uranium"
     }
-  ],
-  "machine_type": "grinder"
+  ]
 }

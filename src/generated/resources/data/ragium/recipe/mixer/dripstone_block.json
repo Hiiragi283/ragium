@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:mixer",
   "condition": {
     "type": "ragium:rock_generator",
     "ingredient": {
@@ -11,6 +11,5 @@
       "count": 8,
       "id": "minecraft:dripstone_block"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

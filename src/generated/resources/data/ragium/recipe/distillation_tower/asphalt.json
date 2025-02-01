@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:distillation_tower",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -17,6 +17,5 @@
       "amount": 3000,
       "id": "ragium:fuel"
     }
-  ],
-  "machine_type": "distillation_tower"
+  ]
 }

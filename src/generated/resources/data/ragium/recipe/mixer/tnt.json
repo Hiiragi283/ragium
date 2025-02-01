@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:mixer",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "advanced"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/advanced"
+    }
   },
   "fluid_inputs": [
     {
@@ -25,6 +27,5 @@
       "count": 16,
       "id": "minecraft:tnt"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

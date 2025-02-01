@@ -42,6 +42,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -62,6 +63,7 @@ import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
+import java.util.function.Consumer
 import java.util.function.Supplier
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -124,12 +126,19 @@ internal object RagiumEvents {
         event
             .getBuilder(RagiumMachineKeys.ASSEMBLER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.default(RagiumRecipes.ASSEMBLER),
+            )
 
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.default(RagiumRecipes.BLAST_FURNACE),
+            ).put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.FLAME))
 
         event
@@ -140,7 +149,7 @@ internal object RagiumEvents {
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.material(
-                    true,
+                    RagiumRecipes.CHEMICAL_REACTOR,
                     HTMachineConverters::chemicalOre3x,
                     HTMachineConverters::chemicalOre4x,
                     HTMachineConverters::chemicalOre5x,
@@ -148,18 +157,11 @@ internal object RagiumEvents {
             )
 
         event
-            .getBuilder(RagiumMachineKeys.COKE_OVEN)
-            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.COKE_OVEN)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.SMOKER_SMOKE)
-            .put(HTMachinePropertyKeys.TICK_RATE) { tier: HTMachineTier -> tier.tickRate * 2 }
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.LARGE_SMOKE))
-
-        event
             .getBuilder(RagiumMachineKeys.COMPRESSOR)
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.material(
-                    true,
+                    RagiumRecipes.COMPRESSOR,
                     HTMachineConverters::compressorGear,
                     HTMachineConverters::compressorGem,
                     HTMachineConverters::compressorPlate,
@@ -171,7 +173,13 @@ internal object RagiumEvents {
             .getBuilder(RagiumMachineKeys.CUTTING_MACHINE)
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.convert(true, RecipeType.STONECUTTING, HTMachineConverters::fromCutting),
+                HTMachineRecipeProxy { level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>> ->
+                    HTMachineRecipeProxy.default(RagiumRecipes.CUTTING_MACHINE).getRecipes(level, consumer)
+                    level.recipeManager
+                        .getAllRecipesFor(RecipeType.STONECUTTING)
+                        .map { HTMachineConverters.fromCutting(it, level.registryAccess()) }
+                        .forEach(consumer)
+                },
             )
 
         event
@@ -179,7 +187,10 @@ internal object RagiumEvents {
             .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
                 HTDistillationTowerBlockEntity(pos, state)
             }.put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
-            .putValidator { recipe: HTMachineRecipe ->
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.default(RagiumRecipes.DISTILLATION_TOWER),
+            ).putValidator { recipe: HTMachineRecipe ->
                 when {
                     recipe.itemInputs.isNotEmpty() -> DataResult.error { "Distillation tower recipe not accepts item inputs!" }
                     recipe.fluidInputs.size != 1 -> DataResult.error { "Distillation tower recipe should have only one fluid input!" }
@@ -200,7 +211,7 @@ internal object RagiumEvents {
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.material(
-                    true,
+                    RagiumRecipes.GRINDER,
                     HTMachineConverters::grinderMainToDust,
                     HTMachineConverters::grinderGearToDust,
                     HTMachineConverters::grinderPlateToDust,
@@ -211,13 +222,21 @@ internal object RagiumEvents {
 
         event.getBuilder(RagiumMachineKeys.GROWTH_CHAMBER)
 
-        event.getBuilder(RagiumMachineKeys.LASER_TRANSFORMER)
+        event
+            .getBuilder(RagiumMachineKeys.LASER_TRANSFORMER)
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.default(RagiumRecipes.LASER_TRANSFORMER),
+            )
 
         event
             .getBuilder(RagiumMachineKeys.MIXER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.default(RagiumRecipes.MIXER),
+            ).put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
 
         event
@@ -225,20 +244,36 @@ internal object RagiumEvents {
             .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
                 HTMultiSmelterBlockEntity(pos, state)
             }.put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.default(RagiumRecipes.MULTI_SMELTER),
+            ).put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.convert(false, RecipeType.SMELTING, HTMachineConverters::fromCooking),
+                HTMachineRecipeProxy { level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>> ->
+                    level.recipeManager
+                        .getAllRecipesFor(RecipeType.SMELTING)
+                        .map { HTMachineConverters.fromCooking(it, level.registryAccess()) }
+                        .forEach(consumer)
+                },
             )
 
         event
             .getBuilder(RagiumMachineKeys.RESOURCE_PLANT)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.RESOURCE_PLANT)
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.default(RagiumRecipes.RESOURCE_PLANT),
+            )
 
         event
             .getBuilder(RagiumMachineKeys.STEAM_BOILER)
             .put(HTMachinePropertyKeys.RECIPE_PROXY, HTMachineRecipeProxy(HTMachineConverters::fromFuel))
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.default(RagiumRecipes.STEAM_BOILER),
+            )
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -449,7 +484,6 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumAPI.DataMapTypes.TEMP_TIER)
         event.register(RagiumAPI.DataMapTypes.MACHINE_FUEL)
 
         event.register(RagiumAPI.DataMapTypes.MACHINE_KEY)
@@ -462,7 +496,7 @@ internal object RagiumEvents {
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         // Item
-        RagiumItems.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
+        RagiumItems.MATERIAL_ITEMS.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
             event.modify(holder) { builder: DataComponentPatch.Builder ->
                 builder.name(prefix.createText(key))
                 if (key in RagiumMaterials.END_CONTENTS) {

@@ -161,10 +161,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "機械の構造は有効です！")
 
         add(RagiumTranslationKeys.CATALYST_CONDITION, "触媒アイテムが必要です")
-        add(RagiumTranslationKeys.COOLING_CONDITION, "次の範囲の冷却が必要です: %s - %s")
-        add(RagiumTranslationKeys.HEATING_CONDITION, "次の範囲の加熱が必要です: %s - %s")
         add(RagiumTranslationKeys.ROCK_GENERATOR_CONDITION, "周囲に水源と溶岩源，そして触媒アイテムが必要です")
-        add(RagiumTranslationKeys.TIER_CONDITION, "最低でも次のティアが必要です: %s")
+        add(RagiumTranslationKeys.SOURCE_CONDITION, "次のソース「%s」が%s側から必要です")
         // Machine Type
         add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
         add(RagiumMachineKeys.DRAIN, "排水溝", "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る")

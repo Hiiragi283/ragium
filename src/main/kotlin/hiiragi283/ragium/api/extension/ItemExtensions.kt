@@ -83,11 +83,17 @@ val ItemStack.isMaxCount: Boolean get() = count == maxStackSize
 
 //    IItemHandler    //
 
+inline fun IItemHandler.forEach(action: (ItemStack) -> Unit) {
+    (0 until this.slots).map(this::getStackInSlot).forEach(action)
+}
+
+inline fun IItemHandler.forEachIndexed(action: (Int, ItemStack) -> Unit) {
+    (0 until this.slots).forEach { slot: Int -> action(slot, getStackInSlot(slot)) }
+}
+
 /**
  * [IItemHandler]に保存されたすべての[ItemStack]を指定した[pos]にドロップします。
  */
 fun IItemHandler.dropStacks(level: Level, pos: BlockPos) {
-    (0 until this.slots)
-        .map(this::getStackInSlot)
-        .forEach { dropStackAt(level, pos, it) }
+    forEach { dropStackAt(level, pos, it) }
 }

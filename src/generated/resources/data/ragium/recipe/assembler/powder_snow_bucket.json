@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -17,6 +17,5 @@
       "count": 1,
       "id": "minecraft:powder_snow_bucket"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

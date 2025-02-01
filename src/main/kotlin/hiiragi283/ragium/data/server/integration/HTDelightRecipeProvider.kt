@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.integration
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
@@ -54,14 +54,14 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
 
         // Pumpkin Slice
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CUTTING_MACHINE)
+            .create(RagiumRecipes.CUTTING_MACHINE)
             .itemInput(Tags.Items.CROPS_PUMPKIN)
             .itemOutput(ModItems.PUMPKIN_SLICE.get(), 4)
             .save(output)
 
         // Rice
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.GRINDER)
+            .create(RagiumRecipes.GRINDER)
             .itemInput(ModItems.RICE_PANICLE.get())
             .itemOutput(ModItems.RICE.get(), 2)
             .itemOutput(ModItems.STRAW.get())
@@ -69,14 +69,14 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
 
         // Milk Bottle
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
+            .create(RagiumRecipes.ASSEMBLER)
             .itemInput(Items.GLASS_BOTTLE)
             .milkInput(FluidType.BUCKET_VOLUME / 4)
             .itemOutput(ModItems.MILK_BOTTLE.get())
             .save(output)
 
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.EXTRACTOR)
+            .create(RagiumRecipes.EXTRACTOR)
             .itemInput(ModItems.MILK_BOTTLE.get())
             .fluidOutput(NeoForgeMod.MILK, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_bottle")

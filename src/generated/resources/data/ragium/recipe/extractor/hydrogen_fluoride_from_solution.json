@@ -1,8 +1,9 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "elite"
+    "type": "ragium:source",
+    "source": "ragium:sources/heating",
+    "target_side": "down"
   },
   "fluid_inputs": [
     {
@@ -19,6 +20,5 @@
       "amount": 1000,
       "id": "minecraft:water"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

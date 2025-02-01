@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:mixer",
   "condition": {
     "type": "ragium:rock_generator",
     "ingredient": {
@@ -17,6 +17,5 @@
       "count": 1,
       "id": "minecraft:obsidian"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

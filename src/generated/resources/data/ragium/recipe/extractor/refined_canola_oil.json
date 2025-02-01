@@ -5,7 +5,7 @@
       "modid": "actuallyadditions"
     }
   ],
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -17,6 +17,5 @@
       "amount": 1000,
       "id": "actuallyadditions:refined_canola_oil"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

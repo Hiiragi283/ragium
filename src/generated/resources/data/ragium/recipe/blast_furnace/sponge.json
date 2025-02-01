@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:blast_furnace",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -11,6 +11,5 @@
       "count": 1,
       "id": "minecraft:sponge"
     }
-  ],
-  "machine_type": "blast_furnace"
+  ]
 }

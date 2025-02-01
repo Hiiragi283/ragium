@@ -1,9 +1,5 @@
 {
-  "type": "ragium:machine",
-  "condition": {
-    "type": "ragium:min_tier",
-    "tier": "advanced"
-  },
+  "type": "ragium:chemical_reactor",
   "fluid_inputs": [
     {
       "amount": 200,
@@ -28,6 +24,5 @@
       "count": 1,
       "id": "ragium:deepant"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

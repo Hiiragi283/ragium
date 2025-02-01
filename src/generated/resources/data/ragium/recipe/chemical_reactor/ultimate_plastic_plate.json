@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "ultimate"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/ultimate"
+    }
   },
   "fluid_inputs": [
     {
@@ -19,6 +21,5 @@
       "count": 8,
       "id": "ragium:plastic_plate"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

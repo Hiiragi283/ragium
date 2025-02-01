@@ -8,18 +8,15 @@ import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tag.RagiumFluidTags
-import hiiragi283.ragium.api.util.HTTemperatureInfo
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.tags.BlockTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.fluids.FluidType
@@ -47,8 +44,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         addItem(item, FurnaceFuel(second * 200))
 
     override fun gather() {
-        // block
-        temperature(builder(RagiumAPI.DataMapTypes.TEMP_TIER))
         // fluid
         machineFuel(builder(RagiumAPI.DataMapTypes.MACHINE_FUEL))
         // item
@@ -60,25 +55,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     }
 
     //    Block    //
-
-    private fun temperature(builder: Builder<HTTemperatureInfo, Block>) {
-        builder.addBlock(Blocks.MAGMA_BLOCK, HTTemperatureInfo.heating(HTMachineTier.BASIC))
-        builder.add(BlockTags.CAMPFIRES, HTTemperatureInfo.heating(HTMachineTier.BASIC), false)
-        builder.add(BlockTags.FIRE, HTTemperatureInfo.heating(HTMachineTier.ADVANCED), false)
-        builder.addBlock(Blocks.LAVA, HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
-        builder.addBlock(RagiumBlocks.SOUL_MAGMA_BLOCK.get(), HTTemperatureInfo.heating(HTMachineTier.ADVANCED))
-
-        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
-            builder.addBlock(burner.get(), HTTemperatureInfo.heating(burner.machineTier))
-        }
-
-        builder.addBlock(Blocks.WATER, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
-        builder.add(BlockTags.SNOW, HTTemperatureInfo.cooling(HTMachineTier.BASIC), false)
-        builder.addBlock(Blocks.ICE, HTTemperatureInfo.cooling(HTMachineTier.BASIC))
-        builder.addBlock(Blocks.PACKED_ICE, HTTemperatureInfo.cooling(HTMachineTier.ADVANCED))
-        builder.addBlock(Blocks.BLUE_ICE, HTTemperatureInfo.cooling(HTMachineTier.ELITE))
-        builder.add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, HTTemperatureInfo.cooling(HTMachineTier.ULTIMATE), false)
-    }
 
     //    Fluid    //
 

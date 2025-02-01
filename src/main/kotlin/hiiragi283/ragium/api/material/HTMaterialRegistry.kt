@@ -5,7 +5,6 @@ import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import java.util.stream.Stream
 
 /**
@@ -55,12 +54,6 @@ interface HTMaterialRegistry : Keyable {
      * @return 値がない場合は`null`
      */
     fun getFirstItem(prefix: HTTagPrefix, key: HTMaterialKey): Holder<Item>? = getItems(prefix, key).firstOrNull()
-
-    /**
-     * 指定した[item]に紐づいた素材のデータを返します。
-     * @return 値がない場合は[emptyList]
-     */
-    fun getDefinitions(item: ItemLike): List<HTMaterialDefinition>
 
     //    Keyable    //
 

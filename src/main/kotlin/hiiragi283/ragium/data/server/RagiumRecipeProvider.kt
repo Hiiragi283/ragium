@@ -3,15 +3,16 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.extension.cooling
-import hiiragi283.ragium.api.extension.tier
+import hiiragi283.ragium.api.extension.catalyst
+import hiiragi283.ragium.api.extension.sources
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.common.recipe.condition.HTRockGeneratorCondition
 import hiiragi283.ragium.data.server.integration.HTAARecipeProvider
 import hiiragi283.ragium.data.server.integration.HTDelightRecipeProvider
@@ -94,7 +95,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     private fun registerVanilla(output: RecipeOutput) {
         // Skulls
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.LASER_TRANSFORMER)
+            .create(RagiumRecipes.LASER_TRANSFORMER)
             .itemInput(Tags.Items.STORAGE_BLOCKS_BONE_MEAL)
             .itemOutput(Items.SKELETON_SKULL)
             .save(output)
@@ -118,10 +119,10 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         tier: HTMachineTier = HTMachineTier.ADVANCED,
     ) {
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.LASER_TRANSFORMER)
+            .create(RagiumRecipes.LASER_TRANSFORMER)
             .itemInput(Items.SKELETON_SKULL)
             .itemInput(input)
-            .tier(tier)
+            .catalyst(tier)
             .itemOutput(skull)
             .save(output)
     }
@@ -150,13 +151,13 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
         // Melon
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CUTTING_MACHINE)
+            .create(RagiumRecipes.CUTTING_MACHINE)
             .itemInput(Tags.Items.CROPS_MELON)
             .itemOutput(Items.MELON_SLICE, 9)
             .save(output)
         // Mushroom Stew
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
+            .create(RagiumRecipes.MIXER)
             .itemInput(Tags.Items.MUSHROOMS, 2)
             .milkInput()
             .itemInput(Items.BOWL, 2)
@@ -164,7 +165,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             .save(output)
         // Pumpkin Pie
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
+            .create(RagiumRecipes.ASSEMBLER)
             .itemInput(Tags.Items.CROPS_PUMPKIN)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemOutput(Items.PUMPKIN_PIE, 2)
@@ -172,14 +173,14 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
         // Mud
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
+            .create(RagiumRecipes.MIXER)
             .itemInput(Items.DIRT)
             .waterInput()
             .itemOutput(Items.MUD)
             .save(output)
         // Packed Mud
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COMPRESSOR)
+            .create(RagiumRecipes.COMPRESSOR)
             .itemInput(Items.MUD)
             .itemOutput(Items.PACKED_MUD)
             .save(output)
@@ -191,42 +192,42 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     private fun registerSnow(output: RecipeOutput) {
         // Water -> Ice
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.COMPRESSOR)
+            .create(RagiumRecipes.COMPRESSOR)
             .waterInput()
-            .cooling(HTMachineTier.BASIC)
+            .sources(RagiumBlockTags.COOLING_SOURCES)
             .itemOutput(Items.SNOW_BLOCK)
             .save(output)
 
         // Snow Block -> 4x Snow Ball
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.GRINDER)
+            .create(RagiumRecipes.GRINDER)
             .itemInput(Items.SNOW_BLOCK)
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_block")
         // Ice -> 4x Snow Ball
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.GRINDER)
+            .create(RagiumRecipes.GRINDER)
             .itemInput(Items.ICE)
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_ice")
 
         // Powder Snow
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
+            .create(RagiumRecipes.MIXER)
             .waterInput()
-            .cooling(HTMachineTier.ADVANCED)
+            .sources(RagiumBlockTags.COOLING_SOURCES)
             .fluidOutput(RagiumFluids.SNOW)
             .saveSuffixed(output, "_from_water")
 
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.EXTRACTOR)
+            .create(RagiumRecipes.EXTRACTOR)
             .itemInput(Tags.Items.BUCKETS_POWDER_SNOW)
             .itemOutput(Items.BUCKET)
             .fluidOutput(RagiumFluids.SNOW)
             .save(output, RagiumAPI.id("powder_snow_from_bucket"))
 
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
+            .create(RagiumRecipes.ASSEMBLER)
             .itemInput(Items.BUCKET)
             .fluidInput(RagiumFluids.SNOW)
             .itemOutput(Items.POWDER_SNOW_BUCKET)
@@ -236,7 +237,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     private fun registerStone(output: RecipeOutput) {
         fun registerRock(rock: ItemLike) {
             HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.MIXER)
+                .create(RagiumRecipes.MIXER)
                 .condition(HTRockGeneratorCondition(Ingredient.of(rock)))
                 .itemOutput(rock, 8)
                 .save(output)
@@ -260,7 +261,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         registerRock(Items.END_STONE)
 
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
+            .create(RagiumRecipes.MIXER)
             .fluidInput(Tags.Fluids.LAVA)
             .condition(HTRockGeneratorCondition(Ingredient.of(Items.OBSIDIAN)))
             .itemOutput(Items.OBSIDIAN)

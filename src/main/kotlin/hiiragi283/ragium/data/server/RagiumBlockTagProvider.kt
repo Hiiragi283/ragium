@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addAll
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.HolderLookup
@@ -12,6 +13,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -57,6 +59,18 @@ class RagiumBlockTagProvider(
         tag(BlockTags.MINEABLE_WITH_HOE)
             .add(RagiumBlocks.SPONGE_CAKE)
             .add(RagiumBlocks.SWEET_BERRIES_CAKE)
+
+        // Ragium
+        tag(RagiumBlockTags.COOLING_SOURCES)
+            .addTag(BlockTags.ICE)
+            .addTag(BlockTags.SNOW)
+            .add(Blocks::WATER)
+
+        tag(RagiumBlockTags.HEATING_SOURCES)
+            .add(Blocks::CAMPFIRE)
+            .add(Blocks::FIRE)
+            .add(Blocks::LAVA)
+            .add(Blocks::MAGMA_BLOCK)
 
         // Farmer's Delight
         tag(ModTags.HEAT_SOURCES).addAll(RagiumBlocks.Burners.entries)

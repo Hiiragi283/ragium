@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -17,6 +17,5 @@
       "count": 1,
       "id": "ragium:carbon_dust"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

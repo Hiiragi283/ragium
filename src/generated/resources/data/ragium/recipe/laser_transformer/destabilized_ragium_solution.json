@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:laser_transformer",
   "fluid_inputs": [
     {
       "amount": 500,
@@ -11,6 +11,5 @@
       "amount": 250,
       "id": "ragium:destabilized_ragium_solution"
     }
-  ],
-  "machine_type": "laser_transformer"
+  ]
 }

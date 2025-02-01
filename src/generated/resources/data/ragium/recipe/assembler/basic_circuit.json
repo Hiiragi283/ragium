@@ -1,5 +1,11 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/basic"
+    }
+  },
   "item_inputs": [
     {
       "count": 1,
@@ -19,6 +25,5 @@
       "count": 1,
       "id": "ragium:basic_circuit"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

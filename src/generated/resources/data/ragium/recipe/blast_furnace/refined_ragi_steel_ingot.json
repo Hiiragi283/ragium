@@ -1,9 +1,5 @@
 {
-  "type": "ragium:machine",
-  "condition": {
-    "type": "ragium:min_tier",
-    "tier": "advanced"
-  },
+  "type": "ragium:blast_furnace",
   "item_inputs": [
     {
       "count": 1,
@@ -19,6 +15,5 @@
       "count": 1,
       "id": "ragium:refined_ragi_steel_ingot"
     }
-  ],
-  "machine_type": "blast_furnace"
+  ]
 }

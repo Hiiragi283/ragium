@@ -5,7 +5,7 @@
       "modid": "actuallyadditions"
     }
   ],
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "item_inputs": [
     {
       "count": 1,
@@ -21,6 +21,5 @@
       "count": 2,
       "id": "actuallyadditions:advanced_coil"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:blast_furnace",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "advanced"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/advanced"
+    }
   },
   "fluid_inputs": [
     {
@@ -25,6 +27,5 @@
       "count": 2,
       "id": "ragium:slag"
     }
-  ],
-  "machine_type": "blast_furnace"
+  ]
 }

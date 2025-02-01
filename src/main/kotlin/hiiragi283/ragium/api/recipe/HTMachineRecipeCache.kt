@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.recipe
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.property.getOrDefault
+import hiiragi283.ragium.api.property.get
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -23,9 +23,8 @@ class HTMachineRecipeCache private constructor(val machine: HTMachineKey) {
     private fun reloadRecipes(level: Level) {
         recipeCache.clear()
         machine
-            .getProperty()
-            .getOrDefault(HTMachinePropertyKeys.RECIPE_PROXY)
-            .getRecipes(level, recipeCache::add)
+            .getProperty()[HTMachinePropertyKeys.RECIPE_PROXY]
+            ?.getRecipes(level, recipeCache::add)
     }
 
     fun getFirstMatch(level: Level, pos: BlockPos, stack: ItemStack): Result<RecipeHolder<HTMachineRecipe>> {

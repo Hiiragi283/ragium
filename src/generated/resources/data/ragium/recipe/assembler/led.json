@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "item_inputs": [
     {
       "count": 1,
@@ -19,6 +19,5 @@
       "count": 4,
       "id": "ragium:led"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

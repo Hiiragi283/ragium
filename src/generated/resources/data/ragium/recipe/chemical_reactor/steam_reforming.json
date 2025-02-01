@@ -1,9 +1,9 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "condition": {
-    "type": "ragium:temperature",
-    "min_tier": "elite",
-    "temperature_type": "heating"
+    "type": "ragium:source",
+    "source": "ragium:sources/heating",
+    "target_side": "down"
   },
   "fluid_inputs": [
     {
@@ -24,6 +24,5 @@
       "amount": 1000,
       "id": "ragium:carbon_monoxide"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

@@ -1,9 +1,9 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "condition": {
-    "type": "ragium:temperature",
-    "min_tier": "elite",
-    "temperature_type": "cooling"
+    "type": "ragium:source",
+    "source": "ragium:sources/cooling",
+    "target_side": "down"
   },
   "fluid_inputs": [
     {
@@ -16,6 +16,5 @@
       "amount": 10,
       "id": "ragium:liquid_nitrogen"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

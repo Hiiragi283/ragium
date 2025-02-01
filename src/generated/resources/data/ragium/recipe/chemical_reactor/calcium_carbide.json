@@ -1,9 +1,9 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "condition": {
-    "type": "ragium:temperature",
-    "min_tier": "advanced",
-    "temperature_type": "heating"
+    "type": "ragium:source",
+    "source": "ragium:sources/heating",
+    "target_side": "down"
   },
   "fluid_outputs": [
     {
@@ -26,6 +26,5 @@
       "count": 1,
       "id": "ragium:calcium_carbide"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

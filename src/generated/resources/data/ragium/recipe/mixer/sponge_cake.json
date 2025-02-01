@@ -1,10 +1,9 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:mixer",
   "condition": {
-    "type": "ragium:temperature",
-    "max_tier": "basic",
-    "min_tier": "basic",
-    "temperature_type": "heating"
+    "type": "ragium:source",
+    "source": "ragium:sources/heating",
+    "target_side": "down"
   },
   "fluid_inputs": [
     {
@@ -31,6 +30,5 @@
       "count": 4,
       "id": "ragium:sponge_cake"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

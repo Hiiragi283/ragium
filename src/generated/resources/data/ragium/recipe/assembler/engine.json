@@ -1,8 +1,10 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "condition": {
-    "type": "ragium:min_tier",
-    "tier": "advanced"
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/advanced"
+    }
   },
   "item_inputs": [
     {
@@ -23,6 +25,5 @@
       "count": 1,
       "id": "ragium:engine"
     }
-  ],
-  "machine_type": "assembler"
+  ]
 }

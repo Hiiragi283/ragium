@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:distillation_tower",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -25,6 +25,5 @@
       "amount": 2000,
       "id": "ragium:propene"
     }
-  ],
-  "machine_type": "distillation_tower"
+  ]
 }

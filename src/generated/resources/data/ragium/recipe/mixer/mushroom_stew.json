@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:mixer",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -21,6 +21,5 @@
       "count": 2,
       "id": "minecraft:mushroom_stew"
     }
-  ],
-  "machine_type": "mixer"
+  ]
 }

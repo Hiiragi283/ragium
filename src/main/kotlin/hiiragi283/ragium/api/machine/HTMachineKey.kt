@@ -112,6 +112,10 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
         }
     }
 
+    override fun equals(other: Any?): Boolean = (other as? HTMachineKey)?.name == this.name
+
+    override fun hashCode(): Int = name.hashCode()
+
     override fun toString(): String = "HTMachineKey[$name]"
 
     //    Comparable    //

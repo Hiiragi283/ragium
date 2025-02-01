@@ -6,16 +6,12 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
-import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -72,7 +68,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .savePrefixed(output)
             // Assembler
             HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.ASSEMBLER)
+                .create(RagiumRecipes.ASSEMBLER)
                 .itemInput(HTTagPrefix.ROD, grate.machineTier.getSteelMetal(), 4)
                 .catalyst(grate)
                 .itemOutput(grate, 4)
@@ -102,7 +98,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .savePrefixed(output)
             // Assembler
             HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.ASSEMBLER)
+                .create(RagiumRecipes.ASSEMBLER)
                 .itemInput(grate, 4)
                 .itemInput(HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
                 .itemInput(corner, 4)
@@ -127,7 +123,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .savePrefixed(output)
             // Assembler
             HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.ASSEMBLER)
+                .create(RagiumRecipes.ASSEMBLER)
                 .itemInput(HTTagPrefix.INGOT, hull.machineTier.getMainMetal(), 5)
                 .itemInput(hull.machineTier.getCasing(), 3)
                 .itemInput(hull.machineTier.getCircuitTag())
@@ -152,10 +148,10 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .savePrefixed(output)
             // Assembler
             HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.ASSEMBLER)
+                .create(RagiumRecipes.ASSEMBLER)
                 .itemInput(HTTagPrefix.INGOT, coil.machineTier.getSubMetal(), 8)
                 .itemInput(RagiumBlocks.SHAFT)
-                .tier(previousTier)
+                .catalyst(previousTier)
                 .itemOutput(coil, 4)
                 .save(output)
         }
@@ -286,11 +282,11 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
         // Superconductive Coolant
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
+            .create(RagiumRecipes.ASSEMBLER)
             .itemInput(RagiumBlocks.Casings.ELITE, 4)
             .itemInput(RagiumBlocks.CHEMICAL_GLASS, 4)
             .fluidInput(RagiumFluids.LIQUID_NITROGEN, FluidType.BUCKET_VOLUME * 8)
-            .tier(HTMachineTier.ELITE)
+            .catalyst(HTMachineTier.ELITE)
             .itemOutput(RagiumBlocks.SUPERCONDUCTIVE_COOLANT)
             .save(output)
     }

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "fluid_outputs": [
     {
       "amount": 1000,
@@ -11,6 +11,5 @@
       "count": 1,
       "item": "minecraft:honey_block"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

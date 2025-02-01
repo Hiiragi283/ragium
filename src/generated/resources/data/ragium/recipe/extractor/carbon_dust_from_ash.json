@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "item_inputs": [
     {
       "count": 1,
@@ -15,6 +15,5 @@
       "count": 1,
       "id": "ragium:alkali_reagent"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

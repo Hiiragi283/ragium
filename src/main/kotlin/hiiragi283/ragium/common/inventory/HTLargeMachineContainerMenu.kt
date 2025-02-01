@@ -20,10 +20,10 @@ class HTLargeMachineContainerMenu(
         pos,
         itemHandler,
     ) {
-    constructor(syncId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf) : this(
+    constructor(syncId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         syncId,
         playerInv,
-        BlockPos.STREAM_CODEC.decode(registryBuf),
+        registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
         ItemStackHandler(6),
     )
 

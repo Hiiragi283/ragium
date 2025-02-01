@@ -59,16 +59,8 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
         player: Player,
         hand: InteractionHand,
         hitResult: BlockHitResult,
-    ): ItemInteractionResult = state.getMenuProvider(level, pos)?.let {
-        when (level.isClientSide) {
-            true -> ItemInteractionResult.SUCCESS
-            else -> {
-                player.openMenu(it)
-                ItemInteractionResult.CONSUME
-            }
-        }
-    } ?: ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-
+    ): ItemInteractionResult = ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    
     /**
      * ブロックが右クリックされたときに呼ばれます。
      * @see [hiiragi283.ragium.api.block.HTEntityBlock.useWithoutItem]

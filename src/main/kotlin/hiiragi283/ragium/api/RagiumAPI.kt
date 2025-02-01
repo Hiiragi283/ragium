@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.api.util.DisableOverwriteMerger
-import hiiragi283.ragium.api.util.HTTemperatureInfo
 import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import net.minecraft.core.Direction
@@ -20,7 +19,6 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.registries.RegistryBuilder
@@ -83,14 +81,6 @@ data object RagiumAPI {
      * Ragiumが追加する[DataMapType]
      */
     object DataMapTypes {
-        //    Block    //
-
-        /**
-         * [HTTemperatureInfo]を返す[DataMapType]
-         */
-        @JvmField
-        val TEMP_TIER: DataMapType<Block, HTTemperatureInfo> = createBlock("temperature", HTTemperatureInfo.CODEC)
-
         //    Fluid    //
 
         /**
@@ -124,13 +114,6 @@ data object RagiumAPI {
          */
         @JvmField
         val RADIOACTIVES: DataMapType<Item, HTRadioactivity> = createItem("radioactivity", HTRadioactivity.CODEC)
-
-        @JvmStatic
-        private fun <T : Any> createBlock(path: String, codec: Codec<T>): DataMapType<Block, T> = AdvancedDataMapType
-            .builder(id(path), MCRegistries.BLOCK, codec)
-            .synced(codec, false)
-            .merger(DisableOverwriteMerger())
-            .build()
 
         @JvmStatic
         private fun <T : Any> createItem(path: String, codec: Codec<T>): DataMapType<Item, T> = AdvancedDataMapType

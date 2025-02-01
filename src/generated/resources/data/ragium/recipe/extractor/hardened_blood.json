@@ -5,11 +5,11 @@
       "modid": "evilcraft"
     }
   ],
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "condition": {
-    "type": "ragium:temperature",
-    "min_tier": "basic",
-    "temperature_type": "heating"
+    "type": "ragium:source",
+    "source": "ragium:sources/heating",
+    "target_side": "down"
   },
   "fluid_inputs": [
     {
@@ -22,6 +22,5 @@
       "count": 1,
       "id": "evilcraft:hardened_blood"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

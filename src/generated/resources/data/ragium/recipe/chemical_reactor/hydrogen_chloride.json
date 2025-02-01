@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:chemical_reactor",
   "fluid_inputs": [
     {
       "amount": 1000,
@@ -15,6 +15,5 @@
       "amount": 2000,
       "id": "ragium:hydrogen_chloride"
     }
-  ],
-  "machine_type": "chemical_reactor"
+  ]
 }

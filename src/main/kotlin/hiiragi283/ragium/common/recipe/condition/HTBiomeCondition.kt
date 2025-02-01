@@ -30,7 +30,7 @@ class HTBiomeCondition(val biomes: HolderSet<Biome>) : HTMachineRecipeCondition 
         Component.literal(
             "Required biome: ${biomes.asHolderText { holder: Holder<Biome> ->
                 Component.literal(holder.idOrThrow.toString())
-            }}",
+            }.string}",
         )
 
     override fun test(level: Level, pos: BlockPos): Boolean = level.getBiome(pos) in biomes

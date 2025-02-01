@@ -1,5 +1,5 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:extractor",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -11,6 +11,5 @@
       "amount": 1000,
       "id": "ragium:air"
     }
-  ],
-  "machine_type": "extractor"
+  ]
 }

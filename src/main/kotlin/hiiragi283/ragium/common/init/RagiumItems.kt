@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemProperty
-import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -33,95 +33,10 @@ object RagiumItems {
     @JvmField
     val REGISTER: DeferredRegister.Items = DeferredRegister.createItems(RagiumAPI.MOD_ID)
 
-    @JvmStatic
-    lateinit var materialItems: HTTable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>>
-        private set
-
-    @JvmStatic
-    fun getMaterialMap(prefix: HTTagPrefix): Map<HTMaterialKey, DeferredItem<out Item>> = materialItems.row(prefix)
-
-    @JvmStatic
-    fun getMaterialItems(prefix: HTTagPrefix): Collection<DeferredItem<out Item>> = getMaterialMap(prefix).values
-
-    @JvmStatic
-    fun getMaterialItem(prefix: HTTagPrefix, material: HTMaterialKey): DeferredItem<out Item> =
-        getMaterialMap(prefix)[material] ?: error("Unregistered material item: ${prefix.createPath(material)}")
-
-    init {
-        registerBlockItems()
-        registerMaterialItems()
-    }
-
-    @JvmStatic
-    private fun registerBlockItems() {
-        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
-            REGISTER.registerSimpleBlockItem(
-                ore,
-                itemProperty().name(variant.createText(key)),
-            )
-        }
-
-        RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
-            REGISTER.registerSimpleBlockItem(
-                storage.id.path,
-                storage,
-                itemProperty {
-                    name(RagiumBlocks.getStorageParent(key).createText(key))
-                    if (key in RagiumMaterials.END_CONTENTS) {
-                        component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                    }
-                },
-            )
-        }
-
-        buildList {
-            addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Casings.entries)
-            addAll(RagiumBlocks.Hulls.entries)
-            addAll(RagiumBlocks.Coils.entries)
-            addAll(RagiumBlocks.Burners.entries)
-
-            addAll(RagiumBlocks.Drums.entries)
-        }.forEach { content: HTBlockContent.Tier ->
-            REGISTER.registerSimpleBlockItem(
-                content.id.path,
-                content,
-                itemProperty().name(content.machineTier.createPrefixedText(content.translationKey)),
-            )
-        }
-
-        buildList {
-            addAll(RagiumBlocks.Decorations.entries)
-            addAll(RagiumBlocks.LEDBlocks.entries)
-        }.map(HTBlockContent::holder)
-            .forEach(REGISTER::registerSimpleBlockItem)
-
-        buildList {
-            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
-
-            add(RagiumBlocks.SHAFT)
-            add(RagiumBlocks.CHEMICAL_GLASS)
-
-            add(RagiumBlocks.PLASTIC_BLOCK)
-
-            add(RagiumBlocks.SPONGE_CAKE)
-            add(RagiumBlocks.SWEET_BERRIES_CAKE)
-
-            add(RagiumBlocks.MANUAL_GRINDER)
-            add(RagiumBlocks.ROBOT)
-
-            addAll(RagiumBlocks.ADDONS)
-        }.forEach(REGISTER::registerSimpleBlockItem)
-    }
-
-    //    Materials    //
-
-    @JvmStatic
-    fun registerMaterialItems() {
-        val builder: HTTable.Mutable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>> = mutableTableOf()
-
+    @JvmField
+    val MATERIAL_ITEMS: HTTable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>> = buildTable {
         fun register(prefix: HTTagPrefix, material: HTMaterialKey) {
-            builder.put(
+            put(
                 prefix,
                 material,
                 REGISTER.registerSimpleItem(
@@ -196,9 +111,85 @@ object RagiumItems {
         register(HTTagPrefix.ROD, CommonMaterials.STEEL)
         register(HTTagPrefix.ROD, RagiumMaterials.DEEP_STEEL)
         register(HTTagPrefix.ROD, RagiumMaterials.DRAGONIUM)
-
-        this.materialItems = builder
     }
+
+    @JvmStatic
+    fun getMaterialMap(prefix: HTTagPrefix): Map<HTMaterialKey, DeferredItem<out Item>> = MATERIAL_ITEMS.row(prefix)
+
+    @JvmStatic
+    fun getMaterialItems(prefix: HTTagPrefix): Collection<DeferredItem<out Item>> = getMaterialMap(prefix).values
+
+    @JvmStatic
+    fun getMaterialItem(prefix: HTTagPrefix, material: HTMaterialKey): DeferredItem<out Item> =
+        getMaterialMap(prefix)[material] ?: error("Unregistered material item: ${prefix.createPath(material)}")
+
+    init {
+        registerBlockItems()
+    }
+
+    @JvmStatic
+    private fun registerBlockItems() {
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
+            REGISTER.registerSimpleBlockItem(
+                ore,
+                itemProperty().name(variant.createText(key)),
+            )
+        }
+
+        RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
+            REGISTER.registerSimpleBlockItem(
+                storage.id.path,
+                storage,
+                itemProperty {
+                    name(RagiumBlocks.getStorageParent(key).createText(key))
+                    if (key in RagiumMaterials.END_CONTENTS) {
+                        component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                    }
+                },
+            )
+        }
+
+        buildList {
+            addAll(RagiumBlocks.Grates.entries)
+            addAll(RagiumBlocks.Casings.entries)
+            addAll(RagiumBlocks.Hulls.entries)
+            addAll(RagiumBlocks.Coils.entries)
+            addAll(RagiumBlocks.Burners.entries)
+
+            addAll(RagiumBlocks.Drums.entries)
+        }.forEach { content: HTBlockContent.Tier ->
+            REGISTER.registerSimpleBlockItem(
+                content.id.path,
+                content,
+                itemProperty().name(content.machineTier.createPrefixedText(content.translationKey)),
+            )
+        }
+
+        buildList {
+            addAll(RagiumBlocks.Decorations.entries)
+            addAll(RagiumBlocks.LEDBlocks.entries)
+        }.map(HTBlockContent::holder)
+            .forEach(REGISTER::registerSimpleBlockItem)
+
+        buildList {
+            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+
+            add(RagiumBlocks.SHAFT)
+            add(RagiumBlocks.CHEMICAL_GLASS)
+
+            add(RagiumBlocks.PLASTIC_BLOCK)
+
+            add(RagiumBlocks.SPONGE_CAKE)
+            add(RagiumBlocks.SWEET_BERRIES_CAKE)
+
+            add(RagiumBlocks.MANUAL_GRINDER)
+            add(RagiumBlocks.ROBOT)
+
+            addAll(RagiumBlocks.ADDONS)
+        }.forEach(REGISTER::registerSimpleBlockItem)
+    }
+
+    //    Materials    //
 
     @JvmField
     val BEE_WAX: DeferredItem<Item> = REGISTER.registerItem("bee_wax", ::HoneycombItem, itemProperty())

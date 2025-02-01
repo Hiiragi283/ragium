@@ -3,7 +3,10 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
-import hiiragi283.ragium.common.recipe.condition.*
+import hiiragi283.ragium.common.recipe.condition.HTBiomeCondition
+import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
+import hiiragi283.ragium.common.recipe.condition.HTRockGeneratorCondition
+import hiiragi283.ragium.common.recipe.condition.HTSourceCondition
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -25,10 +28,6 @@ object RagiumMachineRecipeConditions {
         REGISTER.register("rock_generator", HTRockGeneratorCondition::CODEC)
 
     @JvmField
-    val TEMPERATURE: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTTemperatureCondition>> =
-        REGISTER.register("temperature", HTTemperatureCondition::CODEC)
-
-    @JvmField
-    val TIER: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTTierCondition>> =
-        REGISTER.register("min_tier", HTTierCondition::CODEC)
+    val SOURCE: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTSourceCondition>> =
+        REGISTER.register("source", HTSourceCondition::CODEC)
 }
