@@ -116,7 +116,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 5)
             .catalyst(HTMachineTier.ADVANCED)
-            .itemOutput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
 
         HTMachineRecipeBuilder

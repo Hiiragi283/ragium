@@ -35,6 +35,7 @@
   "config.jade.plugin_ragium.machine_info": "機械の情報",
   "content.ragium.burner": "バーナー",
   "content.ragium.casing": "外装",
+  "content.ragium.casing_wall": "外装の壁",
   "content.ragium.circuit": "回路",
   "content.ragium.coil": "コイル",
   "content.ragium.crate": "クレート",

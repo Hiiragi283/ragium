@@ -63,6 +63,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Content
         add(RagiumTranslationKeys.BURNER, "バーナー")
         add(RagiumTranslationKeys.CASING, "外装")
+        add(RagiumTranslationKeys.CASING_WALL, "外装の壁")
         add(RagiumTranslationKeys.CIRCUIT, "回路")
         add(RagiumTranslationKeys.COIL, "コイル")
         add(RagiumTranslationKeys.CRATE, "クレート")

@@ -60,7 +60,7 @@ object HTMachinePropertyKeys {
     @JvmField
     val MODEL_MAPPER: HTPropertyKey<(HTMachineKey) -> ResourceLocation> =
         HTPropertyKey
-            .builder<(HTMachineKey) -> ResourceLocation>(RagiumAPI.id("block_model_mapper"))
+            .builder<(HTMachineKey) -> ResourceLocation>(RagiumAPI.id("model_mapper"))
             .setDefaultValue { { key: HTMachineKey -> RagiumAPI.id("block/${key.name}") } }
             .build()
 

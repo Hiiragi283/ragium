@@ -62,6 +62,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Content
         add(RagiumTranslationKeys.BURNER, "Burner")
         add(RagiumTranslationKeys.CASING, "Casing")
+        add(RagiumTranslationKeys.CASING_WALL, "Casing Wall")
         add(RagiumTranslationKeys.CIRCUIT, "Circuit")
         add(RagiumTranslationKeys.COIL, "Coil")
         add(RagiumTranslationKeys.CRATE, "Crate")

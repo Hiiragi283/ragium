@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.itemTexture
+import hiiragi283.ragium.api.extension.withExistingParent
 import hiiragi283.ragium.api.extension.withUncheckedParent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -38,6 +39,11 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             addAll(RagiumBlocks.LEDBlocks.entries)
         }.map(HTBlockContent::id).forEach(::simpleBlockItem)
+
+        RagiumBlocks.CasingWalls.entries.forEach { wall: RagiumBlocks.CasingWalls ->
+            withExistingParent(wall, ResourceLocation.withDefaultNamespace("block/wall_inventory"))
+                .texture("wall", wall.machineTier.getCasing().blockId)
+        }
 
         RagiumBlocks.Decorations.entries.forEach { decoration: RagiumBlocks.Decorations ->
             withUncheckedParent(decoration, decoration.parent.blockId)

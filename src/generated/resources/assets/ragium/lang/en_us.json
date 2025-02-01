@@ -35,6 +35,7 @@
   "config.jade.plugin_ragium.machine_info": "Machine Info",
   "content.ragium.burner": "Burner",
   "content.ragium.casing": "Casing",
+  "content.ragium.casing_wall": "Casing Wall",
   "content.ragium.circuit": "Circuit",
   "content.ragium.coil": "Coil",
   "content.ragium.crate": "Crate",

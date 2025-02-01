@@ -106,6 +106,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         registerTier(RagiumBlocks.Grates.entries)
         registerTier(RagiumBlocks.Casings.entries)
+        registerTier(RagiumBlocks.CasingWalls.entries)
         registerTier(RagiumBlocks.Hulls.entries)
         registerTier(RagiumBlocks.Coils.entries)
         registerTier(RagiumBlocks.Burners.entries)

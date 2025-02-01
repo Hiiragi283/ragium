@@ -60,7 +60,7 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
         hand: InteractionHand,
         hitResult: BlockHitResult,
     ): ItemInteractionResult = ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-    
+
     /**
      * ブロックが右クリックされたときに呼ばれます。
      * @see [hiiragi283.ragium.api.block.HTEntityBlock.useWithoutItem]

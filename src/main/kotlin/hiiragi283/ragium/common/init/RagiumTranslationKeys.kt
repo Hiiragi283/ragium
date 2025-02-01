@@ -20,6 +20,7 @@ object RagiumTranslationKeys {
 
     const val BURNER = "content.ragium.burner"
     const val CASING = "content.ragium.casing"
+    const val CASING_WALL = "content.ragium.casing_wall"
     const val CIRCUIT = "content.ragium.circuit"
     const val COIL = "content.ragium.coil"
     const val CRATE = "content.ragium.crate"

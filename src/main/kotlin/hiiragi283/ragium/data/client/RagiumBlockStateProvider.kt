@@ -47,6 +47,10 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }.map(Supplier<out Block>::get)
             .forEach(::simpleBlock)
 
+        RagiumBlocks.CasingWalls.entries.forEach { wall: RagiumBlocks.CasingWalls ->
+            wallBlock(wall.holder.get(), wall.machineTier.getCasing().blockId)
+        }
+
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
             simpleBlock(

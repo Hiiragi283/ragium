@@ -35,6 +35,7 @@ object RagiumClient {
 
     @SubscribeEvent
     fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+        // Fluid
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             event.registerFluidType(fluid, fluid.typeHolder)
         }

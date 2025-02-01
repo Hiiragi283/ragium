@@ -299,9 +299,9 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("BCB")
             .pattern("DDD")
             .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', RagiumBlocks.Coils.BASIC)
-            .define('C', Items.BLAST_FURNACE)
-            .define('D', RagiumBlocks.Casings.BASIC)
+            .define('B', Items.BLAST_FURNACE)
+            .define('C', HTMachineTier.BASIC.getCircuitTag())
+            .define('D', Items.DEEPSLATE_BRICKS)
             .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
             .savePrefixed(output)
         // Coke Oven

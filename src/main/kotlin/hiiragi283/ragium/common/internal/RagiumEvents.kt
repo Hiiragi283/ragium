@@ -360,9 +360,7 @@ internal object RagiumEvents {
         }
 
         bindAllMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
-        bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.COMBUSTION_GENERATOR)
-        bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.GAS_TURBINE)
-        bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.THERMAL_GENERATOR)
+        bindAllMachines(RagiumBlockEntityTypes.FLUID_GENERATOR)
 
         bindAllMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
         bindAllMachines(RagiumBlockEntityTypes.LARGE_PROCESSOR)
@@ -412,6 +410,7 @@ internal object RagiumEvents {
 
         registerTier(RagiumBlocks.Grates.entries)
         registerTier(RagiumBlocks.Casings.entries)
+        registerTier(RagiumBlocks.CasingWalls.entries)
         registerTier(RagiumBlocks.Hulls.entries)
         registerTier(RagiumBlocks.Coils.entries)
         registerTier(RagiumBlocks.Burners.entries)

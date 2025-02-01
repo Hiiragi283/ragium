@@ -19,7 +19,7 @@ object RagiumMultiblockMaps {
 
     private val DEEP_WALL = HTSimpleMultiblockComponent(Blocks::POLISHED_DEEPSLATE_WALL)
     private val DEEP_TILE = HTSimpleMultiblockComponent(Blocks::DEEPSLATE_TILES)
-    
+
     @JvmField
     val BEDROCK_MINER: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()

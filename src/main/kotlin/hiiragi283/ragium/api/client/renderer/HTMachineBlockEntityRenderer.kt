@@ -19,7 +19,7 @@ class HTMachineBlockEntityRenderer(context: BlockEntityRendererProvider.Context)
         packedLight: Int,
         packedOverlay: Int,
     ) {
-        val propertyHolder: HTPropertyHolder = blockEntity.machineKey.getProperty() ?: return
+        val propertyHolder: HTPropertyHolder = blockEntity.machineKey.getProperty()
         propertyHolder
             .getOrDefault(HTMachinePropertyKeys.RENDERER_PRE)
             .render(blockEntity, partialTick, poseStack, bufferSource, packedLight, packedOverlay)
