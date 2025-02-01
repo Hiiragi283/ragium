@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.property.EmptyPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.common.block.HTMachineBlock
+import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.level.block.Block

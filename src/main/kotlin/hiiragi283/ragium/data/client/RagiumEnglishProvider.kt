@@ -159,7 +159,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
 
+        add(RagiumTranslationKeys.BIOME_CONDITION, "Required Biomes: %s")
         add(RagiumTranslationKeys.CATALYST_CONDITION, "Required Catalyst Item")
+        add(RagiumTranslationKeys.ENCHANTMENT_CONDITION, "Required Enchantments: %s")
         add(
             RagiumTranslationKeys.ROCK_GENERATOR_CONDITION,
             "Require Water and Lava Source around the machine, and Catalyst Item",

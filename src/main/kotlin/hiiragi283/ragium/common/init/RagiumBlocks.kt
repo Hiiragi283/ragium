@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlock
 import hiiragi283.ragium.common.block.addon.HTCoolantBlock
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
-import hiiragi283.ragium.common.block.machine.HTRobotBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.*
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -275,10 +274,6 @@ object RagiumBlocks {
     @JvmField
     val MANUAL_GRINDER: DeferredBlock<HTManualGrinderBlock> =
         REGISTER.registerBlock("manual_grinder", ::HTManualGrinderBlock, blockProperty(Blocks.BRICKS))
-
-    @JvmField
-    val ROBOT: DeferredBlock<HTRobotBlock> =
-        REGISTER.registerBlock("robot", ::HTRobotBlock, blockProperty(Blocks.IRON_BLOCK))
 
     //    Utility    //
 

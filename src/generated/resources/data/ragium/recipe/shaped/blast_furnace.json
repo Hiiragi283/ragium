@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "item": "minecraft:deepslate_bricks"
     },
     "B": {
       "item": "minecraft:blast_furnace"
@@ -12,7 +12,7 @@
       "tag": "c:circuits/basic"
     },
     "D": {
-      "item": "minecraft:deepslate_bricks"
+      "item": "minecraft:smooth_stone"
     }
   },
   "pattern": [

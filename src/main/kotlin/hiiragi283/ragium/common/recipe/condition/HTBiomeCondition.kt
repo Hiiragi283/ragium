@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.extension.asHolderText
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -26,12 +28,11 @@ class HTBiomeCondition(val biomes: HolderSet<Biome>) : HTMachineRecipeCondition 
     constructor(biome: Holder<Biome>) : this(HolderSet.direct(biome))
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
-    override val text: MutableComponent =
-        Component.literal(
-            "Required biome: ${biomes.asHolderText { holder: Holder<Biome> ->
-                Component.literal(holder.idOrThrow.toString())
-            }.string}",
-        )
+    override val text: MutableComponent = Component
+        .translatable(
+            RagiumTranslationKeys.BIOME_CONDITION,
+            biomes.asHolderText { holder: Holder<Biome> -> Component.literal(holder.idOrThrow.toString()) },
+        ).withStyle(ChatFormatting.BLUE)
 
     override fun test(level: Level, pos: BlockPos): Boolean = level.getBiome(pos) in biomes
 }

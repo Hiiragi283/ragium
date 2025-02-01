@@ -161,7 +161,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "機械の構造は有効です！")
 
+        add(RagiumTranslationKeys.BIOME_CONDITION, "次のバイオームの範囲内で動作が必要です: %s")
         add(RagiumTranslationKeys.CATALYST_CONDITION, "触媒アイテムが必要です")
+        add(RagiumTranslationKeys.ENCHANTMENT_CONDITION, "次のエンチャントが必要です: %s")
         add(RagiumTranslationKeys.ROCK_GENERATOR_CONDITION, "周囲に水源と溶岩源，そして触媒アイテムが必要です")
         add(RagiumTranslationKeys.SOURCE_CONDITION, "次のソース「%s」が%s側から必要です")
         // Machine Type

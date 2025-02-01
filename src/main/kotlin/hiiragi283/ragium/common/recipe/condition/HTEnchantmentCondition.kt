@@ -6,6 +6,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.asHolderText
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -36,11 +38,11 @@ class HTEnchantmentCondition(val enchantments: HolderSet<Enchantment>, val minLe
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
     override val text: MutableComponent =
-        Component.literal(
-            "Required enchantments: ${
-                enchantments.asHolderText { holder: Holder<Enchantment> -> holder.value().description }.string
-            }",
-        )
+        Component
+            .translatable(
+                RagiumTranslationKeys.ENCHANTMENT_CONDITION,
+                enchantments.asHolderText { it.value().description },
+            ).withStyle(ChatFormatting.LIGHT_PURPLE)
 
     override fun test(level: Level, pos: BlockPos): Boolean {
         val machineEnch: ItemEnchantments = level.getMachineEntity(pos)?.enchantments ?: return false

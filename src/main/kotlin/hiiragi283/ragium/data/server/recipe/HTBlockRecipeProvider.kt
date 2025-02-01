@@ -298,10 +298,10 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('A', Items.DEEPSLATE_BRICKS)
             .define('B', Items.BLAST_FURNACE)
             .define('C', HTMachineTier.BASIC.getCircuitTag())
-            .define('D', Items.DEEPSLATE_BRICKS)
+            .define('D', Items.SMOOTH_STONE)
             .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
             .savePrefixed(output)
         // Coke Oven

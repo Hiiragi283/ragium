@@ -8,7 +8,6 @@ import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
-import hiiragi283.ragium.common.block.machine.HTRobotBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity
 import hiiragi283.ragium.common.block.processor.HTLargeProcessorBlockEntity
@@ -69,10 +68,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val MANUAL_GRINDER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTManualGrinderBlockEntity>> =
         register("manual_grinder", ::HTManualGrinderBlockEntity, RagiumBlocks.MANUAL_GRINDER)
-
-    @JvmField
-    val ROBOT: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRobotBlockEntity>> =
-        register("robot", ::HTRobotBlockEntity, RagiumBlocks.ROBOT)
 
     //    Generator    //
 

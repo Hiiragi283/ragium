@@ -49,7 +49,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
             add(RagiumBlocks.MANUAL_GRINDER)
-            add(RagiumBlocks.ROBOT)
 
             addAll(RagiumBlocks.ADDONS)
 

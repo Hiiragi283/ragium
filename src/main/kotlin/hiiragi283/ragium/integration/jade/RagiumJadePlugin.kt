@@ -1,8 +1,8 @@
 package hiiragi283.ragium.integration.jade
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
+import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import org.slf4j.Logger
 import snownee.jade.api.IWailaClientRegistration
 import snownee.jade.api.IWailaCommonRegistration
