@@ -314,7 +314,7 @@ internal object RagiumEvents {
         event.register(RagiumMaterials.DEEP_STEEL, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.DRAGONIUM, HTMaterialType.METAL)
         event.register(RagiumMaterials.ECHORIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterials.FIERIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.FIERY_COAL, HTMaterialType.GEM)
         event.register(RagiumMaterials.RAGI_ALLOY, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.RAGI_CRYSTAL, HTMaterialType.GEM)
         event.register(RagiumMaterials.RAGI_STEEL, HTMaterialType.ALLOY)

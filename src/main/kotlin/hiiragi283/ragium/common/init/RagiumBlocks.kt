@@ -79,7 +79,7 @@ object RagiumBlocks {
         // Other
         CommonMaterials.ALUMINUM,
         RagiumMaterials.ECHORIUM,
-        RagiumMaterials.FIERIUM,
+        RagiumMaterials.FIERY_COAL,
     ).associateWith { key: HTMaterialKey ->
         REGISTER.registerSimpleBlock(
             "${key.name}_block",
@@ -98,6 +98,7 @@ object RagiumBlocks {
         RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
         CommonMaterials.FLUORITE -> HTTagPrefix.GEM
         CommonMaterials.CRYOLITE -> HTTagPrefix.GEM
+        RagiumMaterials.FIERY_COAL -> HTTagPrefix.GEM
         else -> HTTagPrefix.INGOT
     }
 

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/fierium"
+      "tag": "c:gems/fiery_coal"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:fierium_block"
+    "id": "ragium:fiery_coal_block"
   }
 }

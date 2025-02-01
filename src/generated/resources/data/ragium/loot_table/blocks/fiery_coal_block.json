@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:fierium_block"
+          "name": "ragium:fiery_coal_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/fierium_block"
+  "random_sequence": "ragium:blocks/fiery_coal_block"
 }

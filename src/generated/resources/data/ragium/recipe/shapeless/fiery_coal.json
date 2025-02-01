@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:storage_blocks/fierium"
+      "tag": "c:storage_blocks/fiery_coal"
     }
   ],
   "result": {
     "count": 9,
-    "id": "ragium:fierium_ingot"
+    "id": "ragium:fiery_coal"
   }
 }

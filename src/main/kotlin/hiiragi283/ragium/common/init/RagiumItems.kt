@@ -89,11 +89,11 @@ object RagiumItems {
 
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
-        register(HTTagPrefix.INGOT, RagiumMaterials.FIERIUM)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
         register(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
+        register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
         // Gears
         register(HTTagPrefix.GEAR, VanillaMaterials.COPPER)
         register(HTTagPrefix.GEAR, VanillaMaterials.IRON)

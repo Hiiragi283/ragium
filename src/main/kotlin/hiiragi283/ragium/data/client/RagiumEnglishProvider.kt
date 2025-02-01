@@ -275,7 +275,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterials.DEEP_STEEL, "Deep Steel")
         add(RagiumMaterials.DRAGONIUM, "Dragonium")
         add(RagiumMaterials.ECHORIUM, "Echorium")
-        add(RagiumMaterials.FIERIUM, "Fierium")
+        add(RagiumMaterials.FIERY_COAL, "Fiery Coal")
         add(RagiumMaterials.RAGI_ALLOY, "Ragi-Alloy")
         add(RagiumMaterials.RAGI_CRYSTAL, "Ragi-Crystal")
         add(RagiumMaterials.RAGI_STEEL, "Ragi-Steel")

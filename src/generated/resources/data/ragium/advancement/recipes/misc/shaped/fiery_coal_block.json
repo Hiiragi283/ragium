@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/fierium"
+            "items": "#c:gems/fiery_coal"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/fierium_block"
+        "recipe": "ragium:shaped/fiery_coal_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/fierium_block"
+      "ragium:shaped/fiery_coal_block"
     ]
   }
 }

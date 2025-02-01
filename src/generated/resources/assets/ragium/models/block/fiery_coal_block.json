@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ragium:block/fierium_block"
+    "all": "ragium:block/fiery_coal_block"
   }
 }

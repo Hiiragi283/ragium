@@ -32,14 +32,14 @@ object RagiumMaterials {
     val ECHORIUM: HTMaterialKey = HTMaterialKey.of("echorium")
 
     @JvmField
-    val FIERIUM: HTMaterialKey = HTMaterialKey.of("fierium")
+    val FIERY_COAL: HTMaterialKey = HTMaterialKey.of("fiery_coal")
 
     @JvmField
     val END_CONTENTS: List<HTMaterialKey> = listOf(
         RAGIUM,
         DRAGONIUM,
         ECHORIUM,
-        FIERIUM,
+        FIERY_COAL,
     )
 
     //    Mineral    //

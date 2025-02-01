@@ -162,7 +162,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             val core: ItemLike = when (burner) {
                 RagiumBlocks.Burners.ADVANCED -> Items.MAGMA_BLOCK
                 RagiumBlocks.Burners.ELITE -> RagiumBlocks.SOUL_MAGMA_BLOCK
-                RagiumBlocks.Burners.ULTIMATE -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERIUM]!!
+                RagiumBlocks.Burners.ULTIMATE -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!
             }
             // Shaped Crafting
             ShapedRecipeBuilder
