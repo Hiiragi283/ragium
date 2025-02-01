@@ -72,7 +72,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.PLASTIC, "プラスチック")
 
         add(HTOreVariant.OVERWORLD, "%s鉱石")
-        add(HTOreVariant.DEEP, "深層%s鉱石")
+        add(HTOreVariant.DEEPSLATE, "深層%s鉱石")
         add(HTOreVariant.NETHER, "ネザー%s鉱石")
         add(HTOreVariant.END, "エンド%s鉱石")
         // Fluids

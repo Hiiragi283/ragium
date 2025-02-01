@@ -3,18 +3,21 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.blockProperty
+import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlock
 import hiiragi283.ragium.common.block.addon.HTCoolantBlock
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
+import hiiragi283.ragium.common.block.machine.HTRobotBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.*
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -25,9 +28,6 @@ object RagiumBlocks {
     val REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
 
     init {
-        Ores.entries
-
-        StorageBlocks.entries
         Grates.entries
         Casings.entries
         Hulls.entries
@@ -42,71 +42,62 @@ object RagiumBlocks {
 
     //    Components    //
 
-    enum class Ores(override val oreVariant: HTOreVariant, override val material: HTMaterialKey) : HTOreVariant.Content {
-        // overworld
-        CRUDE_RAGINITE(HTOreVariant.OVERWORLD, RagiumMaterials.CRUDE_RAGINITE),
-        RAGINITE(HTOreVariant.OVERWORLD, RagiumMaterials.RAGINITE),
-        RAGI_CRYSTAL(HTOreVariant.OVERWORLD, RagiumMaterials.RAGI_CRYSTAL),
-
-        // deepslate
-        DEEPSLATE_CRUDE_RAGINITE(HTOreVariant.DEEP, RagiumMaterials.CRUDE_RAGINITE),
-        DEEPSLATE_RAGINITE(HTOreVariant.DEEP, RagiumMaterials.RAGINITE),
-        DEEPSLATE_RAGI_CRYSTAL(HTOreVariant.DEEP, RagiumMaterials.RAGI_CRYSTAL),
-
-        // nether
-        NETHER_CRUDE_RAGINITE(HTOreVariant.NETHER, RagiumMaterials.CRUDE_RAGINITE),
-        NETHER_RAGINITE(HTOreVariant.NETHER, RagiumMaterials.RAGINITE),
-        NETHER_RAGI_CRYSTAL(HTOreVariant.NETHER, RagiumMaterials.RAGI_CRYSTAL),
-
-        // end
-        END_CRUDE_RAGINITE(HTOreVariant.END, RagiumMaterials.CRUDE_RAGINITE),
-        END_RAGINITE(HTOreVariant.END, RagiumMaterials.RAGINITE),
-        END_RAGI_CRYSTAL(HTOreVariant.END, RagiumMaterials.RAGI_CRYSTAL),
-        ;
-
-        override val holder: DeferredBlock<out Block> =
-            REGISTER.registerSimpleBlock("${name.lowercase()}_ore", oreVariant.createProperty())
+    @JvmField
+    val ORES: HTTable<HTOreVariant, HTMaterialKey, DeferredBlock<out Block>> = buildTable {
+        val materials: List<HTMaterialKey> = listOf(
+            RagiumMaterials.CRUDE_RAGINITE,
+            RagiumMaterials.RAGINITE,
+            RagiumMaterials.RAGI_CRYSTAL,
+        )
+        for (variant: HTOreVariant in HTOreVariant.entries) {
+            for (key: HTMaterialKey in materials) {
+                put(variant, key, REGISTER.registerSimpleBlock(variant.createId(key), variant.createProperty()))
+            }
+        }
     }
 
     @JvmField
     val SOUL_MAGMA_BLOCK: DeferredBlock<HTSoulMagmaBlock> =
         REGISTER.registerBlock("soul_magma_block", ::HTSoulMagmaBlock, blockProperty(Blocks.MAGMA_BLOCK))
 
-    enum class StorageBlocks(isGem: Boolean, override val material: HTMaterialKey) : HTBlockContent.Material {
+    @JvmField
+    val STORAGE_BLOCKS: Map<HTMaterialKey, DeferredBlock<Block>> = listOf(
         // Ragium
-        RAGI_ALLOY(false, RagiumMaterials.RAGI_ALLOY),
-        RAGI_STEEL(false, RagiumMaterials.RAGI_STEEL),
-        REFINED_RAGI_STEEL(false, RagiumMaterials.REFINED_RAGI_STEEL),
-        RAGIUM(false, RagiumMaterials.RAGIUM),
-
+        RagiumMaterials.RAGI_ALLOY,
+        RagiumMaterials.RAGI_STEEL,
+        RagiumMaterials.REFINED_RAGI_STEEL,
+        RagiumMaterials.RAGIUM,
         // Steel
-        STEEL(false, CommonMaterials.STEEL),
-        DEEP_STEEL(false, RagiumMaterials.DEEP_STEEL),
-        DRAGONIUM(false, RagiumMaterials.DRAGONIUM),
-
-        // Crystal
-        RAGI_CRYSTAL(true, RagiumMaterials.RAGI_CRYSTAL),
-        FLUORITE(true, CommonMaterials.FLUORITE),
-        CRYOLITE(true, CommonMaterials.CRYOLITE),
-
+        CommonMaterials.STEEL,
+        RagiumMaterials.DEEP_STEEL,
+        RagiumMaterials.DRAGONIUM,
+        // Gem
+        RagiumMaterials.RAGI_CRYSTAL,
+        CommonMaterials.FLUORITE,
+        CommonMaterials.CRYOLITE,
         // Other
-        ALUMINUM(false, CommonMaterials.ALUMINUM),
-        ECHORIUM(false, RagiumMaterials.ECHORIUM),
-        FIERIUM(false, RagiumMaterials.FIERIUM),
-        ;
-
-        override val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(
-            "${name.lowercase()}_block",
-            when (isGem) {
-                true -> Blocks.AMETHYST_BLOCK
-                false -> Blocks.IRON_BLOCK
-            }.let(::blockProperty),
+        CommonMaterials.ALUMINUM,
+        RagiumMaterials.ECHORIUM,
+        RagiumMaterials.FIERIUM,
+    ).associateWith { key: HTMaterialKey ->
+        REGISTER.registerSimpleBlock(
+            "${key.name}_block",
+            blockProperty(
+                if (getStorageParent(key) == HTTagPrefix.GEM) {
+                    Blocks.AMETHYST_BLOCK
+                } else {
+                    Blocks.IRON_BLOCK
+                },
+            ),
         )
-        override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
-        override val parentPrefix: HTTagPrefix = when (isGem) {
-            true -> HTTagPrefix.GEM
-            false -> HTTagPrefix.INGOT
-        }
+    }
+
+    @JvmStatic
+    fun getStorageParent(key: HTMaterialKey): HTTagPrefix = when (key) {
+        RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
+        CommonMaterials.FLUORITE -> HTTagPrefix.GEM
+        CommonMaterials.CRYOLITE -> HTTagPrefix.GEM
+        else -> HTTagPrefix.INGOT
     }
 
     enum class Grates(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -202,9 +193,9 @@ object RagiumBlocks {
 
     enum class Decorations(val parent: HTBlockContent) : HTBlockContent {
         // storage
-        RAGI_ALLOY_BLOCK(StorageBlocks.RAGI_ALLOY),
-        RAGI_STEEL_BLOCK(StorageBlocks.RAGI_STEEL),
-        REFINED_RAGI_STEEL_BLOCK(StorageBlocks.REFINED_RAGI_STEEL),
+        RAGI_ALLOY_BLOCK(RagiumMaterials.RAGI_ALLOY),
+        RAGI_STEEL_BLOCK(RagiumMaterials.RAGI_STEEL),
+        REFINED_RAGI_STEEL_BLOCK(RagiumMaterials.REFINED_RAGI_STEEL),
 
         // casing
         BASIC_CASING(Casings.BASIC),
@@ -224,6 +215,8 @@ object RagiumBlocks {
         ELITE_COIL(Coils.ELITE),
         ULTIMATE_COIL(Coils.ULTIMATE),
         ;
+
+        constructor(key: HTMaterialKey) : this(HTBlockContent.of(DeferredBlock.createBlock<Block>(RagiumAPI.id("${key.name}_block"))))
 
         override val holder: DeferredBlock<Block> =
             REGISTER.registerSimpleBlock("${name.lowercase()}_decoration", blockProperty(Blocks.SMOOTH_STONE))
@@ -269,6 +262,10 @@ object RagiumBlocks {
     @JvmField
     val MANUAL_GRINDER: DeferredBlock<HTManualGrinderBlock> =
         REGISTER.registerBlock("manual_grinder", ::HTManualGrinderBlock, blockProperty(Blocks.BRICKS))
+
+    @JvmField
+    val ROBOT: DeferredBlock<HTRobotBlock> =
+        REGISTER.registerBlock("robot", ::HTRobotBlock, blockProperty(Blocks.IRON_BLOCK))
 
     //    Utility    //
 

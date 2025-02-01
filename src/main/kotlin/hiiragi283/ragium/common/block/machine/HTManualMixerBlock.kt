@@ -7,8 +7,10 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 
-class HTManualGrinderBlock(properties: Properties) : HTManualStepBlock(properties) {
+class HTManualMixerBlock(properties: Properties) : HTManualStepBlock(properties) {
     override fun getStepProperty(): IntegerProperty = BlockStateProperties.AGE_7
 
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = HTManualGrinderBlockEntity(pos, state)
+    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
+        TODO("Not yet implemented")
+    }
 }

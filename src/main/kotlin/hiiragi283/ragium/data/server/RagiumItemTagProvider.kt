@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import aztech.modern_industrialization.MI
 import com.buuz135.industrial.utils.IndustrialTags
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addItem
 import hiiragi283.ragium.api.extension.forEach
@@ -25,8 +26,10 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import java.util.concurrent.CompletableFuture
 
@@ -45,20 +48,24 @@ class RagiumItemTagProvider(
     //    Material    //
 
     private fun materialTags() {
-        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
-            tag(ore.tagPrefix.commonTagKey)
-                .addTag(ore.prefixedTagKey)
+        RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
+            val oreTagKey: TagKey<Item> = HTTagPrefix.ORE.createTag(key)
 
-            tag(ore.prefixedTagKey)
-                .addItem(ore)
+            tag(HTTagPrefix.ORE.commonTagKey)
+                .addTag(oreTagKey)
+
+            tag(oreTagKey)
+                .addItem(HTBlockContent.of(ore))
         }
 
-        RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
-            tag(storage.tagPrefix.commonTagKey)
-                .addTag(storage.prefixedTagKey)
+        RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
+            val storageTagKey: TagKey<Item> = HTTagPrefix.STORAGE_BLOCK.createTag(key)
 
-            tag(storage.prefixedTagKey)
-                .addItem(storage)
+            tag(HTTagPrefix.STORAGE_BLOCK.commonTagKey)
+                .addTag(storageTagKey)
+
+            tag(storageTagKey)
+                .addItem(HTBlockContent.of(storage))
         }
 
         RagiumItems.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->

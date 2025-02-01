@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -67,16 +67,16 @@ fun LanguageProvider.add(variant: HTOreVariant, value: String) {
 
 //    ModelBuilder    //
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(content: HTContent<*>): T = getBuilder(content.id)
+fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(content: HTBlockContent): T = getBuilder(content.id)
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, *>): T = getBuilder(holder.id)
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(id: ResourceLocation): T = getBuilder(id.toString())
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(content: HTContent<*>, parent: ResourceLocation): T =
+fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(content: HTBlockContent, parent: ResourceLocation): T =
     withExistingParent(content.id.toString(), parent)
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.withUncheckedParent(content: HTContent<*>, parent: ResourceLocation): T =
+fun <T : ModelBuilder<T>> ModelProvider<T>.withUncheckedParent(content: HTBlockContent, parent: ResourceLocation): T =
     getBuilder(content).parent(ModelFile.UncheckedModelFile(parent))
 
 fun <T : ModelBuilder<T>> T.blockTexture(key: String, id: ResourceLocation): T = texture(key, id.withPrefix("block/"))
@@ -90,7 +90,7 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(name: String, textu
         .texture("all", texture)
         .cutout()
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(content: HTContent<*>, texture: ResourceLocation): T =
+fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(content: HTBlockContent, texture: ResourceLocation): T =
     cutoutSimpleBlock(content.id.toString(), texture)
 
 //    RecipeBuilder    //
@@ -162,13 +162,13 @@ fun <T : Any> TagsProvider.TagAppender<T>.add(holder: DeferredHolder<T, out T>, 
         false -> add(holder.keyOrThrow)
     }
 
-fun <T : ItemLike> TagsProvider.TagAppender<T>.add(content: HTContent<T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
+fun TagsProvider.TagAppender<Block>.add(content: HTBlockContent, optional: Boolean = false): TagsProvider.TagAppender<Block> =
     when (optional) {
         true -> addOptional(content.id)
         false -> add(content.key)
     }
 
-fun TagsProvider.TagAppender<Item>.addItem(content: HTContent<Block>, optional: Boolean = false): TagsProvider.TagAppender<Item> =
+fun TagsProvider.TagAppender<Item>.addItem(content: HTBlockContent, optional: Boolean = false): TagsProvider.TagAppender<Item> =
     when (optional) {
         true -> addOptional(content.id)
         false -> add(content.asHolder().keyOrThrow)
@@ -180,5 +180,5 @@ fun <T : Any> TagsProvider.TagAppender<T>.addTag(tagKey: TagKey<T>, optional: Bo
         false -> addTag(tagKey)
     }
 
-fun <T : ItemLike> TagsProvider.TagAppender<T>.addAll(contents: Iterable<HTContent<T>>): TagsProvider.TagAppender<T> =
-    addAll(contents.map(HTContent<T>::key))
+fun TagsProvider.TagAppender<Block>.addAll(contents: Iterable<HTBlockContent>): TagsProvider.TagAppender<Block> =
+    addAll(contents.map(HTBlockContent::key))

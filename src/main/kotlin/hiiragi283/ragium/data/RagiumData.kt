@@ -2,22 +2,34 @@ package hiiragi283.ragium.data
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.init.RagiumConfiguredFeatures
+import hiiragi283.ragium.common.init.RagiumPlacedFeatures
 import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.client.RagiumModelProvider
 import hiiragi283.ragium.data.server.*
+import net.minecraft.DetectedVersion
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
 import net.minecraft.data.loot.LootTableProvider
+import net.minecraft.data.metadata.PackMetadataGenerator
+import net.minecraft.network.chat.Component
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection
+import net.minecraft.util.InclusiveRange
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.data.AdvancementProvider
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import org.slf4j.Logger
+import java.util.*
 import java.util.concurrent.CompletableFuture
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = RagiumAPI.MOD_ID)
@@ -31,6 +43,20 @@ object RagiumData {
         val output: PackOutput = generator.packOutput
         val helper: ExistingFileHelper = event.existingFileHelper
         val provider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
+
+        generator.addProvider(
+            true,
+            PackMetadataGenerator(output)
+                .add(
+                    PackMetadataSection.TYPE,
+                    PackMetadataSection(
+                        Component.literal(RagiumAPI.MOD_NAME),
+                        DetectedVersion.BUILT_IN.getPackVersion(PackType.SERVER_DATA),
+                        Optional.of(InclusiveRange(0, Integer.MAX_VALUE)),
+                    ),
+                ),
+        )
+
         // server
         generator.addProvider(event.includeServer(), AdvancementProviderImpl(output, provider, helper))
 
@@ -43,18 +69,18 @@ object RagiumData {
                 provider,
             ),
         )
-        /*generator.addProvider(
+        generator.addProvider(
             event.includeServer(),
             DatapackBuiltinEntriesProvider(
                 output,
                 provider,
                 RegistrySetBuilder()
                     .add(Registries.CONFIGURED_FEATURE, RagiumConfiguredFeatures::boostrap)
-                    .add(Registries.PLACED_FEATURE, RagiumPlacedFeatures::boostrap)
-                    .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifiers::boostrap),
-                setOf(RagiumAPI.MOD_ID)
-            )
-        )*/
+                    .add(Registries.PLACED_FEATURE, RagiumPlacedFeatures::boostrap),
+                // .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifiers::boostrap),
+                setOf(RagiumAPI.MOD_ID),
+            ),
+        )
 
         generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))

@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -118,7 +120,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.LOGS_THAT_BURN)
-            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumFluids.SAP)
             .save(output)
         // Sap -> Refined Gas + Alcohol
@@ -135,7 +137,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.CRIMSON_STEMS)
             .catalyst(HTMachineTier.ADVANCED.getCircuitTag())
-            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumFluids.CRIMSON_SAP)
             .savePrefixed(output, "crimson_")
         // Crimson Sap -> Crimson Crystal
@@ -152,7 +154,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.WARPED_STEMS)
             .catalyst(HTMachineTier.ADVANCED.getCircuitTag())
-            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumFluids.WARPED_SAP)
             .savePrefixed(output, "warped_")
         // Warped Sap -> Warped Crystal

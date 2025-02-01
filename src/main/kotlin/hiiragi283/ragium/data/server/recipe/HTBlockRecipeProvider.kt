@@ -12,7 +12,10 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -163,7 +166,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             val core: ItemLike = when (burner) {
                 RagiumBlocks.Burners.ADVANCED -> Items.MAGMA_BLOCK
                 RagiumBlocks.Burners.ELITE -> RagiumBlocks.SOUL_MAGMA_BLOCK
-                RagiumBlocks.Burners.ULTIMATE -> RagiumBlocks.StorageBlocks.FIERIUM
+                RagiumBlocks.Burners.ULTIMATE -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERIUM]!!
             }
             // Shaped Crafting
             ShapedRecipeBuilder

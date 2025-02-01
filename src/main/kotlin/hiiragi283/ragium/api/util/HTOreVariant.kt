@@ -1,9 +1,7 @@
 package hiiragi283.ragium.api.util
 
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
@@ -16,12 +14,16 @@ import net.minecraft.world.level.material.MapColor
  */
 enum class HTOreVariant(baseStoneName: String) {
     OVERWORLD("stone") {
+        override fun createId(key: HTMaterialKey): String = "${key.name}_ore"
+
         override fun createProperty(): BlockBehaviour.Properties = blockProperty()
             .mapColor(MapColor.STONE)
             .requiresCorrectToolForDrops()
             .strength(3f, 3f)
     },
-    DEEP("deepslate") {
+    DEEPSLATE("deepslate") {
+        override fun createId(key: HTMaterialKey): String = "deepslate_${key.name}_ore"
+
         override fun createProperty(): BlockBehaviour.Properties = blockProperty()
             .mapColor(MapColor.DEEPSLATE)
             .requiresCorrectToolForDrops()
@@ -29,6 +31,8 @@ enum class HTOreVariant(baseStoneName: String) {
             .sound(SoundType.DEEPSLATE)
     },
     NETHER("netherrack") {
+        override fun createId(key: HTMaterialKey): String = "nether_${key.name}_ore"
+
         override fun createProperty(): BlockBehaviour.Properties = blockProperty()
             .mapColor(MapColor.NETHER)
             .requiresCorrectToolForDrops()
@@ -36,6 +40,8 @@ enum class HTOreVariant(baseStoneName: String) {
             .sound(SoundType.NETHER_ORE)
     },
     END("end_stone") {
+        override fun createId(key: HTMaterialKey): String = "end_${key.name}_ore"
+
         override fun createProperty(): BlockBehaviour.Properties = blockProperty()
             .mapColor(MapColor.SAND)
             .requiresCorrectToolForDrops()
@@ -46,15 +52,11 @@ enum class HTOreVariant(baseStoneName: String) {
 
     val baseStoneName: ResourceLocation = ResourceLocation.withDefaultNamespace(baseStoneName)
 
+    abstract fun createId(key: HTMaterialKey): String
+
     abstract fun createProperty(): BlockBehaviour.Properties
 
     val translationKey = "ore_variant.ragium.$baseStoneName"
 
     fun createText(material: HTMaterialKey): MutableComponent = Component.translatable(translationKey, material.text)
-
-    interface Content : HTBlockContent.Material {
-        val oreVariant: HTOreVariant
-
-        override val tagPrefix: HTTagPrefix get() = HTTagPrefix.ORE
-    }
 }

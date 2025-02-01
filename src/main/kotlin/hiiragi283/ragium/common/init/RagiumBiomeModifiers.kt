@@ -16,13 +16,13 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 object RagiumBiomeModifiers {
     @JvmField
-    val OVERWORLD_RAGINITE: ResourceKey<BiomeModifier> = createKey("overworld_raginite")
+    val OVERWORLD_RAGINITE: ResourceKey<BiomeModifier> = createKey("add_overworld_raginite")
 
     @JvmField
-    val NETHER_RAGINITE: ResourceKey<BiomeModifier> = createKey("nether_raginite")
+    val NETHER_RAGINITE: ResourceKey<BiomeModifier> = createKey("add_nether_raginite")
 
     @JvmField
-    val END_RAGINITE: ResourceKey<BiomeModifier> = createKey("end_raginite")
+    val END_RAGINITE: ResourceKey<BiomeModifier> = createKey("add_end_raginite")
 
     @JvmStatic
     private fun createKey(path: String): ResourceKey<BiomeModifier> =
@@ -37,7 +37,7 @@ object RagiumBiomeModifiers {
             OVERWORLD_RAGINITE,
             BiomeModifiers.AddFeaturesBiomeModifier(
                 biomeGetter.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(featureGetter::getOrThrow, RagiumPlacedFeatures.OVERWORLD_RAGINITE),
+                HolderSet.direct(featureGetter.getOrThrow(RagiumPlacedFeatures.OVERWORLD_RAGINITE)),
                 GenerationStep.Decoration.UNDERGROUND_ORES,
             ),
         )
@@ -46,7 +46,7 @@ object RagiumBiomeModifiers {
             NETHER_RAGINITE,
             BiomeModifiers.AddFeaturesBiomeModifier(
                 biomeGetter.getOrThrow(BiomeTags.IS_NETHER),
-                HolderSet.direct(featureGetter::getOrThrow, RagiumPlacedFeatures.NETHER_RAGINITE),
+                HolderSet.direct(featureGetter.getOrThrow(RagiumPlacedFeatures.NETHER_RAGINITE)),
                 GenerationStep.Decoration.UNDERGROUND_ORES,
             ),
         )
@@ -55,7 +55,7 @@ object RagiumBiomeModifiers {
             END_RAGINITE,
             BiomeModifiers.AddFeaturesBiomeModifier(
                 biomeGetter.getOrThrow(BiomeTags.IS_END),
-                HolderSet.direct(featureGetter::getOrThrow, RagiumPlacedFeatures.END_RAGINITE),
+                HolderSet.direct(featureGetter.getOrThrow(RagiumPlacedFeatures.END_RAGINITE)),
                 GenerationStep.Decoration.UNDERGROUND_ORES,
             ),
         )

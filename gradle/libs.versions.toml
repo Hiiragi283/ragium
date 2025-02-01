@@ -5,8 +5,8 @@ ragium = "0.0.1"
 parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
-neo-moddev = "2.0.74"
-neo-version = "21.1.93"
+neo-moddev = "2.0.77"
+neo-version = "21.1.115"
 
 kff-version = "5.7.0"
 kff-version-range = "[5.7,)"

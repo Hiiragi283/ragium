@@ -15,19 +15,22 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
 object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Ingot/Gem -> Block
-        RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
+        RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, block: DeferredBlock<Block>) ->
+            val parent: HTTagPrefix = RagiumBlocks.getStorageParent(key)
             ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, storage)
+                .shaped(RecipeCategory.MISC, block)
                 .pattern("AAA")
                 .pattern("AAA")
                 .pattern("AAA")
-                .define('A', storage.parentPrefix, storage.material)
-                .unlockedBy("has_input", has(storage.parentPrefix, storage.material))
+                .define('A', parent, key)
+                .unlockedBy("has_input", has(parent, key))
                 .savePrefixed(output)
         }
         // Block -> Ingot

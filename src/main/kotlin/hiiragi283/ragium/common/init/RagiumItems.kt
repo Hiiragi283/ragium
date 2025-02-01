@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.extension.name
@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTCraftingToolItem
@@ -23,6 +24,8 @@ import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
+import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -51,21 +54,20 @@ object RagiumItems {
 
     @JvmStatic
     private fun registerBlockItems() {
-        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
             REGISTER.registerSimpleBlockItem(
-                ore.id.path,
                 ore,
-                itemProperty().name(ore.oreVariant.createText(ore.material)),
+                itemProperty().name(variant.createText(key)),
             )
         }
 
-        RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
+        RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
             REGISTER.registerSimpleBlockItem(
                 storage.id.path,
                 storage,
                 itemProperty {
-                    name(storage.prefixedText)
-                    if (storage.material in RagiumMaterials.END_CONTENTS) {
+                    name(RagiumBlocks.getStorageParent(key).createText(key))
+                    if (key in RagiumMaterials.END_CONTENTS) {
                         component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                     }
                 },
@@ -106,10 +108,13 @@ object RagiumItems {
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
             add(RagiumBlocks.MANUAL_GRINDER)
+            add(RagiumBlocks.ROBOT)
 
             addAll(RagiumBlocks.ADDONS)
         }.forEach(REGISTER::registerSimpleBlockItem)
     }
+
+    //    Materials    //
 
     @JvmStatic
     fun registerMaterialItems() {
@@ -126,24 +131,49 @@ object RagiumItems {
             )
         }
 
-        buildList {
-            addAll(Dusts.entries)
-            addAll(Ingots.entries)
-        }.forEach { content: HTItemContent.Material ->
-            builder.put(content.tagPrefix, content.material, content.holder)
-        }
+        // Dusts
+        register(HTTagPrefix.DUST, VanillaMaterials.COPPER)
+        register(HTTagPrefix.DUST, VanillaMaterials.IRON)
+        register(HTTagPrefix.DUST, VanillaMaterials.LAPIS)
+        register(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
+        register(HTTagPrefix.DUST, VanillaMaterials.GOLD)
+        register(HTTagPrefix.DUST, VanillaMaterials.DIAMOND)
+        register(HTTagPrefix.DUST, VanillaMaterials.EMERALD)
 
+        register(HTTagPrefix.DUST, RagiumMaterials.CRUDE_RAGINITE)
+        register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
+        register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
+
+        register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
+        register(HTTagPrefix.DUST, CommonMaterials.ASH)
+        register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
+        register(HTTagPrefix.DUST, CommonMaterials.CARBON)
+        register(HTTagPrefix.DUST, CommonMaterials.NITER)
+        register(HTTagPrefix.DUST, CommonMaterials.SALT)
+        register(HTTagPrefix.DUST, CommonMaterials.SULFUR)
+        register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
 
-        register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
+        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.NITER)
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALT)
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SULFUR)
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)
+        register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
         // Ingots
+        register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+        register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
+        register(HTTagPrefix.INGOT, RagiumMaterials.REFINED_RAGI_STEEL)
+        register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
 
+        register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
+        register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
+        register(HTTagPrefix.INGOT, RagiumMaterials.DRAGONIUM)
+
+        register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+        register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
+        register(HTTagPrefix.INGOT, RagiumMaterials.FIERIUM)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
         register(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
@@ -168,40 +198,6 @@ object RagiumItems {
         register(HTTagPrefix.ROD, RagiumMaterials.DRAGONIUM)
 
         this.materialItems = builder
-    }
-
-    //    Materials    //
-
-    enum class Dusts(override val material: HTMaterialKey) : HTItemContent.Material {
-        // Vanilla
-        COPPER(VanillaMaterials.COPPER),
-        IRON(VanillaMaterials.IRON),
-        LAPIS(VanillaMaterials.LAPIS),
-        QUARTZ(VanillaMaterials.QUARTZ),
-        GOLD(VanillaMaterials.GOLD),
-        DIAMOND(VanillaMaterials.DIAMOND),
-        EMERALD(VanillaMaterials.EMERALD),
-
-        // Ragium
-        CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE),
-        RAGINITE(RagiumMaterials.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
-
-        // Other
-        WOOD(CommonMaterials.WOOD),
-        ASH(CommonMaterials.ASH),
-        CARBON(CommonMaterials.CARBON),
-
-        NITER(CommonMaterials.NITER),
-        SALT(CommonMaterials.SALT),
-        SULFUR(CommonMaterials.SULFUR),
-
-        BAUXITE(CommonMaterials.BAUXITE),
-        ALUMINUM(CommonMaterials.ALUMINUM),
-        ;
-
-        override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(tagPrefix.createPath(material))
     }
 
     @JvmField
@@ -259,30 +255,6 @@ object RagiumItems {
         RESIDUAL_COKE,
         CALCIUM_CARBIDE,
     )
-
-    enum class Ingots(override val material: HTMaterialKey) : HTItemContent.Material {
-        // Vanilla
-        // Ragium
-        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
-        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
-        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
-        RAGIUM(RagiumMaterials.RAGIUM),
-
-        // Steel
-        STEEL(CommonMaterials.STEEL),
-        DEEP_STEEL(RagiumMaterials.DEEP_STEEL),
-        DRAGONIUM(RagiumMaterials.DRAGONIUM),
-
-        // Other
-        ALUMINUM(CommonMaterials.ALUMINUM),
-
-        ECHORIUM(RagiumMaterials.ECHORIUM),
-        FIERIUM(RagiumMaterials.FIERIUM),
-        ;
-
-        override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(tagPrefix.createPath(material))
-    }
 
     @JvmField
     val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = REGISTER.registerSimpleItem("ragi_alloy_compound")

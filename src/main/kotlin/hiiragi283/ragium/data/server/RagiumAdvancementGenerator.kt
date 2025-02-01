@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -214,7 +214,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     @JvmStatic
     private fun createSimple(
         parent: AdvancementHolder,
-        content: HTContent<*>,
+        content: HTBlockContent,
         desc: Component,
         title: Component = content.toStack().hoverName,
         type: AdvancementType = AdvancementType.TASK,

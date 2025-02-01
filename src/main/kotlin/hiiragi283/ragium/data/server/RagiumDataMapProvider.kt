@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTRadioactivity
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -36,7 +35,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
     private fun <T : Any> Builder<T, Item>.addItem(item: ItemLike, value: T): Builder<T, Item> = add(item.asHolder(), value, false)
 
-    private fun <T : Any> Builder<T, Item>.addContent(content: HTContent<*>, value: T): Builder<T, Item> = add(content.id, value, false)
+    private fun <T : Any> Builder<T, Item>.addContent(content: HTBlockContent, value: T): Builder<T, Item> = add(content.id, value, false)
 
     private fun Builder<Map<HTMachineKey, Int>, Fluid>.addFuel(
         fluid: HTFluidContent,

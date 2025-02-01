@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -22,12 +23,12 @@ object RagiumCreativeTabs {
             CreativeModeTab
                 .builder()
                 .title(Component.literal("Ragium"))
-                .icon { ItemStack(RagiumItems.Ingots.RAGIUM) }
+                .icon { RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM).toStack() }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Material Blocks
                     output.accept(RagiumBlocks.SOUL_MAGMA_BLOCK)
-                    RagiumBlocks.Ores.entries.forEach(output::accept)
-                    RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
+                    RagiumBlocks.ORES.values.forEach(output::accept)
+                    RagiumBlocks.STORAGE_BLOCKS.values.forEach(output::accept)
                     // Material Items
                     RagiumItems.getMaterialItems(HTTagPrefix.DUST).forEach(output::accept)
                     RagiumItems.OTHER_DUSTS.forEach(output::accept)

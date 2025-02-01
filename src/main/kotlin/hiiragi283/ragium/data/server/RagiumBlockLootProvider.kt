@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -18,6 +20,7 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
@@ -27,7 +30,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         buildList {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
-            addAll(RagiumBlocks.StorageBlocks.entries)
+            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Hulls.entries)
@@ -45,6 +48,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
             add(RagiumBlocks.MANUAL_GRINDER)
+            add(RagiumBlocks.ROBOT)
 
             addAll(RagiumBlocks.ADDONS)
 
@@ -52,14 +56,14 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }.map(Supplier<out Block>::get)
             .forEach(::dropSelf)
 
-        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
-            val prefix: HTTagPrefix = when (ore.material) {
+        RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
+            val prefix: HTTagPrefix = when (key) {
                 RagiumMaterials.CRUDE_RAGINITE -> HTTagPrefix.RAW_MATERIAL
                 RagiumMaterials.RAGINITE -> HTTagPrefix.RAW_MATERIAL
                 RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
                 else -> return@forEach
             }
-            val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, ore.material)
+            val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, key)
             add(ore.get()) { block: Block -> createOreDrop(block, rawMaterial.asItem()) }
         }
 

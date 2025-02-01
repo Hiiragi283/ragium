@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
@@ -33,17 +34,14 @@ object RagiumPlacedFeatures {
             bottom: VerticalAnchor,
             top: VerticalAnchor,
         ) {
-            context.register(
+            PlacementUtils.register(
+                context,
                 placedKey,
-                PlacedFeature(
-                    getter.getOrThrow(configuredKey),
-                    listOf(
-                        CountPlacement.of(amount),
-                        InSquarePlacement.spread(),
-                        HeightRangePlacement.uniform(bottom, top),
-                        BiomeFilter.biome(),
-                    ),
-                ),
+                getter.getOrThrow(configuredKey),
+                CountPlacement.of(amount),
+                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(bottom, top),
+                BiomeFilter.biome(),
             )
         }
 

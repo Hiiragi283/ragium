@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addAll
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.HolderLookup
@@ -13,6 +14,7 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredBlock
 import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
 
@@ -25,9 +27,6 @@ class RagiumBlockTagProvider(
         // Mineable
         val pickaxe: TagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
         buildList {
-            addAll(RagiumBlocks.Ores.entries)
-            addAll(RagiumBlocks.StorageBlocks.entries)
-
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Hulls.entries)
@@ -40,6 +39,9 @@ class RagiumBlockTagProvider(
         }.forEach(pickaxe::add)
 
         buildList {
+            addAll(RagiumBlocks.ORES.values)
+            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
+
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
             add(RagiumBlocks.SHAFT)
@@ -59,11 +61,11 @@ class RagiumBlockTagProvider(
         // Farmer's Delight
         tag(ModTags.HEAT_SOURCES).addAll(RagiumBlocks.Burners.entries)
 
-        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, _, ore: DeferredBlock<out Block>) ->
             tag(Tags.Blocks.ORES).add(ore)
-            when (ore.oreVariant) {
+            when (variant) {
                 HTOreVariant.OVERWORLD -> Tags.Blocks.ORES_IN_GROUND_STONE
-                HTOreVariant.DEEP -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
+                HTOreVariant.DEEPSLATE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
                 HTOreVariant.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
                 HTOreVariant.END -> null
             }?.let(::tag)?.add(ore)

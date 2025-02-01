@@ -28,9 +28,6 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     private fun registerBlocks() {
         buildList {
-            addAll(RagiumBlocks.Ores.entries)
-            addAll(RagiumBlocks.StorageBlocks.entries)
-
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Hulls.entries)
@@ -47,6 +44,9 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         }
 
         buildList {
+            addAll(RagiumBlocks.ORES.values)
+            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
+
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
             add(RagiumBlocks.SHAFT)

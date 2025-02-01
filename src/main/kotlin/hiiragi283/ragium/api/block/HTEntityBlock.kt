@@ -3,18 +3,27 @@ package hiiragi283.ragium.api.block
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.getHTBlockEntity
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.EntityBlock
+import net.minecraft.world.level.block.Mirror
+import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 
 abstract class HTEntityBlock(properties: Properties) :
@@ -30,6 +39,19 @@ abstract class HTEntityBlock(properties: Properties) :
         .getHTBlockEntity(pos)
         ?.onRightClicked(state, level, pos, player, hitResult)
         ?: super.useWithoutItem(state, level, pos, player, hitResult)
+
+    override fun useItemOn(
+        stack: ItemStack,
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hand: InteractionHand,
+        hitResult: BlockHitResult,
+    ): ItemInteractionResult = level
+        .getHTBlockEntity(pos)
+        ?.onRightClickedWithItem(stack, state, level, pos, player, hand, hitResult)
+        ?: super.useItemOn(stack, state, level, pos, player, hand, hitResult)
 
     override fun attack(
         state: BlockState,
@@ -79,5 +101,37 @@ abstract class HTEntityBlock(properties: Properties) :
         blockEntityType: BlockEntityType<T>,
     ): BlockEntityTicker<T>? = BlockEntityTicker<T> { level: Level, pos: BlockPos, state: BlockState, blockEntity: T ->
         (blockEntity as? HTBlockEntity)?.tick(level, pos, state)
+    }
+
+    //    Horizontal    //
+
+    abstract class Horizontal(properties: Properties) : HTEntityBlock(properties) {
+        init {
+            registerDefaultState(
+                stateDefinition.any().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH),
+            )
+        }
+
+        override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+            builder.add(BlockStateProperties.HORIZONTAL_FACING)
+        }
+
+        override fun getStateForPlacement(context: BlockPlaceContext): BlockState? = defaultBlockState()
+            .setValue(BlockStateProperties.HORIZONTAL_FACING, context.horizontalDirection.opposite)
+
+        override fun rotate(
+            state: BlockState,
+            level: LevelAccessor,
+            pos: BlockPos,
+            direction: Rotation,
+        ): BlockState = state.setValue(
+            BlockStateProperties.HORIZONTAL_FACING,
+            direction.rotate(state.getValue(BlockStateProperties.HORIZONTAL_FACING)),
+        )
+
+        override fun mirror(state: BlockState, mirror: Mirror): BlockState = state.setValue(
+            BlockStateProperties.HORIZONTAL_FACING,
+            mirror.mirror(state.getValue(BlockStateProperties.HORIZONTAL_FACING)),
+        )
     }
 }

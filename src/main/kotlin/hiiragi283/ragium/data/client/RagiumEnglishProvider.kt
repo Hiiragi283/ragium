@@ -71,7 +71,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.PLASTIC, "Plastic")
 
         add(HTOreVariant.OVERWORLD, "%s Ore")
-        add(HTOreVariant.DEEP, "Deepslate %s Ore")
+        add(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
         add(HTOreVariant.NETHER, "Nether %s Ore")
         add(HTOreVariant.END, "End %s Ore")
         // Fluids

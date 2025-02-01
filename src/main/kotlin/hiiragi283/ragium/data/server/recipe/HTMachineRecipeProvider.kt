@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -95,7 +96,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.COKE_OVEN)
             .itemInput(ItemTags.PLANKS)
-            .itemOutput(RagiumItems.Dusts.CARBON)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.CARBON)
             .fluidOutput(RagiumFluids.CREOSOTE, 50)
             .save(output)
 

@@ -3,15 +3,14 @@ package hiiragi283.ragium.data.client
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.extension.blockTexture
-import hiiragi283.ragium.api.extension.cutout
-import hiiragi283.ragium.api.extension.cutoutSimpleBlock
-import hiiragi283.ragium.api.extension.withExistingParent
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.getOrDefault
+import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
@@ -40,7 +39,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         buildList {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
-            addAll(RagiumBlocks.StorageBlocks.entries)
+            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
             addAll(RagiumBlocks.Casings.entries)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
@@ -49,14 +48,14 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             .forEach(::simpleBlock)
 
         // Ore
-        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
             simpleBlock(
                 ore.get(),
                 ConfiguredModel(
                     models()
-                        .withExistingParent(ore, RagiumAPI.id("block/layered"))
-                        .blockTexture("layer0", ore.oreVariant.baseStoneName)
-                        .blockTexture("layer1", RagiumAPI.id(ore.material.name))
+                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
+                        .blockTexture("layer0", variant.baseStoneName)
+                        .blockTexture("layer1", RagiumAPI.id(key.name))
                         .cutout(),
                 ),
             )

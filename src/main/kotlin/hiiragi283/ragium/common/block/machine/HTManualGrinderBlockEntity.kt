@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.capability.LimitedItemHandler
-import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.replaceBlockState
@@ -27,6 +26,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.items.ItemHandlerHelper
 import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
@@ -57,6 +57,10 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         player: Player,
         hitResult: BlockHitResult,
     ): InteractionResult {
+        if (player.isFakePlayer) {
+            process(level, pos, player)
+            return InteractionResult.sidedSuccess(level.isClientSide)
+        }
         val step: Int = state.getOrNull(BlockStateProperties.AGE_7) ?: return InteractionResult.FAIL
         if (step == 7) {
             process(level, pos, player)
@@ -76,7 +80,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             .map(RecipeHolder<HTMachineRecipe>::value)
             .onSuccess { recipe: HTMachineRecipe ->
                 // Drop output
-                dropStackAt(player, recipe.getResultItem(level.registryAccess()))
+                ItemHandlerHelper.giveItemToPlayer(player, recipe.getResultItem(level.registryAccess()))
                 // Shrink input
                 stackIn.shrink(recipe.itemInputs.getOrNull(0)?.count() ?: 0)
                 // Play sound if present
@@ -85,7 +89,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                     .ifPresent(HTMachinePropertyKeys.SOUND) { level.playSound(null, pos, it, SoundSource.BLOCKS) }
             }.onFailure { _: Throwable ->
                 // Drop input
-                dropStackAt(player, stackIn)
+                ItemHandlerHelper.giveItemToPlayer(player, stackIn)
                 itemHandler.setStackInSlot(0, ItemStack.EMPTY)
             }
     }

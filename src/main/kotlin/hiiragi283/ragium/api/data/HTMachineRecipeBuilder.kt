@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.recipes.RecipeBuilder
@@ -89,6 +90,9 @@ class HTMachineRecipeBuilder private constructor(private val machine: HTMachineK
     }
 
     //    Output    //
+
+    fun itemOutput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): HTMachineRecipeBuilder =
+        itemOutput(RagiumItems.getMaterialItem(prefix, material), count)
 
     fun itemOutput(item: ItemLike, count: Int = 1): HTMachineRecipeBuilder = itemOutput(ItemStack(item, count))
 
