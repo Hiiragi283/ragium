@@ -4,10 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.capability.LimitedFluidHandler
-import hiiragi283.ragium.api.fluid.HTTieredFluidTank
+import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -18,8 +17,11 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
@@ -27,9 +29,10 @@ class HTFluidGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val
     HTMachineBlockEntity(RagiumBlockEntityTypes.FLUID_GENERATOR, pos, state) {
     fun getFuelData(stack: FluidStack): Map<HTMachineKey, Int> = stack.fluidHolder.getData(RagiumAPI.DataMapTypes.MACHINE_FUEL) ?: mapOf()
 
-    private val tank: HTTieredFluidTank = object : HTTieredFluidTank(this@HTFluidGeneratorBlockEntity) {
-        override fun isFluidValid(stack: FluidStack): Boolean = machineKey in getFuelData(stack)
-    }
+    private val tank: HTMachineFluidTank =
+        object : HTMachineFluidTank(FluidType.BUCKET_VOLUME * 8, this@HTFluidGeneratorBlockEntity::setChanged) {
+            override fun isFluidValid(stack: FluidStack): Boolean = machineKey in getFuelData(stack)
+        }
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -57,9 +60,9 @@ class HTFluidGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val
     override fun interactWithFluidStorage(player: Player): Boolean =
         FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, tank)
 
-    override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        super.onUpdateTier(oldTier, newTier)
-        tank.onUpdateTier(oldTier, newTier)
+    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+        super.updateEnchantments(newEnchantments)
+        tank.capacity = getEnchantmentLevel(Enchantments.UNBREAKING) * 8 * FluidType.BUCKET_VOLUME
     }
 
     //    HTBlockEntityHandlerProvider    //

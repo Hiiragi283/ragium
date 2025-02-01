@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.extension.keyOrThrow
-import hiiragi283.ragium.api.machine.HTMachineTierProvider
+import hiiragi283.ragium.api.machine.HTMachineTier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -41,9 +41,9 @@ interface HTBlockContent :
 
     override fun asItem(): Item = get().asItem()
 
-    interface Tier :
-        HTBlockContent,
-        HTMachineTierProvider {
+    interface Tier : HTBlockContent {
+        val machineTier: HTMachineTier
+
         val translationKey: String
     }
 }

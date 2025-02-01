@@ -1,12 +1,9 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
-import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.get
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -25,10 +22,7 @@ class HTMachineBlock(properties: Properties) : HTEntityBlock.Horizontal(properti
         tooltipComponents: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        machineKey?.appendTooltip(
-            tooltipComponents::add,
-            stack.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC,
-        )
+        machineKey?.appendTooltip(tooltipComponents::add)
     }
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {

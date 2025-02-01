@@ -5,7 +5,6 @@ import com.mojang.serialization.Keyable
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
@@ -84,7 +83,7 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
      */
     fun getProperty(): HTPropertyHolder = RagiumAPI.machineRegistry.getProperty(this)
 
-    fun appendTooltip(consumer: Consumer<Component>, tier: HTMachineTier, allowDescription: Boolean = true) {
+    fun appendTooltip(consumer: Consumer<Component>, allowDescription: Boolean = true) {
         consumer.accept(
             Component
                 .translatable(
@@ -92,21 +91,6 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
                     text.withStyle(ChatFormatting.WHITE),
                 ).withStyle(ChatFormatting.GRAY),
         )
-        consumer.accept(
-            Component
-                .translatable(
-                    RagiumTranslationKeys.MACHINE_TIER,
-                    tier.text,
-                ).withStyle(ChatFormatting.GRAY),
-        )
-        consumer.accept(
-            Component
-                .translatable(
-                    RagiumTranslationKeys.MACHINE_COST,
-                    intText(tier.processCost).withStyle(ChatFormatting.YELLOW),
-                ).withStyle(ChatFormatting.GRAY),
-        )
-        // entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer.accept, this, tier)
         if (allowDescription) {
             consumer.accept(descriptionText)
         }

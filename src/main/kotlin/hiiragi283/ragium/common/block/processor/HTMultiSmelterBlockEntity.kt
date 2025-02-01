@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntity
 import hiiragi283.ragium.api.capability.LimitedItemHandler
-import hiiragi283.ragium.api.fluid.HTTieredFluidTank
+import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -22,7 +22,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override val machineKey: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
     override val itemHandler: ItemStackHandler = ItemStackHandler(2)
-    override val tanks: Array<out HTTieredFluidTank> = arrayOf()
+    override val tanks: Array<out HTMachineFluidTank> = arrayOf()
     override val processor: HTMachineRecipeProcessor =
         createMachineProcessor(
             intArrayOf(0),

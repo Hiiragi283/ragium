@@ -4,9 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.extension.getItemData
-import hiiragi283.ragium.api.fluid.HTTieredFluidTank
+import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
@@ -24,17 +23,16 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
-class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val machineTier: HTMachineTier) :
+class HTDrumBlockEntity(pos: BlockPos, state: BlockState, machineTier: HTMachineTier) :
     HTBlockEntity(RagiumBlockEntityTypes.DRUM, pos, state),
-    HTBlockEntityHandlerProvider,
-    HTMachineTierProvider {
+    HTBlockEntityHandlerProvider {
     constructor(pos: BlockPos, state: BlockState) : this(
         pos,
         state,
         state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC,
     )
 
-    private val fluidTank = HTTieredFluidTank(machineTier, this::setChanged)
+    private val fluidTank = HTMachineFluidTank(machineTier.tankCapacity, this::setChanged)
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -78,5 +76,5 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val machineTi
 
     //    HTBlockEntityHandlerProvider    //
 
-    override fun getFluidHandler(direction: Direction?): HTTieredFluidTank = fluidTank
+    override fun getFluidHandler(direction: Direction?): HTMachineFluidTank = fluidTank
 }
