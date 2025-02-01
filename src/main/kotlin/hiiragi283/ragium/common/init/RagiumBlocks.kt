@@ -69,6 +69,7 @@ object RagiumBlocks {
         RagiumMaterials.RAGIUM,
         // Steel
         CommonMaterials.STEEL,
+        CommonMaterials.STAINLESS_STEEL,
         RagiumMaterials.DEEP_STEEL,
         RagiumMaterials.DRAGONIUM,
         // Gem

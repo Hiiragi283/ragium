@@ -85,6 +85,9 @@ object CommonMaterials {
     val SILVER: HTMaterialKey = HTMaterialKey.of("silver")
 
     @JvmField
+    val STAINLESS_STEEL: HTMaterialKey = HTMaterialKey.of("stainless_steel")
+
+    @JvmField
     val STEEL: HTMaterialKey = HTMaterialKey.of("steel")
 
     @JvmField

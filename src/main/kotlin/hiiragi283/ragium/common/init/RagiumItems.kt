@@ -83,6 +83,7 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
 
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
+        register(HTTagPrefix.INGOT, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.DRAGONIUM)
 
@@ -101,7 +102,9 @@ object RagiumItems {
         register(HTTagPrefix.GEAR, VanillaMaterials.EMERALD)
 
         register(HTTagPrefix.GEAR, CommonMaterials.STEEL)
+        register(HTTagPrefix.GEAR, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.GEAR, RagiumMaterials.DEEP_STEEL)
+        register(HTTagPrefix.GEAR, VanillaMaterials.NETHERITE)
         register(HTTagPrefix.GEAR, RagiumMaterials.DRAGONIUM)
         // Rods
         register(HTTagPrefix.ROD, VanillaMaterials.COPPER)
@@ -109,7 +112,9 @@ object RagiumItems {
         register(HTTagPrefix.ROD, VanillaMaterials.GOLD)
 
         register(HTTagPrefix.ROD, CommonMaterials.STEEL)
+        register(HTTagPrefix.ROD, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.ROD, RagiumMaterials.DEEP_STEEL)
+        register(HTTagPrefix.ROD, VanillaMaterials.NETHERITE)
         register(HTTagPrefix.ROD, RagiumMaterials.DRAGONIUM)
     }
 

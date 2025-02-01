@@ -300,6 +300,7 @@ internal object RagiumEvents {
         event.register(CommonMaterials.SAPPHIRE, HTMaterialType.GEM)
         event.register(CommonMaterials.SILICON, HTMaterialType.METAL)
         event.register(CommonMaterials.SILVER, HTMaterialType.METAL)
+        event.register(CommonMaterials.STAINLESS_STEEL, HTMaterialType.ALLOY)
         event.register(CommonMaterials.STEEL, HTMaterialType.ALLOY)
         event.register(CommonMaterials.SULFUR, HTMaterialType.MINERAL)
         event.register(CommonMaterials.TIN, HTMaterialType.METAL)

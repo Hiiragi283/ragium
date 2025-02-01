@@ -258,6 +258,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(CommonMaterials.SAPPHIRE, "Sapphire")
         add(CommonMaterials.SILICON, "Silicon")
         add(CommonMaterials.SILVER, "Silver")
+        add(CommonMaterials.STAINLESS_STEEL, "Stainless Steel")
         add(CommonMaterials.STEEL, "Steel")
         add(CommonMaterials.SULFUR, "Sulfur")
         add(CommonMaterials.TIN, "Tin")

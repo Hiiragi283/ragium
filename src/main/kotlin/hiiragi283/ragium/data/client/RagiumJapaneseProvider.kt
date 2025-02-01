@@ -221,6 +221,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(CommonMaterials.SAPPHIRE, "サファイア")
         add(CommonMaterials.SILICON, "シリコン")
         add(CommonMaterials.SILVER, "銀")
+        add(CommonMaterials.STAINLESS_STEEL, "ステンレス鋼")
         add(CommonMaterials.STEEL, "スチール")
         add(CommonMaterials.SULFUR, "硫黄")
         add(CommonMaterials.TIN, "スズ")
