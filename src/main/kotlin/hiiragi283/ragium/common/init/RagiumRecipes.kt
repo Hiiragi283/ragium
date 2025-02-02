@@ -31,9 +31,6 @@ object RagiumRecipes {
     val COMPRESSOR: HTMachineRecipeType = create(RagiumMachineKeys.COMPRESSOR)
 
     @JvmField
-    val CUTTING_MACHINE: HTMachineRecipeType = create(RagiumMachineKeys.CUTTING_MACHINE)
-
-    @JvmField
     val DISTILLATION_TOWER: HTMachineRecipeType = create(RagiumMachineKeys.DISTILLATION_TOWER)
 
     @JvmField

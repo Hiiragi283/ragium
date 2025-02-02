@@ -20,7 +20,6 @@
     "#c:dusts/salt",
     "#c:dusts/sulfur",
     "#c:dusts/wood",
-    "#c:dusts/dark",
-    "#c:dusts/slag"
+    "#c:dusts/dark"
   ]
 }

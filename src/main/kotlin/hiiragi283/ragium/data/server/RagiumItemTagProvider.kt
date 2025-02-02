@@ -56,13 +56,23 @@ class RagiumItemTagProvider(
         }
 
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
-            val storageTagKey: TagKey<Item> = HTTagPrefix.STORAGE_BLOCK.createTag(key)
+            val storageTag: TagKey<Item> = HTTagPrefix.STORAGE_BLOCK.createTag(key)
 
             tag(HTTagPrefix.STORAGE_BLOCK.commonTagKey)
-                .addTag(storageTagKey)
+                .addTag(storageTag)
 
-            tag(storageTagKey)
+            tag(storageTag)
                 .addItem(HTBlockContent.of(storage))
+        }
+
+        RagiumBlocks.CASINGS.forEach { (key: HTMaterialKey, casing: DeferredBlock<Block>) ->
+            val casingTag: TagKey<Item> = HTTagPrefix.CASING.createTag(key)
+
+            tag(HTTagPrefix.CASING.commonTagKey)
+                .addTag(casingTag)
+
+            tag(casingTag)
+                .addItem(HTBlockContent.of(casing))
         }
 
         RagiumItems.MATERIAL_ITEMS.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
@@ -76,14 +86,11 @@ class RagiumItemTagProvider(
         }
 
         addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem_crushed")
-        addMaterialTag(HTTagPrefix.DUST, RagiumMaterials.SLAG, "railcraft:slag")
         addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem")
         addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, "netherite_scrap", false)
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore")
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore_deepslate")
         addMaterialTag(HTTagPrefix.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, "evilcraft:dark_block")
-
-        tag(itemTagKey(commonId("slag"))).add(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.SLAG))
     }
 
     private fun addMaterialTag(

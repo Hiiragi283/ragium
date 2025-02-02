@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/refined_ragi_steel"
+      "tag": "c:ingots/stainless_steel"
     },
     "B": {
-      "item": "minecraft:piston"
+      "tag": "c:circuits/ultimate"
     },
     "C": {
       "item": "minecraft:end_crystal"
     },
     "D": {
-      "item": "ragium:elite_casing"
+      "item": "ragium:ultimate_casing"
     }
   },
   "pattern": [

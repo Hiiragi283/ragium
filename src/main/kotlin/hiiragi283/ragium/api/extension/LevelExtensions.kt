@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.machine.HTMachineAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
@@ -26,7 +26,7 @@ import net.neoforged.neoforge.common.util.FakePlayerFactory
 
 fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
 
-fun BlockGetter.getMachineEntity(pos: BlockPos): HTMachineBlockEntity? = getBlockEntity(pos) as? HTMachineBlockEntity
+fun BlockGetter.getMachineEntity(pos: BlockPos): HTMachineAccess? = getBlockEntity(pos) as? HTMachineAccess
 
 /**
  * 指定した[pos]に存在する[BlockState]を置き換えようとします。

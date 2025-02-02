@@ -3,19 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:chemical_glass"
+      "tag": "c:ingots/copper"
     },
     "B": {
-      "item": "minecraft:diamond_hoe"
+      "tag": "c:circuits/advanced"
     },
     "C": {
+      "item": "minecraft:diamond_hoe"
+    },
+    "D": {
       "item": "ragium:advanced_casing"
     }
   },
   "pattern": [
     "AAA",
-    "ABA",
-    "CCC"
+    "BCB",
+    "DDD"
   ],
   "result": {
     "count": 1,

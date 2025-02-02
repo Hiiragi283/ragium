@@ -86,5 +86,19 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
                 .unlockedBy("has_input", has(parentPrefix, material))
                 .savePrefixed(output)
         }
+
+        // Ingot + Gear + Rod -> Casing
+        RagiumBlocks.CASINGS.forEach { (key: HTMaterialKey, casing: DeferredBlock<Block>) ->
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, casing, 3)
+                .pattern("ABA")
+                .pattern("BCB")
+                .pattern("ABA")
+                .define('A', HTTagPrefix.INGOT, key)
+                .define('B', HTTagPrefix.ROD, key)
+                .define('C', HTTagPrefix.GEAR, key)
+                .unlockedBy("has_ingot", has(HTTagPrefix.INGOT, key))
+                .savePrefixed(output)
+        }
     }
 }

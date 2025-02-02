@@ -3,7 +3,7 @@
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
-      "tag": "c:circuits/elite"
+      "tag": "c:circuits/advanced"
     }
   },
   "item_inputs": [
@@ -17,7 +17,7 @@
     },
     {
       "count": 1,
-      "item": "ragium:luminescence_dust"
+      "tag": "c:dusts/quartz"
     }
   ],
   "item_outputs": [

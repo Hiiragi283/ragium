@@ -9,7 +9,7 @@
       "item": "minecraft:blast_furnace"
     },
     "C": {
-      "item": "minecraft:smooth_stone"
+      "item": "ragium:basic_casing"
     }
   },
   "pattern": [

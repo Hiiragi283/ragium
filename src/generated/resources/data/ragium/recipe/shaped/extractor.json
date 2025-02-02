@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_steel"
+      "tag": "c:ingots/chromium"
     },
     "B": {
-      "item": "minecraft:piston"
+      "tag": "c:circuits/advanced"
     },
     "C": {
-      "item": "ragium:chemical_glass"
+      "item": "minecraft:hopper"
     },
     "D": {
       "item": "ragium:advanced_casing"

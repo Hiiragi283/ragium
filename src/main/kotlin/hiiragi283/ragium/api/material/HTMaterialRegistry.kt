@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.material
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
+import hiiragi283.ragium.api.property.HTPropertyHolder
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import java.util.stream.Stream
@@ -54,6 +55,13 @@ interface HTMaterialRegistry : Keyable {
      * @return 値がない場合は`null`
      */
     fun getFirstItem(prefix: HTTagPrefix, key: HTMaterialKey): Holder<Item>? = getItems(prefix, key).firstOrNull()
+
+    //    Property    //
+
+    /**
+     * 指定した[key]に基づいて[HTPropertyHolder]を返します。
+     */
+    fun getProperty(key: HTMaterialKey): HTPropertyHolder
 
     //    Keyable    //
 

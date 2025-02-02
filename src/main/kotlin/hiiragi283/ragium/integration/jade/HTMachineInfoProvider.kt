@@ -3,10 +3,10 @@ package hiiragi283.ragium.integration.jade
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.boolText
 import hiiragi283.ragium.api.extension.floatText
 import hiiragi283.ragium.api.extension.intText
+import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.nbt.CompoundTag
@@ -36,7 +36,7 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     val ENCHANTMENT: MapCodec<ItemEnchantments> = ItemEnchantments.CODEC.fieldOf("enchantments")
 
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
-        val machineEntity: HTMachineBlockEntity = accessor.blockEntity as? HTMachineBlockEntity ?: return
+        val machineEntity: HTMachineAccess = accessor.blockEntity as? HTMachineAccess ?: return
         accessor.writeData(HTMachineKey.FIELD_CODEC, machineEntity.machineKey)
         accessor.writeData(TICK_RATE, machineEntity.tickRate)
         accessor.writeData(IS_ACTIVE, machineEntity.isActive)

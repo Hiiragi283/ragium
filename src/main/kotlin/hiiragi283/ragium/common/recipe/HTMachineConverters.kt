@@ -15,12 +15,10 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SmeltingRecipe
-import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
@@ -37,18 +35,6 @@ object HTMachineConverters {
             .itemInput(recipe.ingredients[0], 64)
             .itemOutput(recipe.getResultItem(provider).item, 64)
             .export(holder.id.withSuffix("_from_smelting"))
-    }
-
-    @JvmStatic
-    fun fromCutting(holder: RecipeHolder<StonecutterRecipe>, provider: HolderLookup.Provider): RecipeHolder<HTMachineRecipe> {
-        val recipe: StonecutterRecipe = holder.value
-        val output: ItemStack = recipe.getResultItem(provider)
-        return HTMachineRecipeBuilder
-            .create(RagiumRecipes.CUTTING_MACHINE)
-            .itemInput(recipe.ingredients[0])
-            .catalyst(output.item)
-            .itemOutput(recipe.getResultItem(provider))
-            .export(holder.id.withSuffix("_from_cutting"))
     }
 
     @JvmStatic

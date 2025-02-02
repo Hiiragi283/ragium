@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_circuit": {
+    "has_core": {
       "conditions": {
         "items": [
           {
-            "items": "#c:circuits/advanced"
+            "items": "minecraft:crafter"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_circuit"
+      "has_core"
     ]
   ],
   "rewards": {

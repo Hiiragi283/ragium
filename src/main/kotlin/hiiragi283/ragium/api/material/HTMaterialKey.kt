@@ -51,7 +51,8 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
     /**
      * 素材の名前の[MutableComponent]
      */
-    val text: MutableComponent = Component.translatable(translationKey)
+    val text: MutableComponent
+        get() = Component.translatable(translationKey)
 
     //    Comparable    //
 

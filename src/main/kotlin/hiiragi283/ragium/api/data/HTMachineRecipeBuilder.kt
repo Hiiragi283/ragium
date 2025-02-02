@@ -98,7 +98,7 @@ class HTMachineRecipeBuilder private constructor(private val recipeType: HTMachi
 
     fun itemOutput(stack: ItemStack): HTMachineRecipeBuilder = apply {
         check(!stack.isEmpty) { "Empty ItemStack is not allowed!" }
-        itemOutputs.add(stack)
+        itemOutputs.add(stack.copy())
     }
 
     fun fluidOutput(fluid: Supplier<out Fluid>, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
@@ -108,7 +108,7 @@ class HTMachineRecipeBuilder private constructor(private val recipeType: HTMachi
 
     fun fluidOutput(stack: FluidStack): HTMachineRecipeBuilder = apply {
         check(!stack.isEmpty) { "Empty FluidStack is not allowed!" }
-        fluidOutputs.add(stack)
+        fluidOutputs.add(stack.copy())
     }
 
     fun waterOutput(amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidOutput(Fluids.WATER, amount)

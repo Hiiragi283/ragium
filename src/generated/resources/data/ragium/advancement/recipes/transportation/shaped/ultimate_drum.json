@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ingot": {
+    "has_slab": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/ragium"
+            "items": "#minecraft:slabs"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ingot"
+      "has_slab"
     ]
   ],
   "rewards": {

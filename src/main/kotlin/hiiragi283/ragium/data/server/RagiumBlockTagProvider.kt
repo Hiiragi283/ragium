@@ -31,8 +31,6 @@ class RagiumBlockTagProvider(
         buildList {
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Casings.entries)
-            addAll(RagiumBlocks.CasingWalls.entries)
-            addAll(RagiumBlocks.Hulls.entries)
             addAll(RagiumBlocks.Coils.entries)
             addAll(RagiumBlocks.Burners.entries)
 
@@ -44,6 +42,7 @@ class RagiumBlockTagProvider(
         buildList {
             addAll(RagiumBlocks.ORES.values)
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
+            addAll(RagiumBlocks.CASINGS.values)
 
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
@@ -61,9 +60,6 @@ class RagiumBlockTagProvider(
         tag(BlockTags.MINEABLE_WITH_HOE)
             .add(RagiumBlocks.SPONGE_CAKE)
             .add(RagiumBlocks.SWEET_BERRIES_CAKE)
-
-        // Vanilla
-        RagiumBlocks.CasingWalls.entries.forEach(tag(BlockTags.WALLS)::add)
 
         // Ragium
         tag(RagiumBlockTags.COOLING_SOURCES)

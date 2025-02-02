@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/stainless_steel"
+    },
+    "B": {
+      "tag": "c:rods/stainless_steel"
+    },
+    "C": {
+      "tag": "c:gears/stainless_steel"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ragium:stainless_steel_casing"
+  }
+}

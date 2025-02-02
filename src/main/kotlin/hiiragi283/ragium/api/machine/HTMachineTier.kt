@@ -106,13 +106,6 @@ enum class HTMachineTier(
         ULTIMATE -> RagiumBlocks.Casings.ULTIMATE
     }
 
-    fun getHull(): HTBlockContent.Tier = when (this) {
-        BASIC -> RagiumBlocks.Hulls.BASIC
-        ADVANCED -> RagiumBlocks.Hulls.ADVANCED
-        ELITE -> RagiumBlocks.Hulls.ELITE
-        ULTIMATE -> RagiumBlocks.Hulls.ULTIMATE
-    }
-
     fun getCoil(): HTBlockContent.Tier = when (this) {
         BASIC -> RagiumBlocks.Coils.BASIC
         ADVANCED -> RagiumBlocks.Coils.ADVANCED
@@ -132,13 +125,6 @@ enum class HTMachineTier(
     fun getCircuitTag(): TagKey<Item> = itemTagKey(commonId("circuits/$serializedName"))
 
     //    Material    //
-
-    fun getMainMetal(): HTMaterialKey = when (this) {
-        BASIC -> RagiumMaterials.RAGI_ALLOY
-        ADVANCED -> RagiumMaterials.RAGI_STEEL
-        ELITE -> RagiumMaterials.REFINED_RAGI_STEEL
-        ULTIMATE -> RagiumMaterials.RAGIUM
-    }
 
     fun getSubMetal(): HTMaterialKey = when (this) {
         BASIC -> VanillaMaterials.COPPER

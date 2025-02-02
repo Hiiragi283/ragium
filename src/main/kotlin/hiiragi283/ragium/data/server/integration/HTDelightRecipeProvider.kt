@@ -10,7 +10,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.CommonTags
@@ -51,13 +50,6 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
                 ModItems.BEEF_PATTY.get(),
                 2,
             ).save(output)
-
-        // Pumpkin Slice
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CUTTING_MACHINE)
-            .itemInput(Tags.Items.CROPS_PUMPKIN)
-            .itemOutput(ModItems.PUMPKIN_SLICE.get(), 4)
-            .save(output)
 
         // Rice
         HTMachineRecipeBuilder

@@ -225,11 +225,11 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerCircuits(output: RecipeOutput) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             // Assembler
-            val dust: ItemLike = when (tier) {
-                HTMachineTier.BASIC -> Items.REDSTONE
-                HTMachineTier.ADVANCED -> Items.GLOWSTONE_DUST
-                HTMachineTier.ELITE -> RagiumItems.LUMINESCENCE_DUST
-                HTMachineTier.ULTIMATE -> RagiumItems.getMaterialItem(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
+            val dust: Ingredient = when (tier) {
+                HTMachineTier.BASIC -> Ingredient.of(Tags.Items.DUSTS_REDSTONE)
+                HTMachineTier.ADVANCED -> Ingredient.of(Tags.Items.DUSTS_GLOWSTONE)
+                HTMachineTier.ELITE -> Ingredient.of(HTTagPrefix.DUST.createTag(VanillaMaterials.QUARTZ))
+                HTMachineTier.ULTIMATE -> Ingredient.of(RagiumItems.LUMINESCENCE_DUST)
             }
 
             HTMachineRecipeBuilder
@@ -237,7 +237,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
                 .itemInput(HTTagPrefix.INGOT, tier.getSubMetal())
                 .itemInput(dust)
-                .catalyst(tier)
+                .apply { tier.getPreviousTier()?.let(this::catalyst) }
                 .itemOutput(tier.getCircuit())
                 .save(output)
         }

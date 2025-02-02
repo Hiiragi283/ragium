@@ -43,11 +43,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumBlocks.Decorations.ELITE_CASING, "精鋭外装（装飾）")
         add(RagiumBlocks.Decorations.ULTIMATE_CASING, "究極外装（装飾）")
 
-        add(RagiumBlocks.Decorations.BASIC_HULL, "基本筐体（装飾）")
-        add(RagiumBlocks.Decorations.ADVANCED_HULL, "発展筐体（装飾）")
-        add(RagiumBlocks.Decorations.ELITE_HULL, "精鋭筐体（装飾）")
-        add(RagiumBlocks.Decorations.ULTIMATE_HULL, "究極筐体（装飾）")
-
         add(RagiumBlocks.Decorations.BASIC_COIL, "基本コイル（装飾）")
         add(RagiumBlocks.Decorations.ADVANCED_COIL, "発展コイル（装飾）")
         add(RagiumBlocks.Decorations.ELITE_COIL, "精鋭コイル（装飾）")
@@ -180,7 +175,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
         add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽", "Are You Ready?")
         add(RagiumMachineKeys.COMPRESSOR, "圧縮機", "saves.zip.zip")
-        add(RagiumMachineKeys.CUTTING_MACHINE, "裁断機", "コストカットさえすればいい")
         add(RagiumMachineKeys.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
         add(RagiumMachineKeys.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
         add(RagiumMachineKeys.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
@@ -256,6 +250,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(VanillaMaterials.QUARTZ, "水晶")
         add(VanillaMaterials.REDSTONE, "レッドストーン")
         // Tag Prefix
+        add(HTTagPrefix.CASING, "%s外装")
         add(HTTagPrefix.CLUMP, "%sの凝塊")
         add(HTTagPrefix.CRYSTAL, "%sの結晶")
         add(HTTagPrefix.DIRTY_DUST, "汚れた%sの粉")

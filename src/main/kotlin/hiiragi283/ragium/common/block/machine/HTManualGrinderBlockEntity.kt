@@ -1,12 +1,13 @@
 package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.capability.LimitedItemHandler
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.replaceBlockState
+import hiiragi283.ragium.api.machine.HTMachineAccess
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -22,6 +23,7 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -31,7 +33,7 @@ import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
-    HTBlockEntityHandlerProvider {
+    HTMachineAccess {
     private val itemHandler: ItemStackHandler = object : ItemStackHandler(1) {
         override fun onContentsChanged(slot: Int) {
             super.onContentsChanged(slot)
@@ -104,7 +106,20 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         itemHandler.dropStacks(level, pos)
     }
 
-    //    HTBlockEntityHandlerProvider    //
+    //    HTMachineAccess    //
+
+    override val enchantments: ItemEnchantments = ItemEnchantments.EMPTY
+    override val front: Direction = Direction.NORTH
+    override val isActive: Boolean = true
+    override val levelAccess: Level?
+        get() = level
+    override val machineKey: HTMachineKey = RagiumMachineKeys.GRINDER
+    override val pos: BlockPos
+        get() = blockPos
+    override val processCost: Int = 0
+    override var showPreview: Boolean = false
+
+    //    HTMachineAccess    //
 
     override fun getItemHandler(direction: Direction?): LimitedItemHandler =
         LimitedItemHandler(mapOf(0 to HTStorageIO.INPUT), ::itemHandler)

@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/refined_ragi_steel"
+      "tag": "c:ingots/ragi_steel"
     },
     "B": {
-      "item": "ragium:shaft"
+      "tag": "c:circuits/elite"
     },
     "C": {
-      "item": "ragium:extractor"
+      "item": "minecraft:bucket"
     },
     "D": {
       "item": "ragium:elite_casing"

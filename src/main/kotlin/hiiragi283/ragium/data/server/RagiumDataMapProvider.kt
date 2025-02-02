@@ -106,29 +106,10 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         registerTier(RagiumBlocks.Grates.entries)
         registerTier(RagiumBlocks.Casings.entries)
-        registerTier(RagiumBlocks.CasingWalls.entries)
-        registerTier(RagiumBlocks.Hulls.entries)
         registerTier(RagiumBlocks.Coils.entries)
         registerTier(RagiumBlocks.Burners.entries)
 
         registerTier(RagiumBlocks.Drums.entries)
-
-        builder.addContent(RagiumMachineKeys.ASSEMBLER.getBlock(), HTMachineTier.ADVANCED)
-        builder.addContent(RagiumMachineKeys.CHEMICAL_REACTOR.getBlock(), HTMachineTier.ADVANCED)
-        builder.addContent(RagiumMachineKeys.COMBUSTION_GENERATOR.getBlock(), HTMachineTier.ADVANCED)
-        builder.addContent(RagiumMachineKeys.CUTTING_MACHINE.getBlock(), HTMachineTier.ELITE)
-        builder.addContent(RagiumMachineKeys.DISTILLATION_TOWER.getBlock(), HTMachineTier.ADVANCED)
-        builder.addContent(RagiumMachineKeys.EXTRACTOR.getBlock(), HTMachineTier.ADVANCED)
-        builder.addContent(RagiumMachineKeys.GAS_TURBINE.getBlock(), HTMachineTier.ADVANCED)
-        builder.addContent(RagiumMachineKeys.GRINDER.getBlock(), HTMachineTier.ADVANCED)
-        builder.addContent(RagiumMachineKeys.GROWTH_CHAMBER.getBlock(), HTMachineTier.ADVANCED)
-
-        builder.addContent(RagiumMachineKeys.LASER_TRANSFORMER.getBlock(), HTMachineTier.ELITE)
-        builder.addContent(RagiumMachineKeys.MULTI_SMELTER.getBlock(), HTMachineTier.ELITE)
-        builder.addContent(RagiumMachineKeys.RESOURCE_PLANT.getBlock(), HTMachineTier.ELITE)
-        builder.addContent(RagiumMachineKeys.VIBRATION_GENERATOR.getBlock(), HTMachineTier.ELITE)
-
-        builder.addContent(RagiumMachineKeys.BEDROCK_MINER.getBlock(), HTMachineTier.ULTIMATE)
     }
 
     private fun radioactivity(builder: Builder<HTRadioactivity, Item>) {

@@ -63,9 +63,6 @@ object RagiumMachineKeys {
     val COMPRESSOR: HTMachineKey = HTMachineKey.of("compressor")
 
     @JvmField
-    val CUTTING_MACHINE: HTMachineKey = HTMachineKey.of("cutting_machine")
-
-    @JvmField
     val DISTILLATION_TOWER: HTMachineKey = HTMachineKey.of("distillation_tower")
 
     @JvmField
@@ -99,7 +96,6 @@ object RagiumMachineKeys {
             BLAST_FURNACE,
             CHEMICAL_REACTOR,
             COMPRESSOR,
-            CUTTING_MACHINE,
             DISTILLATION_TOWER,
             EXTRACTOR,
             GRINDER,

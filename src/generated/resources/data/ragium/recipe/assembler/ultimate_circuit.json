@@ -3,7 +3,7 @@
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
-      "tag": "c:circuits/ultimate"
+      "tag": "c:circuits/elite"
     }
   },
   "item_inputs": [
@@ -17,7 +17,7 @@
     },
     {
       "count": 1,
-      "item": "ragium:ragi_crystal_dust"
+      "item": "ragium:luminescence_dust"
     }
   ],
   "item_outputs": [

@@ -1,16 +1,14 @@
 package hiiragi283.ragium.api.block.entity
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.blockPosText
+import hiiragi283.ragium.api.extension.getOrDefault
+import hiiragi283.ragium.api.extension.openMenu
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
+import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.multiblock.HTControllerDefinition
-import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
-import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.world.HTEnergyNetwork
@@ -20,12 +18,10 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundSource
@@ -33,7 +29,6 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -43,7 +38,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.fml.loading.FMLLoader
 import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import org.slf4j.Logger
 import java.util.function.Supplier
 import kotlin.math.max
@@ -54,18 +48,24 @@ import kotlin.math.max
 abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),
     MenuProvider,
-    HTBlockEntityHandlerProvider,
-    HTControllerHolder,
-    HTFluidInteractable {
+    HTFluidInteractable,
+    HTMachineAccess {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
     }
 
-    abstract val machineKey: HTMachineKey
-    val front: Direction get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-    var isActive: Boolean = false
+    override val front: Direction
+        get() = blockState.getOrDefault(
+            BlockStateProperties.HORIZONTAL_FACING,
+            Direction.NORTH,
+        )
+    override var isActive: Boolean = false
         protected set
+    override val levelAccess: Level?
+        get() = level
+    override val pos: BlockPos
+        get() = blockPos
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -96,20 +96,13 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     //    Enchantment    //
 
-    var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
+    override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
         protected set
-    protected var processCost: Int = 1280
-        private set
+    override val processCost: Int = 1280
 
     protected open fun updateEnchantments(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments
         this.tickRate = max(20, 200 - (getEnchantmentLevel(Enchantments.EFFICIENCY) * 30))
-    }
-
-    fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int {
-        val lookup: HolderLookup.RegistryLookup<Enchantment> =
-            level?.registryAccess()?.lookupOrThrow(Registries.ENCHANTMENT) ?: return 0
-        return lookup.get(key).map(enchantments::getLevel).orElse(0)
     }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -188,7 +181,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         }
         runCatching { process(level, pos) }
             .onSuccess {
-                if (!energyFlag.processAmount(network, processCost, true)) {
+                if (!energyFlag.processAmount(network, processCost, false)) {
                     LOGGER.error("Failed to interact energy network")
                     return
                 }
@@ -248,20 +241,11 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         override fun getCount(): Int = 2
     }
 
+    //    MenuProvider    //
+
+    override fun getDisplayName(): Component = machineKey.text
+
     //    HTControllerHolder    //
 
     final override var showPreview: Boolean = false
-
-    override fun getMultiblockMap(): HTMultiblockMap.Relative? = machineKey.getProperty()[HTMachinePropertyKeys.MULTIBLOCK_MAP]
-
-    final override fun getController(): HTControllerDefinition? = ifPresentWorld { HTControllerDefinition(it, blockPos, front) }
-
-    //    MenuProvider    //
-
-    final override fun getDisplayName(): Component = machineKey.text
-
-    //    HTBlockEntityHandlerProvider    //
-
-    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
-        level?.asServerLevel()?.energyNetwork?.let(HTStorageIO.INPUT::wrapEnergyStorage)
 }

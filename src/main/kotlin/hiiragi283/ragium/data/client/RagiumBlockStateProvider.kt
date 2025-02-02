@@ -40,16 +40,13 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
+            addAll(RagiumBlocks.CASINGS.values)
             addAll(RagiumBlocks.Casings.entries)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
             addAll(RagiumBlocks.LEDBlocks.entries)
         }.map(Supplier<out Block>::get)
             .forEach(::simpleBlock)
-
-        RagiumBlocks.CasingWalls.entries.forEach { wall: RagiumBlocks.CasingWalls ->
-            wallBlock(wall.holder.get(), wall.machineTier.getCasing().blockId)
-        }
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
@@ -82,7 +79,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Hull
-        RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
+        /*RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
             getVariantBuilder(hull.get())
                 .partialState()
                 .setModels(
@@ -94,7 +91,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                             .cutout(),
                     ),
                 )
-        }
+        }*/
 
         // Coil
         RagiumBlocks.Coils.entries.forEach { coil: RagiumBlocks.Coils ->

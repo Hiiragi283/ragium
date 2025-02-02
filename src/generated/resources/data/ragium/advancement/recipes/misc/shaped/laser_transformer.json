@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_refined_ragi_steel": {
+    "has_core": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/refined_ragi_steel"
+            "items": "minecraft:end_crystal"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_refined_ragi_steel"
+      "has_core"
     ]
   ],
   "rewards": {

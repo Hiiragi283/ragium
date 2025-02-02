@@ -37,11 +37,13 @@ import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.util.RandomSource
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.CampfireBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -73,6 +75,7 @@ internal object RagiumEvents {
         // Consumer
         event
             .getBuilder(RagiumMachineKeys.BEDROCK_MINER)
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BEDROCK_MINER)
 
         // Generator
         event
@@ -133,7 +136,12 @@ internal object RagiumEvents {
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.default(RagiumRecipes.BLAST_FURNACE),
             ).put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.FLAME))
+            .put(
+                HTMachinePropertyKeys.PARTICLE,
+                HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, front: Direction ->
+                    CampfireBlock.makeParticles(level, pos.relative(front.opposite, 2), false, false)
+                },
+            )
 
         event
             .getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
@@ -164,24 +172,10 @@ internal object RagiumEvents {
             )
 
         event
-            .getBuilder(RagiumMachineKeys.CUTTING_MACHINE)
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy { level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>> ->
-                    HTMachineRecipeProxy.default(RagiumRecipes.CUTTING_MACHINE).getRecipes(level, consumer)
-                    level.recipeManager
-                        .getAllRecipesFor(RecipeType.STONECUTTING)
-                        .map { HTMachineConverters.fromCutting(it, level.registryAccess()) }
-                        .forEach(consumer)
-                },
-            )
-
-        event
             .getBuilder(RagiumMachineKeys.DISTILLATION_TOWER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
                 HTDistillationTowerBlockEntity(pos, state)
-            }.put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
-            .put(
+            }.put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.default(RagiumRecipes.DISTILLATION_TOWER),
             ).putValidator { recipe: HTMachineRecipe ->
@@ -237,8 +231,7 @@ internal object RagiumEvents {
             .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
                 HTMultiSmelterBlockEntity(pos, state)
-            }.put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
-            .put(
+            }.put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.default(RagiumRecipes.MULTI_SMELTER),
             ).put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
@@ -255,7 +248,6 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.RESOURCE_PLANT)
-            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.RESOURCE_PLANT)
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.default(RagiumRecipes.RESOURCE_PLANT),
@@ -387,8 +379,6 @@ internal object RagiumEvents {
 
         registerTier(RagiumBlocks.Grates.entries)
         registerTier(RagiumBlocks.Casings.entries)
-        registerTier(RagiumBlocks.CasingWalls.entries)
-        registerTier(RagiumBlocks.Hulls.entries)
         registerTier(RagiumBlocks.Coils.entries)
         registerTier(RagiumBlocks.Burners.entries)
 

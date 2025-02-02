@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/netherite"
+    },
+    "B": {
+      "tag": "c:rods/netherite"
+    },
+    "C": {
+      "tag": "c:gears/netherite"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ragium:netherite_casing"
+  }
+}

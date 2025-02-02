@@ -43,11 +43,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.Decorations.ELITE_CASING, "Elite Casing (Decoration)")
         add(RagiumBlocks.Decorations.ULTIMATE_CASING, "Ultimate Casing (Decoration)")
 
-        add(RagiumBlocks.Decorations.BASIC_HULL, "Basic Hull (Decoration)")
-        add(RagiumBlocks.Decorations.ADVANCED_HULL, "Advanced Hull (Decoration)")
-        add(RagiumBlocks.Decorations.ELITE_HULL, "Elite Hull (Decoration)")
-        add(RagiumBlocks.Decorations.ULTIMATE_HULL, "Ultimate Hull (Decoration)")
-
         add(RagiumBlocks.Decorations.BASIC_COIL, "Basic Coil (Decoration)")
         add(RagiumBlocks.Decorations.ADVANCED_COIL, "Advanced Coil (Decoration)")
         add(RagiumBlocks.Decorations.ELITE_COIL, "Elite Coil (Decoration)")
@@ -217,7 +212,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMachineKeys.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
         add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor", "Are You Ready?")
         add(RagiumMachineKeys.COMPRESSOR, "Compressor", "saves.zip.zip")
-        add(RagiumMachineKeys.CUTTING_MACHINE, "Cutting Machine", "All you need is cost cut")
         add(RagiumMachineKeys.DISTILLATION_TOWER, "Distillation Tower", "Process Crude Oil")
         add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Something like Centrifuge")
         add(RagiumMachineKeys.GRINDER, "Grinder", "Unbreakable Diamond")
@@ -293,6 +287,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(VanillaMaterials.QUARTZ, "Quartz")
         add(VanillaMaterials.REDSTONE, "Redstone")
         // Tag Prefix
+        add(HTTagPrefix.CASING, "%s Casing")
         add(HTTagPrefix.CLUMP, "%s Clump")
         add(HTTagPrefix.CRYSTAL, "%s Crystal")
         add(HTTagPrefix.DIRTY_DUST, "Dirty %s Dust")

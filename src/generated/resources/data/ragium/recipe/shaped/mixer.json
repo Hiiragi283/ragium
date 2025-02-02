@@ -3,16 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/iron"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "tag": "c:storage_blocks/copper"
+      "item": "minecraft:cauldron"
+    },
+    "C": {
+      "item": "ragium:basic_casing"
     }
   },
   "pattern": [
-    "A A",
-    "A A",
-    "ABA"
+    "AAA",
+    "ABA",
+    "CCC"
   ],
   "result": {
     "count": 1,

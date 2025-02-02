@@ -71,14 +71,14 @@ object RagiumCreativeTabs {
             CreativeModeTab
                 .builder()
                 .title(Component.literal("Ragium - Machine"))
-                .icon { ItemStack(RagiumBlocks.Hulls.ELITE) }
+                .icon { ItemStack(RagiumBlocks.MANUAL_GRINDER) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     buildList {
                         // Components
+                        RagiumBlocks.CASINGS.values.forEach(output::accept)
+
                         addAll(RagiumBlocks.Grates.entries)
                         addAll(RagiumBlocks.Casings.entries)
-                        addAll(RagiumBlocks.CasingWalls.entries)
-                        addAll(RagiumBlocks.Hulls.entries)
                         addAll(RagiumBlocks.Coils.entries)
                         addAll(RagiumBlocks.Burners.entries)
 

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_steel"
+      "tag": "c:ingots/stainless_steel"
     },
     "B": {
       "item": "ragium:chemical_glass"

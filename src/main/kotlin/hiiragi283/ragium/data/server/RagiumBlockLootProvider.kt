@@ -31,11 +31,10 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
+            addAll(RagiumBlocks.CASINGS.values)
 
             addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Hulls.entries)
             addAll(RagiumBlocks.Casings.entries)
-            addAll(RagiumBlocks.CasingWalls.entries)
             addAll(RagiumBlocks.Coils.entries)
             addAll(RagiumBlocks.Burners.entries)
             add(RagiumBlocks.SHAFT)

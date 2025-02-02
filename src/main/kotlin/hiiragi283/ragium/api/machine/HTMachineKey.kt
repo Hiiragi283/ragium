@@ -54,7 +54,8 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
     /**
      * 機械の名前を保持する[MutableComponent]
      */
-    val text: MutableComponent = Component.translatable(translationKey)
+    val text: MutableComponent
+        get() = Component.translatable(translationKey)
 
     /**
      * 機械の説明文の翻訳キー
@@ -64,7 +65,8 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
     /**
      * 機械の説明文を保持する[MutableComponent]
      */
-    val descriptionText: MutableComponent = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
+    val descriptionText: MutableComponent
+        get() = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
 
     /**
      * このキーに紐づいたブロックを返します。

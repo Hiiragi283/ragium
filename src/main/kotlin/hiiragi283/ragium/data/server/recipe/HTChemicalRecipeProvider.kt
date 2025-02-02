@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
+import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.extension.sources
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -20,7 +21,9 @@ import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeBuilder
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -470,11 +473,11 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.YELLOW_CAKE)
             .save(output)
         // Cutting Yellow Cake
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CUTTING_MACHINE, HTMachineTier.ELITE)
-            .itemInput(RagiumItems.YELLOW_CAKE)
-            .itemOutput(RagiumItems.YELLOW_CAKE_PIECE, 8)
-            .save(output)
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, RagiumItems.YELLOW_CAKE_PIECE, 8)
+            .requires(RagiumItems.YELLOW_CAKE)
+            .unlockedBy("has_cake", has(RagiumItems.YELLOW_CAKE))
+            .savePrefixed(output)
         // Uranium Fuel
         HTMachineRecipeBuilder
             .create(RagiumRecipes.CHEMICAL_REACTOR, HTMachineTier.ELITE)

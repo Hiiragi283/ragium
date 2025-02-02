@@ -6,7 +6,6 @@
     "ragium:chemical_reactor": "chemical_reactor",
     "ragium:combustion_generator": "combustion_generator",
     "ragium:compressor": "compressor",
-    "ragium:cutting_machine": "cutting_machine",
     "ragium:distillation_tower": "distillation_tower",
     "ragium:drain": "drain",
     "ragium:extractor": "extractor",

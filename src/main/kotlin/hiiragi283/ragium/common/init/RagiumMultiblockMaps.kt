@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.Blocks
 object RagiumMultiblockMaps {
     private val CASING = HTTieredMultiblockComponent(HTMachineTier::getCasing)
     private val GRATE = HTTieredMultiblockComponent(HTMachineTier::getGrate)
-    private val HULL = HTTieredMultiblockComponent(HTMachineTier::getHull)
     private val SHAFT = HTAxisMultiblockComponent.YStatic { RagiumBlocks.SHAFT }
     private val SHAFT_HORIZONTAL = HTAxisMultiblockComponent.FrontHorizontal { RagiumBlocks.SHAFT }
     private val SHAFT_VERTICAL = HTAxisMultiblockComponent.FrontVertical { RagiumBlocks.SHAFT }
@@ -38,10 +37,10 @@ object RagiumMultiblockMaps {
         .add(0, -1, -2, CASING)
         .add(0, -1, 2, CASING)
         .add(2, -1, 0, CASING)
-        .add(-2, 0, 0, HULL)
-        .add(0, 0, -2, HULL)
-        .add(0, 0, 2, HULL)
-        .add(2, 0, 0, HULL)
+        // .add(-2, 0, 0, HULL)
+        // .add(0, 0, -2, HULL)
+        // .add(0, 0, 2, HULL)
+        // .add(2, 0, 0, HULL)
         .add(-2, 0, -2, GRATE)
         .add(-2, 0, -1, GRATE)
         .add(-2, 0, 1, GRATE)
@@ -86,50 +85,5 @@ object RagiumMultiblockMaps {
         .addPillar(-1, 1..3, 2, DEEP_TILE)
         .addPillar(-1, 1..3, 1, DEEP_WALL)
         .addPillar(-1, 1..3, 3, DEEP_WALL)
-        .build()
-
-    @JvmField
-    val CUTTING_MACHINE: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        // bottom
-        .addLayer(-1..1, 0, 1..1, HULL)
-        .add(-1, 0, 2, HTSimpleMultiblockComponent(Blocks::STONE_SLAB))
-        .add(0, 0, 2, HTSimpleMultiblockComponent(Blocks::STONECUTTER))
-        .add(1, 0, 2, HTSimpleMultiblockComponent(Blocks::STONE_SLAB))
-        .addLayer(-1..1, 0, 3..3, HULL)
-        // middle
-        .addLayer(-1..1, 1, 1..1, HTSimpleMultiblockComponent(RagiumBlocks.CHEMICAL_GLASS))
-        .addLayer(-1..1, 1, 3..3, HTSimpleMultiblockComponent(RagiumBlocks.CHEMICAL_GLASS))
-        // top
-        .addLayer(-1..1, 2, 1..3, STORAGE_BLOCK)
-        .build()
-
-    @JvmField
-    val DISTILLATION_TOWER: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        .addLayer(-1..1, -1, 1..3, CASING)
-        .addHollow(-1..1, 0, 1..3, HULL)
-        .addCross4(-1..1, 1, 1..3, HTSimpleMultiblockComponent(Blocks::RED_CONCRETE))
-        .addCross4(-1..1, 2, 1..3, HTSimpleMultiblockComponent(Blocks::WHITE_CONCRETE))
-        .addCross4(-1..1, 3, 1..3, HTSimpleMultiblockComponent(Blocks::RED_CONCRETE))
-        .add(0, 4, 2, HTSimpleMultiblockComponent(Blocks::WHITE_CONCRETE))
-        .build()
-
-    @JvmField
-    val MULTI_SMELTER: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        .addLayer(-1..1, -1, 1..3, HTSimpleMultiblockComponent(RagiumBlocks.Casings.ELITE))
-        .addHollow(-1..1, 0, 1..3, HTSimpleMultiblockComponent(RagiumBlocks.Hulls.ELITE))
-        .addLayer(-1..1, 1, 1..3, HTSimpleMultiblockComponent(RagiumBlocks.Casings.ELITE))
-        .build()
-
-    @JvmField
-    val RESOURCE_PLANT: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        .addLayer(-1..1, 0, 1..3, HULL)
-        .addCross4(-1..1, 1, 1..3, GRATE)
-        .addCross4(-1..1, 2, 1..3, GRATE)
-        .add(0, 3, 2, GRATE)
-        .add(0, 4, 2, GRATE)
         .build()
 }

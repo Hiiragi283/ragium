@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragium"
+      "tag": "c:ingots/netherite"
     },
     "B": {
-      "item": "ragium:shaft"
+      "tag": "c:circuits/ultimate"
     },
     "C": {
       "item": "minecraft:nether_star"

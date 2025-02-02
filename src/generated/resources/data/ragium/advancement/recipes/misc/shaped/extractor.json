@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ragi_steel": {
+    "has_core": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/ragi_steel"
+            "items": "minecraft:hopper"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ragi_steel"
+      "has_core"
     ]
   ],
   "rewards": {

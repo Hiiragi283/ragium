@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.property.EmptyPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.collection.HTTable
@@ -100,4 +101,6 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     override fun getType(key: HTMaterialKey): HTMaterialType = typeMap[key] ?: error("Unknown material key: $key")
 
     override fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): List<Holder<Item>> = tagItemCache.get(prefix, key) ?: listOf()
+
+    override fun getProperty(key: HTMaterialKey): HTPropertyHolder = propertyMap.getOrDefault(key, EmptyPropertyHolder)
 }

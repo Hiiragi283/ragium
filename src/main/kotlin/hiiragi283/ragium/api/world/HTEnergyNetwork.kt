@@ -40,7 +40,7 @@ class HTEnergyNetwork(amount: Int) :
         CONSUME() {
             override fun processAmount(network: HTEnergyNetwork?, amount: Int, simulate: Boolean): Boolean {
                 if (network == null) return false
-                if (amount <= 0) return false
+                if (amount <= 0) return true
                 return network.extractEnergy(amount, simulate) > 0
             }
         },
@@ -52,7 +52,7 @@ class HTEnergyNetwork(amount: Int) :
         GENERATE() {
             override fun processAmount(network: HTEnergyNetwork?, amount: Int, simulate: Boolean): Boolean {
                 if (network == null) return false
-                if (amount <= 0) return false
+                if (amount <= 0) return true
                 return network.receiveEnergy(amount, simulate) > 0
             }
         },

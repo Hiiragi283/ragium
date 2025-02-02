@@ -3,7 +3,7 @@
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
-      "tag": "c:circuits/advanced"
+      "tag": "c:circuits/basic"
     }
   },
   "item_inputs": [
@@ -17,7 +17,7 @@
     },
     {
       "count": 1,
-      "item": "minecraft:glowstone_dust"
+      "tag": "c:dusts/glowstone"
     }
   ],
   "item_outputs": [

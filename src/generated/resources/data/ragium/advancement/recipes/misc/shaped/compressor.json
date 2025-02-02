@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ragi_alloy": {
+    "has_core": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/ragi_alloy"
+            "items": "minecraft:piston"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ragi_alloy"
+      "has_core"
     ]
   ],
   "rewards": {

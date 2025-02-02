@@ -16,6 +16,7 @@ import net.minecraft.world.item.Item
  */
 enum class HTTagPrefix(private val commonName: String, private val tagPrefix: String = "$commonName/") : StringRepresentable {
     // Common
+    CASING("casings"),
     DUST("dusts"),
     GEAR("gears"),
     GEM("gems") {

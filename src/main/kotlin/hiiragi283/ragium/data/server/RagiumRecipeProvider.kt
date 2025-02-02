@@ -149,12 +149,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             ).unlockedBy("has_crystal", has(RagiumItems.WARPED_CRYSTAL))
             .save(output)
 
-        // Melon
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CUTTING_MACHINE)
-            .itemInput(Tags.Items.CROPS_MELON)
-            .itemOutput(Items.MELON_SLICE, 9)
-            .save(output)
         // Mushroom Stew
         HTMachineRecipeBuilder
             .create(RagiumRecipes.MIXER)

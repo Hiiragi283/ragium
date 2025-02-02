@@ -6,7 +6,7 @@
       "tag": "c:ingots/copper"
     },
     "B": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "minecraft:slabs"
     },
     "C": {
       "item": "minecraft:bucket"

@@ -28,6 +28,7 @@ import net.neoforged.neoforge.items.ItemStackHandler
 class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state) {
     override val machineKey: HTMachineKey = RagiumMachineKeys.BLAST_FURNACE
+    override val processCost: Int = 0
 
     private val itemHandler: ItemStackHandler = ItemStackHandler(4)
 

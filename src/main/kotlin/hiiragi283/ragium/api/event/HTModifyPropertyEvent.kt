@@ -7,7 +7,7 @@ import net.neoforged.bus.api.Event
 import net.neoforged.fml.event.IModBusEvent
 import java.util.function.Function
 
-abstract class HTModifyPropertyEvent<T : Any>(private val function: Function<T, HTPropertyHolderBuilder>) :
+sealed class HTModifyPropertyEvent<T : Any>(private val function: Function<T, HTPropertyHolderBuilder>) :
     Event(),
     IModBusEvent {
     fun getBuilder(key: T): HTPropertyHolderBuilder = function.apply(key)
