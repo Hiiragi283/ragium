@@ -64,6 +64,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
             add(RagiumBlocks.MANUAL_GRINDER)
+            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
             addAll(RagiumBlocks.ADDONS)
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)

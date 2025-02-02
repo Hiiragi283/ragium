@@ -28,6 +28,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         add(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
+        add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "Primitive Blast Furnace")
 
         add(RagiumBlocks.CATALYST_ADDON, "Catalyst Addon")
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
@@ -127,7 +128,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.SILKY_CRYSTAL, "Silky Crystal")
-        add(RagiumItems.SLAG, "Slag")
         add(RagiumItems.SOAP, "Soap")
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
         add(RagiumItems.TALLOW, "Tallow")
@@ -216,7 +216,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMachineKeys.ASSEMBLER, "Assembler", "You are the genius!")
         add(RagiumMachineKeys.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
         add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor", "Are You Ready?")
-        add(RagiumMachineKeys.COKE_OVEN, "Coke Oven", "Coke Cola")
         add(RagiumMachineKeys.COMPRESSOR, "Compressor", "saves.zip.zip")
         add(RagiumMachineKeys.CUTTING_MACHINE, "Cutting Machine", "All you need is cost cut")
         add(RagiumMachineKeys.DISTILLATION_TOWER, "Distillation Tower", "Process Crude Oil")
@@ -280,6 +279,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterials.RAGIUM, "Ragium")
         add(RagiumMaterials.REFINED_RAGI_STEEL, "Refined Ragi-Steel")
         add(RagiumMaterials.RESIDUAL_COKE, "Residual Coke")
+        add(RagiumMaterials.SLAG, "Slag")
         add(VanillaMaterials.AMETHYST, "Amethyst")
         add(VanillaMaterials.COAL, "Coal")
         add(VanillaMaterials.COPPER, "Copper")

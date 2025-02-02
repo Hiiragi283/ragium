@@ -14,7 +14,6 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -37,7 +36,7 @@ class HTEnchantmentCondition(val enchantments: HolderSet<Enchantment>, val minLe
     constructor(enchantment: Holder<Enchantment>, minLevel: Int = 1) : this(HolderSet.direct(enchantment), minLevel)
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
-    override val text: MutableComponent =
+    override val text: Component =
         Component
             .translatable(
                 RagiumTranslationKeys.ENCHANTMENT_CONDITION,

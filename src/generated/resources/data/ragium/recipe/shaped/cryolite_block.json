@@ -4,11 +4,14 @@
   "key": {
     "A": {
       "tag": "c:gems/cryolite"
+    },
+    "B": {
+      "item": "ragium:cryolite"
     }
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {

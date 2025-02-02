@@ -14,7 +14,6 @@
     "ragium:methane",
     "ragium:ethene",
     "ragium:acetylene",
-    "ragium:propene",
-    "ragium:dragon_breath"
+    "ragium:propene"
   ]
 }

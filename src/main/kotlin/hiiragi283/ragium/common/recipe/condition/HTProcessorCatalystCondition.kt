@@ -8,7 +8,6 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
@@ -22,7 +21,7 @@ data class HTProcessorCatalystCondition(override val itemIngredient: Ingredient)
     }
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
-    override val text: MutableComponent =
+    override val text: Component =
         Component
             .translatable(RagiumTranslationKeys.CATALYST_CONDITION)
             .withStyle(ChatFormatting.GREEN)

@@ -83,13 +83,14 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             RagiumBlocks.Casings.BASIC,
             Component.empty(),
         )
-        val blastFurnace: AdvancementHolder = createMachine(casing, RagiumMachineKeys.BLAST_FURNACE)
+        val pbf: AdvancementHolder = createSimple(casing, RagiumBlocks.PRIMITIVE_BLAST_FURNACE, Component.empty())
         val steel: AdvancementHolder = createMaterial(
-            blastFurnace,
+            pbf,
             HTTagPrefix.INGOT,
             CommonMaterials.STEEL,
             Component.empty(),
         )
+        val blastFurnace: AdvancementHolder = createMachine(steel, RagiumMachineKeys.BLAST_FURNACE)
         val deepSteel: AdvancementHolder = createMaterial(
             blastFurnace,
             HTTagPrefix.INGOT,
@@ -98,8 +99,6 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
 
         val compressor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COMPRESSOR)
-
-        val cokeOven: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COKE_OVEN)
     }
 
     private fun registerTier2() {

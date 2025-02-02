@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.sources
@@ -8,9 +9,11 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
@@ -22,6 +25,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
@@ -339,7 +343,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(ItemTags.COALS, 4)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-            .itemOutput(RagiumItems.SLAG, 2)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG, 2)
             .saveSuffixed(output, "_with_coal")
 
         // 3x Na + Al + 6x HF -> Cryolite + 3x H2
@@ -357,7 +361,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 3)
-            .itemOutput(RagiumItems.SLAG)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
             .saveSuffixed(output, "_with_cryolite")
     }
 
@@ -365,9 +369,17 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Slag -> Gravel
         HTMachineRecipeBuilder
             .create(RagiumRecipes.GRINDER)
-            .itemInput(RagiumItems.SLAG)
+            .itemInput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
             .itemOutput(Items.GRAVEL)
             .saveSuffixed(output, "_from_slag")
+
+        // Block of Slag -> Chemical Glass
+        HTCookingRecipeBuilder
+            .create(
+                Ingredient.of(HTTagPrefix.STORAGE_BLOCK.createTag(RagiumMaterials.SLAG)),
+                RagiumBlocks.CHEMICAL_GLASS,
+            ).unlockedBy("has_slag", has(HTTagPrefix.STORAGE_BLOCK, RagiumMaterials.SLAG))
+            .save(output)
 
         // Chemical Sludge -> Sand + Clay + Gold
         HTMachineRecipeBuilder
@@ -378,6 +390,12 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.CLAY)
             .itemOutput(Items.GOLD_NUGGET)
             .saveSuffixed(output, "_from_sludge")
+        // Chemical Sludge -> Slag
+        HTMachineRecipeBuilder
+            .create(RagiumRecipes.BLAST_FURNACE)
+            .fluidInput(RagiumFluids.CHEMICAL_SLUDGE)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG, 4)
+            .save(output)
     }
 
     private fun registerSulfur(output: RecipeOutput) {

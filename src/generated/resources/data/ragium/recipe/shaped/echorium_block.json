@@ -4,11 +4,14 @@
   "key": {
     "A": {
       "tag": "c:ingots/echorium"
+    },
+    "B": {
+      "item": "ragium:echorium_ingot"
     }
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {

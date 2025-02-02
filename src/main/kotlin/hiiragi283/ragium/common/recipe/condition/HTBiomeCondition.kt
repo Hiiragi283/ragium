@@ -12,7 +12,6 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.biome.Biome
 
@@ -28,7 +27,7 @@ class HTBiomeCondition(val biomes: HolderSet<Biome>) : HTMachineRecipeCondition 
     constructor(biome: Holder<Biome>) : this(HolderSet.direct(biome))
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
-    override val text: MutableComponent = Component
+    override val text: Component = Component
         .translatable(
             RagiumTranslationKeys.BIOME_CONDITION,
             biomes.asHolderText { holder: Holder<Biome> -> Component.literal(holder.idOrThrow.toString()) },

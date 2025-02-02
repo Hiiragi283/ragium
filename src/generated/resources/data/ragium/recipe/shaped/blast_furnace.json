@@ -3,22 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:deepslate_bricks"
+      "tag": "c:ingots/steel"
     },
     "B": {
       "item": "minecraft:blast_furnace"
     },
     "C": {
-      "tag": "c:circuits/basic"
-    },
-    "D": {
       "item": "minecraft:smooth_stone"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "ABA",
+    "CCC"
   ],
   "result": {
     "count": 1,

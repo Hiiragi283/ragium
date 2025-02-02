@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:coke_oven"
+          "name": "ragium:nickel_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/coke_oven"
+  "random_sequence": "ragium:blocks/nickel_block"
 }

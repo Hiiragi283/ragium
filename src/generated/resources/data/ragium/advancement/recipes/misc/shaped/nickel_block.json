@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_glass": {
+    "has_input": {
       "conditions": {
         "items": [
           {
-            "items": "#c:glass_blocks"
+            "items": "#c:ingots/nickel"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/chemical_glass"
+        "recipe": "ragium:shaped/nickel_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_glass"
+      "has_input"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/chemical_glass"
+      "ragium:shaped/nickel_block"
     ]
   }
 }

@@ -1,11 +1,11 @@
 {
   "parent": "ragium:basic_casing",
   "criteria": {
-    "has_coke_oven": {
+    "has_primitive_blast_furnace": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:coke_oven"
+            "items": "ragium:primitive_blast_furnace"
           }
         ]
       },
@@ -13,21 +13,18 @@
     }
   },
   "display": {
-    "description": {
-      "color": "aqua",
-      "translate": "machine_type.coke_oven.description"
-    },
+    "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:coke_oven"
+      "id": "ragium:primitive_blast_furnace"
     },
     "title": {
-      "translate": "machine_type.coke_oven"
+      "translate": "block.ragium.primitive_blast_furnace"
     }
   },
   "requirements": [
     [
-      "has_coke_oven"
+      "has_primitive_blast_furnace"
     ]
   ],
   "sends_telemetry_event": true

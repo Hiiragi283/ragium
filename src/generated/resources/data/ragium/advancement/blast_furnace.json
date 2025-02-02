@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:basic_casing",
+  "parent": "ragium:steel_ingot",
   "criteria": {
     "has_blast_furnace": {
       "conditions": {

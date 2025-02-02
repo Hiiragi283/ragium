@@ -4,11 +4,14 @@
   "key": {
     "A": {
       "tag": "c:gems/fiery_coal"
+    },
+    "B": {
+      "item": "ragium:fiery_coal"
     }
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {

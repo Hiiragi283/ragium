@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlock
 import hiiragi283.ragium.common.block.addon.HTCoolantBlock
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
+import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.*
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -73,12 +74,15 @@ object RagiumBlocks {
         RagiumMaterials.DEEP_STEEL,
         // Metal
         CommonMaterials.ALUMINUM,
+        CommonMaterials.CHROMIUM,
+        CommonMaterials.NICKEL,
         RagiumMaterials.ECHORIUM,
         // Gem
         RagiumMaterials.RAGI_CRYSTAL,
         CommonMaterials.FLUORITE,
         CommonMaterials.CRYOLITE,
         // Other
+        RagiumMaterials.SLAG,
         RagiumMaterials.RESIDUAL_COKE,
         RagiumMaterials.FIERY_COAL,
     ).associateWith { key: HTMaterialKey ->
@@ -99,6 +103,7 @@ object RagiumBlocks {
         RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
         CommonMaterials.FLUORITE -> HTTagPrefix.GEM
         CommonMaterials.CRYOLITE -> HTTagPrefix.GEM
+        RagiumMaterials.SLAG -> HTTagPrefix.GEM
         RagiumMaterials.FIERY_COAL -> HTTagPrefix.GEM
         RagiumMaterials.RESIDUAL_COKE -> HTTagPrefix.GEM
         else -> HTTagPrefix.INGOT
@@ -278,6 +283,10 @@ object RagiumBlocks {
     @JvmField
     val MANUAL_GRINDER: DeferredBlock<HTManualGrinderBlock> =
         REGISTER.registerBlock("manual_grinder", ::HTManualGrinderBlock, blockProperty(Blocks.BRICKS))
+
+    @JvmField
+    val PRIMITIVE_BLAST_FURNACE: DeferredBlock<HTPrimitiveBlastFurnaceBlock> =
+        REGISTER.registerBlock("primitive_blast_furnace", ::HTPrimitiveBlastFurnaceBlock, blockProperty(Blocks.BRICKS))
 
     //    Utility    //
 

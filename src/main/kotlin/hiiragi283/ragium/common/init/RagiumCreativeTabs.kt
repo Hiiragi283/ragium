@@ -88,6 +88,7 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Drums.entries)
                         // Manual Machines
                         add(RagiumBlocks.MANUAL_GRINDER)
+                        add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
                         // Utilities
                         addAll(RagiumBlocks.ADDONS)
                     }.forEach(output::accept)

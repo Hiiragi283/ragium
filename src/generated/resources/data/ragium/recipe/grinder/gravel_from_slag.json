@@ -3,7 +3,7 @@
   "item_inputs": [
     {
       "count": 1,
-      "item": "ragium:slag"
+      "tag": "c:gems/slag"
     }
   ],
   "item_outputs": [

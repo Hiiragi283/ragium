@@ -8,10 +8,13 @@
     "#c:storage_blocks/stainless_steel",
     "#c:storage_blocks/deep_steel",
     "#c:storage_blocks/aluminum",
+    "#c:storage_blocks/chromium",
+    "#c:storage_blocks/nickel",
     "#c:storage_blocks/echorium",
     "#c:storage_blocks/ragi_crystal",
     "#c:storage_blocks/fluorite",
     "#c:storage_blocks/cryolite",
+    "#c:storage_blocks/slag",
     "#c:storage_blocks/residual_coke",
     "#c:storage_blocks/fiery_coal",
     "#c:storage_blocks/dark"

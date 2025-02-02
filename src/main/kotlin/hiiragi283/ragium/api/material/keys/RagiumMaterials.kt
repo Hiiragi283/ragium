@@ -14,6 +14,9 @@ object RagiumMaterials {
     @JvmField
     val RESIDUAL_COKE: HTMaterialKey = HTMaterialKey.of("residual_coke")
 
+    @JvmField
+    val SLAG: HTMaterialKey = HTMaterialKey.of("slag")
+
     //    Metal    //
 
     @JvmField

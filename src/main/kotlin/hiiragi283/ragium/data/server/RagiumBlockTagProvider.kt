@@ -53,6 +53,7 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.PLASTIC_BLOCK)
 
             add(RagiumBlocks.MANUAL_GRINDER)
+            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
             addAll(RagiumBlocks.ADDONS)
         }.forEach(pickaxe::add)

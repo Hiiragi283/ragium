@@ -49,6 +49,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
             add(RagiumBlocks.MANUAL_GRINDER)
+            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
             addAll(RagiumBlocks.ADDONS)
 

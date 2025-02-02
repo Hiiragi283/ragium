@@ -8,6 +8,8 @@
     "#c:ingots/stainless_steel",
     "#c:ingots/deep_steel",
     "#c:ingots/aluminum",
+    "#c:ingots/chromium",
+    "#c:ingots/nickel",
     "#c:ingots/echorium"
   ]
 }

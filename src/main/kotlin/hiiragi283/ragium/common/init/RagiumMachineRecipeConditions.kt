@@ -17,6 +17,10 @@ object RagiumMachineRecipeConditions {
         REGISTER.register("biome", HTBiomeCondition::CODEC)
 
     @JvmField
+    val DUMMY: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTDummyCondition>> =
+        REGISTER.register("dummy", HTDummyCondition::CODEC)
+
+    @JvmField
     val ENCHANTMENT: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTEnchantmentCondition>> =
         REGISTER.register("enchantment", HTEnchantmentCondition::CODEC)
 

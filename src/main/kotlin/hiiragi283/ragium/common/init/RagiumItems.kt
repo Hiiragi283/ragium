@@ -59,6 +59,9 @@ object RagiumItems {
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
 
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
+        register(HTTagPrefix.DUST, CommonMaterials.CHROMIUM)
+        register(HTTagPrefix.DUST, CommonMaterials.NICKEL)
+
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
         register(HTTagPrefix.DUST, CommonMaterials.CARBON)
@@ -86,12 +89,15 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
 
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+        register(HTTagPrefix.INGOT, CommonMaterials.CHROMIUM)
+        register(HTTagPrefix.INGOT, CommonMaterials.NICKEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
         register(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
+        register(HTTagPrefix.GEM, RagiumMaterials.SLAG)
         register(HTTagPrefix.GEM, RagiumMaterials.RESIDUAL_COKE)
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
         // Gears
@@ -182,6 +188,7 @@ object RagiumItems {
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
             add(RagiumBlocks.MANUAL_GRINDER)
+            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
             addAll(RagiumBlocks.ADDONS)
         }.forEach(REGISTER::registerSimpleBlockItem)
@@ -226,14 +233,10 @@ object RagiumItems {
     )
 
     @JvmField
-    val SLAG: DeferredItem<Item> = REGISTER.registerSimpleItem("slag")
-
-    @JvmField
     val CALCIUM_CARBIDE: DeferredItem<Item> = REGISTER.registerSimpleItem("calcium_carbide")
 
     @JvmField
     val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
-        SLAG,
         CALCIUM_CARBIDE,
     )
 

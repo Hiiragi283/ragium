@@ -24,12 +24,14 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
         // Ingot/Gem -> Block
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, block: DeferredBlock<Block>) ->
             val parent: HTTagPrefix = RagiumBlocks.getStorageParent(key)
+            val coreItem: DeferredItem<out Item> = RagiumItems.getMaterialMap(parent)[key] ?: return@forEach
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, block)
                 .pattern("AAA")
-                .pattern("AAA")
+                .pattern("ABA")
                 .pattern("AAA")
                 .define('A', parent, key)
+                .define('B', coreItem)
                 .unlockedBy("has_input", has(parent, key))
                 .savePrefixed(output)
         }

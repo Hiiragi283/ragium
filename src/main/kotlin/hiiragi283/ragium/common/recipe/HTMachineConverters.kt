@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.material.*
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
@@ -187,7 +188,7 @@ object HTMachineConverters {
             .create(RagiumRecipes.GRINDER)
             .itemInput(HTTagPrefix.ORE, key)
             .itemOutput(output.value(), 2)
-            .itemOutput(RagiumItems.SLAG)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
             .export(RagiumAPI.id("raw_${key.name}_2x"))
     }
 

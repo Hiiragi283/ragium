@@ -11,6 +11,8 @@
     "#c:dusts/raginite",
     "#c:dusts/ragi_crystal",
     "#c:dusts/aluminum",
+    "#c:dusts/chromium",
+    "#c:dusts/nickel",
     "#c:dusts/ash",
     "#c:dusts/bauxite",
     "#c:dusts/carbon",
@@ -18,6 +20,7 @@
     "#c:dusts/salt",
     "#c:dusts/sulfur",
     "#c:dusts/wood",
-    "#c:dusts/dark"
+    "#c:dusts/dark",
+    "#c:dusts/slag"
   ]
 }

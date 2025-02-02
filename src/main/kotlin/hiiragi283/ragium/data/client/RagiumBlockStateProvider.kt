@@ -172,6 +172,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             }
         }
 
+        horizontalBlock(
+            RagiumBlocks.PRIMITIVE_BLAST_FURNACE.get(),
+            ModelFile.UncheckedModelFile(RagiumAPI.id("block/primitive_blast_furnace")),
+        )
+
         // Utility
         RagiumBlocks.SHAFT.let { holder: DeferredBlock<RotatedPillarBlock> ->
             val model = ModelFile.UncheckedModelFile(holder.id.withPrefix("block/"))

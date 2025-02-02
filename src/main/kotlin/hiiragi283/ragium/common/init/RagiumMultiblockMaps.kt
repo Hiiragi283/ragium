@@ -9,13 +9,15 @@ import net.minecraft.world.level.block.Blocks
 
 object RagiumMultiblockMaps {
     private val CASING = HTTieredMultiblockComponent(HTMachineTier::getCasing)
-    private val COIL_Y = HTAxisMultiblockComponent.YStatic(HTMachineTier::getCoil)
     private val GRATE = HTTieredMultiblockComponent(HTMachineTier::getGrate)
     private val HULL = HTTieredMultiblockComponent(HTMachineTier::getHull)
     private val SHAFT = HTAxisMultiblockComponent.YStatic { RagiumBlocks.SHAFT }
     private val SHAFT_HORIZONTAL = HTAxisMultiblockComponent.FrontHorizontal { RagiumBlocks.SHAFT }
     private val SHAFT_VERTICAL = HTAxisMultiblockComponent.FrontVertical { RagiumBlocks.SHAFT }
     private val STORAGE_BLOCK = HTTieredMultiblockComponent(HTMachineTier::getStorageBlock)
+
+    private val BRICK_WALL = HTSimpleMultiblockComponent(Blocks::BRICK_WALL)
+    private val TERRACOTTA = HTSimpleMultiblockComponent(Blocks::TERRACOTTA)
 
     private val DEEP_WALL = HTSimpleMultiblockComponent(Blocks::POLISHED_DEEPSLATE_WALL)
     private val DEEP_TILE = HTSimpleMultiblockComponent(Blocks::DEEPSLATE_TILES)
@@ -56,6 +58,20 @@ object RagiumMultiblockMaps {
         .add(0, 1, -2, STORAGE_BLOCK)
         .add(0, 1, 2, STORAGE_BLOCK)
         .add(2, 1, 0, STORAGE_BLOCK)
+        .build()
+
+    @JvmField
+    val PRIMITIVE_BLAST_FURNACE: HTMultiblockMap.Relative = HTMultiblockMap
+        .builder()
+        .addLayer(-1..1, 0, 1..3, HTSimpleMultiblockComponent(Blocks::BRICKS))
+        .addPillar(0, 1..3, 1, TERRACOTTA)
+        .addPillar(0, 1..3, 3, TERRACOTTA)
+        .addPillar(1, 1..3, 2, TERRACOTTA)
+        .addPillar(1, 1..3, 1, BRICK_WALL)
+        .addPillar(1, 1..3, 3, BRICK_WALL)
+        .addPillar(-1, 1..3, 2, TERRACOTTA)
+        .addPillar(-1, 1..3, 1, BRICK_WALL)
+        .addPillar(-1, 1..3, 3, BRICK_WALL)
         .build()
 
     @JvmField
@@ -102,17 +118,9 @@ object RagiumMultiblockMaps {
     @JvmField
     val MULTI_SMELTER: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
-        .addLayer(-1..1, -1, 1..3, CASING)
-        .addHollow(-1..1, 0, 1..3, COIL_Y)
-        .addLayer(-1..1, 1, 1..3, STORAGE_BLOCK)
-        .build()
-
-    @JvmField
-    val LARGE_MACHINE: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        .addLayer(-1..1, -1, 1..3, CASING)
-        .addHollow(-1..1, 0, 1..3, HULL)
-        .addLayer(-1..1, 1, 1..3, STORAGE_BLOCK)
+        .addLayer(-1..1, -1, 1..3, HTSimpleMultiblockComponent(RagiumBlocks.Casings.ELITE))
+        .addHollow(-1..1, 0, 1..3, HTSimpleMultiblockComponent(RagiumBlocks.Hulls.ELITE))
+        .addLayer(-1..1, 1, 1..3, HTSimpleMultiblockComponent(RagiumBlocks.Casings.ELITE))
         .build()
 
     @JvmField

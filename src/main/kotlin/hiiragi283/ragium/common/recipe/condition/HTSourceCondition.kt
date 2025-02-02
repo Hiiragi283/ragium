@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -33,7 +32,7 @@ data class HTSourceCondition(val source: TagKey<Block>, val offset: Direction) :
     }
 
     override val codec: MapCodec<out HTMachineRecipeCondition> = CODEC
-    override val text: MutableComponent =
+    override val text: Component =
         Component
             .translatable(RagiumTranslationKeys.SOURCE_CONDITION, source.getName(), offset.name)
             .withStyle(ChatFormatting.GOLD)

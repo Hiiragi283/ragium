@@ -98,9 +98,6 @@ enum class RagiumFluids(
     DISTILLED_RAGIUM_SOLUTION(Color(0x990033), "Distilled Ragium Solution", "蒸留ラギウム溶液"),
     REFINED_RAGIUM_SOLUTION(Color(0xff0033), "RefinedRagium Solution", "精製ラギウム溶液"),
     DESTABILIZED_RAGIUM_SOLUTION(Color(0xff6666), "Destabilized Ragium Solution", "励起ラギウム溶液"),
-
-    // Dragonium
-    DRAGON_BREATH(Color(0xff99ff), "Dragon Breath", "ドラゴンブレス", TextureType.GASEOUS),
     ;
 
     constructor(enName: String, jaName: String, type: TextureType = TextureType.LIQUID) : this(

@@ -4,11 +4,14 @@
   "key": {
     "A": {
       "tag": "c:ingots/ragium"
+    },
+    "B": {
+      "item": "ragium:ragium_ingot"
     }
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {

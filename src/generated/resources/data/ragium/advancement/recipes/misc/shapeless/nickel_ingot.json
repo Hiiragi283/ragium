@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_mud_bricks": {
+    "has_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:mud_bricks"
+            "items": "#c:storage_blocks/nickel"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/coke_oven"
+        "recipe": "ragium:shapeless/nickel_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_mud_bricks"
+      "has_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/coke_oven"
+      "ragium:shapeless/nickel_ingot"
     ]
   }
 }

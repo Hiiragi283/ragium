@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -252,6 +253,17 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
             .savePrefixed(output)
 
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("CCC")
+            .define('A', HTTagPrefix.STORAGE_BLOCK, RagiumMaterials.RAGI_ALLOY)
+            .define('B', Items.FURNACE)
+            .define('C', Items.BRICKS)
+            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.STORAGE_BLOCK, RagiumMaterials.RAGI_ALLOY))
+            .savePrefixed(output)
+
         basicMachines(output)
         advancedMachines(output)
         eliteMachines(output)
@@ -296,24 +308,12 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumMachineKeys.BLAST_FURNACE.getBlock())
             .pattern("AAA")
-            .pattern("BCB")
-            .pattern("DDD")
-            .define('A', Items.DEEPSLATE_BRICKS)
-            .define('B', Items.BLAST_FURNACE)
-            .define('C', HTMachineTier.BASIC.getCircuitTag())
-            .define('D', Items.SMOOTH_STONE)
-            .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
-            .savePrefixed(output)
-        // Coke Oven
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.COKE_OVEN.getBlock())
-            .pattern("AAA")
             .pattern("ABA")
             .pattern("CCC")
-            .define('A', Items.MUD_BRICKS)
-            .define('B', Items.FURNACE)
-            .define('C', Items.BRICKS)
-            .unlockedBy("has_mud_bricks", has(Items.MUD_BRICKS))
+            .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .define('B', Items.BLAST_FURNACE)
+            .define('C', Items.SMOOTH_STONE)
+            .unlockedBy("has_steel", has(HTTagPrefix.INGOT, CommonMaterials.STEEL))
             .savePrefixed(output)
         // Compressor
         ShapedRecipeBuilder

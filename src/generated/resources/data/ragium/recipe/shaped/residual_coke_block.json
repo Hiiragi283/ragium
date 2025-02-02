@@ -4,11 +4,14 @@
   "key": {
     "A": {
       "tag": "c:gems/residual_coke"
+    },
+    "B": {
+      "item": "ragium:residual_coke"
     }
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {

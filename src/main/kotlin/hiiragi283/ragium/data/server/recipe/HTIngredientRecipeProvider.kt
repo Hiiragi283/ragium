@@ -100,7 +100,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(RagiumItems.SOAP)
             .waterInput()
             .itemOutput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 6)
-            .itemOutput(RagiumItems.SLAG, 2)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG, 2)
             .save(output)
 
         HTMachineRecipeBuilder
@@ -131,8 +131,16 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumRecipes.BLAST_FURNACE)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .itemInput(ItemTags.COALS, 4)
+            .itemInput(ItemTags.COALS, 2)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .save(output)
+        // Stainless Steel
+        HTMachineRecipeBuilder
+            .create(RagiumRecipes.BLAST_FURNACE)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON, 6)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.NICKEL, 2)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.CHROMIUM)
+            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STAINLESS_STEEL, 9)
             .save(output)
         // Deep Steel
         HTMachineRecipeBuilder
@@ -186,13 +194,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .fluidInput(RagiumFluids.DESTABILIZED_RAGIUM_SOLUTION)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
-            .save(output)
-        // Dragonium
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
-            .itemInput(Items.DRAGON_BREATH)
-            .itemOutput(Items.GLASS_BOTTLE)
-            .fluidOutput(RagiumFluids.DRAGON_BREATH, FluidType.BUCKET_VOLUME / 250)
             .save(output)
 
         // Unbreakable Elytra
@@ -380,17 +381,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("A")
             .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
             .unlockedBy("has_iron_block", has(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
-            .savePrefixed(output)
-
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.CHEMICAL_GLASS)
-            .pattern("ABA")
-            .pattern("BCB")
-            .pattern("ABA")
-            .define('A', Tags.Items.DYES_YELLOW)
-            .define('B', Tags.Items.DYES_BLACK)
-            .define('C', Tags.Items.GLASS_BLOCKS)
-            .unlockedBy("has_glass", has(Tags.Items.GLASS_BLOCKS))
             .savePrefixed(output)
     }
 }

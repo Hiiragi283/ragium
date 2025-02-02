@@ -3,10 +3,7 @@ package hiiragi283.ragium.data.server
 import com.buuz135.industrial.utils.IndustrialTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.extension.add
-import hiiragi283.ragium.api.extension.addItem
-import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -79,11 +76,14 @@ class RagiumItemTagProvider(
         }
 
         addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem_crushed")
+        addMaterialTag(HTTagPrefix.DUST, RagiumMaterials.SLAG, "railcraft:slag")
         addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem")
         addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, "netherite_scrap", false)
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore")
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore_deepslate")
         addMaterialTag(HTTagPrefix.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, "evilcraft:dark_block")
+
+        tag(itemTagKey(commonId("slag"))).add(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.SLAG))
     }
 
     private fun addMaterialTag(

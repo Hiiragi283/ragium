@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toRegistryStream
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.chat.MutableComponent
+import net.minecraft.network.chat.Component
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.Ingredient
@@ -36,7 +36,7 @@ interface HTMachineRecipeCondition {
     /**
      * JEI上での説明文
      */
-    val text: MutableComponent
+    val text: Component
 
     /**
      * 指定した[level]と[pos]が条件を満たしているか判定します。

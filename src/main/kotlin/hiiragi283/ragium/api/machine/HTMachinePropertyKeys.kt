@@ -35,13 +35,6 @@ object HTMachinePropertyKeys {
         HTPropertyKey.simple(RagiumAPI.id("sound"))
 
     @JvmField
-    val TICK_RATE: HTPropertyKey<(HTMachineTier) -> Int> =
-        HTPropertyKey
-            .builder<(HTMachineTier) -> Int>(RagiumAPI.id("tick_rate"))
-            .setDefaultValue { HTMachineTier::tickRate }
-            .build()
-
-    @JvmField
     val RENDERER_PRE: HTPropertyKey<HTMachineRenderer> =
         HTPropertyKey
             .builder<HTMachineRenderer>(RagiumAPI.id("renderer_pre"))

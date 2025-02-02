@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:blast_furnace",
+  "parent": "ragium:primitive_blast_furnace",
   "criteria": {
     "has_steel_ingot": {
       "conditions": {

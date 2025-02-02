@@ -7,7 +7,6 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
@@ -22,7 +21,7 @@ data class HTRockGeneratorCondition(override val itemIngredient: Ingredient) : H
     }
 
     override val codec: MapCodec<HTRockGeneratorCondition> = CODEC
-    override val text: MutableComponent =
+    override val text: Component =
         Component.translatable(RagiumTranslationKeys.ROCK_GENERATOR_CONDITION).withStyle(ChatFormatting.DARK_GRAY)
 
     override fun test(level: Level, pos: BlockPos): Boolean {

@@ -28,6 +28,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
         add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
+        add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "らぎ高炉")
 
         add(RagiumBlocks.CATALYST_ADDON, "触媒アドオン")
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
@@ -128,7 +129,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
-        add(RagiumItems.SLAG, "スラグ")
         add(RagiumItems.SOAP, "石鹸")
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.TALLOW, "獣脂")
@@ -179,7 +179,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMachineKeys.ASSEMBLER, "組立機", "君こそが天才だ!")
         add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
         add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽", "Are You Ready?")
-        add(RagiumMachineKeys.COKE_OVEN, "コークス炉", "コーク・コーラ")
         add(RagiumMachineKeys.COMPRESSOR, "圧縮機", "saves.zip.zip")
         add(RagiumMachineKeys.CUTTING_MACHINE, "裁断機", "コストカットさえすればいい")
         add(RagiumMachineKeys.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
@@ -243,6 +242,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterials.RAGIUM, "ラギウム")
         add(RagiumMaterials.REFINED_RAGI_STEEL, "精製ラギスチール")
         add(RagiumMaterials.RESIDUAL_COKE, "残渣油コークス")
+        add(RagiumMaterials.SLAG, "スラグ")
         add(VanillaMaterials.AMETHYST, "アメシスト")
         add(VanillaMaterials.COAL, "石炭")
         add(VanillaMaterials.COPPER, "銅")

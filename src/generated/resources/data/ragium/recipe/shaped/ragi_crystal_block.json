@@ -4,11 +4,14 @@
   "key": {
     "A": {
       "tag": "c:gems/ragi_crystal"
+    },
+    "B": {
+      "item": "ragium:ragi_crystal"
     }
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {

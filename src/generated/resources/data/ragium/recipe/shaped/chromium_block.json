@@ -3,22 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:mud_bricks"
+      "tag": "c:ingots/chromium"
     },
     "B": {
-      "item": "minecraft:furnace"
-    },
-    "C": {
-      "item": "minecraft:bricks"
+      "item": "ragium:chromium_ingot"
     }
   },
   "pattern": [
     "AAA",
     "ABA",
-    "CCC"
+    "AAA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:coke_oven"
+    "id": "ragium:chromium_block"
   }
 }

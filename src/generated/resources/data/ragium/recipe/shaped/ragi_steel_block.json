@@ -4,11 +4,14 @@
   "key": {
     "A": {
       "tag": "c:ingots/ragi_steel"
+    },
+    "B": {
+      "item": "ragium:ragi_steel_ingot"
     }
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {
