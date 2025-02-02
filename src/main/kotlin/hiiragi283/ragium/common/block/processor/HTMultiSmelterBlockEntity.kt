@@ -23,13 +23,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val itemHandler: ItemStackHandler = ItemStackHandler(2)
     override val tanks: Array<out HTMachineFluidTank> = arrayOf()
-    override val processor: HTMachineRecipeProcessor =
-        createMachineProcessor(
-            intArrayOf(0),
-            intArrayOf(1),
-            intArrayOf(),
-            intArrayOf(),
-        )
+    override val processor: HTMachineRecipeProcessor = createMachineProcessor(intArrayOf(1), intArrayOf())
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTMultiSmelterContainerMenu(containerId, playerInventory, blockPos, itemHandler)

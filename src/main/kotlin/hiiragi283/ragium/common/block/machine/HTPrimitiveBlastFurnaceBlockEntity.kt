@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.LimitedItemHandler
+import hiiragi283.ragium.api.extension.canInsert
+import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -22,7 +24,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.items.ItemHandlerHelper
 import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
@@ -38,10 +39,10 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         val isCoal: Boolean = itemHandler.getStackInSlot(1).let { it.`is`(ItemTags.COALS) && it.count >= 4 }
         if (isIron && isCoal) {
             val steelIngot: ItemStack = RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL).toStack()
-            if (ItemHandlerHelper.insertItem(itemHandler, steelIngot, true).isEmpty) {
+            if (itemHandler.canInsert(steelIngot)) {
                 itemHandler.getStackInSlot(0).shrink(1)
                 itemHandler.getStackInSlot(1).shrink(4)
-                ItemHandlerHelper.insertItem(itemHandler, steelIngot, false)
+                itemHandler.insertOrDrop(level, pos.above(), steelIngot)
             } else {
                 throw HTMachineException.MergeResult(false)
             }

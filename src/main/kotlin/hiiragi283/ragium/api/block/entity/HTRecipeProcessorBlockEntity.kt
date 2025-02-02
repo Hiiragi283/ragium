@@ -19,8 +19,10 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.fluids.capability.templates.EmptyFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
+import net.neoforged.neoforge.items.wrapper.EmptyItemHandler
 import java.util.function.Supplier
 
 /**
@@ -34,20 +36,13 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
 
     protected abstract val processor: HTMachineRecipeProcessor
 
-    protected fun createMachineProcessor(
-        itemInputs: IntArray,
-        itemOutputs: IntArray,
-        fluidInputs: IntArray,
-        fluidOutputs: IntArray,
-    ): HTMachineRecipeProcessor = HTMachineRecipeProcessor(
+    protected fun createMachineProcessor(itemInputs: IntArray, fluidInputs: IntArray): HTMachineRecipeProcessor = HTMachineRecipeProcessor(
         blockPos,
         machineKey,
-        itemHandler,
+        getItemHandler(null) ?: EmptyItemHandler.INSTANCE,
         itemInputs,
-        itemOutputs,
-        tanks::getOrNull,
+        getFluidHandler(null) ?: EmptyFluidHandler.INSTANCE,
         fluidInputs,
-        fluidOutputs,
     )
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

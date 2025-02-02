@@ -183,7 +183,7 @@ internal object RagiumEvents {
                     recipe.itemInputs.isNotEmpty() -> DataResult.error { "Distillation tower recipe not accepts item inputs!" }
                     recipe.fluidInputs.size != 1 -> DataResult.error { "Distillation tower recipe should have only one fluid input!" }
                     recipe.condition.isEmpty -> DataResult.error { "Distillation tower recipe requires condition!" }
-                    recipe.getItemOutput(1) != null -> DataResult.error { "Distillation tower recipe should have one item output!" }
+                    recipe.getItemOutputs().size >= 2 -> DataResult.error { "Distillation tower recipe should have one item output!" }
                     else -> DataResult.success(recipe)
                 }
             }

@@ -109,7 +109,7 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         builder
             .addOutputSlot(getPosition(x), getPosition(y))
             .setStandardSlotBackground()
-            .addItemStack(recipe.getItemOutput(index) ?: ItemStack.EMPTY)
+            .addItemStack(recipe.getItemOutputs().getOrNull(index) ?: ItemStack.EMPTY)
     }
 
     private fun addFluidOutput(
@@ -122,7 +122,7 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         builder
             .addOutputSlot(getPosition(x), getPosition(y))
             .setStandardSlotBackground()
-            .addFluidStack(recipe.getFluidOutput(index))
+            .addFluidStack(recipe.getFluidOutputs().getOrNull(index))
     }
 
     //    IRecipeCategory    //

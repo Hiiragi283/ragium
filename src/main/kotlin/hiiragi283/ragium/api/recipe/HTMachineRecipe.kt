@@ -86,9 +86,9 @@ class HTMachineRecipe(
 
     private val machineKey: HTMachineKey = type.machine
 
-    fun getItemOutput(index: Int): ItemStack? = itemOutputs.getOrNull(index)?.copy()
+    fun getItemOutputs(): List<ItemStack> = itemOutputs.map(ItemStack::copy)
 
-    fun getFluidOutput(index: Int): FluidStack? = fluidOutputs.getOrNull(index)?.copy()
+    fun getFluidOutputs(): List<FluidStack> = fluidOutputs.map(FluidStack::copy)
 
     //    Recipe    //
 
@@ -118,7 +118,7 @@ class HTMachineRecipe(
 
     override fun assemble(input: HTMachineInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
 
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = getItemOutput(0) ?: ItemStack.EMPTY
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = getItemOutputs().getOrNull(0) ?: ItemStack.EMPTY
 
     override fun getIngredients(): NonNullList<Ingredient> {
         val list: NonNullList<Ingredient> = NonNullList.create()

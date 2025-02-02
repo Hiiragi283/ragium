@@ -22,12 +22,7 @@ class HTDefaultProcessorBlockEntity(pos: BlockPos, state: BlockState, override v
     override val itemHandler: ItemStackHandler = ItemStackHandler(4)
     override val tanks: Array<out HTMachineFluidTank> =
         Array(2) { HTMachineFluidTank(FluidType.BUCKET_VOLUME * 8, this::setChanged) }
-    override val processor: HTMachineRecipeProcessor = createMachineProcessor(
-        intArrayOf(0, 1),
-        intArrayOf(2, 3),
-        intArrayOf(0),
-        intArrayOf(1),
-    )
+    override val processor: HTMachineRecipeProcessor = createMachineProcessor(intArrayOf(0, 1), intArrayOf(0))
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTDefaultMachineContainerMenu(containerId, playerInventory, blockPos, itemHandler)

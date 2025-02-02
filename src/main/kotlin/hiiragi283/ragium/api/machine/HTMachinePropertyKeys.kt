@@ -84,8 +84,8 @@ object HTMachinePropertyKeys {
                     when {
                         recipe.itemInputs.size > 3 -> DataResult.error { "Machine recipe accepts 3 or less item input!" }
                         recipe.fluidInputs.size > 3 -> DataResult.error { "Machine recipe accepts 3 or less fluid input!" }
-                        recipe.getItemOutput(3) != null -> DataResult.error { "Machine recipe accepts 3 or less item output!" }
-                        recipe.getFluidOutput(3) != null -> DataResult.error { "Machine recipe accepts 3 or less fluid output!" }
+                        recipe.getItemOutputs().size > 3 -> DataResult.error { "Machine recipe accepts 3 or less item output!" }
+                        recipe.getFluidOutputs().size > 3 -> DataResult.error { "Machine recipe accepts 3 or less fluid output!" }
                         else -> DataResult.success(recipe)
                     }
                 }

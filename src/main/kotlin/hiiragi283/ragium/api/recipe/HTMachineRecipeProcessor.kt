@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.init.RagiumItems
@@ -8,21 +9,18 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import net.neoforged.neoforge.items.IItemHandler
-import java.util.function.Function
+import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTMachineRecipeProcessor(
     val pos: BlockPos,
     val machine: HTMachineKey,
     val itemHandler: IItemHandler,
     val itemInputs: IntArray,
-    val itemOutputs: IntArray,
-    val fluidTanks: Function<Int, out IFluidTank?>,
+    val fluidHandler: IFluidHandler,
     val fluidInputs: IntArray,
-    val fluidOutputs: IntArray,
 ) {
     val cache: HTMachineRecipeCache = HTMachineRecipeCache.of(machine)
 
@@ -31,8 +29,7 @@ class HTMachineRecipeProcessor(
             .getFirstMatch(level, pos) {
                 itemInputs.map(itemHandler::getStackInSlot).forEach(this::add)
                 fluidInputs
-                    .map(fluidTanks::apply)
-                    .map { tank: IFluidTank? -> tank?.fluid ?: FluidStack.EMPTY }
+                    .map(fluidHandler::getFluidInTank)
                     .forEach(this::add)
             }.getOrThrow()
             .value
@@ -44,30 +41,26 @@ class HTMachineRecipeProcessor(
 
     private fun canAccentOutputs(recipe: HTMachineRecipe): Boolean {
         // item
-        itemOutputs.forEachIndexed { index: Int, slot: Int ->
-            val itemOutput: ItemStack = recipe.getItemOutput(index) ?: return@forEachIndexed
-            if (!itemHandler.insertItem(slot, itemOutput, true).isEmpty) return false
+        for (output: ItemStack in recipe.getItemOutputs()) {
+            if (!itemHandler.canInsert(output)) {
+                return false
+            }
         }
         // fluid
-        fluidOutputs.forEachIndexed { index: Int, slot: Int ->
-            val fluidOutput: FluidStack = recipe.getFluidOutput(index) ?: return@forEachIndexed
-            val tank: IFluidTank = fluidTanks.apply(slot) ?: return false
-            if (tank.fill(fluidOutput, IFluidHandler.FluidAction.SIMULATE) < fluidOutput.amount) return false
+        for (output: FluidStack in recipe.getFluidOutputs()) {
+            if (fluidHandler.fill(output, IFluidHandler.FluidAction.SIMULATE) < output.amount) return false
         }
         return true
     }
 
     private fun growOutputs(recipe: HTMachineRecipe) {
         // item
-        itemOutputs.forEachIndexed { index: Int, slot: Int ->
-            val itemOutput: ItemStack = recipe.getItemOutput(index) ?: return@forEachIndexed
-            itemHandler.insertItem(slot, itemOutput, false)
+        for (output: ItemStack in recipe.getItemOutputs()) {
+            ItemHandlerHelper.insertItem(itemHandler, output, false)
         }
         // fluid
-        fluidOutputs.forEachIndexed { index: Int, slot: Int ->
-            val fluidOutput: FluidStack = recipe.getFluidOutput(index) ?: return@forEachIndexed
-            val tank: IFluidTank = fluidTanks.apply(slot) ?: return@forEachIndexed
-            tank.fill(fluidOutput, IFluidHandler.FluidAction.EXECUTE)
+        for (output: FluidStack in recipe.getFluidOutputs()) {
+            fluidHandler.fill(output, IFluidHandler.FluidAction.EXECUTE)
         }
     }
 
@@ -80,7 +73,7 @@ class HTMachineRecipeProcessor(
         }
         // fluid
         recipe.fluidInputs.forEachIndexed { index: Int, ingredient: SizedFluidIngredient ->
-            val stackIn: FluidStack = fluidTanks.apply(index)?.fluid ?: return@forEachIndexed
+            val stackIn: FluidStack = fluidHandler.getFluidInTank(index) ?: return@forEachIndexed
             stackIn.shrink(ingredient.amount())
         }
     }
