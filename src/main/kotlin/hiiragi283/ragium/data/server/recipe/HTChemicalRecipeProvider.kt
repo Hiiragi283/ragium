@@ -336,7 +336,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Alumina Solution + 4x Coal -> Aluminum Ingot
         HTMachineRecipeBuilder
             .create(RagiumRecipes.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(RagiumItemTags.COAL_COKE, 2)
+            .itemInput(ItemTags.COALS, 4)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
             .itemOutput(RagiumItems.SLAG, 2)

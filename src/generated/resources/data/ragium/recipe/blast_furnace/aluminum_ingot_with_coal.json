@@ -14,8 +14,8 @@
   ],
   "item_inputs": [
     {
-      "count": 2,
-      "tag": "c:coal_coke"
+      "count": 4,
+      "tag": "minecraft:coals"
     }
   ],
   "item_outputs": [

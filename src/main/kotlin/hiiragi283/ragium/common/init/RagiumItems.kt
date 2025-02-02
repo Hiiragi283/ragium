@@ -93,6 +93,8 @@ object RagiumItems {
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
         register(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
+
+        register(HTTagPrefix.GEM, RagiumMaterials.RESIDUAL_COKE)
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
         // Gears
         register(HTTagPrefix.GEAR, VanillaMaterials.COPPER)
@@ -146,7 +148,7 @@ object RagiumItems {
                 storage.id.path,
                 storage,
                 itemProperty {
-                    name(RagiumBlocks.getStorageParent(key).createText(key))
+                    name(HTTagPrefix.STORAGE_BLOCK.createText(key))
                     if (key in RagiumMaterials.END_CONTENTS) {
                         component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                     }
@@ -236,19 +238,11 @@ object RagiumItems {
     val SLAG: DeferredItem<Item> = REGISTER.registerSimpleItem("slag")
 
     @JvmField
-    val COKE: DeferredItem<Item> = REGISTER.registerSimpleItem("coke")
-
-    @JvmField
-    val RESIDUAL_COKE: DeferredItem<Item> = REGISTER.registerSimpleItem("residual_coke")
-
-    @JvmField
     val CALCIUM_CARBIDE: DeferredItem<Item> = REGISTER.registerSimpleItem("calcium_carbide")
 
     @JvmField
     val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
         SLAG,
-        COKE,
-        RESIDUAL_COKE,
         CALCIUM_CARBIDE,
     )
 

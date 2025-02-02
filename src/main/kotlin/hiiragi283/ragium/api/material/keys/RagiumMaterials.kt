@@ -6,7 +6,13 @@ object RagiumMaterials {
     //    Gem    //
 
     @JvmField
+    val FIERY_COAL: HTMaterialKey = HTMaterialKey.of("fiery_coal")
+
+    @JvmField
     val RAGI_CRYSTAL: HTMaterialKey = HTMaterialKey.of("ragi_crystal")
+
+    @JvmField
+    val RESIDUAL_COKE: HTMaterialKey = HTMaterialKey.of("residual_coke")
 
     //    Metal    //
 
@@ -31,8 +37,13 @@ object RagiumMaterials {
     @JvmField
     val ECHORIUM: HTMaterialKey = HTMaterialKey.of("echorium")
 
+    //    Mineral    //
+
     @JvmField
-    val FIERY_COAL: HTMaterialKey = HTMaterialKey.of("fiery_coal")
+    val CRUDE_RAGINITE: HTMaterialKey = HTMaterialKey.of("crude_raginite")
+
+    @JvmField
+    val RAGINITE: HTMaterialKey = HTMaterialKey.of("raginite")
 
     @JvmField
     val END_CONTENTS: List<HTMaterialKey> = listOf(
@@ -41,12 +52,4 @@ object RagiumMaterials {
         ECHORIUM,
         FIERY_COAL,
     )
-
-    //    Mineral    //
-
-    @JvmField
-    val CRUDE_RAGINITE: HTMaterialKey = HTMaterialKey.of("crude_raginite")
-
-    @JvmField
-    val RAGINITE: HTMaterialKey = HTMaterialKey.of("raginite")
 }

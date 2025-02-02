@@ -119,7 +119,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.BEE_WAX, "蜜蠟")
         add(RagiumItems.CALCIUM_CARBIDE, "炭化カルシウム")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
-        add(RagiumItems.COKE, "コークス")
         add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumItems.DEEPANT, "ディーパント")
         add(RagiumItems.ENGINE, "V8エンジン")
@@ -128,7 +127,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.RESIDUAL_COKE, "残渣油コークス")
         add(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
         add(RagiumItems.SLAG, "スラグ")
         add(RagiumItems.SOAP, "石鹸")
@@ -245,6 +243,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterials.RAGINITE, "ラギナイト")
         add(RagiumMaterials.RAGIUM, "ラギウム")
         add(RagiumMaterials.REFINED_RAGI_STEEL, "精製ラギスチール")
+        add(RagiumMaterials.RESIDUAL_COKE, "残渣油コークス")
         add(VanillaMaterials.AMETHYST, "アメシスト")
         add(VanillaMaterials.COAL, "石炭")
         add(VanillaMaterials.COPPER, "銅")
@@ -277,7 +276,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Tags
         add(RagiumItemTags.ALKALI_REAGENTS, "アルカリ試薬")
         add(RagiumItemTags.DOUGH, "生地")
-        add(RagiumItemTags.COAL_COKE, "石炭コークス")
         add(RagiumItemTags.PLASTICS, "プラスチック")
 
         add(RagiumItemTags.SOLAR_PANELS, "太陽光パネル")

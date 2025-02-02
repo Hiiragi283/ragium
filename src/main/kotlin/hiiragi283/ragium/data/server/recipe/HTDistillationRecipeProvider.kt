@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
@@ -65,7 +66,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumRecipes.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.RESIDUAL_OIL, FluidType.BUCKET_VOLUME * 8)
             .catalyst(HTMachineTier.ADVANCED)
-            .itemOutput(RagiumItems.RESIDUAL_COKE, 4)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.RESIDUAL_COKE, 4)
             .fluidOutput(RagiumFluids.FUEL, FluidType.BUCKET_VOLUME * 4)
             .save(output)
         // Residual Oil -> Fuel + Aromatic compound

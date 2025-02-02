@@ -118,7 +118,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.BEE_WAX, "Bee Wax")
         add(RagiumItems.CALCIUM_CARBIDE, "Calcium Carbide")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        add(RagiumItems.COKE, "Coke")
         add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumItems.DEEPANT, "Deepant")
         add(RagiumItems.ENGINE, "V8 Engine")
@@ -127,7 +126,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-        add(RagiumItems.RESIDUAL_COKE, "Residual Coke")
         add(RagiumItems.SILKY_CRYSTAL, "Silky Crystal")
         add(RagiumItems.SLAG, "Slag")
         add(RagiumItems.SOAP, "Soap")
@@ -282,6 +280,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterials.RAGINITE, "Raginite")
         add(RagiumMaterials.RAGIUM, "Ragium")
         add(RagiumMaterials.REFINED_RAGI_STEEL, "Refined Ragi-Steel")
+        add(RagiumMaterials.RESIDUAL_COKE, "Residual Coke")
         add(VanillaMaterials.AMETHYST, "Amethyst")
         add(VanillaMaterials.COAL, "Coal")
         add(VanillaMaterials.COPPER, "Copper")
@@ -314,7 +313,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Tags
         add(RagiumItemTags.ALKALI_REAGENTS, "Alkali Reagents")
         add(RagiumItemTags.DOUGH, "Doughs")
-        add(RagiumItemTags.COAL_COKE, "Coal Cokes")
         add(RagiumItemTags.PLASTICS, "Plastics")
 
         add(RagiumItemTags.SOLAR_PANELS, "Solar Panels")

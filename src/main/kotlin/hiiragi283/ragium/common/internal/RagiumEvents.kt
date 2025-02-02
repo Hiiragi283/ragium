@@ -321,6 +321,7 @@ internal object RagiumEvents {
         event.register(RagiumMaterials.RAGINITE, HTMaterialType.MINERAL)
         event.register(RagiumMaterials.RAGIUM, HTMaterialType.METAL)
         event.register(RagiumMaterials.REFINED_RAGI_STEEL, HTMaterialType.ALLOY)
+        event.register(RagiumMaterials.RESIDUAL_COKE, HTMaterialType.GEM)
 
         event.register(VanillaMaterials.AMETHYST, HTMaterialType.GEM)
         event.register(VanillaMaterials.COAL, HTMaterialType.GEM)

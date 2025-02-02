@@ -16,9 +16,6 @@ object RagiumItemTags {
     val DOUGH: TagKey<Item> = itemTagKey(commonId("foods/dough"))
 
     @JvmField
-    val COAL_COKE: TagKey<Item> = itemTagKey(commonId("coal_coke"))
-
-    @JvmField
     val PLASTICS: TagKey<Item> = itemTagKey(commonId("plastics"))
 
     //    Ragium    //

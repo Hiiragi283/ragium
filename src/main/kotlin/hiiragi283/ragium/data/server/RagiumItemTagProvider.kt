@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server
 
-import aztech.modern_industrialization.MI
 import com.buuz135.industrial.utils.IndustrialTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
@@ -12,6 +11,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -136,10 +136,7 @@ class RagiumItemTagProvider(
             .add(RagiumItems.ALKALI_REAGENT)
 
         tag(ItemTags.COALS)
-            .add(RagiumItems.RESIDUAL_COKE)
-        tag(RagiumItemTags.COAL_COKE)
-            .add(RagiumItems.COKE)
-            .addOptional(ResourceLocation.fromNamespaceAndPath(MI.ID, "coke"))
+            .add(RagiumAPI.id(HTTagPrefix.GEM.createPath(RagiumMaterials.RESIDUAL_COKE)))
 
         tag(RagiumItemTags.PLASTICS)
             .add(RagiumItems.PLASTIC_PLATE)

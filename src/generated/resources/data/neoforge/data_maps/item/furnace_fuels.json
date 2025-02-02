@@ -1,10 +1,16 @@
 {
   "values": {
-    "ragium:coke": {
-      "burn_time": 3200
+    "ragium:fiery_coal": {
+      "burn_time": 12800
+    },
+    "ragium:fiery_coal_block": {
+      "burn_time": 128000
     },
     "ragium:residual_coke": {
       "burn_time": 1600
+    },
+    "ragium:residual_coke_block": {
+      "burn_time": 16000
     }
   }
 }

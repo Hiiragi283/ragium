@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -16,7 +18,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.fluids.FluidType
@@ -26,9 +27,6 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(packOutput, lookupProvider) {
-    @Suppress("DEPRECATION")
-    private fun <T : Any> Builder<T, Block>.addBlock(block: Block, value: T): Builder<T, Block> =
-        add(block.builtInRegistryHolder(), value, false)
 
     private fun <T : Any> Builder<T, Item>.addItem(item: ItemLike, value: T): Builder<T, Item> = add(item.asHolder(), value, false)
 
@@ -87,8 +85,11 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     //    Item    //
 
     private fun furnaceFuel(builder: Builder<FurnaceFuel, Item>) {
-        builder.addFuel(RagiumItems.RESIDUAL_COKE, 8)
-        builder.addFuel(RagiumItems.COKE, 16)
+        builder.addFuel(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.RESIDUAL_COKE), 8)
+        builder.addFuel(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL), 64)
+
+        builder.addFuel(RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.RESIDUAL_COKE]!!, 80)
+        builder.addFuel(RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!, 640)
     }
 
     private fun machineKey(builder: Builder<HTMachineKey, Item>) {

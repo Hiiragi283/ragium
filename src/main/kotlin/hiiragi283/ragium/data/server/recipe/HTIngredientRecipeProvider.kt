@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
@@ -135,13 +134,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(ItemTags.COALS, 4)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .save(output)
-
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .itemInput(RagiumItemTags.COAL_COKE)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .saveSuffixed(output, "_alt")
         // Deep Steel
         HTMachineRecipeBuilder
             .create(RagiumRecipes.CHEMICAL_REACTOR)

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ragium:block/residual_coke_block"
+    }
+  }
+}
