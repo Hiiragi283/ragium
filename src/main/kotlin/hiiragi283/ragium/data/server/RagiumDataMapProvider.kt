@@ -27,7 +27,6 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(packOutput, lookupProvider) {
-
     private fun <T : Any> Builder<T, Item>.addItem(item: ItemLike, value: T): Builder<T, Item> = add(item.asHolder(), value, false)
 
     private fun <T : Any> Builder<T, Item>.addContent(content: HTBlockContent, value: T): Builder<T, Item> = add(content.id, value, false)

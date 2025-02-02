@@ -6,7 +6,6 @@
     "#c:rods/steel",
     "#c:rods/stainless_steel",
     "#c:rods/deep_steel",
-    "#c:rods/netherite",
-    "#c:rods/dragonium"
+    "#c:rods/netherite"
   ]
 }

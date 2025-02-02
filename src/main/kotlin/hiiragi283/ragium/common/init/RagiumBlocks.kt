@@ -71,7 +71,6 @@ object RagiumBlocks {
         CommonMaterials.STEEL,
         CommonMaterials.STAINLESS_STEEL,
         RagiumMaterials.DEEP_STEEL,
-        RagiumMaterials.DRAGONIUM,
         // Metal
         CommonMaterials.ALUMINUM,
         RagiumMaterials.ECHORIUM,

@@ -8,7 +8,6 @@
     "#c:gears/steel",
     "#c:gears/stainless_steel",
     "#c:gears/deep_steel",
-    "#c:gears/netherite",
-    "#c:gears/dragonium"
+    "#c:gears/netherite"
   ]
 }

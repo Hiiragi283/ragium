@@ -271,7 +271,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(IntegrationMaterials.REFINED_OBSIDIAN, "Refined Obsidian")
         add(RagiumMaterials.CRUDE_RAGINITE, "Crude Raginite")
         add(RagiumMaterials.DEEP_STEEL, "Deep Steel")
-        add(RagiumMaterials.DRAGONIUM, "Dragonium")
         add(RagiumMaterials.ECHORIUM, "Echorium")
         add(RagiumMaterials.FIERY_COAL, "Fiery Coal")
         add(RagiumMaterials.RAGI_ALLOY, "Ragi-Alloy")

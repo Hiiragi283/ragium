@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:rods/steel"
+      "tag": "c:rods/stainless_steel"
     },
     "B": {
       "item": "ragium:forge_hammer"

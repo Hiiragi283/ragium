@@ -18,7 +18,6 @@ import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTCraftingToolItem
 import hiiragi283.ragium.common.item.HTDynamiteItem
 import hiiragi283.ragium.common.item.HTSilkyPickaxeItem
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
@@ -85,7 +84,6 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
         register(HTTagPrefix.INGOT, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
-        register(HTTagPrefix.INGOT, RagiumMaterials.DRAGONIUM)
 
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
@@ -107,7 +105,6 @@ object RagiumItems {
         register(HTTagPrefix.GEAR, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.GEAR, RagiumMaterials.DEEP_STEEL)
         register(HTTagPrefix.GEAR, VanillaMaterials.NETHERITE)
-        register(HTTagPrefix.GEAR, RagiumMaterials.DRAGONIUM)
         // Rods
         register(HTTagPrefix.ROD, VanillaMaterials.COPPER)
         register(HTTagPrefix.ROD, VanillaMaterials.IRON)
@@ -117,7 +114,6 @@ object RagiumItems {
         register(HTTagPrefix.ROD, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.ROD, RagiumMaterials.DEEP_STEEL)
         register(HTTagPrefix.ROD, VanillaMaterials.NETHERITE)
-        register(HTTagPrefix.ROD, RagiumMaterials.DRAGONIUM)
     }
 
     @JvmStatic
@@ -147,12 +143,7 @@ object RagiumItems {
             REGISTER.registerSimpleBlockItem(
                 storage.id.path,
                 storage,
-                itemProperty {
-                    name(HTTagPrefix.STORAGE_BLOCK.createText(key))
-                    if (key in RagiumMaterials.END_CONTENTS) {
-                        component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                    }
-                },
+                itemProperty().name(HTTagPrefix.STORAGE_BLOCK.createText(key)),
             )
         }
 

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:rods/steel"
+            "items": "#c:rods/stainless_steel"
           }
         ]
       },

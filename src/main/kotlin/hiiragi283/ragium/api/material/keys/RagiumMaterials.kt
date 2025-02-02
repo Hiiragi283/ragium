@@ -32,9 +32,6 @@ object RagiumMaterials {
     val DEEP_STEEL: HTMaterialKey = HTMaterialKey.of("deep_steel")
 
     @JvmField
-    val DRAGONIUM: HTMaterialKey = HTMaterialKey.of("dragonium")
-
-    @JvmField
     val ECHORIUM: HTMaterialKey = HTMaterialKey.of("echorium")
 
     //    Mineral    //
@@ -44,12 +41,4 @@ object RagiumMaterials {
 
     @JvmField
     val RAGINITE: HTMaterialKey = HTMaterialKey.of("raginite")
-
-    @JvmField
-    val END_CONTENTS: List<HTMaterialKey> = listOf(
-        RAGIUM,
-        DRAGONIUM,
-        ECHORIUM,
-        FIERY_COAL,
-    )
 }

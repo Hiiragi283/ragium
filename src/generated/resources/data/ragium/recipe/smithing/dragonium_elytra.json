@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "tag": "c:ingots/dragonium"
+    "tag": "c:ingots/netherite"
   },
   "base": {
     "item": "minecraft:elytra"

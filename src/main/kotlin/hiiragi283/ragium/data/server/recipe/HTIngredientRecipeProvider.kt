@@ -195,17 +195,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.DRAGON_BREATH, FluidType.BUCKET_VOLUME / 250)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
-            .fluidInput(RagiumFluids.DRAGON_BREATH)
-            .catalyst(Items.DRAGON_EGG)
-            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.DRAGONIUM)
-            .save(output)
-
         // Unbreakable Elytra
         val elytraId: ResourceLocation = RagiumAPI.id("smithing/dragonium_elytra")
-        val ingotDragonium: TagKey<Item> = HTTagPrefix.INGOT.createTag(RagiumMaterials.DRAGONIUM)
+        val ingotDragonium: TagKey<Item> = HTTagPrefix.INGOT.createTag(VanillaMaterials.NETHERITE)
         output.accept(
             elytraId,
             SmithingTransformRecipe(

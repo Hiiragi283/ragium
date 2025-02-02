@@ -35,7 +35,6 @@ import hiiragi283.ragium.common.recipe.HTMachineConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.Item
@@ -312,7 +311,6 @@ internal object RagiumEvents {
 
         event.register(RagiumMaterials.CRUDE_RAGINITE, HTMaterialType.MINERAL)
         event.register(RagiumMaterials.DEEP_STEEL, HTMaterialType.ALLOY)
-        event.register(RagiumMaterials.DRAGONIUM, HTMaterialType.METAL)
         event.register(RagiumMaterials.ECHORIUM, HTMaterialType.METAL)
         event.register(RagiumMaterials.FIERY_COAL, HTMaterialType.GEM)
         event.register(RagiumMaterials.RAGI_ALLOY, HTMaterialType.ALLOY)
@@ -475,12 +473,7 @@ internal object RagiumEvents {
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         // Item
         RagiumItems.MATERIAL_ITEMS.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
-            event.modify(holder) { builder: DataComponentPatch.Builder ->
-                builder.name(prefix.createText(key))
-                if (key in RagiumMaterials.END_CONTENTS) {
-                    builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                }
-            }
+            event.modify(holder) { builder: DataComponentPatch.Builder -> builder.name(prefix.createText(key)) }
         }
 
         LOGGER.info("Modified item components!")

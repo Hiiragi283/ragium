@@ -234,7 +234,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(IntegrationMaterials.REFINED_OBSIDIAN, "精製黒曜石")
         add(RagiumMaterials.CRUDE_RAGINITE, "粗製ラギナイト")
         add(RagiumMaterials.DEEP_STEEL, "深層鋼")
-        add(RagiumMaterials.DRAGONIUM, "ドラゴニウム")
         add(RagiumMaterials.ECHORIUM, "エコリウム")
         add(RagiumMaterials.FIERY_COAL, "燃え盛る石炭")
         add(RagiumMaterials.RAGI_ALLOY, "ラギ合金")

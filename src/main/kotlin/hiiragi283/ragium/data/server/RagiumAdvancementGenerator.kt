@@ -96,13 +96,6 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             RagiumMaterials.DEEP_STEEL,
             Component.empty(),
         )
-        val dragonium: AdvancementHolder = createMaterial(
-            blastFurnace,
-            HTTagPrefix.INGOT,
-            RagiumMaterials.DRAGONIUM,
-            Component.empty(),
-            type = AdvancementType.GOAL,
-        )
 
         val compressor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COMPRESSOR)
 
