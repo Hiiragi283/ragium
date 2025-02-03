@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.recipe.condition.HTDummyCondition
 import hiiragi283.ragium.integration.jei.category.HTExtractorRecipeCategory
 import hiiragi283.ragium.integration.jei.category.HTMachineRecipeCategory
 import hiiragi283.ragium.integration.jei.category.HTMaterialInfoCategory
+import hiiragi283.ragium.integration.jei.category.HTRefineryRecipeCategory
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
@@ -64,6 +65,7 @@ class RagiumJEIPlugin : IModPlugin {
 
         registration.addRecipeCategories(
             HTExtractorRecipeCategory(guiHelper),
+            HTRefineryRecipeCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
         )
     }
@@ -80,6 +82,7 @@ class RagiumJEIPlugin : IModPlugin {
         }
 
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
+        register(RagiumJEIRecipeTypes.REFINERY, RagiumRecipeTypes.REFINERY)
 
         registerMachineRecipes(registration, level)
         // Material Info
@@ -138,6 +141,8 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         // Extractor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR.getBlock())
+        // Refinery
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.REFINERY, RagiumMachineKeys.REFINERY.getBlock())
 
         // Machine
         RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: HTBlockContent) ->

@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.common.recipe.condition.HTRockGeneratorCondition
 import hiiragi283.ragium.data.server.integration.HTAARecipeProvider
 import hiiragi283.ragium.data.server.integration.HTDelightRecipeProvider
-import hiiragi283.ragium.data.server.integration.HTEvilRecipeProvider
 import hiiragi283.ragium.data.server.integration.HTMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.*
 import net.minecraft.advancements.CriteriaTriggers
@@ -75,7 +74,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         HTBlockRecipeProvider.buildRecipes(output, holderLookup)
         HTChemicalRecipeProvider.buildRecipes(output, holderLookup)
-        HTDistillationRecipeProvider.buildRecipes(output, holderLookup)
         HTFoodRecipeProvider.buildRecipes(output, holderLookup)
         HTIngredientRecipeProvider.buildRecipes(output, holderLookup)
         HTMachineRecipeProvider.buildRecipes(output, holderLookup)
@@ -83,7 +81,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
         HTAARecipeProvider.buildRecipes(output, holderLookup)
         HTDelightRecipeProvider.buildRecipes(output, holderLookup)
-        HTEvilRecipeProvider.buildRecipes(output, holderLookup)
         HTMekanismRecipeProvider.buildRecipes(output, holderLookup)
 
         registerVanilla(output)

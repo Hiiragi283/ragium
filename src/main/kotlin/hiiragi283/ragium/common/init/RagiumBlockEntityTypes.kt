@@ -88,16 +88,16 @@ object RagiumBlockEntityTypes {
         register("extractor", ::HTExtractorBlockEntity)
 
     @JvmField
+    val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =
+        register("refinery", ::HTRefineryBlockEntity)
+
+    @JvmField
     val DEFAULT_PROCESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDefaultProcessorBlockEntity>> =
         registerMachine("default_processor", ::HTDefaultProcessorBlockEntity)
 
     @JvmField
     val LARGE_PROCESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLargeProcessorBlockEntity>> =
         registerMachine("large_processor", ::HTLargeProcessorBlockEntity)
-
-    @JvmField
-    val DISTILLATION_TOWER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDistillationTowerBlockEntity>> =
-        register("distillation_tower", ::HTDistillationTowerBlockEntity)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =

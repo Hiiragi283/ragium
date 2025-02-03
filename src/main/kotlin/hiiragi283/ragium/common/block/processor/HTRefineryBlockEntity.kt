@@ -1,12 +1,13 @@
 package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.capability.HTCombinedFluidHandler
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeInput
+import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -19,40 +20,41 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.ItemStackHandler
-import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
-class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state) {
+class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state) {
     override val machineKey: HTMachineKey = RagiumMachineKeys.EXTRACTOR
 
-    private val itemInput = ItemStackHandler(1)
     private val itemOutput = ItemStackHandler(1)
+    private val inputTank = HTMachineFluidTank(8000, this::setChanged)
     private val outputTank = HTMachineFluidTank(8000, this::setChanged)
 
-    private val recipeCache: HTRecipeCache<HTRecipeInput, HTExtractorRecipe> =
-        HTRecipeCache(RagiumRecipeTypes.EXTRACTOR)
+    private val recipeCache: HTRecipeCache<HTRecipeInput, HTRefineryRecipe> =
+        HTRecipeCache(RagiumRecipeTypes.REFINERY)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTRecipeInput = HTRecipeInput.of(itemInput.getStackInSlot(0))
-        val holder: RecipeHolder<HTExtractorRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
-        val recipe: HTExtractorRecipe = holder.value
+        val input: HTRecipeInput = HTRecipeInput.of(inputTank.getFluidInTank(0))
+        val holder: RecipeHolder<HTRefineryRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTRefineryRecipe = holder.value
         // Try to insert outputs
         recipe.canInsert(itemOutput, outputTank)
         // Insert outputs
         recipe.insertOutputs(itemOutput, outputTank, level, pos)
         // Decrement input
-        itemInput.getStackInSlot(0).shrink(recipe.input.count())
+        inputTank.getFluidInTank(0).shrink(recipe.input.amount())
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTExtractorContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
+        HTExtractorContainerMenu(containerId, playerInventory, blockPos, itemOutput)
 
     override fun interactWithFluidStorage(player: Player): Boolean = fillPlayerContainer(player, outputTank, true).isSuccess
 
-    override fun getItemHandler(direction: Direction?): CombinedInvWrapper =
-        CombinedInvWrapper(HTStorageIO.INPUT.wrapItemHandler(itemInput), HTStorageIO.OUTPUT.wrapItemHandler(itemOutput))
+    override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.OUTPUT.wrapItemHandler(itemOutput)
 
-    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTStorageIO.OUTPUT.wrapFluidHandler(outputTank)
+    override fun getFluidHandler(direction: Direction?): HTCombinedFluidHandler = HTCombinedFluidHandler(
+        HTStorageIO.INPUT.wrapFluidHandler(inputTank),
+        HTStorageIO.OUTPUT.wrapFluidHandler(outputTank),
+    )
 }

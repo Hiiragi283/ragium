@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:distillation_tower"
+          "name": "ragium:refinery"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/distillation_tower"
+  "random_sequence": "ragium:blocks/refinery"
 }

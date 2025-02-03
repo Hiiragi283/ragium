@@ -53,7 +53,6 @@ object RagiumClient {
         register(RagiumMenuTypes.LARGE_MACHINE)
 
         register(RagiumMenuTypes.EXTRACTOR)
-        register(RagiumMenuTypes.DISTILLATION_TOWER)
         register(RagiumMenuTypes.MULTI_SMELTER)
 
         LOGGER.info("Registered machine screens!")
@@ -69,7 +68,6 @@ object RagiumClient {
 
         register(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
         register(RagiumBlockEntityTypes.LARGE_PROCESSOR)
-        register(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         register(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         event.registerEntityRenderer(RagiumEntityTypes.DYNAMITE.get(), ::ThrownItemRenderer)

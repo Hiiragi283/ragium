@@ -437,17 +437,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             RagiumBlocks.CHEMICAL_GLASS,
             HTMachineTier.ADVANCED,
         )
-        // Distillation Tower
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumMachineKeys.DISTILLATION_TOWER.getBlock())
-            .pattern("A A")
-            .pattern("BAB")
-            .pattern("CCC")
-            .define('A', RagiumBlocks.CHEMICAL_GLASS)
-            .define('B', HTTagPrefix.GEAR, VanillaMaterials.DIAMOND)
-            .define('C', RagiumBlocks.Casings.ADVANCED)
-            .unlockedBy("has_casing", has(RagiumBlocks.Casings.ADVANCED))
-            .savePrefixed(output)
         // Extractor
         machine3(
             output,

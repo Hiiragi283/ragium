@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.content.HTBlockContent
@@ -22,15 +21,10 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.api.util.DataFunction
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
-import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
-import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity
-import hiiragi283.ragium.common.block.processor.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.processor.HTLargeProcessorBlockEntity
-import hiiragi283.ragium.common.block.processor.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.processor.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.HTMachineConverters
 import net.minecraft.core.BlockPos
@@ -70,9 +64,6 @@ internal object RagiumEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun modifyMachineProperties(event: HTModifyPropertyEvent.Machine) {
-        fun HTPropertyHolderBuilder.putValidator(validator: DataFunction<HTMachineRecipe>): HTPropertyHolderBuilder =
-            put(HTMachinePropertyKeys.RECIPE_VALIDATOR, validator)
-
         // Consumer
         event
             .getBuilder(RagiumMachineKeys.BEDROCK_MINER)
@@ -173,23 +164,6 @@ internal object RagiumEvents {
             )
 
         event
-            .getBuilder(RagiumMachineKeys.DISTILLATION_TOWER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
-                HTDistillationTowerBlockEntity(pos, state)
-            }.put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.default(RagiumRecipes.DISTILLATION_TOWER),
-            ).putValidator { recipe: HTMachineRecipe ->
-                when {
-                    recipe.itemInputs.isNotEmpty() -> DataResult.error { "Distillation tower recipe not accepts item inputs!" }
-                    recipe.fluidInputs.size != 1 -> DataResult.error { "Distillation tower recipe should have only one fluid input!" }
-                    recipe.condition.isEmpty -> DataResult.error { "Distillation tower recipe requires condition!" }
-                    recipe.getItemOutputs().size >= 2 -> DataResult.error { "Distillation tower recipe should have one item output!" }
-                    else -> DataResult.success(recipe)
-                }
-            }
-
-        event
             .getBuilder(RagiumMachineKeys.EXTRACTOR)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
                 HTExtractorBlockEntity(pos, state)
@@ -248,6 +222,12 @@ internal object RagiumEvents {
                         .forEach(consumer)
                 },
             )
+
+        event
+            .getBuilder(RagiumMachineKeys.REFINERY)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
+                HTRefineryBlockEntity(pos, state)
+            }
 
         event
             .getBuilder(RagiumMachineKeys.RESOURCE_PLANT)
@@ -354,7 +334,7 @@ internal object RagiumEvents {
         bindAllMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
         bindAllMachines(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         bindMachine(RagiumBlockEntityTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR)
-        bindMachine(RagiumBlockEntityTypes.DISTILLATION_TOWER, RagiumMachineKeys.DISTILLATION_TOWER)
+        bindMachine(RagiumBlockEntityTypes.REFINERY, RagiumMachineKeys.REFINERY)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 
         LOGGER.info("Added external blocks to BlockEntityType!")
@@ -416,8 +396,8 @@ internal object RagiumEvents {
 
         registerHandlers(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
+        registerHandlers(RagiumBlockEntityTypes.REFINERY)
         registerHandlers(RagiumBlockEntityTypes.LARGE_PROCESSOR)
-        registerHandlers(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         // Other

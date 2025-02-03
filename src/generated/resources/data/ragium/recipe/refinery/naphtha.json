@@ -1,0 +1,11 @@
+{
+  "type": "ragium:refinery",
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:naphtha"
+  },
+  "input": {
+    "amount": 1000,
+    "tag": "c:crude_oil"
+  }
+}

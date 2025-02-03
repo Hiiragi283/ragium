@@ -13,28 +13,28 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
-class HTExtractorRecipe(
+class HTRefineryRecipe(
     group: String,
-    val input: SizedIngredient,
+    val input: SizedFluidIngredient,
     itemOutput: Optional<ItemStack>,
     fluidOutput: Optional<FluidStack>,
 ) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTExtractorRecipe> = RecordCodecBuilder
+        val CODEC: MapCodec<HTRefineryRecipe> = RecordCodecBuilder
             .mapCodec { instance ->
                 instance
                     .group(
-                        Codec.STRING.optionalFieldOf("group", "").forGetter(HTExtractorRecipe::getGroup),
-                        SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTExtractorRecipe::input),
-                        ItemStack.STRICT_CODEC.optionalFieldOf("item_output").forGetter(HTExtractorRecipe::itemOutput),
-                        FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTExtractorRecipe::fluidOutput),
-                    ).apply(instance, ::HTExtractorRecipe)
-            }.validate { recipe: HTExtractorRecipe ->
+                        Codec.STRING.optionalFieldOf("group", "").forGetter(HTRefineryRecipe::getGroup),
+                        SizedFluidIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTRefineryRecipe::input),
+                        ItemStack.STRICT_CODEC.optionalFieldOf("item_output").forGetter(HTRefineryRecipe::itemOutput),
+                        FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTRefineryRecipe::fluidOutput),
+                    ).apply(instance, ::HTRefineryRecipe)
+            }.validate { recipe: HTRefineryRecipe ->
                 if (recipe.itemOutput.isEmpty && recipe.fluidOutput.isEmpty) {
                     return@validate DataResult.error { "Either item or fluid output required!" }
                 }
@@ -42,22 +42,22 @@ class HTExtractorRecipe(
             }
 
         @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTExtractorRecipe> = StreamCodec.composite(
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTRefineryRecipe> = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
-            HTExtractorRecipe::getGroup,
-            SizedIngredient.STREAM_CODEC,
-            HTExtractorRecipe::input,
+            HTRefineryRecipe::getGroup,
+            SizedFluidIngredient.STREAM_CODEC,
+            HTRefineryRecipe::input,
             ByteBufCodecs.optional(ItemStack.STREAM_CODEC),
-            HTExtractorRecipe::itemOutput,
+            HTRefineryRecipe::itemOutput,
             ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
-            HTExtractorRecipe::fluidOutput,
-            ::HTExtractorRecipe,
+            HTRefineryRecipe::fluidOutput,
+            ::HTRefineryRecipe,
         )
     }
 
-    override fun matches(input: HTRecipeInput, level: Level): Boolean = this.input.test(input.getItem(0))
+    override fun matches(input: HTRecipeInput, level: Level): Boolean = this.input.test(input.getFluid(0))
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.EXTRACTOR.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINERY.get()
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.EXTRACTOR.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.REFINERY.get()
 }

@@ -1,0 +1,56 @@
+package hiiragi283.ragium.integration.jei.category
+
+import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.recipe.HTRefineryRecipe
+import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
+import hiiragi283.ragium.integration.jei.addFluidStack
+import hiiragi283.ragium.integration.jei.addIngredients
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
+import mezz.jei.api.gui.drawable.IDrawable
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
+import mezz.jei.api.helpers.ICodecHelper
+import mezz.jei.api.helpers.IGuiHelper
+import mezz.jei.api.recipe.IFocusGroup
+import mezz.jei.api.recipe.IRecipeManager
+import mezz.jei.api.recipe.RecipeType
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.ItemStack
+import kotlin.jvm.optionals.getOrNull
+
+class HTRefineryRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTRefineryRecipe> {
+    override fun getRecipeType(): RecipeType<HTRefineryRecipe> = RagiumJEIRecipeTypes.REFINERY
+
+    override fun getTitle(): Component = RagiumMachineKeys.REFINERY.text
+
+    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(RagiumMachineKeys.REFINERY.getBlock())
+
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTRefineryRecipe, focuses: IFocusGroup) {
+        // Item Input
+        builder
+            .addInputSlot(getPosition(0), getPosition(0))
+            .setStandardSlotBackground()
+            .addIngredients(recipe.input)
+        // Item Output
+        builder
+            .addOutputSlot(getPosition(3), getPosition(0))
+            .setStandardSlotBackground()
+            .addItemStack(recipe.itemOutput.orElse(ItemStack.EMPTY))
+        // Fluid Output
+        builder
+            .addOutputSlot(getPosition(4), getPosition(0))
+            .setStandardSlotBackground()
+            .addFluidStack(recipe.fluidOutput.getOrNull())
+    }
+
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTRefineryRecipe, focuses: IFocusGroup) {
+        builder.addRecipeArrow().setPosition(getPosition(1.5), getPosition(0))
+    }
+
+    override fun getWidth(): Int = 18 * 5 + 8
+
+    override fun getHeight(): Int = 18 * 1 + 8
+
+    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTRefineryRecipe> =
+        HTRefineryRecipe.CODEC.codec()
+}

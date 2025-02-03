@@ -231,9 +231,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumRecipes.MIXER, HTMachineTier.ADVANCED)
             .itemInput(Tags.Items.SANDS)
-            .fluidInput(RagiumFluids.AROMATIC_COMPOUNDS)
-            .fluidInput(RagiumFluids.MIXTURE_ACID)
-            .itemOutput(Items.TNT, 16)
+            .itemInput(RagiumItems.CREEPER_REAGENT)
+            .itemOutput(Items.TNT)
             .save(output)
     }
 

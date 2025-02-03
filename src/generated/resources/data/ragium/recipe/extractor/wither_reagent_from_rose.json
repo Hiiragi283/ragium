@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "input": {
+    "count": 1,
+    "item": "minecraft:wither_rose"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "ragium:wither_reagent"
+  }
+}

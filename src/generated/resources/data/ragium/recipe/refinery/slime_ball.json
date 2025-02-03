@@ -1,0 +1,11 @@
+{
+  "type": "ragium:refinery",
+  "input": {
+    "amount": 1000,
+    "tag": "c:sap"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:slime_ball"
+  }
+}

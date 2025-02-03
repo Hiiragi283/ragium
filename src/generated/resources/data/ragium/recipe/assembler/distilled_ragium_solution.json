@@ -1,5 +1,5 @@
 {
-  "type": "ragium:distillation_tower",
+  "type": "ragium:assembler",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
@@ -8,18 +8,18 @@
   },
   "fluid_inputs": [
     {
-      "amount": 8000,
-      "tag": "c:residual_oil"
+      "amount": 1000,
+      "tag": "c:ragium_solution"
     }
   ],
   "fluid_outputs": [
     {
-      "amount": 3000,
-      "id": "ragium:fuel"
+      "amount": 750,
+      "id": "ragium:distilled_ragium_solution"
     },
     {
-      "amount": 5000,
-      "id": "ragium:aromatic_compounds"
+      "amount": 250,
+      "id": "ragium:chemical_sludge"
     }
   ]
 }

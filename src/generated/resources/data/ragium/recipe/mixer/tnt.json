@@ -6,25 +6,19 @@
       "tag": "c:circuits/advanced"
     }
   },
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:aromatic_compounds"
-    },
-    {
-      "amount": 1000,
-      "tag": "c:mixture_acid"
-    }
-  ],
   "item_inputs": [
     {
       "count": 1,
       "tag": "c:sands"
+    },
+    {
+      "count": 1,
+      "item": "ragium:creeper_reagent"
     }
   ],
   "item_outputs": [
     {
-      "count": 16,
+      "count": 1,
       "id": "minecraft:tnt"
     }
   ]

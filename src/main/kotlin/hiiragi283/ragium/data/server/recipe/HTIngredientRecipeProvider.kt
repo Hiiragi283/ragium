@@ -155,7 +155,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.DISTILLATION_TOWER)
+            .create(RagiumRecipes.ASSEMBLER)
             .fluidInput(RagiumFluids.RAGIUM_SOLUTION)
             .catalyst(HTMachineTier.ELITE)
             .fluidOutput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)

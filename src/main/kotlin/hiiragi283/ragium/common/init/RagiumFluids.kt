@@ -39,7 +39,6 @@ enum class RagiumFluids(
     // Natural Resources
     AIR(Color(0xccffff), "Air", "空気", TextureType.GASEOUS),
     BRINE(Color(0x003399), "Brine", "塩水"),
-    CRUDE_OIL(Color(0x000000), "Crude Oil", "原油", TextureType.STICKY),
 
     // Elements
     HYDROGEN(Color(0x0000cc), "Hydrogen", "水素", TextureType.GASEOUS),
@@ -73,19 +72,16 @@ enum class RagiumFluids(
 
     CHEMICAL_SLUDGE(Color(0x333366), "Chemical Sludge", "化学汚泥", TextureType.STICKY),
 
-    // Oil products
-    REFINED_GAS(Color(0xcccccc), "Refined Gas", "精製ガス", TextureType.GASEOUS),
+    // Oil
+    CRUDE_OIL(Color(0x000000), "Crude Oil", "原油", TextureType.STICKY),
     NAPHTHA(Color(0xff9900), "Naphtha", "ナフサ"),
-    RESIDUAL_OIL(Color(0x663300), "Residual Oil", "残渣油", TextureType.STICKY),
+    ALCOHOL(Color(0x99ffff), "Alcohol", "アルコール"),
 
+    // Natural Gas
+    NATURAL_GAS(Color(0xcccccc), "Natural Gas", "天然ガス", TextureType.GASEOUS),
     METHANE(Color(0x990099), "Methane", "メタン", TextureType.GASEOUS),
     ETHENE(Color(0xffccff), "Ethene", "エテン", TextureType.GASEOUS),
     ACETYLENE(Color(0xffffcc), "Acetylene", "アセチレン", TextureType.GASEOUS),
-
-    PROPENE(Color(0xffcc00), "Propene", "プロペン", TextureType.GASEOUS),
-
-    ALCOHOL(Color(0x99ffff), "Alcohol", "アルコール"),
-    AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
 
     // Fuels
     BIO_FUEL(Color(0x99ff00), "Bio Fuel", "バイオ燃料"),

@@ -63,9 +63,6 @@ object RagiumMachineKeys {
     val COMPRESSOR: HTMachineKey = HTMachineKey.of("compressor")
 
     @JvmField
-    val DISTILLATION_TOWER: HTMachineKey = HTMachineKey.of("distillation_tower")
-
-    @JvmField
     val EXTRACTOR: HTMachineKey = HTMachineKey.of("extractor")
 
     @JvmField
@@ -84,6 +81,9 @@ object RagiumMachineKeys {
     val MULTI_SMELTER: HTMachineKey = HTMachineKey.of("multi_smelter")
 
     @JvmField
+    val REFINERY: HTMachineKey = HTMachineKey.of("refinery")
+
+    @JvmField
     val RESOURCE_PLANT: HTMachineKey = HTMachineKey.of("resource_plant")
 
     @JvmField
@@ -96,13 +96,13 @@ object RagiumMachineKeys {
             BLAST_FURNACE,
             CHEMICAL_REACTOR,
             COMPRESSOR,
-            DISTILLATION_TOWER,
             EXTRACTOR,
             GRINDER,
             GROWTH_CHAMBER,
             LASER_TRANSFORMER,
             MIXER,
             MULTI_SMELTER,
+            REFINERY,
             RESOURCE_PLANT,
             STEAM_BOILER,
         )
