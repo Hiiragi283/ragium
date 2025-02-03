@@ -36,7 +36,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "ラギ合金ブロック（装飾）")
         add(RagiumBlocks.Decorations.RAGI_STEEL_BLOCK, "ラギスチールブロック（装飾）")
-        add(RagiumBlocks.Decorations.REFINED_RAGI_STEEL_BLOCK, "精製ラギスチールブロック（装飾）")
 
         add(RagiumBlocks.Decorations.BASIC_CASING, "基本外装（装飾）")
         add(RagiumBlocks.Decorations.ADVANCED_CASING, "発展外装（装飾）")
@@ -112,6 +111,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒）")
 
         add(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
+        add(RagiumItems.BLAZE_REAGENT, "ブレイズ試薬")
+        add(RagiumItems.CREEPER_REAGENT, "クリーパー試薬")
+        add(RagiumItems.WITHER_REAGENT, "ウィザー試薬")
+
         add(RagiumItems.BEE_WAX, "蜜蠟")
         add(RagiumItems.CALCIUM_CARBIDE, "炭化カルシウム")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
@@ -234,7 +237,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterials.RAGI_STEEL, "ラギスチール")
         add(RagiumMaterials.RAGINITE, "ラギナイト")
         add(RagiumMaterials.RAGIUM, "ラギウム")
-        add(RagiumMaterials.REFINED_RAGI_STEEL, "精製ラギスチール")
         add(RagiumMaterials.RESIDUAL_COKE, "残渣油コークス")
         add(RagiumMaterials.SLAG, "スラグ")
         add(VanillaMaterials.AMETHYST, "アメシスト")

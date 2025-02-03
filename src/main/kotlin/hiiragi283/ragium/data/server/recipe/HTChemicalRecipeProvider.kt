@@ -139,7 +139,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumRecipes.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.ALCOHOL)
-            .catalyst(HTTagPrefix.DUST, CommonMaterials.SULFUR)
+            .catalyst(RagiumItems.BLAZE_REAGENT)
             .fluidOutput(RagiumFluids.ETHENE)
             .waterOutput()
             .save(output)
@@ -202,7 +202,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumRecipes.CHEMICAL_REACTOR)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.NITER)
-            .fluidInput(RagiumFluids.SULFURIC_ACID)
+            .fluidInput(RagiumFluids.BLAZE_ACID)
             .itemOutput(RagiumItems.ALKALI_REAGENT, 2)
             .fluidOutput(RagiumFluids.NITRIC_ACID)
             .save(output, RagiumAPI.id("nitric_acid_with_sulfuric"))
@@ -227,7 +227,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumRecipes.MIXER, HTMachineTier.ADVANCED)
             .fluidInput(RagiumFluids.NITRIC_ACID)
-            .fluidInput(RagiumFluids.SULFURIC_ACID)
+            .fluidInput(RagiumFluids.BLAZE_ACID)
             .fluidOutput(RagiumFluids.MIXTURE_ACID, FluidType.BUCKET_VOLUME * 2)
             .save(output)
         // Nitration
@@ -275,7 +275,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumRecipes.CHEMICAL_REACTOR, HTMachineTier.ELITE)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
-            .fluidInput(RagiumFluids.SULFURIC_ACID)
+            .fluidInput(RagiumFluids.BLAZE_ACID)
             .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE)
             .save(output)
         // HF + H2O <-> HF(aq)
@@ -331,7 +331,6 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .create(RagiumRecipes.GRINDER, HTMachineTier.ADVANCED)
             .itemInput(Items.NETHERRACK, 8)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 6)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SULFUR, 2)
             .save(output)
         // Bauxite + Alkali solution -> Alumina Solution
         HTMachineRecipeBuilder
@@ -402,22 +401,18 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerSulfur(output: RecipeOutput) {
-        // Gunpowder -> Sulfur
+        // Blaze Powder -> Blaze Reagent
         HTMachineRecipeBuilder
             .create(RagiumRecipes.EXTRACTOR)
-            .itemInput(Tags.Items.GUNPOWDERS)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SULFUR)
+            .itemInput(Items.BLAZE_POWDER)
+            .itemOutput(RagiumItems.BLAZE_REAGENT)
             .save(output)
-
-        // S <-> SO2
-        solidRedox(output, CommonMaterials.SULFUR, RagiumFluids.SULFUR_DIOXIDE)
-        // SO2 -> H2SO4
+        // Blaze Reagent -> Blaze Acid
         HTMachineRecipeBuilder
             .create(RagiumRecipes.CHEMICAL_REACTOR)
-            .fluidInput(RagiumFluids.SULFUR_DIOXIDE)
+            .itemInput(RagiumItems.BLAZE_REAGENT)
             .waterInput()
-            .catalyst(Items.BLAZE_POWDER)
-            .fluidOutput(RagiumFluids.SULFURIC_ACID)
+            .fluidOutput(RagiumFluids.BLAZE_ACID)
             .save(output)
     }
 
@@ -469,7 +464,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMachineRecipeBuilder
             .create(RagiumRecipes.CHEMICAL_REACTOR, HTMachineTier.ELITE)
             .itemInput(Items.POISONOUS_POTATO, 8)
-            .fluidInput(RagiumFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME * 8)
+            .fluidInput(RagiumFluids.BLAZE_ACID, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(RagiumItems.YELLOW_CAKE)
             .save(output)
         // Cutting Yellow Cake

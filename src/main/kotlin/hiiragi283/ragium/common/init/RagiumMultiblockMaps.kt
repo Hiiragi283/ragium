@@ -13,7 +13,6 @@ object RagiumMultiblockMaps {
     private val SHAFT = HTAxisMultiblockComponent.YStatic { RagiumBlocks.SHAFT }
     private val SHAFT_HORIZONTAL = HTAxisMultiblockComponent.FrontHorizontal { RagiumBlocks.SHAFT }
     private val SHAFT_VERTICAL = HTAxisMultiblockComponent.FrontVertical { RagiumBlocks.SHAFT }
-    private val STORAGE_BLOCK = HTTieredMultiblockComponent(HTMachineTier::getStorageBlock)
 
     private val BRICK_WALL = HTSimpleMultiblockComponent(Blocks::BRICK_WALL)
     private val TERRACOTTA = HTSimpleMultiblockComponent(Blocks::TERRACOTTA)
@@ -53,10 +52,10 @@ object RagiumMultiblockMaps {
         .add(2, 0, -1, GRATE)
         .add(2, 0, 1, GRATE)
         .add(2, 0, -2, GRATE)
-        .add(-2, 1, 0, STORAGE_BLOCK)
-        .add(0, 1, -2, STORAGE_BLOCK)
-        .add(0, 1, 2, STORAGE_BLOCK)
-        .add(2, 1, 0, STORAGE_BLOCK)
+        // .add(-2, 1, 0, STORAGE_BLOCK)
+        // .add(0, 1, -2, STORAGE_BLOCK)
+        // .add(0, 1, 2, STORAGE_BLOCK)
+        // .add(2, 1, 0, STORAGE_BLOCK)
         .build()
 
     @JvmField

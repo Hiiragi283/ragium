@@ -19,9 +19,9 @@ enum class RagiumFluids(
     val color: Color,
     val enName: String,
     val jaName: String,
-    val textureType: TextureType = TextureType.LIQUID,
+    val extension: IClientFluidTypeExtensions = TextureType.LIQUID,
 ) : HTFluidContent,
-    IClientFluidTypeExtensions {
+    IClientFluidTypeExtensions by extension {
     // Vanilla
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
     SNOW("Powder Snow", "粉雪", TextureType.SNOW),
@@ -63,8 +63,7 @@ enum class RagiumFluids(
     ALKALI_SOLUTION(Color(0x000099), "Alkali Solution", "アルカリ溶液"),
     SODIUM_SILICATE(Color(0x00cc99), "Sodium Silicate", "ケイ酸ナトリウム"),
 
-    SULFUR_DIOXIDE(Color(0xff6600), "Sulfur Dioxide", "二酸化硫黄", TextureType.STICKY),
-    SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸", TextureType.STICKY),
+    BLAZE_ACID(Color(0xff3300), "Blaze Acid", "ブレイズ酸", TextureType.STICKY),
 
     HYDROGEN_CHLORIDE(Color(0xccff66), "Hydrogen Chloride", "塩化水素", TextureType.GASEOUS),
     HYDROCHLORIC_ACID(Color(0xccff99), "Hydrochloric Acid", "塩酸"),
@@ -145,26 +144,26 @@ enum class RagiumFluids(
 
     //    TextureType    //
 
-    enum class TextureType(
+    private enum class TextureType(
         val stillTex: ResourceLocation = ResourceLocation.withDefaultNamespace("block/bone_block_side"),
         val floatingTex: ResourceLocation = stillTex,
         val overTex: ResourceLocation? = null,
-    ) {
+    ) : IClientFluidTypeExtensions {
         GASEOUS(ResourceLocation.withDefaultNamespace("block/white_concrete")),
         HONEY(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
         LIQUID,
-        RADIOACTIVE,
         SNOW(ResourceLocation.withDefaultNamespace("block/snow")),
         STICKY(ResourceLocation.withDefaultNamespace("block/quartz_block_bottom")),
+        ;
+
+        override fun getStillTexture(): ResourceLocation = stillTex
+
+        override fun getFlowingTexture(): ResourceLocation = floatingTex
+
+        override fun getOverlayTexture(): ResourceLocation? = overTex
     }
 
     //    ClientExtensions    //
-
-    override fun getStillTexture(): ResourceLocation = textureType.stillTex
-
-    override fun getFlowingTexture(): ResourceLocation = textureType.floatingTex
-
-    override fun getOverlayTexture(): ResourceLocation? = textureType.overTex
 
     override fun getTintColor(): Int = color.rgb
 

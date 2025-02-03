@@ -9,7 +9,7 @@
   "fluid_inputs": [
     {
       "amount": 8000,
-      "tag": "c:sulfuric_acid"
+      "tag": "c:blaze_acid"
     }
   ],
   "item_inputs": [

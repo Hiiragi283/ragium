@@ -21,9 +21,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
 enum class HTMachineTier(
@@ -85,13 +83,6 @@ enum class HTMachineTier(
 
     //    Block    //
 
-    fun getStorageBlock(): DeferredBlock<Block> = when (this) {
-        BASIC -> RagiumMaterials.RAGI_ALLOY
-        ADVANCED -> RagiumMaterials.RAGI_STEEL
-        ELITE -> RagiumMaterials.REFINED_RAGI_STEEL
-        ULTIMATE -> RagiumMaterials.RAGIUM
-    }.let(RagiumBlocks.STORAGE_BLOCKS::get) ?: error("Unknown storage block found")
-
     fun getGrate(): HTBlockContent.Tier = when (this) {
         BASIC -> RagiumBlocks.Grates.BASIC
         ADVANCED -> RagiumBlocks.Grates.ADVANCED
@@ -130,7 +121,7 @@ enum class HTMachineTier(
         BASIC -> VanillaMaterials.COPPER
         ADVANCED -> VanillaMaterials.GOLD
         ELITE -> CommonMaterials.ALUMINUM
-        ULTIMATE -> RagiumMaterials.RAGI_ALLOY
+        ULTIMATE -> RagiumMaterials.ECHORIUM
     }
 
     fun getSteelMetal(): HTMaterialKey = when (this) {

@@ -60,6 +60,7 @@ object RagiumCreativeTabs {
                     // Circuits
                     RagiumItems.CIRCUITS.forEach(output::accept)
                     // Ingredients
+                    RagiumItems.REAGENTS.forEach(output::accept)
                     RagiumItems.INGREDIENTS.forEach(output::accept)
                     RagiumItems.RADIOACTIVES.forEach(output::accept)
                 }.build()

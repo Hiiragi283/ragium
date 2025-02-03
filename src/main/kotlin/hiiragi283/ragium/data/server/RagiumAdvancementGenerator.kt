@@ -60,7 +60,6 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
 
         registerTier1()
         registerTier2()
-        registerTier3()
         registerTier4()
     }
 
@@ -142,22 +141,6 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val extractor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.EXTRACTOR)
 
         val grinder: AdvancementHolder = createMachine(casing, RagiumMachineKeys.GRINDER)
-    }
-
-    private fun registerTier3() {
-        val refinedRagiSteel: AdvancementHolder = createMaterial(
-            root,
-            HTTagPrefix.INGOT,
-            RagiumMaterials.REFINED_RAGI_STEEL,
-            Component.empty(),
-        )
-        val casing: AdvancementHolder = createSimple(
-            refinedRagiSteel,
-            RagiumBlocks.Casings.ELITE,
-            Component.empty(),
-        )
-
-        val laserTransformer: AdvancementHolder = createMachine(casing, RagiumMachineKeys.LASER_TRANSFORMER)
     }
 
     private fun registerTier4() {

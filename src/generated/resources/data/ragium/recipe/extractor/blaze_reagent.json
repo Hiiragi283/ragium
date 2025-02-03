@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:gunpowders"
+      "item": "minecraft:blaze_powder"
     }
   ],
   "item_outputs": [
     {
       "count": 1,
-      "id": "ragium:sulfur_dust"
+      "id": "ragium:blaze_reagent"
     }
   ]
 }

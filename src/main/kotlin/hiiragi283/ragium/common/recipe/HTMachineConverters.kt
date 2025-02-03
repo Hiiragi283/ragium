@@ -184,7 +184,7 @@ object HTMachineConverters {
 
     @JvmStatic
     fun chemicalOre4x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =
-        chemicalOre(material, registry, 4, RagiumFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME / 5)
+        chemicalOre(material, registry, 4, RagiumFluids.BLAZE_ACID, FluidType.BUCKET_VOLUME / 5)
 
     @JvmStatic
     fun chemicalOre5x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =

@@ -13,7 +13,7 @@
     },
     {
       "amount": 1000,
-      "tag": "c:sulfuric_acid"
+      "tag": "c:blaze_acid"
     }
   ],
   "fluid_outputs": [

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/refined_ragi_steel_ingot"
+    "layer0": "ragium:item/creeper_reagent"
   }
 }

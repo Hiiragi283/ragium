@@ -3,25 +3,19 @@
   "fluid_inputs": [
     {
       "amount": 1000,
-      "tag": "c:blaze_acid"
+      "tag": "c:water"
     }
   ],
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:nitric_acid"
+      "id": "ragium:blaze_acid"
     }
   ],
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/niter"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 2,
-      "id": "ragium:alkali_reagent"
+      "item": "ragium:blaze_reagent"
     }
   ]
 }

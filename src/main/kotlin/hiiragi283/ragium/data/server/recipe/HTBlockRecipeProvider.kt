@@ -452,7 +452,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         machine3(
             output,
             RagiumMachineKeys.EXTRACTOR,
-            CommonMaterials.CHROMIUM,
+            RagiumMaterials.RAGI_ALLOY,
             Items.HOPPER,
             HTMachineTier.ADVANCED,
         )

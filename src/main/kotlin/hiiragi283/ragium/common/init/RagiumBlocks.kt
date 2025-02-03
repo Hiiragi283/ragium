@@ -65,7 +65,6 @@ object RagiumBlocks {
         // Ragium
         RagiumMaterials.RAGI_ALLOY,
         RagiumMaterials.RAGI_STEEL,
-        RagiumMaterials.REFINED_RAGI_STEEL,
         RagiumMaterials.RAGIUM,
         // Steel
         CommonMaterials.STEEL,
@@ -73,8 +72,6 @@ object RagiumBlocks {
         RagiumMaterials.DEEP_STEEL,
         // Metal
         CommonMaterials.ALUMINUM,
-        CommonMaterials.CHROMIUM,
-        CommonMaterials.NICKEL,
         RagiumMaterials.ECHORIUM,
         // Gem
         RagiumMaterials.RAGI_CRYSTAL,
@@ -209,7 +206,6 @@ object RagiumBlocks {
         // storage
         RAGI_ALLOY_BLOCK(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL_BLOCK(RagiumMaterials.RAGI_STEEL),
-        REFINED_RAGI_STEEL_BLOCK(RagiumMaterials.REFINED_RAGI_STEEL),
 
         // casing
         BASIC_CASING(Casings.BASIC),

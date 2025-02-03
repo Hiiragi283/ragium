@@ -117,13 +117,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .catalyst(HTMachineTier.ADVANCED)
             .itemOutput(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
-
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 4)
-            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.REFINED_RAGI_STEEL)
-            .save(output)
     }
 
     private fun registerSteels(output: RecipeOutput) {
@@ -133,14 +126,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(ItemTags.COALS, 2)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .save(output)
-        // Stainless Steel
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON, 6)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.NICKEL, 2)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.CHROMIUM)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STAINLESS_STEEL, 9)
             .save(output)
         // Deep Steel
         HTMachineRecipeBuilder

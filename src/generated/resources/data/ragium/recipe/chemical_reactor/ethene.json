@@ -3,7 +3,7 @@
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
-      "tag": "c:dusts/sulfur"
+      "item": "ragium:blaze_reagent"
     }
   },
   "fluid_inputs": [

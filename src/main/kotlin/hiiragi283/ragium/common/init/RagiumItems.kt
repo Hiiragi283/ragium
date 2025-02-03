@@ -32,13 +32,24 @@ object RagiumItems {
     @JvmField
     val REGISTER: DeferredRegister.Items = DeferredRegister.createItems(RagiumAPI.MOD_ID)
 
+    @JvmStatic
+    private fun register(name: String, properties: Item.Properties = itemProperty()): DeferredItem<Item> =
+        REGISTER.registerSimpleItem(name, properties)
+
+    @JvmStatic
+    private fun <T : Item> register(
+        name: String,
+        factory: (Item.Properties) -> T,
+        properties: Item.Properties = itemProperty(),
+    ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
+
     @JvmField
     val MATERIAL_ITEMS: HTTable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>> = buildTable {
         fun register(prefix: HTTagPrefix, material: HTMaterialKey) {
             put(
                 prefix,
                 material,
-                REGISTER.registerSimpleItem(
+                register(
                     prefix.createPath(material),
                     itemProperty().name(prefix.createText(material)),
                 ),
@@ -59,15 +70,12 @@ object RagiumItems {
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
 
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
-        register(HTTagPrefix.DUST, CommonMaterials.CHROMIUM)
-        register(HTTagPrefix.DUST, CommonMaterials.NICKEL)
 
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
         register(HTTagPrefix.DUST, CommonMaterials.CARBON)
         register(HTTagPrefix.DUST, CommonMaterials.NITER)
         register(HTTagPrefix.DUST, CommonMaterials.SALT)
-        register(HTTagPrefix.DUST, CommonMaterials.SULFUR)
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
@@ -76,12 +84,10 @@ object RagiumItems {
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.NITER)
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALT)
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SULFUR)
         register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
         // Ingots
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
-        register(HTTagPrefix.INGOT, RagiumMaterials.REFINED_RAGI_STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
 
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
@@ -89,8 +95,6 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
 
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-        register(HTTagPrefix.INGOT, CommonMaterials.CHROMIUM)
-        register(HTTagPrefix.INGOT, CommonMaterials.NICKEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
@@ -147,7 +151,6 @@ object RagiumItems {
 
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
             REGISTER.registerSimpleBlockItem(
-                storage.id.path,
                 storage,
                 itemProperty().name(HTTagPrefix.STORAGE_BLOCK.createText(key)),
             )
@@ -155,7 +158,6 @@ object RagiumItems {
 
         RagiumBlocks.CASINGS.forEach { (key: HTMaterialKey, casing: DeferredBlock<Block>) ->
             REGISTER.registerSimpleBlockItem(
-                casing.id.path,
                 casing,
                 itemProperty().name(HTTagPrefix.CASING.createText(key)),
             )
@@ -170,8 +172,7 @@ object RagiumItems {
             addAll(RagiumBlocks.Drums.entries)
         }.forEach { content: HTBlockContent.Tier ->
             REGISTER.registerSimpleBlockItem(
-                content.id.path,
-                content,
+                content.holder,
                 itemProperty().name(content.machineTier.createPrefixedText(content.translationKey)),
             )
         }
@@ -203,13 +204,13 @@ object RagiumItems {
     //    Materials    //
 
     @JvmField
-    val BEE_WAX: DeferredItem<Item> = REGISTER.registerItem("bee_wax", ::HoneycombItem, itemProperty())
+    val BEE_WAX: DeferredItem<Item> = register("bee_wax", ::HoneycombItem, itemProperty())
 
     @JvmField
-    val DEEPANT: DeferredItem<Item> = REGISTER.registerSimpleItem("deepant")
+    val DEEPANT: DeferredItem<Item> = register("deepant")
 
     @JvmField
-    val LUMINESCENCE_DUST: DeferredItem<Item> = REGISTER.registerSimpleItem("luminescence_dust")
+    val LUMINESCENCE_DUST: DeferredItem<Item> = register("luminescence_dust")
 
     @JvmField
     val OTHER_DUSTS: List<DeferredItem<Item>> = listOf(
@@ -219,16 +220,16 @@ object RagiumItems {
     )
 
     @JvmField
-    val SILKY_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("silky_crystal")
+    val SILKY_CRYSTAL: DeferredItem<Item> = register("silky_crystal")
 
     @JvmField
-    val CRIMSON_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("crimson_crystal")
+    val CRIMSON_CRYSTAL: DeferredItem<Item> = register("crimson_crystal")
 
     @JvmField
-    val WARPED_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("warped_crystal")
+    val WARPED_CRYSTAL: DeferredItem<Item> = register("warped_crystal")
 
     @JvmField
-    val OBSIDIAN_TEAR: DeferredItem<Item> = REGISTER.registerSimpleItem("obsidian_tear")
+    val OBSIDIAN_TEAR: DeferredItem<Item> = register("obsidian_tear")
 
     @JvmField
     val OTHER_GEMS: List<DeferredItem<Item>> = listOf(
@@ -239,7 +240,7 @@ object RagiumItems {
     )
 
     @JvmField
-    val CALCIUM_CARBIDE: DeferredItem<Item> = REGISTER.registerSimpleItem("calcium_carbide")
+    val CALCIUM_CARBIDE: DeferredItem<Item> = register("calcium_carbide")
 
     @JvmField
     val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
@@ -247,10 +248,10 @@ object RagiumItems {
     )
 
     @JvmField
-    val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = REGISTER.registerSimpleItem("ragi_alloy_compound")
+    val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")
 
     @JvmField
-    val SOAP: DeferredItem<Item> = REGISTER.registerSimpleItem("soap")
+    val SOAP: DeferredItem<Item> = register("soap")
 
     @JvmField
     val OTHER_INGOTS: List<DeferredItem<Item>> = listOf(
@@ -262,7 +263,7 @@ object RagiumItems {
 
     @JvmStatic
     private fun registerFood(name: String, foodProperties: FoodProperties): DeferredItem<Item> =
-        REGISTER.registerSimpleItem(name, itemProperty().food(foodProperties))
+        register(name, itemProperty().food(foodProperties))
 
     @JvmField
     val SWEET_BERRIES_CAKE_PIECE: DeferredItem<Item> =
@@ -278,10 +279,10 @@ object RagiumItems {
     val CARAMEL: DeferredItem<Item> = registerFood("caramel", Foods.DRIED_KELP)
 
     @JvmField
-    val DOUGH: DeferredItem<Item> = REGISTER.registerSimpleItem("dough")
+    val DOUGH: DeferredItem<Item> = register("dough")
 
     @JvmField
-    val FLOUR: DeferredItem<Item> = REGISTER.registerSimpleItem("flour")
+    val FLOUR: DeferredItem<Item> = register("flour")
 
     @JvmField
     val CHOCOLATE: DeferredItem<Item> = registerFood("chocolate", RagiumFoods.CHOCOLATE)
@@ -296,19 +297,19 @@ object RagiumItems {
     val CHOCOLATE_COOKIE: DeferredItem<Item> = registerFood("chocolate_cookie", Foods.COOKIE)
 
     @JvmField
-    val CINNAMON_STICK: DeferredItem<Item> = REGISTER.registerSimpleItem("cinnamon_stick")
+    val CINNAMON_STICK: DeferredItem<Item> = register("cinnamon_stick")
 
     @JvmField
-    val CINNAMON_POWDER: DeferredItem<Item> = REGISTER.registerSimpleItem("cinnamon_powder")
+    val CINNAMON_POWDER: DeferredItem<Item> = register("cinnamon_powder")
 
     @JvmField
     val CINNAMON_ROLL: DeferredItem<Item> = registerFood("cinnamon_roll", Foods.COOKED_BEEF)
 
     @JvmField
-    val TALLOW: DeferredItem<Item> = REGISTER.registerSimpleItem("tallow")
+    val TALLOW: DeferredItem<Item> = register("tallow")
 
     @JvmField
-    val MINCED_MEAT: DeferredItem<Item> = REGISTER.registerSimpleItem("minced_meat")
+    val MINCED_MEAT: DeferredItem<Item> = register("minced_meat")
 
     @JvmField
     val MEAT_INGOT: DeferredItem<Item> = registerFood("meat_ingot", Foods.BEEF)
@@ -321,7 +322,7 @@ object RagiumItems {
 
     @JvmField
     val AMBROSIA: DeferredItem<Item> =
-        REGISTER.registerItem(
+        register(
             "ambrosia",
             ::HTAmbrosiaItem,
             itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC),
@@ -360,38 +361,38 @@ object RagiumItems {
 
     @JvmField
     val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> =
-        REGISTER.registerItem("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(63))
+        register("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(63))
 
     @JvmField
     val SILKY_PICKAXE: DeferredItem<HTSilkyPickaxeItem> =
-        REGISTER.registerItem("silky_pickaxe", ::HTSilkyPickaxeItem)
+        register("silky_pickaxe", ::HTSilkyPickaxeItem)
 
     @JvmField
     val DYNAMITE: DeferredItem<HTDynamiteItem> =
-        REGISTER.registerItem("dynamite", ::HTDynamiteItem)
+        register("dynamite", ::HTDynamiteItem)
 
     @JvmField
     val SLOT_LOCK: DeferredItem<Item> =
-        REGISTER.registerSimpleItem("slot_lock")
+        register("slot_lock")
 
     //    Circuits    //
 
-    val BASIC_CIRCUIT: DeferredItem<Item> = REGISTER.registerSimpleItem(
+    val BASIC_CIRCUIT: DeferredItem<Item> = register(
         "basic_circuit",
         itemProperty().name(HTMachineTier.BASIC.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
     )
 
-    val ADVANCED_CIRCUIT: DeferredItem<Item> = REGISTER.registerSimpleItem(
+    val ADVANCED_CIRCUIT: DeferredItem<Item> = register(
         "advanced_circuit",
         itemProperty().name(HTMachineTier.ADVANCED.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
     )
 
-    val ELITE_CIRCUIT: DeferredItem<Item> = REGISTER.registerSimpleItem(
+    val ELITE_CIRCUIT: DeferredItem<Item> = register(
         "elite_circuit",
         itemProperty().name(HTMachineTier.ELITE.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
     )
 
-    val ULTIMATE_CIRCUIT: DeferredItem<Item> = REGISTER.registerSimpleItem(
+    val ULTIMATE_CIRCUIT: DeferredItem<Item> = register(
         "ultimate_circuit",
         itemProperty().name(HTMachineTier.ULTIMATE.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
     )
@@ -407,44 +408,61 @@ object RagiumItems {
     //    Press Molds    //
 
     @JvmField
-    val GEAR_PRESS_MOLD: DeferredItem<Item> = REGISTER.registerSimpleItem("gear_press_mold")
+    val GEAR_PRESS_MOLD: DeferredItem<Item> = register("gear_press_mold")
 
     @JvmField
-    val PLATE_PRESS_MOLD: DeferredItem<Item> = REGISTER.registerSimpleItem("plate_press_mold")
+    val PLATE_PRESS_MOLD: DeferredItem<Item> = register("plate_press_mold")
 
     @JvmField
-    val ROD_PRESS_MOLD: DeferredItem<Item> = REGISTER.registerSimpleItem("rod_press_mold")
+    val ROD_PRESS_MOLD: DeferredItem<Item> = register("rod_press_mold")
 
     @JvmField
     val PRESS_MOLDS: List<DeferredItem<Item>> = listOf(GEAR_PRESS_MOLD, PLATE_PRESS_MOLD, ROD_PRESS_MOLD)
 
+    //    Reagents    //
+
+    @JvmField
+    val ALKALI_REAGENT: DeferredItem<Item> = register("alkali_reagent")
+
+    @JvmField
+    val BLAZE_REAGENT: DeferredItem<Item> = register("blaze_reagent")
+
+    @JvmField
+    val CREEPER_REAGENT: DeferredItem<Item> = register("creeper_reagent")
+
+    @JvmField
+    val WITHER_REAGENT: DeferredItem<Item> = register("wither_reagent")
+
+    @JvmField
+    val REAGENTS: List<DeferredItem<Item>> = listOf(
+        ALKALI_REAGENT,
+        BLAZE_REAGENT,
+        CREEPER_REAGENT,
+        WITHER_REAGENT,
+    )
+
     //    Ingredients    //
 
     @JvmField
-    val ALKALI_REAGENT: DeferredItem<Item> = REGISTER.registerSimpleItem("alkali_reagent")
+    val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
 
     @JvmField
-    val PLASTIC_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("plastic_plate")
+    val CIRCUIT_BOARD: DeferredItem<Item> = register("circuit_board")
 
     @JvmField
-    val CIRCUIT_BOARD: DeferredItem<Item> = REGISTER.registerSimpleItem("circuit_board")
+    val ENGINE: DeferredItem<Item> = register("engine")
 
     @JvmField
-    val ENGINE: DeferredItem<Item> = REGISTER.registerSimpleItem("engine")
+    val LED: DeferredItem<Item> = register("led")
 
     @JvmField
-    val LED: DeferredItem<Item> = REGISTER.registerSimpleItem("led")
+    val SOLAR_PANEL: DeferredItem<Item> = register("solar_panel")
 
     @JvmField
-    val SOLAR_PANEL: DeferredItem<Item> = REGISTER.registerSimpleItem("solar_panel")
-
-    @JvmField
-    val RAGI_TICKET: DeferredItem<Item> = REGISTER.registerSimpleItem("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
+    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
 
     @JvmField
     val INGREDIENTS: List<DeferredItem<Item>> = buildList {
-        // compound
-        add(ALKALI_REAGENT)
         // parts
         add(PLASTIC_PLATE)
         add(CIRCUIT_BOARD)
@@ -458,19 +476,19 @@ object RagiumItems {
     //    Radioactives    //
 
     val YELLOW_CAKE: DeferredItem<Item> =
-        REGISTER.registerSimpleItem("yellow_cake")
+        register("yellow_cake")
 
     val YELLOW_CAKE_PIECE: DeferredItem<Item> =
         registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
 
     val URANIUM_FUEL: DeferredItem<Item> =
-        REGISTER.registerSimpleItem("uranium_fuel", itemProperty().durability(255))
+        register("uranium_fuel", itemProperty().durability(255))
 
     val NUCLEAR_WASTE: DeferredItem<Item> =
-        REGISTER.registerSimpleItem("nuclear_waste")
+        register("nuclear_waste")
 
     val PLUTONIUM_FUEL: DeferredItem<Item> =
-        REGISTER.registerSimpleItem("plutonium_fuel", itemProperty().durability(1023))
+        register("plutonium_fuel", itemProperty().durability(1023))
 
     @JvmField
     val RADIOACTIVES: List<DeferredItem<Item>> = listOf(

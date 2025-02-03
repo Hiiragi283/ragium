@@ -35,8 +35,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, "Superconductive Coolant")
 
         add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "Block of Ragi-Alloy (Decoration)")
-        add(RagiumBlocks.Decorations.RAGI_STEEL_BLOCK, "Block of Ragi-Steel (Decoration)")
-        add(RagiumBlocks.Decorations.REFINED_RAGI_STEEL_BLOCK, "Block of Refined Ragi-Steel (Decoration)")
 
         add(RagiumBlocks.Decorations.BASIC_CASING, "Basic Casing (Decoration)")
         add(RagiumBlocks.Decorations.ADVANCED_CASING, "Advanced Casing (Decoration)")
@@ -111,6 +109,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
 
         add(RagiumItems.ALKALI_REAGENT, "Alkali Reagent")
+        add(RagiumItems.BLAZE_REAGENT, "Blaze Reagent")
+        add(RagiumItems.CREEPER_REAGENT, "Creeper Reagent")
+        add(RagiumItems.WITHER_REAGENT, "Wither Reagent")
+
         add(RagiumItems.BEE_WAX, "Bee Wax")
         add(RagiumItems.CALCIUM_CARBIDE, "Calcium Carbide")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
@@ -268,10 +270,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterials.FIERY_COAL, "Fiery Coal")
         add(RagiumMaterials.RAGI_ALLOY, "Ragi-Alloy")
         add(RagiumMaterials.RAGI_CRYSTAL, "Ragi-Crystal")
-        add(RagiumMaterials.RAGI_STEEL, "Ragi-Steel")
         add(RagiumMaterials.RAGINITE, "Raginite")
         add(RagiumMaterials.RAGIUM, "Ragium")
-        add(RagiumMaterials.REFINED_RAGI_STEEL, "Refined Ragi-Steel")
         add(RagiumMaterials.RESIDUAL_COKE, "Residual Coke")
         add(RagiumMaterials.SLAG, "Slag")
         add(VanillaMaterials.AMETHYST, "Amethyst")

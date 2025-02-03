@@ -32,7 +32,7 @@ class RagiumFluidTagProvider(
             // Common Tag
             add(fluid.commonTag, fluid)
             // Gaseous Tag
-            if (fluid.textureType == RagiumFluids.TextureType.GASEOUS) {
+            if (fluid.get().fluidType.isLighterThanAir) {
                 add(Tags.Fluids.GASEOUS, fluid)
             }
         }
