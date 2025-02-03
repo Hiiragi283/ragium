@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.define
@@ -342,11 +343,10 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.ENGINE)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(Items.GLOW_INK_SAC)
             .itemOutput(RagiumItems.LUMINESCENCE_DUST)
-            .itemOutput(Items.INK_SAC)
+            // .itemOutput(Items.INK_SAC)
             .save(output)
 
         ShapedRecipeBuilder

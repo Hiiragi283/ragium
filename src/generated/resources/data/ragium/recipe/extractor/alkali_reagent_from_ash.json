@@ -2,10 +2,10 @@
   "type": "ragium:extractor",
   "input": {
     "count": 1,
-    "item": "minecraft:glow_ink_sac"
+    "tag": "c:dusts/ash"
   },
   "item_output": {
     "count": 1,
-    "id": "ragium:luminescence_dust"
+    "id": "ragium:alkali_reagent"
   }
 }

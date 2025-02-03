@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCondition
-import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
+import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -127,7 +127,7 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
 
     //    IRecipeCategory    //
 
-    override fun getRecipeType(): RecipeType<RecipeHolder<HTMachineRecipe>> = RagiumJEIPlugin.getRecipeType(machine)
+    override fun getRecipeType(): RecipeType<RecipeHolder<HTMachineRecipe>> = RagiumJEIRecipeTypes.getRecipeType(machine)
 
     override fun getTitle(): Component = machine.text
 

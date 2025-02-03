@@ -1,15 +1,11 @@
 {
   "type": "ragium:extractor",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:blaze_powder"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:blaze_reagent"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:blaze_powder"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:blaze_reagent"
+  }
 }

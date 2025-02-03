@@ -68,7 +68,7 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
             .save(output)
 
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+            .create(RagiumRecipes.ASSEMBLER)
             .itemInput(ModItems.MILK_BOTTLE.get())
             .fluidOutput(NeoForgeMod.MILK, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_bottle")

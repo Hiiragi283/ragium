@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.integration
 import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
+import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
@@ -14,14 +15,13 @@ import net.minecraft.data.recipes.RecipeOutput
 object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Canola Oil
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(ActuallyTags.Items.SEEDS_CANOLA)
             .fluidOutput(InitFluids.CANOLA_OIL, 80)
             .save(output)
         // Refined Canola Oil
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+            .create(RagiumRecipes.ASSEMBLER)
             .fluidInput(InitFluids.CANOLA_OIL.get())
             .fluidOutput(InitFluids.REFINED_CANOLA_OIL)
             .save(output)

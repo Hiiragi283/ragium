@@ -5,7 +5,7 @@
       "modid": "evilcraft"
     }
   ],
-  "type": "ragium:extractor",
+  "type": "ragium:assembler",
   "condition": {
     "type": "ragium:source",
     "source": "ragium:sources/heating",

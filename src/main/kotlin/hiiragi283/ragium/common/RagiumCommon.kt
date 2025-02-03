@@ -39,6 +39,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumMenuTypes.REGISTER.register(eventBus)
         RagiumRecipes.SERIALIZER.register(eventBus)
         RagiumRecipes.TYPE.register(eventBus)
+
+        RagiumRecipeSerializers.REGISTER.register(eventBus)
+        RagiumRecipeTypes.REGISTER.register(eventBus)
         RagiumMachineRecipeConditions.REGISTER.register(eventBus)
         RagiumMultiblockComponentTypes.REGISTER.register(eventBus)
 

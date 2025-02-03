@@ -1,15 +1,11 @@
 {
   "type": "ragium:extractor",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:sea_lantern"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 6,
-      "id": "ragium:fluorite"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:sea_lantern"
+  },
+  "item_output": {
+    "count": 6,
+    "id": "ragium:fluorite"
+  }
 }

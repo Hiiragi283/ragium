@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -20,8 +21,7 @@ import net.neoforged.neoforge.fluids.FluidType
 object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Soul XX -> Crude Oil
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 2)
@@ -118,8 +118,7 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerSaps(output: RecipeOutput) {
         // XX Log -> Sap + Pulp
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumFluids.SAP)
@@ -134,10 +133,8 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
             .save(output, RagiumAPI.id("sap"))
 
         // Crimson Stem -> Crimson Sap
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(ItemTags.CRIMSON_STEMS)
-            .catalyst(HTMachineTier.ADVANCED)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumFluids.CRIMSON_SAP)
             .savePrefixed(output, "crimson_")
@@ -151,10 +148,8 @@ object HTDistillationRecipeProvider : RagiumRecipeProvider.Child {
             .save(output, RagiumAPI.id("crimson_sap"))
 
         // Warped Stem -> Warped Sap
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(ItemTags.WARPED_STEMS)
-            .catalyst(HTMachineTier.ADVANCED)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumFluids.WARPED_SAP)
             .savePrefixed(output, "warped_")

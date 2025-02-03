@@ -214,7 +214,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             .saveSuffixed(output, "_from_water")
 
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+            .create(RagiumRecipes.ASSEMBLER)
             .itemInput(Tags.Items.BUCKETS_POWDER_SNOW)
             .itemOutput(Items.BUCKET)
             .fluidOutput(RagiumFluids.SNOW)

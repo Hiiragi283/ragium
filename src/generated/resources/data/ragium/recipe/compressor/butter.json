@@ -1,5 +1,5 @@
 {
-  "type": "ragium:extractor",
+  "type": "ragium:compressor",
   "fluid_inputs": [
     {
       "amount": 1000,

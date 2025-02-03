@@ -28,6 +28,7 @@ import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity
+import hiiragi283.ragium.common.block.processor.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTLargeProcessorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.init.*
@@ -190,7 +191,9 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.EXTRACTOR)
-            .put(HTMachinePropertyKeys.RECIPE_PROXY, HTMachineRecipeProxy(HTMachineConverters::fromComposting))
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
+                HTExtractorBlockEntity(pos, state)
+            }
 
         event
             .getBuilder(RagiumMachineKeys.GRINDER)
@@ -350,6 +353,7 @@ internal object RagiumEvents {
 
         bindAllMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
         bindAllMachines(RagiumBlockEntityTypes.LARGE_PROCESSOR)
+        bindMachine(RagiumBlockEntityTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR)
         bindMachine(RagiumBlockEntityTypes.DISTILLATION_TOWER, RagiumMachineKeys.DISTILLATION_TOWER)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 
@@ -411,6 +415,7 @@ internal object RagiumEvents {
         registerHandlers(RagiumBlockEntityTypes.FLUID_GENERATOR)
 
         registerHandlers(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
+        registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
         registerHandlers(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         registerHandlers(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)

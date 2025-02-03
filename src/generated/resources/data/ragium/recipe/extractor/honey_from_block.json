@@ -1,15 +1,11 @@
 {
   "type": "ragium:extractor",
-  "fluid_outputs": [
-    {
-      "amount": 1000,
-      "id": "ragium:honey"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:honey_block"
-    }
-  ]
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:honey"
+  },
+  "input": {
+    "count": 1,
+    "item": "minecraft:honey_block"
+  }
 }

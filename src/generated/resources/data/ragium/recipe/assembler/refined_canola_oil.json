@@ -5,7 +5,7 @@
       "modid": "actuallyadditions"
     }
   ],
-  "type": "ragium:extractor",
+  "type": "ragium:assembler",
   "fluid_inputs": [
     {
       "amount": 1000,

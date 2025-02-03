@@ -2,10 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTContainerMenu
-import hiiragi283.ragium.common.inventory.HTDefaultMachineContainerMenu
-import hiiragi283.ragium.common.inventory.HTDistillationTowerContainerMenu
-import hiiragi283.ragium.common.inventory.HTLargeMachineContainerMenu
-import hiiragi283.ragium.common.inventory.HTMultiSmelterContainerMenu
+import hiiragi283.ragium.common.inventory.*
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.flag.FeatureFlags
@@ -28,6 +25,10 @@ object RagiumMenuTypes {
         REGISTER.register(path) { _: ResourceLocation ->
             IMenuTypeExtension.create(factory)
         }
+
+    @JvmField
+    val EXTRACTOR: DeferredHolder<MenuType<*>, MenuType<HTExtractorContainerMenu>> =
+        registerExtended("extractor", ::HTExtractorContainerMenu)
 
     @JvmField
     val DEFAULT_MACHINE: DeferredHolder<MenuType<*>, MenuType<HTDefaultMachineContainerMenu>> =

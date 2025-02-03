@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -15,7 +14,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SmeltingRecipe
@@ -35,25 +33,6 @@ object HTMachineConverters {
             .itemInput(recipe.ingredients[0], 64)
             .itemOutput(recipe.getResultItem(provider).item, 64)
             .export(holder.id.withSuffix("_from_smelting"))
-    }
-
-    @JvmStatic
-    fun fromComposting(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>) {
-        HTMachineRecipeProxy.default(RagiumRecipes.EXTRACTOR).getRecipes(level, consumer)
-        level
-            .registryAccess()
-            .lookupOrThrow(Registries.ITEM)
-            .listElements()
-            .forEach { holder: Holder.Reference<Item> ->
-                val chance: Float = holder.getData(NeoForgeDataMaps.COMPOSTABLES)?.chance ?: return@forEach
-                HTMachineRecipeBuilder
-                    .create(RagiumRecipes.EXTRACTOR)
-                    .itemInput(holder.value())
-                    .catalyst(Items.COMPOSTER)
-                    .fluidOutput(RagiumFluids.BIOMASS, (1000 * chance).toInt())
-                    .exportSuffixed("_from_${holder.idOrThrow.path}")
-                    .let(consumer::accept)
-            }
     }
 
     @JvmStatic

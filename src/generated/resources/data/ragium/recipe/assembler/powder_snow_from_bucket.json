@@ -1,5 +1,5 @@
 {
-  "type": "ragium:extractor",
+  "type": "ragium:assembler",
   "fluid_outputs": [
     {
       "amount": 1000,

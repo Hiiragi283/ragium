@@ -1,27 +1,15 @@
 {
   "type": "ragium:extractor",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "tag": "c:circuits/advanced"
-    }
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:warped_sap"
   },
-  "fluid_outputs": [
-    {
-      "amount": 1000,
-      "id": "ragium:warped_sap"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "minecraft:warped_stems"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "id": "ragium:wood_dust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "minecraft:warped_stems"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "ragium:wood_dust"
+  }
 }

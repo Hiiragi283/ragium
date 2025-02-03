@@ -1,21 +1,15 @@
 {
   "type": "ragium:extractor",
-  "fluid_outputs": [
-    {
-      "amount": 500,
-      "id": "ragium:crude_oil"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "minecraft:soul_fire_base_blocks"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "minecraft:sand"
-    }
-  ]
+  "fluid_output": {
+    "amount": 500,
+    "id": "ragium:crude_oil"
+  },
+  "input": {
+    "count": 1,
+    "tag": "minecraft:soul_fire_base_blocks"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:sand"
+  }
 }

@@ -19,9 +19,9 @@ enum class RagiumFluids(
     val color: Color,
     val enName: String,
     val jaName: String,
-    val extension: IClientFluidTypeExtensions = TextureType.LIQUID,
+    private val textureType: TextureType = TextureType.LIQUID,
 ) : HTFluidContent,
-    IClientFluidTypeExtensions by extension {
+    IClientFluidTypeExtensions {
     // Vanilla
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
     SNOW("Powder Snow", "粉雪", TextureType.SNOW),
@@ -148,22 +148,21 @@ enum class RagiumFluids(
         val stillTex: ResourceLocation = ResourceLocation.withDefaultNamespace("block/bone_block_side"),
         val floatingTex: ResourceLocation = stillTex,
         val overTex: ResourceLocation? = null,
-    ) : IClientFluidTypeExtensions {
+    ) {
         GASEOUS(ResourceLocation.withDefaultNamespace("block/white_concrete")),
         HONEY(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
         LIQUID,
         SNOW(ResourceLocation.withDefaultNamespace("block/snow")),
         STICKY(ResourceLocation.withDefaultNamespace("block/quartz_block_bottom")),
-        ;
-
-        override fun getStillTexture(): ResourceLocation = stillTex
-
-        override fun getFlowingTexture(): ResourceLocation = floatingTex
-
-        override fun getOverlayTexture(): ResourceLocation? = overTex
     }
 
     //    ClientExtensions    //
+
+    override fun getStillTexture(): ResourceLocation = textureType.stillTex
+
+    override fun getFlowingTexture(): ResourceLocation = textureType.floatingTex
+
+    override fun getOverlayTexture(): ResourceLocation? = textureType.overTex
 
     override fun getTintColor(): Int = color.rgb
 

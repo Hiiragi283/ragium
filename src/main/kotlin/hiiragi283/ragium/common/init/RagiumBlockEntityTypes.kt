@@ -9,10 +9,7 @@ import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
-import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
-import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity
-import hiiragi283.ragium.common.block.processor.HTLargeProcessorBlockEntity
-import hiiragi283.ragium.common.block.processor.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.processor.*
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
@@ -85,6 +82,10 @@ object RagiumBlockEntityTypes {
         registerMachine("fluid_generator", ::HTFluidGeneratorBlockEntity)
 
     //    Processor    //
+
+    @JvmField
+    val EXTRACTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTExtractorBlockEntity>> =
+        register("extractor", ::HTExtractorBlockEntity)
 
     @JvmField
     val DEFAULT_PROCESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDefaultProcessorBlockEntity>> =

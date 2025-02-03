@@ -37,7 +37,7 @@ object RagiumClient {
     fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Fluid
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            event.registerFluidType(fluid, fluid.typeHolder)
+            event.registerFluidType(fluid, fluid.typeHolder.get())
         }
 
         LOGGER.info("Registered client extensions!")
@@ -52,6 +52,7 @@ object RagiumClient {
         register(RagiumMenuTypes.DEFAULT_MACHINE)
         register(RagiumMenuTypes.LARGE_MACHINE)
 
+        register(RagiumMenuTypes.EXTRACTOR)
         register(RagiumMenuTypes.DISTILLATION_TOWER)
         register(RagiumMenuTypes.MULTI_SMELTER)
 

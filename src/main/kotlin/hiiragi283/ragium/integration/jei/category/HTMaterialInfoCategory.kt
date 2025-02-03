@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.HTTypedMaterial
-import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
+import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.createEmptyMaterialStack
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.ICodecHelper
@@ -23,7 +23,7 @@ import net.minecraft.world.item.Items
 
 class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
     AbstractRecipeCategory<HTTypedMaterial>(
-        RagiumJEIPlugin.MATERIAL_INFO,
+        RagiumJEIRecipeTypes.MATERIAL_INFO,
         Component.literal("Material Info"),
         guiHelper.createDrawableItemLike(Items.BOOK),
         18 * 9 + 8,

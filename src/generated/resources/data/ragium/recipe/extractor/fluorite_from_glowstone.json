@@ -1,19 +1,11 @@
 {
   "type": "ragium:extractor",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:glowstone"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "id": "ragium:fluorite"
-    },
-    {
-      "count": 1,
-      "id": "minecraft:gold_nugget"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:glowstone"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "ragium:fluorite"
+  }
 }

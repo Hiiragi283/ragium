@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.requiresFor
@@ -65,8 +66,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerMilk(output: RecipeOutput) {
         // Milk
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(Items.MILK_BUCKET)
             .itemOutput(Items.BUCKET)
             .fluidOutput(NeoForgeMod.MILK)
@@ -81,7 +81,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
         // Butter
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+            .create(RagiumRecipes.COMPRESSOR)
             .milkInput()
             .itemOutput(RagiumItems.BUTTER)
             .save(output)
@@ -116,14 +116,12 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerHoney(output: RecipeOutput) {
         // Honey
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(Items.HONEY_BLOCK)
             .fluidOutput(RagiumFluids.HONEY)
             .saveSuffixed(output, "_from_block")
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(Items.HONEY_BOTTLE)
             .itemOutput(Items.GLASS_BOTTLE)
             .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
@@ -143,15 +141,13 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.HONEY_BLOCK)
             .save(output)
         // Bee wax
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(Items.HONEYCOMB_BLOCK)
             .itemOutput(RagiumItems.BEE_WAX, 4)
             .fluidOutput(RagiumFluids.HONEY)
             .saveSuffixed(output, "_from_block")
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+        HTExtractorRecipeBuilder()
             .itemInput(Items.HONEYCOMB)
             .itemOutput(RagiumItems.BEE_WAX)
             .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)

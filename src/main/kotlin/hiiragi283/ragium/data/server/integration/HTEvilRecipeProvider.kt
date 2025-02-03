@@ -20,7 +20,7 @@ object HTEvilRecipeProvider : RagiumRecipeProvider.ModChild("evilcraft") {
         val blood: Fluid = holderLookup.lookupOrThrow(Registries.FLUID).getOrThrow(BLOOD).value()
         // Hardened Blood
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.EXTRACTOR)
+            .create(RagiumRecipes.ASSEMBLER)
             .fluidInput(blood)
             .sources(RagiumBlockTags.HEATING_SOURCES)
             .itemOutput(RegistryEntries.BLOCK_HARDENED_BLOOD.get())
