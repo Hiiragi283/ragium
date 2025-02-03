@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.machine.recipe
 
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec

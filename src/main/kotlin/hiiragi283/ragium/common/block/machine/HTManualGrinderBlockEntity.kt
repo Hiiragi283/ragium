@@ -9,9 +9,9 @@ import hiiragi283.ragium.api.extension.replaceBlockState
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCache
 import hiiragi283.ragium.api.property.ifPresent
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCache
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos

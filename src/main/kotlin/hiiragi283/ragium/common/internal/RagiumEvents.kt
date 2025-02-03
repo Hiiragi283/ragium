@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -21,7 +22,6 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.DataFunction
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity

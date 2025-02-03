@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.common.recipe.condition.*
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister

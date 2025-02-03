@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.machine.recipe
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import net.minecraft.core.BlockPos

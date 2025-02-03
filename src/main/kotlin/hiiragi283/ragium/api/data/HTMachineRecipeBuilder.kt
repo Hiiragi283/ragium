@@ -4,11 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
-import hiiragi283.ragium.api.recipe.HTMachineRecipeType
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.registries.BuiltInRegistries

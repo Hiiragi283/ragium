@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.extension.constFunction3
 import hiiragi283.ragium.api.extension.identifyFunction
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.DataFunction
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

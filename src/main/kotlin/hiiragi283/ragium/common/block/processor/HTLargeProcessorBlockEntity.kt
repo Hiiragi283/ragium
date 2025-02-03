@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.capability.LimitedFluidHandler
 import hiiragi283.ragium.api.capability.LimitedItemHandler
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.inventory.HTLargeMachineContainerMenu
 import net.minecraft.core.BlockPos

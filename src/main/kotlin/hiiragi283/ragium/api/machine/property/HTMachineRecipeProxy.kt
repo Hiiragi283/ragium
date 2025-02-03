@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.machine.property
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeType
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTypedMaterial
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeType
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
 import java.util.function.BiFunction

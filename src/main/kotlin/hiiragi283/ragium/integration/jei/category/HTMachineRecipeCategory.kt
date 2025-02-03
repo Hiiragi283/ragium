@@ -2,8 +2,8 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients

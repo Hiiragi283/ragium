@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeProcessor
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
