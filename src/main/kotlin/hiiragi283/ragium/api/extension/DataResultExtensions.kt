@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.extension
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.util.DataFunction
 import org.slf4j.Logger
 import kotlin.jvm.optionals.getOrNull
 
@@ -48,7 +47,7 @@ fun OptionalLong.toDataResult(errorMessage: () -> String): DataResult<Long> = wh
  * @return [T]がnullの場合は[DataResult.error]，それ以外の場合は[DataResult.success]
  */
 fun <T : Any> T?.toDataResult(errorMessage: () -> String): DataResult<T> =
-    this?.let(DataFunction.success()) ?: DataResult.error(errorMessage)
+    this?.let(DataResult<T>::success) ?: DataResult.error(errorMessage)
 
 /**
  * [DataResult]の結果を返します。
