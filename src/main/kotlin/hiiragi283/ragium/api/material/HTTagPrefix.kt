@@ -35,6 +35,10 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
         override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
     },
 
+    // IE
+    SHEETMETAL("sheetmetals"),
+    WIRE("wires"),
+
     // Mekanism
     DIRTY_DUST("dirty_dusts"),
     CLUMP("clumps"),

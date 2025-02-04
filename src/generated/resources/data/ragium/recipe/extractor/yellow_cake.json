@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "ragium:compressor",
+  "input": {
+    "count": 8,
+    "item": "mekanism:yellow_cake_uranium"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:yellow_cake"
+  }
+}

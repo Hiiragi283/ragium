@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.canFill
 import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
@@ -7,7 +8,6 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -15,7 +15,17 @@ import net.neoforged.neoforge.items.IItemHandler
 import java.util.*
 
 abstract class HTFluidOutputRecipe(private val group: String, val itemOutput: Optional<ItemStack>, val fluidOutput: Optional<FluidStack>) :
-    Recipe<HTRecipeInput> {
+    HTMachineRecipeBase {
+    companion object {
+        @JvmStatic
+        fun <T : HTFluidOutputRecipe> validate(recipe: T): DataResult<T> {
+            if (recipe.itemOutput.isEmpty && recipe.fluidOutput.isEmpty) {
+                return DataResult.error { "Either item or fluid output required!" }
+            }
+            return DataResult.success(recipe)
+        }
+    }
+
     fun canInsert(itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
         itemOutput.ifPresent { output: ItemStack ->
             if (!itemHandler.canInsert(output)) throw HTMachineException.MergeResult(false)

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.integration
 
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -17,8 +18,8 @@ object HTMekanismRecipeProvider : RagiumRecipeProvider.ModChild("mekanism") {
             .itemOutput(MekanismItems.YELLOW_CAKE_URANIUM, 8)
             .save(output)
         // Yellow Cake Uranium -> Yellow Cake
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        HTSingleItemRecipeBuilder
+            .compressor()
             .itemInput(MekanismItems.YELLOW_CAKE_URANIUM, 8)
             .itemOutput(RagiumItems.YELLOW_CAKE)
             .save(output)

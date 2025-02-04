@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -34,12 +33,7 @@ class HTRefineryRecipe(
                         ItemStack.STRICT_CODEC.optionalFieldOf("item_output").forGetter(HTRefineryRecipe::itemOutput),
                         FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTRefineryRecipe::fluidOutput),
                     ).apply(instance, ::HTRefineryRecipe)
-            }.validate { recipe: HTRefineryRecipe ->
-                if (recipe.itemOutput.isEmpty && recipe.fluidOutput.isEmpty) {
-                    return@validate DataResult.error { "Either item or fluid output required!" }
-                }
-                DataResult.success(recipe)
-            }
+            }.validate(HTFluidOutputRecipe::validate)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTRefineryRecipe> = StreamCodec.composite(

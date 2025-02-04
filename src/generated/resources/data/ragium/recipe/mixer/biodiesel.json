@@ -3,23 +3,21 @@
   "fluid_inputs": [
     {
       "amount": 4000,
-      "tag": "c:alcohol"
+      "tag": "c:ethanol"
+    },
+    {
+      "amount": 1000,
+      "tag": "c:plant_oil"
     }
   ],
   "fluid_outputs": [
     {
       "amount": 4000,
-      "id": "ragium:bio_fuel"
+      "id": "ragium:biodiesel"
     },
     {
       "amount": 1000,
       "id": "ragium:glycerol"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "ragium:tallow"
     }
   ]
 }

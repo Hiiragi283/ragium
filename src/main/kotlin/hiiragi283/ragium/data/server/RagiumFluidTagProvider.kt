@@ -40,7 +40,7 @@ class RagiumFluidTagProvider(
         add(RagiumFluidTags.NITRO_FUEL, RagiumFluids.NITRO_FUEL.commonTag)
 
         add(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluids.FUEL.commonTag)
-        add(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluids.BIO_FUEL.commonTag)
+        add(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluids.BIODIESEL.commonTag)
 
         add(RagiumFluidTags.THERMAL_FUEL, Tags.Fluids.LAVA)
     }

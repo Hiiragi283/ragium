@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import blusunrize.immersiveengineering.ImmersiveEngineering
 import com.buuz135.industrial.utils.IndustrialTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
@@ -148,9 +149,24 @@ class RagiumItemTagProvider(
         tag(RagiumItemTags.PLASTICS)
             .add(RagiumItems.PLASTIC_PLATE)
 
+        tag(itemTagKey(commonId("plates/plastic")))
+            .add(RagiumItems.PLASTIC_PLATE)
+
         tag(RagiumItemTags.SOLAR_PANELS)
             .add(RagiumItems.SOLAR_PANEL)
             .add(GeneratorsItems.SOLAR_PANEL, true)
+
+        tag(RagiumItemTags.GEAR_MOLDS)
+            .add(RagiumItems.GEAR_PRESS_MOLD)
+            .add(ImmersiveEngineering.rl("mold_gear"), true)
+
+        tag(RagiumItemTags.PLATE_MOLDS)
+            .add(RagiumItems.PLATE_PRESS_MOLD)
+            .add(ImmersiveEngineering.rl("mold_plate"), true)
+
+        tag(RagiumItemTags.ROD_MOLDS)
+            .add(RagiumItems.ROD_PRESS_MOLD)
+            .add(ImmersiveEngineering.rl("mold_rod"), true)
 
         // Industrial Foregoing
         tag(IndustrialTags.Items.MACHINE_FRAME_PITY)

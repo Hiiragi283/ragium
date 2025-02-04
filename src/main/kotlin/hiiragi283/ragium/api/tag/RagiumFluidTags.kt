@@ -6,6 +6,10 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 
 object RagiumFluidTags {
+    //    Common    //
+
+    //    Ragium    //
+
     @JvmField
     val NITRO_FUEL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/nitro"))
 

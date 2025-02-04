@@ -151,19 +151,6 @@ internal object RagiumEvents {
             )
 
         event
-            .getBuilder(RagiumMachineKeys.COMPRESSOR)
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.material(
-                    RagiumRecipes.COMPRESSOR,
-                    HTMachineConverters::compressorGear,
-                    HTMachineConverters::compressorGem,
-                    HTMachineConverters::compressorPlate,
-                    HTMachineConverters::compressorRod,
-                ),
-            )
-
-        event
             .getBuilder(RagiumMachineKeys.EXTRACTOR)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
                 HTExtractorBlockEntity(pos, state)
@@ -264,13 +251,13 @@ internal object RagiumEvents {
         event.register(CommonMaterials.IRIDIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.LEAD, HTMaterialType.METAL)
         event.register(CommonMaterials.NICKEL, HTMaterialType.METAL)
-        event.register(CommonMaterials.NITER, HTMaterialType.MINERAL)
         event.register(CommonMaterials.OSMIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.PERIDOT, HTMaterialType.GEM)
         event.register(CommonMaterials.PLATINUM, HTMaterialType.METAL)
         event.register(CommonMaterials.PLUTONIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.RUBY, HTMaterialType.GEM)
         event.register(CommonMaterials.SALT, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.SALTPETER, HTMaterialType.MINERAL)
         event.register(CommonMaterials.SAPPHIRE, HTMaterialType.GEM)
         event.register(CommonMaterials.SILICON, HTMaterialType.METAL)
         event.register(CommonMaterials.SILVER, HTMaterialType.METAL)

@@ -21,5 +21,14 @@ object RagiumItemTags {
     //    Ragium    //
 
     @JvmField
+    val GEAR_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/gear"))
+
+    @JvmField
+    val PLATE_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/plate"))
+
+    @JvmField
+    val ROD_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/rod"))
+
+    @JvmField
     val SOLAR_PANELS: TagKey<Item> = itemTagKey(RagiumAPI.id("solar_panels"))
 }

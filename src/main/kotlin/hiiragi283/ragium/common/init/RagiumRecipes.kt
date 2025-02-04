@@ -28,9 +28,6 @@ object RagiumRecipes {
     val CHEMICAL_REACTOR: HTMachineRecipeType = create(RagiumMachineKeys.CHEMICAL_REACTOR)
 
     @JvmField
-    val COMPRESSOR: HTMachineRecipeType = create(RagiumMachineKeys.COMPRESSOR)
-
-    @JvmField
     val GRINDER: HTMachineRecipeType = create(RagiumMachineKeys.GRINDER)
 
     @JvmField

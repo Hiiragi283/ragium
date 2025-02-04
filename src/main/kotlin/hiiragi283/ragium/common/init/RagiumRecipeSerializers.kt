@@ -2,8 +2,10 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
+import hiiragi283.ragium.api.recipe.HTSingleItemRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -30,6 +32,10 @@ object RagiumRecipeSerializers {
             override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, T> = streamCodec
         }
     }
+
+    @JvmField
+    val COMPRESSOR: DeferredHolder<RecipeSerializer<*>, HTSingleItemRecipe.Serializer<HTCompressorRecipe>> =
+        REGISTER.register("compressor") { _: ResourceLocation -> HTSingleItemRecipe.Serializer(::HTCompressorRecipe) }
 
     @JvmField
     val EXTRACTOR: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractorRecipe>> =

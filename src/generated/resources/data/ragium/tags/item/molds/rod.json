@@ -1,0 +1,9 @@
+{
+  "values": [
+    "ragium:rod_press_mold",
+    {
+      "id": "immersiveengineering:mold_rod",
+      "required": false
+    }
+  ]
+}

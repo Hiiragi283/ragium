@@ -1,9 +1,9 @@
 {
-  "type": "ragium:compressor",
+  "type": "ragium:assembler",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {
-      "item": "ragium:plate_press_mold"
+      "tag": "ragium:molds/plate"
     }
   },
   "item_inputs": [

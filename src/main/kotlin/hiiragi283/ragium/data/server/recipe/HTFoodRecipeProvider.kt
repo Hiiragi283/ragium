@@ -1,9 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -80,8 +78,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // Butter
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        HTRefineryRecipeBuilder()
             .milkInput()
             .itemOutput(RagiumItems.BUTTER)
             .save(output)
@@ -235,8 +232,8 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.MINCED_MEAT)
             .saveSuffixed(output, "_from_rotten")
         // Minced Meat -> Meat Ingot
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        HTSingleItemRecipeBuilder
+            .compressor()
             .itemInput(RagiumItems.MINCED_MEAT)
             .itemOutput(RagiumItems.MEAT_INGOT)
             .save(output)

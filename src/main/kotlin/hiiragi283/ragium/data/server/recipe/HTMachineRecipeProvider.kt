@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
+import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.biome
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -45,10 +46,10 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun compressor(output: RecipeOutput) {
         // Circuit Board
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+            .create(RagiumRecipes.ASSEMBLER)
             .itemInput(RagiumItemTags.PLASTICS)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
-            .catalyst(RagiumItems.PLATE_PRESS_MOLD)
+            .catalyst(RagiumItemTags.PLATE_MOLDS)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
             .save(output)
     }
@@ -103,33 +104,25 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.FUEL)
             .save(output)
         // Polymer Resin -> Plastic
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        HTSingleItemRecipeBuilder
+            .compressor()
             .itemInput(RagiumItems.POLYMER_RESIN)
             .itemOutput(RagiumItems.PLASTIC_PLATE)
             .save(output)
 
-        // Biomass -> Bio Fuel
+        // Biomass -> Alcohol
         HTRefineryRecipeBuilder()
             .fluidInput(RagiumFluids.BIOMASS)
-            .fluidOutput(RagiumFluids.BIO_FUEL)
+            .fluidOutput(RagiumFluids.ETHANOL)
             .save(output)
         // Alcohol + Plant Oil -> Bio Fuel + Glycerol
         HTMachineRecipeBuilder
             .create(RagiumRecipes.MIXER)
-            .fluidInput(RagiumFluids.ALCOHOL, FluidType.BUCKET_VOLUME * 4)
+            .fluidInput(RagiumFluids.ETHANOL, FluidType.BUCKET_VOLUME * 4)
             .fluidInput(RagiumFluids.PLANT_OIL)
-            .fluidOutput(RagiumFluids.BIO_FUEL, FluidType.BUCKET_VOLUME * 4)
+            .fluidOutput(RagiumFluids.BIODIESEL, FluidType.BUCKET_VOLUME * 4)
             .fluidOutput(RagiumFluids.GLYCEROL)
-            .saveSuffixed(output, "_from_plant_oil")
-        // Alcohol + Tallow -> Bio Fuel + Glycerol
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.MIXER)
-            .fluidInput(RagiumFluids.ALCOHOL, FluidType.BUCKET_VOLUME * 4)
-            .itemInput(RagiumItems.TALLOW)
-            .fluidOutput(RagiumFluids.BIO_FUEL, FluidType.BUCKET_VOLUME * 4)
-            .fluidOutput(RagiumFluids.GLYCEROL)
-            .saveSuffixed(output, "_from_tallow")
+            .save(output)
 
         // XX Log -> Sap + Pulp
         HTExtractorRecipeBuilder()

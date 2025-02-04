@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressor",
+  "input": {
+    "count": 1,
+    "item": "ragium:polymer_resin"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:plastic_plate"
+  }
+}

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import net.minecraft.core.registries.Registries
@@ -18,6 +19,9 @@ object RagiumRecipeTypes {
     @JvmStatic
     private fun <T : Recipe<*>> register(name: String): DeferredHolder<RecipeType<*>, RecipeType<T>> =
         REGISTER.register(name) { id: ResourceLocation -> RecipeType.simple<T>(id) }
+
+    @JvmField
+    val COMPRESSOR: DeferredHolder<RecipeType<*>, RecipeType<HTCompressorRecipe>> = register("compressor")
 
     @JvmField
     val EXTRACTOR: DeferredHolder<RecipeType<*>, RecipeType<HTExtractorRecipe>> = register("extractor")

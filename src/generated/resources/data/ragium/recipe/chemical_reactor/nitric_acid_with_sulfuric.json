@@ -3,7 +3,7 @@
   "fluid_inputs": [
     {
       "amount": 1000,
-      "tag": "c:blaze_acid"
+      "tag": "c:sulfuric_acid"
     }
   ],
   "fluid_outputs": [
@@ -15,7 +15,7 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/niter"
+      "tag": "c:dusts/saltpeter"
     }
   ],
   "item_outputs": [

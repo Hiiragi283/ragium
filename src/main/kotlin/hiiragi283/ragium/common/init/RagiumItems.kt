@@ -74,7 +74,7 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
         register(HTTagPrefix.DUST, CommonMaterials.CARBON)
-        register(HTTagPrefix.DUST, CommonMaterials.NITER)
+        register(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
         register(HTTagPrefix.DUST, CommonMaterials.SALT)
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
@@ -82,7 +82,7 @@ object RagiumItems {
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
 
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.NITER)
+        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALTPETER)
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALT)
         register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
         // Ingots

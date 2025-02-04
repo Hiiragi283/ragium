@@ -3,6 +3,8 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
+import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.sources
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -170,8 +172,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             .itemOutput(Items.MUD)
             .save(output)
         // Packed Mud
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        HTSingleItemRecipeBuilder
+            .compressor()
             .itemInput(Items.MUD)
             .itemOutput(Items.PACKED_MUD)
             .save(output)
@@ -182,10 +184,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
     private fun registerSnow(output: RecipeOutput) {
         // Water -> Ice
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        HTRefineryRecipeBuilder()
             .waterInput()
-            .sources(RagiumBlockTags.COOLING_SOURCES)
             .itemOutput(Items.SNOW_BLOCK)
             .save(output)
 

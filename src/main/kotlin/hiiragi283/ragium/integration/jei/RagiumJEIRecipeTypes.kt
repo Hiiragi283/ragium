@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.material.HTTypedMaterial
+import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import mezz.jei.api.recipe.RecipeType
@@ -13,6 +14,10 @@ object RagiumJEIRecipeTypes {
     @JvmField
     val MATERIAL_INFO: RecipeType<HTTypedMaterial> =
         RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTTypedMaterial::class.java)
+
+    @JvmField
+    val COMPRESSOR: RecipeType<HTCompressorRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "compressor", HTCompressorRecipe::class.java)
 
     @JvmField
     val EXTRACTOR: RecipeType<HTExtractorRecipe> =

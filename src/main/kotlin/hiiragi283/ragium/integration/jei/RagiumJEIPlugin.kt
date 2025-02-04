@@ -15,15 +15,9 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.util.collection.HTMultiMap
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.init.RagiumRecipes
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.condition.HTDummyCondition
-import hiiragi283.ragium.integration.jei.category.HTExtractorRecipeCategory
-import hiiragi283.ragium.integration.jei.category.HTMachineRecipeCategory
-import hiiragi283.ragium.integration.jei.category.HTMaterialInfoCategory
-import hiiragi283.ragium.integration.jei.category.HTRefineryRecipeCategory
+import hiiragi283.ragium.integration.jei.category.*
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
@@ -64,6 +58,12 @@ class RagiumJEIPlugin : IModPlugin {
         }
 
         registration.addRecipeCategories(
+            HTSingleItemRecipeCategory(
+                guiHelper,
+                RagiumJEIRecipeTypes.COMPRESSOR,
+                RagiumMachineKeys.COMPRESSOR,
+                RagiumRecipeSerializers.COMPRESSOR.get(),
+            ),
             HTExtractorRecipeCategory(guiHelper),
             HTRefineryRecipeCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
@@ -81,6 +81,7 @@ class RagiumJEIPlugin : IModPlugin {
             )
         }
 
+        register(RagiumJEIRecipeTypes.COMPRESSOR, RagiumRecipeTypes.COMPRESSOR)
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
         register(RagiumJEIRecipeTypes.REFINERY, RagiumRecipeTypes.REFINERY)
 
@@ -139,6 +140,8 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
+        // Compressor
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, RagiumMachineKeys.COMPRESSOR.getBlock())
         // Extractor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR.getBlock())
         // Refinery

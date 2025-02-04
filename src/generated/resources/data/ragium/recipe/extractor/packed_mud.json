@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressor",
+  "input": {
+    "count": 1,
+    "item": "minecraft:mud"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:packed_mud"
+  }
+}

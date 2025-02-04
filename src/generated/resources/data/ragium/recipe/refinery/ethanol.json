@@ -2,7 +2,7 @@
   "type": "ragium:refinery",
   "fluid_output": {
     "amount": 1000,
-    "id": "ragium:bio_fuel"
+    "id": "ragium:ethanol"
   },
   "input": {
     "amount": 1000,

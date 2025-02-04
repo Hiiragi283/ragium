@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressor",
+  "input": {
+    "count": 1,
+    "item": "ragium:minced_meat"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:meat_ingot"
+  }
+}
