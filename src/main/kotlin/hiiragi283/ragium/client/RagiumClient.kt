@@ -49,12 +49,13 @@ object RagiumClient {
             event.register(type.get(), ::HTMachineContainerScreen)
         }
 
-        register(RagiumMenuTypes.DEFAULT_MACHINE)
-        register(RagiumMenuTypes.LARGE_MACHINE)
-
-        register(RagiumMenuTypes.BLAST_FURNACE)
+        register(RagiumMenuTypes.COMPRESSOR)
         register(RagiumMenuTypes.EXTRACTOR)
+        register(RagiumMenuTypes.INFUSER)
+        register(RagiumMenuTypes.MIXER)
+        register(RagiumMenuTypes.MULTI_ITEM)
         register(RagiumMenuTypes.MULTI_SMELTER)
+        register(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE)
 
         LOGGER.info("Registered machine screens!")
     }

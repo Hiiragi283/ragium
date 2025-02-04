@@ -8,13 +8,13 @@ import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTDefaultMachineContainerMenu(
+class HTMixerContainerMenu(
     syncId: Int,
     playerInv: Inventory,
     pos: BlockPos,
     itemHandler: IItemHandler,
 ) : HTMachineContainerMenu(
-        RagiumMenuTypes.DEFAULT_MACHINE,
+        RagiumMenuTypes.MIXER,
         syncId,
         playerInv,
         pos,
@@ -24,24 +24,22 @@ class HTDefaultMachineContainerMenu(
         syncId,
         playerInv,
         registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
-        ItemStackHandler(4),
+        ItemStackHandler(1),
     )
 
     init {
         // inputs
-        addSlot(0, 1, 1)
-        addSlot(1, 2, 1)
-        addFluidSlot(0, 2, 2)
+        addFluidSlot(0, 1, 1)
+        addFluidSlot(1, 2, 1)
         // outputs
-        addOutputSlot(2, 6, 1)
-        addOutputSlot(3, 7, 1)
-        addFluidSlot(1, 6, 2)
+        addOutputSlot(0, 6, 1)
+        addFluidSlot(2, 7, 1)
         // player inventory
         addPlayerInv()
         // register property
         addDataSlots(containerData)
     }
 
-    override val inputSlots: IntRange = (0..1)
-    override val outputSlots: IntRange = (2..3)
+    override val inputSlots: IntRange = IntRange.EMPTY
+    override val outputSlots: IntRange = (0..0)
 }

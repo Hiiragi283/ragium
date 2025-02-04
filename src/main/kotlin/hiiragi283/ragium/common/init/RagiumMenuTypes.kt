@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.inventory.HTContainerMenu
 import hiiragi283.ragium.common.inventory.*
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.inventory.MenuType
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension
 import net.neoforged.neoforge.network.IContainerFactory
@@ -17,32 +16,36 @@ object RagiumMenuTypes {
     val REGISTER: DeferredRegister<MenuType<*>> = DeferredRegister.create(Registries.MENU, RagiumAPI.MOD_ID)
 
     @JvmStatic
-    fun <T : HTContainerMenu> register(path: String, factory: MenuType.MenuSupplier<T>): DeferredHolder<MenuType<*>, MenuType<T>> =
-        REGISTER.register(path) { _: ResourceLocation -> MenuType(factory, FeatureFlags.DEFAULT_FLAGS) }
-
-    @JvmStatic
     fun <T : HTContainerMenu> registerExtended(path: String, factory: IContainerFactory<T>): DeferredHolder<MenuType<*>, MenuType<T>> =
         REGISTER.register(path) { _: ResourceLocation ->
             IMenuTypeExtension.create(factory)
         }
 
     @JvmField
-    val BLAST_FURNACE: DeferredHolder<MenuType<*>, MenuType<HTBlastFurnaceContainerMenu>> =
-        registerExtended("blast_furnace", ::HTBlastFurnaceContainerMenu)
+    val COMPRESSOR: DeferredHolder<MenuType<*>, MenuType<HTCompressorContainerMenu>> =
+        registerExtended("compressor", ::HTCompressorContainerMenu)
 
     @JvmField
     val EXTRACTOR: DeferredHolder<MenuType<*>, MenuType<HTExtractorContainerMenu>> =
         registerExtended("extractor", ::HTExtractorContainerMenu)
 
     @JvmField
-    val DEFAULT_MACHINE: DeferredHolder<MenuType<*>, MenuType<HTDefaultMachineContainerMenu>> =
-        registerExtended("default_machine", ::HTDefaultMachineContainerMenu)
+    val INFUSER: DeferredHolder<MenuType<*>, MenuType<HTInfuserContainerMenu>> =
+        registerExtended("infuser", ::HTInfuserContainerMenu)
 
     @JvmField
-    val LARGE_MACHINE: DeferredHolder<MenuType<*>, MenuType<HTLargeMachineContainerMenu>> =
-        registerExtended("large_machine", ::HTLargeMachineContainerMenu)
+    val MIXER: DeferredHolder<MenuType<*>, MenuType<HTMixerContainerMenu>> =
+        registerExtended("mixer", ::HTMixerContainerMenu)
+
+    @JvmField
+    val MULTI_ITEM: DeferredHolder<MenuType<*>, MenuType<HTMultiItemContainerMenu>> =
+        registerExtended("multi_item", ::HTMultiItemContainerMenu)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<MenuType<*>, MenuType<HTMultiSmelterContainerMenu>> =
         registerExtended("multi_smelter", ::HTMultiSmelterContainerMenu)
+
+    @JvmField
+    val PRIMITIVE_BLAST_FURNACE: DeferredHolder<MenuType<*>, MenuType<HTPrimitiveBlastFurnaceContainerMenu>> =
+        registerExtended("primitive_blast_furnace", ::HTPrimitiveBlastFurnaceContainerMenu)
 }

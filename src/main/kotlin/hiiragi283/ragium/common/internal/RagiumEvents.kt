@@ -23,10 +23,7 @@ import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
-import hiiragi283.ragium.common.block.machine.HTBlastFurnaceBlockEntity
-import hiiragi283.ragium.common.block.machine.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.block.machine.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -116,8 +113,14 @@ internal object RagiumEvents {
             )
 
         event
+            .getBuilder(RagiumMachineKeys.COMPRESSOR)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTCompressorBlockEntity)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.ANVIL_USE)
+
+        event
             .getBuilder(RagiumMachineKeys.EXTRACTOR)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTExtractorBlockEntity)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.PISTON_EXTEND)
 
         event
             .getBuilder(RagiumMachineKeys.GRINDER)
@@ -125,8 +128,13 @@ internal object RagiumEvents {
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
 
         event
+            .getBuilder(RagiumMachineKeys.INFUSER)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTInfuserBlockEntity)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BREWING_STAND_BREW)
+
+        event
             .getBuilder(RagiumMachineKeys.MIXER)
-            .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTMixerBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
 
@@ -135,26 +143,10 @@ internal object RagiumEvents {
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTMultiSmelterBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
-        /* .put(
-            HTMachinePropertyKeys.RECIPE_PROXY,
-            HTMachineRecipeProxy { level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>> ->
-                level.recipeManager
-                    .getAllRecipesFor(RecipeType.SMELTING)
-                    .map { HTMachineConverters.fromCooking(it, level.registryAccess()) }
-                    .forEach(consumer)
-            },
-        )*/
 
         event
             .getBuilder(RagiumMachineKeys.REFINERY)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTRefineryBlockEntity)
-
-        event
-            .getBuilder(RagiumMachineKeys.RESOURCE_PLANT)
-
-        event
-            .getBuilder(RagiumMachineKeys.STEAM_BOILER)
-        // .put(HTMachinePropertyKeys.RECIPE_PROXY, HTMachineRecipeProxy(HTMachineConverters::fromFuel))
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

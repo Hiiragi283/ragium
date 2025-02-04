@@ -81,16 +81,28 @@ object RagiumBlockEntityTypes {
         register("blast_furnace", ::HTBlastFurnaceBlockEntity, RagiumMachineKeys.BLAST_FURNACE)
 
     @JvmField
+    val COMPRESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCompressorBlockEntity>> =
+        register("compressor", ::HTCompressorBlockEntity, RagiumMachineKeys.COMPRESSOR)
+
+    @JvmField
     val EXTRACTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTExtractorBlockEntity>> =
         register("extractor", ::HTExtractorBlockEntity, RagiumMachineKeys.EXTRACTOR)
 
     @JvmField
-    val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =
-        register("refinery", ::HTRefineryBlockEntity, RagiumMachineKeys.REFINERY)
+    val INFUSER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTInfuserBlockEntity>> =
+        register("infuser", ::HTInfuserBlockEntity, RagiumMachineKeys.INFUSER)
+
+    @JvmField
+    val MIXER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMixerBlockEntity>> =
+        register("mixer", ::HTMixerBlockEntity, RagiumMachineKeys.MIXER)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =
         register("multi_smelter", ::HTMultiSmelterBlockEntity, RagiumMachineKeys.MULTI_SMELTER)
+
+    @JvmField
+    val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =
+        register("refinery", ::HTRefineryBlockEntity, RagiumMachineKeys.REFINERY)
 
     //    Storage    //
 

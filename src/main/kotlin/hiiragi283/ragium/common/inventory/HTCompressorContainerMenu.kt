@@ -8,13 +8,13 @@ import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTBlastFurnaceContainerMenu(
+class HTCompressorContainerMenu(
     syncId: Int,
     playerInv: Inventory,
     pos: BlockPos,
     itemHandler: IItemHandler,
 ) : HTMachineContainerMenu(
-        RagiumMenuTypes.BLAST_FURNACE,
+        RagiumMenuTypes.COMPRESSOR,
         syncId,
         playerInv,
         pos,
@@ -24,22 +24,20 @@ class HTBlastFurnaceContainerMenu(
         syncId,
         playerInv,
         registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
-        ItemStackHandler(4),
+        ItemStackHandler(2),
     )
 
     init {
         // inputs
-        addSlot(0, 1, 1)
-        addSlot(1, 2, 1)
-        addSlot(2, 3, 1)
+        addSlot(0, 2, 1)
         // outputs
-        addOutputSlot(3, 5, 1)
+        addOutputSlot(1, 6, 1)
         // player inventory
         addPlayerInv()
         // register property
         addDataSlots(containerData)
     }
 
-    override val inputSlots: IntRange = (0..2)
-    override val outputSlots: IntRange = (3..3)
+    override val inputSlots: IntRange = (0..0)
+    override val outputSlots: IntRange = (1..1)
 }
