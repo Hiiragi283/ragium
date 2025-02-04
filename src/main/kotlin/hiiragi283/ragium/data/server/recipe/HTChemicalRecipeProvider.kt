@@ -223,8 +223,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.DYNAMITE, 8)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER, HTMachineTier.ADVANCED)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(Tags.Items.SANDS)
             .itemInput(RagiumItems.CREEPER_REAGENT)
             .itemOutput(Items.TNT)
@@ -269,20 +269,6 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
         // Alkali + H2O <-> Alkali Solution
         solidSolution(output, RagiumItems.ALKALI_REAGENT, RagiumItemTags.ALKALI_REAGENTS, RagiumFluids.ALKALI_SOLUTION)
-        // Alkali Solution + SiO2 -> Sodium Silicate
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CHEMICAL_REACTOR)
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
-            .fluidInput(RagiumFluids.ALKALI_SOLUTION, FluidType.BUCKET_VOLUME * 2)
-            .sources(RagiumBlockTags.HEATING_SOURCES)
-            .fluidOutput(RagiumFluids.SODIUM_SILICATE)
-            .save(output)
-        // Sodium Silicate -> Sponge
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
-            .fluidInput(RagiumFluids.SODIUM_SILICATE)
-            .itemOutput(Items.SPONGE)
-            .save(output)
     }
 
     private fun registerAluminum(output: RecipeOutput) {
@@ -300,8 +286,9 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.ALUMINA_SOLUTION)
             .save(output)
         // Alumina Solution + 4x Coal -> Aluminum Ingot
+        HTMultiItemRecipeBuilder.blastFurnace()
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE, HTMachineTier.ADVANCED)
+            .create(RagiumRecipes.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .itemInput(ItemTags.COALS, 4)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
@@ -319,7 +306,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
         // Alumina Solution + Cryolite -> 3x Aluminum Ingot
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE, HTMachineTier.ELITE)
+            .create(RagiumRecipes.CHEMICAL_REACTOR, HTMachineTier.ELITE)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 3)
@@ -352,8 +339,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.GOLD_NUGGET)
             .saveSuffixed(output, "_from_sludge")
         // Chemical Sludge -> Slag
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
+        HTRefineryRecipeBuilder()
             .fluidInput(RagiumFluids.CHEMICAL_SLUDGE)
             .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG, 4)
             .save(output)

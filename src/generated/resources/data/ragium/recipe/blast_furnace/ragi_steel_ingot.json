@@ -1,19 +1,15 @@
 {
   "type": "ragium:blast_furnace",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:ingots/iron"
-    },
-    {
-      "count": 4,
-      "tag": "c:dusts/raginite"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:ragi_steel_ingot"
-    }
-  ]
+  "first_item_input": {
+    "count": 1,
+    "tag": "c:ingots/iron"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:ragi_steel_ingot"
+  },
+  "second_item_input": {
+    "count": 4,
+    "tag": "c:dusts/raginite"
+  }
 }

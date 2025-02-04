@@ -1,29 +1,19 @@
 {
   "type": "ragium:assembler",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "item": "ragium:elite_casing"
-    }
+  "first_item_input": {
+    "count": 4,
+    "item": "ragium:elite_grate"
   },
-  "item_inputs": [
-    {
-      "count": 4,
-      "item": "ragium:elite_grate"
-    },
-    {
-      "count": 1,
-      "tag": "c:gears/deep_steel"
-    },
-    {
-      "count": 4,
-      "item": "minecraft:polished_deepslate"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 6,
-      "id": "ragium:elite_casing"
-    }
-  ]
+  "item_output": {
+    "count": 6,
+    "id": "ragium:elite_casing"
+  },
+  "second_item_input": {
+    "count": 1,
+    "tag": "c:gears/deep_steel"
+  },
+  "third_item_input": {
+    "count": 4,
+    "item": "minecraft:polished_deepslate"
+  }
 }

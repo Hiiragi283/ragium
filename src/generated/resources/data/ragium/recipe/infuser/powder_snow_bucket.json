@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:snow"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:bucket"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:powder_snow_bucket"
+  }
+}

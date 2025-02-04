@@ -1,25 +1,15 @@
 {
   "type": "ragium:assembler",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "tag": "c:circuits/basic"
-    }
+  "first_item_input": {
+    "count": 8,
+    "tag": "c:ingots/gold"
   },
-  "item_inputs": [
-    {
-      "count": 8,
-      "tag": "c:ingots/gold"
-    },
-    {
-      "count": 1,
-      "item": "ragium:shaft"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "id": "ragium:advanced_coil"
-    }
-  ]
+  "item_output": {
+    "count": 4,
+    "id": "ragium:advanced_coil"
+  },
+  "second_item_input": {
+    "count": 1,
+    "item": "ragium:shaft"
+  }
 }

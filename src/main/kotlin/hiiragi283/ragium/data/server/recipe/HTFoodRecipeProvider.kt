@@ -2,18 +2,13 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.*
-import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
-import hiiragi283.ragium.api.extension.sources
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -68,8 +63,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(NeoForgeMod.MILK)
             .save(output, RagiumAPI.id("milk"))
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTInfuserRecipeBuilder()
             .itemInput(Items.BUCKET)
             .milkInput()
             .itemOutput(Items.MILK_BUCKET)
@@ -81,28 +75,16 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.BUTTER)
             .save(output)
         // Sponge Cake
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
             .itemInput(RagiumItems.FLOUR, 3)
             .itemInput(Items.SUGAR, 2)
             .itemInput(RagiumItems.BUTTER)
-            .milkInput()
-            .sources(RagiumBlockTags.HEATING_SOURCES)
             .itemOutput(RagiumBlocks.SPONGE_CAKE, 4)
             .save(output)
 
         // Cake
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
-            .itemInput(Tags.Items.CROPS_WHEAT, 3)
-            .itemInput(Items.SUGAR, 2)
-            .itemInput(Tags.Items.EGGS)
-            .milkInput(FluidType.BUCKET_VOLUME * 3)
-            .itemOutput(Items.CAKE)
-            .save(output)
-
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTInfuserRecipeBuilder()
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .milkInput(FluidType.BUCKET_VOLUME * 3)
             .itemOutput(Items.CAKE)
@@ -122,17 +104,15 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_bottle")
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTInfuserRecipeBuilder()
             .itemInput(Items.GLASS_BOTTLE)
             .fluidInput(Tags.Fluids.HONEY, FluidType.BUCKET_VOLUME / 4)
             .itemOutput(Items.HONEY_BOTTLE)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTInfuserRecipeBuilder()
+            .itemInput(Tags.Items.GLASS_BLOCKS)
             .fluidInput(Tags.Fluids.HONEY)
-            .catalyst(Tags.Items.GLASS_BLOCKS)
             .itemOutput(Items.HONEY_BLOCK)
             .save(output)
         // Bee wax
@@ -158,8 +138,8 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // Sweet Berries Cake
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemInput(RagiumItems.CHOCOLATE, 3)
             .itemInput(Tags.Items.FOODS_BERRY, 2)
@@ -186,21 +166,19 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.CINNAMON_POWDER, 4)
             .save(output)
         // Cinnamon Roll
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(Items.BREAD)
             .itemInput(RagiumItems.CINNAMON_POWDER)
-            .milkInput()
             .itemOutput(RagiumItems.CINNAMON_ROLL)
             .save(output)
 
         // Ambrosia
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(RagiumItems.CHOCOLATE, 64)
             .itemInput(RagiumItems.CINNAMON_POWDER, 64)
-            .fluidInput(Tags.Fluids.HONEY, FluidType.BUCKET_VOLUME * 64)
-            .catalyst(HTMachineTier.ULTIMATE)
+            .itemInput(Items.HONEY_BLOCK, 64)
             .itemOutput(RagiumItems.AMBROSIA)
             .save(output)
     }
@@ -237,8 +215,8 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             ).unlockedBy("has_meat_ingot", has(RagiumItems.MEAT_INGOT))
             .save(output)
         // Cooked Meat Ingot -> Canned Cooked Meat
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(RagiumItems.COOKED_MEAT_INGOT, 8)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemOutput(RagiumItems.CANNED_COOKED_MEAT, 8)

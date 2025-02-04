@@ -1,19 +1,15 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "count": 8,
-      "item": "ragium:cooked_meat_ingot"
-    },
-    {
-      "count": 1,
-      "tag": "c:ingots/iron"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 8,
-      "id": "ragium:canned_cooked_meat"
-    }
-  ]
+  "first_item_input": {
+    "count": 8,
+    "item": "ragium:cooked_meat_ingot"
+  },
+  "item_output": {
+    "count": 8,
+    "id": "ragium:canned_cooked_meat"
+  },
+  "second_item_input": {
+    "count": 1,
+    "tag": "c:ingots/iron"
+  }
 }

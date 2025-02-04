@@ -1,0 +1,11 @@
+{
+  "type": "ragium:refinery",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:chemical_sludge"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "ragium:slag"
+  }
+}

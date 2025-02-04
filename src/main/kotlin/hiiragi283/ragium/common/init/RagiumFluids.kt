@@ -51,7 +51,6 @@ enum class RagiumFluids(
     HYDROFLUORIC_ACID(Color(0x33ccff), "Hydrofluoric Acid", "フッ化水素酸"),
 
     ALKALI_SOLUTION(Color(0x000099), "Alkali Solution", "アルカリ溶液"),
-    SODIUM_SILICATE(Color(0x00cc99), "Sodium Silicate", "ケイ酸ナトリウム"),
 
     SULFURIC_ACID(Color(0xff3300), "Blaze Acid", "ブレイズ酸", TextureType.STICKY),
 

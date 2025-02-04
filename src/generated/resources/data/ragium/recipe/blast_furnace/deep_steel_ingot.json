@@ -1,19 +1,15 @@
 {
   "type": "ragium:blast_furnace",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:ingots/steel"
-    },
-    {
-      "count": 4,
-      "item": "ragium:deepant"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:deep_steel_ingot"
-    }
-  ]
+  "first_item_input": {
+    "count": 1,
+    "tag": "c:ingots/steel"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:deep_steel_ingot"
+  },
+  "second_item_input": {
+    "count": 4,
+    "item": "ragium:deepant"
+  }
 }

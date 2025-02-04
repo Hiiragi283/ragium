@@ -2,19 +2,17 @@ package hiiragi283.ragium.integration.jei
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.mutableMultiMapOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.util.collection.HTMultiMap
-import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.recipe.condition.HTDummyCondition
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumRecipeSerializers
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.integration.jei.category.*
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
@@ -25,9 +23,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.*
@@ -53,6 +49,18 @@ class RagiumJEIPlugin : IModPlugin {
         }
 
         registration.addRecipeCategories(
+            HTMultiItemRecipeCategory(
+                guiHelper,
+                RagiumJEIRecipeTypes.ASSEMBLER,
+                RagiumMachineKeys.ASSEMBLER,
+                RagiumRecipeSerializers.ASSEMBLER.get(),
+            ),
+            HTMultiItemRecipeCategory(
+                guiHelper,
+                RagiumJEIRecipeTypes.BLAST_FURNACE,
+                RagiumMachineKeys.BLAST_FURNACE,
+                RagiumRecipeSerializers.BLAST_FURNACE.get(),
+            ),
             HTSingleItemRecipeCategory(
                 guiHelper,
                 RagiumJEIRecipeTypes.COMPRESSOR,
@@ -79,6 +87,8 @@ class RagiumJEIPlugin : IModPlugin {
             )
         }
 
+        register(RagiumJEIRecipeTypes.ASSEMBLER, RagiumRecipeTypes.ASSEMBLER)
+        register(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumRecipeTypes.BLAST_FURNACE)
         register(RagiumJEIRecipeTypes.COMPRESSOR, RagiumRecipeTypes.COMPRESSOR)
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
         register(RagiumJEIRecipeTypes.GRINDER, RagiumRecipeTypes.GRINDER)
@@ -100,16 +110,14 @@ class RagiumJEIPlugin : IModPlugin {
             }
         }
         // PBF Steel
-        recipeCache.put(
+        /*recipeCache.put(
             RagiumMachineKeys.BLAST_FURNACE,
-            HTMachineRecipeBuilder
-                .create(RagiumRecipes.BLAST_FURNACE)
+            HTMultiItemRecipeBuilder.blastFurnace()
                 .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
                 .itemInput(ItemTags.COALS, 4)
-                .condition(HTDummyCondition(Component.literal("Only available on Primitive Blast Furnace")))
                 .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
                 .export(RagiumAPI.id("steel_by_pbf")),
-        )
+        )*/
         // Generator Fuels
         /*level
             .registryAccess()
@@ -141,6 +149,10 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
+        // Assembler
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ASSEMBLER, RagiumMachineKeys.ASSEMBLER.getBlock())
+        // Blast Furnace
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumMachineKeys.BLAST_FURNACE.getBlock())
         // Compressor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, RagiumMachineKeys.COMPRESSOR.getBlock())
         // Extractor

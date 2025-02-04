@@ -35,7 +35,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockE
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTRecipeInput = HTRecipeInput.of(itemInput.getStackInSlot(0))
+        val input: HTRecipeInput = HTRecipeInput.of(pos, itemInput.getStackInSlot(0))
         val holder: RecipeHolder<HTExtractorRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
         val recipe: HTExtractorRecipe = holder.value
         // Try to insert outputs

@@ -19,6 +19,12 @@ object RagiumRecipeTypes {
         REGISTER.register(name) { id: ResourceLocation -> RecipeType.simple<T>(id) }
 
     @JvmField
+    val ASSEMBLER: DeferredHolder<RecipeType<*>, RecipeType<HTAssemblerRecipe>> = register("assembler")
+
+    @JvmField
+    val BLAST_FURNACE: DeferredHolder<RecipeType<*>, RecipeType<HTBlastFurnaceRecipe>> = register("blast_furnace")
+
+    @JvmField
     val COMPRESSOR: DeferredHolder<RecipeType<*>, RecipeType<HTCompressorRecipe>> = register("compressor")
 
     @JvmField

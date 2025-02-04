@@ -1,29 +1,19 @@
 {
   "type": "ragium:assembler",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "tag": "c:circuits/advanced"
-    }
+  "first_item_input": {
+    "count": 4,
+    "tag": "c:ingots/steel"
   },
-  "item_inputs": [
-    {
-      "count": 4,
-      "tag": "c:ingots/steel"
-    },
-    {
-      "count": 4,
-      "tag": "c:ingots/ragi_steel"
-    },
-    {
-      "count": 2,
-      "item": "minecraft:piston"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:engine"
-    }
-  ]
+  "item_output": {
+    "count": 1,
+    "id": "ragium:engine"
+  },
+  "second_item_input": {
+    "count": 4,
+    "tag": "c:ingots/ragi_steel"
+  },
+  "third_item_input": {
+    "count": 2,
+    "item": "minecraft:piston"
+  }
 }

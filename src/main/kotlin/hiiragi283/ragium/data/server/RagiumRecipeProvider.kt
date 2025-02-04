@@ -1,23 +1,12 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
-import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
-import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
-import hiiragi283.ragium.api.extension.catalyst
-import hiiragi283.ragium.api.extension.sources
-import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
-import hiiragi283.ragium.common.recipe.condition.HTRockGeneratorCondition
 import hiiragi283.ragium.data.server.integration.HTAARecipeProvider
 import hiiragi283.ragium.data.server.integration.HTDelightRecipeProvider
 import hiiragi283.ragium.data.server.integration.HTMekanismRecipeProvider
@@ -95,35 +84,24 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
     private fun registerVanilla(output: RecipeOutput) {
         // Skulls
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        /*HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(Tags.Items.STORAGE_BLOCKS_BONE_MEAL)
             .itemOutput(Items.SKELETON_SKULL)
-            .save(output)
+            .save(output)*/
 
-        registerSkull(
-            output,
-            SizedIngredient.of(Tags.Items.STORAGE_BLOCKS_COAL, 1),
-            Items.WITHER_SKELETON_SKULL,
-            HTMachineTier.ELITE,
-        )
+        registerSkull(output, SizedIngredient.of(RagiumItems.WITHER_REAGENT, 1), Items.WITHER_SKELETON_SKULL)
         registerSkull(output, SizedIngredient.of(Items.GOLDEN_APPLE, 8), Items.PLAYER_HEAD)
         registerSkull(output, SizedIngredient.of(Items.ROTTEN_FLESH, 16), Items.ZOMBIE_HEAD)
-        registerSkull(output, SizedIngredient.of(Tags.Items.GUNPOWDERS, 16), Items.CREEPER_HEAD)
+        registerSkull(output, SizedIngredient.of(RagiumItems.CREEPER_REAGENT, 16), Items.CREEPER_HEAD)
         registerSkull(output, SizedIngredient.of(Tags.Items.INGOTS_GOLD, 8), Items.PIGLIN_HEAD)
     }
 
-    private fun registerSkull(
-        output: RecipeOutput,
-        input: SizedIngredient,
-        skull: Item,
-        tier: HTMachineTier = HTMachineTier.ADVANCED,
-    ) {
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+    private fun registerSkull(output: RecipeOutput, input: SizedIngredient, skull: Item) {
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(Items.SKELETON_SKULL)
             .itemInput(input)
-            .catalyst(tier)
             .itemOutput(skull)
             .save(output)
     }
@@ -157,8 +135,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             .itemOutput(Items.MUSHROOM_STEW, 2)
             .save(output)
         // Pumpkin Pie
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(Tags.Items.CROPS_PUMPKIN)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemOutput(Items.PUMPKIN_PIE, 2)
@@ -200,22 +178,13 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             .saveSuffixed(output, "_from_ice")
 
         // Powder Snow
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
-            .waterInput()
-            .sources(RagiumBlockTags.COOLING_SOURCES)
-            .fluidOutput(RagiumFluids.SNOW)
-            .saveSuffixed(output, "_from_water")
-
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTExtractorRecipeBuilder()
             .itemInput(Tags.Items.BUCKETS_POWDER_SNOW)
             .itemOutput(Items.BUCKET)
             .fluidOutput(RagiumFluids.SNOW)
-            .save(output, RagiumAPI.id("powder_snow_from_bucket"))
+            .save(output, RagiumAPI.id("powder_snow"))
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTInfuserRecipeBuilder()
             .itemInput(Items.BUCKET)
             .fluidInput(RagiumFluids.SNOW)
             .itemOutput(Items.POWDER_SNOW_BUCKET)
@@ -224,11 +193,11 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
     private fun registerStone(output: RecipeOutput) {
         fun registerRock(rock: ItemLike) {
-            HTMachineRecipeBuilder
+            /*HTMachineRecipeBuilder
                 .create(RagiumRecipes.ASSEMBLER)
                 .condition(HTRockGeneratorCondition(Ingredient.of(rock)))
                 .itemOutput(rock, 8)
-                .save(output)
+                .save(output)*/
         }
 
         registerRock(Items.STONE)
@@ -248,10 +217,9 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
         registerRock(Items.END_STONE)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMixerRecipeBuilder()
+            .waterInput()
             .fluidInput(Tags.Fluids.LAVA)
-            .condition(HTRockGeneratorCondition(Ingredient.of(Items.OBSIDIAN)))
             .itemOutput(Items.OBSIDIAN)
             .save(output)
     }

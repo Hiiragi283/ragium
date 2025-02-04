@@ -14,6 +14,14 @@ object RagiumJEIRecipeTypes {
         RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTTypedMaterial::class.java)
 
     @JvmField
+    val ASSEMBLER: RecipeType<HTAssemblerRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "assembler", HTAssemblerRecipe::class.java)
+
+    @JvmField
+    val BLAST_FURNACE: RecipeType<HTBlastFurnaceRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "blast_furnace", HTBlastFurnaceRecipe::class.java)
+
+    @JvmField
     val COMPRESSOR: RecipeType<HTCompressorRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "compressor", HTCompressorRecipe::class.java)
 

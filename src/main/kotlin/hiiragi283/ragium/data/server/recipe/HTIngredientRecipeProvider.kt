@@ -1,11 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
-import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -90,33 +86,32 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             ).unlockedBy("has_compound", has(RagiumItems.RAGI_ALLOY_COMPOUND))
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .itemOutput(ragiAlloy)
             .save(output)
         // Ragi-Steel
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
             .save(output)
         // Refined Ragi-Steel
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 5)
-            .catalyst(HTMachineTier.ADVANCED)
             .itemOutput(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
     }
 
     private fun registerSteels(output: RecipeOutput) {
         // Steel
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(ItemTags.COALS, 2)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
@@ -130,8 +125,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, FluidType.BUCKET_VOLUME / 5)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .itemInput(RagiumItems.DEEPANT, 4)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
@@ -146,13 +141,11 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.RAGIUM_SOLUTION)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTRefineryRecipeBuilder()
             .fluidInput(RagiumFluids.RAGIUM_SOLUTION)
-            .catalyst(HTMachineTier.ELITE)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
             .fluidOutput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
-            .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, 250)
-            .save(output)
+            .save(output, RagiumAPI.id("distilled_ragium_solution"))
 
         HTMachineRecipeBuilder
             .create(RagiumRecipes.CHEMICAL_REACTOR)
@@ -208,12 +201,11 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 HTMachineTier.ULTIMATE -> Ingredient.of(RagiumItems.LUMINESCENCE_DUST)
             }
 
-            HTMachineRecipeBuilder
-                .create(RagiumRecipes.ASSEMBLER)
+            HTMultiItemRecipeBuilder
+                .assembler()
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
                 .itemInput(HTTagPrefix.INGOT, tier.getSubMetal())
                 .itemInput(dust)
-                .apply { tier.getPreviousTier()?.let(this::catalyst) }
                 .itemOutput(tier.getCircuit())
                 .save(output)
         }
@@ -316,20 +308,19 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_aluminum", has(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM))
             .savePrefixed(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(RagiumItems.LUMINESCENCE_DUST)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
             .itemOutput(RagiumItems.LED, 4)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL, 4)
             .itemInput(Items.PISTON, 2)
-            .catalyst(HTMachineTier.ADVANCED)
             .itemOutput(RagiumItems.ENGINE)
             .save(output)
 

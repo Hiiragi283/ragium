@@ -1,19 +1,15 @@
 {
   "type": "ragium:blast_furnace",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:ingots/copper"
-    },
-    {
-      "count": 1,
-      "tag": "c:dusts/raginite"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:ragi_alloy_ingot"
-    }
-  ]
+  "first_item_input": {
+    "count": 1,
+    "tag": "c:ingots/copper"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:ragi_alloy_ingot"
+  },
+  "second_item_input": {
+    "count": 1,
+    "tag": "c:dusts/raginite"
+  }
 }

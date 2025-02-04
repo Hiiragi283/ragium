@@ -1,29 +1,19 @@
 {
   "type": "ragium:assembler",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "item": "ragium:advanced_casing"
-    }
+  "first_item_input": {
+    "count": 4,
+    "item": "ragium:advanced_grate"
   },
-  "item_inputs": [
-    {
-      "count": 4,
-      "item": "ragium:advanced_grate"
-    },
-    {
-      "count": 1,
-      "tag": "c:gears/stainless_steel"
-    },
-    {
-      "count": 4,
-      "item": "minecraft:quartz_block"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 6,
-      "id": "ragium:advanced_casing"
-    }
-  ]
+  "item_output": {
+    "count": 6,
+    "id": "ragium:advanced_casing"
+  },
+  "second_item_input": {
+    "count": 1,
+    "tag": "c:gears/stainless_steel"
+  },
+  "third_item_input": {
+    "count": 4,
+    "item": "minecraft:quartz_block"
+  }
 }

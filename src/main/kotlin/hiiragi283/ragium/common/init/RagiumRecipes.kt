@@ -19,12 +19,6 @@ object RagiumRecipes {
         DeferredRegister.create(Registries.RECIPE_TYPE, RagiumAPI.MOD_ID)
 
     @JvmField
-    val ASSEMBLER: HTMachineRecipeType = create(RagiumMachineKeys.ASSEMBLER)
-
-    @JvmField
-    val BLAST_FURNACE: HTMachineRecipeType = create(RagiumMachineKeys.BLAST_FURNACE)
-
-    @JvmField
     val CHEMICAL_REACTOR: HTMachineRecipeType = create(RagiumMachineKeys.CHEMICAL_REACTOR)
 
     @JvmStatic

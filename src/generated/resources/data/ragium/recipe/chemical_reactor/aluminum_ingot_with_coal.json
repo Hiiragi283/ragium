@@ -1,5 +1,5 @@
 {
-  "type": "ragium:blast_furnace",
+  "type": "ragium:chemical_reactor",
   "condition": {
     "type": "ragium:processor_catalyst",
     "ingredient": {

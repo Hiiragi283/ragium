@@ -1,10 +1,11 @@
 package hiiragi283.ragium.data.server.integration
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
 import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
@@ -61,17 +62,16 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
             .save(output)
 
         // Milk Bottle
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTInfuserRecipeBuilder()
             .itemInput(Items.GLASS_BOTTLE)
             .milkInput(FluidType.BUCKET_VOLUME / 4)
             .itemOutput(ModItems.MILK_BOTTLE.get())
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTExtractorRecipeBuilder()
             .itemInput(ModItems.MILK_BOTTLE.get())
+            .itemOutput(Items.GLASS_BOTTLE)
             .fluidOutput(NeoForgeMod.MILK, FluidType.BUCKET_VOLUME / 4)
-            .saveSuffixed(output, "_from_bottle")
+            .save(output, RagiumAPI.id("milk_from_bottle"))
     }
 }

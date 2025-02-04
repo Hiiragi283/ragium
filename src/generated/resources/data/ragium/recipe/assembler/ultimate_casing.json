@@ -1,29 +1,19 @@
 {
   "type": "ragium:assembler",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "item": "ragium:ultimate_casing"
-    }
+  "first_item_input": {
+    "count": 4,
+    "item": "ragium:ultimate_grate"
   },
-  "item_inputs": [
-    {
-      "count": 4,
-      "item": "ragium:ultimate_grate"
-    },
-    {
-      "count": 1,
-      "tag": "c:gears/netherite"
-    },
-    {
-      "count": 4,
-      "item": "minecraft:obsidian"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 6,
-      "id": "ragium:ultimate_casing"
-    }
-  ]
+  "item_output": {
+    "count": 6,
+    "id": "ragium:ultimate_casing"
+  },
+  "second_item_input": {
+    "count": 1,
+    "tag": "c:gears/netherite"
+  },
+  "third_item_input": {
+    "count": 4,
+    "item": "minecraft:obsidian"
+  }
 }

@@ -1,31 +1,19 @@
 {
   "type": "ragium:assembler",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "tag": "c:circuits/ultimate"
-    }
+  "first_item_input": {
+    "count": 64,
+    "item": "ragium:chocolate"
   },
-  "fluid_inputs": [
-    {
-      "amount": 64000,
-      "tag": "c:honey"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 64,
-      "item": "ragium:chocolate"
-    },
-    {
-      "count": 64,
-      "item": "ragium:cinnamon_powder"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:ambrosia"
-    }
-  ]
+  "item_output": {
+    "count": 1,
+    "id": "ragium:ambrosia"
+  },
+  "second_item_input": {
+    "count": 64,
+    "item": "ragium:cinnamon_powder"
+  },
+  "third_item_input": {
+    "count": 64,
+    "item": "minecraft:honey_block"
+  }
 }

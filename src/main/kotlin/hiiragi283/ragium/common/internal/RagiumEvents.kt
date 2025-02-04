@@ -111,19 +111,12 @@ internal object RagiumEvents {
         event
             .getBuilder(RagiumMachineKeys.ASSEMBLER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.default(RagiumRecipes.ASSEMBLER),
-            )
 
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.default(RagiumRecipes.BLAST_FURNACE),
-            ).put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(
                 HTMachinePropertyKeys.PARTICLE,
                 HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, front: Direction ->

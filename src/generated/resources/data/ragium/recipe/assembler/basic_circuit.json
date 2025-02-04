@@ -1,23 +1,19 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "ragium:circuit_board"
-    },
-    {
-      "count": 1,
-      "tag": "c:ingots/copper"
-    },
-    {
-      "count": 1,
-      "tag": "c:dusts/redstone"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:basic_circuit"
-    }
-  ]
+  "first_item_input": {
+    "count": 1,
+    "item": "ragium:circuit_board"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:basic_circuit"
+  },
+  "second_item_input": {
+    "count": 1,
+    "tag": "c:ingots/copper"
+  },
+  "third_item_input": {
+    "count": 1,
+    "tag": "c:dusts/redstone"
+  }
 }

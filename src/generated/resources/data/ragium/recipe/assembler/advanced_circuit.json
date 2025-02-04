@@ -1,29 +1,19 @@
 {
   "type": "ragium:assembler",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "tag": "c:circuits/basic"
-    }
+  "first_item_input": {
+    "count": 1,
+    "item": "ragium:circuit_board"
   },
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "ragium:circuit_board"
-    },
-    {
-      "count": 1,
-      "tag": "c:ingots/gold"
-    },
-    {
-      "count": 1,
-      "tag": "c:dusts/glowstone"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:advanced_circuit"
-    }
-  ]
+  "item_output": {
+    "count": 1,
+    "id": "ragium:advanced_circuit"
+  },
+  "second_item_input": {
+    "count": 1,
+    "tag": "c:ingots/gold"
+  },
+  "third_item_input": {
+    "count": 1,
+    "tag": "c:dusts/glowstone"
+  }
 }

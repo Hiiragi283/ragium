@@ -5,7 +5,7 @@
       "modid": "actuallyadditions"
     }
   ],
-  "type": "ragium:assembler",
+  "type": "ragium:chemical_reactor",
   "fluid_inputs": [
     {
       "amount": 1000,

@@ -1,25 +1,15 @@
 {
   "type": "ragium:assembler",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "tag": "ragium:molds/plate"
-    }
+  "first_item_input": {
+    "count": 1,
+    "tag": "c:plastics"
   },
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:plastics"
-    },
-    {
-      "count": 1,
-      "tag": "c:dusts/quartz"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:circuit_board"
-    }
-  ]
+  "item_output": {
+    "count": 1,
+    "id": "ragium:circuit_board"
+  },
+  "second_item_input": {
+    "count": 1,
+    "tag": "c:dusts/quartz"
+  }
 }

@@ -3,9 +3,7 @@ package hiiragi283.ragium.data.server.integration
 import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
-import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
-import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumRecipes
@@ -21,8 +19,7 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
             .fluidOutput(InitFluids.CANOLA_OIL, 80)
             .save(output)
         // Refined Canola Oil
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTRefineryRecipeBuilder()
             .fluidInput(InitFluids.CANOLA_OIL.get())
             .fluidOutput(InitFluids.REFINED_CANOLA_OIL)
             .save(output)
@@ -41,7 +38,7 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
 
         // Coffee
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+            .create(RagiumRecipes.CHEMICAL_REACTOR)
             .itemInput(ActuallyTags.Items.CROPS_COFFEE)
             .itemInput(ActuallyItems.EMPTY_CUP)
             .milkInput()
@@ -49,15 +46,15 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
             .save(output)
 
         // Basic Coil
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(ActuallyItems.RESTONIA_CRYSTAL, 4)
             .itemInput(ActuallyTags.Items.GEMS_BLACK_QUARTZ)
             .itemOutput(ActuallyItems.BASIC_COIL, 2)
             .saveSuffixed(output, "_aa")
         // Advanced Coil
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(ActuallyItems.BASIC_COIL)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.GOLD)
             .itemOutput(ActuallyItems.ADVANCED_COIL, 2)

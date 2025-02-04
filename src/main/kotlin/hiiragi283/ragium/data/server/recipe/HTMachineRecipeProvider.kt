@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.biome
-import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
@@ -42,11 +41,10 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun compressor(output: RecipeOutput) {
         // Circuit Board
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.ASSEMBLER)
+        HTMultiItemRecipeBuilder
+            .assembler()
             .itemInput(RagiumItemTags.PLASTICS)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
-            .catalyst(RagiumItemTags.PLATE_MOLDS)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
             .save(output)
     }

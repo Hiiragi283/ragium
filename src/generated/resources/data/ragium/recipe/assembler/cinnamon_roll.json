@@ -1,25 +1,15 @@
 {
   "type": "ragium:assembler",
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:milk"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:bread"
-    },
-    {
-      "count": 1,
-      "item": "ragium:cinnamon_powder"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:cinnamon_roll"
-    }
-  ]
+  "first_item_input": {
+    "count": 1,
+    "item": "minecraft:bread"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:cinnamon_roll"
+  },
+  "second_item_input": {
+    "count": 1,
+    "item": "ragium:cinnamon_powder"
+  }
 }

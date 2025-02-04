@@ -1,34 +1,19 @@
 {
   "type": "ragium:blast_furnace",
-  "condition": {
-    "type": "ragium:source",
-    "source": "ragium:sources/heating",
-    "target_side": "down"
+  "first_item_input": {
+    "count": 3,
+    "item": "ragium:flour"
   },
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:milk"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 3,
-      "item": "ragium:flour"
-    },
-    {
-      "count": 2,
-      "item": "minecraft:sugar"
-    },
-    {
-      "count": 1,
-      "item": "ragium:butter"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "id": "ragium:sponge_cake"
-    }
-  ]
+  "item_output": {
+    "count": 4,
+    "id": "ragium:sponge_cake"
+  },
+  "second_item_input": {
+    "count": 2,
+    "item": "minecraft:sugar"
+  },
+  "third_item_input": {
+    "count": 1,
+    "item": "ragium:butter"
+  }
 }
