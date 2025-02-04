@@ -1,14 +1,5 @@
 {
   "values": {
-    "#c:acetylene": {
-      "gas_turbine": 20
-    },
-    "#c:ethene": {
-      "gas_turbine": 50
-    },
-    "#c:methane": {
-      "gas_turbine": 10
-    },
     "#c:steam": {
       "steam_turbine": 100
     },

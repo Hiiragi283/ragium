@@ -11,8 +11,8 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
-import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -23,9 +23,10 @@ import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
-import hiiragi283.ragium.common.block.processor.*
+import hiiragi283.ragium.common.block.machine.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.recipe.HTMachineConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentPatch
@@ -101,7 +102,6 @@ internal object RagiumEvents {
             .map(event::getBuilder)
             .forEach { builder: HTPropertyHolderBuilder ->
                 builder
-                    .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTDefaultProcessorBlockEntity)
                     .put(
                         HTMachinePropertyKeys.PARTICLE,
                         HTMachineParticleHandler.ofSimple(ParticleTypes.ELECTRIC_SPARK),
@@ -110,11 +110,9 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.ASSEMBLER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(
@@ -125,32 +123,9 @@ internal object RagiumEvents {
             )
 
         event
-            .getBuilder(RagiumMachineKeys.COMPRESSOR)
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.material(
-                    RagiumRecipeTypes.COMPRESSOR,
-                    HTMachineConverters::compressorGear,
-                    HTMachineConverters::compressorGem,
-                    HTMachineConverters::compressorPlate,
-                    HTMachineConverters::compressorRod,
-                ),
-            )
-
-        event
             .getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BREWING_STAND_BREW)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.BUBBLE_POP))
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.material(
-                    RagiumRecipeTypes.CHEMICAL,
-                    HTMachineConverters::chemicalOre3x,
-                    HTMachineConverters::chemicalOre4x,
-                    HTMachineConverters::chemicalOre5x,
-                ),
-            )
 
         event
             .getBuilder(RagiumMachineKeys.EXTRACTOR)
@@ -162,21 +137,9 @@ internal object RagiumEvents {
             .getBuilder(RagiumMachineKeys.GRINDER)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.GRINDSTONE_USE)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.material(
-                    RagiumRecipeTypes.GRINDER,
-                    HTMachineConverters::grinderMainToDust,
-                    HTMachineConverters::grinderGearToDust,
-                    HTMachineConverters::grinderPlateToDust,
-                    HTMachineConverters::grinderRawToDust,
-                    HTMachineConverters::grinderOreToRaw,
-                ),
-            )
 
         event
             .getBuilder(RagiumMachineKeys.MIXER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
@@ -213,6 +176,7 @@ internal object RagiumEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun registerMaterial(event: HTRegisterMaterialEvent) {
+        event.register(CommonMaterials.ALUMINA, HTMaterialType.DUST)
         event.register(CommonMaterials.ALUMINUM, HTMaterialType.METAL)
         event.register(CommonMaterials.ANTIMONY, HTMaterialType.METAL)
         event.register(CommonMaterials.BERYLLIUM, HTMaterialType.METAL)
@@ -275,6 +239,18 @@ internal object RagiumEvents {
         event.register(VanillaMaterials.REDSTONE, HTMaterialType.MINERAL)
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    fun modifyMaterialProperties(event: HTModifyPropertyEvent.Material) {
+        // Grinder Ore Count
+        event
+            .getBuilder(VanillaMaterials.LAPIS)
+            .put(HTMaterialPropertyKeys.GRINDER_RAW_COUNT, 4)
+
+        event
+            .getBuilder(VanillaMaterials.REDSTONE)
+            .put(HTMaterialPropertyKeys.GRINDER_RAW_COUNT, 2)
+    }
+
     @SubscribeEvent
     fun createRegistry(event: NewRegistryEvent) {
         event.register(RagiumAPI.Registries.MULTIBLOCK_COMPONENT_TYPE)
@@ -297,8 +273,6 @@ internal object RagiumEvents {
         bindAllMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
         bindAllMachines(RagiumBlockEntityTypes.FLUID_GENERATOR)
 
-        bindAllMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
-        bindAllMachines(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         bindMachine(RagiumBlockEntityTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR)
         bindMachine(RagiumBlockEntityTypes.REFINERY, RagiumMachineKeys.REFINERY)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
@@ -360,10 +334,8 @@ internal object RagiumEvents {
         registerHandlers(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
         registerHandlers(RagiumBlockEntityTypes.FLUID_GENERATOR)
 
-        registerHandlers(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
         registerHandlers(RagiumBlockEntityTypes.REFINERY)
-        registerHandlers(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         // Other

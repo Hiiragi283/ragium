@@ -3,26 +3,17 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.data.HTChemicalRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.common.recipe.condition.HTBiomeCondition
-import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
-import hiiragi283.ragium.common.recipe.condition.HTSourceCondition
-import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.*
 import net.minecraft.data.tags.TagsProvider
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
@@ -120,28 +111,6 @@ fun ShapelessRecipeBuilder.savePrefixed(output: RecipeOutput) {
 fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
     savePrefixed(output, "stonecutting/")
 }
-
-//    HTMachineRecipeBuilder    //
-
-fun HTChemicalRecipeBuilder.catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTChemicalRecipeBuilder =
-    catalyst(prefix.createTag(material))
-
-fun HTChemicalRecipeBuilder.catalyst(tier: HTMachineTier): HTChemicalRecipeBuilder = catalyst(tier.getCircuitTag())
-
-fun HTChemicalRecipeBuilder.catalyst(tagKey: TagKey<Item>): HTChemicalRecipeBuilder = catalyst(Ingredient.of(tagKey))
-
-fun HTChemicalRecipeBuilder.catalyst(item: ItemLike): HTChemicalRecipeBuilder = catalyst(Ingredient.of(item))
-
-fun HTChemicalRecipeBuilder.catalyst(ingredient: Ingredient): HTChemicalRecipeBuilder = condition(HTProcessorCatalystCondition(ingredient))
-
-fun HTChemicalRecipeBuilder.sources(source: TagKey<Block>, targetSide: Direction = Direction.DOWN): HTChemicalRecipeBuilder =
-    condition(HTSourceCondition(source, targetSide))
-
-fun HTChemicalRecipeBuilder.biome(tagKey: TagKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTChemicalRecipeBuilder =
-    condition(HTBiomeCondition(lookup.getOrThrow(tagKey)))
-
-fun HTChemicalRecipeBuilder.biome(resourceKey: ResourceKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTChemicalRecipeBuilder =
-    condition(HTBiomeCondition(lookup.getOrThrow(resourceKey)))
 
 //    TagBuilder    //
 

@@ -1,11 +1,11 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 1,
+    "count": 4,
     "tag": "c:sands"
   },
   "item_output": {
-    "count": 1,
+    "count": 4,
     "id": "minecraft:tnt"
   },
   "second_item_input": {

@@ -105,11 +105,13 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     protected abstract fun createRecipe(): R
 
-    fun export(): RecipeHolder<R> = export(getPrimalId())
-
     fun export(id: ResourceLocation): RecipeHolder<R> = RecipeHolder(fixId(id), createRecipe())
 
     fun exportPrefixed(prefix: String): RecipeHolder<R> = export(getPrimalId().withPrefix(prefix))
 
     fun exportSuffixed(suffix: String): RecipeHolder<R> = export(getPrimalId().withSuffix(suffix))
+
+    fun export(consumer: (R) -> Unit) {
+        consumer(createRecipe())
+    }
 }

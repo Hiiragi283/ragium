@@ -65,9 +65,6 @@ object RagiumClient {
         }
 
         register(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
-
-        register(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
-        register(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         register(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         event.registerEntityRenderer(RagiumEntityTypes.DYNAMITE.get(), ::ThrownItemRenderer)

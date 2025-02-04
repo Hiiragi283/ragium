@@ -7,9 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
-import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
-import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
-import hiiragi283.ragium.common.block.processor.*
+import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
@@ -90,14 +88,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =
         register("refinery", ::HTRefineryBlockEntity)
-
-    @JvmField
-    val DEFAULT_PROCESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDefaultProcessorBlockEntity>> =
-        registerMachine("default_processor", ::HTDefaultProcessorBlockEntity)
-
-    @JvmField
-    val LARGE_PROCESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLargeProcessorBlockEntity>> =
-        registerMachine("large_processor", ::HTLargeProcessorBlockEntity)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =

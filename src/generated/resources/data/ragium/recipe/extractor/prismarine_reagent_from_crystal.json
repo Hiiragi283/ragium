@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "count": 3,
+    "tag": "c:gems/prismarine"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:prismarine_reagent"
+  }
+}

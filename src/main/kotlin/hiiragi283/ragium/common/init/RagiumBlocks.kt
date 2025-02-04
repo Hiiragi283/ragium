@@ -68,7 +68,6 @@ object RagiumBlocks {
         RagiumMaterials.RAGIUM,
         // Steel
         CommonMaterials.STEEL,
-        CommonMaterials.STAINLESS_STEEL,
         RagiumMaterials.DEEP_STEEL,
         // Metal
         CommonMaterials.ALUMINUM,
@@ -113,7 +112,6 @@ object RagiumBlocks {
         VanillaMaterials.GOLD,
         // Steel
         CommonMaterials.STEEL,
-        CommonMaterials.STAINLESS_STEEL,
         RagiumMaterials.DEEP_STEEL,
         VanillaMaterials.NETHERITE,
     ).associateWith { key: HTMaterialKey ->

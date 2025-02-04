@@ -2,7 +2,7 @@
   "type": "ragium:infuser",
   "fluid_input": {
     "amount": 1000,
-    "tag": "c:aqua_regia"
+    "tag": "c:redstone_acid"
   },
   "fluid_output": {
     "amount": 1000,

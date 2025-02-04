@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 8000,
+    "tag": "c:hydrofluoric_acid"
+  },
+  "item_input": {
+    "count": 16,
+    "item": "ragium:yellow_cake_piece"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:uranium_fuel"
+  }
+}

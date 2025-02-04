@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:sculk_catalyst"
+  },
+  "item_output": {
+    "count": 8,
+    "id": "ragium:sculk_reagent"
+  }
+}

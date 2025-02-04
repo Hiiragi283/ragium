@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 8000,
+    "tag": "ragium:fuels/non_nitro"
+  },
+  "fluid_output": {
+    "amount": 8000,
+    "id": "ragium:nitro_fuel"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "ragium:creeper_reagent"
+  }
+}

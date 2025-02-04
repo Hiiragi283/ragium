@@ -1,8 +1,10 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.*
-import hiiragi283.ragium.api.extension.catalyst
+import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -23,7 +25,6 @@ import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -34,8 +35,6 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.BlockTagIngredient
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredItem
 
 object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
@@ -116,17 +115,10 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .save(output)
         // Deep Steel
-        HTChemicalRecipeBuilder()
-            .itemInput(BlockTagIngredient(BlockTags.DEEPSLATE_ORE_REPLACEABLES), 8)
-            .fluidInput(RagiumFluids.AQUA_REGIA, FluidType.BUCKET_VOLUME / 5)
-            .itemOutput(RagiumItems.DEEPANT)
-            .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, FluidType.BUCKET_VOLUME / 5)
-            .save(output)
-
         HTMultiItemRecipeBuilder
             .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .itemInput(RagiumItems.DEEPANT, 4)
+            .itemInput(RagiumItems.DEEPANT_REAGENT, 4)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
             .save(output)
     }
@@ -135,7 +127,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Ragium
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 4)
-            .fluidInput(RagiumFluids.AQUA_REGIA)
+            .fluidInput(RagiumFluids.REDSTONE_ACID)
             .fluidOutput(RagiumFluids.RAGIUM_SOLUTION)
             .save(output)
 
@@ -145,9 +137,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
             .save(output, RagiumAPI.id("distilled_ragium_solution"))
 
-        HTChemicalRecipeBuilder()
+        HTRefineryRecipeBuilder()
             .fluidInput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
-            .catalyst(Items.NETHER_STAR)
             .fluidOutput(RagiumFluids.REFINED_RAGIUM_SOLUTION, 500)
             .save(output)
 
@@ -319,12 +310,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL, 4)
             .itemInput(Items.PISTON, 2)
             .itemOutput(RagiumItems.ENGINE)
-            .save(output)
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.GLOW_INK_SAC)
-            .itemOutput(RagiumItems.LUMINESCENCE_DUST)
-            // .itemOutput(Items.INK_SAC)
             .save(output)
 
         ShapedRecipeBuilder

@@ -1,0 +1,19 @@
+{
+  "type": "ragium:assembler",
+  "first_item_input": {
+    "count": 4,
+    "tag": "c:strings"
+  },
+  "item_output": {
+    "count": 8,
+    "id": "ragium:dynamite"
+  },
+  "second_item_input": {
+    "count": 4,
+    "item": "minecraft:paper"
+  },
+  "third_item_input": {
+    "count": 1,
+    "item": "ragium:creeper_reagent"
+  }
+}

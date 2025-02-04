@@ -67,10 +67,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             mapOf(RagiumMachineKeys.COMBUSTION_GENERATOR to FluidType.BUCKET_VOLUME / 100),
             false,
         )
-        // Gas Turbine
-        builder.addFuel(RagiumFluids.METHANE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 100)
-        builder.addFuel(RagiumFluids.ETHENE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 20)
-        builder.addFuel(RagiumFluids.ACETYLENE, RagiumMachineKeys.GAS_TURBINE, FluidType.BUCKET_VOLUME / 50)
         // Steam
         builder.addFuel(RagiumFluids.STEAM, RagiumMachineKeys.STEAM_TURBINE, FluidType.BUCKET_VOLUME / 10)
         // Thermal

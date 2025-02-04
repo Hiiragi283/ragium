@@ -71,11 +71,11 @@ object RagiumItems {
 
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
 
+        register(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
         register(HTTagPrefix.DUST, CommonMaterials.CARBON)
         register(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
-        register(HTTagPrefix.DUST, CommonMaterials.SALT)
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
@@ -83,7 +83,6 @@ object RagiumItems {
 
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALTPETER)
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALT)
         register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
         // Ingots
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
@@ -91,7 +90,6 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
 
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
-        register(HTTagPrefix.INGOT, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
 
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
@@ -112,7 +110,6 @@ object RagiumItems {
         register(HTTagPrefix.GEAR, VanillaMaterials.EMERALD)
 
         register(HTTagPrefix.GEAR, CommonMaterials.STEEL)
-        register(HTTagPrefix.GEAR, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.GEAR, RagiumMaterials.DEEP_STEEL)
         register(HTTagPrefix.GEAR, VanillaMaterials.NETHERITE)
         // Rods
@@ -121,7 +118,6 @@ object RagiumItems {
         register(HTTagPrefix.ROD, VanillaMaterials.GOLD)
 
         register(HTTagPrefix.ROD, CommonMaterials.STEEL)
-        register(HTTagPrefix.ROD, CommonMaterials.STAINLESS_STEEL)
         register(HTTagPrefix.ROD, RagiumMaterials.DEEP_STEEL)
         register(HTTagPrefix.ROD, VanillaMaterials.NETHERITE)
     }
@@ -207,15 +203,11 @@ object RagiumItems {
     val BEE_WAX: DeferredItem<Item> = register("bee_wax", ::HoneycombItem, itemProperty())
 
     @JvmField
-    val DEEPANT: DeferredItem<Item> = register("deepant")
-
-    @JvmField
     val LUMINESCENCE_DUST: DeferredItem<Item> = register("luminescence_dust")
 
     @JvmField
     val OTHER_DUSTS: List<DeferredItem<Item>> = listOf(
         BEE_WAX,
-        DEEPANT,
         LUMINESCENCE_DUST,
     )
 
@@ -427,6 +419,21 @@ object RagiumItems {
     val CREEPER_REAGENT: DeferredItem<Item> = register("creeper_reagent")
 
     @JvmField
+    val DEEPANT_REAGENT: DeferredItem<Item> = register("deepant_reagent")
+
+    @JvmField
+    val ENDER_REAGENT: DeferredItem<Item> = register("ender_reagent")
+
+    @JvmField
+    val NETHER_REAGENT: DeferredItem<Item> = register("nether_reagent")
+
+    @JvmField
+    val PRISMARINE_REAGENT: DeferredItem<Item> = register("prismarine_reagent")
+
+    @JvmField
+    val SCULK_REAGENT: DeferredItem<Item> = register("sculk_reagent")
+
+    @JvmField
     val WITHER_REAGENT: DeferredItem<Item> = register("wither_reagent")
 
     @JvmField
@@ -434,6 +441,11 @@ object RagiumItems {
         ALKALI_REAGENT,
         BLAZE_REAGENT,
         CREEPER_REAGENT,
+        DEEPANT_REAGENT,
+        ENDER_REAGENT,
+        NETHER_REAGENT,
+        PRISMARINE_REAGENT,
+        SCULK_REAGENT,
         WITHER_REAGENT,
     )
 

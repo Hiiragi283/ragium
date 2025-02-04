@@ -33,50 +33,33 @@ object HTMachinePropertyKeys {
 
     @JvmField
     val RENDERER_PRE: HTPropertyKey<HTMachineRenderer> =
-        HTPropertyKey
-            .builder<HTMachineRenderer>(RagiumAPI.id("renderer_pre"))
-            .setDefaultValue(HTMachineRenderer::EMPTY)
-            .build()
+        HTPropertyKey.withDefault(RagiumAPI.id("renderer_pre"), HTMachineRenderer::EMPTY)
 
     @JvmField
     val RENDERER_POST: HTPropertyKey<HTMachineRenderer> =
-        HTPropertyKey
-            .builder<HTMachineRenderer>(RagiumAPI.id("renderer_post"))
-            .setDefaultValue(HTMachineRenderer::EMPTY)
-            .build()
+        HTPropertyKey.withDefault(RagiumAPI.id("renderer_post"), HTMachineRenderer::EMPTY)
 
     //    Data Gen    //
 
     @JvmField
     val MODEL_MAPPER: HTPropertyKey<(HTMachineKey) -> ResourceLocation> =
-        HTPropertyKey
-            .builder<(HTMachineKey) -> ResourceLocation>(RagiumAPI.id("model_mapper"))
-            .setDefaultValue { { key: HTMachineKey -> RagiumAPI.id("block/${key.name}") } }
-            .build()
+        HTPropertyKey.withDefault(RagiumAPI.id("model_mapper")) { key: HTMachineKey -> RagiumAPI.id("block/${key.name}") }
 
     @JvmField
     val ROTATION_MAPPER: HTPropertyKey<(Direction) -> Direction> =
-        HTPropertyKey
-            .builder<(Direction) -> Direction>(RagiumAPI.id("rotation_mapper"))
-            .setDefaultValue(::identifyFunction)
-            .build()
+        HTPropertyKey.withDefault(RagiumAPI.id("rotation_mapper"), ::identifyFunction)
 
     //    Generator    //
 
     @JvmField
     val GENERATOR_PREDICATE: HTPropertyKey<(Level, BlockPos) -> Boolean> =
-        HTPropertyKey
-            .builder<(Level, BlockPos) -> Boolean>(RagiumAPI.id("generator_predicate"))
-            .setDefaultValue { constFunction3(false) }
-            .build()
+        HTPropertyKey.withDefault(RagiumAPI.id("generator_predicate"), constFunction3(false))
 
     //    Processor    //
 
     @JvmField
     val RECIPE_PROXY: HTPropertyKey<HTMachineRecipeProxy> =
-        HTPropertyKey
-            .builder<HTMachineRecipeProxy>(RagiumAPI.id("recipe_proxy"))
-            .build()
+        HTPropertyKey.simple(RagiumAPI.id("recipe_proxy"))
 
     //    Multiblock    //
 

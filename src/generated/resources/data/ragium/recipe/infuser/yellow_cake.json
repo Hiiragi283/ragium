@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 8000,
+    "tag": "c:sulfuric_acid"
+  },
+  "item_input": {
+    "count": 8,
+    "item": "minecraft:poisonous_potato"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:yellow_cake"
+  }
+}

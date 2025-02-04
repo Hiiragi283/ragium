@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -16,7 +15,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -57,12 +55,6 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerMilk(output: RecipeOutput) {
         // Milk
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.MILK_BUCKET)
-            .itemOutput(Items.BUCKET)
-            .fluidOutput(NeoForgeMod.MILK)
-            .save(output, RagiumAPI.id("milk"))
-
         HTInfuserRecipeBuilder()
             .itemInput(Items.BUCKET)
             .milkInput()

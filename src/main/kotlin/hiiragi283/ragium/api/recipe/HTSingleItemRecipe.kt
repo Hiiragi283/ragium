@@ -7,23 +7,32 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import java.util.*
 
-abstract class HTSingleItemRecipe(group: String, val input: SizedIngredient, val output: ItemStack) : HTMachineRecipeBase(group) {
+abstract class HTSingleItemRecipe(
+    group: String,
+    val input: SizedIngredient,
+    val catalyst: Optional<Ingredient>,
+    val output: ItemStack,
+) : HTMachineRecipeBase(group) {
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input.getItem(0))
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = output.copy()
 
     //    Serializer    //
 
-    class Serializer<T : HTSingleItemRecipe>(private val factory: (String, SizedIngredient, ItemStack) -> T) : RecipeSerializer<T> {
+    class Serializer<T : HTSingleItemRecipe>(private val factory: (String, SizedIngredient, Optional<Ingredient>, ItemStack) -> T) :
+        RecipeSerializer<T> {
         private val codec: MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
                     HTRecipeCodecs.GROUP.forGetter(HTSingleItemRecipe::getGroup),
                     HTRecipeCodecs.ITEM_INPUT.forGetter(HTSingleItemRecipe::input),
+                    HTRecipeCodecs.CATALYST.forGetter(HTSingleItemRecipe::catalyst),
                     HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTSingleItemRecipe::output),
                 ).apply(instance, factory)
         }
@@ -33,6 +42,8 @@ abstract class HTSingleItemRecipe(group: String, val input: SizedIngredient, val
             HTSingleItemRecipe::getGroup,
             SizedIngredient.STREAM_CODEC,
             HTSingleItemRecipe::input,
+            ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
+            HTSingleItemRecipe::catalyst,
             ItemStack.STREAM_CODEC,
             HTSingleItemRecipe::output,
             factory,

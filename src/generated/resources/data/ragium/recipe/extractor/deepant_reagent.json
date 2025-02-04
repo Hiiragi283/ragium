@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "type": "neoforge:block_tag",
+    "count": 8,
+    "tag": "minecraft:deepslate_ore_replaceables"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:deepant_reagent"
+  }
+}

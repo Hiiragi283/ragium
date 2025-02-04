@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "count": 2,
+    "item": "minecraft:prismarine_shard"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:prismarine_reagent"
+  }
+}

@@ -13,6 +13,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 
 class HTSingleItemRecipeCategory<T : HTSingleItemRecipe>(
@@ -33,18 +34,23 @@ class HTSingleItemRecipeCategory<T : HTSingleItemRecipe>(
             .addInputSlot(getPosition(0), getPosition(0))
             .setStandardSlotBackground()
             .addIngredients(recipe.input)
+        // Catalyst
+        builder
+            .addInputSlot(getPosition(1), getPosition(0))
+            .setStandardSlotBackground()
+            .addIngredients(recipe.catalyst.orElse(Ingredient.of()))
         // Item Output
         builder
-            .addOutputSlot(getPosition(3), getPosition(0))
+            .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
             .addItemStack(recipe.output)
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: T, focuses: IFocusGroup) {
-        builder.addRecipeArrow().setPosition(getPosition(1.5), getPosition(0))
+        builder.addRecipeArrow().setPosition(getPosition(2.5), getPosition(0))
     }
 
-    override fun getWidth(): Int = 18 * 4 + 8
+    override fun getWidth(): Int = 18 * 5 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
 

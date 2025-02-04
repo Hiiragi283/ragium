@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "count": 1,
+    "tag": "c:gunpowders"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:creeper_reagent"
+  }
+}

@@ -3,7 +3,10 @@ package hiiragi283.ragium.data.server.integration
 import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
-import hiiragi283.ragium.api.data.*
+import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
+import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -33,14 +36,6 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
             .itemInput(ActuallyItems.EMPOWERED_CANOLA_SEED)
             .fluidInput(InitFluids.CRYSTALLIZED_OIL.get())
             .fluidOutput(InitFluids.EMPOWERED_OIL)
-            .save(output)
-
-        // Coffee
-        HTChemicalRecipeBuilder()
-            .itemInput(ActuallyTags.Items.CROPS_COFFEE)
-            .itemInput(ActuallyItems.EMPTY_CUP)
-            .milkInput()
-            .itemOutput(ActuallyItems.COFFEE_CUP)
             .save(output)
 
         // Basic Coil

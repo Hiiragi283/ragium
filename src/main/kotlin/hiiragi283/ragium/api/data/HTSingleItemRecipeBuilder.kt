@@ -14,10 +14,11 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
+import java.util.*
 
 class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     override val prefix: String,
-    private val factory: (String, SizedIngredient, ItemStack) -> T,
+    private val factory: (String, SizedIngredient, Optional<Ingredient>, ItemStack) -> T,
 ) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>, T>() {
     companion object {
         @JvmStatic
@@ -47,12 +48,13 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     fun catalyst(tagKey: TagKey<Item>): HTSingleItemRecipeBuilder<T> = catalyst(Ingredient.of(tagKey))
 
     fun catalyst(catalyst: Ingredient): HTSingleItemRecipeBuilder<T> = apply {
+        check(!catalyst.isEmpty) { "Empty ingredient is not allowed for catalyst" }
         this.catalyst = catalyst
     }
 
     override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
 
-    override fun createRecipe(): T = factory(group ?: "", input, this.output)
+    override fun createRecipe(): T = factory(group ?: "", input, Optional.ofNullable(catalyst), this.output)
 
     override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = this
 

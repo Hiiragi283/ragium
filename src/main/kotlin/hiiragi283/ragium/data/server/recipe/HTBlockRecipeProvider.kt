@@ -413,7 +413,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         machine2(
             output,
             RagiumMachineKeys.CHEMICAL_REACTOR,
-            CommonMaterials.STAINLESS_STEEL,
+            CommonMaterials.ALUMINUM,
             RagiumBlocks.CHEMICAL_GLASS,
             HTMachineTier.ADVANCED,
         )
@@ -467,7 +467,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         machine3(
             output,
             RagiumMachineKeys.LASER_TRANSFORMER,
-            CommonMaterials.STAINLESS_STEEL,
+            CommonMaterials.ALUMINUM,
             Items.END_CRYSTAL,
             HTMachineTier.ULTIMATE,
         )

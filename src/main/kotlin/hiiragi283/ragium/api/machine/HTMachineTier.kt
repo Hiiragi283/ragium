@@ -126,7 +126,7 @@ enum class HTMachineTier(
 
     fun getSteelMetal(): HTMaterialKey = when (this) {
         BASIC -> CommonMaterials.STEEL
-        ADVANCED -> CommonMaterials.STAINLESS_STEEL
+        ADVANCED -> RagiumMaterials.RAGI_STEEL
         ELITE -> RagiumMaterials.DEEP_STEEL
         ULTIMATE -> VanillaMaterials.NETHERITE
     }

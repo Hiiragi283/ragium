@@ -1,19 +1,18 @@
 package hiiragi283.ragium.api.property
 
 import net.minecraft.resources.ResourceLocation
-import java.util.function.Supplier
 
-class HTPropertyKey<T : Any> internal constructor(
-    val id: ResourceLocation,
-    val hasDefaultValue: Boolean,
-    val defaultValue: Supplier<T>,
-) {
+class HTPropertyKey<T : Any> internal constructor(val id: ResourceLocation, val hasDefaultValue: Boolean, val defaultValue: () -> T) {
     companion object {
         @JvmStatic
-        fun <T : Any> builder(id: ResourceLocation): Builder<T> = Builder<T>(id)
+        fun <T : Any> simple(id: ResourceLocation): HTPropertyKey<T> =
+            HTPropertyKey(id, false) { error("HTPropertyKey: $id have no default value!") }
 
         @JvmStatic
-        fun <T : Any> simple(id: ResourceLocation): HTPropertyKey<T> = builder<T>(id).build()
+        fun <T : Any> withDefault(id: ResourceLocation, value: T): HTPropertyKey<T> = withDefault<T>(id) { value }
+
+        @JvmStatic
+        fun <T : Any> withDefault(id: ResourceLocation, value: () -> T): HTPropertyKey<T> = HTPropertyKey(id, true, value)
     }
 
     /**
@@ -21,7 +20,7 @@ class HTPropertyKey<T : Any> internal constructor(
      * @throws IllegalStateException デフォルト値を持っていない場合
      */
     @Throws
-    fun getDefaultValue(): T = defaultValue.get()
+    fun getDefaultValue(): T = defaultValue()
 
     /**
      * デフォルトの値を取得します
@@ -37,16 +36,4 @@ class HTPropertyKey<T : Any> internal constructor(
     fun cast(obj: Any?): T? = obj as? T
 
     override fun toString(): String = "HTPropertyKey[$id]"
-
-    class Builder<T : Any>(val id: ResourceLocation) {
-        private var hasDefaultValue: Boolean = false
-        private var defaultValue: Supplier<T> = Supplier { error("HTPropertyKey: $id have no default value!") }
-
-        fun setDefaultValue(defaultValue: Supplier<T>): Builder<T> = apply {
-            this.defaultValue = defaultValue
-            this.hasDefaultValue = true
-        }
-
-        fun build(): HTPropertyKey<T> = HTPropertyKey(id, hasDefaultValue, defaultValue)
-    }
 }
