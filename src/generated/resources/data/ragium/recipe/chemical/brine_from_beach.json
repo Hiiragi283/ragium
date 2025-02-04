@@ -1,0 +1,13 @@
+{
+  "type": "ragium:chemical",
+  "condition": {
+    "type": "ragium:biome",
+    "biome": "#minecraft:is_beach"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "id": "ragium:brine"
+    }
+  ]
+}

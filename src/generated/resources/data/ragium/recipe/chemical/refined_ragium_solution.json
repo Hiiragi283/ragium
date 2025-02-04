@@ -1,0 +1,21 @@
+{
+  "type": "ragium:chemical",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "fluid_inputs": [
+    {
+      "amount": 750,
+      "tag": "c:distilled_ragium_solution"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 500,
+      "id": "ragium:refined_ragium_solution"
+    }
+  ]
+}

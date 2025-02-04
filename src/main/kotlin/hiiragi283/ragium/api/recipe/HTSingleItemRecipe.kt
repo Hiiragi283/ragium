@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 abstract class HTSingleItemRecipe(group: String, val input: SizedIngredient, val output: ItemStack) : HTMachineRecipeBase(group) {
-    override fun matches(input: HTRecipeInput, level: Level): Boolean = this.input.test(input.getItem(0))
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input.getItem(0))
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = output.copy()
 

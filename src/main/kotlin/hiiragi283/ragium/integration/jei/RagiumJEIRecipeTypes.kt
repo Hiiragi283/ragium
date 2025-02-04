@@ -1,12 +1,9 @@
 package hiiragi283.ragium.integration.jei
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.api.recipe.*
 import mezz.jei.api.recipe.RecipeType
-import net.minecraft.world.item.crafting.RecipeHolder
 
 object RagiumJEIRecipeTypes {
     @JvmField
@@ -20,6 +17,10 @@ object RagiumJEIRecipeTypes {
     @JvmField
     val BLAST_FURNACE: RecipeType<HTBlastFurnaceRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "blast_furnace", HTBlastFurnaceRecipe::class.java)
+
+    @JvmField
+    val CHEMICAL: RecipeType<HTChemicalRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "chemical", HTChemicalRecipe::class.java)
 
     @JvmField
     val COMPRESSOR: RecipeType<HTCompressorRecipe> =
@@ -44,14 +45,4 @@ object RagiumJEIRecipeTypes {
     @JvmField
     val REFINERY: RecipeType<HTRefineryRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "refinery", HTRefineryRecipe::class.java)
-
-    @JvmStatic
-    private val RECIPE_TYPE_MAP: MutableMap<HTMachineKey, RecipeType<RecipeHolder<HTMachineRecipe>>> =
-        mutableMapOf()
-
-    @JvmStatic
-    fun getRecipeType(machine: HTMachineKey): RecipeType<RecipeHolder<HTMachineRecipe>> =
-        RECIPE_TYPE_MAP.computeIfAbsent(machine) { key: HTMachineKey ->
-            RecipeType.createRecipeHolderType(RagiumAPI.id(key.name).withSuffix("_old"))
-        }
 }

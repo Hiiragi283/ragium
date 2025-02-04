@@ -1,0 +1,27 @@
+{
+  "type": "ragium:chemical",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:chemical_sludge"
+    },
+    {
+      "amount": 4000,
+      "tag": "c:water"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:sand"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:clay"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:gold_nugget"
+    }
+  ]
+}

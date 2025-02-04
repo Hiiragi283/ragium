@@ -1,0 +1,27 @@
+{
+  "type": "ragium:chemical",
+  "fluid_inputs": [
+    {
+      "amount": 8000,
+      "tag": "c:hydrofluoric_acid"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 12000,
+      "id": "ragium:chemical_sludge"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 16,
+      "item": "ragium:yellow_cake_piece"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:uranium_fuel"
+    }
+  ]
+}

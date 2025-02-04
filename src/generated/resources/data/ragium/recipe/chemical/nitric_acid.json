@@ -1,0 +1,19 @@
+{
+  "type": "ragium:chemical",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:ammonia"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:nitric_acid"
+    },
+    {
+      "amount": 4000,
+      "id": "ragium:hydrogen"
+    }
+  ]
+}

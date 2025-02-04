@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTRecipeInput
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -30,12 +30,12 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockE
     private val itemOutput = ItemStackHandler(1)
     private val outputTank = HTMachineFluidTank(8000, this::setChanged)
 
-    private val recipeCache: HTRecipeCache<HTRecipeInput, HTExtractorRecipe> =
+    private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTExtractorRecipe> =
         HTRecipeCache(RagiumRecipeTypes.EXTRACTOR)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTRecipeInput = HTRecipeInput.of(pos, itemInput.getStackInSlot(0))
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, itemInput.getStackInSlot(0))
         val holder: RecipeHolder<HTExtractorRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
         val recipe: HTExtractorRecipe = holder.value
         // Try to insert outputs

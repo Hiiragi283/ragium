@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
@@ -12,6 +13,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
@@ -23,7 +25,7 @@ import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.function.Supplier
 
-abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T>> : RecipeBuilder {
+abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, R : HTMachineRecipeBase> : RecipeBuilder {
     //    Item Input    //
 
     fun itemInput(item: ItemLike, count: Int = 1): T = itemInput(Ingredient.of(item), count)
@@ -77,7 +79,7 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T>> : R
         save(recipeOutput, getPrimalId())
     }
 
-    abstract fun getPrimalId(): ResourceLocation
+    protected abstract fun getPrimalId(): ResourceLocation
 
     fun savePrefixed(recipeOutput: RecipeOutput, prefix: String) {
         save(recipeOutput, getPrimalId().withPrefix(prefix))
@@ -88,11 +90,26 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T>> : R
     }
 
     final override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        val fixedId: ResourceLocation = RagiumAPI.wrapId(id).withPrefix("$prefix/")
-        saveInternal(recipeOutput, fixedId)
+        recipeOutput.accept(
+            fixId(id),
+            createRecipe(),
+            null,
+        )
     }
 
-    abstract val prefix: String
+    protected abstract val prefix: String
 
-    protected abstract fun saveInternal(output: RecipeOutput, id: ResourceLocation)
+    private fun fixId(id: ResourceLocation): ResourceLocation = RagiumAPI.wrapId(id.withPrefix("$prefix/"))
+
+    //    Export    //
+
+    protected abstract fun createRecipe(): R
+
+    fun export(): RecipeHolder<R> = export(getPrimalId())
+
+    fun export(id: ResourceLocation): RecipeHolder<R> = RecipeHolder(fixId(id), createRecipe())
+
+    fun exportPrefixed(prefix: String): RecipeHolder<R> = export(getPrimalId().withPrefix(prefix))
+
+    fun exportSuffixed(suffix: String): RecipeHolder<R> = export(getPrimalId().withSuffix(suffix))
 }

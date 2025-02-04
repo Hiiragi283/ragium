@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachineFuel
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.api.util.DisableOverwriteMerger
 import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl

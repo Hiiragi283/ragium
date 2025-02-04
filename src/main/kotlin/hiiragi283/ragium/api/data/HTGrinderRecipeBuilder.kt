@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.recipe.HTChancedItemStack
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -15,7 +14,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.*
 
-class HTGrinderRecipeBuilder : HTMachineRecipeBuilderBase<HTGrinderRecipeBuilder>() {
+class HTGrinderRecipeBuilder : HTMachineRecipeBuilderBase<HTGrinderRecipeBuilder, HTGrinderRecipe>() {
     private var group: String? = null
     private lateinit var input: SizedIngredient
     private lateinit var output: ItemStack
@@ -48,17 +47,13 @@ class HTGrinderRecipeBuilder : HTMachineRecipeBuilderBase<HTGrinderRecipeBuilder
 
     override val prefix: String = "grinder"
 
-    override fun saveInternal(output: RecipeOutput, id: ResourceLocation) {
+    override fun createRecipe(): HTGrinderRecipe {
         val chanced: HTChancedItemStack? = secondOutput?.let { HTChancedItemStack(it, chance) }
-        output.accept(
-            id,
-            HTGrinderRecipe(
-                group ?: "",
-                input,
-                this.output,
-                Optional.ofNullable(chanced),
-            ),
-            null,
+        return HTGrinderRecipe(
+            group ?: "",
+            input,
+            this.output,
+            Optional.ofNullable(chanced),
         )
     }
 

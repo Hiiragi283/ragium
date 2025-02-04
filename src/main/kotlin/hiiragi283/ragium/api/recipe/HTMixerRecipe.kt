@@ -56,7 +56,7 @@ class HTMixerRecipe(
         )
     }
 
-    override fun matches(input: HTRecipeInput, level: Level): Boolean =
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean =
         firstFluid.test(input.getFluid(0)) && secondFluid.test(input.getFluid(1))
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXER.get()

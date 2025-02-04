@@ -1,0 +1,25 @@
+{
+  "type": "ragium:chemical",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:alumina_solution"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:gems/cryolite"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 3,
+      "id": "ragium:aluminum_ingot"
+    },
+    {
+      "count": 1,
+      "id": "ragium:slag"
+    }
+  ]
+}

@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.mutableMultiMapOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.get
+import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
 import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -24,7 +24,6 @@ import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
@@ -43,10 +42,6 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerCategories(registration: IRecipeCategoryRegistration) {
         val jeiHelper: IJeiHelpers = registration.jeiHelpers
         val guiHelper: IGuiHelper = jeiHelper.guiHelper
-
-        HTMachineKey.allKeys.forEach { key: HTMachineKey ->
-            registration.addRecipeCategories(HTMachineRecipeCategory(key, guiHelper))
-        }
 
         registration.addRecipeCategories(
             HTMultiItemRecipeCategory(
@@ -67,6 +62,7 @@ class RagiumJEIPlugin : IModPlugin {
                 RagiumMachineKeys.COMPRESSOR,
                 RagiumRecipeSerializers.COMPRESSOR.get(),
             ),
+            HTChemicalRecipeCategory(guiHelper),
             HTExtractorRecipeCategory(guiHelper),
             HTGrinderRecipeCategory(guiHelper),
             HTInfuserRecipeCategory(guiHelper),
@@ -89,6 +85,7 @@ class RagiumJEIPlugin : IModPlugin {
 
         register(RagiumJEIRecipeTypes.ASSEMBLER, RagiumRecipeTypes.ASSEMBLER)
         register(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumRecipeTypes.BLAST_FURNACE)
+        register(RagiumJEIRecipeTypes.CHEMICAL, RagiumRecipeTypes.CHEMICAL)
         register(RagiumJEIRecipeTypes.COMPRESSOR, RagiumRecipeTypes.COMPRESSOR)
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
         register(RagiumJEIRecipeTypes.GRINDER, RagiumRecipeTypes.GRINDER)
@@ -96,19 +93,21 @@ class RagiumJEIPlugin : IModPlugin {
         register(RagiumJEIRecipeTypes.MIXER, RagiumRecipeTypes.MIXER)
         register(RagiumJEIRecipeTypes.REFINERY, RagiumRecipeTypes.REFINERY)
 
-        registerMachineRecipes(registration, level)
         // Material Info
         registration.addRecipes(RagiumJEIRecipeTypes.MATERIAL_INFO, RagiumAPI.materialRegistry.typedMaterials)
     }
 
     private fun registerMachineRecipes(registration: IRecipeRegistration, level: Level) {
-        val recipeCache: HTMultiMap.Mutable<HTMachineKey, RecipeHolder<HTMachineRecipe>> = mutableMultiMapOf()
+        val recipeCache: HTMultiMap.Mutable<HTMachineKey, RecipeHolder<out HTMachineRecipeBase>> = mutableMultiMapOf()
         // Machine
         RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, _: HTBlockContent?, properties: HTPropertyHolder ->
-            properties[HTMachinePropertyKeys.RECIPE_PROXY]?.getRecipes(level) { holder: RecipeHolder<HTMachineRecipe> ->
+            properties[HTMachinePropertyKeys.RECIPE_PROXY]?.getRecipes(level) { holder: RecipeHolder<out HTMachineRecipeBase> ->
                 recipeCache.put(key, holder)
             }
         }
+
+        // Grinder
+
         // PBF Steel
         /*recipeCache.put(
             RagiumMachineKeys.BLAST_FURNACE,
@@ -142,10 +141,6 @@ class RagiumJEIPlugin : IModPlugin {
                     )
                 }
             }*/
-
-        recipeCache.map.forEach { machine: HTMachineKey, holders: Collection<RecipeHolder<HTMachineRecipe>> ->
-            registration.addRecipes(RagiumJEIRecipeTypes.getRecipeType(machine), holders.toList())
-        }
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
@@ -153,6 +148,9 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ASSEMBLER, RagiumMachineKeys.ASSEMBLER.getBlock())
         // Blast Furnace
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumMachineKeys.BLAST_FURNACE.getBlock())
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+        // Chemical
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.CHEMICAL, RagiumMachineKeys.CHEMICAL_REACTOR.getBlock())
         // Compressor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, RagiumMachineKeys.COMPRESSOR.getBlock())
         // Extractor
@@ -167,16 +165,6 @@ class RagiumJEIPlugin : IModPlugin {
         // Refinery
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.REFINERY, RagiumMachineKeys.REFINERY.getBlock())
 
-        // Machine
-        RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: HTBlockContent) ->
-            val stack = ItemStack(content)
-            registration.addRecipeCatalysts(RagiumJEIRecipeTypes.getRecipeType(key), stack)
-        }
-
-        registration.addRecipeCatalysts(
-            RagiumJEIRecipeTypes.getRecipeType(RagiumMachineKeys.BLAST_FURNACE),
-            RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
-        )
         // Material
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MATERIAL_INFO, Items.IRON_INGOT)
     }

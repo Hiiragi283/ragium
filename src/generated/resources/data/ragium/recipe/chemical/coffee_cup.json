@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actuallyadditions"
+    }
+  ],
+  "type": "ragium:chemical",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:milk"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:crops/coffee"
+    },
+    {
+      "count": 1,
+      "item": "actuallyadditions:empty_cup"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "actuallyadditions:coffee_cup"
+    }
+  ]
+}

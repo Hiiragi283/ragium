@@ -125,6 +125,19 @@ internal object RagiumEvents {
             )
 
         event
+            .getBuilder(RagiumMachineKeys.COMPRESSOR)
+            .put(
+                HTMachinePropertyKeys.RECIPE_PROXY,
+                HTMachineRecipeProxy.material(
+                    RagiumRecipeTypes.COMPRESSOR,
+                    HTMachineConverters::compressorGear,
+                    HTMachineConverters::compressorGem,
+                    HTMachineConverters::compressorPlate,
+                    HTMachineConverters::compressorRod,
+                ),
+            )
+
+        event
             .getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BREWING_STAND_BREW)
@@ -132,7 +145,7 @@ internal object RagiumEvents {
             .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.material(
-                    RagiumRecipes.CHEMICAL_REACTOR,
+                    RagiumRecipeTypes.CHEMICAL,
                     HTMachineConverters::chemicalOre3x,
                     HTMachineConverters::chemicalOre4x,
                     HTMachineConverters::chemicalOre5x,
@@ -149,17 +162,17 @@ internal object RagiumEvents {
             .getBuilder(RagiumMachineKeys.GRINDER)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.GRINDSTONE_USE)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
-            /*.put(
+            .put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.material(
-                    RagiumRecipes.GRINDER,
+                    RagiumRecipeTypes.GRINDER,
                     HTMachineConverters::grinderMainToDust,
                     HTMachineConverters::grinderGearToDust,
                     HTMachineConverters::grinderPlateToDust,
                     HTMachineConverters::grinderRawToDust,
                     HTMachineConverters::grinderOreToRaw,
                 ),
-            )*/
+            )
 
         event
             .getBuilder(RagiumMachineKeys.MIXER)

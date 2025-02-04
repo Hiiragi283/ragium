@@ -47,7 +47,7 @@ class HTGrinderRecipe(
         )
     }
 
-    override fun matches(input: HTRecipeInput, level: Level): Boolean = this.input.test(input.getItem(0))
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input.getItem(0))
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = output.copy()
 

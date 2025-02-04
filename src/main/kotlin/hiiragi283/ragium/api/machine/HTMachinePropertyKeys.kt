@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.machine
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.client.renderer.HTMachineRenderer
@@ -8,10 +7,8 @@ import hiiragi283.ragium.api.extension.constFunction3
 import hiiragi283.ragium.api.extension.identifyFunction
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.api.util.DataFunction
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
@@ -74,22 +71,6 @@ object HTMachinePropertyKeys {
             .build()
 
     //    Processor    //
-
-    @JvmField
-    val RECIPE_VALIDATOR: HTPropertyKey<DataFunction<HTMachineRecipe>> =
-        HTPropertyKey
-            .builder<DataFunction<HTMachineRecipe>>(RagiumAPI.id("recipe_validator"))
-            .setDefaultValue {
-                DataFunction<HTMachineRecipe> { recipe: HTMachineRecipe ->
-                    when {
-                        recipe.itemInputs.size > 3 -> DataResult.error { "Machine recipe accepts 3 or less item input!" }
-                        recipe.fluidInputs.size > 3 -> DataResult.error { "Machine recipe accepts 3 or less fluid input!" }
-                        recipe.getItemOutputs().size > 3 -> DataResult.error { "Machine recipe accepts 3 or less item output!" }
-                        recipe.getFluidOutputs().size > 3 -> DataResult.error { "Machine recipe accepts 3 or less fluid output!" }
-                        else -> DataResult.success(recipe)
-                    }
-                }
-            }.build()
 
     @JvmField
     val RECIPE_PROXY: HTPropertyKey<HTMachineRecipeProxy> =

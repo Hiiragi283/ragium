@@ -6,7 +6,6 @@ import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
 import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
@@ -37,8 +36,7 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
             .save(output)
 
         // Coffee
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CHEMICAL_REACTOR)
+        HTChemicalRecipeBuilder()
             .itemInput(ActuallyTags.Items.CROPS_COFFEE)
             .itemInput(ActuallyItems.EMPTY_CUP)
             .milkInput()

@@ -53,7 +53,7 @@ class HTInfuserRecipe(
         )
     }
 
-    override fun matches(input: HTRecipeInput, level: Level): Boolean =
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean =
         itemInput.test(input.getItem(0)) && fluidInput.test(input.getFluid(0))
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INFUSER.get()

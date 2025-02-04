@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe.condition
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.getName
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos

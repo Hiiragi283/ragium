@@ -5,11 +5,12 @@ import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTSingleItemRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
@@ -17,7 +18,7 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     override val prefix: String,
     private val factory: (String, SizedIngredient, ItemStack) -> T,
-) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>>() {
+) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>, T>() {
     companion object {
         @JvmStatic
         fun compressor(): HTSingleItemRecipeBuilder<HTCompressorRecipe> = HTSingleItemRecipeBuilder("compressor", ::HTCompressorRecipe)
@@ -26,6 +27,7 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     private var group: String? = null
     private lateinit var input: SizedIngredient
     private lateinit var output: ItemStack
+    private var catalyst: Ingredient? = null
 
     override fun itemInput(ingredient: Ingredient, count: Int): HTSingleItemRecipeBuilder<T> = apply {
         check(!::input.isInitialized) { "Input is already initialized" }
@@ -40,15 +42,17 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
 
     override fun fluidOutput(stack: FluidStack): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()
 
+    fun catalyst(item: ItemLike): HTSingleItemRecipeBuilder<T> = catalyst(Ingredient.of(item))
+
+    fun catalyst(tagKey: TagKey<Item>): HTSingleItemRecipeBuilder<T> = catalyst(Ingredient.of(tagKey))
+
+    fun catalyst(catalyst: Ingredient): HTSingleItemRecipeBuilder<T> = apply {
+        this.catalyst = catalyst
+    }
+
     override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
 
-    override fun saveInternal(output: RecipeOutput, id: ResourceLocation) {
-        output.accept(
-            id,
-            factory(group ?: "", input, this.output),
-            null,
-        )
-    }
+    override fun createRecipe(): T = factory(group ?: "", input, this.output)
 
     override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = this
 

@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -161,21 +160,18 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun resourcePlant(output: RecipeOutput, lookup: HolderLookup.RegistryLookup<Biome>) {
         // Brine from Ocean
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CHEMICAL_REACTOR)
+        HTChemicalRecipeBuilder()
             .biome(BiomeTags.IS_OCEAN, lookup)
             .fluidOutput(RagiumFluids.BRINE, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_ocean")
         // Brine from Beach
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CHEMICAL_REACTOR)
+        HTChemicalRecipeBuilder()
             .biome(BiomeTags.IS_BEACH, lookup)
             .fluidOutput(RagiumFluids.BRINE, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_beach")
 
         // Oil from Nether
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CHEMICAL_REACTOR)
+        HTChemicalRecipeBuilder()
             .biome(Biomes.SOUL_SAND_VALLEY, lookup)
             .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 4)
             .save(output)

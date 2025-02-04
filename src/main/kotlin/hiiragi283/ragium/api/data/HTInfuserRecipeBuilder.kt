@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -16,7 +15,7 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
-class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder>() {
+class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder, HTInfuserRecipe>() {
     private var group: String? = null
     private lateinit var itemInput1: SizedIngredient
     private lateinit var fluidInput1: SizedFluidIngredient
@@ -47,19 +46,13 @@ class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder
 
     override val prefix: String = "infuser"
 
-    override fun saveInternal(output: RecipeOutput, id: ResourceLocation) {
-        output.accept(
-            id,
-            HTInfuserRecipe(
-                group ?: "",
-                itemInput1,
-                fluidInput1,
-                Optional.ofNullable(itemOutput),
-                Optional.ofNullable(fluidOutput),
-            ),
-            null,
-        )
-    }
+    override fun createRecipe(): HTInfuserRecipe = HTInfuserRecipe(
+        group ?: "",
+        itemInput1,
+        fluidInput1,
+        Optional.ofNullable(itemOutput),
+        Optional.ofNullable(fluidOutput),
+    )
 
     override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = this
 

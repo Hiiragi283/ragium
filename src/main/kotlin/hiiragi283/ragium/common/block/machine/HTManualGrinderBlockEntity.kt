@@ -9,9 +9,9 @@ import hiiragi283.ragium.api.extension.replaceBlockState
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCache
 import hiiragi283.ragium.api.property.ifPresent
+import hiiragi283.ragium.api.recipe.HTGrinderRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeCache
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
@@ -40,7 +40,8 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             setChanged()
         }
     }
-    private val recipeCache: HTMachineRecipeCache = HTMachineRecipeCache.of(RagiumMachineKeys.GRINDER)
+    private val recipeCache: HTMachineRecipeCache<HTGrinderRecipe> =
+        HTMachineRecipeCache(RagiumMachineKeys.GRINDER)
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -79,12 +80,12 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
         recipeCache
             .getFirstMatch(level, pos, stackIn)
-            .map(RecipeHolder<HTMachineRecipe>::value)
-            .onSuccess { recipe: HTMachineRecipe ->
+            .map(RecipeHolder<HTGrinderRecipe>::value)
+            .onSuccess { recipe: HTGrinderRecipe ->
                 // Drop output
                 ItemHandlerHelper.giveItemToPlayer(player, recipe.getResultItem(level.registryAccess()))
                 // Shrink input
-                stackIn.shrink(recipe.itemInputs.getOrNull(0)?.count() ?: 0)
+                stackIn.shrink(recipe.input.count())
                 // Play sound if present
                 RagiumMachineKeys.GRINDER
                     .getProperty()

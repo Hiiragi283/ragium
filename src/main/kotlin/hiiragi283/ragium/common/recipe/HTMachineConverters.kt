@@ -1,11 +1,18 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.data.HTChemicalRecipeBuilder
+import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.material.*
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.recipe.HTChemicalRecipe
+import hiiragi283.ragium.api.recipe.HTCompressorRecipe
+import hiiragi283.ragium.api.recipe.HTGrinderRecipe
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumRecipes
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -46,35 +53,45 @@ object HTMachineConverters {
 
     //    Material    //
 
-    /*fun compressorGear(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipeBase>? {
+    @JvmField
+    val COMPRESSOR: HTMachineRecipeProxy = HTMachineRecipeProxy.material(
+        RagiumRecipeTypes.COMPRESSOR,
+        HTMachineConverters::compressorGear,
+        HTMachineConverters::compressorGem,
+        HTMachineConverters::compressorPlate,
+        HTMachineConverters::compressorRod,
+    )
+
+    fun compressorGear(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTCompressorRecipe>? {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.GEAR, key) ?: return null
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
-        HTSingleItemRecipeBuilder.compressor()
+        return HTSingleItemRecipeBuilder
+            .compressor()
             .itemInput(mainPrefix, key)
+            .catalyst(RagiumItemTags.GEAR_MOLDS)
             .itemOutput(output.value())
-            .save(TODO(), RagiumAPI.id("${key.name}_gear"))
-        return null
+            .export(RagiumAPI.id("${key.name}_gear"))
     }
 
     @JvmStatic
-    fun compressorGem(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipeBase>? {
+    fun compressorGem(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTCompressorRecipe>? {
         val (_: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.GEM, key) ?: return null
-        return HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        return HTSingleItemRecipeBuilder
+            .compressor()
             .itemInput(HTTagPrefix.DUST, key)
             .itemOutput(output.value())
             .export(RagiumAPI.id("${key.name}_gem"))
     }
 
     @JvmStatic
-    fun compressorPlate(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipeBase>? {
+    fun compressorPlate(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTCompressorRecipe>? {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.PLATE, key) ?: return null
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
-        return HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        return HTSingleItemRecipeBuilder
+            .compressor()
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItemTags.PLATE_MOLDS)
             .itemOutput(output.value())
@@ -82,34 +99,34 @@ object HTMachineConverters {
     }
 
     @JvmStatic
-    fun compressorRod(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipeBase>? {
+    fun compressorRod(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTCompressorRecipe>? {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.ROD, key) ?: return null
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
-        return HTMachineRecipeBuilder
-            .create(RagiumRecipes.COMPRESSOR)
+        return HTSingleItemRecipeBuilder
+            .compressor()
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItemTags.ROD_MOLDS)
             .itemOutput(output.value())
             .export(RagiumAPI.id("${key.name}_rod"))
-    }*/
+    }
 
-    /*fun grinderMainToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? {
+    fun grinderMainToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTGrinderRecipe>? {
         val (type: HTMaterialType, _: HTMaterialKey) = material
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
         return grinderToDust(material, registry, mainPrefix, 1)
     }
 
     @JvmStatic
-    fun grinderGearToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =
+    fun grinderGearToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTGrinderRecipe>? =
         grinderToDust(material, registry, HTTagPrefix.GEAR, 4)
 
     @JvmStatic
-    fun grinderPlateToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =
+    fun grinderPlateToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTGrinderRecipe>? =
         grinderToDust(material, registry, HTTagPrefix.PLATE, 1)
 
     @JvmStatic
-    fun grinderRawToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =
+    fun grinderRawToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTGrinderRecipe>? =
         grinderToDust(material, registry, HTTagPrefix.RAW_MATERIAL, 2)
 
     @JvmStatic
@@ -118,39 +135,37 @@ object HTMachineConverters {
         registry: HTMaterialRegistry,
         inputPrefix: HTTagPrefix,
         baseCount: Int,
-    ): RecipeHolder<HTMachineRecipe>? {
+    ): RecipeHolder<HTGrinderRecipe>? {
         val (_: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.DUST, key) ?: return null
-        return HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER)
+        return HTGrinderRecipeBuilder()
             .itemInput(inputPrefix, key)
             .itemOutput(output.value(), baseCount)
             .export(RagiumAPI.id("${key.name}_dust_from${inputPrefix.serializedName}"))
     }
 
     @JvmStatic
-    fun grinderOreToRaw(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? {
+    fun grinderOreToRaw(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTGrinderRecipe>? {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return null
         val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return null
-        return HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER)
+        return HTGrinderRecipeBuilder()
             .itemInput(HTTagPrefix.ORE, key)
             .itemOutput(output.value(), 2)
             .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
             .export(RagiumAPI.id("raw_${key.name}_2x"))
-    }*/
+    }
 
     @JvmStatic
-    fun chemicalOre3x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =
+    fun chemicalOre3x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTChemicalRecipe>? =
         chemicalOre(material, registry, 3, RagiumFluids.HYDROCHLORIC_ACID, FluidType.BUCKET_VOLUME / 10)
 
     @JvmStatic
-    fun chemicalOre4x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =
+    fun chemicalOre4x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTChemicalRecipe>? =
         chemicalOre(material, registry, 4, RagiumFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME / 5)
 
     @JvmStatic
-    fun chemicalOre5x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =
+    fun chemicalOre5x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTChemicalRecipe>? =
         chemicalOre(material, registry, 5, RagiumFluids.AQUA_REGIA, FluidType.BUCKET_VOLUME / 2)
 
     @JvmStatic
@@ -160,12 +175,11 @@ object HTMachineConverters {
         count: Int,
         chemical: RagiumFluids,
         fluidAmount: Int,
-    ): RecipeHolder<HTMachineRecipe>? {
+    ): RecipeHolder<HTChemicalRecipe>? {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return null
         val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return null
-        return HTMachineRecipeBuilder
-            .create(RagiumRecipes.CHEMICAL_REACTOR)
+        return HTChemicalRecipeBuilder()
             .itemInput(HTTagPrefix.ORE, key)
             .fluidInput(chemical, fluidAmount)
             .itemOutput(output.value(), count)

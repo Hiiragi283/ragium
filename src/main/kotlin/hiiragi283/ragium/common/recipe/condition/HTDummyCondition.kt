@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.recipe.condition
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization

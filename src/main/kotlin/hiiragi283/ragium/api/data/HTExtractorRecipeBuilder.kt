@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -15,7 +14,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.*
 
-class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBuilder>() {
+class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBuilder, HTExtractorRecipe>() {
     private var group: String? = null
     private lateinit var input: SizedIngredient
     private var itemOutput: ItemStack? = null
@@ -42,18 +41,12 @@ class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBui
 
     override val prefix: String = "extractor"
 
-    override fun saveInternal(output: RecipeOutput, id: ResourceLocation) {
-        output.accept(
-            id,
-            HTExtractorRecipe(
-                group ?: "",
-                input,
-                Optional.ofNullable(itemOutput),
-                Optional.ofNullable(fluidOutput),
-            ),
-            null,
-        )
-    }
+    override fun createRecipe(): HTExtractorRecipe = HTExtractorRecipe(
+        group ?: "",
+        input,
+        Optional.ofNullable(itemOutput),
+        Optional.ofNullable(fluidOutput),
+    )
 
     override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = this
 

@@ -3,7 +3,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.HTChemicalRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -123,24 +123,24 @@ fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
 
 //    HTMachineRecipeBuilder    //
 
-fun HTMachineRecipeBuilder.catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeBuilder =
+fun HTChemicalRecipeBuilder.catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTChemicalRecipeBuilder =
     catalyst(prefix.createTag(material))
 
-fun HTMachineRecipeBuilder.catalyst(tier: HTMachineTier): HTMachineRecipeBuilder = catalyst(tier.getCircuitTag())
+fun HTChemicalRecipeBuilder.catalyst(tier: HTMachineTier): HTChemicalRecipeBuilder = catalyst(tier.getCircuitTag())
 
-fun HTMachineRecipeBuilder.catalyst(tagKey: TagKey<Item>): HTMachineRecipeBuilder = catalyst(Ingredient.of(tagKey))
+fun HTChemicalRecipeBuilder.catalyst(tagKey: TagKey<Item>): HTChemicalRecipeBuilder = catalyst(Ingredient.of(tagKey))
 
-fun HTMachineRecipeBuilder.catalyst(item: ItemLike): HTMachineRecipeBuilder = catalyst(Ingredient.of(item))
+fun HTChemicalRecipeBuilder.catalyst(item: ItemLike): HTChemicalRecipeBuilder = catalyst(Ingredient.of(item))
 
-fun HTMachineRecipeBuilder.catalyst(ingredient: Ingredient): HTMachineRecipeBuilder = condition(HTProcessorCatalystCondition(ingredient))
+fun HTChemicalRecipeBuilder.catalyst(ingredient: Ingredient): HTChemicalRecipeBuilder = condition(HTProcessorCatalystCondition(ingredient))
 
-fun HTMachineRecipeBuilder.sources(source: TagKey<Block>, targetSide: Direction = Direction.DOWN): HTMachineRecipeBuilder =
+fun HTChemicalRecipeBuilder.sources(source: TagKey<Block>, targetSide: Direction = Direction.DOWN): HTChemicalRecipeBuilder =
     condition(HTSourceCondition(source, targetSide))
 
-fun HTMachineRecipeBuilder.biome(tagKey: TagKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTMachineRecipeBuilder =
+fun HTChemicalRecipeBuilder.biome(tagKey: TagKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTChemicalRecipeBuilder =
     condition(HTBiomeCondition(lookup.getOrThrow(tagKey)))
 
-fun HTMachineRecipeBuilder.biome(resourceKey: ResourceKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTMachineRecipeBuilder =
+fun HTChemicalRecipeBuilder.biome(resourceKey: ResourceKey<Biome>, lookup: HolderLookup.RegistryLookup<Biome>): HTChemicalRecipeBuilder =
     condition(HTBiomeCondition(lookup.getOrThrow(resourceKey)))
 
 //    TagBuilder    //

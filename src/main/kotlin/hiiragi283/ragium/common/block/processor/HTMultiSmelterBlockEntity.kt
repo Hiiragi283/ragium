@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntity
 import hiiragi283.ragium.api.capability.LimitedItemHandler
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.inventory.HTMultiSmelterContainerMenu
@@ -23,7 +22,6 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val itemHandler: ItemStackHandler = ItemStackHandler(2)
     override val tanks: Array<out HTMachineFluidTank> = arrayOf()
-    override val processor: HTMachineRecipeProcessor = createMachineProcessor(intArrayOf(1), intArrayOf())
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTMultiSmelterContainerMenu(containerId, playerInventory, blockPos, itemHandler)

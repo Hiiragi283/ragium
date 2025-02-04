@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
 import hiiragi283.ragium.api.recipe.HTMultiItemRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -19,7 +18,7 @@ import java.util.*
 class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
     override val prefix: String,
     private val factory: (String, SizedIngredient, SizedIngredient, Optional<SizedIngredient>, ItemStack) -> T,
-) : HTMachineRecipeBuilderBase<HTMultiItemRecipeBuilder<T>>() {
+) : HTMachineRecipeBuilderBase<HTMultiItemRecipeBuilder<T>, T>() {
     companion object {
         @JvmStatic
         fun assembler(): HTMultiItemRecipeBuilder<HTAssemblerRecipe> = HTMultiItemRecipeBuilder("assembler", ::HTAssemblerRecipe)
@@ -57,13 +56,7 @@ class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
 
     override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
 
-    override fun saveInternal(output: RecipeOutput, id: ResourceLocation) {
-        output.accept(
-            id,
-            factory(group ?: "", firstInput, secondInput, Optional.ofNullable(thirdInput), this.output),
-            null,
-        )
-    }
+    override fun createRecipe(): T = factory(group ?: "", firstInput, secondInput, Optional.ofNullable(thirdInput), this.output)
 
     override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = this
 

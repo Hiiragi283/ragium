@@ -48,7 +48,7 @@ class HTRefineryRecipe(
         )
     }
 
-    override fun matches(input: HTRecipeInput, level: Level): Boolean = this.input.test(input.getFluid(0))
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input.getFluid(0))
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINERY.get()
 

@@ -19,7 +19,7 @@ abstract class HTMultiItemRecipe(
     val thirdInput: Optional<SizedIngredient>,
     val output: ItemStack,
 ) : HTMachineRecipeBase(group) {
-    override fun matches(input: HTRecipeInput, level: Level): Boolean {
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         val bool1: Boolean = this.firstInput.test(input.getItem(0))
         val bool2: Boolean = this.secondInput.test(input.getItem(1))
         val bool3: Boolean = this.thirdInput.map { it.test(input.getItem(2)) }.orElse(true)

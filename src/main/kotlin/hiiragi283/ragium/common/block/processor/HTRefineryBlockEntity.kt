@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.capability.HTCombinedFluidHandler
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTRecipeInput
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -30,12 +30,12 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEn
     private val inputTank = HTMachineFluidTank(8000, this::setChanged)
     private val outputTank = HTMachineFluidTank(8000, this::setChanged)
 
-    private val recipeCache: HTRecipeCache<HTRecipeInput, HTRefineryRecipe> =
+    private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTRefineryRecipe> =
         HTRecipeCache(RagiumRecipeTypes.REFINERY)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTRecipeInput = HTRecipeInput.of(pos, inputTank.getFluidInTank(0))
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, inputTank.getFluidInTank(0))
         val holder: RecipeHolder<HTRefineryRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
         val recipe: HTRefineryRecipe = holder.value
         // Try to insert outputs

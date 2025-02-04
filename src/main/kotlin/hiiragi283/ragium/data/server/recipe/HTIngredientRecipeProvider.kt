@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
@@ -117,8 +116,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .save(output)
         // Deep Steel
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CHEMICAL_REACTOR)
+        HTChemicalRecipeBuilder()
             .itemInput(BlockTagIngredient(BlockTags.DEEPSLATE_ORE_REPLACEABLES), 8)
             .fluidInput(RagiumFluids.AQUA_REGIA, FluidType.BUCKET_VOLUME / 5)
             .itemOutput(RagiumItems.DEEPANT)
@@ -147,8 +145,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
             .save(output, RagiumAPI.id("distilled_ragium_solution"))
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.CHEMICAL_REACTOR)
+        HTChemicalRecipeBuilder()
             .fluidInput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
             .catalyst(Items.NETHER_STAR)
             .fluidOutput(RagiumFluids.REFINED_RAGIUM_SOLUTION, 500)

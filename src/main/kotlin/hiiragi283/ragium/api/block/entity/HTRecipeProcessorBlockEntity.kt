@@ -2,8 +2,7 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipeProcessor
+import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -19,31 +18,18 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.FluidUtil
-import net.neoforged.neoforge.fluids.capability.templates.EmptyFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
-import net.neoforged.neoforge.items.wrapper.EmptyItemHandler
 import java.util.function.Supplier
 
 /**
- * [HTMachineRecipe]を処理する[HTMachineBlockEntity]
+ * [HTMachineRecipeBase]を処理する[HTMachineBlockEntity]
  */
 abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
     protected abstract val itemHandler: ItemStackHandler
 
     protected abstract val tanks: Array<out HTMachineFluidTank>
-
-    protected abstract val processor: HTMachineRecipeProcessor
-
-    protected fun createMachineProcessor(itemInputs: IntArray, fluidInputs: IntArray): HTMachineRecipeProcessor = HTMachineRecipeProcessor(
-        blockPos,
-        machineKey,
-        getItemHandler(null) ?: EmptyItemHandler.INSTANCE,
-        itemInputs,
-        getFluidHandler(null) ?: EmptyFluidHandler.INSTANCE,
-        fluidInputs,
-    )
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -66,7 +52,6 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()
-        processor.process(level).getOrThrow()
     }
 
     final override fun interactWithFluidStorage(player: Player): Boolean {
