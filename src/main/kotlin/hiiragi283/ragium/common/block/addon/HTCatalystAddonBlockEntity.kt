@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.addon
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
-import hiiragi283.ragium.api.capability.LimitedItemHandler
+import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import net.neoforged.neoforge.items.ItemStackHandler
 
@@ -75,5 +76,5 @@ class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTBlockEntityHandlerProvider    //
 
-    override fun getItemHandler(direction: Direction?): LimitedItemHandler = LimitedItemHandler.dummy(itemHandler)
+    override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.INTERNAL.wrapItemHandler(itemHandler)
 }

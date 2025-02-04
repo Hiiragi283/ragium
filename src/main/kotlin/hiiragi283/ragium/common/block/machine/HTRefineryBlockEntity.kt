@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTCombinedFluidHandler
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
@@ -23,9 +22,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state) {
-    override val machineKey: HTMachineKey = RagiumMachineKeys.EXTRACTOR
-
+class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state, RagiumMachineKeys.REFINERY) {
     private val itemOutput = ItemStackHandler(1)
     private val inputTank = HTMachineFluidTank(8000, this::setChanged)
     private val outputTank = HTMachineFluidTank(8000, this::setChanged)

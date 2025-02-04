@@ -18,5 +18,5 @@ enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
 
     fun wrapFluidHandler(handler: IFluidHandler): IFluidHandler = HTLimitedFluidHandler(this, handler)
 
-    fun wrapEnergyStorage(storage: IEnergyStorage): IEnergyStorage = LimitedEnergyStorage(this, storage)
+    fun wrapEnergyStorage(storage: IEnergyStorage): IEnergyStorage = HTLimitedEnergyStorage(this, storage)
 }

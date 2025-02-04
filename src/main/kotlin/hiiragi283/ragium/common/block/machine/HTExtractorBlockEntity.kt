@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -23,9 +22,8 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
-class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state) {
-    override val machineKey: HTMachineKey = RagiumMachineKeys.EXTRACTOR
-
+class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state, RagiumMachineKeys.EXTRACTOR) {
     private val itemInput = ItemStackHandler(1)
     private val itemOutput = ItemStackHandler(1)
     private val outputTank = HTMachineFluidTank(8000, this::setChanged)

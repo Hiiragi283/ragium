@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.openMenu
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
 import hiiragi283.ragium.api.property.get
@@ -45,8 +46,12 @@ import kotlin.math.max
 /**
  * 機械のベースとなる[HTBlockEntity]
  */
-abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
-    HTBlockEntity(type, pos, state),
+abstract class HTMachineBlockEntity(
+    type: Supplier<out BlockEntityType<*>>,
+    pos: BlockPos,
+    state: BlockState,
+    override val machineKey: HTMachineKey,
+) : HTBlockEntity(type, pos, state),
     MenuProvider,
     HTFluidInteractable,
     HTMachineAccess {

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.LimitedFluidHandler
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -28,8 +27,8 @@ abstract class HTFluidGeneratorBlockEntity(
     type: Supplier<out BlockEntityType<*>>,
     pos: BlockPos,
     state: BlockState,
-    override val machineKey: HTMachineKey,
-) : HTMachineBlockEntity(type, pos, state) {
+    machineKey: HTMachineKey,
+) : HTMachineBlockEntity(type, pos, state, machineKey) {
     private val tank: HTMachineFluidTank =
         object : HTMachineFluidTank(FluidType.BUCKET_VOLUME * 8, this@HTFluidGeneratorBlockEntity::setChanged) {
             override fun isFluidValid(stack: FluidStack): Boolean = this@HTFluidGeneratorBlockEntity.isFluidValid(stack)
@@ -73,6 +72,5 @@ abstract class HTFluidGeneratorBlockEntity(
 
     //    HTBlockEntityHandlerProvider    //
 
-    override fun getFluidHandler(direction: Direction?): LimitedFluidHandler =
-        LimitedFluidHandler(mapOf(0 to HTStorageIO.INPUT), arrayOf(tank))
+    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTStorageIO.INPUT.wrapFluidHandler(tank)
 }

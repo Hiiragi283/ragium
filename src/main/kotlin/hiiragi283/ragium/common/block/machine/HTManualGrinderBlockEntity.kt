@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.LimitedItemHandler
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.replaceBlockState
@@ -29,6 +28,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import net.neoforged.neoforge.items.ItemStackHandler
 
@@ -123,6 +123,5 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTMachineAccess    //
 
-    override fun getItemHandler(direction: Direction?): LimitedItemHandler =
-        LimitedItemHandler(mapOf(0 to HTStorageIO.INPUT), ::itemHandler)
+    override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.INPUT.wrapItemHandler(itemHandler)
 }

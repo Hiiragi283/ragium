@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -27,9 +26,7 @@ import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.BLAST_FURNACE, pos, state) {
-    override val machineKey: HTMachineKey = RagiumMachineKeys.BLAST_FURNACE
-
+    HTMachineBlockEntity(RagiumBlockEntityTypes.BLAST_FURNACE, pos, state, RagiumMachineKeys.BLAST_FURNACE) {
     private val itemInput = ItemStackHandler(3)
     private val itemOutput = ItemStackHandler(1)
 
