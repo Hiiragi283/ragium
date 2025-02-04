@@ -67,10 +67,10 @@ object RagiumItems {
 
         register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
-
-        register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
+        register(HTTagPrefix.DUST, CommonMaterials.FLUORITE)
 
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
+        register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
         register(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
@@ -96,7 +96,6 @@ object RagiumItems {
         register(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
-        register(HTTagPrefix.GEM, RagiumMaterials.SLAG)
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
         // Gears
         register(HTTagPrefix.GEAR, VanillaMaterials.COPPER)
@@ -178,6 +177,8 @@ object RagiumItems {
         buildList {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
+            add(RagiumBlocks.SLAG_BLOCK)
+
             add(RagiumBlocks.SHAFT)
             add(RagiumBlocks.CHEMICAL_GLASS)
 
@@ -234,9 +235,13 @@ object RagiumItems {
     val SOAP: DeferredItem<Item> = register("soap")
 
     @JvmField
-    val OTHER_INGOTS: List<DeferredItem<Item>> = listOf(
+    val SLAG: DeferredItem<Item> = register("slag")
+
+    @JvmField
+    val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
         RAGI_ALLOY_COMPOUND,
         SOAP,
+        SLAG,
     )
 
     //    Foods    //

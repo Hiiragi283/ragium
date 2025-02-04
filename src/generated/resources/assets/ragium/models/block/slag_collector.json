@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ragium:block/superconductive_coolant"
+    "all": "ragium:block/slag_collector"
   }
 }

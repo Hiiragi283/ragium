@@ -2,7 +2,7 @@
   "type": "ragium:grinder",
   "item_input": {
     "count": 1,
-    "tag": "c:gems/slag"
+    "tag": "c:slag"
   },
   "item_output": {
     "count": 1,

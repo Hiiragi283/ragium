@@ -28,6 +28,7 @@ enum class RagiumFluids(
     EXPERIENCE(Color(0x99cc00), "Liquid Experience", "液体経験値"),
 
     // Water
+    HYDROGEN(Color(0x000099), "Hydrogen", "水素", TextureType.GASEOUS),
     OXYGEN(Color(0x66cccc), "Oxygen", "酸素", TextureType.GASEOUS),
     STEAM("Steam", "蒸気", TextureType.GASEOUS),
 
@@ -39,7 +40,7 @@ enum class RagiumFluids(
     HYDROFLUORIC_ACID(Color(0x33ccff), "Hydrofluoric Acid", "フッ化水素酸"),
 
     // Base
-    LAPIS_SOLUTION(Color(0x3333ff), "lapis Solution", "ラピス溶液"),
+    LAPIS_SOLUTION(Color(0x3333ff), "Lapis Solution", "ラピス溶液"),
 
     // Oil
     CRUDE_OIL(Color(0x000000), "Crude Oil", "原油", TextureType.STICKY),

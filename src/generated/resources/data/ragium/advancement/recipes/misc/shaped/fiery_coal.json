@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_solar_panel": {
+    "has_reagent": {
       "conditions": {
         "items": [
           {
-            "items": "#ragium:solar_panels"
+            "items": "ragium:nether_reagent"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/solar_generator"
+        "recipe": "ragium:shaped/fiery_coal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_solar_panel"
+      "has_reagent"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/solar_generator"
+      "ragium:shaped/fiery_coal"
     ]
   }
 }

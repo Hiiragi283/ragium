@@ -21,6 +21,9 @@ object RagiumItemTags {
     @JvmField
     val PLASTICS: TagKey<Item> = itemTagKey(commonId("plastics"))
 
+    @JvmField
+    val SLAG: TagKey<Item> = itemTagKey(commonId("slag"))
+
     //    Ragium    //
 
     @JvmField

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_copper": {
+    "has_hopper": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/copper"
+            "items": "minecraft:hopper"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/steam_boiler"
+        "recipe": "ragium:shaped/slag_collector"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_copper"
+      "has_hopper"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/steam_boiler"
+      "ragium:shaped/slag_collector"
     ]
   }
 }

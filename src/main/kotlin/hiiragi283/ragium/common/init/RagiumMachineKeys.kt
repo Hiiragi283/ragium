@@ -68,7 +68,7 @@ object RagiumMachineKeys {
     val INFUSER: HTMachineKey = HTMachineKey.of("infuser")
 
     @JvmField
-    val LASER_TRANSFORMER: HTMachineKey = HTMachineKey.of("laser_transformer")
+    val LASER_ASSEMBLY: HTMachineKey = HTMachineKey.of("laser_assembly")
 
     @JvmField
     val MIXER: HTMachineKey = HTMachineKey.of("mixer")
@@ -80,12 +80,6 @@ object RagiumMachineKeys {
     val REFINERY: HTMachineKey = HTMachineKey.of("refinery")
 
     @JvmField
-    val RESOURCE_PLANT: HTMachineKey = HTMachineKey.of("resource_plant")
-
-    @JvmField
-    val STEAM_BOILER: HTMachineKey = HTMachineKey.of("steam_boiler")
-
-    @JvmField
     val PROCESSORS: List<HTMachineKey> =
         listOf(
             ASSEMBLER,
@@ -95,11 +89,9 @@ object RagiumMachineKeys {
             GRINDER,
             GROWTH_CHAMBER,
             INFUSER,
-            LASER_TRANSFORMER,
+            LASER_ASSEMBLY,
             MIXER,
             MULTI_SMELTER,
             REFINERY,
-            RESOURCE_PLANT,
-            STEAM_BOILER,
         )
 }

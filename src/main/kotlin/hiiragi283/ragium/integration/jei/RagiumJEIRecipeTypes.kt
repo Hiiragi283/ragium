@@ -35,6 +35,10 @@ object RagiumJEIRecipeTypes {
         RecipeType.create(RagiumAPI.MOD_ID, "infuser", HTInfuserRecipe::class.java)
 
     @JvmField
+    val LASER_ASSEMBLY: RecipeType<HTLaserAssemblyRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "laser_assembly", HTLaserAssemblyRecipe::class.java)
+
+    @JvmField
     val MIXER: RecipeType<HTMixerRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "mixer", HTMixerRecipe::class.java)
 

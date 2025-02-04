@@ -25,7 +25,12 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
     companion object {
         const val ACTIVE_KEY = "isActive"
         const val ENCH_KEY = "enchantment"
-        const val ITEM_KEY = "Items"
+
+        const val ITEM_INPUT_KEY = "input_items"
+        const val ITEM_OUTPUT_KEY = "output_items"
+
+        const val FLUID_INPUT_KEY = "input_fluids"
+        const val FLUID_OUTPUT_KEY = "output_fluids"
     }
 
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag =

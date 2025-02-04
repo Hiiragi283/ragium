@@ -12,6 +12,8 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.HTMixerContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -31,6 +33,22 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTMixerRecipe> =
         HTRecipeCache(RagiumRecipeTypes.MIXER)
+
+    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        tag.put(ITEM_OUTPUT_KEY, itemOutput.serializeNBT(registries))
+        tag.put("first_fluid_input", firstTank.writeToNBT(registries, CompoundTag()))
+        tag.put("second_fluid_input", secondTank.writeToNBT(registries, CompoundTag()))
+        tag.put(FLUID_OUTPUT_KEY, outputTank.writeToNBT(registries, CompoundTag()))
+    }
+
+    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        itemOutput.deserializeNBT(registries, tag.getCompound(ITEM_OUTPUT_KEY))
+        firstTank.readFromNBT(registries, tag.getCompound("first_fluid_input"))
+        secondTank.readFromNBT(registries, tag.getCompound("second_fluid_input"))
+        outputTank.readFromNBT(registries, tag.getCompound(FLUID_OUTPUT_KEY))
+    }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe

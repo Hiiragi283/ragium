@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:storage_blocks/ragi_alloy"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
       "item": "minecraft:furnace"

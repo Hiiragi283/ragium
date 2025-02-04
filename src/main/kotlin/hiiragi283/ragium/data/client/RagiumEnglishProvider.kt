@@ -19,6 +19,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Block
         add(RagiumBlocks.SOUL_MAGMA_BLOCK, "Soul Magma Block")
 
+        add(RagiumBlocks.SLAG_BLOCK, "Block of Slag")
+
         add(RagiumBlocks.CHEMICAL_GLASS, "Chemical Glass")
         add(RagiumBlocks.SHAFT, "Shaft")
 
@@ -30,9 +32,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
         add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "Primitive Blast Furnace")
 
-        add(RagiumBlocks.CATALYST_ADDON, "Catalyst Addon")
+        add(RagiumBlocks.CATALYST_ADDON, "Catalyst Holder")
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
-        add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, "Superconductive Coolant")
+        add(RagiumBlocks.SLAG_COLLECTOR, "Slag Collector")
 
         add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "Block of Ragi-Alloy (Decoration)")
 
@@ -218,12 +220,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMachineKeys.GRINDER, "Grinder", "Unbreakable Diamond")
         add(RagiumMachineKeys.GROWTH_CHAMBER, "Growth Chamber", "Growth Gran-ma")
         add(RagiumMachineKeys.INFUSER, "Infuser", "Something not like Centrifuge")
-        add(RagiumMachineKeys.LASER_TRANSFORMER, "Laser Transformer", "Laser On...")
+        add(RagiumMachineKeys.LASER_ASSEMBLY, "Laser Assembly", "Laser On...")
         add(RagiumMachineKeys.MIXER, "Mixer", "Best Match!")
         add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
         add(RagiumMachineKeys.REFINERY, "Refinery", "Project Build")
-        add(RagiumMachineKeys.RESOURCE_PLANT, "Resource Plant", "Like a Chocolate Fountain")
-        add(RagiumMachineKeys.STEAM_BOILER, "Steam Boiler", "Steam Hopper!")
         // Material
         add(CommonMaterials.ALUMINA, "Alumina")
         add(CommonMaterials.ALUMINUM, "Aluminum")
@@ -274,7 +274,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterials.RAGI_STEEL, "Ragi-Steel")
         add(RagiumMaterials.RAGINITE, "Raginite")
         add(RagiumMaterials.RAGIUM, "Ragium")
-        add(RagiumMaterials.SLAG, "Slag")
         add(VanillaMaterials.AMETHYST, "Amethyst")
         add(VanillaMaterials.COAL, "Coal")
         add(VanillaMaterials.COPPER, "Copper")

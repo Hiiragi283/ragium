@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:storage_blocks/slag"
+      "item": "ragium:slag_block"
     }
   ],
   "result": {

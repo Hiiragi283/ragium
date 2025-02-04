@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.openMenu
@@ -38,6 +39,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.fml.loading.FMLLoader
+import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.common.util.TriState
 import org.slf4j.Logger
 import java.util.function.Supplier
@@ -195,10 +197,10 @@ abstract class HTMachineBlockEntity(
                 machineKey.getProperty().ifPresent(HTMachinePropertyKeys.SOUND) { soundEvent: SoundEvent ->
                     level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 0.5f, 1.0f)
                 }
-                onSucceeded(level, pos)
+                NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Success(this))
             }.onFailure { throwable: Throwable ->
                 isActive = false
-                onFailed(level, pos)
+                NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Failed(this))
                 val throwable1: Throwable =
                     when (throwable) {
                         is HTMachineException -> throwable.takeIf { it.showInLog || !FMLLoader.isProduction() }
@@ -206,6 +208,7 @@ abstract class HTMachineBlockEntity(
                     } ?: return@onFailure
                 LOGGER.error("Error on {} at {}: {}", machineKey, blockPosText(pos).string, throwable1.message)
             }
+        setChanged()
     }
 
     open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME
@@ -217,12 +220,6 @@ abstract class HTMachineBlockEntity(
      * @throws HTMachineException 機械がエネルギーを消費しない場合
      */
     abstract fun process(level: ServerLevel, pos: BlockPos)
-
-    open fun onSucceeded(level: ServerLevel, pos: BlockPos) {
-    }
-
-    open fun onFailed(level: ServerLevel, pos: BlockPos) {
-    }
 
     override fun onRemove(
         state: BlockState,

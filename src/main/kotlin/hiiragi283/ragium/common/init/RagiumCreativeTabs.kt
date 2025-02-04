@@ -29,6 +29,7 @@ object RagiumCreativeTabs {
                     output.accept(RagiumBlocks.SOUL_MAGMA_BLOCK)
                     RagiumBlocks.ORES.values.forEach(output::accept)
                     RagiumBlocks.STORAGE_BLOCKS.values.forEach(output::accept)
+                    output.accept(RagiumBlocks.SLAG_BLOCK)
                     // Material Items
                     RagiumItems.getMaterialItems(HTTagPrefix.DUST).forEach(output::accept)
                     RagiumItems.OTHER_DUSTS.forEach(output::accept)
@@ -39,7 +40,7 @@ object RagiumCreativeTabs {
                     RagiumItems.OTHER_GEMS.forEach(output::accept)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.INGOT).forEach(output::accept)
-                    RagiumItems.OTHER_INGOTS.forEach(output::accept)
+                    RagiumItems.OTHER_RESOURCES.forEach(output::accept)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.GEAR).forEach(output::accept)
 

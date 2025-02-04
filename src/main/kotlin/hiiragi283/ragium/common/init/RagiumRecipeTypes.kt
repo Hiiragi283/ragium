@@ -40,6 +40,9 @@ object RagiumRecipeTypes {
     val INFUSER: DeferredHolder<RecipeType<*>, RecipeType<HTInfuserRecipe>> = register("infuser")
 
     @JvmField
+    val LASER_ASSEMBLY: DeferredHolder<RecipeType<*>, RecipeType<HTLaserAssemblyRecipe>> = register("laser_assembly")
+
+    @JvmField
     val MIXER: DeferredHolder<RecipeType<*>, RecipeType<HTMixerRecipe>> = register("mixer")
 
     @JvmField

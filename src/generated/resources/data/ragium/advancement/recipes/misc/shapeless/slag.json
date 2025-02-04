@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gem": {
+    "has_slag": {
       "conditions": {
         "items": [
           {
-            "items": "#c:storage_blocks/slag"
+            "items": "ragium:slag_block"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_gem"
+      "has_slag"
     ]
   ],
   "rewards": {

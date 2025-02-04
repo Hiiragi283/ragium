@@ -62,6 +62,12 @@ class RagiumJEIPlugin : IModPlugin {
             HTExtractorRecipeCategory(guiHelper),
             HTGrinderRecipeCategory(guiHelper),
             HTInfuserRecipeCategory(guiHelper),
+            HTSingleItemRecipeCategory(
+                guiHelper,
+                RagiumJEIRecipeTypes.LASER_ASSEMBLY,
+                RagiumMachineKeys.LASER_ASSEMBLY,
+                RagiumRecipeSerializers.LASER_ASSEMBLY.get(),
+            ),
             HTMixerRecipeCategory(guiHelper),
             HTRefineryRecipeCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
@@ -101,6 +107,7 @@ class RagiumJEIPlugin : IModPlugin {
                 HTRecipeConverters.infuser(recipeManager, registry, this::add)
             },
         )
+        register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, RagiumRecipeTypes.LASER_ASSEMBLY)
         register(RagiumJEIRecipeTypes.MIXER, RagiumRecipeTypes.MIXER)
         register(RagiumJEIRecipeTypes.REFINERY, RagiumRecipeTypes.REFINERY)
 
@@ -126,6 +133,8 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumBlocks.MANUAL_GRINDER)
         // Infuser
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.INFUSER, RagiumMachineKeys.INFUSER.getBlock())
+        // Laser Assembly
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.LASER_ASSEMBLY, RagiumMachineKeys.LASER_ASSEMBLY.getBlock())
         // Mixer
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MIXER, RagiumMachineKeys.MIXER.getBlock())
         // Refinery

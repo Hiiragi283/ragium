@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
@@ -114,6 +115,13 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(ItemTags.COALS, 2)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .save(output)
+
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
+            .itemInput(RagiumItemTags.COAL_COKE)
+            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .saveSuffixed(output, "_with_coke")
         // Deep Steel
         HTMultiItemRecipeBuilder
             .blastFurnace()
@@ -160,8 +168,23 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .build(elytraId.withPrefix("recipes/combat/")),
         )
         // Echorium
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+            .itemInput(RagiumItems.SCULK_REAGENT, 16)
+            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
+            .save(output)
 
-        // Fierium
+        // Fiery Coal
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL))
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', RagiumItems.NETHER_REAGENT)
+            .define('B', Tags.Items.STORAGE_BLOCKS_COAL)
+            .unlockedBy("has_reagent", has(RagiumItems.NETHER_REAGENT))
+            .savePrefixed(output)
     }
 
     private fun registerCircuits(output: RecipeOutput) {
@@ -297,6 +320,22 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.PISTON, 2)
             .itemOutput(RagiumItems.ENGINE)
             .save(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumBlocks.SLAG_BLOCK)
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', RagiumItemTags.SLAG)
+            .define('B', RagiumItems.SLAG)
+            .unlockedBy("has_slag", has(RagiumItemTags.SLAG))
+            .savePrefixed(output)
+
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, RagiumItems.SLAG, 9)
+            .requires(RagiumBlocks.SLAG_BLOCK)
+            .unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
+            .savePrefixed(output)
 
         ShapelessRecipeBuilder
             .shapeless(RecipeCategory.MISC, RagiumBlocks.SOUL_MAGMA_BLOCK)

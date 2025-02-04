@@ -29,6 +29,20 @@ import net.minecraft.world.phys.BlockHitResult
 abstract class HTEntityBlock(properties: Properties) :
     Block(properties),
     EntityBlock {
+    companion object {
+        @JvmStatic
+        fun of(factory: (BlockPos, BlockState) -> HTBlockEntity?, properties: Properties): HTEntityBlock =
+            object : HTEntityBlock(properties) {
+                override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = factory(pos, state)
+            }
+
+        @JvmStatic
+        fun horizontal(factory: (BlockPos, BlockState) -> HTBlockEntity?, properties: Properties): Horizontal =
+            object : Horizontal(properties) {
+                override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = factory(pos, state)
+            }
+    }
+
     final override fun useWithoutItem(
         state: BlockState,
         level: Level,

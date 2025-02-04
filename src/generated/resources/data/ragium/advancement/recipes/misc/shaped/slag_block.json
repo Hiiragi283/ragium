@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_slag": {
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/slag"
+            "items": "#c:slag"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_slag"
     ]
   ],
   "rewards": {

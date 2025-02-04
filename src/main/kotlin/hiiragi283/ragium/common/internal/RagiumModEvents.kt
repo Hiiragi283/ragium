@@ -53,7 +53,7 @@ import org.slf4j.Logger
 import java.util.function.Supplier
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
-internal object RagiumEvents {
+internal object RagiumModEvents {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
@@ -297,6 +297,7 @@ internal object RagiumEvents {
 
         registerHandlers(RagiumBlockEntityTypes.CATALYST_ADDON)
         registerHandlers(RagiumBlockEntityTypes.DRUM)
+        registerHandlers(RagiumBlockEntityTypes.SLAG_COLLECTOR)
 
         // Other
         event.registerBlock(

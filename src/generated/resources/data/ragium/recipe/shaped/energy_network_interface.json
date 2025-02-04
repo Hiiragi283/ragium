@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/deep_steel"
+      "tag": "c:ingots/steel"
     },
     "B": {
-      "tag": "c:circuits/elite"
+      "tag": "c:circuits/advanced"
     },
     "C": {
       "tag": "c:obsidians/crying"

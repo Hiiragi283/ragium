@@ -49,6 +49,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
+            add(RagiumBlocks.SLAG_BLOCK)
+
             add(RagiumBlocks.SHAFT)
             add(RagiumBlocks.CHEMICAL_GLASS)
 
@@ -77,7 +79,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumItems.MATERIAL_ITEMS.values)
             addAll(RagiumItems.OTHER_DUSTS)
             addAll(RagiumItems.OTHER_GEMS)
-            addAll(RagiumItems.OTHER_INGOTS)
+            addAll(RagiumItems.OTHER_RESOURCES)
 
             addAll(RagiumItems.FOODS)
             remove(RagiumItems.CHOCOLATE_APPLE)

@@ -57,6 +57,9 @@ class RagiumBlockTagProvider(
             addAll(RagiumBlocks.ADDONS)
         }.forEach(pickaxe::add)
 
+        tag(BlockTags.MINEABLE_WITH_SHOVEL)
+            .add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+
         tag(BlockTags.MINEABLE_WITH_HOE)
             .add(RagiumBlocks.SPONGE_CAKE)
             .add(RagiumBlocks.SWEET_BERRIES_CAKE)

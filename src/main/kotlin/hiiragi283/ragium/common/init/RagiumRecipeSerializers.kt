@@ -59,6 +59,10 @@ object RagiumRecipeSerializers {
         register("infuser", HTInfuserRecipe.CODEC, HTInfuserRecipe.STREAM_CODEC)
 
     @JvmField
+    val LASER_ASSEMBLY: DeferredHolder<RecipeSerializer<*>, HTSingleItemRecipe.Serializer<HTLaserAssemblyRecipe>> =
+        REGISTER.register("laser_assembly") { _: ResourceLocation -> HTSingleItemRecipe.Serializer(::HTLaserAssemblyRecipe) }
+
+    @JvmField
     val MIXER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTMixerRecipe>> =
         register("mixer", HTMixerRecipe.CODEC, HTMixerRecipe.STREAM_CODEC)
 

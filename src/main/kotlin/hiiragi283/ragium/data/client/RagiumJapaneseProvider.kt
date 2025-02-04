@@ -19,6 +19,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Block
         add(RagiumBlocks.SOUL_MAGMA_BLOCK, "ソウルマグマブロック")
 
+        add(RagiumBlocks.SLAG_BLOCK, "スラグブロック")
+
         add(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
         add(RagiumBlocks.SHAFT, "シャフト")
 
@@ -32,7 +34,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumBlocks.CATALYST_ADDON, "触媒アドオン")
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
-        add(RagiumBlocks.SUPERCONDUCTIVE_COOLANT, "超伝導冷却材")
+        add(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")
 
         add(RagiumBlocks.Decorations.RAGI_ALLOY_BLOCK, "ラギ合金ブロック（装飾）")
         add(RagiumBlocks.Decorations.RAGI_STEEL_BLOCK, "ラギスチールブロック（装飾）")
@@ -186,12 +188,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMachineKeys.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
         add(RagiumMachineKeys.GROWTH_CHAMBER, "成長チャンバー", "成長バーチャン")
         add(RagiumMachineKeys.INFUSER, "Infuser", "遠心分離機みたくないやつ")
-        add(RagiumMachineKeys.LASER_TRANSFORMER, "レーザー変換機", "レーザーオン…")
+        add(RagiumMachineKeys.LASER_ASSEMBLY, "レーザーアセンブリ", "レーザーオン…")
         add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
         add(RagiumMachineKeys.MIXER, "ミキサー", "ベストマッチ!")
         add(RagiumMachineKeys.REFINERY, "精製機", "プロジェクト・ビルド")
-        add(RagiumMachineKeys.RESOURCE_PLANT, "資源プラント", "チョコレートファウンテンのように")
-        add(RagiumMachineKeys.STEAM_BOILER, "蒸気ボイラー", "スチールホッパー!")
         // Material
         add(CommonMaterials.ALUMINA, "アルミナ")
         add(CommonMaterials.ALUMINUM, "アルミニウム")
@@ -242,7 +242,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterials.RAGI_STEEL, "ラギスチール")
         add(RagiumMaterials.RAGINITE, "ラギナイト")
         add(RagiumMaterials.RAGIUM, "ラギウム")
-        add(RagiumMaterials.SLAG, "スラグ")
         add(VanillaMaterials.AMETHYST, "アメシスト")
         add(VanillaMaterials.COAL, "石炭")
         add(VanillaMaterials.COPPER, "銅")

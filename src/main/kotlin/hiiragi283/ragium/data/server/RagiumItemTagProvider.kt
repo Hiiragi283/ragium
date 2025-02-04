@@ -148,6 +148,9 @@ class RagiumItemTagProvider(
         tag(itemTagKey(commonId("plates/plastic")))
             .add(RagiumItems.PLASTIC_PLATE)
 
+        tag(RagiumItemTags.SLAG)
+            .add(RagiumItems.SLAG)
+
         tag(RagiumItemTags.SOLAR_PANELS)
             .add(RagiumItems.SOLAR_PANEL)
             .add(GeneratorsItems.SOLAR_PANEL, true)

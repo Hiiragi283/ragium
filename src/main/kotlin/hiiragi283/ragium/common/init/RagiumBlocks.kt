@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.buildTable
@@ -14,13 +15,14 @@ import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
-import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlock
-import hiiragi283.ragium.common.block.addon.HTCoolantBlock
+import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
+import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -76,7 +78,6 @@ object RagiumBlocks {
         CommonMaterials.FLUORITE,
         CommonMaterials.CRYOLITE,
         // Other
-        RagiumMaterials.SLAG,
         RagiumMaterials.FIERY_COAL,
     ).associateWith { key: HTMaterialKey ->
         REGISTER.registerSimpleBlock(
@@ -97,9 +98,12 @@ object RagiumBlocks {
         CommonMaterials.FLUORITE -> HTTagPrefix.GEM
         RagiumMaterials.FIERY_COAL -> HTTagPrefix.GEM
         RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
-        RagiumMaterials.SLAG -> HTTagPrefix.GEM
         else -> HTTagPrefix.INGOT
     }
+
+    @JvmField
+    val SLAG_BLOCK: DeferredBlock<Block> =
+        REGISTER.registerSimpleBlock("slag_block", blockProperty(Blocks.GRAVEL))
 
     @JvmField
     val CASINGS: Map<HTMaterialKey, DeferredBlock<Block>> = listOf(
@@ -269,21 +273,29 @@ object RagiumBlocks {
     //    Utility    //
 
     @JvmField
-    val CATALYST_ADDON: DeferredBlock<HTCatalystAddonBlock> =
-        REGISTER.registerBlock("catalyst_addon", ::HTCatalystAddonBlock, blockProperty(Blocks.SMOOTH_STONE))
+    val CATALYST_ADDON: DeferredBlock<HTEntityBlock> =
+        REGISTER.registerBlock(
+            "catalyst_addon",
+            { prop: BlockBehaviour.Properties -> HTEntityBlock.of(::HTCatalystAddonBlockEntity, prop) },
+            blockProperty(Blocks.SMOOTH_STONE),
+        )
 
     @JvmField
     val ENERGY_NETWORK_INTERFACE: DeferredBlock<HTEnergyNetworkBlock> =
         REGISTER.registerBlock("energy_network_interface", ::HTEnergyNetworkBlock, blockProperty(Blocks.SMOOTH_STONE))
 
     @JvmField
-    val SUPERCONDUCTIVE_COOLANT: DeferredBlock<HTCoolantBlock> =
-        REGISTER.registerBlock("superconductive_coolant", ::HTCoolantBlock, blockProperty().sound(SoundType.GLASS))
+    val SLAG_COLLECTOR: DeferredBlock<HTEntityBlock> =
+        REGISTER.registerBlock(
+            "slag_collector",
+            { prop: BlockBehaviour.Properties -> HTEntityBlock.of(::HTSlagCollectorBlockEntity, prop) },
+            blockProperty(Blocks.DEEPSLATE_BRICKS),
+        )
 
     @JvmField
     val ADDONS: List<DeferredBlock<out Block>> = listOf(
         CATALYST_ADDON,
         ENERGY_NETWORK_INTERFACE,
-        SUPERCONDUCTIVE_COOLANT,
+        SLAG_COLLECTOR,
     )
 }

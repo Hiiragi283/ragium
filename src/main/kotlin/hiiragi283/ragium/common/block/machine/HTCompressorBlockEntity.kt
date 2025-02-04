@@ -14,6 +14,8 @@ import hiiragi283.ragium.common.inventory.HTCompressorContainerMenu
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -27,6 +29,18 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.COMPRESSOR, pos, state, RagiumMachineKeys.COMPRESSOR) {
     private val itemInput = ItemStackHandler(1)
     private val itemOutput = ItemStackHandler(1)
+
+    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        tag.put(ITEM_INPUT_KEY, itemInput.serializeNBT(registries))
+        tag.put(ITEM_OUTPUT_KEY, itemOutput.serializeNBT(registries))
+    }
+
+    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        itemInput.deserializeNBT(registries, tag.getCompound(ITEM_INPUT_KEY))
+        itemOutput.deserializeNBT(registries, tag.getCompound(ITEM_OUTPUT_KEY))
+    }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe

@@ -34,12 +34,10 @@
     "ragium:grinder",
     "ragium:growth_chamber",
     "ragium:infuser",
-    "ragium:laser_transformer",
+    "ragium:laser_assembly",
     "ragium:mixer",
     "ragium:multi_smelter",
     "ragium:refinery",
-    "ragium:resource_plant",
-    "ragium:steam_boiler",
     "ragium:raginite_ore",
     "ragium:ragi_crystal_ore",
     "ragium:deepslate_raginite_ore",
@@ -58,7 +56,6 @@
     "ragium:ragi_crystal_block",
     "ragium:fluorite_block",
     "ragium:cryolite_block",
-    "ragium:slag_block",
     "ragium:fiery_coal_block",
     "ragium:copper_casing",
     "ragium:iron_casing",
@@ -74,6 +71,6 @@
     "ragium:primitive_blast_furnace",
     "ragium:catalyst_addon",
     "ragium:energy_network_interface",
-    "ragium:superconductive_coolant"
+    "ragium:slag_collector"
   ]
 }

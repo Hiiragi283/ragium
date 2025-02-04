@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/copper"
+      "item": "ragium:nether_reagent"
     },
     "B": {
-      "item": "minecraft:bricks"
+      "tag": "c:storage_blocks/coal"
     }
   },
   "pattern": [
     "AAA",
-    "A A",
-    "BBB"
+    "ABA",
+    "AAA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:steam_boiler"
+    "id": "ragium:fiery_coal"
   }
 }

@@ -6,19 +6,16 @@
       "tag": "c:ingots/deep_steel"
     },
     "B": {
-      "tag": "c:circuits/elite"
+      "item": "minecraft:furnace"
     },
     "C": {
-      "item": "ragium:blast_furnace"
-    },
-    "D": {
       "item": "ragium:elite_casing"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "B B",
+    "CCC"
   ],
   "result": {
     "count": 1,

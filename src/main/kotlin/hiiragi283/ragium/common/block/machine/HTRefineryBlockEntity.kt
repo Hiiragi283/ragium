@@ -13,6 +13,8 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.HTExtractorContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
@@ -32,6 +34,20 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTRefineryRecipe> =
         HTRecipeCache(RagiumRecipeTypes.REFINERY)
+
+    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        tag.put(ITEM_OUTPUT_KEY, itemOutput.serializeNBT(registries))
+        tag.put(FLUID_INPUT_KEY, inputTank.writeToNBT(registries, CompoundTag()))
+        tag.put(FLUID_OUTPUT_KEY, outputTank.writeToNBT(registries, CompoundTag()))
+    }
+
+    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        itemOutput.deserializeNBT(registries, tag.getCompound(ITEM_OUTPUT_KEY))
+        inputTank.readFromNBT(registries, tag.getCompound(FLUID_INPUT_KEY))
+        outputTank.readFromNBT(registries, tag.getCompound(FLUID_OUTPUT_KEY))
+    }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe

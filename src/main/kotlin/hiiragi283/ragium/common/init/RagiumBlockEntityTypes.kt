@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
+import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
@@ -113,4 +114,8 @@ object RagiumBlockEntityTypes {
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =
         register("drum", ::HTDrumBlockEntity, RagiumBlocks.Drums.entries)
+
+    @JvmField
+    val SLAG_COLLECTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSlagCollectorBlockEntity>> =
+        register("slag_collector", ::HTSlagCollectorBlockEntity, RagiumBlocks.SLAG_COLLECTOR)
 }

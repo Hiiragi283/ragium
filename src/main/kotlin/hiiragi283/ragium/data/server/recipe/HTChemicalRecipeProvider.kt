@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
@@ -158,16 +158,16 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerSludge(output: RecipeOutput) {
         // Slag -> Gravel
         HTGrinderRecipeBuilder()
-            .itemInput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
+            .itemInput(RagiumItemTags.SLAG)
             .itemOutput(Items.GRAVEL)
             .saveSuffixed(output, "_from_slag")
 
         // Block of Slag -> Chemical Glass
         HTCookingRecipeBuilder
             .create(
-                Ingredient.of(HTTagPrefix.STORAGE_BLOCK.createTag(RagiumMaterials.SLAG)),
+                Ingredient.of(RagiumBlocks.SLAG_BLOCK),
                 RagiumBlocks.CHEMICAL_GLASS,
-            ).unlockedBy("has_slag", has(HTTagPrefix.STORAGE_BLOCK, RagiumMaterials.SLAG))
+            ).unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
             .save(output)
     }
 

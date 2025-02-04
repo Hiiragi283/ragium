@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:laser_transformer"
+          "name": "ragium:laser_assembly"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/laser_transformer"
+  "random_sequence": "ragium:blocks/laser_assembly"
 }

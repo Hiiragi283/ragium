@@ -30,6 +30,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         buildList {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
+            add(RagiumBlocks.SLAG_BLOCK)
+
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
             addAll(RagiumBlocks.CASINGS.values)
 

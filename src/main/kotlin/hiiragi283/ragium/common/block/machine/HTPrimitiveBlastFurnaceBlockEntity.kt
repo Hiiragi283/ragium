@@ -15,6 +15,8 @@ import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import hiiragi283.ragium.common.inventory.HTPrimitiveBlastFurnaceContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.player.Inventory
@@ -32,6 +34,18 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val itemInput = ItemStackHandler(2)
     private val itemOutput = ItemStackHandler(1)
+
+    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        tag.put(ITEM_INPUT_KEY, itemInput.serializeNBT(registries))
+        tag.put(ITEM_OUTPUT_KEY, itemOutput.serializeNBT(registries))
+    }
+
+    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        itemInput.deserializeNBT(registries, tag.getCompound(ITEM_INPUT_KEY))
+        itemOutput.deserializeNBT(registries, tag.getCompound(ITEM_OUTPUT_KEY))
+    }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()

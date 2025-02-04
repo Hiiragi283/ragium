@@ -11,9 +11,6 @@ object RagiumMaterials {
     @JvmField
     val RAGI_CRYSTAL: HTMaterialKey = HTMaterialKey.of("ragi_crystal")
 
-    @JvmField
-    val SLAG: HTMaterialKey = HTMaterialKey.of("slag")
-
     //    Metal    //
 
     @JvmField

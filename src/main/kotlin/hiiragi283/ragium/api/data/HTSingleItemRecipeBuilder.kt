@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
+import hiiragi283.ragium.api.recipe.HTLaserAssemblyRecipe
 import hiiragi283.ragium.api.recipe.HTSingleItemRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
@@ -23,6 +24,9 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     companion object {
         @JvmStatic
         fun compressor(): HTSingleItemRecipeBuilder<HTCompressorRecipe> = HTSingleItemRecipeBuilder("compressor", ::HTCompressorRecipe)
+
+        @JvmStatic
+        fun laser(): HTSingleItemRecipeBuilder<HTLaserAssemblyRecipe> = HTSingleItemRecipeBuilder("laser", ::HTLaserAssemblyRecipe)
     }
 
     private var group: String? = null

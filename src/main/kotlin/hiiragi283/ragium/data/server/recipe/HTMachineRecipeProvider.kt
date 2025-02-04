@@ -105,6 +105,8 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.LUMINESCENCE_DUST)
             .save(output)
 
+        // Nether Reagent
+
         // Prismarine Reagent
         HTExtractorRecipeBuilder()
             .itemInput(Tags.Items.GEMS_PRISMARINE, 3)
@@ -131,6 +133,11 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.SCULK_CATALYST)
             .itemOutput(RagiumItems.SCULK_REAGENT, 8)
             .saveSuffixed(output, "_from_catalyst")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.ECHO_SHARD)
+            .itemOutput(RagiumItems.SCULK_REAGENT, 16)
+            .saveSuffixed(output, "_from_shard")
 
         // Soul Reagent
         HTExtractorRecipeBuilder()

@@ -46,12 +46,12 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        tag.put(ITEM_KEY, itemHandler.serializeNBT(registries))
+        tag.put(ITEM_INPUT_KEY, itemHandler.serializeNBT(registries))
     }
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_KEY))
+        itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_INPUT_KEY))
     }
 
     override fun onRightClicked(

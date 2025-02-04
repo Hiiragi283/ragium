@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:resource_plant"
+          "name": "ragium:slag_collector"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/resource_plant"
+  "random_sequence": "ragium:blocks/slag_collector"
 }
