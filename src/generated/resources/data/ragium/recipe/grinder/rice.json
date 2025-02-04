@@ -6,20 +6,19 @@
     }
   ],
   "type": "ragium:grinder",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "farmersdelight:rice_panicle"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 2,
-      "id": "farmersdelight:rice"
-    },
-    {
+  "item_input": {
+    "count": 1,
+    "item": "farmersdelight:rice_panicle"
+  },
+  "item_output": {
+    "count": 2,
+    "id": "farmersdelight:rice"
+  },
+  "second_output": {
+    "chance": 0.5,
+    "stack": {
       "count": 1,
       "id": "farmersdelight:straw"
     }
-  ]
+  }
 }

@@ -1,19 +1,11 @@
 {
   "type": "ragium:grinder",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:foods/raw_meat"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:minced_meat"
-    },
-    {
-      "count": 1,
-      "id": "ragium:tallow"
-    }
-  ]
+  "item_input": {
+    "count": 1,
+    "tag": "c:foods/raw_meat"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:minced_meat"
+  }
 }

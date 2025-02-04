@@ -1,15 +1,11 @@
 {
   "type": "ragium:grinder",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:snow_block"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "id": "minecraft:snowball"
-    }
-  ]
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:snow_block"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "minecraft:snowball"
+  }
 }

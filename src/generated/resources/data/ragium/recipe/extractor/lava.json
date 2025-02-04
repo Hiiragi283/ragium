@@ -4,7 +4,7 @@
     "amount": 1000,
     "id": "minecraft:lava"
   },
-  "input": {
+  "item_input": {
     "count": 1,
     "tag": "c:buckets/lava"
   },

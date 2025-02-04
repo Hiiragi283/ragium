@@ -14,8 +14,8 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.*
 
-abstract class HTFluidOutputRecipe(private val group: String, val itemOutput: Optional<ItemStack>, val fluidOutput: Optional<FluidStack>) :
-    HTMachineRecipeBase {
+abstract class HTFluidOutputRecipe(group: String, val itemOutput: Optional<ItemStack>, val fluidOutput: Optional<FluidStack>) :
+    HTMachineRecipeBase(group) {
     companion object {
         @JvmStatic
         fun <T : HTFluidOutputRecipe> validate(recipe: T): DataResult<T> {
@@ -49,11 +49,5 @@ abstract class HTFluidOutputRecipe(private val group: String, val itemOutput: Op
         }
     }
 
-    final override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
-
-    final override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = itemOutput.orElse(ItemStack.EMPTY).copy()
-
-    final override fun getGroup(): String = group
 }

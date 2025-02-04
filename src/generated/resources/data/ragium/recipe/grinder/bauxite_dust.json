@@ -1,21 +1,18 @@
 {
   "type": "ragium:grinder",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "tag": "c:circuits/advanced"
-    }
+  "item_input": {
+    "count": 8,
+    "item": "minecraft:netherrack"
   },
-  "item_inputs": [
-    {
-      "count": 8,
-      "item": "minecraft:netherrack"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 6,
+  "item_output": {
+    "count": 4,
+    "id": "ragium:bauxite_dust"
+  },
+  "second_output": {
+    "chance": 0.5,
+    "stack": {
+      "count": 2,
       "id": "ragium:bauxite_dust"
     }
-  ]
+  }
 }

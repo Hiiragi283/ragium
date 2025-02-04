@@ -1,5 +1,13 @@
 package hiiragi283.ragium.api.recipe
 
+import net.minecraft.core.HolderLookup
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
 
-interface HTMachineRecipeBase : Recipe<HTRecipeInput>
+abstract class HTMachineRecipeBase(private val group: String) : Recipe<HTRecipeInput> {
+    final override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
+
+    final override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
+
+    final override fun getGroup(): String = group
+}

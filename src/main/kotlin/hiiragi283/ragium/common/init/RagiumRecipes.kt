@@ -28,9 +28,6 @@ object RagiumRecipes {
     val CHEMICAL_REACTOR: HTMachineRecipeType = create(RagiumMachineKeys.CHEMICAL_REACTOR)
 
     @JvmField
-    val GRINDER: HTMachineRecipeType = create(RagiumMachineKeys.GRINDER)
-
-    @JvmField
     val LASER_TRANSFORMER: HTMachineRecipeType = create(RagiumMachineKeys.LASER_TRANSFORMER)
 
     @JvmField
@@ -41,12 +38,6 @@ object RagiumRecipes {
 
     @JvmField
     val RESOURCE_PLANT: HTMachineRecipeType = create(RagiumMachineKeys.RESOURCE_PLANT)
-
-    @JvmField
-    val STEAM_BOILER: HTMachineRecipeType = create(RagiumMachineKeys.STEAM_BOILER)
-
-    @JvmField
-    val FUEL: HTMachineRecipeType = create(HTMachineKey.of("fuel"))
 
     @JvmStatic
     private fun create(machine: HTMachineKey): HTMachineRecipeType {

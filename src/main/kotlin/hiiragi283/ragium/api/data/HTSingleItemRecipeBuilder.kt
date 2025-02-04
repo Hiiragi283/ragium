@@ -14,16 +14,18 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
-class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(private val factory: (String, SizedIngredient, ItemStack) -> T) :
-    HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>>() {
+class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
+    override val prefix: String,
+    private val factory: (String, SizedIngredient, ItemStack) -> T,
+) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>>() {
     companion object {
         @JvmStatic
-        fun compressor(): HTSingleItemRecipeBuilder<HTCompressorRecipe> = HTSingleItemRecipeBuilder(::HTCompressorRecipe)
+        fun compressor(): HTSingleItemRecipeBuilder<HTCompressorRecipe> = HTSingleItemRecipeBuilder("compressor", ::HTCompressorRecipe)
     }
 
     private var group: String? = null
     private lateinit var input: SizedIngredient
-    private lateinit var itemOutput: ItemStack
+    private lateinit var output: ItemStack
 
     override fun itemInput(ingredient: Ingredient, count: Int): HTSingleItemRecipeBuilder<T> = apply {
         check(!::input.isInitialized) { "Input is already initialized" }
@@ -33,19 +35,17 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(private val factory: (St
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()
 
     override fun itemOutput(stack: ItemStack): HTSingleItemRecipeBuilder<T> = apply {
-        this.itemOutput = stack
+        this.output = stack
     }
 
     override fun fluidOutput(stack: FluidStack): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()
 
-    override fun getPrimalId(): ResourceLocation = itemOutput.itemHolder.idOrThrow
-
-    override val prefix: String = "extractor"
+    override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
 
     override fun saveInternal(output: RecipeOutput, id: ResourceLocation) {
         output.accept(
             id,
-            factory(group ?: "", input, itemOutput),
+            factory(group ?: "", input, this.output),
             null,
         )
     }
@@ -56,5 +56,5 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(private val factory: (St
         this.group = groupName
     }
 
-    override fun getResult(): Item = itemOutput.item
+    override fun getResult(): Item = output.item
 }

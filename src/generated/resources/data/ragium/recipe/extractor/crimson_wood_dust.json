@@ -4,7 +4,7 @@
     "amount": 1000,
     "id": "ragium:crimson_sap"
   },
-  "input": {
+  "item_input": {
     "count": 1,
     "tag": "minecraft:crimson_stems"
   },

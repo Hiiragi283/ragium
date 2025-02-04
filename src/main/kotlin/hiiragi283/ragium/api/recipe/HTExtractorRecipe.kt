@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -28,8 +27,8 @@ class HTExtractorRecipe(
             .mapCodec { instance ->
                 instance
                     .group(
-                        Codec.STRING.optionalFieldOf("group", "").forGetter(HTExtractorRecipe::getGroup),
-                        SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTExtractorRecipe::input),
+                        HTRecipeCodecs.GROUP.forGetter(HTExtractorRecipe::getGroup),
+                        HTRecipeCodecs.ITEM_INPUT.forGetter(HTExtractorRecipe::input),
                         ItemStack.STRICT_CODEC.optionalFieldOf("item_output").forGetter(HTExtractorRecipe::itemOutput),
                         FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTExtractorRecipe::fluidOutput),
                     ).apply(instance, ::HTExtractorRecipe)

@@ -10,7 +10,7 @@
     "amount": 80,
     "id": "actuallyadditions:canola_oil"
   },
-  "input": {
+  "item_input": {
     "count": 1,
     "tag": "c:seeds/canola"
   }

@@ -1,6 +1,6 @@
 {
   "type": "ragium:extractor",
-  "input": {
+  "item_input": {
     "count": 1,
     "tag": "c:dusts/ash"
   },

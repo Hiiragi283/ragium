@@ -1,11 +1,11 @@
 {
   "type": "ragium:refinery",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:biomass"
+  },
   "fluid_output": {
     "amount": 1000,
     "id": "ragium:ethanol"
-  },
-  "input": {
-    "amount": 1000,
-    "tag": "c:biomass"
   }
 }

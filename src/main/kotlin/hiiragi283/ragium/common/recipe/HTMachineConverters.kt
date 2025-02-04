@@ -2,23 +2,17 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.material.*
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SmeltingRecipe
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
-import java.util.function.Consumer
 
 object HTMachineConverters {
     //    Vanilla    //
@@ -33,8 +27,7 @@ object HTMachineConverters {
             .export(holder.id.withSuffix("_from_smelting"))
     }
 
-    @JvmStatic
-    fun fromFuel(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>) {
+    /*fun fromFuel(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>) {
         level
             .registryAccess()
             .lookupOrThrow(Registries.ITEM)
@@ -53,12 +46,11 @@ object HTMachineConverters {
                     .exportSuffixed("_from_${holder.idOrThrow.path}")
                     .let(consumer::accept)
             }
-    }
+    }*/
 
     //    Material    //
 
-    /*@JvmStatic
-    fun compressorGear(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipeBase>? {
+    /*fun compressorGear(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipeBase>? {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.GEAR, key) ?: return null
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
@@ -106,8 +98,7 @@ object HTMachineConverters {
             .export(RagiumAPI.id("${key.name}_rod"))
     }*/
 
-    @JvmStatic
-    fun grinderMainToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? {
+    /*fun grinderMainToDust(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? {
         val (type: HTMaterialType, _: HTMaterialKey) = material
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return null
         return grinderToDust(material, registry, mainPrefix, 1)
@@ -152,7 +143,7 @@ object HTMachineConverters {
             .itemOutput(output.value(), 2)
             .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
             .export(RagiumAPI.id("raw_${key.name}_2x"))
-    }
+    }*/
 
     @JvmStatic
     fun chemicalOre3x(material: HTTypedMaterial, registry: HTMaterialRegistry): RecipeHolder<HTMachineRecipe>? =

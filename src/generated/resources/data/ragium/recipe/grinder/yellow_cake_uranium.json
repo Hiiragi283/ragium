@@ -6,16 +6,12 @@
     }
   ],
   "type": "ragium:grinder",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "ragium:yellow_cake"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 8,
-      "id": "mekanism:yellow_cake_uranium"
-    }
-  ]
+  "item_input": {
+    "count": 1,
+    "item": "ragium:yellow_cake"
+  },
+  "item_output": {
+    "count": 8,
+    "id": "mekanism:yellow_cake_uranium"
+  }
 }

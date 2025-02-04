@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.integration
 
+import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -52,11 +53,11 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
             ).save(output)
 
         // Rice
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER)
+        HTGrinderRecipeBuilder()
             .itemInput(ModItems.RICE_PANICLE.get())
             .itemOutput(ModItems.RICE.get(), 2)
             .itemOutput(ModItems.STRAW.get())
+            .setChance(0.5f)
             .save(output)
 
         // Milk Bottle

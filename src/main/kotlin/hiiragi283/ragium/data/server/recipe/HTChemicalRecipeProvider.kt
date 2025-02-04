@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
+import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -173,11 +174,11 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)*/
 
         // Sandstone -> KNO3
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER)
+        HTGrinderRecipeBuilder()
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             .itemOutput(Items.SAND, 4)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
+            .setChance(0.25f)
             .save(output)
         // 2x KNO3 + H2SO4 -> 2x HNO3 + K2SO4
         HTMachineRecipeBuilder
@@ -302,10 +303,11 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerAluminum(output: RecipeOutput) {
         // 8x Netherrack -> 6x Bauxite + 2x Sulfur
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER, HTMachineTier.ADVANCED)
+        HTGrinderRecipeBuilder()
             .itemInput(Items.NETHERRACK, 8)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 6)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 4)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 2)
+            .setChance(0.5f)
             .save(output)
         // Bauxite + Alkali solution -> Alumina Solution
         HTMachineRecipeBuilder
@@ -344,8 +346,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerSludge(output: RecipeOutput) {
         // Slag -> Gravel
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER)
+        HTGrinderRecipeBuilder()
             .itemInput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
             .itemOutput(Items.GRAVEL)
             .saveSuffixed(output, "_from_slag")

@@ -160,7 +160,7 @@ internal object RagiumEvents {
             .getBuilder(RagiumMachineKeys.GRINDER)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.GRINDSTONE_USE)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
-            .put(
+            /*.put(
                 HTMachinePropertyKeys.RECIPE_PROXY,
                 HTMachineRecipeProxy.material(
                     RagiumRecipes.GRINDER,
@@ -170,7 +170,7 @@ internal object RagiumEvents {
                     HTMachineConverters::grinderRawToDust,
                     HTMachineConverters::grinderOreToRaw,
                 ),
-            )
+            )*/
 
         event.getBuilder(RagiumMachineKeys.GROWTH_CHAMBER)
 
@@ -225,11 +225,7 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.STEAM_BOILER)
-            .put(HTMachinePropertyKeys.RECIPE_PROXY, HTMachineRecipeProxy(HTMachineConverters::fromFuel))
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.default(RagiumRecipes.STEAM_BOILER),
-            )
+        // .put(HTMachinePropertyKeys.RECIPE_PROXY, HTMachineRecipeProxy(HTMachineConverters::fromFuel))
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

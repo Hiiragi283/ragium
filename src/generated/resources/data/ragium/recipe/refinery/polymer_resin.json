@@ -1,12 +1,12 @@
 {
   "type": "ragium:refinery",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:naphtha"
+  },
   "fluid_output": {
     "amount": 1000,
     "id": "ragium:fuel"
-  },
-  "input": {
-    "amount": 1000,
-    "tag": "c:naphtha"
   },
   "item_output": {
     "count": 2,

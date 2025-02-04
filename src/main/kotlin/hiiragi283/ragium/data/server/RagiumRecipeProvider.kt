@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
 import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
@@ -190,14 +191,12 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             .save(output)
 
         // Snow Block -> 4x Snow Ball
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER)
+        HTGrinderRecipeBuilder()
             .itemInput(Items.SNOW_BLOCK)
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_block")
         // Ice -> 4x Snow Ball
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER)
+        HTGrinderRecipeBuilder()
             .itemInput(Items.ICE)
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_ice")

@@ -6,11 +6,11 @@
     }
   ],
   "type": "ragium:compressor",
-  "input": {
+  "item_input": {
     "count": 8,
     "item": "mekanism:yellow_cake_uranium"
   },
-  "output": {
+  "item_output": {
     "count": 1,
     "id": "ragium:yellow_cake"
   }

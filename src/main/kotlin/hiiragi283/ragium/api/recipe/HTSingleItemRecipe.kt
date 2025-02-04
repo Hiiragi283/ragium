@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.HolderLookup
@@ -12,16 +11,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
-abstract class HTSingleItemRecipe(private val group: String, val input: SizedIngredient, val output: ItemStack) : HTMachineRecipeBase {
+abstract class HTSingleItemRecipe(group: String, val input: SizedIngredient, val output: ItemStack) : HTMachineRecipeBase(group) {
     override fun matches(input: HTRecipeInput, level: Level): Boolean = this.input.test(input.getItem(0))
 
-    final override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
-
-    final override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = output.copy()
-
-    final override fun getGroup(): String = group
 
     //    Serializer    //
 
@@ -29,9 +22,9 @@ abstract class HTSingleItemRecipe(private val group: String, val input: SizedIng
         private val codec: MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    Codec.STRING.optionalFieldOf("group", "").forGetter(HTSingleItemRecipe::getGroup),
-                    SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTSingleItemRecipe::input),
-                    ItemStack.STRICT_CODEC.fieldOf("output").forGetter(HTSingleItemRecipe::output),
+                    HTRecipeCodecs.GROUP.forGetter(HTSingleItemRecipe::getGroup),
+                    HTRecipeCodecs.ITEM_INPUT.forGetter(HTSingleItemRecipe::input),
+                    HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTSingleItemRecipe::output),
                 ).apply(instance, factory)
         }
 

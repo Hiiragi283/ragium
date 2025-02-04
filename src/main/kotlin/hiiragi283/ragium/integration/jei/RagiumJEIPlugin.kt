@@ -3,8 +3,6 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.extension.isSource
 import hiiragi283.ragium.api.extension.mutableMultiMapOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -27,8 +25,6 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.core.Holder
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
@@ -36,7 +32,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.material.Fluid
 import java.util.function.Supplier
 import mezz.jei.api.recipe.RecipeType as JEIRecipeType
 
@@ -65,6 +60,7 @@ class RagiumJEIPlugin : IModPlugin {
                 RagiumRecipeSerializers.COMPRESSOR.get(),
             ),
             HTExtractorRecipeCategory(guiHelper),
+            HTGrinderRecipeCategory(guiHelper),
             HTRefineryRecipeCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
         )
@@ -83,6 +79,7 @@ class RagiumJEIPlugin : IModPlugin {
 
         register(RagiumJEIRecipeTypes.COMPRESSOR, RagiumRecipeTypes.COMPRESSOR)
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
+        register(RagiumJEIRecipeTypes.GRINDER, RagiumRecipeTypes.GRINDER)
         register(RagiumJEIRecipeTypes.REFINERY, RagiumRecipeTypes.REFINERY)
 
         registerMachineRecipes(registration, level)
@@ -110,7 +107,7 @@ class RagiumJEIPlugin : IModPlugin {
                 .export(RagiumAPI.id("steel_by_pbf")),
         )
         // Generator Fuels
-        level
+        /*level
             .registryAccess()
             .lookupOrThrow(Registries.FLUID)
             .listElements()
@@ -132,7 +129,7 @@ class RagiumJEIPlugin : IModPlugin {
                             ),
                     )
                 }
-            }
+            }*/
 
         recipeCache.map.forEach { machine: HTMachineKey, holders: Collection<RecipeHolder<HTMachineRecipe>> ->
             registration.addRecipes(RagiumJEIRecipeTypes.getRecipeType(machine), holders.toList())
@@ -144,6 +141,9 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, RagiumMachineKeys.COMPRESSOR.getBlock())
         // Extractor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR.getBlock())
+        // Grinder
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumMachineKeys.GRINDER.getBlock())
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumBlocks.MANUAL_GRINDER)
         // Refinery
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.REFINERY, RagiumMachineKeys.REFINERY.getBlock())
 
@@ -153,10 +153,6 @@ class RagiumJEIPlugin : IModPlugin {
             registration.addRecipeCatalysts(RagiumJEIRecipeTypes.getRecipeType(key), stack)
         }
 
-        registration.addRecipeCatalysts(
-            RagiumJEIRecipeTypes.getRecipeType(RagiumMachineKeys.GRINDER),
-            RagiumBlocks.MANUAL_GRINDER,
-        )
         registration.addRecipeCatalysts(
             RagiumJEIRecipeTypes.getRecipeType(RagiumMachineKeys.BLAST_FURNACE),
             RagiumBlocks.PRIMITIVE_BLAST_FURNACE,

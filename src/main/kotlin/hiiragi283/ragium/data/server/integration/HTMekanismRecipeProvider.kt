@@ -1,9 +1,8 @@
 package hiiragi283.ragium.data.server.integration
 
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup
@@ -12,8 +11,7 @@ import net.minecraft.data.recipes.RecipeOutput
 object HTMekanismRecipeProvider : RagiumRecipeProvider.ModChild("mekanism") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Yellow Cake -> Yellow Cake Uranium
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.GRINDER)
+        HTGrinderRecipeBuilder()
             .itemInput(RagiumItems.YELLOW_CAKE)
             .itemOutput(MekanismItems.YELLOW_CAKE_URANIUM, 8)
             .save(output)

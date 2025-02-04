@@ -1,6 +1,6 @@
 {
   "type": "ragium:refinery",
-  "input": {
+  "fluid_input": {
     "amount": 1000,
     "tag": "c:milk"
   },

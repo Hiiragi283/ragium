@@ -2,10 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTCompressorRecipe
-import hiiragi283.ragium.api.recipe.HTExtractorRecipe
-import hiiragi283.ragium.api.recipe.HTRefineryRecipe
-import hiiragi283.ragium.api.recipe.HTSingleItemRecipe
+import hiiragi283.ragium.api.recipe.*
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -40,6 +37,10 @@ object RagiumRecipeSerializers {
     @JvmField
     val EXTRACTOR: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractorRecipe>> =
         register("extractor", HTExtractorRecipe.CODEC, HTExtractorRecipe.STREAM_CODEC)
+
+    @JvmField
+    val GRINDER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTGrinderRecipe>> =
+        register("grinder", HTGrinderRecipe.CODEC, HTGrinderRecipe.STREAM_CODEC)
 
     @JvmField
     val REFINERY: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTRefineryRecipe>> =

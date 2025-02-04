@@ -4,7 +4,7 @@
     "amount": 1000,
     "id": "ragium:sap"
   },
-  "input": {
+  "item_input": {
     "count": 1,
     "tag": "minecraft:logs_that_burn"
   },
