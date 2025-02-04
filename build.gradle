@@ -235,9 +235,6 @@ idea {
 
 processResources {
     exclude("**/.cache/**")
-    exclude("**/worldgen/**")
-    exclude("fabric.mod.json")
-    exclude("ragium.accesswidener")
 }
 
 kotlin {

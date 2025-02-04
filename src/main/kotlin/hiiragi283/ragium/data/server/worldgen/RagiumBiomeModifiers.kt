@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.data.server.worldgen
 
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.HolderGetter
@@ -16,13 +16,13 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 object RagiumBiomeModifiers {
     @JvmField
-    val OVERWORLD_RAGINITE: ResourceKey<BiomeModifier> = createKey("add_overworld_raginite")
+    val OVERWORLD_RAGINITE: ResourceKey<BiomeModifier> = createKey("overworld_raginite")
 
     @JvmField
-    val NETHER_RAGINITE: ResourceKey<BiomeModifier> = createKey("add_nether_raginite")
+    val NETHER_RAGINITE: ResourceKey<BiomeModifier> = createKey("nether_raginite")
 
     @JvmField
-    val END_RAGINITE: ResourceKey<BiomeModifier> = createKey("add_end_raginite")
+    val END_RAGINITE: ResourceKey<BiomeModifier> = createKey("end_raginite")
 
     @JvmStatic
     private fun createKey(path: String): ResourceKey<BiomeModifier> =

@@ -6,17 +6,11 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
-import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
-import net.neoforged.neoforge.common.NeoForge
-import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import org.slf4j.Logger
 
 @Mod(RagiumAPI.MOD_ID)
@@ -50,24 +44,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
         container.registerConfig(ModConfig.Type.STARTUP, RagiumConfig.SPEC)
 
-        NeoForge.EVENT_BUS.register(this)
-
         LOGGER.info("Ragium loaded!")
     }
 
     private fun construct(event: FMLConstructModEvent) {
         event.enqueueWork(HTMachineRegistryImpl::modifyProperties)
         event.enqueueWork(HTMaterialRegistryImpl::initRegistry)
-    }
-    
-    @SubscribeEvent
-    fun onServerStart(event: ServerAboutToStartEvent) {
-        event
-            .server
-            .registryAccess()
-            .lookupOrThrow(Registries.PLACED_FEATURE)
-            .listElementIds()
-            .map(ResourceKey<PlacedFeature>::toString)
-            .forEach(LOGGER::info)
     }
 }

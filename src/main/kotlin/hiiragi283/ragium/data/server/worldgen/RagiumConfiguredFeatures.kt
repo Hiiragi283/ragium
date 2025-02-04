@@ -1,9 +1,10 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.data.server.worldgen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
@@ -52,7 +53,7 @@ object RagiumConfiguredFeatures {
         register(
             OVERWORLD_RAGINITE,
             8,
-            createTarget(BlockTags.STONE_ORE_REPLACEABLES, HTOreVariant.OVERWORLD, RagiumMaterials.CRUDE_RAGINITE),
+            createTarget(BlockTags.STONE_ORE_REPLACEABLES, HTOreVariant.OVERWORLD, RagiumMaterials.RAGINITE),
             createTarget(BlockTags.DEEPSLATE_ORE_REPLACEABLES, HTOreVariant.DEEPSLATE, RagiumMaterials.RAGINITE),
         )
         // Deep

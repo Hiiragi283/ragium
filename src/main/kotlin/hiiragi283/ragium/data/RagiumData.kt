@@ -2,13 +2,14 @@ package hiiragi283.ragium.data
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.init.RagiumConfiguredFeatures
-import hiiragi283.ragium.common.init.RagiumPlacedFeatures
 import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.client.RagiumModelProvider
 import hiiragi283.ragium.data.server.*
+import hiiragi283.ragium.data.server.worldgen.RagiumBiomeModifiers
+import hiiragi283.ragium.data.server.worldgen.RagiumConfiguredFeatures
+import hiiragi283.ragium.data.server.worldgen.RagiumPlacedFeatures
 import net.minecraft.DetectedVersion
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistrySetBuilder
@@ -28,6 +29,7 @@ import net.neoforged.neoforge.common.data.AdvancementProvider
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
+import net.neoforged.neoforge.registries.NeoForgeRegistries
 import org.slf4j.Logger
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -76,8 +78,8 @@ object RagiumData {
                 provider,
                 RegistrySetBuilder()
                     .add(Registries.CONFIGURED_FEATURE, RagiumConfiguredFeatures::boostrap)
-                    .add(Registries.PLACED_FEATURE, RagiumPlacedFeatures::boostrap),
-                // .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifiers::boostrap),
+                    .add(Registries.PLACED_FEATURE, RagiumPlacedFeatures::boostrap)
+                    .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifiers::boostrap),
                 setOf(RagiumAPI.MOD_ID),
             ),
         )

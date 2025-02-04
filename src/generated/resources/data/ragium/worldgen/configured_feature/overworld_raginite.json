@@ -6,7 +6,7 @@
     "targets": [
       {
         "state": {
-          "Name": "ragium:crude_raginite_ore"
+          "Name": "ragium:raginite_ore"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",

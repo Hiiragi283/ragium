@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": "ragium:nether_raginite",
+  "step": "underground_ores"
+}
