@@ -189,7 +189,6 @@ internal object RagiumEvents {
         event.register(CommonMaterials.WOOD, HTMaterialType.DUST)
         event.register(CommonMaterials.ZINC, HTMaterialType.METAL)
 
-        event.register(RagiumMaterials.CRUDE_RAGINITE, HTMaterialType.MINERAL)
         event.register(RagiumMaterials.DEEP_STEEL, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.ECHORIUM, HTMaterialType.METAL)
         event.register(RagiumMaterials.FIERY_COAL, HTMaterialType.GEM)

@@ -34,8 +34,5 @@ object RagiumMaterials {
     //    Mineral    //
 
     @JvmField
-    val CRUDE_RAGINITE: HTMaterialKey = HTMaterialKey.of("crude_raginite")
-
-    @JvmField
     val RAGINITE: HTMaterialKey = HTMaterialKey.of("raginite")
 }

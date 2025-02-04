@@ -45,7 +45,6 @@ object RagiumBlocks {
     @JvmField
     val ORES: HTTable<HTOreVariant, HTMaterialKey, DeferredBlock<out Block>> = buildTable {
         val materials: List<HTMaterialKey> = listOf(
-            RagiumMaterials.CRUDE_RAGINITE,
             RagiumMaterials.RAGINITE,
             RagiumMaterials.RAGI_CRYSTAL,
         )

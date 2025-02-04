@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:raw_crude_raginite"
+            "items": "ragium:raw_raginite"
           }
         ]
       },
@@ -16,7 +16,7 @@
     "description": "Welcome to Ragium!",
     "icon": {
       "count": 1,
-      "id": "ragium:raw_crude_raginite"
+      "id": "ragium:raw_raginite"
     },
     "title": "Ragium"
   },

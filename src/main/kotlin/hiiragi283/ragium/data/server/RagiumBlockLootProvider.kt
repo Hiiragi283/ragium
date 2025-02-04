@@ -58,7 +58,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
         RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
             val prefix: HTTagPrefix = when (key) {
-                RagiumMaterials.CRUDE_RAGINITE -> HTTagPrefix.RAW_MATERIAL
                 RagiumMaterials.RAGINITE -> HTTagPrefix.RAW_MATERIAL
                 RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
                 else -> return@forEach

@@ -65,7 +65,6 @@ object RagiumItems {
         register(HTTagPrefix.DUST, VanillaMaterials.DIAMOND)
         register(HTTagPrefix.DUST, VanillaMaterials.EMERALD)
 
-        register(HTTagPrefix.DUST, RagiumMaterials.CRUDE_RAGINITE)
         register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
 
@@ -77,7 +76,6 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
-        register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
 
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)

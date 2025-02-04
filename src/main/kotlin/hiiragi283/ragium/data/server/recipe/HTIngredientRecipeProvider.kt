@@ -60,9 +60,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .pattern("ABA")
             .pattern("AAA")
-            .define('A', HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
+            .define('A', HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
             .define('B', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
-            .unlockedBy("has_crude_raginite", has(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE))
+            .unlockedBy("has_raginite", has(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE))
             .savePrefixed(output)
 
         ShapedRecipeBuilder
@@ -70,9 +70,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .pattern(" A ")
             .pattern("ABA")
             .pattern(" A ")
-            .define('A', HTTagPrefix.DUST, RagiumMaterials.CRUDE_RAGINITE)
+            .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .define('B', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
-            .unlockedBy("has_crude_raginite", has(HTTagPrefix.DUST, RagiumMaterials.CRUDE_RAGINITE))
+            .unlockedBy("has_raginite", has(HTTagPrefix.DUST, RagiumMaterials.RAGINITE))
             .save(output, RagiumAPI.id("shaped/ragi_alloy_compound_alt"))
 
         HTCookingRecipeBuilder

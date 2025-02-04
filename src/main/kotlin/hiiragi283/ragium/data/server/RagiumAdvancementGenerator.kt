@@ -40,13 +40,13 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
 
     override fun generate(registries: HolderLookup.Provider, saver: Consumer<AdvancementHolder>, existingFileHelper: ExistingFileHelper) {
         output = saver
-        val crudeRaginite: ItemLike =
-            RagiumItems.getMaterialItem(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.CRUDE_RAGINITE)
+        val rawRaginite: ItemLike =
+            RagiumItems.getMaterialItem(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
         root = Advancement.Builder
             .advancement()
             .display(
                 DisplayInfo(
-                    crudeRaginite.toStack(),
+                    rawRaginite.toStack(),
                     Component.literal(RagiumAPI.MOD_NAME),
                     Component.literal("Welcome to Ragium!"),
                     Optional.of(ResourceLocation.withDefaultNamespace("textures/block/bricks.png")),
@@ -55,7 +55,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
                     true,
                     false,
                 ),
-            ).hasItem("has_raginite", crudeRaginite)
+            ).hasItem("has_raginite", rawRaginite)
             .save("root")
 
         registerTier1()
