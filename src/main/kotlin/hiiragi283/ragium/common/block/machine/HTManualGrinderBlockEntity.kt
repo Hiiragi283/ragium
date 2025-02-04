@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCache
+import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
@@ -79,7 +80,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     private fun process(level: Level, pos: BlockPos, player: Player) {
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
         recipeCache
-            .getFirstMatch(level, pos, stackIn)
+            .getFirstMatch(level, HTMachineRecipeInput.of(pos, stackIn))
             .map(RecipeHolder<HTGrinderRecipe>::value)
             .onSuccess { recipe: HTGrinderRecipe ->
                 // Drop output

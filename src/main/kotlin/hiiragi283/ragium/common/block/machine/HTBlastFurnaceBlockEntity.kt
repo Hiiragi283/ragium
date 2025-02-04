@@ -1,0 +1,69 @@
+package hiiragi283.ragium.common.block.machine
+
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.extension.canInsert
+import hiiragi283.ragium.api.extension.insertOrDrop
+import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.common.inventory.HTBlastFurnaceContainerMenu
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.common.crafting.SizedIngredient
+import net.neoforged.neoforge.items.ItemStackHandler
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
+
+class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(RagiumBlockEntityTypes.BLAST_FURNACE, pos, state) {
+    override val machineKey: HTMachineKey = RagiumMachineKeys.BLAST_FURNACE
+
+    private val itemInput = ItemStackHandler(3)
+    private val itemOutput = ItemStackHandler(1)
+
+    private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTBlastFurnaceRecipe> =
+        HTRecipeCache(RagiumRecipeTypes.BLAST_FURNACE)
+
+    override fun process(level: ServerLevel, pos: BlockPos) {
+        checkMultiblockOrThrow()
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
+            pos,
+            listOf(
+                itemInput.getStackInSlot(0),
+                itemInput.getStackInSlot(1),
+                itemInput.getStackInSlot(2),
+            ),
+            listOf(),
+        )
+        val holder: RecipeHolder<HTBlastFurnaceRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTBlastFurnaceRecipe = holder.value()
+        val output: ItemStack = recipe.output.copy()
+        if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
+        itemOutput.insertOrDrop(level, pos, output)
+        itemInput.getStackInSlot(0).shrink(recipe.firstInput.count())
+        itemInput.getStackInSlot(1).shrink(recipe.secondInput.count())
+        recipe.thirdInput.ifPresent { third: SizedIngredient ->
+            itemInput.getStackInSlot(2).shrink(third.count())
+        }
+    }
+
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        HTBlastFurnaceContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
+
+    override fun interactWithFluidStorage(player: Player): Boolean = false
+
+    override fun getItemHandler(direction: Direction?): CombinedInvWrapper =
+        CombinedInvWrapper(HTStorageIO.INPUT.wrapItemHandler(itemInput), HTStorageIO.OUTPUT.wrapItemHandler(itemOutput))
+}

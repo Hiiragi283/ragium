@@ -27,6 +27,6 @@ class HTMachineBlock(properties: Properties) : HTEntityBlock.Horizontal(properti
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
         val machineKey: HTMachineKey = machineKey ?: return null
-        return machineKey.getProperty()[HTMachinePropertyKeys.MACHINE_FACTORY_NEW]?.invoke(pos, state)
+        return machineKey.getProperty()[HTMachinePropertyKeys.MACHINE_FACTORY]?.invoke(pos, state)
     }
 }

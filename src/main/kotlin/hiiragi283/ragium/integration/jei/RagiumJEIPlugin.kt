@@ -13,6 +13,7 @@ import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.helpers.IJeiHelpers
+import mezz.jei.api.registration.IGuiHandlerRegistration
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
@@ -105,6 +106,9 @@ class RagiumJEIPlugin : IModPlugin {
 
         // Material Info
         registration.addRecipes(RagiumJEIRecipeTypes.MATERIAL_INFO, RagiumAPI.materialRegistry.typedMaterials)
+    }
+
+    override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

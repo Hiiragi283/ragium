@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
@@ -21,8 +20,10 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.world.energyNetwork
-import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.block.machine.HTBlastFurnaceBlockEntity
 import hiiragi283.ragium.common.block.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.machine.HTRefineryBlockEntity
@@ -69,27 +70,22 @@ internal object RagiumEvents {
         // Generator
         event
             .getBuilder(RagiumMachineKeys.COMBUSTION_GENERATOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTCombustionGeneratorBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.FIRE_EXTINGUISH)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ASH))
 
         event
             .getBuilder(RagiumMachineKeys.NUCLEAR_REACTOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTDefaultGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTSolarGeneratorBlockEntity)
             .put(HTMachinePropertyKeys.GENERATOR_PREDICATE) { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay }
             .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
 
         event
-            .getBuilder(RagiumMachineKeys.STEAM_TURBINE)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
-
-        event
             .getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTThermalGeneratorBlockEntity)
 
         event.getBuilder(RagiumMachineKeys.VIBRATION_GENERATOR)
 
@@ -109,6 +105,7 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTBlastFurnaceBlockEntity)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(
@@ -120,7 +117,7 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.EXTRACTOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY_NEW, ::HTExtractorBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTExtractorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.GRINDER)
@@ -135,9 +132,8 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
-                HTMultiSmelterBlockEntity(pos, state)
-            }.put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTMultiSmelterBlockEntity)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
         /* .put(
             HTMachinePropertyKeys.RECIPE_PROXY,
@@ -151,7 +147,7 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.REFINERY)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY_NEW, ::HTRefineryBlockEntity)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTRefineryBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.RESOURCE_PLANT)
@@ -247,22 +243,6 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun addBlockToBlockEntity(event: BlockEntityTypeAddBlocksEvent) {
-        fun bindMachine(type: Supplier<out BlockEntityType<*>>, machine: HTMachineKey) {
-            val content: HTBlockContent = machine.getBlockOrNull() ?: return
-            event.modify(type.get(), content.get())
-        }
-
-        fun bindAllMachines(type: Supplier<out BlockEntityType<*>>) {
-            HTMachineKey.allKeys.forEach { machine: HTMachineKey -> bindMachine(type, machine) }
-        }
-
-        bindAllMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
-        bindAllMachines(RagiumBlockEntityTypes.FLUID_GENERATOR)
-
-        bindMachine(RagiumBlockEntityTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR)
-        bindMachine(RagiumBlockEntityTypes.REFINERY, RagiumMachineKeys.REFINERY)
-        bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
-
         LOGGER.info("Added external blocks to BlockEntityType!")
     }
 
@@ -313,16 +293,19 @@ internal object RagiumEvents {
             )
         }
 
-        registerHandlers(RagiumBlockEntityTypes.CATALYST_ADDON)
-        registerHandlers(RagiumBlockEntityTypes.DRUM)
         registerHandlers(RagiumBlockEntityTypes.MANUAL_GRINDER)
+        registerHandlers(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
-        registerHandlers(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
-        registerHandlers(RagiumBlockEntityTypes.FLUID_GENERATOR)
+        registerHandlers(RagiumBlockEntityTypes.COMBUSTION_GENERATOR)
+        registerHandlers(RagiumBlockEntityTypes.THERMAL_GENERATOR)
 
+        registerHandlers(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
         registerHandlers(RagiumBlockEntityTypes.REFINERY)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
+
+        registerHandlers(RagiumBlockEntityTypes.CATALYST_ADDON)
+        registerHandlers(RagiumBlockEntityTypes.DRUM)
 
         // Other
         event.registerBlock(
@@ -358,8 +341,6 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumAPI.DataMapTypes.MACHINE_FUEL)
-
         event.register(RagiumAPI.DataMapTypes.MACHINE_KEY)
         event.register(RagiumAPI.DataMapTypes.MACHINE_TIER)
         event.register(RagiumAPI.DataMapTypes.RADIOACTIVES)

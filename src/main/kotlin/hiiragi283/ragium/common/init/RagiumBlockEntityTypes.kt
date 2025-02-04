@@ -1,21 +1,18 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
-import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
-import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
@@ -45,18 +42,12 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private fun <T : HTMachineBlockEntity> registerMachine(
+    private fun <T : BlockEntity> register(
         path: String,
-        factory: (BlockPos, BlockState, HTMachineKey) -> T,
+        factory: BlockEntityType.BlockEntitySupplier<T>,
+        machine: HTMachineKey,
     ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
-        BlockEntityType.Builder
-            .of(
-                { pos: BlockPos, state: BlockState ->
-                    val machine: HTMachineKey =
-                        state.block.machineKey ?: RagiumMachineKeys.ASSEMBLER
-                    factory(pos, state, machine)
-                },
-            ).build(null)
+        BlockEntityType.Builder.of(factory, machine.getBlock().get()).build(null)
     }
 
     //    Manual Machine    //
@@ -72,32 +63,40 @@ object RagiumBlockEntityTypes {
     //    Generator    //
 
     @JvmField
-    val DEFAULT_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDefaultGeneratorBlockEntity>> =
-        registerMachine("default_generator", ::HTDefaultGeneratorBlockEntity)
+    val COMBUSTION_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCombustionGeneratorBlockEntity>> =
+        register("combustion_generator", ::HTCombustionGeneratorBlockEntity, RagiumMachineKeys.COMBUSTION_GENERATOR)
 
     @JvmField
-    val FLUID_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTFluidGeneratorBlockEntity>> =
-        registerMachine("fluid_generator", ::HTFluidGeneratorBlockEntity)
+    val SOLAR_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSolarGeneratorBlockEntity>> =
+        register("solar_generator", ::HTSolarGeneratorBlockEntity, RagiumMachineKeys.SOLAR_GENERATOR)
+
+    @JvmField
+    val THERMAL_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTThermalGeneratorBlockEntity>> =
+        register("thermal_generator", ::HTThermalGeneratorBlockEntity, RagiumMachineKeys.THERMAL_GENERATOR)
 
     //    Processor    //
 
     @JvmField
+    val BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBlastFurnaceBlockEntity>> =
+        register("blast_furnace", ::HTBlastFurnaceBlockEntity, RagiumMachineKeys.BLAST_FURNACE)
+
+    @JvmField
     val EXTRACTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTExtractorBlockEntity>> =
-        register("extractor", ::HTExtractorBlockEntity)
+        register("extractor", ::HTExtractorBlockEntity, RagiumMachineKeys.EXTRACTOR)
 
     @JvmField
     val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =
-        register("refinery", ::HTRefineryBlockEntity)
+        register("refinery", ::HTRefineryBlockEntity, RagiumMachineKeys.REFINERY)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =
-        register("multi_smelter", ::HTMultiSmelterBlockEntity)
+        register("multi_smelter", ::HTMultiSmelterBlockEntity, RagiumMachineKeys.MULTI_SMELTER)
 
     //    Storage    //
 
     @JvmField
     val CATALYST_ADDON: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCatalystAddonBlockEntity>> =
-        register("catalyst_addon", ::HTCatalystAddonBlockEntity, listOf(RagiumBlocks.CATALYST_ADDON))
+        register("catalyst_addon", ::HTCatalystAddonBlockEntity, RagiumBlocks.CATALYST_ADDON)
 
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =

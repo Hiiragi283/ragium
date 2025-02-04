@@ -4,12 +4,9 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.get
-import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.fluids.FluidStack
 
 class HTMachineRecipeCache<T : HTMachineRecipeBase>(val machine: HTMachineKey) {
     private var recipeCache: MutableList<RecipeHolder<T>> = mutableListOf()
@@ -26,23 +23,8 @@ class HTMachineRecipeCache<T : HTMachineRecipeBase>(val machine: HTMachineKey) {
             }
     }
 
-    fun getFirstMatch(level: Level, pos: BlockPos, stack: ItemStack): Result<RecipeHolder<T>> {
+    fun getFirstMatch(level: Level, input: HTMachineRecipeInput): Result<RecipeHolder<T>> {
         reloadRecipes(level)
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, stack)
-        return recipeCache
-            .firstOrNull { holder: RecipeHolder<T> -> holder.value.matches(input, level) }
-            ?.let(Result.Companion::success)
-            ?: Result.failure(HTMachineException.NoMatchingRecipe(false))
-    }
-
-    fun getFirstMatch(
-        level: Level,
-        pos: BlockPos,
-        items: List<ItemStack>,
-        fluids: List<FluidStack>,
-    ): Result<RecipeHolder<T>> {
-        reloadRecipes(level)
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, items, fluids)
         return recipeCache
             .firstOrNull { holder: RecipeHolder<T> -> holder.value.matches(input, level) }
             ?.let(Result.Companion::success)

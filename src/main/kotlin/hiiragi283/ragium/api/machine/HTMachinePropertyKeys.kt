@@ -20,12 +20,8 @@ typealias HTMachineEntityFactory = (BlockPos, BlockState, HTMachineKey) -> HTMac
 
 object HTMachinePropertyKeys {
     @JvmField
-    val MACHINE_FACTORY: HTPropertyKey<HTMachineEntityFactory> =
+    val MACHINE_FACTORY: HTPropertyKey<(BlockPos, BlockState) -> HTMachineBlockEntity> =
         HTPropertyKey.simple(RagiumAPI.id("machine_factory"))
-
-    @JvmField
-    val MACHINE_FACTORY_NEW: HTPropertyKey<(BlockPos, BlockState) -> HTMachineBlockEntity> =
-        HTPropertyKey.simple(RagiumAPI.id("machine_factory_new"))
 
     @JvmField
     val PARTICLE: HTPropertyKey<HTMachineParticleHandler> =

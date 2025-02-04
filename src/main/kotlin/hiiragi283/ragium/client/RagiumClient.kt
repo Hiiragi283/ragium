@@ -52,6 +52,7 @@ object RagiumClient {
         register(RagiumMenuTypes.DEFAULT_MACHINE)
         register(RagiumMenuTypes.LARGE_MACHINE)
 
+        register(RagiumMenuTypes.BLAST_FURNACE)
         register(RagiumMenuTypes.EXTRACTOR)
         register(RagiumMenuTypes.MULTI_SMELTER)
 
@@ -64,8 +65,9 @@ object RagiumClient {
             event.registerBlockEntityRenderer(type.get(), ::HTMachineBlockEntityRenderer)
         }
 
-        register(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
+        register(RagiumBlockEntityTypes.BLAST_FURNACE)
         register(RagiumBlockEntityTypes.MULTI_SMELTER)
+        register(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
         event.registerEntityRenderer(RagiumEntityTypes.DYNAMITE.get(), ::ThrownItemRenderer)
 

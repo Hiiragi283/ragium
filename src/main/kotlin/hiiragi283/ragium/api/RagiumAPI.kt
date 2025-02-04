@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.component.HTRadioactivity
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.property.HTMachineFuel
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
@@ -19,7 +18,6 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.registries.RegistryBuilder
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
@@ -81,20 +79,6 @@ data object RagiumAPI {
      * Ragiumが追加する[DataMapType]
      */
     object DataMapTypes {
-        //    Fluid    //
-
-        /**
-         * [Map]を返す[DataMapType]
-         */
-        @JvmField
-        val MACHINE_FUEL: DataMapType<Fluid, Map<HTMachineKey, Int>> =
-            AdvancedDataMapType
-                .builder(id("machine_fuel"), MCRegistries.FLUID, HTMachineFuel.CODEC)
-                .synced(HTMachineFuel.CODEC, false)
-                .merger(HTMachineFuel.Merger)
-                .remover(HTMachineFuel.Remover.CODEC)
-                .build()
-
         //    Item    //
 
         /**
