@@ -1,0 +1,25 @@
+{
+  "type": "ragium:assembler",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/advanced"
+    }
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:sands"
+    },
+    {
+      "count": 1,
+      "item": "ragium:creeper_reagent"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:tnt"
+    }
+  ]
+}

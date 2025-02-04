@@ -7,18 +7,14 @@ import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.neoforged.neoforge.fluids.FluidType
 
 object HTMachineConverters {
     //    Vanilla    //
 
-    @JvmStatic
-    fun fromCooking(holder: RecipeHolder<SmeltingRecipe>, provider: HolderLookup.Provider): RecipeHolder<HTMachineRecipe> {
+    /*fun fromCooking(holder: RecipeHolder<SmeltingRecipe>, provider: HolderLookup.Provider): RecipeHolder<HTMachineRecipe> {
         val recipe: AbstractCookingRecipe = holder.value
         return HTMachineRecipeBuilder
             .create(RagiumRecipes.MULTI_SMELTER)
@@ -27,7 +23,7 @@ object HTMachineConverters {
             .export(holder.id.withSuffix("_from_smelting"))
     }
 
-    /*fun fromFuel(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>) {
+    fun fromFuel(level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>>) {
         level
             .registryAccess()
             .lookupOrThrow(Registries.ITEM)

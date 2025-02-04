@@ -128,7 +128,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.SILKY_CRYSTAL, "Silky Crystal")
         add(RagiumItems.SOAP, "Soap")
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
-        add(RagiumItems.TALLOW, "Tallow")
         add(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
 
         add(RagiumItems.NUCLEAR_WASTE, "Nuclear Waste")
@@ -218,6 +217,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Something like Centrifuge")
         add(RagiumMachineKeys.GRINDER, "Grinder", "Unbreakable Diamond")
         add(RagiumMachineKeys.GROWTH_CHAMBER, "Growth Chamber", "Growth Gran-ma")
+        add(RagiumMachineKeys.INFUSER, "Infuser", "Something not like Centrifuge")
         add(RagiumMachineKeys.LASER_TRANSFORMER, "Laser Transformer", "Laser On...")
         add(RagiumMachineKeys.MIXER, "Mixer", "Best Match!")
         add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")

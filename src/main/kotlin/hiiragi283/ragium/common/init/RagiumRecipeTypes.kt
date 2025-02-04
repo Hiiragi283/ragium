@@ -1,10 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTCompressorRecipe
-import hiiragi283.ragium.api.recipe.HTExtractorRecipe
-import hiiragi283.ragium.api.recipe.HTGrinderRecipe
-import hiiragi283.ragium.api.recipe.HTRefineryRecipe
+import hiiragi283.ragium.api.recipe.*
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
@@ -29,6 +26,12 @@ object RagiumRecipeTypes {
 
     @JvmField
     val GRINDER: DeferredHolder<RecipeType<*>, RecipeType<HTGrinderRecipe>> = register("grinder")
+
+    @JvmField
+    val INFUSER: DeferredHolder<RecipeType<*>, RecipeType<HTInfuserRecipe>> = register("infuser")
+
+    @JvmField
+    val MIXER: DeferredHolder<RecipeType<*>, RecipeType<HTMixerRecipe>> = register("mixer")
 
     @JvmField
     val REFINERY: DeferredHolder<RecipeType<*>, RecipeType<HTRefineryRecipe>> = register("refinery")

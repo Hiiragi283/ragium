@@ -18,7 +18,7 @@ object HTRecipeCodecs {
     val FLUID_INPUT: MapCodec<SizedFluidIngredient> = SizedFluidIngredient.FLAT_CODEC.fieldOf("fluid_input")
 
     @JvmField
-    val ITEM_OUTPUT: MapCodec<ItemStack> = ItemStack.STRICT_CODEC.fieldOf("item_output")
+    val ITEM_OUTPUT: MapCodec<ItemStack> = ItemStack.CODEC.fieldOf("item_output")
 
     @JvmField
     val FLUID_OUTPUT: MapCodec<FluidStack> = FluidStack.CODEC.fieldOf("fluid_output")

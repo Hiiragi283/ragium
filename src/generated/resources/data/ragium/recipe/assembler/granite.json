@@ -1,0 +1,15 @@
+{
+  "type": "ragium:assembler",
+  "condition": {
+    "type": "ragium:rock_generator",
+    "ingredient": {
+      "item": "minecraft:granite"
+    }
+  },
+  "item_outputs": [
+    {
+      "count": 8,
+      "id": "minecraft:granite"
+    }
+  ]
+}

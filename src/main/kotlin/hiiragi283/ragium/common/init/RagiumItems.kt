@@ -306,9 +306,6 @@ object RagiumItems {
     val CINNAMON_ROLL: DeferredItem<Item> = registerFood("cinnamon_roll", Foods.COOKED_BEEF)
 
     @JvmField
-    val TALLOW: DeferredItem<Item> = register("tallow")
-
-    @JvmField
     val MINCED_MEAT: DeferredItem<Item> = register("minced_meat")
 
     @JvmField
@@ -348,7 +345,6 @@ object RagiumItems {
         CINNAMON_POWDER,
         CINNAMON_ROLL,
         // meat
-        TALLOW,
         MINCED_MEAT,
         MEAT_INGOT,
         COOKED_MEAT_INGOT,

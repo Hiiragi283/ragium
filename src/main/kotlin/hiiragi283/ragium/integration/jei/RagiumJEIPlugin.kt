@@ -61,6 +61,8 @@ class RagiumJEIPlugin : IModPlugin {
             ),
             HTExtractorRecipeCategory(guiHelper),
             HTGrinderRecipeCategory(guiHelper),
+            HTInfuserRecipeCategory(guiHelper),
+            HTMixerRecipeCategory(guiHelper),
             HTRefineryRecipeCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
         )
@@ -80,6 +82,8 @@ class RagiumJEIPlugin : IModPlugin {
         register(RagiumJEIRecipeTypes.COMPRESSOR, RagiumRecipeTypes.COMPRESSOR)
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
         register(RagiumJEIRecipeTypes.GRINDER, RagiumRecipeTypes.GRINDER)
+        register(RagiumJEIRecipeTypes.INFUSER, RagiumRecipeTypes.INFUSER)
+        register(RagiumJEIRecipeTypes.MIXER, RagiumRecipeTypes.MIXER)
         register(RagiumJEIRecipeTypes.REFINERY, RagiumRecipeTypes.REFINERY)
 
         registerMachineRecipes(registration, level)
@@ -144,6 +148,10 @@ class RagiumJEIPlugin : IModPlugin {
         // Grinder
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumMachineKeys.GRINDER.getBlock())
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumBlocks.MANUAL_GRINDER)
+        // Infuser
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.INFUSER, RagiumMachineKeys.INFUSER.getBlock())
+        // Mixer
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MIXER, RagiumMachineKeys.MIXER.getBlock())
         // Refinery
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.REFINERY, RagiumMachineKeys.REFINERY.getBlock())
 

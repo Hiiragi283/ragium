@@ -1,0 +1,25 @@
+{
+  "type": "ragium:assembler",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/advanced"
+    }
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 8,
+      "tag": "c:ingots/gold"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:piglin_head"
+    }
+  ]
+}

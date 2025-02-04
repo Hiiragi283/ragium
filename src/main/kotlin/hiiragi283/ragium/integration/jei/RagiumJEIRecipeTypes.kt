@@ -4,10 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.material.HTTypedMaterial
-import hiiragi283.ragium.api.recipe.HTCompressorRecipe
-import hiiragi283.ragium.api.recipe.HTExtractorRecipe
-import hiiragi283.ragium.api.recipe.HTGrinderRecipe
-import hiiragi283.ragium.api.recipe.HTRefineryRecipe
+import hiiragi283.ragium.api.recipe.*
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.world.item.crafting.RecipeHolder
 
@@ -27,6 +24,14 @@ object RagiumJEIRecipeTypes {
     @JvmField
     val GRINDER: RecipeType<HTGrinderRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "grinder", HTGrinderRecipe::class.java)
+
+    @JvmField
+    val INFUSER: RecipeType<HTInfuserRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "infuser", HTInfuserRecipe::class.java)
+
+    @JvmField
+    val MIXER: RecipeType<HTMixerRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "mixer", HTMixerRecipe::class.java)
 
     @JvmField
     val REFINERY: RecipeType<HTRefineryRecipe> =

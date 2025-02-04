@@ -35,6 +35,7 @@
     "ragium:extractor",
     "ragium:grinder",
     "ragium:growth_chamber",
+    "ragium:infuser",
     "ragium:laser_transformer",
     "ragium:mixer",
     "ragium:multi_smelter",

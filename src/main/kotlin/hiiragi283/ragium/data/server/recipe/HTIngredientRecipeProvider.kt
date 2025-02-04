@@ -3,7 +3,9 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
+import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -96,15 +98,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
         // Ragi-Steel
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.MIXER)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterials.CRUDE_RAGINITE, 8)
-            .itemInput(RagiumItems.SOAP)
-            .waterInput()
-            .itemOutput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 6)
-            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG, 2)
-            .save(output)
-
-        HTMachineRecipeBuilder
             .create(RagiumRecipes.BLAST_FURNACE)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
@@ -147,8 +140,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerEndContents(output: RecipeOutput) {
         // Ragium
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.MIXER)
+        HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 4)
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .fluidOutput(RagiumFluids.RAGIUM_SOLUTION)
@@ -169,14 +161,12 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.REFINED_RAGIUM_SOLUTION, 500)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.LASER_TRANSFORMER)
+        HTRefineryRecipeBuilder()
             .fluidInput(RagiumFluids.REFINED_RAGIUM_SOLUTION, 500)
             .fluidOutput(RagiumFluids.DESTABILIZED_RAGIUM_SOLUTION, 250)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.BLAST_FURNACE)
+        HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .fluidInput(RagiumFluids.DESTABILIZED_RAGIUM_SOLUTION)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)

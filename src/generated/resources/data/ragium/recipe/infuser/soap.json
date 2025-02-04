@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:plant_oil"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "ragium:alkali_reagent"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "ragium:soap"
+  }
+}

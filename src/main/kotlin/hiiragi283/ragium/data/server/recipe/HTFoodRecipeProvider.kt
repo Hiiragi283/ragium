@@ -44,8 +44,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.FLOUR)
             .save(output)
         // Dough
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.MIXER)
+        HTInfuserRecipeBuilder()
             .itemInput(RagiumItems.FLOUR, 3)
             .waterInput()
             .itemOutput(RagiumItems.DOUGH, 3)
@@ -83,7 +82,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
         // Sponge Cake
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.MIXER)
+            .create(RagiumRecipes.BLAST_FURNACE)
             .itemInput(RagiumItems.FLOUR, 3)
             .itemInput(Items.SUGAR, 2)
             .itemInput(RagiumItems.BUTTER)
@@ -152,9 +151,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerChocolate(output: RecipeOutput) {
         // Chocolate
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.MIXER)
-            .itemInput(Items.SUGAR)
+        HTInfuserRecipeBuilder()
             .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput()
             .itemOutput(RagiumItems.CHOCOLATE)

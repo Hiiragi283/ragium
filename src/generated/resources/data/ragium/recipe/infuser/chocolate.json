@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:milk"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "c:crops/cocoa_bean"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:chocolate"
+  }
+}

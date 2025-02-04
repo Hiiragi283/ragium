@@ -1,19 +1,15 @@
 {
   "type": "ragium:mixer",
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:hydrogen_fluoride"
-    },
-    {
-      "amount": 1000,
-      "tag": "c:water"
-    }
-  ],
-  "fluid_outputs": [
-    {
-      "amount": 1000,
-      "id": "ragium:hydrofluoric_acid"
-    }
-  ]
+  "first_fluidInput": {
+    "amount": 1000,
+    "tag": "c:hydrogen_fluoride"
+  },
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:hydrofluoric_acid"
+  },
+  "second_fluidInput": {
+    "amount": 1000,
+    "tag": "c:water"
+  }
 }

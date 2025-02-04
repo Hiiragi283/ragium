@@ -1,10 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
-import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.biome
 import hiiragi283.ragium.api.extension.catalyst
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -116,12 +113,11 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.ETHANOL)
             .save(output)
         // Alcohol + Plant Oil -> Bio Fuel + Glycerol
-        HTMachineRecipeBuilder
-            .create(RagiumRecipes.MIXER)
+        HTMixerRecipeBuilder()
             .fluidInput(RagiumFluids.ETHANOL, FluidType.BUCKET_VOLUME * 4)
             .fluidInput(RagiumFluids.PLANT_OIL)
             .fluidOutput(RagiumFluids.BIODIESEL, FluidType.BUCKET_VOLUME * 4)
-            .fluidOutput(RagiumFluids.GLYCEROL)
+            // .fluidOutput(RagiumFluids.GLYCEROL)
             .save(output)
 
         // XX Log -> Sap + Pulp
@@ -168,20 +164,20 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun resourcePlant(output: RecipeOutput, lookup: HolderLookup.RegistryLookup<Biome>) {
         // Brine from Ocean
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.RESOURCE_PLANT)
+            .create(RagiumRecipes.CHEMICAL_REACTOR)
             .biome(BiomeTags.IS_OCEAN, lookup)
             .fluidOutput(RagiumFluids.BRINE, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_ocean")
         // Brine from Beach
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.RESOURCE_PLANT)
+            .create(RagiumRecipes.CHEMICAL_REACTOR)
             .biome(BiomeTags.IS_BEACH, lookup)
             .fluidOutput(RagiumFluids.BRINE, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_beach")
 
         // Oil from Nether
         HTMachineRecipeBuilder
-            .create(RagiumRecipes.RESOURCE_PLANT)
+            .create(RagiumRecipes.CHEMICAL_REACTOR)
             .biome(Biomes.SOUL_SAND_VALLEY, lookup)
             .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 4)
             .save(output)

@@ -1,25 +1,15 @@
 {
   "type": "ragium:mixer",
-  "condition": {
-    "type": "ragium:processor_catalyst",
-    "ingredient": {
-      "tag": "c:circuits/advanced"
-    }
+  "first_fluidInput": {
+    "amount": 1000,
+    "tag": "ragium:fuels/non_nitro"
   },
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:fuel"
-    },
-    {
-      "amount": 100,
-      "tag": "c:mixture_acid"
-    }
-  ],
-  "fluid_outputs": [
-    {
-      "amount": 1000,
-      "id": "ragium:nitro_fuel"
-    }
-  ]
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:nitro_fuel"
+  },
+  "second_fluidInput": {
+    "amount": 100,
+    "tag": "c:mixture_acid"
+  }
 }

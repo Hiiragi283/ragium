@@ -130,7 +130,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
         add(RagiumItems.SOAP, "石鹸")
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
-        add(RagiumItems.TALLOW, "獣脂")
         add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
 
         add(RagiumItems.NUCLEAR_WASTE, "核廃棄物")
@@ -182,6 +181,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMachineKeys.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
         add(RagiumMachineKeys.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
         add(RagiumMachineKeys.GROWTH_CHAMBER, "成長チャンバー", "成長バーチャン")
+        add(RagiumMachineKeys.INFUSER, "Infuser", "遠心分離機みたくないやつ")
         add(RagiumMachineKeys.LASER_TRANSFORMER, "レーザー変換機", "レーザーオン…")
         add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
         add(RagiumMachineKeys.MIXER, "ミキサー", "ベストマッチ!")

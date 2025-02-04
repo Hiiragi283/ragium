@@ -13,7 +13,7 @@ data class HTChancedItemStack(val stack: ItemStack, val chance: Float) {
         val CODEC: Codec<HTChancedItemStack> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    ItemStack.STRICT_CODEC.fieldOf("stack").forGetter(HTChancedItemStack::stack),
+                    ItemStack.CODEC.fieldOf("stack").forGetter(HTChancedItemStack::stack),
                     Codec.floatRange(0f, 1f).fieldOf("chance").forGetter(HTChancedItemStack::chance),
                 ).apply(instance, ::HTChancedItemStack)
         }

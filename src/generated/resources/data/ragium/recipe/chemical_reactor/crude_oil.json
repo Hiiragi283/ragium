@@ -1,0 +1,13 @@
+{
+  "type": "ragium:chemical_reactor",
+  "condition": {
+    "type": "ragium:biome",
+    "biome": "minecraft:soul_sand_valley"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "id": "ragium:crude_oil"
+    }
+  ]
+}

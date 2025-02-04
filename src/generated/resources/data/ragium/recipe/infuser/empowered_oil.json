@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actuallyadditions"
+    }
+  ],
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "fluid": "actuallyadditions:crystallized_oil"
+  },
+  "fluid_output": {
+    "amount": 1000,
+    "id": "actuallyadditions:empowered_oil"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "actuallyadditions:empowered_canola_seed"
+  }
+}

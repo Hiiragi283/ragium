@@ -1,0 +1,25 @@
+{
+  "type": "ragium:assembler",
+  "condition": {
+    "type": "ragium:processor_catalyst",
+    "ingredient": {
+      "tag": "c:circuits/advanced"
+    }
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 16,
+      "tag": "c:gunpowders"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:creeper_head"
+    }
+  ]
+}

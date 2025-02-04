@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
-import hiiragi283.ragium.api.machine.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -35,8 +34,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.CampfireBlock
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -54,7 +51,6 @@ import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
-import java.util.function.Consumer
 import java.util.function.Supplier
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -172,43 +168,28 @@ internal object RagiumEvents {
                 ),
             )*/
 
-        event.getBuilder(RagiumMachineKeys.GROWTH_CHAMBER)
-
-        event
-            .getBuilder(RagiumMachineKeys.LASER_TRANSFORMER)
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.default(RagiumRecipes.LASER_TRANSFORMER),
-            )
-
         event
             .getBuilder(RagiumMachineKeys.MIXER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLargeProcessorBlockEntity)
             .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.default(RagiumRecipes.MIXER),
-            ).put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
 
         event
             .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
                 HTMultiSmelterBlockEntity(pos, state)
-            }.put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.default(RagiumRecipes.MULTI_SMELTER),
-            ).put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
+            }.put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy { level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>> ->
-                    level.recipeManager
-                        .getAllRecipesFor(RecipeType.SMELTING)
-                        .map { HTMachineConverters.fromCooking(it, level.registryAccess()) }
-                        .forEach(consumer)
-                },
-            )
+        /* .put(
+            HTMachinePropertyKeys.RECIPE_PROXY,
+            HTMachineRecipeProxy { level: Level, consumer: Consumer<RecipeHolder<HTMachineRecipe>> ->
+                level.recipeManager
+                    .getAllRecipesFor(RecipeType.SMELTING)
+                    .map { HTMachineConverters.fromCooking(it, level.registryAccess()) }
+                    .forEach(consumer)
+            },
+        )*/
 
         event
             .getBuilder(RagiumMachineKeys.REFINERY)
@@ -218,10 +199,6 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.RESOURCE_PLANT)
-            .put(
-                HTMachinePropertyKeys.RECIPE_PROXY,
-                HTMachineRecipeProxy.default(RagiumRecipes.RESOURCE_PLANT),
-            )
 
         event
             .getBuilder(RagiumMachineKeys.STEAM_BOILER)

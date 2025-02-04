@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:milk"
+  },
+  "item_input": {
+    "count": 2,
+    "tag": "c:mushrooms"
+  },
+  "item_output": {
+    "count": 2,
+    "id": "minecraft:mushroom_stew"
+  }
+}

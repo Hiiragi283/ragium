@@ -1,0 +1,20 @@
+{
+  "type": "ragium:assembler",
+  "condition": {
+    "type": "ragium:source",
+    "source": "ragium:sources/cooling",
+    "target_side": "down"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:water"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:snow"
+    }
+  ]
+}

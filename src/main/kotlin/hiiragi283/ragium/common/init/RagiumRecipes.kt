@@ -27,18 +27,6 @@ object RagiumRecipes {
     @JvmField
     val CHEMICAL_REACTOR: HTMachineRecipeType = create(RagiumMachineKeys.CHEMICAL_REACTOR)
 
-    @JvmField
-    val LASER_TRANSFORMER: HTMachineRecipeType = create(RagiumMachineKeys.LASER_TRANSFORMER)
-
-    @JvmField
-    val MIXER: HTMachineRecipeType = create(RagiumMachineKeys.MIXER)
-
-    @JvmField
-    val MULTI_SMELTER: HTMachineRecipeType = create(RagiumMachineKeys.MULTI_SMELTER)
-
-    @JvmField
-    val RESOURCE_PLANT: HTMachineRecipeType = create(RagiumMachineKeys.RESOURCE_PLANT)
-
     @JvmStatic
     private fun create(machine: HTMachineKey): HTMachineRecipeType {
         val type = HTMachineRecipeType(machine)
