@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dragonium": {
+    "has_ragium": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/netherite"
+            "items": "#c:ingots/ragium"
           }
         ]
       },
@@ -13,20 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:smithing/dragonium_elytra"
+        "recipe": "ragium:smithing/ragi_elytra"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_dragonium",
+      "has_ragium",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:smithing/dragonium_elytra"
+      "ragium:smithing/ragi_elytra"
     ]
   }
 }

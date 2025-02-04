@@ -1,12 +1,16 @@
 package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 
 object RagiumFluidTags {
     //    Common    //
+
+    @JvmField
+    val CREOSOTE: TagKey<Fluid> = fluidTagKey(commonId("creosote"))
 
     //    Ragium    //
 

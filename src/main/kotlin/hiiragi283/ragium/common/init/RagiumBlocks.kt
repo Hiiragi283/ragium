@@ -78,7 +78,6 @@ object RagiumBlocks {
         CommonMaterials.CRYOLITE,
         // Other
         RagiumMaterials.SLAG,
-        RagiumMaterials.RESIDUAL_COKE,
         RagiumMaterials.FIERY_COAL,
     ).associateWith { key: HTMaterialKey ->
         REGISTER.registerSimpleBlock(
@@ -95,12 +94,11 @@ object RagiumBlocks {
 
     @JvmStatic
     fun getStorageParent(key: HTMaterialKey): HTTagPrefix = when (key) {
-        RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
-        CommonMaterials.FLUORITE -> HTTagPrefix.GEM
         CommonMaterials.CRYOLITE -> HTTagPrefix.GEM
-        RagiumMaterials.SLAG -> HTTagPrefix.GEM
+        CommonMaterials.FLUORITE -> HTTagPrefix.GEM
         RagiumMaterials.FIERY_COAL -> HTTagPrefix.GEM
-        RagiumMaterials.RESIDUAL_COKE -> HTTagPrefix.GEM
+        RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
+        RagiumMaterials.SLAG -> HTTagPrefix.GEM
         else -> HTTagPrefix.INGOT
     }
 

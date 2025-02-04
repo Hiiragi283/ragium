@@ -58,7 +58,6 @@ class RagiumJEIPlugin : IModPlugin {
                 RagiumMachineKeys.COMPRESSOR,
                 RagiumRecipeSerializers.COMPRESSOR.get(),
             ),
-            HTChemicalRecipeCategory(guiHelper),
             HTExtractorRecipeCategory(guiHelper),
             HTGrinderRecipeCategory(guiHelper),
             HTInfuserRecipeCategory(guiHelper),
@@ -82,7 +81,6 @@ class RagiumJEIPlugin : IModPlugin {
 
         register(RagiumJEIRecipeTypes.ASSEMBLER, RagiumRecipeTypes.ASSEMBLER)
         register(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumRecipeTypes.BLAST_FURNACE)
-        register(RagiumJEIRecipeTypes.CHEMICAL, RagiumRecipeTypes.CHEMICAL)
         registration.addRecipes(
             RagiumJEIRecipeTypes.COMPRESSOR,
             buildList {
@@ -115,8 +113,6 @@ class RagiumJEIPlugin : IModPlugin {
         // Blast Furnace
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumMachineKeys.BLAST_FURNACE.getBlock())
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
-        // Chemical
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.CHEMICAL, RagiumMachineKeys.CHEMICAL_REACTOR.getBlock())
         // Compressor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, RagiumMachineKeys.COMPRESSOR.getBlock())
         // Extractor

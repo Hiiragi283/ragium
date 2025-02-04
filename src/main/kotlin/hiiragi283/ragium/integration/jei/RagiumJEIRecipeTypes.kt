@@ -19,10 +19,6 @@ object RagiumJEIRecipeTypes {
         RecipeType.create(RagiumAPI.MOD_ID, "blast_furnace", HTBlastFurnaceRecipe::class.java)
 
     @JvmField
-    val CHEMICAL: RecipeType<HTChemicalRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "chemical", HTChemicalRecipe::class.java)
-
-    @JvmField
     val COMPRESSOR: RecipeType<HTCompressorRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "compressor", HTCompressorRecipe::class.java)
 

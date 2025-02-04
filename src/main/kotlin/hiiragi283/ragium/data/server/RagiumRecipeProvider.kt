@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.integration.HTAARecipeProvider
 import hiiragi283.ragium.data.server.integration.HTDelightRecipeProvider
+import hiiragi283.ragium.data.server.integration.HTIERecipeProvider
 import hiiragi283.ragium.data.server.integration.HTMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.*
 import net.minecraft.advancements.CriteriaTriggers
@@ -74,6 +75,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
         HTAARecipeProvider.buildRecipes(output, holderLookup)
         HTDelightRecipeProvider.buildRecipes(output, holderLookup)
+        HTIERecipeProvider.buildRecipes(output, holderLookup)
         HTMekanismRecipeProvider.buildRecipes(output, holderLookup)
 
         registerVanilla(output)

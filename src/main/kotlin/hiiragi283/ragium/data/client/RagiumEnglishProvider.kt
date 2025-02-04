@@ -107,6 +107,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.GEAR_PRESS_MOLD, "Press Mold (Gear)")
         add(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
         add(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
+        add(RagiumItems.WIRE_PRESS_MOLD, "Press Mold (Wire)")
 
         add(RagiumItems.ALKALI_REAGENT, "Alkali Reagent")
         add(RagiumItems.BLAZE_REAGENT, "Blaze Reagent")
@@ -115,11 +116,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.ENDER_REAGENT, "Ender Reagent")
         add(RagiumItems.NETHER_REAGENT, "Nether Reagent")
         add(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
+        add(RagiumItems.RAGIUM_REAGENT, "Ragium Reagent")
         add(RagiumItems.SCULK_REAGENT, "Sculk Reagent")
+        add(RagiumItems.SOUL_REAGENT, "Soul Reagent")
         add(RagiumItems.WITHER_REAGENT, "Wither Reagent")
 
         add(RagiumItems.BEE_WAX, "Bee Wax")
-        add(RagiumItems.CALCIUM_CARBIDE, "Calcium Carbide")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumItems.ENGINE, "V8 Engine")
@@ -184,11 +186,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Generate energy from liquid fuels",
         )
         add(
-            RagiumMachineKeys.GAS_TURBINE,
-            "Gas Turbine",
-            "Generate energy from gaseous fuels",
-        )
-        add(
             RagiumMachineKeys.NUCLEAR_REACTOR,
             "Nuclear Reactor",
             "Generate energy from radioactive fuels",
@@ -216,7 +213,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumMachineKeys.ASSEMBLER, "Assembler", "You are the genius!")
         add(RagiumMachineKeys.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
-        add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor", "Are You Ready?")
         add(RagiumMachineKeys.COMPRESSOR, "Compressor", "saves.zip.zip")
         add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Something like Centrifuge")
         add(RagiumMachineKeys.GRINDER, "Grinder", "Unbreakable Diamond")
@@ -278,7 +274,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterials.RAGI_CRYSTAL, "Ragi-Crystal")
         add(RagiumMaterials.RAGINITE, "Raginite")
         add(RagiumMaterials.RAGIUM, "Ragium")
-        add(RagiumMaterials.RESIDUAL_COKE, "Residual Coke")
         add(RagiumMaterials.SLAG, "Slag")
         add(VanillaMaterials.AMETHYST, "Amethyst")
         add(VanillaMaterials.COAL, "Coal")

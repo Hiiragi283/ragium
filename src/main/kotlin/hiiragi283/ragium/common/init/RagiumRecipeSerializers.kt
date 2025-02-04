@@ -39,12 +39,12 @@ object RagiumRecipeSerializers {
         REGISTER.register("blast_furnace") { _: ResourceLocation -> HTMultiItemRecipe.Serializer(::HTBlastFurnaceRecipe) }
 
     @JvmField
-    val CHEMICAL: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTChemicalRecipe>> =
-        register("chemical", HTChemicalRecipe.CODEC, HTChemicalRecipe.STREAM_CODEC)
-
-    @JvmField
     val COMPRESSOR: DeferredHolder<RecipeSerializer<*>, HTSingleItemRecipe.Serializer<HTCompressorRecipe>> =
         REGISTER.register("compressor") { _: ResourceLocation -> HTSingleItemRecipe.Serializer(::HTCompressorRecipe) }
+
+    @JvmField
+    val DISTILLERY: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTDistilleryRecipe>> =
+        register("distillery", HTDistilleryRecipe.CODEC, HTDistilleryRecipe.STREAM_CODEC)
 
     @JvmField
     val EXTRACTOR: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractorRecipe>> =

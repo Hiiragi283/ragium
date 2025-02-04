@@ -132,6 +132,12 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.SCULK_REAGENT, 8)
             .saveSuffixed(output, "_from_catalyst")
 
+        // Soul Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .itemOutput(RagiumItems.SOUL_REAGENT)
+            .save(output)
+
         // Wither Reagent
         HTExtractorRecipeBuilder()
             .itemInput(Items.WITHER_SKELETON_SKULL)

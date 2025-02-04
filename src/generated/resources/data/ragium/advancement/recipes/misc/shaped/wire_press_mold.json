@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gem": {
+    "has_steel": {
       "conditions": {
         "items": [
           {
-            "items": "#c:storage_blocks/residual_coke"
+            "items": "#c:ingots/steel"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shapeless/residual_coke"
+        "recipe": "ragium:shaped/wire_press_mold"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_gem"
+      "has_steel"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shapeless/residual_coke"
+      "ragium:shaped/wire_press_mold"
     ]
   }
 }

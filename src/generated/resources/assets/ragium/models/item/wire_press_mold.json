@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/carbon_dust"
+    "layer0": "ragium:item/wire_press_mold"
   }
 }

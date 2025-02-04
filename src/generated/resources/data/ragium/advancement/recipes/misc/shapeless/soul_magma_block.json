@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_core": {
+    "has_soul": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:chemical_glass"
+            "items": "ragium:soul_reagent"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/chemical_reactor"
+        "recipe": "ragium:shapeless/soul_magma_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_core"
+      "has_soul"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/chemical_reactor"
+      "ragium:shapeless/soul_magma_block"
     ]
   }
 }

@@ -136,8 +136,6 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             type = AdvancementType.GOAL,
         )
 
-        val chemicalReactor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.CHEMICAL_REACTOR)
-
         val extractor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.EXTRACTOR)
 
         val grinder: AdvancementHolder = createMachine(casing, RagiumMachineKeys.GRINDER)

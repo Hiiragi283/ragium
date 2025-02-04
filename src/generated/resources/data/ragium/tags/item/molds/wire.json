@@ -1,0 +1,9 @@
+{
+  "values": [
+    "ragium:wire_press_mold",
+    {
+      "id": "immersiveengineering:mold_wire",
+      "required": false
+    }
+  ]
+}

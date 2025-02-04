@@ -14,9 +14,6 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.function.Function
 
-/**
- * [HTChemicalRecipe]に追加できる条件を表すインターフェース
- */
 interface HTMachineRecipeCondition {
     companion object {
         @JvmField

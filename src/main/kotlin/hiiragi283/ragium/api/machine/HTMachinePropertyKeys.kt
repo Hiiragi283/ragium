@@ -24,6 +24,10 @@ object HTMachinePropertyKeys {
         HTPropertyKey.simple(RagiumAPI.id("machine_factory"))
 
     @JvmField
+    val MACHINE_FACTORY_NEW: HTPropertyKey<(BlockPos, BlockState) -> HTMachineBlockEntity> =
+        HTPropertyKey.simple(RagiumAPI.id("machine_factory_new"))
+
+    @JvmField
     val PARTICLE: HTPropertyKey<HTMachineParticleHandler> =
         HTPropertyKey.simple(RagiumAPI.id("particle"))
 

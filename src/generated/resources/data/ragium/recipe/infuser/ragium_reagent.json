@@ -2,14 +2,14 @@
   "type": "ragium:infuser",
   "fluid_input": {
     "amount": 1000,
-    "tag": "c:destabilized_ragium_solution"
+    "tag": "c:lapis_solution"
   },
   "item_input": {
     "count": 1,
-    "tag": "c:ingots/iron"
+    "tag": "c:dusts/ragi_crystal"
   },
   "item_output": {
     "count": 1,
-    "id": "ragium:ragium_ingot"
+    "id": "ragium:ragium_reagent"
   }
 }

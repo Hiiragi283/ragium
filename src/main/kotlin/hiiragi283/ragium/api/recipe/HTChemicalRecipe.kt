@@ -4,8 +4,6 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipeSerializers
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -100,7 +98,7 @@ class HTChemicalRecipe(
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = getItemOutputs().getOrNull(0) ?: ItemStack.EMPTY
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CHEMICAL.get()
+    override fun getSerializer(): RecipeSerializer<*> = TODO()
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CHEMICAL.get()
+    override fun getType(): RecipeType<*> = TODO()
 }

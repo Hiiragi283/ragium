@@ -409,14 +409,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             Items.CRAFTER,
             HTMachineTier.ADVANCED,
         )
-        // Chemical Reactor
-        machine2(
-            output,
-            RagiumMachineKeys.CHEMICAL_REACTOR,
-            CommonMaterials.ALUMINUM,
-            RagiumBlocks.CHEMICAL_GLASS,
-            HTMachineTier.ADVANCED,
-        )
         // Extractor
         machine3(
             output,

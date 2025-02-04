@@ -22,9 +22,6 @@ object RagiumMachineKeys {
     val COMBUSTION_GENERATOR: HTMachineKey = HTMachineKey.of("combustion_generator")
 
     @JvmField
-    val GAS_TURBINE: HTMachineKey = HTMachineKey.of("gas_turbine")
-
-    @JvmField
     val NUCLEAR_REACTOR: HTMachineKey = HTMachineKey.of("nuclear_reactor")
 
     @JvmField
@@ -43,7 +40,6 @@ object RagiumMachineKeys {
     val GENERATORS: List<HTMachineKey> =
         listOf(
             COMBUSTION_GENERATOR,
-            GAS_TURBINE,
             SOLAR_GENERATOR,
             STEAM_TURBINE,
             THERMAL_GENERATOR,
@@ -55,9 +51,6 @@ object RagiumMachineKeys {
 
     @JvmField
     val BLAST_FURNACE: HTMachineKey = HTMachineKey.of("blast_furnace")
-
-    @JvmField
-    val CHEMICAL_REACTOR: HTMachineKey = HTMachineKey.of("chemical_reactor")
 
     @JvmField
     val COMPRESSOR: HTMachineKey = HTMachineKey.of("compressor")
@@ -97,7 +90,6 @@ object RagiumMachineKeys {
         listOf(
             ASSEMBLER,
             BLAST_FURNACE,
-            CHEMICAL_REACTOR,
             COMPRESSOR,
             EXTRACTOR,
             GRINDER,

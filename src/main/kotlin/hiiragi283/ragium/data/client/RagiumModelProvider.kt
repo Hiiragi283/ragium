@@ -77,7 +77,6 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumItems.MATERIAL_ITEMS.values)
             addAll(RagiumItems.OTHER_DUSTS)
             addAll(RagiumItems.OTHER_GEMS)
-            addAll(RagiumItems.OTHER_RESOURCES)
             addAll(RagiumItems.OTHER_INGOTS)
 
             addAll(RagiumItems.FOODS)

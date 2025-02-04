@@ -57,12 +57,6 @@ enum class RagiumFluids(
     SAP(Color(0x996633), "Sap", "樹液", TextureType.STICKY),
     CRIMSON_SAP(Color(0x660000), "Crimson Sap", "深紅の樹液", TextureType.STICKY),
     WARPED_SAP(Color(0x006666), "Warped Sap", "歪んだ樹液", TextureType.STICKY),
-
-    // Ragium
-    RAGIUM_SOLUTION(Color(0x330000), "Ragium Solution", "ラギウム溶液"),
-    DISTILLED_RAGIUM_SOLUTION(Color(0x990033), "Distilled Ragium Solution", "蒸留ラギウム溶液"),
-    REFINED_RAGIUM_SOLUTION(Color(0xff0033), "RefinedRagium Solution", "精製ラギウム溶液"),
-    DESTABILIZED_RAGIUM_SOLUTION(Color(0xff6666), "Destabilized Ragium Solution", "励起ラギウム溶液"),
     ;
 
     constructor(enName: String, jaName: String, type: TextureType = TextureType.LIQUID) : this(

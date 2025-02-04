@@ -30,6 +30,7 @@ object HTRecipeConverters {
             compressorGem(material, registry, consumer)
             compressorPlate(material, registry, consumer)
             compressorRod(material, registry, consumer)
+            compressorWire(material, registry, consumer)
         }
     }
 
@@ -80,6 +81,19 @@ object HTRecipeConverters {
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItemTags.ROD_MOLDS)
             .itemOutput(output.value())
+            .export(consumer)
+    }
+
+    @JvmStatic
+    private fun compressorWire(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTCompressorRecipe) -> Unit) {
+        val (type: HTMaterialType, key: HTMaterialKey) = material
+        val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.WIRE, key) ?: return
+        val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
+        HTSingleItemRecipeBuilder
+            .compressor()
+            .itemInput(mainPrefix, key)
+            .catalyst(RagiumItemTags.WIRE_MOLDS)
+            .itemOutput(output.value(), 2)
             .export(consumer)
     }
 

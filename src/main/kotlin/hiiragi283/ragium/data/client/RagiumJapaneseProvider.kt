@@ -109,6 +109,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
         add(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板）")
         add(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒）")
+        add(RagiumItems.WIRE_PRESS_MOLD, "プレス型（ワイヤー）")
 
         add(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
         add(RagiumItems.BLAZE_REAGENT, "ブレイズ試薬")
@@ -117,11 +118,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.ENDER_REAGENT, "エンダー試薬")
         add(RagiumItems.NETHER_REAGENT, "ネザー試薬")
         add(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
+        add(RagiumItems.RAGIUM_REAGENT, "ラギウム試薬")
         add(RagiumItems.SCULK_REAGENT, "スカルク試薬")
+        add(RagiumItems.SOUL_REAGENT, "ソウル試薬")
         add(RagiumItems.WITHER_REAGENT, "ウィザー試薬")
 
         add(RagiumItems.BEE_WAX, "蜜蠟")
-        add(RagiumItems.CALCIUM_CARBIDE, "炭化カルシウム")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumItems.ENGINE, "V8エンジン")
@@ -171,7 +173,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMachineKeys.DRAIN, "排水溝", "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る")
 
         add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
-        add(RagiumMachineKeys.GAS_TURBINE, "ガスタービン", "気体燃料から発電する")
         add(RagiumMachineKeys.NUCLEAR_REACTOR, "原子炉", "放射性燃料から発電する")
         add(RagiumMachineKeys.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")
         add(RagiumMachineKeys.STEAM_TURBINE, "蒸気タービン", "蒸気から発電する")
@@ -180,7 +181,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumMachineKeys.ASSEMBLER, "組立機", "君こそが天才だ!")
         add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
-        add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽", "Are You Ready?")
         add(RagiumMachineKeys.COMPRESSOR, "圧縮機", "saves.zip.zip")
         add(RagiumMachineKeys.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
         add(RagiumMachineKeys.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
@@ -243,7 +243,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterials.RAGI_STEEL, "ラギスチール")
         add(RagiumMaterials.RAGINITE, "ラギナイト")
         add(RagiumMaterials.RAGIUM, "ラギウム")
-        add(RagiumMaterials.RESIDUAL_COKE, "残渣油コークス")
         add(RagiumMaterials.SLAG, "スラグ")
         add(VanillaMaterials.AMETHYST, "アメシスト")
         add(VanillaMaterials.COAL, "石炭")

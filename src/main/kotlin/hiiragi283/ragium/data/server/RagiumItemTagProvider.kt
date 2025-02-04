@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -143,9 +142,6 @@ class RagiumItemTagProvider(
         tag(RagiumItemTags.ALKALI_REAGENTS)
             .add(RagiumItems.ALKALI_REAGENT)
 
-        tag(ItemTags.COALS)
-            .add(RagiumAPI.id(HTTagPrefix.GEM.createPath(RagiumMaterials.RESIDUAL_COKE)))
-
         tag(RagiumItemTags.PLASTICS)
             .add(RagiumItems.PLASTIC_PLATE)
 
@@ -167,6 +163,10 @@ class RagiumItemTagProvider(
         tag(RagiumItemTags.ROD_MOLDS)
             .add(RagiumItems.ROD_PRESS_MOLD)
             .add(ImmersiveEngineering.rl("mold_rod"), true)
+
+        tag(RagiumItemTags.WIRE_MOLDS)
+            .add(RagiumItems.WIRE_PRESS_MOLD)
+            .add(ImmersiveEngineering.rl("mold_wire"), true)
 
         // Industrial Foregoing
         tag(IndustrialTags.Items.MACHINE_FRAME_PITY)

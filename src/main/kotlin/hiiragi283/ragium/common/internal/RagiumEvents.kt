@@ -74,10 +74,6 @@ internal object RagiumEvents {
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ASH))
 
         event
-            .getBuilder(RagiumMachineKeys.GAS_TURBINE)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
-
-        event
             .getBuilder(RagiumMachineKeys.NUCLEAR_REACTOR)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFluidGeneratorBlockEntity)
 
@@ -123,15 +119,8 @@ internal object RagiumEvents {
             )
 
         event
-            .getBuilder(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BREWING_STAND_BREW)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.BUBBLE_POP))
-
-        event
             .getBuilder(RagiumMachineKeys.EXTRACTOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
-                HTExtractorBlockEntity(pos, state)
-            }
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY_NEW, ::HTExtractorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.GRINDER)
@@ -162,9 +151,7 @@ internal object RagiumEvents {
 
         event
             .getBuilder(RagiumMachineKeys.REFINERY)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY) { pos: BlockPos, state: BlockState, _: HTMachineKey ->
-                HTRefineryBlockEntity(pos, state)
-            }
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY_NEW, ::HTRefineryBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.RESOURCE_PLANT)
@@ -223,7 +210,6 @@ internal object RagiumEvents {
         event.register(RagiumMaterials.RAGI_STEEL, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.RAGINITE, HTMaterialType.MINERAL)
         event.register(RagiumMaterials.RAGIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterials.RESIDUAL_COKE, HTMaterialType.GEM)
 
         event.register(VanillaMaterials.AMETHYST, HTMaterialType.GEM)
         event.register(VanillaMaterials.COAL, HTMaterialType.GEM)

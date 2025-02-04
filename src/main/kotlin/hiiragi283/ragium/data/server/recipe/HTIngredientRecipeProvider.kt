@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
-import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -24,6 +23,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -126,49 +126,34 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerEndContents(output: RecipeOutput) {
         // Ragium
         HTInfuserRecipeBuilder()
-            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 4)
-            .fluidInput(RagiumFluids.REDSTONE_ACID)
-            .fluidOutput(RagiumFluids.RAGIUM_SOLUTION)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
+            .fluidInput(RagiumFluids.LAPIS_SOLUTION)
+            .itemOutput(RagiumItems.RAGIUM_REAGENT)
             .save(output)
 
-        HTRefineryRecipeBuilder()
-            .fluidInput(RagiumFluids.RAGIUM_SOLUTION)
-            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.SLAG)
-            .fluidOutput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
-            .save(output, RagiumAPI.id("distilled_ragium_solution"))
-
-        HTRefineryRecipeBuilder()
-            .fluidInput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
-            .fluidOutput(RagiumFluids.REFINED_RAGIUM_SOLUTION, 500)
-            .save(output)
-
-        HTRefineryRecipeBuilder()
-            .fluidInput(RagiumFluids.REFINED_RAGIUM_SOLUTION, 500)
-            .fluidOutput(RagiumFluids.DESTABILIZED_RAGIUM_SOLUTION, 250)
-            .save(output)
-
-        HTInfuserRecipeBuilder()
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .fluidInput(RagiumFluids.DESTABILIZED_RAGIUM_SOLUTION)
+            .itemInput(RagiumItems.RAGIUM_REAGENT, 64)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .save(output)
 
         // Unbreakable Elytra
-        val elytraId: ResourceLocation = RagiumAPI.id("smithing/dragonium_elytra")
-        val ingotDragonium: TagKey<Item> = HTTagPrefix.INGOT.createTag(VanillaMaterials.NETHERITE)
+        val elytraId: ResourceLocation = RagiumAPI.id("smithing/ragi_elytra")
+        val ragiumIngot: TagKey<Item> = HTTagPrefix.INGOT.createTag(RagiumMaterials.RAGIUM)
         output.accept(
             elytraId,
             SmithingTransformRecipe(
                 Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                 Ingredient.of(Items.ELYTRA),
-                Ingredient.of(ingotDragonium),
+                Ingredient.of(ragiumIngot),
                 ItemStack(Items.ELYTRA).apply {
                     set(DataComponents.UNBREAKABLE, Unbreakable(true))
                 },
             ),
             output
                 .advancement()
-                .addCriterion("has_dragonium", has(ingotDragonium))
+                .addCriterion("has_ragium", has(ragiumIngot))
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(elytraId))
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .rewards(AdvancementRewards.Builder.recipe(elytraId))
@@ -185,7 +170,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             val dust: Ingredient = when (tier) {
                 HTMachineTier.BASIC -> Ingredient.of(Tags.Items.DUSTS_REDSTONE)
                 HTMachineTier.ADVANCED -> Ingredient.of(Tags.Items.DUSTS_GLOWSTONE)
-                HTMachineTier.ELITE -> Ingredient.of(HTTagPrefix.DUST.createTag(VanillaMaterials.QUARTZ))
+                HTMachineTier.ELITE -> Ingredient.of(HTTagPrefix.DUST.createTag(VanillaMaterials.DIAMOND))
                 HTMachineTier.ULTIMATE -> Ingredient.of(RagiumItems.LUMINESCENCE_DUST)
             }
 
@@ -237,8 +222,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         }
 
         register(RagiumItems.GEAR_PRESS_MOLD, HTTagPrefix.GEAR)
-        register(RagiumItems.ROD_PRESS_MOLD, HTTagPrefix.ROD)
         register(RagiumItems.PLATE_PRESS_MOLD, HTTagPrefix.PLATE)
+        register(RagiumItems.ROD_PRESS_MOLD, HTTagPrefix.ROD)
+        register(RagiumItems.WIRE_PRESS_MOLD, HTTagPrefix.WIRE)
     }
 
     private fun registerTool(output: RecipeOutput) {
@@ -312,15 +298,11 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.ENGINE)
             .save(output)
 
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumBlocks.SOUL_MAGMA_BLOCK)
-            .pattern("ABA")
-            .pattern("BCB")
-            .pattern("ABA")
-            .define('A', ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            .define('B', RagiumItems.CALCIUM_CARBIDE)
-            .define('C', Items.MAGMA_BLOCK)
-            .unlockedBy("has_carbide", has(RagiumItems.CALCIUM_CARBIDE))
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, RagiumBlocks.SOUL_MAGMA_BLOCK)
+            .requires(Items.MAGMA_BLOCK)
+            .requires(RagiumItems.SOUL_REAGENT)
+            .unlockedBy("has_soul", has(RagiumItems.SOUL_REAGENT))
             .savePrefixed(output)
 
         ShapedRecipeBuilder

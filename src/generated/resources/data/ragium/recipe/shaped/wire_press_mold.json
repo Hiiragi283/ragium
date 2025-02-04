@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/aluminum"
+      "tag": "c:ingots/steel"
     },
     "B": {
-      "item": "ragium:chemical_glass"
+      "item": "ragium:forge_hammer"
     },
     "C": {
-      "item": "ragium:advanced_casing"
+      "tag": "c:wires"
     }
   },
   "pattern": [
-    "AAA",
-    "B B",
-    "CCC"
+    "AA",
+    "AA",
+    "BC"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:chemical_reactor"
+    "id": "ragium:wire_press_mold"
   }
 }

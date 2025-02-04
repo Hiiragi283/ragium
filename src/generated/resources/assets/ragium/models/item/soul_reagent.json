@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/residual_coke"
+    "layer0": "ragium:item/soul_reagent"
   }
 }

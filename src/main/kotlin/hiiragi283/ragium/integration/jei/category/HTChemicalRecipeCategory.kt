@@ -3,8 +3,6 @@ package hiiragi283.ragium.integration.jei.category
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.recipe.HTChemicalRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -125,11 +123,11 @@ class HTChemicalRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTC
 
     //    IRecipeCategory    //
 
-    override fun getRecipeType(): RecipeType<HTChemicalRecipe> = RagiumJEIRecipeTypes.CHEMICAL
+    override fun getRecipeType(): RecipeType<HTChemicalRecipe> = TODO()
 
-    override fun getTitle(): Component = RagiumMachineKeys.CHEMICAL_REACTOR.text
+    override fun getTitle(): Component = TODO()
 
-    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(RagiumMachineKeys.CHEMICAL_REACTOR.getBlock())
+    override fun getIcon(): IDrawable? = TODO()
 
     override fun getWidth(): Int = 18 * 8 + 8
 

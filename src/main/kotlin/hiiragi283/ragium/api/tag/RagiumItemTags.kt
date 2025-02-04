@@ -13,6 +13,9 @@ object RagiumItemTags {
     val ALKALI_REAGENTS: TagKey<Item> = itemTagKey(commonId("reagents/alkali"))
 
     @JvmField
+    val COAL_COKE: TagKey<Item> = itemTagKey(commonId("coal_coke"))
+
+    @JvmField
     val DOUGH: TagKey<Item> = itemTagKey(commonId("foods/dough"))
 
     @JvmField
@@ -28,6 +31,9 @@ object RagiumItemTags {
 
     @JvmField
     val ROD_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/rod"))
+
+    @JvmField
+    val WIRE_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/wire"))
 
     @JvmField
     val SOLAR_PANELS: TagKey<Item> = itemTagKey(RagiumAPI.id("solar_panels"))

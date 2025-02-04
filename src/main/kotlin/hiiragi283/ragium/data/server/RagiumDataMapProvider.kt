@@ -80,10 +80,8 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     //    Item    //
 
     private fun furnaceFuel(builder: Builder<FurnaceFuel, Item>) {
-        builder.addFuel(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.RESIDUAL_COKE), 8)
         builder.addFuel(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL), 64)
 
-        builder.addFuel(RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.RESIDUAL_COKE]!!, 80)
         builder.addFuel(RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!, 640)
     }
 

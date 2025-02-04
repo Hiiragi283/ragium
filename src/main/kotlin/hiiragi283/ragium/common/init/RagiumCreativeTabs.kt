@@ -34,7 +34,6 @@ object RagiumCreativeTabs {
                     RagiumItems.OTHER_DUSTS.forEach(output::accept)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.RAW_MATERIAL).forEach(output::accept)
-                    RagiumItems.OTHER_RESOURCES.forEach(output::accept)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.GEM).forEach(output::accept)
                     RagiumItems.OTHER_GEMS.forEach(output::accept)

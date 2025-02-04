@@ -5,12 +5,6 @@
     },
     "ragium:fiery_coal_block": {
       "burn_time": 128000
-    },
-    "ragium:residual_coke": {
-      "burn_time": 1600
-    },
-    "ragium:residual_coke_block": {
-      "burn_time": 16000
     }
   }
 }

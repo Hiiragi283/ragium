@@ -74,7 +74,6 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
-        register(HTTagPrefix.DUST, CommonMaterials.CARBON)
         register(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
@@ -100,7 +99,6 @@ object RagiumItems {
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
         register(HTTagPrefix.GEM, RagiumMaterials.SLAG)
-        register(HTTagPrefix.GEM, RagiumMaterials.RESIDUAL_COKE)
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
         // Gears
         register(HTTagPrefix.GEAR, VanillaMaterials.COPPER)
@@ -229,14 +227,6 @@ object RagiumItems {
         CRIMSON_CRYSTAL,
         WARPED_CRYSTAL,
         OBSIDIAN_TEAR,
-    )
-
-    @JvmField
-    val CALCIUM_CARBIDE: DeferredItem<Item> = register("calcium_carbide")
-
-    @JvmField
-    val OTHER_RESOURCES: List<DeferredItem<Item>> = listOf(
-        CALCIUM_CARBIDE,
     )
 
     @JvmField
@@ -405,7 +395,11 @@ object RagiumItems {
     val ROD_PRESS_MOLD: DeferredItem<Item> = register("rod_press_mold")
 
     @JvmField
-    val PRESS_MOLDS: List<DeferredItem<Item>> = listOf(GEAR_PRESS_MOLD, PLATE_PRESS_MOLD, ROD_PRESS_MOLD)
+    val WIRE_PRESS_MOLD: DeferredItem<Item> = register("wire_press_mold")
+
+    @JvmField
+    val PRESS_MOLDS: List<DeferredItem<Item>> =
+        listOf(GEAR_PRESS_MOLD, PLATE_PRESS_MOLD, ROD_PRESS_MOLD, WIRE_PRESS_MOLD)
 
     //    Reagents    //
 
@@ -431,7 +425,13 @@ object RagiumItems {
     val PRISMARINE_REAGENT: DeferredItem<Item> = register("prismarine_reagent")
 
     @JvmField
+    val RAGIUM_REAGENT: DeferredItem<Item> = register("ragium_reagent")
+
+    @JvmField
     val SCULK_REAGENT: DeferredItem<Item> = register("sculk_reagent")
+
+    @JvmField
+    val SOUL_REAGENT: DeferredItem<Item> = register("soul_reagent")
 
     @JvmField
     val WITHER_REAGENT: DeferredItem<Item> = register("wither_reagent")
@@ -445,7 +445,9 @@ object RagiumItems {
         ENDER_REAGENT,
         NETHER_REAGENT,
         PRISMARINE_REAGENT,
+        RAGIUM_REAGENT,
         SCULK_REAGENT,
+        SOUL_REAGENT,
         WITHER_REAGENT,
     )
 
