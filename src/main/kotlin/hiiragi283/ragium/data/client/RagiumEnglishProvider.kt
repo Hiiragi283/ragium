@@ -43,11 +43,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.Decorations.ELITE_CASING, "Elite Casing (Decoration)")
         add(RagiumBlocks.Decorations.ULTIMATE_CASING, "Ultimate Casing (Decoration)")
 
-        add(RagiumBlocks.Decorations.BASIC_COIL, "Basic Coil (Decoration)")
-        add(RagiumBlocks.Decorations.ADVANCED_COIL, "Advanced Coil (Decoration)")
-        add(RagiumBlocks.Decorations.ELITE_COIL, "Elite Coil (Decoration)")
-        add(RagiumBlocks.Decorations.ULTIMATE_COIL, "Ultimate Coil (Decoration)")
-
         add(RagiumBlocks.LEDBlocks.RED, "Red LED Block")
         add(RagiumBlocks.LEDBlocks.GREEN, "Green LED Block")
         add(RagiumBlocks.LEDBlocks.BLUE, "Blue LED Block")
@@ -287,7 +282,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(VanillaMaterials.QUARTZ, "Quartz")
         add(VanillaMaterials.REDSTONE, "Redstone")
         // Tag Prefix
-        add(HTTagPrefix.CASING, "%s Casing")
         add(HTTagPrefix.CLUMP, "%s Clump")
         add(HTTagPrefix.CRYSTAL, "%s Crystal")
         add(HTTagPrefix.DIRTY_DUST, "Dirty %s Dust")

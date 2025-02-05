@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
@@ -33,7 +32,6 @@ object RagiumBlocks {
     init {
         Grates.entries
         Casings.entries
-        Coils.entries
         Burners.entries
 
         Drums.entries
@@ -105,23 +103,6 @@ object RagiumBlocks {
     val SLAG_BLOCK: DeferredBlock<Block> =
         REGISTER.registerSimpleBlock("slag_block", blockProperty(Blocks.GRAVEL))
 
-    @JvmField
-    val CASINGS: Map<HTMaterialKey, DeferredBlock<Block>> = listOf(
-        // Vanilla
-        VanillaMaterials.COPPER,
-        VanillaMaterials.IRON,
-        VanillaMaterials.GOLD,
-        // Steel
-        CommonMaterials.STEEL,
-        RagiumMaterials.DEEP_STEEL,
-        VanillaMaterials.NETHERITE,
-    ).associateWith { key: HTMaterialKey ->
-        REGISTER.registerSimpleBlock(
-            "${key.name}_casing",
-            blockProperty(Blocks.NETHER_BRICKS),
-        )
-    }
-
     enum class Grates(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -144,18 +125,6 @@ object RagiumBlocks {
         override val holder: DeferredBlock<Block> =
             REGISTER.registerSimpleBlock("${name.lowercase()}_casing", blockProperty(Blocks.SMOOTH_STONE))
         override val translationKey: String = RagiumTranslationKeys.CASING
-    }
-
-    enum class Coils(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        BASIC(HTMachineTier.BASIC),
-        ADVANCED(HTMachineTier.ADVANCED),
-        ELITE(HTMachineTier.ELITE),
-        ULTIMATE(HTMachineTier.ULTIMATE),
-        ;
-
-        override val holder: DeferredBlock<RotatedPillarBlock> =
-            REGISTER.registerBlock("${name.lowercase()}_coil", ::RotatedPillarBlock, blockProperty(Blocks.COPPER_BLOCK))
-        override val translationKey: String = RagiumTranslationKeys.COIL
     }
 
     enum class Burners(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -202,21 +171,15 @@ object RagiumBlocks {
         REGISTER.registerSimpleBlock("plastic_block", blockProperty(Blocks.SMOOTH_STONE))
 
     enum class Decorations(val parent: HTBlockContent) : HTBlockContent {
-        // storage
+        // Storage
         RAGI_ALLOY_BLOCK(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL_BLOCK(RagiumMaterials.RAGI_STEEL),
 
-        // casing
+        // Casing
         BASIC_CASING(Casings.BASIC),
         ADVANCED_CASING(Casings.ADVANCED),
         ELITE_CASING(Casings.ELITE),
         ULTIMATE_CASING(Casings.ULTIMATE),
-
-        // coil
-        BASIC_COIL(Coils.BASIC),
-        ADVANCED_COIL(Coils.ADVANCED),
-        ELITE_COIL(Coils.ELITE),
-        ULTIMATE_COIL(Coils.ULTIMATE),
         ;
 
         constructor(key: HTMaterialKey) : this(HTBlockContent.of(DeferredBlock.createBlock<Block>(RagiumAPI.id("${key.name}_block"))))

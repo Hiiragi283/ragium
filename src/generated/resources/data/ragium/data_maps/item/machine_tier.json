@@ -2,21 +2,17 @@
   "values": {
     "ragium:advanced_burner": "advanced",
     "ragium:advanced_casing": "advanced",
-    "ragium:advanced_coil": "advanced",
     "ragium:advanced_drum": "advanced",
     "ragium:advanced_grate": "advanced",
     "ragium:basic_casing": "basic",
-    "ragium:basic_coil": "basic",
     "ragium:basic_drum": "basic",
     "ragium:basic_grate": "basic",
     "ragium:elite_burner": "elite",
     "ragium:elite_casing": "elite",
-    "ragium:elite_coil": "elite",
     "ragium:elite_drum": "elite",
     "ragium:elite_grate": "elite",
     "ragium:ultimate_burner": "ultimate",
     "ragium:ultimate_casing": "ultimate",
-    "ragium:ultimate_coil": "ultimate",
     "ragium:ultimate_drum": "ultimate",
     "ragium:ultimate_grate": "ultimate"
   }

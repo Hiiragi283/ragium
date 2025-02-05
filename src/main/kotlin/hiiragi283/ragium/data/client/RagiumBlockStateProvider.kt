@@ -42,7 +42,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.SLAG_BLOCK)
 
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
-            addAll(RagiumBlocks.CASINGS.values)
             addAll(RagiumBlocks.Casings.entries)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
@@ -94,16 +93,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     ),
                 )
         }*/
-
-        // Coil
-        RagiumBlocks.Coils.entries.forEach { coil: RagiumBlocks.Coils ->
-            val block: RotatedPillarBlock = coil.get() as RotatedPillarBlock
-            axisBlock(
-                block,
-                coil.blockId.withSuffix("_side"),
-                coil.blockId.withSuffix("_top"),
-            )
-        }
 
         // Burner
         RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->

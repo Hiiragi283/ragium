@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/copper"
+      "tag": "c:ingots/gold"
     },
     "B": {
       "item": "minecraft:cauldron"

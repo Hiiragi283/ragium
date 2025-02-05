@@ -31,7 +31,6 @@ class RagiumBlockTagProvider(
         buildList {
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Casings.entries)
-            addAll(RagiumBlocks.Coils.entries)
             addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)
@@ -42,7 +41,6 @@ class RagiumBlockTagProvider(
         buildList {
             addAll(RagiumBlocks.ORES.values)
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
-            addAll(RagiumBlocks.CASINGS.values)
 
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 

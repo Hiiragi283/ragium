@@ -65,16 +65,6 @@ class RagiumItemTagProvider(
                 .addItem(HTBlockContent.of(storage))
         }
 
-        RagiumBlocks.CASINGS.forEach { (key: HTMaterialKey, casing: DeferredBlock<Block>) ->
-            val casingTag: TagKey<Item> = HTTagPrefix.CASING.createTag(key)
-
-            tag(HTTagPrefix.CASING.commonTagKey)
-                .addTag(casingTag)
-
-            tag(casingTag)
-                .addItem(HTBlockContent.of(casing))
-        }
-
         RagiumItems.MATERIAL_ITEMS.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
             val tagKey: TagKey<Item> = prefix.createTag(key)
 

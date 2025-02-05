@@ -33,7 +33,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerGrates(output)
         registerCasings(output)
-        registerCoils(output)
         registerBurners(output)
         registerDrums(output)
 
@@ -75,8 +74,8 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         RagiumBlocks.Casings.entries.forEach { casings: RagiumBlocks.Casings ->
             val corner: Item = when (casings) {
                 RagiumBlocks.Casings.BASIC -> Items.STONE
-                RagiumBlocks.Casings.ADVANCED -> Items.QUARTZ_BLOCK
-                RagiumBlocks.Casings.ELITE -> Items.POLISHED_DEEPSLATE
+                RagiumBlocks.Casings.ADVANCED -> Items.POLISHED_DEEPSLATE
+                RagiumBlocks.Casings.ELITE -> Items.QUARTZ_BLOCK
                 RagiumBlocks.Casings.ULTIMATE -> Items.OBSIDIAN
             }
             // Shaped Crafting
@@ -127,29 +126,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         }
     }*/
 
-    private fun registerCoils(output: RecipeOutput) {
-        RagiumBlocks.Coils.entries.forEach { coil: RagiumBlocks.Coils ->
-            val previousTier: HTMachineTier = coil.machineTier.getPreviousTier() ?: HTMachineTier.BASIC
-            // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, coil, 2)
-                .pattern("AAA")
-                .pattern("ABA")
-                .pattern("AAA")
-                .define('A', HTTagPrefix.INGOT, coil.machineTier.getSubMetal())
-                .define('B', RagiumBlocks.SHAFT)
-                .unlockedBy("has_shaft", has(RagiumBlocks.SHAFT))
-                .savePrefixed(output)
-            // Assembler
-            HTMultiItemRecipeBuilder
-                .assembler()
-                .itemInput(HTTagPrefix.INGOT, coil.machineTier.getSubMetal(), 8)
-                .itemInput(RagiumBlocks.SHAFT)
-                .itemOutput(coil, 4)
-                .save(output)
-        }
-    }
-
     private fun registerBurners(output: RecipeOutput) {
         RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
             val core: ItemLike = when (burner) {
@@ -165,7 +141,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .pattern("CCC")
                 .define('A', burner.machineTier.getGrate())
                 .define('B', core)
-                .define('C', burner.machineTier.getCoil())
+                .define('C', burner.machineTier.getCasing())
                 .unlockedBy("has_core", has(core))
                 .savePrefixed(output)
         }

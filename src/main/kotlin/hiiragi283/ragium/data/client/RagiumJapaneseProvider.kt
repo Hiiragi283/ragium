@@ -44,11 +44,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumBlocks.Decorations.ELITE_CASING, "精鋭外装（装飾）")
         add(RagiumBlocks.Decorations.ULTIMATE_CASING, "究極外装（装飾）")
 
-        add(RagiumBlocks.Decorations.BASIC_COIL, "基本コイル（装飾）")
-        add(RagiumBlocks.Decorations.ADVANCED_COIL, "発展コイル（装飾）")
-        add(RagiumBlocks.Decorations.ELITE_COIL, "精鋭コイル（装飾）")
-        add(RagiumBlocks.Decorations.ULTIMATE_COIL, "究極コイル（装飾）")
-
         add(RagiumBlocks.LEDBlocks.RED, "LEDブロック（赤）")
         add(RagiumBlocks.LEDBlocks.GREEN, "LEDブロック（緑）")
         add(RagiumBlocks.LEDBlocks.BLUE, "LEDブロック（青）")
@@ -255,7 +250,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(VanillaMaterials.QUARTZ, "水晶")
         add(VanillaMaterials.REDSTONE, "レッドストーン")
         // Tag Prefix
-        add(HTTagPrefix.CASING, "%s外装")
         add(HTTagPrefix.CLUMP, "%sの凝塊")
         add(HTTagPrefix.CRYSTAL, "%sの結晶")
         add(HTTagPrefix.DIRTY_DUST, "汚れた%sの粉")

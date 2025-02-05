@@ -4,7 +4,7 @@
   "textures": {
     "bars": "ragium:block/elite_grate",
     "core": "ragium:block/soul_magma_block",
-    "side": "ragium:block/elite_coil_side",
-    "top": "ragium:block/elite_coil_top"
+    "side": "ragium:block/elite_casing",
+    "top": "ragium:block/elite_casing"
   }
 }

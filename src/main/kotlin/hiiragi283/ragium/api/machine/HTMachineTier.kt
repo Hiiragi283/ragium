@@ -97,13 +97,6 @@ enum class HTMachineTier(
         ULTIMATE -> RagiumBlocks.Casings.ULTIMATE
     }
 
-    fun getCoil(): HTBlockContent.Tier = when (this) {
-        BASIC -> RagiumBlocks.Coils.BASIC
-        ADVANCED -> RagiumBlocks.Coils.ADVANCED
-        ELITE -> RagiumBlocks.Coils.ELITE
-        ULTIMATE -> RagiumBlocks.Coils.ULTIMATE
-    }
-
     //    Item    //
 
     fun getCircuit(): DeferredItem<Item> = when (this) {
@@ -126,8 +119,8 @@ enum class HTMachineTier(
 
     fun getSteelMetal(): HTMaterialKey = when (this) {
         BASIC -> CommonMaterials.STEEL
-        ADVANCED -> RagiumMaterials.RAGI_STEEL
-        ELITE -> RagiumMaterials.DEEP_STEEL
+        ADVANCED -> RagiumMaterials.DEEP_STEEL
+        ELITE -> CommonMaterials.ALUMINUM
         ULTIMATE -> VanillaMaterials.NETHERITE
     }
 

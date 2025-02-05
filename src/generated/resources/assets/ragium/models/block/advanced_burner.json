@@ -4,7 +4,7 @@
   "textures": {
     "bars": "ragium:block/advanced_grate",
     "core": "minecraft:block/magma",
-    "side": "ragium:block/advanced_coil_side",
-    "top": "ragium:block/advanced_coil_top"
+    "side": "ragium:block/advanced_casing",
+    "top": "ragium:block/advanced_casing"
   }
 }

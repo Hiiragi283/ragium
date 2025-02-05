@@ -10,10 +10,10 @@
   },
   "second_item_input": {
     "count": 1,
-    "tag": "c:gears/ragi_steel"
+    "tag": "c:gears/deep_steel"
   },
   "third_item_input": {
     "count": 4,
-    "item": "minecraft:quartz_block"
+    "item": "minecraft:polished_deepslate"
   }
 }

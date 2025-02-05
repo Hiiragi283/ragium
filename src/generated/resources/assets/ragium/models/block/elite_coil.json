@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "ragium:block/elite_coil_top",
-    "side": "ragium:block/elite_coil_side"
-  }
-}

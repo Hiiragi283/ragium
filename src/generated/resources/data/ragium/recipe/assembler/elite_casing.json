@@ -10,10 +10,10 @@
   },
   "second_item_input": {
     "count": 1,
-    "tag": "c:gears/deep_steel"
+    "tag": "c:gears/aluminum"
   },
   "third_item_input": {
     "count": 4,
-    "item": "minecraft:polished_deepslate"
+    "item": "minecraft:quartz_block"
   }
 }

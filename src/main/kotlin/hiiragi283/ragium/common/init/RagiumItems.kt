@@ -147,17 +147,9 @@ object RagiumItems {
             )
         }
 
-        RagiumBlocks.CASINGS.forEach { (key: HTMaterialKey, casing: DeferredBlock<Block>) ->
-            REGISTER.registerSimpleBlockItem(
-                casing,
-                itemProperty().name(HTTagPrefix.CASING.createText(key)),
-            )
-        }
-
         buildList {
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Casings.entries)
-            addAll(RagiumBlocks.Coils.entries)
             addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)

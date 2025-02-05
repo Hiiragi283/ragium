@@ -259,7 +259,6 @@ internal object RagiumModEvents {
 
         registerTier(RagiumBlocks.Grates.entries)
         registerTier(RagiumBlocks.Casings.entries)
-        registerTier(RagiumBlocks.Coils.entries)
         registerTier(RagiumBlocks.Burners.entries)
 
         registerTier(RagiumBlocks.Drums.entries)

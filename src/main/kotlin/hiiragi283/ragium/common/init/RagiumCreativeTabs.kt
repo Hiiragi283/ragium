@@ -67,6 +67,30 @@ object RagiumCreativeTabs {
         }
 
     @JvmField
+    val BLOCKS: DeferredHolder<CreativeModeTab, CreativeModeTab> =
+        REGISTER.register("blocks") { _: ResourceLocation ->
+            CreativeModeTab
+                .builder()
+                .title(Component.literal("Ragium - Blocks"))
+                .icon { ItemStack(RagiumBlocks.MANUAL_GRINDER) }
+                .displayItems { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                    buildList {
+                        // Components
+                        addAll(RagiumBlocks.Grates.entries)
+                        addAll(RagiumBlocks.Casings.entries)
+                        addAll(RagiumBlocks.Burners.entries)
+
+                        add(RagiumBlocks.SHAFT)
+                        add(RagiumBlocks.CHEMICAL_GLASS)
+                        // Decorations
+                        addAll(RagiumBlocks.LEDBlocks.entries)
+                        add(RagiumBlocks.PLASTIC_BLOCK)
+                        addAll(RagiumBlocks.Decorations.entries)
+                    }.forEach(output::accept)
+                }.build()
+        }
+
+    @JvmField
     val MACHINE: DeferredHolder<CreativeModeTab, CreativeModeTab> =
         REGISTER.register("machine") { _: ResourceLocation ->
             CreativeModeTab
@@ -75,16 +99,6 @@ object RagiumCreativeTabs {
                 .icon { ItemStack(RagiumBlocks.MANUAL_GRINDER) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     buildList {
-                        // Components
-                        RagiumBlocks.CASINGS.values.forEach(output::accept)
-
-                        addAll(RagiumBlocks.Grates.entries)
-                        addAll(RagiumBlocks.Casings.entries)
-                        addAll(RagiumBlocks.Coils.entries)
-                        addAll(RagiumBlocks.Burners.entries)
-
-                        add(RagiumBlocks.SHAFT)
-                        add(RagiumBlocks.CHEMICAL_GLASS)
                         // Storage
                         addAll(RagiumBlocks.Drums.entries)
                         // Manual Machines
@@ -102,12 +116,6 @@ object RagiumCreativeTabs {
                             .values
                             .forEach(output::accept)
                     }
-
-                    buildList {
-                        addAll(RagiumBlocks.LEDBlocks.entries)
-                        add(RagiumBlocks.PLASTIC_BLOCK)
-                        addAll(RagiumBlocks.Decorations.entries)
-                    }.forEach(output::accept)
                 }.build()
         }
 }

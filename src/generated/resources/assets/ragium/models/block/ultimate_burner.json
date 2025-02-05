@@ -4,7 +4,7 @@
   "textures": {
     "bars": "ragium:block/ultimate_grate",
     "core": "ragium:block/ultimate_burner",
-    "side": "ragium:block/ultimate_coil_side",
-    "top": "ragium:block/ultimate_coil_top"
+    "side": "ragium:block/ultimate_casing",
+    "top": "ragium:block/ultimate_casing"
   }
 }

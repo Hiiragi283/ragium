@@ -3,13 +3,13 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "minecraft:quartz_block"
+      "item": "minecraft:polished_deepslate"
     },
     "B": {
       "item": "ragium:advanced_grate"
     },
     "C": {
-      "tag": "c:gears/ragi_steel"
+      "tag": "c:gears/deep_steel"
     }
   },
   "pattern": [
