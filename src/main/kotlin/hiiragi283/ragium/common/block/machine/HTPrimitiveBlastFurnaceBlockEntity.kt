@@ -1,9 +1,11 @@
 package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
+import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -15,8 +17,6 @@ import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import hiiragi283.ragium.common.inventory.HTPrimitiveBlastFurnaceContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.player.Inventory
@@ -25,27 +25,22 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state, RagiumMachineKeys.BLAST_FURNACE) {
     override val processCost: Int = 0
 
-    private val itemInput = ItemStackHandler(2)
-    private val itemOutput = ItemStackHandler(1)
+    private val itemInput = HTMachineItemHandler(2, this::setChanged)
+    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
 
-    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
-        tag.put(ITEM_INPUT_KEY, itemInput.serializeNBT(registries))
-        tag.put(ITEM_OUTPUT_KEY, itemOutput.serializeNBT(registries))
-    }
-
-    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
-        itemInput.deserializeNBT(registries, tag.getCompound(ITEM_INPUT_KEY))
-        itemOutput.deserializeNBT(registries, tag.getCompound(ITEM_OUTPUT_KEY))
-    }
+    override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
+        listOf(
+            itemInput.createSlot(0),
+            itemInput.createSlot(1),
+            itemOutput.createSlot(0),
+        ),
+    )
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()

@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemHandlerCopySlot
+import net.neoforged.neoforge.items.SlotItemHandler
 import java.util.function.Supplier
 
 abstract class HTContainerMenu(
@@ -86,12 +86,12 @@ abstract class HTContainerMenu(
     private fun getSlotPosY(index: Int): Int = 18 + index * 18
 
     protected fun addSlot(index: Int, x: Int, y: Int) {
-        addSlot(ItemHandlerCopySlot(itemHandler, index, getSlotPosX(x), getSlotPosY(y)))
+        addSlot(SlotItemHandler(itemHandler, index, getSlotPosX(x), getSlotPosY(y)))
         itemSlots.add(x to y)
     }
 
     protected fun addOutputSlot(index: Int, x: Int, y: Int) {
-        addSlot(ItemHandlerCopySlot(itemHandler, index, getSlotPosX(x), getSlotPosY(y)))
+        addSlot(SlotItemHandler(itemHandler, index, getSlotPosX(x), getSlotPosY(y)))
         itemSlots.add(x to y)
     }
 

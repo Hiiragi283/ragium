@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.fluid
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.capability.HTSlotHandler
 import hiiragi283.ragium.api.extension.logError
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -10,7 +11,9 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 import org.slf4j.Logger
 
-open class HTMachineFluidTank(capacity: Int, val callback: () -> Unit) : FluidTank(capacity) {
+open class HTMachineFluidTank(capacity: Int, val callback: () -> Unit) :
+    FluidTank(capacity),
+    HTSlotHandler<FluidStack> {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
@@ -51,4 +54,10 @@ open class HTMachineFluidTank(capacity: Int, val callback: () -> Unit) : FluidTa
     override fun onContentsChanged() {
         callback()
     }
+
+    //    HTSlotHandler    //
+
+    override var stack: FluidStack
+        get() = fluid
+        set(value) = setFluid(value)
 }

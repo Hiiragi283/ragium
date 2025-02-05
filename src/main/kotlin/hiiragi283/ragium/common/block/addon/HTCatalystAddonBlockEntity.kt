@@ -2,8 +2,10 @@ package hiiragi283.ragium.common.block.addon
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.dropStacks
+import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -18,26 +20,28 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.ItemHandlerHelper
-import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.CATALYST_ADDON, pos, state),
     HTBlockEntityHandlerProvider {
-    private val itemHandler: ItemStackHandler = object : ItemStackHandler(1) {
-        override fun getSlotLimit(slot: Int): Int = 1
-    }
+    private val itemHandler: HTMachineItemHandler =
+        object : HTMachineItemHandler(1, this@HTCatalystAddonBlockEntity::setChanged) {
+            override fun getSlotLimit(slot: Int): Int = 1
+        }
 
     val catalystStack: ItemStack
         get() = itemHandler.getStackInSlot(0)
 
+    private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(listOf(itemHandler.createSlot(0)))
+
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        tag.put(ITEM_INPUT_KEY, itemHandler.serializeNBT(registries))
+        serializer.writeNbt(tag, registries)
     }
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_INPUT_KEY))
+        serializer.readNbt(tag, registries)
     }
 
     override fun onRightClickedWithItem(

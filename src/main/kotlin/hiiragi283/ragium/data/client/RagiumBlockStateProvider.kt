@@ -121,8 +121,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                             HTMachineTier.ELITE -> RagiumAPI.id("soul_magma_block")
                             HTMachineTier.ULTIMATE -> RagiumAPI.id("ultimate_burner")
                         },
-                    ).blockTexture("side", tier.getCoil().id.withSuffix("_side"))
-                    .blockTexture("top", tier.getCoil().id.withSuffix("_top"))
+                    ).blockTexture("side", tier.getCasing().id)
+                    .blockTexture("top", tier.getCasing().id)
                     .cutout(),
             )
         }

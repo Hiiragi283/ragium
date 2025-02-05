@@ -29,7 +29,7 @@ class HTPrimitiveBlastFurnaceContainerMenu(
 
     init {
         // inputs
-        addSlot(0, 1, 1)
+        addSlot(0, 2, 1)
         addSlot(1, 3, 1)
         // outputs
         addOutputSlot(2, 5, 1)

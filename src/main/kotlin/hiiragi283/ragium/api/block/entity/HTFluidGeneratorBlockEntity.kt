@@ -1,13 +1,12 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
@@ -34,15 +33,7 @@ abstract class HTFluidGeneratorBlockEntity(
             override fun isFluidValid(stack: FluidStack): Boolean = this@HTFluidGeneratorBlockEntity.isFluidValid(stack)
         }
 
-    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
-        tank.writeToNBT(registries, tag)
-    }
-
-    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
-        tank.readFromNBT(registries, tag)
-    }
+    override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(tank))
 
     abstract fun isFluidValid(stack: FluidStack): Boolean
 

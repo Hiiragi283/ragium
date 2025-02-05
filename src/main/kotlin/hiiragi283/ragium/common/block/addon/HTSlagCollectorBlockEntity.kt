@@ -2,7 +2,9 @@ package hiiragi283.ragium.common.block.addon
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.extension.dropStacks
+import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -12,23 +14,25 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTSlagCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.SLAG_COLLECTOR, pos, state),
     HTBlockEntityHandlerProvider {
-    private val itemHandler: ItemStackHandler = object : ItemStackHandler(1) {
-        override fun isItemValid(slot: Int, stack: ItemStack): Boolean = stack.`is`(RagiumItemTags.SLAG)
-    }
+    private val itemHandler: HTMachineItemHandler =
+        object : HTMachineItemHandler(1, this@HTSlagCollectorBlockEntity::setChanged) {
+            override fun isItemValid(slot: Int, stack: ItemStack): Boolean = stack.`is`(RagiumItemTags.SLAG)
+        }
+
+    private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(listOf(itemHandler.createSlot(0)))
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        tag.put(ITEM_OUTPUT_KEY, itemHandler.serializeNBT(registries))
+        serializer.writeNbt(tag, registries)
     }
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_OUTPUT_KEY))
+        serializer.readNbt(tag, registries)
     }
 
     override fun onRemove(
@@ -43,5 +47,5 @@ class HTSlagCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTBlockEntityHandlerProvider    //
 
-    override fun getItemHandler(direction: Direction?): ItemStackHandler = itemHandler
+    override fun getItemHandler(direction: Direction?): HTMachineItemHandler = itemHandler
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.getOrDefault
@@ -74,12 +75,15 @@ abstract class HTMachineBlockEntity(
     override val pos: BlockPos
         get() = blockPos
 
+    protected abstract val handlerSerializer: HTHandlerSerializer
+
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
         ItemEnchantments.CODEC
             .encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), enchantments)
             .ifSuccess { tag.put(ENCH_KEY, it) }
         tag.putBoolean(ACTIVE_KEY, isActive)
+        handlerSerializer.writeNbt(tag, registries)
     }
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -88,6 +92,7 @@ abstract class HTMachineBlockEntity(
             .parse(NbtOps.INSTANCE, tag.get(ENCH_KEY))
             .ifSuccess(::updateEnchantments)
         isActive = tag.getBoolean(ACTIVE_KEY)
+        handlerSerializer.readNbt(tag, registries)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -208,7 +213,6 @@ abstract class HTMachineBlockEntity(
                     } ?: return@onFailure
                 LOGGER.error("Error on {} at {}: {}", machineKey, blockPosText(pos).string, throwable1.message)
             }
-        setChanged()
     }
 
     open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME

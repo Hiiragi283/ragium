@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.generator
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.getOrDefault
@@ -16,6 +17,8 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.SOLAR_GENERATOR, pos, state, RagiumMachineKeys.SOLAR_GENERATOR) {
+    override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.EMPTY
+
     override fun process(level: ServerLevel, pos: BlockPos) {
         if (!machineKey.getProperty().getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(level, pos)) {
             throw HTMachineException.GenerateEnergy(false)

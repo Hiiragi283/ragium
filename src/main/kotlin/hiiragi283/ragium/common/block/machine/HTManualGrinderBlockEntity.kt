@@ -1,10 +1,12 @@
 package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.replaceBlockState
+import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -30,29 +32,26 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.ItemHandlerHelper
-import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
     HTMachineAccess {
-    private val itemHandler: ItemStackHandler = object : ItemStackHandler(1) {
-        override fun onContentsChanged(slot: Int) {
-            super.onContentsChanged(slot)
-            setChanged()
-        }
-    }
-    private val recipeCache: HTMachineRecipeCache<HTGrinderRecipe> =
-        HTMachineRecipeCache(RagiumMachineKeys.GRINDER)
+    private val itemHandler = HTMachineItemHandler(1, this::setChanged)
+
+    private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(listOf(itemHandler.createSlot(0)))
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        tag.put(ITEM_INPUT_KEY, itemHandler.serializeNBT(registries))
+        serializer.writeNbt(tag, registries)
     }
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_INPUT_KEY))
+        serializer.readNbt(tag, registries)
     }
+
+    private val recipeCache: HTMachineRecipeCache<HTGrinderRecipe> =
+        HTMachineRecipeCache(RagiumMachineKeys.GRINDER)
 
     override fun onRightClicked(
         state: BlockState,
