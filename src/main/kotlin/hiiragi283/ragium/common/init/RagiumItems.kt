@@ -172,7 +172,7 @@ object RagiumItems {
             add(RagiumBlocks.SLAG_BLOCK)
 
             add(RagiumBlocks.SHAFT)
-            add(RagiumBlocks.CHEMICAL_GLASS)
+            addAll(RagiumBlocks.GLASSES)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
 
@@ -192,12 +192,8 @@ object RagiumItems {
     val BEE_WAX: DeferredItem<Item> = register("bee_wax", ::HoneycombItem, itemProperty())
 
     @JvmField
-    val LUMINESCENCE_DUST: DeferredItem<Item> = register("luminescence_dust")
-
-    @JvmField
     val OTHER_DUSTS: List<DeferredItem<Item>> = listOf(
         BEE_WAX,
-        LUMINESCENCE_DUST,
     )
 
     @JvmField
@@ -414,7 +410,7 @@ object RagiumItems {
     val ENDER_REAGENT: DeferredItem<Item> = register("ender_reagent")
 
     @JvmField
-    val NETHER_REAGENT: DeferredItem<Item> = register("nether_reagent")
+    val GLOW_REAGENT: DeferredItem<Item> = register("glow_reagent")
 
     @JvmField
     val PRISMARINE_REAGENT: DeferredItem<Item> = register("prismarine_reagent")
@@ -438,7 +434,7 @@ object RagiumItems {
         CREEPER_REAGENT,
         DEEPANT_REAGENT,
         ENDER_REAGENT,
-        NETHER_REAGENT,
+        GLOW_REAGENT,
         PRISMARINE_REAGENT,
         RAGIUM_REAGENT,
         SCULK_REAGENT,

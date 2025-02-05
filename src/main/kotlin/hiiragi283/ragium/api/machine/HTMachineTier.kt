@@ -24,17 +24,11 @@ import net.minecraft.world.item.Item
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredItem
 
-enum class HTMachineTier(
-    private val idPattern: String,
-    val color: ChatFormatting,
-    val tickRate: Int,
-    val processCost: Int,
-    val tankCapacity: Int,
-) : StringRepresentable {
-    BASIC("basic_%S", ChatFormatting.GREEN, 200, 100, FluidType.BUCKET_VOLUME * 8),
-    ADVANCED("advanced_%S", ChatFormatting.RED, 150, 200, FluidType.BUCKET_VOLUME * 16),
-    ELITE("elite_%S", ChatFormatting.AQUA, 100, 400, FluidType.BUCKET_VOLUME * 64),
-    ULTIMATE("ultimate_%S", ChatFormatting.LIGHT_PURPLE, 50, 800, FluidType.BUCKET_VOLUME * 256),
+enum class HTMachineTier(private val idPattern: String, val color: ChatFormatting, val tankCapacity: Int) : StringRepresentable {
+    BASIC("basic_%S", ChatFormatting.GREEN, FluidType.BUCKET_VOLUME * 8),
+    ADVANCED("advanced_%S", ChatFormatting.RED, FluidType.BUCKET_VOLUME * 16),
+    ELITE("elite_%S", ChatFormatting.AQUA, FluidType.BUCKET_VOLUME * 64),
+    ULTIMATE("ultimate_%S", ChatFormatting.LIGHT_PURPLE, FluidType.BUCKET_VOLUME * 256),
     ;
 
     companion object {
@@ -114,7 +108,7 @@ enum class HTMachineTier(
         BASIC -> VanillaMaterials.COPPER
         ADVANCED -> VanillaMaterials.GOLD
         ELITE -> CommonMaterials.ALUMINUM
-        ULTIMATE -> RagiumMaterials.ECHORIUM
+        ULTIMATE -> RagiumMaterials.RAGIUM
     }
 
     fun getSteelMetal(): HTMaterialKey = when (this) {

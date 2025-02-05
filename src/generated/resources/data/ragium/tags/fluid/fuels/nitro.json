@@ -1,5 +1,13 @@
 {
   "values": [
+    {
+      "id": "#c:boosted_diesel",
+      "required": false
+    },
+    {
+      "id": "#c:high_power_biodiesel",
+      "required": false
+    },
     "#c:nitro_fuel"
   ]
 }

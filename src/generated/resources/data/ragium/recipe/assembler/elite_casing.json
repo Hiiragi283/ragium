@@ -2,18 +2,18 @@
   "type": "ragium:assembler",
   "first_item_input": {
     "count": 4,
-    "item": "ragium:elite_grate"
+    "item": "ragium:chemical_glass"
   },
   "item_output": {
     "count": 6,
     "id": "ragium:elite_casing"
   },
   "second_item_input": {
-    "count": 1,
-    "tag": "c:gears/aluminum"
-  },
-  "third_item_input": {
     "count": 4,
     "item": "minecraft:quartz_block"
+  },
+  "third_item_input": {
+    "count": 1,
+    "tag": "c:gears/aluminum"
   }
 }

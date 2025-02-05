@@ -1,11 +1,11 @@
 {
   "type": "ragium:extractor",
   "item_input": {
-    "count": 1,
-    "item": "minecraft:glow_ink_sac"
+    "count": 8,
+    "item": "minecraft:glow_lichen"
   },
   "item_output": {
     "count": 1,
-    "id": "ragium:luminescence_dust"
+    "id": "ragium:glow_reagent"
   }
 }

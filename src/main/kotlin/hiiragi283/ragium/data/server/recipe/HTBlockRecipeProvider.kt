@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -22,7 +21,6 @@ import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.SingleItemRecipeBuilder
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -78,24 +76,29 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 RagiumBlocks.Casings.ELITE -> Items.QUARTZ_BLOCK
                 RagiumBlocks.Casings.ULTIMATE -> Items.OBSIDIAN
             }
+            val glass: Ingredient = when (casings) {
+                RagiumBlocks.Casings.BASIC -> Ingredient.of(Tags.Items.GLASS_BLOCKS)
+                RagiumBlocks.Casings.ADVANCED -> Ingredient.of(Tags.Items.GLASS_BLOCKS_TINTED)
+                RagiumBlocks.Casings.ELITE -> Ingredient.of(RagiumBlocks.CHEMICAL_GLASS)
+                RagiumBlocks.Casings.ULTIMATE -> Ingredient.of(RagiumBlocks.OBSIDIAN_GLASS)
+            }
             // Shaped Crafting
-            val grate: HTBlockContent.Tier = casings.machineTier.getGrate()
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.BUILDING_BLOCKS, casings, 3)
                 .pattern("ABA")
                 .pattern("BCB")
                 .pattern("ABA")
                 .define('A', corner)
-                .define('B', grate)
+                .define('B', glass)
                 .define('C', HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
-                .unlockedBy("has_grate", has(grate))
+                .unlockedBy("has_gear", has(HTTagPrefix.GEAR, casings.machineTier.getSteelMetal()))
                 .savePrefixed(output)
             // Assembler
             HTMultiItemRecipeBuilder
                 .assembler()
-                .itemInput(grate, 4)
-                .itemInput(HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
+                .itemInput(glass, 4)
                 .itemInput(corner, 4)
+                .itemInput(HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
                 .itemOutput(casings, 6)
                 .save(output)
         }
@@ -156,9 +159,9 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .pattern("ACA")
                 .pattern("ABA")
                 .define('A', HTTagPrefix.INGOT, drum.machineTier.getSubMetal())
-                .define('B', ItemTags.SLABS)
+                .define('B', Items.SMOOTH_STONE_SLAB)
                 .define('C', Items.BUCKET)
-                .unlockedBy("has_slab", has(ItemTags.SLABS))
+                .unlockedBy("has_slab", has(Items.SMOOTH_STONE_SLAB))
                 .savePrefixed(output)
         }
     }
@@ -226,7 +229,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("ABA")
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', HTMachineTier.ADVANCED.getCircuitTag())
-            .define('C', Tags.Items.OBSIDIANS_CRYING)
+            .define('C', Tags.Items.ENDER_PEARLS)
             .unlockedBy("has_circuit", has(HTMachineTier.ADVANCED.getCircuitTag()))
             .savePrefixed(output)
         // Slag Collector
@@ -261,7 +264,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("ABA")
             .pattern("CCC")
             .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', Items.FURNACE)
+            .define('B', Items.BLAST_FURNACE)
             .define('C', Items.BRICKS)
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
             .savePrefixed(output)
@@ -279,7 +282,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             output,
             RagiumMachineKeys.BLAST_FURNACE,
             CommonMaterials.STEEL,
-            Items.BLAST_FURNACE,
+            RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
             HTMachineTier.BASIC,
         )
         // Compressor

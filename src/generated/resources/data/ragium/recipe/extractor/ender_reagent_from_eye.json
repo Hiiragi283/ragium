@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:ender_eye"
+  },
+  "item_output": {
+    "count": 2,
+    "id": "ragium:ender_reagent"
+  }
+}

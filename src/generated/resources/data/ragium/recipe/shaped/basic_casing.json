@@ -6,7 +6,7 @@
       "item": "minecraft:stone"
     },
     "B": {
-      "item": "ragium:basic_grate"
+      "tag": "c:glass_blocks"
     },
     "C": {
       "tag": "c:gears/steel"

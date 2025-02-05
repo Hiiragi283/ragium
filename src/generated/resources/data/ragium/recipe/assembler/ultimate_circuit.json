@@ -10,10 +10,10 @@
   },
   "second_item_input": {
     "count": 1,
-    "tag": "c:ingots/echorium"
+    "tag": "c:ingots/ragium"
   },
   "third_item_input": {
     "count": 1,
-    "item": "ragium:luminescence_dust"
+    "item": "ragium:ragium_reagent"
   }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:heart_of_the_sea"
+  },
+  "item_output": {
+    "count": 64,
+    "id": "ragium:prismarine_reagent"
+  }
+}

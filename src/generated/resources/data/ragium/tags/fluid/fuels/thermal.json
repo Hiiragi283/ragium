@@ -1,5 +1,9 @@
 {
   "values": [
-    "#c:lava"
+    "#c:lava",
+    {
+      "id": "#c:superheated_sodium",
+      "required": false
+    }
   ]
 }

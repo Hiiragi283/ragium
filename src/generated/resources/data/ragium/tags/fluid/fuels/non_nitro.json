@@ -1,6 +1,18 @@
 {
   "values": [
-    "#c:fuel",
-    "#c:biodiesel"
+    {
+      "id": "#c:biofuel",
+      "required": false
+    },
+    {
+      "id": "#c:heavy_fuel",
+      "required": false
+    },
+    {
+      "id": "#c:light_fuel",
+      "required": false
+    },
+    "#c:biodiesel",
+    "#c:fuel"
   ]
 }

@@ -11,27 +11,19 @@ import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.BlockTagIngredient
 import net.neoforged.neoforge.fluids.FluidType
 
 object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        chemicalReactor(output)
         compressor(output)
         extractor(output)
         infuser(output)
         refinery(output)
-    }
-
-    //    Chemical Reactor    //
-
-    fun chemicalReactor(output: RecipeOutput) {
     }
 
     //    Compressor    //
@@ -70,6 +62,12 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(NeoForgeMod.MILK)
             .save(output, RagiumAPI.id("milk"))
 
+        // Crude Oil
+        HTExtractorRecipeBuilder()
+            .itemInput(ItemTags.COALS, 8)
+            .fluidOutput(RagiumFluids.CRUDE_OIL)
+            .save(output, RagiumAPI.id("crude_oil_from_coal"))
+
         // Blaze Reagent
         HTExtractorRecipeBuilder()
             .itemInput(Items.BLAZE_POWDER)
@@ -84,60 +82,88 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Deep Reagent
         HTExtractorRecipeBuilder()
-            .itemInput(BlockTagIngredient(BlockTags.DEEPSLATE_ORE_REPLACEABLES), 8)
+            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 8)
             .itemOutput(RagiumItems.DEEPANT_REAGENT)
             .save(output)
 
         // Ender Reagent
         HTExtractorRecipeBuilder()
             .itemInput(Tags.Items.ENDER_PEARLS)
-            .itemOutput(RagiumItems.ENDER_REAGENT, 4)
+            .itemOutput(RagiumItems.ENDER_REAGENT)
             .saveSuffixed(output, "_from_pearl")
 
         HTExtractorRecipeBuilder()
+            .itemInput(Items.ENDER_EYE)
+            .itemOutput(RagiumItems.ENDER_REAGENT, 2)
+            .saveSuffixed(output, "_from_eye")
+
+        HTExtractorRecipeBuilder()
             .itemInput(Items.END_CRYSTAL)
-            .itemOutput(RagiumItems.ENDER_REAGENT, 16)
+            .itemOutput(RagiumItems.ENDER_REAGENT, 4)
             .saveSuffixed(output, "_from_crystal")
 
-        // Luminescence Reagent
+        // Glow Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.GLOW_LICHEN, 8)
+            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .saveSuffixed(output, "_from_lichen")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.GLOW_BERRIES, 4)
+            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .saveSuffixed(output, "_from_berry")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
+            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .saveSuffixed(output, "_from_dust")
+
         HTExtractorRecipeBuilder()
             .itemInput(Items.GLOW_INK_SAC)
-            .itemOutput(RagiumItems.LUMINESCENCE_DUST)
-            .save(output)
-
-        // Nether Reagent
+            .itemOutput(RagiumItems.GLOW_REAGENT, 2)
+            .saveSuffixed(output, "_from_ink")
 
         // Prismarine Reagent
         HTExtractorRecipeBuilder()
-            .itemInput(Tags.Items.GEMS_PRISMARINE, 3)
+            .itemInput(Tags.Items.GEMS_PRISMARINE)
             .itemOutput(RagiumItems.PRISMARINE_REAGENT)
             .saveSuffixed(output, "_from_crystal")
 
         HTExtractorRecipeBuilder()
-            .itemInput(Items.PRISMARINE_SHARD, 2)
-            .itemOutput(RagiumItems.PRISMARINE_REAGENT)
+            .itemInput(Items.PRISMARINE_SHARD, 3)
+            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 2)
             .saveSuffixed(output, "_from_shard")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.NAUTILUS_SHELL)
+            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 4)
+            .saveSuffixed(output, "_from_nautilus")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.HEART_OF_THE_SEA)
+            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 64)
+            .saveSuffixed(output, "_from_heart")
 
         // Sculk Reagent
         HTExtractorRecipeBuilder()
-            .itemInput(Items.SCULK_VEIN)
+            .itemInput(Items.SCULK_VEIN, 8)
             .itemOutput(RagiumItems.SCULK_REAGENT)
             .saveSuffixed(output, "_from_vein")
 
         HTExtractorRecipeBuilder()
             .itemInput(Items.SCULK)
-            .itemOutput(RagiumItems.SCULK_REAGENT, 4)
+            .itemOutput(RagiumItems.SCULK_REAGENT)
             .save(output)
 
         HTExtractorRecipeBuilder()
             .itemInput(Items.SCULK_CATALYST)
-            .itemOutput(RagiumItems.SCULK_REAGENT, 8)
+            .itemOutput(RagiumItems.SCULK_REAGENT, 4)
             .saveSuffixed(output, "_from_catalyst")
 
         HTExtractorRecipeBuilder()
-            .itemInput(Items.ECHO_SHARD)
+            .itemInput(Items.SCULK_SHRIEKER)
             .itemOutput(RagiumItems.SCULK_REAGENT, 16)
-            .saveSuffixed(output, "_from_shard")
+            .saveSuffixed(output, "_from_shrieker")
 
         // Soul Reagent
         HTExtractorRecipeBuilder()
@@ -147,14 +173,14 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Wither Reagent
         HTExtractorRecipeBuilder()
-            .itemInput(Items.WITHER_SKELETON_SKULL)
-            .itemOutput(RagiumItems.WITHER_REAGENT, 8)
-            .saveSuffixed(output, "_from_skull")
-
-        HTExtractorRecipeBuilder()
             .itemInput(Items.WITHER_ROSE)
             .itemOutput(RagiumItems.WITHER_REAGENT, 4)
             .saveSuffixed(output, "_from_rose")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.WITHER_SKELETON_SKULL)
+            .itemOutput(RagiumItems.WITHER_REAGENT, 8)
+            .saveSuffixed(output, "_from_skull")
     }
 
     //    Infuser    //
@@ -176,7 +202,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 2)
-            .save(output, RagiumAPI.id("crude_oil"))
+            .save(output, RagiumAPI.id("crude_oil_from_soul"))
         // Crude Oil -> Naphtha
         HTRefineryRecipeBuilder()
             .fluidInput(RagiumFluids.CRUDE_OIL)

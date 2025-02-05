@@ -2,10 +2,10 @@
   "type": "ragium:extractor",
   "item_input": {
     "count": 1,
-    "item": "minecraft:echo_shard"
+    "item": "minecraft:glow_ink_sac"
   },
   "item_output": {
-    "count": 16,
-    "id": "ragium:sculk_reagent"
+    "count": 2,
+    "id": "ragium:glow_reagent"
   }
 }

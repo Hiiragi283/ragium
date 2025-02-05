@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_grate": {
+    "has_gear": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:elite_grate"
+            "items": "#c:gears/aluminum"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_grate"
+      "has_gear"
     ]
   ],
   "rewards": {

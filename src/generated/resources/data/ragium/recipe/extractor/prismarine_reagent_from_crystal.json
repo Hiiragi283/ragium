@@ -1,7 +1,7 @@
 {
   "type": "ragium:extractor",
   "item_input": {
-    "count": 3,
+    "count": 1,
     "tag": "c:gems/prismarine"
   },
   "item_output": {

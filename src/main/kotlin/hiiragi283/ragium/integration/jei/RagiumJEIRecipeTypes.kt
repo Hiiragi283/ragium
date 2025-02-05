@@ -11,6 +11,10 @@ object RagiumJEIRecipeTypes {
         RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTTypedMaterial::class.java)
 
     @JvmField
+    val GENERATOR: RecipeType<HTGeneratorFuelEntry> =
+        RecipeType.create(RagiumAPI.MOD_ID, "generator", HTGeneratorFuelEntry::class.java)
+
+    @JvmField
     val ASSEMBLER: RecipeType<HTAssemblerRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "assembler", HTAssemblerRecipe::class.java)
 

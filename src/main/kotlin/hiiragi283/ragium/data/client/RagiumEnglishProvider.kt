@@ -21,8 +21,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumBlocks.SLAG_BLOCK, "Block of Slag")
 
-        add(RagiumBlocks.CHEMICAL_GLASS, "Chemical Glass")
         add(RagiumBlocks.SHAFT, "Shaft")
+
+        add(RagiumBlocks.CHEMICAL_GLASS, "Chemical Glass")
+        add(RagiumBlocks.OBSIDIAN_GLASS, "Obsidian Glass")
 
         add(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
 
@@ -111,7 +113,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.CREEPER_REAGENT, "Creeper Reagent")
         add(RagiumItems.DEEPANT_REAGENT, "Deepant Reagent")
         add(RagiumItems.ENDER_REAGENT, "Ender Reagent")
-        add(RagiumItems.NETHER_REAGENT, "Nether Reagent")
+        add(RagiumItems.GLOW_REAGENT, "Glow Reagent")
         add(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
         add(RagiumItems.RAGIUM_REAGENT, "Ragium Reagent")
         add(RagiumItems.SCULK_REAGENT, "Sculk Reagent")
@@ -123,7 +125,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumItems.ENGINE, "V8 Engine")
         add(RagiumItems.LED, "L.E.D.")
-        add(RagiumItems.LUMINESCENCE_DUST, "Luminescence Dust")
         add(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.POLYMER_RESIN, "Polymer Resin")

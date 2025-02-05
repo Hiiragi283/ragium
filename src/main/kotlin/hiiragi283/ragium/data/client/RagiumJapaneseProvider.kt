@@ -21,8 +21,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumBlocks.SLAG_BLOCK, "スラグブロック")
 
-        add(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
         add(RagiumBlocks.SHAFT, "シャフト")
+
+        add(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
+        add(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石ガラス")
 
         add(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
 
@@ -113,7 +115,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.CREEPER_REAGENT, "クリーパー試薬")
         add(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
         add(RagiumItems.ENDER_REAGENT, "エンダー試薬")
-        add(RagiumItems.NETHER_REAGENT, "ネザー試薬")
+        add(RagiumItems.GLOW_REAGENT, "グロウ試薬")
         add(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
         add(RagiumItems.RAGIUM_REAGENT, "ラギウム試薬")
         add(RagiumItems.SCULK_REAGENT, "スカルク試薬")
@@ -125,7 +127,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumItems.ENGINE, "V8エンジン")
         add(RagiumItems.LED, "L.E.D.")
-        add(RagiumItems.LUMINESCENCE_DUST, "ルミネッセンスダスト")
         add(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.POLYMER_RESIN, "高分子樹脂")

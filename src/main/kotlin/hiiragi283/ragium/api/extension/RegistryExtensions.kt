@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredBlock
 
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。
@@ -42,6 +43,11 @@ val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = keyOrThrow.location(
  * 指定した[value]が一致するか判定します。
  */
 fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
+
+/**
+ * `block/`で前置された[DeferredBlock.getId]
+ */
+val DeferredBlock<*>.blockId: ResourceLocation get() = id.withPrefix("block/")
 
 //    HolderSet    //
 

@@ -6,7 +6,7 @@
       "item": "minecraft:polished_deepslate"
     },
     "B": {
-      "item": "ragium:advanced_grate"
+      "tag": "c:glass_blocks/tinted"
     },
     "C": {
       "tag": "c:gears/deep_steel"

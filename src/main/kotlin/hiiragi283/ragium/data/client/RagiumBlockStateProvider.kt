@@ -17,6 +17,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -167,14 +168,16 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Utility
         RagiumBlocks.SHAFT.let { holder: DeferredBlock<RotatedPillarBlock> ->
-            val model = ModelFile.UncheckedModelFile(holder.id.withPrefix("block/"))
+            val model = ModelFile.UncheckedModelFile(holder.blockId)
             axisBlock(holder.get(), model, model)
         }
 
-        simpleBlock(
-            RagiumBlocks.CHEMICAL_GLASS.get(),
-            models().cutoutSimpleBlock("block/chemical_glass", RagiumAPI.id("block/chemical_glass")),
-        )
+        RagiumBlocks.GLASSES.forEach { glass: DeferredBlock<TransparentBlock> ->
+            simpleBlock(
+                glass.get(),
+                models().cutoutSimpleBlock(glass.blockId.path, glass.blockId),
+            )
+        }
 
         buildList {
             addAll(RagiumBlocks.ADDONS)

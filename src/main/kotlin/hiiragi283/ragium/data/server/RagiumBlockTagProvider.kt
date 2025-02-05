@@ -45,7 +45,7 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
             add(RagiumBlocks.SHAFT)
-            add(RagiumBlocks.CHEMICAL_GLASS)
+            addAll(RagiumBlocks.GLASSES)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
 

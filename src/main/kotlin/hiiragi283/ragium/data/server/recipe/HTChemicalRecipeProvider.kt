@@ -17,7 +17,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -162,12 +161,12 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.GRAVEL)
             .saveSuffixed(output, "_from_slag")
 
-        // Block of Slag -> Chemical Glass
-        HTCookingRecipeBuilder
-            .create(
-                Ingredient.of(RagiumBlocks.SLAG_BLOCK),
-                RagiumBlocks.CHEMICAL_GLASS,
-            ).unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
+        // Slag -> Chemical Glass
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
+            .itemInput(Tags.Items.GLASS_BLOCKS)
+            .itemInput(RagiumItemTags.SLAG, 4)
+            .itemOutput(RagiumBlocks.CHEMICAL_GLASS)
             .save(output)
     }
 

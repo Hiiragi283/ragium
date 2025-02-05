@@ -36,6 +36,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredItem
 
 object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
@@ -134,8 +135,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerEndContents(output: RecipeOutput) {
         // Ragium
         HTInfuserRecipeBuilder()
-            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
-            .fluidInput(RagiumFluids.LAPIS_SOLUTION)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 8)
+            .fluidInput(RagiumFluids.LAPIS_SOLUTION, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(RagiumItems.RAGIUM_REAGENT)
             .save(output)
 
@@ -176,15 +177,11 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // Fiery Coal
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL))
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
-            .define('A', RagiumItems.NETHER_REAGENT)
-            .define('B', Tags.Items.STORAGE_BLOCKS_COAL)
-            .unlockedBy("has_reagent", has(RagiumItems.NETHER_REAGENT))
-            .savePrefixed(output)
+        HTInfuserRecipeBuilder()
+            .itemInput(RagiumItems.BLAZE_REAGENT, 8)
+            .fluidInput(RagiumFluids.CRUDE_OIL)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
+            .save(output)
     }
 
     private fun registerCircuits(output: RecipeOutput) {
@@ -192,9 +189,9 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             // Assembler
             val dust: Ingredient = when (tier) {
                 HTMachineTier.BASIC -> Ingredient.of(Tags.Items.DUSTS_REDSTONE)
-                HTMachineTier.ADVANCED -> Ingredient.of(Tags.Items.DUSTS_GLOWSTONE)
-                HTMachineTier.ELITE -> Ingredient.of(HTTagPrefix.DUST.createTag(VanillaMaterials.DIAMOND))
-                HTMachineTier.ULTIMATE -> Ingredient.of(RagiumItems.LUMINESCENCE_DUST)
+                HTMachineTier.ADVANCED -> Ingredient.of(RagiumItems.GLOW_REAGENT)
+                HTMachineTier.ELITE -> Ingredient.of(RagiumItems.PRISMARINE_REAGENT)
+                HTMachineTier.ULTIMATE -> Ingredient.of(RagiumItems.RAGIUM_REAGENT)
             }
 
             HTMultiItemRecipeBuilder
@@ -307,7 +304,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMultiItemRecipeBuilder
             .assembler()
-            .itemInput(RagiumItems.LUMINESCENCE_DUST)
+            .itemInput(RagiumItems.GLOW_REAGENT)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
             .itemOutput(RagiumItems.LED, 4)
@@ -351,5 +348,12 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
             .unlockedBy("has_iron_block", has(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
             .savePrefixed(output)
+
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
+            .itemInput(Tags.Items.GLASS_BLOCKS, 4)
+            .itemInput(Tags.Items.OBSIDIANS_NORMAL)
+            .itemOutput(RagiumBlocks.OBSIDIAN_GLASS)
+            .save(output)
     }
 }

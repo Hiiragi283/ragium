@@ -81,10 +81,11 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Burners.entries)
 
                         add(RagiumBlocks.SHAFT)
-                        add(RagiumBlocks.CHEMICAL_GLASS)
                         // Decorations
                         addAll(RagiumBlocks.LEDBlocks.entries)
                         add(RagiumBlocks.PLASTIC_BLOCK)
+
+                        addAll(RagiumBlocks.GLASSES)
                         addAll(RagiumBlocks.Decorations.entries)
                     }.forEach(output::accept)
                 }.build()

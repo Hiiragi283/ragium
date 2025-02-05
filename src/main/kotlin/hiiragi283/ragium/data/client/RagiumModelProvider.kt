@@ -50,7 +50,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumBlocks.SLAG_BLOCK)
 
             add(RagiumBlocks.SHAFT)
-            add(RagiumBlocks.CHEMICAL_GLASS)
+            addAll(RagiumBlocks.GLASSES)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
 

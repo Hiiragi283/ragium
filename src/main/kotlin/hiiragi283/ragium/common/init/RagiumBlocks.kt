@@ -146,10 +146,6 @@ object RagiumBlocks {
     val SHAFT: DeferredBlock<RotatedPillarBlock> =
         REGISTER.registerBlock("shaft", ::RotatedPillarBlock, blockProperty(Blocks.CHAIN))
 
-    @JvmField
-    val CHEMICAL_GLASS: DeferredBlock<TransparentBlock> =
-        REGISTER.registerBlock("chemical_glass", ::TransparentBlock, blockProperty(Blocks.GLASS))
-
     //    Storage    //
 
     enum class Drums(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -187,6 +183,24 @@ object RagiumBlocks {
         override val holder: DeferredBlock<Block> =
             REGISTER.registerSimpleBlock("${name.lowercase()}_decoration", blockProperty(Blocks.SMOOTH_STONE))
     }
+
+    @JvmField
+    val CHEMICAL_GLASS: DeferredBlock<TransparentBlock> =
+        REGISTER.registerBlock("chemical_glass", ::TransparentBlock, blockProperty(Blocks.GLASS))
+
+    @JvmField
+    val OBSIDIAN_GLASS: DeferredBlock<TransparentBlock> =
+        REGISTER.registerBlock(
+            "obsidian_glass",
+            ::TransparentBlock,
+            blockProperty(Blocks.GLASS).strength(50.0F, 1200.0F),
+        )
+
+    @JvmField
+    val GLASSES: List<DeferredBlock<TransparentBlock>> = listOf(
+        CHEMICAL_GLASS,
+        OBSIDIAN_GLASS,
+    )
 
     enum class LEDBlocks(val baseBlock: Block) : HTBlockContent {
         RED(Blocks.RED_STAINED_GLASS),

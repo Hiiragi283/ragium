@@ -2,7 +2,7 @@
   "type": "ragium:assembler",
   "first_item_input": {
     "count": 1,
-    "item": "ragium:luminescence_dust"
+    "item": "ragium:glow_reagent"
   },
   "item_output": {
     "count": 4,
