@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:dyes/yellow"
+      "tag": "ragium:led_blocks"
     },
     "B": {
-      "tag": "ragium:led_blocks"
+      "tag": "c:dyes/yellow"
     }
   },
   "pattern": [

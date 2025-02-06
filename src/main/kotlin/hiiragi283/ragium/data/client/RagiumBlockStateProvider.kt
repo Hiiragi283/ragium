@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.client
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -184,8 +183,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             .forEach(::simpleBlock)
 
         // Machine
-        RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, content: HTBlockContent?, property: HTPropertyHolder ->
-            val block: Block = content?.get() ?: return@forEachEntries
+        RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, holder: DeferredBlock<*>?, property: HTPropertyHolder ->
+            val block: Block = holder?.get() ?: return@forEachEntries
             val properties: HTPropertyHolder = key.getProperty()
             getVariantBuilder(block)
                 .forAllStates { state: BlockState ->

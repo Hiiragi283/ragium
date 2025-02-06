@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.itemTexture
 import hiiragi283.ragium.api.extension.withUncheckedParent
@@ -56,11 +55,11 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
         // Machine
-        RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, content: HTBlockContent?, property: HTPropertyHolder ->
-            if (content == null) return@forEachEntries
+        RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, holder: DeferredBlock<*>?, property: HTPropertyHolder ->
+            if (holder == null) return@forEachEntries
             val modelId: ResourceLocation =
                 key.getProperty().getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER)(key)
-            withUncheckedParent(content.holder, modelId)
+            withUncheckedParent(holder, modelId)
         }
     }
 

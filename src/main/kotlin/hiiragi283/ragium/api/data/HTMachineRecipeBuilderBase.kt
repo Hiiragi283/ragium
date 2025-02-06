@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
@@ -44,7 +44,8 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     //    Fluid Input    //
 
-    fun fluidInput(content: HTFluidContent, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(content.commonTag, amount)
+    fun fluidInput(content: RagiumVirtualFluids, amount: Int = FluidType.BUCKET_VOLUME): T =
+        fluidInput(content.fluidHolder, amount)
 
     fun fluidInput(fluid: DeferredHolder<Fluid, *>, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(fluid.commonTag, amount)
 

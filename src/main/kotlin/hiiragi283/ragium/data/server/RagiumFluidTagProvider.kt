@@ -35,14 +35,14 @@ class RagiumFluidTagProvider(
         tag(RagiumFluidTags.NITRO_FUEL)
             .addOptionalTag(commonId("boosted_diesel"))
             .addOptionalTag(commonId("high_power_biodiesel"))
-            .addTag(RagiumVirtualFluids.NITRO_FUEL.commonTag)
+            .addTag(RagiumVirtualFluids.NITRO_FUEL.fluidHolder.commonTag)
 
         tag(RagiumFluidTags.NON_NITRO_FUEL)
             .addOptionalTag(commonId("biofuel"))
             .addOptionalTag(commonId("heavy_fuel"))
             .addOptionalTag(commonId("light_fuel"))
-            .addTag(RagiumVirtualFluids.BIODIESEL.commonTag)
-            .addTag(RagiumVirtualFluids.FUEL.commonTag)
+            .addTag(RagiumVirtualFluids.BIODIESEL.fluidHolder.commonTag)
+            .addTag(RagiumVirtualFluids.FUEL.fluidHolder.commonTag)
 
         tag(RagiumFluidTags.THERMAL_FUEL)
             .addOptionalTag(commonId("steam"))

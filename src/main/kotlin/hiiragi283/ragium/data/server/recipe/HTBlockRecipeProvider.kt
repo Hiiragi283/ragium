@@ -1,9 +1,8 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.extension.define
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -192,8 +191,8 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .pattern("AAA")
                 .pattern("ABA")
                 .pattern("AAA")
-                .define('A', itemTagKey(commonId("dyes/${color.serializedName}")))
-                .define('B', RagiumItemTags.LED_BLOCKS)
+                .define('A', RagiumItemTags.LED_BLOCKS)
+                .define('B', color.commonTag)
                 .unlockedBy("has_led", has(RagiumItemTags.LED_BLOCKS))
                 .savePrefixed(output)
         }

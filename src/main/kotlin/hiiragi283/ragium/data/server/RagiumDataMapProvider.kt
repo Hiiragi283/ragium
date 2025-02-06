@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTRadioactivity
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -47,7 +46,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     }
 
     private fun machineKey(builder: Builder<HTMachineKey, Item>) {
-        RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: HTBlockContent) ->
+        RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: DeferredBlock<*>) ->
             builder.add(content.id, key, false)
         }
     }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.constFunction2
@@ -26,7 +25,7 @@ internal object HTMachineRegistryImpl : HTMachineRegistry {
 
     //    Init    //
 
-    override lateinit var blockMap: Map<HTMachineKey, HTBlockContent>
+    override lateinit var blockMap: Map<HTMachineKey, DeferredBlock<*>>
     private lateinit var propertyMap: Map<HTMachineKey, HTPropertyHolder>
 
     fun registerBlocks() {
@@ -42,7 +41,7 @@ internal object HTMachineRegistryImpl : HTMachineRegistry {
                     .noOcclusion(),
             )
             RagiumItems.REGISTER.registerSimpleBlockItem(holder)
-            HTBlockContent.of(holder)
+            holder
         }
         LOGGER.info("Registered machine blocks!")
     }

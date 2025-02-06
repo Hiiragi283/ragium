@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.Keyable
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
@@ -13,6 +12,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Consumer
 
 /**
@@ -72,13 +72,13 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
      * このキーに紐づいたブロックを返します。
      * @return 値がない場合はnull
      */
-    fun getBlockOrNull(): HTBlockContent? = RagiumAPI.machineRegistry.getBlockOrNull(this)
+    fun getBlockOrNull(): DeferredBlock<*>? = RagiumAPI.machineRegistry.getBlockOrNull(this)
 
     /**
      * このキーに紐づいたブロックを返します。
      * @throws IllegalStateException このキーにブロックが登録されていない場合
      */
-    fun getBlock(): HTBlockContent = RagiumAPI.machineRegistry.getBlock(this)
+    fun getBlock(): DeferredBlock<*> = RagiumAPI.machineRegistry.getBlock(this)
 
     /**
      * このキーに紐づいた[HTPropertyHolder]を返します。

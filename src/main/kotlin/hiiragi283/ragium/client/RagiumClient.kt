@@ -56,7 +56,7 @@ object RagiumClient {
                 RagiumVirtualFluids.TextureType.LIQUID -> "block/bone_block_side"
                 RagiumVirtualFluids.TextureType.STICKY -> "block/quartz_block_bottom"
             }.let(ResourceLocation::withDefaultNamespace)
-            event.registerFluidType(HTSimpleFluidExtensions(textureId, fluid.color), fluid.typeHolder.get())
+            event.registerFluidType(HTSimpleFluidExtensions(textureId, fluid.color), fluid.get().fluidType)
         }
 
         LOGGER.info("Registered client extensions!")
