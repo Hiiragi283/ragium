@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.inventory
 
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.extension.getMachineEntity
+import hiiragi283.ragium.api.machine.HTMachineAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.ContainerData
@@ -22,7 +23,7 @@ abstract class HTMachineContainerMenu(
         pos,
         itemHandler,
     ) {
-    val machineEntity: HTMachineBlockEntity? = blockEntity as? HTMachineBlockEntity
+    val machineEntity: HTMachineAccess? = level.getMachineEntity(pos)
 
     protected val containerData: ContainerData = machineEntity?.containerData ?: SimpleContainerData(2)
 

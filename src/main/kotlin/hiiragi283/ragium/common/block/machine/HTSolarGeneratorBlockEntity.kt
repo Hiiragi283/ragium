@@ -2,10 +2,10 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
+import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.getOrDefault
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
@@ -19,13 +19,13 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.SOLAR_GENERATOR, pos, state, RagiumMachineKeys.SOLAR_GENERATOR) {
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.EMPTY
 
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generated(500)
+
     override fun process(level: ServerLevel, pos: BlockPos) {
         if (!machineKey.getProperty().getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(level, pos)) {
             throw HTMachineException.GenerateEnergy(false)
         }
     }
-
-    override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 

@@ -8,7 +8,6 @@ import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.SlotItemHandler
 import java.util.function.Supplier
@@ -22,7 +21,6 @@ abstract class HTContainerMenu(
 ) : AbstractContainerMenu(menuType.get(), containerId) {
     val player: Player = playerInv.player
     val level: Level get() = player.level()
-    val blockEntity: BlockEntity? get() = level.getBlockEntity(pos)
 
     override fun stillValid(player: Player): Boolean = true
 
@@ -91,7 +89,7 @@ abstract class HTContainerMenu(
     }
 
     protected fun addOutputSlot(index: Int, x: Int, y: Int) {
-        addSlot(SlotItemHandler(itemHandler, index, getSlotPosX(x), getSlotPosY(y)))
+        addSlot(HTOutputSlot(itemHandler, index, getSlotPosX(x), getSlotPosY(y)))
         itemSlots.add(x to y)
     }
 

@@ -2,17 +2,18 @@ package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.energy.energyNetwork
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.get
-import hiiragi283.ragium.api.world.energyNetwork
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -63,6 +64,11 @@ interface HTMachineAccess :
      * 機械の処理間隔 (tick表記)
      */
     val tickRate: Int
+
+    /**
+     * 機械のtickを返す
+     */
+    val containerData: ContainerData
 
     /**
      * 指定した[key]のレベルを取得します。

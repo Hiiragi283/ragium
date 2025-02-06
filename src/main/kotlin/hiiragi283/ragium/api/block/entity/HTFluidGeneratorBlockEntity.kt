@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -38,6 +38,8 @@ abstract class HTFluidGeneratorBlockEntity(
 
     abstract fun getFuelAmount(stack: FluidStack): Int
 
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generated(250)
+
     override fun process(level: ServerLevel, pos: BlockPos) {
         if (tank.isEmpty) throw HTMachineException.EmptyFluid(false)
         val stackIn: FluidStack = tank.fluid
@@ -49,8 +51,6 @@ abstract class HTFluidGeneratorBlockEntity(
         }
         throw throw HTMachineException.ConsumeFuel(false)
     }
-
-    override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 

@@ -1,7 +1,8 @@
-package hiiragi283.ragium.api.world
+package hiiragi283.ragium.api.energy
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getServerSavedData
+import hiiragi283.ragium.api.world.HTSavedDataType
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -18,7 +19,8 @@ class HTEnergyNetwork(amount: Int) :
         const val KEY = "network"
 
         @JvmField
-        val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> = HTSavedDataType(RagiumAPI.id(KEY), ::HTEnergyNetwork, ::HTEnergyNetwork)
+        val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> =
+            HTSavedDataType(RagiumAPI.id(KEY), ::HTEnergyNetwork, ::HTEnergyNetwork)
     }
 
     constructor() : this(0)
@@ -27,39 +29,6 @@ class HTEnergyNetwork(amount: Int) :
 
     override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag =
         CompoundTag().apply { putInt(KEY, delegated.energyStored) }
-
-    fun canConsume(required: Int): Boolean = energyStored >= required
-
-    //    Flag    //
-
-    enum class Flag {
-        /**
-         * エネルギーを消費します。
-         * @see hiiragi283.ragium.api.block.entity.HTMachineBlockEntity.energyFlag
-         */
-        CONSUME() {
-            override fun processAmount(network: HTEnergyNetwork?, amount: Int, simulate: Boolean): Boolean {
-                if (network == null) return false
-                if (amount <= 0) return true
-                return network.extractEnergy(amount, simulate) > 0
-            }
-        },
-
-        /**
-         * エネルギーを生産します。
-         * @see hiiragi283.ragium.api.block.entity.HTMachineBlockEntity.energyFlag
-         */
-        GENERATE() {
-            override fun processAmount(network: HTEnergyNetwork?, amount: Int, simulate: Boolean): Boolean {
-                if (network == null) return false
-                if (amount <= 0) return true
-                return network.receiveEnergy(amount, simulate) > 0
-            }
-        },
-        ;
-
-        abstract fun processAmount(network: HTEnergyNetwork?, amount: Int, simulate: Boolean): Boolean
-    }
 
     //    IEnergyStorage    //
 

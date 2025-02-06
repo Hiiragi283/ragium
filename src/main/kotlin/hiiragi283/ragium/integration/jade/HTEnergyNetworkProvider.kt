@@ -3,9 +3,9 @@ package hiiragi283.ragium.integration.jade
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.energy.HTEnergyNetwork
+import hiiragi283.ragium.api.energy.energyNetwork
 import hiiragi283.ragium.api.extension.asServerLevel
-import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.api.world.energyNetwork
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

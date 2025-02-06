@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.internal
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.energy.energyNetwork
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
@@ -16,7 +17,6 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos

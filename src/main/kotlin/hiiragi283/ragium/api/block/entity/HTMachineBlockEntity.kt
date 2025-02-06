@@ -3,6 +3,9 @@ package hiiragi283.ragium.api.block.entity
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTSlotHandler
+import hiiragi283.ragium.api.energy.HTEnergyNetwork
+import hiiragi283.ragium.api.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.energy.energyNetwork
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.dropStackAt
@@ -15,8 +18,6 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.property.ifPresent
-import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.api.world.energyNetwork
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -43,6 +44,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.fml.loading.FMLLoader
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.common.util.TriState
+import net.neoforged.neoforge.energy.IEnergyStorage
 import org.slf4j.Logger
 import java.util.function.Supplier
 import kotlin.math.max
@@ -184,17 +186,17 @@ abstract class HTMachineBlockEntity(
 
     private fun tickOnServer(level: ServerLevel, pos: BlockPos) {
         val network: HTEnergyNetwork = level.energyNetwork
-        if (energyFlag == HTEnergyNetwork.Flag.CONSUME && !network.canConsume(processCost)) {
-            LOGGER.error("Failed to extract required energy from network!")
+        val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
+        val energyAmount: Int = energyData.amount
+        // 取得したエネルギー量を処理できるか判定
+        val handler: IEnergyStorage.(Int, Boolean) -> Int = energyData.energyHandler
+        if (handler(network, energyAmount, true) < energyAmount) {
+            LOGGER.error("Failed to handle required energy from network!")
             return
         }
         runCatching { process(level, pos) }
             .onSuccess {
-                if (!energyFlag.processAmount(network, processCost, false)) {
-                    LOGGER.error("Failed to interact energy network")
-                    return
-                }
-            }.onSuccess {
+                handler(network, energyAmount, false)
                 isActive = true
                 machineKey.getProperty().ifPresent(HTMachinePropertyKeys.SOUND) { soundEvent: SoundEvent ->
                     level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 0.5f, 1.0f)
@@ -212,7 +214,10 @@ abstract class HTMachineBlockEntity(
             }
     }
 
-    open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME
+    /**
+     * 機械が要求するエネルギー量を返します。
+     */
+    open fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume(100)
 
     /**
      * 機械の処理を行います。
@@ -222,7 +227,7 @@ abstract class HTMachineBlockEntity(
      */
     abstract fun process(level: ServerLevel, pos: BlockPos)
 
-    override fun onRemove(
+    final override fun onRemove(
         state: BlockState,
         level: Level,
         pos: BlockPos,
@@ -232,7 +237,7 @@ abstract class HTMachineBlockEntity(
         handlerSerializer.items.map(HTSlotHandler<ItemStack>::stack).forEach { dropStackAt(level, pos, it) }
     }
 
-    val containerData: ContainerData = object : ContainerData {
+    final override val containerData: ContainerData = object : ContainerData {
         override fun get(index: Int): Int = when (index) {
             0 -> ticks
             1 -> tickRate

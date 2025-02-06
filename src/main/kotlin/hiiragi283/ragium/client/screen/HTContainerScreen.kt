@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.screen
 
+import hiiragi283.ragium.api.energy.HTEnergyNetwork
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.inventory.HTContainerMenu
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft

@@ -3,11 +3,11 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
@@ -36,6 +36,10 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         listOf(fluidInput),
     )
 
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData {
+        TODO("Not yet implemented")
+    }
+
     override fun process(level: ServerLevel, pos: BlockPos) {
         val fuelTime: Int = itemInput.getStackInSlot(0).getItemData(NeoForgeDataMaps.FURNACE_FUELS)?.burnTime
             ?: throw HTMachineException.FindFuel(false)
@@ -49,8 +53,6 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         fluidInput.drain(requiredWater, IFluidHandler.FluidAction.EXECUTE)
         itemInput.getStackInSlot(0).shrink(1)
     }
-
-    override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 
