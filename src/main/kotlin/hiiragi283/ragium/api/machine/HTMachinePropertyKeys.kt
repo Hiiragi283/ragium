@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.client.renderer.HTMachineRenderer
 import hiiragi283.ragium.api.extension.constFunction3
 import hiiragi283.ragium.api.extension.identifyFunction
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
-import hiiragi283.ragium.api.machine.property.HTMachineRecipeProxy
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
 import net.minecraft.core.BlockPos
@@ -52,12 +51,6 @@ object HTMachinePropertyKeys {
     @JvmField
     val GENERATOR_PREDICATE: HTPropertyKey<(Level, BlockPos) -> Boolean> =
         HTPropertyKey.withDefault(RagiumAPI.id("generator_predicate"), constFunction3(false))
-
-    //    Processor    //
-
-    @JvmField
-    val RECIPE_PROXY: HTPropertyKey<HTMachineRecipeProxy> =
-        HTPropertyKey.simple(RagiumAPI.id("recipe_proxy"))
 
     //    Multiblock    //
 

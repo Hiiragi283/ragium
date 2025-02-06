@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -20,16 +19,16 @@ abstract class HTMultiItemRecipe(
     val firstInput: SizedIngredient,
     val secondInput: SizedIngredient,
     val thirdInput: Optional<SizedIngredient>,
-    val output: ItemStack,
+    private val output: ItemStack,
 ) : HTMachineRecipeBase(group) {
+    final override fun getItemOutput(): ItemStack = output.copy()
+
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         val bool1: Boolean = this.firstInput.test(input.getItem(0))
         val bool2: Boolean = this.secondInput.test(input.getItem(1))
         val bool3: Boolean = this.thirdInput.map { it.test(input.getItem(2)) }.orElse(true)
         return bool1 && bool2 && bool3
     }
-
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = output.copy()
 
     //    Serializer    //
 

@@ -15,8 +15,6 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.ItemStack
-import kotlin.jvm.optionals.getOrNull
 
 class HTRefineryRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTRefineryRecipe> {
     override fun getRecipeType(): RecipeType<HTRefineryRecipe> = RagiumJEIRecipeTypes.REFINERY
@@ -35,12 +33,12 @@ class HTRefineryRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTR
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.itemOutput.orElse(ItemStack.EMPTY))
+            .addItemStack(recipe.getItemOutput())
         // Fluid Output
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
-            .addFluidStack(recipe.fluidOutput.getOrNull())
+            .addFluidStack(recipe.getFluidOutput())
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTRefineryRecipe, focuses: IFocusGroup) {

@@ -56,7 +56,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTExtractorContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
 
-    override fun interactWithFluidStorage(player: Player): Boolean = fillPlayerContainer(player, outputTank, true).isSuccess
+    override fun interactWithFluidStorage(player: Player): Boolean = outputTank.interactWithFluidStorage(player, HTStorageIO.GENERIC)
 
     override fun getItemHandler(direction: Direction?): CombinedInvWrapper =
         CombinedInvWrapper(HTStorageIO.INPUT.wrapItemHandler(itemInput), HTStorageIO.OUTPUT.wrapItemHandler(itemOutput))

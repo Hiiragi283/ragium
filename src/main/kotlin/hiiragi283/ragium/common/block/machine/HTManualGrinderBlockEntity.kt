@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
@@ -8,14 +9,15 @@ import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.replaceBlockState
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineAccess
+import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCache
 import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -24,7 +26,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -50,9 +51,6 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         serializer.readNbt(tag, registries)
     }
 
-    private val recipeCache: HTMachineRecipeCache<HTGrinderRecipe> =
-        HTMachineRecipeCache(RagiumMachineKeys.GRINDER)
-
     override fun onRightClicked(
         state: BlockState,
         level: Level,
@@ -77,24 +75,30 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private fun process(level: Level, pos: BlockPos, player: Player) {
+        // Find matching recipe
+        val foundRecipes: MutableList<HTGrinderRecipe> = mutableListOf()
+        HTRecipeConverters.grinder(level.recipeManager, RagiumAPI.materialRegistry, foundRecipes::add)
+        if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
-        recipeCache
-            .getFirstMatch(level, HTMachineRecipeInput.of(pos, stackIn))
-            .map(RecipeHolder<HTGrinderRecipe>::value)
-            .onSuccess { recipe: HTGrinderRecipe ->
-                // Drop output
-                ItemHandlerHelper.giveItemToPlayer(player, recipe.getResultItem(level.registryAccess()))
-                // Shrink input
-                stackIn.shrink(recipe.input.count())
-                // Play sound if present
-                RagiumMachineKeys.GRINDER
-                    .getProperty()
-                    .ifPresent(HTMachinePropertyKeys.SOUND) { level.playSound(null, pos, it, SoundSource.BLOCKS) }
-            }.onFailure { _: Throwable ->
-                // Drop input
-                ItemHandlerHelper.giveItemToPlayer(player, stackIn)
-                itemHandler.setStackInSlot(0, ItemStack.EMPTY)
-            }
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, stackIn)
+        var foundRecipe: HTGrinderRecipe? = foundRecipes.firstOrNull { it.matches(input, level) }
+        runCatching {
+            if (foundRecipe == null) throw HTMachineException.NoMatchingRecipe(false)
+            foundRecipe
+        }.onSuccess { recipe: HTGrinderRecipe ->
+            // Drop output
+            ItemHandlerHelper.giveItemToPlayer(player, recipe.getResultItem(level.registryAccess()))
+            // Shrink input
+            stackIn.shrink(recipe.input.count())
+            // Play sound if present
+            RagiumMachineKeys.GRINDER
+                .getProperty()
+                .ifPresent(HTMachinePropertyKeys.SOUND) { level.playSound(null, pos, it, SoundSource.BLOCKS) }
+        }.onFailure { _: Throwable ->
+            // Drop input
+            ItemHandlerHelper.giveItemToPlayer(player, stackIn)
+            itemHandler.setStackInSlot(0, ItemStack.EMPTY)
+        }
     }
 
     override fun onRemove(

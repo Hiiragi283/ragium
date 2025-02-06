@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.storage
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -20,7 +21,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 class HTDrumBlockEntity(pos: BlockPos, state: BlockState, machineTier: HTMachineTier) :
@@ -65,11 +65,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, machineTier: HTMachine
         hand: InteractionHand,
         hitResult: BlockHitResult,
     ): ItemInteractionResult = when {
-        FluidUtil.interactWithFluidHandler(
-            player,
-            InteractionHand.MAIN_HAND,
-            fluidTank,
-        ) -> ItemInteractionResult.SUCCESS
+        fluidTank.interactWithFluidStorage(player, HTStorageIO.GENERIC) -> ItemInteractionResult.SUCCESS
 
         else -> super.onRightClickedWithItem(stack, state, level, pos, player, hand, hitResult)
     }

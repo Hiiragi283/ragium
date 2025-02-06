@@ -46,7 +46,7 @@ class HTGrowthChamberRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategor
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.crop)
+            .addItemStack(recipe.getItemOutput())
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTGrowthChamberRecipe, focuses: IFocusGroup) {

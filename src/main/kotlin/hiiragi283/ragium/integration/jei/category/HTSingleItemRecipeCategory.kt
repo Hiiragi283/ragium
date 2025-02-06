@@ -43,7 +43,7 @@ class HTSingleItemRecipeCategory<T : HTSingleItemRecipe>(
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.output)
+            .addItemStack(recipe.getItemOutput())
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: T, focuses: IFocusGroup) {

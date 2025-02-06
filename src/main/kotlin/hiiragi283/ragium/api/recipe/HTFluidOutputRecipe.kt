@@ -17,8 +17,11 @@ import java.util.*
 /**
  * アイテムまたは液体の完成品を持つレシピのクラス
  */
-abstract class HTFluidOutputRecipe(group: String, val itemOutput: Optional<ItemStack>, val fluidOutput: Optional<FluidStack>) :
-    HTMachineRecipeBase(group) {
+abstract class HTFluidOutputRecipe(
+    group: String,
+    protected val itemOutput: Optional<ItemStack>,
+    protected val fluidOutput: Optional<FluidStack>,
+) : HTMachineRecipeBase(group) {
     companion object {
         @JvmStatic
         fun <T : HTFluidOutputRecipe> validate(recipe: T): DataResult<T> {
@@ -29,16 +32,20 @@ abstract class HTFluidOutputRecipe(group: String, val itemOutput: Optional<ItemS
         }
     }
 
+    final override fun getItemOutput(): ItemStack = itemOutput.orElse(ItemStack.EMPTY).copy()
+
+    fun getFluidOutput(): FluidStack = fluidOutput.orElse(FluidStack.EMPTY).copy()
+
     /**
      * 指定した[itemHandler]と[fluidHandler]に完成品を入れられるか判定します。
      * @throws HTMachineException 完成品を入れられなかった場合
      */
     fun canInsert(itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
         itemOutput.ifPresent { output: ItemStack ->
-            if (!itemHandler.canInsert(output)) throw HTMachineException.MergeResult(false)
+            if (!itemHandler.canInsert(output.copy())) throw HTMachineException.MergeResult(false)
         }
         fluidOutput.ifPresent { output: FluidStack ->
-            if (!fluidHandler.canFill(output)) throw HTMachineException.MergeResult(false)
+            if (!fluidHandler.canFill(output.copy())) throw HTMachineException.MergeResult(false)
         }
     }
 
@@ -54,12 +61,12 @@ abstract class HTFluidOutputRecipe(group: String, val itemOutput: Optional<ItemS
         pos: BlockPos,
     ) {
         itemOutput.ifPresent { output: ItemStack ->
-            itemHandler.insertOrDrop(level, pos.above(), output)
+            itemHandler.insertOrDrop(level, pos.above(), output.copy())
         }
         fluidOutput.ifPresent { output: FluidStack ->
-            fluidHandler.fill(output, IFluidHandler.FluidAction.EXECUTE)
+            fluidHandler.fill(output.copy(), IFluidHandler.FluidAction.EXECUTE)
         }
     }
 
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = itemOutput.orElse(ItemStack.EMPTY).copy()
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = getItemOutput()
 }

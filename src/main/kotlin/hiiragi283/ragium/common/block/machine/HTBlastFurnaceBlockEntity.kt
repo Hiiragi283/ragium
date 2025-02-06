@@ -57,7 +57,7 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         val holder: RecipeHolder<HTBlastFurnaceRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
         val recipe: HTBlastFurnaceRecipe = holder.value()
         if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
-        val output: ItemStack = recipe.output.copy()
+        val output: ItemStack = recipe.getItemOutput()
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         itemOutput.insertOrDrop(level, pos, output)
         itemInput.consumeItem(0, recipe.firstInput.count(), false)
@@ -72,6 +72,8 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: Player): Boolean = false
 
-    override fun getItemHandler(direction: Direction?): CombinedInvWrapper =
-        CombinedInvWrapper(HTStorageIO.INPUT.wrapItemHandler(itemInput), HTStorageIO.OUTPUT.wrapItemHandler(itemOutput))
+    override fun getItemHandler(direction: Direction?): CombinedInvWrapper = CombinedInvWrapper(
+        HTStorageIO.INPUT.wrapItemHandler(itemInput),
+        HTStorageIO.OUTPUT.wrapItemHandler(itemOutput),
+    )
 }

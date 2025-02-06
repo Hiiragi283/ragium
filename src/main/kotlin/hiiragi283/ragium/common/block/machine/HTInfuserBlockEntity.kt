@@ -5,10 +5,12 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
+import hiiragi283.ragium.api.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
+import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.inventory.HTInfuserContainerMenu
@@ -16,12 +18,11 @@ import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
@@ -63,18 +64,34 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         foundRecipe.insertOutputs(itemOutput, outputTank, level, pos)
         // Decrement input
         itemInput.getStackInSlot(0).shrink(foundRecipe.itemInput.count())
-        inputTank.fluid.shrink(foundRecipe.fluidInput.amount())
+        inputTank.drain(foundRecipe.fluidInput.amount(), IFluidHandler.FluidAction.EXECUTE)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTInfuserContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
 
-    override fun interactWithFluidStorage(player: Player): Boolean = when {
-        fillPlayerContainer(player, outputTank, true).isSuccess -> true
-        FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, inputTank) -> true
-        else -> false
+    override fun interactWithFluidStorage(player: Player): Boolean {
+        if (outputTank.interactWithFluidStorage(player, HTStorageIO.OUTPUT)) {
+            return true
+        }
+        if (inputTank.interactWithFluidStorage(player, HTStorageIO.GENERIC)) {
+            return true
+        }
+        return false
     }
 
     override fun getItemHandler(direction: Direction?): CombinedInvWrapper =
         CombinedInvWrapper(HTStorageIO.INPUT.wrapItemHandler(itemInput), HTStorageIO.OUTPUT.wrapItemHandler(itemOutput))
+
+    override fun getFluidHandler(direction: Direction?): IFluidHandler? {
+        if (direction == null) {
+            return HTReadOnlyFluidHandler(inputTank, outputTank)
+        }
+        val relativeFront: HTRelativeDirection = HTRelativeDirection.fromDirection(front, direction)
+        return when (relativeFront) {
+            HTRelativeDirection.RIGHT -> HTStorageIO.INPUT.wrapFluidHandler(inputTank)
+            HTRelativeDirection.LEFT -> HTStorageIO.OUTPUT.wrapFluidHandler(outputTank)
+            else -> null
+        }
+    }
 }

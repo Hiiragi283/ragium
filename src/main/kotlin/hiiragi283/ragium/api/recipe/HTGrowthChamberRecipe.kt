@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -13,7 +12,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -23,7 +21,7 @@ class HTGrowthChamberRecipe(
     val seed: Ingredient,
     val soil: Ingredient,
     val waterAmount: Int,
-    val crop: ItemStack,
+    private val crop: ItemStack,
 ) : HTMachineRecipeBase(group) {
     companion object {
         @JvmField
@@ -57,13 +55,7 @@ class HTGrowthChamberRecipe(
         )
     }
 
-    constructor(seed: Ingredient, soil: Ingredient, waterAmount: Int, crop: ItemLike, cropCount: Int = 1) : this(
-        "",
-        seed,
-        soil,
-        waterAmount,
-        ItemStack(crop, cropCount),
-    )
+    override fun getItemOutput(): ItemStack = crop.copy()
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         val bool1: Boolean = seed.test(input.getItem(0))
@@ -75,8 +67,6 @@ class HTGrowthChamberRecipe(
         }
         return bool1 && bool2 && bool3
     }
-
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = crop.copy()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.GROWTH_CHAMBER.get()
 

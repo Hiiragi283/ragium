@@ -126,30 +126,30 @@ abstract class HTMachineBlockEntity(
         player: Player,
         hitResult: BlockHitResult,
     ): InteractionResult {
-        // Toggle multiblock preview
-        if (player.isShiftKeyDown) {
-            showPreview = !showPreview
-            return InteractionResult.SUCCESS
-        }
-        // Insert fluid from holding stack
-        if (interactWithFluidStorage(player)) {
-            return InteractionResult.SUCCESS
-        }
-        // Validate multiblock
-        val data: HTMultiblockData = collectData { player.displayClientMessage(it, true) }
-        return when (data.result) {
-            TriState.FALSE -> InteractionResult.PASS
-            else -> {
-                if (!level.isClientSide) {
+        if (!level.isClientSide) {
+            // Toggle multiblock preview
+            if (player.isShiftKeyDown) {
+                showPreview = !showPreview
+                return InteractionResult.SUCCESS
+            }
+            // Insert fluid from holding stack
+            if (interactWithFluidStorage(player)) {
+                return InteractionResult.SUCCESS
+            }
+            // Validate multiblock
+            val data: HTMultiblockData = collectData { player.displayClientMessage(it, true) }
+            when (data.result) {
+                TriState.FALSE -> return InteractionResult.PASS
+                else -> {
                     // init multiblock data
                     processData(data)
                     // open machine screen
                     player.openMenu(this, pos)
                     // HTInteractMachineCriterion.trigger(player, machineKey, tier)
                 }
-                InteractionResult.SUCCESS
             }
         }
+        return InteractionResult.sidedSuccess(level.isClientSide)
     }
 
     protected fun checkMultiblockOrThrow() {

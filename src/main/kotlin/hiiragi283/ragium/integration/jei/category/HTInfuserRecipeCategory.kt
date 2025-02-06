@@ -15,8 +15,6 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.ItemStack
-import kotlin.jvm.optionals.getOrNull
 
 class HTInfuserRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTInfuserRecipe> {
     override fun getRecipeType(): RecipeType<HTInfuserRecipe> = RagiumJEIRecipeTypes.INFUSER
@@ -40,12 +38,12 @@ class HTInfuserRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTIn
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.itemOutput.orElse(ItemStack.EMPTY))
+            .addItemStack(recipe.getItemOutput())
         // Fluid Output
         builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .setStandardSlotBackground()
-            .addFluidStack(recipe.fluidOutput.getOrNull())
+            .addFluidStack(recipe.getFluidOutput())
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTInfuserRecipe, focuses: IFocusGroup) {

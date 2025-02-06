@@ -42,15 +42,9 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
         HTRecipeConverters.compressor(level.recipeManager, RagiumAPI.materialRegistry, foundRecipes::add)
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, itemInput.getStackInSlot(0))
-        var foundRecipe: HTCompressorRecipe? = null
-        for (recipe: HTCompressorRecipe in foundRecipes) {
-            if (recipe.matches(input, level)) {
-                foundRecipe = recipe
-                break
-            }
-        }
+        var foundRecipe: HTCompressorRecipe? = foundRecipes.firstOrNull { it.matches(input, level) }
         if (foundRecipe == null) throw HTMachineException.NoMatchingRecipe(false)
-        val output: ItemStack = foundRecipe.output.copy()
+        val output: ItemStack = foundRecipe.getItemOutput()
         // Try to insert outputs
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         // Insert outputs

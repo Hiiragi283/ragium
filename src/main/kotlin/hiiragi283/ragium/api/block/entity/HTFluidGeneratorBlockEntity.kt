@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -19,7 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.function.Supplier
 
@@ -56,8 +54,7 @@ abstract class HTFluidGeneratorBlockEntity(
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 
-    override fun interactWithFluidStorage(player: Player): Boolean =
-        FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, tank)
+    override fun interactWithFluidStorage(player: Player): Boolean = tank.interactWithFluidStorage(player, HTStorageIO.GENERIC)
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)

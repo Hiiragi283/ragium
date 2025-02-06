@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.entity
 
-import hiiragi283.ragium.api.component.HTExplosionComponent
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.entity.EntityType
@@ -22,7 +21,7 @@ class HTDynamite : ThrowableItemProjectile {
     override fun onHit(result: HitResult) {
         super.onHit(result)
         if (!level().isClientSide) {
-            HTExplosionComponent(2f, true).explode(level(), this, x, y, z)
+            level().explode(this, x, y, z, 2f, false, Level.ExplosionInteraction.TNT)
             discard()
         }
     }

@@ -34,7 +34,7 @@ class HTGrinderRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTGr
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.output)
+            .addItemStack(recipe.getItemOutput())
         // Second Item Output
         builder
             .addOutputSlot(getPosition(4), getPosition(0))

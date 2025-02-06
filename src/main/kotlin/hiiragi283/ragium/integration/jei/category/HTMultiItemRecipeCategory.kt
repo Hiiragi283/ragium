@@ -48,7 +48,7 @@ class HTMultiItemRecipeCategory<T : HTMultiItemRecipe>(
         builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.output)
+            .addItemStack(recipe.getItemOutput())
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: T, focuses: IFocusGroup) {

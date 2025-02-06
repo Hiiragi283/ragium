@@ -256,9 +256,12 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.THERMAL_GENERATOR)
 
         registerHandlers(RagiumBlockEntityTypes.BLAST_FURNACE)
+        registerHandlers(RagiumBlockEntityTypes.COMPRESSOR)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
-        registerHandlers(RagiumBlockEntityTypes.REFINERY)
+        registerHandlers(RagiumBlockEntityTypes.INFUSER)
+        registerHandlers(RagiumBlockEntityTypes.MIXER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
+        registerHandlers(RagiumBlockEntityTypes.REFINERY)
 
         registerHandlers(RagiumBlockEntityTypes.CATALYST_ADDON)
         registerHandlers(RagiumBlockEntityTypes.DRUM)

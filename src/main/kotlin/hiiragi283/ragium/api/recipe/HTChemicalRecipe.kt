@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.common.init.RagiumItems
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -76,6 +75,8 @@ class HTChemicalRecipe(
 
     fun getFluidOutputs(): List<FluidStack> = fluidOutputs.map(FluidStack::copy)
 
+    override fun getItemOutput(): ItemStack = (getItemOutputs().getOrNull(0) ?: ItemStack.EMPTY).copy()
+
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         // Item
         input.items.forEachIndexed { slot: Int, stack: ItemStack ->
@@ -95,8 +96,6 @@ class HTChemicalRecipe(
         // Condition
         return condition.map { it.test(level, input.pos) }.orElse(true)
     }
-
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = getItemOutputs().getOrNull(0) ?: ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<*> = TODO()
 

@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
+import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
@@ -10,16 +11,16 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 
 class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
@@ -53,6 +54,9 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 
-    override fun interactWithFluidStorage(player: Player): Boolean =
-        FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, fluidInput)
+    override fun interactWithFluidStorage(player: Player): Boolean = fluidInput.interactWithFluidStorage(player, HTStorageIO.GENERIC)
+
+    override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.INPUT.wrapItemHandler(itemInput)
+
+    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTStorageIO.INPUT.wrapFluidHandler(fluidInput)
 }
