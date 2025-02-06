@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.api.item.HTMachineItemHandler
@@ -38,6 +39,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTRefineryRecipe> =
         HTRecipeCache(RagiumRecipeTypes.REFINERY)
+
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.consume(1600)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe

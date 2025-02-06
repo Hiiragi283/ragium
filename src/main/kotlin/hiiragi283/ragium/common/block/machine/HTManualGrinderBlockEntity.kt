@@ -25,6 +25,8 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -121,8 +123,8 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     override val machineKey: HTMachineKey = RagiumMachineKeys.GRINDER
     override val pos: BlockPos
         get() = blockPos
-    override val processCost: Int = 0
     override var showPreview: Boolean = false
+    override val containerData: ContainerData = SimpleContainerData(2)
 
     //    HTMachineAccess    //
 

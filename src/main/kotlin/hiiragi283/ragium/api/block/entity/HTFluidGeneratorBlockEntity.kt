@@ -38,7 +38,7 @@ abstract class HTFluidGeneratorBlockEntity(
 
     abstract fun getFuelAmount(stack: FluidStack): Int
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generated(250)
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.generate(3200)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         if (tank.isEmpty) throw HTMachineException.EmptyFluid(false)

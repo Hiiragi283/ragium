@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.item.HTMachineItemHandler
@@ -42,6 +43,8 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTBlastFurnaceRecipe> =
         HTRecipeCache(RagiumRecipeTypes.BLAST_FURNACE)
+
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.consume(1600)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()

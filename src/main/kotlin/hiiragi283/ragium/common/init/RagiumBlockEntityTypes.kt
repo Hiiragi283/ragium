@@ -91,6 +91,10 @@ object RagiumBlockEntityTypes {
         register("extractor", ::HTExtractorBlockEntity, RagiumMachineKeys.EXTRACTOR)
 
     @JvmField
+    val GRINDER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTGrinderBlockEntity>> =
+        register("grinder", ::HTGrinderBlockEntity, RagiumMachineKeys.GRINDER)
+
+    @JvmField
     val INFUSER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTInfuserBlockEntity>> =
         register("infuser", ::HTInfuserBlockEntity, RagiumMachineKeys.INFUSER)
 

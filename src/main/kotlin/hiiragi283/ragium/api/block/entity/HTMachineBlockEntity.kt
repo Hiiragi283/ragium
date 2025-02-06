@@ -113,7 +113,6 @@ abstract class HTMachineBlockEntity(
 
     override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
         protected set
-    override val processCost: Int = 1280
 
     protected open fun updateEnchantments(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments
@@ -217,7 +216,7 @@ abstract class HTMachineBlockEntity(
     /**
      * 機械が要求するエネルギー量を返します。
      */
-    open fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume(100)
+    abstract fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData
 
     /**
      * 機械の処理を行います。

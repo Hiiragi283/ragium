@@ -2,17 +2,25 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.canInsert
+import hiiragi283.ragium.api.extension.insertOrDrop
+import hiiragi283.ragium.api.machine.HTMachineAccess
+import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import net.neoforged.neoforge.items.IItemHandler
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 class HTGrinderRecipe(
     group: String,
@@ -44,6 +52,38 @@ class HTGrinderRecipe(
             HTGrinderRecipe::secondOutput,
             ::HTGrinderRecipe,
         )
+    }
+
+    fun canInsert(itemHandler: IItemHandler) {
+        // First Output
+        if (!itemHandler.canInsert(output.copy())) throw HTMachineException.MergeResult(false)
+        // Second Output
+        secondOutput.ifPresent { second: HTChancedItemStack ->
+            if (!itemHandler.canInsert(second.stack.copy())) throw HTMachineException.MergeResult(false)
+        }
+    }
+
+    fun insertOutputs(machine: HTMachineAccess, itemHandler: IItemHandler) {
+        val level: Level = machine.levelAccess ?: return
+        val pos: BlockPos = machine.pos
+        // First Output
+        itemHandler.insertOrDrop(level, pos, output.copy())
+        // Second Output
+        getSecondOutput(machine).ifPresent { second: ItemStack ->
+            itemHandler.insertOrDrop(level, pos, second)
+        }
+    }
+
+    fun getSecondOutput(machine: HTMachineAccess): Optional<ItemStack> {
+        val chanced: HTChancedItemStack = this.secondOutput.getOrNull() ?: return Optional.empty()
+        val level: Level = machine.levelAccess ?: return Optional.empty()
+        val fortune: Int = machine.getEnchantmentLevel(Enchantments.FORTUNE)
+        repeat(fortune + 1) {
+            if (level.random.nextFloat() > chanced.chance) {
+                return Optional.of(chanced.stack.copy())
+            }
+        }
+        return Optional.empty()
     }
 
     override fun getItemOutput(): ItemStack = output.copy()

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.api.item.HTMachineItemHandler
@@ -39,6 +40,8 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         ),
         listOf(inputTank, outputTank),
     )
+
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.consume(1600)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe

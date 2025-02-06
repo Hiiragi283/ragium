@@ -109,15 +109,12 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
                     // Fluid Capacity
                     add(fluidCapacityText(capacity).withStyle(ChatFormatting.GRAY))
                     // Mod Name
-                    ModList
+                    val firstMod = ModList
                         .get()
                         .getModFileById(stack.fluidHolder.idOrThrow.namespace)
-                        ?.moduleName()
-                        ?.let { name: String ->
-                            add(
-                                Component.literal(name).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC),
-                            )
-                        }
+                        .mods
+                        .firstOrNull() ?: return@buildList
+                    add(Component.literal(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
                 },
                 mouseX,
                 mouseY,

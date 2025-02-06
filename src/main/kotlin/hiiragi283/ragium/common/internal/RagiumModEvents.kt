@@ -106,6 +106,7 @@ internal object RagiumModEvents {
 
         event
             .getBuilder(RagiumMachineKeys.GRINDER)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTGrinderBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.GRINDSTONE_USE)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
 
@@ -258,6 +259,7 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerHandlers(RagiumBlockEntityTypes.COMPRESSOR)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
+        registerHandlers(RagiumBlockEntityTypes.GRINDER)
         registerHandlers(RagiumBlockEntityTypes.INFUSER)
         registerHandlers(RagiumBlockEntityTypes.MIXER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)

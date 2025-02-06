@@ -19,7 +19,7 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.SOLAR_GENERATOR, pos, state, RagiumMachineKeys.SOLAR_GENERATOR) {
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.EMPTY
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generated(500)
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.generate(500)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         if (!machineKey.getProperty().getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(level, pos)) {

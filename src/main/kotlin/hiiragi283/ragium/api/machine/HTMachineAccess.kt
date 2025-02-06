@@ -56,11 +56,6 @@ interface HTMachineAccess :
     val pos: BlockPos
 
     /**
-     * 機械の処理に必要なエネルギー量
-     */
-    val processCost: Int
-
-    /**
      * 機械の処理間隔 (tick表記)
      */
     val tickRate: Int
