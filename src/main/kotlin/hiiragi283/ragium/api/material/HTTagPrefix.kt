@@ -12,7 +12,7 @@ import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 
 /**
- * Represent [TagKey] prefixes
+ * [TagKey]のプレフィックスを表すクラス
  */
 enum class HTTagPrefix(private val commonName: String, private val tagPrefix: String = "$commonName/") : StringRepresentable {
     // Common
@@ -81,18 +81,27 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
 
     //    Id    //
 
+    /**
+     * 指定した[key]から，このプレフィックスで修飾された文字列を返します。
+     */
     open fun createPath(key: HTMaterialKey): String = "${key.name}_$serializedName"
 
     //    TagKey    //
 
     val commonTagKey: TagKey<Item> = itemTagKey(commonId(commonName))
 
+    /**
+     * 指定した[key]から，このプレフィックスで修飾された[TagKey]を返します。
+     */
     fun createTag(key: HTMaterialKey): TagKey<Item> = itemTagKey(commonId("$tagPrefix${key.name}"))
 
     //    Translation    //
 
     val translationKey = "tag_prefix.${RagiumAPI.MOD_ID}.$serializedName"
 
+    /**
+     * 指定した[key]から，このプレフィックスで修飾された[MutableComponent]を返します。
+     */
     fun createText(key: HTMaterialKey): MutableComponent = Component.translatable(translationKey, key.text)
 
     //    StringRepresentable    //

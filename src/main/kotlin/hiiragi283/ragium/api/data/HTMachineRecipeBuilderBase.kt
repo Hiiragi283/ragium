@@ -44,8 +44,7 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     //    Fluid Input    //
 
-    fun fluidInput(content: RagiumVirtualFluids, amount: Int = FluidType.BUCKET_VOLUME): T =
-        fluidInput(content.fluidHolder, amount)
+    fun fluidInput(content: RagiumVirtualFluids, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(content.fluidHolder, amount)
 
     fun fluidInput(fluid: DeferredHolder<Fluid, *>, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(fluid.commonTag, amount)
 

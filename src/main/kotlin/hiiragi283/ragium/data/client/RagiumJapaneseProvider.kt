@@ -2,12 +2,14 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
+import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
@@ -18,36 +20,35 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
     override fun addTranslations() {
         // Block
-        add(RagiumBlocks.SOUL_MAGMA_BLOCK, "ソウルマグマブロック")
-        add(RagiumBlocks.CRUDE_OIL, "原油")
+        addBlock(RagiumBlocks.SOUL_MAGMA_BLOCK, "ソウルマグマブロック")
+        addBlock(RagiumBlocks.CRUDE_OIL, "原油")
 
-        add(RagiumBlocks.SLAG_BLOCK, "スラグブロック")
+        addBlock(RagiumBlocks.SLAG_BLOCK, "スラグブロック")
 
-        add(RagiumBlocks.SHAFT, "シャフト")
+        addBlock(RagiumBlocks.SHAFT, "シャフト")
 
-        add(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
-        add(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石ガラス")
+        addBlock(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
+        addBlock(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石ガラス")
 
-        add(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
+        addBlock(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
 
-        add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
-        add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
+        addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
+        addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
-        add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
-        add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "らぎ高炉")
+        addBlock(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
+        addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "らぎ高炉")
 
-        add(RagiumBlocks.CATALYST_ADDON, "触媒アドオン")
-        add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
-        add(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")
+        addBlock(RagiumBlocks.CATALYST_ADDON, "触媒アドオン")
+        addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
+        addBlock(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")
 
-        add(RagiumBlocks.getLedBlock(DyeColor.RED), "LEDブロック（赤）")
-        add(RagiumBlocks.getLedBlock(DyeColor.GREEN), "LEDブロック（緑）")
-        add(RagiumBlocks.getLedBlock(DyeColor.BLUE), "LEDブロック（青）")
-        add(RagiumBlocks.getLedBlock(DyeColor.CYAN), "LEDブロック（シアン）")
-        add(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "LEDブロック（マゼンタ）")
-        add(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
-        add(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
-
+        addBlock(RagiumBlocks.getLedBlock(DyeColor.RED), "LEDブロック（赤）")
+        addBlock(RagiumBlocks.getLedBlock(DyeColor.GREEN), "LEDブロック（緑）")
+        addBlock(RagiumBlocks.getLedBlock(DyeColor.BLUE), "LEDブロック（青）")
+        addBlock(RagiumBlocks.getLedBlock(DyeColor.CYAN), "LEDブロック（シアン）")
+        addBlock(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "LEDブロック（マゼンタ）")
+        addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
+        addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
         // Content
         add(RagiumTranslationKeys.BURNER, "バーナー")
         add(RagiumTranslationKeys.CASING, "外装")
@@ -65,104 +66,103 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTOreVariant.NETHER, "ネザー%s鉱石")
         add(HTOreVariant.END, "エンド%s鉱石")
         // Fluids
-        add(RagiumFluids.HONEY, "蜂蜜")
-        add(RagiumFluids.SNOW, "粉雪")
+        addFluid(RagiumFluids.HONEY, "蜂蜜")
+        addFluid(RagiumFluids.SNOW, "粉雪")
 
-        add(RagiumVirtualFluids.HYDROGEN, "水素")
-        add(RagiumVirtualFluids.OXYGEN, "酸素")
-        add(RagiumVirtualFluids.STEAM, "蒸気")
+        addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
+        addFluid(RagiumVirtualFluids.OXYGEN, "酸素")
+        addFluid(RagiumVirtualFluids.STEAM, "蒸気")
 
-        add(RagiumVirtualFluids.SULFURIC_ACID, "ブレイズ酸")
-        add(RagiumVirtualFluids.HYDROFLUORIC_ACID, "グロウ酸")
+        addFluid(RagiumVirtualFluids.SULFURIC_ACID, "ブレイズ酸")
+        addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "グロウ酸")
 
-        add(RagiumVirtualFluids.LAPIS_SOLUTION, "ラピス溶液")
+        addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "ラピス溶液")
 
-        add(RagiumVirtualFluids.NAPHTHA, "ナフサ")
-        add(RagiumVirtualFluids.FUEL, "燃料")
-        add(RagiumVirtualFluids.NITRO_FUEL, "ニトロ燃料")
+        addFluid(RagiumVirtualFluids.NAPHTHA, "ナフサ")
+        addFluid(RagiumVirtualFluids.FUEL, "燃料")
+        addFluid(RagiumVirtualFluids.NITRO_FUEL, "ニトロ燃料")
 
-        add(RagiumVirtualFluids.PLANT_OIL, "植物油")
-        add(RagiumVirtualFluids.BIOMASS, "バイオマス")
-        add(RagiumVirtualFluids.ETHANOL, "エタノール")
-        add(RagiumVirtualFluids.BIODIESEL, "バイオディーゼル")
+        addFluid(RagiumVirtualFluids.PLANT_OIL, "植物油")
+        addFluid(RagiumVirtualFluids.BIOMASS, "バイオマス")
+        addFluid(RagiumVirtualFluids.ETHANOL, "エタノール")
+        addFluid(RagiumVirtualFluids.BIODIESEL, "バイオディーゼル")
 
-        add(RagiumVirtualFluids.SAP, "樹液")
-        add(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
-        add(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
+        addFluid(RagiumVirtualFluids.SAP, "樹液")
+        addFluid(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
+        addFluid(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
         // Items
-        add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
-        add(RagiumItems.MELON_PIE, "メロンパイ")
+        addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
+        addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
-        add(RagiumItems.BUTTER, "バター")
-        add(RagiumItems.CARAMEL, "キャラメル")
-        add(RagiumItems.DOUGH, "生地")
-        add(RagiumItems.FLOUR, "小麦粉")
+        addItem(RagiumItems.BUTTER, "バター")
+        addItem(RagiumItems.CARAMEL, "キャラメル")
+        addItem(RagiumItems.DOUGH, "生地")
+        addItem(RagiumItems.FLOUR, "小麦粉")
 
-        add(RagiumItems.CHOCOLATE, "チョコレート")
-        add(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
-        add(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
-        add(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
+        addItem(RagiumItems.CHOCOLATE, "チョコレート")
+        addItem(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
+        addItem(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
+        addItem(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
 
-        add(RagiumItems.CINNAMON_STICK, "シナモンスティック")
-        add(RagiumItems.CINNAMON_POWDER, "シナモンパウダー")
-        add(RagiumItems.CINNAMON_ROLL, "シナモンロール")
+        addItem(RagiumItems.CINNAMON_STICK, "シナモンスティック")
+        addItem(RagiumItems.CINNAMON_POWDER, "シナモンパウダー")
+        addItem(RagiumItems.CINNAMON_ROLL, "シナモンロール")
 
-        add(RagiumItems.MINCED_MEAT, "ひき肉")
-        add(RagiumItems.MEAT_INGOT, "生肉インゴット")
-        add(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
-        add(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
+        addItem(RagiumItems.MINCED_MEAT, "ひき肉")
+        addItem(RagiumItems.MEAT_INGOT, "生肉インゴット")
+        addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
+        addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
 
-        add(RagiumItems.AMBROSIA, "アンブロシア")
+        addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
-        add(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
-        add(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
+        addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
+        addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
 
-        add(RagiumItems.DYNAMITE, "ダイナマイト")
-        add(RagiumItems.SLOT_LOCK, "スロットロック")
+        addItem(RagiumItems.DYNAMITE, "ダイナマイト")
+        addItem(RagiumItems.SLOT_LOCK, "スロットロック")
 
-        add(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
-        add(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板）")
-        add(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒）")
-        add(RagiumItems.WIRE_PRESS_MOLD, "プレス型（ワイヤー）")
+        addItem(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
+        addItem(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板材）")
+        addItem(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒材）")
+        addItem(RagiumItems.WIRE_PRESS_MOLD, "プレス型（ワイヤー）")
 
-        add(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
-        add(RagiumItems.BLAZE_REAGENT, "ブレイズ試薬")
-        add(RagiumItems.CREEPER_REAGENT, "クリーパー試薬")
-        add(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
-        add(RagiumItems.ENDER_REAGENT, "エンダー試薬")
-        add(RagiumItems.GLOW_REAGENT, "グロウ試薬")
-        add(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
-        add(RagiumItems.RAGIUM_REAGENT, "ラギウム試薬")
-        add(RagiumItems.SCULK_REAGENT, "スカルク試薬")
-        add(RagiumItems.SOUL_REAGENT, "ソウル試薬")
-        add(RagiumItems.WITHER_REAGENT, "ウィザー試薬")
+        addItem(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
+        addItem(RagiumItems.BLAZE_REAGENT, "ブレイズ試薬")
+        addItem(RagiumItems.CREEPER_REAGENT, "クリーパー試薬")
+        addItem(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
+        addItem(RagiumItems.ENDER_REAGENT, "エンダー試薬")
+        addItem(RagiumItems.GLOW_REAGENT, "グロウ試薬")
+        addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
+        addItem(RagiumItems.RAGIUM_REAGENT, "ラギウム試薬")
+        addItem(RagiumItems.SCULK_REAGENT, "スカルク試薬")
+        addItem(RagiumItems.SOUL_REAGENT, "ソウル試薬")
+        addItem(RagiumItems.WITHER_REAGENT, "ウィザー試薬")
 
-        add(RagiumItems.BEE_WAX, "蜜蠟")
-        add(RagiumItems.CHEMICAL_MACHINE_CASING, "化学機械筐体")
-        add(RagiumItems.CIRCUIT_BOARD, "回路基板")
-        add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
-        add(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
-        add(RagiumItems.ENGINE, "V8エンジン")
-        add(RagiumItems.LED, "L.E.D.")
-        add(RagiumItems.MACHINE_CASING, "機械筐体")
-        add(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")
-        add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
-        add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
-        add(RagiumItems.PRECISION_MACHINE_CASING, "精密機械筐体")
-        add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
-        add(RagiumItems.SOAP, "石鹸")
-        add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
-        add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
+        addItem(RagiumItems.BEE_WAX, "蜜蠟")
+        addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "化学機械筐体")
+        addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
+        addItem(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
+        addItem(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
+        addItem(RagiumItems.ENGINE, "V8エンジン")
+        addItem(RagiumItems.LED, "L.E.D.")
+        addItem(RagiumItems.MACHINE_CASING, "機械筐体")
+        addItem(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")
+        addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
+        addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
+        addItem(RagiumItems.PRECISION_MACHINE_CASING, "精密機械筐体")
+        addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        addItem(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
+        addItem(RagiumItems.SOAP, "石鹸")
+        addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
+        addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
 
-        add(RagiumItems.NUCLEAR_WASTE, "核廃棄物")
-        add(RagiumItems.PLUTONIUM_FUEL, "プルトニウム燃料")
-        add(RagiumItems.URANIUM_FUEL, "ウラン燃料")
-        add(RagiumItems.YELLOW_CAKE, "イエローケーキ")
-        add(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
+        addItem(RagiumItems.NUCLEAR_WASTE, "核廃棄物")
+        addItem(RagiumItems.PLUTONIUM_FUEL, "プルトニウム燃料")
+        addItem(RagiumItems.URANIUM_FUEL, "ウラン燃料")
+        addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
+        addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 
-        add(RagiumItems.RAGI_TICKET, "らぎチケット")
-
+        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Machine
         add(HTMachineTier.BASIC, "基本", "基本%s")
         add(HTMachineTier.ADVANCED, "発展", "発展%s")
@@ -287,11 +287,32 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTTagPrefix.TINY_DUST, "小さな%sの粉")
         add(HTTagPrefix.WIRE, "%sのワイヤー")
         // Tags
-        add(RagiumItemTags.ALKALI_REAGENTS, "アルカリ試薬")
+        add(RagiumItemTags.ADVANCED_CIRCUIT, "発展回路")
+        add(RagiumItemTags.BASIC_CIRCUIT, "基本回路")
+        add(RagiumItemTags.COAL_COKE, "石炭コークス")
         add(RagiumItemTags.DOUGH, "生地")
+        add(RagiumItemTags.ELITE_CIRCUIT, "精鋭回路")
         add(RagiumItemTags.PLASTICS, "プラスチック")
+        add(RagiumItemTags.SLAG, "スラグ")
+        add(RagiumItemTags.ULTIMATE_CIRCUIT, "究極回路")
 
+        add(RagiumItemTags.DIRT_SOILS, "土壌")
+        add(RagiumItemTags.END_SOILS, "エンドの土壌")
+        add(RagiumItemTags.GEAR_MOLDS, "プレス型（歯車）")
+        add(RagiumItemTags.LED_BLOCKS, "LEDブロック")
+        add(RagiumItemTags.MUSHROOM_SOILS, "キノコの土壌")
+        add(RagiumItemTags.NETHER_SOILS, "ネザーの土壌")
+        add(RagiumItemTags.PLATE_MOLDS, "プレス型（板材）")
+        add(RagiumItemTags.ROD_MOLDS, "プレス型（棒材）")
         add(RagiumItemTags.SOLAR_PANELS, "太陽光パネル")
+        add(RagiumItemTags.WIRE_MOLDS, "プレス型（ワイヤー）")
+
+        add(RagiumFluidTags.CREOSOTE, "クレオソート")
+        add(RagiumFluidTags.MEAT, "液体肉")
+
+        add(RagiumFluidTags.NITRO_FUEL, "ニトロ系燃料")
+        add(RagiumFluidTags.NON_NITRO_FUEL, "非ニトロ系燃料")
+        add(RagiumFluidTags.THERMAL_FUEL, "発熱燃料")
         // Misc
         add(RagiumTranslationKeys.FLUID_AMOUNT, "液体量: %s mb")
         add(RagiumTranslationKeys.FLUID_CAPACITY, "容量: %s mb")

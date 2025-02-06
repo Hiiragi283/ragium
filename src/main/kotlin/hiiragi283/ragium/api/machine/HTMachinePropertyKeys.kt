@@ -16,8 +16,6 @@ import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
-typealias HTMachineEntityFactory = (BlockPos, BlockState, HTMachineKey) -> HTMachineBlockEntity?
-
 object HTMachinePropertyKeys {
     @JvmField
     val MACHINE_FACTORY: HTPropertyKey<(BlockPos, BlockState) -> HTMachineBlockEntity> =

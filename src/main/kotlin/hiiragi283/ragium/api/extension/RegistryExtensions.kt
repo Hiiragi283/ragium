@@ -51,6 +51,9 @@ fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
  */
 val DeferredBlock<*>.blockId: ResourceLocation get() = id.withPrefix("block/")
 
+/**
+ * 液体のIDから名前空間が`c`となる[TagKey]を返します。
+ */
 val DeferredHolder<Fluid, *>.commonTag: TagKey<Fluid> get() = fluidTagKey(commonId(id.path))
 
 //    HolderSet    //
@@ -73,12 +76,24 @@ fun <T : Any> HolderSet<T>.asHolderText(transform: (Holder<T>) -> Component): Mu
 
 //    TagKey    //
 
+/**
+ * 指定した[id]から[TagKey]を返します。
+ */
 fun blockTagKey(id: ResourceLocation): TagKey<Block> = TagKey.create(Registries.BLOCK, id)
 
+/**
+ * 指定した[id]から[TagKey]を返します。
+ */
 fun fluidTagKey(id: ResourceLocation): TagKey<Fluid> = TagKey.create(Registries.FLUID, id)
 
+/**
+ * 指定した[id]から[TagKey]を返します。
+ */
 fun itemTagKey(id: ResourceLocation): TagKey<Item> = TagKey.create(Registries.ITEM, id)
 
+/**
+ * この[DyeColor]から染料のタグを返します。
+ */
 val DyeColor.commonTag: TagKey<Item> get() = itemTagKey(commonId("dyes/${this.serializedName}"))
 
 /**

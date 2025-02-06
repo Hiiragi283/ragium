@@ -14,9 +14,18 @@ operator fun ItemEnchantments.get(holder: Holder<Enchantment>): Int = getLevel(h
 
 operator fun ItemEnchantments.contains(key: ResourceKey<Enchantment>): Boolean = key in keySet().map(Holder<Enchantment>::keyOrThrow)
 
+/**
+ * この[ItemEnchantments]をコピーした新しいインスタンスを返します。
+ * @param action エンチャントを編集するブロック
+ */
 inline fun ItemEnchantments.copyAndEdit(action: ItemEnchantments.Mutable.() -> Unit): ItemEnchantments =
     ItemEnchantments.Mutable(this).apply(action).toImmutable()
 
+/**
+ * この[ItemStack]が保持しているエンチャントを更新します。
+ * @param type エンチャントが紐づいている[DataComponentType]
+ * @param action エンチャントを更新するブロック
+ */
 fun ItemStack.modifyEnchantment(
     type: DataComponentType<ItemEnchantments> = DataComponents.ENCHANTMENTS,
     action: (ItemEnchantments) -> ItemEnchantments?,

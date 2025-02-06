@@ -2,6 +2,9 @@ package hiiragi283.ragium.api.material.keys
 
 import hiiragi283.ragium.api.material.HTMaterialKey
 
+/**
+ * Ragiumで使用されている素材の一覧
+ */
 object RagiumMaterials {
     //    Gem    //
 

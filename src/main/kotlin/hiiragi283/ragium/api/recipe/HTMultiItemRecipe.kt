@@ -12,6 +12,9 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import java.util.*
 
+/**
+ * 複数のアイテムによるインプットを受け付けるレシピ
+ */
 abstract class HTMultiItemRecipe(
     group: String,
     val firstInput: SizedIngredient,

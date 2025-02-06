@@ -24,6 +24,9 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
  */
 val Fluid.name: Component get() = fluidType.description
 
+/**
+ * この[Fluid]が流体の源となっているか判定します。
+ */
 val Fluid.isSource: Boolean get() = isSource(defaultFluidState())
 
 //    IFluidHandler    //

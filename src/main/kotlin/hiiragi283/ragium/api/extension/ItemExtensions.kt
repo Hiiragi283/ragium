@@ -12,7 +12,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
@@ -22,10 +21,14 @@ import net.neoforged.neoforge.registries.datamaps.IWithData
 //    ItemLike    //
 
 /**
- * [ItemLike]から[Holder]を返します。
+ * この[ItemLike]から[Holder]を返します。
  */
 fun ItemLike.asHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
 
+/**
+ * この[ItemLike]から[ItemStack]を返します。
+ * @param count [ItemStack]の個数
+ */
 fun ItemLike.toStack(count: Int = 1): ItemStack = ItemStack(asItem(), count)
 
 /**
@@ -45,12 +48,6 @@ fun <T : Any> ItemStack.getItemData(type: DataMapType<Item, T>): T? = itemHolder
  * @return [IWithData.getData]が`null`の場合は`null`
  */
 fun <T : Any> BlockState.getItemData(type: DataMapType<Item, T>): T? = block.getItemData(type)
-
-/**
- * 指定した[type]で[BlockState]から[T]を返します。
- * @return [IWithData.getData]が`null`の場合は`null`
- */
-fun <T : Any> BlockState.getBlockData(type: DataMapType<Block, T>): T? = blockHolder.getData(type)
 
 val ItemLike.machineKey: HTMachineKey? get() = getItemData(RagiumAPI.DataMapTypes.MACHINE_KEY)
 
@@ -92,19 +89,23 @@ inline fun IItemHandler.forEachSlot(action: (Int) -> Unit) {
     (0 until this.slots).forEach(action)
 }
 
-inline fun IItemHandler.forEachIndexed(action: (Int, ItemStack) -> Unit) {
-    (0 until this.slots).forEach { slot: Int -> action(slot, getStackInSlot(slot)) }
-}
-
 /**
- * [IItemHandler]に保存されたすべての[ItemStack]を指定した[pos]にドロップします。
+ * この[IItemHandler]に保存されたすべての[ItemStack]を指定した[pos]にドロップします。
  */
 fun IItemHandler.dropStacks(level: Level, pos: BlockPos) {
     forEach { dropStackAt(level, pos, it) }
 }
 
+/**
+ * 指定した[stack]がこの[IItemHandler]に入れられるか判定します。
+ */
 fun IItemHandler.canInsert(stack: ItemStack): Boolean = ItemHandlerHelper.insertItem(this, stack, true).isEmpty
 
+/**
+ * 指定した[stack]をこの[IItemHandler]に入れようとします。
+ *
+ * 入らなかった場合は[dropStackAt]を通じてドロップします。
+ */
 fun IItemHandler.insertOrDrop(level: Level, pos: BlockPos, stack: ItemStack) {
     val remain: ItemStack = ItemHandlerHelper.insertItem(this, stack, false)
     dropStackAt(level, pos, remain)

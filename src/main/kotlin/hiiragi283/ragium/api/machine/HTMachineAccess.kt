@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
-import hiiragi283.ragium.api.multiblock.HTControllerHolder
+import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.world.energyNetwork
@@ -18,18 +18,56 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
 
+/**
+ * 機械の参照を表すインタフェース
+ */
 interface HTMachineAccess :
     HTBlockEntityHandlerProvider,
-    HTControllerHolder {
+    HTMultiblockController {
+    /**
+     * 機械が保持しているエンチャントの一覧
+     */
     val enchantments: ItemEnchantments
+
+    /**
+     * 機械の正面の向き
+     */
     val front: Direction
+
+    /**
+     * 機械が稼働状態かどうか判定します。
+     */
     val isActive: Boolean
+
+    /**
+     * 機械がおかれている[Level]
+     */
     val levelAccess: Level?
+
+    /**
+     * 機械の種類
+     */
     val machineKey: HTMachineKey
+
+    /**
+     * 機械の座標
+     */
     val pos: BlockPos
+
+    /**
+     * 機械の処理に必要なエネルギー量
+     */
     val processCost: Int
+
+    /**
+     * 機械の処理間隔 (tick表記)
+     */
     val tickRate: Int
 
+    /**
+     * 指定した[key]のレベルを取得します。
+     * @return 指定したエンチャントが登録されていない，または紐づいていない場合は`0`
+     */
     fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int {
         val lookup: HolderLookup.RegistryLookup<Enchantment> =
             levelAccess?.registryAccess()?.lookupOrThrow(Registries.ENCHANTMENT) ?: return 0

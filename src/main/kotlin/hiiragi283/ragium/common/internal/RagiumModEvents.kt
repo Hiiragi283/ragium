@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.init.*
@@ -39,7 +38,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -222,13 +220,13 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        RagiumAPI.machineRegistry.blocks.forEach { holder: DeferredBlock<*> ->
+        /*RagiumAPI.machineRegistry.blocks.forEach { holder: DeferredBlock<*> ->
             event.registerBlock(
                 RagiumAPI.BlockCapabilities.CONTROLLER_HOLDER,
-                { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction -> blockEntity as? HTControllerHolder },
+                { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction -> blockEntity as? HTMultiblockController },
                 holder.get(),
             )
-        }
+        }*/
 
         // from HTBlockEntityHandlerProvider
         fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTBlockEntityHandlerProvider {
@@ -302,7 +300,6 @@ internal object RagiumModEvents {
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(RagiumAPI.DataMapTypes.MACHINE_KEY)
         event.register(RagiumAPI.DataMapTypes.MACHINE_TIER)
-        event.register(RagiumAPI.DataMapTypes.RADIOACTIVES)
 
         LOGGER.info("Registered Data Map Types!")
     }

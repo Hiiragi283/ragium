@@ -8,6 +8,9 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
 
+/**
+ * [HTMachineRecipeBase]のキャッシュを保持するクラス
+ */
 class HTMachineRecipeCache<T : HTMachineRecipeBase>(val machine: HTMachineKey) {
     private var recipeCache: MutableList<RecipeHolder<T>> = mutableListOf()
 
@@ -23,6 +26,9 @@ class HTMachineRecipeCache<T : HTMachineRecipeBase>(val machine: HTMachineKey) {
             }
     }
 
+    /**
+     * 指定した[level]と[input]に一致する最初のレシピを返します。
+     */
     fun getFirstMatch(level: Level, input: HTMachineRecipeInput): Result<RecipeHolder<T>> {
         reloadRecipes(level)
         return recipeCache

@@ -2,6 +2,9 @@ package hiiragi283.ragium.api.material.keys
 
 import hiiragi283.ragium.api.material.HTMaterialKey
 
+/**
+ * 連携mod向けの素材の一覧
+ */
 object IntegrationMaterials {
     //    Actually Additions    //
 

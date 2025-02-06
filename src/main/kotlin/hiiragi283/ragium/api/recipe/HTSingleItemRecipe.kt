@@ -14,6 +14,9 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import java.util.*
 
+/**
+ * 単一のアイテムによるインプットを受け付けるレシピ
+ */
 abstract class HTSingleItemRecipe(
     group: String,
     val input: SizedIngredient,

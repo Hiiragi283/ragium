@@ -25,19 +25,8 @@ import java.util.function.Supplier
 
 //    LanguageProvider    //
 
-@JvmName("addBlock")
-fun LanguageProvider.add(block: Supplier<out Block>, value: String) {
-    add(block.get().descriptionId, value)
-}
-
-@JvmName("addFluid")
-fun LanguageProvider.add(fluid: Supplier<out Fluid>, value: String) {
+fun LanguageProvider.addFluid(fluid: Supplier<out Fluid>, value: String) {
     add(fluid.get().fluidType.descriptionId, value)
-}
-
-@JvmName("addItem")
-fun LanguageProvider.add(block: Supplier<out Item>, value: String) {
-    add(block.get().descriptionId, value)
 }
 
 fun LanguageProvider.add(tier: HTMachineTier, value: String, prefix: String) {

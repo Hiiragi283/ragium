@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.component.HTRadioactivity
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -34,7 +33,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         machineKey(builder(RagiumAPI.DataMapTypes.MACHINE_KEY))
         machineTier(builder(RagiumAPI.DataMapTypes.MACHINE_TIER))
-        radioactivity(builder(RagiumAPI.DataMapTypes.RADIOACTIVES))
     }
 
     //    Item    //
@@ -59,12 +57,5 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         RagiumBlocks.DRUMS.forEach { (tier: HTMachineTier, drum: DeferredBlock<HTDrumBlock>) ->
             builder.addItem(drum, tier)
         }
-    }
-
-    private fun radioactivity(builder: Builder<HTRadioactivity, Item>) {
-        builder
-            .addItem(RagiumItems.URANIUM_FUEL, HTRadioactivity.MEDIUM)
-            .addItem(RagiumItems.NUCLEAR_WASTE, HTRadioactivity.LOW)
-            .addItem(RagiumItems.PLUTONIUM_FUEL, HTRadioactivity.HIGH)
     }
 }

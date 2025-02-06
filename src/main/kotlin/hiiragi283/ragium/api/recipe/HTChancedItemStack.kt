@@ -7,6 +7,9 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 
+/**
+ * 確率付きの[ItemStack]を表すクラス
+ */
 data class HTChancedItemStack(val stack: ItemStack, val chance: Float) {
     companion object {
         @JvmField

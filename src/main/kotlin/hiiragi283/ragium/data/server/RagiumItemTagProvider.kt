@@ -138,9 +138,6 @@ class RagiumItemTagProvider(
         tag(RagiumItemTags.ULTIMATE_CIRCUIT)
             .add(RagiumItems.ULTIMATE_CIRCUIT)
 
-        tag(RagiumItemTags.ALKALI_REAGENTS)
-            .add(RagiumItems.ALKALI_REAGENT)
-
         tag(RagiumItemTags.PLASTICS)
             .add(RagiumItems.PLASTIC_PLATE)
 

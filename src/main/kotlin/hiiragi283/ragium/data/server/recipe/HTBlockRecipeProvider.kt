@@ -58,15 +58,21 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .save(output, RagiumAPI.id("shaped/copper_grate"))
 
         RagiumBlocks.GRATES.forEach { (tier: HTMachineTier, grate: DeferredBlock<TransparentBlock>) ->
+            val steel: HTMaterialKey = when (tier) {
+                HTMachineTier.BASIC -> CommonMaterials.STEEL
+                HTMachineTier.ADVANCED -> RagiumMaterials.DEEP_STEEL
+                HTMachineTier.ELITE -> CommonMaterials.ALUMINUM
+                HTMachineTier.ULTIMATE -> VanillaMaterials.NETHERITE
+            }
             // Shaped Crafting
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.BUILDING_BLOCKS, grate, 4)
                 .pattern("AAA")
                 .pattern("ABA")
                 .pattern("AAA")
-                .define('A', HTTagPrefix.ROD, tier.getSteelMetal())
+                .define('A', HTTagPrefix.ROD, steel)
                 .define('B', RagiumItems.FORGE_HAMMER)
-                .unlockedBy("has_rod", has(HTTagPrefix.ROD, tier.getSteelMetal()))
+                .unlockedBy("has_rod", has(HTTagPrefix.ROD, steel))
                 .savePrefixed(output)
         }
     }

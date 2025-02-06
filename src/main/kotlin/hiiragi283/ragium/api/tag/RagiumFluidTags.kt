@@ -6,6 +6,9 @@ import hiiragi283.ragium.api.extension.fluidTagKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 
+/**
+ * Ragiumが使用する液体の[TagKey]の一覧
+ */
 object RagiumFluidTags {
     //    Common    //
 
@@ -22,9 +25,6 @@ object RagiumFluidTags {
 
     @JvmField
     val NON_NITRO_FUEL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/non_nitro"))
-
-    @JvmField
-    val NUCLEAR_FUEL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/nuclear"))
 
     @JvmField
     val THERMAL_FUEL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/thermal"))

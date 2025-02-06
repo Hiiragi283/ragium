@@ -202,7 +202,7 @@ abstract class HTMachineBlockEntity(
                 NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Success(this))
             }.onFailure { throwable: Throwable ->
                 isActive = false
-                NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Failed(this))
+                NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
                 val throwable1: Throwable =
                     when (throwable) {
                         is HTMachineException -> throwable.takeIf { it.showInLog || !FMLLoader.isProduction() }

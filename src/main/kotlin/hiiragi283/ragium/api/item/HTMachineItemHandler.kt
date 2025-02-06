@@ -5,11 +5,18 @@ import hiiragi283.ragium.api.extension.forEachSlot
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.ItemStackHandler
 
+/**
+ * Ragiumで使用する[ItemStackHandler]の拡張クラス
+ * @param callback [ItemStackHandler.onContentsChanged]で呼び出されるブロック
+ */
 open class HTMachineItemHandler(size: Int, val callback: () -> Unit) : ItemStackHandler(size) {
     override fun onContentsChanged(slot: Int) {
         callback()
     }
 
+    /**
+     * 指定した[slot]に対する[HTSlotHandler]を返します。
+     */
     fun createSlot(slot: Int): HTSlotHandler<ItemStack> = object : HTSlotHandler<ItemStack> {
         override var stack: ItemStack
             get() = this@HTMachineItemHandler.getStackInSlot(slot)

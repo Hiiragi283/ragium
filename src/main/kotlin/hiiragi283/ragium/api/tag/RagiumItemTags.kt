@@ -6,11 +6,11 @@ import hiiragi283.ragium.api.extension.itemTagKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
+/**
+ * Ragiumが使用するアイテムの[TagKey]の一覧
+ */
 object RagiumItemTags {
     //    Common    //
-
-    @JvmField
-    val ALKALI_REAGENTS: TagKey<Item> = itemTagKey(commonId("reagents/alkali"))
 
     @JvmField
     val COAL_COKE: TagKey<Item> = itemTagKey(commonId("coal_coke"))

@@ -14,6 +14,9 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.*
 
+/**
+ * アイテムまたは液体の完成品を持つレシピのクラス
+ */
 abstract class HTFluidOutputRecipe(group: String, val itemOutput: Optional<ItemStack>, val fluidOutput: Optional<FluidStack>) :
     HTMachineRecipeBase(group) {
     companion object {
@@ -26,6 +29,10 @@ abstract class HTFluidOutputRecipe(group: String, val itemOutput: Optional<ItemS
         }
     }
 
+    /**
+     * 指定した[itemHandler]と[fluidHandler]に完成品を入れられるか判定します。
+     * @throws HTMachineException 完成品を入れられなかった場合
+     */
     fun canInsert(itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
         itemOutput.ifPresent { output: ItemStack ->
             if (!itemHandler.canInsert(output)) throw HTMachineException.MergeResult(false)
@@ -35,6 +42,11 @@ abstract class HTFluidOutputRecipe(group: String, val itemOutput: Optional<ItemS
         }
     }
 
+    /**
+     * 指定した[itemHandler]と[fluidHandler]に完成品を入れます。
+     * @param level 入れられなかった場合にドロップする対象の[Level]
+     * @param pos 入れられなかった場合にドロップする座標
+     */
     fun insertOutputs(
         itemHandler: IItemHandler,
         fluidHandler: IFluidHandler,

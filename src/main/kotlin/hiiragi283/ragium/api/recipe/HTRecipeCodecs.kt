@@ -10,6 +10,9 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
+/**
+ * レシピ向けの[MapCodec]の一覧
+ */
 object HTRecipeCodecs {
     @JvmStatic
     fun <T : HTMachineRecipeBase> group(): RecordCodecBuilder<T, String> =

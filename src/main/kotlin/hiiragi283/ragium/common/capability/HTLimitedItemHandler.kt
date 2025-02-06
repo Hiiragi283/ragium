@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.capability
+package hiiragi283.ragium.common.capability
 
+import hiiragi283.ragium.api.capability.HTStorageIO
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 

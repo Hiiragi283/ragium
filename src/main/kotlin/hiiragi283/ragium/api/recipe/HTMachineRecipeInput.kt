@@ -5,6 +5,12 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 
+/**
+ * 機械レシピのインプットを表すクラス
+ * @param pos 機械レシピを実行している座標
+ * @param items アイテムのインプットの一覧
+ * @param fluids 液体のインプットの一覧
+ */
 class HTMachineRecipeInput private constructor(val pos: BlockPos, val items: List<ItemStack>, val fluids: List<FluidStack>) : RecipeInput {
     companion object {
         @JvmStatic

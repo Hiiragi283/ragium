@@ -19,13 +19,19 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.phys.Vec3
-import net.neoforged.neoforge.common.util.FakePlayer
-import net.neoforged.neoforge.common.util.FakePlayerFactory
 
 //    BlockGetter    //
 
+/**
+ * 指定した[pos]から[HTBlockEntity]を返します。
+ * @return 存在しない場合は`null`
+ */
 fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
 
+/**
+ * 指定した[pos]から[HTMachineAccess]を返します。
+ * @return 存在しない場合は`null`
+ */
 fun BlockGetter.getMachineEntity(pos: BlockPos): HTMachineAccess? = getBlockEntity(pos) as? HTMachineAccess
 
 /**
@@ -104,8 +110,6 @@ fun dropStackAt(
     itemEntity.setPickUpDelay(0)
     return level.addFreshEntity(itemEntity)
 }
-
-fun Level?.getFakePlayer(): FakePlayer? = asServerLevel()?.let(FakePlayerFactory::getMinecraft)
 
 //    BlockEntity    //
 

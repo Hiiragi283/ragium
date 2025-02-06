@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.Keyable
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyHolder
@@ -28,9 +27,6 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
 
         @JvmField
         val FIELD_CODEC: MapCodec<HTMachineKey> = CODEC.fieldOf("machine_type")
-
-        @JvmField
-        val KEYABLE: Keyable = Keyable.forStrings { allKeys.stream().map(HTMachineKey::name) }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineKey> =

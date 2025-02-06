@@ -2,23 +2,19 @@ package hiiragi283.ragium.api
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.component.HTRadioactivity
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
 import hiiragi283.ragium.api.util.DisableOverwriteMerger
 import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
-import net.minecraft.core.Direction
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.registries.RegistryBuilder
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -57,18 +53,6 @@ data object RagiumAPI {
     val materialRegistry: HTMaterialRegistry = HTMaterialRegistryImpl
 
     /**
-     * Ragiumが追加する[BlockCapability]
-     */
-    object BlockCapabilities {
-        /**
-         * [HTControllerHolder]を返す[BlockCapability]
-         */
-        @JvmField
-        val CONTROLLER_HOLDER: BlockCapability<HTControllerHolder, Direction?> =
-            BlockCapability.createSided(id("controller_holder"), HTControllerHolder::class.java)
-    }
-
-    /**
      * Ragiumが追加する[DataMapType]
      */
     object DataMapTypes {
@@ -85,12 +69,6 @@ data object RagiumAPI {
          */
         @JvmField
         val MACHINE_TIER: DataMapType<Item, HTMachineTier> = createItem("machine_tier", HTMachineTier.CODEC)
-
-        /**
-         * [HTRadioactivity]を返す[DataMapType]
-         */
-        @JvmField
-        val RADIOACTIVES: DataMapType<Item, HTRadioactivity> = createItem("radioactivity", HTRadioactivity.CODEC)
 
         @JvmStatic
         private fun <T : Any> createItem(path: String, codec: Codec<T>): DataMapType<Item, T> = AdvancedDataMapType

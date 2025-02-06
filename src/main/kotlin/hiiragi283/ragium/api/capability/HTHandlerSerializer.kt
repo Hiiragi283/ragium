@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.capability
 
 import com.mojang.logging.LogUtils
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.logError
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -11,14 +12,24 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import org.slf4j.Logger
 
+/**
+ * 指定された[items]と[fluids]を[Codec]に基づいて読み書きするクラス
+ */
 class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<ItemStack>>, val fluids: List<HTSlotHandler<FluidStack>>) {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
 
+        /**
+         * 空のインスタンス
+         */
         @JvmField
         val EMPTY = HTHandlerSerializer(listOf(), listOf())
 
+        /**
+         * 指定した[items]と[fluids]から新しいインスタンスを返します。
+         * @return [items]と[fluids]が共に空の場合は[HTHandlerSerializer.EMPTY]
+         */
         @JvmStatic
         fun of(items: List<HTSlotHandler<ItemStack>>, fluids: List<HTSlotHandler<FluidStack>>): HTHandlerSerializer {
             if (items.isEmpty() && fluids.isEmpty()) {
@@ -27,15 +38,26 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
             return HTHandlerSerializer(items, fluids)
         }
 
+        /**
+         * 指定した[items]から新しいインスタンスを返します。
+         * @return [items]が空の場合は[HTHandlerSerializer.EMPTY]
+         */
         @JvmStatic
         fun ofItem(items: List<HTSlotHandler<ItemStack>>): HTHandlerSerializer =
             if (items.isEmpty()) EMPTY else HTHandlerSerializer(items, listOf())
 
+        /**
+         * 指定した[fluids]から新しいインスタンスを返します。
+         * @return [fluids]が空の場合は[HTHandlerSerializer.EMPTY]
+         */
         @JvmStatic
         fun ofFluid(fluids: List<HTSlotHandler<FluidStack>>): HTHandlerSerializer =
             if (fluids.isEmpty()) EMPTY else HTHandlerSerializer(listOf(), fluids)
     }
 
+    /**
+     * 指定した[nbt]に値を書き込みます。
+     */
     fun writeNbt(nbt: CompoundTag, provider: HolderLookup.Provider) {
         val dynamicOps: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
         ItemStack.OPTIONAL_CODEC
@@ -50,6 +72,9 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
             .logError(LOGGER)
     }
 
+    /**
+     * 指定した[nbt]から値を読み取ります。
+     */
     fun readNbt(nbt: CompoundTag, provider: HolderLookup.Provider) {
         val dynamicOps: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
         ItemStack.OPTIONAL_CODEC
