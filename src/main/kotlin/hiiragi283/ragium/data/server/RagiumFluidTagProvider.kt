@@ -1,12 +1,10 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.add
-import hiiragi283.ragium.api.extension.addTag
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.fluidTagKey
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumFluidsNew
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -14,6 +12,7 @@ import net.minecraft.data.tags.TagsProvider
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.concurrent.CompletableFuture
 
 class RagiumFluidTagProvider(
@@ -24,13 +23,19 @@ class RagiumFluidTagProvider(
     override fun addTags(provider: HolderLookup.Provider) {
         val gasBuilder: TagAppender<Fluid> = tag(Tags.Fluids.GASEOUS)
 
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+        tag(Tags.Fluids.HONEY)
+            .add(RagiumFluidsNew.HONEY)
+
+        tag(RagiumFluidsNew.SNOW.commonTag)
+            .add(RagiumFluidsNew.SNOW)
+
+        tag(RagiumFluidsNew.CRUDE_OIL.commonTag)
+            .add(RagiumFluidsNew.CRUDE_OIL)
+            .add(RagiumFluidsNew.FLOWING_CRUDE_OIL)
+
+        RagiumFluids.REGISTER.entries.forEach { holder: DeferredHolder<Fluid, out Fluid> ->
             // Common Tag
-            tag(fluid.commonTag).add(fluid.fluidHolder)
-            // Gaseous Tag
-            if (fluid.get().fluidType.isLighterThanAir) {
-                gasBuilder.add(fluid.fluidHolder)
-            }
+            tag(holder.commonTag).add(holder.keyOrThrow)
         }
 
         tag(RagiumFluidTags.NITRO_FUEL)

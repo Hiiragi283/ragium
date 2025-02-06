@@ -18,6 +18,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     override fun addTranslations() {
         // Block
         add(RagiumBlocks.SOUL_MAGMA_BLOCK, "Soul Magma Block")
+        add(RagiumBlocks.CRUDE_OIL, "Crude Oil")
 
         add(RagiumBlocks.SLAG_BLOCK, "Block of Slag")
 
@@ -69,9 +70,30 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTOreVariant.NETHER, "Nether %s Ore")
         add(HTOreVariant.END, "End %s Ore")
         // Fluids
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            add(fluid.typeHolder.get().descriptionId, fluid.enName)
-        }
+        add(RagiumFluidsNew.HONEY, "Honey")
+        add(RagiumFluidsNew.SNOW, "Powder Snow")
+
+        add(RagiumFluids.HYDROGEN, "Hydrogen")
+        add(RagiumFluids.OXYGEN, "Oxygen")
+        add(RagiumFluids.STEAM, "Steam")
+
+        add(RagiumFluids.SULFURIC_ACID, "Blaze Acid")
+        add(RagiumFluids.HYDROFLUORIC_ACID, "Glow Acid")
+
+        add(RagiumFluids.LAPIS_SOLUTION, "Lapis Solution")
+
+        add(RagiumFluids.NAPHTHA, "Naphtha")
+        add(RagiumFluids.FUEL, "Fuel")
+        add(RagiumFluids.NITRO_FUEL, "Nitro Fuel")
+
+        add(RagiumFluids.PLANT_OIL, "Plant Oil")
+        add(RagiumFluids.BIOMASS, "Biomass")
+        add(RagiumFluids.ETHANOL, "Ethanol")
+        add(RagiumFluids.BIODIESEL, "Biodiesel")
+
+        add(RagiumFluids.SAP, "Sap")
+        add(RagiumFluids.CRIMSON_SAP, "Crimson Sap")
+        add(RagiumFluids.WARPED_SAP, "Warped Sap")
         // Items
         add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
         add(RagiumItems.MELON_PIE, "Melon Pie")
@@ -123,6 +145,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.BEE_WAX, "Bee Wax")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
+        add(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
         add(RagiumItems.ENGINE, "V8 Engine")
         add(RagiumItems.LED, "L.E.D.")
         add(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")

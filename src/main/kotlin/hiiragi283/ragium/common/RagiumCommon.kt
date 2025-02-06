@@ -30,6 +30,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         HTMachineRegistryImpl.registerBlocks()
 
         RagiumFluids.register(eventBus)
+
+        RagiumFluidsNew.init()
+        RagiumFluidsNew.REGISTER.register(eventBus)
+        RagiumFluidTypes.REGISTER.register(eventBus)
+
         RagiumBlocks.REGISTER.register(eventBus)
         RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumItems.REGISTER.register(eventBus)

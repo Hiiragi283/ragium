@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -15,57 +14,35 @@ import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import java.awt.Color
 
-enum class RagiumFluids(
-    val color: Color,
-    val enName: String,
-    val jaName: String,
-    private val textureType: TextureType = TextureType.LIQUID,
-) : HTFluidContent,
-    IClientFluidTypeExtensions {
-    // Vanilla
-    HONEY("Honey", "蜂蜜", TextureType.HONEY),
-    SNOW("Powder Snow", "粉雪", TextureType.SNOW),
-    EXPERIENCE(Color(0x99cc00), "Liquid Experience", "液体経験値"),
-
+enum class RagiumFluids(val color: Color, val textureType: TextureType = TextureType.LIQUID) : HTFluidContent {
     // Water
-    HYDROGEN(Color(0x000099), "Hydrogen", "水素", TextureType.GASEOUS),
-    OXYGEN(Color(0x66cccc), "Oxygen", "酸素", TextureType.GASEOUS),
-    STEAM("Steam", "蒸気", TextureType.GASEOUS),
+    HYDROGEN(Color(0x000099), TextureType.GASEOUS),
+    OXYGEN(Color(0x66cccc), TextureType.GASEOUS),
+    STEAM(Color.WHITE, TextureType.GASEOUS),
 
     // Acid
-    REDSTONE_ACID(Color(0xcc3333), "Redstone Acid", "赤石酸", TextureType.STICKY),
-    SULFURIC_ACID(Color(0xff3300), "Blaze Acid", "ブレイズ酸", TextureType.STICKY),
-
-    HYDROGEN_FLUORIDE(Color(0x33cccc), "Hydrogen Fluoride", "フッ化水素", TextureType.GASEOUS),
-    HYDROFLUORIC_ACID(Color(0x33ccff), "Hydrofluoric Acid", "フッ化水素酸"),
+    SULFURIC_ACID(Color(0xff3300), TextureType.STICKY),
+    HYDROFLUORIC_ACID(Color(0xffcc33)),
 
     // Base
-    LAPIS_SOLUTION(Color(0x3333ff), "Lapis Solution", "ラピス溶液"),
+    LAPIS_SOLUTION(Color(0x3333ff)),
 
     // Oil
-    CRUDE_OIL(Color(0x000000), "Crude Oil", "原油", TextureType.STICKY),
-    NAPHTHA(Color(0xff9900), "Naphtha", "ナフサ"),
-    FUEL(Color(0xcc6633), "Fuel", "燃料"),
-    NITRO_FUEL(Color(0xff33333), "Nitro Fuel", "ニトロ燃料"),
+    NAPHTHA(Color(0xff9900)),
+    FUEL(Color(0xcc6633)),
+    NITRO_FUEL(Color(0xff33333)),
 
     // Bio
-    PLANT_OIL(Color(0x99cc33), "Plant Oil", "植物油"),
-    BIOMASS(Color(0x006600), "Biomass", "バイオマス", TextureType.STICKY),
-    ETHANOL(Color(0x99ffff), "Ethanol", "エタノール"),
-    BIODIESEL(Color(0x99ff00), "Biodiesel", "バイオディーゼル"),
+    PLANT_OIL(Color(0x99cc33)),
+    BIOMASS(Color(0x006600), TextureType.STICKY),
+    ETHANOL(Color(0x99ffff)),
+    BIODIESEL(Color(0x99ff00)),
 
     // Saps
-    SAP(Color(0x996633), "Sap", "樹液", TextureType.STICKY),
-    CRIMSON_SAP(Color(0x660000), "Crimson Sap", "深紅の樹液", TextureType.STICKY),
-    WARPED_SAP(Color(0x006666), "Warped Sap", "歪んだ樹液", TextureType.STICKY),
+    SAP(Color(0x996633), TextureType.STICKY),
+    CRIMSON_SAP(Color(0x660000), TextureType.STICKY),
+    WARPED_SAP(Color(0x006666), TextureType.STICKY),
     ;
-
-    constructor(enName: String, jaName: String, type: TextureType = TextureType.LIQUID) : this(
-        Color.WHITE,
-        enName,
-        jaName,
-        type,
-    )
 
     companion object {
         @JvmField
@@ -105,27 +82,11 @@ enum class RagiumFluids(
 
     //    TextureType    //
 
-    private enum class TextureType(
-        val stillTex: ResourceLocation = ResourceLocation.withDefaultNamespace("block/bone_block_side"),
-        val floatingTex: ResourceLocation = stillTex,
-        val overTex: ResourceLocation? = null,
-    ) {
-        GASEOUS(ResourceLocation.withDefaultNamespace("block/white_concrete")),
-        HONEY(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
+    enum class TextureType {
+        GASEOUS,
         LIQUID,
-        SNOW(ResourceLocation.withDefaultNamespace("block/snow")),
-        STICKY(ResourceLocation.withDefaultNamespace("block/quartz_block_bottom")),
+        STICKY,
     }
-
-    //    ClientExtensions    //
-
-    override fun getStillTexture(): ResourceLocation = textureType.stillTex
-
-    override fun getFlowingTexture(): ResourceLocation = textureType.floatingTex
-
-    override fun getOverlayTexture(): ResourceLocation? = textureType.overTex
-
-    override fun getTintColor(): Int = color.rgb
 
     //    StringRepresentable    //
 

@@ -15,6 +15,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
@@ -27,6 +28,11 @@ import java.util.function.Supplier
 @JvmName("addBlock")
 fun LanguageProvider.add(block: Supplier<out Block>, value: String) {
     add(block.get().descriptionId, value)
+}
+
+@JvmName("addFluid")
+fun LanguageProvider.add(fluid: Supplier<out Fluid>, value: String) {
+    add(fluid.get().fluidType.descriptionId, value)
 }
 
 @JvmName("addItem")

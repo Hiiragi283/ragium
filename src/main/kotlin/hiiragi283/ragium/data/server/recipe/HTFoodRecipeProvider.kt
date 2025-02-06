@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumFluidsNew
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
@@ -87,13 +87,13 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
         // Honey
         HTExtractorRecipeBuilder()
             .itemInput(Items.HONEY_BLOCK)
-            .fluidOutput(RagiumFluids.HONEY)
+            .fluidOutput(RagiumFluidsNew.HONEY)
             .saveSuffixed(output, "_from_block")
 
         HTExtractorRecipeBuilder()
             .itemInput(Items.HONEY_BOTTLE)
             .itemOutput(Items.GLASS_BOTTLE)
-            .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
+            .fluidOutput(RagiumFluidsNew.HONEY, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_bottle")
 
         HTInfuserRecipeBuilder()
@@ -111,13 +111,13 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
         HTExtractorRecipeBuilder()
             .itemInput(Items.HONEYCOMB_BLOCK)
             .itemOutput(RagiumItems.BEE_WAX, 4)
-            .fluidOutput(RagiumFluids.HONEY)
+            .fluidOutput(RagiumFluidsNew.HONEY)
             .saveSuffixed(output, "_from_block")
 
         HTExtractorRecipeBuilder()
             .itemInput(Items.HONEYCOMB)
             .itemOutput(RagiumItems.BEE_WAX)
-            .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
+            .fluidOutput(RagiumFluidsNew.HONEY, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_comb")
     }
 

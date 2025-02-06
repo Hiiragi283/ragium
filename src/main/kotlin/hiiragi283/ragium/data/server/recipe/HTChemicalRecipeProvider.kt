@@ -69,16 +69,10 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(HTTagPrefix.GEM, CommonMaterials.FLUORITE, 6)
             .saveSuffixed(output, "_from_sea_lantern")
 
-        // CaF2 + H2SO4 -> CaSO4 + 2x HF
+        // CaF2 + H2SO4 -> CaSO4 + 2x HF(aq)
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
             .fluidInput(RagiumFluids.SULFURIC_ACID)
-            .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE)
-            .save(output)
-        // HF + H2O <-> HF(aq)
-        HTMixerRecipeBuilder()
-            .fluidInput(RagiumFluids.HYDROGEN_FLUORIDE)
-            .waterInput()
             .fluidOutput(RagiumFluids.HYDROFLUORIC_ACID)
             .save(output)
     }

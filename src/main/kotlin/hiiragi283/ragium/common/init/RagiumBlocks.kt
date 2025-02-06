@@ -60,6 +60,13 @@ object RagiumBlocks {
         REGISTER.registerBlock("soul_magma_block", ::HTSoulMagmaBlock, blockProperty(Blocks.MAGMA_BLOCK))
 
     @JvmField
+    val CRUDE_OIL: DeferredBlock<LiquidBlock> = REGISTER.registerBlock(
+        "crude_oil",
+        { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluidsNew.CRUDE_OIL.get(), properties) },
+        blockProperty(Blocks.WATER),
+    )
+
+    @JvmField
     val STORAGE_BLOCKS: Map<HTMaterialKey, DeferredBlock<Block>> = listOf(
         // Ragium
         RagiumMaterials.RAGI_ALLOY,

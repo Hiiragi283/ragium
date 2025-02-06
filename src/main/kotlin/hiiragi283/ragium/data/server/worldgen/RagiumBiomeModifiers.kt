@@ -24,6 +24,12 @@ object RagiumBiomeModifiers {
     @JvmField
     val END_RAGINITE: ResourceKey<BiomeModifier> = createKey("end_raginite")
 
+    @JvmField
+    val LAKE_CRUDE_OIL_SURFACE: ResourceKey<BiomeModifier> = createKey("lake_crude_oil_surface")
+
+    @JvmField
+    val LAKE_CRUDE_OIL_UNDERGROUND: ResourceKey<BiomeModifier> = createKey("lake_crude_oil_underground")
+
     @JvmStatic
     private fun createKey(path: String): ResourceKey<BiomeModifier> =
         ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumAPI.id(path))
@@ -57,6 +63,25 @@ object RagiumBiomeModifiers {
                 biomeGetter.getOrThrow(BiomeTags.IS_END),
                 HolderSet.direct(featureGetter.getOrThrow(RagiumPlacedFeatures.END_RAGINITE)),
                 GenerationStep.Decoration.UNDERGROUND_ORES,
+            ),
+        )
+
+        // Crude Oil
+        context.register(
+            LAKE_CRUDE_OIL_SURFACE,
+            BiomeModifiers.AddFeaturesBiomeModifier(
+                biomeGetter.getOrThrow(BiomeTags.IS_OVERWORLD),
+                HolderSet.direct(featureGetter.getOrThrow(RagiumPlacedFeatures.LAKE_CRUDE_OIL_SURFACE)),
+                GenerationStep.Decoration.LAKES,
+            ),
+        )
+
+        context.register(
+            LAKE_CRUDE_OIL_UNDERGROUND,
+            BiomeModifiers.AddFeaturesBiomeModifier(
+                biomeGetter.getOrThrow(BiomeTags.IS_OVERWORLD),
+                HolderSet.direct(featureGetter.getOrThrow(RagiumPlacedFeatures.LAKE_CRUDE_OIL_UNDERGROUND)),
+                GenerationStep.Decoration.LAKES,
             ),
         )
     }

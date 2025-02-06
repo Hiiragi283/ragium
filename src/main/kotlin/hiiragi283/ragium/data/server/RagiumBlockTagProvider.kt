@@ -62,6 +62,8 @@ class RagiumBlockTagProvider(
             .add(RagiumBlocks.SPONGE_CAKE)
             .add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
+        // Vanilla
+
         // Ragium
         tag(RagiumBlockTags.COOLING_SOURCES)
             .addTag(BlockTags.ICE)

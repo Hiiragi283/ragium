@@ -124,6 +124,9 @@ class RagiumItemTagProvider(
     //    Part    //
 
     private fun partTags() {
+        tag(Tags.Items.BUCKETS)
+            .add(RagiumItems.CRUDE_OIL_BUCKET)
+
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             tag(tier.getCircuitTag())
                 .add(tier.getCircuit())

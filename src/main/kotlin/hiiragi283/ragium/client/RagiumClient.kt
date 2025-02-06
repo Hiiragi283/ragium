@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTagMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -36,8 +37,26 @@ object RagiumClient {
     @SubscribeEvent
     fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Fluid
+        event.registerFluidType(
+            HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
+            RagiumFluidTypes.HONEY,
+        )
+        event.registerFluidType(
+            HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/snow")),
+            RagiumFluidTypes.SNOW,
+        )
+        event.registerFluidType(
+            HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/black_concrete_powder")),
+            RagiumFluidTypes.CRUDE_OIL,
+        )
+
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            event.registerFluidType(fluid, fluid.typeHolder.get())
+            val textureId: ResourceLocation = when (fluid.textureType) {
+                RagiumFluids.TextureType.GASEOUS -> "block/white_concrete"
+                RagiumFluids.TextureType.LIQUID -> "block/bone_block_side"
+                RagiumFluids.TextureType.STICKY -> "block/quartz_block_bottom"
+            }.let(ResourceLocation::withDefaultNamespace)
+            event.registerFluidType(HTSimpleFluidExtensions(textureId, fluid.color), fluid.typeHolder.get())
         }
 
         LOGGER.info("Registered client extensions!")

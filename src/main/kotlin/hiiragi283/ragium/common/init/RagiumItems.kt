@@ -20,9 +20,7 @@ import hiiragi283.ragium.common.item.HTDynamiteItem
 import hiiragi283.ragium.common.item.HTSilkyPickaxeItem
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
-import net.minecraft.world.item.HoneycombItem
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.*
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
@@ -445,6 +443,13 @@ object RagiumItems {
     //    Ingredients    //
 
     @JvmField
+    val CRUDE_OIL_BUCKET: DeferredItem<BucketItem> = register(
+        "crude_oil_bucket",
+        { properties: Item.Properties -> BucketItem(RagiumFluidsNew.CRUDE_OIL.get(), properties) },
+        itemProperty().craftRemainder(Items.BUCKET).stacksTo(1),
+    )
+
+    @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
 
     @JvmField
@@ -466,7 +471,9 @@ object RagiumItems {
     val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
 
     @JvmField
-    val INGREDIENTS: List<DeferredItem<Item>> = buildList {
+    val INGREDIENTS: List<DeferredItem<out Item>> = buildList {
+        // bucket
+        add(CRUDE_OIL_BUCKET)
         // parts
         add(POLYMER_RESIN)
         add(PLASTIC_PLATE)

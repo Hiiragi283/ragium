@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredHolder
 
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。
@@ -48,6 +49,8 @@ fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
  * `block/`で前置された[DeferredBlock.getId]
  */
 val DeferredBlock<*>.blockId: ResourceLocation get() = id.withPrefix("block/")
+
+val DeferredHolder<Fluid, *>.commonTag: TagKey<Fluid> get() = fluidTagKey(commonId(id.path))
 
 //    HolderSet    //
 

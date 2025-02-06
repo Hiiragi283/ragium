@@ -18,6 +18,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     override fun addTranslations() {
         // Block
         add(RagiumBlocks.SOUL_MAGMA_BLOCK, "ソウルマグマブロック")
+        add(RagiumBlocks.CRUDE_OIL, "原油")
 
         add(RagiumBlocks.SLAG_BLOCK, "スラグブロック")
 
@@ -71,9 +72,30 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTOreVariant.NETHER, "ネザー%s鉱石")
         add(HTOreVariant.END, "エンド%s鉱石")
         // Fluids
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            add(fluid.typeHolder.get().descriptionId, fluid.jaName)
-        }
+        add(RagiumFluidsNew.HONEY, "蜂蜜")
+        add(RagiumFluidsNew.SNOW, "粉雪")
+
+        add(RagiumFluids.HYDROGEN, "水素")
+        add(RagiumFluids.OXYGEN, "酸素")
+        add(RagiumFluids.STEAM, "蒸気")
+
+        add(RagiumFluids.SULFURIC_ACID, "ブレイズ酸")
+        add(RagiumFluids.HYDROFLUORIC_ACID, "グロウ酸")
+
+        add(RagiumFluids.LAPIS_SOLUTION, "ラピス溶液")
+
+        add(RagiumFluids.NAPHTHA, "ナフサ")
+        add(RagiumFluids.FUEL, "燃料")
+        add(RagiumFluids.NITRO_FUEL, "ニトロ燃料")
+
+        add(RagiumFluids.PLANT_OIL, "植物油")
+        add(RagiumFluids.BIOMASS, "バイオマス")
+        add(RagiumFluids.ETHANOL, "エタノール")
+        add(RagiumFluids.BIODIESEL, "バイオディーゼル")
+
+        add(RagiumFluids.SAP, "樹液")
+        add(RagiumFluids.CRIMSON_SAP, "深紅の樹液")
+        add(RagiumFluids.WARPED_SAP, "歪んだ樹液")
         // Items
         add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
         add(RagiumItems.MELON_PIE, "メロンパイ")
@@ -125,6 +147,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.BEE_WAX, "蜜蠟")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
+        add(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
         add(RagiumItems.ENGINE, "V8エンジン")
         add(RagiumItems.LED, "L.E.D.")
         add(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")

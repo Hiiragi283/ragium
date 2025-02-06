@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumFluidsNew
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
@@ -64,8 +65,14 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Crude Oil
         HTExtractorRecipeBuilder()
+            .itemInput(RagiumItems.CRUDE_OIL_BUCKET)
+            .itemOutput(Items.BUCKET)
+            .fluidOutput(RagiumFluidsNew.CRUDE_OIL)
+            .save(output, RagiumAPI.id("crude_oil"))
+
+        HTExtractorRecipeBuilder()
             .itemInput(ItemTags.COALS, 8)
-            .fluidOutput(RagiumFluids.CRUDE_OIL)
+            .fluidOutput(RagiumFluidsNew.CRUDE_OIL)
             .save(output, RagiumAPI.id("crude_oil_from_coal"))
 
         // Blaze Reagent
@@ -201,11 +208,11 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         HTExtractorRecipeBuilder()
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .itemOutput(Items.SAND)
-            .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 2)
+            .fluidOutput(RagiumFluidsNew.CRUDE_OIL, FluidType.BUCKET_VOLUME / 2)
             .save(output, RagiumAPI.id("crude_oil_from_soul"))
         // Crude Oil -> Naphtha
         HTRefineryRecipeBuilder()
-            .fluidInput(RagiumFluids.CRUDE_OIL)
+            .fluidInput(RagiumFluidsNew.CRUDE_OIL)
             .fluidOutput(RagiumFluids.NAPHTHA)
             .save(output)
         // Naphtha -> Polymer Resin + Fuel
