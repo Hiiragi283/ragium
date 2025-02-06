@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -38,7 +38,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTInfuserRecipeBuilder()
             .itemInput(RagiumItems.CREEPER_REAGENT)
             .fluidInput(RagiumFluidTags.NON_NITRO_FUEL, FluidType.BUCKET_VOLUME * 8)
-            .fluidOutput(RagiumFluids.NITRO_FUEL, FluidType.BUCKET_VOLUME * 8)
+            .fluidOutput(RagiumVirtualFluids.NITRO_FUEL, FluidType.BUCKET_VOLUME * 8)
             .save(output)
 
         HTMultiItemRecipeBuilder
@@ -72,8 +72,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // CaF2 + H2SO4 -> CaSO4 + 2x HF(aq)
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
-            .fluidInput(RagiumFluids.SULFURIC_ACID)
-            .fluidOutput(RagiumFluids.HYDROFLUORIC_ACID)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID)
+            .fluidOutput(RagiumVirtualFluids.HYDROFLUORIC_ACID)
             .save(output)
     }
 
@@ -92,7 +92,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Alkali + Seed Oil -> Soap
         HTInfuserRecipeBuilder()
             .itemInput(RagiumItems.ALKALI_REAGENT)
-            .fluidInput(RagiumFluids.PLANT_OIL)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL)
             .itemOutput(RagiumItems.SOAP, 4)
             .save(output)
     }
@@ -102,7 +102,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.LAPIS)
             .waterInput()
-            .fluidOutput(RagiumFluids.LAPIS_SOLUTION)
+            .fluidOutput(RagiumVirtualFluids.LAPIS_SOLUTION)
             .save(output)
 
         // 8x Netherrack -> 6x Bauxite + 2x Sulfur
@@ -115,7 +115,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Bauxite + Lapis solution -> Alumina + Water
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
-            .fluidInput(RagiumFluids.LAPIS_SOLUTION)
+            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
             .waterOutput()
             .saveSuffixed(output, "_from_bauxite")
@@ -130,13 +130,13 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Al + O2 -> Alumina
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM, 2)
-            .fluidInput(RagiumFluids.OXYGEN, FluidType.BUCKET_VOLUME * 3)
+            .fluidInput(RagiumVirtualFluids.OXYGEN, FluidType.BUCKET_VOLUME * 3)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA, 5)
             .saveSuffixed(output, "_from_aluminum")
         // Alumina + HF -> Cryolite
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
-            .fluidInput(RagiumFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
+            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
             .itemOutput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
             .save(output)
         // Alumina + Cryolite -> 3x Aluminum Ingot
@@ -168,7 +168,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Poisonous Potato + H2SO4 -> Yellow Cake
         HTInfuserRecipeBuilder()
             .itemInput(Items.POISONOUS_POTATO, 8)
-            .fluidInput(RagiumFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME * 8)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(RagiumItems.YELLOW_CAKE)
             .save(output)
         // Cutting Yellow Cake
@@ -180,7 +180,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Uranium Fuel
         HTInfuserRecipeBuilder()
             .itemInput(RagiumItems.YELLOW_CAKE_PIECE, 16)
-            .fluidInput(RagiumFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 8)
+            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(RagiumItems.URANIUM_FUEL)
             .save(output)
     }

@@ -70,30 +70,30 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTOreVariant.NETHER, "Nether %s Ore")
         add(HTOreVariant.END, "End %s Ore")
         // Fluids
-        add(RagiumFluidsNew.HONEY, "Honey")
-        add(RagiumFluidsNew.SNOW, "Powder Snow")
+        add(RagiumFluids.HONEY, "Honey")
+        add(RagiumFluids.SNOW, "Powder Snow")
 
-        add(RagiumFluids.HYDROGEN, "Hydrogen")
-        add(RagiumFluids.OXYGEN, "Oxygen")
-        add(RagiumFluids.STEAM, "Steam")
+        add(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
+        add(RagiumVirtualFluids.OXYGEN, "Oxygen")
+        add(RagiumVirtualFluids.STEAM, "Steam")
 
-        add(RagiumFluids.SULFURIC_ACID, "Blaze Acid")
-        add(RagiumFluids.HYDROFLUORIC_ACID, "Glow Acid")
+        add(RagiumVirtualFluids.SULFURIC_ACID, "Blaze Acid")
+        add(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Glow Acid")
 
-        add(RagiumFluids.LAPIS_SOLUTION, "Lapis Solution")
+        add(RagiumVirtualFluids.LAPIS_SOLUTION, "Lapis Solution")
 
-        add(RagiumFluids.NAPHTHA, "Naphtha")
-        add(RagiumFluids.FUEL, "Fuel")
-        add(RagiumFluids.NITRO_FUEL, "Nitro Fuel")
+        add(RagiumVirtualFluids.NAPHTHA, "Naphtha")
+        add(RagiumVirtualFluids.FUEL, "Fuel")
+        add(RagiumVirtualFluids.NITRO_FUEL, "Nitro Fuel")
 
-        add(RagiumFluids.PLANT_OIL, "Plant Oil")
-        add(RagiumFluids.BIOMASS, "Biomass")
-        add(RagiumFluids.ETHANOL, "Ethanol")
-        add(RagiumFluids.BIODIESEL, "Biodiesel")
+        add(RagiumVirtualFluids.PLANT_OIL, "Plant Oil")
+        add(RagiumVirtualFluids.BIOMASS, "Biomass")
+        add(RagiumVirtualFluids.ETHANOL, "Ethanol")
+        add(RagiumVirtualFluids.BIODIESEL, "Biodiesel")
 
-        add(RagiumFluids.SAP, "Sap")
-        add(RagiumFluids.CRIMSON_SAP, "Crimson Sap")
-        add(RagiumFluids.WARPED_SAP, "Warped Sap")
+        add(RagiumVirtualFluids.SAP, "Sap")
+        add(RagiumVirtualFluids.CRIMSON_SAP, "Crimson Sap")
+        add(RagiumVirtualFluids.WARPED_SAP, "Warped Sap")
         // Items
         add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
         add(RagiumItems.MELON_PIE, "Melon Pie")

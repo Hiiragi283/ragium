@@ -14,8 +14,8 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumFluidsNew
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
@@ -137,7 +137,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Ragium
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 8)
-            .fluidInput(RagiumFluids.LAPIS_SOLUTION, FluidType.BUCKET_VOLUME * 8)
+            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(RagiumItems.RAGIUM_REAGENT)
             .save(output)
 
@@ -180,7 +180,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Fiery Coal
         HTInfuserRecipeBuilder()
             .itemInput(RagiumItems.BLAZE_REAGENT, 8)
-            .fluidInput(RagiumFluidsNew.CRUDE_OIL)
+            .fluidInput(RagiumFluids.CRUDE_OIL)
             .itemOutput(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
             .save(output)
     }

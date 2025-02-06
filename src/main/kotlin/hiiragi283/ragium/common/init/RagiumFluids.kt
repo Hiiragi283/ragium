@@ -1,94 +1,70 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTFluidContent
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
-import net.neoforged.neoforge.registries.NeoForgeRegistries
-import java.awt.Color
+import java.util.function.Supplier
 
-enum class RagiumFluids(val color: Color, val textureType: TextureType = TextureType.LIQUID) : HTFluidContent {
-    // Water
-    HYDROGEN(Color(0x000099), TextureType.GASEOUS),
-    OXYGEN(Color(0x66cccc), TextureType.GASEOUS),
-    STEAM(Color.WHITE, TextureType.GASEOUS),
+object RagiumFluids {
+    @JvmField
+    val REGISTER: DeferredRegister<Fluid> = DeferredRegister.create(Registries.FLUID, RagiumAPI.MOD_ID)
 
-    // Acid
-    SULFURIC_ACID(Color(0xff3300), TextureType.STICKY),
-    HYDROFLUORIC_ACID(Color(0xffcc33)),
+    @JvmField
+    val HONEY: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("honey", RagiumFluidTypes.HONEY)
 
-    // Base
-    LAPIS_SOLUTION(Color(0x3333ff)),
+    @JvmField
+    val SNOW: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("snow", RagiumFluidTypes.SNOW)
 
-    // Oil
-    NAPHTHA(Color(0xff9900)),
-    FUEL(Color(0xcc6633)),
-    NITRO_FUEL(Color(0xff33333)),
+    @JvmField
+    val CRUDE_OIL: DeferredHolder<Fluid, BaseFlowingFluid.Source> =
+        DeferredHolder.create(Registries.FLUID, RagiumAPI.id("crude_oil"))
 
-    // Bio
-    PLANT_OIL(Color(0x99cc33)),
-    BIOMASS(Color(0x006600), TextureType.STICKY),
-    ETHANOL(Color(0x99ffff)),
-    BIODIESEL(Color(0x99ff00)),
+    @JvmField
+    val FLOWING_CRUDE_OIL: DeferredHolder<Fluid, BaseFlowingFluid.Flowing> =
+        DeferredHolder.create(Registries.FLUID, RagiumAPI.id("flowing_crude_oil"))
 
-    // Saps
-    SAP(Color(0x996633), TextureType.STICKY),
-    CRIMSON_SAP(Color(0x660000), TextureType.STICKY),
-    WARPED_SAP(Color(0x006666), TextureType.STICKY),
-    ;
-
-    companion object {
-        @JvmField
-        val REGISTER: DeferredRegister<Fluid> = DeferredRegister.create(Registries.FLUID, RagiumAPI.MOD_ID)
-
-        @JvmField
-        val TYPE_REGISTER: DeferredRegister<FluidType> =
-            DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, RagiumAPI.MOD_ID)
-
-        @JvmStatic
-        fun register(eventBus: IEventBus) {
-            RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-                // Fluid Type
-                TYPE_REGISTER.register(fluid.serializedName) { _: ResourceLocation -> FluidType(FluidType.Properties.create()) }
-                // Fluid
-                REGISTER.register(fluid.serializedName) { _: ResourceLocation ->
-                    BaseFlowingFluid.Source(
-                        BaseFlowingFluid.Properties(
-                            fluid.typeHolder,
-                            fluid.fluidHolder,
-                            fluid.fluidHolder,
-                        ),
-                    )
-                }
-            }
-
-            TYPE_REGISTER.register(eventBus)
-            REGISTER.register(eventBus)
+    @JvmStatic
+    fun init() {
+        // Crude Oil
+        val properties: BaseFlowingFluid.Properties = BaseFlowingFluid
+            .Properties(
+                RagiumFluidTypes.CRUDE_OIL,
+                CRUDE_OIL,
+                FLOWING_CRUDE_OIL,
+            ).block(RagiumBlocks.CRUDE_OIL)
+            .bucket(RagiumItems.CRUDE_OIL_BUCKET)
+        REGISTER.register(CRUDE_OIL.id.path) { _: ResourceLocation -> BaseFlowingFluid.Source(properties) }
+        REGISTER.register(FLOWING_CRUDE_OIL.id.path) { _: ResourceLocation -> BaseFlowingFluid.Flowing(properties) }
+        // Virtual
+        RagiumVirtualFluids.entries.forEach { fluid: RagiumVirtualFluids ->
+            // Fluid Type
+            RagiumFluidTypes.REGISTER.register(fluid.serializedName) { _: ResourceLocation -> FluidType(FluidType.Properties.create()) }
+            // Fluid
+            virtual(fluid.serializedName, fluid.typeHolder)
         }
     }
 
-    private val id: ResourceLocation = RagiumAPI.id(serializedName)
-
-    override val fluidHolder: DeferredHolder<Fluid, FlowingFluid> = DeferredHolder.create(Registries.FLUID, id)
-    override val typeHolder: DeferredHolder<FluidType, FluidType> =
-        DeferredHolder.create(NeoForgeRegistries.Keys.FLUID_TYPES, id)
-
-    //    TextureType    //
-
-    enum class TextureType {
-        GASEOUS,
-        LIQUID,
-        STICKY,
+    @JvmStatic
+    private fun virtual(
+        name: String,
+        typeHolder: Supplier<out FluidType>,
+        builderAction: BaseFlowingFluid.Properties.() -> Unit = {},
+    ): DeferredHolder<Fluid, out BaseFlowingFluid> {
+        val stillHolder: DeferredHolder<Fluid, Fluid> = DeferredHolder.create(Registries.FLUID, RagiumAPI.id(name))
+        return REGISTER.register(name) { _: ResourceLocation ->
+            BaseFlowingFluid.Source(
+                BaseFlowingFluid
+                    .Properties(
+                        typeHolder,
+                        stillHolder,
+                        stillHolder,
+                    ).apply(builderAction),
+            )
+        }
     }
-
-    //    StringRepresentable    //
-
-    override fun getSerializedName(): String = name.lowercase()
 }

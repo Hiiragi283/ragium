@@ -9,8 +9,8 @@ import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -185,7 +185,7 @@ object HTRecipeConverters {
         val count: Int = registry.getProperty(key).getOrDefault(HTMaterialPropertyKeys.GRINDER_RAW_COUNT)
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.ORE, key)
-            .fluidInput(RagiumFluids.SULFURIC_ACID)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID)
             .itemOutput(output.value(), count * 3)
             .export(consumer)
     }

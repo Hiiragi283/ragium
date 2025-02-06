@@ -62,7 +62,7 @@ object RagiumBlocks {
     @JvmField
     val CRUDE_OIL: DeferredBlock<LiquidBlock> = REGISTER.registerBlock(
         "crude_oil",
-        { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluidsNew.CRUDE_OIL.get(), properties) },
+        { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluids.CRUDE_OIL.get(), properties) },
         blockProperty(Blocks.WATER),
     )
 

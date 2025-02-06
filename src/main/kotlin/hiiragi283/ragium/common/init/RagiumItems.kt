@@ -445,7 +445,7 @@ object RagiumItems {
     @JvmField
     val CRUDE_OIL_BUCKET: DeferredItem<BucketItem> = register(
         "crude_oil_bucket",
-        { properties: Item.Properties -> BucketItem(RagiumFluidsNew.CRUDE_OIL.get(), properties) },
+        { properties: Item.Properties -> BucketItem(RagiumFluids.CRUDE_OIL.get(), properties) },
         itemProperty().craftRemainder(Items.BUCKET).stacksTo(1),
     )
 

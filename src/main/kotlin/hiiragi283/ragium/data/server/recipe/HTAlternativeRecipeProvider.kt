@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluidsNew
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
@@ -118,12 +118,12 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
         HTExtractorRecipeBuilder()
             .itemInput(Tags.Items.BUCKETS_POWDER_SNOW)
             .itemOutput(Items.BUCKET)
-            .fluidOutput(RagiumFluidsNew.SNOW)
+            .fluidOutput(RagiumFluids.SNOW)
             .save(output, RagiumAPI.id("powder_snow"))
 
         HTInfuserRecipeBuilder()
             .itemInput(Items.BUCKET)
-            .fluidInput(RagiumFluidsNew.SNOW)
+            .fluidInput(RagiumFluids.SNOW)
             .itemOutput(Items.POWDER_SNOW_BUCKET)
             .save(output)
     }

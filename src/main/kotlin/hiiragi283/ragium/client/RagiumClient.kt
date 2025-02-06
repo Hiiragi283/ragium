@@ -50,11 +50,11 @@ object RagiumClient {
             RagiumFluidTypes.CRUDE_OIL,
         )
 
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+        RagiumVirtualFluids.entries.forEach { fluid: RagiumVirtualFluids ->
             val textureId: ResourceLocation = when (fluid.textureType) {
-                RagiumFluids.TextureType.GASEOUS -> "block/white_concrete"
-                RagiumFluids.TextureType.LIQUID -> "block/bone_block_side"
-                RagiumFluids.TextureType.STICKY -> "block/quartz_block_bottom"
+                RagiumVirtualFluids.TextureType.GASEOUS -> "block/white_concrete"
+                RagiumVirtualFluids.TextureType.LIQUID -> "block/bone_block_side"
+                RagiumVirtualFluids.TextureType.STICKY -> "block/quartz_block_bottom"
             }.let(ResourceLocation::withDefaultNamespace)
             event.registerFluidType(HTSimpleFluidExtensions(textureId, fluid.color), fluid.typeHolder.get())
         }

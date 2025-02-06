@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumFluidsNew
+import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -24,14 +24,14 @@ class RagiumFluidTagProvider(
         val gasBuilder: TagAppender<Fluid> = tag(Tags.Fluids.GASEOUS)
 
         tag(Tags.Fluids.HONEY)
-            .add(RagiumFluidsNew.HONEY)
+            .add(RagiumFluids.HONEY)
 
-        tag(RagiumFluidsNew.SNOW.commonTag)
-            .add(RagiumFluidsNew.SNOW)
+        tag(RagiumFluids.SNOW.commonTag)
+            .add(RagiumFluids.SNOW)
 
-        tag(RagiumFluidsNew.CRUDE_OIL.commonTag)
-            .add(RagiumFluidsNew.CRUDE_OIL)
-            .add(RagiumFluidsNew.FLOWING_CRUDE_OIL)
+        tag(RagiumFluids.CRUDE_OIL.commonTag)
+            .add(RagiumFluids.CRUDE_OIL)
+            .add(RagiumFluids.FLOWING_CRUDE_OIL)
 
         RagiumFluids.REGISTER.entries.forEach { holder: DeferredHolder<Fluid, out Fluid> ->
             // Common Tag
@@ -41,14 +41,14 @@ class RagiumFluidTagProvider(
         tag(RagiumFluidTags.NITRO_FUEL)
             .addTag(fluidTagKey(commonId("boosted_diesel")), true)
             .addTag(fluidTagKey(commonId("high_power_biodiesel")), true)
-            .addTag(RagiumFluids.NITRO_FUEL.commonTag)
+            .addTag(RagiumVirtualFluids.NITRO_FUEL.commonTag)
 
         tag(RagiumFluidTags.NON_NITRO_FUEL)
             .addTag(fluidTagKey(commonId("biofuel")), true)
             .addTag(fluidTagKey(commonId("heavy_fuel")), true)
             .addTag(fluidTagKey(commonId("light_fuel")), true)
-            .addTag(RagiumFluids.BIODIESEL.commonTag)
-            .addTag(RagiumFluids.FUEL.commonTag)
+            .addTag(RagiumVirtualFluids.BIODIESEL.commonTag)
+            .addTag(RagiumVirtualFluids.FUEL.commonTag)
 
         tag(RagiumFluidTags.THERMAL_FUEL)
             .addTag(fluidTagKey(commonId("steam")), true)

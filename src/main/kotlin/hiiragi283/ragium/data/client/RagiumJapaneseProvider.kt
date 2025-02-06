@@ -72,30 +72,30 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTOreVariant.NETHER, "ネザー%s鉱石")
         add(HTOreVariant.END, "エンド%s鉱石")
         // Fluids
-        add(RagiumFluidsNew.HONEY, "蜂蜜")
-        add(RagiumFluidsNew.SNOW, "粉雪")
+        add(RagiumFluids.HONEY, "蜂蜜")
+        add(RagiumFluids.SNOW, "粉雪")
 
-        add(RagiumFluids.HYDROGEN, "水素")
-        add(RagiumFluids.OXYGEN, "酸素")
-        add(RagiumFluids.STEAM, "蒸気")
+        add(RagiumVirtualFluids.HYDROGEN, "水素")
+        add(RagiumVirtualFluids.OXYGEN, "酸素")
+        add(RagiumVirtualFluids.STEAM, "蒸気")
 
-        add(RagiumFluids.SULFURIC_ACID, "ブレイズ酸")
-        add(RagiumFluids.HYDROFLUORIC_ACID, "グロウ酸")
+        add(RagiumVirtualFluids.SULFURIC_ACID, "ブレイズ酸")
+        add(RagiumVirtualFluids.HYDROFLUORIC_ACID, "グロウ酸")
 
-        add(RagiumFluids.LAPIS_SOLUTION, "ラピス溶液")
+        add(RagiumVirtualFluids.LAPIS_SOLUTION, "ラピス溶液")
 
-        add(RagiumFluids.NAPHTHA, "ナフサ")
-        add(RagiumFluids.FUEL, "燃料")
-        add(RagiumFluids.NITRO_FUEL, "ニトロ燃料")
+        add(RagiumVirtualFluids.NAPHTHA, "ナフサ")
+        add(RagiumVirtualFluids.FUEL, "燃料")
+        add(RagiumVirtualFluids.NITRO_FUEL, "ニトロ燃料")
 
-        add(RagiumFluids.PLANT_OIL, "植物油")
-        add(RagiumFluids.BIOMASS, "バイオマス")
-        add(RagiumFluids.ETHANOL, "エタノール")
-        add(RagiumFluids.BIODIESEL, "バイオディーゼル")
+        add(RagiumVirtualFluids.PLANT_OIL, "植物油")
+        add(RagiumVirtualFluids.BIOMASS, "バイオマス")
+        add(RagiumVirtualFluids.ETHANOL, "エタノール")
+        add(RagiumVirtualFluids.BIODIESEL, "バイオディーゼル")
 
-        add(RagiumFluids.SAP, "樹液")
-        add(RagiumFluids.CRIMSON_SAP, "深紅の樹液")
-        add(RagiumFluids.WARPED_SAP, "歪んだ樹液")
+        add(RagiumVirtualFluids.SAP, "樹液")
+        add(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
+        add(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
         // Items
         add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
         add(RagiumItems.MELON_PIE, "メロンパイ")
