@@ -56,13 +56,14 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         )
         val holder: RecipeHolder<HTBlastFurnaceRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
         val recipe: HTBlastFurnaceRecipe = holder.value()
+        if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
         val output: ItemStack = recipe.output.copy()
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         itemOutput.insertOrDrop(level, pos, output)
-        itemInput.getStackInSlot(0).shrink(recipe.firstInput.count())
-        itemInput.getStackInSlot(1).shrink(recipe.secondInput.count())
+        itemInput.consumeItem(0, recipe.firstInput.count(), false)
+        itemInput.consumeItem(1, recipe.secondInput.count(), false)
         recipe.thirdInput.ifPresent { third: SizedIngredient ->
-            itemInput.getStackInSlot(2).shrink(third.count())
+            itemInput.consumeItem(2, third.count(), false)
         }
     }
 

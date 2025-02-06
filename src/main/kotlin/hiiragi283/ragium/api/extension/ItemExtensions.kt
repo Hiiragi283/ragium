@@ -88,6 +88,10 @@ inline fun IItemHandler.forEach(action: (ItemStack) -> Unit) {
     (0 until this.slots).map(this::getStackInSlot).forEach(action)
 }
 
+inline fun IItemHandler.forEachSlot(action: (Int) -> Unit) {
+    (0 until this.slots).forEach(action)
+}
+
 inline fun IItemHandler.forEachIndexed(action: (Int, ItemStack) -> Unit) {
     (0 until this.slots).forEach { slot: Int -> action(slot, getStackInSlot(slot)) }
 }

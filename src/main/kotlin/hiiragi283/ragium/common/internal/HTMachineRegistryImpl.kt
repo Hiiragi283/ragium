@@ -14,7 +14,8 @@ import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.material.MapColor
 import net.neoforged.fml.ModLoader
 import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
@@ -33,7 +34,12 @@ internal object HTMachineRegistryImpl : HTMachineRegistry {
             val holder: DeferredBlock<out Block> = RagiumBlocks.REGISTER.registerBlock(
                 key.name,
                 ::HTMachineBlock,
-                blockProperty(Blocks.SMOOTH_STONE).noOcclusion(),
+                blockProperty()
+                    .mapColor(MapColor.STONE)
+                    .strength(2f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion(),
             )
             RagiumItems.REGISTER.registerSimpleBlockItem(holder)
             HTBlockContent.of(holder)

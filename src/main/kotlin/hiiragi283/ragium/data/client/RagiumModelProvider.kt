@@ -72,7 +72,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     private fun registerItems() {
         buildList {
             addAll(RagiumItems.MATERIAL_ITEMS.values)
-            addAll(RagiumItems.OTHER_DUSTS)
+            add(RagiumItems.BEE_WAX)
             addAll(RagiumItems.OTHER_GEMS)
             addAll(RagiumItems.OTHER_RESOURCES)
 

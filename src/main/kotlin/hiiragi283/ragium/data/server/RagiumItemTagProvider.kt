@@ -98,7 +98,7 @@ class RagiumItemTagProvider(
 
     private fun foodTags() {
         val foods: TagAppender<Item> = tag(Tags.Items.FOODS)
-        RagiumItems.FOODS.forEach { foodItem: DeferredItem<Item> ->
+        RagiumItems.FOODS.forEach { foodItem: DeferredItem<out Item> ->
             if (foodItem.get().components().has(DataComponents.FOOD)) {
                 foods.add(foodItem)
             }

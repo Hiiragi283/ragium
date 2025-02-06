@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.capability
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.extension.logError
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
@@ -41,12 +42,12 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
             .listOf()
             .encodeStart(dynamicOps, items.map(HTSlotHandler<ItemStack>::stack))
             .ifSuccess { nbt.put("items", it) }
-            .ifError { LOGGER.error(it.message()) }
+            .logError(LOGGER)
         FluidStack.OPTIONAL_CODEC
             .listOf()
             .encodeStart(dynamicOps, fluids.map(HTSlotHandler<FluidStack>::stack))
             .ifSuccess { nbt.put("fluids", it) }
-            .ifError { LOGGER.error(it.message()) }
+            .logError(LOGGER)
     }
 
     fun readNbt(nbt: CompoundTag, provider: HolderLookup.Provider) {
@@ -58,7 +59,7 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
                 stacks.forEachIndexed { index: Int, stack: ItemStack ->
                     items[index].stack = stack
                 }
-            }.ifError { LOGGER.error(it.message()) }
+            }.logError(LOGGER)
         FluidStack.OPTIONAL_CODEC
             .listOf()
             .parse(dynamicOps, nbt.get("fluids"))
@@ -66,6 +67,6 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
                 stacks.forEachIndexed { index: Int, stack: FluidStack ->
                     fluids[index].stack = stack
                 }
-            }.ifError { LOGGER.error(it.message()) }
+            }.logError(LOGGER)
     }
 }

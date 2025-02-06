@@ -4,15 +4,12 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
-import java.util.function.Supplier
 
 //    Block    //
 
 fun blockProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties.of()
 
 fun blockProperty(parent: Block): BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(parent)
-
-fun blockProperty(parent: Supplier<Block>): BlockBehaviour.Properties = blockProperty(parent.get())
 
 //    BlockState    //
 

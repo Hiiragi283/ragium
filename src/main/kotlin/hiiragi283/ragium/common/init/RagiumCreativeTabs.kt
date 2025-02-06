@@ -32,7 +32,7 @@ object RagiumCreativeTabs {
                     output.accept(RagiumBlocks.SLAG_BLOCK)
                     // Material Items
                     RagiumItems.getMaterialItems(HTTagPrefix.DUST).forEach(output::accept)
-                    RagiumItems.OTHER_DUSTS.forEach(output::accept)
+                    output.accept(RagiumItems.BEE_WAX)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.RAW_MATERIAL).forEach(output::accept)
 

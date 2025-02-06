@@ -14,10 +14,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.collection.HTTable
-import hiiragi283.ragium.common.item.HTAmbrosiaItem
-import hiiragi283.ragium.common.item.HTCraftingToolItem
-import hiiragi283.ragium.common.item.HTDynamiteItem
-import hiiragi283.ragium.common.item.HTSilkyPickaxeItem
+import hiiragi283.ragium.common.item.*
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
@@ -183,12 +180,7 @@ object RagiumItems {
     //    Materials    //
 
     @JvmField
-    val BEE_WAX: DeferredItem<Item> = register("bee_wax", ::HoneycombItem, itemProperty())
-
-    @JvmField
-    val OTHER_DUSTS: List<DeferredItem<Item>> = listOf(
-        BEE_WAX,
-    )
+    val BEE_WAX: DeferredItem<HoneycombItem> = register("bee_wax", ::HoneycombItem, itemProperty())
 
     @JvmField
     val SILKY_CRYSTAL: DeferredItem<Item> = register("silky_crystal")
@@ -285,7 +277,7 @@ object RagiumItems {
     val CANNED_COOKED_MEAT: DeferredItem<Item> = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
 
     @JvmField
-    val AMBROSIA: DeferredItem<Item> =
+    val AMBROSIA: DeferredItem<HTAmbrosiaItem> =
         register(
             "ambrosia",
             ::HTAmbrosiaItem,
@@ -293,7 +285,7 @@ object RagiumItems {
         )
 
     @JvmField
-    val FOODS: List<DeferredItem<Item>> = listOf(
+    val FOODS: List<DeferredItem<out Item>> = listOf(
         // cake
         SWEET_BERRIES_CAKE_PIECE,
         MELON_PIE,
@@ -335,8 +327,8 @@ object RagiumItems {
         register("dynamite", ::HTDynamiteItem)
 
     @JvmField
-    val SLOT_LOCK: DeferredItem<Item> =
-        register("slot_lock")
+    val SLOT_LOCK: DeferredItem<HTCatalystItem> =
+        register("slot_lock", ::HTCatalystItem, itemProperty().stacksTo(1))
 
     //    Circuits    //
 
@@ -371,19 +363,23 @@ object RagiumItems {
     //    Press Molds    //
 
     @JvmField
-    val GEAR_PRESS_MOLD: DeferredItem<Item> = register("gear_press_mold")
+    val GEAR_PRESS_MOLD: DeferredItem<HTCatalystItem> =
+        register("gear_press_mold", ::HTCatalystItem, itemProperty().stacksTo(1))
 
     @JvmField
-    val PLATE_PRESS_MOLD: DeferredItem<Item> = register("plate_press_mold")
+    val PLATE_PRESS_MOLD: DeferredItem<HTCatalystItem> =
+        register("plate_press_mold", ::HTCatalystItem, itemProperty().stacksTo(1))
 
     @JvmField
-    val ROD_PRESS_MOLD: DeferredItem<Item> = register("rod_press_mold")
+    val ROD_PRESS_MOLD: DeferredItem<HTCatalystItem> =
+        register("rod_press_mold", ::HTCatalystItem, itemProperty().stacksTo(1))
 
     @JvmField
-    val WIRE_PRESS_MOLD: DeferredItem<Item> = register("wire_press_mold")
+    val WIRE_PRESS_MOLD: DeferredItem<HTCatalystItem> =
+        register("wire_press_mold", ::HTCatalystItem, itemProperty().stacksTo(1))
 
     @JvmField
-    val PRESS_MOLDS: List<DeferredItem<Item>> =
+    val PRESS_MOLDS: List<DeferredItem<HTCatalystItem>> =
         listOf(GEAR_PRESS_MOLD, PLATE_PRESS_MOLD, ROD_PRESS_MOLD, WIRE_PRESS_MOLD)
 
     //    Reagents    //

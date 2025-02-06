@@ -42,6 +42,9 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         if (fluidInput.drain(requiredWater, IFluidHandler.FluidAction.SIMULATE).amount < requiredWater) {
             throw HTMachineException.ExtractFluid(false)
         }
+        if (!itemInput.consumeItem(0, 1, true)) {
+            throw HTMachineException.ConsumeInput(false)
+        }
         fluidInput.drain(requiredWater, IFluidHandler.FluidAction.EXECUTE)
         itemInput.getStackInSlot(0).shrink(1)
     }
