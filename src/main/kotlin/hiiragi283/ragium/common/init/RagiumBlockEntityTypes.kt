@@ -4,9 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.registries.Registries
@@ -70,6 +67,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val SOLAR_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSolarGeneratorBlockEntity>> =
         register("solar_generator", ::HTSolarGeneratorBlockEntity, RagiumMachineKeys.SOLAR_GENERATOR)
+
+    @JvmField
+    val STIRLING_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTStirlingGeneratorBlockEntity>> =
+        register("stirling_generator", ::HTStirlingGeneratorBlockEntity, RagiumMachineKeys.STIRLING_GENERATOR)
 
     @JvmField
     val THERMAL_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTThermalGeneratorBlockEntity>> =

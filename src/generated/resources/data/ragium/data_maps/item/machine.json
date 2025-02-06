@@ -13,10 +13,9 @@
     "ragium:laser_assembly": "laser_assembly",
     "ragium:mixer": "mixer",
     "ragium:multi_smelter": "multi_smelter",
-    "ragium:nuclear_reactor": "nuclear_reactor",
     "ragium:refinery": "refinery",
     "ragium:solar_generator": "solar_generator",
-    "ragium:steam_turbine": "steam_turbine",
+    "ragium:stirling_generator": "stirling_generator",
     "ragium:thermal_generator": "thermal_generator",
     "ragium:vibration_generator": "vibration_generator"
   }

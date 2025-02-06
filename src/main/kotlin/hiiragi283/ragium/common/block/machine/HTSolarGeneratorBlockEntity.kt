@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.generator
+package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer

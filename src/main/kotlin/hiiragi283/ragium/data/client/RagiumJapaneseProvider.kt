@@ -171,9 +171,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMachineKeys.DRAIN, "排水溝", "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る")
 
         add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
-        add(RagiumMachineKeys.NUCLEAR_REACTOR, "原子炉", "放射性燃料から発電する")
         add(RagiumMachineKeys.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")
-        add(RagiumMachineKeys.STEAM_TURBINE, "蒸気タービン", "蒸気から発電する")
+        add(RagiumMachineKeys.STIRLING_GENERATOR, "スターリング発電機", "固体燃料と水から発電する")
         add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
         add(RagiumMachineKeys.VIBRATION_GENERATOR, "音波発電機", "エッチなのはダメ!死刑!")
 

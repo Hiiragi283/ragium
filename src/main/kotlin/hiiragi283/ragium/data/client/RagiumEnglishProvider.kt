@@ -184,19 +184,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Generate energy from liquid fuels",
         )
         add(
-            RagiumMachineKeys.NUCLEAR_REACTOR,
-            "Nuclear Reactor",
-            "Generate energy from radioactive fuels",
-        )
-        add(
             RagiumMachineKeys.SOLAR_GENERATOR,
             "Solar Generator",
             "Generate energy in daytime",
         )
         add(
-            RagiumMachineKeys.STEAM_TURBINE,
-            "Steam Turbine",
-            "Generate energy from steam",
+            RagiumMachineKeys.STIRLING_GENERATOR,
+            "Stirling Generator",
+            "Generate energy from solid fuel and water",
         )
         add(
             RagiumMachineKeys.THERMAL_GENERATOR,

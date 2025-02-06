@@ -10,40 +10,22 @@ object RagiumMachineKeys {
     @JvmField
     val DRAIN: HTMachineKey = HTMachineKey.of("drain")
 
-    @JvmField
-    val CONSUMERS: List<HTMachineKey> =
-        listOf(
-            BEDROCK_MINER,
-        )
-
     //    Generator    //
 
     @JvmField
     val COMBUSTION_GENERATOR: HTMachineKey = HTMachineKey.of("combustion_generator")
 
     @JvmField
-    val NUCLEAR_REACTOR: HTMachineKey = HTMachineKey.of("nuclear_reactor")
-
-    @JvmField
     val SOLAR_GENERATOR: HTMachineKey = HTMachineKey.of("solar_generator")
 
     @JvmField
-    val STEAM_TURBINE: HTMachineKey = HTMachineKey.of("steam_turbine")
+    val STIRLING_GENERATOR: HTMachineKey = HTMachineKey.of("stirling_generator")
 
     @JvmField
     val THERMAL_GENERATOR: HTMachineKey = HTMachineKey.of("thermal_generator")
 
     @JvmField
     val VIBRATION_GENERATOR: HTMachineKey = HTMachineKey.of("vibration_generator")
-
-    @JvmField
-    val GENERATORS: List<HTMachineKey> =
-        listOf(
-            COMBUSTION_GENERATOR,
-            SOLAR_GENERATOR,
-            STEAM_TURBINE,
-            THERMAL_GENERATOR,
-        )
 
     //    Processor    //
     @JvmField
@@ -78,20 +60,4 @@ object RagiumMachineKeys {
 
     @JvmField
     val REFINERY: HTMachineKey = HTMachineKey.of("refinery")
-
-    @JvmField
-    val PROCESSORS: List<HTMachineKey> =
-        listOf(
-            ASSEMBLER,
-            BLAST_FURNACE,
-            COMPRESSOR,
-            EXTRACTOR,
-            GRINDER,
-            GROWTH_CHAMBER,
-            INFUSER,
-            LASER_ASSEMBLY,
-            MIXER,
-            MULTI_SMELTER,
-            REFINERY,
-        )
 }

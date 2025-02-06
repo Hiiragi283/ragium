@@ -18,11 +18,7 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
-import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.world.energyNetwork
-import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
@@ -72,13 +68,14 @@ internal object RagiumModEvents {
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ASH))
 
         event
-            .getBuilder(RagiumMachineKeys.NUCLEAR_REACTOR)
-
-        event
             .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTSolarGeneratorBlockEntity)
             .put(HTMachinePropertyKeys.GENERATOR_PREDICATE) { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay }
             .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
+
+        event
+            .getBuilder(RagiumMachineKeys.STIRLING_GENERATOR)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTStirlingGeneratorBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
@@ -87,16 +84,6 @@ internal object RagiumModEvents {
         event.getBuilder(RagiumMachineKeys.VIBRATION_GENERATOR)
 
         // Processor
-        RagiumMachineKeys.PROCESSORS
-            .map(event::getBuilder)
-            .forEach { builder: HTPropertyHolderBuilder ->
-                builder
-                    .put(
-                        HTMachinePropertyKeys.PARTICLE,
-                        HTMachineParticleHandler.ofSimple(ParticleTypes.ELECTRIC_SPARK),
-                    )
-            }
-
         event
             .getBuilder(RagiumMachineKeys.ASSEMBLER)
 
@@ -287,6 +274,7 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
         registerHandlers(RagiumBlockEntityTypes.COMBUSTION_GENERATOR)
+        registerHandlers(RagiumBlockEntityTypes.STIRLING_GENERATOR)
         registerHandlers(RagiumBlockEntityTypes.THERMAL_GENERATOR)
 
         registerHandlers(RagiumBlockEntityTypes.BLAST_FURNACE)
