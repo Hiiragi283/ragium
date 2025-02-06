@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -10,8 +11,9 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
 object HTRecipeCodecs {
-    @JvmField
-    val GROUP: MapCodec<String> = Codec.STRING.optionalFieldOf("group", "")
+    @JvmStatic
+    fun <T : HTMachineRecipeBase> group(): RecordCodecBuilder<T, String> =
+        Codec.STRING.optionalFieldOf("group", "").forGetter(HTMachineRecipeBase::getGroup)
 
     @JvmField
     val ITEM_INPUT: MapCodec<SizedIngredient> = SizedIngredient.FLAT_CODEC.fieldOf("item_input")

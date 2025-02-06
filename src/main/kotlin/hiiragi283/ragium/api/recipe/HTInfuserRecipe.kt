@@ -29,7 +29,7 @@ class HTInfuserRecipe(
             .mapCodec { instance ->
                 instance
                     .group(
-                        HTRecipeCodecs.GROUP.forGetter(HTInfuserRecipe::getGroup),
+                        HTRecipeCodecs.group(),
                         HTRecipeCodecs.ITEM_INPUT.forGetter(HTInfuserRecipe::itemInput),
                         HTRecipeCodecs.FLUID_INPUT.forGetter(HTInfuserRecipe::fluidInput),
                         ItemStack.CODEC.optionalFieldOf("item_output").forGetter(HTInfuserRecipe::itemOutput),

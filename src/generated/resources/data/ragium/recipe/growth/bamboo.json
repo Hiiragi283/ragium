@@ -1,0 +1,14 @@
+{
+  "type": "ragium:growth_chamber",
+  "item_output": {
+    "count": 6,
+    "id": "minecraft:bamboo"
+  },
+  "seed": {
+    "item": "minecraft:bamboo"
+  },
+  "soil": {
+    "tag": "ragium:soils/dirt"
+  },
+  "water": 100
+}

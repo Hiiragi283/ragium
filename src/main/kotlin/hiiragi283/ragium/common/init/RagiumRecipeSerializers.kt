@@ -55,6 +55,10 @@ object RagiumRecipeSerializers {
         register("grinder", HTGrinderRecipe.CODEC, HTGrinderRecipe.STREAM_CODEC)
 
     @JvmField
+    val GROWTH_CHAMBER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTGrowthChamberRecipe>> =
+        register("growth_chamber", HTGrowthChamberRecipe.CODEC, HTGrowthChamberRecipe.STREAM_CODEC)
+
+    @JvmField
     val INFUSER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTInfuserRecipe>> =
         register("infuser", HTInfuserRecipe.CODEC, HTInfuserRecipe.STREAM_CODEC)
 

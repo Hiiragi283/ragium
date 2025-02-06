@@ -28,7 +28,7 @@ class HTMixerRecipe(
             .mapCodec { instance ->
                 instance
                     .group(
-                        HTRecipeCodecs.GROUP.forGetter(HTMixerRecipe::getGroup),
+                        HTRecipeCodecs.group(),
                         SizedFluidIngredient.FLAT_CODEC
                             .fieldOf("first_fluidInput")
                             .forGetter(HTMixerRecipe::firstFluid),

@@ -35,6 +35,10 @@ object RagiumJEIRecipeTypes {
         RecipeType.create(RagiumAPI.MOD_ID, "grinder", HTGrinderRecipe::class.java)
 
     @JvmField
+    val GROWTH_CHAMBER: RecipeType<HTGrowthChamberRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "growth_chamber", HTGrowthChamberRecipe::class.java)
+
+    @JvmField
     val INFUSER: RecipeType<HTInfuserRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "infuser", HTInfuserRecipe::class.java)
 

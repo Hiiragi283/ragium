@@ -42,6 +42,7 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()
 
     override fun itemOutput(stack: ItemStack): HTSingleItemRecipeBuilder<T> = apply {
+        check(!::output.isInitialized) { "Output is already initialized" }
         this.output = stack
     }
 

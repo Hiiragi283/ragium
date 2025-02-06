@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server
 
 import blusunrize.immersiveengineering.ImmersiveEngineering
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -21,11 +20,13 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
+import vectorwing.farmersdelight.common.registry.ModBlocks
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagProvider(
@@ -50,7 +51,7 @@ class RagiumItemTagProvider(
                 .addTag(oreTagKey)
 
             tag(oreTagKey)
-                .addItem(HTBlockContent.of(ore))
+                .addItem(ore)
         }
 
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
@@ -60,7 +61,7 @@ class RagiumItemTagProvider(
                 .addTag(storageTag)
 
             tag(storageTag)
-                .addItem(HTBlockContent.of(storage))
+                .addItem(storage)
         }
 
         RagiumItems.MATERIAL_ITEMS.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
@@ -152,6 +153,22 @@ class RagiumItemTagProvider(
         tag(RagiumItemTags.SOLAR_PANELS)
             .add(RagiumItems.SOLAR_PANEL)
             .add(GeneratorsItems.SOLAR_PANEL, true)
+
+        tag(RagiumItemTags.DIRT_SOILS)
+            .addItem(Items.FARMLAND)
+            .addItem(ModBlocks.RICH_SOIL.get(), true)
+            .addItem(ModBlocks.RICH_SOIL_FARMLAND.get(), true)
+            .addTag(ItemTags.DIRT)
+
+        tag(RagiumItemTags.MUSHROOM_SOILS)
+            .addItem(Items.MYCELIUM)
+
+        tag(RagiumItemTags.NETHER_SOILS)
+            .addItem(Items.CRIMSON_NYLIUM)
+            .addItem(Items.WARPED_NYLIUM)
+
+        tag(RagiumItemTags.END_SOILS)
+            .addTag(Tags.Items.END_STONES)
 
         tag(RagiumItemTags.GEAR_MOLDS)
             .add(RagiumItems.GEAR_PRESS_MOLD)

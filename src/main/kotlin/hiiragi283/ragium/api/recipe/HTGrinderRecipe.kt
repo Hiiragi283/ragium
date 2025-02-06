@@ -26,7 +26,7 @@ class HTGrinderRecipe(
         val CODEC: MapCodec<HTGrinderRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTRecipeCodecs.GROUP.forGetter(HTGrinderRecipe::getGroup),
+                    HTRecipeCodecs.group(),
                     HTRecipeCodecs.ITEM_INPUT.forGetter(HTGrinderRecipe::input),
                     HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTGrinderRecipe::output),
                     HTChancedItemStack.CODEC.optionalFieldOf("second_output").forGetter(HTGrinderRecipe::secondOutput),

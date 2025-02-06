@@ -3,21 +3,32 @@ package hiiragi283.ragium.data.server.integration
 import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
-import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
-import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
-import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
-import hiiragi283.ragium.api.data.HTRefineryRecipeBuilder
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 
 object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        // Canola Seeds
+        HTGrowthChamberRecipeBuilder()
+            .itemInput(ActuallyTags.Items.SEEDS_CANOLA)
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(ActuallyItems.CANOLA, 2)
+            .save(output)
+        // Coffee Seeds
+        HTGrowthChamberRecipeBuilder()
+            .itemInput(ActuallyTags.Items.SEEDS_COFFEE)
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(ActuallyItems.COFFEE_BEANS, 2)
+            .save(output)
+
         // Canola Oil
         HTExtractorRecipeBuilder()
-            .itemInput(ActuallyTags.Items.SEEDS_CANOLA)
+            .itemInput(ActuallyTags.Items.CROPS_CANOLA)
             .fluidOutput(InitFluids.CANOLA_OIL, 80)
             .save(output)
         // Refined Canola Oil

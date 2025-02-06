@@ -31,7 +31,7 @@ class HTChemicalRecipe(
             .mapCodec { instance ->
                 instance
                     .group(
-                        HTRecipeCodecs.GROUP.forGetter(HTChemicalRecipe::getGroup),
+                        HTRecipeCodecs.group(),
                         SizedIngredient.FLAT_CODEC
                             .listOf()
                             .optionalFieldOf("item_inputs", listOf())

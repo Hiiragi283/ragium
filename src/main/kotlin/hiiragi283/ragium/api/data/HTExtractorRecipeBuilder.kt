@@ -28,10 +28,12 @@ class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBui
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTExtractorRecipeBuilder = throw UnsupportedOperationException()
 
     override fun itemOutput(stack: ItemStack): HTExtractorRecipeBuilder = apply {
+        check(itemOutput == null) { "Output is already initialized" }
         this.itemOutput = stack
     }
 
     override fun fluidOutput(stack: FluidStack): HTExtractorRecipeBuilder = apply {
+        check(fluidOutput == null) { "Output is already initialized" }
         this.fluidOutput = stack
     }
 

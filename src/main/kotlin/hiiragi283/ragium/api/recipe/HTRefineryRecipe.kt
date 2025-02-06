@@ -27,7 +27,7 @@ class HTRefineryRecipe(
             .mapCodec { instance ->
                 instance
                     .group(
-                        HTRecipeCodecs.GROUP.forGetter(HTRefineryRecipe::getGroup),
+                        HTRecipeCodecs.group(),
                         HTRecipeCodecs.FLUID_INPUT.forGetter(HTRefineryRecipe::input),
                         ItemStack.CODEC.optionalFieldOf("item_output").forGetter(HTRefineryRecipe::itemOutput),
                         FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTRefineryRecipe::fluidOutput),

@@ -29,11 +29,12 @@ class HTGrinderRecipeBuilder : HTMachineRecipeBuilderBase<HTGrinderRecipeBuilder
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTGrinderRecipeBuilder = throw UnsupportedOperationException()
 
     override fun itemOutput(stack: ItemStack): HTGrinderRecipeBuilder = apply {
-        if (::output.isInitialized) {
-            secondOutput = stack
-        } else {
+        if (!::output.isInitialized) {
             this.output = stack
+            return@apply
         }
+        check(secondOutput == null) { "Output is already initialized" }
+        secondOutput = stack
     }
 
     fun setChance(chance: Float): HTGrinderRecipeBuilder = apply {

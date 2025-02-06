@@ -24,18 +24,21 @@ class HTMixerRecipeBuilder : HTMachineRecipeBuilderBase<HTMixerRecipeBuilder, HT
     override fun itemInput(ingredient: Ingredient, count: Int): HTMixerRecipeBuilder = throw UnsupportedOperationException()
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTMixerRecipeBuilder = apply {
-        if (::firstInput.isInitialized) {
-            secondInput = SizedFluidIngredient(ingredient, amount)
-        } else {
+        if (!::firstInput.isInitialized) {
             firstInput = SizedFluidIngredient(ingredient, amount)
+            return@apply
         }
+        check(!::secondInput.isInitialized) { "Input is already initialized" }
+        secondInput = SizedFluidIngredient(ingredient, amount)
     }
 
     override fun itemOutput(stack: ItemStack): HTMixerRecipeBuilder = apply {
+        check(itemOutput == null) { "Output is already initialized" }
         this.itemOutput = stack
     }
 
     override fun fluidOutput(stack: FluidStack): HTMixerRecipeBuilder = apply {
+        check(fluidOutput == null) { "Output is already initialized" }
         this.fluidOutput = stack
     }
 

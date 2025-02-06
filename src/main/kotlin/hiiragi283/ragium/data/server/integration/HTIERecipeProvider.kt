@@ -1,9 +1,11 @@
 package hiiragi283.ragium.data.server.integration
 
+import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
 import blusunrize.immersiveengineering.common.register.IEItems
 import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.data.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -54,6 +56,13 @@ object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering"
             .itemInput(Tags.Items.GLASS_BLOCKS, 2)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemOutput(IEBlocks.StoneDecoration.INSULATING_GLASS, 2)
+            .save(output)
+
+        // Industrial Hemp
+        HTGrowthChamberRecipeBuilder()
+            .itemInput(IETags.seedsHemp)
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(IEItems.Ingredients.HEMP_FIBER, 2)
             .save(output)
     }
 }

@@ -65,6 +65,7 @@ class RagiumJEIPlugin : IModPlugin {
             ),
             HTExtractorRecipeCategory(guiHelper),
             HTGrinderRecipeCategory(guiHelper),
+            HTGrowthChamberRecipeCategory(guiHelper),
             HTInfuserRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
@@ -107,6 +108,7 @@ class RagiumJEIPlugin : IModPlugin {
                 HTRecipeConverters.grinder(recipeManager, registry, this::add)
             },
         )
+        register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, RagiumRecipeTypes.GROWTH_CHAMBER)
         registration.addRecipes(
             RagiumJEIRecipeTypes.INFUSER,
             buildList {
@@ -161,6 +163,8 @@ class RagiumJEIPlugin : IModPlugin {
         // Grinder
         register(RagiumJEIRecipeTypes.GRINDER, RagiumMachineKeys.GRINDER)
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumBlocks.MANUAL_GRINDER)
+        // Growth Chamber
+        register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, RagiumMachineKeys.GROWTH_CHAMBER)
         // Infuser
         register(RagiumJEIRecipeTypes.INFUSER, RagiumMachineKeys.INFUSER)
         // Laser Assembly

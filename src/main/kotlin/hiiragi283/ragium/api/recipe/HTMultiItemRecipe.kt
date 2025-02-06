@@ -36,7 +36,7 @@ abstract class HTMultiItemRecipe(
         private val codec: MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTRecipeCodecs.GROUP.forGetter(HTMultiItemRecipe::getGroup),
+                    HTRecipeCodecs.group(),
                     SizedIngredient.FLAT_CODEC.fieldOf("first_item_input").forGetter(HTMultiItemRecipe::firstInput),
                     SizedIngredient.FLAT_CODEC
                         .fieldOf("second_item_input")

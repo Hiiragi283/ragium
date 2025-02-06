@@ -43,12 +43,14 @@ class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
             this.secondInput = SizedIngredient(ingredient, count)
             return@apply
         }
+        check(thirdInput == null) { "Input is already initialized" }
         this.thirdInput = SizedIngredient(ingredient, count)
     }
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTMultiItemRecipeBuilder<T> = throw UnsupportedOperationException()
 
     override fun itemOutput(stack: ItemStack): HTMultiItemRecipeBuilder<T> = apply {
+        check(!::output.isInitialized) { "Output is already initialized" }
         this.output = stack
     }
 

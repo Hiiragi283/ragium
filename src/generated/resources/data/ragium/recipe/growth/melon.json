@@ -1,0 +1,14 @@
+{
+  "type": "ragium:growth_chamber",
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:melon"
+  },
+  "seed": {
+    "tag": "c:seeds/melon"
+  },
+  "soil": {
+    "tag": "ragium:soils/dirt"
+  },
+  "water": 100
+}

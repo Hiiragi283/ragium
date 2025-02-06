@@ -34,7 +34,7 @@ abstract class HTSingleItemRecipe(
         private val codec: MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTRecipeCodecs.GROUP.forGetter(HTSingleItemRecipe::getGroup),
+                    HTRecipeCodecs.group(),
                     HTRecipeCodecs.ITEM_INPUT.forGetter(HTSingleItemRecipe::input),
                     HTRecipeCodecs.CATALYST.forGetter(HTSingleItemRecipe::catalyst),
                     HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTSingleItemRecipe::output),

@@ -52,4 +52,16 @@ object RagiumItemTags {
 
     @JvmField
     val SOLAR_PANELS: TagKey<Item> = itemTagKey(RagiumAPI.id("solar_panels"))
+
+    @JvmField
+    val DIRT_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/dirt"))
+
+    @JvmField
+    val MUSHROOM_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/mushroom"))
+
+    @JvmField
+    val NETHER_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/nether"))
+
+    @JvmField
+    val END_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/end"))
 }

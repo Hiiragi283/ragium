@@ -26,7 +26,7 @@ class HTDistilleryRecipe(
         val CODEC: MapCodec<HTDistilleryRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTRecipeCodecs.GROUP.forGetter(HTDistilleryRecipe::getGroup),
+                    HTRecipeCodecs.group(),
                     HTRecipeCodecs.FLUID_INPUT.forGetter(HTDistilleryRecipe::input),
                     FluidStack.CODEC.fieldOf("first_fluid_output").forGetter(HTDistilleryRecipe::firstOutput),
                     FluidStack.CODEC.fieldOf("second_fluid_output").forGetter(HTDistilleryRecipe::secondOutput),

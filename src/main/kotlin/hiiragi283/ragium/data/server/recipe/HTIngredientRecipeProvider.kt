@@ -271,7 +271,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
 
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.SLOT_LOCK, 3)
+            .shaped(RecipeCategory.MISC, RagiumItems.SLOT_LOCK)
             .pattern("AAA")
             .pattern("BBB")
             .pattern("AAA")

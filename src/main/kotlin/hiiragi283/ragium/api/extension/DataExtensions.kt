@@ -11,9 +11,9 @@ import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.data.recipes.*
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
@@ -132,20 +132,10 @@ fun <T : Any> TagsProvider.TagAppender<T>.add(holder: DeferredHolder<T, out T>, 
 fun TagsProvider.TagAppender<Block>.add(content: HTBlockContent, optional: Boolean = false): TagsProvider.TagAppender<Block> =
     add(content.id, optional)
 
-fun TagsProvider.TagAppender<Block>.add(block: Supplier<Block>, optional: Boolean = false): TagsProvider.TagAppender<Block> =
-    add(block.get().builtInRegistryHolder().idOrThrow, optional)
+fun TagsProvider.TagAppender<Block>.addBlock(block: Block, optional: Boolean = false): TagsProvider.TagAppender<Block> =
+    add(block.builtInRegistryHolder().idOrThrow, optional)
 
-fun TagsProvider.TagAppender<Item>.addItem(content: HTBlockContent, optional: Boolean = false): TagsProvider.TagAppender<Item> =
-    when (optional) {
-        true -> addOptional(content.id)
-        false -> add(content.asHolder().keyOrThrow)
-    }
-
-fun <T : Any> TagsProvider.TagAppender<T>.addTag(tagKey: TagKey<T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
-    when (optional) {
-        true -> addOptionalTag(tagKey.location)
-        false -> addTag(tagKey)
-    }
-
-fun TagsProvider.TagAppender<Block>.addAll(contents: Iterable<HTBlockContent>): TagsProvider.TagAppender<Block> =
-    addAll(contents.map(HTBlockContent::key))
+fun TagsProvider.TagAppender<Item>.addItem(item: ItemLike, optional: Boolean = false): TagsProvider.TagAppender<Item> = when (optional) {
+    true -> addOptional(item.asHolder().idOrThrow)
+    false -> add(item.asHolder().keyOrThrow)
+}

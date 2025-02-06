@@ -1,7 +1,7 @@
 {
   "values": [
+    "minecraft:water",
     "#minecraft:ice",
-    "#minecraft:snow",
-    "minecraft:water"
+    "#minecraft:snow"
   ]
 }

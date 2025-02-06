@@ -37,6 +37,9 @@ object RagiumRecipeTypes {
     val GRINDER: DeferredHolder<RecipeType<*>, RecipeType<HTGrinderRecipe>> = register("grinder")
 
     @JvmField
+    val GROWTH_CHAMBER: DeferredHolder<RecipeType<*>, RecipeType<HTGrowthChamberRecipe>> = register("growth_chamber")
+
+    @JvmField
     val INFUSER: DeferredHolder<RecipeType<*>, RecipeType<HTInfuserRecipe>> = register("infuser")
 
     @JvmField

@@ -1,18 +1,14 @@
 package hiiragi283.ragium.integration.jei
 
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.neoforge.NeoForgeTypes
-import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
@@ -27,10 +23,6 @@ fun createEmptyStack(name: Component): ItemStack {
     return stack
 }
 
-fun createEmptyBlockStack(block: Holder<Block>): ItemStack = createEmptyStack(Component.literal("Block: " + block.idOrThrow))
-
-fun createEmptyTagStack(tagKey: TagKey<*>): ItemStack = createEmptyStack(Component.literal("Empty Tag: " + tagKey.location()))
-
 fun createEmptyMaterialStack(prefix: HTTagPrefix, material: HTMaterialKey): ItemStack =
     createEmptyStack(Component.literal("Empty Matching Items: ${prefix.createText(material).string}"))
 
@@ -38,6 +30,7 @@ fun createEmptyMaterialStack(prefix: HTTagPrefix, material: HTMaterialKey): Item
 
 fun IRecipeSlotBuilder.addFluidStack(stack: FluidStack?): IRecipeSlotBuilder {
     val stack1: FluidStack = stack ?: return this
+    if (stack1.isEmpty) return this
     val amount: Long = stack1.amount.toLong()
     addFluidStack(stack1.fluid, amount)
     return setFluidRenderer(amount, false, 16, 16)

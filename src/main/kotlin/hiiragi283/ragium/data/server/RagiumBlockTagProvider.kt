@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
-import hiiragi283.ragium.api.extension.addAll
+import hiiragi283.ragium.api.extension.addBlock
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.util.HTOreVariant
@@ -65,18 +65,21 @@ class RagiumBlockTagProvider(
 
         // Ragium
         tag(RagiumBlockTags.COOLING_SOURCES)
+            .addBlock(Blocks.WATER)
             .addTag(BlockTags.ICE)
             .addTag(BlockTags.SNOW)
-            .add(Blocks::WATER)
 
         tag(RagiumBlockTags.HEATING_SOURCES)
-            .add(Blocks::CAMPFIRE)
-            .add(Blocks::FIRE)
-            .add(Blocks::LAVA)
-            .add(Blocks::MAGMA_BLOCK)
+            .addBlock(Blocks.CAMPFIRE)
+            .addBlock(Blocks.FIRE)
+            .addBlock(Blocks.LAVA)
+            .addBlock(Blocks.MAGMA_BLOCK)
 
         // Farmer's Delight
-        tag(ModTags.HEAT_SOURCES).addAll(RagiumBlocks.Burners.entries)
+        val heatBuilder: TagAppender<Block> = tag(ModTags.HEAT_SOURCES)
+        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
+            heatBuilder.add(burner)
+        }
 
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, _, ore: DeferredBlock<out Block>) ->
             tag(Tags.Blocks.ORES).add(ore)

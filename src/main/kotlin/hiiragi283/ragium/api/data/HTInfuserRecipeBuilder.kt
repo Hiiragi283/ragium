@@ -33,10 +33,12 @@ class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder
     }
 
     override fun itemOutput(stack: ItemStack): HTInfuserRecipeBuilder = apply {
+        check(itemOutput == null) { "Output is already initialized" }
         this.itemOutput = stack
     }
 
     override fun fluidOutput(stack: FluidStack): HTInfuserRecipeBuilder = apply {
+        check(fluidOutput == null) { "Output is already initialized" }
         this.fluidOutput = stack
     }
 

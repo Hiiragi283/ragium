@@ -1,0 +1,14 @@
+{
+  "type": "ragium:growth_chamber",
+  "item_output": {
+    "count": 3,
+    "id": "minecraft:cocoa_beans"
+  },
+  "seed": {
+    "tag": "c:crops/cocoa_bean"
+  },
+  "soil": {
+    "tag": "minecraft:jungle_logs"
+  },
+  "water": 100
+}

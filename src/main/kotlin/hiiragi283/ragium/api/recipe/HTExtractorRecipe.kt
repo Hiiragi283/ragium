@@ -27,7 +27,7 @@ class HTExtractorRecipe(
             .mapCodec { instance ->
                 instance
                     .group(
-                        HTRecipeCodecs.GROUP.forGetter(HTExtractorRecipe::getGroup),
+                        HTRecipeCodecs.group(),
                         HTRecipeCodecs.ITEM_INPUT.forGetter(HTExtractorRecipe::input),
                         ItemStack.CODEC.optionalFieldOf("item_output").forGetter(HTExtractorRecipe::itemOutput),
                         FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTExtractorRecipe::fluidOutput),

@@ -28,10 +28,12 @@ class HTRefineryRecipeBuilder : HTMachineRecipeBuilderBase<HTRefineryRecipeBuild
     }
 
     override fun itemOutput(stack: ItemStack): HTRefineryRecipeBuilder = apply {
+        check(itemOutput == null) { "Output is already initialized" }
         this.itemOutput = stack
     }
 
     override fun fluidOutput(stack: FluidStack): HTRefineryRecipeBuilder = apply {
+        check(fluidOutput == null) { "Output is already initialized" }
         this.fluidOutput = stack
     }
 

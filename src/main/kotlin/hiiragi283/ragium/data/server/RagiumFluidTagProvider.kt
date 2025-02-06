@@ -33,20 +33,20 @@ class RagiumFluidTagProvider(
             .add(RagiumFluids.FLOWING_CRUDE_OIL)
 
         tag(RagiumFluidTags.NITRO_FUEL)
-            .addTag(fluidTagKey(commonId("boosted_diesel")), true)
-            .addTag(fluidTagKey(commonId("high_power_biodiesel")), true)
+            .addOptionalTag(commonId("boosted_diesel"))
+            .addOptionalTag(commonId("high_power_biodiesel"))
             .addTag(RagiumVirtualFluids.NITRO_FUEL.commonTag)
 
         tag(RagiumFluidTags.NON_NITRO_FUEL)
-            .addTag(fluidTagKey(commonId("biofuel")), true)
-            .addTag(fluidTagKey(commonId("heavy_fuel")), true)
-            .addTag(fluidTagKey(commonId("light_fuel")), true)
+            .addOptionalTag(commonId("biofuel"))
+            .addOptionalTag(commonId("heavy_fuel"))
+            .addOptionalTag(commonId("light_fuel"))
             .addTag(RagiumVirtualFluids.BIODIESEL.commonTag)
             .addTag(RagiumVirtualFluids.FUEL.commonTag)
 
         tag(RagiumFluidTags.THERMAL_FUEL)
-            .addTag(fluidTagKey(commonId("steam")), true)
-            .addTag(fluidTagKey(commonId("superheated_sodium")), true)
+            .addOptionalTag(commonId("steam"))
+            .addOptionalTag(commonId("superheated_sodium"))
             .addTag(Tags.Fluids.LAVA)
     }
 }
