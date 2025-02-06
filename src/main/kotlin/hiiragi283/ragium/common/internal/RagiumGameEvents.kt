@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.internal
 
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.machine.HTMachineAccess
@@ -11,10 +12,20 @@ import net.minecraft.core.Direction
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.items.ItemStackHandler
+import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 internal object RagiumGameEvents {
+    @JvmStatic
+    private val LOGGER: Logger = LogUtils.getLogger()
+
+    @SubscribeEvent
+    fun onRegisterCommands(event: RegisterCommandsEvent) {
+        LOGGER.info("Registered Commands!")
+    }
+
     @SubscribeEvent
     fun onBlastFurnaceSucceeded(event: HTMachineProcessEvent.Success) {
         val machine: HTMachineAccess = event.machine

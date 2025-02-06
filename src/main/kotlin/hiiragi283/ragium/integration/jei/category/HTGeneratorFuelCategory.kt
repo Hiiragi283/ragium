@@ -1,13 +1,16 @@
 package hiiragi283.ragium.integration.jei.category
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.integration.jei.HTGeneratorFuelEntry
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
+import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -43,4 +46,7 @@ class HTGeneratorFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTGe
     override fun getWidth(): Int = 18 * 6 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
+
+    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTGeneratorFuelEntry> =
+        HTGeneratorFuelEntry.CODEC
 }

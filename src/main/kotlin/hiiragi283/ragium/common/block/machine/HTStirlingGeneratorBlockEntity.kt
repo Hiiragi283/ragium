@@ -38,7 +38,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(level: ServerLevel, pos: BlockPos) {
         val fuelTime: Int = itemInput.getStackInSlot(0).getItemData(NeoForgeDataMaps.FURNACE_FUELS)?.burnTime
             ?: throw HTMachineException.FindFuel(false)
-        val requiredWater: Int = fuelTime * 10
+        val requiredWater: Int = fuelTime / 10
         if (fluidInput.drain(requiredWater, IFluidHandler.FluidAction.SIMULATE).amount < requiredWater) {
             throw HTMachineException.ExtractFluid(false)
         }

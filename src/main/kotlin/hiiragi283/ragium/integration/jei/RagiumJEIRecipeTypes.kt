@@ -49,4 +49,8 @@ object RagiumJEIRecipeTypes {
     @JvmField
     val REFINERY: RecipeType<HTRefineryRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "refinery", HTRefineryRecipe::class.java)
+
+    @JvmField
+    val STIRLING: RecipeType<HTStirlingFuelEntry> =
+        RecipeType.create(RagiumAPI.MOD_ID, "stirling", HTStirlingFuelEntry::class.java)
 }

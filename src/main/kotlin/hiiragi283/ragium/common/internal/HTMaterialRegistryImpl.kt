@@ -21,7 +21,7 @@ import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.ModLoader
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.registries.datamaps.DataMapsUpdatedEvent
+import net.neoforged.neoforge.event.TagsUpdatedEvent
 import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -73,16 +73,14 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     private var tagItemCache: HTTable.Mutable<HTTagPrefix, HTMaterialKey, MutableList<Holder<Item>>> = mutableTableOf()
 
     @SubscribeEvent
-    fun onDataMapUpdated(event: DataMapsUpdatedEvent) {
-        if (event.cause != DataMapsUpdatedEvent.UpdateCause.SERVER_RELOAD) return
-        if (event.registryKey != Registries.ITEM) return
+    fun onTagsUpdated(event: TagsUpdatedEvent) {
+        if (event.updateCause != TagsUpdatedEvent.UpdateCause.SERVER_DATA_LOAD) return
+        val itemLookup: HolderLookup.RegistryLookup<Item> = event.registryAccess.lookupOrThrow(Registries.ITEM)
         // Reload material items
         tagItemCache.clear()
-
-        val lookup: HolderLookup.RegistryLookup<Item> = event.registries.lookupOrThrow(Registries.ITEM)
         for (material: HTMaterialKey in keys) {
             for (prefix: HTTagPrefix in HTTagPrefix.entries) {
-                lookup.get(prefix.createTag(material)).ifPresent { holderSet: HolderSet.Named<Item> ->
+                itemLookup.get(prefix.createTag(material)).ifPresent { holderSet: HolderSet.Named<Item> ->
                     for (holder: Holder<Item> in holderSet) {
                         tagItemCache
                             .computeIfAbsent(prefix, material, constFunction3(mutableListOf()))

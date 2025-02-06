@@ -21,11 +21,13 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import java.util.function.Supplier
 import mezz.jei.api.recipe.RecipeType as JEIRecipeType
 
@@ -73,6 +75,7 @@ class RagiumJEIPlugin : IModPlugin {
             HTMixerRecipeCategory(guiHelper),
             HTRefineryRecipeCategory(guiHelper),
             HTGeneratorFuelCategory(guiHelper),
+            HTStirlingFuelCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
         )
     }
@@ -123,6 +126,17 @@ class RagiumJEIPlugin : IModPlugin {
                 HTGeneratorFuelEntry(RagiumMachineKeys.THERMAL_GENERATOR, RagiumFluidTags.THERMAL_FUEL, 100),
             ),
         )
+        // Stirling
+        registration.addRecipes(
+            RagiumJEIRecipeTypes.STIRLING,
+            level
+                .registryAccess()
+                .lookupOrThrow(Registries.ITEM)
+                .listElements()
+                .filter { it.getData(NeoForgeDataMaps.FURNACE_FUELS) != null }
+                .map(::HTStirlingFuelEntry)
+                .toList(),
+        )
         // Material Info
         registration.addRecipes(RagiumJEIRecipeTypes.MATERIAL_INFO, RagiumAPI.materialRegistry.typedMaterials)
     }
@@ -159,6 +173,8 @@ class RagiumJEIPlugin : IModPlugin {
         // Generator
         register(RagiumJEIRecipeTypes.GENERATOR, RagiumMachineKeys.COMBUSTION_GENERATOR)
         register(RagiumJEIRecipeTypes.GENERATOR, RagiumMachineKeys.THERMAL_GENERATOR)
+        // Stirling
+        register(RagiumJEIRecipeTypes.STIRLING, RagiumMachineKeys.STIRLING_GENERATOR)
         // Material
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MATERIAL_INFO, Items.IRON_INGOT)
     }
