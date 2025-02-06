@@ -3,22 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/aluminum"
+      "tag": "c:nether_stars"
     },
     "B": {
-      "tag": "c:circuits/ultimate"
-    },
-    "C": {
       "item": "minecraft:end_crystal"
     },
+    "C": {
+      "item": "ragium:precision_machine_casing"
+    },
     "D": {
-      "item": "ragium:ultimate_casing"
+      "item": "minecraft:end_crystal"
+    },
+    "E": {
+      "tag": "c:gears/diamond"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DDD"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

@@ -81,7 +81,6 @@ object RagiumItems {
         register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
         // Ingots
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-        register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
 
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
@@ -147,7 +146,6 @@ object RagiumItems {
 
         buildList {
             addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)
@@ -158,11 +156,9 @@ object RagiumItems {
             )
         }
 
-        buildList {
-            addAll(RagiumBlocks.Decorations.entries)
-            addAll(RagiumBlocks.LEDBlocks.entries)
-        }.map(HTBlockContent::holder)
-            .forEach(REGISTER::registerSimpleBlockItem)
+        RagiumBlocks.LEDBlocks.entries.forEach { ledBlock: RagiumBlocks.LEDBlocks ->
+            REGISTER.registerSimpleBlockItem(ledBlock.holder)
+        }
 
         buildList {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
@@ -450,6 +446,15 @@ object RagiumItems {
     )
 
     @JvmField
+    val MACHINE_CASING: DeferredItem<Item> = register("machine_casing")
+
+    @JvmField
+    val CHEMICAL_MACHINE_CASING: DeferredItem<Item> = register("chemical_machine_casing")
+
+    @JvmField
+    val PRECISION_MACHINE_CASING: DeferredItem<Item> = register("precision_machine_casing")
+
+    @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
 
     @JvmField
@@ -474,6 +479,10 @@ object RagiumItems {
     val INGREDIENTS: List<DeferredItem<out Item>> = buildList {
         // bucket
         add(CRUDE_OIL_BUCKET)
+        // casing
+        add(MACHINE_CASING)
+        add(CHEMICAL_MACHINE_CASING)
+        add(PRECISION_MACHINE_CASING)
         // parts
         add(POLYMER_RESIN)
         add(PLASTIC_PLATE)

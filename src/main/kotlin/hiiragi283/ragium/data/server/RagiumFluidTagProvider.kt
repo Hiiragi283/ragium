@@ -23,20 +23,14 @@ class RagiumFluidTagProvider(
     override fun addTags(provider: HolderLookup.Provider) {
         val gasBuilder: TagAppender<Fluid> = tag(Tags.Fluids.GASEOUS)
 
-        tag(Tags.Fluids.HONEY)
-            .add(RagiumFluids.HONEY)
-
-        tag(RagiumFluids.SNOW.commonTag)
-            .add(RagiumFluids.SNOW)
-
-        tag(RagiumFluids.CRUDE_OIL.commonTag)
-            .add(RagiumFluids.CRUDE_OIL)
-            .add(RagiumFluids.FLOWING_CRUDE_OIL)
-
         RagiumFluids.REGISTER.entries.forEach { holder: DeferredHolder<Fluid, out Fluid> ->
+            if (!holder.get().isSource) return@forEach
             // Common Tag
             tag(holder.commonTag).add(holder.keyOrThrow)
         }
+
+        tag(RagiumFluids.CRUDE_OIL.commonTag)
+            .add(RagiumFluids.FLOWING_CRUDE_OIL)
 
         tag(RagiumFluidTags.NITRO_FUEL)
             .addTag(fluidTagKey(commonId("boosted_diesel")), true)

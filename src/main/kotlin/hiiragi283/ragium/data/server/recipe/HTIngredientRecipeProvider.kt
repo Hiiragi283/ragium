@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
-import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -92,13 +92,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .itemOutput(ragiAlloy)
-            .save(output)
-        // Ragi-Steel
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
-            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL)
             .save(output)
         // Refined Ragi-Steel
         HTMultiItemRecipeBuilder
@@ -186,23 +179,20 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerCircuits(output: RecipeOutput) {
-        HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            // Assembler
-            val dust: Ingredient = when (tier) {
-                HTMachineTier.BASIC -> Ingredient.of(Tags.Items.DUSTS_REDSTONE)
-                HTMachineTier.ADVANCED -> Ingredient.of(RagiumItems.GLOW_REAGENT)
-                HTMachineTier.ELITE -> Ingredient.of(RagiumItems.PRISMARINE_REAGENT)
-                HTMachineTier.ULTIMATE -> Ingredient.of(RagiumItems.RAGIUM_REAGENT)
-            }
-
+        fun circuit(circuit: ItemLike, subMetal: HTMaterialKey, dopant: Ingredient) {
             HTMultiItemRecipeBuilder
                 .assembler()
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
-                .itemInput(HTTagPrefix.INGOT, tier.getSubMetal())
-                .itemInput(dust)
-                .itemOutput(tier.getCircuit())
+                .itemInput(HTTagPrefix.INGOT, subMetal)
+                .itemInput(dopant)
+                .itemOutput(circuit)
                 .save(output)
         }
+
+        circuit(RagiumItems.BASIC_CIRCUIT, VanillaMaterials.COPPER, Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+        circuit(RagiumItems.ADVANCED_CIRCUIT, VanillaMaterials.GOLD, Ingredient.of(RagiumItems.GLOW_REAGENT))
+        circuit(RagiumItems.ELITE_CIRCUIT, CommonMaterials.ALUMINUM, Ingredient.of(RagiumItems.PRISMARINE_REAGENT))
+        circuit(RagiumItems.ULTIMATE_CIRCUIT, RagiumMaterials.RAGIUM, Ingredient.of(RagiumItems.RAGIUM_REAGENT))
 
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumItems.BASIC_CIRCUIT)
@@ -223,8 +213,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('A', Tags.Items.GEMS_LAPIS)
             .define('B', Tags.Items.DUSTS_REDSTONE)
             .define('C', Tags.Items.DUSTS_GLOWSTONE)
-            .define('D', HTMachineTier.BASIC.getCircuitTag())
-            .unlockedBy("has_circuit", has(HTMachineTier.BASIC.getCircuitTag()))
+            .define('D', RagiumItemTags.BASIC_CIRCUIT)
+            .unlockedBy("has_circuit", has(RagiumItemTags.BASIC_CIRCUIT))
             .savePrefixed(output)
     }
 
@@ -314,7 +304,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTMultiItemRecipeBuilder
             .assembler()
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_STEEL, 4)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
             .itemInput(Items.PISTON, 2)
             .itemOutput(RagiumItems.ENGINE)
             .save(output)

@@ -3,22 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_steel"
+      "item": "ragium:crude_oil_bucket"
     },
     "B": {
-      "tag": "c:circuits/elite"
+      "tag": "c:glass_blocks"
     },
     "C": {
-      "item": "ragium:chemical_glass"
+      "item": "ragium:chemical_machine_casing"
     },
     "D": {
-      "item": "ragium:elite_casing"
+      "tag": "c:glass_blocks"
+    },
+    "E": {
+      "tag": "c:gears/iron"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DDD"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

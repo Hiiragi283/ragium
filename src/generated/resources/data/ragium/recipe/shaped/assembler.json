@@ -3,22 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_steel"
+      "item": "minecraft:crafter"
     },
     "B": {
       "tag": "c:circuits/advanced"
     },
     "C": {
-      "item": "minecraft:crafter"
+      "item": "ragium:machine_casing"
     },
     "D": {
-      "item": "ragium:advanced_casing"
+      "tag": "c:circuits/advanced"
+    },
+    "E": {
+      "tag": "c:gears/copper"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DDD"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

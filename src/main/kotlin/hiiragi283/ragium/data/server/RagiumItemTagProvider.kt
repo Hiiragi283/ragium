@@ -1,11 +1,9 @@
 package hiiragi283.ragium.data.server
 
 import blusunrize.immersiveengineering.ImmersiveEngineering
-import com.buuz135.industrial.utils.IndustrialTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -127,10 +125,17 @@ class RagiumItemTagProvider(
         tag(Tags.Items.BUCKETS)
             .add(RagiumItems.CRUDE_OIL_BUCKET)
 
-        HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            tag(tier.getCircuitTag())
-                .add(tier.getCircuit())
-        }
+        tag(RagiumItemTags.BASIC_CIRCUIT)
+            .add(RagiumItems.BASIC_CIRCUIT)
+
+        tag(RagiumItemTags.ADVANCED_CIRCUIT)
+            .add(RagiumItems.ADVANCED_CIRCUIT)
+
+        tag(RagiumItemTags.ELITE_CIRCUIT)
+            .add(RagiumItems.ELITE_CIRCUIT)
+
+        tag(RagiumItemTags.ULTIMATE_CIRCUIT)
+            .add(RagiumItems.ULTIMATE_CIRCUIT)
 
         tag(RagiumItemTags.ALKALI_REAGENTS)
             .add(RagiumItems.ALKALI_REAGENT)
@@ -163,15 +168,5 @@ class RagiumItemTagProvider(
         tag(RagiumItemTags.WIRE_MOLDS)
             .add(RagiumItems.WIRE_PRESS_MOLD)
             .add(ImmersiveEngineering.rl("mold_wire"), true)
-
-        // Industrial Foregoing
-        tag(IndustrialTags.Items.MACHINE_FRAME_PITY)
-            .addItem(RagiumBlocks.Casings.BASIC)
-        tag(IndustrialTags.Items.MACHINE_FRAME_SIMPLE)
-            .addItem(RagiumBlocks.Casings.ADVANCED)
-        tag(IndustrialTags.Items.MACHINE_FRAME_ADVANCED)
-            .addItem(RagiumBlocks.Casings.ELITE)
-        tag(IndustrialTags.Items.MACHINE_FRAME_SUPREME)
-            .addItem(RagiumBlocks.Casings.ULTIMATE)
     }
 }

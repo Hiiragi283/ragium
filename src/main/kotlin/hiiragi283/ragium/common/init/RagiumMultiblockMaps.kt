@@ -8,7 +8,6 @@ import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
 import net.minecraft.world.level.block.Blocks
 
 object RagiumMultiblockMaps {
-    private val CASING = HTTieredMultiblockComponent(HTMachineTier::getCasing)
     private val GRATE = HTTieredMultiblockComponent(HTMachineTier::getGrate)
     private val SHAFT = HTAxisMultiblockComponent.YStatic { RagiumBlocks.SHAFT }
     private val SHAFT_HORIZONTAL = HTAxisMultiblockComponent.FrontHorizontal { RagiumBlocks.SHAFT }
@@ -32,10 +31,10 @@ object RagiumMultiblockMaps {
         .add(0, 0, 1, SHAFT_HORIZONTAL)
         .add(1, 0, 0, SHAFT_VERTICAL)
         // frame
-        .add(-2, -1, 0, CASING)
-        .add(0, -1, -2, CASING)
-        .add(0, -1, 2, CASING)
-        .add(2, -1, 0, CASING)
+        // .add(-2, -1, 0, CASING)
+        // .add(0, -1, -2, CASING)
+        // .add(0, -1, 2, CASING)
+        // .add(2, -1, 0, CASING)
         // .add(-2, 0, 0, HULL)
         // .add(0, 0, -2, HULL)
         // .add(0, 0, 2, HULL)

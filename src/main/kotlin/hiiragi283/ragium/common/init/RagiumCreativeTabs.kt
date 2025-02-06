@@ -72,12 +72,11 @@ object RagiumCreativeTabs {
             CreativeModeTab
                 .builder()
                 .title(Component.literal("Ragium - Blocks"))
-                .icon { ItemStack(RagiumBlocks.MANUAL_GRINDER) }
+                .icon { ItemStack(RagiumBlocks.PLASTIC_BLOCK) }
                 .displayItems { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     buildList {
                         // Components
                         addAll(RagiumBlocks.Grates.entries)
-                        addAll(RagiumBlocks.Casings.entries)
                         addAll(RagiumBlocks.Burners.entries)
 
                         add(RagiumBlocks.SHAFT)
@@ -86,7 +85,6 @@ object RagiumCreativeTabs {
                         add(RagiumBlocks.PLASTIC_BLOCK)
 
                         addAll(RagiumBlocks.GLASSES)
-                        addAll(RagiumBlocks.Decorations.entries)
                     }.forEach(output::accept)
                 }.build()
         }

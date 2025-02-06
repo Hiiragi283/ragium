@@ -77,12 +77,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
         val mixer: AdvancementHolder = createMachine(ragiAlloy, RagiumMachineKeys.MIXER)
 
-        val casing: AdvancementHolder = createSimple(
-            ragiAlloy,
-            RagiumBlocks.Casings.BASIC,
-            Component.empty(),
-        )
-        val pbf: AdvancementHolder = createSimple(casing, RagiumBlocks.PRIMITIVE_BLAST_FURNACE, Component.empty())
+        val pbf: AdvancementHolder = createSimple(ragiAlloy, RagiumBlocks.PRIMITIVE_BLAST_FURNACE, Component.empty())
         val steel: AdvancementHolder = createMaterial(
             pbf,
             HTTagPrefix.INGOT,
@@ -97,23 +92,11 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             Component.empty(),
         )
 
-        val compressor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COMPRESSOR)
+        val compressor: AdvancementHolder = createMachine(ragiAlloy, RagiumMachineKeys.COMPRESSOR)
     }
 
     private fun registerTier2() {
-        val ragiSteel: AdvancementHolder = createMaterial(
-            root,
-            HTTagPrefix.INGOT,
-            RagiumMaterials.RAGI_STEEL,
-            Component.empty(),
-        )
-        val casing: AdvancementHolder = createSimple(
-            ragiSteel,
-            RagiumBlocks.Casings.ADVANCED,
-            Component.empty(),
-        )
-
-        val assembler: AdvancementHolder = createMachine(casing, RagiumMachineKeys.ASSEMBLER)
+        val assembler: AdvancementHolder = createMachine(root, RagiumMachineKeys.ASSEMBLER)
         val basicCircuit: AdvancementHolder = createSimple(
             assembler,
             RagiumItems.BASIC_CIRCUIT,
@@ -136,9 +119,9 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             type = AdvancementType.GOAL,
         )
 
-        val extractor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.EXTRACTOR)
+        val extractor: AdvancementHolder = createMachine(root, RagiumMachineKeys.EXTRACTOR)
 
-        val grinder: AdvancementHolder = createMachine(casing, RagiumMachineKeys.GRINDER)
+        val grinder: AdvancementHolder = createMachine(root, RagiumMachineKeys.GRINDER)
     }
 
     private fun registerTier4() {
@@ -148,11 +131,6 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             RagiumMaterials.RAGIUM,
             Component.empty(),
             type = AdvancementType.GOAL,
-        )
-        val casing: AdvancementHolder = createSimple(
-            ragium,
-            RagiumBlocks.Casings.ULTIMATE,
-            Component.empty(),
         )
     }
 

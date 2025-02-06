@@ -1,0 +1,8 @@
+{
+  "parent": "ragium:block/machine_casing",
+  "textures": {
+    "bottom": "ragium:block/chemical_machine_casing_bottom",
+    "side": "ragium:block/chemical_machine_casing_side",
+    "top": "ragium:block/chemical_machine_casing_top"
+  }
+}

@@ -3,8 +3,6 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.stringCodec
 import hiiragi283.ragium.api.extension.stringStreamCodec
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -12,17 +10,13 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumItems
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
-import net.minecraft.world.item.Item
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.registries.DeferredItem
 
 enum class HTMachineTier(private val idPattern: String, val color: ChatFormatting, val tankCapacity: Int) : StringRepresentable {
     BASIC("basic_%S", ChatFormatting.GREEN, FluidType.BUCKET_VOLUME * 8),
@@ -84,32 +78,7 @@ enum class HTMachineTier(private val idPattern: String, val color: ChatFormattin
         ULTIMATE -> RagiumBlocks.Grates.ULTIMATE
     }
 
-    fun getCasing(): HTBlockContent.Tier = when (this) {
-        BASIC -> RagiumBlocks.Casings.BASIC
-        ADVANCED -> RagiumBlocks.Casings.ADVANCED
-        ELITE -> RagiumBlocks.Casings.ELITE
-        ULTIMATE -> RagiumBlocks.Casings.ULTIMATE
-    }
-
-    //    Item    //
-
-    fun getCircuit(): DeferredItem<Item> = when (this) {
-        BASIC -> RagiumItems.BASIC_CIRCUIT
-        ADVANCED -> RagiumItems.ADVANCED_CIRCUIT
-        ELITE -> RagiumItems.ELITE_CIRCUIT
-        ULTIMATE -> RagiumItems.ULTIMATE_CIRCUIT
-    }
-
-    fun getCircuitTag(): TagKey<Item> = itemTagKey(commonId("circuits/$serializedName"))
-
     //    Material    //
-
-    fun getSubMetal(): HTMaterialKey = when (this) {
-        BASIC -> VanillaMaterials.COPPER
-        ADVANCED -> VanillaMaterials.GOLD
-        ELITE -> CommonMaterials.ALUMINUM
-        ULTIMATE -> RagiumMaterials.RAGIUM
-    }
 
     fun getSteelMetal(): HTMaterialKey = when (this) {
         BASIC -> CommonMaterials.STEEL

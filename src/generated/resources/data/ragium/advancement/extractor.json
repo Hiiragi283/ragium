@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:advanced_casing",
+  "parent": "ragium:root",
   "criteria": {
     "has_extractor": {
       "conditions": {

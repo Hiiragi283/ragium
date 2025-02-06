@@ -3,19 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/gold"
+      "tag": "c:glass_blocks"
     },
     "B": {
       "item": "minecraft:cauldron"
     },
     "C": {
-      "item": "ragium:advanced_casing"
+      "item": "ragium:chemical_machine_casing"
+    },
+    "D": {
+      "item": "minecraft:cauldron"
+    },
+    "E": {
+      "tag": "c:gears/iron"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "B B",
-    "CCC"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

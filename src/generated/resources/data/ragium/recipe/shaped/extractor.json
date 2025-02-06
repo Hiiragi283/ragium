@@ -3,22 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/gold"
-    },
-    "B": {
-      "tag": "c:circuits/advanced"
-    },
-    "C": {
       "item": "minecraft:hopper"
     },
+    "B": {
+      "item": "minecraft:piston"
+    },
+    "C": {
+      "item": "ragium:chemical_machine_casing"
+    },
     "D": {
-      "item": "ragium:advanced_casing"
+      "item": "minecraft:piston"
+    },
+    "E": {
+      "tag": "c:gears/iron"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DDD"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

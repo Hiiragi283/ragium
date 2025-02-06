@@ -35,13 +35,11 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
             addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Burners.entries)
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
-            addAll(RagiumBlocks.Decorations.entries)
             addAll(RagiumBlocks.LEDBlocks.entries)
 
             add(RagiumBlocks.SPONGE_CAKE)

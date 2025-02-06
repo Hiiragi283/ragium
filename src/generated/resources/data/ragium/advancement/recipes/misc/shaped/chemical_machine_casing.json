@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/advanced_casing"
+        "recipe": "ragium:shaped/chemical_machine_casing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/advanced_casing"
+      "ragium:shaped/chemical_machine_casing"
     ]
   }
 }

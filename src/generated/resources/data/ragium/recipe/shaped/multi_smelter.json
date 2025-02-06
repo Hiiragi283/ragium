@@ -3,19 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/deep_steel"
+      "item": "ragium:blaze_reagent"
     },
     "B": {
       "item": "minecraft:furnace"
     },
     "C": {
-      "item": "ragium:elite_casing"
+      "item": "ragium:machine_casing"
+    },
+    "D": {
+      "item": "minecraft:furnace"
+    },
+    "E": {
+      "tag": "c:gears/copper"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "B B",
-    "CCC"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

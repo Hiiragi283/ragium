@@ -3,19 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/steel"
+      "item": "ragium:forge_hammer"
     },
     "B": {
       "item": "minecraft:piston"
     },
     "C": {
-      "item": "ragium:basic_casing"
+      "item": "ragium:machine_casing"
+    },
+    "D": {
+      "item": "minecraft:piston"
+    },
+    "E": {
+      "tag": "c:gears/copper"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "B B",
-    "CCC"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

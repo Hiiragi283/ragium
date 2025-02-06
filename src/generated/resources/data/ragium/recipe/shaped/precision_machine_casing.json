@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "building",
+  "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:obsidian"
+      "tag": "c:ingots/aluminum"
     },
     "B": {
       "item": "ragium:obsidian_glass"
@@ -18,7 +18,7 @@
     "ABA"
   ],
   "result": {
-    "count": 3,
-    "id": "ragium:ultimate_casing"
+    "count": 1,
+    "id": "ragium:precision_machine_casing"
   }
 }

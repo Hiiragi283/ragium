@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package hiiragi283.ragium.data.server.worldgen
 
 import hiiragi283.ragium.api.RagiumAPI
@@ -39,7 +41,6 @@ object RagiumConfiguredFeatures {
     private fun createKey(path: String): ResourceKey<ConfiguredFeature<*, *>> =
         ResourceKey.create(Registries.CONFIGURED_FEATURE, RagiumAPI.id(path))
 
-    @Suppress("DEPRECATION")
     @JvmStatic
     fun boostrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
         fun createTarget(target: TagKey<Block>, variant: HTOreVariant, key: HTMaterialKey): OreConfiguration.TargetBlockState {

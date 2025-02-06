@@ -31,12 +31,10 @@ object RagiumBlocks {
 
     init {
         Grates.entries
-        Casings.entries
         Burners.entries
 
         Drums.entries
 
-        Decorations.entries
         LEDBlocks.entries
     }
 
@@ -70,7 +68,6 @@ object RagiumBlocks {
     val STORAGE_BLOCKS: Map<HTMaterialKey, DeferredBlock<Block>> = listOf(
         // Ragium
         RagiumMaterials.RAGI_ALLOY,
-        RagiumMaterials.RAGI_STEEL,
         RagiumMaterials.RAGIUM,
         // Steel
         CommonMaterials.STEEL,
@@ -122,18 +119,6 @@ object RagiumBlocks {
         override val translationKey: String = RagiumTranslationKeys.GRATE
     }
 
-    enum class Casings(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        BASIC(HTMachineTier.BASIC),
-        ADVANCED(HTMachineTier.ADVANCED),
-        ELITE(HTMachineTier.ELITE),
-        ULTIMATE(HTMachineTier.ULTIMATE),
-        ;
-
-        override val holder: DeferredBlock<Block> =
-            REGISTER.registerSimpleBlock("${name.lowercase()}_casing", blockProperty(Blocks.SMOOTH_STONE))
-        override val translationKey: String = RagiumTranslationKeys.CASING
-    }
-
     enum class Burners(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
         ADVANCED(HTMachineTier.ADVANCED),
         ELITE(HTMachineTier.ELITE),
@@ -172,24 +157,6 @@ object RagiumBlocks {
     @JvmField
     val PLASTIC_BLOCK: DeferredBlock<Block> =
         REGISTER.registerSimpleBlock("plastic_block", blockProperty(Blocks.SMOOTH_STONE))
-
-    enum class Decorations(val parent: HTBlockContent) : HTBlockContent {
-        // Storage
-        RAGI_ALLOY_BLOCK(RagiumMaterials.RAGI_ALLOY),
-        RAGI_STEEL_BLOCK(RagiumMaterials.RAGI_STEEL),
-
-        // Casing
-        BASIC_CASING(Casings.BASIC),
-        ADVANCED_CASING(Casings.ADVANCED),
-        ELITE_CASING(Casings.ELITE),
-        ULTIMATE_CASING(Casings.ULTIMATE),
-        ;
-
-        constructor(key: HTMaterialKey) : this(HTBlockContent.of(DeferredBlock.createBlock<Block>(RagiumAPI.id("${key.name}_block"))))
-
-        override val holder: DeferredBlock<Block> =
-            REGISTER.registerSimpleBlock("${name.lowercase()}_decoration", blockProperty(Blocks.SMOOTH_STONE))
-    }
 
     @JvmField
     val CHEMICAL_GLASS: DeferredBlock<TransparentBlock> =

@@ -181,7 +181,6 @@ internal object RagiumModEvents {
         event.register(RagiumMaterials.FIERY_COAL, HTMaterialType.GEM)
         event.register(RagiumMaterials.RAGI_ALLOY, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.RAGI_CRYSTAL, HTMaterialType.GEM)
-        event.register(RagiumMaterials.RAGI_STEEL, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.RAGINITE, HTMaterialType.MINERAL)
         event.register(RagiumMaterials.RAGIUM, HTMaterialType.METAL)
 
@@ -245,7 +244,6 @@ internal object RagiumModEvents {
         }
 
         registerTier(RagiumBlocks.Grates.entries)
-        registerTier(RagiumBlocks.Casings.entries)
         registerTier(RagiumBlocks.Burners.entries)
 
         registerTier(RagiumBlocks.Drums.entries)

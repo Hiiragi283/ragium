@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.getOrDefault
@@ -43,7 +42,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.SLAG_BLOCK)
 
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
-            addAll(RagiumBlocks.Casings.entries)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
             addAll(RagiumBlocks.LEDBlocks.entries)
@@ -97,22 +95,24 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Burner
         RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
-            val tier: HTMachineTier = burner.machineTier
+            val core: ResourceLocation = when (burner) {
+                RagiumBlocks.Burners.ADVANCED -> ResourceLocation.withDefaultNamespace("magma")
+                RagiumBlocks.Burners.ELITE -> RagiumAPI.id("soul_magma_block")
+                RagiumBlocks.Burners.ULTIMATE -> RagiumAPI.id("ultimate_burner")
+            }
+            val base: ResourceLocation = when (burner) {
+                RagiumBlocks.Burners.ADVANCED -> "polished_blackstone_bricks"
+                RagiumBlocks.Burners.ELITE -> "end_stone_bricks"
+                RagiumBlocks.Burners.ULTIMATE -> "red_nether_bricks"
+            }.let(ResourceLocation::withDefaultNamespace)
             simpleBlock(
                 burner.get(),
                 models()
                     .withExistingParent(burner, RagiumAPI.id("block/burner"))
-                    .blockTexture("bars", tier.getGrate().id)
-                    .blockTexture(
-                        "core",
-                        when (tier) {
-                            HTMachineTier.BASIC -> ResourceLocation.withDefaultNamespace("coal_block")
-                            HTMachineTier.ADVANCED -> ResourceLocation.withDefaultNamespace("magma")
-                            HTMachineTier.ELITE -> RagiumAPI.id("soul_magma_block")
-                            HTMachineTier.ULTIMATE -> RagiumAPI.id("ultimate_burner")
-                        },
-                    ).blockTexture("side", tier.getCasing().id)
-                    .blockTexture("top", tier.getCasing().id)
+                    .blockTexture("bars", burner.machineTier.getGrate().id)
+                    .blockTexture("core", core)
+                    .blockTexture("side", base)
+                    .blockTexture("top", base)
                     .cutout(),
             )
         }
@@ -121,11 +121,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
             val id: ResourceLocation = drum.blockId
             simpleBlock(drum.get(), models().cubeTop(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
-        }
-
-        // Decoration
-        RagiumBlocks.Decorations.entries.forEach { decoration: RagiumBlocks.Decorations ->
-            simpleBlock(decoration.get(), ModelFile.UncheckedModelFile(decoration.parent.blockId))
         }
 
         // Food

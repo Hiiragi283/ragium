@@ -3,19 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_steel"
-    },
-    "B": {
       "item": "ragium:manual_grinder"
     },
+    "B": {
+      "item": "minecraft:flint"
+    },
     "C": {
-      "item": "ragium:advanced_casing"
+      "item": "ragium:machine_casing"
+    },
+    "D": {
+      "item": "minecraft:flint"
+    },
+    "E": {
+      "tag": "c:gears/copper"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "B B",
-    "CCC"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

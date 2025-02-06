@@ -3,19 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/steel"
-    },
-    "B": {
       "item": "ragium:primitive_blast_furnace"
     },
+    "B": {
+      "item": "minecraft:magma_block"
+    },
     "C": {
-      "item": "ragium:basic_casing"
+      "item": "ragium:machine_casing"
+    },
+    "D": {
+      "item": "minecraft:magma_block"
+    },
+    "E": {
+      "tag": "c:gears/copper"
+    },
+    "F": {
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    "AAA",
-    "ABA",
-    "CCC"
+    " A ",
+    "BCD",
+    "EFE"
   ],
   "result": {
     "count": 1,

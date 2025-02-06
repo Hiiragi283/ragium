@@ -30,7 +30,6 @@ class RagiumBlockTagProvider(
         val pickaxe: TagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
         buildList {
             addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Burners.entries)
 
             addAll(RagiumBlocks.Drums.entries)

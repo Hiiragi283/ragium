@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_core": {
+    "has_casing": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:hopper"
+            "items": "ragium:chemical_machine_casing"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_core"
+      "has_casing"
     ]
   ],
   "rewards": {

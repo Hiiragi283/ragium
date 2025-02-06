@@ -24,6 +24,18 @@ object RagiumItemTags {
     @JvmField
     val SLAG: TagKey<Item> = itemTagKey(commonId("slag"))
 
+    @JvmField
+    val BASIC_CIRCUIT: TagKey<Item> = itemTagKey(commonId("circuits/basic"))
+
+    @JvmField
+    val ADVANCED_CIRCUIT: TagKey<Item> = itemTagKey(commonId("circuits/advanced"))
+
+    @JvmField
+    val ELITE_CIRCUIT: TagKey<Item> = itemTagKey(commonId("circuits/elite"))
+
+    @JvmField
+    val ULTIMATE_CIRCUIT: TagKey<Item> = itemTagKey(commonId("circuits/ultimate"))
+
     //    Ragium    //
 
     @JvmField
