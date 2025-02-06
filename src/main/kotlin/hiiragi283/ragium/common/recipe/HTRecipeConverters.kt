@@ -183,10 +183,17 @@ object HTRecipeConverters {
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return
         val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return
         val count: Int = registry.getProperty(key).getOrDefault(HTMaterialPropertyKeys.GRINDER_RAW_COUNT)
+        // 3x
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.ORE, key)
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID, 500)
             .itemOutput(output.value(), count * 3)
+            .export(consumer)
+        // 4x
+        HTInfuserRecipeBuilder()
+            .itemInput(HTTagPrefix.ORE, key)
+            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, 500)
+            .itemOutput(output.value(), count * 4)
             .export(consumer)
     }
 }

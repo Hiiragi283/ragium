@@ -21,6 +21,9 @@ object RagiumFluids {
     val SNOW: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("snow", RagiumFluidTypes.SNOW)
 
     @JvmField
+    val SLIME: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("slime", RagiumFluidTypes.SLIME)
+
+    @JvmField
     val CRUDE_OIL: DeferredHolder<Fluid, BaseFlowingFluid.Source> =
         DeferredHolder.create(Registries.FLUID, RagiumAPI.id("crude_oil"))
 

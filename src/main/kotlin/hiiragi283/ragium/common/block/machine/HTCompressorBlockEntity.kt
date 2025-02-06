@@ -28,11 +28,13 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.COMPRESSOR, pos, state, RagiumMachineKeys.COMPRESSOR) {
     private val itemInput = HTMachineItemHandler(1, this::setChanged)
+    private val itemCatalyst = HTMachineItemHandler(1, this::setChanged)
     private val itemOutput = HTMachineItemHandler(1, this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
         listOf(
             itemInput.createSlot(0),
+            itemCatalyst.createSlot(0),
             itemOutput.createSlot(0),
         ),
     )
@@ -44,7 +46,11 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
         val foundRecipes: MutableList<HTCompressorRecipe> = mutableListOf()
         HTRecipeConverters.compressor(level.recipeManager, RagiumAPI.materialRegistry, foundRecipes::add)
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, itemInput.getStackInSlot(0))
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
+            pos,
+            itemInput.getStackInSlot(0),
+            itemCatalyst.getStackInSlot(0),
+        )
         var foundRecipe: HTCompressorRecipe? = foundRecipes.firstOrNull { it.matches(input, level) }
         if (foundRecipe == null) throw HTMachineException.NoMatchingRecipe(false)
         val output: ItemStack = foundRecipe.getItemOutput()
@@ -57,10 +63,18 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTCompressorContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
+        HTCompressorContainerMenu(
+            containerId,
+            playerInventory,
+            blockPos,
+            CombinedInvWrapper(itemInput, itemCatalyst, itemOutput),
+        )
 
     override fun interactWithFluidStorage(player: Player): Boolean = false
 
-    override fun getItemHandler(direction: Direction?): CombinedInvWrapper =
-        CombinedInvWrapper(HTStorageIO.INPUT.wrapItemHandler(itemInput), HTStorageIO.OUTPUT.wrapItemHandler(itemOutput))
+    override fun getItemHandler(direction: Direction?): CombinedInvWrapper = CombinedInvWrapper(
+        HTStorageIO.INPUT.wrapItemHandler(itemInput),
+        HTStorageIO.INTERNAL.wrapItemHandler(itemCatalyst),
+        HTStorageIO.OUTPUT.wrapItemHandler(itemOutput),
+    )
 }

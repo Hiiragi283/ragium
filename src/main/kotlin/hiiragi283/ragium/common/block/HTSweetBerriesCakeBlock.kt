@@ -10,7 +10,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 class HTSweetBerriesCakeBlock(properties: Properties) : Block(properties) {
     companion object {
         @JvmField
-        val SHAPE: VoxelShape = box(13.0, 0.0, 1.0, 15.0, 8.0, 15.0)
+        val SHAPE: VoxelShape = box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0)
     }
 
     override fun getShape(

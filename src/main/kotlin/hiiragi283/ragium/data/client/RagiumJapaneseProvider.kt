@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
+import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -51,27 +52,21 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
         // Content
         add(RagiumTranslationKeys.BURNER, "バーナー")
-        add(RagiumTranslationKeys.CASING, "外装")
-        add(RagiumTranslationKeys.CASING_WALL, "外装の壁")
         add(RagiumTranslationKeys.CIRCUIT, "回路")
-        add(RagiumTranslationKeys.COIL, "コイル")
         add(RagiumTranslationKeys.CRATE, "クレート")
         add(RagiumTranslationKeys.DRUM, "ドラム")
         add(RagiumTranslationKeys.GRATE, "格子")
-        add(RagiumTranslationKeys.HULL, "筐体")
-        add(RagiumTranslationKeys.PLASTIC, "プラスチック")
 
         add(HTOreVariant.OVERWORLD, "%s鉱石")
         add(HTOreVariant.DEEPSLATE, "深層%s鉱石")
         add(HTOreVariant.NETHER, "ネザー%s鉱石")
         add(HTOreVariant.END, "エンド%s鉱石")
+        // Enchantment
+        addEnchantment(RagiumEnchantments.CAPACITY, "大容量")
         // Fluids
         addFluid(RagiumFluids.HONEY, "蜂蜜")
         addFluid(RagiumFluids.SNOW, "粉雪")
-
-        addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
-        addFluid(RagiumVirtualFluids.OXYGEN, "酸素")
-        addFluid(RagiumVirtualFluids.STEAM, "蒸気")
+        addFluid(RagiumFluids.SLIME, "スライム")
 
         addFluid(RagiumVirtualFluids.SULFURIC_ACID, "ブレイズ酸")
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "グロウ酸")

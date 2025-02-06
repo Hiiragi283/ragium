@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.define
+import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -13,6 +14,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -82,6 +85,15 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .define('A', HTTagPrefix.ROD, VanillaMaterials.IRON)
             .unlockedBy("has_iron_rod", has(HTTagPrefix.ROD, VanillaMaterials.IRON))
+        
+        // Fire charge
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, Items.FIRE_CHARGE, 3)
+            .requires(Tags.Items.GUNPOWDERS)
+            .requires(ItemTags.COALS)
+            .requires(RagiumItems.BLAZE_REAGENT)
+            .unlockedBy("has_reagent", has(RagiumItems.BLAZE_REAGENT))
+            .savePrefixed(output)
 
         registerSnow(output)
         registerStone(output)

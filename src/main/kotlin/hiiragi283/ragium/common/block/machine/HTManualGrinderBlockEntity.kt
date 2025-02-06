@@ -20,8 +20,9 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -43,14 +44,12 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(listOf(itemHandler.createSlot(0)))
 
-    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
-        serializer.writeNbt(tag, registries)
+    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        serializer.writeNbt(nbt, dynamicOps)
     }
 
-    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
-        serializer.readNbt(tag, registries)
+    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        serializer.readNbt(nbt, dynamicOps)
     }
 
     override fun onRightClicked(
@@ -125,6 +124,10 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         get() = blockPos
     override var showPreview: Boolean = false
     override val containerData: ContainerData = SimpleContainerData(2)
+    override val costModifier: Int = 0
+
+    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+    }
 
     //    HTMachineAccess    //
 

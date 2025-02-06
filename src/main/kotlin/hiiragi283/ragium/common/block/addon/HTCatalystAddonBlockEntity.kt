@@ -9,8 +9,9 @@ import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
@@ -34,14 +35,12 @@ class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(listOf(itemHandler.createSlot(0)))
 
-    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
-        serializer.writeNbt(tag, registries)
+    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        serializer.writeNbt(nbt, dynamicOps)
     }
 
-    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
-        serializer.readNbt(tag, registries)
+    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        serializer.readNbt(nbt, dynamicOps)
     }
 
     override fun onRightClickedWithItem(

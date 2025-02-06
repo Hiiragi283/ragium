@@ -4,9 +4,12 @@ import hiiragi283.ragium.api.extension.sendUpdatePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
+import net.minecraft.nbt.Tag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
+import net.minecraft.resources.RegistryOps
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -42,7 +45,21 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
         sendUpdatePacket()
     }
 
+    final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        writeNbt(tag, registries.createSerializationContext(NbtOps.INSTANCE))
+    }
+
+    final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        readNbt(tag, registries.createSerializationContext(NbtOps.INSTANCE))
+    }
+
     //    Extension    //
+
+    protected open fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {}
+
+    protected open fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {}
 
     /**
      * ブロックが右クリックされたときに呼ばれます。

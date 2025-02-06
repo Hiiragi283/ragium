@@ -84,7 +84,6 @@ object RagiumBlocks {
         put(RagiumMaterials.ECHORIUM, metal(MapColor.COLOR_CYAN))
         // Gem
         put(RagiumMaterials.RAGI_CRYSTAL, gem(MapColor.COLOR_RED))
-        put(CommonMaterials.FLUORITE, gem(MapColor.EMERALD))
         put(CommonMaterials.CRYOLITE, gem(MapColor.NONE))
         // Other
         put(
@@ -98,7 +97,6 @@ object RagiumBlocks {
     @JvmStatic
     fun getStorageParent(key: HTMaterialKey): HTTagPrefix = when (key) {
         CommonMaterials.CRYOLITE -> HTTagPrefix.GEM
-        CommonMaterials.FLUORITE -> HTTagPrefix.GEM
         RagiumMaterials.FIERY_COAL -> HTTagPrefix.GEM
         RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
         else -> HTTagPrefix.INGOT

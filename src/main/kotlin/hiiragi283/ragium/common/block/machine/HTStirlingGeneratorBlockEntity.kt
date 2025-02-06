@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
@@ -27,7 +28,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, RagiumMachineKeys.STIRLING_GENERATOR) {
     private val itemInput = HTMachineItemHandler(1, this::setChanged)
     private val fluidInput: HTMachineFluidTank =
-        object : HTMachineFluidTank(8000, this@HTStirlingGeneratorBlockEntity::setChanged) {
+        object : HTMachineFluidTank(this@HTStirlingGeneratorBlockEntity::setChanged) {
             override fun isFluidValid(stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
         }
 
@@ -35,6 +36,11 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         listOf(itemInput.createSlot(0)),
         listOf(fluidInput),
     )
+
+    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+        super.updateEnchantments(newEnchantments)
+        fluidInput.updateCapacity(this)
+    }
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData {
         TODO("Not yet implemented")

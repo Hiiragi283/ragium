@@ -10,6 +10,7 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Ingredient
 
 /**
  * [TagKey]のプレフィックスを表すクラス
@@ -95,6 +96,8 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
      */
     fun createTag(key: HTMaterialKey): TagKey<Item> = itemTagKey(commonId("$tagPrefix${key.name}"))
 
+    fun createIngredient(key: HTMaterialKey): Ingredient = Ingredient.of(createTag(key))
+    
     //    Translation    //
 
     val translationKey = "tag_prefix.${RagiumAPI.MOD_ID}.$serializedName"

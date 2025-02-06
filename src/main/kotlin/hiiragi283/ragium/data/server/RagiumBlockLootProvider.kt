@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.component.DataComponents
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.Items
@@ -23,7 +24,6 @@ import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
-import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
@@ -66,11 +66,11 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         RagiumBlocks.DRUMS.forEach { (_, drum: DeferredBlock<HTDrumBlock>) ->
-            add(drum.get()) { copyComponent(it, RagiumComponentTypes.FLUID_CONTENT) }
+            add(drum.get()) { copyComponent(it, RagiumComponentTypes.FLUID_CONTENT.get(), DataComponents.ENCHANTMENTS) }
         }
     }
 
-    private fun copyComponent(block: Block, type: Supplier<out DataComponentType<*>>): LootTable.Builder = LootTable
+    private fun copyComponent(block: Block, vararg types: DataComponentType<*>): LootTable.Builder = LootTable
         .lootTable()
         .withPool(
             applyExplosionCondition(
@@ -84,7 +84,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                             .apply(
                                 CopyComponentsFunction
                                     .copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                                    .include(type.get()),
+                                    .apply { types.forEach(this::include) },
                             ),
                     ),
             ),

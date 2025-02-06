@@ -357,8 +357,8 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             output,
             RagiumMachineKeys.LASER_ASSEMBLY,
             RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(Tags.Items.NETHER_STARS),
             Ingredient.of(Items.END_CRYSTAL),
+            HTTagPrefix.GEM.createIngredient(RagiumMaterials.RAGI_CRYSTAL),
         )
         // Mixer
         registerMachine(

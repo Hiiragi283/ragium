@@ -7,11 +7,14 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
+import net.minecraft.Util
 import net.minecraft.data.recipes.*
 import net.minecraft.data.tags.TagsProvider
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
@@ -27,6 +30,10 @@ import java.util.function.Supplier
 
 fun LanguageProvider.addFluid(fluid: Supplier<out Fluid>, value: String) {
     add(fluid.get().fluidType.descriptionId, value)
+}
+
+fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String) {
+    add(Util.makeDescriptionId("enchantment", key.location()), value)
 }
 
 fun LanguageProvider.add(tier: HTMachineTier, value: String, prefix: String) {

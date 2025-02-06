@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:sulfuric_acid"
+  },
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:hydrofluoric_acid"
+  },
+  "item_input": {
+    "count": 2,
+    "item": "ragium:glow_reagent"
+  }
+}

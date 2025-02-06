@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
+import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -51,27 +52,21 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
         // Content
         add(RagiumTranslationKeys.BURNER, "Burner")
-        add(RagiumTranslationKeys.CASING, "Casing")
-        add(RagiumTranslationKeys.CASING_WALL, "Casing Wall")
         add(RagiumTranslationKeys.CIRCUIT, "Circuit")
-        add(RagiumTranslationKeys.COIL, "Coil")
         add(RagiumTranslationKeys.CRATE, "Crate")
         add(RagiumTranslationKeys.DRUM, "Drum")
         add(RagiumTranslationKeys.GRATE, "Grate")
-        add(RagiumTranslationKeys.HULL, "hull")
-        add(RagiumTranslationKeys.PLASTIC, "Plastic")
 
         add(HTOreVariant.OVERWORLD, "%s Ore")
         add(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
         add(HTOreVariant.NETHER, "Nether %s Ore")
         add(HTOreVariant.END, "End %s Ore")
+        // Enchantment
+        addEnchantment(RagiumEnchantments.CAPACITY, "Capacity")
         // Fluids
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.SNOW, "Powder Snow")
-
-        addFluid(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
-        addFluid(RagiumVirtualFluids.OXYGEN, "Oxygen")
-        addFluid(RagiumVirtualFluids.STEAM, "Steam")
+        addFluid(RagiumFluids.SLIME, "Slime")
 
         addFluid(RagiumVirtualFluids.SULFURIC_ACID, "Blaze Acid")
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Glow Acid")

@@ -12,12 +12,10 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.function.Supplier
 
@@ -28,7 +26,7 @@ abstract class HTFluidGeneratorBlockEntity(
     machineKey: HTMachineKey,
 ) : HTMachineBlockEntity(type, pos, state, machineKey) {
     private val tank: HTMachineFluidTank =
-        object : HTMachineFluidTank(FluidType.BUCKET_VOLUME * 8, this@HTFluidGeneratorBlockEntity::setChanged) {
+        object : HTMachineFluidTank(this@HTFluidGeneratorBlockEntity::setChanged) {
             override fun isFluidValid(stack: FluidStack): Boolean = this@HTFluidGeneratorBlockEntity.isFluidValid(stack)
         }
 
@@ -58,7 +56,7 @@ abstract class HTFluidGeneratorBlockEntity(
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)
-        tank.capacity = getEnchantmentLevel(Enchantments.UNBREAKING) * 8 * FluidType.BUCKET_VOLUME
+        tank.updateCapacity(this)
     }
 
     //    HTBlockEntityHandlerProvider    //

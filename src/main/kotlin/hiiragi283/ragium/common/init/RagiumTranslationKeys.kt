@@ -19,15 +19,10 @@ object RagiumTranslationKeys {
     //    Content    //
 
     const val BURNER = "content.ragium.burner"
-    const val CASING = "content.ragium.casing"
-    const val CASING_WALL = "content.ragium.casing_wall"
     const val CIRCUIT = "content.ragium.circuit"
-    const val COIL = "content.ragium.coil"
     const val CRATE = "content.ragium.crate"
     const val DRUM = "content.ragium.drum"
     const val GRATE = "content.ragium.grate"
-    const val HULL = "content.ragium.hull"
-    const val PLASTIC = "content.ragium.plastic"
 
     //    Fluid    //
 
@@ -36,16 +31,8 @@ object RagiumTranslationKeys {
 
     //    Item    //
 
-    const val ANVIL_DYNAMITE = "tooltip.ragium.item.anvil_dynamite"
-    const val BACKPACK = "tooltip.ragium.item.backpack"
-    const val RAGI_WRENCH = "tooltip.ragium.item.ragi_wrench"
-    const val TRADER_CATALOG = "tooltip.ragium.item.trader_catalog"
-    const val WARPED_CRYSTAL = "tooltip.ragium.item.warped_crystal"
-
     const val DYNAMITE_DESTROY = "tooltip.ragium.item.dynamite.destroy"
     const val DYNAMITE_POWER = "tooltip.ragium.item.dynamite.power"
-    const val RADIOACTIVITY = "tooltip.ragium.item.radioactivity"
-    const val WARPED_CRYSTAL_DESTINATION = "tooltip.ragium.item.warped_crystal.destination"
 
     //    Machine    //
 

@@ -3,9 +3,7 @@ package hiiragi283.ragium.api.capability
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.logError
-import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.world.item.ItemStack
@@ -58,8 +56,7 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
     /**
      * 指定した[nbt]に値を書き込みます。
      */
-    fun writeNbt(nbt: CompoundTag, provider: HolderLookup.Provider) {
-        val dynamicOps: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
+    fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         ItemStack.OPTIONAL_CODEC
             .listOf()
             .encodeStart(dynamicOps, items.map(HTSlotHandler<ItemStack>::stack))
@@ -75,8 +72,7 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
     /**
      * 指定した[nbt]から値を読み取ります。
      */
-    fun readNbt(nbt: CompoundTag, provider: HolderLookup.Provider) {
-        val dynamicOps: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
+    fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         ItemStack.OPTIONAL_CODEC
             .listOf()
             .parse(dynamicOps, nbt.get("items"))

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
@@ -77,6 +78,7 @@ object RagiumData {
                 output,
                 provider,
                 RegistrySetBuilder()
+                    .add(Registries.ENCHANTMENT, RagiumEnchantments::boostrap)
                     .add(Registries.CONFIGURED_FEATURE, RagiumConfiguredFeatures::boostrap)
                     .add(Registries.PLACED_FEATURE, RagiumPlacedFeatures::boostrap)
                     .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifiers::boostrap),

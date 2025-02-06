@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.common.recipe.condition.HTProcessorCatalystCondition
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -26,7 +25,8 @@ abstract class HTSingleItemRecipe(
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         if (!this.input.test(input.getItem(0))) return false
-        return catalyst.map { HTProcessorCatalystCondition(it).test(level, input.pos) }.orElse(true)
+        val catalystItem: ItemStack = input.getItem(1)
+        return catalyst.map { it.test(catalystItem) }.orElse(catalystItem.isEmpty)
     }
 
     //    Serializer    //

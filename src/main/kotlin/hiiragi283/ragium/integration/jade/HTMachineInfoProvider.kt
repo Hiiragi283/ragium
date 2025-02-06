@@ -30,6 +30,9 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     val TICK_RATE: MapCodec<Int> = Codec.INT.fieldOf("tick_rate")
 
     @JvmField
+    val COST_MODIFIER: MapCodec<Int> = Codec.INT.fieldOf("cost_modifier")
+
+    @JvmField
     val SHOW_PREVIEW: MapCodec<Boolean> = Codec.BOOL.fieldOf("show_preview")
 
     @JvmField
@@ -38,7 +41,8 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
         val machineEntity: HTMachineAccess = accessor.blockEntity as? HTMachineAccess ?: return
         accessor.writeData(HTMachineKey.FIELD_CODEC, machineEntity.machineKey)
-        accessor.writeData(TICK_RATE, machineEntity.tickRate)
+        accessor.writeData(TICK_RATE, machineEntity.containerData.get(1))
+        accessor.writeData(COST_MODIFIER, machineEntity.costModifier)
         accessor.writeData(IS_ACTIVE, machineEntity.isActive)
         accessor.writeData(SHOW_PREVIEW, machineEntity.showPreview)
         accessor.writeData(ENCHANTMENT, machineEntity.enchantments)
@@ -63,6 +67,9 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
                 floatText(tickRate / 20f),
             ),
         )
+
+        val costModifier: Int? = accessor.readData(COST_MODIFIER).orElse(1)
+        tooltip.add(Component.literal("- Cost Modifier: x$costModifier"))
 
         val showPreview: Boolean = accessor.readData(SHOW_PREVIEW).orElse(false)
         tooltip.add(Component.translatable(RagiumTranslationKeys.MACHINE_PREVIEW, boolText(showPreview)))

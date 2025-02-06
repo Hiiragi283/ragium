@@ -15,7 +15,8 @@
             {
               "function": "minecraft:copy_components",
               "include": [
-                "ragium:fluid_content"
+                "ragium:fluid_content",
+                "minecraft:enchantments"
               ],
               "source": "block_entity"
             }

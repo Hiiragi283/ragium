@@ -66,7 +66,13 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.BUCKET)
             .fluidOutput(NeoForgeMod.MILK)
             .save(output, RagiumAPI.id("milk"))
-
+        
+        // Slime
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.SLIME_BALLS)
+            .fluidOutput(RagiumFluids.SLIME)
+            .save(output, RagiumAPI.id("slime"))
+        
         // Crude Oil
         HTExtractorRecipeBuilder()
             .itemInput(RagiumItems.CRUDE_OIL_BUCKET)
@@ -81,9 +87,14 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Blaze Reagent
         HTExtractorRecipeBuilder()
+            .itemInput(Items.MAGMA_BLOCK, 8)
+            .itemOutput(RagiumItems.BLAZE_REAGENT)
+            .saveSuffixed(output, "_from_magma")
+        
+        HTExtractorRecipeBuilder()
             .itemInput(Items.BLAZE_POWDER)
             .itemOutput(RagiumItems.BLAZE_REAGENT)
-            .save(output)
+            .saveSuffixed(output, "_from_powder")
 
         // Creeper Reagent
         HTExtractorRecipeBuilder()

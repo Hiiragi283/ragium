@@ -1,9 +1,11 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.energyNetwork
 import hiiragi283.ragium.api.extension.asServerLevel
+import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
@@ -15,7 +17,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
 
@@ -24,12 +25,8 @@ import net.neoforged.neoforge.energy.IEnergyStorage
  */
 interface HTMachineAccess :
     HTBlockEntityHandlerProvider,
+    HTEnchantableBlockEntity,
     HTMultiblockController {
-    /**
-     * 機械が保持しているエンチャントの一覧
-     */
-    val enchantments: ItemEnchantments
-
     /**
      * 機械の正面の向き
      */
@@ -56,23 +53,20 @@ interface HTMachineAccess :
     val pos: BlockPos
 
     /**
-     * 機械の処理間隔 (tick表記)
-     */
-    val tickRate: Int
-
-    /**
      * 機械のtickを返す
      */
     val containerData: ContainerData
+
+    val costModifier: Int
 
     /**
      * 指定した[key]のレベルを取得します。
      * @return 指定したエンチャントが登録されていない，または紐づいていない場合は`0`
      */
-    fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int {
+    override fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int {
         val lookup: HolderLookup.RegistryLookup<Enchantment> =
             levelAccess?.registryAccess()?.lookupOrThrow(Registries.ENCHANTMENT) ?: return 0
-        return lookup.get(key).map(enchantments::getLevel).orElse(0)
+        return enchantments.getLevel(lookup, key)
     }
 
     //    HTBlockEntityHandlerProvider    //

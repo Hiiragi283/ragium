@@ -15,11 +15,6 @@ import java.util.function.Supplier
 enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = TextureType.LIQUID) :
     StringRepresentable,
     Supplier<Fluid> {
-    // Water
-    HYDROGEN(Color(0x000099), TextureType.GASEOUS),
-    OXYGEN(Color(0x66cccc), TextureType.GASEOUS),
-    STEAM(Color.WHITE, TextureType.GASEOUS),
-
     // Acid
     SULFURIC_ACID(Color(0xff3300), TextureType.STICKY),
     HYDROFLUORIC_ACID(Color(0xffcc33)),

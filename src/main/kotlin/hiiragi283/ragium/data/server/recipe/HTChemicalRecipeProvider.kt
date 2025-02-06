@@ -1,6 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.*
+import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
+import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -58,23 +61,18 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerFluorine(output: RecipeOutput) {
-        // Glowstone -> 4x CaF2
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.GLOWSTONE)
-            .itemOutput(HTTagPrefix.GEM, CommonMaterials.FLUORITE, 4)
-            .saveSuffixed(output, "_from_glowstone")
-        // Sea Lantern -> 4x CaF2
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.SEA_LANTERN)
-            .itemOutput(HTTagPrefix.GEM, CommonMaterials.FLUORITE, 6)
-            .saveSuffixed(output, "_from_sea_lantern")
-
         // CaF2 + H2SO4 -> CaSO4 + 2x HF(aq)
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
             .fluidInput(RagiumVirtualFluids.SULFURIC_ACID)
             .fluidOutput(RagiumVirtualFluids.HYDROFLUORIC_ACID)
-            .save(output)
+            .saveSuffixed(output, "_from_fluorite")
+
+        HTInfuserRecipeBuilder()
+            .itemInput(RagiumItems.GLOW_REAGENT, 2)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID)
+            .fluidOutput(RagiumVirtualFluids.HYDROFLUORIC_ACID)
+            .saveSuffixed(output, "_from_reagent")
     }
 
     private fun registerAlkali(output: RecipeOutput) {
@@ -118,7 +116,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
             .waterOutput()
-            .saveSuffixed(output, "_from_bauxite")
+            .save(output)
         // Alumina + 4x Coal -> Aluminum Ingot
         HTMultiItemRecipeBuilder
             .blastFurnace()
@@ -127,15 +125,9 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
             .saveSuffixed(output, "_with_coal")
 
-        // Al + O2 -> Alumina
+        // Al + HF -> Cryolite
         HTInfuserRecipeBuilder()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM, 2)
-            .fluidInput(RagiumVirtualFluids.OXYGEN, FluidType.BUCKET_VOLUME * 3)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA, 5)
-            .saveSuffixed(output, "_from_aluminum")
-        // Alumina + HF -> Cryolite
-        HTInfuserRecipeBuilder()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
             .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
             .itemOutput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
             .save(output)

@@ -20,6 +20,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
@@ -28,7 +29,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state, RagiumMachineKeys.EXTRACTOR) {
     private val itemInput = HTMachineItemHandler(1, this::setChanged)
     private val itemOutput = HTMachineItemHandler(1, this::setChanged)
-    private val outputTank = HTMachineFluidTank(8000, this::setChanged)
+    private val outputTank = HTMachineFluidTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
         listOf(
@@ -37,6 +38,11 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         ),
         listOf(outputTank),
     )
+
+    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+        super.updateEnchantments(newEnchantments)
+        outputTank.updateCapacity(this)
+    }
 
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTExtractorRecipe> =
         HTRecipeCache(RagiumRecipeTypes.EXTRACTOR)

@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:nether_stars"
+      "item": "minecraft:end_crystal"
     },
     "B": {
-      "item": "minecraft:end_crystal"
+      "tag": "c:gems/ragi_crystal"
     },
     "C": {
       "item": "ragium:precision_machine_casing"
     },
     "D": {
-      "item": "minecraft:end_crystal"
+      "tag": "c:gems/ragi_crystal"
     },
     "E": {
       "tag": "c:gears/diamond"

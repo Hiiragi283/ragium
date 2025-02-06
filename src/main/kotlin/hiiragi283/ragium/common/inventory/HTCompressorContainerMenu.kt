@@ -24,14 +24,16 @@ class HTCompressorContainerMenu(
         syncId,
         playerInv,
         registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
-        ItemStackHandler(2),
+        ItemStackHandler(3),
     )
 
     init {
         // inputs
         addSlot(0, 2, 1)
+        // Catalyst
+        addSlot(1, 4, 2)
         // outputs
-        addOutputSlot(1, 6, 1)
+        addOutputSlot(2, 6, 1)
         // player inventory
         addPlayerInv()
         // register property
@@ -39,5 +41,5 @@ class HTCompressorContainerMenu(
     }
 
     override val inputSlots: IntRange = (0..0)
-    override val outputSlots: IntRange = (1..1)
+    override val outputSlots: IntRange = (2..2)
 }

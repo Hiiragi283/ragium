@@ -18,10 +18,10 @@ class HTMachineRecipeInput private constructor(val pos: BlockPos, val items: Lis
             HTMachineRecipeInput(pos, items, fluids)
 
         @JvmStatic
-        fun of(pos: BlockPos, item: ItemStack): HTMachineRecipeInput = HTMachineRecipeInput(pos, listOf(item), listOf())
+        fun of(pos: BlockPos, vararg items: ItemStack): HTMachineRecipeInput = HTMachineRecipeInput(pos, listOf(*items), listOf())
 
         @JvmStatic
-        fun of(pos: BlockPos, fluid: FluidStack): HTMachineRecipeInput = HTMachineRecipeInput(pos, listOf(), listOf(fluid))
+        fun of(pos: BlockPos, vararg fluids: FluidStack): HTMachineRecipeInput = HTMachineRecipeInput(pos, listOf(), listOf(*fluids))
 
         @JvmStatic
         fun of(pos: BlockPos, item: ItemStack, fluid: FluidStack): HTMachineRecipeInput =

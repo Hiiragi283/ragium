@@ -63,7 +63,6 @@ object RagiumItems {
 
         register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
-        register(HTTagPrefix.DUST, CommonMaterials.FLUORITE)
 
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
@@ -88,7 +87,6 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
-        register(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)

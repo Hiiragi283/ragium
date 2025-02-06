@@ -20,12 +20,12 @@ import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.api.property.ifPresent
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtOps
+import net.minecraft.nbt.Tag
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundSource
@@ -48,6 +48,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import org.slf4j.Logger
 import java.util.function.Supplier
 import kotlin.math.max
+import kotlin.math.min
 
 /**
  * 機械のベースとなる[HTBlockEntity]
@@ -80,22 +81,20 @@ abstract class HTMachineBlockEntity(
 
     protected abstract val handlerSerializer: HTHandlerSerializer
 
-    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
+    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
-            .encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), enchantments)
-            .ifSuccess { tag.put(ENCH_KEY, it) }
-        tag.putBoolean(ACTIVE_KEY, isActive)
-        handlerSerializer.writeNbt(tag, registries)
+            .encodeStart(dynamicOps, enchantments)
+            .ifSuccess { nbt.put(ENCH_KEY, it) }
+        nbt.putBoolean(ACTIVE_KEY, isActive)
+        handlerSerializer.writeNbt(nbt, dynamicOps)
     }
 
-    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
+    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
-            .parse(NbtOps.INSTANCE, tag.get(ENCH_KEY))
+            .parse(dynamicOps, nbt.get(ENCH_KEY))
             .ifSuccess(::updateEnchantments)
-        isActive = tag.getBoolean(ACTIVE_KEY)
-        handlerSerializer.readNbt(tag, registries)
+        isActive = nbt.getBoolean(ACTIVE_KEY)
+        handlerSerializer.readNbt(nbt, dynamicOps)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -111,12 +110,17 @@ abstract class HTMachineBlockEntity(
 
     //    Enchantment    //
 
-    override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
-        protected set
+    final override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
 
-    protected open fun updateEnchantments(newEnchantments: ItemEnchantments) {
+    final override var costModifier: Int = 1
+
+    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments
+        // Efficiency -> Increase process speed
         this.tickRate = max(20, 200 - (getEnchantmentLevel(Enchantments.EFFICIENCY) * 30))
+        // Unbreaking -> Decrease energy cost
+        this.costModifier =
+            min(1, getEnchantmentLevel(Enchantments.EFFICIENCY) - getEnchantmentLevel(Enchantments.UNBREAKING))
     }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -186,7 +190,7 @@ abstract class HTMachineBlockEntity(
     private fun tickOnServer(level: ServerLevel, pos: BlockPos) {
         val network: HTEnergyNetwork = level.energyNetwork
         val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
-        val energyAmount: Int = energyData.amount
+        val energyAmount: Int = energyData.amount * costModifier
         // 取得したエネルギー量を処理できるか判定
         val handler: IEnergyStorage.(Int, Boolean) -> Int = energyData.energyHandler
         if (handler(network, energyAmount, true) < energyAmount) {
@@ -216,7 +220,7 @@ abstract class HTMachineBlockEntity(
     /**
      * 機械が要求するエネルギー量を返します。
      */
-    abstract fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData
+    protected abstract fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData
 
     /**
      * 機械の処理を行います。
@@ -224,7 +228,7 @@ abstract class HTMachineBlockEntity(
      * 投げられた例外は安全に処理されます。
      * @throws HTMachineException 機械がエネルギーを消費しない場合
      */
-    abstract fun process(level: ServerLevel, pos: BlockPos)
+    protected abstract fun process(level: ServerLevel, pos: BlockPos)
 
     final override fun onRemove(
         state: BlockState,

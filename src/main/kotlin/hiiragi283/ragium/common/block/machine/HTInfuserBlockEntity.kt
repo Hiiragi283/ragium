@@ -22,6 +22,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
@@ -29,9 +30,9 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.INFUSER, pos, state, RagiumMachineKeys.INFUSER) {
     private val itemInput = HTMachineItemHandler(1, this::setChanged)
-    private val inputTank = HTMachineFluidTank(8000, this::setChanged)
+    private val inputTank = HTMachineFluidTank(this::setChanged)
     private val itemOutput = HTMachineItemHandler(1, this::setChanged)
-    private val outputTank = HTMachineFluidTank(8000, this::setChanged)
+    private val outputTank = HTMachineFluidTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
         listOf(
@@ -40,6 +41,12 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         ),
         listOf(inputTank, outputTank),
     )
+
+    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+        super.updateEnchantments(newEnchantments)
+        inputTank.updateCapacity(this)
+        outputTank.updateCapacity(this)
+    }
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.consume(1600)
 

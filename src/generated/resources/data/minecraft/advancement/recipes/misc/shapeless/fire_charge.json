@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_reagent": {
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/fluorite"
+            "items": "ragium:blaze_reagent"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/fluorite_block"
+        "recipe": "minecraft:shapeless/fire_charge"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_reagent"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/fluorite_block"
+      "minecraft:shapeless/fire_charge"
     ]
   }
 }
