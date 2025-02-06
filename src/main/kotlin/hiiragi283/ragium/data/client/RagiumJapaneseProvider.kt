@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
 
 class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
@@ -39,13 +40,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         add(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")
 
-        add(RagiumBlocks.LEDBlocks.RED, "LEDブロック（赤）")
-        add(RagiumBlocks.LEDBlocks.GREEN, "LEDブロック（緑）")
-        add(RagiumBlocks.LEDBlocks.BLUE, "LEDブロック（青）")
-        add(RagiumBlocks.LEDBlocks.CYAN, "LEDブロック（シアン）")
-        add(RagiumBlocks.LEDBlocks.MAGENTA, "LEDブロック（マゼンタ）")
-        add(RagiumBlocks.LEDBlocks.YELLOW, "LEDブロック（黄色）")
-        add(RagiumBlocks.LEDBlocks.WHITE, "LEDブロック")
+        add(RagiumBlocks.getLedBlock(DyeColor.RED), "LEDブロック（赤）")
+        add(RagiumBlocks.getLedBlock(DyeColor.GREEN), "LEDブロック（緑）")
+        add(RagiumBlocks.getLedBlock(DyeColor.BLUE), "LEDブロック（青）")
+        add(RagiumBlocks.getLedBlock(DyeColor.CYAN), "LEDブロック（シアン）")
+        add(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "LEDブロック（マゼンタ）")
+        add(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
+        add(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
 
         // Content
         add(RagiumTranslationKeys.BURNER, "バーナー")

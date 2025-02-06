@@ -28,20 +28,17 @@ class RagiumBlockTagProvider(
     override fun addTags(provider: HolderLookup.Provider) {
         // Mineable
         val pickaxe: TagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        buildList {
-            addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Burners.entries)
-
-            addAll(RagiumBlocks.Drums.entries)
-
-            addAll(RagiumAPI.machineRegistry.blockMap.values)
-        }.forEach(pickaxe::add)
+        RagiumAPI.machineRegistry.blocks.forEach(pickaxe::add)
 
         buildList {
             addAll(RagiumBlocks.ORES.values)
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+
+            addAll(RagiumBlocks.GRATES.values)
+            addAll(RagiumBlocks.BURNERS.values)
+            addAll(RagiumBlocks.DRUMS.values)
 
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
@@ -77,7 +74,7 @@ class RagiumBlockTagProvider(
 
         // Farmer's Delight
         val heatBuilder: TagAppender<Block> = tag(ModTags.HEAT_SOURCES)
-        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
+        RagiumBlocks.BURNERS.values.forEach { burner: DeferredBlock<Block> ->
             heatBuilder.add(burner)
         }
 

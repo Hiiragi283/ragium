@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemProperty
@@ -14,11 +13,13 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.collection.HTTable
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.item.*
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -141,21 +142,28 @@ object RagiumItems {
             )
         }
 
-        buildList {
-            addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Burners.entries)
-
-            addAll(RagiumBlocks.Drums.entries)
-        }.forEach { content: HTBlockContent.Tier ->
+        RagiumBlocks.GRATES.forEach { (tier: HTMachineTier, grate: DeferredBlock<TransparentBlock>) ->
             REGISTER.registerSimpleBlockItem(
-                content.holder,
-                itemProperty().name(content.machineTier.createPrefixedText(content.translationKey)),
+                grate,
+                itemProperty().name(tier.createPrefixedText(RagiumTranslationKeys.GRATE)),
             )
         }
 
-        RagiumBlocks.LEDBlocks.entries.forEach { ledBlock: RagiumBlocks.LEDBlocks ->
-            REGISTER.registerSimpleBlockItem(ledBlock.holder)
+        RagiumBlocks.BURNERS.forEach { (tier: HTMachineTier, drum: DeferredBlock<Block>) ->
+            REGISTER.registerSimpleBlockItem(
+                drum,
+                itemProperty().name(tier.createPrefixedText(RagiumTranslationKeys.BURNER)),
+            )
         }
+
+        RagiumBlocks.DRUMS.forEach { (tier: HTMachineTier, drum: DeferredBlock<HTDrumBlock>) ->
+            REGISTER.registerSimpleBlockItem(
+                drum,
+                itemProperty().name(tier.createPrefixedText(RagiumTranslationKeys.DRUM)),
+            )
+        }
+
+        RagiumBlocks.LED_BLOCKS.values.forEach(REGISTER::registerSimpleBlockItem)
 
         buildList {
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)

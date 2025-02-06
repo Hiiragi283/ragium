@@ -6,10 +6,12 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
@@ -44,7 +46,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
-            addAll(RagiumBlocks.LEDBlocks.entries)
+            addAll(RagiumBlocks.LED_BLOCKS.values)
         }.map(Supplier<out Block>::get)
             .forEach(::simpleBlock)
 
@@ -63,7 +65,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Grate
-        RagiumBlocks.Grates.entries.forEach { grate: RagiumBlocks.Grates ->
+        RagiumBlocks.GRATES.forEach { (_, grate: DeferredBlock<TransparentBlock>) ->
             simpleBlock(
                 grate.get(),
                 ConfiguredModel(
@@ -94,22 +96,24 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }*/
 
         // Burner
-        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
-            val core: ResourceLocation = when (burner) {
-                RagiumBlocks.Burners.ADVANCED -> ResourceLocation.withDefaultNamespace("magma")
-                RagiumBlocks.Burners.ELITE -> RagiumAPI.id("soul_magma_block")
-                RagiumBlocks.Burners.ULTIMATE -> RagiumAPI.id("ultimate_burner")
+        RagiumBlocks.BURNERS.forEach { (tier: HTMachineTier, burner: DeferredBlock<Block>) ->
+            val core: ResourceLocation = when (tier) {
+                HTMachineTier.ADVANCED -> ResourceLocation.withDefaultNamespace("magma")
+                HTMachineTier.ELITE -> RagiumAPI.id("soul_magma_block")
+                HTMachineTier.ULTIMATE -> RagiumAPI.id("ultimate_burner")
+                else -> return
             }
-            val base: ResourceLocation = when (burner) {
-                RagiumBlocks.Burners.ADVANCED -> "polished_blackstone_bricks"
-                RagiumBlocks.Burners.ELITE -> "end_stone_bricks"
-                RagiumBlocks.Burners.ULTIMATE -> "red_nether_bricks"
+            val base: ResourceLocation = when (tier) {
+                HTMachineTier.ADVANCED -> "polished_blackstone_bricks"
+                HTMachineTier.ELITE -> "end_stone_bricks"
+                HTMachineTier.ULTIMATE -> "red_nether_bricks"
+                else -> return
             }.let(ResourceLocation::withDefaultNamespace)
             simpleBlock(
                 burner.get(),
                 models()
-                    .withExistingParent(burner, RagiumAPI.id("block/burner"))
-                    .blockTexture("bars", burner.machineTier.getGrate().id)
+                    .withExistingParent(burner.id.path, RagiumAPI.id("block/burner"))
+                    .blockTexture("bars", tier.getGrate().id)
                     .blockTexture("core", core)
                     .blockTexture("side", base)
                     .blockTexture("top", base)
@@ -118,7 +122,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Drum
-        RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
+        RagiumBlocks.DRUMS.forEach { (_, drum: DeferredBlock<HTDrumBlock>) ->
             val id: ResourceLocation = drum.blockId
             simpleBlock(drum.get(), models().cubeTop(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
         }

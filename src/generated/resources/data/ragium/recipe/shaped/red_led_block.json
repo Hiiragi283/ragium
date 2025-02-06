@@ -3,16 +3,16 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "minecraft:red_stained_glass"
+      "tag": "c:dyes/red"
     },
     "B": {
-      "item": "ragium:led"
+      "tag": "ragium:led_blocks"
     }
   },
   "pattern": [
-    " A ",
+    "AAA",
     "ABA",
-    " A "
+    "AAA"
   ],
   "result": {
     "count": 4,

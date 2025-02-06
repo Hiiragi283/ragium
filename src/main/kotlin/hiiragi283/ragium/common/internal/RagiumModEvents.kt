@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.internal
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
@@ -40,6 +39,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -222,28 +222,13 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        RagiumAPI.machineRegistry.blockMap.values.forEach { content: HTBlockContent ->
+        RagiumAPI.machineRegistry.blocks.forEach { holder: DeferredBlock<*> ->
             event.registerBlock(
                 RagiumAPI.BlockCapabilities.CONTROLLER_HOLDER,
                 { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction -> blockEntity as? HTControllerHolder },
-                content.get(),
+                holder.get(),
             )
         }
-
-        fun registerTier(contents: Iterable<HTBlockContent>) {
-            event.registerBlock(
-                RagiumAPI.BlockCapabilities.MACHINE_TIER,
-                { _: Level, _: BlockPos, state: BlockState, _: BlockEntity?, _: Void? ->
-                    state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER)
-                },
-                *contents.map(HTBlockContent::get).toTypedArray(),
-            )
-        }
-
-        registerTier(RagiumBlocks.Grates.entries)
-        registerTier(RagiumBlocks.Burners.entries)
-
-        registerTier(RagiumBlocks.Drums.entries)
 
         // from HTBlockEntityHandlerProvider
         fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTBlockEntityHandlerProvider {
@@ -307,7 +292,7 @@ internal object RagiumModEvents {
                     tier.tankCapacity,
                 )
             },
-            *RagiumBlocks.Drums.entries.toTypedArray(),
+            *RagiumBlocks.DRUMS.values.toTypedArray(),
         )
 
         LOGGER.info("Registered Item Capabilities!")

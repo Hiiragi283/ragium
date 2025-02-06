@@ -3,19 +3,19 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:dyes/magenta"
+      "tag": "c:glass_blocks"
     },
     "B": {
-      "tag": "ragium:led_blocks"
+      "item": "ragium:led"
     }
   },
   "pattern": [
-    "AAA",
+    " A ",
     "ABA",
-    "AAA"
+    " A "
   ],
   "result": {
     "count": 4,
-    "id": "ragium:magenta_led_block"
+    "id": "ragium:white_led_block"
   }
 }

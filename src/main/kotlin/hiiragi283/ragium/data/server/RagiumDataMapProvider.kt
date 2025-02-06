@@ -8,13 +8,16 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.DataMapProvider
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import java.util.concurrent.CompletableFuture
@@ -22,8 +25,6 @@ import java.util.concurrent.CompletableFuture
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(packOutput, lookupProvider) {
     private fun <T : Any> Builder<T, Item>.addItem(item: ItemLike, value: T): Builder<T, Item> = add(item.asHolder(), value, false)
-
-    private fun <T : Any> Builder<T, Item>.addContent(content: HTBlockContent, value: T): Builder<T, Item> = add(content.id, value, false)
 
     private fun Builder<FurnaceFuel, Item>.addFuel(item: ItemLike, second: Int): Builder<FurnaceFuel, Item> =
         addItem(item, FurnaceFuel(second * 200))
@@ -47,21 +48,18 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
     private fun machineKey(builder: Builder<HTMachineKey, Item>) {
         RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: HTBlockContent) ->
-            builder.addContent(content, key)
+            builder.add(content.id, key, false)
         }
     }
 
     private fun machineTier(builder: Builder<HTMachineTier, Item>) {
-        fun registerTier(contents: Iterable<HTBlockContent.Tier>) {
-            for (content: HTBlockContent.Tier in contents) {
-                builder.addContent(content, content.machineTier)
-            }
+        RagiumBlocks.BURNERS.forEach { (tier: HTMachineTier, burner: DeferredBlock<Block>) ->
+            builder.addItem(burner, tier)
         }
 
-        registerTier(RagiumBlocks.Grates.entries)
-        registerTier(RagiumBlocks.Burners.entries)
-
-        registerTier(RagiumBlocks.Drums.entries)
+        RagiumBlocks.DRUMS.forEach { (tier: HTMachineTier, drum: DeferredBlock<HTDrumBlock>) ->
+            builder.addItem(drum, tier)
+        }
     }
 
     private fun radioactivity(builder: Builder<HTRadioactivity, Item>) {

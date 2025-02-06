@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
@@ -17,7 +18,7 @@ class HTTieredMultiblockComponent(val getter: Function<HTMachineTier, out Suppli
     override fun getType(): HTMultiblockComponent.Type<*> = RagiumMultiblockComponentTypes.TIER.get()
 
     fun getBlock(controller: HTControllerDefinition): Block =
-        (controller.getCapability(RagiumAPI.BlockCapabilities.MACHINE_TIER) ?: HTMachineTier.BASIC)
+        (controller.state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC)
             .let(getter::apply)
             .get()
 

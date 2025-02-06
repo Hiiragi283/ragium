@@ -30,26 +30,21 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     private fun registerBlocks() {
         buildList {
-            addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Burners.entries)
-
-            addAll(RagiumBlocks.Drums.entries)
-
-            addAll(RagiumBlocks.LEDBlocks.entries)
-        }.map(HTBlockContent::id).forEach(::simpleBlockItem)
-
-        buildList {
             addAll(RagiumBlocks.ORES.values)
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
-
             add(RagiumBlocks.SLAG_BLOCK)
+
+            addAll(RagiumBlocks.GRATES.values)
+            addAll(RagiumBlocks.BURNERS.values)
+            addAll(RagiumBlocks.DRUMS.values)
 
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
+            addAll(RagiumBlocks.LED_BLOCKS.values)
 
             add(RagiumBlocks.SPONGE_CAKE)
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -65,7 +60,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             if (content == null) return@forEachEntries
             val modelId: ResourceLocation =
                 key.getProperty().getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER)(key)
-            withUncheckedParent(content, modelId)
+            withUncheckedParent(content.holder, modelId)
         }
     }
 

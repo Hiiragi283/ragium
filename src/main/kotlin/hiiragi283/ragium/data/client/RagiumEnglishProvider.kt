@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
 
 class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "en_us") {
@@ -39,13 +40,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         add(RagiumBlocks.SLAG_COLLECTOR, "Slag Collector")
 
-        add(RagiumBlocks.LEDBlocks.RED, "Red LED Block")
-        add(RagiumBlocks.LEDBlocks.GREEN, "Green LED Block")
-        add(RagiumBlocks.LEDBlocks.BLUE, "Blue LED Block")
-        add(RagiumBlocks.LEDBlocks.CYAN, "Cyan LED Block")
-        add(RagiumBlocks.LEDBlocks.MAGENTA, "Magenta LED Block")
-        add(RagiumBlocks.LEDBlocks.YELLOW, "Yellow LED Block")
-        add(RagiumBlocks.LEDBlocks.WHITE, "LED Block")
+        add(RagiumBlocks.getLedBlock(DyeColor.RED), "Red LED Block")
+        add(RagiumBlocks.getLedBlock(DyeColor.GREEN), "Green LED Block")
+        add(RagiumBlocks.getLedBlock(DyeColor.BLUE), "Blue LED Block")
+        add(RagiumBlocks.getLedBlock(DyeColor.CYAN), "Cyan LED Block")
+        add(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "Magenta LED Block")
+        add(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
+        add(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
         // Content
         add(RagiumTranslationKeys.BURNER, "Burner")
         add(RagiumTranslationKeys.CASING, "Casing")

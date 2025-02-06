@@ -66,13 +66,6 @@ data object RagiumAPI {
         @JvmField
         val CONTROLLER_HOLDER: BlockCapability<HTControllerHolder, Direction?> =
             BlockCapability.createSided(id("controller_holder"), HTControllerHolder::class.java)
-
-        /**
-         * [HTMachineTier]を返す[BlockCapability]
-         */
-        @JvmField
-        val MACHINE_TIER: BlockCapability<HTMachineTier, Void?> =
-            BlockCapability.createVoid(id("machine_tier"), HTMachineTier::class.java)
     }
 
     /**

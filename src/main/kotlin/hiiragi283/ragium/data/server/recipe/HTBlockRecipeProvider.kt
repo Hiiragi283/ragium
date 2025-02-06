@@ -1,15 +1,19 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.define
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -18,11 +22,15 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredBlock
 
 object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -50,16 +58,16 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_rod", has(HTTagPrefix.ROD, VanillaMaterials.COPPER))
             .save(output, RagiumAPI.id("shaped/copper_grate"))
 
-        RagiumBlocks.Grates.entries.forEach { grate: RagiumBlocks.Grates ->
+        RagiumBlocks.GRATES.forEach { (tier: HTMachineTier, grate: DeferredBlock<TransparentBlock>) ->
             // Shaped Crafting
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.BUILDING_BLOCKS, grate, 4)
                 .pattern("AAA")
                 .pattern("ABA")
                 .pattern("AAA")
-                .define('A', HTTagPrefix.ROD, grate.machineTier.getSteelMetal())
+                .define('A', HTTagPrefix.ROD, tier.getSteelMetal())
                 .define('B', RagiumItems.FORGE_HAMMER)
-                .unlockedBy("has_rod", has(HTTagPrefix.ROD, grate.machineTier.getSteelMetal()))
+                .unlockedBy("has_rod", has(HTTagPrefix.ROD, tier.getSteelMetal()))
                 .savePrefixed(output)
         }
     }
@@ -101,16 +109,18 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     }*/
 
     private fun registerBurners(output: RecipeOutput) {
-        RagiumBlocks.Burners.entries.forEach { burner: RagiumBlocks.Burners ->
-            val core: ItemLike = when (burner) {
-                RagiumBlocks.Burners.ADVANCED -> Items.MAGMA_BLOCK
-                RagiumBlocks.Burners.ELITE -> RagiumBlocks.SOUL_MAGMA_BLOCK
-                RagiumBlocks.Burners.ULTIMATE -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!
+        RagiumBlocks.BURNERS.forEach { (tier: HTMachineTier, burner: DeferredBlock<Block>) ->
+            val core: ItemLike = when (tier) {
+                HTMachineTier.ADVANCED -> Items.MAGMA_BLOCK
+                HTMachineTier.ELITE -> RagiumBlocks.SOUL_MAGMA_BLOCK
+                HTMachineTier.ULTIMATE -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!
+                else -> return
             }
-            val base: Item = when (burner) {
-                RagiumBlocks.Burners.ADVANCED -> Items.POLISHED_BLACKSTONE_BRICKS
-                RagiumBlocks.Burners.ELITE -> Items.END_STONE_BRICKS
-                RagiumBlocks.Burners.ULTIMATE -> Items.RED_NETHER_BRICKS
+            val base: Item = when (tier) {
+                HTMachineTier.ADVANCED -> Items.POLISHED_BLACKSTONE_BRICKS
+                HTMachineTier.ELITE -> Items.END_STONE_BRICKS
+                HTMachineTier.ULTIMATE -> Items.RED_NETHER_BRICKS
+                else -> return
             }
             // Shaped Crafting
             ShapedRecipeBuilder
@@ -118,7 +128,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .pattern("A A")
                 .pattern("ABA")
                 .pattern("CCC")
-                .define('A', burner.machineTier.getGrate())
+                .define('A', tier.getGrate())
                 .define('B', core)
                 .define('C', base)
                 .unlockedBy("has_core", has(core))
@@ -127,12 +137,12 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerDrums(output: RecipeOutput) {
-        RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
-            val metal: HTMaterialKey = when (drum) {
-                RagiumBlocks.Drums.BASIC -> VanillaMaterials.COPPER
-                RagiumBlocks.Drums.ADVANCED -> VanillaMaterials.GOLD
-                RagiumBlocks.Drums.ELITE -> CommonMaterials.ALUMINUM
-                RagiumBlocks.Drums.ULTIMATE -> RagiumMaterials.RAGIUM
+        RagiumBlocks.DRUMS.forEach { (tier: HTMachineTier, drum: DeferredBlock<HTDrumBlock>) ->
+            val metal: HTMaterialKey = when (tier) {
+                HTMachineTier.BASIC -> VanillaMaterials.COPPER
+                HTMachineTier.ADVANCED -> VanillaMaterials.GOLD
+                HTMachineTier.ELITE -> CommonMaterials.ALUMINUM
+                HTMachineTier.ULTIMATE -> RagiumMaterials.RAGIUM
             }
             // Shaped Crafting
             ShapedRecipeBuilder
@@ -165,16 +175,26 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerLEDs(output: RecipeOutput) {
         // LED
-        RagiumBlocks.LEDBlocks.entries.forEach { ledBlock: RagiumBlocks.LEDBlocks ->
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.getLedBlock(DyeColor.WHITE), 4)
+            .pattern(" A ")
+            .pattern("ABA")
+            .pattern(" A ")
+            .define('A', Tags.Items.GLASS_BLOCKS)
+            .define('B', RagiumItems.LED)
+            .unlockedBy("has_led", has(RagiumItems.LED))
+            .save(output, RagiumAPI.id("shaped/led_block"))
+
+        RagiumBlocks.LED_BLOCKS.forEach { (color: DyeColor, block: DeferredBlock<Block>) ->
             // Shaped Crafting
             ShapedRecipeBuilder
-                .shaped(RecipeCategory.BUILDING_BLOCKS, ledBlock, 4)
-                .pattern(" A ")
+                .shaped(RecipeCategory.BUILDING_BLOCKS, block, 4)
+                .pattern("AAA")
                 .pattern("ABA")
-                .pattern(" A ")
-                .define('A', ledBlock.baseBlock)
-                .define('B', RagiumItems.LED)
-                .unlockedBy("has_led", has(RagiumItems.LED))
+                .pattern("AAA")
+                .define('A', itemTagKey(commonId("dyes/${color.serializedName}")))
+                .define('B', RagiumItemTags.LED_BLOCKS)
+                .unlockedBy("has_led", has(RagiumItemTags.LED_BLOCKS))
                 .savePrefixed(output)
         }
     }

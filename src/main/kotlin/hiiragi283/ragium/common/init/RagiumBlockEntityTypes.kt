@@ -114,7 +114,7 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =
-        register("drum", ::HTDrumBlockEntity, RagiumBlocks.Drums.entries)
+        register("drum", ::HTDrumBlockEntity, RagiumBlocks.DRUMS.values)
 
     @JvmField
     val SLAG_COLLECTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSlagCollectorBlockEntity>> =

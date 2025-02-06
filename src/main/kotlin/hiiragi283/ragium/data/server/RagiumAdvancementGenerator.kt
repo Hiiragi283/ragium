@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -161,31 +160,6 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             ),
         ).hasItem("has_${holder.id.path}", holder)
         .save(holder.id.path)
-
-    @JvmStatic
-    private fun createSimple(
-        parent: AdvancementHolder,
-        content: HTBlockContent,
-        desc: Component,
-        title: Component = content.toStack().hoverName,
-        type: AdvancementType = AdvancementType.TASK,
-        showToast: Boolean = true,
-        showChat: Boolean = true,
-        hidden: Boolean = false,
-    ): AdvancementHolder = create(parent)
-        .display(
-            DisplayInfo(
-                ItemStack(content),
-                title,
-                desc,
-                Optional.empty(),
-                type,
-                showToast,
-                showChat,
-                hidden,
-            ),
-        ).hasItem("has_${content.id.path}", content)
-        .save(content.id.path)
 
     @JvmStatic
     private fun createMaterial(

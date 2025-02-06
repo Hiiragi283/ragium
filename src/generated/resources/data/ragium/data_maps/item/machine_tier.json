@@ -2,14 +2,10 @@
   "values": {
     "ragium:advanced_burner": "advanced",
     "ragium:advanced_drum": "advanced",
-    "ragium:advanced_grate": "advanced",
     "ragium:basic_drum": "basic",
-    "ragium:basic_grate": "basic",
     "ragium:elite_burner": "elite",
     "ragium:elite_drum": "elite",
-    "ragium:elite_grate": "elite",
     "ragium:ultimate_burner": "ultimate",
-    "ragium:ultimate_drum": "ultimate",
-    "ragium:ultimate_grate": "ultimate"
+    "ragium:ultimate_drum": "ultimate"
   }
 }

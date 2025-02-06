@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
+import net.neoforged.neoforge.registries.DeferredBlock
 
 interface HTMachineRegistry {
     fun forEachEntries(action: (HTMachineKey, HTBlockContent?, HTPropertyHolder) -> Unit) {
@@ -20,6 +21,9 @@ interface HTMachineRegistry {
      * 登録された[HTMachineKey]とその[HTBlockContent]のマップ
      */
     val blockMap: Map<HTMachineKey, HTBlockContent>
+
+    val blocks: Collection<DeferredBlock<*>>
+        get() = blockMap.values.map(HTBlockContent::holder)
 
     /**
      * 指定された[key]に紐づいたブロックを返します。

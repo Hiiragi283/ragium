@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -20,6 +19,7 @@ import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -29,15 +29,6 @@ import net.neoforged.neoforge.registries.DeferredRegister
 object RagiumBlocks {
     @JvmField
     val REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
-
-    init {
-        Grates.entries
-        Burners.entries
-
-        Drums.entries
-
-        LEDBlocks.entries
-    }
 
     //    Components    //
 
@@ -119,36 +110,33 @@ object RagiumBlocks {
         blockProperty().mapColor(MapColor.TERRACOTTA_CYAN).strength(3f).sound(SoundType.DEEPSLATE),
     )
 
-    enum class Grates(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        BASIC(HTMachineTier.BASIC),
-        ADVANCED(HTMachineTier.ADVANCED),
-        ELITE(HTMachineTier.ELITE),
-        ULTIMATE(HTMachineTier.ULTIMATE),
-        ;
+    @JvmField
+    val GRATES: Map<HTMachineTier, DeferredBlock<TransparentBlock>> =
+        HTMachineTier.entries.associateWith { tier: HTMachineTier ->
+            REGISTER.registerBlock(
+                "${tier.serializedName}_grate",
+                ::TransparentBlock,
+                blockProperty(Blocks.COPPER_GRATE),
+            )
+        }
 
-        override val holder: DeferredBlock<TransparentBlock> =
-            REGISTER.registerBlock("${name.lowercase()}_grate", ::TransparentBlock, blockProperty(Blocks.COPPER_GRATE))
-        override val translationKey: String = RagiumTranslationKeys.GRATE
-    }
-
-    enum class Burners(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        ADVANCED(HTMachineTier.ADVANCED),
-        ELITE(HTMachineTier.ELITE),
-        ULTIMATE(HTMachineTier.ULTIMATE),
-        ;
-
-        override val holder: DeferredBlock<Block> = REGISTER.registerBlock(
-            "${name.lowercase()}_burner",
-            ::Block,
-            blockProperty()
-                .mapColor(MapColor.STONE)
-                .strength(5f)
-                .sound(SoundType.COPPER)
-                .noOcclusion()
-                .requiresCorrectToolForDrops(),
-        )
-        override val translationKey: String = RagiumTranslationKeys.BURNER
-    }
+    @JvmField
+    val BURNERS: Map<HTMachineTier, DeferredBlock<Block>> =
+        listOf(
+            HTMachineTier.ADVANCED,
+            HTMachineTier.ELITE,
+            HTMachineTier.ULTIMATE,
+        ).associateWith { tier: HTMachineTier ->
+            REGISTER.registerSimpleBlock(
+                "${tier.serializedName}_burner",
+                blockProperty()
+                    .mapColor(MapColor.STONE)
+                    .strength(5f)
+                    .sound(SoundType.COPPER)
+                    .noOcclusion()
+                    .requiresCorrectToolForDrops(),
+            )
+        }
 
     @JvmField
     val SHAFT: DeferredBlock<RotatedPillarBlock> = REGISTER.registerBlock(
@@ -164,24 +152,19 @@ object RagiumBlocks {
 
     //    Storage    //
 
-    enum class Drums(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        BASIC(HTMachineTier.BASIC),
-        ADVANCED(HTMachineTier.ADVANCED),
-        ELITE(HTMachineTier.ELITE),
-        ULTIMATE(HTMachineTier.ULTIMATE),
-        ;
-
-        override val holder: DeferredBlock<Block> = REGISTER.registerBlock(
-            "${name.lowercase()}_drum",
-            ::HTDrumBlock,
-            blockProperty()
-                .mapColor(MapColor.STONE)
-                .strength(2f)
-                .sound(SoundType.COPPER)
-                .requiresCorrectToolForDrops(),
-        )
-        override val translationKey: String = RagiumTranslationKeys.DRUM
-    }
+    @JvmField
+    val DRUMS: Map<HTMachineTier, DeferredBlock<HTDrumBlock>> =
+        HTMachineTier.entries.associateWith { tier: HTMachineTier ->
+            REGISTER.registerBlock(
+                "${tier.serializedName}_drum",
+                ::HTDrumBlock,
+                blockProperty()
+                    .mapColor(MapColor.STONE)
+                    .strength(2f)
+                    .sound(SoundType.COPPER)
+                    .requiresCorrectToolForDrops(),
+            )
+        }
 
     //    Buildings    //
 
@@ -207,24 +190,27 @@ object RagiumBlocks {
         OBSIDIAN_GLASS,
     )
 
-    enum class LEDBlocks(val baseBlock: Block) : HTBlockContent {
-        RED(Blocks.RED_STAINED_GLASS),
-        GREEN(Blocks.GREEN_STAINED_GLASS),
-        BLUE(Blocks.BLUE_STAINED_GLASS),
-        CYAN(Blocks.CYAN_STAINED_GLASS),
-        MAGENTA(Blocks.MAGENTA_STAINED_GLASS),
-        YELLOW(Blocks.YELLOW_STAINED_GLASS),
-        WHITE(Blocks.GLASS),
-        ;
-
-        override val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(
-            "${name.lowercase()}_led_block",
-            blockProperty(baseBlock)
-                .mapColor(baseBlock.defaultMapColor())
+    @JvmField
+    val LED_BLOCKS: Map<DyeColor, DeferredBlock<Block>> = listOf(
+        DyeColor.RED,
+        DyeColor.GREEN,
+        DyeColor.BLUE,
+        DyeColor.CYAN,
+        DyeColor.MAGENTA,
+        DyeColor.YELLOW,
+        DyeColor.WHITE,
+    ).associateWith { color: DyeColor ->
+        REGISTER.registerSimpleBlock(
+            "${color.serializedName}_led_block",
+            blockProperty(Blocks.GLASS)
+                .mapColor(color)
                 .lightLevel { 15 }
                 .sound(SoundType.GLASS),
         )
     }
+
+    @JvmStatic
+    fun getLedBlock(color: DyeColor): DeferredBlock<Block> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
 
     //    Foods    //
 

@@ -185,5 +185,8 @@ class RagiumItemTagProvider(
         tag(RagiumItemTags.WIRE_MOLDS)
             .add(RagiumItems.WIRE_PRESS_MOLD)
             .add(ImmersiveEngineering.rl("mold_wire"), true)
+
+        val ledBuilder: TagAppender<Item> = tag(RagiumItemTags.LED_BLOCKS)
+        RagiumBlocks.LED_BLOCKS.values.forEach(ledBuilder::addItem)
     }
 }

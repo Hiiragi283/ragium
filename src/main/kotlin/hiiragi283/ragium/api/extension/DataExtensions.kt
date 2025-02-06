@@ -2,7 +2,6 @@
 
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -20,6 +19,7 @@ import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.LanguageProvider
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
@@ -64,17 +64,12 @@ fun LanguageProvider.add(variant: HTOreVariant, value: String) {
 
 //    ModelBuilder    //
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(content: HTBlockContent): T = getBuilder(content.id)
-
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, *>): T = getBuilder(holder.id)
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(id: ResourceLocation): T = getBuilder(id.toString())
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(content: HTBlockContent, parent: ResourceLocation): T =
-    withExistingParent(content.id.toString(), parent)
-
-fun <T : ModelBuilder<T>> ModelProvider<T>.withUncheckedParent(content: HTBlockContent, parent: ResourceLocation): T =
-    getBuilder(content).parent(ModelFile.UncheckedModelFile(parent))
+fun <T : ModelBuilder<T>> ModelProvider<T>.withUncheckedParent(holder: DeferredBlock<*>, parent: ResourceLocation): T =
+    getBuilder(holder).parent(ModelFile.UncheckedModelFile(parent))
 
 fun <T : ModelBuilder<T>> T.blockTexture(key: String, id: ResourceLocation): T = texture(key, id.withPrefix("block/"))
 
@@ -86,9 +81,6 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(name: String, textu
     withExistingParent(name, "block/cube_all")
         .texture("all", texture)
         .cutout()
-
-fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(content: HTBlockContent, texture: ResourceLocation): T =
-    cutoutSimpleBlock(content.id.toString(), texture)
 
 //    RecipeBuilder    //
 
@@ -128,9 +120,6 @@ fun <T : Any> TagsProvider.TagAppender<T>.add(id: ResourceLocation, optional: Bo
 
 fun <T : Any> TagsProvider.TagAppender<T>.add(holder: DeferredHolder<T, out T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
     add(holder.id, optional)
-
-fun TagsProvider.TagAppender<Block>.add(content: HTBlockContent, optional: Boolean = false): TagsProvider.TagAppender<Block> =
-    add(content.id, optional)
 
 fun TagsProvider.TagAppender<Block>.addBlock(block: Block, optional: Boolean = false): TagsProvider.TagAppender<Block> =
     add(block.builtInRegistryHolder().idOrThrow, optional)

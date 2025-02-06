@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.stringCodec
 import hiiragi283.ragium.api.extension.stringStreamCodec
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -16,7 +15,9 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.registries.DeferredBlock
 
 enum class HTMachineTier(private val idPattern: String, val color: ChatFormatting, val tankCapacity: Int) : StringRepresentable {
     BASIC("basic_%S", ChatFormatting.GREEN, FluidType.BUCKET_VOLUME * 8),
@@ -71,12 +72,7 @@ enum class HTMachineTier(private val idPattern: String, val color: ChatFormattin
 
     //    Block    //
 
-    fun getGrate(): HTBlockContent.Tier = when (this) {
-        BASIC -> RagiumBlocks.Grates.BASIC
-        ADVANCED -> RagiumBlocks.Grates.ADVANCED
-        ELITE -> RagiumBlocks.Grates.ELITE
-        ULTIMATE -> RagiumBlocks.Grates.ULTIMATE
-    }
+    fun getGrate(): DeferredBlock<TransparentBlock> = RagiumBlocks.GRATES[this]!!
 
     //    Material    //
 

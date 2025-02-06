@@ -5,14 +5,14 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
 class HTCraftingToolItem(properties: Properties) : Item(properties) {
-    override fun hasCraftingRemainingItem(stack: ItemStack): Boolean = true
+    override fun hasCraftingRemainingItem(stack: ItemStack): Boolean = stack.restDamage > 0
 
-    override fun getCraftingRemainingItem(itemStack: ItemStack): ItemStack {
-        if (itemStack.restDamage > 0) {
-            val copied: ItemStack = itemStack.copy()
+    override fun getCraftingRemainingItem(stack: ItemStack): ItemStack {
+        if (hasCraftingRemainingItem(stack)) {
+            val copied: ItemStack = stack.copy()
             copied.damageValue++
             return copied
         }
-        return super.getCraftingRemainingItem(itemStack)
+        return super.getCraftingRemainingItem(stack)
     }
 }

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -34,13 +35,13 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
-            addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Burners.entries)
+            addAll(RagiumBlocks.GRATES.values)
+            addAll(RagiumBlocks.BURNERS.values)
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
-            addAll(RagiumBlocks.LEDBlocks.entries)
+            addAll(RagiumBlocks.LED_BLOCKS.values)
 
             add(RagiumBlocks.SPONGE_CAKE)
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -50,8 +51,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             addAll(RagiumBlocks.ADDONS)
 
-            addAll(RagiumAPI.machineRegistry.blockMap.values)
-        }.map(Supplier<out Block>::get)
+            addAll(RagiumAPI.machineRegistry.blocks)
+        }.map(DeferredBlock<*>::get)
             .forEach(::dropSelf)
 
         RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
@@ -64,7 +65,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(ore.get()) { block: Block -> createOreDrop(block, rawMaterial.asItem()) }
         }
 
-        RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
+        RagiumBlocks.DRUMS.forEach { (_, drum: DeferredBlock<HTDrumBlock>) ->
             add(drum.get()) { copyComponent(it, RagiumComponentTypes.FLUID_CONTENT) }
         }
     }

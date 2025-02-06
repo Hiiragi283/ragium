@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:led"
+            "items": "#ragium:led_blocks"
           }
         ]
       },

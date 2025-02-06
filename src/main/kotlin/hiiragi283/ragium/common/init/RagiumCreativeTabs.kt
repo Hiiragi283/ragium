@@ -76,12 +76,12 @@ object RagiumCreativeTabs {
                 .displayItems { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     buildList {
                         // Components
-                        addAll(RagiumBlocks.Grates.entries)
-                        addAll(RagiumBlocks.Burners.entries)
+                        addAll(RagiumBlocks.GRATES.values)
+                        addAll(RagiumBlocks.BURNERS.values)
 
                         add(RagiumBlocks.SHAFT)
                         // Decorations
-                        addAll(RagiumBlocks.LEDBlocks.entries)
+                        addAll(RagiumBlocks.LED_BLOCKS.values)
                         add(RagiumBlocks.PLASTIC_BLOCK)
 
                         addAll(RagiumBlocks.GLASSES)
@@ -99,7 +99,7 @@ object RagiumCreativeTabs {
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     buildList {
                         // Storage
-                        addAll(RagiumBlocks.Drums.entries)
+                        addAll(RagiumBlocks.DRUMS.values)
                         // Manual Machines
                         add(RagiumBlocks.MANUAL_GRINDER)
                         add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
@@ -111,8 +111,7 @@ object RagiumCreativeTabs {
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
                         RagiumAPI
                             .machineRegistry
-                            .blockMap
-                            .values
+                            .blocks
                             .forEach(output::accept)
                     }
                 }.build()
