@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:root",
+  "parent": "ragium:machine_casing",
   "criteria": {
     "has_grinder": {
       "conditions": {

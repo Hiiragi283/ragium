@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:machine_casing",
+  "parent": "ragium:refinery",
   "criteria": {
-    "has_assembler": {
+    "has_crimson_crystal": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:assembler"
+            "items": "ragium:crimson_crystal"
           }
         ]
       },
@@ -13,21 +13,19 @@
     }
   },
   "display": {
-    "description": {
-      "color": "aqua",
-      "translate": "machine_type.assembler.description"
-    },
+    "description": "",
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:assembler"
+      "id": "ragium:crimson_crystal"
     },
     "title": {
-      "translate": "machine_type.assembler"
+      "translate": "item.ragium.crimson_crystal"
     }
   },
   "requirements": [
     [
-      "has_assembler"
+      "has_crimson_crystal"
     ]
   ],
   "sends_telemetry_event": true

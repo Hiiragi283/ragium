@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:machine_casing",
+  "parent": "ragium:blast_furnace",
   "criteria": {
-    "has_assembler": {
+    "has_slag_collector": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:assembler"
+            "items": "ragium:slag_collector"
           }
         ]
       },
@@ -13,21 +13,18 @@
     }
   },
   "display": {
-    "description": {
-      "color": "aqua",
-      "translate": "machine_type.assembler.description"
-    },
+    "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:assembler"
+      "id": "ragium:slag_collector"
     },
     "title": {
-      "translate": "machine_type.assembler"
+      "translate": "block.ragium.slag_collector"
     }
   },
   "requirements": [
     [
-      "has_assembler"
+      "has_slag_collector"
     ]
   ],
   "sends_telemetry_event": true

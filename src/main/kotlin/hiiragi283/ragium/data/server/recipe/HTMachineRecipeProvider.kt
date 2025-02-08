@@ -103,8 +103,13 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .saveSuffixed(output, "_from_powder")
 
         // Deep Reagent
+        HTGrinderRecipeBuilder()
+            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 16)
+            .itemOutput(RagiumItems.DEEPANT_REAGENT)
+            .save(output)
+
         HTExtractorRecipeBuilder()
-            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 8)
+            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 4)
             .itemOutput(RagiumItems.DEEPANT_REAGENT)
             .save(output)
 

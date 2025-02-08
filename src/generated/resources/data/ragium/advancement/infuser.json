@@ -1,11 +1,11 @@
 {
   "parent": "ragium:chemical_machine_casing",
   "criteria": {
-    "has_extractor": {
+    "has_infuser": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:extractor"
+            "items": "ragium:infuser"
           }
         ]
       },
@@ -15,19 +15,19 @@
   "display": {
     "description": {
       "color": "aqua",
-      "translate": "machine_type.extractor.description"
+      "translate": "machine_type.infuser.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:extractor"
+      "id": "ragium:infuser"
     },
     "title": {
-      "translate": "machine_type.extractor"
+      "translate": "machine_type.infuser"
     }
   },
   "requirements": [
     [
-      "has_extractor"
+      "has_infuser"
     ]
   ],
   "sends_telemetry_event": true

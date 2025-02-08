@@ -57,12 +57,6 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             ).hasItem("has_raginite", rawRaginite)
             .save("root")
 
-        registerTier1()
-        registerTier2()
-        registerTier4()
-    }
-
-    private fun registerTier1() {
         val ragiAlloy: AdvancementHolder = createMaterial(
             root,
             HTTagPrefix.INGOT,
@@ -74,43 +68,41 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             RagiumBlocks.MANUAL_GRINDER,
             Component.empty(),
         )
-        val mixer: AdvancementHolder = createMachine(ragiAlloy, RagiumMachineKeys.MIXER)
+        val raginiteDust: AdvancementHolder = createMaterial(
+            grinder,
+            HTTagPrefix.DUST,
+            RagiumMaterials.RAGINITE,
+            Component.empty(),
+        )
 
-        val pbf: AdvancementHolder = createSimple(ragiAlloy, RagiumBlocks.PRIMITIVE_BLAST_FURNACE, Component.empty())
+        val pbf: AdvancementHolder = createSimple(
+            ragiAlloy,
+            RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
+            Component.empty(),
+        )
         val steel: AdvancementHolder = createMaterial(
             pbf,
             HTTagPrefix.INGOT,
             CommonMaterials.STEEL,
             Component.empty(),
         )
-        val blastFurnace: AdvancementHolder = createMachine(steel, RagiumMachineKeys.BLAST_FURNACE)
-        val deepSteel: AdvancementHolder = createMaterial(
-            blastFurnace,
-            HTTagPrefix.INGOT,
-            RagiumMaterials.DEEP_STEEL,
-            Component.empty(),
-        )
 
-        val compressor: AdvancementHolder = createMachine(ragiAlloy, RagiumMachineKeys.COMPRESSOR)
+        registerMachines(steel)
     }
 
-    private fun registerTier2() {
-        val assembler: AdvancementHolder = createMachine(root, RagiumMachineKeys.ASSEMBLER)
-        val basicCircuit: AdvancementHolder = createSimple(
-            assembler,
-            RagiumItems.BASIC_CIRCUIT,
+    private fun registerMachines(steel: AdvancementHolder) {
+        val casing: AdvancementHolder = createSimple(
+            steel,
+            RagiumItems.MACHINE_CASING,
             Component.empty(),
+            type = AdvancementType.GOAL,
         )
-        val advancedCircuit: AdvancementHolder = createSimple(
-            basicCircuit,
-            RagiumItems.ADVANCED_CIRCUIT,
-            Component.empty(),
-        )
-        val eliteCircuit: AdvancementHolder = createSimple(
-            advancedCircuit,
-            RagiumItems.ELITE_CIRCUIT,
-            Component.empty(),
-        )
+
+        // Assembler
+        val assembler: AdvancementHolder = createMachine(casing, RagiumMachineKeys.ASSEMBLER)
+        val basicCircuit: AdvancementHolder = createSimple(assembler, RagiumItems.BASIC_CIRCUIT, Component.empty())
+        val advancedCircuit: AdvancementHolder = createSimple(basicCircuit, RagiumItems.ADVANCED_CIRCUIT, Component.empty())
+        val eliteCircuit: AdvancementHolder = createSimple(advancedCircuit, RagiumItems.ELITE_CIRCUIT, Component.empty())
         val ultimateCircuit: AdvancementHolder = createSimple(
             eliteCircuit,
             RagiumItems.ULTIMATE_CIRCUIT,
@@ -118,19 +110,100 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             type = AdvancementType.GOAL,
         )
 
-        val extractor: AdvancementHolder = createMachine(root, RagiumMachineKeys.EXTRACTOR)
-
-        val grinder: AdvancementHolder = createMachine(root, RagiumMachineKeys.GRINDER)
-    }
-
-    private fun registerTier4() {
-        val ragium: AdvancementHolder = createMaterial(
-            root,
-            HTTagPrefix.INGOT,
-            RagiumMaterials.RAGIUM,
+        val berriesCake: AdvancementHolder = createSimple(assembler, RagiumBlocks.SWEET_BERRIES_CAKE, Component.empty())
+        val ambrosia: AdvancementHolder = createSimple(
+            berriesCake,
+            RagiumItems.AMBROSIA,
+            Component.empty(),
+            type = AdvancementType.CHALLENGE,
+        )
+        // Blast Furnace
+        val blastFurnace: AdvancementHolder = createMachine(casing, RagiumMachineKeys.BLAST_FURNACE)
+        val slagCollector: AdvancementHolder =
+            createSimple(blastFurnace, RagiumBlocks.SLAG_COLLECTOR, Component.empty())
+        val chemicalGlass: AdvancementHolder =
+            createSimple(slagCollector, RagiumBlocks.CHEMICAL_GLASS, Component.empty())
+        // Compressor
+        val compressor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COMPRESSOR)
+        val meatIngot: AdvancementHolder = createSimple(compressor, RagiumItems.MEAT_INGOT, Component.empty())
+        val cannedMeat: AdvancementHolder = createSimple(
+            meatIngot,
+            RagiumItems.CANNED_COOKED_MEAT,
             Component.empty(),
             type = AdvancementType.GOAL,
         )
+        // Grinder
+        val grinder: AdvancementHolder = createMachine(casing, RagiumMachineKeys.GRINDER)
+        val deepant: AdvancementHolder = createSimple(grinder, RagiumItems.DEEPANT_REAGENT, Component.empty())
+        val deepSteel: AdvancementHolder = createMaterial(
+            deepant,
+            HTTagPrefix.INGOT,
+            RagiumMaterials.DEEP_STEEL,
+            Component.empty(),
+        )
+        registerChemical(deepSteel)
+    }
+
+    private fun registerChemical(deepSteel: AdvancementHolder) {
+        val casing: AdvancementHolder = createSimple(
+            deepSteel,
+            RagiumItems.CHEMICAL_MACHINE_CASING,
+            Component.empty(),
+            type = AdvancementType.GOAL,
+        )
+        // Extractor
+        val extractor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.EXTRACTOR)
+        // Infuser
+        val infuser: AdvancementHolder = createMachine(casing, RagiumMachineKeys.INFUSER)
+        val alumina: AdvancementHolder = createMaterial(
+            infuser,
+            HTTagPrefix.DUST,
+            CommonMaterials.ALUMINA,
+            Component.empty(),
+        )
+        val aluminum: AdvancementHolder = createMaterial(
+            alumina,
+            HTTagPrefix.INGOT,
+            CommonMaterials.ALUMINUM,
+            Component.empty(),
+            type = AdvancementType.GOAL,
+        )
+        registerPrecision(aluminum)
+        val cryolite: AdvancementHolder = createMaterial(
+            aluminum,
+            HTTagPrefix.GEM,
+            CommonMaterials.CRYOLITE,
+            Component.empty(),
+            type = AdvancementType.CHALLENGE,
+        )
+
+        val fieryCoal: AdvancementHolder = createMaterial(
+            infuser,
+            HTTagPrefix.GEM,
+            RagiumMaterials.FIERY_COAL,
+            Component.empty(),
+            type = AdvancementType.CHALLENGE,
+        )
+
+        // Mixer
+        val mixer: AdvancementHolder = createMachine(casing, RagiumMachineKeys.MIXER)
+        // Refinery
+        val refinery: AdvancementHolder = createMachine(casing, RagiumMachineKeys.REFINERY)
+        val crudeOil: AdvancementHolder = createSimple(refinery, RagiumItems.CRUDE_OIL_BUCKET, Component.empty())
+
+        val crimson: AdvancementHolder = createSimple(refinery, RagiumItems.CRIMSON_CRYSTAL, Component.empty(), type = AdvancementType.GOAL)
+        val warped: AdvancementHolder = createSimple(refinery, RagiumItems.WARPED_CRYSTAL, Component.empty(), type = AdvancementType.GOAL)
+    }
+
+    private fun registerPrecision(aluminum: AdvancementHolder) {
+        val casing: AdvancementHolder = createSimple(
+            aluminum,
+            RagiumItems.PRECISION_MACHINE_CASING,
+            Component.empty(),
+        )
+
+        // Laser Assembly
+        val assembly: AdvancementHolder = createMachine(casing, RagiumMachineKeys.LASER_ASSEMBLY)
     }
 
     @JvmStatic

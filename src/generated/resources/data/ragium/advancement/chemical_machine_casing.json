@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:deepant_reagent",
+  "parent": "ragium:deep_steel_ingot",
   "criteria": {
-    "has_deep_steel_ingot": {
+    "has_chemical_machine_casing": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/deep_steel"
+            "items": "ragium:chemical_machine_casing"
           }
         ]
       },
@@ -14,22 +14,18 @@
   },
   "display": {
     "description": "",
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:deep_steel_ingot"
+      "id": "ragium:chemical_machine_casing"
     },
     "title": {
-      "translate": "tag_prefix.ragium.ingot",
-      "with": [
-        {
-          "translate": "material.ragium.deep_steel"
-        }
-      ]
+      "translate": "item.ragium.chemical_machine_casing"
     }
   },
   "requirements": [
     [
-      "has_deep_steel_ingot"
+      "has_chemical_machine_casing"
     ]
   ],
   "sends_telemetry_event": true

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:deepant_reagent",
+  "parent": "ragium:alumina_dust",
   "criteria": {
-    "has_deep_steel_ingot": {
+    "has_aluminum_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/deep_steel"
+            "items": "#c:ingots/aluminum"
           }
         ]
       },
@@ -14,22 +14,23 @@
   },
   "display": {
     "description": "",
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:deep_steel_ingot"
+      "id": "ragium:aluminum_ingot"
     },
     "title": {
       "translate": "tag_prefix.ragium.ingot",
       "with": [
         {
-          "translate": "material.ragium.deep_steel"
+          "translate": "material.ragium.aluminum"
         }
       ]
     }
   },
   "requirements": [
     [
-      "has_deep_steel_ingot"
+      "has_aluminum_ingot"
     ]
   ],
   "sends_telemetry_event": true

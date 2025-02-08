@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:deepant_reagent",
+  "parent": "ragium:aluminum_ingot",
   "criteria": {
-    "has_deep_steel_ingot": {
+    "has_cryolite": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/deep_steel"
+            "items": "#c:gems/cryolite"
           }
         ]
       },
@@ -14,22 +14,23 @@
   },
   "display": {
     "description": "",
+    "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "ragium:deep_steel_ingot"
+      "id": "ragium:cryolite"
     },
     "title": {
-      "translate": "tag_prefix.ragium.ingot",
+      "translate": "tag_prefix.ragium.gem",
       "with": [
         {
-          "translate": "material.ragium.deep_steel"
+          "translate": "material.ragium.cryolite"
         }
       ]
     }
   },
   "requirements": [
     [
-      "has_deep_steel_ingot"
+      "has_cryolite"
     ]
   ],
   "sends_telemetry_event": true

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:machine_casing",
+  "parent": "ragium:assembler",
   "criteria": {
-    "has_assembler": {
+    "has_sweet_berries_cake": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:assembler"
+            "items": "ragium:sweet_berries_cake"
           }
         ]
       },
@@ -13,21 +13,18 @@
     }
   },
   "display": {
-    "description": {
-      "color": "aqua",
-      "translate": "machine_type.assembler.description"
-    },
+    "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:assembler"
+      "id": "ragium:sweet_berries_cake"
     },
     "title": {
-      "translate": "machine_type.assembler"
+      "translate": "block.ragium.sweet_berries_cake"
     }
   },
   "requirements": [
     [
-      "has_assembler"
+      "has_sweet_berries_cake"
     ]
   ],
   "sends_telemetry_event": true

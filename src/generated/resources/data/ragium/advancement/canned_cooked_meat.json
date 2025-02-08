@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:machine_casing",
+  "parent": "ragium:meat_ingot",
   "criteria": {
-    "has_assembler": {
+    "has_canned_cooked_meat": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:assembler"
+            "items": "ragium:canned_cooked_meat"
           }
         ]
       },
@@ -13,21 +13,19 @@
     }
   },
   "display": {
-    "description": {
-      "color": "aqua",
-      "translate": "machine_type.assembler.description"
-    },
+    "description": "",
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:assembler"
+      "id": "ragium:canned_cooked_meat"
     },
     "title": {
-      "translate": "machine_type.assembler"
+      "translate": "item.ragium.canned_cooked_meat"
     }
   },
   "requirements": [
     [
-      "has_assembler"
+      "has_canned_cooked_meat"
     ]
   ],
   "sends_telemetry_event": true

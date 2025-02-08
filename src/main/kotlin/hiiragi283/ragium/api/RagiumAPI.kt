@@ -2,6 +2,7 @@ package hiiragi283.ragium.api
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
+import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -10,6 +11,8 @@ import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 import java.util.*
 
 interface RagiumAPI {
@@ -61,4 +64,10 @@ interface RagiumAPI {
     fun createTank(capacity: Int, callback: () -> Unit): HTMachineFluidTank
 
     fun getEnergyNetwork(level: ServerLevel): IEnergyStorage
+
+    fun wrapItemHandler(storageIO: HTStorageIO, handler: IItemHandlerModifiable): IItemHandlerModifiable
+
+    fun wrapFluidHandler(storageIO: HTStorageIO, handler: IFluidHandler): IFluidHandler
+
+    fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
 }

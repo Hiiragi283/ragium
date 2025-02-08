@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:machine_casing",
+  "parent": "ragium:refinery",
   "criteria": {
-    "has_assembler": {
+    "has_crude_oil_bucket": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:assembler"
+            "items": "ragium:crude_oil_bucket"
           }
         ]
       },
@@ -13,21 +13,18 @@
     }
   },
   "display": {
-    "description": {
-      "color": "aqua",
-      "translate": "machine_type.assembler.description"
-    },
+    "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:assembler"
+      "id": "ragium:crude_oil_bucket"
     },
     "title": {
-      "translate": "machine_type.assembler"
+      "translate": "item.ragium.crude_oil_bucket"
     }
   },
   "requirements": [
     [
-      "has_assembler"
+      "has_crude_oil_bucket"
     ]
   ],
   "sends_telemetry_event": true

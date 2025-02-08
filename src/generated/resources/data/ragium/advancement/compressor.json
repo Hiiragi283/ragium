@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:ragi_alloy_ingot",
+  "parent": "ragium:machine_casing",
   "criteria": {
     "has_compressor": {
       "conditions": {

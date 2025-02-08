@@ -1,7 +1,7 @@
 {
-  "type": "ragium:extractor",
+  "type": "ragium:grinder",
   "item_input": {
-    "count": 4,
+    "count": 16,
     "tag": "c:cobblestones/deepslate"
   },
   "item_output": {

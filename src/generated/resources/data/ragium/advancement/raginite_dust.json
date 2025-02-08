@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:deepant_reagent",
+  "parent": "ragium:manual_grinder",
   "criteria": {
-    "has_deep_steel_ingot": {
+    "has_raginite_dust": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/deep_steel"
+            "items": "#c:dusts/raginite"
           }
         ]
       },
@@ -16,20 +16,20 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:deep_steel_ingot"
+      "id": "ragium:raginite_dust"
     },
     "title": {
-      "translate": "tag_prefix.ragium.ingot",
+      "translate": "tag_prefix.ragium.dust",
       "with": [
         {
-          "translate": "material.ragium.deep_steel"
+          "translate": "material.ragium.raginite"
         }
       ]
     }
   },
   "requirements": [
     [
-      "has_deep_steel_ingot"
+      "has_raginite_dust"
     ]
   ],
   "sends_telemetry_event": true

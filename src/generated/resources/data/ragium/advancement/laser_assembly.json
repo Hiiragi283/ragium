@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:chemical_machine_casing",
+  "parent": "ragium:precision_machine_casing",
   "criteria": {
-    "has_extractor": {
+    "has_laser_assembly": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:extractor"
+            "items": "ragium:laser_assembly"
           }
         ]
       },
@@ -15,19 +15,19 @@
   "display": {
     "description": {
       "color": "aqua",
-      "translate": "machine_type.extractor.description"
+      "translate": "machine_type.laser_assembly.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:extractor"
+      "id": "ragium:laser_assembly"
     },
     "title": {
-      "translate": "machine_type.extractor"
+      "translate": "machine_type.laser_assembly"
     }
   },
   "requirements": [
     [
-      "has_extractor"
+      "has_laser_assembly"
     ]
   ],
   "sends_telemetry_event": true

@@ -1,11 +1,11 @@
 {
   "parent": "ragium:chemical_machine_casing",
   "criteria": {
-    "has_extractor": {
+    "has_refinery": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:extractor"
+            "items": "ragium:refinery"
           }
         ]
       },
@@ -15,19 +15,19 @@
   "display": {
     "description": {
       "color": "aqua",
-      "translate": "machine_type.extractor.description"
+      "translate": "machine_type.refinery.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:extractor"
+      "id": "ragium:refinery"
     },
     "title": {
-      "translate": "machine_type.extractor"
+      "translate": "machine_type.refinery"
     }
   },
   "requirements": [
     [
-      "has_extractor"
+      "has_refinery"
     ]
   ],
   "sends_telemetry_event": true

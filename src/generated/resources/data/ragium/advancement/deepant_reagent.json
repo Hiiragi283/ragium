@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:root",
+  "parent": "ragium:grinder",
   "criteria": {
-    "has_ragium_ingot": {
+    "has_deepant_reagent": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/ragium"
+            "items": "ragium:deepant_reagent"
           }
         ]
       },
@@ -14,23 +14,17 @@
   },
   "display": {
     "description": "",
-    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:ragium_ingot"
+      "id": "ragium:deepant_reagent"
     },
     "title": {
-      "translate": "tag_prefix.ragium.ingot",
-      "with": [
-        {
-          "translate": "material.ragium.ragium"
-        }
-      ]
+      "translate": "item.ragium.deepant_reagent"
     }
   },
   "requirements": [
     [
-      "has_ragium_ingot"
+      "has_deepant_reagent"
     ]
   ],
   "sends_telemetry_event": true
