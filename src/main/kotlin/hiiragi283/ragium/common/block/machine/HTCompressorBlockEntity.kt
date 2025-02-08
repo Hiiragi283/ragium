@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.inventory.HTCompressorContainerMenu
@@ -44,7 +44,7 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val foundRecipes: MutableList<HTCompressorRecipe> = mutableListOf()
-        HTRecipeConverters.compressor(level.recipeManager, RagiumAPI.materialRegistry, foundRecipes::add)
+        HTRecipeConverters.compressor(level.recipeManager, RagiumAPI.getInstance().getMaterialRegistry(), foundRecipes::add)
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
             pos,

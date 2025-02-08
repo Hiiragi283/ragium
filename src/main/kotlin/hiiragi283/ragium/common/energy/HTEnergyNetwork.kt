@@ -1,18 +1,14 @@
-package hiiragi283.ragium.api.energy
+package hiiragi283.ragium.common.energy
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.world.HTSavedDataType
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.saveddata.SavedData
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-val ServerLevel.energyNetwork: HTEnergyNetwork get() = getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
-
-class HTEnergyNetwork(amount: Int) :
+internal class HTEnergyNetwork(amount: Int) :
     SavedData(),
     IEnergyStorage {
     companion object {
@@ -20,7 +16,7 @@ class HTEnergyNetwork(amount: Int) :
 
         @JvmField
         val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> =
-            HTSavedDataType(RagiumAPI.id(KEY), ::HTEnergyNetwork, ::HTEnergyNetwork)
+            HTSavedDataType(RagiumAPI.Companion.id(KEY), ::HTEnergyNetwork, ::HTEnergyNetwork)
     }
 
     constructor() : this(0)

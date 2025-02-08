@@ -2,43 +2,26 @@ package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.HashMultimap
-import com.google.common.collect.ImmutableMultimap
-import hiiragi283.ragium.api.util.collection.HTMultiMap
-import hiiragi283.ragium.api.util.collection.HTTable
-import hiiragi283.ragium.api.util.collection.HTWrappedMultiMap
-import hiiragi283.ragium.api.util.collection.HTWrappedTable
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.util.HTMultiMap
+import hiiragi283.ragium.api.util.HTTable
 
 //    MultiMap    //
 
-fun <K : Any, V : Any> multiMapOf(vararg pairs: Pair<K, V>): HTMultiMap<K, V> = HTWrappedMultiMap(
-    ImmutableMultimap.builder<K, V>().apply { pairs.forEach { (key: K, value: V) -> put(key, value) } }.build(),
-)
-
-fun <K : Any, V : Any> mutableMultiMapOf(vararg pairs: Pair<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(
-    HashMultimap.create<K, V>().apply {
-        pairs.forEach { (key: K, value: V) -> put(key, value) }
-    },
-)
-
 fun <K : Any, V : Any> buildMultiMap(builderAction: HTMultiMap.Mutable<K, V>.() -> Unit): HTMultiMap<K, V> =
-    mutableMultiMapOf<K, V>().apply(builderAction)
+    RagiumAPI.getInstance().createMultiMap<K, V>(HashMultimap.create()).apply(builderAction)
 
 fun <K : Any, V : Any> HTMultiMap<K, V>.forEach(action: (K, V) -> Unit) {
     entries.forEach { (k: K, v: V) -> action(k, v) }
 }
 
-fun <K : Any, V : Any> Map<out K, Iterable<V>>.toMultiMap(): HTMultiMap<K, V> = buildMultiMap {
-    this@toMultiMap.forEach { (key: K, values: Iterable<V>) -> values.forEach { put(key, it) } }
-}
-
 //    Table    //
 
-fun <R : Any, C : Any, V : Any> tableOf(): HTTable<R, C, V> = HTWrappedTable(HashBasedTable.create())
-
-fun <R : Any, C : Any, V : Any> mutableTableOf(): HTWrappedTable.Mutable<R, C, V> = HTWrappedTable.Mutable(HashBasedTable.create())
+fun <R : Any, C : Any, V : Any> mutableTableOf(): HTTable.Mutable<R, C, V> =
+    RagiumAPI.getInstance().createTable<R, C, V>(HashBasedTable.create())
 
 fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, V>.() -> Unit): HTTable<R, C, V> =
-    HTWrappedTable.Mutable(HashBasedTable.create<R, C, V>()).apply(builderAction)
+    mutableTableOf<R, C, V>().apply(builderAction)
 
 fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
     entries.forEach(action)

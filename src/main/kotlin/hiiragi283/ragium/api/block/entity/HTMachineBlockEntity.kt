@@ -1,11 +1,10 @@
 package hiiragi283.ragium.api.block.entity
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTSlotHandler
-import hiiragi283.ragium.api.energy.HTEnergyNetwork
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
-import hiiragi283.ragium.api.energy.energyNetwork
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.dropStackAt
@@ -188,7 +187,7 @@ abstract class HTMachineBlockEntity(
     }
 
     private fun tickOnServer(level: ServerLevel, pos: BlockPos) {
-        val network: HTEnergyNetwork = level.energyNetwork
+        val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetwork(level)
         val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
         val energyAmount: Int = energyData.amount * costModifier
         // 取得したエネルギー量を処理できるか判定

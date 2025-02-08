@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
@@ -25,10 +26,7 @@ abstract class HTFluidGeneratorBlockEntity(
     state: BlockState,
     machineKey: HTMachineKey,
 ) : HTMachineBlockEntity(type, pos, state, machineKey) {
-    private val tank: HTMachineFluidTank =
-        object : HTMachineFluidTank(this@HTFluidGeneratorBlockEntity::setChanged) {
-            override fun isFluidValid(stack: FluidStack): Boolean = this@HTFluidGeneratorBlockEntity.isFluidValid(stack)
-        }
+    private val tank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(tank))
 
@@ -39,7 +37,6 @@ abstract class HTFluidGeneratorBlockEntity(
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.generate(3200)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        if (tank.isEmpty) throw HTMachineException.EmptyFluid(false)
         val stackIn: FluidStack = tank.fluid
         val amount: Int = getFuelAmount(stackIn)
         if (amount <= 0) throw HTMachineException.FindFuel(false)

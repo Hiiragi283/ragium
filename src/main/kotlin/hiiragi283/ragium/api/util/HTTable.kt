@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util.collection
+package hiiragi283.ragium.api.util
 
 import com.google.common.collect.Table
 

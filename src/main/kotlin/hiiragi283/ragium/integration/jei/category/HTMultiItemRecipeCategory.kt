@@ -2,7 +2,7 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.recipe.HTMultiItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable

@@ -3,7 +3,7 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -84,7 +84,7 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerRecipes(registration: IRecipeRegistration) {
         val level: ClientLevel = Minecraft.getInstance().level ?: return
         val recipeManager: RecipeManager = level.recipeManager
-        val registry: HTMaterialRegistry = RagiumAPI.materialRegistry
+        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
 
         fun <T : HTMachineRecipeBase> register(recipeType: JEIRecipeType<T>, recipe: Supplier<RecipeType<T>>) {
             registration.addRecipes(
@@ -140,7 +140,7 @@ class RagiumJEIPlugin : IModPlugin {
                 .toList(),
         )
         // Material Info
-        registration.addRecipes(RagiumJEIRecipeTypes.MATERIAL_INFO, RagiumAPI.materialRegistry.typedMaterials)
+        registration.addRecipes(RagiumJEIRecipeTypes.MATERIAL_INFO, RagiumAPI.getInstance().getMaterialRegistry().typedMaterials)
     }
 
     override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {

@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.api.util.collection.HTTable
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity

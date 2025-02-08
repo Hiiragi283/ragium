@@ -16,9 +16,6 @@
   },
   "second_output": {
     "chance": 0.5,
-    "stack": {
-      "count": 1,
-      "id": "farmersdelight:straw"
-    }
+    "item": "farmersdelight:straw"
   }
 }

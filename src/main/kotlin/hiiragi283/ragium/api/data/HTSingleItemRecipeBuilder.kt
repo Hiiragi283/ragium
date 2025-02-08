@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTLaserAssemblyRecipe
-import hiiragi283.ragium.api.recipe.HTSingleItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation

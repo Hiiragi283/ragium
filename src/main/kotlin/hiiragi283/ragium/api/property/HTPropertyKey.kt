@@ -2,17 +2,17 @@ package hiiragi283.ragium.api.property
 
 import net.minecraft.resources.ResourceLocation
 
-class HTPropertyKey<T : Any> internal constructor(val id: ResourceLocation, val hasDefaultValue: Boolean, val defaultValue: () -> T) {
+class HTPropertyKey<T : Any> internal constructor(val id: ResourceLocation, val defaultValue: () -> T) {
     companion object {
         @JvmStatic
         fun <T : Any> simple(id: ResourceLocation): HTPropertyKey<T> =
-            HTPropertyKey(id, false) { error("HTPropertyKey: $id have no default value!") }
+            HTPropertyKey(id) { error("HTPropertyKey: $id have no default value!") }
 
         @JvmStatic
         fun <T : Any> withDefault(id: ResourceLocation, value: T): HTPropertyKey<T> = withDefault<T>(id) { value }
 
         @JvmStatic
-        fun <T : Any> withDefault(id: ResourceLocation, value: () -> T): HTPropertyKey<T> = HTPropertyKey(id, true, value)
+        fun <T : Any> withDefault(id: ResourceLocation, value: () -> T): HTPropertyKey<T> = HTPropertyKey(id, value)
     }
 
     /**

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.recipe.HTChancedItemStack
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
+import hiiragi283.ragium.api.recipe.base.HTChancedItemStack
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
@@ -39,7 +39,7 @@ class HTGrinderRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTGr
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.secondOutput.map(HTChancedItemStack::stack).orElse(ItemStack.EMPTY))
+            .addItemStack(recipe.secondOutput.map(HTChancedItemStack::toStack).orElse(ItemStack.EMPTY))
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTGrinderRecipe, focuses: IFocusGroup) {

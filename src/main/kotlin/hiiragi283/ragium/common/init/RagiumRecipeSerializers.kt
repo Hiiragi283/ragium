@@ -3,6 +3,8 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec

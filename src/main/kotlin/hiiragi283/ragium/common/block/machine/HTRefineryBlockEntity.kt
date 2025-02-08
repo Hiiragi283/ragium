@@ -1,16 +1,17 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.api.item.HTMachineItemHandler
-import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTRecipeCache
 import hiiragi283.ragium.api.util.HTRelativeDirection
+import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -30,8 +31,8 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state, RagiumMachineKeys.REFINERY) {
     private val itemOutput = HTMachineItemHandler(1, this::setChanged)
-    private val inputTank = HTMachineFluidTank(this::setChanged)
-    private val outputTank = HTMachineFluidTank(this::setChanged)
+    private val inputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
+    private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
         listOf(itemOutput.createSlot(0)),

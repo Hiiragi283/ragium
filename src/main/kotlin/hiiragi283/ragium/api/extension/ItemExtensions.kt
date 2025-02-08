@@ -2,7 +2,7 @@
 
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumReferences
 import hiiragi283.ragium.api.machine.HTMachineKey
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -49,7 +49,7 @@ fun <T : Any> ItemStack.getItemData(type: DataMapType<Item, T>): T? = itemHolder
  */
 fun <T : Any> BlockState.getItemData(type: DataMapType<Item, T>): T? = block.getItemData(type)
 
-val ItemLike.machineKey: HTMachineKey? get() = getItemData(RagiumAPI.DataMapTypes.MACHINE_KEY)
+val ItemLike.machineKey: HTMachineKey? get() = getItemData(RagiumReferences.DataMapTypes.MACHINE_KEY)
 
 //    Item    //
 

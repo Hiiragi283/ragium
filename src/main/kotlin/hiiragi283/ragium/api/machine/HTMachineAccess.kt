@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.energy.energyNetwork
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
@@ -71,8 +71,10 @@ interface HTMachineAccess :
 
     //    HTBlockEntityHandlerProvider    //
 
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
-        levelAccess?.asServerLevel()?.energyNetwork?.let(HTStorageIO.INPUT::wrapEnergyStorage)
+    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = levelAccess
+        ?.asServerLevel()
+        ?.let(RagiumAPI.getInstance()::getEnergyNetwork)
+        ?.let(HTStorageIO.INPUT::wrapEnergyStorage)
 
     //    HTControllerHolder    //
 

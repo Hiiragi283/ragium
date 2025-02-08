@@ -33,7 +33,9 @@ class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTTypedMaterial, focuses: IFocusGroup) {
         val (_: HTMaterialType, key: HTMaterialKey) = recipe
         for (prefix: HTTagPrefix in HTTagPrefix.entries) {
-            val stacks: List<ItemStack> = RagiumAPI.materialRegistry
+            val stacks: List<ItemStack> = RagiumAPI
+                .getInstance()
+                .getMaterialRegistry()
                 .getItems(prefix, key)
                 .map(::ItemStack)
                 .takeIf(List<ItemStack>::isNotEmpty)
@@ -50,5 +52,5 @@ class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
     override fun getRegistryName(recipe: HTTypedMaterial): ResourceLocation = commonId(recipe.material.name)
 
     override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTTypedMaterial> =
-        RagiumAPI.materialRegistry.createTypedCodec()
+        RagiumAPI.getInstance().getMaterialRegistry().createTypedCodec()
 }

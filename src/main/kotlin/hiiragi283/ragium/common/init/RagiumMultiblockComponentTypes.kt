@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumReferences
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
 import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
@@ -13,7 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
 object RagiumMultiblockComponentTypes {
     @JvmField
     val REGISTER: DeferredRegister<HTMultiblockComponent.Type<*>> =
-        DeferredRegister.create(RagiumAPI.RegistryKeys.MULTIBLOCK_COMPONENT_TYPE, RagiumAPI.MOD_ID)
+        DeferredRegister.create(RagiumReferences.RegistryKeys.MULTIBLOCK_COMPONENT_TYPE, RagiumAPI.MOD_ID)
 
     val AXIS: DeferredHolder<HTMultiblockComponent.Type<*>, out HTMultiblockComponent.Type<HTAxisMultiblockComponent>> =
         register("axis")

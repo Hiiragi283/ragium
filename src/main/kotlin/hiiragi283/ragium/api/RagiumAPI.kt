@@ -1,133 +1,64 @@
 package hiiragi283.ragium.api
 
-import com.mojang.serialization.Codec
-import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.machine.HTMachineKey
+import com.google.common.collect.Multimap
+import com.google.common.collect.Table
+import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineRegistry
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
-import hiiragi283.ragium.api.util.DisableOverwriteMerger
-import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
-import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
-import net.minecraft.core.Registry
-import net.minecraft.resources.ResourceKey
+import hiiragi283.ragium.api.util.HTMultiMap
+import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
-import net.neoforged.neoforge.registries.RegistryBuilder
-import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
-import net.neoforged.neoforge.registries.datamaps.DataMapType
-import net.minecraft.core.registries.Registries as MCRegistries
+import net.minecraft.server.level.ServerLevel
+import net.neoforged.neoforge.energy.IEnergyStorage
+import java.util.*
 
-/**
- * RagiumのAPI
- */
-@Suppress("DEPRECATION")
-data object RagiumAPI {
-    const val MOD_ID = "ragium"
-    const val MOD_NAME = "Ragium"
-
-    /**
-     * 名前空間が`ragium`となる[ResourceLocation]を返します。
-     */
-    @JvmStatic
-    fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
-
-    /**
-     * 指定した[id]の名前空間を`ragium`に変えます。
-     */
-    @JvmStatic
-    fun wrapId(id: ResourceLocation): ResourceLocation = id(id.path)
-
-    /**
-     * 機械レジストリのインスタンスです。
-     */
-    @JvmField
-    val machineRegistry: HTMachineRegistry = HTMachineRegistryImpl
-
-    /**
-     * 素材レジストリのインスタンスです。
-     */
-    @JvmField
-    val materialRegistry: HTMaterialRegistry = HTMaterialRegistryImpl
-
-    /**
-     * Ragiumが追加する[DataMapType]
-     */
-    object DataMapTypes {
-        //    Item    //
+interface RagiumAPI {
+    companion object {
+        const val MOD_ID = "ragium"
+        const val MOD_NAME = "Ragium"
 
         /**
-         * [HTMachineKey]を返す[DataMapType]
+         * 名前空間が`ragium`となる[ResourceLocation]を返します。
          */
-        @JvmField
-        val MACHINE_KEY: DataMapType<Item, HTMachineKey> = createItem("machine", HTMachineKey.CODEC)
+        @JvmStatic
+        fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
 
         /**
-         * [HTMachineTier]を返す[DataMapType]
+         * 指定した[id]の名前空間を`ragium`に変えます。
          */
-        @JvmField
-        val MACHINE_TIER: DataMapType<Item, HTMachineTier> = createItem("machine_tier", HTMachineTier.CODEC)
+        @JvmStatic
+        fun wrapId(id: ResourceLocation): ResourceLocation = id(id.path)
+
+        private lateinit var instance: RagiumAPI
 
         @JvmStatic
-        private fun <T : Any> createItem(path: String, codec: Codec<T>): DataMapType<Item, T> = AdvancedDataMapType
-            .builder(id(path), MCRegistries.ITEM, codec)
-            .synced(codec, false)
-            .merger(DisableOverwriteMerger())
-            .build()
-    }
-
-    /**
-     * Ragiumが追加する[Registry]
-     */
-    object Registries {
-        /**
-         * [HTMultiblockComponent.Type]の[Registry]
-         */
-        @JvmField
-        val MULTIBLOCK_COMPONENT_TYPE: Registry<HTMultiblockComponent.Type<*>> =
-            RegistryBuilder(RegistryKeys.MULTIBLOCK_COMPONENT_TYPE).sync(true).create()
-
-        /**
-         * [HTMachineRecipeCondition]の[MapCodec]の[Registry]
-         */
-        @JvmField
-        val RECIPE_CONDITION: Registry<MapCodec<out HTMachineRecipeCondition>> =
-            RegistryBuilder(RegistryKeys.RECIPE_CONDITION).sync(true).create()
-    }
-
-    /**
-     * Ragiumが追加する[Registry]の[ResourceKey]
-     */
-    object RegistryKeys {
-        @JvmField
-        val MULTIBLOCK_COMPONENT_TYPE: ResourceKey<Registry<HTMultiblockComponent.Type<*>>> =
-            ResourceKey.createRegistryKey<HTMultiblockComponent.Type<*>>(id("multiblock_component_type"))
-
-        @JvmField
-        val RECIPE_CONDITION: ResourceKey<Registry<MapCodec<out HTMachineRecipeCondition>>> =
-            ResourceKey.createRegistryKey<MapCodec<out HTMachineRecipeCondition>>(id("recipe_condition"))
-    }
-}
-
-/*fun collectPlugins() {
-    LOGGER.info("Collecting RagiumPlugin ...")
-    this.plugins =
-        buildList<RagiumPlugin> {
-            ModList.get().forEachModContainer { modId: String, container: ModContainer ->
-                container
-                    .getCustomExtension(RagiumPlugin.Provider::class.java)
-                    .map(RagiumPlugin.Provider::getPlugins)
-                    .ifPresent(this::addAll)
+        fun getInstance(): RagiumAPI {
+            if (!::instance.isInitialized) {
+                instance = ServiceLoader.load(RagiumAPI::class.java).first()
             }
-        }.sortedWith(compareBy(RagiumPlugin::priority).thenBy { it::class.java.canonicalName })
-            .filter(RagiumPlugin::shouldLoad)
-    LOGGER.info("RagiumPlugin collected!")
-
-    LOGGER.info("=== Loaded Ragium Plugins ===")
-    plugins.forEach { plugin: RagiumPlugin ->
-        LOGGER.info("- Priority : ${plugin.priority} ... ${plugin.javaClass.canonicalName}")
+            return instance
+        }
     }
-    LOGGER.info("=============================")
-}*/
+
+    /**
+     * 機械レジストリのインスタンスを返します。。
+     */
+    fun getMachineRegistry(): HTMachineRegistry
+
+    /**
+     * 素材レジストリのインスタンスを返します。
+     */
+    fun getMaterialRegistry(): HTMaterialRegistry
+
+    //    Platform    //
+
+    fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V>
+
+    fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
+
+    fun createTank(callback: () -> Unit): HTMachineFluidTank = createTank(8000, callback)
+
+    fun createTank(capacity: Int, callback: () -> Unit): HTMachineFluidTank
+
+    fun getEnergyNetwork(level: ServerLevel): IEnergyStorage
+}

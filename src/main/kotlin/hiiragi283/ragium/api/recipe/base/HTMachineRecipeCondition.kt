@@ -1,8 +1,8 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.base
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumReferences
 import hiiragi283.ragium.api.extension.toRegistryStream
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -17,14 +17,14 @@ import java.util.function.Function
 interface HTMachineRecipeCondition {
     companion object {
         @JvmField
-        val CODEC: Codec<HTMachineRecipeCondition> = RagiumAPI.Registries.RECIPE_CONDITION
+        val CODEC: Codec<HTMachineRecipeCondition> = RagiumReferences.Registries.RECIPE_CONDITION
             .byNameCodec()
             .dispatch(HTMachineRecipeCondition::codec, Function.identity())
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipeCondition> =
             ByteBufCodecs
-                .registry(RagiumAPI.RegistryKeys.RECIPE_CONDITION)
+                .registry(RagiumReferences.RegistryKeys.RECIPE_CONDITION)
                 .dispatch(HTMachineRecipeCondition::codec, MapCodec<out HTMachineRecipeCondition>::toRegistryStream)
     }
 
@@ -43,14 +43,14 @@ interface HTMachineRecipeCondition {
     fun test(level: Level, pos: BlockPos): Boolean
 
     /**
-     * [net.minecraft.world.item.crafting.Ingredient]をベースとした[HTMachineRecipeCondition]
+     * [Ingredient]をベースとした[HTMachineRecipeCondition]
      */
     interface ItemBased : HTMachineRecipeCondition {
         val itemIngredient: Ingredient
     }
 
     /**
-     * [net.neoforged.neoforge.fluids.crafting.FluidIngredient]をベースとした[HTMachineRecipeCondition]
+     * [FluidIngredient]をベースとした[HTMachineRecipeCondition]
      */
     interface FluidBased : HTMachineRecipeCondition {
         val fluidIngredient: FluidIngredient

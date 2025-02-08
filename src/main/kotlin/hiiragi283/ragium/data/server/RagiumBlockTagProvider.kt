@@ -28,7 +28,11 @@ class RagiumBlockTagProvider(
     override fun addTags(provider: HolderLookup.Provider) {
         // Mineable
         val pickaxe: TagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumAPI.machineRegistry.blocks.forEach(pickaxe::add)
+        RagiumAPI
+            .getInstance()
+            .getMachineRegistry()
+            .blocks
+            .forEach(pickaxe::add)
 
         buildList {
             addAll(RagiumBlocks.ORES.values)

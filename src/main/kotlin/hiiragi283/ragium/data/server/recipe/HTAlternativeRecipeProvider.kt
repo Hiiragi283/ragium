@@ -85,7 +85,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .pattern("AAA")
             .define('A', HTTagPrefix.ROD, VanillaMaterials.IRON)
             .unlockedBy("has_iron_rod", has(HTTagPrefix.ROD, VanillaMaterials.IRON))
-        
+
         // Fire charge
         ShapelessRecipeBuilder
             .shapeless(RecipeCategory.MISC, Items.FIRE_CHARGE, 3)

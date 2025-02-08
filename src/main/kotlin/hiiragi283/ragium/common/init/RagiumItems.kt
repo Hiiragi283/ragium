@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.api.util.collection.HTTable
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.item.*
 import net.minecraft.world.food.FoodProperties

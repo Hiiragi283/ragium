@@ -6,6 +6,10 @@ import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.recipe.base.HTChancedItemStack
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
@@ -59,7 +63,7 @@ class HTGrinderRecipe(
         if (!itemHandler.canInsert(output.copy())) throw HTMachineException.MergeResult(false)
         // Second Output
         secondOutput.ifPresent { second: HTChancedItemStack ->
-            if (!itemHandler.canInsert(second.stack.copy())) throw HTMachineException.MergeResult(false)
+            if (!itemHandler.canInsert(second.toStack())) throw HTMachineException.MergeResult(false)
         }
     }
 
@@ -80,7 +84,7 @@ class HTGrinderRecipe(
         val fortune: Int = machine.getEnchantmentLevel(Enchantments.FORTUNE)
         repeat(fortune + 1) {
             if (level.random.nextFloat() > chanced.chance) {
-                return Optional.of(chanced.stack.copy())
+                return Optional.of(chanced.toStack())
             }
         }
         return Optional.empty()

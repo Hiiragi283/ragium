@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.base
 
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack

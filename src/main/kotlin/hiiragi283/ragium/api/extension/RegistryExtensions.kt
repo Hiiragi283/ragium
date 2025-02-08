@@ -27,7 +27,7 @@ fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAnd
 /**
  * [Holder.idOrThrow]に基づいた[Comparator]を返します。
  */
-fun <T : Any> createHolderSorter(): Comparator<Holder<T>> = compareBy(Holder<T>::keyOrThrow)
+fun <T : Any> createHolderSorter(): Comparator<Holder<T>> = compareBy(Holder<T>::idOrThrow)
 
 /**
  * [Holder]から[ResourceKey]を返します。

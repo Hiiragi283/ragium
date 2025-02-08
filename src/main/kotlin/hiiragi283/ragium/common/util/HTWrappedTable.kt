@@ -1,6 +1,7 @@
-package hiiragi283.ragium.api.util.collection
+package hiiragi283.ragium.common.util
 
 import com.google.common.collect.Table
+import hiiragi283.ragium.api.util.HTTable
 
 open class HTWrappedTable<R : Any, C : Any, V : Any>(protected val delegated: Table<R, C, V>) : HTTable<R, C, V> {
     override fun contains(row: R, column: C): Boolean = delegated.contains(row, column)

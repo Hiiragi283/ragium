@@ -19,9 +19,14 @@ class HTPropertyHolderBuilder(private val map: MutableMap<HTPropertyKey<*>, Any>
         map.remove(key)
     }
 
-    fun build(): HTPropertyHolder = object : HTPropertyHolder {
-        override fun <T : Any> getResult(key: HTPropertyKey<T>): DataResult<T> = map[key]
-            .let(key::cast)
-            .toDataResult { "Unknown key: $key" }
+    fun build(): HTPropertyHolder = when {
+        map.isEmpty() -> EmptyPropertyHolder
+        else -> object : HTPropertyHolder {
+            override val hasProperty: Boolean = false
+
+            override fun <T : Any> getResult(key: HTPropertyKey<T>): DataResult<T> = map[key]
+                .let(key::cast)
+                .toDataResult { "Unknown key: $key" }
+        }
     }
 }

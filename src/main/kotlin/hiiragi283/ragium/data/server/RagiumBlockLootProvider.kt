@@ -51,7 +51,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             addAll(RagiumBlocks.ADDONS)
 
-            addAll(RagiumAPI.machineRegistry.blocks)
+            addAll(RagiumAPI.getInstance().getMachineRegistry().blocks)
         }.map(DeferredBlock<*>::get)
             .forEach(::dropSelf)
 

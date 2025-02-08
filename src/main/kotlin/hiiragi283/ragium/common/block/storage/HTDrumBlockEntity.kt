@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumReferences
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
@@ -40,10 +41,11 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, machineTier: HTMachine
     constructor(pos: BlockPos, state: BlockState) : this(
         pos,
         state,
-        state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC,
+        state.getItemData(RagiumReferences.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC,
     )
 
-    private val fluidTank = HTMachineFluidTank(machineTier.tankCapacity, this::setChanged)
+    private val fluidTank: HTMachineFluidTank =
+        RagiumAPI.getInstance().createTank(machineTier.tankCapacity, this::setChanged)
     private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(fluidTank))
 
     override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {

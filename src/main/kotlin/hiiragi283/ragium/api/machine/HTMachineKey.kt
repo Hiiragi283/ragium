@@ -68,18 +68,32 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
      * このキーに紐づいたブロックを返します。
      * @return 値がない場合はnull
      */
-    fun getBlockOrNull(): DeferredBlock<*>? = RagiumAPI.machineRegistry.getBlockOrNull(this)
+    fun getBlockOrNull(): DeferredBlock<*>? = RagiumAPI.getInstance().getMachineRegistry().getBlockOrNull(this)
+
+    private lateinit var blockCache: DeferredBlock<*>
 
     /**
      * このキーに紐づいたブロックを返します。
      * @throws IllegalStateException このキーにブロックが登録されていない場合
      */
-    fun getBlock(): DeferredBlock<*> = RagiumAPI.machineRegistry.getBlock(this)
+    fun getBlock(): DeferredBlock<*> {
+        if (!::blockCache.isInitialized) {
+            blockCache = RagiumAPI.getInstance().getMachineRegistry().getBlock(this)
+        }
+        return blockCache
+    }
+
+    private lateinit var propertyCache: HTPropertyHolder
 
     /**
      * このキーに紐づいた[HTPropertyHolder]を返します。
      */
-    fun getProperty(): HTPropertyHolder = RagiumAPI.machineRegistry.getProperty(this)
+    fun getProperty(): HTPropertyHolder {
+        if (!::propertyCache.isInitialized) {
+            propertyCache = RagiumAPI.getInstance().getMachineRegistry().getProperty(this)
+        }
+        return propertyCache
+    }
 
     fun appendTooltip(consumer: Consumer<Component>, allowDescription: Boolean = true) {
         consumer.accept(

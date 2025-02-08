@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.base
 
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack

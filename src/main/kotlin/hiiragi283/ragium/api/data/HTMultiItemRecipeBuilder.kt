@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTAssemblerRecipe
 import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
-import hiiragi283.ragium.api.recipe.HTMultiItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation

@@ -86,7 +86,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 .setModels(
                     ConfiguredModel(
                         models()
-                            .withExistingParent(hull, RagiumAPI.id("block/hull"))
+                            .withExistingParent(hull, RagiumAPINew.id("block/hull"))
                             .blockTexture("top", hull.machineTier.getStorageBlock().id)
                             .blockTexture("bottom", hull.machineTier.getCasing().id)
                             .cutout(),
@@ -183,7 +183,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             .forEach(::simpleBlock)
 
         // Machine
-        RagiumAPI.machineRegistry.forEachEntries { key: HTMachineKey, holder: DeferredBlock<*>?, property: HTPropertyHolder ->
+        RagiumAPI.getInstance().getMachineRegistry().forEachEntries {
+                key: HTMachineKey,
+                holder: DeferredBlock<*>?,
+                property: HTPropertyHolder,
+            ->
             val block: Block = holder?.get() ?: return@forEachEntries
             val properties: HTPropertyHolder = key.getProperty()
             getVariantBuilder(block)
@@ -202,7 +206,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 }
         }
 
-        /*RagiumAPI.machineRegistry.blocks.forEach { content: HTBlockContent ->
+        /*RagiumAPINew.getInstance().getMachineRegistry().blocks.forEach { content: HTBlockContent ->
             val builder: ConfiguredModel.Builder<MultiPartBlockStateBuilder.PartBuilder> =
                 getMultipartBuilder(content.get()).part()
 
@@ -222,7 +226,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .rotationY(front.getRotationY())
                     .modelFile(
                         models()
-                            .withExistingParent(inactiveId, RagiumAPI.id("block/machine_front"))
+                            .withExistingParent(inactiveId, RagiumAPINew.id("block/machine_front"))
                             .texture("front", inactiveId)
                             .renderType("cutout"),
                     ).addModel()
@@ -233,7 +237,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .rotationY(front.getRotationY())
                     .modelFile(
                         models()
-                            .withExistingParent(activeId, RagiumAPI.id("block/machine_front"))
+                            .withExistingParent(activeId, RagiumAPINew.id("block/machine_front"))
                             .texture("front", activeId)
                             .renderType("cutout"),
                     ).addModel()

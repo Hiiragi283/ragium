@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.extension.orElse
  * @see [HTMutablePropertyHolder]
  */
 interface HTPropertyHolder {
+    val hasProperty: Boolean
+
     fun <T : Any> getResult(key: HTPropertyKey<T>): DataResult<T>
 }
 

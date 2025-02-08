@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.base
 
 import hiiragi283.ragium.api.machine.HTMachineException
 import net.minecraft.resources.ResourceLocation

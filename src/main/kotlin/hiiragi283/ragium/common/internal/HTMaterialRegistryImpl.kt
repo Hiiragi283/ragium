@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.EmptyPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.api.util.collection.HTTable
+import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet

@@ -25,7 +25,7 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
         val CODEC: Codec<HTMaterialKey> =
             Codec.STRING.xmap(Companion::of, HTMaterialKey::name).validate { key: HTMaterialKey ->
                 key
-                    .takeIf(RagiumAPI.materialRegistry::contains)
+                    .takeIf(RagiumAPI.getInstance().getMaterialRegistry()::contains)
                     .toDataResult { "Unknown material key: $key" }
             }
 

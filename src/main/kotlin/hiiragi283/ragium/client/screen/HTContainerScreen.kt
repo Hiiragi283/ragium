@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.screen
 
-import hiiragi283.ragium.api.energy.HTEnergyNetwork
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.inventory.HTContainerMenu
+import hiiragi283.ragium.common.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -129,7 +130,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
         mouseX: Int,
         mouseY: Int,
     ) {
-        val network: HTEnergyNetwork =
+        val network: IEnergyStorage =
             Minecraft.getInstance().getClientSavedDataMap(HTEnergyNetwork.DATA_FACTORY)[menu.level.dimension()]
                 ?: return
         renderTooltip(x, y, mouseX, mouseY) {

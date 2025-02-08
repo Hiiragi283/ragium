@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.recipe.HTChancedItemStack
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
+import hiiragi283.ragium.api.recipe.base.HTChancedItemStack
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
@@ -49,7 +49,7 @@ class HTGrinderRecipeBuilder : HTMachineRecipeBuilderBase<HTGrinderRecipeBuilder
     override val prefix: String = "grinder"
 
     override fun createRecipe(): HTGrinderRecipe {
-        val chanced: HTChancedItemStack? = secondOutput?.let { HTChancedItemStack(it, chance) }
+        val chanced: HTChancedItemStack? = secondOutput?.let { HTChancedItemStack(it.itemHolder, it.count, chance) }
         return HTGrinderRecipe(
             group ?: "",
             input,

@@ -6,12 +6,12 @@ import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.util.HTRelativeDirection
+import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.inventory.HTInfuserContainerMenu
@@ -30,9 +30,9 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.INFUSER, pos, state, RagiumMachineKeys.INFUSER) {
     private val itemInput = HTMachineItemHandler(1, this::setChanged)
-    private val inputTank = HTMachineFluidTank(this::setChanged)
+    private val inputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
     private val itemOutput = HTMachineItemHandler(1, this::setChanged)
-    private val outputTank = HTMachineFluidTank(this::setChanged)
+    private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
         listOf(
@@ -53,7 +53,11 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val foundRecipes: MutableList<HTInfuserRecipe> = mutableListOf()
-        HTRecipeConverters.infuser(level.recipeManager, RagiumAPI.materialRegistry, foundRecipes::add)
+        HTRecipeConverters.infuser(
+            level.recipeManager,
+            RagiumAPI.getInstance().getMaterialRegistry(),
+            foundRecipes::add,
+        )
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
             pos,

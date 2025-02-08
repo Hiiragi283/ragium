@@ -3,37 +3,24 @@ package hiiragi283.ragium.api.fluid
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.capability.HTSlotHandler
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.common.init.RagiumEnchantments
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidUtil
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank
+import net.neoforged.neoforge.fluids.IFluidTank
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 /**
- * Ragiumで使用する[FluidTank]の拡張クラス
- * @param callback [FluidTank.onContentsChanged]で呼び出されるブロック
+ * Ragiumで使用する[IFluidTank]の拡張クラス
  */
-open class HTMachineFluidTank(private val baseCapacity: Int, private val callback: () -> Unit) :
-    FluidTank(baseCapacity),
+interface HTMachineFluidTank :
+    IFluidHandler,
+    IFluidTank,
     HTSlotHandler<FluidStack> {
-    constructor(callback: () -> Unit) : this(8000, callback)
+    fun setFluid(stack: FluidStack)
 
-    override fun onContentsChanged() {
-        callback()
-    }
-
-    fun updateCapacity(blockEntity: HTEnchantableBlockEntity) {
-        val level: Int = blockEntity.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-        capacity = level * baseCapacity
-    }
+    fun updateCapacity(blockEntity: HTEnchantableBlockEntity)
 
     fun interactWithFluidStorage(player: Player, storageIO: HTStorageIO): Boolean =
         FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, storageIO.wrapFluidHandler(this))
-
-    //    HTSlotHandler    //
-
-    override var stack: FluidStack
-        get() = fluid
-        set(value) = setFluid(value)
 }

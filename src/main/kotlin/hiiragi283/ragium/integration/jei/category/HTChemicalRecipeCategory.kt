@@ -2,7 +2,7 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.recipe.HTChemicalRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder

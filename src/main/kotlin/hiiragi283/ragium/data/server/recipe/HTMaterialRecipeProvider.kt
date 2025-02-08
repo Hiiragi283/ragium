@@ -58,8 +58,11 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
         RagiumItems
             .getMaterialMap(HTTagPrefix.GEAR)
             .forEach { (material: HTMaterialKey, gear: DeferredItem<out Item>) ->
-                val parentPrefix: HTTagPrefix =
-                    RagiumAPI.materialRegistry.getType(material).getMainPrefix() ?: return@forEach
+                val parentPrefix: HTTagPrefix = RagiumAPI
+                    .getInstance()
+                    .getMaterialRegistry()
+                    .getType(material)
+                    .getMainPrefix() ?: return@forEach
                 // Shaped Recipe
                 ShapedRecipeBuilder
                     .shaped(RecipeCategory.MISC, gear)
@@ -74,8 +77,11 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
 
         // Ingot/Gem -> Rod
         RagiumItems.getMaterialMap(HTTagPrefix.ROD).forEach { (material: HTMaterialKey, rod: DeferredItem<out Item>) ->
-            val parentPrefix: HTTagPrefix =
-                RagiumAPI.materialRegistry.getType(material).getMainPrefix() ?: return@forEach
+            val parentPrefix: HTTagPrefix = RagiumAPI
+                .getInstance()
+                .getMaterialRegistry()
+                .getType(material)
+                .getMainPrefix() ?: return@forEach
             // Shaped Recipe
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, rod, 2)

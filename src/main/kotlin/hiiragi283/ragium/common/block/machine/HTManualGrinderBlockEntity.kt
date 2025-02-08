@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.ifPresent
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
@@ -78,7 +78,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     private fun process(level: Level, pos: BlockPos, player: Player) {
         // Find matching recipe
         val foundRecipes: MutableList<HTGrinderRecipe> = mutableListOf()
-        HTRecipeConverters.grinder(level.recipeManager, RagiumAPI.materialRegistry, foundRecipes::add)
+        HTRecipeConverters.grinder(level.recipeManager, RagiumAPI.getInstance().getMaterialRegistry(), foundRecipes::add)
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, stackIn)

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.base
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.canFill
@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
-import java.util.*
+import java.util.Optional
 
 /**
  * アイテムまたは液体の完成品を持つレシピのクラス
@@ -38,7 +38,7 @@ abstract class HTFluidOutputRecipe(
 
     /**
      * 指定した[itemHandler]と[fluidHandler]に完成品を入れられるか判定します。
-     * @throws HTMachineException 完成品を入れられなかった場合
+     * @throws hiiragi283.ragium.api.machine.HTMachineException 完成品を入れられなかった場合
      */
     fun canInsert(itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
         itemOutput.ifPresent { output: ItemStack ->
@@ -51,7 +51,7 @@ abstract class HTFluidOutputRecipe(
 
     /**
      * 指定した[itemHandler]と[fluidHandler]に完成品を入れます。
-     * @param level 入れられなかった場合にドロップする対象の[Level]
+     * @param level 入れられなかった場合にドロップする対象の[net.minecraft.world.level.Level]
      * @param pos 入れられなかった場合にドロップする座標
      */
     fun insertOutputs(

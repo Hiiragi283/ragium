@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.asHolderText
 import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.recipe.HTMachineRecipeCondition
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos

@@ -3,12 +3,11 @@ package hiiragi283.ragium.integration.jade
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.energy.HTEnergyNetwork
-import hiiragi283.ragium.api.energy.energyNetwork
 import hiiragi283.ragium.api.extension.asServerLevel
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.neoforged.neoforge.energy.IEnergyStorage
 import snownee.jade.api.BlockAccessor
 import snownee.jade.api.IComponentProvider
 import snownee.jade.api.IServerDataProvider
@@ -26,7 +25,8 @@ object HTEnergyNetworkProvider : IServerDataProvider<BlockAccessor>, IComponentP
     //    IServerDataProvider    //
 
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
-        val network: HTEnergyNetwork = accessor.level.asServerLevel()?.energyNetwork ?: return
+        val network: IEnergyStorage =
+            accessor.level.asServerLevel()?.let(RagiumAPI.getInstance()::getEnergyNetwork) ?: return
         accessor.writeData(CODEC, network.energyStored)
     }
 

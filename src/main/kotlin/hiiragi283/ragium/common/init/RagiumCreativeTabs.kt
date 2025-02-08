@@ -110,7 +110,8 @@ object RagiumCreativeTabs {
                     // Machines
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
                         RagiumAPI
-                            .machineRegistry
+                            .getInstance()
+                            .getMachineRegistry()
                             .blocks
                             .forEach(output::accept)
                     }

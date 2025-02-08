@@ -10,7 +10,7 @@ import java.util.stream.Stream
 
 /**
  * [HTMaterialKey]のレジストリ
- * @see hiiragi283.ragium.api.RagiumAPI.materialRegistry
+ * @see hiiragi283.ragium.api.RagiumAPI.getMaterialRegistry
  */
 interface HTMaterialRegistry : Keyable {
     fun createTypedCodec(): Codec<HTTypedMaterial> = HTMaterialKey.CODEC.xmap(::getTypedMaterial, HTTypedMaterial::material)

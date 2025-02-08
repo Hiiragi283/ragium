@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.base
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
-import java.util.*
+import java.util.Optional
 
 /**
  * 複数のアイテムによるインプットを受け付けるレシピ

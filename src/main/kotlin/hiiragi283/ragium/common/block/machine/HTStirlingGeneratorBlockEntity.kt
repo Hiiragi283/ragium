@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
@@ -18,8 +19,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
@@ -27,10 +26,7 @@ import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, RagiumMachineKeys.STIRLING_GENERATOR) {
     private val itemInput = HTMachineItemHandler(1, this::setChanged)
-    private val fluidInput: HTMachineFluidTank =
-        object : HTMachineFluidTank(this@HTStirlingGeneratorBlockEntity::setChanged) {
-            override fun isFluidValid(stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
-        }
+    private val fluidInput: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
         listOf(itemInput.createSlot(0)),

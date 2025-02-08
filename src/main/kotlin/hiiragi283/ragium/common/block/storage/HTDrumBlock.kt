@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.storage
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumReferences
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.fluidAmountText
 import hiiragi283.ragium.api.extension.fluidCapacityText
@@ -38,10 +38,10 @@ class HTDrumBlock(properties: Properties) : HTEntityBlock(properties) {
             context.registries()?.lookupOrThrow(Registries.ENCHANTMENT) ?: return
         val enchantments: ItemEnchantments = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
         val capacityLevel: Int = enchantments.getLevel(lookup.getOrThrow(RagiumEnchantments.CAPACITY)) + 1
-        val tier: HTMachineTier = stack.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: return
+        val tier: HTMachineTier = stack.getItemData(RagiumReferences.DataMapTypes.MACHINE_TIER) ?: return
         tooltipComponents.add(fluidCapacityText(tier.tankCapacity * capacityLevel))
     }
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): HTDrumBlockEntity =
-        HTDrumBlockEntity(pos, state, state.getItemData(RagiumAPI.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC)
+        HTDrumBlockEntity(pos, state, state.getItemData(RagiumReferences.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC)
 }

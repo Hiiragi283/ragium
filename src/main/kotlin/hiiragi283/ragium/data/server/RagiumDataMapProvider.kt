@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumReferences
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -31,8 +32,8 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         // item
         furnaceFuel(builder(NeoForgeDataMaps.FURNACE_FUELS))
 
-        machineKey(builder(RagiumAPI.DataMapTypes.MACHINE_KEY))
-        machineTier(builder(RagiumAPI.DataMapTypes.MACHINE_TIER))
+        machineKey(builder(RagiumReferences.DataMapTypes.MACHINE_KEY))
+        machineTier(builder(RagiumReferences.DataMapTypes.MACHINE_TIER))
     }
 
     //    Item    //
@@ -44,7 +45,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     }
 
     private fun machineKey(builder: Builder<HTMachineKey, Item>) {
-        RagiumAPI.machineRegistry.blockMap.forEach { (key: HTMachineKey, content: DeferredBlock<*>) ->
+        RagiumAPI.getInstance().getMachineRegistry().blockMap.forEach { (key: HTMachineKey, content: DeferredBlock<*>) ->
             builder.add(content.id, key, false)
         }
     }

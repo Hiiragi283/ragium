@@ -1,14 +1,7 @@
 package hiiragi283.ragium.api.machine
 
-import net.minecraft.world.level.block.Block
-
 sealed class HTMachineException(val showInLog: Boolean, message: String) : RuntimeException(message) {
     class Custom(showInLog: Boolean, message: String) : HTMachineException(showInLog, message)
-
-    //    Block    //
-
-    class AroundBlock(showInLog: Boolean, block: Block, count: Int = 1) :
-        HTMachineException(showInLog, "Require ${count}x ${block.name.string} around the machine!")
 
     //    Energy    //
 
