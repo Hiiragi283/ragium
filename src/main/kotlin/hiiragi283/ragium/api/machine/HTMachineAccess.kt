@@ -12,8 +12,6 @@ import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.get
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.enchantment.Enchantment
@@ -63,11 +61,7 @@ interface HTMachineAccess :
      * 指定した[key]のレベルを取得します。
      * @return 指定したエンチャントが登録されていない，または紐づいていない場合は`0`
      */
-    override fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int {
-        val lookup: HolderLookup.RegistryLookup<Enchantment> =
-            levelAccess?.registryAccess()?.lookupOrThrow(Registries.ENCHANTMENT) ?: return 0
-        return enchantments.getLevel(lookup, key)
-    }
+    override fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int = enchantments.getLevel(levelAccess?.registryAccess(), key)
 
     //    HTBlockEntityHandlerProvider    //
 

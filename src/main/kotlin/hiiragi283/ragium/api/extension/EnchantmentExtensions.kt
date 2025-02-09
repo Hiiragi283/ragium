@@ -4,15 +4,26 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 
+//    ItemStack    //
+
+fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int {
+    val provider1: HolderLookup.Provider = provider ?: return 0
+    val enchantments: ItemEnchantments = this.getAllEnchantments(provider1.lookupOrThrow(Registries.ENCHANTMENT))
+    return enchantments.getLevel(provider1, key)
+}
+
 //    ItemEnchantments    //
 
-fun ItemEnchantments.getLevel(lookup: HolderLookup.RegistryLookup<Enchantment>, key: ResourceKey<Enchantment>): Int =
-    lookup.get(key).map(this::getLevel).orElse(0)
+fun ItemEnchantments.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int {
+    val provider1: HolderLookup.Provider = provider ?: return 0
+    return provider1.getHolder(Registries.ENCHANTMENT, key).map(this::getLevel).orElse(0)
+}
 
 operator fun ItemEnchantments.get(holder: Holder<Enchantment>): Int = getLevel(holder)
 

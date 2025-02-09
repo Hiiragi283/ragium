@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.constFunction2
+import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
@@ -17,6 +18,7 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.block.machine.*
+import hiiragi283.ragium.common.fluid.HTDrillFluidHandler
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -285,14 +287,23 @@ internal object RagiumModEvents {
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
             { stack: ItemStack, _: Void? ->
-                FluidHandlerItemStack.SwapEmpty(
+                val enchLevel: Int =
+                    stack.getLevel(RagiumAPI.getInstance().getCurrentLookup(), RagiumEnchantments.CAPACITY)
+                FluidHandlerItemStack(
                     RagiumComponentTypes.FLUID_CONTENT,
                     stack,
-                    ItemStack(stack.item),
-                    RagiumAPI.DEFAULT_TANK_CAPACITY,
+                    RagiumAPI.DEFAULT_TANK_CAPACITY * (enchLevel + 1),
                 )
             },
             RagiumBlocks.COPPER_DRUM,
+        )
+
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            HTDrillFluidHandler::create,
+            RagiumItems.STEEL_DRILL,
+            RagiumItems.DEEP_STEEL_DRILL,
+            RagiumItems.RAGIUM_DRILL,
         )
 
         LOGGER.info("Registered Item Capabilities!")

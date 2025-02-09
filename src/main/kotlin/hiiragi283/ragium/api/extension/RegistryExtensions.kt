@@ -1,7 +1,9 @@
 package hiiragi283.ragium.api.extension
 
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
+import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -16,6 +18,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
+import java.util.Optional
 
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。
@@ -73,6 +76,13 @@ operator fun <T : Any> HolderSet<T>.contains(value: T): Boolean = any { it.isOf(
 fun <T : Any> HolderSet<T>.asHolderText(transform: (Holder<T>) -> Component): MutableComponent = unwrap()
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
+
+//    HolderLookup    //
+
+fun <T : Any> HolderLookup.Provider.getHolder(
+    registry: ResourceKey<out Registry<out T>>,
+    key: ResourceKey<T>,
+): Optional<Holder.Reference<T>> = lookupOrThrow(registry).get(key)
 
 //    TagKey    //
 

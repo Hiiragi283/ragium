@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.fluid.HTMachineFluidTankImpl
 import hiiragi283.ragium.common.item.HTLimitedItemHandler
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -42,4 +43,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage =
         HTLimitedEnergyStorage(storageIO, storage)
+
+    override fun getCurrentServer(): MinecraftServer? = RagiumGameEvents.currentServer
 }

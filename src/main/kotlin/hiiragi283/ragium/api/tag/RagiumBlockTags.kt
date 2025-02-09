@@ -14,4 +14,7 @@ object RagiumBlockTags {
 
     @JvmField
     val HEATING_SOURCES: TagKey<Block> = blockTagKey(RagiumAPI.id("sources/heating"))
+
+    @JvmField
+    val MINEABLE_WITH_DRILL: TagKey<Block> = blockTagKey(RagiumAPI.id("mineable/drill"))
 }

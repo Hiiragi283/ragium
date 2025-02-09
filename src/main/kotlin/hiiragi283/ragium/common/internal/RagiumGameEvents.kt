@@ -9,10 +9,13 @@ import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.RegisterCommandsEvent
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
+import net.neoforged.neoforge.event.server.ServerStoppedEvent
 import net.neoforged.neoforge.items.ItemStackHandler
 import org.slf4j.Logger
 
@@ -24,6 +27,22 @@ internal object RagiumGameEvents {
     @SubscribeEvent
     fun onRegisterCommands(event: RegisterCommandsEvent) {
         LOGGER.info("Registered Commands!")
+    }
+
+    @JvmStatic
+    var currentServer: MinecraftServer? = null
+        private set
+
+    @SubscribeEvent
+    fun onServerStart(event: ServerAboutToStartEvent) {
+        currentServer = event.server
+        LOGGER.info("Current server updated!")
+    }
+
+    @SubscribeEvent
+    fun onStoppedStart(event: ServerStoppedEvent) {
+        currentServer = null
+        LOGGER.info("Current server removed...")
     }
 
     @SubscribeEvent

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.energy
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.world.HTSavedDataType
+import hiiragi283.ragium.api.util.HTSavedDataType
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.saveddata.SavedData

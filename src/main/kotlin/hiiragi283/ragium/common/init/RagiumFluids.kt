@@ -46,7 +46,7 @@ object RagiumFluids {
         // Virtual
         RagiumVirtualFluids.entries.forEach { fluid: RagiumVirtualFluids ->
             // Fluid Type
-            RagiumFluidTypes.REGISTER.register(fluid.serializedName) { _: ResourceLocation -> FluidType(FluidType.Properties.create()) }
+            RagiumFluidTypes.register(fluid.serializedName, FluidType.Properties.create())
             // Fluid
             virtual(fluid.serializedName, fluid.typeHolder)
         }

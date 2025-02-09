@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:ingots/steel"
+    },
+    "B": {
+      "tag": "c:storage_blocks/redstone"
+    },
+    "C": {
+      "tag": "c:circuits/advanced"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    "ACA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:steel_drill"
+  }
+}

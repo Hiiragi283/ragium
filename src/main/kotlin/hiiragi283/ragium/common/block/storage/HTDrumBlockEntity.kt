@@ -12,10 +12,8 @@ import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
@@ -95,11 +93,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
 
     override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
 
-    override fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int {
-        val lookup: HolderLookup.RegistryLookup<Enchantment> =
-            level?.registryAccess()?.lookupOrThrow(Registries.ENCHANTMENT) ?: return 0
-        return enchantments.getLevel(lookup, key)
-    }
+    override fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int = enchantments.getLevel(level?.registryAccess(), key)
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments

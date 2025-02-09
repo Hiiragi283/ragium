@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.world
+package hiiragi283.ragium.api.util
 
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

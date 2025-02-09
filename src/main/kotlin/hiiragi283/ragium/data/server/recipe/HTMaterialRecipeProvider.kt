@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.requires
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -58,10 +57,8 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
         RagiumItems
             .getMaterialMap(HTTagPrefix.GEAR)
             .forEach { (material: HTMaterialKey, gear: DeferredItem<out Item>) ->
-                val parentPrefix: HTTagPrefix = RagiumAPI
-                    .getInstance()
-                    .getMaterialRegistry()
-                    .getType(material)
+                val parentPrefix: HTTagPrefix = material
+                    .getType()
                     .getMainPrefix() ?: return@forEach
                 // Shaped Recipe
                 ShapedRecipeBuilder
@@ -77,10 +74,8 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
 
         // Ingot/Gem -> Rod
         RagiumItems.getMaterialMap(HTTagPrefix.ROD).forEach { (material: HTMaterialKey, rod: DeferredItem<out Item>) ->
-            val parentPrefix: HTTagPrefix = RagiumAPI
-                .getInstance()
-                .getMaterialRegistry()
-                .getType(material)
+            val parentPrefix: HTTagPrefix = material
+                .getType()
                 .getMainPrefix() ?: return@forEach
             // Shaped Recipe
             ShapedRecipeBuilder

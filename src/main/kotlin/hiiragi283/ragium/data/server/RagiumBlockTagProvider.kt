@@ -74,6 +74,10 @@ class RagiumBlockTagProvider(
             .addBlock(Blocks.LAVA)
             .addBlock(Blocks.MAGMA_BLOCK)
 
+        tag(RagiumBlockTags.MINEABLE_WITH_DRILL)
+            .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .addTag(BlockTags.MINEABLE_WITH_SHOVEL)
+
         // Farmer's Delight
         tag(ModTags.HEAT_SOURCES)
             .add(RagiumBlocks.MAGMA_BURNER)

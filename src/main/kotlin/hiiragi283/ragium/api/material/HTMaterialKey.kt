@@ -54,6 +54,15 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
     val text: MutableComponent
         get() = Component.translatable(translationKey)
 
+    private lateinit var typeCache: HTMaterialType
+
+    fun getType(): HTMaterialType {
+        if (!::typeCache.isInitialized) {
+            typeCache = RagiumAPI.getInstance().getMaterialRegistry().getType(this)
+        }
+        return typeCache
+    }
+
     //    Comparable    //
 
     override fun compareTo(other: HTMaterialKey): Int = name.compareTo(other.name)

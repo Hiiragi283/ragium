@@ -17,7 +17,7 @@ class HTDynamiteItem(properties: Properties) :
     Item(properties),
     ProjectileItem {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
-        val stack: ItemStack = player.getItemInHand(usedHand)
+        val stack: ItemStack = player.mainHandItem
         if (!level.isClientSide) {
             val dynamite = HTDynamite(level, player)
             dynamite.item = stack

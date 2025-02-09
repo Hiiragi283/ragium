@@ -24,7 +24,7 @@ object RagiumFluidTypes {
         DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, RagiumAPI.MOD_ID)
 
     @JvmStatic
-    private fun register(name: String, properties: FluidType.Properties): DeferredHolder<FluidType, FluidType> =
+    fun register(name: String, properties: FluidType.Properties): DeferredHolder<FluidType, FluidType> =
         REGISTER.register(name) { _: ResourceLocation ->
             FluidType(
                 properties

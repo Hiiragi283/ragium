@@ -77,6 +77,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             add(RagiumItems.FORGE_HAMMER)
             add(RagiumItems.SILKY_PICKAXE)
+            // addAll(RagiumItems.DRILLS)
 
             add(RagiumItems.DYNAMITE)
             add(RagiumItems.SLOT_LOCK)

@@ -8,7 +8,9 @@ import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import net.minecraft.core.RegistryAccess
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -72,4 +74,8 @@ interface RagiumAPI {
     fun wrapFluidHandler(storageIO: HTStorageIO, handler: IFluidHandler): IFluidHandler
 
     fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
+
+    fun getCurrentLookup(): RegistryAccess? = getCurrentServer()?.registryAccess()
+
+    fun getCurrentServer(): MinecraftServer?
 }

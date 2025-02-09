@@ -19,6 +19,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -378,6 +379,12 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             RagiumItems.PRECISION_MACHINE_CASING -> VanillaMaterials.DIAMOND
             else -> return
         }
+        val circuit: TagKey<Item> = when (casing) {
+            RagiumItems.MACHINE_CASING -> RagiumItemTags.BASIC_CIRCUIT
+            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumItemTags.ADVANCED_CIRCUIT
+            RagiumItems.PRECISION_MACHINE_CASING -> RagiumItemTags.ELITE_CIRCUIT
+            else -> return
+        }
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, machine.getBlock())
             .pattern(" A ")
@@ -388,7 +395,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .define('C', casing)
             .define('D', right)
             .define('E', HTTagPrefix.GEAR, gearMaterial)
-            .define('F', RagiumItemTags.BASIC_CIRCUIT)
+            .define('F', circuit)
             .unlockedBy("has_casing", has(casing))
             .savePrefixed(output)
     }

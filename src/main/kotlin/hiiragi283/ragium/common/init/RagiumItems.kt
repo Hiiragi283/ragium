@@ -307,6 +307,27 @@ object RagiumItems {
         register("silky_pickaxe", ::HTSilkyPickaxeItem)
 
     @JvmField
+    val STEEL_DRILL: DeferredItem<HTFuelDrillItem> = register(
+        "steel_drill",
+        { properties: Item.Properties -> HTFuelDrillItem(Tiers.IRON, properties) },
+    )
+
+    @JvmField
+    val DEEP_STEEL_DRILL: DeferredItem<HTFuelDrillItem> = register(
+        "deep_steel_drill",
+        { properties: Item.Properties -> HTFuelDrillItem(Tiers.DIAMOND, properties) },
+    )
+
+    @JvmField
+    val RAGIUM_DRILL: DeferredItem<HTFuelDrillItem> = register(
+        "ragium_drill",
+        { properties: Item.Properties -> HTFuelDrillItem(Tiers.NETHERITE, properties) },
+    )
+
+    @JvmField
+    val DRILLS: List<DeferredItem<HTFuelDrillItem>> = listOf(STEEL_DRILL, DEEP_STEEL_DRILL, RAGIUM_DRILL)
+
+    @JvmField
     val DYNAMITE: DeferredItem<HTDynamiteItem> =
         register("dynamite", ::HTDynamiteItem)
 
