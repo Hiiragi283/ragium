@@ -32,7 +32,7 @@ open class HTMachineItemHandler(size: Int, val callback: () -> Unit) : ItemStack
 
     fun consumeItem(slot: Int, count: Int, simulate: Boolean): Boolean {
         val stackIn: ItemStack = getStackInSlot(slot)
-        if (stackIn.isEmpty) return false
+        if (stackIn.isEmpty) return true
         if (stackIn.hasCraftingRemainingItem()) {
             val remainStack: ItemStack = stackIn.copy().craftingRemainingItem
             if (stackIn.count == 1 && remainStack.`is`(stackIn.item)) {

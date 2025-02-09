@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanter",
+  "enchantment_output": "minecraft:loyalty",
+  "first_item_input": {
+    "count": 8,
+    "item": "minecraft:lead"
+  }
+}

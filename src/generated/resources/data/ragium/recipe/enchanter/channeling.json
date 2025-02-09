@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanter",
+  "enchantment_output": "minecraft:channeling",
+  "first_item_input": {
+    "count": 64,
+    "item": "minecraft:lightning_rod"
+  }
+}

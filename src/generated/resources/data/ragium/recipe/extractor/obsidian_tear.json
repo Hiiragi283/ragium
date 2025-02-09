@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "count": 1,
+    "tag": "c:obsidians/crying"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "ragium:obsidian_tear"
+  }
+}

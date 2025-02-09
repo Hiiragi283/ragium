@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanter",
+  "enchantment_output": "minecraft:impaling",
+  "first_item_input": {
+    "count": 64,
+    "item": "ragium:prismarine_reagent"
+  }
+}

@@ -9,7 +9,7 @@
     "id": "minecraft:creeper_head"
   },
   "second_item_input": {
-    "count": 16,
+    "count": 8,
     "item": "ragium:creeper_reagent"
   }
 }

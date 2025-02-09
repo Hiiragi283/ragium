@@ -47,20 +47,20 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCategories(
             HTMultiItemRecipeCategory(
                 guiHelper,
-                RagiumJEIRecipeTypes.ASSEMBLER,
                 RagiumMachineKeys.ASSEMBLER,
+                RagiumJEIRecipeTypes.ASSEMBLER,
                 RagiumRecipeSerializers.ASSEMBLER.get(),
             ),
             HTMultiItemRecipeCategory(
                 guiHelper,
-                RagiumJEIRecipeTypes.BLAST_FURNACE,
                 RagiumMachineKeys.BLAST_FURNACE,
+                RagiumJEIRecipeTypes.BLAST_FURNACE,
                 RagiumRecipeSerializers.BLAST_FURNACE.get(),
             ),
             HTSingleItemRecipeCategory(
                 guiHelper,
-                RagiumJEIRecipeTypes.COMPRESSOR,
                 RagiumMachineKeys.COMPRESSOR,
+                RagiumJEIRecipeTypes.COMPRESSOR,
                 RagiumRecipeSerializers.COMPRESSOR.get(),
             ),
             HTEnchanterRecipeCategory(guiHelper),
@@ -70,8 +70,8 @@ class RagiumJEIPlugin : IModPlugin {
             HTInfuserRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
-                RagiumJEIRecipeTypes.LASER_ASSEMBLY,
                 RagiumMachineKeys.LASER_ASSEMBLY,
+                RagiumJEIRecipeTypes.LASER_ASSEMBLY,
                 RagiumRecipeSerializers.LASER_ASSEMBLY.get(),
             ),
             HTMixerRecipeCategory(guiHelper),

@@ -1,16 +1,9 @@
 package hiiragi283.ragium.api.recipe
 
-import com.mojang.serialization.MapCodec
-import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
 import hiiragi283.ragium.common.init.RagiumItems
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -28,7 +21,7 @@ class HTChemicalRecipe(
     private val fluidOutputs: List<FluidStack>,
     val condition: Optional<HTMachineRecipeCondition>,
 ) : HTMachineRecipeBase(group) {
-    companion object {
+    /*companion object {
         @JvmField
         val CODEC: MapCodec<HTChemicalRecipe> = RecordCodecBuilder
             .mapCodec { instance ->
@@ -73,7 +66,7 @@ class HTChemicalRecipe(
             HTChemicalRecipe::condition,
             ::HTChemicalRecipe,
         )
-    }
+    }*/
 
     fun getItemOutputs(): List<ItemStack> = itemOutputs.map(ItemStack::copy)
 

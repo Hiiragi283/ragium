@@ -15,6 +15,7 @@ import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
+import kotlin.jvm.optionals.getOrNull
 
 class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTEnchanterRecipe> {
     override fun getRecipeType(): RecipeType<HTEnchanterRecipe> = RagiumJEIRecipeTypes.ENCHANTER
@@ -23,6 +24,7 @@ class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HT
 
     override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(RagiumMachineKeys.ARCANE_ENCHANTER.getBlock())
 
+    @Suppress("DEPRECATION")
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTEnchanterRecipe, focuses: IFocusGroup) {
         // Target Item
         builder
@@ -43,7 +45,7 @@ class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HT
         builder
             .addInputSlot(getPosition(2), getPosition(0))
             .setStandardSlotBackground()
-            .addIngredients(recipe.secondInput)
+            .addIngredients(recipe.secondInput.getOrNull())
         // Item Output
         builder
             .addOutputSlot(getPosition(5), getPosition(0))

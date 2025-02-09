@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
-import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -45,6 +44,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerRaginite(output)
         registerSteels(output)
+        registerAluminum(output)
         registerEndContents(output)
 
         registerCircuits(output)
@@ -127,6 +127,51 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
     }
 
+    private fun registerAluminum(output: RecipeOutput) {
+        // Lapis + Water -> Lapis Solution
+        HTInfuserRecipeBuilder()
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.LAPIS)
+            .waterInput()
+            .fluidOutput(RagiumVirtualFluids.LAPIS_SOLUTION)
+            .save(output)
+
+        // 8x Netherrack -> 6x Bauxite + 2x Sulfur
+        HTGrinderRecipeBuilder()
+            .itemInput(Items.NETHERRACK, 8)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 4)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 2)
+            .setChance(0.5f)
+            .save(output)
+        // Bauxite + Lapis solution -> Alumina + Water
+        HTInfuserRecipeBuilder()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
+            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
+            .waterOutput()
+            .save(output)
+        // Alumina + 4x Coal -> Aluminum Ingot
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
+            .itemInput(ItemTags.COALS, 4)
+            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+            .saveSuffixed(output, "_with_coal")
+
+        // Al + HF -> Cryolite
+        HTInfuserRecipeBuilder()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
+            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
+            .itemOutput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
+            .save(output)
+        // Alumina + Cryolite -> 3x Aluminum Ingot
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
+            .itemInput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
+            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 3)
+            .saveSuffixed(output, "_with_cryolite")
+    }
+
     private fun registerEndContents(output: RecipeOutput) {
         // Ragium
         HTInfuserRecipeBuilder()
@@ -161,26 +206,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .rewards(AdvancementRewards.Builder.recipe(elytraId))
                 .build(elytraId.withPrefix("recipes/combat/")),
         )
-        // Echorium
-        HTSingleItemRecipeBuilder
-            .laser()
-            .itemInput(RagiumItems.SCULK_REAGENT, 16)
-            .itemOutput(Items.ECHO_SHARD)
-            .save(output)
-
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-            .itemInput(Items.ECHO_SHARD, 4)
-            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
-            .save(output)
-
-        // Fiery Coal
-        HTInfuserRecipeBuilder()
-            .itemInput(RagiumItems.BLAZE_REAGENT, 8)
-            .fluidInput(RagiumFluids.CRUDE_OIL)
-            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
-            .save(output)
     }
 
     private fun registerCircuits(output: RecipeOutput) {
@@ -366,13 +391,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .shapeless(RecipeCategory.MISC, RagiumItems.SLAG, 9)
             .requires(RagiumBlocks.SLAG_BLOCK)
             .unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
-            .savePrefixed(output)
-
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, RagiumBlocks.SOUL_MAGMA_BLOCK)
-            .requires(Items.MAGMA_BLOCK)
-            .requires(RagiumItems.SOUL_REAGENT)
-            .unlockedBy("has_soul", has(RagiumItems.SOUL_REAGENT))
             .savePrefixed(output)
 
         ShapedRecipeBuilder

@@ -24,11 +24,12 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import java.util.Optional
 
 class HTEnchanterRecipe(
     group: String,
     val firstInput: SizedIngredient,
-    val secondInput: SizedIngredient,
+    val secondInput: Optional<SizedIngredient>,
     val enchantment: Holder<Enchantment>,
 ) : HTMachineRecipeBase(group) {
     companion object {
@@ -38,7 +39,7 @@ class HTEnchanterRecipe(
                 .group(
                     HTRecipeCodecs.group(),
                     SizedIngredient.FLAT_CODEC.fieldOf("first_item_input").forGetter(HTEnchanterRecipe::firstInput),
-                    SizedIngredient.FLAT_CODEC.fieldOf("second_item_input").forGetter(HTEnchanterRecipe::secondInput),
+                    SizedIngredient.FLAT_CODEC.optionalFieldOf("second_item_input").forGetter(HTEnchanterRecipe::secondInput),
                     RegistryFixedCodec
                         .create(Registries.ENCHANTMENT)
                         .fieldOf("enchantment_output")
@@ -52,7 +53,7 @@ class HTEnchanterRecipe(
             HTEnchanterRecipe::getGroup,
             SizedIngredient.STREAM_CODEC,
             HTEnchanterRecipe::firstInput,
-            SizedIngredient.STREAM_CODEC,
+            ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
             HTEnchanterRecipe::secondInput,
             ByteBufCodecs.holderRegistry(Registries.ENCHANTMENT),
             HTEnchanterRecipe::enchantment,
@@ -67,7 +68,8 @@ class HTEnchanterRecipe(
         if (input.getItem(0).getEnchantmentLevel(enchantment) > 0) {
             return false
         }
-        return firstInput.test(input.getItem(1)) && secondInput.test(input.getItem(2))
+        val second: ItemStack = input.getItem(2)
+        return firstInput.test(input.getItem(1)) && secondInput.map { it.test(second) }.orElse(second.isEmpty)
     }
 
     override fun assemble(input: HTMachineRecipeInput, registries: HolderLookup.Provider): ItemStack =

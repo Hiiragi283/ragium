@@ -99,6 +99,10 @@ object RagiumBlockEntityTypes {
         register("infuser", ::HTInfuserBlockEntity, RagiumMachineKeys.INFUSER)
 
     @JvmField
+    val LASER_ASSEMBLY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLaserAssemblyBlockEntity>> =
+        register("laser_assembly", ::HTLaserAssemblyBlockEntity, RagiumMachineKeys.LASER_ASSEMBLY)
+
+    @JvmField
     val MIXER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMixerBlockEntity>> =
         register("mixer", ::HTMixerBlockEntity, RagiumMachineKeys.MIXER)
 

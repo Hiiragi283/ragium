@@ -4,13 +4,15 @@ import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
 import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -25,18 +27,82 @@ import net.neoforged.neoforge.fluids.FluidType
 
 object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        registerNitrogen(output)
-        registerFluorine(output)
-
         registerAlkali(output)
-        registerAluminum(output)
+        registerBlaze(output)
+        registerCreeper(output)
+        registerDeepant(output)
+        registerEnder(output)
+        registerGlow(output)
+        registerPrismarine(output)
+        registerSculk(output)
+        registerSoul(output)
+        registerWither(output)
+
         registerSludge(output)
 
         registerUranium(output)
-        registerPlutonium(output)
     }
 
-    private fun registerNitrogen(output: RecipeOutput) {
+    private fun registerAlkali(output: RecipeOutput) {
+        // Ash -> Alkali
+        HTExtractorRecipeBuilder()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ASH)
+            .itemOutput(RagiumItems.ALKALI_REAGENT)
+            .saveSuffixed(output, "_from_ash")
+        // Calcite -> Alkali
+        HTGrinderRecipeBuilder()
+            .itemInput(Items.CALCITE, 4)
+            .itemOutput(RagiumItems.ALKALI_REAGENT)
+            .saveSuffixed(output, "_from_calcite")
+
+        // Alkali + Seed Oil -> Soap
+        HTInfuserRecipeBuilder()
+            .itemInput(RagiumItems.ALKALI_REAGENT)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL)
+            .itemOutput(RagiumItems.SOAP, 4)
+            .save(output)
+    }
+
+    private fun registerBlaze(output: RecipeOutput) {
+        // Blaze Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.MAGMA_BLOCK, 8)
+            .itemOutput(RagiumItems.BLAZE_REAGENT)
+            .saveSuffixed(output, "_from_magma")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.BLAZE_POWDER)
+            .itemOutput(RagiumItems.BLAZE_REAGENT)
+            .saveSuffixed(output, "_from_powder")
+
+        // Blaze Reagent -> Blaze Acid
+        HTInfuserRecipeBuilder()
+            .itemInput(RagiumItems.BLAZE_REAGENT)
+            .waterInput()
+            .fluidOutput(RagiumVirtualFluids.SULFURIC_ACID)
+            .save(output)
+        // Fire charge
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, Items.FIRE_CHARGE, 3)
+            .requires(Tags.Items.GUNPOWDERS)
+            .requires(ItemTags.COALS)
+            .requires(RagiumItems.BLAZE_REAGENT)
+            .unlockedBy("has_reagent", has(RagiumItems.BLAZE_REAGENT))
+            .savePrefixed(output)
+        // Fiery Coal
+        HTInfuserRecipeBuilder()
+            .itemInput(RagiumItems.BLAZE_REAGENT, 8)
+            .fluidInput(RagiumFluids.CRUDE_OIL)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
+            .save(output)
+    }
+
+    private fun registerCreeper(output: RecipeOutput) {
+        // Creeper Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.GUNPOWDERS)
+            .itemOutput(RagiumItems.CREEPER_REAGENT)
+            .saveSuffixed(output, "_from_powder")
         // Nitration
         HTInfuserRecipeBuilder()
             .itemInput(RagiumItems.CREEPER_REAGENT)
@@ -60,7 +126,59 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
     }
 
-    private fun registerFluorine(output: RecipeOutput) {
+    private fun registerDeepant(output: RecipeOutput) {
+        // Deep Reagent
+        HTGrinderRecipeBuilder()
+            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 16)
+            .itemOutput(RagiumItems.DEEPANT_REAGENT)
+            .save(output)
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 4)
+            .itemOutput(RagiumItems.DEEPANT_REAGENT)
+            .save(output)
+    }
+
+    private fun registerEnder(output: RecipeOutput) {
+        // Ender Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.ENDER_PEARLS)
+            .itemOutput(RagiumItems.ENDER_REAGENT)
+            .saveSuffixed(output, "_from_pearl")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.ENDER_EYE)
+            .itemOutput(RagiumItems.ENDER_REAGENT, 2)
+            .saveSuffixed(output, "_from_eye")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.END_CRYSTAL)
+            .itemOutput(RagiumItems.ENDER_REAGENT, 4)
+            .saveSuffixed(output, "_from_crystal")
+    }
+
+    private fun registerGlow(output: RecipeOutput) {
+        // Glow Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.GLOW_LICHEN, 8)
+            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .saveSuffixed(output, "_from_lichen")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.GLOW_BERRIES, 4)
+            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .saveSuffixed(output, "_from_berry")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
+            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .saveSuffixed(output, "_from_dust")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.GLOW_INK_SAC)
+            .itemOutput(RagiumItems.GLOW_REAGENT, 2)
+            .saveSuffixed(output, "_from_ink")
+
         // CaF2 + H2SO4 -> CaSO4 + 2x HF(aq)
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
@@ -75,69 +193,103 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .saveSuffixed(output, "_from_reagent")
     }
 
-    private fun registerAlkali(output: RecipeOutput) {
-        // Ash -> Alkali
+    private fun registerPrismarine(output: RecipeOutput) {
+        // Prismarine Reagent
         HTExtractorRecipeBuilder()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ASH)
-            .itemOutput(RagiumItems.ALKALI_REAGENT)
-            .saveSuffixed(output, "_from_ash")
-        // Calcite -> Alkali
-        HTGrinderRecipeBuilder()
-            .itemInput(Items.CALCITE, 4)
-            .itemOutput(RagiumItems.ALKALI_REAGENT)
-            .saveSuffixed(output, "_from_calcite")
+            .itemInput(Tags.Items.GEMS_PRISMARINE)
+            .itemOutput(RagiumItems.PRISMARINE_REAGENT)
+            .saveSuffixed(output, "_from_crystal")
 
-        // Alkali + Seed Oil -> Soap
-        HTInfuserRecipeBuilder()
-            .itemInput(RagiumItems.ALKALI_REAGENT)
-            .fluidInput(RagiumVirtualFluids.PLANT_OIL)
-            .itemOutput(RagiumItems.SOAP, 4)
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.PRISMARINE_SHARD, 3)
+            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 2)
+            .saveSuffixed(output, "_from_shard")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.NAUTILUS_SHELL)
+            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 4)
+            .saveSuffixed(output, "_from_nautilus")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.HEART_OF_THE_SEA)
+            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 64)
+            .saveSuffixed(output, "_from_heart")
+
+        // Sea Lantern
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.BUILDING_BLOCKS, Items.SEA_LANTERN)
+            .requires(Tags.Items.GLASS_BLOCKS)
+            .requires(RagiumItems.PRISMARINE_REAGENT)
+            .requires(RagiumItems.PRISMARINE_REAGENT)
+            .unlockedBy("has_reagent", has(RagiumItems.PRISMARINE_REAGENT))
+            .savePrefixed(output)
+    }
+
+    private fun registerSculk(output: RecipeOutput) {
+        // Sculk Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.SCULK_VEIN, 8)
+            .itemOutput(RagiumItems.SCULK_REAGENT)
+            .saveSuffixed(output, "_from_vein")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.SCULK)
+            .itemOutput(RagiumItems.SCULK_REAGENT)
+            .save(output)
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.SCULK_CATALYST)
+            .itemOutput(RagiumItems.SCULK_REAGENT, 4)
+            .saveSuffixed(output, "_from_catalyst")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.SCULK_SHRIEKER)
+            .itemOutput(RagiumItems.SCULK_REAGENT, 16)
+            .saveSuffixed(output, "_from_shrieker")
+
+        // Echorium
+        HTSingleItemRecipeBuilder
+            .laser()
+            .itemInput(RagiumItems.SCULK_REAGENT, 16)
+            .itemOutput(Items.ECHO_SHARD)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+            .itemInput(Items.ECHO_SHARD, 4)
+            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
             .save(output)
     }
 
-    private fun registerAluminum(output: RecipeOutput) {
-        // Lapis + Water -> Lapis Solution
-        HTInfuserRecipeBuilder()
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.LAPIS)
-            .waterInput()
-            .fluidOutput(RagiumVirtualFluids.LAPIS_SOLUTION)
+    private fun registerSoul(output: RecipeOutput) {
+        // Soul Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .itemOutput(RagiumItems.SOUL_REAGENT)
             .save(output)
 
-        // 8x Netherrack -> 6x Bauxite + 2x Sulfur
-        HTGrinderRecipeBuilder()
-            .itemInput(Items.NETHERRACK, 8)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 4)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 2)
-            .setChance(0.5f)
-            .save(output)
-        // Bauxite + Lapis solution -> Alumina + Water
-        HTInfuserRecipeBuilder()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
-            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
-            .waterOutput()
-            .save(output)
-        // Alumina + 4x Coal -> Aluminum Ingot
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
-            .itemInput(ItemTags.COALS, 4)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-            .saveSuffixed(output, "_with_coal")
+        // Soul Magma
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, RagiumBlocks.SOUL_MAGMA_BLOCK)
+            .requires(Items.MAGMA_BLOCK)
+            .requires(RagiumItems.SOUL_REAGENT)
+            .requires(RagiumItems.SOUL_REAGENT)
+            .unlockedBy("has_soul", has(RagiumItems.SOUL_REAGENT))
+            .savePrefixed(output)
+    }
 
-        // Al + HF -> Cryolite
-        HTInfuserRecipeBuilder()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
-            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
-            .itemOutput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
-            .save(output)
-        // Alumina + Cryolite -> 3x Aluminum Ingot
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
-            .itemInput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 3)
-            .saveSuffixed(output, "_with_cryolite")
+    private fun registerWither(output: RecipeOutput) {
+        // Wither Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.WITHER_ROSE)
+            .itemOutput(RagiumItems.WITHER_REAGENT, 4)
+            .saveSuffixed(output, "_from_rose")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.WITHER_SKELETON_SKULL)
+            .itemOutput(RagiumItems.WITHER_REAGENT, 8)
+            .saveSuffixed(output, "_from_skull")
     }
 
     private fun registerSludge(output: RecipeOutput) {
@@ -175,8 +327,5 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(RagiumItems.URANIUM_FUEL)
             .save(output)
-    }
-
-    private fun registerPlutonium(output: RecipeOutput) {
     }
 }

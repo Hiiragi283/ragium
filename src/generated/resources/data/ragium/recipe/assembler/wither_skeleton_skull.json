@@ -9,7 +9,7 @@
     "id": "minecraft:wither_skeleton_skull"
   },
   "second_item_input": {
-    "count": 1,
+    "count": 8,
     "item": "ragium:wither_reagent"
   }
 }

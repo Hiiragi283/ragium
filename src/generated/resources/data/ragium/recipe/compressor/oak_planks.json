@@ -1,14 +1,14 @@
 {
   "type": "ragium:compressor",
   "catalyst": {
-    "item": "ragium:shaft"
+    "tag": "minecraft:planks"
   },
   "item_input": {
-    "count": 2,
-    "tag": "c:ingots/steel"
+    "count": 1,
+    "tag": "c:dusts/wood"
   },
   "item_output": {
     "count": 1,
-    "id": "ragium:shaft"
+    "id": "minecraft:oak_planks"
   }
 }

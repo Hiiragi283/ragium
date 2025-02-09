@@ -9,7 +9,7 @@
     "id": "minecraft:zombie_head"
   },
   "second_item_input": {
-    "count": 16,
+    "count": 8,
     "item": "minecraft:rotten_flesh"
   }
 }

@@ -7,21 +7,15 @@ import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.gui.drawable.IDrawable
-import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
-import net.minecraft.network.chat.Component
 
-class HTRefineryRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTRefineryRecipe> {
+class HTRefineryRecipeCategory(guiHelper: IGuiHelper) :
+    HTMachineRecipeCategory<HTRefineryRecipe>(guiHelper, RagiumMachineKeys.REFINERY, 1.5) {
     override fun getRecipeType(): RecipeType<HTRefineryRecipe> = RagiumJEIRecipeTypes.REFINERY
-
-    override fun getTitle(): Component = RagiumMachineKeys.REFINERY.text
-
-    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(RagiumMachineKeys.REFINERY.getBlock())
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTRefineryRecipe, focuses: IFocusGroup) {
         // Item Input
@@ -39,10 +33,6 @@ class HTRefineryRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTR
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
             .addFluidStack(recipe.getFluidOutput())
-    }
-
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTRefineryRecipe, focuses: IFocusGroup) {
-        builder.addRecipeArrow().setPosition(getPosition(1.5), getPosition(0))
     }
 
     override fun getWidth(): Int = 18 * 5 + 8

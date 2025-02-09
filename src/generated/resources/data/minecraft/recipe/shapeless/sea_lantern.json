@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "c:glass_blocks"
+    },
+    {
+      "item": "ragium:prismarine_reagent"
+    },
+    {
+      "item": "ragium:prismarine_reagent"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:sea_lantern"
+  }
+}

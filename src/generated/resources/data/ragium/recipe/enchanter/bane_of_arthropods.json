@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanter",
+  "enchantment_output": "minecraft:bane_of_arthropods",
+  "first_item_input": {
+    "count": 16,
+    "item": "minecraft:spider_eye"
+  }
+}

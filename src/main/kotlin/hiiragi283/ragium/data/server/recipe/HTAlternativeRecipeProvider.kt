@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.define
-import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -14,23 +13,35 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.data.recipes.ShapelessRecipeBuilder
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Skulls
-        registerSkull(output, SizedIngredient.of(RagiumItems.WITHER_REAGENT, 1), Items.WITHER_SKELETON_SKULL)
-        registerSkull(output, SizedIngredient.of(Items.GOLDEN_APPLE, 8), Items.PLAYER_HEAD)
-        registerSkull(output, SizedIngredient.of(Items.ROTTEN_FLESH, 16), Items.ZOMBIE_HEAD)
-        registerSkull(output, SizedIngredient.of(RagiumItems.CREEPER_REAGENT, 16), Items.CREEPER_HEAD)
-        registerSkull(output, SizedIngredient.of(Tags.Items.INGOTS_GOLD, 8), Items.PIGLIN_HEAD)
+        fun skull(input: ItemLike, skull: Item) {
+            HTMultiItemRecipeBuilder
+                .assembler()
+                .itemInput(Items.SKELETON_SKULL)
+                .itemInput(input, 8)
+                .itemOutput(skull)
+                .save(output)
+        }
+
+        HTSingleItemRecipeBuilder
+            .laser()
+            .itemInput(Tags.Items.STORAGE_BLOCKS_BONE_MEAL)
+            .itemOutput(Items.SKELETON_SKULL)
+            .save(output)
+
+        skull(RagiumItems.WITHER_REAGENT, Items.WITHER_SKELETON_SKULL)
+        skull(Items.GOLDEN_APPLE, Items.PLAYER_HEAD)
+        skull(Items.ROTTEN_FLESH, Items.ZOMBIE_HEAD)
+        skull(RagiumItems.CREEPER_REAGENT, Items.CREEPER_HEAD)
+        skull(Items.GILDED_BLACKSTONE, Items.PIGLIN_HEAD)
 
         // Blaze Powder
         HTCookingRecipeBuilder
@@ -86,15 +97,6 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .define('A', HTTagPrefix.ROD, VanillaMaterials.IRON)
             .unlockedBy("has_iron_rod", has(HTTagPrefix.ROD, VanillaMaterials.IRON))
 
-        // Fire charge
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, Items.FIRE_CHARGE, 3)
-            .requires(Tags.Items.GUNPOWDERS)
-            .requires(ItemTags.COALS)
-            .requires(RagiumItems.BLAZE_REAGENT)
-            .unlockedBy("has_reagent", has(RagiumItems.BLAZE_REAGENT))
-            .savePrefixed(output)
-
         // Copper Grate
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, Items.COPPER_GRATE, 4)
@@ -106,17 +108,14 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_rod", has(HTTagPrefix.ROD, VanillaMaterials.COPPER))
             .save(output, RagiumAPI.id("shaped/copper_grate"))
 
-        registerSnow(output)
-        registerStone(output)
-    }
-
-    private fun registerSkull(output: RecipeOutput, input: SizedIngredient, skull: Item) {
-        HTMultiItemRecipeBuilder
-            .assembler()
-            .itemInput(Items.SKELETON_SKULL)
-            .itemInput(input)
-            .itemOutput(skull)
+        // Obsidian
+        HTMixerRecipeBuilder()
+            .waterInput()
+            .fluidInput(Tags.Fluids.LAVA)
+            .itemOutput(Items.OBSIDIAN)
             .save(output)
+
+        registerSnow(output)
     }
 
     private fun registerSnow(output: RecipeOutput) {
@@ -148,39 +147,6 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.BUCKET)
             .fluidInput(RagiumFluids.SNOW)
             .itemOutput(Items.POWDER_SNOW_BUCKET)
-            .save(output)
-    }
-
-    private fun registerStone(output: RecipeOutput) {
-        fun registerRock(rock: ItemLike) {
-            /*HTMachineRecipeBuilder
-                .create(RagiumRecipes.ASSEMBLER)
-                .condition(HTRockGeneratorCondition(Ingredient.of(rock)))
-                .itemOutput(rock, 8)
-                .save(output)*/
-        }
-
-        registerRock(Items.STONE)
-        registerRock(Items.COBBLESTONE)
-        registerRock(Items.GRANITE)
-        registerRock(Items.DIORITE)
-        registerRock(Items.ANDESITE)
-
-        registerRock(Items.DEEPSLATE)
-        registerRock(Items.COBBLED_DEEPSLATE)
-        registerRock(Items.CALCITE)
-        registerRock(Items.TUFF)
-        registerRock(Items.DRIPSTONE_BLOCK)
-        registerRock(Items.NETHERRACK)
-        registerRock(Items.BASALT)
-        registerRock(Items.BLACKSTONE)
-
-        registerRock(Items.END_STONE)
-
-        HTMixerRecipeBuilder()
-            .waterInput()
-            .fluidInput(Tags.Fluids.LAVA)
-            .itemOutput(Items.OBSIDIAN)
             .save(output)
     }
 }

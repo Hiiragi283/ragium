@@ -1,5 +1,8 @@
 {
   "type": "ragium:compressor",
+  "catalyst": {
+    "item": "ragium:shaft"
+  },
   "item_input": {
     "count": 1,
     "tag": "c:ingots/deep_steel"

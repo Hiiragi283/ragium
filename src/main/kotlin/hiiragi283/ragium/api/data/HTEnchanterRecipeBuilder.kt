@@ -15,6 +15,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
+import java.util.Optional
 
 class HTEnchanterRecipeBuilder(val enchantment: Holder<Enchantment>) :
     HTMachineRecipeBuilderBase<HTEnchanterRecipeBuilder, HTEnchanterRecipe>() {
@@ -22,14 +23,14 @@ class HTEnchanterRecipeBuilder(val enchantment: Holder<Enchantment>) :
 
     private var group: String? = null
     private lateinit var firstInput: SizedIngredient
-    private lateinit var secondInput: SizedIngredient
+    private var secondInput: SizedIngredient? = null
 
     override fun itemInput(ingredient: Ingredient, count: Int): HTEnchanterRecipeBuilder = apply {
         if (!::firstInput.isInitialized) {
             this.firstInput = SizedIngredient(ingredient, count)
             return@apply
         }
-        check(!::secondInput.isInitialized) { "Input is already initialized" }
+        check(secondInput == null) { "Input is already initialized" }
         this.secondInput = SizedIngredient(ingredient, count)
     }
 
@@ -46,7 +47,7 @@ class HTEnchanterRecipeBuilder(val enchantment: Holder<Enchantment>) :
     override fun createRecipe(): HTEnchanterRecipe = HTEnchanterRecipe(
         group ?: "",
         firstInput,
-        secondInput,
+        Optional.ofNullable(secondInput),
         enchantment,
     )
 

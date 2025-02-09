@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanter",
+  "enchantment_output": "minecraft:sharpness",
+  "first_item_input": {
+    "count": 64,
+    "tag": "c:gems/quartz"
+  }
+}

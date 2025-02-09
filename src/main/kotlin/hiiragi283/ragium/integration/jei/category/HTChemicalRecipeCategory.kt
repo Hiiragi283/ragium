@@ -1,6 +1,5 @@
 package hiiragi283.ragium.integration.jei.category
 
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.recipe.HTChemicalRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
 import hiiragi283.ragium.integration.jei.addFluidStack
@@ -10,10 +9,8 @@ import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.placement.HorizontalAlignment
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
-import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
@@ -132,7 +129,4 @@ class HTChemicalRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTC
     override fun getWidth(): Int = 18 * 8 + 8
 
     override fun getHeight(): Int = 18 * 2 + 8
-
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTChemicalRecipe> =
-        HTChemicalRecipe.CODEC.codec()
 }

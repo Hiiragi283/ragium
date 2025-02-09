@@ -8,13 +8,13 @@ import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTCompressorContainerMenu(
+class HTSingleItemContainerMenu(
     syncId: Int,
     playerInv: Inventory,
     pos: BlockPos,
     itemHandler: IItemHandler,
 ) : HTMachineContainerMenu(
-        RagiumMenuTypes.COMPRESSOR,
+        RagiumMenuTypes.SINGLE_ITEM,
         syncId,
         playerInv,
         pos,

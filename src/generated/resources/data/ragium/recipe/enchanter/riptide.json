@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanter",
+  "enchantment_output": "minecraft:riptide",
+  "first_item_input": {
+    "count": 1,
+    "item": "minecraft:heart_of_the_sea"
+  }
+}

@@ -101,15 +101,21 @@ internal object RagiumModEvents {
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.ANVIL_USE)
 
         event
-            .getBuilder(RagiumMachineKeys.EXTRACTOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTExtractorBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.PISTON_EXTEND)
-
-        event
             .getBuilder(RagiumMachineKeys.GRINDER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTGrinderBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.GRINDSTONE_USE)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
+
+        event
+            .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTMultiSmelterBlockEntity)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
+        // Advanced
+        event
+            .getBuilder(RagiumMachineKeys.EXTRACTOR)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTExtractorBlockEntity)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.PISTON_EXTEND)
 
         event
             .getBuilder(RagiumMachineKeys.INFUSER)
@@ -123,14 +129,12 @@ internal object RagiumModEvents {
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
 
         event
-            .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTMultiSmelterBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
-
-        event
             .getBuilder(RagiumMachineKeys.REFINERY)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTRefineryBlockEntity)
+        // Elite
+        event
+            .getBuilder(RagiumMachineKeys.LASER_ASSEMBLY)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLaserAssemblyBlockEntity)
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

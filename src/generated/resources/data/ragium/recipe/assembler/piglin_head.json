@@ -10,6 +10,6 @@
   },
   "second_item_input": {
     "count": 8,
-    "tag": "c:ingots/gold"
+    "item": "minecraft:gilded_blackstone"
   }
 }

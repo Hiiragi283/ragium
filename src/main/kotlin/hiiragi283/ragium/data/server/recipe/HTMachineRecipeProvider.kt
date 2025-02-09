@@ -34,7 +34,6 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         enchanter(output, holderLookup.lookupOrThrow(Registries.ENCHANTMENT))
         extractor(output)
         growthChamber(output)
-        infuser(output)
         refinery(output)
     }
 
@@ -57,24 +56,61 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         HTSingleItemRecipeBuilder
             .compressor()
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 2)
+            .catalyst(RagiumBlocks.SHAFT)
             .itemOutput(RagiumBlocks.SHAFT)
             .saveSuffixed(output, "_from_steel")
 
         HTSingleItemRecipeBuilder
             .compressor()
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
+            .catalyst(RagiumBlocks.SHAFT)
             .itemOutput(RagiumBlocks.SHAFT)
             .saveSuffixed(output, "_from_deep_steel")
+        // Pulp -> Oak Planks
+        HTSingleItemRecipeBuilder
+            .compressor()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.WOOD)
+            .catalyst(ItemTags.PLANKS)
+            .itemOutput(Items.OAK_PLANKS)
+            .save(output)
     }
 
     //    Enchanter    //
 
     private fun enchanter(output: RecipeOutput, lookup: HolderLookup.RegistryLookup<Enchantment>) {
-        // Looting
+        // for Armors
+        // for Swords
+        HTEnchanterRecipeBuilder(lookup, Enchantments.SHARPNESS)
+            .itemInput(HTTagPrefix.GEM, VanillaMaterials.QUARTZ, 64)
+            .save(output)
+
+        HTEnchanterRecipeBuilder(lookup, Enchantments.BANE_OF_ARTHROPODS)
+            .itemInput(Items.SPIDER_EYE, 16)
+            .save(output)
+
         HTEnchanterRecipeBuilder(lookup, Enchantments.LOOTING)
             .itemInput(HTTagPrefix.GEM, VanillaMaterials.EMERALD, 16)
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.GOLD, 8)
             .save(output)
+        // for Mining Tools
+        // for Bows
+        // for Tridents
+        HTEnchanterRecipeBuilder(lookup, Enchantments.LOYALTY)
+            .itemInput(Items.LEAD, 8)
+            .save(output)
+
+        HTEnchanterRecipeBuilder(lookup, Enchantments.IMPALING)
+            .itemInput(RagiumItems.PRISMARINE_REAGENT, 64)
+            .save(output)
+
+        HTEnchanterRecipeBuilder(lookup, Enchantments.RIPTIDE)
+            .itemInput(Items.HEART_OF_THE_SEA)
+            .save(output)
+
+        HTEnchanterRecipeBuilder(lookup, Enchantments.CHANNELING)
+            .itemInput(Items.LIGHTNING_ROD, 64)
+            .save(output)
+        // for Crossbows
+        // for Maces
     }
 
     //    Extractor    //
@@ -119,129 +155,11 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumFluids.CRUDE_OIL)
             .save(output, RagiumAPI.id("crude_oil_from_coal"))
 
-        // Blaze Reagent
+        // Obsidian Tier
         HTExtractorRecipeBuilder()
-            .itemInput(Items.MAGMA_BLOCK, 8)
-            .itemOutput(RagiumItems.BLAZE_REAGENT)
-            .saveSuffixed(output, "_from_magma")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.BLAZE_POWDER)
-            .itemOutput(RagiumItems.BLAZE_REAGENT)
-            .saveSuffixed(output, "_from_powder")
-
-        // Creeper Reagent
-        HTExtractorRecipeBuilder()
-            .itemInput(Tags.Items.GUNPOWDERS)
-            .itemOutput(RagiumItems.CREEPER_REAGENT)
-            .saveSuffixed(output, "_from_powder")
-
-        // Deep Reagent
-        HTGrinderRecipeBuilder()
-            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 16)
-            .itemOutput(RagiumItems.DEEPANT_REAGENT)
+            .itemInput(Tags.Items.OBSIDIANS_CRYING)
+            .itemOutput(RagiumItems.OBSIDIAN_TEAR, 4)
             .save(output)
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 4)
-            .itemOutput(RagiumItems.DEEPANT_REAGENT)
-            .save(output)
-
-        // Ender Reagent
-        HTExtractorRecipeBuilder()
-            .itemInput(Tags.Items.ENDER_PEARLS)
-            .itemOutput(RagiumItems.ENDER_REAGENT)
-            .saveSuffixed(output, "_from_pearl")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.ENDER_EYE)
-            .itemOutput(RagiumItems.ENDER_REAGENT, 2)
-            .saveSuffixed(output, "_from_eye")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.END_CRYSTAL)
-            .itemOutput(RagiumItems.ENDER_REAGENT, 4)
-            .saveSuffixed(output, "_from_crystal")
-
-        // Glow Reagent
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.GLOW_LICHEN, 8)
-            .itemOutput(RagiumItems.GLOW_REAGENT)
-            .saveSuffixed(output, "_from_lichen")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.GLOW_BERRIES, 4)
-            .itemOutput(RagiumItems.GLOW_REAGENT)
-            .saveSuffixed(output, "_from_berry")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
-            .itemOutput(RagiumItems.GLOW_REAGENT)
-            .saveSuffixed(output, "_from_dust")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.GLOW_INK_SAC)
-            .itemOutput(RagiumItems.GLOW_REAGENT, 2)
-            .saveSuffixed(output, "_from_ink")
-
-        // Prismarine Reagent
-        HTExtractorRecipeBuilder()
-            .itemInput(Tags.Items.GEMS_PRISMARINE)
-            .itemOutput(RagiumItems.PRISMARINE_REAGENT)
-            .saveSuffixed(output, "_from_crystal")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.PRISMARINE_SHARD, 3)
-            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 2)
-            .saveSuffixed(output, "_from_shard")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.NAUTILUS_SHELL)
-            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 4)
-            .saveSuffixed(output, "_from_nautilus")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.HEART_OF_THE_SEA)
-            .itemOutput(RagiumItems.PRISMARINE_REAGENT, 64)
-            .saveSuffixed(output, "_from_heart")
-
-        // Sculk Reagent
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.SCULK_VEIN, 8)
-            .itemOutput(RagiumItems.SCULK_REAGENT)
-            .saveSuffixed(output, "_from_vein")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.SCULK)
-            .itemOutput(RagiumItems.SCULK_REAGENT)
-            .save(output)
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.SCULK_CATALYST)
-            .itemOutput(RagiumItems.SCULK_REAGENT, 4)
-            .saveSuffixed(output, "_from_catalyst")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.SCULK_SHRIEKER)
-            .itemOutput(RagiumItems.SCULK_REAGENT, 16)
-            .saveSuffixed(output, "_from_shrieker")
-
-        // Soul Reagent
-        HTExtractorRecipeBuilder()
-            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            .itemOutput(RagiumItems.SOUL_REAGENT)
-            .save(output)
-
-        // Wither Reagent
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.WITHER_ROSE)
-            .itemOutput(RagiumItems.WITHER_REAGENT, 4)
-            .saveSuffixed(output, "_from_rose")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.WITHER_SKELETON_SKULL)
-            .itemOutput(RagiumItems.WITHER_REAGENT, 8)
-            .saveSuffixed(output, "_from_skull")
     }
 
     //    Growth Chamber    //
@@ -304,17 +222,6 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         register(Tags.Items.CROPS_SUGAR_CANE, ItemTags.SAND, Items.SUGAR_CANE, 4)
         // Soul Sand
         register(Tags.Items.CROPS_NETHER_WART, ItemTags.SOUL_FIRE_BASE_BLOCKS, Items.NETHER_WART, 3, 0)
-    }
-
-    //    Infuser    //
-
-    private fun infuser(output: RecipeOutput) {
-        // Blaze Reagent -> Blaze Acid
-        HTInfuserRecipeBuilder()
-            .itemInput(RagiumItems.BLAZE_REAGENT)
-            .waterInput()
-            .fluidOutput(RagiumVirtualFluids.SULFURIC_ACID)
-            .save(output)
     }
 
     //    Refinery    //
