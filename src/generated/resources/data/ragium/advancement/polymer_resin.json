@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:crude_oil_bucket",
+  "criteria": {
+    "has_polymer_resin": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:polymer_resin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:polymer_resin"
+    },
+    "title": {
+      "translate": "item.ragium.polymer_resin"
+    }
+  },
+  "requirements": [
+    [
+      "has_polymer_resin"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

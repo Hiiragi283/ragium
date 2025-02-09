@@ -190,6 +190,8 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         // Refinery
         val refinery: AdvancementHolder = createMachine(casing, RagiumMachineKeys.REFINERY)
         val crudeOil: AdvancementHolder = createSimple(refinery, RagiumItems.CRUDE_OIL_BUCKET, Component.empty())
+        val resin: AdvancementHolder = createSimple(crudeOil, RagiumItems.POLYMER_RESIN, Component.empty())
+        val plastic: AdvancementHolder = createSimple(resin, RagiumItems.PLASTIC_PLATE, Component.empty())
 
         val crimson: AdvancementHolder = createSimple(refinery, RagiumItems.CRIMSON_CRYSTAL, Component.empty(), type = AdvancementType.GOAL)
         val warped: AdvancementHolder = createSimple(refinery, RagiumItems.WARPED_CRYSTAL, Component.empty(), type = AdvancementType.GOAL)
@@ -202,6 +204,10 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             Component.empty(),
         )
 
+        // Alchemical Brewery
+        val brewery: AdvancementHolder = createMachine(casing, RagiumMachineKeys.ALCHEMICAL_BREWERY)
+        // Arcane Enchanter
+        val enchanter: AdvancementHolder = createMachine(casing, RagiumMachineKeys.ARCANE_ENCHANTER)
         // Laser Assembly
         val assembly: AdvancementHolder = createMachine(casing, RagiumMachineKeys.LASER_ASSEMBLY)
     }

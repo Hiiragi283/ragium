@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:enchanting_table"
+    },
+    "B": {
+      "tag": "c:gems/amethyst"
+    },
+    "C": {
+      "item": "ragium:precision_machine_casing"
+    },
+    "D": {
+      "tag": "c:gems/amethyst"
+    },
+    "E": {
+      "tag": "c:gears/diamond"
+    },
+    "F": {
+      "tag": "c:circuits/elite"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BCD",
+    "EFE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:arcane_enchanter"
+  }
+}

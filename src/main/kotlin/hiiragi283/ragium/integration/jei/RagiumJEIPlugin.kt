@@ -63,6 +63,7 @@ class RagiumJEIPlugin : IModPlugin {
                 RagiumMachineKeys.COMPRESSOR,
                 RagiumRecipeSerializers.COMPRESSOR.get(),
             ),
+            HTEnchanterRecipeCategory(guiHelper),
             HTExtractorRecipeCategory(guiHelper),
             HTGrinderRecipeCategory(guiHelper),
             HTGrowthChamberRecipeCategory(guiHelper),
@@ -101,6 +102,7 @@ class RagiumJEIPlugin : IModPlugin {
                 HTRecipeConverters.compressor(recipeManager, registry, this::add)
             },
         )
+        register(RagiumJEIRecipeTypes.ENCHANTER, RagiumRecipeTypes.ENCHANTER)
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
         registration.addRecipes(
             RagiumJEIRecipeTypes.GRINDER,
@@ -158,6 +160,8 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
         // Compressor
         register(RagiumJEIRecipeTypes.COMPRESSOR, RagiumMachineKeys.COMPRESSOR)
+        // Enchanter
+        register(RagiumJEIRecipeTypes.ENCHANTER, RagiumMachineKeys.ARCANE_ENCHANTER)
         // Extractor
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR)
         // Grinder

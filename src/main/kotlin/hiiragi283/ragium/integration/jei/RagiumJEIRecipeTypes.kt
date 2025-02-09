@@ -27,6 +27,10 @@ object RagiumJEIRecipeTypes {
         RecipeType.create(RagiumAPI.MOD_ID, "compressor", HTCompressorRecipe::class.java)
 
     @JvmField
+    val ENCHANTER: RecipeType<HTEnchanterRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "enchanter", HTEnchanterRecipe::class.java)
+
+    @JvmField
     val EXTRACTOR: RecipeType<HTExtractorRecipe> =
         RecipeType.create(RagiumAPI.MOD_ID, "extractor", HTExtractorRecipe::class.java)
 

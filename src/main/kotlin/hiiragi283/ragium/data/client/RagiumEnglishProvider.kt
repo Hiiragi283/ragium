@@ -219,6 +219,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Augh! Pervert! Death penalty!",
         )
 
+        add(RagiumMachineKeys.ALCHEMICAL_BREWERY, "Alchemical Brewery", "Sequential Brewing")
+        add(RagiumMachineKeys.ARCANE_ENCHANTER, "Arcane Enchanter", "Stable Enchanting")
         add(RagiumMachineKeys.ASSEMBLER, "Assembler", "You are the genius!")
         add(RagiumMachineKeys.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
         add(RagiumMachineKeys.COMPRESSOR, "Compressor", "saves.zip.zip")

@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.Recipe
 abstract class HTMachineRecipeBase(private val group: String) : Recipe<HTMachineRecipeInput> {
     abstract fun getItemOutput(): ItemStack
 
-    final override fun assemble(input: HTMachineRecipeInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
+    override fun assemble(input: HTMachineRecipeInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = getItemOutput()
 

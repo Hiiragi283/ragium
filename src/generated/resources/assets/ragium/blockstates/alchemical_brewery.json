@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ragium:block/alchemical_brewery",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/alchemical_brewery"
+    },
+    "facing=south": {
+      "model": "ragium:block/alchemical_brewery",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ragium:block/alchemical_brewery",
+      "y": 270
+    }
+  }
+}

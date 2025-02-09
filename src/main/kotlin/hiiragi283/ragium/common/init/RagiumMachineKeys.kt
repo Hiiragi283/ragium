@@ -28,6 +28,8 @@ object RagiumMachineKeys {
     val VIBRATION_GENERATOR: HTMachineKey = HTMachineKey.of("vibration_generator")
 
     //    Processor    //
+
+    // Basic
     @JvmField
     val ASSEMBLER: HTMachineKey = HTMachineKey.of("assembler")
 
@@ -35,13 +37,17 @@ object RagiumMachineKeys {
     val BLAST_FURNACE: HTMachineKey = HTMachineKey.of("blast_furnace")
 
     @JvmField
+    val GRINDER: HTMachineKey = HTMachineKey.of("grinder")
+
+    @JvmField
     val COMPRESSOR: HTMachineKey = HTMachineKey.of("compressor")
 
     @JvmField
-    val EXTRACTOR: HTMachineKey = HTMachineKey.of("extractor")
+    val MULTI_SMELTER: HTMachineKey = HTMachineKey.of("multi_smelter")
 
+    // Advanced
     @JvmField
-    val GRINDER: HTMachineKey = HTMachineKey.of("grinder")
+    val EXTRACTOR: HTMachineKey = HTMachineKey.of("extractor")
 
     @JvmField
     val GROWTH_CHAMBER: HTMachineKey = HTMachineKey.of("growth_chamber")
@@ -50,14 +56,18 @@ object RagiumMachineKeys {
     val INFUSER: HTMachineKey = HTMachineKey.of("infuser")
 
     @JvmField
-    val LASER_ASSEMBLY: HTMachineKey = HTMachineKey.of("laser_assembly")
-
-    @JvmField
     val MIXER: HTMachineKey = HTMachineKey.of("mixer")
 
     @JvmField
-    val MULTI_SMELTER: HTMachineKey = HTMachineKey.of("multi_smelter")
+    val REFINERY: HTMachineKey = HTMachineKey.of("refinery")
+
+    // Elite
+    @JvmField
+    val ALCHEMICAL_BREWERY: HTMachineKey = HTMachineKey.of("alchemical_brewery")
 
     @JvmField
-    val REFINERY: HTMachineKey = HTMachineKey.of("refinery")
+    val ARCANE_ENCHANTER: HTMachineKey = HTMachineKey.of("arcane_enchanter")
+
+    @JvmField
+    val LASER_ASSEMBLY: HTMachineKey = HTMachineKey.of("laser_assembly")
 }

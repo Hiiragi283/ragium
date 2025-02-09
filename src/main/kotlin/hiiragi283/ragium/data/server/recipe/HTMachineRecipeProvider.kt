@@ -13,11 +13,14 @@ import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -28,6 +31,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         assembler(output)
         compressor(output)
+        enchanter(output, holderLookup.lookupOrThrow(Registries.ENCHANTMENT))
         extractor(output)
         growthChamber(output)
         infuser(output)
@@ -61,6 +65,16 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
             .itemOutput(RagiumBlocks.SHAFT)
             .saveSuffixed(output, "_from_deep_steel")
+    }
+
+    //    Enchanter    //
+
+    private fun enchanter(output: RecipeOutput, lookup: HolderLookup.RegistryLookup<Enchantment>) {
+        // Looting
+        HTEnchanterRecipeBuilder(lookup, Enchantments.LOOTING)
+            .itemInput(HTTagPrefix.GEM, VanillaMaterials.EMERALD, 16)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.GOLD, 8)
+            .save(output)
     }
 
     //    Extractor    //

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:brewing_stand"
+    },
+    "B": {
+      "tag": "c:gems/emerald"
+    },
+    "C": {
+      "item": "ragium:precision_machine_casing"
+    },
+    "D": {
+      "tag": "c:gems/emerald"
+    },
+    "E": {
+      "tag": "c:gears/diamond"
+    },
+    "F": {
+      "tag": "c:circuits/elite"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BCD",
+    "EFE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:alchemical_brewery"
+  }
+}

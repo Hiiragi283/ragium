@@ -306,14 +306,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             Ingredient.of(RagiumItems.FORGE_HAMMER),
             Ingredient.of(Items.PISTON),
         )
-        // Extractor
-        registerMachine(
-            output,
-            RagiumMachineKeys.EXTRACTOR,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(Items.HOPPER),
-            Ingredient.of(Items.PISTON),
-        )
         // Grinder
         registerMachine(
             output,
@@ -321,6 +313,23 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             RagiumItems.MACHINE_CASING,
             Ingredient.of(RagiumBlocks.MANUAL_GRINDER),
             Ingredient.of(Items.FLINT),
+        )
+        // Multi Smelter
+        registerMachine(
+            output,
+            RagiumMachineKeys.MULTI_SMELTER,
+            RagiumItems.MACHINE_CASING,
+            Ingredient.of(RagiumItems.BLAZE_REAGENT),
+            Ingredient.of(Items.FURNACE),
+        )
+
+        // Extractor
+        registerMachine(
+            output,
+            RagiumMachineKeys.EXTRACTOR,
+            RagiumItems.CHEMICAL_MACHINE_CASING,
+            Ingredient.of(Items.HOPPER),
+            Ingredient.of(Items.PISTON),
         )
         // Growth Chamber
         // Infuser
@@ -331,14 +340,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             Ingredient.of(Items.HOPPER),
             Ingredient.of(Items.BUCKET),
         )
-        // Laser Assembly
-        registerMachine(
-            output,
-            RagiumMachineKeys.LASER_ASSEMBLY,
-            RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(Items.END_CRYSTAL),
-            HTTagPrefix.GEM.createIngredient(RagiumMaterials.RAGI_CRYSTAL),
-        )
         // Mixer
         registerMachine(
             output,
@@ -347,14 +348,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             Ingredient.of(Tags.Items.GLASS_BLOCKS),
             Ingredient.of(Items.CAULDRON),
         )
-        // Multi Smelter
-        registerMachine(
-            output,
-            RagiumMachineKeys.MULTI_SMELTER,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(RagiumItems.BLAZE_REAGENT),
-            Ingredient.of(Items.FURNACE),
-        )
         // Refinery
         registerMachine(
             output,
@@ -362,6 +355,31 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             RagiumItems.CHEMICAL_MACHINE_CASING,
             Ingredient.of(RagiumItems.CRUDE_OIL_BUCKET),
             Ingredient.of(Tags.Items.GLASS_BLOCKS),
+        )
+
+        // Alchemical Brewery
+        registerMachine(
+            output,
+            RagiumMachineKeys.ALCHEMICAL_BREWERY,
+            RagiumItems.PRECISION_MACHINE_CASING,
+            Ingredient.of(Items.BREWING_STAND),
+            HTTagPrefix.GEM.createIngredient(VanillaMaterials.EMERALD),
+        )
+        // Arcane Enchanter
+        registerMachine(
+            output,
+            RagiumMachineKeys.ARCANE_ENCHANTER,
+            RagiumItems.PRECISION_MACHINE_CASING,
+            Ingredient.of(Items.ENCHANTING_TABLE),
+            HTTagPrefix.GEM.createIngredient(VanillaMaterials.AMETHYST),
+        )
+        // Laser Assembly
+        registerMachine(
+            output,
+            RagiumMachineKeys.LASER_ASSEMBLY,
+            RagiumItems.PRECISION_MACHINE_CASING,
+            Ingredient.of(Items.END_CRYSTAL),
+            HTTagPrefix.GEM.createIngredient(RagiumMaterials.RAGI_CRYSTAL),
         )
     }
 

@@ -31,6 +31,9 @@ object RagiumRecipeTypes {
     val DISTILLERY: DeferredHolder<RecipeType<*>, RecipeType<HTDistilleryRecipe>> = register("distillery")
 
     @JvmField
+    val ENCHANTER: DeferredHolder<RecipeType<*>, RecipeType<HTEnchanterRecipe>> = register("enchanter")
+
+    @JvmField
     val EXTRACTOR: DeferredHolder<RecipeType<*>, RecipeType<HTExtractorRecipe>> = register("extractor")
 
     @JvmField

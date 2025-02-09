@@ -3,20 +3,17 @@ package hiiragi283.ragium.api.extension
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
 
 //    ItemStack    //
 
-fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int {
-    val provider1: HolderLookup.Provider = provider ?: return 0
-    val enchantments: ItemEnchantments = this.getAllEnchantments(provider1.lookupOrThrow(Registries.ENCHANTMENT))
-    return enchantments.getLevel(provider1, key)
-}
+fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int =
+    provider?.getHolder(Registries.ENCHANTMENT, key)?.map(this::getEnchantmentLevel)?.orElse(0) ?: 0
 
 //    ItemEnchantments    //
 
@@ -38,10 +35,12 @@ inline fun ItemEnchantments.copyAndEdit(action: ItemEnchantments.Mutable.() -> U
 
 /**
  * この[ItemStack]が保持しているエンチャントを更新します。
- * @param type エンチャントが紐づいている[DataComponentType]
  * @param action エンチャントを更新するブロック
  */
-fun ItemStack.modifyEnchantment(
-    type: DataComponentType<ItemEnchantments> = DataComponents.ENCHANTMENTS,
-    action: (ItemEnchantments) -> ItemEnchantments?,
-): ItemEnchantments? = update(type, ItemEnchantments.EMPTY, action)
+fun ItemStack.modifyEnchantment(action: (ItemEnchantments.Mutable) -> ItemEnchantments?): ItemStack {
+    val type: DataComponentType<ItemEnchantments> = EnchantmentHelper.getComponentType(this)
+    val current: ItemEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(this)
+    val newEnch: ItemEnchantments? = action(ItemEnchantments.Mutable(current))
+    if (newEnch == null) this.remove(type) else this.set(type, newEnch)
+    return this
+}
