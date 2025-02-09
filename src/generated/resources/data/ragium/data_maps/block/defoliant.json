@@ -1,0 +1,37 @@
+{
+  "values": {
+    "#minecraft:crops": {
+      "Name": "minecraft:air"
+    },
+    "#minecraft:dirt": {
+      "Name": "minecraft:coarse_dirt"
+    },
+    "#minecraft:leaves": {
+      "Name": "minecraft:air"
+    },
+    "#minecraft:replaceable_by_trees": {
+      "Name": "minecraft:air"
+    },
+    "#minecraft:saplings": {
+      "Name": "minecraft:dead_bush"
+    },
+    "#minecraft:wart_blocks": {
+      "Name": "minecraft:air"
+    },
+    "minecraft:brown_mushroom_block": {
+      "Name": "minecraft:air"
+    },
+    "minecraft:crimson_nylium": {
+      "Name": "minecraft:netherrack"
+    },
+    "minecraft:moss_carpet": {
+      "Name": "minecraft:air"
+    },
+    "minecraft:red_mushroom_block": {
+      "Name": "minecraft:air"
+    },
+    "minecraft:warped_nylium": {
+      "Name": "minecraft:netherrack"
+    }
+  }
+}

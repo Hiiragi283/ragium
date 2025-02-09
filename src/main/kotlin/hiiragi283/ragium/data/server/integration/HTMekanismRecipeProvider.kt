@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.integration
 
-import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
-import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import mekanism.common.registries.MekanismItems

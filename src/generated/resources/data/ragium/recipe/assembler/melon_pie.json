@@ -1,15 +1,15 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 1,
-    "item": "minecraft:bread"
+    "count": 4,
+    "tag": "c:crops/melon"
   },
   "item_output": {
     "count": 1,
-    "id": "ragium:cinnamon_roll"
+    "id": "ragium:melon_pie"
   },
   "second_item_input": {
     "count": 1,
-    "item": "ragium:cinnamon_powder"
+    "item": "ragium:sponge_cake"
   }
 }

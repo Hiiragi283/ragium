@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.integration
 
-import hiiragi283.ragium.api.data.HTGrowthChamberRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup

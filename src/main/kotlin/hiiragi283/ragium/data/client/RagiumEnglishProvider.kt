@@ -100,10 +100,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
         addItem(RagiumItems.CHOCOLATE_COOKIE, "Chocolate Cookie")
 
-        addItem(RagiumItems.CINNAMON_STICK, "Cinnamon Stick")
-        addItem(RagiumItems.CINNAMON_POWDER, "Cinnamon Powder")
-        addItem(RagiumItems.CINNAMON_ROLL, "Cinnamon Roll")
-
         addItem(RagiumItems.MINCED_MEAT, "Minced Meat")
         addItem(RagiumItems.MEAT_INGOT, "Meat Ingot")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
@@ -114,6 +110,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
 
+        addItem(RagiumItems.DEFOLIANT, "Defoliant")
         addItem(RagiumItems.DYNAMITE, "Dynamite")
         addItem(RagiumItems.SLOT_LOCK, "Slot Lock")
 
@@ -122,10 +119,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
         addItem(RagiumItems.ULTIMATE_CIRCUIT, "Ultimate Circuit")
 
-        addItem(RagiumItems.GEAR_PRESS_MOLD, "Press Mold (Gear)")
-        addItem(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
-        addItem(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
-        addItem(RagiumItems.WIRE_PRESS_MOLD, "Press Mold (Wire)")
+        addItem(RagiumItems.getPressMold(HTTagPrefix.GEAR), "Press Mold (Gear)")
+        addItem(RagiumItems.getPressMold(HTTagPrefix.PLATE), "Press Mold (Plate)")
+        addItem(RagiumItems.getPressMold(HTTagPrefix.ROD), "Press Mold (Rod)")
+        addItem(RagiumItems.getPressMold(HTTagPrefix.WIRE), "Press Mold (Wire)")
 
         addItem(RagiumItems.ALKALI_REAGENT, "Alkali Reagent")
         addItem(RagiumItems.BLAZE_REAGENT, "Blaze Reagent")
@@ -151,19 +148,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "Precision Machine Casing")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.SILKY_CRYSTAL, "Silky Crystal")
         addItem(RagiumItems.SLAG, "Slag")
         addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
-
-        addItem(RagiumItems.NUCLEAR_WASTE, "Nuclear Waste")
-        addItem(RagiumItems.PLUTONIUM_FUEL, "Plutonium Fuel")
-        addItem(RagiumItems.URANIUM_FUEL, "Uranium Fuel")
         addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
-
-        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
         add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")

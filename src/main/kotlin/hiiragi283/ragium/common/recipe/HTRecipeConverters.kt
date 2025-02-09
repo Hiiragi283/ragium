@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
-import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
-import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe

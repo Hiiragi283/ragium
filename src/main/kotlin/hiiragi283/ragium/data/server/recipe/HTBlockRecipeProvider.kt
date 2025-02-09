@@ -43,63 +43,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
 
     //    Components    //
 
-    /*private fun registerGrates(output: RecipeOutput) {
-        RagiumBlocks.GRATES.forEach { (tier: HTMachineTier, grate: DeferredBlock<TransparentBlock>) ->
-            val steel: HTMaterialKey = when (tier) {
-                HTMachineTier.BASIC -> CommonMaterials.STEEL
-                HTMachineTier.ADVANCED -> RagiumMaterials.DEEP_STEEL
-                HTMachineTier.ELITE -> CommonMaterials.ALUMINUM
-                HTMachineTier.ULTIMATE -> VanillaMaterials.NETHERITE
-            }
-            // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.BUILDING_BLOCKS, grate, 4)
-                .pattern("AAA")
-                .pattern("ABA")
-                .pattern("AAA")
-                .define('A', HTTagPrefix.ROD, steel)
-                .define('B', RagiumItems.FORGE_HAMMER)
-                .unlockedBy("has_rod", has(HTTagPrefix.ROD, steel))
-                .savePrefixed(output)
-        }
-    }
-
-    private fun registerCasings(output: RecipeOutput) {
-        RagiumBlocks.Casings.entries.forEach { casings: RagiumBlocks.Casings ->
-            val corner: Item = when (casings) {
-                RagiumBlocks.Casings.BASIC -> Items.STONE
-                RagiumBlocks.Casings.ADVANCED -> Items.POLISHED_DEEPSLATE
-                RagiumBlocks.Casings.ELITE -> Items.QUARTZ_BLOCK
-                RagiumBlocks.Casings.ULTIMATE -> Items.OBSIDIAN
-            }
-            val glass: Ingredient = when (casings) {
-                RagiumBlocks.Casings.BASIC -> Ingredient.of(Tags.Items.GLASS_BLOCKS)
-                RagiumBlocks.Casings.ADVANCED -> Ingredient.of(Tags.Items.GLASS_BLOCKS_TINTED)
-                RagiumBlocks.Casings.ELITE -> Ingredient.of(RagiumBlocks.CHEMICAL_GLASS)
-                RagiumBlocks.Casings.ULTIMATE -> Ingredient.of(RagiumBlocks.OBSIDIAN_GLASS)
-            }
-            // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.BUILDING_BLOCKS, casings, 3)
-                .pattern("ABA")
-                .pattern("BCB")
-                .pattern("ABA")
-                .define('A', corner)
-                .define('B', glass)
-                .define('C', HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
-                .unlockedBy("has_gear", has(HTTagPrefix.GEAR, casings.machineTier.getSteelMetal()))
-                .savePrefixed(output)
-            // Assembler
-            HTMultiItemRecipeBuilder
-                .assembler()
-                .itemInput(glass, 4)
-                .itemInput(corner, 4)
-                .itemInput(HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
-                .itemOutput(casings, 6)
-                .save(output)
-        }
-    }*/
-
     private fun registerBurners(output: RecipeOutput) {
         RagiumBlocks.BURNERS_NEW.forEach { burner: DeferredBlock<Block> ->
             val core: ItemLike = when (burner) {

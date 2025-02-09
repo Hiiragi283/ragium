@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.integration
 import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
-import hiiragi283.ragium.api.data.*
+import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags

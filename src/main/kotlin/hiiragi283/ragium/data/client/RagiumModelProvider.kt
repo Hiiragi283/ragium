@@ -79,12 +79,12 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumItems.SILKY_PICKAXE)
             // addAll(RagiumItems.DRILLS)
 
+            // add(RagiumItems.DEFOLIANT)
             add(RagiumItems.DYNAMITE)
             add(RagiumItems.SLOT_LOCK)
 
             addAll(RagiumItems.CIRCUITS)
-            addAll(RagiumItems.PRESS_MOLDS)
-            addAll(RagiumItems.RADIOACTIVES)
+            addAll(RagiumItems.PRESS_MOLDS.values)
 
             addAll(RagiumItems.REAGENTS)
             addAll(RagiumItems.INGREDIENTS)

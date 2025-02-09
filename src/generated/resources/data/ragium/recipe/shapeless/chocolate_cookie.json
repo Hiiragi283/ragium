@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:chocolate"
+    },
+    {
+      "item": "ragium:flour"
+    },
+    {
+      "item": "ragium:butter"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "ragium:chocolate_cookie"
+  }
+}

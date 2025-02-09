@@ -100,10 +100,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
         addItem(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
 
-        addItem(RagiumItems.CINNAMON_STICK, "シナモンスティック")
-        addItem(RagiumItems.CINNAMON_POWDER, "シナモンパウダー")
-        addItem(RagiumItems.CINNAMON_ROLL, "シナモンロール")
-
         addItem(RagiumItems.MINCED_MEAT, "ひき肉")
         addItem(RagiumItems.MEAT_INGOT, "生肉インゴット")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
@@ -114,6 +110,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
         addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
 
+        addItem(RagiumItems.DEFOLIANT, "枯葉剤")
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
         addItem(RagiumItems.SLOT_LOCK, "スロットロック")
 
@@ -122,10 +119,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
         addItem(RagiumItems.ULTIMATE_CIRCUIT, "究極回路")
 
-        addItem(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
-        addItem(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板材）")
-        addItem(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒材）")
-        addItem(RagiumItems.WIRE_PRESS_MOLD, "プレス型（ワイヤー）")
+        addItem(RagiumItems.getPressMold(HTTagPrefix.GEAR), "プレス型（歯車）")
+        addItem(RagiumItems.getPressMold(HTTagPrefix.PLATE), "プレス型（板材）")
+        addItem(RagiumItems.getPressMold(HTTagPrefix.ROD), "プレス型（棒材）")
+        addItem(RagiumItems.getPressMold(HTTagPrefix.WIRE), "プレス型（ワイヤー）")
 
         addItem(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
         addItem(RagiumItems.BLAZE_REAGENT, "ブレイズ試薬")
@@ -151,19 +148,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "精密機械筐体")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
         addItem(RagiumItems.SLAG, "スラグ")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
-
-        addItem(RagiumItems.NUCLEAR_WASTE, "核廃棄物")
-        addItem(RagiumItems.PLUTONIUM_FUEL, "プルトニウム燃料")
-        addItem(RagiumItems.URANIUM_FUEL, "ウラン燃料")
         addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
-
-        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
         add(RagiumTranslationKeys.MACHINE_NAME, "- 機械: %s")

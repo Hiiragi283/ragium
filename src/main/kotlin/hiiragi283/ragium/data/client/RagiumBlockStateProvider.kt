@@ -62,37 +62,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             )
         }
 
-        // Grate
-        /*RagiumBlocks.GRATES.forEach { (_, grate: DeferredBlock<TransparentBlock>) ->
-            simpleBlock(
-                grate.get(),
-                ConfiguredModel(
-                    models()
-                        .singleTexture(
-                            grate.id.path,
-                            ResourceLocation.withDefaultNamespace("block/cube_all"),
-                            "all",
-                            grate.blockId,
-                        ).cutout(),
-                ),
-            )
-        }
-
-        // Hull
-        RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
-            getVariantBuilder(hull.get())
-                .partialState()
-                .setModels(
-                    ConfiguredModel(
-                        models()
-                            .withExistingParent(hull, RagiumAPINew.id("block/hull"))
-                            .blockTexture("top", hull.machineTier.getStorageBlock().id)
-                            .blockTexture("bottom", hull.machineTier.getCasing().id)
-                            .cutout(),
-                    ),
-                )
-        }*/
-
         // Burner
         RagiumBlocks.BURNERS_NEW.forEach { burner ->
             val core: ResourceLocation = when (burner) {
@@ -204,46 +173,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                         .build()
                 }
         }
-
-        /*RagiumAPINew.getInstance().getMachineRegistry().blocks.forEach { content: HTBlockContent ->
-            val builder: ConfiguredModel.Builder<MultiPartBlockStateBuilder.PartBuilder> =
-                getMultipartBuilder(content.get()).part()
-
-            HTMachineTier.entries.forEach { tier: HTMachineTier ->
-                builder
-                    .modelFile(ModelFile.UncheckedModelFile(tier.getHull().blockId))
-                    .addModel()
-                    .condition(HTMachineTier.PROPERTY, tier)
-            }
-
-            val inactiveId: ResourceLocation = content.id.withPrefix("block/machine/")
-            val activeId: ResourceLocation = content.id.withPath { "block/machine/${it}_active" }
-
-            BlockStateProperties.HORIZONTAL_FACING.possibleValues.forEach { front: Direction ->
-                // inactive front
-                builder
-                    .rotationY(front.getRotationY())
-                    .modelFile(
-                        models()
-                            .withExistingParent(inactiveId, RagiumAPINew.id("block/machine_front"))
-                            .texture("front", inactiveId)
-                            .renderType("cutout"),
-                    ).addModel()
-                    .condition(BlockStateProperties.HORIZONTAL_FACING, front)
-                    .condition(RagiumBlockProperties.ACTIVE, false)
-                // active front
-                builder
-                    .rotationY(front.getRotationY())
-                    .modelFile(
-                        models()
-                            .withExistingParent(activeId, RagiumAPINew.id("block/machine_front"))
-                            .texture("front", activeId)
-                            .renderType("cutout"),
-                    ).addModel()
-                    .condition(BlockStateProperties.HORIZONTAL_FACING, front)
-                    .condition(RagiumBlockProperties.ACTIVE, true)
-            }
-        }*/
     }
 
     private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()

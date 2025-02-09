@@ -1,10 +1,10 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
-import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
-import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -45,7 +45,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         registerRaginite(output)
         registerSteels(output)
         registerAluminum(output)
-        registerEndContents(output)
+        registerRagium(output)
 
         registerCircuits(output)
         registerPressMolds(output)
@@ -172,7 +172,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .saveSuffixed(output, "_with_cryolite")
     }
 
-    private fun registerEndContents(output: RecipeOutput) {
+    private fun registerRagium(output: RecipeOutput) {
         // Ragium
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 8)
@@ -185,6 +185,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .save(output)
+
         // Unbreakable Elytra
         val elytraId: ResourceLocation = RagiumAPI.id("smithing/ragi_elytra")
         val ragiumIngot: TagKey<Item> = HTTagPrefix.INGOT.createTag(RagiumMaterials.RAGIUM)
@@ -206,6 +207,12 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .rewards(AdvancementRewards.Builder.recipe(elytraId))
                 .build(elytraId.withPrefix("recipes/combat/")),
         )
+        // Ragi Ticket
+        HTInfuserRecipeBuilder()
+            .itemInput(Items.PAPER)
+            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION)
+            .itemOutput(RagiumItems.RAGI_TICKET)
+            .save(output)
     }
 
     private fun registerCircuits(output: RecipeOutput) {
@@ -249,7 +256,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerPressMolds(output: RecipeOutput) {
-        fun register(pressMold: ItemLike, prefix: HTTagPrefix) {
+        fun register(entry: Map.Entry<HTTagPrefix, ItemLike>) {
+            val (prefix: HTTagPrefix, pressMold: ItemLike) = entry
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, pressMold)
                 .pattern("AA")
@@ -262,10 +270,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .savePrefixed(output)
         }
 
-        register(RagiumItems.GEAR_PRESS_MOLD, HTTagPrefix.GEAR)
-        register(RagiumItems.PLATE_PRESS_MOLD, HTTagPrefix.PLATE)
-        register(RagiumItems.ROD_PRESS_MOLD, HTTagPrefix.ROD)
-        register(RagiumItems.WIRE_PRESS_MOLD, HTTagPrefix.WIRE)
+        RagiumItems.PRESS_MOLDS.forEach(::register)
     }
 
     private fun registerTool(output: RecipeOutput) {

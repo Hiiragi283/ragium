@@ -1,7 +1,7 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.recipe.HTInfuserRecipe
+import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
@@ -9,35 +9,35 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
-class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder, HTInfuserRecipe>() {
+class HTMixerRecipeBuilder : HTMachineRecipeBuilderBase<HTMixerRecipeBuilder, HTMixerRecipe>() {
     private var group: String? = null
-    private lateinit var itemInput1: SizedIngredient
-    private lateinit var fluidInput1: SizedFluidIngredient
+    private lateinit var firstInput: SizedFluidIngredient
+    private lateinit var secondInput: SizedFluidIngredient
     private var itemOutput: ItemStack? = null
     private var fluidOutput: FluidStack? = null
 
-    override fun itemInput(ingredient: Ingredient, count: Int): HTInfuserRecipeBuilder = apply {
-        check(!::itemInput1.isInitialized) { "Input is already initialized" }
-        itemInput1 = SizedIngredient(ingredient, count)
+    override fun itemInput(ingredient: Ingredient, count: Int): HTMixerRecipeBuilder = throw UnsupportedOperationException()
+
+    override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTMixerRecipeBuilder = apply {
+        if (!::firstInput.isInitialized) {
+            firstInput = SizedFluidIngredient(ingredient, amount)
+            return@apply
+        }
+        check(!::secondInput.isInitialized) { "Input is already initialized" }
+        secondInput = SizedFluidIngredient(ingredient, amount)
     }
 
-    override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTInfuserRecipeBuilder = apply {
-        check(!::fluidInput1.isInitialized) { "Input is already initialized" }
-        fluidInput1 = SizedFluidIngredient(ingredient, amount)
-    }
-
-    override fun itemOutput(stack: ItemStack): HTInfuserRecipeBuilder = apply {
+    override fun itemOutput(stack: ItemStack): HTMixerRecipeBuilder = apply {
         check(itemOutput == null) { "Output is already initialized" }
         this.itemOutput = stack
     }
 
-    override fun fluidOutput(stack: FluidStack): HTInfuserRecipeBuilder = apply {
+    override fun fluidOutput(stack: FluidStack): HTMixerRecipeBuilder = apply {
         check(fluidOutput == null) { "Output is already initialized" }
         this.fluidOutput = stack
     }
@@ -46,12 +46,12 @@ class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder
         ?: fluidOutput?.fluidHolder?.idOrThrow
         ?: error("Either item or fluid output required!")
 
-    override val prefix: String = "infuser"
+    override val prefix: String = "mixer"
 
-    override fun createRecipe(): HTInfuserRecipe = HTInfuserRecipe(
+    override fun createRecipe(): HTMixerRecipe = HTMixerRecipe(
         group ?: "",
-        itemInput1,
-        fluidInput1,
+        firstInput,
+        secondInput,
         Optional.ofNullable(itemOutput),
         Optional.ofNullable(fluidOutput),
     )

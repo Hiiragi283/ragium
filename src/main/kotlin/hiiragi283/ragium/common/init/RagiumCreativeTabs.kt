@@ -56,18 +56,18 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.FORGE_HAMMER)
                     output.accept(RagiumItems.SILKY_PICKAXE)
 
+                    output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)
                     output.accept(RagiumItems.SLOT_LOCK)
 
                     RagiumItems.DRILLS.forEach(output::accept)
-                    RagiumItems.PRESS_MOLDS.forEach(output::accept)
+                    RagiumItems.PRESS_MOLDS.values.forEach(output::accept)
                     // Circuits
                     RagiumItems.CIRCUITS.forEach(output::accept)
                     // Ingredients
                     output.accept(RagiumBlocks.SHAFT)
                     RagiumItems.REAGENTS.forEach(output::accept)
                     RagiumItems.INGREDIENTS.forEach(output::accept)
-                    RagiumItems.RADIOACTIVES.forEach(output::accept)
                 }.build()
         }
 

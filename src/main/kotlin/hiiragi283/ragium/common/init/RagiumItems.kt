@@ -240,15 +240,6 @@ object RagiumItems {
     val CHOCOLATE_COOKIE: DeferredItem<Item> = registerFood("chocolate_cookie", Foods.COOKIE)
 
     @JvmField
-    val CINNAMON_STICK: DeferredItem<Item> = register("cinnamon_stick")
-
-    @JvmField
-    val CINNAMON_POWDER: DeferredItem<Item> = register("cinnamon_powder")
-
-    @JvmField
-    val CINNAMON_ROLL: DeferredItem<Item> = registerFood("cinnamon_roll", Foods.COOKED_BEEF)
-
-    @JvmField
     val MINCED_MEAT: DeferredItem<Item> = register("minced_meat")
 
     @JvmField
@@ -265,7 +256,7 @@ object RagiumItems {
         register(
             "ambrosia",
             ::HTAmbrosiaItem,
-            itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC),
+            itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC).stacksTo(1),
         )
 
     @JvmField
@@ -283,10 +274,6 @@ object RagiumItems {
         CHOCOLATE_APPLE,
         CHOCOLATE_BREAD,
         CHOCOLATE_COOKIE,
-        // cinnamon
-        CINNAMON_STICK,
-        CINNAMON_POWDER,
-        CINNAMON_ROLL,
         // meat
         MINCED_MEAT,
         MEAT_INGOT,
@@ -328,12 +315,30 @@ object RagiumItems {
     val DRILLS: List<DeferredItem<HTFuelDrillItem>> = listOf(STEEL_DRILL, DEEP_STEEL_DRILL, RAGIUM_DRILL)
 
     @JvmField
+    val DEFOLIANT: DeferredItem<HTDefoliantItem> =
+        register("defoliant", ::HTDefoliantItem)
+
+    @JvmField
     val DYNAMITE: DeferredItem<HTDynamiteItem> =
         register("dynamite", ::HTDynamiteItem)
 
     @JvmField
     val SLOT_LOCK: DeferredItem<HTCatalystItem> =
         register("slot_lock", ::HTCatalystItem, itemProperty().stacksTo(1))
+
+    @JvmField
+    val PRESS_MOLDS: Map<HTTagPrefix, DeferredItem<HTCatalystItem>> =
+        listOf(
+            HTTagPrefix.GEAR,
+            HTTagPrefix.PLATE,
+            HTTagPrefix.ROD,
+            HTTagPrefix.WIRE,
+        ).associateWith { prefix: HTTagPrefix ->
+            register("${prefix.serializedName}_press_mold", ::HTCatalystItem)
+        }
+
+    @JvmStatic
+    fun getPressMold(prefix: HTTagPrefix): DeferredItem<HTCatalystItem> = PRESS_MOLDS[prefix] ?: error("Unregistered with $prefix")
 
     //    Circuits    //
 
@@ -352,28 +357,6 @@ object RagiumItems {
         ELITE_CIRCUIT,
         ULTIMATE_CIRCUIT,
     )
-
-    //    Press Molds    //
-
-    @JvmField
-    val GEAR_PRESS_MOLD: DeferredItem<HTCatalystItem> =
-        register("gear_press_mold", ::HTCatalystItem, itemProperty().stacksTo(1))
-
-    @JvmField
-    val PLATE_PRESS_MOLD: DeferredItem<HTCatalystItem> =
-        register("plate_press_mold", ::HTCatalystItem, itemProperty().stacksTo(1))
-
-    @JvmField
-    val ROD_PRESS_MOLD: DeferredItem<HTCatalystItem> =
-        register("rod_press_mold", ::HTCatalystItem, itemProperty().stacksTo(1))
-
-    @JvmField
-    val WIRE_PRESS_MOLD: DeferredItem<HTCatalystItem> =
-        register("wire_press_mold", ::HTCatalystItem, itemProperty().stacksTo(1))
-
-    @JvmField
-    val PRESS_MOLDS: List<DeferredItem<HTCatalystItem>> =
-        listOf(GEAR_PRESS_MOLD, PLATE_PRESS_MOLD, ROD_PRESS_MOLD, WIRE_PRESS_MOLD)
 
     //    Reagents    //
 
@@ -457,6 +440,12 @@ object RagiumItems {
     @JvmField
     val SOLAR_PANEL: DeferredItem<Item> = register("solar_panel")
 
+    val YELLOW_CAKE: DeferredItem<Item> =
+        register("yellow_cake")
+
+    val YELLOW_CAKE_PIECE: DeferredItem<Item> =
+        registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
+
     @JvmField
     val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
 
@@ -475,33 +464,10 @@ object RagiumItems {
         add(ENGINE)
         add(LED)
         add(SOLAR_PANEL)
+        // nuclear
+        add(YELLOW_CAKE)
+        add(YELLOW_CAKE_PIECE)
         // misc
         add(RAGI_TICKET)
     }
-
-    //    Radioactives    //
-
-    val YELLOW_CAKE: DeferredItem<Item> =
-        register("yellow_cake")
-
-    val YELLOW_CAKE_PIECE: DeferredItem<Item> =
-        registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
-
-    val URANIUM_FUEL: DeferredItem<Item> =
-        register("uranium_fuel", itemProperty().durability(255))
-
-    val NUCLEAR_WASTE: DeferredItem<Item> =
-        register("nuclear_waste")
-
-    val PLUTONIUM_FUEL: DeferredItem<Item> =
-        register("plutonium_fuel", itemProperty().durability(1023))
-
-    @JvmField
-    val RADIOACTIVES: List<DeferredItem<Item>> = listOf(
-        YELLOW_CAKE,
-        YELLOW_CAKE_PIECE,
-        URANIUM_FUEL,
-        NUCLEAR_WASTE,
-        PLUTONIUM_FUEL,
-    )
 }

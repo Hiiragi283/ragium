@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.*
+import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -20,12 +20,19 @@ import net.neoforged.neoforge.fluids.FluidType
 
 object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        // Melon Pie
+        HTMultiItemRecipeBuilder
+            .assembler()
+            .itemInput(Tags.Items.CROPS_MELON, 4)
+            .itemInput(RagiumBlocks.SPONGE_CAKE)
+            .itemOutput(RagiumItems.MELON_PIE)
+            .save(output)
+
         registerWheat(output)
 
         registerMilk(output)
         registerHoney(output)
         registerChocolate(output)
-        registerCinnamon(output)
 
         registerMeat(output)
     }
@@ -128,6 +135,28 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .milkInput()
             .itemOutput(RagiumItems.CHOCOLATE)
             .save(output)
+        // Chocolate Apple
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.FOOD, RagiumItems.CHOCOLATE_APPLE)
+            .requires(RagiumItems.CHOCOLATE)
+            .requires(Items.APPLE)
+            .unlockedBy("has_chocolate", has(RagiumItems.CHOCOLATE))
+            .savePrefixed(output)
+        // Chocolate Bread
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.FOOD, RagiumItems.CHOCOLATE_BREAD)
+            .requires(RagiumItems.CHOCOLATE)
+            .requires(Items.BREAD)
+            .unlockedBy("has_chocolate", has(RagiumItems.CHOCOLATE))
+            .savePrefixed(output)
+        // Chocolate Cookie
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.FOOD, RagiumItems.CHOCOLATE_COOKIE, 8)
+            .requires(RagiumItems.CHOCOLATE)
+            .requires(RagiumItems.FLOUR)
+            .requires(RagiumItems.BUTTER)
+            .unlockedBy("has_chocolate", has(RagiumItems.CHOCOLATE))
+            .savePrefixed(output)
 
         // Sweet Berries Cake
         HTMultiItemRecipeBuilder
@@ -149,28 +178,11 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .requiresFor(8, Ingredient.of(RagiumItems.SWEET_BERRIES_CAKE_PIECE))
             .unlockedBy("has_cake", has(RagiumItems.SWEET_BERRIES_CAKE_PIECE))
             .savePrefixed(output)
-    }
-
-    private fun registerCinnamon(output: RecipeOutput) {
-        // Cinnamon Powder
-        HTGrinderRecipeBuilder()
-            .itemInput(RagiumItems.CINNAMON_STICK)
-            .itemOutput(RagiumItems.CINNAMON_POWDER, 4)
-            .save(output)
-        // Cinnamon Roll
-        HTMultiItemRecipeBuilder
-            .assembler()
-            .itemInput(Items.BREAD)
-            .itemInput(RagiumItems.CINNAMON_POWDER)
-            .itemOutput(RagiumItems.CINNAMON_ROLL)
-            .save(output)
 
         // Ambrosia
-        HTMultiItemRecipeBuilder
-            .assembler()
+        HTInfuserRecipeBuilder()
             .itemInput(RagiumItems.CHOCOLATE, 64)
-            .itemInput(RagiumItems.CINNAMON_POWDER, 64)
-            .itemInput(Items.HONEY_BLOCK, 64)
+            .fluidInput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME * 64)
             .itemOutput(RagiumItems.AMBROSIA)
             .save(output)
     }

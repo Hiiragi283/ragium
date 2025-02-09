@@ -1,10 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
-import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
-import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
-import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
-import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -290,6 +286,14 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.WITHER_SKELETON_SKULL)
             .itemOutput(RagiumItems.WITHER_REAGENT, 8)
             .saveSuffixed(output, "_from_skull")
+
+        // Defoliant
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, RagiumItems.DEFOLIANT)
+            .requires(Tags.Items.FERTILIZERS)
+            .requires(RagiumItems.WITHER_REAGENT)
+            .unlockedBy("has_reagent", has(RagiumItems.WITHER_REAGENT))
+            .savePrefixed(output)
     }
 
     private fun registerSludge(output: RecipeOutput) {
@@ -321,11 +325,6 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .requires(RagiumItems.YELLOW_CAKE)
             .unlockedBy("has_cake", has(RagiumItems.YELLOW_CAKE))
             .savePrefixed(output)
-        // Uranium Fuel
-        HTInfuserRecipeBuilder()
-            .itemInput(RagiumItems.YELLOW_CAKE_PIECE, 16)
-            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 8)
-            .itemOutput(RagiumItems.URANIUM_FUEL)
-            .save(output)
+        // Catastrophic Fuel
     }
 }

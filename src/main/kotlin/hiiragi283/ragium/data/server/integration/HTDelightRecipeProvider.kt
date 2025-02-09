@@ -1,9 +1,9 @@
 package hiiragi283.ragium.data.server.integration
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTExtractorRecipeBuilder
-import hiiragi283.ragium.api.data.HTGrinderRecipeBuilder
-import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTExtractorRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider

@@ -23,7 +23,7 @@ class RagiumFluidTagProvider(
     override fun addTags(provider: HolderLookup.Provider) {
         val gasBuilder: TagAppender<Fluid> = tag(Tags.Fluids.GASEOUS)
 
-        RagiumFluids.REGISTER.entries.forEach { holder: DeferredHolder<Fluid, out Fluid> ->
+        RagiumFluids.REGISTER.forEach { holder: DeferredHolder<Fluid, out Fluid> ->
             if (!holder.get().isSource) return@forEach
             // Common Tag
             tag(holder.commonTag).add(holder.keyOrThrow)

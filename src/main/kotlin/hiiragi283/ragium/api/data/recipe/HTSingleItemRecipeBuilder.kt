@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe

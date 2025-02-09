@@ -175,19 +175,19 @@ class RagiumItemTagProvider(
             .addTag(Tags.Items.END_STONES)
 
         tag(RagiumItemTags.GEAR_MOLDS)
-            .add(RagiumItems.GEAR_PRESS_MOLD)
+            .add(RagiumItems.getPressMold(HTTagPrefix.GEAR))
             .add(ImmersiveEngineering.rl("mold_gear"), true)
 
         tag(RagiumItemTags.PLATE_MOLDS)
-            .add(RagiumItems.PLATE_PRESS_MOLD)
+            .add(RagiumItems.getPressMold(HTTagPrefix.PLATE))
             .add(ImmersiveEngineering.rl("mold_plate"), true)
 
         tag(RagiumItemTags.ROD_MOLDS)
-            .add(RagiumItems.ROD_PRESS_MOLD)
+            .add(RagiumItems.getPressMold(HTTagPrefix.ROD))
             .add(ImmersiveEngineering.rl("mold_rod"), true)
 
         tag(RagiumItemTags.WIRE_MOLDS)
-            .add(RagiumItems.WIRE_PRESS_MOLD)
+            .add(RagiumItems.getPressMold(HTTagPrefix.WIRE))
             .add(ImmersiveEngineering.rl("mold_wire"), true)
 
         val ledBuilder: TagAppender<Item> = tag(RagiumItemTags.LED_BLOCKS)

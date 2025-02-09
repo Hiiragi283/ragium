@@ -1,7 +1,7 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.recipe.HTExtractorRecipe
+import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
@@ -9,30 +9,30 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
-class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBuilder, HTExtractorRecipe>() {
+class HTRefineryRecipeBuilder : HTMachineRecipeBuilderBase<HTRefineryRecipeBuilder, HTRefineryRecipe>() {
     private var group: String? = null
-    private lateinit var input: SizedIngredient
+    private lateinit var input: SizedFluidIngredient
     private var itemOutput: ItemStack? = null
     private var fluidOutput: FluidStack? = null
 
-    override fun itemInput(ingredient: Ingredient, count: Int): HTExtractorRecipeBuilder = apply {
+    override fun itemInput(ingredient: Ingredient, count: Int): HTRefineryRecipeBuilder = throw UnsupportedOperationException()
+
+    override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTRefineryRecipeBuilder = apply {
         check(!::input.isInitialized) { "Input is already initialized" }
-        input = SizedIngredient(ingredient, count)
+        input = SizedFluidIngredient(ingredient, amount)
     }
 
-    override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTExtractorRecipeBuilder = throw UnsupportedOperationException()
-
-    override fun itemOutput(stack: ItemStack): HTExtractorRecipeBuilder = apply {
+    override fun itemOutput(stack: ItemStack): HTRefineryRecipeBuilder = apply {
         check(itemOutput == null) { "Output is already initialized" }
         this.itemOutput = stack
     }
 
-    override fun fluidOutput(stack: FluidStack): HTExtractorRecipeBuilder = apply {
+    override fun fluidOutput(stack: FluidStack): HTRefineryRecipeBuilder = apply {
         check(fluidOutput == null) { "Output is already initialized" }
         this.fluidOutput = stack
     }
@@ -41,9 +41,9 @@ class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBui
         ?: fluidOutput?.fluidHolder?.idOrThrow
         ?: error("Either item or fluid output required!")
 
-    override val prefix: String = "extractor"
+    override val prefix: String = "refinery"
 
-    override fun createRecipe(): HTExtractorRecipe = HTExtractorRecipe(
+    override fun createRecipe(): HTRefineryRecipe = HTRefineryRecipe(
         group ?: "",
         input,
         Optional.ofNullable(itemOutput),

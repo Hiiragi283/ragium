@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.client.renderer.HTMachineBlockEntityRenderer
 import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRenderer
 import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRendererRegistry
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.inventory.HTMachineMenuType
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.client.screen.HTMachineContainerScreen
@@ -68,7 +69,7 @@ object RagiumClient {
 
     @SubscribeEvent
     private fun registerMenu(event: RegisterMenuScreensEvent) {
-        RagiumMenuTypes.REGISTER.entries.forEach { holder: DeferredHolder<MenuType<*>, out MenuType<*>> ->
+        RagiumMenuTypes.REGISTER.forEach { holder: DeferredHolder<MenuType<*>, out MenuType<*>> ->
             val menuType: MenuType<*> = holder.get()
             if (menuType is HTMachineMenuType<*>) {
                 event.register(menuType, ::HTMachineContainerScreen)

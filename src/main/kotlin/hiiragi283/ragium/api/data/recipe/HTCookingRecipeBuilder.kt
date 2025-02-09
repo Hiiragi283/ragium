@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.advancements.Advancement

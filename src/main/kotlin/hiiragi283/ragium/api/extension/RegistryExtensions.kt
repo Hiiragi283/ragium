@@ -18,6 +18,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.Optional
 
 /**
@@ -83,6 +84,12 @@ fun <T : Any> HolderLookup.Provider.getHolder(
     registry: ResourceKey<out Registry<out T>>,
     key: ResourceKey<T>,
 ): Optional<Holder.Reference<T>> = lookupOrThrow(registry).get(key)
+
+//    DeferredRegister    //
+
+fun <T : Any> DeferredRegister<T>.forEach(action: (DeferredHolder<T, out T>) -> Unit) {
+    entries.forEach(action)
+}
 
 //    TagKey    //
 

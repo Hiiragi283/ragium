@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_chocolate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:chocolate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:shapeless/chocolate_bread"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_chocolate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:shapeless/chocolate_bread"
+    ]
+  }
+}

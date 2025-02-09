@@ -315,6 +315,7 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
+        event.register(RagiumDataMaps.DEFOLIANT)
         event.register(RagiumDataMaps.EXECUTIONER_DROPS)
 
         LOGGER.info("Registered Data Map Types!")
