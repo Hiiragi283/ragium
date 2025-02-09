@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.recipe.base
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.RagiumReferences
+import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.extension.toRegistryStream
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -17,14 +17,14 @@ import java.util.function.Function
 interface HTMachineRecipeCondition {
     companion object {
         @JvmField
-        val CODEC: Codec<HTMachineRecipeCondition> = RagiumReferences.Registries.RECIPE_CONDITION
+        val CODEC: Codec<HTMachineRecipeCondition> = RagiumRegistries.RECIPE_CONDITION
             .byNameCodec()
             .dispatch(HTMachineRecipeCondition::codec, Function.identity())
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipeCondition> =
             ByteBufCodecs
-                .registry(RagiumReferences.RegistryKeys.RECIPE_CONDITION)
+                .registry(RagiumRegistries.Keys.RECIPE_CONDITION)
                 .dispatch(HTMachineRecipeCondition::codec, MapCodec<out HTMachineRecipeCondition>::toRegistryStream)
     }
 

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumReferences
+import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
 import hiiragi283.ragium.common.recipe.condition.*
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
 object RagiumMachineRecipeConditions {
     @JvmField
     val REGISTER: DeferredRegister<MapCodec<out HTMachineRecipeCondition>> =
-        DeferredRegister.create(RagiumReferences.RegistryKeys.RECIPE_CONDITION, RagiumAPI.MOD_ID)
+        DeferredRegister.create(RagiumRegistries.Keys.RECIPE_CONDITION, RagiumAPI.MOD_ID)
 
     @JvmField
     val BIOME: DeferredHolder<MapCodec<out HTMachineRecipeCondition>, MapCodec<HTBiomeCondition>> =

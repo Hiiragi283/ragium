@@ -1,13 +1,11 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumReferences
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -41,7 +39,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, machineTier: HTMachine
     constructor(pos: BlockPos, state: BlockState) : this(
         pos,
         state,
-        state.getItemData(RagiumReferences.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC,
+        HTMachineTier.BASIC,
     )
 
     private val fluidTank: HTMachineFluidTank =

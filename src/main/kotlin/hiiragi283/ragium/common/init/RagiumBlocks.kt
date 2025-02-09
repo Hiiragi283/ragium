@@ -155,7 +155,7 @@ object RagiumBlocks {
         HTMachineTier.entries.associateWith { tier: HTMachineTier ->
             REGISTER.registerBlock(
                 "${tier.serializedName}_drum",
-                ::HTDrumBlock,
+                { properties: BlockBehaviour.Properties -> HTDrumBlock(tier, properties) },
                 blockProperty()
                     .mapColor(MapColor.STONE)
                     .strength(2f)

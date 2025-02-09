@@ -8,15 +8,13 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import java.util.function.Supplier
 
-class HTSimpleMultiblockComponent(val block: Supplier<out Block>) : HTMultiblockComponent {
+class HTSimpleMultiblockComponent(val block: Block) : HTMultiblockComponent {
     override fun getType(): HTMultiblockComponent.Type<*> = RagiumMultiblockComponentTypes.SIMPLE.get()
 
-    override fun getBlockName(controller: HTControllerDefinition): Component = ItemStack(block.get()).displayName
+    override fun getBlockName(controller: HTControllerDefinition): Component = ItemStack(block).displayName
 
-    override fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean =
-        controller.level.getBlockState(pos).`is`(block.get())
+    override fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean = controller.level.getBlockState(pos).`is`(block)
 
-    override fun getPlacementState(controller: HTControllerDefinition): BlockState? = block.get().defaultBlockState()
+    override fun getPlacementState(controller: HTControllerDefinition): BlockState? = block.defaultBlockState()
 }

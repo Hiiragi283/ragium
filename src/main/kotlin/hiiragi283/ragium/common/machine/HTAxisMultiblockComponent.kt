@@ -1,9 +1,6 @@
 package hiiragi283.ragium.common.machine
 
-import hiiragi283.ragium.api.RagiumReferences
-import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.extension.getOrNull
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.common.init.RagiumMultiblockComponentTypes
@@ -14,23 +11,17 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import java.util.function.Function
 import java.util.function.Supplier
 
-sealed class HTAxisMultiblockComponent(val getter: Function<HTMachineTier, out Supplier<out Block>>) : HTMultiblockComponent {
-    fun getBlock(controller: HTControllerDefinition): Block =
-        (controller.state.getItemData(RagiumReferences.DataMapTypes.MACHINE_TIER) ?: HTMachineTier.BASIC)
-            .let(getter::apply)
-            .get()
-
+sealed class HTAxisMultiblockComponent(val block: Supplier<out Block>) : HTMultiblockComponent {
     abstract fun getAxis(controller: HTControllerDefinition): Direction.Axis
 
     final override fun getType(): HTMultiblockComponent.Type<*> = RagiumMultiblockComponentTypes.AXIS.get()
 
-    final override fun getBlockName(controller: HTControllerDefinition): Component = getBlock(controller).let(::ItemStack).displayName
+    final override fun getBlockName(controller: HTControllerDefinition): Component = ItemStack(block.get()).displayName
 
     final override fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean {
-        val block: Block = getBlock(controller)
+        val block: Block = block.get()
         val state: BlockState = controller.level.getBlockState(pos)
         if (!state.`is`(block)) return false
         val currentAxis: Direction.Axis = state.getOrNull(BlockStateProperties.AXIS) ?: return true
@@ -38,23 +29,23 @@ sealed class HTAxisMultiblockComponent(val getter: Function<HTMachineTier, out S
     }
 
     final override fun getPlacementState(controller: HTControllerDefinition): BlockState? =
-        getBlock(controller).defaultBlockState().setValue(BlockStateProperties.AXIS, getAxis(controller))
+        block.get().defaultBlockState().setValue(BlockStateProperties.AXIS, getAxis(controller))
 
     //    YStatic    //
 
-    class YStatic(blockGetter: Function<HTMachineTier, out Supplier<out Block>>) : HTAxisMultiblockComponent(blockGetter) {
+    class YStatic(block: Supplier<out Block>) : HTAxisMultiblockComponent(block) {
         override fun getAxis(controller: HTControllerDefinition): Direction.Axis = Direction.Axis.Y
     }
 
     //    FrontHorizontal    //
 
-    class FrontHorizontal(blockGetter: Function<HTMachineTier, out Supplier<out Block>>) : HTAxisMultiblockComponent(blockGetter) {
+    class FrontHorizontal(block: Supplier<out Block>) : HTAxisMultiblockComponent(block) {
         override fun getAxis(controller: HTControllerDefinition): Direction.Axis = controller.front.axis
     }
 
     //    FrontVertical    //
 
-    class FrontVertical(blockGetter: Function<HTMachineTier, out Supplier<out Block>>) : HTAxisMultiblockComponent(blockGetter) {
+    class FrontVertical(block: Supplier<out Block>) : HTAxisMultiblockComponent(block) {
         override fun getAxis(controller: HTControllerDefinition): Direction.Axis = when (controller.front) {
             Direction.DOWN -> Direction.Axis.Y
             Direction.UP -> Direction.Axis.Y

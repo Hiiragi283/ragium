@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumReferences
+import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.constFunction2
-import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
@@ -208,8 +208,8 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun createRegistry(event: NewRegistryEvent) {
-        event.register(RagiumReferences.Registries.MULTIBLOCK_COMPONENT_TYPE)
-        event.register(RagiumReferences.Registries.RECIPE_CONDITION)
+        event.register(RagiumRegistries.MULTIBLOCK_COMPONENT_TYPE)
+        event.register(RagiumRegistries.RECIPE_CONDITION)
 
         LOGGER.info("Registered new registries!")
     }
@@ -286,8 +286,7 @@ internal object RagiumModEvents {
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
             { stack: ItemStack, _: Void? ->
-                val tier: HTMachineTier =
-                    stack.getItemData(RagiumReferences.DataMapTypes.MACHINE_TIER) ?: return@registerItem null
+                val tier: HTMachineTier = null ?: return@registerItem null
                 FluidHandlerItemStack.SwapEmpty(
                     RagiumComponentTypes.FLUID_CONTENT,
                     stack,
@@ -303,8 +302,7 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumReferences.DataMapTypes.MACHINE_KEY)
-        event.register(RagiumReferences.DataMapTypes.MACHINE_TIER)
+        event.register(RagiumDataMaps.EXECUTIONER_DROPS)
 
         LOGGER.info("Registered Data Map Types!")
     }

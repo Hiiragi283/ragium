@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.HTEntityBlock
-import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.get
@@ -13,8 +12,8 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
-class HTMachineBlock(properties: Properties) : HTEntityBlock.Horizontal(properties) {
-    override fun getDescriptionId(): String = machineKey?.translationKey ?: super.descriptionId
+class HTMachineBlock(val key: HTMachineKey, properties: Properties) : HTEntityBlock.Horizontal(properties) {
+    override fun getDescriptionId(): String = key.translationKey
 
     override fun appendHoverText(
         stack: ItemStack,
@@ -22,11 +21,9 @@ class HTMachineBlock(properties: Properties) : HTEntityBlock.Horizontal(properti
         tooltipComponents: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        machineKey?.appendTooltip(tooltipComponents::add)
+        key.appendTooltip(tooltipComponents::add)
     }
 
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
-        val machineKey: HTMachineKey = machineKey ?: return null
-        return machineKey.getProperty()[HTMachinePropertyKeys.MACHINE_FACTORY]?.invoke(pos, state)
-    }
+    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? =
+        key.getProperty()[HTMachinePropertyKeys.MACHINE_FACTORY]?.invoke(pos, state)
 }

@@ -13,7 +13,6 @@ import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
 import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTagMultiblockComponent
-import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.inventory.MenuType
@@ -110,7 +109,7 @@ object RagiumClient {
                     _: Level,
                     component: HTSimpleMultiblockComponent,
                 ->
-                component.block.get().defaultBlockState()
+                component.block.defaultBlockState()
             },
         )
 
@@ -122,17 +121,6 @@ object RagiumClient {
                     component: HTTagMultiblockComponent,
                 ->
                 null
-            },
-        )
-
-        HTMultiblockComponentRendererRegistry.register(
-            RagiumMultiblockComponentTypes.TIER.get(),
-            HTMultiblockComponentRenderer.BlockRenderer<HTTieredMultiblockComponent> {
-                    controller: HTControllerDefinition,
-                    world: Level,
-                    component: HTTieredMultiblockComponent,
-                ->
-                component.getBlock(controller).defaultBlockState()
             },
         )
 

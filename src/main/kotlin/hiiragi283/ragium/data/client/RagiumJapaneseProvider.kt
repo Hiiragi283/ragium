@@ -62,7 +62,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTOreVariant.NETHER, "ネザー%s鉱石")
         add(HTOreVariant.END, "エンド%s鉱石")
         // Enchantment
-        addEnchantment(RagiumEnchantments.CAPACITY, "大容量")
+        addEnchantment(RagiumEnchantments.CAPACITY, "容量増加")
         // Fluids
         addFluid(RagiumFluids.HONEY, "蜂蜜")
         addFluid(RagiumFluids.SNOW, "粉雪")

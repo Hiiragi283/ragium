@@ -2,8 +2,6 @@
 
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.RagiumReferences
-import hiiragi283.ragium.api.machine.HTMachineKey
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
@@ -12,7 +10,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -42,14 +39,6 @@ fun <T : Any> ItemLike.getItemData(type: DataMapType<Item, T>): T? = asHolder().
  * @return [IWithData.getData]が`null`の場合は`null`
  */
 fun <T : Any> ItemStack.getItemData(type: DataMapType<Item, T>): T? = itemHolder.getData(type)
-
-/**
- * 指定した[type]で[BlockState]から[T]を返します。
- * @return [IWithData.getData]が`null`の場合は`null`
- */
-fun <T : Any> BlockState.getItemData(type: DataMapType<Item, T>): T? = block.getItemData(type)
-
-val ItemLike.machineKey: HTMachineKey? get() = getItemData(RagiumReferences.DataMapTypes.MACHINE_KEY)
 
 //    Item    //
 

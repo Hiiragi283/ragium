@@ -1,9 +1,9 @@
 {
   "values": {
-    "ragium:fiery_coal": {
+    "#c:gems/fiery_coal": {
       "burn_time": 12800
     },
-    "ragium:fiery_coal_block": {
+    "#c:storage_blocks/fiery_coal": {
       "burn_time": 128000
     }
   }
