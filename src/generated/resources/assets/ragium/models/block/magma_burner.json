@@ -1,0 +1,10 @@
+{
+  "parent": "ragium:block/burner",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bars": "minecraft:block/iron_bars",
+    "core": "minecraft:block/magma",
+    "side": "minecraft:block/polished_blackstone_bricks",
+    "top": "minecraft:block/polished_blackstone_bricks"
+  }
+}

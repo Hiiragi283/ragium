@@ -1,0 +1,10 @@
+{
+  "parent": "ragium:block/burner",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bars": "minecraft:block/iron_bars",
+    "core": "ragium:block/ultimate_burner",
+    "side": "minecraft:block/red_nether_bricks",
+    "top": "minecraft:block/red_nether_bricks"
+  }
+}

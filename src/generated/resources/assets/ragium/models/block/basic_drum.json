@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_top",
-  "textures": {
-    "side": "ragium:block/basic_drum_side",
-    "top": "ragium:block/basic_drum_top"
-  }
-}

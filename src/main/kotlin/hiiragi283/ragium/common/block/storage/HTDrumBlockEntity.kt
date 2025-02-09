@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
@@ -32,18 +31,11 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
-class HTDrumBlockEntity(pos: BlockPos, state: BlockState, machineTier: HTMachineTier) :
+class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.DRUM, pos, state),
     HTBlockEntityHandlerProvider,
     HTEnchantableBlockEntity {
-    constructor(pos: BlockPos, state: BlockState) : this(
-        pos,
-        state,
-        HTMachineTier.BASIC,
-    )
-
-    private val fluidTank: HTMachineFluidTank =
-        RagiumAPI.getInstance().createTank(machineTier.tankCapacity, this::setChanged)
+    private val fluidTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
     private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(fluidTank))
 
     override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {

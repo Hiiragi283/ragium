@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.extension.name
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -13,13 +12,11 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.item.*
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -140,27 +137,6 @@ object RagiumItems {
             )
         }
 
-        RagiumBlocks.GRATES.forEach { (tier: HTMachineTier, grate: DeferredBlock<TransparentBlock>) ->
-            REGISTER.registerSimpleBlockItem(
-                grate,
-                itemProperty().name(tier.createPrefixedText(RagiumTranslationKeys.GRATE)),
-            )
-        }
-
-        RagiumBlocks.BURNERS.forEach { (tier: HTMachineTier, drum: DeferredBlock<Block>) ->
-            REGISTER.registerSimpleBlockItem(
-                drum,
-                itemProperty().name(tier.createPrefixedText(RagiumTranslationKeys.BURNER)),
-            )
-        }
-
-        RagiumBlocks.DRUMS.forEach { (tier: HTMachineTier, drum: DeferredBlock<HTDrumBlock>) ->
-            REGISTER.registerSimpleBlockItem(
-                drum,
-                itemProperty().name(tier.createPrefixedText(RagiumTranslationKeys.DRUM)),
-            )
-        }
-
         RagiumBlocks.LED_BLOCKS.values.forEach(REGISTER::registerSimpleBlockItem)
 
         buildList {
@@ -179,7 +155,9 @@ object RagiumItems {
             add(RagiumBlocks.MANUAL_GRINDER)
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
+            add(RagiumBlocks.COPPER_DRUM)
             addAll(RagiumBlocks.ADDONS)
+            addAll(RagiumBlocks.BURNERS_NEW)
         }.forEach(REGISTER::registerSimpleBlockItem)
     }
 
@@ -338,25 +316,13 @@ object RagiumItems {
 
     //    Circuits    //
 
-    val BASIC_CIRCUIT: DeferredItem<Item> = register(
-        "basic_circuit",
-        itemProperty().name(HTMachineTier.BASIC.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
-    )
+    val BASIC_CIRCUIT: DeferredItem<Item> = register("basic_circuit")
 
-    val ADVANCED_CIRCUIT: DeferredItem<Item> = register(
-        "advanced_circuit",
-        itemProperty().name(HTMachineTier.ADVANCED.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
-    )
+    val ADVANCED_CIRCUIT: DeferredItem<Item> = register("advanced_circuit")
 
-    val ELITE_CIRCUIT: DeferredItem<Item> = register(
-        "elite_circuit",
-        itemProperty().name(HTMachineTier.ELITE.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
-    )
+    val ELITE_CIRCUIT: DeferredItem<Item> = register("elite_circuit")
 
-    val ULTIMATE_CIRCUIT: DeferredItem<Item> = register(
-        "ultimate_circuit",
-        itemProperty().name(HTMachineTier.ULTIMATE.createPrefixedText(RagiumTranslationKeys.CIRCUIT)),
-    )
+    val ULTIMATE_CIRCUIT: DeferredItem<Item> = register("ultimate_circuit")
 
     @JvmField
     val CIRCUITS: List<DeferredItem<Item>> = listOf(

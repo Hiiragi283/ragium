@@ -40,10 +40,6 @@ class RagiumBlockTagProvider(
 
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
-            addAll(RagiumBlocks.GRATES.values)
-            addAll(RagiumBlocks.BURNERS.values)
-            addAll(RagiumBlocks.DRUMS.values)
-
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
 
@@ -52,7 +48,9 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.MANUAL_GRINDER)
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
+            add(RagiumBlocks.COPPER_DRUM)
             addAll(RagiumBlocks.ADDONS)
+            addAll(RagiumBlocks.BURNERS_NEW)
         }.forEach(pickaxe::add)
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
@@ -77,10 +75,10 @@ class RagiumBlockTagProvider(
             .addBlock(Blocks.MAGMA_BLOCK)
 
         // Farmer's Delight
-        val heatBuilder: TagAppender<Block> = tag(ModTags.HEAT_SOURCES)
-        RagiumBlocks.BURNERS.values.forEach { burner: DeferredBlock<Block> ->
-            heatBuilder.add(burner)
-        }
+        tag(ModTags.HEAT_SOURCES)
+            .add(RagiumBlocks.MAGMA_BURNER)
+            .add(RagiumBlocks.SOUL_BURNER)
+            .add(RagiumBlocks.FIERY_BURNER)
 
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, _, ore: DeferredBlock<out Block>) ->
             tag(Tags.Blocks.ORES).add(ore)

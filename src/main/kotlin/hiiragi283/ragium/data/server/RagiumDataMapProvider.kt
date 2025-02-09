@@ -15,11 +15,8 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(packOutput, lookupProvider) {
-    private fun <T : Any> Builder<T, Item>.addItem(
-        item: ItemLike,
-        value: T,
-        replace: Boolean = false,
-    ): Builder<T, Item> = add(item.asHolder(), value, replace)
+    private fun <T : Any> Builder<T, Item>.addItem(item: ItemLike, value: T, replace: Boolean = false): Builder<T, Item> =
+        add(item.asHolder(), value, replace)
 
     private fun <T : Any> Builder<T, Item>.addItem(
         prefix: HTTagPrefix,

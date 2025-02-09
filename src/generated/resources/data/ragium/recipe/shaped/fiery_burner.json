@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_bars"
+    },
+    "B": {
+      "item": "ragium:fiery_coal_block"
+    },
+    "C": {
+      "item": "minecraft:red_nether_bricks"
+    }
+  },
+  "pattern": [
+    "A A",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:fiery_burner"
+  }
+}

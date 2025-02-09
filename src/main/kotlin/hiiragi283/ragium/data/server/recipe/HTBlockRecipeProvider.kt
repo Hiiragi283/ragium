@@ -5,14 +5,12 @@ import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -27,13 +25,11 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
 
 object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        registerGrates(output)
         registerBurners(output)
         registerDrums(output)
 
@@ -46,17 +42,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
 
     //    Components    //
 
-    private fun registerGrates(output: RecipeOutput) {
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, Items.COPPER_GRATE, 4)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
-            .define('A', HTTagPrefix.ROD, VanillaMaterials.COPPER)
-            .define('B', RagiumItems.FORGE_HAMMER)
-            .unlockedBy("has_rod", has(HTTagPrefix.ROD, VanillaMaterials.COPPER))
-            .save(output, RagiumAPI.id("shaped/copper_grate"))
-
+    /*private fun registerGrates(output: RecipeOutput) {
         RagiumBlocks.GRATES.forEach { (tier: HTMachineTier, grate: DeferredBlock<TransparentBlock>) ->
             val steel: HTMaterialKey = when (tier) {
                 HTMachineTier.BASIC -> CommonMaterials.STEEL
@@ -77,7 +63,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         }
     }
 
-    /*private fun registerCasings(output: RecipeOutput) {
+    private fun registerCasings(output: RecipeOutput) {
         RagiumBlocks.Casings.entries.forEach { casings: RagiumBlocks.Casings ->
             val corner: Item = when (casings) {
                 RagiumBlocks.Casings.BASIC -> Items.STONE
@@ -114,17 +100,17 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     }*/
 
     private fun registerBurners(output: RecipeOutput) {
-        RagiumBlocks.BURNERS.forEach { (tier: HTMachineTier, burner: DeferredBlock<Block>) ->
-            val core: ItemLike = when (tier) {
-                HTMachineTier.ADVANCED -> Items.MAGMA_BLOCK
-                HTMachineTier.ELITE -> RagiumBlocks.SOUL_MAGMA_BLOCK
-                HTMachineTier.ULTIMATE -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!
+        RagiumBlocks.BURNERS_NEW.forEach { burner: DeferredBlock<Block> ->
+            val core: ItemLike = when (burner) {
+                RagiumBlocks.MAGMA_BURNER -> Items.MAGMA_BLOCK
+                RagiumBlocks.SOUL_BURNER -> RagiumBlocks.SOUL_MAGMA_BLOCK
+                RagiumBlocks.FIERY_BURNER -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!
                 else -> return
             }
-            val base: Item = when (tier) {
-                HTMachineTier.ADVANCED -> Items.POLISHED_BLACKSTONE_BRICKS
-                HTMachineTier.ELITE -> Items.END_STONE_BRICKS
-                HTMachineTier.ULTIMATE -> Items.RED_NETHER_BRICKS
+            val base: Item = when (burner) {
+                RagiumBlocks.MAGMA_BURNER -> Items.POLISHED_BLACKSTONE_BRICKS
+                RagiumBlocks.SOUL_BURNER -> Items.END_STONE_BRICKS
+                RagiumBlocks.FIERY_BURNER -> Items.RED_NETHER_BRICKS
                 else -> return
             }
             // Shaped Crafting
@@ -133,7 +119,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 .pattern("A A")
                 .pattern("ABA")
                 .pattern("CCC")
-                .define('A', tier.getGrate())
+                .define('A', Items.IRON_BARS)
                 .define('B', core)
                 .define('C', base)
                 .unlockedBy("has_core", has(core))
@@ -142,25 +128,17 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerDrums(output: RecipeOutput) {
-        RagiumBlocks.DRUMS.forEach { (tier: HTMachineTier, drum: DeferredBlock<HTDrumBlock>) ->
-            val metal: HTMaterialKey = when (tier) {
-                HTMachineTier.BASIC -> VanillaMaterials.COPPER
-                HTMachineTier.ADVANCED -> VanillaMaterials.GOLD
-                HTMachineTier.ELITE -> CommonMaterials.ALUMINUM
-                HTMachineTier.ULTIMATE -> RagiumMaterials.RAGIUM
-            }
-            // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.TRANSPORTATION, drum)
-                .pattern("ABA")
-                .pattern("ACA")
-                .pattern("ABA")
-                .define('A', HTTagPrefix.INGOT, metal)
-                .define('B', Items.SMOOTH_STONE_SLAB)
-                .define('C', Items.BUCKET)
-                .unlockedBy("has_slab", has(Items.SMOOTH_STONE_SLAB))
-                .savePrefixed(output)
-        }
+        // Shaped Crafting
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.TRANSPORTATION, RagiumBlocks.COPPER_DRUM)
+            .pattern("ABA")
+            .pattern("ACA")
+            .pattern("ABA")
+            .define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .define('B', Items.SMOOTH_STONE_SLAB)
+            .define('C', Items.BUCKET)
+            .unlockedBy("has_slab", has(Items.SMOOTH_STONE_SLAB))
+            .savePrefixed(output)
     }
 
     //    Decorations    //

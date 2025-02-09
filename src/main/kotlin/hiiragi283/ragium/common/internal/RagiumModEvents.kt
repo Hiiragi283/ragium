@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -286,15 +285,14 @@ internal object RagiumModEvents {
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
             { stack: ItemStack, _: Void? ->
-                val tier: HTMachineTier = null ?: return@registerItem null
                 FluidHandlerItemStack.SwapEmpty(
                     RagiumComponentTypes.FLUID_CONTENT,
                     stack,
                     ItemStack(stack.item),
-                    tier.tankCapacity,
+                    RagiumAPI.DEFAULT_TANK_CAPACITY,
                 )
             },
-            *RagiumBlocks.DRUMS.values.toTypedArray(),
+            RagiumBlocks.COPPER_DRUM,
         )
 
         LOGGER.info("Registered Item Capabilities!")

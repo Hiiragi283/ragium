@@ -20,13 +20,7 @@
       "id": "ragium:ultimate_circuit"
     },
     "title": {
-      "color": "light_purple",
-      "translate": "machine_tier.ragium.ultimate.prefix",
-      "with": [
-        {
-          "translate": "content.ragium.circuit"
-        }
-      ]
+      "translate": "item.ragium.ultimate_circuit"
     }
   },
   "requirements": [

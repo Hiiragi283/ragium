@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.storage
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.fluidAmountText
 import hiiragi283.ragium.api.extension.fluidCapacityText
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import net.minecraft.core.BlockPos
@@ -19,7 +19,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
-class HTDrumBlock(val tier: HTMachineTier, properties: Properties) : HTEntityBlock(properties) {
+class HTDrumBlock(properties: Properties) : HTEntityBlock(properties) {
     override fun appendHoverText(
         stack: ItemStack,
         context: Item.TooltipContext,
@@ -36,8 +36,8 @@ class HTDrumBlock(val tier: HTMachineTier, properties: Properties) : HTEntityBlo
             context.registries()?.lookupOrThrow(Registries.ENCHANTMENT) ?: return
         val enchantments: ItemEnchantments = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
         val capacityLevel: Int = enchantments.getLevel(lookup.getOrThrow(RagiumEnchantments.CAPACITY)) + 1
-        tooltipComponents.add(fluidCapacityText(tier.tankCapacity * capacityLevel))
+        tooltipComponents.add(fluidCapacityText(RagiumAPI.DEFAULT_TANK_CAPACITY * capacityLevel))
     }
 
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): HTDrumBlockEntity = HTDrumBlockEntity(pos, state, tier)
+    override fun newBlockEntity(pos: BlockPos, state: BlockState): HTDrumBlockEntity = HTDrumBlockEntity(pos, state)
 }

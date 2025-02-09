@@ -4,8 +4,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
@@ -24,6 +26,7 @@ import net.neoforged.neoforge.fluids.FluidType
 
 object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        assembler(output)
         compressor(output)
         extractor(output)
         growthChamber(output)
@@ -31,9 +34,9 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         refinery(output)
     }
 
-    //    Compressor    //
+    //    Assembler    //
 
-    private fun compressor(output: RecipeOutput) {
+    private fun assembler(output: RecipeOutput) {
         // Circuit Board
         HTMultiItemRecipeBuilder
             .assembler()
@@ -41,6 +44,23 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
             .save(output)
+    }
+
+    //    Compressor    //
+
+    private fun compressor(output: RecipeOutput) {
+        // Shaft
+        HTSingleItemRecipeBuilder
+            .compressor()
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 2)
+            .itemOutput(RagiumBlocks.SHAFT)
+            .saveSuffixed(output, "_from_steel")
+
+        HTSingleItemRecipeBuilder
+            .compressor()
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
+            .itemOutput(RagiumBlocks.SHAFT)
+            .saveSuffixed(output, "_from_deep_steel")
     }
 
     //    Extractor    //

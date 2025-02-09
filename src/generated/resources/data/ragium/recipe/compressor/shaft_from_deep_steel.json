@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compressor",
+  "item_input": {
+    "count": 1,
+    "tag": "c:ingots/deep_steel"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:shaft"
+  }
+}

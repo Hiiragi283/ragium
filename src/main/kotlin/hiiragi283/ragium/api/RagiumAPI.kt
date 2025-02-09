@@ -20,6 +20,8 @@ interface RagiumAPI {
         const val MOD_ID = "ragium"
         const val MOD_NAME = "Ragium"
 
+        const val DEFAULT_TANK_CAPACITY = 8000
+
         /**
          * 名前空間が`ragium`となる[ResourceLocation]を返します。
          */
@@ -59,7 +61,7 @@ interface RagiumAPI {
 
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
-    fun createTank(callback: () -> Unit): HTMachineFluidTank = createTank(8000, callback)
+    fun createTank(callback: () -> Unit): HTMachineFluidTank = createTank(DEFAULT_TANK_CAPACITY, callback)
 
     fun createTank(capacity: Int, callback: () -> Unit): HTMachineFluidTank
 

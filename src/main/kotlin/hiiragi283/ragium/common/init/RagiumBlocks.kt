@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.buildTable
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -108,33 +107,14 @@ object RagiumBlocks {
         blockProperty().mapColor(MapColor.TERRACOTTA_CYAN).strength(3f).sound(SoundType.DEEPSLATE),
     )
 
-    @JvmField
-    val GRATES: Map<HTMachineTier, DeferredBlock<TransparentBlock>> =
+    /*val GRATES: Map<HTMachineTier, DeferredBlock<TransparentBlock>> =
         HTMachineTier.entries.associateWith { tier: HTMachineTier ->
             REGISTER.registerBlock(
                 "${tier.serializedName}_grate",
                 ::TransparentBlock,
                 blockProperty(Blocks.COPPER_GRATE),
             )
-        }
-
-    @JvmField
-    val BURNERS: Map<HTMachineTier, DeferredBlock<Block>> =
-        listOf(
-            HTMachineTier.ADVANCED,
-            HTMachineTier.ELITE,
-            HTMachineTier.ULTIMATE,
-        ).associateWith { tier: HTMachineTier ->
-            REGISTER.registerSimpleBlock(
-                "${tier.serializedName}_burner",
-                blockProperty()
-                    .mapColor(MapColor.STONE)
-                    .strength(5f)
-                    .sound(SoundType.COPPER)
-                    .noOcclusion()
-                    .requiresCorrectToolForDrops(),
-            )
-        }
+        }*/
 
     @JvmField
     val SHAFT: DeferredBlock<RotatedPillarBlock> = REGISTER.registerBlock(
@@ -147,22 +127,6 @@ object RagiumBlocks {
             .sound(SoundType.COPPER)
             .noOcclusion(),
     )
-
-    //    Storage    //
-
-    @JvmField
-    val DRUMS: Map<HTMachineTier, DeferredBlock<HTDrumBlock>> =
-        HTMachineTier.entries.associateWith { tier: HTMachineTier ->
-            REGISTER.registerBlock(
-                "${tier.serializedName}_drum",
-                { properties: BlockBehaviour.Properties -> HTDrumBlock(tier, properties) },
-                blockProperty()
-                    .mapColor(MapColor.STONE)
-                    .strength(2f)
-                    .sound(SoundType.COPPER)
-                    .requiresCorrectToolForDrops(),
-            )
-        }
 
     //    Buildings    //
 
@@ -242,6 +206,19 @@ object RagiumBlocks {
         blockProperty(Blocks.BRICKS),
     )
 
+    //    Storage    //
+
+    @JvmField
+    val COPPER_DRUM: DeferredBlock<HTDrumBlock> = REGISTER.registerBlock(
+        "copper_drum",
+        ::HTDrumBlock,
+        blockProperty()
+            .mapColor(MapColor.STONE)
+            .strength(2f)
+            .sound(SoundType.COPPER)
+            .requiresCorrectToolForDrops(),
+    )
+
     //    Utility    //
 
     @JvmField
@@ -282,5 +259,45 @@ object RagiumBlocks {
         CATALYST_ADDON,
         ENERGY_NETWORK_INTERFACE,
         SLAG_COLLECTOR,
+    )
+
+    @JvmField
+    val MAGMA_BURNER: DeferredBlock<Block> = REGISTER.registerSimpleBlock(
+        "magma_burner",
+        blockProperty()
+            .mapColor(MapColor.STONE)
+            .strength(5f)
+            .sound(SoundType.COPPER)
+            .noOcclusion()
+            .requiresCorrectToolForDrops(),
+    )
+
+    @JvmField
+    val SOUL_BURNER: DeferredBlock<Block> = REGISTER.registerSimpleBlock(
+        "soul_burner",
+        blockProperty()
+            .mapColor(MapColor.STONE)
+            .strength(5f)
+            .sound(SoundType.COPPER)
+            .noOcclusion()
+            .requiresCorrectToolForDrops(),
+    )
+
+    @JvmField
+    val FIERY_BURNER: DeferredBlock<Block> = REGISTER.registerSimpleBlock(
+        "fiery_burner",
+        blockProperty()
+            .mapColor(MapColor.STONE)
+            .strength(5f)
+            .sound(SoundType.COPPER)
+            .noOcclusion()
+            .requiresCorrectToolForDrops(),
+    )
+
+    @JvmField
+    val BURNERS_NEW: List<DeferredBlock<Block>> = listOf(
+        MAGMA_BURNER,
+        SOUL_BURNER,
+        FIERY_BURNER,
     )
 }

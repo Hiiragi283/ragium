@@ -35,10 +35,6 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
             add(RagiumBlocks.SLAG_BLOCK)
 
-            addAll(RagiumBlocks.GRATES.values)
-            addAll(RagiumBlocks.BURNERS.values)
-            addAll(RagiumBlocks.DRUMS.values)
-
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
 
@@ -51,7 +47,9 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumBlocks.MANUAL_GRINDER)
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
+            add(RagiumBlocks.COPPER_DRUM)
             addAll(RagiumBlocks.ADDONS)
+            addAll(RagiumBlocks.BURNERS_NEW)
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
         // Machine

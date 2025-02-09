@@ -16,14 +16,6 @@ object RagiumTranslationKeys {
 
     const val CRATE_CAPACITY = "tooltip.ragium.block.crate_capacity"
 
-    //    Content    //
-
-    const val BURNER = "content.ragium.burner"
-    const val CIRCUIT = "content.ragium.circuit"
-    const val CRATE = "content.ragium.crate"
-    const val DRUM = "content.ragium.drum"
-    const val GRATE = "content.ragium.grate"
-
     //    Fluid    //
 
     const val FLUID_AMOUNT = "tooltip.ragium.fluid.amount"

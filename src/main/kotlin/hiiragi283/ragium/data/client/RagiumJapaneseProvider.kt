@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -43,6 +42,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         addBlock(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")
 
+        addBlock(RagiumBlocks.MAGMA_BURNER, "マグマバーナー")
+        addBlock(RagiumBlocks.SOUL_BURNER, "ソウルバーナー")
+        addBlock(RagiumBlocks.FIERY_BURNER, "燃え盛るバーナー")
+
         addBlock(RagiumBlocks.getLedBlock(DyeColor.RED), "LEDブロック（赤）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.GREEN), "LEDブロック（緑）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.BLUE), "LEDブロック（青）")
@@ -51,12 +54,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
         // Content
-        add(RagiumTranslationKeys.BURNER, "バーナー")
-        add(RagiumTranslationKeys.CIRCUIT, "回路")
-        add(RagiumTranslationKeys.CRATE, "クレート")
-        add(RagiumTranslationKeys.DRUM, "ドラム")
-        add(RagiumTranslationKeys.GRATE, "格子")
-
         add(HTOreVariant.OVERWORLD, "%s鉱石")
         add(HTOreVariant.DEEPSLATE, "深層%s鉱石")
         add(HTOreVariant.NETHER, "ネザー%s鉱石")
@@ -116,6 +113,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
         addItem(RagiumItems.SLOT_LOCK, "スロットロック")
 
+        addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
+        addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
+        addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
+        addItem(RagiumItems.ULTIMATE_CIRCUIT, "究極回路")
+
         addItem(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
         addItem(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板材）")
         addItem(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒材）")
@@ -147,6 +149,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "精密機械筐体")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         addItem(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
+        addItem(RagiumItems.SLAG, "スラグ")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
@@ -159,11 +162,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Machine
-        add(HTMachineTier.BASIC, "基本", "基本%s")
-        add(HTMachineTier.ADVANCED, "発展", "発展%s")
-        add(HTMachineTier.ELITE, "精鋭", "精鋭%s")
-        add(HTMachineTier.ULTIMATE, "究極", "究極%s")
-
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
         add(RagiumTranslationKeys.MACHINE_NAME, "- 機械: %s")
         add(RagiumTranslationKeys.MACHINE_TIER, "- ティア: %s")

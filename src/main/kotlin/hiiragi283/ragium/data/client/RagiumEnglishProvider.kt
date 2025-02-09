@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -43,6 +42,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         addBlock(RagiumBlocks.SLAG_COLLECTOR, "Slag Collector")
 
+        addBlock(RagiumBlocks.MAGMA_BURNER, "Magma Burner")
+        addBlock(RagiumBlocks.SOUL_BURNER, "Soul Burner")
+        addBlock(RagiumBlocks.FIERY_BURNER, "Fiery Burner")
+
         addBlock(RagiumBlocks.getLedBlock(DyeColor.RED), "Red LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.GREEN), "Green LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.BLUE), "Blue LED Block")
@@ -51,12 +54,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
         // Content
-        add(RagiumTranslationKeys.BURNER, "Burner")
-        add(RagiumTranslationKeys.CIRCUIT, "Circuit")
-        add(RagiumTranslationKeys.CRATE, "Crate")
-        add(RagiumTranslationKeys.DRUM, "Drum")
-        add(RagiumTranslationKeys.GRATE, "Grate")
-
         add(HTOreVariant.OVERWORLD, "%s Ore")
         add(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
         add(HTOreVariant.NETHER, "Nether %s Ore")
@@ -116,6 +113,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.DYNAMITE, "Dynamite")
         addItem(RagiumItems.SLOT_LOCK, "Slot Lock")
 
+        addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
+        addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
+        addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
+        addItem(RagiumItems.ULTIMATE_CIRCUIT, "Ultimate Circuit")
+
         addItem(RagiumItems.GEAR_PRESS_MOLD, "Press Mold (Gear)")
         addItem(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
         addItem(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
@@ -147,6 +149,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "Precision Machine Casing")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         addItem(RagiumItems.SILKY_CRYSTAL, "Silky Crystal")
+        addItem(RagiumItems.SLAG, "Slag")
         addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
@@ -159,11 +162,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Machine
-        add(HTMachineTier.BASIC, "Basic", "Basic %s")
-        add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
-        add(HTMachineTier.ELITE, "Elite", "Elite %s")
-        add(HTMachineTier.ULTIMATE, "Ultimate", "Ultimate %s")
-
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
         add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")
         add(RagiumTranslationKeys.MACHINE_TIER, "- Tier: %s")

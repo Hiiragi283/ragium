@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -35,8 +34,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
-            addAll(RagiumBlocks.GRATES.values)
-            addAll(RagiumBlocks.BURNERS.values)
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
 
@@ -50,6 +47,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
             addAll(RagiumBlocks.ADDONS)
+            addAll(RagiumBlocks.BURNERS_NEW)
 
             addAll(RagiumAPI.getInstance().getMachineRegistry().blocks)
         }.map(DeferredBlock<*>::get)
@@ -65,8 +63,12 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(ore.get()) { block: Block -> createOreDrop(block, rawMaterial.asItem()) }
         }
 
-        RagiumBlocks.DRUMS.forEach { (_, drum: DeferredBlock<HTDrumBlock>) ->
-            add(drum.get()) { copyComponent(it, RagiumComponentTypes.FLUID_CONTENT.get(), DataComponents.ENCHANTMENTS) }
+        add(RagiumBlocks.COPPER_DRUM.get()) {
+            copyComponent(
+                it,
+                RagiumComponentTypes.FLUID_CONTENT.get(),
+                DataComponents.ENCHANTMENTS,
+            )
         }
     }
 

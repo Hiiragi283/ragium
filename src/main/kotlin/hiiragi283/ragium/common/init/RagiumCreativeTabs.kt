@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import net.minecraft.core.registries.Registries
@@ -30,6 +29,10 @@ object RagiumCreativeTabs {
                     RagiumBlocks.ORES.values.forEach(output::accept)
                     RagiumBlocks.STORAGE_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.SLAG_BLOCK)
+                    // Decorations
+                    RagiumBlocks.GLASSES.forEach(output::accept)
+                    RagiumBlocks.LED_BLOCKS.values.forEach(output::accept)
+                    output.accept(RagiumBlocks.PLASTIC_BLOCK)
                     // Material Items
                     RagiumItems.getMaterialItems(HTTagPrefix.DUST).forEach(output::accept)
                     output.accept(RagiumItems.BEE_WAX)
@@ -60,32 +63,10 @@ object RagiumCreativeTabs {
                     // Circuits
                     RagiumItems.CIRCUITS.forEach(output::accept)
                     // Ingredients
+                    output.accept(RagiumBlocks.SHAFT)
                     RagiumItems.REAGENTS.forEach(output::accept)
                     RagiumItems.INGREDIENTS.forEach(output::accept)
                     RagiumItems.RADIOACTIVES.forEach(output::accept)
-                }.build()
-        }
-
-    @JvmField
-    val BLOCKS: DeferredHolder<CreativeModeTab, CreativeModeTab> =
-        REGISTER.register("blocks") { _: ResourceLocation ->
-            CreativeModeTab
-                .builder()
-                .title(Component.literal("Ragium - Blocks"))
-                .icon { ItemStack(RagiumBlocks.PLASTIC_BLOCK) }
-                .displayItems { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-                    buildList {
-                        // Components
-                        addAll(RagiumBlocks.GRATES.values)
-                        addAll(RagiumBlocks.BURNERS.values)
-
-                        add(RagiumBlocks.SHAFT)
-                        // Decorations
-                        addAll(RagiumBlocks.LED_BLOCKS.values)
-                        add(RagiumBlocks.PLASTIC_BLOCK)
-
-                        addAll(RagiumBlocks.GLASSES)
-                    }.forEach(output::accept)
                 }.build()
         }
 
@@ -99,22 +80,21 @@ object RagiumCreativeTabs {
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     buildList {
                         // Storage
-                        addAll(RagiumBlocks.DRUMS.values)
+                        add(RagiumBlocks.COPPER_DRUM)
                         // Manual Machines
                         add(RagiumBlocks.MANUAL_GRINDER)
                         add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
                         // Utilities
                         addAll(RagiumBlocks.ADDONS)
+                        addAll(RagiumBlocks.BURNERS_NEW)
                     }.forEach(output::accept)
 
                     // Machines
-                    HTMachineTier.entries.forEach { tier: HTMachineTier ->
-                        RagiumAPI
-                            .getInstance()
-                            .getMachineRegistry()
-                            .blocks
-                            .forEach(output::accept)
-                    }
+                    RagiumAPI
+                        .getInstance()
+                        .getMachineRegistry()
+                        .blocks
+                        .forEach(output::accept)
                 }.build()
         }
 }

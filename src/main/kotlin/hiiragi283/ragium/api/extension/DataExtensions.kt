@@ -3,7 +3,6 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
@@ -34,11 +33,6 @@ fun LanguageProvider.addFluid(fluid: Supplier<out Fluid>, value: String) {
 
 fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String) {
     add(Util.makeDescriptionId("enchantment", key.location()), value)
-}
-
-fun LanguageProvider.add(tier: HTMachineTier, value: String, prefix: String) {
-    add(tier.translationKey, value)
-    add(tier.prefixKey, prefix)
 }
 
 fun LanguageProvider.add(machine: HTMachineKey, value: String, desc: String = "") {

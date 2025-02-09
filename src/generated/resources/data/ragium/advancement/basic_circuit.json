@@ -19,13 +19,7 @@
       "id": "ragium:basic_circuit"
     },
     "title": {
-      "color": "green",
-      "translate": "machine_tier.ragium.basic.prefix",
-      "with": [
-        {
-          "translate": "content.ragium.circuit"
-        }
-      ]
+      "translate": "item.ragium.basic_circuit"
     }
   },
   "requirements": [

@@ -19,13 +19,7 @@
       "id": "ragium:elite_circuit"
     },
     "title": {
-      "color": "aqua",
-      "translate": "machine_tier.ragium.elite.prefix",
-      "with": [
-        {
-          "translate": "content.ragium.circuit"
-        }
-      ]
+      "translate": "item.ragium.elite_circuit"
     }
   },
   "requirements": [

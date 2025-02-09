@@ -95,6 +95,17 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_reagent", has(RagiumItems.BLAZE_REAGENT))
             .savePrefixed(output)
 
+        // Copper Grate
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, Items.COPPER_GRATE, 4)
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', HTTagPrefix.ROD, VanillaMaterials.COPPER)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .unlockedBy("has_rod", has(HTTagPrefix.ROD, VanillaMaterials.COPPER))
+            .save(output, RagiumAPI.id("shaped/copper_grate"))
+
         registerSnow(output)
         registerStone(output)
     }
