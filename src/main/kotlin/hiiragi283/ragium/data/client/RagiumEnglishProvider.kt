@@ -38,6 +38,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
         addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "Primitive Blast Furnace")
 
+        addBlock(RagiumBlocks.COPPER_DRUM, "Copper Drum")
+
         addBlock(RagiumBlocks.CATALYST_ADDON, "Catalyst Holder")
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         addBlock(RagiumBlocks.SLAG_COLLECTOR, "Slag Collector")
@@ -82,6 +84,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.SAP, "Sap")
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "Warped Sap")
+
+        addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "Ragium Solution")
         // Items
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
@@ -130,7 +134,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ENDER_REAGENT, "Ender Reagent")
         addItem(RagiumItems.GLOW_REAGENT, "Glow Reagent")
         addItem(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
-        addItem(RagiumItems.RAGIUM_REAGENT, "Ragium Reagent")
         addItem(RagiumItems.SCULK_REAGENT, "Sculk Reagent")
         addItem(RagiumItems.SOUL_REAGENT, "Soul Reagent")
         addItem(RagiumItems.WITHER_REAGENT, "Wither Reagent")

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -130,17 +131,15 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Ragium
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 8)
-            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION, FluidType.BUCKET_VOLUME * 8)
-            .itemOutput(RagiumItems.RAGIUM_REAGENT)
+            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION, FluidType.BUCKET_VOLUME)
+            .fluidOutput(RagiumVirtualFluids.RAGIUM_SOLUTION)
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
+        HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .itemInput(RagiumItems.RAGIUM_REAGENT, 64)
+            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .save(output)
-
         // Unbreakable Elytra
         val elytraId: ResourceLocation = RagiumAPI.id("smithing/ragi_elytra")
         val ragiumIngot: TagKey<Item> = HTTagPrefix.INGOT.createTag(RagiumMaterials.RAGIUM)
@@ -163,10 +162,16 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .build(elytraId.withPrefix("recipes/combat/")),
         )
         // Echorium
+        HTSingleItemRecipeBuilder
+            .laser()
+            .itemInput(RagiumItems.SCULK_REAGENT, 16)
+            .itemOutput(Items.ECHO_SHARD)
+            .save(output)
+
         HTMultiItemRecipeBuilder
             .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-            .itemInput(RagiumItems.SCULK_REAGENT, 16)
+            .itemInput(Items.ECHO_SHARD, 4)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
             .save(output)
 
@@ -192,7 +197,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         circuit(RagiumItems.BASIC_CIRCUIT, VanillaMaterials.COPPER, Ingredient.of(Tags.Items.DUSTS_REDSTONE))
         circuit(RagiumItems.ADVANCED_CIRCUIT, VanillaMaterials.GOLD, Ingredient.of(RagiumItems.GLOW_REAGENT))
         circuit(RagiumItems.ELITE_CIRCUIT, CommonMaterials.ALUMINUM, Ingredient.of(RagiumItems.PRISMARINE_REAGENT))
-        circuit(RagiumItems.ULTIMATE_CIRCUIT, RagiumMaterials.RAGIUM, Ingredient.of(RagiumItems.RAGIUM_REAGENT))
+        circuit(RagiumItems.ULTIMATE_CIRCUIT, RagiumMaterials.RAGIUM, Ingredient.of(RagiumItems.ENDER_REAGENT))
 
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumItems.BASIC_CIRCUIT)

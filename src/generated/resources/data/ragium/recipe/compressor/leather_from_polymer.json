@@ -1,11 +1,14 @@
 {
   "type": "ragium:compressor",
+  "catalyst": {
+    "tag": "c:leathers"
+  },
   "item_input": {
     "count": 1,
     "item": "ragium:polymer_resin"
   },
   "item_output": {
     "count": 1,
-    "id": "ragium:plastic_plate"
+    "id": "minecraft:leather"
   }
 }

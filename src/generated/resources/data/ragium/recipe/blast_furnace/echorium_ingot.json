@@ -9,7 +9,7 @@
     "id": "ragium:echorium_ingot"
   },
   "second_item_input": {
-    "count": 16,
-    "item": "ragium:sculk_reagent"
+    "count": 4,
+    "item": "minecraft:echo_shard"
   }
 }

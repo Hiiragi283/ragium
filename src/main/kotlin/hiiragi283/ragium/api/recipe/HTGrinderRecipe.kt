@@ -25,6 +25,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
+import kotlin.math.max
 
 class HTGrinderRecipe(
     group: String,
@@ -82,12 +83,18 @@ class HTGrinderRecipe(
         val chanced: HTChancedItemStack = this.secondOutput.getOrNull() ?: return Optional.empty()
         val level: Level = machine.levelAccess ?: return Optional.empty()
         val fortune: Int = machine.getEnchantmentLevel(Enchantments.FORTUNE)
-        repeat(fortune + 1) {
-            if (level.random.nextFloat() > chanced.chance) {
-                return Optional.of(chanced.toStack())
-            }
+        val chance: Double = max(
+            1.0,
+            chanced.chance + when (fortune) {
+                2 -> 0.66
+                3 -> 1.0
+                else -> 0.33
+            },
+        )
+        return when {
+            level.random.nextFloat() > (1 - chance) -> Optional.of(chanced.toStack())
+            else -> Optional.empty()
         }
-        return Optional.empty()
     }
 
     override fun getItemOutput(): ItemStack = output.copy()

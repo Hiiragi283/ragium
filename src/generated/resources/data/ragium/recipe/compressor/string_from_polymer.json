@@ -1,0 +1,14 @@
+{
+  "type": "ragium:compressor",
+  "catalyst": {
+    "tag": "c:strings"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "ragium:polymer_resin"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:string"
+  }
+}

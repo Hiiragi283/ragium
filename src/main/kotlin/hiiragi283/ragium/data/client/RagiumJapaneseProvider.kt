@@ -38,6 +38,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
         addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "らぎ高炉")
 
+        addBlock(RagiumBlocks.COPPER_DRUM, "銅のドラム")
+
         addBlock(RagiumBlocks.CATALYST_ADDON, "触媒アドオン")
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         addBlock(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")
@@ -82,6 +84,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.SAP, "樹液")
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
+
+        addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "ラギウム溶液")
         // Items
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
@@ -130,7 +134,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ENDER_REAGENT, "エンダー試薬")
         addItem(RagiumItems.GLOW_REAGENT, "グロウ試薬")
         addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
-        addItem(RagiumItems.RAGIUM_REAGENT, "ラギウム試薬")
         addItem(RagiumItems.SCULK_REAGENT, "スカルク試薬")
         addItem(RagiumItems.SOUL_REAGENT, "ソウル試薬")
         addItem(RagiumItems.WITHER_REAGENT, "ウィザー試薬")

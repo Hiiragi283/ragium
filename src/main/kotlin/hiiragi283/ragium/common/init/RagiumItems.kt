@@ -399,9 +399,6 @@ object RagiumItems {
     val PRISMARINE_REAGENT: DeferredItem<Item> = register("prismarine_reagent")
 
     @JvmField
-    val RAGIUM_REAGENT: DeferredItem<Item> = register("ragium_reagent")
-
-    @JvmField
     val SCULK_REAGENT: DeferredItem<Item> = register("sculk_reagent")
 
     @JvmField
@@ -419,7 +416,6 @@ object RagiumItems {
         ENDER_REAGENT,
         GLOW_REAGENT,
         PRISMARINE_REAGENT,
-        RAGIUM_REAGENT,
         SCULK_REAGENT,
         SOUL_REAGENT,
         WITHER_REAGENT,

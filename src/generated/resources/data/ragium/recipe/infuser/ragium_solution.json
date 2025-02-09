@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:lapis_solution"
+  },
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:ragium_solution"
+  },
+  "item_input": {
+    "count": 8,
+    "tag": "c:dusts/ragi_crystal"
+  }
+}

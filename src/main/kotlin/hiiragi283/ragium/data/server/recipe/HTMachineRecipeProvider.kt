@@ -337,12 +337,21 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.POLYMER_RESIN, 2)
             .fluidOutput(RagiumVirtualFluids.FUEL)
             .save(output)
-        // Polymer Resin -> Plastic
-        HTSingleItemRecipeBuilder
-            .compressor()
-            .itemInput(RagiumItems.POLYMER_RESIN)
-            .itemOutput(RagiumItems.PLASTIC_PLATE)
-            .save(output)
+
+        // Polymer Resin -> XX
+        mapOf(
+            RagiumItemTags.PLATE_MOLDS to RagiumItems.PLASTIC_PLATE,
+            Tags.Items.STRINGS to Items.STRING,
+            Tags.Items.LEATHERS to Items.LEATHER,
+            Tags.Items.GLASS_BLOCKS to Items.GLASS,
+        ).forEach { (catalyst: TagKey<Item>, result: ItemLike) ->
+            HTSingleItemRecipeBuilder
+                .compressor()
+                .itemInput(RagiumItems.POLYMER_RESIN)
+                .catalyst(catalyst)
+                .itemOutput(result)
+                .saveSuffixed(output, "_from_polymer")
+        }
 
         // Biomass -> Alcohol
         HTRefineryRecipeBuilder()

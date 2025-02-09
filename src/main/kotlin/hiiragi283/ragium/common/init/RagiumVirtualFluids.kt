@@ -37,6 +37,8 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     SAP(Color(0x996633), TextureType.STICKY),
     CRIMSON_SAP(Color(0x660000), TextureType.STICKY),
     WARPED_SAP(Color(0x006666), TextureType.STICKY),
+
+    RAGIUM_SOLUTION(Color(0xff003f)),
     ;
 
     private val id: ResourceLocation = RagiumAPI.id(serializedName)
