@@ -87,7 +87,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
 
         HTAARecipeProvider.buildRecipes(output, holderLookup)
         HTDelightRecipeProvider.buildRecipes(output, holderLookup)
-        HTFDRecipeProvider.buildRecipes(output, holderLookup)
         HTIERecipeProvider.buildRecipes(output, holderLookup)
         HTMekanismRecipeProvider.buildRecipes(output, holderLookup)
     }

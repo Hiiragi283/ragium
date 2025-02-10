@@ -3,7 +3,9 @@ package hiiragi283.ragium.data.server.integration
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTExtractorRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -73,5 +75,30 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
             .itemOutput(Items.GLASS_BOTTLE)
             .fluidOutput(NeoForgeMod.MILK, FluidType.BUCKET_VOLUME / 4)
             .save(output, RagiumAPI.id("milk_from_bottle"))
+
+        // Growth
+        HTGrowthChamberRecipeBuilder()
+            .itemInput(ModItems.CABBAGE_SEEDS.get())
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(ModItems.CABBAGE.get(), 2)
+            .save(output)
+
+        HTGrowthChamberRecipeBuilder()
+            .itemInput(ModItems.TOMATO_SEEDS.get())
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(ModItems.TOMATO.get(), 2)
+            .save(output)
+
+        HTGrowthChamberRecipeBuilder()
+            .itemInput(ModItems.ONION.get())
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(ModItems.ONION.get(), 2)
+            .save(output)
+
+        HTGrowthChamberRecipeBuilder()
+            .itemInput(CommonTags.CROPS_RICE)
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(ModItems.WILD_RICE.get(), 2)
+            .save(output)
     }
 }

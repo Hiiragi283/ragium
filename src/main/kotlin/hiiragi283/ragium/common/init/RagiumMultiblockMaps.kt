@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
-import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
-import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
+import hiiragi283.ragium.common.multiblock.HTAxisMultiblockComponent
+import hiiragi283.ragium.common.multiblock.HTSimpleMultiblockComponent
 import net.minecraft.world.level.block.Blocks
 
 object RagiumMultiblockMaps {

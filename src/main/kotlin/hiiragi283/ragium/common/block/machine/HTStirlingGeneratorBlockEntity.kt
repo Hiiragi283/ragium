@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
-import hiiragi283.ragium.api.extension.getItemData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
@@ -43,7 +42,11 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val fuelTime: Int = itemInput.getStackInSlot(0).getItemData(NeoForgeDataMaps.FURNACE_FUELS)?.burnTime
+        val fuelTime: Int = itemInput
+            .getStackInSlot(0)
+            .itemHolder
+            .getData(NeoForgeDataMaps.FURNACE_FUELS)
+            ?.burnTime
             ?: throw HTMachineException.FindFuel(false)
         val requiredWater: Int = fuelTime / 10
         if (fluidInput.drain(requiredWater, IFluidHandler.FluidAction.SIMULATE).amount < requiredWater) {

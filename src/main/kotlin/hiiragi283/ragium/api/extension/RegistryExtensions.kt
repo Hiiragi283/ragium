@@ -67,8 +67,6 @@ val DeferredHolder<Fluid, *>.commonTag: TagKey<Fluid> get() = fluidTagKey(common
  */
 val <T : Any> HolderSet<T>.isEmpty: Boolean get() = size() == 0
 
-operator fun <T : Any> HolderSet<T>.contains(value: T): Boolean = any { it.isOf(value) }
-
 /**
  * この[HolderSet]を[Component]に変換します。
  * @param transform 値を[Component]に変換するブロック

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.multiblock
 
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition

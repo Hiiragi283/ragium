@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -7,6 +5,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.Util
+import net.minecraft.core.Holder
 import net.minecraft.data.recipes.*
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceKey
@@ -108,13 +107,14 @@ fun <T : Any> TagsProvider.TagAppender<T>.add(id: ResourceLocation, optional: Bo
         false -> apply { internalBuilder.addElement(id) }
     }
 
+fun <T : Any> TagsProvider.TagAppender<T>.add(holder: Holder<T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
+    add(holder.idOrThrow, optional)
+
 fun <T : Any> TagsProvider.TagAppender<T>.add(holder: DeferredHolder<T, out T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
     add(holder.id, optional)
 
 fun TagsProvider.TagAppender<Block>.addBlock(block: Block, optional: Boolean = false): TagsProvider.TagAppender<Block> =
-    add(block.builtInRegistryHolder().idOrThrow, optional)
+    add(block.defaultBlockState().blockHolder, optional)
 
-fun TagsProvider.TagAppender<Item>.addItem(item: ItemLike, optional: Boolean = false): TagsProvider.TagAppender<Item> = when (optional) {
-    true -> addOptional(item.asHolder().idOrThrow)
-    false -> add(item.asHolder().keyOrThrow)
-}
+fun TagsProvider.TagAppender<Item>.addItem(item: ItemLike, optional: Boolean = false): TagsProvider.TagAppender<Item> =
+    add(item.asHolder(), optional)

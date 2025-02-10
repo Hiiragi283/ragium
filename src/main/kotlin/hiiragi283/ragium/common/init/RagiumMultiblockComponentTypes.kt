@@ -3,9 +3,9 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
-import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
-import hiiragi283.ragium.common.machine.HTTagMultiblockComponent
+import hiiragi283.ragium.common.multiblock.HTAxisMultiblockComponent
+import hiiragi283.ragium.common.multiblock.HTSimpleMultiblockComponent
+import hiiragi283.ragium.common.multiblock.HTTagMultiblockComponent
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister

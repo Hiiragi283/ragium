@@ -12,8 +12,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
-import net.neoforged.neoforge.registries.datamaps.DataMapType
-import net.neoforged.neoforge.registries.datamaps.IWithData
 
 //    ItemLike    //
 
@@ -27,18 +25,6 @@ fun ItemLike.asHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder
  * @param count [ItemStack]の個数
  */
 fun ItemLike.toStack(count: Int = 1): ItemStack = ItemStack(asItem(), count)
-
-/**
- * 指定した[type]で[ItemLike]から[T]を返します。
- * @return [IWithData.getData]が`null`の場合は`null`
- */
-fun <T : Any> ItemLike.getItemData(type: DataMapType<Item, T>): T? = asHolder().getData(type)
-
-/**
- * 指定した[type]で[ItemStack]から[T]を返します。
- * @return [IWithData.getData]が`null`の場合は`null`
- */
-fun <T : Any> ItemStack.getItemData(type: DataMapType<Item, T>): T? = itemHolder.getData(type)
 
 //    Item    //
 
