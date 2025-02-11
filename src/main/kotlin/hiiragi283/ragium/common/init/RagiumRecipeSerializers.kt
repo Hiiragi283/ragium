@@ -41,6 +41,10 @@ object RagiumRecipeSerializers {
         REGISTER.register("blast_furnace") { _: ResourceLocation -> HTMultiItemRecipe.Serializer(::HTBlastFurnaceRecipe) }
 
     @JvmField
+    val BREWERY: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBreweryRecipe>> =
+        register("brewery", HTBreweryRecipe.CODEC, HTBreweryRecipe.STREAM_CODEC)
+
+    @JvmField
     val COMPRESSOR: DeferredHolder<RecipeSerializer<*>, HTSingleItemRecipe.Serializer<HTCompressorRecipe>> =
         REGISTER.register("compressor") { _: ResourceLocation -> HTSingleItemRecipe.Serializer(::HTCompressorRecipe) }
 

@@ -25,6 +25,9 @@ object RagiumRecipeTypes {
     val BLAST_FURNACE: DeferredHolder<RecipeType<*>, RecipeType<HTBlastFurnaceRecipe>> = register("blast_furnace")
 
     @JvmField
+    val BREWERY: DeferredHolder<RecipeType<*>, RecipeType<HTBreweryRecipe>> = register("brewery")
+
+    @JvmField
     val COMPRESSOR: DeferredHolder<RecipeType<*>, RecipeType<HTCompressorRecipe>> = register("compressor")
 
     @JvmField

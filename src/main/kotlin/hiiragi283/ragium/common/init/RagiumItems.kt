@@ -327,6 +327,12 @@ object RagiumItems {
         register("slot_lock", ::HTCatalystItem, itemProperty().stacksTo(1))
 
     @JvmField
+    val ALUMINUM_CAN: DeferredItem<Item> = register("aluminum_can")
+
+    @JvmField
+    val POTION_CAN: DeferredItem<HTPotionCanItem> = register("potion_can", ::HTPotionCanItem)
+
+    @JvmField
     val PRESS_MOLDS: Map<HTTagPrefix, DeferredItem<HTCatalystItem>> =
         listOf(
             HTTagPrefix.GEAR,

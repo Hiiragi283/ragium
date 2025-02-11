@@ -114,6 +114,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
         addItem(RagiumItems.SLOT_LOCK, "スロットロック")
 
+        addItem(RagiumItems.ALUMINUM_CAN, "アルミ缶")
+        addItem(RagiumItems.POTION_CAN, "ポーション缶")
+
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")

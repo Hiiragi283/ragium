@@ -60,6 +60,8 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.DYNAMITE)
                     output.accept(RagiumItems.SLOT_LOCK)
 
+                    output.accept(RagiumItems.ALUMINUM_CAN)
+
                     RagiumItems.DRILLS.forEach(output::accept)
                     RagiumItems.PRESS_MOLDS.values.forEach(output::accept)
                     // Circuits

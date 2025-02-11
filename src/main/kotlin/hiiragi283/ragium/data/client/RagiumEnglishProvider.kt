@@ -114,6 +114,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.DYNAMITE, "Dynamite")
         addItem(RagiumItems.SLOT_LOCK, "Slot Lock")
 
+        addItem(RagiumItems.ALUMINUM_CAN, "Aluminum Can")
+        addItem(RagiumItems.POTION_CAN, "Potion Can")
+
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")

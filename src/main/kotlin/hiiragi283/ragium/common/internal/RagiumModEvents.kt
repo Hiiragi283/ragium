@@ -28,9 +28,13 @@ import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.core.registries.Registries
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.RandomSource
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.CampfireBlock
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -42,6 +46,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.registries.NewRegistryEvent
@@ -243,14 +248,6 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        /*RagiumAPI.machineRegistry.blocks.forEach { holder: DeferredBlock<*> ->
-            event.registerBlock(
-                RagiumAPI.BlockCapabilities.CONTROLLER_HOLDER,
-                { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction -> blockEntity as? HTMultiblockController },
-                holder.get(),
-            )
-        }*/
-
         // from HTBlockEntityHandlerProvider
         fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTBlockEntityHandlerProvider {
             val type: BlockEntityType<T> = supplier.get()
@@ -345,5 +342,21 @@ internal object RagiumModEvents {
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         LOGGER.info("Modified item components!")
+    }
+
+    @SubscribeEvent
+    fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
+        // Add Potion Can
+        if (event.tabKey == CreativeModeTabs.FOOD_AND_DRINKS) {
+            val parameters: CreativeModeTab.ItemDisplayParameters = event.parameters
+            parameters
+                .holders
+                .lookupOrThrow(Registries.POTION)
+                .listElements()
+                .filter { it.value().isEnabled(parameters.enabledFeatures) }
+                .map { PotionContents.createItemStack(RagiumItems.POTION_CAN.asItem(), it) }
+                .forEach(event::accept)
+            LOGGER.info("Modified existing Creative Tags!")
+        }
     }
 }

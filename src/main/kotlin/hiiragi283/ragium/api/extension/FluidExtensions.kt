@@ -31,6 +31,9 @@ val Fluid.isSource: Boolean get() = isSource(defaultFluidState())
 
 //    IFluidHandler    //
 
+val IFluidHandler.tankRange: IntRange
+    get() = (0 until tanks)
+
 fun IFluidHandler.canFill(resource: FluidStack): Boolean = fill(resource, IFluidHandler.FluidAction.SIMULATE) > 0
 
 fun IFluidHandler.canDrain(resource: FluidStack): Boolean = !drain(resource, IFluidHandler.FluidAction.SIMULATE).isEmpty

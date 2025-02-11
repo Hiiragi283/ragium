@@ -15,8 +15,12 @@ import hiiragi283.ragium.common.multiblock.HTAxisMultiblockComponent
 import hiiragi283.ragium.common.multiblock.HTSimpleMultiblockComponent
 import hiiragi283.ragium.common.multiblock.HTTagMultiblockComponent
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
+import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.FastColor
 import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.api.distmarker.Dist
@@ -24,6 +28,7 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -34,6 +39,22 @@ import java.util.function.Supplier
 object RagiumClient {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
+
+    @SubscribeEvent
+    fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
+        event.register(
+            { stack: ItemStack, tintIndex: Int ->
+                if (tintIndex != 1) {
+                    -1
+                } else {
+                    FastColor.ARGB32.opaque(stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).color)
+                }
+            },
+            RagiumItems.POTION_CAN,
+        )
+
+        LOGGER.info("Registered ItemColor!")
+    }
 
     @SubscribeEvent
     fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
@@ -68,7 +89,7 @@ object RagiumClient {
     }
 
     @SubscribeEvent
-    private fun registerMenu(event: RegisterMenuScreensEvent) {
+    fun registerMenu(event: RegisterMenuScreensEvent) {
         RagiumMenuTypes.REGISTER.forEach { holder: DeferredHolder<MenuType<*>, out MenuType<*>> ->
             val menuType: MenuType<*> = holder.get()
             if (menuType is HTMachineMenuType<*>) {
@@ -80,7 +101,7 @@ object RagiumClient {
     }
 
     @SubscribeEvent
-    private fun registerBlockEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+    fun registerBlockEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         fun register(type: Supplier<out BlockEntityType<out HTMachineBlockEntity>>) {
             event.registerBlockEntityRenderer(type.get(), ::HTMachineBlockEntityRenderer)
         }

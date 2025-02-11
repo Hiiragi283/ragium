@@ -82,6 +82,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             // add(RagiumItems.DEFOLIANT)
             add(RagiumItems.DYNAMITE)
             add(RagiumItems.SLOT_LOCK)
+            add(RagiumItems.ALUMINUM_CAN)
 
             addAll(RagiumItems.CIRCUITS)
             addAll(RagiumItems.PRESS_MOLDS.values)
@@ -99,6 +100,11 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             .parent(ModelFile.UncheckedModelFile("item/generated"))
             .itemTexture("layer0", ResourceLocation.withDefaultNamespace("apple"))
             .itemTexture("layer1", RagiumItems.CHOCOLATE_APPLE.id)
+
+        getBuilder(RagiumItems.POTION_CAN)
+            .parent(ModelFile.UncheckedModelFile("item/generated"))
+            .itemTexture("layer0", RagiumItems.POTION_CAN.id)
+            .itemTexture("layer1", RagiumItems.POTION_CAN.id.withSuffix("_overlay"))
 
         listOf(
             RagiumItems.MACHINE_CASING,
