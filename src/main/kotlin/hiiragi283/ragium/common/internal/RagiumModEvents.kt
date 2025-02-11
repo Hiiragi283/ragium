@@ -280,11 +280,13 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.STIRLING_GENERATOR)
         registerHandlers(RagiumBlockEntityTypes.THERMAL_GENERATOR)
 
+        registerHandlers(RagiumBlockEntityTypes.ASSEMBLER)
         registerHandlers(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerHandlers(RagiumBlockEntityTypes.COMPRESSOR)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
         registerHandlers(RagiumBlockEntityTypes.GRINDER)
         registerHandlers(RagiumBlockEntityTypes.INFUSER)
+        registerHandlers(RagiumBlockEntityTypes.LASER_ASSEMBLY)
         registerHandlers(RagiumBlockEntityTypes.MIXER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
         registerHandlers(RagiumBlockEntityTypes.REFINERY)

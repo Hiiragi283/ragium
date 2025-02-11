@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -78,7 +77,6 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private val recipeGetter: HTRecipeGetter.Listed<HTMachineRecipeInput, HTGrinderRecipe> = HTRecipeGetter.Listed(
-        RagiumRecipeTypes.GRINDER.get(),
         HTRecipeConverters::grinder,
     )
 

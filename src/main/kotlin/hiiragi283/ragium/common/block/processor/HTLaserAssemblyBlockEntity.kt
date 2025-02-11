@@ -13,7 +13,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
 class HTLaserAssemblyBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemMachineBlockEntity(RagiumBlockEntityTypes.GRINDER, pos, state, RagiumMachineKeys.GRINDER) {
+    HTSingleItemMachineBlockEntity(RagiumBlockEntityTypes.LASER_ASSEMBLY, pos, state, RagiumMachineKeys.LASER_ASSEMBLY) {
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.PRECISION
 
     override val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTSingleItemRecipe> =

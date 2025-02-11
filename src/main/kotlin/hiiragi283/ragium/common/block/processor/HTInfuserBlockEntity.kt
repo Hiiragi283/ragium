@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.HTInfuserContainerMenu
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
@@ -49,8 +48,8 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
-    private val recipeGetter: HTRecipeGetter.Listed<HTMachineRecipeInput, HTInfuserRecipe> =
-        HTRecipeGetter.Listed(RagiumRecipeTypes.INFUSER.get(), HTRecipeConverters::infuser)
+    private val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, HTInfuserRecipe> =
+        HTRecipeGetter.Listed(HTRecipeConverters::infuser)
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 

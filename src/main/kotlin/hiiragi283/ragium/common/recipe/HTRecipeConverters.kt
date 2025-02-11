@@ -3,21 +3,27 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.extension.getAllRecipes
 import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.RecipeManager
 
 object HTRecipeConverters {
     //    Compressor    //
 
     @JvmStatic
     fun compressor(consumer: (HTCompressorRecipe) -> Unit) {
+        val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
+        recipeManager.getAllRecipes(RagiumRecipeTypes.COMPRESSOR.get()).forEach(consumer)
+
         val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
         registry.typedMaterials.forEach { material: HTTypedMaterial ->
             compressorGear(material, registry, consumer)
@@ -95,6 +101,9 @@ object HTRecipeConverters {
 
     @JvmStatic
     fun grinder(consumer: (HTGrinderRecipe) -> Unit) {
+        val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
+        recipeManager.getAllRecipes(RagiumRecipeTypes.GRINDER.get()).forEach(consumer)
+
         val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
         registry.typedMaterials.forEach { material: HTTypedMaterial ->
             grinderOreToRaw(material, registry, consumer)
@@ -161,6 +170,9 @@ object HTRecipeConverters {
 
     @JvmStatic
     fun infuser(consumer: (HTInfuserRecipe) -> Unit) {
+        val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
+        recipeManager.getAllRecipes(RagiumRecipeTypes.INFUSER.get()).forEach(consumer)
+
         val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
         registry.typedMaterials.forEach { material: HTTypedMaterial ->
             infuserOreToRaw(material, registry, consumer)

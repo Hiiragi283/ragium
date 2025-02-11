@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe.base
 
-import hiiragi283.ragium.api.extension.getAllRecipes
 import hiiragi283.ragium.api.machine.HTMachineException
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
@@ -15,20 +14,11 @@ fun interface HTRecipeGetter<I : RecipeInput, R : Recipe<I>> {
 
     //    Listed    //
 
-    class Listed<I : RecipeInput, R : Recipe<I>>(val recipeType: RecipeType<R>, val runtimeRecipes: Consumer<(R) -> Unit>) :
-        HTRecipeGetter<I, R> {
-        override fun getFirstRecipe(input: I, level: Level): Result<R> {
-            // from RecipeManager
-            val recipes: MutableList<R> = level.recipeManager
-                .getAllRecipes(recipeType)
-                .toMutableList()
-            // from Runtime Recipes
-            runtimeRecipes.accept(recipes::add)
-            return recipes
-                .firstOrNull { recipe: R -> recipe.matches(input, level) }
-                ?.let(Result.Companion::success)
-                ?: Result.failure(HTMachineException.NoMatchingRecipe(false))
-        }
+    class Listed<I : RecipeInput, R : Recipe<I>>(val runtimeRecipes: Consumer<(R) -> Unit>) : HTRecipeGetter<I, R> {
+        override fun getFirstRecipe(input: I, level: Level): Result<R> = buildList { runtimeRecipes.accept(this::add) }
+            .firstOrNull { recipe: R -> recipe.matches(input, level) }
+            ?.let(Result.Companion::success)
+            ?: Result.failure(HTMachineException.NoMatchingRecipe(false))
     }
 
     //    Cached    //

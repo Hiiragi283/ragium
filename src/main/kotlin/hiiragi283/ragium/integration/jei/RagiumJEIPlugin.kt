@@ -102,7 +102,6 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipes(
             RagiumJEIRecipeTypes.COMPRESSOR,
             buildList {
-                addAll(recipeManager.getAllRecipes(RagiumRecipeTypes.COMPRESSOR.get()))
                 HTRecipeConverters.compressor(this::add)
             },
         )
@@ -111,7 +110,6 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipes(
             RagiumJEIRecipeTypes.GRINDER,
             buildList {
-                addAll(recipeManager.getAllRecipes(RagiumRecipeTypes.GRINDER.get()))
                 HTRecipeConverters.grinder(this::add)
             },
         )
@@ -119,7 +117,6 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipes(
             RagiumJEIRecipeTypes.INFUSER,
             buildList {
-                addAll(recipeManager.getAllRecipes(RagiumRecipeTypes.INFUSER.get()))
                 HTRecipeConverters.infuser(this::add)
             },
         )
