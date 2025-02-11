@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.machine
+package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
-import hiiragi283.ragium.api.recipe.HTRefineryRecipe
+import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
@@ -15,7 +15,8 @@ import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.inventory.HTRefineryContainerMenu
+import hiiragi283.ragium.common.inventory.HTInfuserContainerMenu
+import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -25,21 +26,22 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
-class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state, RagiumMachineKeys.REFINERY) {
-    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(RagiumBlockEntityTypes.INFUSER, pos, state, RagiumMachineKeys.INFUSER) {
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val inputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
-        listOf(itemOutput.createSlot(0)),
+        listOf(
+            itemInput.createSlot(0),
+            itemOutput.createSlot(0),
+        ),
         listOf(inputTank, outputTank),
     )
-
-    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTRefineryRecipe> =
-        HTRecipeGetter.Cached(RagiumRecipeTypes.REFINERY.get())
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)
@@ -47,22 +49,30 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
+    private val recipeGetter: HTRecipeGetter.Listed<HTMachineRecipeInput, HTInfuserRecipe> =
+        HTRecipeGetter.Listed(RagiumRecipeTypes.INFUSER.get(), HTRecipeConverters::infuser)
+
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, inputTank.fluid)
-        val recipe: HTRefineryRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
+            enchantments,
+            itemInput.getStackInSlot(0),
+            inputTank.fluid,
+        )
+        val recipe: HTInfuserRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(itemOutput, outputTank)
         // Insert outputs
         recipe.insertOutputs(itemOutput, outputTank, level, pos)
         // Decrement input
-        inputTank.drain(recipe.input.amount(), IFluidHandler.FluidAction.EXECUTE)
+        itemInput.getStackInSlot(0).shrink(recipe.itemInput.count())
+        inputTank.drain(recipe.fluidInput.amount(), IFluidHandler.FluidAction.EXECUTE)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTRefineryContainerMenu(containerId, playerInventory, blockPos, itemOutput)
+        HTInfuserContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
 
     override fun interactWithFluidStorage(player: Player): Boolean {
         if (outputTank.interactWithFluidStorage(player, HTStorageIO.OUTPUT)) {
@@ -74,7 +84,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         return false
     }
 
-    override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.OUTPUT.wrapItemHandler(itemOutput)
+    override fun getItemHandler(direction: Direction?): CombinedInvWrapper =
+        CombinedInvWrapper(HTStorageIO.INPUT.wrapItemHandler(itemInput), HTStorageIO.OUTPUT.wrapItemHandler(itemOutput))
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? {
         if (direction == null) {
@@ -83,8 +94,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         val relativeFront: HTRelativeDirection = HTRelativeDirection.fromDirection(front, direction)
         return when (relativeFront) {
             HTRelativeDirection.RIGHT -> HTStorageIO.INPUT.wrapFluidHandler(inputTank)
-            HTRelativeDirection.LEFT -> HTStorageIO.INPUT.wrapFluidHandler(inputTank)
-            HTRelativeDirection.FRONT -> HTStorageIO.OUTPUT.wrapFluidHandler(outputTank)
+            HTRelativeDirection.LEFT -> HTStorageIO.OUTPUT.wrapFluidHandler(outputTank)
             else -> null
         }
     }

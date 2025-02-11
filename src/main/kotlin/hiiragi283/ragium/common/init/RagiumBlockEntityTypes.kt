@@ -4,7 +4,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
-import hiiragi283.ragium.common.block.machine.*
+import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
+import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
+import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
+import hiiragi283.ragium.common.block.processor.*
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -83,6 +90,10 @@ object RagiumBlockEntityTypes {
         register("thermal_generator", ::HTThermalGeneratorBlockEntity, RagiumMachineKeys.THERMAL_GENERATOR)
 
     //    Processor    //
+
+    @JvmField
+    val ASSEMBLER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTAssemblerBlockEntity>> =
+        register("assembler", ::HTAssemblerBlockEntity, RagiumMachineKeys.ASSEMBLER)
 
     @JvmField
     val BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBlastFurnaceBlockEntity>> =

@@ -102,4 +102,11 @@ interface RagiumAPI {
         pos: BlockPos,
         itemHandler: IItemHandler,
     ): AbstractContainerMenu
+
+    fun createMultiItemMenu(
+        syncId: Int,
+        playerInv: Inventory,
+        pos: BlockPos,
+        itemHandler: IItemHandler,
+    ): AbstractContainerMenu
 }

@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.fluid.HTLimitedFluidHandler
 import hiiragi283.ragium.common.fluid.HTMachineFluidTankImpl
+import hiiragi283.ragium.common.inventory.HTMultiItemContainerMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemContainerMenu
 import hiiragi283.ragium.common.item.HTLimitedItemHandler
 import hiiragi283.ragium.common.item.HTMachineItemHandlerImpl
@@ -68,6 +69,18 @@ class InternalRagiumAPI : RagiumAPI {
         pos: BlockPos,
         itemHandler: IItemHandler,
     ): AbstractContainerMenu = HTSingleItemContainerMenu(
+        syncId,
+        playerInv,
+        pos,
+        itemHandler,
+    )
+
+    override fun createMultiItemMenu(
+        syncId: Int,
+        playerInv: Inventory,
+        pos: BlockPos,
+        itemHandler: IItemHandler,
+    ): AbstractContainerMenu = HTMultiItemContainerMenu(
         syncId,
         playerInv,
         pos,

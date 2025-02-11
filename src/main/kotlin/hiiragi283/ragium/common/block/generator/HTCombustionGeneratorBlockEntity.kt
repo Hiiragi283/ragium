@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.machine
+package hiiragi283.ragium.common.block.generator
 
 import hiiragi283.ragium.api.block.entity.HTFluidGeneratorBlockEntity
 import hiiragi283.ragium.api.tag.RagiumFluidTags

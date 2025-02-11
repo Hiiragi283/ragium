@@ -1,21 +1,16 @@
-package hiiragi283.ragium.common.block.machine
+package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.inventory.HTMultiItemContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -23,16 +18,22 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
+import java.util.function.Supplier
 
-class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.BLAST_FURNACE, pos, state, RagiumMachineKeys.BLAST_FURNACE) {
+abstract class HTMultiItemMachineBlockEntity(
+    type: Supplier<out BlockEntityType<*>>,
+    pos: BlockPos,
+    state: BlockState,
+    machineKey: HTMachineKey,
+) : HTMachineBlockEntity(type, pos, state, machineKey) {
     private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(3, this::setChanged)
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
-    override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
+    final override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
         listOf(
             itemInput.createSlot(0),
             itemInput.createSlot(1),
@@ -41,12 +42,9 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         ),
     )
 
-    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTBlastFurnaceRecipe> =
-        HTRecipeGetter.Cached(RagiumRecipeTypes.BLAST_FURNACE.get())
+    abstract val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTMultiItemRecipe>
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
-
-    override fun process(level: ServerLevel, pos: BlockPos) {
+    final override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
             enchantments,
@@ -57,7 +55,7 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
             ),
             listOf(),
         )
-        val recipe: HTBlastFurnaceRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTMultiItemRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
         if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
         val output: ItemStack = recipe.itemResults[0].getItem(enchantments)
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
@@ -69,12 +67,12 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTMultiItemContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
+    final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        RagiumAPI.getInstance().createMultiItemMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
 
-    override fun interactWithFluidStorage(player: Player): Boolean = false
+    final override fun interactWithFluidStorage(player: Player): Boolean = false
 
-    override fun getItemHandler(direction: Direction?): CombinedInvWrapper = CombinedInvWrapper(
+    final override fun getItemHandler(direction: Direction?): CombinedInvWrapper = CombinedInvWrapper(
         HTStorageIO.INPUT.wrapItemHandler(itemInput),
         HTStorageIO.OUTPUT.wrapItemHandler(itemOutput),
     )

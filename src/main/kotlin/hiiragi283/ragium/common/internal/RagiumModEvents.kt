@@ -17,7 +17,12 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.common.block.machine.*
+import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
+import hiiragi283.ragium.common.block.processor.*
 import hiiragi283.ragium.common.fluid.HTDrillFluidHandler
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
@@ -93,6 +98,7 @@ internal object RagiumModEvents {
         // Processor
         event
             .getBuilder(RagiumMachineKeys.ASSEMBLER)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTAssemblerBlockEntity)
 
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)

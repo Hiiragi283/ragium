@@ -61,7 +61,7 @@ abstract class HTSingleItemMachineBlockEntity(
     }
 
     final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
-        RagiumAPI.Companion.getInstance().createSingleItemMenu(
+        RagiumAPI.getInstance().createSingleItemMenu(
             containerId,
             playerInventory,
             blockPos,
