@@ -26,10 +26,6 @@ object RagiumMenuTypes {
         registerMachine("extractor", ::HTExtractorContainerMenu)
 
     @JvmField
-    val GRINDER: DeferredHolder<MenuType<*>, HTMachineMenuType<HTGrinderContainerMenu>> =
-        registerMachine("grinder", ::HTGrinderContainerMenu)
-
-    @JvmField
     val INFUSER: DeferredHolder<MenuType<*>, HTMachineMenuType<HTInfuserContainerMenu>> =
         registerMachine("infuser", ::HTInfuserContainerMenu)
 

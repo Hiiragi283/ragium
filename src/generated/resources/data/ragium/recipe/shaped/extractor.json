@@ -15,7 +15,7 @@
       "item": "minecraft:piston"
     },
     "E": {
-      "tag": "c:gears/iron"
+      "item": "ragium:gold_coil"
     },
     "F": {
       "tag": "c:circuits/advanced"

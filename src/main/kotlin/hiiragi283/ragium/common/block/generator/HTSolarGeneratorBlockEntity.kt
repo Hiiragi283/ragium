@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
@@ -19,10 +17,10 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.SOLAR_GENERATOR, pos, state, RagiumMachineKeys.SOLAR_GENERATOR) {
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.EMPTY
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generate.DEFAULT
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generate.PRECISION
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        if (!machineKey.getProperty().getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(level, pos)) {
+        if (!(level.canSeeSky(pos.above()) && level.isDay)) {
             throw HTMachineException.GenerateEnergy(false)
         }
     }

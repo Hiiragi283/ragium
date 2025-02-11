@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
-import hiiragi283.ragium.api.property.get
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceKey
@@ -72,7 +71,7 @@ interface HTMachineAccess :
 
     //    HTControllerHolder    //
 
-    override fun getMultiblockMap(): HTMultiblockMap.Relative? = machineKey.getProperty()[HTMachinePropertyKeys.MULTIBLOCK_MAP]
+    override fun getMultiblockMap(): HTMultiblockMap.Relative? = null
 
     override fun getController(): HTControllerDefinition? = levelAccess?.let { HTControllerDefinition(it, pos, front) }
 }

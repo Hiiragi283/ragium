@@ -15,7 +15,7 @@
       "item": "minecraft:piston"
     },
     "E": {
-      "tag": "c:gears/copper"
+      "item": "ragium:copper_coil"
     },
     "F": {
       "tag": "c:circuits/basic"

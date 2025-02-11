@@ -3,31 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:blaze_reagent"
+      "tag": "c:dusts/redstone"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "tag": "c:player_workstations/furnaces"
     },
     "C": {
       "item": "ragium:machine_casing"
     },
     "D": {
-      "item": "minecraft:furnace"
-    },
-    "E": {
       "item": "ragium:copper_coil"
     },
-    "F": {
-      "tag": "c:circuits/basic"
+    "E": {
+      "tag": "c:gears/copper"
     }
   },
   "pattern": [
     " A ",
-    "BCD",
-    "EFE"
+    "BCB",
+    "DED"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:multi_smelter"
+    "id": "ragium:stirling_generator"
   }
 }

@@ -411,5 +411,31 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Tags.Items.OBSIDIANS_NORMAL)
             .itemOutput(RagiumBlocks.OBSIDIAN_GLASS)
             .save(output)
+
+        // Coils
+        mapOf(
+            RagiumItems.COPPER_COIL to VanillaMaterials.COPPER,
+            RagiumItems.GOLD_COIL to VanillaMaterials.GOLD,
+            RagiumItems.ALUMINUM_COIL to CommonMaterials.ALUMINUM,
+        ).forEach { (coil: DeferredItem<Item>, metal: HTMaterialKey) ->
+            // Shaped Crafting
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, coil, 2)
+                .pattern(" A ")
+                .pattern("BCB")
+                .pattern("BCB")
+                .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+                .define('B', HTTagPrefix.INGOT, metal)
+                .define('C', RagiumBlocks.SHAFT)
+                .unlockedBy("has_metal", has(HTTagPrefix.INGOT, metal))
+                .savePrefixed(output)
+            // Assembler
+            HTMultiItemRecipeBuilder
+                .assembler()
+                .itemInput(HTTagPrefix.INGOT, metal, 4)
+                .itemInput(RagiumBlocks.SHAFT)
+                .itemOutput(coil, 4)
+                .save(output)
+        }
     }
 }

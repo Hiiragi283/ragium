@@ -20,7 +20,6 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 
 class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, RagiumMachineKeys.STIRLING_GENERATOR) {
@@ -37,18 +36,20 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         fluidInput.updateCapacity(this)
     }
 
+    private fun getBurnTime(): Int = itemInput.getStackInSlot(0).getBurnTime(null)
+
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData {
-        TODO("Not yet implemented")
+        val burnTime: Int = getBurnTime()
+        if (burnTime > 0) {
+            return HTMachineEnergyData.Stirling(burnTime * 10)
+        }
+        return HTMachineEnergyData.Empty
     }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val fuelTime: Int = itemInput
-            .getStackInSlot(0)
-            .itemHolder
-            .getData(NeoForgeDataMaps.FURNACE_FUELS)
-            ?.burnTime
-            ?: throw HTMachineException.FindFuel(false)
-        val requiredWater: Int = fuelTime / 10
+        val burnTime: Int = getBurnTime()
+        if (burnTime <= 0) throw HTMachineException.FindFuel(false)
+        val requiredWater: Int = burnTime / 10
         if (fluidInput.drain(requiredWater, IFluidHandler.FluidAction.SIMULATE).amount < requiredWater) {
             throw HTMachineException.ExtractFluid(false)
         }

@@ -19,6 +19,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
@@ -30,6 +31,7 @@ import net.neoforged.neoforge.fluids.FluidType
 object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         assembler(output)
+        brewery(output)
         compressor(output)
         enchanter(output, holderLookup.lookupOrThrow(Registries.ENCHANTMENT))
         extractor(output)
@@ -46,6 +48,55 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(RagiumItemTags.PLASTICS)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
+            .save(output)
+    }
+
+    //    brewery    //
+
+    private fun brewery(output: RecipeOutput) {
+        // Night Vision
+        HTBreweryRecipeBuilder()
+            .itemInput(Tags.Items.CROPS_NETHER_WART)
+            .itemInput(Items.GOLDEN_CARROT)
+            .potionOutput(Potions.LONG_NIGHT_VISION)
+            .save(output)
+        // Invisibility
+        HTBreweryRecipeBuilder()
+            .itemInput(Tags.Items.CROPS_NETHER_WART)
+            .itemInput(Items.GOLDEN_CARROT)
+            .itemInput(Items.FERMENTED_SPIDER_EYE)
+            .potionOutput(Potions.LONG_INVISIBILITY)
+            .save(output)
+        // Leaping
+        HTBreweryRecipeBuilder()
+            .itemInput(Tags.Items.CROPS_NETHER_WART)
+            .itemInput(Items.RABBIT_FOOT)
+            .potionOutput(Potions.LONG_LEAPING)
+            .save(output)
+        // Fire Resistance
+        HTBreweryRecipeBuilder()
+            .itemInput(Tags.Items.CROPS_NETHER_WART)
+            .itemInput(Items.MAGMA_CREAM)
+            .potionOutput(Potions.LONG_FIRE_RESISTANCE)
+            .save(output)
+        // Swiftness
+        HTBreweryRecipeBuilder()
+            .itemInput(Tags.Items.CROPS_NETHER_WART)
+            .itemInput(Items.SUGAR)
+            .potionOutput(Potions.LONG_SWIFTNESS)
+            .save(output)
+        // Slowness
+        HTBreweryRecipeBuilder()
+            .itemInput(Tags.Items.CROPS_NETHER_WART)
+            .itemInput(Items.SUGAR)
+            .itemInput(Items.FERMENTED_SPIDER_EYE)
+            .potionOutput(Potions.LONG_SLOWNESS)
+            .save(output)
+        // Turtle Master
+        HTBreweryRecipeBuilder()
+            .itemInput(Tags.Items.CROPS_NETHER_WART)
+            .itemInput(Items.TURTLE_HELMET)
+            .potionOutput(Potions.LONG_TURTLE_MASTER)
             .save(output)
     }
 

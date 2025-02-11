@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.energy
 
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-sealed interface HTMachineEnergyData {
+interface HTMachineEnergyData {
     val amount: Int
 
     fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean
@@ -30,6 +30,11 @@ sealed interface HTMachineEnergyData {
         ;
 
         override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean =
-            storage.receiveEnergy(amount * modifier, simulate) >= 0
+            storage.receiveEnergy(amount * modifier, simulate) > 0
+    }
+
+    data class Stirling(override val amount: Int) : HTMachineEnergyData {
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean =
+            storage.receiveEnergy(amount * modifier, simulate) > 0
     }
 }

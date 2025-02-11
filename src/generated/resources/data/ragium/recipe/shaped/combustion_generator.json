@@ -3,31 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:crude_oil_bucket"
+      "tag": "c:storage_blocks/redstone"
     },
     "B": {
-      "tag": "c:glass_blocks"
+      "item": "ragium:engine"
     },
     "C": {
       "item": "ragium:chemical_machine_casing"
     },
     "D": {
-      "tag": "c:glass_blocks"
-    },
-    "E": {
       "item": "ragium:gold_coil"
     },
-    "F": {
-      "tag": "c:circuits/advanced"
+    "E": {
+      "tag": "c:gears/iron"
     }
   },
   "pattern": [
     " A ",
-    "BCD",
-    "EFE"
+    "BCB",
+    "DED"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:refinery"
+    "id": "ragium:combustion_generator"
   }
 }

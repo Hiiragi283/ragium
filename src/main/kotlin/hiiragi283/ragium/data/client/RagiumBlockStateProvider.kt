@@ -4,10 +4,8 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -157,19 +155,12 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             property: HTPropertyHolder,
             ->
             val block: Block = holder?.get() ?: return@forEachEntries
-            val properties: HTPropertyHolder = key.getProperty()
             getVariantBuilder(block)
                 .forAllStates { state: BlockState ->
-                    val modelId: ResourceLocation =
-                        properties.getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER)(key)
-                    val rotation: Int = properties
-                        .getOrDefault(HTMachinePropertyKeys.ROTATION_MAPPER)(state.getValue(BlockStateProperties.HORIZONTAL_FACING))
-                        .getRotationY()
-
                     ConfiguredModel
                         .builder()
-                        .modelFile(ModelFile.UncheckedModelFile(modelId))
-                        .rotationY(rotation)
+                        .modelFile(ModelFile.UncheckedModelFile(RagiumAPI.id("block/${key.name}")))
+                        .rotationY(state.getValue(BlockStateProperties.HORIZONTAL_FACING).getRotationY())
                         .build()
                 }
         }

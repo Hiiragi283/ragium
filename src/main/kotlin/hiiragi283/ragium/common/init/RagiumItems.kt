@@ -429,6 +429,15 @@ object RagiumItems {
     val PRECISION_MACHINE_CASING: DeferredItem<Item> = register("precision_machine_casing")
 
     @JvmField
+    val COPPER_COIL: DeferredItem<Item> = register("copper_coil")
+
+    @JvmField
+    val GOLD_COIL: DeferredItem<Item> = register("gold_coil")
+
+    @JvmField
+    val ALUMINUM_COIL: DeferredItem<Item> = register("aluminum_coil")
+
+    @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
 
     @JvmField
@@ -463,6 +472,10 @@ object RagiumItems {
         add(MACHINE_CASING)
         add(CHEMICAL_MACHINE_CASING)
         add(PRECISION_MACHINE_CASING)
+        // coil
+        add(COPPER_COIL)
+        add(GOLD_COIL)
+        add(ALUMINUM_COIL)
         // parts
         add(POLYMER_RESIN)
         add(PLASTIC_PLATE)

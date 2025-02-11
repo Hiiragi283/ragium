@@ -28,6 +28,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredItem
 
 object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -225,6 +226,52 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             VanillaMaterials.NETHERITE,
         )
 
+        // Combustion Generator
+        registerGenerator(
+            output,
+            RagiumMachineKeys.COMBUSTION_GENERATOR,
+            RagiumItems.CHEMICAL_MACHINE_CASING,
+            Ingredient.of(RagiumItems.ENGINE),
+        )
+        // Solar Generator
+        registerGenerator(
+            output,
+            RagiumMachineKeys.SOLAR_GENERATOR,
+            RagiumItems.PRECISION_MACHINE_CASING,
+            Ingredient.of(RagiumItemTags.SOLAR_PANELS),
+        )
+        // Stirling Generator
+        registerGenerator(
+            output,
+            RagiumMachineKeys.STIRLING_GENERATOR,
+            RagiumItems.MACHINE_CASING,
+            Ingredient.of(Tags.Items.PLAYER_WORKSTATIONS_FURNACES),
+        )
+        // Thermal Generator
+        registerGenerator(
+            output,
+            RagiumMachineKeys.THERMAL_GENERATOR,
+            RagiumItems.CHEMICAL_MACHINE_CASING,
+            Ingredient.of(Tags.Items.BUCKETS_LAVA),
+        )
+
+        // Bedrock Miner
+        registerMachine(
+            output,
+            RagiumMachineKeys.BEDROCK_MINER,
+            RagiumItems.PRECISION_MACHINE_CASING,
+            Ingredient.of(Items.BEACON),
+            Ingredient.of(Items.NETHERITE_PICKAXE),
+        )
+        // Fisher
+        registerMachine(
+            output,
+            RagiumMachineKeys.FISHER,
+            RagiumItems.MACHINE_CASING,
+            Ingredient.of(Items.FISHING_ROD),
+            Ingredient.of(Tags.Items.BARRELS),
+        )
+
         // Assembler
         registerMachine(
             output,
@@ -326,6 +373,44 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         )
     }
 
+    private fun registerGenerator(
+        output: RecipeOutput,
+        machine: HTMachineKey,
+        casing: ItemLike,
+        bottom: Ingredient,
+    ) {
+        val top: TagKey<Item> = when (casing) {
+            RagiumItems.MACHINE_CASING -> Tags.Items.DUSTS_REDSTONE
+            RagiumItems.CHEMICAL_MACHINE_CASING -> Tags.Items.STORAGE_BLOCKS_REDSTONE
+            RagiumItems.PRECISION_MACHINE_CASING -> HTTagPrefix.GEM.createTag(RagiumMaterials.RAGI_CRYSTAL)
+            else -> return
+        }
+        val coil: DeferredItem<Item> = when (casing) {
+            RagiumItems.MACHINE_CASING -> RagiumItems.COPPER_COIL
+            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumItems.GOLD_COIL
+            RagiumItems.PRECISION_MACHINE_CASING -> RagiumItems.ALUMINUM_COIL
+            else -> return
+        }
+        val gearMaterial: HTMaterialKey = when (casing) {
+            RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
+            RagiumItems.CHEMICAL_MACHINE_CASING -> VanillaMaterials.IRON
+            RagiumItems.PRECISION_MACHINE_CASING -> VanillaMaterials.DIAMOND
+            else -> return
+        }
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, machine.getBlock())
+            .pattern(" A ")
+            .pattern("BCB")
+            .pattern("DED")
+            .define('A', top)
+            .define('B', bottom)
+            .define('C', casing)
+            .define('D', coil)
+            .define('E', HTTagPrefix.GEAR, gearMaterial)
+            .unlockedBy("has_casing", has(casing))
+            .savePrefixed(output)
+    }
+
     private fun registerMachine(
         output: RecipeOutput,
         machine: HTMachineKey,
@@ -334,10 +419,10 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         left: Ingredient,
         right: Ingredient = left,
     ) {
-        val gearMaterial: HTMaterialKey = when (casing) {
-            RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
-            RagiumItems.CHEMICAL_MACHINE_CASING -> VanillaMaterials.IRON
-            RagiumItems.PRECISION_MACHINE_CASING -> VanillaMaterials.DIAMOND
+        val coil: DeferredItem<Item> = when (casing) {
+            RagiumItems.MACHINE_CASING -> RagiumItems.COPPER_COIL
+            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumItems.GOLD_COIL
+            RagiumItems.PRECISION_MACHINE_CASING -> RagiumItems.ALUMINUM_COIL
             else -> return
         }
         val circuit: TagKey<Item> = when (casing) {
@@ -355,7 +440,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .define('B', left)
             .define('C', casing)
             .define('D', right)
-            .define('E', HTTagPrefix.GEAR, gearMaterial)
+            .define('E', coil)
             .define('F', circuit)
             .unlockedBy("has_casing", has(casing))
             .savePrefixed(output)

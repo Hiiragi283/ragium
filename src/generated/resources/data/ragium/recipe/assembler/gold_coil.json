@@ -1,0 +1,16 @@
+{
+  "type": "ragium:assembler",
+  "first_item_input": {
+    "count": 4,
+    "tag": "c:ingots/gold"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "count": 4,
+    "item": "ragium:gold_coil"
+  },
+  "second_item_input": {
+    "count": 1,
+    "item": "ragium:shaft"
+  }
+}

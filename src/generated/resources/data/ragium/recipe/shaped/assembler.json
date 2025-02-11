@@ -15,7 +15,7 @@
       "tag": "c:circuits/advanced"
     },
     "E": {
-      "tag": "c:gears/copper"
+      "item": "ragium:copper_coil"
     },
     "F": {
       "tag": "c:circuits/basic"

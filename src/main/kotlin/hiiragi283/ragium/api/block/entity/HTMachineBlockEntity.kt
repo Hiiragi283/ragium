@@ -191,7 +191,7 @@ abstract class HTMachineBlockEntity(
         val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
         // 取得したエネルギー量を処理できるか判定
         if (!energyData.handleEnergy(network, costModifier, true)) {
-            LOGGER.error("Failed to handle required energy from network!")
+            LOGGER.error("Error on {} at {}: Failed to handle required energy from network!", machineKey, blockPosText(pos).string)
             return
         }
         runCatching { process(level, pos) }

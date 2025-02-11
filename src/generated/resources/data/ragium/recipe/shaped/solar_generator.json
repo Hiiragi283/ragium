@@ -3,31 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:end_crystal"
+      "tag": "c:gems/ragi_crystal"
     },
     "B": {
-      "tag": "c:gems/ragi_crystal"
+      "tag": "ragium:solar_panels"
     },
     "C": {
       "item": "ragium:precision_machine_casing"
     },
     "D": {
-      "tag": "c:gems/ragi_crystal"
-    },
-    "E": {
       "item": "ragium:aluminum_coil"
     },
-    "F": {
-      "tag": "c:circuits/elite"
+    "E": {
+      "tag": "c:gears/diamond"
     }
   },
   "pattern": [
     " A ",
-    "BCD",
-    "EFE"
+    "BCB",
+    "DED"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:laser_assembly"
+    "id": "ragium:solar_generator"
   }
 }

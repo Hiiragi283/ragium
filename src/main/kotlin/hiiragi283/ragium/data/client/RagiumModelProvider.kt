@@ -1,13 +1,12 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.blockId
 import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.itemTexture
 import hiiragi283.ragium.api.extension.withUncheckedParent
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.data.PackOutput
@@ -59,9 +58,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             property: HTPropertyHolder,
             ->
             if (holder == null) return@forEachEntries
-            val modelId: ResourceLocation =
-                key.getProperty().getOrDefault(HTMachinePropertyKeys.MODEL_MAPPER)(key)
-            withUncheckedParent(holder, modelId)
+            withUncheckedParent(holder, holder.blockId)
         }
     }
 

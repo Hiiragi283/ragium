@@ -31,10 +31,10 @@ object RagiumRegistries {
     object Keys {
         @JvmField
         val ITEM_RESULT: ResourceKey<Registry<MapCodec<out HTItemResult>>> =
-            ResourceKey.createRegistryKey<MapCodec<out HTItemResult>>(RagiumAPI.id("item_result"))
+            ResourceKey.createRegistryKey(RagiumAPI.id("item_result"))
 
         @JvmField
         val MULTIBLOCK_COMPONENT_TYPE: ResourceKey<Registry<HTMultiblockComponent.Type<*>>> =
-            ResourceKey.createRegistryKey<HTMultiblockComponent.Type<*>>(RagiumAPI.id("multiblock_component_type"))
+            ResourceKey.createRegistryKey(RagiumAPI.id("multiblock_component_type"))
     }
 }

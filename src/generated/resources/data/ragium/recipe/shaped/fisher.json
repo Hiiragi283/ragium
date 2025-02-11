@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:blaze_reagent"
+      "item": "minecraft:fishing_rod"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "tag": "c:barrels"
     },
     "C": {
       "item": "ragium:machine_casing"
     },
     "D": {
-      "item": "minecraft:furnace"
+      "tag": "c:barrels"
     },
     "E": {
       "item": "ragium:copper_coil"
@@ -28,6 +28,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:multi_smelter"
+    "id": "ragium:fisher"
   }
 }

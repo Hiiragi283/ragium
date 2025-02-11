@@ -16,7 +16,7 @@ internal class HTEnergyNetwork(amount: Int) :
 
         @JvmField
         val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> =
-            HTSavedDataType(RagiumAPI.Companion.id(KEY), ::HTEnergyNetwork, ::HTEnergyNetwork)
+            HTSavedDataType(RagiumAPI.id(KEY), ::HTEnergyNetwork, ::HTEnergyNetwork)
     }
 
     constructor() : this(0)

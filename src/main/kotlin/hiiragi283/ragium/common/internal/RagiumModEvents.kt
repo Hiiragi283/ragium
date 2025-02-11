@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
-import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
@@ -63,10 +62,6 @@ internal object RagiumModEvents {
     fun modifyMachineProperties(event: HTModifyPropertyEvent.Machine) {
         // Consumer
         event
-            .getBuilder(RagiumMachineKeys.BEDROCK_MINER)
-            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BEDROCK_MINER)
-
-        event
             .getBuilder(RagiumMachineKeys.DISENCHANTER)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.ENCHANTMENT_TABLE_USE)
             .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT))
@@ -87,8 +82,6 @@ internal object RagiumModEvents {
         event
             .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTSolarGeneratorBlockEntity)
-            .put(HTMachinePropertyKeys.GENERATOR_PREDICATE) { level: Level, pos: BlockPos -> level.canSeeSky(pos.above()) && level.isDay }
-            .put(HTMachinePropertyKeys.ROTATION_MAPPER, constFunction2(Direction.NORTH))
 
         event
             .getBuilder(RagiumMachineKeys.STIRLING_GENERATOR)
@@ -108,7 +101,6 @@ internal object RagiumModEvents {
         event
             .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTBlastFurnaceBlockEntity)
-            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
             .put(
                 HTMachinePropertyKeys.PARTICLE,
