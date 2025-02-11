@@ -1,8 +1,8 @@
 package hiiragi283.ragium.integration.jei
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getAllRecipes
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -24,7 +24,6 @@ import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
@@ -65,7 +64,12 @@ class RagiumJEIPlugin : IModPlugin {
             ),
             HTEnchanterRecipeCategory(guiHelper),
             HTExtractorRecipeCategory(guiHelper),
-            HTGrinderRecipeCategory(guiHelper),
+            HTSingleItemRecipeCategory(
+                guiHelper,
+                RagiumMachineKeys.GRINDER,
+                RagiumJEIRecipeTypes.GRINDER,
+                RagiumRecipeSerializers.GRINDER.get(),
+            ),
             HTGrowthChamberRecipeCategory(guiHelper),
             HTInfuserRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
@@ -85,12 +89,11 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerRecipes(registration: IRecipeRegistration) {
         val level: ClientLevel = Minecraft.getInstance().level ?: return
         val recipeManager: RecipeManager = level.recipeManager
-        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
 
         fun <T : HTMachineRecipeBase> register(recipeType: JEIRecipeType<T>, recipe: Supplier<RecipeType<T>>) {
             registration.addRecipes(
                 recipeType,
-                recipeManager.getAllRecipesFor(recipe.get()).map(RecipeHolder<T>::value),
+                recipeManager.getAllRecipes(recipe.get()),
             )
         }
 
@@ -99,7 +102,8 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipes(
             RagiumJEIRecipeTypes.COMPRESSOR,
             buildList {
-                HTRecipeConverters.compressor(recipeManager, registry, this::add)
+                addAll(recipeManager.getAllRecipes(RagiumRecipeTypes.COMPRESSOR.get()))
+                HTRecipeConverters.compressor(this::add)
             },
         )
         register(RagiumJEIRecipeTypes.ENCHANTER, RagiumRecipeTypes.ENCHANTER)
@@ -107,14 +111,16 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipes(
             RagiumJEIRecipeTypes.GRINDER,
             buildList {
-                HTRecipeConverters.grinder(recipeManager, registry, this::add)
+                addAll(recipeManager.getAllRecipes(RagiumRecipeTypes.GRINDER.get()))
+                HTRecipeConverters.grinder(this::add)
             },
         )
         register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, RagiumRecipeTypes.GROWTH_CHAMBER)
         registration.addRecipes(
             RagiumJEIRecipeTypes.INFUSER,
             buildList {
-                HTRecipeConverters.infuser(recipeManager, registry, this::add)
+                addAll(recipeManager.getAllRecipes(RagiumRecipeTypes.INFUSER.get()))
+                HTRecipeConverters.infuser(this::add)
             },
         )
         register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, RagiumRecipeTypes.LASER_ASSEMBLY)

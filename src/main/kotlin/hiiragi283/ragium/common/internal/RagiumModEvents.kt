@@ -57,6 +57,11 @@ internal object RagiumModEvents {
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BEDROCK_MINER)
 
         event
+            .getBuilder(RagiumMachineKeys.DISENCHANTER)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.ENCHANTMENT_TABLE_USE)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT))
+
+        event
             .getBuilder(RagiumMachineKeys.FISHER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFisherBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.FISHING_BOBBER_SPLASH)

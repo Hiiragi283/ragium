@@ -4,10 +4,10 @@ import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
 import blusunrize.immersiveengineering.common.register.IEItems
-import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
@@ -45,7 +45,8 @@ object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering"
             .save(output)
 
         // Coal Coke Dust
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(RagiumItemTags.COAL_COKE)
             .itemOutput(IEItems.Ingredients.DUST_COKE)
             .save(output)

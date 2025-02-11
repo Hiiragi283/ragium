@@ -126,12 +126,14 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // Snow Block -> 4x Snow Ball
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Items.SNOW_BLOCK)
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_block")
         // Ice -> 4x Snow Ball
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Items.ICE)
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_ice")

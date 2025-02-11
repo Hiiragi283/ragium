@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCache
+import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -20,7 +20,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -45,17 +44,15 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
-    private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTExtractorRecipe> =
-        HTRecipeCache(RagiumRecipeTypes.EXTRACTOR)
+    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTExtractorRecipe> =
+        HTRecipeGetter.Cached(RagiumRecipeTypes.EXTRACTOR.get())
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
-        HTMachineEnergyData.Consume.CHEMICAL
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, itemInput.getStackInSlot(0))
-        val holder: RecipeHolder<HTExtractorRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
-        val recipe: HTExtractorRecipe = holder.value
+        val recipe: HTExtractorRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(itemOutput, outputTank)
         // Insert outputs

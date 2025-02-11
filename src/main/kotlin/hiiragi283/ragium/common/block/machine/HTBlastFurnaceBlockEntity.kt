@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCache
+import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -23,7 +23,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
@@ -42,11 +41,10 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         ),
     )
 
-    private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTBlastFurnaceRecipe> =
-        HTRecipeCache(RagiumRecipeTypes.BLAST_FURNACE)
+    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTBlastFurnaceRecipe> =
+        HTRecipeGetter.Cached(RagiumRecipeTypes.BLAST_FURNACE.get())
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
-        HTMachineEnergyData.Consume.DEFAULT
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()
@@ -59,12 +57,11 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
             ),
             listOf(),
         )
-        val holder: RecipeHolder<HTBlastFurnaceRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
-        val recipe: HTBlastFurnaceRecipe = holder.value()
+        val recipe: HTBlastFurnaceRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
         if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
         val output: ItemStack = recipe.itemResults[0].getItem(enchantments)
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
-        itemOutput.insertOrDrop(level, pos, output)
+        itemOutput.insertOrDrop(level, pos.above(), output)
         itemInput.consumeItem(0, recipe.firstInput.count(), false)
         itemInput.consumeItem(1, recipe.secondInput.count(), false)
         recipe.thirdInput.ifPresent { third: SizedIngredient ->

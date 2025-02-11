@@ -39,7 +39,8 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerWheat(output: RecipeOutput) {
         // Flour
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Tags.Items.CROPS_WHEAT)
             .itemOutput(RagiumItems.FLOUR)
             .save(output)
@@ -189,17 +190,20 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerMeat(output: RecipeOutput) {
         // Raw Food -> Minced Meat
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Tags.Items.FOODS_RAW_MEAT)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .saveSuffixed(output, "_from_meat")
 
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Tags.Items.FOODS_RAW_FISH)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .saveSuffixed(output, "_from_fish")
 
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Items.ROTTEN_FLESH)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .saveSuffixed(output, "_from_rotten")

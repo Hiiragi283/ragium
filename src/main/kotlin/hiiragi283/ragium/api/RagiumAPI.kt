@@ -10,15 +10,19 @@ import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import java.util.*
 
@@ -91,4 +95,11 @@ interface RagiumAPI {
     fun createItemResult(stack: ItemStack): HTItemResult = createItemResult(stack.item, stack.count, stack.componentsPatch)
 
     fun createItemResult(item: Item, count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult
+
+    fun createSingleItemMenu(
+        syncId: Int,
+        playerInv: Inventory,
+        pos: BlockPos,
+        itemHandler: IItemHandler,
+    ): AbstractContainerMenu
 }

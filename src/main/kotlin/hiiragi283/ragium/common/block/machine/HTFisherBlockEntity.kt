@@ -40,11 +40,15 @@ class HTFisherBlockEntity(pos: BlockPos, state: BlockState) :
     override val handlerSerializer: HTHandlerSerializer =
         HTHandlerSerializer.ofItem(itemOutput.slotRange.map(itemOutput::createSlot))
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
-        HTMachineEnergyData.Consume.DEFAULT
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        if (!level.getFluidState(pos.below()).`is`(FluidTags.WATER)) throw HTMachineException.FindFluid(false)
+        if (!level.getFluidState(pos.below()).`is`(FluidTags.WATER)) {
+            throw HTMachineException.Custom(
+                true,
+                "Failed to find water source below!",
+            )
+        }
         // Apply enchantment
         val stack = ItemStack(Items.FISHING_ROD)
         EnchantmentHelper.setEnchantments(stack, enchantments)
@@ -52,15 +56,16 @@ class HTFisherBlockEntity(pos: BlockPos, state: BlockState) :
         val luck: Int = getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA)
         val lootKey: ResourceKey<LootTable> = if ((luck / 3f) > level.random.nextFloat()) {
             BuiltInLootTables.FISHING_TREASURE
-        } else BuiltInLootTables.FISHING
+        } else {
+            BuiltInLootTables.FISHING
+        }
         val lootParams: LootParams = LootParams
             .Builder(level)
             .withParameter(LootContextParams.ORIGIN, pos.below().toVec3())
             .withParameter(LootContextParams.TOOL, stack)
             .withLuck(
-                EnchantmentHelper.getFishingLuckBonus(level, stack, FakePlayerFactory.getMinecraft(level)).toFloat()
-            )
-            .create(LootContextParamSets.FISHING)
+                EnchantmentHelper.getFishingLuckBonus(level, stack, FakePlayerFactory.getMinecraft(level)).toFloat(),
+            ).create(LootContextParamSets.FISHING)
         val lootTable: LootTable = level.server.reloadableRegistries().getLootTable(lootKey)
         val stacks: List<ItemStack> = lootTable.getRandomItems(lootParams)
         // Insert loots
@@ -73,6 +78,5 @@ class HTFisherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: Player): Boolean = false
 
-    override fun getItemHandler(direction: Direction?): IItemHandlerModifiable =
-        HTStorageIO.OUTPUT.wrapItemHandler(itemOutput)
+    override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.OUTPUT.wrapItemHandler(itemOutput)
 }

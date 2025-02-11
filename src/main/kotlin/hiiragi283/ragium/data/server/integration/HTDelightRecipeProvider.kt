@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.server.integration
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTExtractorRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -56,7 +56,8 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
             ).save(output)
 
         // Rice
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(ModItems.RICE_PANICLE.get())
             .itemOutput(ModItems.RICE.get(), 2)
             .save(output)

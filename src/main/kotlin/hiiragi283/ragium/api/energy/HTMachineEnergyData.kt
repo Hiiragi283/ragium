@@ -6,7 +6,7 @@ sealed interface HTMachineEnergyData {
     val amount: Int
 
     fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean
-    
+
     data object Empty : HTMachineEnergyData {
         override val amount: Int = 0
 

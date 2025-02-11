@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
+import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTLaserAssemblyRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
@@ -22,6 +23,9 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     companion object {
         @JvmStatic
         fun compressor(): HTSingleItemRecipeBuilder<HTCompressorRecipe> = HTSingleItemRecipeBuilder("compressor", ::HTCompressorRecipe)
+
+        @JvmStatic
+        fun grinder(): HTSingleItemRecipeBuilder<HTGrinderRecipe> = HTSingleItemRecipeBuilder("grinder", ::HTGrinderRecipe)
 
         @JvmStatic
         fun laser(): HTSingleItemRecipeBuilder<HTLaserAssemblyRecipe> = HTSingleItemRecipeBuilder("laser", ::HTLaserAssemblyRecipe)

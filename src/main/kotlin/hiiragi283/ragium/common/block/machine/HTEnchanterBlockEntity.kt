@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCache
+import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
@@ -32,11 +32,10 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
         ),
     )
 
-    private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTEnchanterRecipe> =
-        HTRecipeCache(RagiumRecipeTypes.ENCHANTER)
+    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTEnchanterRecipe> =
+        HTRecipeGetter.Cached(RagiumRecipeTypes.ENCHANTER.get())
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
-        HTMachineEnergyData.Consume.PRECISION
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.PRECISION
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val enchantPower: Double = EnchantingTableBlock.BOOKSHELF_OFFSETS

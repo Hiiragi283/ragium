@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -136,7 +136,8 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // 8x Netherrack -> 6x Bauxite + 2x Sulfur
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Items.NETHERRACK, 8)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 4)
             .save(output)

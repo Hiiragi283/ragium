@@ -57,8 +57,8 @@ object RagiumRecipeSerializers {
         register("extractor", HTExtractorRecipe.CODEC, HTExtractorRecipe.STREAM_CODEC)
 
     @JvmField
-    val GRINDER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTGrinderRecipe>> =
-        register("grinder", HTGrinderRecipe.CODEC, HTGrinderRecipe.STREAM_CODEC)
+    val GRINDER: DeferredHolder<RecipeSerializer<*>, HTSingleItemRecipe.Serializer<HTGrinderRecipe>> =
+        REGISTER.register("grinder") { _: ResourceLocation -> HTSingleItemRecipe.Serializer(::HTGrinderRecipe) }
 
     @JvmField
     val GROWTH_CHAMBER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTGrowthChamberRecipe>> =

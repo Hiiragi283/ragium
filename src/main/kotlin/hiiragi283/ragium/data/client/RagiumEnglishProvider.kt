@@ -182,16 +182,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Bedrock Miner",
             "Collect minerals from Bedrock",
         )
+        add(RagiumMachineKeys.DISENCHANTER, "Disenchanter", "Transfer enchantment from applied item to book")
         add(
             RagiumMachineKeys.DRAIN,
             "Drain",
             "Drains fluids from front, experience from up, and fluid cube in slot",
         )
-        add(
-            RagiumMachineKeys.FISHER,
-            "Fisher",
-            "Fishing fishes from below water source",
-        )
+        add(RagiumMachineKeys.FISHER, "Fisher", "Fishing fishes from below water source")
 
         add(
             RagiumMachineKeys.COMBUSTION_GENERATOR,

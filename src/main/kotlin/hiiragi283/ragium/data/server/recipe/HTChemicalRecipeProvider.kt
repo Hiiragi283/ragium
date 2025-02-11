@@ -1,6 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.data.recipe.HTExtractorRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -46,7 +49,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.ALKALI_REAGENT)
             .saveSuffixed(output, "_from_ash")
         // Calcite -> Alkali
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Items.CALCITE, 4)
             .itemOutput(RagiumItems.ALKALI_REAGENT)
             .saveSuffixed(output, "_from_calcite")
@@ -124,7 +128,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerDeepant(output: RecipeOutput) {
         // Deep Reagent
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 16)
             .itemOutput(RagiumItems.DEEPANT_REAGENT)
             .save(output)
@@ -298,7 +303,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerSludge(output: RecipeOutput) {
         // Slag -> Gravel
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(RagiumItemTags.SLAG)
             .itemOutput(Items.GRAVEL)
             .saveSuffixed(output, "_from_slag")

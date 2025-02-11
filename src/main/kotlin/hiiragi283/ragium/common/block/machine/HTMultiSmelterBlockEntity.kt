@@ -16,8 +16,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state, RagiumMachineKeys.MULTI_SMELTER) {
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.EMPTY
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
-        HTMachineEnergyData.Consume.DEFAULT
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()

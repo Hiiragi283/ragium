@@ -9,25 +9,11 @@ sealed class HTMachineException(val showInLog: Boolean, message: String) : Runti
 
     class ConsumeFuel(showInLog: Boolean) : HTMachineException(showInLog, "Failed to consume fuel!")
 
-    class ConsumeEnergy(showInLog: Boolean) : HTMachineException(showInLog, "Failed to consume energy!")
-
     class GenerateEnergy(showInLog: Boolean) : HTMachineException(showInLog, "Failed to generate energy!")
 
     //    Fluid    //
 
-    class CalculateAmount(showInLog: Boolean) : HTMachineException(showInLog, "Failed to calculate required fluid amount!")
-
-    class FindFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to find fluid!")
-
-    class FluidInteract(showInLog: Boolean) : HTMachineException(showInLog, "Failed to interact with the fluid storage!")
-
-    class InsertFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to insert fluid into the storage!")
-
     class ExtractFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to extract fluid into the storage!")
-
-    class EmptyFluid(showInLog: Boolean) : HTMachineException(showInLog, "The fluid storage is empty!")
-
-    class MaxFluid(showInLog: Boolean) : HTMachineException(showInLog, "The fluid storage is already full!")
 
     //    Item    //
 

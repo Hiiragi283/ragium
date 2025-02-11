@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTGrinderRecipeBuilder
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.material.*
@@ -9,22 +9,16 @@ import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.RecipeManager
 
 object HTRecipeConverters {
     //    Compressor    //
 
     @JvmStatic
-    fun compressor(recipeManager: RecipeManager, registry: HTMaterialRegistry, consumer: (HTCompressorRecipe) -> Unit) {
-        recipeManager
-            .getAllRecipesFor(RagiumRecipeTypes.COMPRESSOR.get())
-            .map(RecipeHolder<HTCompressorRecipe>::value)
-            .forEach(consumer)
+    fun compressor(consumer: (HTCompressorRecipe) -> Unit) {
+        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
         registry.typedMaterials.forEach { material: HTTypedMaterial ->
             compressorGear(material, registry, consumer)
             compressorGem(material, registry, consumer)
@@ -100,11 +94,8 @@ object HTRecipeConverters {
     //    Grinder    //
 
     @JvmStatic
-    fun grinder(recipeManager: RecipeManager, registry: HTMaterialRegistry, consumer: (HTGrinderRecipe) -> Unit) {
-        recipeManager
-            .getAllRecipesFor(RagiumRecipeTypes.GRINDER.get())
-            .map(RecipeHolder<HTGrinderRecipe>::value)
-            .forEach(consumer)
+    fun grinder(consumer: (HTGrinderRecipe) -> Unit) {
+        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
         registry.typedMaterials.forEach { material: HTTypedMaterial ->
             grinderOreToRaw(material, registry, consumer)
             grinderMainToDust(material, registry, consumer)
@@ -120,7 +111,8 @@ object HTRecipeConverters {
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return
         val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return
         val count: Int = registry.getProperty(key).getOrDefault(HTMaterialPropertyKeys.GRINDER_RAW_COUNT)
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(HTTagPrefix.ORE, key)
             .itemOutput(HTApplyFortuneItemResult(output.value(), count * 2, count))
             .export(consumer)
@@ -158,7 +150,8 @@ object HTRecipeConverters {
     ) {
         val (_: HTMaterialType, key: HTMaterialKey) = material
         val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.DUST, key) ?: return
-        HTGrinderRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(inputPrefix, key)
             .itemOutput(output.value(), baseCount)
             .export(consumer)
@@ -167,11 +160,8 @@ object HTRecipeConverters {
     //    Infuser    //
 
     @JvmStatic
-    fun infuser(recipeManager: RecipeManager, registry: HTMaterialRegistry, consumer: (HTInfuserRecipe) -> Unit) {
-        recipeManager
-            .getAllRecipesFor(RagiumRecipeTypes.INFUSER.get())
-            .map(RecipeHolder<HTInfuserRecipe>::value)
-            .forEach(consumer)
+    fun infuser(consumer: (HTInfuserRecipe) -> Unit) {
+        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
         registry.typedMaterials.forEach { material: HTTypedMaterial ->
             infuserOreToRaw(material, registry, consumer)
         }

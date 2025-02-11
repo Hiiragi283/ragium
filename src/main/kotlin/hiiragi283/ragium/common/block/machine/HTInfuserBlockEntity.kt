@@ -7,13 +7,14 @@ import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.HTInfuserContainerMenu
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
@@ -48,38 +49,26 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
-        HTMachineEnergyData.Consume.CHEMICAL
+    private val recipeGetter: HTRecipeGetter.Listed<HTMachineRecipeInput, HTInfuserRecipe> =
+        HTRecipeGetter.Listed(RagiumRecipeTypes.INFUSER.get(), HTRecipeConverters::infuser)
+
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val foundRecipes: MutableList<HTInfuserRecipe> = mutableListOf()
-        HTRecipeConverters.infuser(
-            level.recipeManager,
-            RagiumAPI.getInstance().getMaterialRegistry(),
-            foundRecipes::add,
-        )
-        if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
             enchantments,
             itemInput.getStackInSlot(0),
             inputTank.fluid,
         )
-        var foundRecipe: HTInfuserRecipe? = null
-        for (recipe: HTInfuserRecipe in foundRecipes) {
-            if (recipe.matches(input, level)) {
-                foundRecipe = recipe
-                break
-            }
-        }
-        if (foundRecipe == null) throw HTMachineException.NoMatchingRecipe(false)
+        val recipe: HTInfuserRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
-        foundRecipe.canInsert(itemOutput, outputTank)
+        recipe.canInsert(itemOutput, outputTank)
         // Insert outputs
-        foundRecipe.insertOutputs(itemOutput, outputTank, level, pos)
+        recipe.insertOutputs(itemOutput, outputTank, level, pos)
         // Decrement input
-        itemInput.getStackInSlot(0).shrink(foundRecipe.itemInput.count())
-        inputTank.drain(foundRecipe.fluidInput.amount(), IFluidHandler.FluidAction.EXECUTE)
+        itemInput.getStackInSlot(0).shrink(recipe.itemInput.count())
+        inputTank.drain(recipe.fluidInput.amount(), IFluidHandler.FluidAction.EXECUTE)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

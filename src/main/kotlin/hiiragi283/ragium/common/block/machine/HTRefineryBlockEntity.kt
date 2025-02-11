@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCache
+import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -22,7 +22,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -39,8 +38,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         listOf(inputTank, outputTank),
     )
 
-    private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTRefineryRecipe> =
-        HTRecipeCache(RagiumRecipeTypes.REFINERY)
+    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTRefineryRecipe> =
+        HTRecipeGetter.Cached(RagiumRecipeTypes.REFINERY.get())
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)
@@ -48,14 +47,12 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
-        HTMachineEnergyData.Consume.CHEMICAL
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, inputTank.fluid)
-        val holder: RecipeHolder<HTRefineryRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
-        val recipe: HTRefineryRecipe = holder.value
+        val recipe: HTRefineryRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(itemOutput, outputTank)
         // Insert outputs

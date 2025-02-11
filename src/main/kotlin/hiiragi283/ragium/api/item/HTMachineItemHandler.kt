@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.item
 
 import hiiragi283.ragium.api.capability.HTSlotHandler
 import hiiragi283.ragium.api.extension.forEachSlot
+import hiiragi283.ragium.api.extension.slotRange
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 
@@ -14,6 +15,8 @@ interface HTMachineItemHandler : IItemHandlerModifiable {
             get() = this@HTMachineItemHandler.getStackInSlot(slot)
             set(value) = this@HTMachineItemHandler.setStackInSlot(slot, value)
     }
+
+    fun allSlots(): List<HTSlotHandler<ItemStack>> = slotRange.map(::createSlot)
 
     fun canConsumeAll(): Boolean {
         forEachSlot { slot: Int ->
