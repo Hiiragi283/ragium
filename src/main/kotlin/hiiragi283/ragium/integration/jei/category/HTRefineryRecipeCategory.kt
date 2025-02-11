@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
+import hiiragi283.ragium.integration.jei.addItemResult
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
@@ -27,7 +28,7 @@ class HTRefineryRecipeCategory(guiHelper: IGuiHelper) :
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.getItemOutput())
+            .addItemResult(recipe, 0)
         // Fluid Output
         builder
             .addOutputSlot(getPosition(4), getPosition(0))

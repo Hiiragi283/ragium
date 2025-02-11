@@ -2,7 +2,7 @@ package hiiragi283.ragium.api
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.registries.RegistryBuilder
@@ -12,6 +12,13 @@ import net.neoforged.neoforge.registries.RegistryBuilder
  */
 object RagiumRegistries {
     /**
+     * [HTItemResult]の[MapCodec]の[Registry]
+     */
+    @JvmField
+    val ITEM_RESULT: Registry<MapCodec<out HTItemResult>> =
+        RegistryBuilder(Keys.ITEM_RESULT).sync(true).create()
+
+    /**
      * [HTMultiblockComponent.Type]の[Registry]
      */
     @JvmField
@@ -19,22 +26,15 @@ object RagiumRegistries {
         RegistryBuilder(Keys.MULTIBLOCK_COMPONENT_TYPE).sync(true).create()
 
     /**
-     * [HTMachineRecipeCondition]の[MapCodec]の[Registry]
-     */
-    @JvmField
-    val RECIPE_CONDITION: Registry<MapCodec<out HTMachineRecipeCondition>> =
-        RegistryBuilder(Keys.RECIPE_CONDITION).sync(true).create()
-
-    /**
      * Ragiumが追加する[Registry]の[ResourceKey]
      */
     object Keys {
         @JvmField
-        val MULTIBLOCK_COMPONENT_TYPE: ResourceKey<Registry<HTMultiblockComponent.Type<*>>> =
-            ResourceKey.createRegistryKey<HTMultiblockComponent.Type<*>>(RagiumAPI.id("multiblock_component_type"))
+        val ITEM_RESULT: ResourceKey<Registry<MapCodec<out HTItemResult>>> =
+            ResourceKey.createRegistryKey<MapCodec<out HTItemResult>>(RagiumAPI.id("item_result"))
 
         @JvmField
-        val RECIPE_CONDITION: ResourceKey<Registry<MapCodec<out HTMachineRecipeCondition>>> =
-            ResourceKey.createRegistryKey<MapCodec<out HTMachineRecipeCondition>>(RagiumAPI.id("recipe_condition"))
+        val MULTIBLOCK_COMPONENT_TYPE: ResourceKey<Registry<HTMultiblockComponent.Type<*>>> =
+            ResourceKey.createRegistryKey<HTMultiblockComponent.Type<*>>(RagiumAPI.id("multiblock_component_type"))
     }
 }

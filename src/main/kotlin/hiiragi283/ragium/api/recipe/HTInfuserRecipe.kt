@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -10,7 +11,6 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
@@ -23,7 +23,7 @@ class HTInfuserRecipe(
     group: String,
     val itemInput: SizedIngredient,
     val fluidInput: SizedFluidIngredient,
-    itemOutput: Optional<ItemStack>,
+    itemOutput: Optional<HTItemResult>,
     fluidOutput: Optional<FluidStack>,
 ) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
     companion object {
@@ -35,7 +35,7 @@ class HTInfuserRecipe(
                         HTRecipeCodecs.group(),
                         HTRecipeCodecs.ITEM_INPUT.forGetter(HTInfuserRecipe::itemInput),
                         HTRecipeCodecs.FLUID_INPUT.forGetter(HTInfuserRecipe::fluidInput),
-                        ItemStack.CODEC.optionalFieldOf("item_output").forGetter(HTInfuserRecipe::itemOutput),
+                        HTItemResult.CODEC.optionalFieldOf("item_output").forGetter(HTInfuserRecipe::itemOutput),
                         FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTInfuserRecipe::fluidOutput),
                     ).apply(instance, ::HTInfuserRecipe)
             }.validate(HTFluidOutputRecipe::validate)
@@ -48,7 +48,7 @@ class HTInfuserRecipe(
             HTInfuserRecipe::itemInput,
             SizedFluidIngredient.STREAM_CODEC,
             HTInfuserRecipe::fluidInput,
-            ByteBufCodecs.optional(ItemStack.STREAM_CODEC),
+            ByteBufCodecs.optional(HTItemResult.STREAM_CODEC),
             HTInfuserRecipe::itemOutput,
             ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
             HTInfuserRecipe::fluidOutput,

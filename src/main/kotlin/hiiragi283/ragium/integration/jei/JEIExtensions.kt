@@ -2,6 +2,7 @@ package hiiragi283.ragium.integration.jei
 
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
@@ -9,6 +10,7 @@ import mezz.jei.api.neoforge.NeoForgeTypes
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
@@ -54,3 +56,12 @@ fun <T : IIngredientAcceptor<*>> T.addIngredients(ingredient: SizedIngredient?):
 
 fun <T : IIngredientAcceptor<*>> T.addIngredients(ingredient: FluidIngredient?): IIngredientAcceptor<*> =
     addIngredients(NeoForgeTypes.FLUID_STACK, ingredient?.stacks?.toList() ?: listOf())
+
+//    HTItemResult    //
+
+fun <T : IIngredientAcceptor<*>> T.addItemResult(recipe: HTMachineRecipeBase, index: Int): IIngredientAcceptor<*> = addItemStacks(
+    recipe.itemResults
+        .getOrNull(index)
+        ?.getItem(ItemEnchantments.EMPTY)
+        ?.let(::listOf) ?: listOf(),
+)

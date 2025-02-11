@@ -139,8 +139,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         HTGrinderRecipeBuilder()
             .itemInput(Items.NETHERRACK, 8)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 4)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 2)
-            .setChance(0.5f)
             .save(output)
         // Bauxite + Lapis solution -> Alumina + Water
         HTInfuserRecipeBuilder()

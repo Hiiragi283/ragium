@@ -5,8 +5,8 @@
     "tag": "c:glass_blocks"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:chemical_glass"
+    "type": "ragium:simple",
+    "item": "ragium:chemical_glass"
   },
   "second_item_input": {
     "count": 4,

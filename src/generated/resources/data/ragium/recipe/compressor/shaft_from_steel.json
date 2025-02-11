@@ -8,7 +8,7 @@
     "tag": "c:ingots/steel"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:shaft"
+    "type": "ragium:simple",
+    "item": "ragium:shaft"
   }
 }

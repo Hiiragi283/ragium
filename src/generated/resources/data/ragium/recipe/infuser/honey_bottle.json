@@ -9,7 +9,7 @@
     "item": "minecraft:glass_bottle"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:honey_bottle"
+    "type": "ragium:simple",
+    "item": "minecraft:honey_bottle"
   }
 }

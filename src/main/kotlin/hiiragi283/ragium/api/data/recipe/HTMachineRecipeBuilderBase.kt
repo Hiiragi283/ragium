@@ -4,9 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
+import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
@@ -65,7 +67,9 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     fun itemOutput(item: ItemLike, count: Int = 1): T = itemOutput(ItemStack(item, count))
 
-    abstract fun itemOutput(stack: ItemStack): T
+    fun itemOutput(stack: ItemStack): T = itemOutput(RagiumAPI.getInstance().createItemResult(stack))
+
+    abstract fun itemOutput(result: HTItemResult): T
 
     //    Fluid Output    //
 
@@ -78,6 +82,10 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
     fun waterOutput(amount: Int = FluidType.BUCKET_VOLUME): T = fluidOutput(Fluids.WATER, amount)
 
     //    RecipeBuilder    //
+
+    final override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = throw UnsupportedOperationException()
+
+    final override fun getResult(): Item = throw UnsupportedOperationException()
 
     final override fun save(recipeOutput: RecipeOutput) {
         save(recipeOutput, getPrimalId())

@@ -13,7 +13,7 @@ data class HTGeneratorFuelEntry(val machine: HTMachineKey, val fuelTag: TagKey<F
         val CODEC: Codec<HTGeneratorFuelEntry> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    HTMachineKey.CODEC.fieldOf("machine").forGetter(HTGeneratorFuelEntry::machine),
+                    HTMachineKey.FIELD_CODEC.forGetter(HTGeneratorFuelEntry::machine),
                     TagKey.codec(Registries.FLUID).fieldOf("fuel").forGetter(HTGeneratorFuelEntry::fuelTag),
                     Codec.INT.fieldOf("amount").forGetter(HTGeneratorFuelEntry::amount),
                 ).apply(instance, ::HTGeneratorFuelEntry)

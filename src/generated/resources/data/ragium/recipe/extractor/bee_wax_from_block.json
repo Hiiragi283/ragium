@@ -9,7 +9,8 @@
     "item": "minecraft:honeycomb_block"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "ragium:bee_wax"
+    "item": "ragium:bee_wax"
   }
 }

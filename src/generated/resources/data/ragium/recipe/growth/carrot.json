@@ -1,8 +1,9 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "minecraft:carrot"
+    "item": "minecraft:carrot"
   },
   "seed": {
     "tag": "c:crops/carrot"

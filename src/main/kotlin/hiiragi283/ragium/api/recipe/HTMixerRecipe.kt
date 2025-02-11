@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -10,7 +11,6 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
@@ -22,7 +22,7 @@ class HTMixerRecipe(
     group: String,
     val firstFluid: SizedFluidIngredient,
     val secondFluid: SizedFluidIngredient,
-    itemOutput: Optional<ItemStack>,
+    itemOutput: Optional<HTItemResult>,
     fluidOutput: Optional<FluidStack>,
 ) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
     companion object {
@@ -38,7 +38,7 @@ class HTMixerRecipe(
                         SizedFluidIngredient.FLAT_CODEC
                             .fieldOf("second_fluidInput")
                             .forGetter(HTMixerRecipe::secondFluid),
-                        ItemStack.CODEC.optionalFieldOf("item_output").forGetter(HTMixerRecipe::itemOutput),
+                        HTItemResult.CODEC.optionalFieldOf("item_output").forGetter(HTMixerRecipe::itemOutput),
                         FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTMixerRecipe::fluidOutput),
                     ).apply(instance, ::HTMixerRecipe)
             }.validate(HTFluidOutputRecipe::validate)
@@ -51,7 +51,7 @@ class HTMixerRecipe(
             HTMixerRecipe::firstFluid,
             SizedFluidIngredient.STREAM_CODEC,
             HTMixerRecipe::secondFluid,
-            ByteBufCodecs.optional(ItemStack.STREAM_CODEC),
+            ByteBufCodecs.optional(HTItemResult.STREAM_CODEC),
             HTMixerRecipe::itemOutput,
             ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
             HTMixerRecipe::fluidOutput,

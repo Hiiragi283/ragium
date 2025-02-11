@@ -54,9 +54,9 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
         // Machine
         RagiumAPI.getInstance().getMachineRegistry().forEachEntries {
-                key: HTMachineKey,
-                holder: DeferredBlock<*>?,
-                property: HTPropertyHolder,
+            key: HTMachineKey,
+            holder: DeferredBlock<*>?,
+            property: HTPropertyHolder,
             ->
             if (holder == null) return@forEachEntries
             val modelId: ResourceLocation =

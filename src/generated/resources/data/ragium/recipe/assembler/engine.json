@@ -5,8 +5,8 @@
     "tag": "c:ingots/steel"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:engine"
+    "type": "ragium:simple",
+    "item": "ragium:engine"
   },
   "second_item_input": {
     "count": 4,

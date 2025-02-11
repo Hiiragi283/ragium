@@ -48,13 +48,13 @@ class HTLaserAssemblyBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
-            pos,
+            enchantments,
             itemInput.getStackInSlot(0),
             itemCatalyst.getStackInSlot(0),
         )
         val holder: RecipeHolder<HTLaserAssemblyRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
         val recipe: HTLaserAssemblyRecipe = holder.value()
-        val output: ItemStack = recipe.getItemOutput()
+        val output: ItemStack = recipe.itemResults[0].getItem(enchantments)
         // Try to insert outputs
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         // Insert outputs

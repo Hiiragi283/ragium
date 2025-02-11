@@ -5,7 +5,8 @@
     "item": "minecraft:ender_eye"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 2,
-    "id": "ragium:ender_reagent"
+    "item": "ragium:ender_reagent"
   }
 }

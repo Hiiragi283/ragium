@@ -19,9 +19,9 @@ abstract class HTSingleItemRecipe(
     group: String,
     val input: SizedIngredient,
     val catalyst: Optional<Ingredient>,
-    private val output: ItemStack,
+    itemResult: HTItemResult,
 ) : HTMachineRecipeBase(group) {
-    final override fun getItemOutput(): ItemStack = output.copy()
+    override val itemResults: List<HTItemResult> = listOf(itemResult)
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         if (!this.input.test(input.getItem(0))) return false
@@ -31,7 +31,7 @@ abstract class HTSingleItemRecipe(
 
     //    Serializer    //
 
-    class Serializer<T : HTSingleItemRecipe>(private val factory: (String, SizedIngredient, Optional<Ingredient>, ItemStack) -> T) :
+    class Serializer<T : HTSingleItemRecipe>(private val factory: (String, SizedIngredient, Optional<Ingredient>, HTItemResult) -> T) :
         RecipeSerializer<T> {
         private val codec: MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
@@ -39,7 +39,7 @@ abstract class HTSingleItemRecipe(
                     HTRecipeCodecs.group(),
                     HTRecipeCodecs.ITEM_INPUT.forGetter(HTSingleItemRecipe::input),
                     HTRecipeCodecs.CATALYST.forGetter(HTSingleItemRecipe::catalyst),
-                    HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTSingleItemRecipe::output),
+                    HTRecipeCodecs.itemResult(),
                 ).apply(instance, factory)
         }
 
@@ -50,8 +50,8 @@ abstract class HTSingleItemRecipe(
             HTSingleItemRecipe::input,
             ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
             HTSingleItemRecipe::catalyst,
-            ItemStack.STREAM_CODEC,
-            HTSingleItemRecipe::output,
+            HTItemResult.STREAM_CODEC,
+            { it.itemResults[0] },
             factory,
         )
 

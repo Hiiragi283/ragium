@@ -5,8 +5,9 @@
     "item": "ragium:cooked_meat_ingot"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 8,
-    "id": "ragium:canned_cooked_meat"
+    "item": "ragium:canned_cooked_meat"
   },
   "second_item_input": {
     "count": 1,

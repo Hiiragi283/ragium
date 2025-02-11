@@ -9,7 +9,8 @@
     "tag": "minecraft:crimson_stems"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "ragium:wood_dust"
+    "item": "ragium:wood_dust"
   }
 }

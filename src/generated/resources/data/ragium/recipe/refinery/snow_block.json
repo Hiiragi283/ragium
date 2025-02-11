@@ -5,7 +5,7 @@
     "tag": "c:water"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:snow_block"
+    "type": "ragium:simple",
+    "item": "minecraft:snow_block"
   }
 }

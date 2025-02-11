@@ -1,8 +1,9 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 2,
-    "id": "minecraft:beetroot"
+    "item": "minecraft:beetroot"
   },
   "seed": {
     "tag": "c:seeds/beetroot"

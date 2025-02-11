@@ -57,7 +57,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
-            pos,
+            enchantments,
             listOf(),
             listOf(firstTank.fluid, secondTank.fluid),
         )

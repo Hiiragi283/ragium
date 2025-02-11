@@ -60,7 +60,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         )
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
-            pos,
+            enchantments,
             itemInput.getStackInSlot(0),
             inputTank.fluid,
         )

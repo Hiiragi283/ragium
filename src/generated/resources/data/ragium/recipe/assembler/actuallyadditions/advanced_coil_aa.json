@@ -11,8 +11,9 @@
     "item": "actuallyadditions:basic_coil"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 2,
-    "id": "actuallyadditions:advanced_coil"
+    "item": "actuallyadditions:advanced_coil"
   },
   "second_item_input": {
     "count": 1,

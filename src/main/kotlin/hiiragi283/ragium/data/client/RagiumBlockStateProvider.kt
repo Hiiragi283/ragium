@@ -152,9 +152,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Machine
         RagiumAPI.getInstance().getMachineRegistry().forEachEntries {
-                key: HTMachineKey,
-                holder: DeferredBlock<*>?,
-                property: HTPropertyHolder,
+            key: HTMachineKey,
+            holder: DeferredBlock<*>?,
+            property: HTPropertyHolder,
             ->
             val block: Block = holder?.get() ?: return@forEachEntries
             val properties: HTPropertyHolder = key.getProperty()

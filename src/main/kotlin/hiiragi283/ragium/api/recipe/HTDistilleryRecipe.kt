@@ -2,15 +2,12 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
+import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
@@ -49,7 +46,7 @@ class HTDistilleryRecipe(
         )
     }
 
-    override fun getItemOutput(): ItemStack = ItemStack.EMPTY
+    override val itemResults: List<HTItemResult> = listOf()
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input.getFluid(0))
 

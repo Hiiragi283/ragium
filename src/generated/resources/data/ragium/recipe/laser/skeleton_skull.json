@@ -5,7 +5,7 @@
     "tag": "c:storage_blocks/bone_meal"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:skeleton_skull"
+    "type": "ragium:simple",
+    "item": "minecraft:skeleton_skull"
   }
 }

@@ -5,7 +5,7 @@
     "tag": "minecraft:soul_fire_base_blocks"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:soul_reagent"
+    "type": "ragium:simple",
+    "item": "ragium:soul_reagent"
   }
 }

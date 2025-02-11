@@ -5,7 +5,8 @@
     "item": "minecraft:wither_rose"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "ragium:wither_reagent"
+    "item": "ragium:wither_reagent"
   }
 }

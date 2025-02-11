@@ -5,7 +5,7 @@
     "item": "ragium:minced_meat"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:meat_ingot"
+    "type": "ragium:simple",
+    "item": "ragium:meat_ingot"
   }
 }

@@ -5,8 +5,9 @@
     "tag": "c:strings"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 8,
-    "id": "ragium:dynamite"
+    "item": "ragium:dynamite"
   },
   "second_item_input": {
     "count": 4,

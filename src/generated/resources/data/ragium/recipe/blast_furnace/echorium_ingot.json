@@ -5,8 +5,8 @@
     "tag": "c:ingots/aluminum"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:echorium_ingot"
+    "type": "ragium:simple",
+    "item": "ragium:echorium_ingot"
   },
   "second_item_input": {
     "count": 4,

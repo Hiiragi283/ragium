@@ -5,8 +5,8 @@
     "tag": "c:dusts/raginite"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:ragi_crystal"
+    "type": "ragium:simple",
+    "item": "ragium:ragi_crystal"
   },
   "second_item_input": {
     "count": 5,

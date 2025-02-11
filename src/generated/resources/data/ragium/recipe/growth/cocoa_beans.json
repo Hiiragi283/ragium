@@ -1,8 +1,9 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 3,
-    "id": "minecraft:cocoa_beans"
+    "item": "minecraft:cocoa_beans"
   },
   "seed": {
     "tag": "c:crops/cocoa_bean"

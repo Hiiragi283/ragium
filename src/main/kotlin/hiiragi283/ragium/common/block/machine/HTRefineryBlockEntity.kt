@@ -52,7 +52,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, inputTank.fluid)
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, inputTank.fluid)
         val holder: RecipeHolder<HTRefineryRecipe> = recipeCache.getFirstRecipe(input, level).getOrThrow()
         val recipe: HTRefineryRecipe = holder.value
         // Try to insert outputs

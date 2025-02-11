@@ -9,7 +9,7 @@
     "item": "ragium:sponge_cake"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:cake"
+    "type": "ragium:simple",
+    "item": "minecraft:cake"
   }
 }

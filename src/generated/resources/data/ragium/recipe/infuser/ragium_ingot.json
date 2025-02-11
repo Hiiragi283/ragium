@@ -9,7 +9,7 @@
     "tag": "c:ingots/iron"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:ragium_ingot"
+    "type": "ragium:simple",
+    "item": "ragium:ragium_ingot"
   }
 }

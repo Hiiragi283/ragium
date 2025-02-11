@@ -7,8 +7,9 @@
   ],
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 2,
-    "id": "farmersdelight:wild_rice"
+    "item": "farmersdelight:wild_rice"
   },
   "seed": {
     "tag": "c:crops/rice"

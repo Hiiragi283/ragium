@@ -5,7 +5,7 @@
     "tag": "c:slag"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:gravel"
+    "type": "ragium:simple",
+    "item": "minecraft:gravel"
   }
 }

@@ -5,8 +5,8 @@
     "item": "minecraft:skeleton_skull"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:player_head"
+    "type": "ragium:simple",
+    "item": "minecraft:player_head"
   },
   "second_item_input": {
     "count": 8,

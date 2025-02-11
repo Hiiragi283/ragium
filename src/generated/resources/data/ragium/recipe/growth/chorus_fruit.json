@@ -1,8 +1,9 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "minecraft:chorus_fruit"
+    "item": "minecraft:chorus_fruit"
   },
   "seed": {
     "item": "minecraft:chorus_fruit"

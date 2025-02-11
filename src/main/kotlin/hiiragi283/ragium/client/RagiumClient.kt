@@ -110,9 +110,9 @@ object RagiumClient {
         HTMultiblockComponentRendererRegistry.register(
             RagiumMultiblockComponentTypes.SIMPLE.get(),
             HTMultiblockComponentRenderer.BlockRenderer<HTSimpleMultiblockComponent> {
-                    _: HTControllerDefinition,
-                    _: Level,
-                    component: HTSimpleMultiblockComponent,
+                _: HTControllerDefinition,
+                _: Level,
+                component: HTSimpleMultiblockComponent,
                 ->
                 component.block.defaultBlockState()
             },
@@ -121,9 +121,9 @@ object RagiumClient {
         HTMultiblockComponentRendererRegistry.register(
             RagiumMultiblockComponentTypes.TAG.get(),
             HTMultiblockComponentRenderer.BlockRenderer<HTTagMultiblockComponent> {
-                    _: HTControllerDefinition,
-                    world: Level,
-                    component: HTTagMultiblockComponent,
+                _: HTControllerDefinition,
+                world: Level,
+                component: HTTagMultiblockComponent,
                 ->
                 null
             },
@@ -132,9 +132,9 @@ object RagiumClient {
         HTMultiblockComponentRendererRegistry.register(
             RagiumMultiblockComponentTypes.AXIS.get(),
             HTMultiblockComponentRenderer.BlockRenderer<HTAxisMultiblockComponent> {
-                    controller: HTControllerDefinition,
-                    world: Level,
-                    component: HTAxisMultiblockComponent,
+                controller: HTControllerDefinition,
+                world: Level,
+                component: HTAxisMultiblockComponent,
                 ->
                 component.getPlacementState(controller)
             },

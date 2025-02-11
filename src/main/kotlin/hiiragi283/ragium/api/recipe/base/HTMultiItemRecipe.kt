@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -19,9 +18,9 @@ abstract class HTMultiItemRecipe(
     val firstInput: SizedIngredient,
     val secondInput: SizedIngredient,
     val thirdInput: Optional<SizedIngredient>,
-    private val output: ItemStack,
+    itemResult: HTItemResult,
 ) : HTMachineRecipeBase(group) {
-    final override fun getItemOutput(): ItemStack = output.copy()
+    override val itemResults: List<HTItemResult> = listOf(itemResult)
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         val bool1: Boolean = this.firstInput.test(input.getItem(0))
@@ -33,7 +32,7 @@ abstract class HTMultiItemRecipe(
     //    Serializer    //
 
     class Serializer<T : HTMultiItemRecipe>(
-        private val factory: (String, SizedIngredient, SizedIngredient, Optional<SizedIngredient>, ItemStack) -> T,
+        private val factory: (String, SizedIngredient, SizedIngredient, Optional<SizedIngredient>, HTItemResult) -> T,
     ) : RecipeSerializer<T> {
         private val codec: MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
@@ -46,7 +45,7 @@ abstract class HTMultiItemRecipe(
                     SizedIngredient.FLAT_CODEC
                         .optionalFieldOf("third_item_input")
                         .forGetter(HTMultiItemRecipe::thirdInput),
-                    HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTMultiItemRecipe::output),
+                    HTRecipeCodecs.itemResult(),
                 ).apply(instance, factory)
         }
 
@@ -59,8 +58,8 @@ abstract class HTMultiItemRecipe(
             HTMultiItemRecipe::secondInput,
             ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
             HTMultiItemRecipe::thirdInput,
-            ItemStack.STREAM_CODEC,
-            HTMultiItemRecipe::output,
+            HTItemResult.STREAM_CODEC,
+            { it.itemResults[0] },
             factory,
         )
 

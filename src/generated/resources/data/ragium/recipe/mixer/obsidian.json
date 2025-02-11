@@ -5,8 +5,8 @@
     "tag": "c:water"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:obsidian"
+    "type": "ragium:simple",
+    "item": "minecraft:obsidian"
   },
   "second_fluidInput": {
     "amount": 1000,

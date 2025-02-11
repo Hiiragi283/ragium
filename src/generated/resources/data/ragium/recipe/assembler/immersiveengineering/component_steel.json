@@ -11,8 +11,8 @@
     "tag": "c:plates/steel"
   },
   "item_output": {
-    "count": 1,
-    "id": "immersiveengineering:component_steel"
+    "type": "ragium:simple",
+    "item": "immersiveengineering:component_steel"
   },
   "second_item_input": {
     "count": 1,

@@ -18,6 +18,10 @@ object HTRecipeCodecs {
     fun <T : HTMachineRecipeBase> group(): RecordCodecBuilder<T, String> =
         Codec.STRING.optionalFieldOf("group", "").forGetter(HTMachineRecipeBase::getGroup)
 
+    @JvmStatic
+    fun <T : HTMachineRecipeBase> itemResult(): RecordCodecBuilder<T, HTItemResult> =
+        HTItemResult.CODEC.fieldOf("item_output").forGetter { it.itemResults[0] }
+
     @JvmField
     val ITEM_INPUT: MapCodec<SizedIngredient> = SizedIngredient.FLAT_CODEC.fieldOf("item_input")
 

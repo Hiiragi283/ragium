@@ -81,14 +81,14 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         HTRecipeConverters.grinder(level.recipeManager, RagiumAPI.getInstance().getMaterialRegistry(), foundRecipes::add)
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, stackIn)
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, stackIn)
         var foundRecipe: HTGrinderRecipe? = foundRecipes.firstOrNull { it.matches(input, level) }
         runCatching {
             if (foundRecipe == null) throw HTMachineException.NoMatchingRecipe(false)
             foundRecipe
         }.onSuccess { recipe: HTGrinderRecipe ->
             // Drop output
-            ItemHandlerHelper.giveItemToPlayer(player, recipe.getResultItem(level.registryAccess()))
+            ItemHandlerHelper.giveItemToPlayer(player, recipe.assemble(input, level.registryAccess()))
             // Shrink input
             stackIn.shrink(recipe.input.count())
             // Play sound if present

@@ -5,7 +5,8 @@
     "item": "minecraft:wither_skeleton_skull"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 8,
-    "id": "ragium:wither_reagent"
+    "item": "ragium:wither_reagent"
   }
 }

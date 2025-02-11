@@ -5,8 +5,8 @@
     "tag": "c:ingots/steel"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:deep_steel_ingot"
+    "type": "ragium:simple",
+    "item": "ragium:deep_steel_ingot"
   },
   "second_item_input": {
     "count": 4,

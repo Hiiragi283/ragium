@@ -5,7 +5,7 @@
     "item": "minecraft:blaze_powder"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:blaze_reagent"
+    "type": "ragium:simple",
+    "item": "ragium:blaze_reagent"
   }
 }

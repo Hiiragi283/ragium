@@ -47,19 +47,19 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
         HTRecipeConverters.compressor(level.recipeManager, RagiumAPI.getInstance().getMaterialRegistry(), foundRecipes::add)
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
-            pos,
+            enchantments,
             itemInput.getStackInSlot(0),
             itemCatalyst.getStackInSlot(0),
         )
-        var foundRecipe: HTCompressorRecipe? = foundRecipes.firstOrNull { it.matches(input, level) }
-        if (foundRecipe == null) throw HTMachineException.NoMatchingRecipe(false)
-        val output: ItemStack = foundRecipe.getItemOutput()
+        var recipe: HTCompressorRecipe? = foundRecipes.firstOrNull { it.matches(input, level) }
+        if (recipe == null) throw HTMachineException.NoMatchingRecipe(false)
+        val output: ItemStack = recipe.itemResults[0].getItem(enchantments)
         // Try to insert outputs
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         // Insert outputs
         itemOutput.insertOrDrop(level, pos, output)
         // Decrement input
-        itemInput.getStackInSlot(0).shrink(foundRecipe.input.count())
+        itemInput.getStackInSlot(0).shrink(recipe.input.count())
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

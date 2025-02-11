@@ -1,31 +1,36 @@
 package hiiragi283.ragium.api.recipe.base
 
-import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.fluids.FluidStack
 
 /**
  * 機械レシピのインプットを表すクラス
- * @param pos 機械レシピを実行している座標
  * @param items アイテムのインプットの一覧
  * @param fluids 液体のインプットの一覧
  */
-class HTMachineRecipeInput private constructor(val pos: BlockPos, val items: List<ItemStack>, val fluids: List<FluidStack>) : RecipeInput {
+class HTMachineRecipeInput private constructor(
+    val enchantments: ItemEnchantments,
+    val items: List<ItemStack>,
+    val fluids: List<FluidStack>,
+) : RecipeInput {
     companion object {
         @JvmStatic
-        fun of(pos: BlockPos, items: List<ItemStack>, fluids: List<FluidStack>): HTMachineRecipeInput =
-            HTMachineRecipeInput(pos, items, fluids)
+        fun of(enchantments: ItemEnchantments, items: List<ItemStack>, fluids: List<FluidStack>): HTMachineRecipeInput =
+            HTMachineRecipeInput(enchantments, items, fluids)
 
         @JvmStatic
-        fun of(pos: BlockPos, vararg items: ItemStack): HTMachineRecipeInput = HTMachineRecipeInput(pos, listOf(*items), listOf())
+        fun of(enchantments: ItemEnchantments, vararg items: ItemStack): HTMachineRecipeInput =
+            HTMachineRecipeInput(enchantments, listOf(*items), listOf())
 
         @JvmStatic
-        fun of(pos: BlockPos, vararg fluids: FluidStack): HTMachineRecipeInput = HTMachineRecipeInput(pos, listOf(), listOf(*fluids))
+        fun of(enchantments: ItemEnchantments, vararg fluids: FluidStack): HTMachineRecipeInput =
+            HTMachineRecipeInput(enchantments, listOf(), listOf(*fluids))
 
         @JvmStatic
-        fun of(pos: BlockPos, item: ItemStack, fluid: FluidStack): HTMachineRecipeInput =
-            HTMachineRecipeInput(pos, listOf(item), listOf(fluid))
+        fun of(enchantments: ItemEnchantments, item: ItemStack, fluid: FluidStack): HTMachineRecipeInput =
+            HTMachineRecipeInput(enchantments, listOf(item), listOf(fluid))
     }
 
     override fun getItem(index: Int): ItemStack = items.getOrNull(index) ?: ItemStack.EMPTY

@@ -9,7 +9,7 @@
     "tag": "c:dusts/aluminum"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:cryolite"
+    "type": "ragium:simple",
+    "item": "ragium:cryolite"
   }
 }

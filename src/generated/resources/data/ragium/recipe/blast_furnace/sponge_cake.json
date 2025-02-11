@@ -5,8 +5,9 @@
     "item": "ragium:flour"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "ragium:sponge_cake"
+    "item": "ragium:sponge_cake"
   },
   "second_item_input": {
     "count": 2,

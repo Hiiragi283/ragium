@@ -5,6 +5,8 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.extension.canInsert
+import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
@@ -43,16 +45,16 @@ class HTGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         val foundRecipes: MutableList<HTGrinderRecipe> = mutableListOf()
         HTRecipeConverters.grinder(level.recipeManager, RagiumAPI.getInstance().getMaterialRegistry(), foundRecipes::add)
         if (foundRecipes.isEmpty()) throw HTMachineException.NoMatchingRecipe(false)
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(pos, itemInput.getStackInSlot(0))
-        var foundRecipe: HTGrinderRecipe? = foundRecipes.firstOrNull { it.matches(input, level) }
-        if (foundRecipe == null) throw HTMachineException.NoMatchingRecipe(false)
-        val output: ItemStack = foundRecipe.getItemOutput()
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, itemInput.getStackInSlot(0))
+        var recipe: HTGrinderRecipe? = foundRecipes.firstOrNull { it.matches(input, level) }
+        if (recipe == null) throw HTMachineException.NoMatchingRecipe(false)
+        val output: ItemStack = recipe.itemResults[0].getItem(enchantments)
         // Try to insert outputs
-        foundRecipe.canInsert(itemOutput)
+        if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         // Insert outputs
-        foundRecipe.insertOutputs(this, itemOutput)
+        itemOutput.insertOrDrop(level, pos, output)
         // Decrement input
-        itemInput.getStackInSlot(0).shrink(foundRecipe.input.count())
+        itemInput.getStackInSlot(0).shrink(recipe.input.count())
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

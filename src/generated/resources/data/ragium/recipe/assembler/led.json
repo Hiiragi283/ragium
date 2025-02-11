@@ -5,8 +5,9 @@
     "item": "ragium:glow_reagent"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "ragium:led"
+    "item": "ragium:led"
   },
   "second_item_input": {
     "count": 1,

@@ -1,8 +1,9 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "minecraft:sugar_cane"
+    "item": "minecraft:sugar_cane"
   },
   "seed": {
     "tag": "c:crops/sugar_cane"

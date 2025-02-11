@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.modifyEnchantment
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
@@ -15,16 +16,14 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.RegistryFixedCodec
-import net.minecraft.world.item.EnchantedBookItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
-import java.util.Optional
+import java.util.*
 
 class HTEnchanterRecipe(
     group: String,
@@ -61,8 +60,7 @@ class HTEnchanterRecipe(
         )
     }
 
-    override fun getItemOutput(): ItemStack =
-        EnchantedBookItem.createForEnchantment(EnchantmentInstance(enchantment, enchantment.value().maxLevel))
+    override val itemResults: List<HTItemResult> = listOf()
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         if (input.getItem(0).getEnchantmentLevel(enchantment) > 0) {

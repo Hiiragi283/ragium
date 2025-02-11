@@ -7,8 +7,9 @@
   ],
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 2,
-    "id": "farmersdelight:tomato"
+    "item": "farmersdelight:tomato"
   },
   "seed": {
     "item": "farmersdelight:tomato_seeds"

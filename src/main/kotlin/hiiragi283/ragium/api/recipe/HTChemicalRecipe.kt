@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
@@ -72,7 +73,7 @@ class HTChemicalRecipe(
 
     fun getFluidOutputs(): List<FluidStack> = fluidOutputs.map(FluidStack::copy)
 
-    override fun getItemOutput(): ItemStack = (getItemOutputs().getOrNull(0) ?: ItemStack.EMPTY).copy()
+    override val itemResults: List<HTItemResult> = listOf()
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         // Item
@@ -91,7 +92,8 @@ class HTChemicalRecipe(
             }
         }
         // Condition
-        return condition.map { it.test(level, input.pos) }.orElse(true)
+        return true
+        // return condition.map { it.test(level, input.pos) }.orElse(true)
     }
 
     override fun getSerializer(): RecipeSerializer<*> = TODO()

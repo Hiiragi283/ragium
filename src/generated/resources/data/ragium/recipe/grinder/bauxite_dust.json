@@ -5,12 +5,8 @@
     "item": "minecraft:netherrack"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "ragium:bauxite_dust"
-  },
-  "second_output": {
-    "chance": 0.5,
-    "count": 2,
     "item": "ragium:bauxite_dust"
   }
 }

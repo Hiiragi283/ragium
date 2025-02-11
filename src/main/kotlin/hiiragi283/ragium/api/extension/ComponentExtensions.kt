@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.ItemStack
@@ -32,3 +33,6 @@ fun foodComponent(
         FoodProperties.PossibleEffect(effect, chance)
     },
 )
+
+inline fun buildCompPatch(builderAction: DataComponentPatch.Builder.() -> Unit): DataComponentPatch =
+    DataComponentPatch.builder().apply(builderAction).build()

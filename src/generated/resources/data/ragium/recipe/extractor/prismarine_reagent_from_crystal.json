@@ -5,7 +5,7 @@
     "tag": "c:gems/prismarine"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:prismarine_reagent"
+    "type": "ragium:simple",
+    "item": "ragium:prismarine_reagent"
   }
 }

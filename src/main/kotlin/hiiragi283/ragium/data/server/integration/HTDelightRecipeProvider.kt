@@ -59,8 +59,6 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
         HTGrinderRecipeBuilder()
             .itemInput(ModItems.RICE_PANICLE.get())
             .itemOutput(ModItems.RICE.get(), 2)
-            .itemOutput(ModItems.STRAW.get())
-            .setChance(0.5f)
             .save(output)
 
         // Milk Bottle

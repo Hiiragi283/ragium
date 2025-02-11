@@ -13,7 +13,7 @@
     "tag": "c:dusts/bauxite"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:alumina_dust"
+    "type": "ragium:simple",
+    "item": "ragium:alumina_dust"
   }
 }

@@ -9,7 +9,7 @@
     "item": "ragium:crude_oil_bucket"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:bucket"
+    "type": "ragium:simple",
+    "item": "minecraft:bucket"
   }
 }

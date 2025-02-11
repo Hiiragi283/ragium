@@ -5,7 +5,7 @@
     "item": "minecraft:mud"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:packed_mud"
+    "type": "ragium:simple",
+    "item": "minecraft:packed_mud"
   }
 }

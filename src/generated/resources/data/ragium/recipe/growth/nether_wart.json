@@ -1,8 +1,9 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 3,
-    "id": "minecraft:nether_wart"
+    "item": "minecraft:nether_wart"
   },
   "seed": {
     "tag": "c:crops/nether_wart"

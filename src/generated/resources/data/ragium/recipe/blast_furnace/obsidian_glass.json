@@ -5,8 +5,8 @@
     "tag": "c:glass_blocks"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:obsidian_glass"
+    "type": "ragium:simple",
+    "item": "ragium:obsidian_glass"
   },
   "second_item_input": {
     "count": 1,

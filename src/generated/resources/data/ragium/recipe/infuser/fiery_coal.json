@@ -9,7 +9,7 @@
     "item": "ragium:blaze_reagent"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:fiery_coal"
+    "type": "ragium:simple",
+    "item": "ragium:fiery_coal"
   }
 }

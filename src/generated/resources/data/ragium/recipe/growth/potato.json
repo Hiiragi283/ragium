@@ -1,8 +1,9 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "minecraft:potato"
+    "item": "minecraft:potato"
   },
   "seed": {
     "tag": "c:crops/potato"

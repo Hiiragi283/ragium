@@ -11,7 +11,7 @@
     "tag": "c:coal_coke"
   },
   "item_output": {
-    "count": 1,
-    "id": "immersiveengineering:dust_coke"
+    "type": "ragium:simple",
+    "item": "immersiveengineering:dust_coke"
   }
 }

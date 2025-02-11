@@ -5,7 +5,8 @@
     "tag": "c:obsidians/crying"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "ragium:obsidian_tear"
+    "item": "ragium:obsidian_tear"
   }
 }

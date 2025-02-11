@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.energy.HTEnergyNetwork
@@ -15,10 +16,13 @@ import hiiragi283.ragium.common.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.fluid.HTLimitedFluidHandler
 import hiiragi283.ragium.common.fluid.HTMachineFluidTankImpl
 import hiiragi283.ragium.common.item.HTLimitedItemHandler
+import hiiragi283.ragium.common.recipe.HTSimpleItemResult
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.Item
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
@@ -45,4 +49,7 @@ class InternalRagiumAPI : RagiumAPI {
         HTLimitedEnergyStorage(storageIO, storage)
 
     override fun getCurrentServer(): MinecraftServer? = RagiumGameEvents.currentServer
+
+    override fun createItemResult(item: Item, count: Int, components: DataComponentPatch): HTItemResult =
+        HTSimpleItemResult(item, count, components)
 }

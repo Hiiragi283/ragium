@@ -5,7 +5,7 @@
     "tag": "c:milk"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:butter"
+    "type": "ragium:simple",
+    "item": "ragium:butter"
   }
 }

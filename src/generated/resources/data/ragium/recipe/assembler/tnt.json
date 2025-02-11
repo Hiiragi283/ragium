@@ -5,8 +5,9 @@
     "tag": "c:sands"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "minecraft:tnt"
+    "item": "minecraft:tnt"
   },
   "second_item_input": {
     "count": 1,

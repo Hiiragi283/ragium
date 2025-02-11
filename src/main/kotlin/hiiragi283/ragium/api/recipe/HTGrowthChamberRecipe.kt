@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
@@ -11,7 +12,6 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -24,7 +24,7 @@ class HTGrowthChamberRecipe(
     val seed: Ingredient,
     val soil: Ingredient,
     val waterAmount: Int,
-    private val crop: ItemStack,
+    private val crop: HTItemResult,
 ) : HTMachineRecipeBase(group) {
     companion object {
         @JvmField
@@ -38,7 +38,7 @@ class HTGrowthChamberRecipe(
                         .intRange(0, Int.MAX_VALUE)
                         .optionalFieldOf("water", 0)
                         .forGetter(HTGrowthChamberRecipe::waterAmount),
-                    HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTGrowthChamberRecipe::crop),
+                    HTRecipeCodecs.itemResult(),
                 ).apply(instance, ::HTGrowthChamberRecipe)
         }
 
@@ -52,13 +52,13 @@ class HTGrowthChamberRecipe(
             HTGrowthChamberRecipe::soil,
             ByteBufCodecs.INT,
             HTGrowthChamberRecipe::waterAmount,
-            ItemStack.STREAM_CODEC,
+            HTItemResult.STREAM_CODEC,
             HTGrowthChamberRecipe::crop,
             ::HTGrowthChamberRecipe,
         )
     }
 
-    override fun getItemOutput(): ItemStack = crop.copy()
+    override val itemResults: List<HTItemResult> = listOf(crop)
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         val bool1: Boolean = seed.test(input.getItem(0))

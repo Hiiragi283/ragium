@@ -5,7 +5,8 @@
     "item": "minecraft:nautilus_shell"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "ragium:prismarine_reagent"
+    "item": "ragium:prismarine_reagent"
   }
 }

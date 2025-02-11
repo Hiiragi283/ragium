@@ -9,7 +9,7 @@
     "item": "minecraft:bucket"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:powder_snow_bucket"
+    "type": "ragium:simple",
+    "item": "minecraft:powder_snow_bucket"
   }
 }

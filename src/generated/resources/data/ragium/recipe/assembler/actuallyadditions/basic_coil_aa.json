@@ -11,8 +11,9 @@
     "item": "actuallyadditions:restonia_crystal"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 2,
-    "id": "actuallyadditions:basic_coil"
+    "item": "actuallyadditions:basic_coil"
   },
   "second_item_input": {
     "count": 1,

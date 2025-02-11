@@ -1,15 +1,13 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTLaserAssemblyRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
-import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -19,7 +17,7 @@ import java.util.*
 
 class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     override val prefix: String,
-    private val factory: (String, SizedIngredient, Optional<Ingredient>, ItemStack) -> T,
+    private val factory: (String, SizedIngredient, Optional<Ingredient>, HTItemResult) -> T,
 ) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>, T>() {
     companion object {
         @JvmStatic
@@ -31,7 +29,7 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
 
     private var group: String? = null
     private lateinit var input: SizedIngredient
-    private lateinit var output: ItemStack
+    private lateinit var output: HTItemResult
     private var catalyst: Ingredient? = null
 
     override fun itemInput(ingredient: Ingredient, count: Int): HTSingleItemRecipeBuilder<T> = apply {
@@ -41,9 +39,9 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()
 
-    override fun itemOutput(stack: ItemStack): HTSingleItemRecipeBuilder<T> = apply {
+    override fun itemOutput(result: HTItemResult): HTSingleItemRecipeBuilder<T> = apply {
         check(!::output.isInitialized) { "Output is already initialized" }
-        this.output = stack
+        this.output = result
     }
 
     override fun fluidOutput(stack: FluidStack): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()
@@ -57,15 +55,11 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
         this.catalyst = catalyst
     }
 
-    override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
+    override fun getPrimalId(): ResourceLocation = output.getResultId()
 
-    override fun createRecipe(): T = factory(group ?: "", input, Optional.ofNullable(catalyst), this.output)
-
-    override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = this
+    override fun createRecipe(): T = factory(group ?: "", input, Optional.ofNullable(catalyst), output)
 
     override fun group(groupName: String?): RecipeBuilder = apply {
         this.group = groupName
     }
-
-    override fun getResult(): Item = output.item
 }

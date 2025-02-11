@@ -11,7 +11,8 @@
     "item": "ragium:yellow_cake"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 8,
-    "id": "mekanism:yellow_cake_uranium"
+    "item": "mekanism:yellow_cake_uranium"
   }
 }

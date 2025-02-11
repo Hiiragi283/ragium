@@ -9,7 +9,7 @@
     "id": "ragium:sap"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:warped_crystal"
+    "type": "ragium:simple",
+    "item": "ragium:warped_crystal"
   }
 }

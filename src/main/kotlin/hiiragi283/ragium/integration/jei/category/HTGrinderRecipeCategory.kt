@@ -2,17 +2,16 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
-import hiiragi283.ragium.api.recipe.base.HTChancedItemStack
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
+import hiiragi283.ragium.integration.jei.addItemResult
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
-import net.minecraft.world.item.ItemStack
 
 class HTGrinderRecipeCategory(guiHelper: IGuiHelper) :
     HTMachineRecipeCategory<HTGrinderRecipe>(guiHelper, RagiumMachineKeys.GRINDER, 1.5) {
@@ -28,15 +27,10 @@ class HTGrinderRecipeCategory(guiHelper: IGuiHelper) :
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.getItemOutput())
-        // Second Item Output
-        builder
-            .addOutputSlot(getPosition(4), getPosition(0))
-            .setStandardSlotBackground()
-            .addItemStack(recipe.secondOutput.map(HTChancedItemStack::toStack).orElse(ItemStack.EMPTY))
+            .addItemResult(recipe, 0)
     }
 
-    override fun getWidth(): Int = 18 * 5 + 8
+    override fun getWidth(): Int = 18 * 4 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
 

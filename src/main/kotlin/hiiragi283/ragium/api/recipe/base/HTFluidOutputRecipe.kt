@@ -6,20 +6,18 @@ import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.machine.HTMachineException
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
-import java.util.Optional
+import java.util.*
 
 /**
  * アイテムまたは液体の完成品を持つレシピのクラス
  */
 abstract class HTFluidOutputRecipe(
     group: String,
-    protected val itemOutput: Optional<ItemStack>,
+    protected val itemOutput: Optional<HTItemResult>,
     protected val fluidOutput: Optional<FluidStack>,
 ) : HTMachineRecipeBase(group) {
     companion object {
@@ -32,17 +30,17 @@ abstract class HTFluidOutputRecipe(
         }
     }
 
-    final override fun getItemOutput(): ItemStack = itemOutput.orElse(ItemStack.EMPTY).copy()
+    override val itemResults: List<HTItemResult> = itemOutput.map(::listOf).orElse(listOf())
 
     fun getFluidOutput(): FluidStack = fluidOutput.orElse(FluidStack.EMPTY).copy()
 
     /**
      * 指定した[itemHandler]と[fluidHandler]に完成品を入れられるか判定します。
-     * @throws hiiragi283.ragium.api.machine.HTMachineException 完成品を入れられなかった場合
+     * @throws HTMachineException 完成品を入れられなかった場合
      */
     fun canInsert(itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
-        itemOutput.ifPresent { output: ItemStack ->
-            if (!itemHandler.canInsert(output.copy())) throw HTMachineException.MergeResult(false)
+        itemOutput.ifPresent { output: HTItemResult ->
+            if (!itemHandler.canInsert(output.getItem(TODO()))) throw HTMachineException.MergeResult(false)
         }
         fluidOutput.ifPresent { output: FluidStack ->
             if (!fluidHandler.canFill(output.copy())) throw HTMachineException.MergeResult(false)
@@ -60,13 +58,11 @@ abstract class HTFluidOutputRecipe(
         level: Level,
         pos: BlockPos,
     ) {
-        itemOutput.ifPresent { output: ItemStack ->
-            itemHandler.insertOrDrop(level, pos.above(), output.copy())
+        itemOutput.ifPresent { output: HTItemResult ->
+            itemHandler.insertOrDrop(level, pos.above(), output.getItem(TODO()))
         }
         fluidOutput.ifPresent { output: FluidStack ->
             fluidHandler.fill(output.copy(), IFluidHandler.FluidAction.EXECUTE)
         }
     }
-
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = getItemOutput()
 }

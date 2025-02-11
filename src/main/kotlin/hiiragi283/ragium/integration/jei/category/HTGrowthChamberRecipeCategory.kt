@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
+import hiiragi283.ragium.integration.jei.addItemResult
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
@@ -42,7 +43,7 @@ class HTGrowthChamberRecipeCategory(guiHelper: IGuiHelper) :
         builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(recipe.getItemOutput())
+            .addItemResult(recipe, 0)
     }
 
     override fun getWidth(): Int = 18 * 6 + 8

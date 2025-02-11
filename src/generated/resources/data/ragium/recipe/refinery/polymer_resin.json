@@ -9,7 +9,8 @@
     "id": "ragium:fuel"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 2,
-    "id": "ragium:polymer_resin"
+    "item": "ragium:polymer_resin"
   }
 }

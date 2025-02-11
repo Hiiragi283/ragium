@@ -5,8 +5,9 @@
     "tag": "c:dusts/alumina"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 3,
-    "id": "ragium:aluminum_ingot"
+    "item": "ragium:aluminum_ingot"
   },
   "second_item_input": {
     "count": 1,

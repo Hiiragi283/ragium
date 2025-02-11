@@ -5,8 +5,8 @@
     "tag": "c:plastics"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:circuit_board"
+    "type": "ragium:simple",
+    "item": "ragium:circuit_board"
   },
   "second_item_input": {
     "count": 1,

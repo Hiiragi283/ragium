@@ -7,8 +7,9 @@
   ],
   "type": "ragium:growth_chamber",
   "item_output": {
+    "type": "ragium:simple",
     "count": 2,
-    "id": "actuallyadditions:coffee_beans"
+    "item": "actuallyadditions:coffee_beans"
   },
   "seed": {
     "tag": "c:seeds/coffee"

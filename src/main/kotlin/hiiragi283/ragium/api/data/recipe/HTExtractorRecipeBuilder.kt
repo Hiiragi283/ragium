@@ -2,12 +2,9 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
-import net.minecraft.advancements.Criterion
+import hiiragi283.ragium.api.recipe.base.HTItemResult
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
@@ -17,7 +14,7 @@ import java.util.*
 class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBuilder, HTExtractorRecipe>() {
     private var group: String? = null
     private lateinit var input: SizedIngredient
-    private var itemOutput: ItemStack? = null
+    private var itemOutput: HTItemResult? = null
     private var fluidOutput: FluidStack? = null
 
     override fun itemInput(ingredient: Ingredient, count: Int): HTExtractorRecipeBuilder = apply {
@@ -27,9 +24,9 @@ class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBui
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTExtractorRecipeBuilder = throw UnsupportedOperationException()
 
-    override fun itemOutput(stack: ItemStack): HTExtractorRecipeBuilder = apply {
+    override fun itemOutput(result: HTItemResult): HTExtractorRecipeBuilder = apply {
         check(itemOutput == null) { "Output is already initialized" }
-        this.itemOutput = stack
+        this.itemOutput = result
     }
 
     override fun fluidOutput(stack: FluidStack): HTExtractorRecipeBuilder = apply {
@@ -37,7 +34,7 @@ class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBui
         this.fluidOutput = stack
     }
 
-    override fun getPrimalId(): ResourceLocation = itemOutput?.itemHolder?.idOrThrow
+    override fun getPrimalId(): ResourceLocation = itemOutput?.getResultId()
         ?: fluidOutput?.fluidHolder?.idOrThrow
         ?: error("Either item or fluid output required!")
 
@@ -50,11 +47,7 @@ class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBui
         Optional.ofNullable(fluidOutput),
     )
 
-    override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = this
-
     override fun group(groupName: String?): RecipeBuilder = apply {
         this.group = groupName
     }
-
-    override fun getResult(): Item = itemOutput?.item ?: Items.AIR
 }

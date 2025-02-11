@@ -5,7 +5,8 @@
     "item": "minecraft:ice"
   },
   "item_output": {
+    "type": "ragium:simple",
     "count": 4,
-    "id": "minecraft:snowball"
+    "item": "minecraft:snowball"
   }
 }
