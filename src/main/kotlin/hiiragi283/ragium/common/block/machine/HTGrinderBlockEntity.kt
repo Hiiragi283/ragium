@@ -27,8 +27,8 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.GRINDER, pos, state, RagiumMachineKeys.GRINDER) {
-    private val itemInput = HTMachineItemHandler(1, this::setChanged)
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
         listOf(

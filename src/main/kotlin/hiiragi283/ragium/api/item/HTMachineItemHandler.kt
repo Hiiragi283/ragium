@@ -3,17 +3,9 @@ package hiiragi283.ragium.api.item
 import hiiragi283.ragium.api.capability.HTSlotHandler
 import hiiragi283.ragium.api.extension.forEachSlot
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.items.ItemStackHandler
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 
-/**
- * Ragiumで使用する[ItemStackHandler]の拡張クラス
- * @param callback [ItemStackHandler.onContentsChanged]で呼び出されるブロック
- */
-open class HTMachineItemHandler(size: Int, val callback: () -> Unit) : ItemStackHandler(size) {
-    override fun onContentsChanged(slot: Int) {
-        callback()
-    }
-
+interface HTMachineItemHandler : IItemHandlerModifiable {
     /**
      * 指定した[slot]に対する[HTSlotHandler]を返します。
      */

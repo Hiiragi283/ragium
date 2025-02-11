@@ -30,7 +30,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state, RagiumMachineKeys.REFINERY) {
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val inputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
     private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 

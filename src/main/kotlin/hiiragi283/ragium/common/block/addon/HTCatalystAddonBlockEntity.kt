@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.addon
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
@@ -25,10 +26,7 @@ import net.neoforged.neoforge.items.ItemHandlerHelper
 class HTCatalystAddonBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.CATALYST_ADDON, pos, state),
     HTBlockEntityHandlerProvider {
-    private val itemHandler: HTMachineItemHandler =
-        object : HTMachineItemHandler(1, this@HTCatalystAddonBlockEntity::setChanged) {
-            override fun getSlotLimit(slot: Int): Int = 1
-        }
+    private val itemHandler: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
     val catalystStack: ItemStack
         get() = itemHandler.getStackInSlot(0)

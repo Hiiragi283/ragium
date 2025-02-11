@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
+import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.recipe.base.HTItemResult
@@ -16,6 +17,7 @@ import hiiragi283.ragium.common.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.fluid.HTLimitedFluidHandler
 import hiiragi283.ragium.common.fluid.HTMachineFluidTankImpl
 import hiiragi283.ragium.common.item.HTLimitedItemHandler
+import hiiragi283.ragium.common.item.HTMachineItemHandlerImpl
 import hiiragi283.ragium.common.recipe.HTSimpleItemResult
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
@@ -35,6 +37,8 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
+
+    override fun createItemHandler(size: Int, callback: () -> Unit): HTMachineItemHandler = HTMachineItemHandlerImpl(size, callback)
 
     override fun createTank(capacity: Int, callback: () -> Unit): HTMachineFluidTank = HTMachineFluidTankImpl(capacity, callback)
 

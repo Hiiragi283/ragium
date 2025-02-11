@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
@@ -30,8 +31,8 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state, RagiumMachineKeys.BLAST_FURNACE) {
-    private val itemInput = HTMachineItemHandler(2, this::setChanged)
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(2, this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
         listOf(

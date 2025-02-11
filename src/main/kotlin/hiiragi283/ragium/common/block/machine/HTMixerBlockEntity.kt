@@ -30,7 +30,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.MIXER, pos, state, RagiumMachineKeys.MIXER) {
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val firstTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
     private val secondTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
     private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)

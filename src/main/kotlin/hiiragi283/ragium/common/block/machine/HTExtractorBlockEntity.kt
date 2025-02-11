@@ -28,8 +28,8 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state, RagiumMachineKeys.EXTRACTOR) {
-    private val itemInput = HTMachineItemHandler(1, this::setChanged)
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(

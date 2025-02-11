@@ -29,9 +29,9 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.INFUSER, pos, state, RagiumMachineKeys.INFUSER) {
-    private val itemInput = HTMachineItemHandler(1, this::setChanged)
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val inputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(

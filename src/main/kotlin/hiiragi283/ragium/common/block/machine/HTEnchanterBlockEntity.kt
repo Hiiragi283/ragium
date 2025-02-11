@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
@@ -19,8 +20,8 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(TODO(), pos, state, RagiumMachineKeys.ARCANE_ENCHANTER) {
-    private val itemInput = HTMachineItemHandler(3, this::setChanged)
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(3, this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
         listOf(

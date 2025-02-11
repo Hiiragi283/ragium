@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
@@ -28,9 +29,9 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTLaserAssemblyBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.LASER_ASSEMBLY, pos, state, RagiumMachineKeys.LASER_ASSEMBLY) {
-    private val itemInput = HTMachineItemHandler(1, this::setChanged)
-    private val itemCatalyst = HTMachineItemHandler(1, this::setChanged)
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val itemCatalyst: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
         listOf(

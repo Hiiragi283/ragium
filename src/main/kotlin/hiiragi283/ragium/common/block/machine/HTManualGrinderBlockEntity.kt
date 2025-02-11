@@ -40,7 +40,7 @@ import net.neoforged.neoforge.items.ItemHandlerHelper
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
     HTMachineAccess {
-    private val itemHandler = HTMachineItemHandler(1, this::setChanged)
+    private val itemHandler: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
     private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(listOf(itemHandler.createSlot(0)))
 

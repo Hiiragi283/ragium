@@ -27,9 +27,9 @@ import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.COMPRESSOR, pos, state, RagiumMachineKeys.COMPRESSOR) {
-    private val itemInput = HTMachineItemHandler(1, this::setChanged)
-    private val itemCatalyst = HTMachineItemHandler(1, this::setChanged)
-    private val itemOutput = HTMachineItemHandler(1, this::setChanged)
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val itemCatalyst: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
         listOf(

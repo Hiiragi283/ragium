@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
+import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.recipe.base.HTItemResult
@@ -66,6 +67,10 @@ interface RagiumAPI {
     fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V>
 
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
+
+    fun createItemHandler(callback: () -> Unit): HTMachineItemHandler = createItemHandler(1, callback)
+
+    fun createItemHandler(size: Int, callback: () -> Unit): HTMachineItemHandler
 
     fun createTank(callback: () -> Unit): HTMachineFluidTank = createTank(DEFAULT_TANK_CAPACITY, callback)
 
