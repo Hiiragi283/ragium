@@ -189,16 +189,14 @@ abstract class HTMachineBlockEntity(
     private fun tickOnServer(level: ServerLevel, pos: BlockPos) {
         val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetwork(level)
         val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
-        val energyAmount: Int = energyData.amount * costModifier
         // 取得したエネルギー量を処理できるか判定
-        val handler: IEnergyStorage.(Int, Boolean) -> Int = energyData.energyHandler
-        if (handler(network, energyAmount, true) < energyAmount) {
+        if (!energyData.handleEnergy(network, costModifier, true)) {
             LOGGER.error("Failed to handle required energy from network!")
             return
         }
         runCatching { process(level, pos) }
             .onSuccess {
-                handler(network, energyAmount, false)
+                energyData.handleEnergy(network, costModifier, false)
                 isActive = true
                 machineKey.getProperty().ifPresent(HTMachinePropertyKeys.SOUND) { soundEvent: SoundEvent ->
                     level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 0.5f, 1.0f)

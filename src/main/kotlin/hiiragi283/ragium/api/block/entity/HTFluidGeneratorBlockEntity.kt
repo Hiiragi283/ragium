@@ -34,7 +34,8 @@ abstract class HTFluidGeneratorBlockEntity(
 
     abstract fun getFuelAmount(stack: FluidStack): Int
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.generate(3200)
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
+        HTMachineEnergyData.Generate.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val stackIn: FluidStack = tank.fluid

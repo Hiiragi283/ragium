@@ -44,7 +44,8 @@ class HTLaserAssemblyBlockEntity(pos: BlockPos, state: BlockState) :
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTLaserAssemblyRecipe> =
         HTRecipeCache(RagiumRecipeTypes.LASER_ASSEMBLY)
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.consume(6400)
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
+        HTMachineEnergyData.Consume.PRECISION
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe

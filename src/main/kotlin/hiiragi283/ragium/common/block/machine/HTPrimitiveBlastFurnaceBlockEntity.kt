@@ -42,7 +42,7 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         ),
     )
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.EMPTY
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Empty
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()

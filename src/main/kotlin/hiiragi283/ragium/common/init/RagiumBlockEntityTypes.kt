@@ -58,6 +58,12 @@ object RagiumBlockEntityTypes {
     val PRIMITIVE_BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTPrimitiveBlastFurnaceBlockEntity>> =
         register("primitive_blast_furnace", ::HTPrimitiveBlastFurnaceBlockEntity, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
+    //    Consumer    //
+
+    @JvmField
+    val FISHER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTFisherBlockEntity>> =
+        register("fisher", ::HTFisherBlockEntity, RagiumMachineKeys.FISHER)
+
     //    Generator    //
 
     @JvmField

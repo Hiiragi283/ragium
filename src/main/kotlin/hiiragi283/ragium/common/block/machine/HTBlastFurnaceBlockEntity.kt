@@ -45,7 +45,8 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTBlastFurnaceRecipe> =
         HTRecipeCache(RagiumRecipeTypes.BLAST_FURNACE)
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.consume(1600)
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
+        HTMachineEnergyData.Consume.DEFAULT
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()

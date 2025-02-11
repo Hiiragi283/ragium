@@ -16,7 +16,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
-import net.neoforged.neoforge.items.ItemStackHandler
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -58,7 +58,7 @@ internal object RagiumGameEvents {
             }
         }
         if (foundAddon == null) return
-        val itemHandler: ItemStackHandler = foundAddon.getItemHandler(null)
+        val itemHandler: IItemHandlerModifiable = foundAddon.getItemHandler(null)
         itemHandler.insertItem(0, RagiumItems.SLAG.toStack(), false)
     }
 }

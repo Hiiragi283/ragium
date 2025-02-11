@@ -56,12 +56,15 @@ val ItemStack.isMaxCount: Boolean get() = count == maxStackSize
 
 //    IItemHandler    //
 
+val IItemHandler.slotRange: IntRange
+    get() = (0 until this.slots)
+
 inline fun IItemHandler.forEach(action: (ItemStack) -> Unit) {
-    (0 until this.slots).map(this::getStackInSlot).forEach(action)
+    slotRange.map(this::getStackInSlot).forEach(action)
 }
 
 inline fun IItemHandler.forEachSlot(action: (Int) -> Unit) {
-    (0 until this.slots).forEach(action)
+    slotRange.forEach(action)
 }
 
 /**

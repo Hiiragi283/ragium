@@ -187,6 +187,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Drain",
             "Drains fluids from front, experience from up, and fluid cube in slot",
         )
+        add(
+            RagiumMachineKeys.FISHER,
+            "Fisher",
+            "Fishing fishes from below water source",
+        )
 
         add(
             RagiumMachineKeys.COMBUSTION_GENERATOR,

@@ -2,19 +2,34 @@ package hiiragi283.ragium.api.energy
 
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-sealed class HTMachineEnergyData(val amount: Int, val energyHandler: IEnergyStorage.(Int, Boolean) -> Int) {
-    companion object {
-        @JvmField
-        val EMPTY: HTMachineEnergyData = Consume(0)
+sealed interface HTMachineEnergyData {
+    val amount: Int
 
-        @JvmStatic
-        fun consume(amount: Int): HTMachineEnergyData = Consume(amount)
+    fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean
+    
+    data object Empty : HTMachineEnergyData {
+        override val amount: Int = 0
 
-        @JvmStatic
-        fun generate(amount: Int): HTMachineEnergyData = Generate(amount)
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean = false
     }
 
-    private class Consume(amount: Int) : HTMachineEnergyData(amount, IEnergyStorage::extractEnergy)
+    enum class Consume(override val amount: Int) : HTMachineEnergyData {
+        DEFAULT(160),
+        CHEMICAL(640),
+        PRECISION(2560),
+        ;
 
-    private class Generate(amount: Int) : HTMachineEnergyData(amount, IEnergyStorage::receiveEnergy)
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean =
+            storage.extractEnergy(amount * modifier, simulate) == (amount * modifier)
+    }
+
+    enum class Generate(override val amount: Int) : HTMachineEnergyData {
+        DEFAULT(320),
+        CHEMICAL(1280),
+        PRECISION(5120),
+        ;
+
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean =
+            storage.receiveEnergy(amount * modifier, simulate) >= 0
+    }
 }

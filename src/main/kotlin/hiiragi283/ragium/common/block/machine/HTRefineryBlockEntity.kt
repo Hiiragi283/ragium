@@ -48,7 +48,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.consume(1600)
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
+        HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe

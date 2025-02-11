@@ -56,6 +56,12 @@ internal object RagiumModEvents {
             .getBuilder(RagiumMachineKeys.BEDROCK_MINER)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BEDROCK_MINER)
 
+        event
+            .getBuilder(RagiumMachineKeys.FISHER)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFisherBlockEntity)
+            .put(HTMachinePropertyKeys.SOUND, SoundEvents.FISHING_BOBBER_SPLASH)
+            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.BUBBLE))
+
         // Generator
         event
             .getBuilder(RagiumMachineKeys.COMBUSTION_GENERATOR)
@@ -256,6 +262,8 @@ internal object RagiumModEvents {
 
         registerHandlers(RagiumBlockEntityTypes.MANUAL_GRINDER)
         registerHandlers(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
+
+        registerHandlers(RagiumBlockEntityTypes.FISHER)
 
         registerHandlers(RagiumBlockEntityTypes.COMBUSTION_GENERATOR)
         registerHandlers(RagiumBlockEntityTypes.STIRLING_GENERATOR)

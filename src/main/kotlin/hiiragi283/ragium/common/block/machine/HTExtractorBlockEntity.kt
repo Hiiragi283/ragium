@@ -48,7 +48,8 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTExtractorRecipe> =
         HTRecipeCache(RagiumRecipeTypes.EXTRACTOR)
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.consume(1600)
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
+        HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe

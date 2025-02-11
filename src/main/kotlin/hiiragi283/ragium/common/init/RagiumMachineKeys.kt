@@ -10,6 +10,9 @@ object RagiumMachineKeys {
     @JvmField
     val DRAIN: HTMachineKey = HTMachineKey.of("drain")
 
+    @JvmField
+    val FISHER: HTMachineKey = HTMachineKey.of("fisher")
+
     //    Generator    //
 
     @JvmField

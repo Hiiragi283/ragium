@@ -121,6 +121,8 @@
   "machine_type.drain.description": "Drains fluids from front, experience from up, and fluid cube in slot",
   "machine_type.extractor": "Extractor",
   "machine_type.extractor.description": "Something like Centrifuge",
+  "machine_type.fisher": "Fisher",
+  "machine_type.fisher.description": "Fishing fishes from below water source",
   "machine_type.grinder": "Grinder",
   "machine_type.grinder.description": "Unbreakable Diamond",
   "machine_type.growth_chamber": "Growth Chamber",

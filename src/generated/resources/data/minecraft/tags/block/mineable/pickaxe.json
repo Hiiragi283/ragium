@@ -2,6 +2,7 @@
   "values": [
     "ragium:bedrock_miner",
     "ragium:drain",
+    "ragium:fisher",
     "ragium:combustion_generator",
     "ragium:solar_generator",
     "ragium:stirling_generator",

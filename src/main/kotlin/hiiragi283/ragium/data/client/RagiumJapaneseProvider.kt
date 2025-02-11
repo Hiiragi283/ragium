@@ -176,6 +176,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Machine Type
         add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
         add(RagiumMachineKeys.DRAIN, "排水溝", "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る")
+        add(RagiumMachineKeys.FISHER, "自動釣り機", "下の水源から魚を釣る")
 
         add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
         add(RagiumMachineKeys.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")

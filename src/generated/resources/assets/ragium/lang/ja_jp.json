@@ -121,6 +121,8 @@
   "machine_type.drain.description": "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る",
   "machine_type.extractor": "抽出器",
   "machine_type.extractor.description": "遠心分離機みたいなやつ",
+  "machine_type.fisher": "自動釣り機",
+  "machine_type.fisher.description": "下の水源から魚を釣る",
   "machine_type.grinder": "粉砕機",
   "machine_type.grinder.description": "ダイヤモンドは壊れない",
   "machine_type.growth_chamber": "成長チャンバー",

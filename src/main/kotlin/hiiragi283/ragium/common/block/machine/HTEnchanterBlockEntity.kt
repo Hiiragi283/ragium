@@ -35,9 +35,8 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
     private val recipeCache: HTRecipeCache<HTMachineRecipeInput, HTEnchanterRecipe> =
         HTRecipeCache(RagiumRecipeTypes.ENCHANTER)
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData {
-        TODO("Not yet implemented")
-    }
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData =
+        HTMachineEnergyData.Consume.PRECISION
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val enchantPower: Double = EnchantingTableBlock.BOOKSHELF_OFFSETS
