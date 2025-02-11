@@ -24,7 +24,7 @@ class HTGrinderContainerMenu(
         syncId,
         playerInv,
         registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
-        ItemStackHandler(3),
+        ItemStackHandler(2),
     )
 
     init {
@@ -32,7 +32,6 @@ class HTGrinderContainerMenu(
         addSlot(0, 2, 1)
         // outputs
         addOutputSlot(1, 6, 1)
-        addOutputSlot(2, 7, 1)
         // player inventory
         addPlayerInv()
         // register property

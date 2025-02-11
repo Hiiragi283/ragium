@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.item.ItemStack
@@ -12,7 +11,6 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import java.util.*
 
 class HTChemicalRecipe(
     group: String,
@@ -20,7 +18,7 @@ class HTChemicalRecipe(
     val fluidInputs: List<SizedFluidIngredient>,
     private val itemOutputs: List<ItemStack>,
     private val fluidOutputs: List<FluidStack>,
-    val condition: Optional<HTMachineRecipeCondition>,
+    // val condition: Optional<HTMachineRecipeCondition>,
 ) : HTMachineRecipeBase(group) {
     /*companion object {
         @JvmField

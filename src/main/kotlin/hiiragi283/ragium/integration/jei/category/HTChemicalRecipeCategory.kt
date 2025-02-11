@@ -1,13 +1,11 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.ragium.api.recipe.HTChemicalRecipe
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCondition
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
-import mezz.jei.api.gui.placement.HorizontalAlignment
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
@@ -39,13 +37,13 @@ class HTChemicalRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTC
         // Recipe Arrow
         builder.addRecipeArrow().setPosition(getPosition(3.5), getPosition(0))
         // Condition Info
-        recipe.condition.ifPresent { condition: HTMachineRecipeCondition ->
+        /*recipe.condition.ifPresent { condition: HTMachineRecipeCondition ->
             builder
                 .addText(condition.text, width - 4, 10)
                 .setPosition(getPosition(0), getPosition(2))
                 .setShadow(true)
                 .setTextAlignment(HorizontalAlignment.LEFT)
-        }
+        }*/
     }
 
     private fun addItemInput(
@@ -66,7 +64,7 @@ class HTChemicalRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTC
             .addInputSlot(5 + 9 + 3 * 18, getPosition(y))
             .setStandardSlotBackground()
 
-        recipe.condition.ifPresent { condition: HTMachineRecipeCondition ->
+        /*recipe.condition.ifPresent { condition: HTMachineRecipeCondition ->
             when (condition) {
                 is HTMachineRecipeCondition.ItemBased ->
                     slotBuilder.addIngredients(condition.itemIngredient)
@@ -76,7 +74,7 @@ class HTChemicalRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTC
 
                 else -> {}
             }
-        }
+        }*/
     }
 
     private fun addFluidInput(

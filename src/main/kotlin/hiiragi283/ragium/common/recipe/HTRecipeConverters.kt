@@ -122,7 +122,7 @@ object HTRecipeConverters {
         val count: Int = registry.getProperty(key).getOrDefault(HTMaterialPropertyKeys.GRINDER_RAW_COUNT)
         HTGrinderRecipeBuilder()
             .itemInput(HTTagPrefix.ORE, key)
-            .itemOutput(output.value(), count * 2)
+            .itemOutput(HTApplyFortuneItemResult(output.value(), count * 2, count))
             .export(consumer)
     }
 
