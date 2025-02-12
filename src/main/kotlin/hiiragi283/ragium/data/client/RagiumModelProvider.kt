@@ -1,18 +1,12 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.blockId
-import hiiragi283.ragium.api.extension.getBuilder
-import hiiragi283.ragium.api.extension.itemTexture
-import hiiragi283.ragium.api.extension.withUncheckedParent
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -27,71 +21,30 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     }
 
     private fun registerBlocks() {
+        // Blocks
         buildList {
-            addAll(RagiumBlocks.ORES.values)
-            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
+            addAll(RagiumBlocks.REGISTER.entries)
 
-            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
-            add(RagiumBlocks.SLAG_BLOCK)
-
-            add(RagiumBlocks.SHAFT)
-            addAll(RagiumBlocks.GLASSES)
-
-            add(RagiumBlocks.PLASTIC_BLOCK)
-            addAll(RagiumBlocks.LED_BLOCKS.values)
-
-            add(RagiumBlocks.SPONGE_CAKE)
-            add(RagiumBlocks.SWEET_BERRIES_CAKE)
-
-            add(RagiumBlocks.MANUAL_GRINDER)
-            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
-
-            add(RagiumBlocks.COPPER_DRUM)
-            addAll(RagiumBlocks.ADDONS)
-            addAll(RagiumBlocks.BURNERS_NEW)
-        }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
-
+            remove(RagiumBlocks.CRUDE_OIL)
+        }.forEach(::simpleBlockItem)
         // Machine
-        RagiumAPI.getInstance().getMachineRegistry().forEachEntries {
-            key: HTMachineKey,
-            holder: DeferredBlock<*>?,
-            property: HTPropertyHolder,
-            ->
-            if (holder == null) return@forEachEntries
+        RagiumAPI.getInstance().getMachineRegistry().blocks.forEach { holder: DeferredBlock<*> ->
             withUncheckedParent(holder, holder.blockId)
         }
     }
 
     private fun registerItems() {
         buildList {
-            addAll(RagiumItems.MATERIAL_ITEMS.values)
-            add(RagiumItems.BEE_WAX)
-            addAll(RagiumItems.OTHER_GEMS)
-            addAll(RagiumItems.OTHER_RESOURCES)
+            addAll(RagiumItems.REGISTER.entries)
 
-            addAll(RagiumItems.FOODS)
             remove(RagiumItems.CHOCOLATE_APPLE)
 
-            add(RagiumItems.FORGE_HAMMER)
-            add(RagiumItems.SILKY_PICKAXE)
-            // addAll(RagiumItems.DRILLS)
-
-            // add(RagiumItems.DEFOLIANT)
-            add(RagiumItems.DYNAMITE)
-            add(RagiumItems.SLOT_LOCK)
-            add(RagiumItems.ALUMINUM_CAN)
-
-            addAll(RagiumItems.CIRCUITS)
-            addAll(RagiumItems.PRESS_MOLDS.values)
-
-            addAll(RagiumItems.REAGENTS)
-            addAll(RagiumItems.INGREDIENTS)
             remove(RagiumItems.MACHINE_CASING)
             remove(RagiumItems.CHEMICAL_MACHINE_CASING)
             remove(RagiumItems.PRECISION_MACHINE_CASING)
+
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
-        }.map(ItemLike::asItem)
-            .forEach(::basicItem)
+        }.forEach(::basicItem)
 
         getBuilder(RagiumItems.CHOCOLATE_APPLE)
             .parent(ModelFile.UncheckedModelFile("item/generated"))

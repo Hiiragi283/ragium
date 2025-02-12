@@ -313,44 +313,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('B', Tags.Items.DYES_WHITE)
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
             .savePrefixed(output)
-
-        // Drill
-        fun drill(
-            drill: ItemLike,
-            metal: HTMaterialKey,
-            core: Ingredient,
-            circuit: TagKey<Item>,
-        ) {
-            // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.TOOLS, drill)
-                .pattern(" A ")
-                .pattern("ABA")
-                .pattern("ACA")
-                .define('A', HTTagPrefix.INGOT, metal)
-                .define('B', core)
-                .define('C', circuit)
-                .unlockedBy("has_circuit", has(circuit))
-                .savePrefixed(output)
-        }
-        drill(
-            RagiumItems.STEEL_DRILL,
-            CommonMaterials.STEEL,
-            HTTagPrefix.STORAGE_BLOCK.createIngredient(VanillaMaterials.REDSTONE),
-            RagiumItemTags.ADVANCED_CIRCUIT,
-        )
-        drill(
-            RagiumItems.DEEP_STEEL_DRILL,
-            RagiumMaterials.DEEP_STEEL,
-            HTTagPrefix.GEM.createIngredient(VanillaMaterials.DIAMOND),
-            RagiumItemTags.ELITE_CIRCUIT,
-        )
-        drill(
-            RagiumItems.RAGIUM_DRILL,
-            RagiumMaterials.RAGIUM,
-            HTTagPrefix.GEM.createIngredient(RagiumMaterials.RAGI_CRYSTAL),
-            RagiumItemTags.ULTIMATE_CIRCUIT,
-        )
     }
 
     private fun registerMisc(output: RecipeOutput) {

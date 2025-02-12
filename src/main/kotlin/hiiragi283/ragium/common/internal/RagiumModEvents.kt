@@ -22,7 +22,6 @@ import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
 import hiiragi283.ragium.common.block.processor.*
-import hiiragi283.ragium.common.fluid.HTDrillFluidHandler
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -310,14 +309,6 @@ internal object RagiumModEvents {
                 )
             },
             RagiumBlocks.COPPER_DRUM,
-        )
-
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            HTDrillFluidHandler::create,
-            RagiumItems.STEEL_DRILL,
-            RagiumItems.DEEP_STEEL_DRILL,
-            RagiumItems.RAGIUM_DRILL,
         )
 
         LOGGER.info("Registered Item Capabilities!")

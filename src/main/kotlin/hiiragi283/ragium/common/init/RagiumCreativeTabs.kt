@@ -24,6 +24,7 @@ object RagiumCreativeTabs {
                 .title(Component.literal("Ragium"))
                 .icon { RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM).toStack() }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                    output.accept(RagiumItems.CRUDE_OIL_BUCKET)
                     // Material Blocks
                     output.accept(RagiumBlocks.SOUL_MAGMA_BLOCK)
                     RagiumBlocks.ORES.values.forEach(output::accept)
@@ -38,12 +39,17 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.BEE_WAX)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.RAW_MATERIAL).forEach(output::accept)
+                    output.accept(RagiumItems.SLAG)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.GEM).forEach(output::accept)
-                    RagiumItems.OTHER_GEMS.forEach(output::accept)
+                    output.accept(RagiumItems.SILKY_PICKAXE)
+                    output.accept(RagiumItems.CRIMSON_CRYSTAL)
+                    output.accept(RagiumItems.WARPED_CRYSTAL)
+                    output.accept(RagiumItems.OBSIDIAN_TEAR)
 
+                    output.accept(RagiumItems.RAGI_ALLOY_COMPOUND)
                     RagiumItems.getMaterialItems(HTTagPrefix.INGOT).forEach(output::accept)
-                    RagiumItems.OTHER_RESOURCES.forEach(output::accept)
+                    output.accept(RagiumItems.SOAP)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.GEAR).forEach(output::accept)
 
@@ -62,14 +68,36 @@ object RagiumCreativeTabs {
 
                     output.accept(RagiumItems.ALUMINUM_CAN)
 
-                    RagiumItems.DRILLS.forEach(output::accept)
                     RagiumItems.PRESS_MOLDS.values.forEach(output::accept)
                     // Circuits
-                    RagiumItems.CIRCUITS.forEach(output::accept)
+                    output.accept(RagiumItems.POLYMER_RESIN)
+                    output.accept(RagiumItems.PLASTIC_PLATE)
+                    output.accept(RagiumItems.CIRCUIT_BOARD)
+
+                    output.accept(RagiumItems.BASIC_CIRCUIT)
+                    output.accept(RagiumItems.ADVANCED_CIRCUIT)
+                    output.accept(RagiumItems.ELITE_CIRCUIT)
+                    output.accept(RagiumItems.ULTIMATE_CIRCUIT)
                     // Ingredients
                     output.accept(RagiumBlocks.SHAFT)
+                    output.accept(RagiumItems.MACHINE_CASING)
+                    output.accept(RagiumItems.CHEMICAL_MACHINE_CASING)
+                    output.accept(RagiumItems.PRECISION_MACHINE_CASING)
+
+                    output.accept(RagiumItems.COPPER_COIL)
+                    output.accept(RagiumItems.GOLD_COIL)
+                    output.accept(RagiumItems.ALUMINUM_COIL)
+
+                    output.accept(RagiumItems.ENGINE)
+                    output.accept(RagiumItems.LED)
+                    output.accept(RagiumItems.SOLAR_PANEL)
+
+                    output.accept(RagiumItems.YELLOW_CAKE)
+                    output.accept(RagiumItems.YELLOW_CAKE_PIECE)
+
+                    output.accept(RagiumItems.RAGI_TICKET)
+
                     RagiumItems.REAGENTS.forEach(output::accept)
-                    RagiumItems.INGREDIENTS.forEach(output::accept)
                 }.build()
         }
 

@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.item.HTFuelDrillItem
 import mekanism.generators.common.registries.GeneratorsItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
@@ -116,11 +115,6 @@ class RagiumItemTagProvider(
 
         val pickaxe: TagAppender<Item> = tag(ItemTags.PICKAXES).add(RagiumItems.SILKY_PICKAXE)
         val shovel: TagAppender<Item> = tag(ItemTags.SHOVELS)
-
-        RagiumItems.DRILLS.forEach { drill: DeferredItem<HTFuelDrillItem> ->
-            pickaxe.add(drill)
-            shovel.add(drill)
-        }
 
         tag(
             itemTagKey(ResourceLocation.fromNamespaceAndPath("modern_industrialization", "forge_hammer_tools")),

@@ -22,36 +22,17 @@ import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.DeferredHolder
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
     override fun generate() {
         buildList {
-            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+            addAll(RagiumBlocks.REGISTER.entries)
 
-            add(RagiumBlocks.SLAG_BLOCK)
-
-            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
-
-            add(RagiumBlocks.SHAFT)
-            addAll(RagiumBlocks.GLASSES)
-
-            add(RagiumBlocks.PLASTIC_BLOCK)
-            addAll(RagiumBlocks.LED_BLOCKS.values)
-
-            add(RagiumBlocks.SPONGE_CAKE)
-            add(RagiumBlocks.SWEET_BERRIES_CAKE)
-
-            add(RagiumBlocks.MANUAL_GRINDER)
-            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
-
-            addAll(RagiumBlocks.ADDONS)
-            addAll(RagiumBlocks.BURNERS_NEW)
-
-            addAll(RagiumAPI.getInstance().getMachineRegistry().blocks)
-        }.map(DeferredBlock<*>::get)
-            .forEach(::dropSelf)
+            remove(RagiumBlocks.CRUDE_OIL)
+            remove(RagiumBlocks.COPPER_DRUM)
+            removeAll(RagiumBlocks.ORES.values)
+        }.forEach { dropSelf(it.get()) }
 
         RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
             val prefix: HTTagPrefix = when (key) {
@@ -69,6 +50,10 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                 RagiumComponentTypes.FLUID_CONTENT.get(),
                 DataComponents.ENCHANTMENTS,
             )
+        }
+
+        RagiumAPI.getInstance().getMachineRegistry().blocks.forEach { holder: DeferredBlock<*> ->
+            add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }
         }
     }
 
@@ -92,5 +77,12 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             ),
         )
 
-    override fun getKnownBlocks(): Iterable<Block> = RagiumBlocks.REGISTER.entries.map(DeferredHolder<Block, out Block>::get)
+    private val blocks: MutableList<Block> = mutableListOf()
+
+    override fun add(block: Block, builder: LootTable.Builder) {
+        super.add(block, builder)
+        blocks.add(block)
+    }
+
+    override fun getKnownBlocks(): Iterable<Block> = blocks
 }

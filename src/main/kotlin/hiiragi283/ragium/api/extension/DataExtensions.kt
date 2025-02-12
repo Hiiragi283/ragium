@@ -16,6 +16,8 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
@@ -70,6 +72,10 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(name: String, textu
     withExistingParent(name, "block/cube_all")
         .texture("all", texture)
         .cutout()
+
+fun ItemModelProvider.basicItem(holder: DeferredHolder<Item, *>): ItemModelBuilder = basicItem(holder.id)
+
+fun ItemModelProvider.simpleBlockItem(holder: DeferredHolder<Block, *>): ItemModelBuilder = simpleBlockItem(holder.id)
 
 //    RecipeBuilder    //
 

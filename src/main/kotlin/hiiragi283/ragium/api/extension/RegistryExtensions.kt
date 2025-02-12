@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
-import java.util.Optional
+import java.util.*
 
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。
@@ -49,6 +49,8 @@ val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = keyOrThrow.location(
  * 指定した[value]が一致するか判定します。
  */
 fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
+
+fun <T : Block> DeferredHolder<Block, T>.toBlockHolder(): DeferredBlock<T> = DeferredBlock.createBlock<T>(this.id)
 
 /**
  * `block/`で前置された[DeferredBlock.getId]

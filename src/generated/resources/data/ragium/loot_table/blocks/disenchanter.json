@@ -20,11 +20,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:grinder"
+          "name": "ragium:disenchanter"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/grinder"
+  "random_sequence": "ragium:blocks/disenchanter"
 }
