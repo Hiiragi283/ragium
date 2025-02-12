@@ -1,20 +1,20 @@
 {
   "values": [
-    "#c:dusts/copper",
-    "#c:dusts/iron",
-    "#c:dusts/lapis",
-    "#c:dusts/quartz",
-    "#c:dusts/gold",
-    "#c:dusts/diamond",
-    "#c:dusts/emerald",
-    "#c:dusts/raginite",
-    "#c:dusts/ragi_crystal",
     "#c:dusts/alumina",
     "#c:dusts/aluminum",
     "#c:dusts/ash",
     "#c:dusts/bauxite",
+    "#c:dusts/copper",
+    "#c:dusts/dark",
+    "#c:dusts/diamond",
+    "#c:dusts/emerald",
+    "#c:dusts/gold",
+    "#c:dusts/iron",
+    "#c:dusts/lapis",
+    "#c:dusts/quartz",
+    "#c:dusts/ragi_crystal",
+    "#c:dusts/raginite",
     "#c:dusts/saltpeter",
-    "#c:dusts/wood",
-    "#c:dusts/dark"
+    "#c:dusts/wood"
   ]
 }

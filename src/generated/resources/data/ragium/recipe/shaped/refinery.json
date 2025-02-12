@@ -15,7 +15,7 @@
       "tag": "c:glass_blocks"
     },
     "E": {
-      "item": "ragium:gold_coil"
+      "tag": "c:coils/gold"
     },
     "F": {
       "tag": "c:circuits/advanced"

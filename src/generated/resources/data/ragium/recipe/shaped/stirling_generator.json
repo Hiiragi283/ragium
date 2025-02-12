@@ -12,10 +12,10 @@
       "item": "ragium:machine_casing"
     },
     "D": {
-      "item": "ragium:copper_coil"
+      "tag": "c:coils/copper"
     },
     "E": {
-      "tag": "c:gears/copper"
+      "tag": "c:gears/iron"
     }
   },
   "pattern": [

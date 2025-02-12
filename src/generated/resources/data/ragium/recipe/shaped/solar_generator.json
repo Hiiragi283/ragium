@@ -12,7 +12,7 @@
       "item": "ragium:precision_machine_casing"
     },
     "D": {
-      "item": "ragium:aluminum_coil"
+      "tag": "c:coils/aluminum"
     },
     "E": {
       "tag": "c:gears/diamond"

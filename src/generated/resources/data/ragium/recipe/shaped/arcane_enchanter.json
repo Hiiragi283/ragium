@@ -15,7 +15,7 @@
       "tag": "c:gems/amethyst"
     },
     "E": {
-      "item": "ragium:aluminum_coil"
+      "tag": "c:coils/aluminum"
     },
     "F": {
       "tag": "c:circuits/elite"

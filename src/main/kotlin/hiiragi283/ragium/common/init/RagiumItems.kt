@@ -32,6 +32,17 @@ object RagiumItems {
         properties: Item.Properties = itemProperty(),
     ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
 
+    //    Natural Resources    //
+
+    @JvmField
+    val CRUDE_OIL_BUCKET: DeferredItem<BucketItem> = register(
+        "crude_oil_bucket",
+        { properties: Item.Properties -> BucketItem(RagiumFluids.CRUDE_OIL.get(), properties) },
+        itemProperty().craftRemainder(Items.BUCKET).stacksTo(1),
+    )
+
+    //    Materials    //
+
     @JvmField
     val MATERIAL_ITEMS: HTTable<HTTagPrefix, HTMaterialKey, DeferredItem<out Item>> = buildTable {
         fun register(prefix: HTTagPrefix, material: HTMaterialKey) {
@@ -83,6 +94,10 @@ object RagiumItems {
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
+        // Coils
+        register(HTTagPrefix.COIL, VanillaMaterials.COPPER)
+        register(HTTagPrefix.COIL, VanillaMaterials.GOLD)
+        register(HTTagPrefix.COIL, CommonMaterials.ALUMINUM)
         // Gears
         register(HTTagPrefix.GEAR, VanillaMaterials.COPPER)
         register(HTTagPrefix.GEAR, VanillaMaterials.IRON)
@@ -112,8 +127,6 @@ object RagiumItems {
     @JvmStatic
     fun getMaterialItem(prefix: HTTagPrefix, material: HTMaterialKey): DeferredItem<out Item> =
         getMaterialMap(prefix)[material] ?: error("Unregistered material item: ${prefix.createPath(material)}")
-
-    //    Materials    //
 
     @JvmField
     val BEE_WAX: DeferredItem<HoneycombItem> = register("bee_wax", ::HoneycombItem, itemProperty())
@@ -331,14 +344,7 @@ object RagiumItems {
         WITHER_REAGENT,
     )
 
-    //    Ingredients    //
-
-    @JvmField
-    val CRUDE_OIL_BUCKET: DeferredItem<BucketItem> = register(
-        "crude_oil_bucket",
-        { properties: Item.Properties -> BucketItem(RagiumFluids.CRUDE_OIL.get(), properties) },
-        itemProperty().craftRemainder(Items.BUCKET).stacksTo(1),
-    )
+    //    Machine Parts    //
 
     @JvmField
     val MACHINE_CASING: DeferredItem<Item> = register("machine_casing")
@@ -348,15 +354,6 @@ object RagiumItems {
 
     @JvmField
     val PRECISION_MACHINE_CASING: DeferredItem<Item> = register("precision_machine_casing")
-
-    @JvmField
-    val COPPER_COIL: DeferredItem<Item> = register("copper_coil")
-
-    @JvmField
-    val GOLD_COIL: DeferredItem<Item> = register("gold_coil")
-
-    @JvmField
-    val ALUMINUM_COIL: DeferredItem<Item> = register("aluminum_coil")
 
     @JvmField
     val ENGINE: DeferredItem<Item> = register("engine")

@@ -1,17 +1,18 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.add
-import hiiragi283.ragium.api.extension.addBlock
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.data.HTTagBuilder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.BlockTags
+import net.minecraft.tags.TagEntry
+import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
@@ -25,14 +26,18 @@ class RagiumBlockTagProvider(
     provider: CompletableFuture<HolderLookup.Provider>,
     existingFileHelper: ExistingFileHelper,
 ) : TagsProvider<Block>(output, Registries.BLOCK, provider, RagiumAPI.MOD_ID, existingFileHelper) {
+    lateinit var builder: HTTagBuilder<Block>
+
+    @Suppress("DEPRECATION")
     override fun addTags(provider: HolderLookup.Provider) {
+        builder = HTTagBuilder(provider.lookupOrThrow(Registries.BLOCK))
+
         // Mineable
-        val pickaxe: TagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
         RagiumAPI
             .getInstance()
             .getMachineRegistry()
             .blocks
-            .forEach(pickaxe::add)
+            .forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
 
         buildList {
             addAll(RagiumBlocks.ORES.values)
@@ -52,47 +57,44 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.COPPER_DRUM)
             addAll(RagiumBlocks.ADDONS)
             addAll(RagiumBlocks.BURNERS)
-        }.forEach(pickaxe::add)
+        }.forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
 
-        tag(BlockTags.MINEABLE_WITH_SHOVEL)
-            .add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+        builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SLAG_BLOCK)
 
-        tag(BlockTags.MINEABLE_WITH_HOE)
-            .add(RagiumBlocks.SPONGE_CAKE)
-            .add(RagiumBlocks.SWEET_BERRIES_CAKE)
-
+        builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE)
+        builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Vanilla
 
         // Ragium
-        tag(RagiumBlockTags.COOLING_SOURCES)
-            .addBlock(Blocks.WATER)
-            .addTag(BlockTags.ICE)
-            .addTag(BlockTags.SNOW)
+        builder.add(RagiumBlockTags.COOLING_SOURCES, Blocks.WATER.builtInRegistryHolder())
+        builder.addTag(RagiumBlockTags.COOLING_SOURCES, BlockTags.ICE)
+        builder.addTag(RagiumBlockTags.COOLING_SOURCES, BlockTags.SNOW)
 
-        tag(RagiumBlockTags.HEATING_SOURCES)
-            .addBlock(Blocks.CAMPFIRE)
-            .addBlock(Blocks.FIRE)
-            .addBlock(Blocks.LAVA)
-            .addBlock(Blocks.MAGMA_BLOCK)
+        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.CAMPFIRE.builtInRegistryHolder())
+        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.FIRE.builtInRegistryHolder())
+        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.LAVA.builtInRegistryHolder())
+        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.MAGMA_BLOCK.builtInRegistryHolder())
 
-        tag(RagiumBlockTags.MINEABLE_WITH_DRILL)
-            .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .addTag(BlockTags.MINEABLE_WITH_SHOVEL)
+        builder.addTag(RagiumBlockTags.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_PICKAXE)
+        builder.addTag(RagiumBlockTags.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_SHOVEL)
 
         // Farmer's Delight
-        tag(ModTags.HEAT_SOURCES)
-            .add(RagiumBlocks.MAGMA_BURNER)
-            .add(RagiumBlocks.SOUL_BURNER)
-            .add(RagiumBlocks.FIERY_BURNER)
+        builder.add(ModTags.HEAT_SOURCES, RagiumBlocks.MAGMA_BURNER)
+        builder.add(ModTags.HEAT_SOURCES, RagiumBlocks.SOUL_BURNER)
+        builder.add(ModTags.HEAT_SOURCES, RagiumBlocks.FIERY_BURNER)
 
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, _, ore: DeferredBlock<out Block>) ->
-            tag(Tags.Blocks.ORES).add(ore)
+            builder.add(Tags.Blocks.ORES, ore)
             when (variant) {
                 HTOreVariant.OVERWORLD -> Tags.Blocks.ORES_IN_GROUND_STONE
                 HTOreVariant.DEEPSLATE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
                 HTOreVariant.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
                 HTOreVariant.END -> null
-            }?.let(::tag)?.add(ore)
+            }?.let { builder.add(it, ore) }
+        }
+        
+        builder.build { tagKey: TagKey<Block>, entry: TagEntry -> 
+            tag(tagKey).add(entry)
         }
     }
 }

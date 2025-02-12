@@ -17,6 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient
  */
 enum class HTTagPrefix(private val commonName: String, private val tagPrefix: String = "$commonName/") : StringRepresentable {
     // Common
+    COIL("coils"),
     DUST("dusts"),
     GEAR("gears"),
     GEM("gems") {

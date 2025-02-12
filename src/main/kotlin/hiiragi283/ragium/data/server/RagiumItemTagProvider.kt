@@ -1,15 +1,21 @@
 package hiiragi283.ragium.data.server
 
-import blusunrize.immersiveengineering.ImmersiveEngineering
+import blusunrize.immersiveengineering.api.wires.WireType
+import blusunrize.immersiveengineering.common.register.IEItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.asHolder
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.data.HTTagBuilder
 import mekanism.generators.common.registries.GeneratorsItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
@@ -18,9 +24,11 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -34,11 +42,19 @@ class RagiumItemTagProvider(
     provider: CompletableFuture<HolderLookup.Provider>,
     existingFileHelper: ExistingFileHelper,
 ) : TagsProvider<Item>(output, Registries.ITEM, provider, RagiumAPI.MOD_ID, existingFileHelper) {
+    lateinit var builder: HTTagBuilder<Item>
+
     override fun addTags(provider: HolderLookup.Provider) {
+        builder = HTTagBuilder(provider.lookupOrThrow(Registries.ITEM))
+
         materialTags()
         foodTags()
         toolTags()
         partTags()
+
+        builder.build { tagKey: TagKey<Item>, entry: TagEntry ->
+            tag(tagKey).add(entry)
+        }
     }
 
     //    Material    //
@@ -46,37 +62,29 @@ class RagiumItemTagProvider(
     private fun materialTags() {
         RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
             val oreTagKey: TagKey<Item> = HTTagPrefix.ORE.createTag(key)
-
-            tag(HTTagPrefix.ORE.commonTagKey)
-                .addTag(oreTagKey)
-
-            tag(oreTagKey)
-                .addItem(ore)
+            builder.addTag(HTTagPrefix.ORE.commonTagKey, oreTagKey)
+            builder.add(oreTagKey, ore.asHolder())
         }
 
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
             val storageTag: TagKey<Item> = HTTagPrefix.STORAGE_BLOCK.createTag(key)
-
-            tag(HTTagPrefix.STORAGE_BLOCK.commonTagKey)
-                .addTag(storageTag)
-
-            tag(storageTag)
-                .addItem(storage)
+            builder.addTag(HTTagPrefix.STORAGE_BLOCK.commonTagKey, storageTag)
+            builder.add(storageTag, storage.asHolder())
         }
 
         RagiumItems.MATERIAL_ITEMS.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
             val tagKey: TagKey<Item> = prefix.createTag(key)
-
-            tag(prefix.commonTagKey)
-                .addTag(tagKey)
-
-            tag(tagKey)
-                .add(holder)
+            builder.addTag(prefix.commonTagKey, tagKey)
+            builder.add(tagKey, holder)
         }
+
+        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])
+        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IEItems.Misc.WIRE_COILS[WireType.STEEL])
+        addMaterialTag(HTTagPrefix.COIL, VanillaMaterials.COPPER, IEItems.Misc.WIRE_COILS[WireType.COPPER])
+        addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP, false)
 
         addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem_crushed")
         addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem")
-        addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, "netherite_scrap", false)
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore")
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore_deepslate")
         addMaterialTag(HTTagPrefix.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, "evilcraft:dark_block")
@@ -85,106 +93,85 @@ class RagiumItemTagProvider(
     private fun addMaterialTag(
         prefix: HTTagPrefix,
         material: HTMaterialKey,
+        item: ItemLike?,
+        optional: Boolean = true,
+    ) {
+        builder.addTag(prefix.commonTagKey, prefix.createTag(material))
+        item?.let { builder.add(prefix.createTag(material), it.asHolder(), optional) }
+    }
+
+    private fun addMaterialTag(
+        prefix: HTTagPrefix,
+        material: HTMaterialKey,
         value: String,
         optional: Boolean = true,
     ) {
-        tag(prefix.commonTagKey)
-            .addTag(prefix.createTag(material))
-
-        tag(prefix.createTag(material))
-            .add(DeferredItem.createItem(ResourceLocation.parse(value)), optional)
+        builder.addTag(prefix.commonTagKey, prefix.createTag(material))
+        builder.add(prefix.createTag(material), DeferredItem.createItem<Item>(ResourceLocation.parse(value)), optional)
     }
 
     //    Food    //
 
     private fun foodTags() {
-        val foods: TagAppender<Item> = tag(Tags.Items.FOODS)
         RagiumItems.FOODS.forEach { foodItem: DeferredItem<out Item> ->
             if (foodItem.get().components().has(DataComponents.FOOD)) {
-                foods.add(foodItem)
+                builder.add(Tags.Items.FOODS, foodItem)
             }
         }
 
-        tag(RagiumItemTags.DOUGH).add(RagiumItems.DOUGH)
+        builder.add(RagiumItemTags.DOUGH, RagiumItems.DOUGH)
     }
 
     //    Tool    //
 
     private fun toolTags() {
-        tag(ItemTags.DURABILITY_ENCHANTABLE).add(RagiumItems.FORGE_HAMMER)
+        builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.FORGE_HAMMER)
 
-        val pickaxe: TagAppender<Item> = tag(ItemTags.PICKAXES).add(RagiumItems.SILKY_PICKAXE)
-        val shovel: TagAppender<Item> = tag(ItemTags.SHOVELS)
+        builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)
 
-        tag(
+        builder.add(
             itemTagKey(ResourceLocation.fromNamespaceAndPath("modern_industrialization", "forge_hammer_tools")),
-        ).add(RagiumItems.FORGE_HAMMER)
+            RagiumItems.FORGE_HAMMER,
+        )
     }
 
     //    Part    //
 
     private fun partTags() {
-        tag(Tags.Items.BUCKETS)
-            .add(RagiumItems.CRUDE_OIL_BUCKET)
+        builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
+        builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
 
-        tag(RagiumItemTags.BASIC_CIRCUIT)
-            .add(RagiumItems.BASIC_CIRCUIT)
+        builder.add(RagiumItemTags.BASIC_CIRCUIT, RagiumItems.BASIC_CIRCUIT)
+        builder.add(RagiumItemTags.ADVANCED_CIRCUIT, RagiumItems.ADVANCED_CIRCUIT)
+        builder.add(RagiumItemTags.ELITE_CIRCUIT, RagiumItems.ELITE_CIRCUIT)
+        builder.add(RagiumItemTags.ULTIMATE_CIRCUIT, RagiumItems.ULTIMATE_CIRCUIT)
 
-        tag(RagiumItemTags.ADVANCED_CIRCUIT)
-            .add(RagiumItems.ADVANCED_CIRCUIT)
+        builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
+        builder.add(RagiumItemTags.SOLAR_PANELS, GeneratorsItems.SOLAR_PANEL, true)
+        builder.add(RagiumItemTags.SOLAR_PANELS, RagiumItems.SOLAR_PANEL)
+        builder.add(Tags.Items.BUCKETS, RagiumItems.CRUDE_OIL_BUCKET)
 
-        tag(RagiumItemTags.ELITE_CIRCUIT)
-            .add(RagiumItems.ELITE_CIRCUIT)
+        builder.add(RagiumItemTags.DIRT_SOILS, Items.FARMLAND.asHolder())
+        builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL.get().asHolder(), true)
+        builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL_FARMLAND.get().asHolder(), true)
+        builder.addTag(RagiumItemTags.DIRT_SOILS, ItemTags.DIRT)
 
-        tag(RagiumItemTags.ULTIMATE_CIRCUIT)
-            .add(RagiumItems.ULTIMATE_CIRCUIT)
+        builder.add(RagiumItemTags.MUSHROOM_SOILS, Items.MYCELIUM.asHolder())
 
-        tag(RagiumItemTags.PLASTICS)
-            .add(RagiumItems.PLASTIC_PLATE)
+        builder.add(RagiumItemTags.NETHER_SOILS, Items.CRIMSON_NYLIUM.asHolder())
+        builder.add(RagiumItemTags.NETHER_SOILS, Items.WARPED_NYLIUM.asHolder())
 
-        tag(itemTagKey(commonId("plates/plastic")))
-            .add(RagiumItems.PLASTIC_PLATE)
+        builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
 
-        tag(RagiumItemTags.SLAG)
-            .add(RagiumItems.SLAG)
+        builder.add(RagiumItemTags.GEAR_MOLDS, IEItems.Molds.MOLD_GEAR.asHolder(), true)
+        builder.add(RagiumItemTags.GEAR_MOLDS, RagiumItems.getPressMold(HTTagPrefix.GEAR))
+        builder.add(RagiumItemTags.PLATE_MOLDS, IEItems.Molds.MOLD_PLATE.asHolder(), true)
+        builder.add(RagiumItemTags.PLATE_MOLDS, RagiumItems.getPressMold(HTTagPrefix.PLATE))
+        builder.add(RagiumItemTags.ROD_MOLDS, IEItems.Molds.MOLD_ROD.asHolder(), true)
+        builder.add(RagiumItemTags.ROD_MOLDS, RagiumItems.getPressMold(HTTagPrefix.ROD))
+        builder.add(RagiumItemTags.WIRE_MOLDS, IEItems.Molds.MOLD_WIRE.asHolder(), true)
+        builder.add(RagiumItemTags.WIRE_MOLDS, RagiumItems.getPressMold(HTTagPrefix.WIRE))
 
-        tag(RagiumItemTags.SOLAR_PANELS)
-            .add(RagiumItems.SOLAR_PANEL)
-            .add(GeneratorsItems.SOLAR_PANEL, true)
-
-        tag(RagiumItemTags.DIRT_SOILS)
-            .addItem(Items.FARMLAND)
-            .addItem(ModBlocks.RICH_SOIL.get(), true)
-            .addItem(ModBlocks.RICH_SOIL_FARMLAND.get(), true)
-            .addTag(ItemTags.DIRT)
-
-        tag(RagiumItemTags.MUSHROOM_SOILS)
-            .addItem(Items.MYCELIUM)
-
-        tag(RagiumItemTags.NETHER_SOILS)
-            .addItem(Items.CRIMSON_NYLIUM)
-            .addItem(Items.WARPED_NYLIUM)
-
-        tag(RagiumItemTags.END_SOILS)
-            .addTag(Tags.Items.END_STONES)
-
-        tag(RagiumItemTags.GEAR_MOLDS)
-            .add(RagiumItems.getPressMold(HTTagPrefix.GEAR))
-            .add(ImmersiveEngineering.rl("mold_gear"), true)
-
-        tag(RagiumItemTags.PLATE_MOLDS)
-            .add(RagiumItems.getPressMold(HTTagPrefix.PLATE))
-            .add(ImmersiveEngineering.rl("mold_plate"), true)
-
-        tag(RagiumItemTags.ROD_MOLDS)
-            .add(RagiumItems.getPressMold(HTTagPrefix.ROD))
-            .add(ImmersiveEngineering.rl("mold_rod"), true)
-
-        tag(RagiumItemTags.WIRE_MOLDS)
-            .add(RagiumItems.getPressMold(HTTagPrefix.WIRE))
-            .add(ImmersiveEngineering.rl("mold_wire"), true)
-
-        val ledBuilder: TagAppender<Item> = tag(RagiumItemTags.LED_BLOCKS)
-        RagiumBlocks.LED_BLOCKS.values.forEach(ledBuilder::addItem)
+        RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
     }
 }

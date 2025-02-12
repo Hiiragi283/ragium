@@ -8,8 +8,10 @@ import hiiragi283.ragium.api.util.HTTable
 
 //    MultiMap    //
 
+fun <K : Any, V : Any> multiMapOf(): HTMultiMap.Mutable<K, V> = RagiumAPI.getInstance().createMultiMap<K, V>(HashMultimap.create())
+
 fun <K : Any, V : Any> buildMultiMap(builderAction: HTMultiMap.Mutable<K, V>.() -> Unit): HTMultiMap<K, V> =
-    RagiumAPI.getInstance().createMultiMap<K, V>(HashMultimap.create()).apply(builderAction)
+    multiMapOf<K, V>().apply(builderAction)
 
 fun <K : Any, V : Any> HTMultiMap<K, V>.forEach(action: (K, V) -> Unit) {
     entries.forEach { (k: K, v: V) -> action(k, v) }

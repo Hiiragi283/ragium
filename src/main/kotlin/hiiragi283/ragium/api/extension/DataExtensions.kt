@@ -6,15 +6,12 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.Util
-import net.minecraft.core.Holder
 import net.minecraft.data.recipes.*
-import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -127,23 +124,3 @@ fun ShapelessRecipeBuilder.savePrefixed(output: RecipeOutput) {
 fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
     savePrefixed(output, "stonecutting/")
 }
-
-//    TagBuilder    //
-
-fun <T : Any> TagsProvider.TagAppender<T>.add(id: ResourceLocation, optional: Boolean = false): TagsProvider.TagAppender<T> =
-    when (optional) {
-        true -> addOptional(id)
-        false -> apply { internalBuilder.addElement(id) }
-    }
-
-fun <T : Any> TagsProvider.TagAppender<T>.add(holder: Holder<T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
-    add(holder.idOrThrow, optional)
-
-fun <T : Any> TagsProvider.TagAppender<T>.add(holder: DeferredHolder<T, out T>, optional: Boolean = false): TagsProvider.TagAppender<T> =
-    add(holder.id, optional)
-
-fun TagsProvider.TagAppender<Block>.addBlock(block: Block, optional: Boolean = false): TagsProvider.TagAppender<Block> =
-    add(block.defaultBlockState().blockHolder, optional)
-
-fun TagsProvider.TagAppender<Item>.addItem(item: ItemLike, optional: Boolean = false): TagsProvider.TagAppender<Item> =
-    add(item.asHolder(), optional)

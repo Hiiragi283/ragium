@@ -15,7 +15,7 @@
       "item": "minecraft:furnace"
     },
     "E": {
-      "item": "ragium:copper_coil"
+      "tag": "c:coils/copper"
     },
     "F": {
       "tag": "c:circuits/basic"

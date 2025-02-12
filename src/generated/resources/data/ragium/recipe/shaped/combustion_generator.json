@@ -12,10 +12,10 @@
       "item": "ragium:chemical_machine_casing"
     },
     "D": {
-      "item": "ragium:gold_coil"
+      "tag": "c:coils/gold"
     },
     "E": {
-      "tag": "c:gears/iron"
+      "tag": "c:gears/steel"
     }
   },
   "pattern": [

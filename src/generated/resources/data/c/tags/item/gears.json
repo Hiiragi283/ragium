@@ -1,12 +1,12 @@
 {
   "values": [
     "#c:gears/copper",
-    "#c:gears/iron",
-    "#c:gears/gold",
+    "#c:gears/deep_steel",
     "#c:gears/diamond",
     "#c:gears/emerald",
-    "#c:gears/steel",
-    "#c:gears/deep_steel",
-    "#c:gears/netherite"
+    "#c:gears/gold",
+    "#c:gears/iron",
+    "#c:gears/netherite",
+    "#c:gears/steel"
   ]
 }

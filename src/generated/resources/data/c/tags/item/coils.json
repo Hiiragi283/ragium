@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:coils/aluminum",
+    "#c:coils/copper",
+    "#c:coils/electrum",
+    "#c:coils/gold",
+    "#c:coils/steel"
+  ]
+}

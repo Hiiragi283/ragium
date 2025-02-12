@@ -43,7 +43,7 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.SLAG)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.GEM).forEach(output::accept)
-                    output.accept(RagiumItems.SILKY_PICKAXE)
+                    output.accept(RagiumItems.SILKY_CRYSTAL)
                     output.accept(RagiumItems.CRIMSON_CRYSTAL)
                     output.accept(RagiumItems.WARPED_CRYSTAL)
                     output.accept(RagiumItems.OBSIDIAN_TEAR)
@@ -84,10 +84,6 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.MACHINE_CASING)
                     output.accept(RagiumItems.CHEMICAL_MACHINE_CASING)
                     output.accept(RagiumItems.PRECISION_MACHINE_CASING)
-
-                    output.accept(RagiumItems.COPPER_COIL)
-                    output.accept(RagiumItems.GOLD_COIL)
-                    output.accept(RagiumItems.ALUMINUM_COIL)
 
                     output.accept(RagiumItems.ENGINE)
                     output.accept(RagiumItems.LED)

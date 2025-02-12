@@ -1,0 +1,9 @@
+{
+  "values": [
+    "ragium:copper_coil",
+    {
+      "id": "immersiveengineering:wirecoil_copper",
+      "required": false
+    }
+  ]
+}

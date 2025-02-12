@@ -138,15 +138,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.SOUL_REAGENT, "Soul Reagent")
         addItem(RagiumItems.WITHER_REAGENT, "Wither Reagent")
 
-        addItem(RagiumItems.ALUMINUM_COIL, "Aluminum Coil")
         addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "Chemical Machine Casing")
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        addItem(RagiumItems.COPPER_COIL, "Copper Coil")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
         addItem(RagiumItems.ENGINE, "V8 Engine")
-        addItem(RagiumItems.GOLD_COIL, "Gold Coil")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.MACHINE_CASING, "Machine Casing")
         addItem(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")
@@ -298,6 +295,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(VanillaMaterials.REDSTONE, "Redstone")
         // Tag Prefix
         add(HTTagPrefix.CLUMP, "%s Clump")
+        add(HTTagPrefix.COIL, "%s Coil")
         add(HTTagPrefix.CRYSTAL, "%s Crystal")
         add(HTTagPrefix.DIRTY_DUST, "Dirty %s Dust")
         add(HTTagPrefix.DUST, "%s Dust")

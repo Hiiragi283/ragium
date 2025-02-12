@@ -1,8 +1,8 @@
 {
   "values": [
-    "#c:raw_materials/raginite",
     "#c:raw_materials/bauxite",
-    "#c:raw_materials/saltpeter",
-    "#c:raw_materials/redstone"
+    "#c:raw_materials/raginite",
+    "#c:raw_materials/redstone",
+    "#c:raw_materials/saltpeter"
   ]
 }

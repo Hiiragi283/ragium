@@ -1,10 +1,12 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.requires
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -86,6 +88,28 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
                 .define('B', RagiumItems.FORGE_HAMMER)
                 .unlockedBy("has_input", has(parentPrefix, material))
                 .savePrefixed(output)
+        }
+
+        // Ingot -> Coil
+        RagiumItems.getMaterialMap(HTTagPrefix.COIL).forEach { (material: HTMaterialKey, coil: DeferredItem<out Item>) ->
+            // Shaped Crafting
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, coil, 2)
+                .pattern(" A ")
+                .pattern("BCB")
+                .pattern("BCB")
+                .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+                .define('B', HTTagPrefix.INGOT, material)
+                .define('C', RagiumBlocks.SHAFT)
+                .unlockedBy("has_metal", has(HTTagPrefix.INGOT, material))
+                .savePrefixed(output)
+            // Assembler
+            HTMultiItemRecipeBuilder
+                .assembler()
+                .itemInput(HTTagPrefix.INGOT, material, 4)
+                .itemInput(RagiumBlocks.SHAFT)
+                .itemOutput(coil, 4)
+                .save(output)
         }
     }
 }
