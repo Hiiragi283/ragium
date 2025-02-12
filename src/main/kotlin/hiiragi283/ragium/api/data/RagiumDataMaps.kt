@@ -34,4 +34,16 @@ object RagiumDataMaps {
             ItemStack.CODEC,
         ).synced(ItemStack.CODEC, false)
         .build()
+
+    /**
+     * 石鹸でブロックを洗った後のブロックを登録します。
+     */
+    @JvmField
+    val SOAP: DataMapType<Block, HTSoap> = DataMapType
+        .builder(
+            RagiumAPI.id("soap"),
+            Registries.BLOCK,
+            HTSoap.CODEC,
+        ).synced(HTSoap.CODEC, false)
+        .build()
 }

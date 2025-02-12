@@ -113,6 +113,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.DEFOLIANT, "Defoliant")
         addItem(RagiumItems.DYNAMITE, "Dynamite")
         addItem(RagiumItems.SLOT_LOCK, "Slot Lock")
+        addItem(RagiumItems.SOAP, "Soap")
 
         addItem(RagiumItems.ALUMINUM_CAN, "Aluminum Can")
         addItem(RagiumItems.POTION_CAN, "Potion Can")
@@ -154,7 +155,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.SILKY_CRYSTAL, "Silky Crystal")
         addItem(RagiumItems.SLAG, "Slag")
-        addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
         addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")

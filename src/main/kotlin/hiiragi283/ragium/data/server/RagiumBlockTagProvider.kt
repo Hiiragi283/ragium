@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.data.HTTagBuilder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
@@ -27,6 +28,10 @@ class RagiumBlockTagProvider(
     existingFileHelper: ExistingFileHelper,
 ) : TagsProvider<Block>(output, Registries.BLOCK, provider, RagiumAPI.MOD_ID, existingFileHelper) {
     lateinit var builder: HTTagBuilder<Block>
+
+    private fun HTTagBuilder<Block>.add(tagKey: TagKey<Block>, block: Block) {
+        add(tagKey, BuiltInRegistries.BLOCK.wrapAsHolder(block))
+    }
 
     @Suppress("DEPRECATION")
     override fun addTags(provider: HolderLookup.Provider) {
@@ -66,14 +71,14 @@ class RagiumBlockTagProvider(
         // Vanilla
 
         // Ragium
-        builder.add(RagiumBlockTags.COOLING_SOURCES, Blocks.WATER.builtInRegistryHolder())
+        builder.add(RagiumBlockTags.COOLING_SOURCES, Blocks.WATER)
         builder.addTag(RagiumBlockTags.COOLING_SOURCES, BlockTags.ICE)
         builder.addTag(RagiumBlockTags.COOLING_SOURCES, BlockTags.SNOW)
 
-        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.CAMPFIRE.builtInRegistryHolder())
-        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.FIRE.builtInRegistryHolder())
-        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.LAVA.builtInRegistryHolder())
-        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.MAGMA_BLOCK.builtInRegistryHolder())
+        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.CAMPFIRE)
+        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.FIRE)
+        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.LAVA)
+        builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.MAGMA_BLOCK)
 
         builder.addTag(RagiumBlockTags.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_PICKAXE)
         builder.addTag(RagiumBlockTags.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_SHOVEL)
@@ -92,8 +97,8 @@ class RagiumBlockTagProvider(
                 HTOreVariant.END -> null
             }?.let { builder.add(it, ore) }
         }
-        
-        builder.build { tagKey: TagKey<Block>, entry: TagEntry -> 
+
+        builder.build { tagKey: TagKey<Block>, entry: TagEntry ->
             tag(tagKey).add(entry)
         }
     }

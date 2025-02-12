@@ -50,11 +50,8 @@ object RagiumCreativeTabs {
 
                     output.accept(RagiumItems.RAGI_ALLOY_COMPOUND)
                     RagiumItems.getMaterialItems(HTTagPrefix.INGOT).forEach(output::accept)
-                    output.accept(RagiumItems.SOAP)
 
                     RagiumItems.getMaterialItems(HTTagPrefix.GEAR).forEach(output::accept)
-
-                    RagiumItems.getMaterialItems(HTTagPrefix.ROD).forEach(output::accept)
                     // Foods
                     output.accept(RagiumBlocks.SPONGE_CAKE)
                     output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -66,6 +63,7 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)
                     output.accept(RagiumItems.SLOT_LOCK)
+                    output.accept(RagiumItems.SOAP)
 
                     output.accept(RagiumItems.ALUMINUM_CAN)
 

@@ -3,8 +3,11 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.stats.Stats
 import net.minecraft.world.InteractionHand
@@ -13,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.*
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.Level
@@ -71,4 +75,12 @@ class HTPotionCanItem(properties: Properties) : Item(properties.durability(3)) {
     ) {
         stack.get(DataComponents.POTION_CONTENTS)?.addPotionTooltip(tooltipComponents::add, 1f, context.tickRate())
     }
+
+    override fun getCreatorModId(stack: ItemStack): String? = stack
+        .getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
+        .potion
+        .flatMap(Holder<Potion>::unwrapKey)
+        .map(ResourceKey<Potion>::location)
+        .map(ResourceLocation::getNamespace)
+        .orElse(super.getCreatorModId(stack))
 }

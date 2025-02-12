@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import aztech.modern_industrialization.items.ForgeTool
 import blusunrize.immersiveengineering.api.wires.WireType
 import blusunrize.immersiveengineering.common.register.IEItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -126,13 +127,11 @@ class RagiumItemTagProvider(
 
     private fun toolTags() {
         builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.FORGE_HAMMER)
+        builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.SOAP)
 
         builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)
 
-        builder.add(
-            itemTagKey(ResourceLocation.fromNamespaceAndPath("modern_industrialization", "forge_hammer_tools")),
-            RagiumItems.FORGE_HAMMER,
-        )
+        builder.add(ForgeTool.TAG, RagiumItems.FORGE_HAMMER)
     }
 
     //    Part    //

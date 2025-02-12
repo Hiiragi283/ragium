@@ -2,9 +2,9 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.integration.jei.HTStirlingFuelEntry
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
+import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -46,7 +46,7 @@ class HTStirlingFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSti
         builder.addRecipeArrow().setPosition(getPosition(2.5), getPosition(0))
     }
 
-    override fun getWidth(): Int = 18 * 6 + 8
+    override fun getWidth(): Int = 18 * 5 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
 

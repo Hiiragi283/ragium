@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.jei
+package hiiragi283.ragium.integration.jei.entry
 
 import com.mojang.serialization.Codec
 import net.minecraft.core.Holder

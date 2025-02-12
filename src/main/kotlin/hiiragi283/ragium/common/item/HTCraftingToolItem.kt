@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.extension.restDamage
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
-class HTCraftingToolItem(properties: Properties) : Item(properties) {
+class HTCraftingToolItem(properties: Properties) : Item(properties.stacksTo(1)) {
     override fun hasCraftingRemainingItem(stack: ItemStack): Boolean = stack.restDamage > 0
 
     override fun getCraftingRemainingItem(stack: ItemStack): ItemStack {

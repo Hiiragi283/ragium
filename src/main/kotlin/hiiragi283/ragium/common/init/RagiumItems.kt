@@ -109,13 +109,13 @@ object RagiumItems {
         register(HTTagPrefix.GEAR, RagiumMaterials.DEEP_STEEL)
         register(HTTagPrefix.GEAR, VanillaMaterials.NETHERITE)
         // Rods
-        register(HTTagPrefix.ROD, VanillaMaterials.COPPER)
-        register(HTTagPrefix.ROD, VanillaMaterials.IRON)
-        register(HTTagPrefix.ROD, VanillaMaterials.GOLD)
+        // register(HTTagPrefix.ROD, VanillaMaterials.COPPER)
+        // register(HTTagPrefix.ROD, VanillaMaterials.IRON)
+        // register(HTTagPrefix.ROD, VanillaMaterials.GOLD)
 
-        register(HTTagPrefix.ROD, CommonMaterials.STEEL)
-        register(HTTagPrefix.ROD, RagiumMaterials.DEEP_STEEL)
-        register(HTTagPrefix.ROD, VanillaMaterials.NETHERITE)
+        // register(HTTagPrefix.ROD, CommonMaterials.STEEL)
+        // register(HTTagPrefix.ROD, RagiumMaterials.DEEP_STEEL)
+        // register(HTTagPrefix.ROD, VanillaMaterials.NETHERITE)
     }
 
     @JvmStatic
@@ -148,9 +148,6 @@ object RagiumItems {
 
     @JvmField
     val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")
-
-    @JvmField
-    val SOAP: DeferredItem<Item> = register("soap")
 
     //    Foods    //
 
@@ -240,20 +237,20 @@ object RagiumItems {
         register("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(63))
 
     @JvmField
-    val SILKY_PICKAXE: DeferredItem<HTSilkyPickaxeItem> =
-        register("silky_pickaxe", ::HTSilkyPickaxeItem)
+    val SILKY_PICKAXE: DeferredItem<HTSilkyPickaxeItem> = register("silky_pickaxe", ::HTSilkyPickaxeItem)
 
     @JvmField
-    val DEFOLIANT: DeferredItem<HTDefoliantItem> =
-        register("defoliant", ::HTDefoliantItem)
+    val DEFOLIANT: DeferredItem<HTDefoliantItem> = register("defoliant", ::HTDefoliantItem)
 
     @JvmField
-    val DYNAMITE: DeferredItem<HTDynamiteItem> =
-        register("dynamite", ::HTDynamiteItem)
+    val DYNAMITE: DeferredItem<HTDynamiteItem> = register("dynamite", ::HTDynamiteItem)
 
     @JvmField
     val SLOT_LOCK: DeferredItem<HTCatalystItem> =
         register("slot_lock", ::HTCatalystItem, itemProperty().stacksTo(1))
+
+    @JvmField
+    val SOAP: DeferredItem<HTSoapItem> = register("soap", ::HTSoapItem, itemProperty().durability(63))
 
     @JvmField
     val ALUMINUM_CAN: DeferredItem<Item> = register("aluminum_can")

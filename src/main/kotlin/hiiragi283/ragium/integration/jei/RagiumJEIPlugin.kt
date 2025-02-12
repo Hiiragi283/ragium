@@ -1,16 +1,18 @@
 package hiiragi283.ragium.integration.jei
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTSoap
+import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.getAllRecipes
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.tag.RagiumFluidTags
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipeSerializers
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import hiiragi283.ragium.integration.jei.category.*
+import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
+import hiiragi283.ragium.integration.jei.entry.HTSoapEntry
+import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
@@ -21,13 +23,17 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import java.util.function.Supplier
+import kotlin.streams.asSequence
 import mezz.jei.api.recipe.RecipeType as JEIRecipeType
 
 @JeiPlugin
@@ -83,6 +89,7 @@ class RagiumJEIPlugin : IModPlugin {
             HTGeneratorFuelCategory(guiHelper),
             HTStirlingFuelCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
+            HTSoapCategory(guiHelper),
         )
     }
 
@@ -145,6 +152,20 @@ class RagiumJEIPlugin : IModPlugin {
         )
         // Material Info
         registration.addRecipes(RagiumJEIRecipeTypes.MATERIAL_INFO, RagiumAPI.getInstance().getMaterialRegistry().typedMaterials)
+        // Soap
+        registration.addRecipes(
+            RagiumJEIRecipeTypes.SOAP,
+            level
+                .registryAccess()
+                .lookupOrThrow(Registries.BLOCK)
+                .listElements()
+                .asSequence()
+                .mapNotNull { holder: Holder.Reference<Block> ->
+                    val soap: HTSoap = holder.getData(RagiumDataMaps.SOAP) ?: return@mapNotNull null
+                    if (holder.value() == soap.block) return@mapNotNull null
+                    HTSoapEntry(holder, soap)
+                }.toList(),
+        )
     }
 
     override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {
@@ -187,5 +208,7 @@ class RagiumJEIPlugin : IModPlugin {
         register(RagiumJEIRecipeTypes.STIRLING, RagiumMachineKeys.STIRLING_GENERATOR)
         // Material
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MATERIAL_INFO, Items.IRON_INGOT)
+        // Soap
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.SOAP, RagiumItems.SOAP)
     }
 }

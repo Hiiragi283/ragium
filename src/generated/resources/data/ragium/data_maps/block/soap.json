@@ -1,0 +1,21 @@
+{
+  "values": {
+    "#c:cobblestones/mossy": "minecraft:cobblestone",
+    "#c:concretes": "minecraft:white_concrete",
+    "#c:glass_blocks/cheap": "minecraft:glass",
+    "#c:glass_panes": "minecraft:glass_pane",
+    "#minecraft:candles": "minecraft:candle",
+    "#minecraft:concrete_powder": "minecraft:white_concrete_powder",
+    "#minecraft:terracotta": "minecraft:terracotta",
+    "#minecraft:wool": "minecraft:white_wool",
+    "#minecraft:wool_carpets": "minecraft:white_carpet",
+    "minecraft:infested_chiseled_stone_bricks": "minecraft:chiseled_stone_bricks",
+    "minecraft:infested_cobblestone": "minecraft:cobblestone",
+    "minecraft:infested_cracked_stone_bricks": "minecraft:cracked_stone_bricks",
+    "minecraft:infested_deepslate": "minecraft:deepslate",
+    "minecraft:infested_mossy_stone_bricks": "minecraft:stone_bricks",
+    "minecraft:infested_stone": "minecraft:stone",
+    "minecraft:infested_stone_bricks": "minecraft:stone_bricks",
+    "minecraft:mossy_stone_bricks": "minecraft:stone_bricks"
+  }
+}

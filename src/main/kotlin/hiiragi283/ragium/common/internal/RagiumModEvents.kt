@@ -318,6 +318,7 @@ internal object RagiumModEvents {
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(RagiumDataMaps.DEFOLIANT)
         event.register(RagiumDataMaps.EXECUTIONER_DROPS)
+        event.register(RagiumDataMaps.SOAP)
 
         LOGGER.info("Registered Data Map Types!")
     }

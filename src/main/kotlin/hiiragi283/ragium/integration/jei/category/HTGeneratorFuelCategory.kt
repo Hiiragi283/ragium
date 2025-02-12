@@ -1,9 +1,9 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.integration.jei.HTGeneratorFuelEntry
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
+import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -43,7 +43,7 @@ class HTGeneratorFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTGe
         builder.addRecipeArrow().setPosition(getPosition(2.5), getPosition(0))
     }
 
-    override fun getWidth(): Int = 18 * 6 + 8
+    override fun getWidth(): Int = 18 * 5 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
 

@@ -113,6 +113,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DEFOLIANT, "枯葉剤")
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
         addItem(RagiumItems.SLOT_LOCK, "スロットロック")
+        addItem(RagiumItems.SOAP, "石鹸")
 
         addItem(RagiumItems.ALUMINUM_CAN, "アルミ缶")
         addItem(RagiumItems.POTION_CAN, "ポーション缶")
@@ -154,7 +155,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
         addItem(RagiumItems.SLAG, "スラグ")
-        addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
         addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")

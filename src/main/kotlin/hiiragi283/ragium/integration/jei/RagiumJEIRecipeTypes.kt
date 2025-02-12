@@ -3,6 +3,9 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
+import hiiragi283.ragium.integration.jei.entry.HTSoapEntry
+import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
 import mezz.jei.api.recipe.RecipeType
 
 object RagiumJEIRecipeTypes {
@@ -13,6 +16,12 @@ object RagiumJEIRecipeTypes {
     @JvmField
     val GENERATOR: RecipeType<HTGeneratorFuelEntry> =
         RecipeType.create(RagiumAPI.MOD_ID, "generator", HTGeneratorFuelEntry::class.java)
+
+    @JvmField
+    val SOAP: RecipeType<HTSoapEntry> =
+        RecipeType.create(RagiumAPI.MOD_ID, "soap", HTSoapEntry::class.java)
+
+    //    Machine Recipe    //
 
     @JvmField
     val ASSEMBLER: RecipeType<HTAssemblerRecipe> =

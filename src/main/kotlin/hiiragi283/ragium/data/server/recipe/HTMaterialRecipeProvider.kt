@@ -75,7 +75,7 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
             }
 
         // Ingot/Gem -> Rod
-        RagiumItems.getMaterialMap(HTTagPrefix.ROD).forEach { (material: HTMaterialKey, rod: DeferredItem<out Item>) ->
+        /*RagiumItems.getMaterialMap(HTTagPrefix.ROD).forEach { (material: HTMaterialKey, rod: DeferredItem<out Item>) ->
             val parentPrefix: HTTagPrefix = material
                 .getType()
                 .getMainPrefix() ?: return@forEach
@@ -88,7 +88,7 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
                 .define('B', RagiumItems.FORGE_HAMMER)
                 .unlockedBy("has_input", has(parentPrefix, material))
                 .savePrefixed(output)
-        }
+        }*/
 
         // Ingot -> Coil
         RagiumItems.getMaterialMap(HTTagPrefix.COIL).forEach { (material: HTMaterialKey, coil: DeferredItem<out Item>) ->

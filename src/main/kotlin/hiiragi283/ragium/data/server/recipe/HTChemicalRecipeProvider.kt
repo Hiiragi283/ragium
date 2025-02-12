@@ -58,8 +58,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Alkali + Seed Oil -> Soap
         HTInfuserRecipeBuilder()
             .itemInput(RagiumItems.ALKALI_REAGENT)
-            .fluidInput(RagiumVirtualFluids.PLANT_OIL)
-            .itemOutput(RagiumItems.SOAP, 4)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL, FluidType.BUCKET_VOLUME * 4)
+            .itemOutput(RagiumItems.SOAP)
             .save(output)
     }
 

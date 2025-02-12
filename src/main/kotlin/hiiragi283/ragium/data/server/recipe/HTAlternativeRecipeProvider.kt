@@ -2,17 +2,12 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.*
-import hiiragi283.ragium.api.extension.define
-import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -90,7 +85,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // Iron Bars
-        ShapedRecipeBuilder
+        /*ShapedRecipeBuilder
             .shaped(RecipeCategory.BUILDING_BLOCKS, Items.IRON_BARS, 8)
             .pattern("AAA")
             .pattern("AAA")
@@ -106,7 +101,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .define('A', HTTagPrefix.ROD, VanillaMaterials.COPPER)
             .define('B', RagiumItems.FORGE_HAMMER)
             .unlockedBy("has_rod", has(HTTagPrefix.ROD, VanillaMaterials.COPPER))
-            .save(output, RagiumAPI.id("shaped/copper_grate"))
+            .save(output, RagiumAPI.id("shaped/copper_grate"))*/
 
         // Obsidian
         HTMixerRecipeBuilder()
