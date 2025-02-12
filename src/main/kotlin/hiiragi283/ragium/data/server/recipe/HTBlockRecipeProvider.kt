@@ -45,7 +45,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     //    Components    //
 
     private fun registerBurners(output: RecipeOutput) {
-        RagiumBlocks.BURNERS_NEW.forEach { burner: DeferredBlock<Block> ->
+        RagiumBlocks.BURNERS.forEach { burner: DeferredBlock<Block> ->
             val core: ItemLike = when (burner) {
                 RagiumBlocks.MAGMA_BURNER -> Items.MAGMA_BLOCK
                 RagiumBlocks.SOUL_BURNER -> RagiumBlocks.SOUL_MAGMA_BLOCK

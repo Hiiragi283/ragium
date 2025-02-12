@@ -14,7 +14,6 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RotatedPillarBlock
-import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -48,20 +47,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
-            simpleBlock(
-                ore.get(),
-                ConfiguredModel(
-                    models()
-                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
-                        .blockTexture("layer0", variant.baseStoneName)
-                        .blockTexture("layer1", RagiumAPI.id(key.name))
-                        .cutout(),
-                ),
-            )
+            layeredBlock(ore, variant.baseStoneName.withPrefix("block/"), RagiumAPI.id(key.name).withPrefix("block/"))
         }
 
         // Burner
-        RagiumBlocks.BURNERS_NEW.forEach { burner ->
+        RagiumBlocks.BURNERS.forEach { burner: DeferredBlock<Block> ->
             val core: ResourceLocation = when (burner) {
                 RagiumBlocks.MAGMA_BURNER -> ResourceLocation.withDefaultNamespace("magma")
                 RagiumBlocks.SOUL_BURNER -> RagiumAPI.id("soul_magma_block")
@@ -136,12 +126,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             axisBlock(holder.get(), model, model)
         }
 
-        RagiumBlocks.GLASSES.forEach { glass: DeferredBlock<TransparentBlock> ->
-            simpleBlock(
-                glass.get(),
-                models().cutoutSimpleBlock(glass.blockId.path, glass.blockId),
-            )
-        }
+        listOf(RagiumBlocks.CHEMICAL_GLASS, RagiumBlocks.OBSIDIAN_GLASS).forEach(::cutoutSimpleBlock)
 
         buildList {
             addAll(RagiumBlocks.ADDONS)

@@ -41,7 +41,8 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
 
             add(RagiumBlocks.SHAFT)
-            addAll(RagiumBlocks.GLASSES)
+            add(RagiumBlocks.CHEMICAL_GLASS)
+            add(RagiumBlocks.OBSIDIAN_GLASS)
 
             add(RagiumBlocks.PLASTIC_BLOCK)
 
@@ -50,7 +51,7 @@ class RagiumBlockTagProvider(
 
             add(RagiumBlocks.COPPER_DRUM)
             addAll(RagiumBlocks.ADDONS)
-            addAll(RagiumBlocks.BURNERS_NEW)
+            addAll(RagiumBlocks.BURNERS)
         }.forEach(pickaxe::add)
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)

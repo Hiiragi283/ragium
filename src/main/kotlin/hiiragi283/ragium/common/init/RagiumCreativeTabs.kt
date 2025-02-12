@@ -31,7 +31,8 @@ object RagiumCreativeTabs {
                     RagiumBlocks.STORAGE_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.SLAG_BLOCK)
                     // Decorations
-                    RagiumBlocks.GLASSES.forEach(output::accept)
+                    output.accept(RagiumBlocks.CHEMICAL_GLASS)
+                    output.accept(RagiumBlocks.OBSIDIAN_GLASS)
                     RagiumBlocks.LED_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.PLASTIC_BLOCK)
                     // Material Items
@@ -117,7 +118,7 @@ object RagiumCreativeTabs {
                         add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
                         // Utilities
                         addAll(RagiumBlocks.ADDONS)
-                        addAll(RagiumBlocks.BURNERS_NEW)
+                        addAll(RagiumBlocks.BURNERS)
                     }.forEach(output::accept)
 
                     // Machines

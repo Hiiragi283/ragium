@@ -58,7 +58,7 @@ object RagiumBlocks {
         return holder
     }
 
-    //    Components    //
+    //    Natural Resources    //
 
     @JvmField
     val ORES: HTTable<HTOreVariant, HTMaterialKey, DeferredBlock<out Block>> = buildTable {
@@ -94,6 +94,8 @@ object RagiumBlocks {
         { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluids.CRUDE_OIL.get(), properties) },
         blockProperty(Blocks.WATER).mapColor(MapColor.COLOR_BLACK),
     )
+
+    //    Materials    //
 
     @JvmField
     val STORAGE_BLOCKS: Map<HTMaterialKey, DeferredBlock<Block>> = buildMap {
@@ -144,6 +146,8 @@ object RagiumBlocks {
         blockProperty().mapColor(MapColor.TERRACOTTA_CYAN).strength(3f).sound(SoundType.DEEPSLATE),
     )
 
+    //    Buildings    //
+
     @JvmField
     val SHAFT: DeferredBlock<RotatedPillarBlock> = register(
         "shaft",
@@ -156,12 +160,6 @@ object RagiumBlocks {
             .noOcclusion(),
     )
 
-    //    Buildings    //
-
-    @JvmField
-    val PLASTIC_BLOCK: DeferredBlock<Block> =
-        register("plastic_block", blockProperty().strength(2f).sound(SoundType.COPPER))
-
     @JvmField
     val CHEMICAL_GLASS: DeferredBlock<TransparentBlock> =
         register("chemical_glass", ::TransparentBlock, blockProperty(Blocks.GLASS))
@@ -169,12 +167,6 @@ object RagiumBlocks {
     @JvmField
     val OBSIDIAN_GLASS: DeferredBlock<TransparentBlock> =
         register("obsidian_glass", ::TransparentBlock, blockProperty(Blocks.GLASS).strength(5f, 1200f))
-
-    @JvmField
-    val GLASSES: List<DeferredBlock<TransparentBlock>> = listOf(
-        CHEMICAL_GLASS,
-        OBSIDIAN_GLASS,
-    )
 
     @JvmField
     val LED_BLOCKS: Map<DyeColor, DeferredBlock<Block>> = listOf(
@@ -197,6 +189,10 @@ object RagiumBlocks {
 
     @JvmStatic
     fun getLedBlock(color: DyeColor): DeferredBlock<Block> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
+
+    @JvmField
+    val PLASTIC_BLOCK: DeferredBlock<Block> =
+        register("plastic_block", blockProperty().strength(2f).sound(SoundType.COPPER))
 
     //    Foods    //
 
@@ -319,7 +315,7 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val BURNERS_NEW: List<DeferredBlock<Block>> = listOf(
+    val BURNERS: List<DeferredBlock<Block>> = listOf(
         MAGMA_BURNER,
         SOUL_BURNER,
         FIERY_BURNER,

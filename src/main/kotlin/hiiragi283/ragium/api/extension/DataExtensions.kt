@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -16,6 +17,8 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
@@ -72,6 +75,26 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(name: String, textu
     withExistingParent(name, "block/cube_all")
         .texture("all", texture)
         .cutout()
+
+fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation) {
+    simpleBlock(
+        holder.get(),
+        ConfiguredModel(
+            models()
+                .withExistingParent(holder.id.path, RagiumAPI.id("block/layered"))
+                .texture("layer0", layer0)
+                .texture("layer1", layer1)
+                .cutout(),
+        ),
+    )
+}
+
+fun BlockStateProvider.cutoutSimpleBlock(holder: DeferredBlock<*>) {
+    simpleBlock(
+        holder.get(),
+        models().cutoutSimpleBlock(holder.blockId.path, holder.blockId),
+    )
+}
 
 fun ItemModelProvider.basicItem(holder: DeferredHolder<Item, *>): ItemModelBuilder = basicItem(holder.id)
 
