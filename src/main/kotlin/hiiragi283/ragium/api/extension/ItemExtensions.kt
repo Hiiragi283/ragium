@@ -40,11 +40,6 @@ fun Item.Properties.name(text: Component): Item.Properties = component(DataCompo
 //    ItemStack    //
 
 /**
- * 指定した[item]とアイテムが一致するか判定します。
- */
-fun ItemStack.isOf(item: ItemLike): Boolean = `is`(item.asItem())
-
-/**
  * 残りの耐久値を返します。
  */
 val ItemStack.restDamage: Int get() = maxDamage - damageValue

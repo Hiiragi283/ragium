@@ -39,7 +39,9 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     WIRE("wires"),
 
     // Mekanism
-    DIRTY_DUST("dirty_dusts"),
+    DIRTY_DUST("dirty_dusts") {
+        override fun createPath(key: HTMaterialKey): String = "dirty_${key.name}_dust"
+    },
     CLUMP("clumps"),
     SHARD("shards"),
     CRYSTAL("crystals"),

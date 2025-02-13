@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
@@ -28,105 +29,12 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.MELON_PIE)
             .save(output)
 
-        registerWheat(output)
-
-        registerMilk(output)
-        registerHoney(output)
         registerChocolate(output)
-
+        registerHoney(output)
         registerMeat(output)
-    }
-
-    private fun registerWheat(output: RecipeOutput) {
-        // Flour
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Tags.Items.CROPS_WHEAT)
-            .itemOutput(RagiumItems.FLOUR)
-            .save(output)
-        // Dough
-        HTInfuserRecipeBuilder()
-            .itemInput(RagiumItems.FLOUR, 3)
-            .waterInput()
-            .itemOutput(RagiumItems.DOUGH, 3)
-            .save(output)
-        // Bread
-        HTCookingRecipeBuilder
-            .create(
-                Ingredient.of(RagiumItems.DOUGH),
-                Items.BREAD,
-                RecipeCategory.FOOD,
-                types = HTCookingRecipeBuilder.SMOKING_TYPES,
-            ).unlockedBy("has_dough", has(RagiumItems.DOUGH))
-            .save(output)
-    }
-
-    private fun registerMilk(output: RecipeOutput) {
-        // Milk
-        HTInfuserRecipeBuilder()
-            .itemInput(Items.BUCKET)
-            .milkInput()
-            .itemOutput(Items.MILK_BUCKET)
-            .save(output)
-
-        // Butter
-        HTRefineryRecipeBuilder()
-            .milkInput()
-            .itemOutput(RagiumItems.BUTTER)
-            .save(output)
-        // Sponge Cake
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(RagiumItems.FLOUR, 3)
-            .itemInput(Items.SUGAR, 2)
-            .itemInput(RagiumItems.BUTTER)
-            .itemOutput(RagiumBlocks.SPONGE_CAKE, 4)
-            .save(output)
-
-        // Cake
-        HTInfuserRecipeBuilder()
-            .itemInput(RagiumBlocks.SPONGE_CAKE)
-            .milkInput(FluidType.BUCKET_VOLUME * 3)
-            .itemOutput(Items.CAKE)
-            .saveSuffixed(output, "_with_sponge_cake")
-    }
-
-    private fun registerHoney(output: RecipeOutput) {
-        // Honey
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.HONEY_BLOCK)
-            .fluidOutput(RagiumFluids.HONEY)
-            .saveSuffixed(output, "_from_block")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.HONEY_BOTTLE)
-            .itemOutput(Items.GLASS_BOTTLE)
-            .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
-            .saveSuffixed(output, "_from_bottle")
-
-        HTInfuserRecipeBuilder()
-            .itemInput(Items.GLASS_BOTTLE)
-            .fluidInput(Tags.Fluids.HONEY, FluidType.BUCKET_VOLUME / 4)
-            .itemOutput(Items.HONEY_BOTTLE)
-            .save(output)
-
-        HTInfuserRecipeBuilder()
-            .itemInput(Tags.Items.GLASS_BLOCKS)
-            .fluidInput(Tags.Fluids.HONEY)
-            .itemOutput(Items.HONEY_BLOCK)
-            .save(output)
-        // Bee wax
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.HONEYCOMB_BLOCK)
-            .itemOutput(RagiumItems.BEE_WAX, 4)
-            .fluidOutput(RagiumFluids.HONEY)
-            .saveSuffixed(output, "_from_block")
-
-        HTExtractorRecipeBuilder()
-            .itemInput(Items.HONEYCOMB)
-            .itemOutput(RagiumItems.BEE_WAX)
-            .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
-            .saveSuffixed(output, "_from_comb")
+        registerMilk(output)
+        registerMushroom(output)
+        registerWheat(output)
     }
 
     private fun registerChocolate(output: RecipeOutput) {
@@ -188,6 +96,44 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
     }
 
+    private fun registerHoney(output: RecipeOutput) {
+        // Honey
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.HONEY_BLOCK)
+            .fluidOutput(RagiumFluids.HONEY)
+            .saveSuffixed(output, "_from_block")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.HONEY_BOTTLE)
+            .itemOutput(Items.GLASS_BOTTLE)
+            .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
+            .saveSuffixed(output, "_from_bottle")
+
+        HTInfuserRecipeBuilder()
+            .itemInput(Items.GLASS_BOTTLE)
+            .fluidInput(Tags.Fluids.HONEY, FluidType.BUCKET_VOLUME / 4)
+            .itemOutput(Items.HONEY_BOTTLE)
+            .save(output)
+
+        HTInfuserRecipeBuilder()
+            .itemInput(Tags.Items.GLASS_BLOCKS)
+            .fluidInput(Tags.Fluids.HONEY)
+            .itemOutput(Items.HONEY_BLOCK)
+            .save(output)
+        // Bee wax
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.HONEYCOMB_BLOCK)
+            .itemOutput(RagiumItems.BEE_WAX, 4)
+            .fluidOutput(RagiumFluids.HONEY)
+            .saveSuffixed(output, "_from_block")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.HONEYCOMB)
+            .itemOutput(RagiumItems.BEE_WAX)
+            .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
+            .saveSuffixed(output, "_from_comb")
+    }
+
     private fun registerMeat(output: RecipeOutput) {
         // Raw Food -> Minced Meat
         HTSingleItemRecipeBuilder
@@ -228,6 +174,75 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(RagiumItems.COOKED_MEAT_INGOT, 8)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemOutput(RagiumItems.CANNED_COOKED_MEAT, 8)
+            .save(output)
+    }
+
+    private fun registerMilk(output: RecipeOutput) {
+        // Milk
+        HTInfuserRecipeBuilder()
+            .itemInput(Items.BUCKET)
+            .milkInput()
+            .itemOutput(Items.MILK_BUCKET)
+            .save(output)
+
+        // Butter
+        HTRefineryRecipeBuilder()
+            .milkInput()
+            .itemOutput(RagiumItems.BUTTER)
+            .save(output)
+        // Sponge Cake
+        HTMultiItemRecipeBuilder
+            .blastFurnace()
+            .itemInput(RagiumItems.FLOUR, 3)
+            .itemInput(Items.SUGAR, 2)
+            .itemInput(RagiumItems.BUTTER)
+            .itemOutput(RagiumBlocks.SPONGE_CAKE, 4)
+            .save(output)
+
+        // Cake
+        HTInfuserRecipeBuilder()
+            .itemInput(RagiumBlocks.SPONGE_CAKE)
+            .milkInput(FluidType.BUCKET_VOLUME * 3)
+            .itemOutput(Items.CAKE)
+            .saveSuffixed(output, "_with_sponge_cake")
+    }
+
+    private fun registerMushroom(output: RecipeOutput) {
+        // Mushroom Stew
+        HTInfuserRecipeBuilder()
+            .itemInput(Tags.Items.MUSHROOMS)
+            .milkInput()
+            .fluidOutput(RagiumVirtualFluids.MUSHROOM_STEW)
+            .saveSuffixed(output, "_from_milk")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.MUSHROOM_STEW)
+            .itemOutput(Items.BOWL)
+            .fluidOutput(RagiumVirtualFluids.MUSHROOM_STEW)
+            .saveSuffixed(output, "_from_bowl")
+    }
+
+    private fun registerWheat(output: RecipeOutput) {
+        // Flour
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Tags.Items.CROPS_WHEAT)
+            .itemOutput(RagiumItems.FLOUR)
+            .save(output)
+        // Dough
+        HTInfuserRecipeBuilder()
+            .itemInput(RagiumItems.FLOUR, 3)
+            .waterInput()
+            .itemOutput(RagiumItems.DOUGH, 3)
+            .save(output)
+        // Bread
+        HTCookingRecipeBuilder
+            .create(
+                Ingredient.of(RagiumItems.DOUGH),
+                Items.BREAD,
+                RecipeCategory.FOOD,
+                types = HTCookingRecipeBuilder.SMOKING_TYPES,
+            ).unlockedBy("has_dough", has(RagiumItems.DOUGH))
             .save(output)
     }
 }

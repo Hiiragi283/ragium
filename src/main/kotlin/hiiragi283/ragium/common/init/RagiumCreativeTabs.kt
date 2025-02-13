@@ -35,23 +35,33 @@ object RagiumCreativeTabs {
                     output.accept(RagiumBlocks.OBSIDIAN_GLASS)
                     RagiumBlocks.LED_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.PLASTIC_BLOCK)
+
                     // Material Items
-                    RagiumItems.getMaterialItems(HTTagPrefix.DUST).forEach(output::accept)
+                    fun registerPrefix(prefix: HTTagPrefix) {
+                        RagiumItems.getMaterialItems(prefix).forEach(output::accept)
+                    }
+
+                    registerPrefix(HTTagPrefix.DUST)
                     output.accept(RagiumItems.BEE_WAX)
 
-                    RagiumItems.getMaterialItems(HTTagPrefix.RAW_MATERIAL).forEach(output::accept)
+                    registerPrefix(HTTagPrefix.RAW_MATERIAL)
                     output.accept(RagiumItems.SLAG)
 
-                    RagiumItems.getMaterialItems(HTTagPrefix.GEM).forEach(output::accept)
+                    registerPrefix(HTTagPrefix.GEM)
                     output.accept(RagiumItems.SILKY_CRYSTAL)
                     output.accept(RagiumItems.CRIMSON_CRYSTAL)
                     output.accept(RagiumItems.WARPED_CRYSTAL)
                     output.accept(RagiumItems.OBSIDIAN_TEAR)
 
                     output.accept(RagiumItems.RAGI_ALLOY_COMPOUND)
-                    RagiumItems.getMaterialItems(HTTagPrefix.INGOT).forEach(output::accept)
+                    registerPrefix(HTTagPrefix.INGOT)
 
-                    RagiumItems.getMaterialItems(HTTagPrefix.GEAR).forEach(output::accept)
+                    registerPrefix(HTTagPrefix.GEAR)
+
+                    registerPrefix(HTTagPrefix.DIRTY_DUST)
+                    registerPrefix(HTTagPrefix.CLUMP)
+                    registerPrefix(HTTagPrefix.SHARD)
+                    registerPrefix(HTTagPrefix.CRYSTAL)
                     // Foods
                     output.accept(RagiumBlocks.SPONGE_CAKE)
                     output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)

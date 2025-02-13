@@ -117,6 +117,11 @@ object RagiumItems {
         // register(HTTagPrefix.ROD, CommonMaterials.STEEL)
         // register(HTTagPrefix.ROD, RagiumMaterials.DEEP_STEEL)
         // register(HTTagPrefix.ROD, VanillaMaterials.NETHERITE)
+        // Mekanism
+        register(HTTagPrefix.DIRTY_DUST, RagiumMaterials.RAGINITE)
+        register(HTTagPrefix.CLUMP, RagiumMaterials.RAGINITE)
+        register(HTTagPrefix.SHARD, RagiumMaterials.RAGINITE)
+        register(HTTagPrefix.CRYSTAL, RagiumMaterials.RAGINITE)
     }
 
     @JvmStatic
@@ -167,9 +172,6 @@ object RagiumItems {
     val BUTTER: DeferredItem<Item> = registerFood("butter", Foods.APPLE)
 
     @JvmField
-    val CARAMEL: DeferredItem<Item> = registerFood("caramel", Foods.DRIED_KELP)
-
-    @JvmField
     val DOUGH: DeferredItem<Item> = register("dough")
 
     @JvmField
@@ -214,7 +216,6 @@ object RagiumItems {
         MELON_PIE,
         // ingredient
         BUTTER,
-        CARAMEL,
         DOUGH,
         FLOUR,
         // chocolate

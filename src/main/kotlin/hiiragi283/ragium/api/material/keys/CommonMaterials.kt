@@ -76,7 +76,7 @@ object CommonMaterials {
     val NICKEL: HTMaterialKey = HTMaterialKey.of("nickel")
 
     @JvmField
-    val OSMIUM: HTMaterialKey = HTMaterialKey.Companion.of("osmium")
+    val OSMIUM: HTMaterialKey = HTMaterialKey.of("osmium")
 
     @JvmField
     val PLATINUM: HTMaterialKey = HTMaterialKey.of("platinum")

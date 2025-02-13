@@ -1,11 +1,9 @@
 package hiiragi283.ragium.api.block.entity
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
-import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.machine.HTMachineAccess
@@ -36,7 +34,6 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
-import org.slf4j.Logger
 import java.util.function.Supplier
 import kotlin.math.max
 
@@ -52,11 +49,6 @@ abstract class HTMachineBlockEntity(
     MenuProvider,
     HTFluidInteractable,
     HTMachineAccess {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
-
     override val front: Direction
         get() = blockState.getOrDefault(
             BlockStateProperties.HORIZONTAL_FACING,
@@ -187,25 +179,19 @@ abstract class HTMachineBlockEntity(
         val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
         // 取得したエネルギー量を処理できるか判定
         if (!energyData.handleEnergy(network, costModifier, true)) {
-            LOGGER.error(
-                "Error on {} at {}: Failed to handle required energy from network!",
-                machineType.serializedName,
-                blockPosText(pos).string,
-            )
+            failed(HTMachineException.HandleEnergy(false))
             return
         }
-        runCatching { process(level, pos) }
-            .onSuccess {
+        runCatching { process(level, pos) }.fold(
+            {
                 energyData.handleEnergy(network, costModifier, false)
                 isActive = true
                 errorCache = null
                 machineType.soundEvent?.let { level.playSound(null, pos, it, SoundSource.BLOCKS, 0.5f, 1.0f) }
                 NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Success(this))
-            }.onFailure { throwable: Throwable ->
-                isActive = false
-                errorCache = throwable.message
-                NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
-            }
+            },
+            ::failed,
+        )
     }
 
     /**
@@ -220,6 +206,12 @@ abstract class HTMachineBlockEntity(
      * @throws HTMachineException 機械がエネルギーを消費しない場合
      */
     protected abstract fun process(level: ServerLevel, pos: BlockPos)
+
+    private fun failed(throwable: Throwable) {
+        isActive = false
+        errorCache = throwable.message
+        NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
+    }
 
     final override fun onRemove(
         state: BlockState,

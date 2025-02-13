@@ -96,7 +96,7 @@ object RagiumPlacedFeatures {
                 ),
                 32,
             ),
-            SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, Int.Companion.MIN_VALUE, -5),
+            SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, Int.MIN_VALUE, -5),
             BiomeFilter.biome(),
         )
 
@@ -115,7 +115,7 @@ object RagiumPlacedFeatures {
                 ),
                 32,
             ),
-            SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, Int.Companion.MIN_VALUE, -5),
+            SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, Int.MIN_VALUE, -5),
             BiomeFilter.biome(),
         )
     }

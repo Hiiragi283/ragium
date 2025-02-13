@@ -29,11 +29,11 @@ abstract class HTSingleItemMachineBlockEntity(
     state: BlockState,
     machineType: HTMachineType,
 ) : HTMachineBlockEntity(type, pos, state, machineType) {
-    private val itemInput: HTMachineItemHandler = RagiumAPI.Companion.getInstance().createItemHandler(this::setChanged)
-    private val itemCatalyst: HTMachineItemHandler = RagiumAPI.Companion.getInstance().createItemHandler(this::setChanged)
-    private val itemOutput: HTMachineItemHandler = RagiumAPI.Companion.getInstance().createItemHandler(this::setChanged)
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val itemCatalyst: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
-    final override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.Companion.ofItem(
+    final override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
         listOf(
             itemInput.createSlot(0),
             itemCatalyst.createSlot(0),
@@ -45,7 +45,7 @@ abstract class HTSingleItemMachineBlockEntity(
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.Companion.of(
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
             enchantments,
             itemInput.getStackInSlot(0),
             itemCatalyst.getStackInSlot(0),

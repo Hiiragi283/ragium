@@ -6,8 +6,10 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
+import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
+import net.neoforged.fml.ModList
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
@@ -44,6 +46,10 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumMultiblockComponentTypes.REGISTER.register(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumRecipeTypes.REGISTER.register(eventBus)
+
+        if (ModList.get().isLoaded("mekanism")) {
+            RagiumMekIntegration.CHEMICAL_REGISTER.register(eventBus)
+        }
 
         container.registerConfig(ModConfig.Type.STARTUP, RagiumConfig.SPEC)
 

@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "ragium:refinery",
+  "fluid_input": {
+    "amount": 150,
+    "tag": "c:nutritional_paste"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "ragium:meat_ingot"
+  }
+}

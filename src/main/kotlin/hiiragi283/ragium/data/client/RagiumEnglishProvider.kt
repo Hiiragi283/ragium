@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -57,6 +58,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "Magenta LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
+        // Chemical
+        add(RagiumMekIntegration.RAGINITE_SLURRY.cleanSlurry.translationKey, "Clean Raginite Slurry")
+        add(RagiumMekIntegration.RAGINITE_SLURRY.dirtySlurry.translationKey, "Dirty Raginite Slurry")
         // Content
         add(HTOreVariant.OVERWORLD, "%s Ore")
         add(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
@@ -68,6 +72,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.SNOW, "Powder Snow")
         addFluid(RagiumFluids.SLIME, "Slime")
+
+        addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
 
         addFluid(RagiumVirtualFluids.SULFURIC_ACID, "Blaze Acid")
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Glow Acid")
@@ -93,7 +99,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.BUTTER, "Butter")
-        addItem(RagiumItems.CARAMEL, "Caramel")
         addItem(RagiumItems.DOUGH, "Dough")
         addItem(RagiumItems.FLOUR, "Flour")
 

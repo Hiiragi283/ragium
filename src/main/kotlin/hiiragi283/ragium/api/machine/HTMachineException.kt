@@ -11,6 +11,8 @@ sealed class HTMachineException(val showInLog: Boolean, message: String) : Runti
 
     class GenerateEnergy(showInLog: Boolean) : HTMachineException(showInLog, "Failed to generate energy!")
 
+    class HandleEnergy(showInLog: Boolean) : HTMachineException(showInLog, "Failed to handle required energy from network!")
+
     //    Fluid    //
 
     class ExtractFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to extract fluid into the storage!")

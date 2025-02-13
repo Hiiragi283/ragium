@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -57,6 +58,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "LEDブロック（マゼンタ）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
+        // Chemical
+        add(RagiumMekIntegration.RAGINITE_SLURRY.cleanSlurry.translationKey, "純粋なラギナイトの懸濁液")
+        add(RagiumMekIntegration.RAGINITE_SLURRY.dirtySlurry.translationKey, "汚れたラギナイトの懸濁液")
         // Content
         add(HTOreVariant.OVERWORLD, "%s鉱石")
         add(HTOreVariant.DEEPSLATE, "深層%s鉱石")
@@ -68,6 +72,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluids.HONEY, "蜂蜜")
         addFluid(RagiumFluids.SNOW, "粉雪")
         addFluid(RagiumFluids.SLIME, "スライム")
+
+        addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
 
         addFluid(RagiumVirtualFluids.SULFURIC_ACID, "ブレイズ酸")
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "グロウ酸")
@@ -93,7 +99,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
         addItem(RagiumItems.BUTTER, "バター")
-        addItem(RagiumItems.CARAMEL, "キャラメル")
         addItem(RagiumItems.DOUGH, "生地")
         addItem(RagiumItems.FLOUR, "小麦粉")
 

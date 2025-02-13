@@ -95,13 +95,6 @@ fun dropStackAt(
 //    BlockEntity    //
 
 /**
- * [BlockEntity.hasLevel]がtrueの場合のみに[action]を実行します。
- * @param T 戻り値のクラス
- * @return [action]を実行した場合はその戻り値を，それ以外の場合は`null`
- */
-fun <T : Any> BlockEntity.ifPresentWorld(action: (Level) -> T): T? = level?.let(action)
-
-/**
  * [BlockEntity]に[CompoundTag]を使用したタグを同期させます。
  */
 fun BlockEntity.sendUpdatePacket() {
