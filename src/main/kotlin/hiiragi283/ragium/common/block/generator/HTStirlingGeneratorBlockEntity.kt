@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.energy.HTMachineEnergyData.Empty
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
@@ -16,8 +17,10 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 
@@ -36,18 +39,10 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         fluidInput.updateCapacity(this)
     }
 
-    private fun getBurnTime(): Int = itemInput.getStackInSlot(0).getBurnTime(null)
-
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData {
-        val burnTime: Int = getBurnTime()
-        if (burnTime > 0) {
-            return HTMachineEnergyData.Stirling(burnTime * 10)
-        }
-        return HTMachineEnergyData.Empty
-    }
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = Stirling.of(itemInput.getStackInSlot(0))
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val burnTime: Int = getBurnTime()
+        val burnTime: Int = itemInput.getStackInSlot(0).getBurnTime(null)
         if (burnTime <= 0) throw HTMachineException.FindFuel(false)
         val requiredWater: Int = burnTime / 10
         if (fluidInput.drain(requiredWater, IFluidHandler.FluidAction.SIMULATE).amount < requiredWater) {
@@ -67,4 +62,25 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.INPUT.wrapItemHandler(itemInput)
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler = HTStorageIO.INPUT.wrapFluidHandler(fluidInput)
+
+    //    EnergyData    //
+
+    private class Stirling private constructor(override val amount: Int) : HTMachineEnergyData {
+        companion object {
+            @JvmStatic
+            fun of(stack: ItemStack): HTMachineEnergyData {
+                val burnTime: Int = stack.getBurnTime(null)
+                if (burnTime > 0) {
+                    return Stirling(burnTime * 10)
+                }
+                return Empty
+            }
+        }
+
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean {
+            val fixedAmount: Int = amount * modifier
+            if (fixedAmount <= 0) return false
+            return storage.receiveEnergy(fixedAmount, simulate) > 0
+        }
+    }
 }

@@ -47,7 +47,6 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import org.slf4j.Logger
 import java.util.function.Supplier
 import kotlin.math.max
-import kotlin.math.min
 
 /**
  * 機械のベースとなる[HTBlockEntity]

@@ -19,8 +19,11 @@ interface HTMachineEnergyData {
         PRECISION(2560),
         ;
 
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean =
-            storage.extractEnergy(amount * modifier, simulate) == (amount * modifier)
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean {
+            val fixedAmount: Int = amount * modifier
+            if (fixedAmount <= 0) return false
+            return storage.extractEnergy(fixedAmount, simulate) == fixedAmount
+        }
     }
 
     enum class Generate(override val amount: Int) : HTMachineEnergyData {
@@ -29,12 +32,10 @@ interface HTMachineEnergyData {
         PRECISION(5120),
         ;
 
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean =
-            storage.receiveEnergy(amount * modifier, simulate) > 0
-    }
-
-    data class Stirling(override val amount: Int) : HTMachineEnergyData {
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean =
-            storage.receiveEnergy(amount * modifier, simulate) > 0
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean {
+            val fixedAmount: Int = amount * modifier
+            if (fixedAmount <= 0) return false
+            return storage.receiveEnergy(fixedAmount, simulate) > 0
+        }
     }
 }

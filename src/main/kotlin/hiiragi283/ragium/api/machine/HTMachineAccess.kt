@@ -56,7 +56,7 @@ interface HTMachineAccess :
 
     /**
      * 消費/生産エネルギーにかけられる倍率
-     * 
+     *
      * 最小値は`1`
      */
     val costModifier: Int

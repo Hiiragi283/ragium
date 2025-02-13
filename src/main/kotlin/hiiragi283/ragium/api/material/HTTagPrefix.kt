@@ -1,10 +1,8 @@
 package hiiragi283.ragium.api.material
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.extension.toDataResult
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.tags.TagKey
@@ -75,10 +73,6 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
             SHARD,
             CRYSTAL,
         )
-
-        @JvmStatic
-        fun fromSerializedName(name: String): DataResult<HTTagPrefix> =
-            HTTagPrefix.entries.firstOrNull { it.serializedName == name }.toDataResult { "Unknown prefix: $name" }
     }
 
     //    Id    //
