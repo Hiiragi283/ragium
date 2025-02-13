@@ -24,7 +24,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
 class HTBreweryRecipe(
@@ -69,6 +72,9 @@ class HTBreweryRecipe(
             HTBreweryRecipe::potion,
             ::HTBreweryRecipe,
         )
+
+        @JvmField
+        val WATER_INGREDIENT: SizedFluidIngredient = SizedFluidIngredient.of(Tags.Fluids.WATER, FluidType.BUCKET_VOLUME)
     }
 
     override val itemResults: List<HTItemResult> = listOf(PotionResult(potion))
@@ -77,7 +83,8 @@ class HTBreweryRecipe(
         val bool1: Boolean = this.firstInput.test(input.getItem(0))
         val bool2: Boolean = this.secondInput.test(input.getItem(1))
         val bool3: Boolean = this.thirdInput.map { it.test(input.getItem(2)) }.orElse(true)
-        return bool1 && bool2 && bool3
+        val bool4: Boolean = WATER_INGREDIENT.test(input.getFluid(0))
+        return bool1 && bool2 && bool3 && bool4
     }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BREWERY.get()
@@ -96,7 +103,7 @@ class HTBreweryRecipe(
         override fun getResultId(): ResourceLocation = potion.idOrThrow
 
         override fun getItem(enchantments: ItemEnchantments): ItemStack {
-            val stack = ItemStack(Items.POTION)
+            val stack = ItemStack(Items.POTION, 3)
             stack.set(DataComponents.POTION_CONTENTS, PotionContents(potion))
             return stack
         }

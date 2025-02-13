@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
@@ -19,6 +20,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
@@ -54,50 +56,43 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     //    brewery    //
 
     private fun brewery(output: RecipeOutput) {
-        // Night Vision
-        HTBreweryRecipeBuilder()
-            .itemInput(Tags.Items.CROPS_NETHER_WART)
-            .itemInput(Items.GOLDEN_CARROT)
-            .potionOutput(Potions.LONG_NIGHT_VISION)
-            .save(output)
-        // Invisibility
-        HTBreweryRecipeBuilder()
-            .itemInput(Tags.Items.CROPS_NETHER_WART)
-            .itemInput(Items.GOLDEN_CARROT)
-            .itemInput(Items.FERMENTED_SPIDER_EYE)
-            .potionOutput(Potions.LONG_INVISIBILITY)
-            .save(output)
-        // Leaping
-        HTBreweryRecipeBuilder()
-            .itemInput(Tags.Items.CROPS_NETHER_WART)
-            .itemInput(Items.RABBIT_FOOT)
-            .potionOutput(Potions.LONG_LEAPING)
-            .save(output)
-        // Fire Resistance
-        HTBreweryRecipeBuilder()
-            .itemInput(Tags.Items.CROPS_NETHER_WART)
-            .itemInput(Items.MAGMA_CREAM)
-            .potionOutput(Potions.LONG_FIRE_RESISTANCE)
-            .save(output)
-        // Swiftness
-        HTBreweryRecipeBuilder()
-            .itemInput(Tags.Items.CROPS_NETHER_WART)
-            .itemInput(Items.SUGAR)
-            .potionOutput(Potions.LONG_SWIFTNESS)
-            .save(output)
-        // Slowness
-        HTBreweryRecipeBuilder()
-            .itemInput(Tags.Items.CROPS_NETHER_WART)
-            .itemInput(Items.SUGAR)
-            .itemInput(Items.FERMENTED_SPIDER_EYE)
-            .potionOutput(Potions.LONG_SLOWNESS)
-            .save(output)
-        // Turtle Master
-        HTBreweryRecipeBuilder()
-            .itemInput(Tags.Items.CROPS_NETHER_WART)
-            .itemInput(Items.TURTLE_HELMET)
-            .potionOutput(Potions.LONG_TURTLE_MASTER)
-            .save(output)
+        fun register(potion: Holder<Potion>, input: ItemLike) {
+            HTBreweryRecipeBuilder()
+                .itemInput(Tags.Items.CROPS_NETHER_WART)
+                .itemInput(input)
+                .potionOutput(potion)
+                .save(output)
+        }
+
+        fun registerFermented(potion: Holder<Potion>, input: ItemLike) {
+            HTBreweryRecipeBuilder()
+                .itemInput(Tags.Items.CROPS_NETHER_WART)
+                .itemInput(input)
+                .itemInput(Items.FERMENTED_SPIDER_EYE)
+                .potionOutput(potion)
+                .save(output)
+        }
+
+        register(Potions.FIRE_RESISTANCE, Items.MAGMA_CREAM)
+        register(Potions.HEALING, Items.GLISTERING_MELON_SLICE)
+        register(Potions.INFESTED, Items.STONE)
+        register(Potions.LEAPING, Items.RABBIT_FOOT)
+        register(Potions.LUCK, Items.EMERALD)
+        register(Potions.NIGHT_VISION, Items.GOLDEN_CARROT)
+        register(Potions.OOZING, Items.SLIME_BLOCK)
+        register(Potions.POISON, Items.SPIDER_EYE)
+        register(Potions.REGENERATION, Items.GHAST_TEAR)
+        register(Potions.SLOW_FALLING, Items.PHANTOM_MEMBRANE)
+        register(Potions.STRENGTH, Items.BLAZE_POWDER)
+        register(Potions.SWIFTNESS, Items.SUGAR)
+        register(Potions.TURTLE_MASTER, Items.TURTLE_HELMET)
+        register(Potions.WATER_BREATHING, Items.PUFFERFISH)
+        register(Potions.WEAVING, Items.COBWEB)
+        register(Potions.WIND_CHARGED, Items.BREEZE_ROD)
+        registerFermented(Potions.HARMING, Items.GLISTERING_MELON_SLICE)
+        registerFermented(Potions.INVISIBILITY, Items.GOLDEN_CARROT)
+        registerFermented(Potions.SLOWNESS, Items.SUGAR)
+        registerFermented(Potions.WEAKNESS, Items.BLAZE_POWDER)
     }
 
     //    Compressor    //

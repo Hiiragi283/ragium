@@ -1,12 +1,12 @@
 {
   "type": "ragium:brewery",
-  "effect": "minecraft:long_swiftness",
+  "effect": "minecraft:regeneration",
   "first_item_input": {
     "count": 1,
     "tag": "c:crops/nether_wart"
   },
   "second_item_input": {
     "count": 1,
-    "item": "minecraft:sugar"
+    "item": "minecraft:ghast_tear"
   }
 }

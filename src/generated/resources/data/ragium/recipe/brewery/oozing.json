@@ -1,12 +1,12 @@
 {
   "type": "ragium:brewery",
-  "effect": "minecraft:long_leaping",
+  "effect": "minecraft:oozing",
   "first_item_input": {
     "count": 1,
     "tag": "c:crops/nether_wart"
   },
   "second_item_input": {
     "count": 1,
-    "item": "minecraft:rabbit_foot"
+    "item": "minecraft:slime_block"
   }
 }

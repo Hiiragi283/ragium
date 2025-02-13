@@ -1,6 +1,6 @@
 {
   "type": "ragium:brewery",
-  "effect": "minecraft:long_invisibility",
+  "effect": "minecraft:night_vision",
   "first_item_input": {
     "count": 1,
     "tag": "c:crops/nether_wart"
@@ -8,9 +8,5 @@
   "second_item_input": {
     "count": 1,
     "item": "minecraft:golden_carrot"
-  },
-  "third_item_input": {
-    "count": 1,
-    "item": "minecraft:fermented_spider_eye"
   }
 }

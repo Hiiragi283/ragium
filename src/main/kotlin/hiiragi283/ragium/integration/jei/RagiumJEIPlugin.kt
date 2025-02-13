@@ -63,6 +63,7 @@ class RagiumJEIPlugin : IModPlugin {
                 RagiumJEIRecipeTypes.BLAST_FURNACE,
                 RagiumRecipeSerializers.BLAST_FURNACE.get(),
             ),
+            HTBreweryRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
                 RagiumMachineKeys.COMPRESSOR,
@@ -113,6 +114,7 @@ class RagiumJEIPlugin : IModPlugin {
                 HTRecipeConverters.compressor(this::add)
             },
         )
+        register(RagiumJEIRecipeTypes.BREWERY, RagiumRecipeTypes.BREWERY)
         register(RagiumJEIRecipeTypes.ENCHANTER, RagiumRecipeTypes.ENCHANTER)
         register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
         registration.addRecipes(
@@ -179,6 +181,8 @@ class RagiumJEIPlugin : IModPlugin {
         // Blast Furnace
         register(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumMachineKeys.BLAST_FURNACE)
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+        // Brewery
+        register(RagiumJEIRecipeTypes.BREWERY, RagiumMachineKeys.ALCHEMICAL_BREWERY)
         // Compressor
         register(RagiumJEIRecipeTypes.COMPRESSOR, RagiumMachineKeys.COMPRESSOR)
         // Enchanter

@@ -46,7 +46,7 @@ class HTPotionCanItem(properties: Properties) : Item(properties.durability(3)) {
 
         player?.let { playerIn: Player ->
             playerIn.awardStat(Stats.ITEM_USED.get(this))
-            val drankStack = stack.hurtAndConvertOnBreak(
+            val drankStack: ItemStack = stack.hurtAndConvertOnBreak(
                 1,
                 RagiumItems.ALUMINUM_CAN,
                 playerIn,

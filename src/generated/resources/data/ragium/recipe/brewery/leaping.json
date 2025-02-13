@@ -1,12 +1,12 @@
 {
   "type": "ragium:brewery",
-  "effect": "minecraft:long_turtle_master",
+  "effect": "minecraft:leaping",
   "first_item_input": {
     "count": 1,
     "tag": "c:crops/nether_wart"
   },
   "second_item_input": {
     "count": 1,
-    "item": "minecraft:turtle_helmet"
+    "item": "minecraft:rabbit_foot"
   }
 }

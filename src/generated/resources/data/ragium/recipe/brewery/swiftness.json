@@ -1,0 +1,12 @@
+{
+  "type": "ragium:brewery",
+  "effect": "minecraft:swiftness",
+  "first_item_input": {
+    "count": 1,
+    "tag": "c:crops/nether_wart"
+  },
+  "second_item_input": {
+    "count": 1,
+    "item": "minecraft:sugar"
+  }
+}
