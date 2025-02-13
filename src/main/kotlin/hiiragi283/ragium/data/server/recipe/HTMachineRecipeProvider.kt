@@ -1,7 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
+import com.mojang.authlib.properties.PropertyMap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.extension.buildCompPatch
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -11,17 +13,22 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
+import hiiragi283.ragium.common.recipe.HTSimpleItemResult
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.network.chat.Component
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.item.component.ResolvableProfile
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
@@ -29,6 +36,7 @@ import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
+import java.util.*
 
 object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -51,6 +59,30 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
             .save(output)
+
+        // Hiiragi283's Head
+        HTMultiItemRecipeBuilder
+            .assembler()
+            .itemInput(Items.SKELETON_SKULL)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM, 64)
+            .itemOutput(
+                HTSimpleItemResult(
+                    Items.PLAYER_HEAD,
+                    1,
+                    buildCompPatch {
+                        set(
+                            DataComponents.PROFILE,
+                            ResolvableProfile(
+                                Optional.of("Russell_283"),
+                                Optional.empty(),
+                                PropertyMap(),
+                            ),
+                        )
+                        set(DataComponents.RARITY, Rarity.EPIC)
+                        set(DataComponents.ITEM_NAME, Component.literal("Hiiragi 283"))
+                    },
+                ),
+            ).save(output, RagiumAPI.id("hiiragi_head"))
     }
 
     //    brewery    //
