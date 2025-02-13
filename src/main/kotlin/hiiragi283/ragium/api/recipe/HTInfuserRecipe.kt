@@ -35,8 +35,8 @@ class HTInfuserRecipe(
                         HTRecipeCodecs.group(),
                         HTRecipeCodecs.ITEM_INPUT.forGetter(HTInfuserRecipe::itemInput),
                         HTRecipeCodecs.FLUID_INPUT.forGetter(HTInfuserRecipe::fluidInput),
-                        HTItemResult.CODEC.optionalFieldOf("item_output").forGetter(HTInfuserRecipe::itemOutput),
-                        FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTInfuserRecipe::fluidOutput),
+                        HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTInfuserRecipe::itemOutput),
+                        HTRecipeCodecs.FLUID_OUTPUT.forGetter(HTInfuserRecipe::fluidOutput),
                     ).apply(instance, ::HTInfuserRecipe)
             }.validate(HTFluidOutputRecipe::validate)
 

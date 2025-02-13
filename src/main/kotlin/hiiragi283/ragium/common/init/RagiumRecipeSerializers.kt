@@ -49,10 +49,6 @@ object RagiumRecipeSerializers {
         REGISTER.register("compressor") { _: ResourceLocation -> HTSingleItemRecipe.Serializer(::HTCompressorRecipe) }
 
     @JvmField
-    val DISTILLERY: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTDistilleryRecipe>> =
-        register("distillery", HTDistilleryRecipe.CODEC, HTDistilleryRecipe.STREAM_CODEC)
-
-    @JvmField
     val ENCHANTER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTEnchanterRecipe>> =
         register("enchanter", HTEnchanterRecipe.CODEC, HTEnchanterRecipe.STREAM_CODEC)
 

@@ -32,8 +32,8 @@ class HTRefineryRecipe(
                     .group(
                         HTRecipeCodecs.group(),
                         HTRecipeCodecs.FLUID_INPUT.forGetter(HTRefineryRecipe::input),
-                        HTItemResult.CODEC.optionalFieldOf("item_output").forGetter(HTRefineryRecipe::itemOutput),
-                        FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTRefineryRecipe::fluidOutput),
+                        HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTRefineryRecipe::itemOutput),
+                        HTRecipeCodecs.FLUID_OUTPUT.forGetter(HTRefineryRecipe::fluidOutput),
                     ).apply(instance, ::HTRefineryRecipe)
             }.validate(HTFluidOutputRecipe::validate)
 

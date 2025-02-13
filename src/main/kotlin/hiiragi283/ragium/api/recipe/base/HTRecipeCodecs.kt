@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe.base
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
@@ -32,8 +31,8 @@ object HTRecipeCodecs {
     val CATALYST: MapCodec<Optional<Ingredient>> = Ingredient.CODEC_NONEMPTY.optionalFieldOf("catalyst")
 
     @JvmField
-    val ITEM_OUTPUT: MapCodec<ItemStack> = ItemStack.CODEC.fieldOf("item_output")
+    val ITEM_OUTPUT: MapCodec<Optional<HTItemResult>> = HTItemResult.CODEC.optionalFieldOf("item_output")
 
     @JvmField
-    val FLUID_OUTPUT: MapCodec<FluidStack> = FluidStack.CODEC.fieldOf("fluid_output")
+    val FLUID_OUTPUT: MapCodec<Optional<FluidStack>> = FluidStack.CODEC.optionalFieldOf("fluid_output")
 }

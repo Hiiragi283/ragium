@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
@@ -13,6 +14,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import java.util.*
 
 object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -104,11 +106,17 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .save(output, RagiumAPI.id("shaped/copper_grate"))*/
 
         // Obsidian
-        HTMixerRecipeBuilder()
-            .waterInput()
-            .fluidInput(Tags.Fluids.LAVA)
-            .itemOutput(Items.OBSIDIAN)
-            .save(output)
+        output.accept(
+            RagiumAPI.id("mixer/obsidian"),
+            HTMixerRecipe(
+                "",
+                HTIngredientBuilder.water(),
+                HTIngredientBuilder.fluid(Tags.Fluids.LAVA),
+                Optional.of(RagiumAPI.getInstance().createItemResult(Items.OBSIDIAN)),
+                Optional.empty(),
+            ),
+            null,
+        )
 
         registerSnow(output)
     }

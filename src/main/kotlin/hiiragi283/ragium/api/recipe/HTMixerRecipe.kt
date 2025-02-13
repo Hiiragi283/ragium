@@ -38,8 +38,8 @@ class HTMixerRecipe(
                         SizedFluidIngredient.FLAT_CODEC
                             .fieldOf("second_fluidInput")
                             .forGetter(HTMixerRecipe::secondFluid),
-                        HTItemResult.CODEC.optionalFieldOf("item_output").forGetter(HTMixerRecipe::itemOutput),
-                        FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTMixerRecipe::fluidOutput),
+                        HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTMixerRecipe::itemOutput),
+                        HTRecipeCodecs.FLUID_OUTPUT.forGetter(HTMixerRecipe::fluidOutput),
                     ).apply(instance, ::HTMixerRecipe)
             }.validate(HTFluidOutputRecipe::validate)
 

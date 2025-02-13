@@ -4,10 +4,14 @@ import com.mojang.authlib.properties.PropertyMap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.buildCompPatch
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.recipe.HTBreweryRecipe
+import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
+import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -21,6 +25,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -35,6 +40,8 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.SizedIngredient
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import java.util.*
 
@@ -90,20 +97,31 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun brewery(output: RecipeOutput) {
         fun register(potion: Holder<Potion>, input: ItemLike) {
-            HTBreweryRecipeBuilder()
-                .itemInput(Tags.Items.CROPS_NETHER_WART)
-                .itemInput(input)
-                .potionOutput(potion)
-                .save(output)
+            output.accept(
+                potion.idOrThrow.withPrefix("brewery/"),
+                HTBreweryRecipe(
+                    "",
+                    HTIngredientBuilder.item(Tags.Items.CROPS_NETHER_WART),
+                    HTIngredientBuilder.item(input),
+                    Optional.empty(),
+                    potion,
+                ),
+                null,
+            )
         }
 
         fun registerFermented(potion: Holder<Potion>, input: ItemLike) {
-            HTBreweryRecipeBuilder()
-                .itemInput(Tags.Items.CROPS_NETHER_WART)
-                .itemInput(input)
-                .itemInput(Items.FERMENTED_SPIDER_EYE)
-                .potionOutput(potion)
-                .save(output)
+            output.accept(
+                potion.idOrThrow.withPrefix("brewery/"),
+                HTBreweryRecipe(
+                    "",
+                    HTIngredientBuilder.item(Tags.Items.CROPS_NETHER_WART),
+                    HTIngredientBuilder.item(input),
+                    Optional.of(HTIngredientBuilder.item(Items.FERMENTED_SPIDER_EYE)),
+                    potion,
+                ),
+                null,
+            )
         }
 
         register(Potions.FIRE_RESISTANCE, Items.MAGMA_CREAM)
@@ -157,37 +175,31 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     //    Enchanter    //
 
     private fun enchanter(output: RecipeOutput, lookup: HolderLookup.RegistryLookup<Enchantment>) {
+        fun register(enchantment: ResourceKey<Enchantment>, input: SizedIngredient) {
+            output.accept(
+                enchantment.location().withPrefix("enchanter/"),
+                HTEnchanterRecipe(
+                    "",
+                    input,
+                    Optional.empty(),
+                    lookup.getOrThrow(enchantment),
+                ),
+                null,
+            )
+        }
+
         // for Armors
         // for Swords
-        HTEnchanterRecipeBuilder(lookup, Enchantments.SHARPNESS)
-            .itemInput(HTTagPrefix.GEM, VanillaMaterials.QUARTZ, 64)
-            .save(output)
-
-        HTEnchanterRecipeBuilder(lookup, Enchantments.BANE_OF_ARTHROPODS)
-            .itemInput(Items.SPIDER_EYE, 16)
-            .save(output)
-
-        HTEnchanterRecipeBuilder(lookup, Enchantments.LOOTING)
-            .itemInput(HTTagPrefix.GEM, VanillaMaterials.EMERALD, 16)
-            .save(output)
+        register(Enchantments.SHARPNESS, HTIngredientBuilder.item(HTTagPrefix.GEM, VanillaMaterials.QUARTZ, 64))
+        register(Enchantments.BANE_OF_ARTHROPODS, HTIngredientBuilder.item(Items.SPIDER_EYE, 16))
+        register(Enchantments.LOOTING, HTIngredientBuilder.item(HTTagPrefix.GEM, VanillaMaterials.EMERALD, 16))
         // for Mining Tools
         // for Bows
         // for Tridents
-        HTEnchanterRecipeBuilder(lookup, Enchantments.LOYALTY)
-            .itemInput(Items.LEAD, 8)
-            .save(output)
-
-        HTEnchanterRecipeBuilder(lookup, Enchantments.IMPALING)
-            .itemInput(RagiumItems.PRISMARINE_REAGENT, 64)
-            .save(output)
-
-        HTEnchanterRecipeBuilder(lookup, Enchantments.RIPTIDE)
-            .itemInput(Items.HEART_OF_THE_SEA)
-            .save(output)
-
-        HTEnchanterRecipeBuilder(lookup, Enchantments.CHANNELING)
-            .itemInput(Items.LIGHTNING_ROD, 64)
-            .save(output)
+        register(Enchantments.LOYALTY, HTIngredientBuilder.item(Items.LEAD, 8))
+        register(Enchantments.IMPALING, HTIngredientBuilder.item(RagiumItems.PRISMARINE_REAGENT, 64))
+        register(Enchantments.RIPTIDE, HTIngredientBuilder.item(Items.HEART_OF_THE_SEA))
+        register(Enchantments.CHANNELING, HTIngredientBuilder.item(Items.LIGHTNING_ROD, 64))
         // for Crossbows
         // for Maces
     }
@@ -389,12 +401,17 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumVirtualFluids.ETHANOL)
             .save(output)
         // Alcohol + Plant Oil -> Bio Fuel + Glycerol
-        HTMixerRecipeBuilder()
-            .fluidInput(RagiumVirtualFluids.ETHANOL, FluidType.BUCKET_VOLUME * 4)
-            .fluidInput(RagiumVirtualFluids.PLANT_OIL)
-            .fluidOutput(RagiumVirtualFluids.BIODIESEL, FluidType.BUCKET_VOLUME * 4)
-            // .fluidOutput(RagiumFluids.GLYCEROL)
-            .save(output)
+        output.accept(
+            RagiumAPI.id("mixer/biodiesel"),
+            HTMixerRecipe(
+                "",
+                HTIngredientBuilder.fluid(RagiumVirtualFluids.ETHANOL, FluidType.BUCKET_VOLUME * 4),
+                HTIngredientBuilder.fluid(RagiumVirtualFluids.PLANT_OIL),
+                Optional.empty(),
+                Optional.of(FluidStack(RagiumVirtualFluids.BIODIESEL.get(), FluidType.BUCKET_VOLUME * 4)),
+            ),
+            null,
+        )
 
         // XX Log -> Sap + Pulp
         HTExtractorRecipeBuilder()

@@ -111,7 +111,7 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     protected abstract val prefix: String
 
-    private fun fixId(id: ResourceLocation): ResourceLocation = RagiumAPI.wrapId(id.withPrefix("$prefix/"))
+    private fun fixId(id: ResourceLocation): ResourceLocation = id.withPrefix("$prefix/")
 
     //    Export    //
 

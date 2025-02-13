@@ -271,6 +271,7 @@
   "tooltip.ragium.fluid.capacity": "Capacity: %s mb",
   "tooltip.ragium.machine.cost": "- Process Cost: %s FE/times",
   "tooltip.ragium.machine.name": "- Machine Name: %s",
+  "tooltip.ragium.machine.owner": "- Owner: %s",
   "tooltip.ragium.machine.preview": "- Show Preview: %s",
   "tooltip.ragium.machine.tick_rate": "- Tick Rate: %s ticks (%s sec)",
   "tooltip.ragium.machine.tier": "- Tier: %s",

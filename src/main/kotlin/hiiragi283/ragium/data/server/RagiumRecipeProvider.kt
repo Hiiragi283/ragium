@@ -2,10 +2,11 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.data.server.integration.*
+import hiiragi283.ragium.data.server.integration.HTAARecipeProvider
+import hiiragi283.ragium.data.server.integration.HTDelightRecipeProvider
+import hiiragi283.ragium.data.server.integration.HTIERecipeProvider
+import hiiragi283.ragium.data.server.integration.HTMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.*
-import net.minecraft.advancements.Advancement
-import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
@@ -17,9 +18,7 @@ import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -51,7 +50,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
 
         final override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-            val fixedOutput: RecipeOutput = object : RecipeOutput {
+            /*val fixedOutput: RecipeOutput = object : RecipeOutput {
                 override fun accept(
                     id: ResourceLocation,
                     recipe: Recipe<*>,
@@ -69,8 +68,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
                 }
 
                 override fun advancement(): Advancement.Builder = output.advancement()
-            }
-            buildModRecipes(fixedOutput.withConditions(ModLoadedCondition(modId)), holderLookup)
+            }*/
+            buildModRecipes(output.withConditions(ModLoadedCondition(modId)), holderLookup)
         }
 
         abstract fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)

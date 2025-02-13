@@ -271,6 +271,7 @@
   "tooltip.ragium.fluid.capacity": "容量: %s mb",
   "tooltip.ragium.machine.cost": "- 処理コスト: %s FE/回",
   "tooltip.ragium.machine.name": "- 機械: %s",
+  "tooltip.ragium.machine.owner": "- 所有者: %s",
   "tooltip.ragium.machine.preview": "- プレビューの表示: %s",
   "tooltip.ragium.machine.tick_rate": "- 処理時間: %s ティック（%s秒）",
   "tooltip.ragium.machine.tier": "- ティア: %s",

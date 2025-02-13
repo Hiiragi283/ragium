@@ -32,8 +32,8 @@ class HTExtractorRecipe(
                     .group(
                         HTRecipeCodecs.group(),
                         HTRecipeCodecs.ITEM_INPUT.forGetter(HTExtractorRecipe::input),
-                        HTItemResult.CODEC.optionalFieldOf("item_output").forGetter(HTExtractorRecipe::itemOutput),
-                        FluidStack.CODEC.optionalFieldOf("fluid_output").forGetter(HTExtractorRecipe::fluidOutput),
+                        HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTExtractorRecipe::itemOutput),
+                        HTRecipeCodecs.FLUID_OUTPUT.forGetter(HTExtractorRecipe::fluidOutput),
                     ).apply(instance, ::HTExtractorRecipe)
             }.validate(HTFluidOutputRecipe::validate)
 
