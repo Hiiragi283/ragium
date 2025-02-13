@@ -2,6 +2,9 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
@@ -26,6 +29,7 @@ class HTStirlingFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSti
     override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.STIRLING_GENERATOR)
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTStirlingFuelEntry, focuses: IFocusGroup) {
+        val burnTime: Int = recipe.burnTime
         // Item Input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -35,11 +39,12 @@ class HTStirlingFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSti
         builder
             .addInputSlot(getPosition(1), getPosition(0))
             .setStandardSlotBackground()
-            .addFluidStack(FluidStack(Fluids.WATER, recipe.water))
+            .addFluidStack(FluidStack(Fluids.WATER, burnTime / 10))
         // Item Output
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
+            .addItemStack(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH).toStack(burnTime / 200))
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTStirlingFuelEntry, focuses: IFocusGroup) {

@@ -153,7 +153,7 @@ class RagiumJEIPlugin : IModPlugin {
                 .getDataMap(NeoForgeDataMaps.FURNACE_FUELS)
                 .mapNotNull { (key: ResourceKey<Item>, fuelTime: FurnaceFuel) ->
                     val holder: Holder.Reference<Item> = BuiltInRegistries.ITEM.getHolderOrThrow(key)
-                    HTStirlingFuelEntry(holder, fuelTime.burnTime / 10)
+                    HTStirlingFuelEntry(holder, fuelTime.burnTime)
                 }.sorted(),
         )
         // Material Info
