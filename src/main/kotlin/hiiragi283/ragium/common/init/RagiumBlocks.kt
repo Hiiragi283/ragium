@@ -20,7 +20,7 @@ import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
-import hiiragi283.ragium.common.block.storage.HTDrumBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
@@ -237,9 +237,9 @@ object RagiumBlocks {
     //    Storage    //
 
     @JvmField
-    val COPPER_DRUM: DeferredBlock<HTDrumBlock> = register(
+    val COPPER_DRUM: DeferredBlock<HTEntityBlock> = register(
         "copper_drum",
-        ::HTDrumBlock,
+        { properties: BlockBehaviour.Properties -> HTEntityBlock.of(::HTDrumBlockEntity, properties) },
         blockProperty()
             .mapColor(MapColor.STONE)
             .strength(2f)

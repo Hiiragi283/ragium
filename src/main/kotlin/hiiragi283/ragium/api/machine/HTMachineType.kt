@@ -27,6 +27,7 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     // Consumer
     BEDROCK_MINER(SoundEvents.STONE_BREAK, null),
     FISHER(SoundEvents.FISHING_BOBBER_SPLASH, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE)),
+    LOOT_SPAWNER(SoundEvents.ZOMBIE_AMBIENT, HTMachineParticleHandler.ofSimple(ParticleTypes.FLAME)),
 
     // Generator
     COMBUSTION_GENERATOR(SoundEvents.FIRE_EXTINGUISH, HTMachineParticleHandler.ofSimple(ParticleTypes.SMOKE)),

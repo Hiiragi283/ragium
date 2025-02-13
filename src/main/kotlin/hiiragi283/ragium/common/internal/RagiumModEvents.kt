@@ -201,6 +201,7 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
         registerHandlers(RagiumBlockEntityTypes.FISHER)
+        registerHandlers(RagiumBlockEntityTypes.LOOT_SPAWNER)
 
         registerHandlers(RagiumBlockEntityTypes.COMBUSTION_GENERATOR)
         registerHandlers(RagiumBlockEntityTypes.STIRLING_GENERATOR)

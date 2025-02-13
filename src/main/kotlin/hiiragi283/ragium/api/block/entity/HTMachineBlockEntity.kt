@@ -22,8 +22,10 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -34,6 +36,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
+import java.util.*
 import java.util.function.Supplier
 import kotlin.math.max
 
@@ -68,6 +71,9 @@ abstract class HTMachineBlockEntity(
             .encodeStart(dynamicOps, enchantments)
             .ifSuccess { nbt.put(ENCH_KEY, it) }
         nbt.putBoolean(ACTIVE_KEY, isActive)
+        HTPlayerOwningBlockEntity.UUID_CODEC
+            .encodeStart(dynamicOps, Optional.ofNullable(ownerUUID))
+            .ifSuccess { nbt.put(OWNER_KEY, it) }
         handlerSerializer.writeNbt(nbt, dynamicOps)
     }
 
@@ -76,6 +82,13 @@ abstract class HTMachineBlockEntity(
             .parse(dynamicOps, nbt.get(ENCH_KEY))
             .ifSuccess(::updateEnchantments)
         isActive = nbt.getBoolean(ACTIVE_KEY)
+        HTPlayerOwningBlockEntity.UUID_CODEC
+            .parse(dynamicOps, nbt.get(OWNER_KEY))
+            .ifSuccess { optional: Optional<UUID> ->
+                optional.ifPresent { uuid: UUID ->
+                    this.ownerUUID = uuid
+                }
+            }
         handlerSerializer.readNbt(nbt, dynamicOps)
     }
 
@@ -213,6 +226,16 @@ abstract class HTMachineBlockEntity(
         NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
     }
 
+    override fun setPlacedBy(
+        level: Level,
+        pos: BlockPos,
+        state: BlockState,
+        placer: LivingEntity?,
+        stack: ItemStack,
+    ) {
+        if (placer is Player) this.ownerUUID = placer.uuid
+    }
+
     final override fun onRemove(
         state: BlockState,
         level: Level,
@@ -248,4 +271,8 @@ abstract class HTMachineBlockEntity(
     private var errorCache: String? = null
 
     final override fun getErrorMessage(): String? = errorCache
+
+    //    HTPlayerOwningBlockEntity    //
+
+    override var ownerUUID: UUID? = null
 }

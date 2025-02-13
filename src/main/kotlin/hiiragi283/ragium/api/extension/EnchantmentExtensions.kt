@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.RagiumAPI
 import it.unimi.dsi.fastutil.objects.Object2IntMap
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -19,8 +20,8 @@ fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchan
 
 //    ItemEnchantments    //
 
-fun ItemEnchantments.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int {
-    val provider1: HolderLookup.Provider = provider ?: return 0
+fun ItemEnchantments.getLevel(key: ResourceKey<Enchantment>): Int {
+    val provider1: HolderLookup.Provider = RagiumAPI.getInstance().getCurrentLookup() ?: return 0
     return provider1.getHolder(Registries.ENCHANTMENT, key).map(this::getLevel).orElse(0)
 }
 

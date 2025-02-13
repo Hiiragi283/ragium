@@ -88,6 +88,7 @@ fun dropStackAt(
     stack: ItemStack,
 ): Boolean {
     val itemEntity = ItemEntity(level, x, y, z, stack.copy())
+    itemEntity.deltaMovement = Vec3.ZERO
     itemEntity.setPickUpDelay(0)
     return level.addFreshEntity(itemEntity)
 }

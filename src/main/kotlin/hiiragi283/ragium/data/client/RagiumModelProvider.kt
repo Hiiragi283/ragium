@@ -44,6 +44,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             remove(RagiumItems.CHEMICAL_MACHINE_CASING)
             remove(RagiumItems.PRECISION_MACHINE_CASING)
 
+            remove(RagiumItems.BROKEN_SPAWNER)
+
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
         }.forEach(::basicItem)
 
@@ -73,5 +75,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             .parent(ModelFile.UncheckedModelFile("item/generated"))
             .itemTexture("layer0", ResourceLocation.withDefaultNamespace("copper_ingot"))
             .itemTexture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.id)
+
+        getBuilder(RagiumItems.BROKEN_SPAWNER)
+            .parent(ModelFile.UncheckedModelFile("item/spawner"))
     }
 }

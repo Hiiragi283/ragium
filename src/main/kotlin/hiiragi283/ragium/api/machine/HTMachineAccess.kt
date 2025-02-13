@@ -4,28 +4,33 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.block.entity.HTErrorHoldingBlockEntity
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
+import hiiragi283.ragium.api.block.entity.HTPlayerOwningBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.asServerLevel
-import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.resources.ResourceKey
+import net.minecraft.network.chat.Component
 import net.minecraft.world.inventory.ContainerData
-import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipProvider
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
+import java.util.function.Consumer
 
 /**
  * 機械の参照を表すインタフェース
  */
 interface HTMachineAccess :
+    TooltipProvider,
     HTEnchantableBlockEntity,
     HTErrorHoldingBlockEntity,
     HTHandlerBlockEntity,
-    HTMultiblockController {
+    HTMultiblockController,
+    HTPlayerOwningBlockEntity {
     /**
      * 機械の正面の向き
      */
@@ -63,11 +68,10 @@ interface HTMachineAccess :
      */
     val costModifier: Int
 
-    /**
-     * 指定した[key]のレベルを取得します。
-     * @return 指定したエンチャントが登録されていない，または紐づいていない場合は`0`
-     */
-    override fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int = enchantments.getLevel(levelAccess?.registryAccess(), key)
+    //    TooltipProvider    //
+
+    override fun addToTooltip(context: Item.TooltipContext, consumer: Consumer<Component>, flag: TooltipFlag) {
+    }
 
     //    HTBlockEntityHandlerProvider    //
 

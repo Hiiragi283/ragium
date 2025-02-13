@@ -30,6 +30,10 @@ object RagiumMenuTypes {
         registerMachine("infuser", ::HTInfuserContainerMenu)
 
     @JvmField
+    val LOOT_SPAWNER: DeferredHolder<MenuType<*>, HTMachineMenuType<HTLootSpawnerContainerMenu>> =
+        registerMachine("loot_spawner", ::HTLootSpawnerContainerMenu)
+
+    @JvmField
     val MIXER: DeferredHolder<MenuType<*>, HTMachineMenuType<HTMixerContainerMenu>> =
         registerMachine("mixer", ::HTMixerContainerMenu)
 

@@ -16,6 +16,7 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.Item
@@ -83,6 +84,8 @@ interface RagiumAPI {
     fun wrapFluidHandler(storageIO: HTStorageIO, handler: IFluidHandler): IFluidHandler
 
     fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
+
+    fun getPlayer(uuid: UUID?): ServerPlayer? = uuid?.let { getCurrentServer()?.playerList?.getPlayer(it) }
 
     fun getCurrentLookup(): RegistryAccess? = getCurrentServer()?.registryAccess()
 

@@ -18,6 +18,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
@@ -279,6 +280,14 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             RagiumItems.MACHINE_CASING,
             Ingredient.of(Items.FISHING_ROD),
             Ingredient.of(Tags.Items.BARRELS),
+        )
+        // Loot Spawner
+        registerMachine(
+            output,
+            HTMachineType.LOOT_SPAWNER,
+            RagiumItems.PRECISION_MACHINE_CASING,
+            Ingredient.of(Items.TOTEM_OF_UNDYING),
+            Ingredient.of(ItemTags.SWORDS),
         )
 
         // Assembler

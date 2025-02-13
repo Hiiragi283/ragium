@@ -152,6 +152,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.WITHER_REAGENT, "Wither Reagent")
 
         addItem(RagiumItems.BEE_WAX, "Bee Wax")
+        addItem(RagiumItems.BROKEN_SPAWNER, "Broken Spawner")
         addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "Chemical Machine Casing")
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
@@ -176,6 +177,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")
         add(RagiumTranslationKeys.MACHINE_TIER, "- Tier: %s")
 
+        add(RagiumTranslationKeys.MACHINE_OWNER, "- Owner: %s")
         add(RagiumTranslationKeys.MACHINE_PREVIEW, "- Show Preview: %s")
         add(RagiumTranslationKeys.MACHINE_TICK_RATE, "- Tick Rate: %s ticks (%s sec)")
         add(RagiumTranslationKeys.MACHINE_WORKING, "- Working: %s")
@@ -198,6 +200,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Collect minerals from Bedrock",
         )
         add(HTMachineType.FISHER, "Fisher", "Fishing fishes from below water source")
+        add(HTMachineType.LOOT_SPAWNER, "Loot Spawner", "Generate mob drops from Broken Spawner")
 
         add(
             HTMachineType.COMBUSTION_GENERATOR,

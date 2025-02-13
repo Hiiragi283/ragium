@@ -51,6 +51,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SOUL_BURNER, "ソウルバーナー")
         addBlock(RagiumBlocks.FIERY_BURNER, "燃え盛るバーナー")
 
+        addItem(RagiumItems.BROKEN_SPAWNER, "壊れたスポナー")
+
         addBlock(RagiumBlocks.getLedBlock(DyeColor.RED), "LEDブロック（赤）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.GREEN), "LEDブロック（緑）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.BLUE), "LEDブロック（青）")
@@ -176,6 +178,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.MACHINE_NAME, "- 機械: %s")
         add(RagiumTranslationKeys.MACHINE_TIER, "- ティア: %s")
 
+        add(RagiumTranslationKeys.MACHINE_OWNER, "- 所有者: %s")
         add(RagiumTranslationKeys.MACHINE_PREVIEW, "- プレビューの表示: %s")
         add(RagiumTranslationKeys.MACHINE_TICK_RATE, "- 処理時間: %s ティック（%s秒）")
         add(RagiumTranslationKeys.MACHINE_WORKING, "- 稼働中: %s")
@@ -191,6 +194,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Machine Type
         add(HTMachineType.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
         add(HTMachineType.FISHER, "自動釣り機", "下の水源から魚を釣る")
+        add(HTMachineType.LOOT_SPAWNER, "ルートスポナー", "壊れたスポナーからモブドロップを生成する")
 
         add(HTMachineType.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
         add(HTMachineType.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")

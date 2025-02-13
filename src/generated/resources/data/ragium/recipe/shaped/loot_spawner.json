@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "B": {
+      "tag": "minecraft:swords"
+    },
+    "C": {
+      "item": "ragium:precision_machine_casing"
+    },
+    "D": {
+      "tag": "minecraft:swords"
+    },
+    "E": {
+      "tag": "c:coils/aluminum"
+    },
+    "F": {
+      "tag": "c:circuits/elite"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BCD",
+    "EFE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:loot_spawner"
+  }
+}

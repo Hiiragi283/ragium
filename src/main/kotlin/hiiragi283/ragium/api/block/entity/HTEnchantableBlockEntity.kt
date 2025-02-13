@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.extension.getLevel
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
@@ -18,7 +19,7 @@ interface HTEnchantableBlockEntity {
      * 指定した[key]のレベルを取得します。
      * @return 指定したエンチャントが登録されていない，または紐づいていない場合は`0`
      */
-    fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int
+    fun getEnchantmentLevel(key: ResourceKey<Enchantment>): Int = enchantments.getLevel(key)
 
     /**
      * 指定した[newEnchantments]でエンチャントを更新します。

@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.ItemHandlerHelper
+import java.util.*
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
@@ -118,6 +119,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     override var showPreview: Boolean = false
     override val containerData: ContainerData = SimpleContainerData(2)
     override val costModifier: Int = 0
+    override val ownerUUID: UUID? = null
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
     }

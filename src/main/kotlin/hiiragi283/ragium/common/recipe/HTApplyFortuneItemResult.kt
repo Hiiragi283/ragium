@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.extension.idOrThrow
@@ -37,7 +36,7 @@ data class HTApplyFortuneItemResult private constructor(val item: Holder<Item>, 
     override fun getResultId(): ResourceLocation = item.idOrThrow
 
     override fun getItem(enchantments: ItemEnchantments): ItemStack {
-        val fortune: Int = enchantments.getLevel(RagiumAPI.getInstance().getCurrentLookup(), Enchantments.FORTUNE)
+        val fortune: Int = enchantments.getLevel(Enchantments.FORTUNE)
         val stackCount: Int = count + (addition * fortune)
         return ItemStack(item, stackCount)
     }

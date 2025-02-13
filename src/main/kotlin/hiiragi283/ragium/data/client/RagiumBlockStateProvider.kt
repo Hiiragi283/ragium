@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.common.block.storage.HTDrumBlock
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
@@ -76,7 +76,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Drum
-        RagiumBlocks.COPPER_DRUM.let { drum: DeferredBlock<HTDrumBlock> ->
+        RagiumBlocks.COPPER_DRUM.let { drum: DeferredBlock<HTEntityBlock> ->
             val id: ResourceLocation = drum.blockId
             simpleBlock(drum.get(), models().cubeTop(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
         }

@@ -105,6 +105,7 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.YELLOW_CAKE_PIECE)
 
                     output.accept(RagiumItems.RAGI_TICKET)
+                    output.accept(RagiumItems.BROKEN_SPAWNER)
 
                     RagiumItems.REAGENTS.forEach(output::accept)
                     // Storage

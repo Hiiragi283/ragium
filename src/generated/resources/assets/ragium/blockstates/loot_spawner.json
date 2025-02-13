@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ragium:block/loot_spawner",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/loot_spawner"
+    },
+    "facing=south": {
+      "model": "ragium:block/loot_spawner",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ragium:block/loot_spawner",
+      "y": 270
+    }
+  }
+}

@@ -3,6 +3,7 @@
 package hiiragi283.ragium.api.extension
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
@@ -10,6 +11,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -82,4 +84,15 @@ fun IItemHandler.canInsert(stack: ItemStack): Boolean = ItemHandlerHelper.insert
 fun IItemHandler.insertOrDrop(level: Level, pos: BlockPos, stack: ItemStack) {
     val remain: ItemStack = ItemHandlerHelper.insertItem(this, stack, false)
     dropStackAt(level, pos, remain)
+}
+
+fun moveNextOrDrop(level: Level, pos: BlockPos, stack: ItemStack) {
+    var remaining: ItemStack = stack
+    for (direction: Direction in Direction.entries) {
+        val nextHandler: IItemHandler =
+            level.getCapability(Capabilities.ItemHandler.BLOCK, pos.relative(direction), direction.opposite) ?: continue
+        remaining = ItemHandlerHelper.insertItem(nextHandler, stack, false)
+        if (remaining.isEmpty) return
+    }
+    dropStackAt(level, pos.above(), remaining)
 }

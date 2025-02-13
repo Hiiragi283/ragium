@@ -33,6 +33,7 @@ object RagiumTranslationKeys {
     const val MACHINE_NETWORK_ENERGY = "tooltip.ragium.machine.network_energy"
     const val MACHINE_TIER = "tooltip.ragium.machine.tier"
 
+    const val MACHINE_OWNER = "tooltip.ragium.machine.owner"
     const val MACHINE_PREVIEW = "tooltip.ragium.machine.preview"
     const val MACHINE_TICK_RATE = "tooltip.ragium.machine.tick_rate"
     const val MACHINE_WORKING = "tooltip.ragium.machine.working"

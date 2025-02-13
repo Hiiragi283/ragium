@@ -22,6 +22,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
         private val factoryMap: Map<HTMachineType, (BlockPos, BlockState) -> HTMachineBlockEntity?> = mapOf(
             // Consumer
             HTMachineType.FISHER to ::HTFisherBlockEntity,
+            HTMachineType.LOOT_SPAWNER to ::HTLookSpawnerBlockEntity,
             // Generator
             HTMachineType.COMBUSTION_GENERATOR to ::HTCombustionGeneratorBlockEntity,
             HTMachineType.SOLAR_GENERATOR to ::HTSolarGeneratorBlockEntity,
@@ -51,7 +52,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
         tooltipComponents: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        type.appendTooltip(tooltipComponents::add)
+        tooltipComponents.add(type.descriptionText)
     }
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = factoryMap[type]?.invoke(pos, state)

@@ -3,8 +3,10 @@ package hiiragi283.ragium.integration.jade
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTPlayerOwningBlockEntity
 import hiiragi283.ragium.api.extension.boolText
 import hiiragi283.ragium.api.extension.floatText
+import hiiragi283.ragium.api.extension.identifyFunction
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -20,9 +22,13 @@ import snownee.jade.api.IComponentProvider
 import snownee.jade.api.IServerDataProvider
 import snownee.jade.api.ITooltip
 import snownee.jade.api.config.IPluginConfig
+import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentProvider<BlockAccessor> {
+    @JvmField
+    val OWNER: MapCodec<Optional<UUID>> = HTPlayerOwningBlockEntity.UUID_CODEC.fieldOf("owner")
+
     @JvmField
     val IS_ACTIVE: MapCodec<Boolean> = Codec.BOOL.fieldOf("is_active")
 
@@ -41,6 +47,7 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
         val machineEntity: HTMachineAccess = accessor.blockEntity as? HTMachineAccess ?: return
         accessor.writeData(HTMachineType.FIELD_CODEC, machineEntity.machineType)
+        accessor.writeData(OWNER, Optional.ofNullable(machineEntity.owner?.uuid))
         accessor.writeData(TICK_RATE, machineEntity.containerData.get(1))
         accessor.writeData(COST_MODIFIER, machineEntity.costModifier)
         accessor.writeData(IS_ACTIVE, machineEntity.isActive)
@@ -55,6 +62,14 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     override fun appendTooltip(tooltip: ITooltip, accessor: BlockAccessor, config: IPluginConfig) {
         val machineType: HTMachineType = accessor.readData(HTMachineType.FIELD_CODEC).getOrNull() ?: return
         machineType.appendTooltip(tooltip::add, false)
+
+        accessor
+            .readData(OWNER)
+            .flatMap(identifyFunction())
+            .getOrNull()
+            ?.let(RagiumAPI.getInstance()::getPlayer)
+            ?.displayName
+            ?.let { Component.translatable(RagiumTranslationKeys.MACHINE_OWNER, it) }
 
         val isActive: Boolean = accessor.readData(IS_ACTIVE).orElse(false)
         tooltip.add(Component.translatable(RagiumTranslationKeys.MACHINE_WORKING, boolText(isActive)))
