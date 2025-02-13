@@ -1,10 +1,11 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.restDamage
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 
-class HTCraftingToolItem(properties: Properties) : Item(properties.stacksTo(1)) {
+class HTCraftingToolItem(properties: Properties) : Item(properties.durability(RagiumAPI.getInstance().getForgeHammerDurability())) {
     override fun hasCraftingRemainingItem(stack: ItemStack): Boolean = stack.restDamage > 0
 
     override fun getCraftingRemainingItem(stack: ItemStack): ItemStack {

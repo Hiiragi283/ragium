@@ -200,7 +200,16 @@ abstract class HTMachineBlockEntity(
                 energyData.handleEnergy(network, costModifier, false)
                 isActive = true
                 errorCache = null
-                machineType.soundEvent?.let { level.playSound(null, pos, it, SoundSource.BLOCKS, 0.5f, 1.0f) }
+                machineType.soundEvent?.let {
+                    level.playSound(
+                        null,
+                        pos,
+                        it,
+                        SoundSource.BLOCKS,
+                        RagiumAPI.getInstance().getMachineSoundVolume(),
+                        1.0f,
+                    )
+                }
                 NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Success(this))
             },
             ::failed,

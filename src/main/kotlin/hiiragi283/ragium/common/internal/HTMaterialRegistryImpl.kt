@@ -2,16 +2,15 @@ package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.computeIfAbsent
+import hiiragi283.ragium.api.extension.constFunction3
+import hiiragi283.ragium.api.extension.createHolderSorter
+import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.property.EmptyPropertyHolder
-import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -32,11 +31,10 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     //    Init    //
 
     private lateinit var typeMap: Map<HTMaterialKey, HTMaterialType>
-    private lateinit var propertyMap: Map<HTMaterialKey, HTPropertyHolder>
 
     fun initRegistry() {
         registerMaterials()
-        modifyProperties()
+        // modifyProperties()
         LOGGER.info("Loaded material registry!")
     }
 
@@ -54,7 +52,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         LOGGER.info("Registered new materials!")
     }
 
-    private fun modifyProperties() {
+    /*private fun modifyProperties() {
         val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()
         ModLoader.postEvent(
             HTModifyPropertyEvent.Material {
@@ -66,7 +64,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         )
         this.propertyMap = propertyCache.mapValues { (_, builder: HTPropertyHolderBuilder) -> builder.build() }
         LOGGER.info("Modified material properties!")
-    }
+    }*/
 
     //    HTMaterialRegistry    //
 
@@ -99,6 +97,4 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     override fun getType(key: HTMaterialKey): HTMaterialType = typeMap[key] ?: error("Unknown material key: $key")
 
     override fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): List<Holder<Item>> = tagItemCache.get(prefix, key) ?: listOf()
-
-    override fun getProperty(key: HTMaterialKey): HTPropertyHolder = propertyMap.getOrDefault(key, EmptyPropertyHolder)
 }

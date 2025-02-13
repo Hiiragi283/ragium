@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.multiblock
 
 import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.emptyConsumer2
-import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponentMap
 import net.minecraft.network.chat.Component
 
 interface HTMultiblockController {
@@ -33,7 +33,7 @@ interface HTMultiblockController {
         val absoluteMap: HTMultiblockMap.Absolute =
             getMultiblockMap()?.convertAbsolute(controller) ?: return HTMultiblockData.DEFAULT
         if (absoluteMap.isEmpty()) return HTMultiblockData.DEFAULT
-        val builder = HTPropertyHolderBuilder()
+        val builder: DataComponentMap.Builder = DataComponentMap.builder()
         for ((pos: BlockPos, component: HTMultiblockComponent) in absoluteMap.entries) {
             if (component.checkState(controller, pos)) {
                 component.collectData(controller, pos, builder)
@@ -46,7 +46,7 @@ interface HTMultiblockController {
             }
         }
         consumer(Component.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS))
-        return HTMultiblockData.of(builder.build())
+        return HTMultiblockData.of(builder)
     }
 
     /**

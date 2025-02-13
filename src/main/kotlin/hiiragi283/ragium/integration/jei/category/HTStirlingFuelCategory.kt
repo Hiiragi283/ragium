@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.internal.RagiumConfig
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
@@ -39,12 +40,16 @@ class HTStirlingFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSti
         builder
             .addInputSlot(getPosition(1), getPosition(0))
             .setStandardSlotBackground()
-            .addFluidStack(FluidStack(Fluids.WATER, burnTime / 10))
+            .addFluidStack(FluidStack(Fluids.WATER, RagiumConfig.getStirlingWater(burnTime)))
         // Item Output
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH).toStack(burnTime / 200))
+            .addItemStack(
+                RagiumItems
+                    .getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH)
+                    .toStack(RagiumConfig.getStirlingAsh(burnTime)),
+            )
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTStirlingFuelEntry, focuses: IFocusGroup) {

@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.internal.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -49,7 +50,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(level: ServerLevel, pos: BlockPos) {
         val burnTime: Int = itemInput.getStackInSlot(0).getBurnTime(null)
         if (burnTime <= 0) throw HTMachineException.FindFuel(false)
-        val requiredWater: Int = burnTime / 10
+        val requiredWater: Int = RagiumConfig.getStirlingWater(burnTime)
         if (fluidInput.drain(requiredWater, IFluidHandler.FluidAction.SIMULATE).amount < requiredWater) {
             throw HTMachineException.ExtractFluid(false)
         }
@@ -61,7 +62,9 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         itemOutput.insertOrDrop(
             level,
             pos,
-            RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH).toStack(burnTime / 200),
+            RagiumItems
+                .getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH)
+                .toStack(RagiumConfig.getStirlingAsh(burnTime)),
         )
     }
 
@@ -86,7 +89,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             fun of(stack: ItemStack): HTMachineEnergyData {
                 val burnTime: Int = stack.getBurnTime(null)
                 if (burnTime > 0) {
-                    return Stirling(burnTime * 10)
+                    return Stirling(RagiumConfig.getStirlingEnergy(burnTime))
                 }
                 return Empty
             }

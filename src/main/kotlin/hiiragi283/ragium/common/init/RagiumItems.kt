@@ -235,8 +235,7 @@ object RagiumItems {
     //    Tools    //
 
     @JvmField
-    val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> =
-        register("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(127))
+    val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> = register("forge_hammer", ::HTCraftingToolItem)
 
     @JvmField
     val SILKY_PICKAXE: DeferredItem<HTSingleEnchantmentPickaxeItem> = register(
@@ -251,7 +250,7 @@ object RagiumItems {
     val DYNAMITE: DeferredItem<HTDynamiteItem> = register("dynamite", ::HTDynamiteItem)
 
     @JvmField
-    val SOAP: DeferredItem<HTSoapItem> = register("soap", ::HTSoapItem, itemProperty().durability(63))
+    val SOAP: DeferredItem<HTSoapItem> = register("soap", ::HTSoapItem)
 
     @JvmField
     val ALUMINUM_CAN: DeferredItem<Item> = register("aluminum_can")

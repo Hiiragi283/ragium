@@ -39,6 +39,28 @@ import net.neoforged.neoforge.registries.DeferredBlock
 class InternalRagiumAPI : RagiumAPI {
     override fun getMaterialRegistry(): HTMaterialRegistry = HTMaterialRegistryImpl
 
+    override fun getCurrentServer(): MinecraftServer? = RagiumGameEvents.currentServer
+
+    override fun getEnergyNetwork(level: ServerLevel): IEnergyStorage = level.getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
+
+    //    Durability    //
+
+    override fun getForgeHammerDurability(): Int = RagiumConfig.FORGE_HAMMER_DURABILITY.get()
+
+    override fun getSoapDurability(): Int = RagiumConfig.SOAP_DURABILITY.get()
+
+    //    Machine    //
+
+    override fun getDefaultTankCapacity(): Int = RagiumConfig.MACHINE_TANK_CAPACITY.get()
+
+    override fun getMachineSoundVolume(): Float = RagiumConfig.MACHINE_SOUND.get().toFloat()
+
+    //    Misc    //
+
+    override fun getDynamitePower(): Float = RagiumConfig.DYNAMITE_POWER.get().toFloat()
+
+    //    Platform    //
+
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
@@ -47,8 +69,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun createTank(capacity: Int, callback: () -> Unit): HTMachineFluidTank = HTMachineFluidTankImpl(capacity, callback)
 
-    override fun getEnergyNetwork(level: ServerLevel): IEnergyStorage = level.getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
-
     override fun wrapItemHandler(storageIO: HTStorageIO, handler: IItemHandlerModifiable): IItemHandlerModifiable =
         HTLimitedItemHandler(storageIO, handler)
 
@@ -56,8 +76,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage =
         HTLimitedEnergyStorage(storageIO, storage)
-
-    override fun getCurrentServer(): MinecraftServer? = RagiumGameEvents.currentServer
 
     override fun createItemResult(item: Item, count: Int, components: DataComponentPatch): HTItemResult =
         HTSimpleItemResult(item, count, components)

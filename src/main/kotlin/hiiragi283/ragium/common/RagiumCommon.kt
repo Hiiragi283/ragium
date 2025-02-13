@@ -2,10 +2,10 @@ package hiiragi283.ragium.common
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
+import hiiragi283.ragium.common.internal.RagiumConfig
 import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer

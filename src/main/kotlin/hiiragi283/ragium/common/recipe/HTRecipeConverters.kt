@@ -5,13 +5,13 @@ import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.getAllRecipes
 import hiiragi283.ragium.api.material.*
-import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
+import hiiragi283.ragium.common.internal.RagiumConfig
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeManager
@@ -119,7 +119,7 @@ object HTRecipeConverters {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return
         val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return
-        val count: Int = registry.getProperty(key).getOrDefault(HTMaterialPropertyKeys.GRINDER_RAW_COUNT)
+        val count: Int = RagiumConfig.getGrinderRawCountMap()[key] ?: 1
         HTSingleItemRecipeBuilder
             .grinder()
             .itemInput(HTTagPrefix.ORE, key)
@@ -184,7 +184,7 @@ object HTRecipeConverters {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return
         val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return
-        val count: Int = registry.getProperty(key).getOrDefault(HTMaterialPropertyKeys.GRINDER_RAW_COUNT)
+        val count: Int = RagiumConfig.getGrinderRawCountMap()[key] ?: 1
         // 3x
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.ORE, key)

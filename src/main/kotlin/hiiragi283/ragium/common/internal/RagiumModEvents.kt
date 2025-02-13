@@ -5,14 +5,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.data.RagiumDataMaps
-import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -23,11 +21,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.CreativeModeTabs
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.*
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -117,18 +111,6 @@ internal object RagiumModEvents {
         event.register(VanillaMaterials.NETHERITE_SCRAP, HTMaterialType.GEM)
         event.register(VanillaMaterials.QUARTZ, HTMaterialType.GEM)
         event.register(VanillaMaterials.REDSTONE, HTMaterialType.MINERAL)
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    fun modifyMaterialProperties(event: HTModifyPropertyEvent.Material) {
-        // Grinder Ore Count
-        event
-            .getBuilder(VanillaMaterials.LAPIS)
-            .put(HTMaterialPropertyKeys.GRINDER_RAW_COUNT, 4)
-
-        event
-            .getBuilder(VanillaMaterials.REDSTONE)
-            .put(HTMaterialPropertyKeys.GRINDER_RAW_COUNT, 2)
     }
 
     @SubscribeEvent
@@ -244,7 +226,7 @@ internal object RagiumModEvents {
                 FluidHandlerItemStack(
                     RagiumComponentTypes.FLUID_CONTENT,
                     stack,
-                    RagiumAPI.DEFAULT_TANK_CAPACITY * (enchLevel + 1),
+                    RagiumAPI.getInstance().getTankCapacityWithEnch(enchLevel),
                 )
             },
             RagiumBlocks.COPPER_DRUM,

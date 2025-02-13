@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.multiblock
 
-import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponentMap
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.block.state.BlockState
 
@@ -30,9 +30,9 @@ interface HTMultiblockComponent {
     /**
      * 指定した値からデータを処理します。
      * @param pos この要素の座標
-     * @param holder データを渡す先
+     * @param builder データを渡す先
      */
-    fun collectData(controller: HTControllerDefinition, pos: BlockPos, holder: HTPropertyHolderBuilder) {}
+    fun collectData(controller: HTControllerDefinition, pos: BlockPos, builder: DataComponentMap.Builder) {}
 
     //    Type    //
 

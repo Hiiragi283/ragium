@@ -151,6 +151,6 @@ internal object RagiumGameEvents {
         consumer.accept(fluidAmountText(content.amount))
         // Capacity
         val enchLevel: Int = stack.getLevel(context.registries(), RagiumEnchantments.CAPACITY)
-        consumer.accept(fluidCapacityText(RagiumAPI.DEFAULT_TANK_CAPACITY * (enchLevel + 1)))
+        consumer.accept(fluidCapacityText(RagiumAPI.getInstance().getTankCapacityWithEnch(enchLevel)))
     }
 }

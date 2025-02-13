@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.restDamage
 import net.minecraft.advancements.CriteriaTriggers
@@ -15,7 +16,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.gameevent.GameEvent
 
-class HTSoapItem(properties: Properties) : Item(properties.stacksTo(1)) {
+class HTSoapItem(properties: Properties) : Item(properties.durability(RagiumAPI.getInstance().getSoapDurability())) {
     override fun useOn(context: UseOnContext): InteractionResult {
         val level: Level = context.level
         val pos: BlockPos = context.clickedPos

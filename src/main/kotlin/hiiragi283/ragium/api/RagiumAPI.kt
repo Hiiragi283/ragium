@@ -3,6 +3,9 @@ package hiiragi283.ragium.api
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilderBase
+import hiiragi283.ragium.api.extension.buildMultiMap
+import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -33,8 +36,6 @@ interface RagiumAPI {
         const val MOD_ID = "ragium"
         const val MOD_NAME = "Ragium"
 
-        const val DEFAULT_TANK_CAPACITY = 8000
-
         /**
          * 名前空間が`ragium`となる[ResourceLocation]を返します。
          */
@@ -63,34 +64,88 @@ interface RagiumAPI {
      */
     fun getMaterialRegistry(): HTMaterialRegistry
 
+    /**
+     * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。
+     * @return サーバーまたはプレイヤーが存在しない場合は`null`
+     */
+    fun getPlayer(uuid: UUID?): ServerPlayer? {
+        val uuid1: UUID = uuid ?: return null
+        return getCurrentServer()?.playerList?.getPlayer(uuid1)
+    }
+
+    /**
+     * [getCurrentServer]に基づいた[RegistryAccess]のインスタンスを返します。
+     * @return 存在しない場合は`null`
+     */
+    fun getCurrentLookup(): RegistryAccess? = getCurrentServer()?.registryAccess()
+
+    /**
+     * 現在のサーバーのインスタンスを返します。
+     * @return 存在しない場合は`null`
+     */
+    fun getCurrentServer(): MinecraftServer?
+
+    /**
+     * 指定した[level]からエネルギーネットワークのインスタンスを返します。
+     */
+    fun getEnergyNetwork(level: ServerLevel): IEnergyStorage
+
+    //    Durability    //
+
+    fun getForgeHammerDurability(): Int
+
+    fun getSoapDurability(): Int
+
+    //    Machine    //
+
+    fun getTankCapacityWithEnch(enchLevel: Int): Int = getDefaultTankCapacity() * (enchLevel + 1)
+
+    fun getDefaultTankCapacity(): Int
+
+    fun getMachineSoundVolume(): Float
+
+    //    Misc    //
+
+    fun getDynamitePower(): Float
+
     //    Platform    //
 
+    /**
+     * @see [buildMultiMap]
+     */
     fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V>
 
+    /**
+     * @see [mutableTableOf]
+     */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
     fun createItemHandler(callback: () -> Unit): HTMachineItemHandler = createItemHandler(1, callback)
 
     fun createItemHandler(size: Int, callback: () -> Unit): HTMachineItemHandler
 
-    fun createTank(callback: () -> Unit): HTMachineFluidTank = createTank(DEFAULT_TANK_CAPACITY, callback)
+    fun createTank(callback: () -> Unit): HTMachineFluidTank = createTank(getDefaultTankCapacity(), callback)
 
     fun createTank(capacity: Int, callback: () -> Unit): HTMachineFluidTank
 
-    fun getEnergyNetwork(level: ServerLevel): IEnergyStorage
-
+    /**
+     * @see [HTStorageIO.wrapItemHandler]
+     */
     fun wrapItemHandler(storageIO: HTStorageIO, handler: IItemHandlerModifiable): IItemHandlerModifiable
 
+    /**
+     * @see [HTStorageIO.wrapFluidHandler]
+     */
     fun wrapFluidHandler(storageIO: HTStorageIO, handler: IFluidHandler): IFluidHandler
 
+    /**
+     * @see [HTStorageIO.wrapEnergyStorage]
+     */
     fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
 
-    fun getPlayer(uuid: UUID?): ServerPlayer? = uuid?.let { getCurrentServer()?.playerList?.getPlayer(it) }
-
-    fun getCurrentLookup(): RegistryAccess? = getCurrentServer()?.registryAccess()
-
-    fun getCurrentServer(): MinecraftServer?
-
+    /**
+     * @see [HTMachineRecipeBuilderBase.itemInput]
+     */
     fun createItemResult(stack: ItemStack): HTItemResult = createItemResult(stack.item, stack.count, stack.componentsPatch)
 
     fun createItemResult(item: Item, count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult
@@ -109,5 +164,8 @@ interface RagiumAPI {
         itemHandler: IItemHandler,
     ): AbstractContainerMenu
 
+    /**
+     * @see [HTMachineType.getBlock]
+     */
     fun getMachineBlock(type: HTMachineType): DeferredBlock<*>
 }
