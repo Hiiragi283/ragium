@@ -175,42 +175,38 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-        fun register(recipeType: JEIRecipeType<*>, machine: HTMachineType) {
-            registration.addRecipeCatalysts(recipeType, machine.getBlock())
-        }
-
         // Assembler
-        register(RagiumJEIRecipeTypes.ASSEMBLER, HTMachineType.ASSEMBLER)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ASSEMBLER, HTMachineType.ASSEMBLER)
         // Blast Furnace
-        register(RagiumJEIRecipeTypes.BLAST_FURNACE, HTMachineType.BLAST_FURNACE)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, HTMachineType.BLAST_FURNACE)
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
         // Brewery
-        register(RagiumJEIRecipeTypes.BREWERY, HTMachineType.ALCHEMICAL_BREWERY)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BREWERY, HTMachineType.ALCHEMICAL_BREWERY)
         // Compressor
-        register(RagiumJEIRecipeTypes.COMPRESSOR, HTMachineType.COMPRESSOR)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, HTMachineType.COMPRESSOR)
         // Enchanter
-        register(RagiumJEIRecipeTypes.ENCHANTER, HTMachineType.ARCANE_ENCHANTER)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ENCHANTER, HTMachineType.ARCANE_ENCHANTER)
         // Extractor
-        register(RagiumJEIRecipeTypes.EXTRACTOR, HTMachineType.EXTRACTOR)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.EXTRACTOR, HTMachineType.EXTRACTOR)
         // Grinder
-        register(RagiumJEIRecipeTypes.GRINDER, HTMachineType.GRINDER)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, HTMachineType.GRINDER)
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumBlocks.MANUAL_GRINDER)
         // Growth Chamber
-        register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, HTMachineType.GROWTH_CHAMBER)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GROWTH_CHAMBER, HTMachineType.GROWTH_CHAMBER)
         // Infuser
-        register(RagiumJEIRecipeTypes.INFUSER, HTMachineType.INFUSER)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.INFUSER, HTMachineType.INFUSER)
         // Laser Assembly
-        register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, HTMachineType.LASER_ASSEMBLY)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.LASER_ASSEMBLY, HTMachineType.LASER_ASSEMBLY)
         // Mixer
-        register(RagiumJEIRecipeTypes.MIXER, HTMachineType.MIXER)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MIXER, HTMachineType.MIXER)
         // Refinery
-        register(RagiumJEIRecipeTypes.REFINERY, HTMachineType.REFINERY)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.REFINERY, HTMachineType.REFINERY)
 
         // Generator
-        register(RagiumJEIRecipeTypes.GENERATOR, HTMachineType.COMBUSTION_GENERATOR)
-        register(RagiumJEIRecipeTypes.GENERATOR, HTMachineType.THERMAL_GENERATOR)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GENERATOR, HTMachineType.COMBUSTION_GENERATOR)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GENERATOR, HTMachineType.THERMAL_GENERATOR)
         // Stirling
-        register(RagiumJEIRecipeTypes.STIRLING, HTMachineType.STIRLING_GENERATOR)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.STIRLING, HTMachineType.STIRLING_GENERATOR)
         // Material
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MATERIAL_INFO, Items.IRON_INGOT)
         // Soap

@@ -279,7 +279,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     ): AdvancementHolder = create(parent)
         .display(
             DisplayInfo(
-                ItemStack(machine.getBlock()),
+                ItemStack(machine),
                 machine.text,
                 machine.descriptionText,
                 Optional.empty(),
@@ -288,7 +288,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
                 showChat,
                 hidden,
             ),
-        ).hasItem("has_${machine.serializedName}", machine.getBlock())
+        ).hasItem("has_${machine.serializedName}", machine)
         .save(machine.serializedName)
 
     @JvmStatic

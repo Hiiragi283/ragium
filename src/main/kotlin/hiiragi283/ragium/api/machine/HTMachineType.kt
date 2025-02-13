@@ -14,12 +14,16 @@ import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.RandomSource
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.CampfireBlock
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Consumer
 
-enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMachineParticleHandler?) : StringRepresentable {
+enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMachineParticleHandler?) :
+    ItemLike,
+    StringRepresentable {
     // Consumer
     BEDROCK_MINER(SoundEvents.STONE_BREAK, null),
     FISHER(SoundEvents.FISHING_BOBBER_SPLASH, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE)),
@@ -113,6 +117,8 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
             consumer.accept(descriptionText)
         }
     }
+
+    override fun asItem(): Item = getBlock().asItem()
 
     override fun getSerializedName(): String = name.lowercase()
 }

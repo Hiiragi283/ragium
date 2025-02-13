@@ -23,7 +23,7 @@ class HTStirlingFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSti
 
     override fun getTitle(): Component = HTMachineType.STIRLING_GENERATOR.text
 
-    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.STIRLING_GENERATOR.getBlock())
+    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.STIRLING_GENERATOR)
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTStirlingFuelEntry, focuses: IFocusGroup) {
         // Item Input

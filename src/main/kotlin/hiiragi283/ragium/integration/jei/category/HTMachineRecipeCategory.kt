@@ -15,7 +15,7 @@ abstract class HTMachineRecipeCategory<T : HTMachineRecipeBase>(
 ) : HTRecipeCategory<T> {
     final override fun getTitle(): Component = machine.text
 
-    final override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(machine.getBlock())
+    final override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(machine)
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: T, focuses: IFocusGroup) {
         builder.addRecipeArrow().setPosition(getPosition(arrowX), getPosition(0))

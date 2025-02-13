@@ -27,7 +27,7 @@ class HTGeneratorFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTGe
         builder
             .addInputSlot(getPosition(0), getPosition(0))
             .setStandardSlotBackground()
-            .addItemLike(recipe.machine.getBlock())
+            .addItemLike(recipe.machine)
         // Fluid Input
         builder
             .addInputSlot(getPosition(1), getPosition(0))

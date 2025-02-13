@@ -407,7 +407,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             else -> return
         }
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, machine.getBlock())
+            .shaped(RecipeCategory.MISC, machine)
             .pattern(" A ")
             .pattern("BCB")
             .pattern("DED")
@@ -441,7 +441,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             else -> return
         }
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, machine.getBlock())
+            .shaped(RecipeCategory.MISC, machine)
             .pattern(" A ")
             .pattern("BCD")
             .pattern("EFE")

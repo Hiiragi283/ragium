@@ -8,7 +8,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -93,32 +92,18 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.RAGI_TICKET)
 
                     RagiumItems.REAGENTS.forEach(output::accept)
-                }.build()
-        }
+                    // Storage
+                    output.accept(RagiumBlocks.COPPER_DRUM)
+                    // Manual Machines
+                    output.accept(RagiumBlocks.MANUAL_GRINDER)
+                    output.accept(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
-    @JvmField
-    val MACHINE: DeferredHolder<CreativeModeTab, CreativeModeTab> =
-        REGISTER.register("machine") { _: ResourceLocation ->
-            CreativeModeTab
-                .builder()
-                .title(Component.literal("Ragium - Machine"))
-                .icon { ItemStack(RagiumBlocks.MANUAL_GRINDER) }
-                .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-                    buildList {
-                        // Storage
-                        add(RagiumBlocks.COPPER_DRUM)
-                        // Manual Machines
-                        add(RagiumBlocks.MANUAL_GRINDER)
-                        add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
-
-                        add(RagiumBlocks.DISENCHANTING_TABLE)
-                        // Utilities
-                        addAll(RagiumBlocks.ADDONS)
-                        addAll(RagiumBlocks.BURNERS)
-                    }.forEach(output::accept)
-
+                    output.accept(RagiumBlocks.DISENCHANTING_TABLE)
+                    // Utilities
+                    RagiumBlocks.ADDONS.forEach(output::accept)
+                    RagiumBlocks.BURNERS.forEach(output::accept)
                     // Machines
-                    HTMachineType.entries.map(HTMachineType::getBlock).forEach(output::accept)
+                    HTMachineType.entries.forEach(output::accept)
                 }.build()
         }
 }

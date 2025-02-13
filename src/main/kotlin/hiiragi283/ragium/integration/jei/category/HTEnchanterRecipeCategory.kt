@@ -23,7 +23,7 @@ class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HT
 
     override fun getTitle(): Component = HTMachineType.ARCANE_ENCHANTER.text
 
-    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.ARCANE_ENCHANTER.getBlock())
+    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.ARCANE_ENCHANTER)
 
     @Suppress("DEPRECATION")
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTEnchanterRecipe, focuses: IFocusGroup) {
