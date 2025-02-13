@@ -119,7 +119,7 @@ abstract class HTMachineBlockEntity(
         this.tickRate = max(20, 200 - (getEnchantmentLevel(Enchantments.EFFICIENCY) * 30))
         // Unbreaking -> Decrease energy cost
         this.costModifier =
-            min(1, getEnchantmentLevel(Enchantments.EFFICIENCY) - getEnchantmentLevel(Enchantments.UNBREAKING))
+            max(1, getEnchantmentLevel(Enchantments.EFFICIENCY) - getEnchantmentLevel(Enchantments.UNBREAKING))
     }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
