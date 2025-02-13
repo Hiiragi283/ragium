@@ -1,8 +1,8 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
@@ -14,7 +14,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 
-class HTInfuserRecipeCategory(guiHelper: IGuiHelper) : HTMachineRecipeCategory<HTInfuserRecipe>(guiHelper, RagiumMachineKeys.INFUSER, 2.5) {
+class HTInfuserRecipeCategory(guiHelper: IGuiHelper) : HTMachineRecipeCategory<HTInfuserRecipe>(guiHelper, HTMachineType.INFUSER, 2.5) {
     override fun getRecipeType(): RecipeType<HTInfuserRecipe> = RagiumJEIRecipeTypes.INFUSER
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTInfuserRecipe, focuses: IFocusGroup) {

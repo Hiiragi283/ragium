@@ -3,8 +3,8 @@ package hiiragi283.ragium.common
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -25,16 +25,14 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
         RagiumComponentTypes.REGISTER.register(eventBus)
 
-        RagiumMachineKeys
-
-        HTMachineRegistryImpl.registerBlocks()
+        HTMachineType
 
         RagiumFluids.init()
         RagiumFluids.REGISTER.register(eventBus)
         RagiumFluidTypes.REGISTER.register(eventBus)
 
         RagiumBlocks.REGISTER.register(eventBus)
-        HTMachineRegistryImpl.REGISTER.register(eventBus)
+
         RagiumBlocks.ITEM_REGISTER.register(eventBus)
         RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumItems.REGISTER.register(eventBus)
@@ -53,7 +51,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun construct(event: FMLConstructModEvent) {
-        event.enqueueWork(HTMachineRegistryImpl::modifyProperties)
         event.enqueueWork(HTMaterialRegistryImpl::initRegistry)
     }
 }

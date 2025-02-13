@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.event
 
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import net.neoforged.bus.api.Event
@@ -20,11 +19,6 @@ sealed class HTModifyPropertyEvent<T : Any>(private val function: Function<T, HT
      * 指定した[key]に紐づいた[HTPropertyHolderBuilder]を返します。
      */
     fun getBuilder(key: T): HTPropertyHolderBuilder = function.apply(key)
-
-    /**
-     * [HTMachineKey]向け
-     */
-    class Machine(function: Function<HTMachineKey, HTPropertyHolderBuilder>) : HTModifyPropertyEvent<HTMachineKey>(function)
 
     /**
      * [HTMaterialKey]向け

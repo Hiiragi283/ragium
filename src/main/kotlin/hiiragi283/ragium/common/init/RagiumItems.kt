@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.item.*
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
+import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -234,20 +235,19 @@ object RagiumItems {
 
     @JvmField
     val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> =
-        register("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(63))
+        register("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(127))
 
     @JvmField
-    val SILKY_PICKAXE: DeferredItem<HTSilkyPickaxeItem> = register("silky_pickaxe", ::HTSilkyPickaxeItem)
+    val SILKY_PICKAXE: DeferredItem<HTSingleEnchantmentPickaxeItem> = register(
+        "silky_pickaxe",
+        { properties: Item.Properties -> HTSingleEnchantmentPickaxeItem(Enchantments.SILK_TOUCH, 1, properties) },
+    )
 
     @JvmField
     val DEFOLIANT: DeferredItem<HTDefoliantItem> = register("defoliant", ::HTDefoliantItem)
 
     @JvmField
     val DYNAMITE: DeferredItem<HTDynamiteItem> = register("dynamite", ::HTDynamiteItem)
-
-    @JvmField
-    val SLOT_LOCK: DeferredItem<HTCatalystItem> =
-        register("slot_lock", ::HTCatalystItem, itemProperty().stacksTo(1))
 
     @JvmField
     val SOAP: DeferredItem<HTSoapItem> = register("soap", ::HTSoapItem, itemProperty().durability(63))

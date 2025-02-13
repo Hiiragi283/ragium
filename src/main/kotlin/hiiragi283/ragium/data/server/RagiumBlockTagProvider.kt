@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -38,11 +39,7 @@ class RagiumBlockTagProvider(
         builder = HTTagBuilder(provider.lookupOrThrow(Registries.BLOCK))
 
         // Mineable
-        RagiumAPI
-            .getInstance()
-            .getMachineRegistry()
-            .blocks
-            .forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
+        HTMachineType.getBlocks().forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
 
         buildList {
             addAll(RagiumBlocks.ORES.values)

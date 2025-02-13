@@ -3,9 +3,6 @@ package hiiragi283.ragium.api.client.renderer
 import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.renderMultiblock
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.property.getOrDefault
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -19,13 +16,6 @@ class HTMachineBlockEntityRenderer(context: BlockEntityRendererProvider.Context)
         packedLight: Int,
         packedOverlay: Int,
     ) {
-        val propertyHolder: HTPropertyHolder = blockEntity.machineKey.getProperty()
-        propertyHolder
-            .getOrDefault(HTMachinePropertyKeys.RENDERER_PRE)
-            .render(blockEntity, partialTick, poseStack, bufferSource, packedLight, packedOverlay)
         blockEntity.renderMultiblock(poseStack, bufferSource, packedLight, packedOverlay)
-        propertyHolder
-            .getOrDefault(HTMachinePropertyKeys.RENDERER_POST)
-            .render(blockEntity, partialTick, poseStack, bufferSource, packedLight, packedOverlay)
     }
 }

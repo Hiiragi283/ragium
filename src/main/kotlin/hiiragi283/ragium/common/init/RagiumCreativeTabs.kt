@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import net.minecraft.core.registries.Registries
@@ -62,7 +63,6 @@ object RagiumCreativeTabs {
 
                     output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)
-                    output.accept(RagiumItems.SLOT_LOCK)
                     output.accept(RagiumItems.SOAP)
 
                     output.accept(RagiumItems.ALUMINUM_CAN)
@@ -118,11 +118,7 @@ object RagiumCreativeTabs {
                     }.forEach(output::accept)
 
                     // Machines
-                    RagiumAPI
-                        .getInstance()
-                        .getMachineRegistry()
-                        .blocks
-                        .forEach(output::accept)
+                    HTMachineType.entries.map(HTMachineType::getBlock).forEach(output::accept)
                 }.build()
         }
 }

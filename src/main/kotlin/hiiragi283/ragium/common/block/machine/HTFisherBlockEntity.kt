@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.extension.slotRange
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceKey
@@ -34,7 +34,7 @@ import net.neoforged.neoforge.items.ItemHandlerHelper
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
 
 class HTFisherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.FISHER, pos, state, RagiumMachineKeys.FISHER) {
+    HTMachineBlockEntity(RagiumBlockEntityTypes.FISHER, pos, state, HTMachineType.FISHER) {
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(9, this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer =

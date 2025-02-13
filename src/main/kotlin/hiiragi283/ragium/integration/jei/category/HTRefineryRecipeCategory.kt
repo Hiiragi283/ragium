@@ -1,8 +1,8 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
@@ -15,7 +15,7 @@ import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 
 class HTRefineryRecipeCategory(guiHelper: IGuiHelper) :
-    HTMachineRecipeCategory<HTRefineryRecipe>(guiHelper, RagiumMachineKeys.REFINERY, 1.5) {
+    HTMachineRecipeCategory<HTRefineryRecipe>(guiHelper, HTMachineType.REFINERY, 1.5) {
     override fun getRecipeType(): RecipeType<HTRefineryRecipe> = RagiumJEIRecipeTypes.REFINERY
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTRefineryRecipe, focuses: IFocusGroup) {

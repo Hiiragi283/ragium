@@ -44,7 +44,7 @@ interface HTMachineAccess :
     /**
      * 機械の種類
      */
-    val machineKey: HTMachineKey
+    val machineType: HTMachineType
 
     /**
      * 機械の座標

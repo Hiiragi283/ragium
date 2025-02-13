@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -177,29 +178,27 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.ROCK_GENERATOR_CONDITION, "周囲に水源と溶岩源，そして触媒アイテムが必要です")
         add(RagiumTranslationKeys.SOURCE_CONDITION, "次のソース「%s」が%s側から必要です")
         // Machine Type
-        add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
-        add(RagiumMachineKeys.DRAIN, "排水溝", "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る")
-        add(RagiumMachineKeys.FISHER, "自動釣り機", "下の水源から魚を釣る")
+        add(HTMachineType.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
+        add(HTMachineType.FISHER, "自動釣り機", "下の水源から魚を釣る")
 
-        add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
-        add(RagiumMachineKeys.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")
-        add(RagiumMachineKeys.STIRLING_GENERATOR, "スターリング発電機", "固体燃料と水から発電する")
-        add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
-        add(RagiumMachineKeys.VIBRATION_GENERATOR, "音波発電機", "エッチなのはダメ!死刑!")
+        add(HTMachineType.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
+        add(HTMachineType.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")
+        add(HTMachineType.STIRLING_GENERATOR, "スターリング発電機", "固体燃料と水から発電する")
+        add(HTMachineType.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
 
-        add(RagiumMachineKeys.ALCHEMICAL_BREWERY, "錬金醸造機", "連続した醸造")
-        add(RagiumMachineKeys.ARCANE_ENCHANTER, "神秘的エンチャント機", "安定したエンチャント")
-        add(RagiumMachineKeys.ASSEMBLER, "組立機", "君こそが天才だ!")
-        add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
-        add(RagiumMachineKeys.COMPRESSOR, "圧縮機", "saves.zip.zip")
-        add(RagiumMachineKeys.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
-        add(RagiumMachineKeys.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
-        add(RagiumMachineKeys.GROWTH_CHAMBER, "成長チャンバー", "成長バーチャン")
-        add(RagiumMachineKeys.INFUSER, "注入機", "遠心分離機みたくないやつ")
-        add(RagiumMachineKeys.LASER_ASSEMBLY, "レーザーアセンブリ", "レーザーオン…")
-        add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
-        add(RagiumMachineKeys.MIXER, "ミキサー", "ベストマッチ!")
-        add(RagiumMachineKeys.REFINERY, "精製機", "プロジェクト・ビルド")
+        add(HTMachineType.ALCHEMICAL_BREWERY, "錬金醸造機", "連続した醸造")
+        add(HTMachineType.ARCANE_ENCHANTER, "神秘的エンチャント機", "安定したエンチャント")
+        add(HTMachineType.ASSEMBLER, "組立機", "君こそが天才だ!")
+        add(HTMachineType.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
+        add(HTMachineType.COMPRESSOR, "圧縮機", "saves.zip.zip")
+        add(HTMachineType.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
+        add(HTMachineType.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
+        add(HTMachineType.GROWTH_CHAMBER, "成長チャンバー", "成長バーチャン")
+        add(HTMachineType.INFUSER, "注入機", "遠心分離機みたくないやつ")
+        add(HTMachineType.LASER_ASSEMBLY, "レーザーアセンブリ", "レーザーオン…")
+        add(HTMachineType.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
+        add(HTMachineType.MIXER, "ミキサー", "ベストマッチ!")
+        add(HTMachineType.REFINERY, "精製機", "プロジェクト・ビルド")
         // Material
         add(CommonMaterials.ALUMINA, "アルミナ")
         add(CommonMaterials.ALUMINUM, "アルミニウム")

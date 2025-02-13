@@ -10,11 +10,8 @@ import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
-import hiiragi283.ragium.api.property.get
-import hiiragi283.ragium.api.property.ifPresent
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
@@ -24,7 +21,6 @@ import net.minecraft.nbt.Tag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
@@ -51,7 +47,7 @@ abstract class HTMachineBlockEntity(
     type: Supplier<out BlockEntityType<*>>,
     pos: BlockPos,
     state: BlockState,
-    override val machineKey: HTMachineKey,
+    override val machineType: HTMachineType,
 ) : HTBlockEntity(type, pos, state),
     MenuProvider,
     HTFluidInteractable,
@@ -175,7 +171,7 @@ abstract class HTMachineBlockEntity(
     ) {
         if (isActive) {
             // spawn particles
-            machineKey.getProperty()[HTMachinePropertyKeys.PARTICLE]?.addParticle(level, pos, level.random, front)
+            machineType.particleHandler?.addParticle(level, pos, level.random, front)
         }
     }
 
@@ -191,7 +187,11 @@ abstract class HTMachineBlockEntity(
         val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
         // 取得したエネルギー量を処理できるか判定
         if (!energyData.handleEnergy(network, costModifier, true)) {
-            LOGGER.error("Error on {} at {}: Failed to handle required energy from network!", machineKey, blockPosText(pos).string)
+            LOGGER.error(
+                "Error on {} at {}: Failed to handle required energy from network!",
+                machineType.serializedName,
+                blockPosText(pos).string,
+            )
             return
         }
         runCatching { process(level, pos) }
@@ -199,9 +199,7 @@ abstract class HTMachineBlockEntity(
                 energyData.handleEnergy(network, costModifier, false)
                 isActive = true
                 errorCache = null
-                machineKey.getProperty().ifPresent(HTMachinePropertyKeys.SOUND) { soundEvent: SoundEvent ->
-                    level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 0.5f, 1.0f)
-                }
+                machineType.soundEvent?.let { level.playSound(null, pos, it, SoundSource.BLOCKS, 0.5f, 1.0f) }
                 NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Success(this))
             }.onFailure { throwable: Throwable ->
                 isActive = false
@@ -247,7 +245,7 @@ abstract class HTMachineBlockEntity(
 
     //    MenuProvider    //
 
-    override fun getDisplayName(): Component = machineKey.text
+    override fun getDisplayName(): Component = machineType.text
 
     //    HTControllerHolder    //
 

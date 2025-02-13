@@ -4,9 +4,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.event.HTGeneratorFuelTimeEvent
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -16,6 +17,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.function.Supplier
@@ -24,13 +26,11 @@ abstract class HTFluidGeneratorBlockEntity(
     type: Supplier<out BlockEntityType<*>>,
     pos: BlockPos,
     state: BlockState,
-    machineKey: HTMachineKey,
-) : HTMachineBlockEntity(type, pos, state, machineKey) {
+    machineType: HTMachineType,
+) : HTMachineBlockEntity(type, pos, state, machineType) {
     private val tank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(tank))
-
-    abstract fun isFluidValid(stack: FluidStack): Boolean
 
     abstract fun getFuelAmount(stack: FluidStack): Int
 
@@ -38,7 +38,13 @@ abstract class HTFluidGeneratorBlockEntity(
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val stackIn: FluidStack = tank.fluid
-        val amount: Int = getFuelAmount(stackIn)
+        var amount: Int = getFuelAmount(stackIn)
+        if (amount <= 0) {
+            val event = HTGeneratorFuelTimeEvent(this, stackIn, amount)
+            NeoForge.EVENT_BUS.post(event)
+            if (event.isCanceled) throw HTMachineException.FindFuel(false)
+            amount = event.fuelTime
+        }
         if (amount <= 0) throw HTMachineException.FindFuel(false)
         if (tank.drain(amount, IFluidHandler.FluidAction.SIMULATE).amount == amount) {
             tank.drain(amount, IFluidHandler.FluidAction.EXECUTE)

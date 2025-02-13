@@ -5,7 +5,7 @@ import com.google.common.collect.Table
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
-import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.util.HTMultiMap
@@ -24,6 +24,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.*
 
 interface RagiumAPI {
@@ -55,11 +56,6 @@ interface RagiumAPI {
             return instance
         }
     }
-
-    /**
-     * 機械レジストリのインスタンスを返します。。
-     */
-    fun getMachineRegistry(): HTMachineRegistry
 
     /**
      * 素材レジストリのインスタンスを返します。
@@ -109,4 +105,6 @@ interface RagiumAPI {
         pos: BlockPos,
         itemHandler: IItemHandler,
     ): AbstractContainerMenu
+
+    fun getMachineBlock(type: HTMachineType): DeferredBlock<*>
 }

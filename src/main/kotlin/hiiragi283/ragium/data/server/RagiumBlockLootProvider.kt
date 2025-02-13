@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -52,7 +52,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             )
         }
 
-        RagiumAPI.getInstance().getMachineRegistry().blocks.forEach { holder: DeferredBlock<*> ->
+        HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->
             add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }
         }
     }

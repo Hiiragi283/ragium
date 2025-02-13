@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.machine.HTMachineException
 import net.minecraft.core.BlockPos
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -38,9 +39,9 @@ abstract class HTFluidOutputRecipe(
      * 指定した[itemHandler]と[fluidHandler]に完成品を入れられるか判定します。
      * @throws HTMachineException 完成品を入れられなかった場合
      */
-    fun canInsert(itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
+    fun canInsert(enchantments: ItemEnchantments, itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
         itemOutput.ifPresent { output: HTItemResult ->
-            if (!itemHandler.canInsert(output.getItem(TODO()))) throw HTMachineException.MergeResult(false)
+            if (!itemHandler.canInsert(output.getItem(enchantments))) throw HTMachineException.MergeResult(false)
         }
         fluidOutput.ifPresent { output: FluidStack ->
             if (!fluidHandler.canFill(output.copy())) throw HTMachineException.MergeResult(false)
@@ -53,13 +54,14 @@ abstract class HTFluidOutputRecipe(
      * @param pos 入れられなかった場合にドロップする座標
      */
     fun insertOutputs(
+        enchantments: ItemEnchantments,
         itemHandler: IItemHandler,
         fluidHandler: IFluidHandler,
         level: Level,
         pos: BlockPos,
     ) {
         itemOutput.ifPresent { output: HTItemResult ->
-            itemHandler.insertOrDrop(level, pos.above(), output.getItem(TODO()))
+            itemHandler.insertOrDrop(level, pos.above(), output.getItem(enchantments))
         }
         fluidOutput.ifPresent { output: FluidStack ->
             fluidHandler.fill(output.copy(), IFluidHandler.FluidAction.EXECUTE)

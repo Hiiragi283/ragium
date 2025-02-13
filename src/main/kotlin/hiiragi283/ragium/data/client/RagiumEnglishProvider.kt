@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -181,56 +182,46 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.SOURCE_CONDITION, "Required Source %s from %s side")
         // Machine Type
         add(
-            RagiumMachineKeys.BEDROCK_MINER,
+            HTMachineType.BEDROCK_MINER,
             "Bedrock Miner",
             "Collect minerals from Bedrock",
         )
-        add(
-            RagiumMachineKeys.DRAIN,
-            "Drain",
-            "Drains fluids from front, experience from up, and fluid cube in slot",
-        )
-        add(RagiumMachineKeys.FISHER, "Fisher", "Fishing fishes from below water source")
+        add(HTMachineType.FISHER, "Fisher", "Fishing fishes from below water source")
 
         add(
-            RagiumMachineKeys.COMBUSTION_GENERATOR,
+            HTMachineType.COMBUSTION_GENERATOR,
             "Combustion Generator",
             "Generate energy from liquid fuels",
         )
         add(
-            RagiumMachineKeys.SOLAR_GENERATOR,
+            HTMachineType.SOLAR_GENERATOR,
             "Solar Generator",
             "Generate energy in daytime",
         )
         add(
-            RagiumMachineKeys.STIRLING_GENERATOR,
+            HTMachineType.STIRLING_GENERATOR,
             "Stirling Generator",
             "Generate energy from solid fuel and water",
         )
         add(
-            RagiumMachineKeys.THERMAL_GENERATOR,
+            HTMachineType.THERMAL_GENERATOR,
             "Thermal Generator",
             "Generate energy from hot fluids",
         )
-        add(
-            RagiumMachineKeys.VIBRATION_GENERATOR,
-            "Vibration Generator",
-            "Augh! Pervert! Death penalty!",
-        )
 
-        add(RagiumMachineKeys.ALCHEMICAL_BREWERY, "Alchemical Brewery", "Sequential Brewing")
-        add(RagiumMachineKeys.ARCANE_ENCHANTER, "Arcane Enchanter", "Stable Enchanting")
-        add(RagiumMachineKeys.ASSEMBLER, "Assembler", "You are the genius!")
-        add(RagiumMachineKeys.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
-        add(RagiumMachineKeys.COMPRESSOR, "Compressor", "saves.zip.zip")
-        add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Something like Centrifuge")
-        add(RagiumMachineKeys.GRINDER, "Grinder", "Unbreakable Diamond")
-        add(RagiumMachineKeys.GROWTH_CHAMBER, "Growth Chamber", "Growth Gran-ma")
-        add(RagiumMachineKeys.INFUSER, "Infuser", "Something not like Centrifuge")
-        add(RagiumMachineKeys.LASER_ASSEMBLY, "Laser Assembly", "Laser On...")
-        add(RagiumMachineKeys.MIXER, "Mixer", "Best Match!")
-        add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
-        add(RagiumMachineKeys.REFINERY, "Refinery", "Project Build")
+        add(HTMachineType.ALCHEMICAL_BREWERY, "Alchemical Brewery", "Sequential Brewing")
+        add(HTMachineType.ARCANE_ENCHANTER, "Arcane Enchanter", "Stable Enchanting")
+        add(HTMachineType.ASSEMBLER, "Assembler", "You are the genius!")
+        add(HTMachineType.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
+        add(HTMachineType.COMPRESSOR, "Compressor", "saves.zip.zip")
+        add(HTMachineType.EXTRACTOR, "Extractor", "Something like Centrifuge")
+        add(HTMachineType.GRINDER, "Grinder", "Unbreakable Diamond")
+        add(HTMachineType.GROWTH_CHAMBER, "Growth Chamber", "Growth Gran-ma")
+        add(HTMachineType.INFUSER, "Infuser", "Something not like Centrifuge")
+        add(HTMachineType.LASER_ASSEMBLY, "Laser Assembly", "Laser On...")
+        add(HTMachineType.MIXER, "Mixer", "Best Match!")
+        add(HTMachineType.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
+        add(HTMachineType.REFINERY, "Refinery", "Project Build")
         // Material
         add(CommonMaterials.ALUMINA, "Alumina")
         add(CommonMaterials.ALUMINUM, "Aluminum")

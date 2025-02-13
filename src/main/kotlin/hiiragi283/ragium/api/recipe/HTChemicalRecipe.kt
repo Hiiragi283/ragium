@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -76,7 +75,6 @@ class HTChemicalRecipe(
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         // Item
         input.items.forEachIndexed { slot: Int, stack: ItemStack ->
-            if (stack.`is`(RagiumItems.SLOT_LOCK)) return@forEachIndexed
             val ingredient: SizedIngredient = itemInputs.getOrNull(slot) ?: return@forEachIndexed
             if (!ingredient.test(stack)) {
                 return false

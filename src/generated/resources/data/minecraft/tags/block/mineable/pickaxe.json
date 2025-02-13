@@ -16,7 +16,6 @@
     "ragium:deepslate_ragi_crystal_ore",
     "ragium:deepslate_raginite_ore",
     "ragium:disenchanting_table",
-    "ragium:drain",
     "ragium:echorium_block",
     "ragium:end_ragi_crystal_ore",
     "ragium:end_raginite_ore",
@@ -51,7 +50,6 @@
     "ragium:soul_magma_block",
     "ragium:steel_block",
     "ragium:stirling_generator",
-    "ragium:thermal_generator",
-    "ragium:vibration_generator"
+    "ragium:thermal_generator"
   ]
 }

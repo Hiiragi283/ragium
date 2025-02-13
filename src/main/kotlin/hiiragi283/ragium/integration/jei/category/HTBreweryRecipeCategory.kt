@@ -1,8 +1,8 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTBreweryRecipe
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
 import hiiragi283.ragium.integration.jei.addItemResult
@@ -15,7 +15,7 @@ import mezz.jei.api.recipe.RecipeType
 import kotlin.jvm.optionals.getOrNull
 
 class HTBreweryRecipeCategory(guiHelper: IGuiHelper) :
-    HTMachineRecipeCategory<HTBreweryRecipe>(guiHelper, RagiumMachineKeys.ALCHEMICAL_BREWERY, 4.5) {
+    HTMachineRecipeCategory<HTBreweryRecipe>(guiHelper, HTMachineType.ALCHEMICAL_BREWERY, 4.5) {
     override fun getRecipeType(): RecipeType<HTBreweryRecipe> = RagiumJEIRecipeTypes.BREWERY
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTBreweryRecipe, focuses: IFocusGroup) {

@@ -303,16 +303,6 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('B', Tags.Items.RODS_WOODEN)
             .unlockedBy("has_crystal", has(RagiumItems.SILKY_CRYSTAL))
             .savePrefixed(output)
-
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.SLOT_LOCK)
-            .pattern("AAA")
-            .pattern("BBB")
-            .pattern("AAA")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', Tags.Items.DYES_WHITE)
-            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
-            .savePrefixed(output)
     }
 
     private fun registerMisc(output: RecipeOutput) {

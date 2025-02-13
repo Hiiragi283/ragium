@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
@@ -14,13 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider
-import net.neoforged.neoforge.client.model.generators.ModelBuilder
-import net.neoforged.neoforge.client.model.generators.ModelFile
-import net.neoforged.neoforge.client.model.generators.ModelProvider
+import net.neoforged.neoforge.client.model.generators.*
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -36,7 +30,7 @@ fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String
     add(Util.makeDescriptionId("enchantment", key.location()), value)
 }
 
-fun LanguageProvider.add(machine: HTMachineKey, value: String, desc: String = "") {
+fun LanguageProvider.add(machine: HTMachineType, value: String, desc: String = "") {
     add(machine.translationKey, value)
     add(machine.descriptionKey, desc)
 }

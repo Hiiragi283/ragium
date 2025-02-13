@@ -8,21 +8,19 @@ import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineAccess
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.property.ifPresent
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -88,10 +86,8 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                 ItemHandlerHelper.giveItemToPlayer(player, recipe.assemble(input, level.registryAccess()))
                 // Shrink input
                 stackIn.shrink(recipe.input.count())
-                // Play sound if present
-                RagiumMachineKeys.GRINDER
-                    .getProperty()
-                    .ifPresent(HTMachinePropertyKeys.SOUND) { level.playSound(null, pos, it, SoundSource.BLOCKS) }
+                // Play sound
+                level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS)
             }.onFailure { _: Throwable ->
                 // Drop input
                 ItemHandlerHelper.giveItemToPlayer(player, stackIn)
@@ -116,7 +112,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     override val isActive: Boolean = true
     override val levelAccess: Level?
         get() = level
-    override val machineKey: HTMachineKey = RagiumMachineKeys.GRINDER
+    override val machineType: HTMachineType = HTMachineType.BLAST_FURNACE
     override val pos: BlockPos
         get() = blockPos
     override var showPreview: Boolean = false

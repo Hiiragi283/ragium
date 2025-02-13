@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.integration.jei.addIngredients
 import hiiragi283.ragium.integration.jei.addItemResult
@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 
 class HTSingleItemRecipeCategory<T : HTSingleItemRecipe>(
     guiHelper: IGuiHelper,
-    machine: HTMachineKey,
+    machine: HTMachineType,
     private val recipeType: RecipeType<T>,
     private val serializer: RecipeSerializer<T>,
 ) : HTMachineRecipeCategory<T>(guiHelper, machine, 2.5) {

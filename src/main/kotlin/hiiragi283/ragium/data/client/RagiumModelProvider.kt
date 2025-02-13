@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.data.PackOutput
@@ -28,7 +29,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             remove(RagiumBlocks.CRUDE_OIL)
         }.forEach(::simpleBlockItem)
         // Machine
-        RagiumAPI.getInstance().getMachineRegistry().blocks.forEach { holder: DeferredBlock<*> ->
+        HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->
             withUncheckedParent(holder, holder.blockId)
         }
     }

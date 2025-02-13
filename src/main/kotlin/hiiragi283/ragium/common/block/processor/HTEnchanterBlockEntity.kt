@@ -5,10 +5,10 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.item.HTMachineItemHandler
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.EnchantingTableBlock
 import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(TODO(), pos, state, RagiumMachineKeys.ARCANE_ENCHANTER) {
+    HTMachineBlockEntity(TODO(), pos, state, HTMachineType.ARCANE_ENCHANTER) {
     private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(3, this::setChanged)
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 

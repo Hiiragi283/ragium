@@ -8,36 +8,34 @@ import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
+import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.getLevel
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.property.HTMachineParticleHandler
+import hiiragi283.ragium.api.extension.itemProperty
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
-import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
-import hiiragi283.ragium.common.block.processor.*
+import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.Registries
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.util.RandomSource
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.CreativeModeTabs
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.CampfireBlock
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -47,7 +45,9 @@ import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.NewRegistryEvent
+import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
 import java.util.function.Supplier
@@ -56,94 +56,6 @@ import java.util.function.Supplier
 internal object RagiumModEvents {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    fun modifyMachineProperties(event: HTModifyPropertyEvent.Machine) {
-        // Consumer
-        event
-            .getBuilder(RagiumMachineKeys.FISHER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFisherBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.FISHING_BOBBER_SPLASH)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.BUBBLE))
-
-        // Generator
-        event
-            .getBuilder(RagiumMachineKeys.COMBUSTION_GENERATOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTCombustionGeneratorBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.FIRE_EXTINGUISH)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ASH))
-
-        event
-            .getBuilder(RagiumMachineKeys.SOLAR_GENERATOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTSolarGeneratorBlockEntity)
-
-        event
-            .getBuilder(RagiumMachineKeys.STIRLING_GENERATOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTStirlingGeneratorBlockEntity)
-
-        event
-            .getBuilder(RagiumMachineKeys.THERMAL_GENERATOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTThermalGeneratorBlockEntity)
-
-        event.getBuilder(RagiumMachineKeys.VIBRATION_GENERATOR)
-
-        // Processor
-        event
-            .getBuilder(RagiumMachineKeys.ASSEMBLER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTAssemblerBlockEntity)
-
-        event
-            .getBuilder(RagiumMachineKeys.BLAST_FURNACE)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTBlastFurnaceBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
-            .put(
-                HTMachinePropertyKeys.PARTICLE,
-                HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, front: Direction ->
-                    CampfireBlock.makeParticles(level, pos.relative(front.opposite, 2), false, false)
-                },
-            )
-
-        event
-            .getBuilder(RagiumMachineKeys.COMPRESSOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTCompressorBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.ANVIL_USE)
-
-        event
-            .getBuilder(RagiumMachineKeys.GRINDER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTGrinderBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.GRINDSTONE_USE)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofMiddle(ParticleTypes.CRIT))
-
-        event
-            .getBuilder(RagiumMachineKeys.MULTI_SMELTER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTMultiSmelterBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLAZE_AMBIENT)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME))
-        // Advanced
-        event
-            .getBuilder(RagiumMachineKeys.EXTRACTOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTExtractorBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.PISTON_EXTEND)
-
-        event
-            .getBuilder(RagiumMachineKeys.INFUSER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTInfuserBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.BREWING_STAND_BREW)
-
-        event
-            .getBuilder(RagiumMachineKeys.MIXER)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTMixerBlockEntity)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.PLAYER_SWIM)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP))
-
-        event
-            .getBuilder(RagiumMachineKeys.REFINERY)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTRefineryBlockEntity)
-        // Elite
-        event
-            .getBuilder(RagiumMachineKeys.LASER_ASSEMBLY)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTLaserAssemblyBlockEntity)
-    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun registerMaterial(event: HTRegisterMaterialEvent) {
@@ -225,6 +137,37 @@ internal object RagiumModEvents {
         event.register(RagiumRegistries.MULTIBLOCK_COMPONENT_TYPE)
 
         LOGGER.info("Registered new registries!")
+    }
+
+    @JvmStatic
+    internal lateinit var blockMap: Map<HTMachineType, DeferredBlock<*>>
+
+    @SubscribeEvent
+    fun registerMachineBlocks(event: RegisterEvent) {
+        // Block
+        event.register(Registries.BLOCK) { helper: RegisterEvent.RegisterHelper<Block> ->
+            blockMap = HTMachineType.entries.associateWith { type: HTMachineType ->
+                val block = HTMachineBlock(
+                    type,
+                    blockProperty()
+                        .mapColor(MapColor.STONE)
+                        .strength(2f)
+                        .sound(SoundType.METAL)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion(),
+                )
+                val id: ResourceLocation = RagiumAPI.id(type.serializedName)
+                helper.register(id, block)
+                DeferredBlock.createBlock<Block>(id)
+            }
+            LOGGER.info("Registered machine blocks!")
+        }
+        // Item
+        event.register(Registries.ITEM) { helper: RegisterEvent.RegisterHelper<Item> ->
+            blockMap.forEach { (_, holder: DeferredBlock<*>) ->
+                helper.register(holder.id, BlockItem(holder.get(), itemProperty()))
+            }
+        }
     }
 
     @SubscribeEvent

@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
-import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.util.HTMultiMap
@@ -34,10 +34,9 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.registries.DeferredBlock
 
 class InternalRagiumAPI : RagiumAPI {
-    override fun getMachineRegistry(): HTMachineRegistry = HTMachineRegistryImpl
-
     override fun getMaterialRegistry(): HTMaterialRegistry = HTMaterialRegistryImpl
 
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
@@ -86,4 +85,34 @@ class InternalRagiumAPI : RagiumAPI {
         pos,
         itemHandler,
     )
+
+    /*companion object {
+        @JvmStatic
+        private val BLOCK_REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
+
+        @JvmStatic
+        private lateinit var blockMap: Map<HTMachineType, DeferredBlock<*>>
+
+        @JvmStatic
+        fun initMachineBlocks(eventBus: IEventBus) {
+            blockMap = HTMachineType.entries.associateWith { type: HTMachineType ->
+                val holder: DeferredBlock<out Block> = BLOCK_REGISTER.registerBlock(
+                    type.serializedName,
+                    { properties: BlockBehaviour.Properties -> HTMachineBlock(type, properties) },
+                    blockProperty()
+                        .mapColor(MapColor.STONE)
+                        .strength(2f)
+                        .sound(SoundType.METAL)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion(),
+                )
+                RagiumBlocks.ITEM_REGISTER.registerSimpleBlockItem(holder)
+                holder
+            }
+            BLOCK_REGISTER.register(eventBus)
+        }
+    }*/
+
+    override fun getMachineBlock(type: HTMachineType): DeferredBlock<*> =
+        RagiumModEvents.blockMap[type] ?: error("Unknown machine type: ${type.serializedName} found!")
 }

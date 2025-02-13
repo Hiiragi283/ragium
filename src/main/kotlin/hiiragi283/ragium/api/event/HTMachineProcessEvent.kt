@@ -2,14 +2,12 @@ package hiiragi283.ragium.api.event
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineAccess
-import net.neoforged.bus.api.Event
 
 /**
  * 機械が処理を行う度に呼び出されるイベント
  * [HTMachineBlockEntity.tickOnServer]中にフックされています。
- * @param machine 機械の参照
  */
-sealed class HTMachineProcessEvent(val machine: HTMachineAccess) : Event() {
+sealed class HTMachineProcessEvent(machine: HTMachineAccess) : HTMachineEvent(machine) {
     /**
      * 機械が処理に成功した場合のイベント
      */

@@ -7,11 +7,11 @@ import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.HTExtractorContainerMenu
 import net.minecraft.core.BlockPos
@@ -26,7 +26,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state, RagiumMachineKeys.EXTRACTOR) {
+    HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state, HTMachineType.EXTRACTOR) {
     private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
@@ -54,9 +54,9 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, itemInput.getStackInSlot(0))
         val recipe: HTExtractorRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
-        recipe.canInsert(itemOutput, outputTank)
+        recipe.canInsert(enchantments, itemOutput, outputTank)
         // Insert outputs
-        recipe.insertOutputs(itemOutput, outputTank, level, pos)
+        recipe.insertOutputs(enchantments, itemOutput, outputTank, level, pos)
         // Decrement input
         itemInput.getStackInSlot(0).shrink(recipe.input.count())
     }

@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.extension.boolText
 import hiiragi283.ragium.api.extension.floatText
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.machine.HTMachineAccess
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
@@ -40,7 +40,7 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
 
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
         val machineEntity: HTMachineAccess = accessor.blockEntity as? HTMachineAccess ?: return
-        accessor.writeData(HTMachineKey.FIELD_CODEC, machineEntity.machineKey)
+        accessor.writeData(HTMachineType.FIELD_CODEC, machineEntity.machineType)
         accessor.writeData(TICK_RATE, machineEntity.containerData.get(1))
         accessor.writeData(COST_MODIFIER, machineEntity.costModifier)
         accessor.writeData(IS_ACTIVE, machineEntity.isActive)
@@ -53,8 +53,8 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     //    IComponentProvider    //
 
     override fun appendTooltip(tooltip: ITooltip, accessor: BlockAccessor, config: IPluginConfig) {
-        val machineKey: HTMachineKey = accessor.readData(HTMachineKey.FIELD_CODEC).getOrNull() ?: return
-        machineKey.appendTooltip(tooltip::add, false)
+        val machineType: HTMachineType = accessor.readData(HTMachineType.FIELD_CODEC).getOrNull() ?: return
+        machineType.appendTooltip(tooltip::add, false)
 
         val isActive: Boolean = accessor.readData(IS_ACTIVE).orElse(false)
         tooltip.add(Component.translatable(RagiumTranslationKeys.MACHINE_WORKING, boolText(isActive)))

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.machine.property
+package hiiragi283.ragium.api.machine
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

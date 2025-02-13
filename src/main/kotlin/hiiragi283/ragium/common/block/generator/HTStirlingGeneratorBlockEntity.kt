@@ -9,8 +9,8 @@ import hiiragi283.ragium.api.energy.HTMachineEnergyData.Empty
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -25,7 +25,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, RagiumMachineKeys.STIRLING_GENERATOR) {
+    HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, HTMachineType.STIRLING_GENERATOR) {
     private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val fluidInput: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 

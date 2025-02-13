@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
@@ -27,8 +27,8 @@ abstract class HTSingleItemMachineBlockEntity(
     type: Supplier<out BlockEntityType<*>>,
     pos: BlockPos,
     state: BlockState,
-    machineKey: HTMachineKey,
-) : HTMachineBlockEntity(type, pos, state, machineKey) {
+    machineType: HTMachineType,
+) : HTMachineBlockEntity(type, pos, state, machineType) {
     private val itemInput: HTMachineItemHandler = RagiumAPI.Companion.getInstance().createItemHandler(this::setChanged)
     private val itemCatalyst: HTMachineItemHandler = RagiumAPI.Companion.getInstance().createItemHandler(this::setChanged)
     private val itemOutput: HTMachineItemHandler = RagiumAPI.Companion.getInstance().createItemHandler(this::setChanged)

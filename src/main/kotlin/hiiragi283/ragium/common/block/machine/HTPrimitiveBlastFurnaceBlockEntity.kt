@@ -9,12 +9,12 @@ import hiiragi283.ragium.api.extension.canInsert
 import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import hiiragi283.ragium.common.inventory.HTPrimitiveBlastFurnaceContainerMenu
 import net.minecraft.core.BlockPos
@@ -30,7 +30,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state, RagiumMachineKeys.BLAST_FURNACE) {
+    HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state, HTMachineType.BLAST_FURNACE) {
     private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(2, this::setChanged)
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 

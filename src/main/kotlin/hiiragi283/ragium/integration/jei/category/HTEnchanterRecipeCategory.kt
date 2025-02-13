@@ -1,8 +1,8 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
 import hiiragi283.ragium.integration.jei.addItemResult
@@ -21,9 +21,9 @@ import kotlin.jvm.optionals.getOrNull
 class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTEnchanterRecipe> {
     override fun getRecipeType(): RecipeType<HTEnchanterRecipe> = RagiumJEIRecipeTypes.ENCHANTER
 
-    override fun getTitle(): Component = RagiumMachineKeys.ARCANE_ENCHANTER.text
+    override fun getTitle(): Component = HTMachineType.ARCANE_ENCHANTER.text
 
-    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(RagiumMachineKeys.ARCANE_ENCHANTER.getBlock())
+    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.ARCANE_ENCHANTER.getBlock())
 
     @Suppress("DEPRECATION")
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTEnchanterRecipe, focuses: IFocusGroup) {

@@ -2,14 +2,13 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
@@ -99,7 +98,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
 
         // Assembler
-        val assembler: AdvancementHolder = createMachine(casing, RagiumMachineKeys.ASSEMBLER)
+        val assembler: AdvancementHolder = createMachine(casing, HTMachineType.ASSEMBLER)
         val basicCircuit: AdvancementHolder = createSimple(assembler, RagiumItems.BASIC_CIRCUIT, Component.empty())
         val advancedCircuit: AdvancementHolder = createSimple(basicCircuit, RagiumItems.ADVANCED_CIRCUIT, Component.empty())
         val eliteCircuit: AdvancementHolder = createSimple(advancedCircuit, RagiumItems.ELITE_CIRCUIT, Component.empty())
@@ -118,13 +117,13 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             type = AdvancementType.CHALLENGE,
         )
         // Blast Furnace
-        val blastFurnace: AdvancementHolder = createMachine(casing, RagiumMachineKeys.BLAST_FURNACE)
+        val blastFurnace: AdvancementHolder = createMachine(casing, HTMachineType.BLAST_FURNACE)
         val slagCollector: AdvancementHolder =
             createSimple(blastFurnace, RagiumBlocks.SLAG_COLLECTOR, Component.empty())
         val chemicalGlass: AdvancementHolder =
             createSimple(slagCollector, RagiumBlocks.CHEMICAL_GLASS, Component.empty())
         // Compressor
-        val compressor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.COMPRESSOR)
+        val compressor: AdvancementHolder = createMachine(casing, HTMachineType.COMPRESSOR)
         val meatIngot: AdvancementHolder = createSimple(compressor, RagiumItems.MEAT_INGOT, Component.empty())
         val cannedMeat: AdvancementHolder = createSimple(
             meatIngot,
@@ -133,7 +132,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             type = AdvancementType.GOAL,
         )
         // Grinder
-        val grinder: AdvancementHolder = createMachine(casing, RagiumMachineKeys.GRINDER)
+        val grinder: AdvancementHolder = createMachine(casing, HTMachineType.GRINDER)
         val deepant: AdvancementHolder = createSimple(grinder, RagiumItems.DEEPANT_REAGENT, Component.empty())
         val deepSteel: AdvancementHolder = createMaterial(
             deepant,
@@ -152,9 +151,9 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             type = AdvancementType.GOAL,
         )
         // Extractor
-        val extractor: AdvancementHolder = createMachine(casing, RagiumMachineKeys.EXTRACTOR)
+        val extractor: AdvancementHolder = createMachine(casing, HTMachineType.EXTRACTOR)
         // Infuser
-        val infuser: AdvancementHolder = createMachine(casing, RagiumMachineKeys.INFUSER)
+        val infuser: AdvancementHolder = createMachine(casing, HTMachineType.INFUSER)
         val alumina: AdvancementHolder = createMaterial(
             infuser,
             HTTagPrefix.DUST,
@@ -186,9 +185,9 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
 
         // Mixer
-        val mixer: AdvancementHolder = createMachine(casing, RagiumMachineKeys.MIXER)
+        val mixer: AdvancementHolder = createMachine(casing, HTMachineType.MIXER)
         // Refinery
-        val refinery: AdvancementHolder = createMachine(casing, RagiumMachineKeys.REFINERY)
+        val refinery: AdvancementHolder = createMachine(casing, HTMachineType.REFINERY)
         val crudeOil: AdvancementHolder = createSimple(refinery, RagiumItems.CRUDE_OIL_BUCKET, Component.empty())
         val resin: AdvancementHolder = createSimple(crudeOil, RagiumItems.POLYMER_RESIN, Component.empty())
         val plastic: AdvancementHolder = createSimple(resin, RagiumItems.PLASTIC_PLATE, Component.empty())
@@ -205,11 +204,11 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
 
         // Alchemical Brewery
-        val brewery: AdvancementHolder = createMachine(casing, RagiumMachineKeys.ALCHEMICAL_BREWERY)
+        val brewery: AdvancementHolder = createMachine(casing, HTMachineType.ALCHEMICAL_BREWERY)
         // Arcane Enchanter
-        val enchanter: AdvancementHolder = createMachine(casing, RagiumMachineKeys.ARCANE_ENCHANTER)
+        val enchanter: AdvancementHolder = createMachine(casing, HTMachineType.ARCANE_ENCHANTER)
         // Laser Assembly
-        val assembly: AdvancementHolder = createMachine(casing, RagiumMachineKeys.LASER_ASSEMBLY)
+        val assembly: AdvancementHolder = createMachine(casing, HTMachineType.LASER_ASSEMBLY)
     }
 
     @JvmStatic
@@ -272,7 +271,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     @JvmStatic
     private fun createMachine(
         parent: AdvancementHolder,
-        machine: HTMachineKey,
+        machine: HTMachineType,
         type: AdvancementType = AdvancementType.TASK,
         showToast: Boolean = true,
         showChat: Boolean = true,
@@ -289,8 +288,8 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
                 showChat,
                 hidden,
             ),
-        ).hasItem("has_${machine.name}", machine.getBlock())
-        .save(machine.name)
+        ).hasItem("has_${machine.serializedName}", machine.getBlock())
+        .save(machine.serializedName)
 
     @JvmStatic
     private fun Advancement.Builder.hasItem(key: String, item: ItemLike): Advancement.Builder =

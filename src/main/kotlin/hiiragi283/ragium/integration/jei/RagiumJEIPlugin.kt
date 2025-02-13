@@ -4,10 +4,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTSoap
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.getAllRecipes
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.tag.RagiumFluidTags
-import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumRecipeSerializers
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import hiiragi283.ragium.integration.jei.category.*
 import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
@@ -53,20 +56,20 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCategories(
             HTMultiItemRecipeCategory(
                 guiHelper,
-                RagiumMachineKeys.ASSEMBLER,
+                HTMachineType.ASSEMBLER,
                 RagiumJEIRecipeTypes.ASSEMBLER,
                 RagiumRecipeSerializers.ASSEMBLER.get(),
             ),
             HTMultiItemRecipeCategory(
                 guiHelper,
-                RagiumMachineKeys.BLAST_FURNACE,
+                HTMachineType.BLAST_FURNACE,
                 RagiumJEIRecipeTypes.BLAST_FURNACE,
                 RagiumRecipeSerializers.BLAST_FURNACE.get(),
             ),
             HTBreweryRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
-                RagiumMachineKeys.COMPRESSOR,
+                HTMachineType.COMPRESSOR,
                 RagiumJEIRecipeTypes.COMPRESSOR,
                 RagiumRecipeSerializers.COMPRESSOR.get(),
             ),
@@ -74,7 +77,7 @@ class RagiumJEIPlugin : IModPlugin {
             HTExtractorRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
-                RagiumMachineKeys.GRINDER,
+                HTMachineType.GRINDER,
                 RagiumJEIRecipeTypes.GRINDER,
                 RagiumRecipeSerializers.GRINDER.get(),
             ),
@@ -82,7 +85,7 @@ class RagiumJEIPlugin : IModPlugin {
             HTInfuserRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
-                RagiumMachineKeys.LASER_ASSEMBLY,
+                HTMachineType.LASER_ASSEMBLY,
                 RagiumJEIRecipeTypes.LASER_ASSEMBLY,
                 RagiumRecipeSerializers.LASER_ASSEMBLY.get(),
             ),
@@ -138,9 +141,9 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipes(
             RagiumJEIRecipeTypes.GENERATOR,
             listOf(
-                HTGeneratorFuelEntry(RagiumMachineKeys.COMBUSTION_GENERATOR, RagiumFluidTags.NITRO_FUEL, 10),
-                HTGeneratorFuelEntry(RagiumMachineKeys.COMBUSTION_GENERATOR, RagiumFluidTags.NON_NITRO_FUEL, 100),
-                HTGeneratorFuelEntry(RagiumMachineKeys.THERMAL_GENERATOR, RagiumFluidTags.THERMAL_FUEL, 100),
+                HTGeneratorFuelEntry(HTMachineType.COMBUSTION_GENERATOR, RagiumFluidTags.NITRO_FUEL, 10),
+                HTGeneratorFuelEntry(HTMachineType.COMBUSTION_GENERATOR, RagiumFluidTags.NON_NITRO_FUEL, 100),
+                HTGeneratorFuelEntry(HTMachineType.THERMAL_GENERATOR, RagiumFluidTags.THERMAL_FUEL, 100),
             ),
         )
         // Stirling
@@ -172,42 +175,42 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-        fun register(recipeType: JEIRecipeType<*>, machine: HTMachineKey) {
+        fun register(recipeType: JEIRecipeType<*>, machine: HTMachineType) {
             registration.addRecipeCatalysts(recipeType, machine.getBlock())
         }
 
         // Assembler
-        register(RagiumJEIRecipeTypes.ASSEMBLER, RagiumMachineKeys.ASSEMBLER)
+        register(RagiumJEIRecipeTypes.ASSEMBLER, HTMachineType.ASSEMBLER)
         // Blast Furnace
-        register(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumMachineKeys.BLAST_FURNACE)
+        register(RagiumJEIRecipeTypes.BLAST_FURNACE, HTMachineType.BLAST_FURNACE)
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
         // Brewery
-        register(RagiumJEIRecipeTypes.BREWERY, RagiumMachineKeys.ALCHEMICAL_BREWERY)
+        register(RagiumJEIRecipeTypes.BREWERY, HTMachineType.ALCHEMICAL_BREWERY)
         // Compressor
-        register(RagiumJEIRecipeTypes.COMPRESSOR, RagiumMachineKeys.COMPRESSOR)
+        register(RagiumJEIRecipeTypes.COMPRESSOR, HTMachineType.COMPRESSOR)
         // Enchanter
-        register(RagiumJEIRecipeTypes.ENCHANTER, RagiumMachineKeys.ARCANE_ENCHANTER)
+        register(RagiumJEIRecipeTypes.ENCHANTER, HTMachineType.ARCANE_ENCHANTER)
         // Extractor
-        register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumMachineKeys.EXTRACTOR)
+        register(RagiumJEIRecipeTypes.EXTRACTOR, HTMachineType.EXTRACTOR)
         // Grinder
-        register(RagiumJEIRecipeTypes.GRINDER, RagiumMachineKeys.GRINDER)
+        register(RagiumJEIRecipeTypes.GRINDER, HTMachineType.GRINDER)
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumBlocks.MANUAL_GRINDER)
         // Growth Chamber
-        register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, RagiumMachineKeys.GROWTH_CHAMBER)
+        register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, HTMachineType.GROWTH_CHAMBER)
         // Infuser
-        register(RagiumJEIRecipeTypes.INFUSER, RagiumMachineKeys.INFUSER)
+        register(RagiumJEIRecipeTypes.INFUSER, HTMachineType.INFUSER)
         // Laser Assembly
-        register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, RagiumMachineKeys.LASER_ASSEMBLY)
+        register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, HTMachineType.LASER_ASSEMBLY)
         // Mixer
-        register(RagiumJEIRecipeTypes.MIXER, RagiumMachineKeys.MIXER)
+        register(RagiumJEIRecipeTypes.MIXER, HTMachineType.MIXER)
         // Refinery
-        register(RagiumJEIRecipeTypes.REFINERY, RagiumMachineKeys.REFINERY)
+        register(RagiumJEIRecipeTypes.REFINERY, HTMachineType.REFINERY)
 
         // Generator
-        register(RagiumJEIRecipeTypes.GENERATOR, RagiumMachineKeys.COMBUSTION_GENERATOR)
-        register(RagiumJEIRecipeTypes.GENERATOR, RagiumMachineKeys.THERMAL_GENERATOR)
+        register(RagiumJEIRecipeTypes.GENERATOR, HTMachineType.COMBUSTION_GENERATOR)
+        register(RagiumJEIRecipeTypes.GENERATOR, HTMachineType.THERMAL_GENERATOR)
         // Stirling
-        register(RagiumJEIRecipeTypes.STIRLING, RagiumMachineKeys.STIRLING_GENERATOR)
+        register(RagiumJEIRecipeTypes.STIRLING, HTMachineType.STIRLING_GENERATOR)
         // Material
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MATERIAL_INFO, Items.IRON_INGOT)
         // Soap

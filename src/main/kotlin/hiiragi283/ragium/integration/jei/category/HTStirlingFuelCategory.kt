@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
@@ -21,9 +21,9 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTStirlingFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTStirlingFuelEntry> {
     override fun getRecipeType(): RecipeType<HTStirlingFuelEntry> = RagiumJEIRecipeTypes.STIRLING
 
-    override fun getTitle(): Component = RagiumMachineKeys.STIRLING_GENERATOR.text
+    override fun getTitle(): Component = HTMachineType.STIRLING_GENERATOR.text
 
-    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(RagiumMachineKeys.STIRLING_GENERATOR.getBlock())
+    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.STIRLING_GENERATOR.getBlock())
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTStirlingFuelEntry, focuses: IFocusGroup) {
         // Item Input

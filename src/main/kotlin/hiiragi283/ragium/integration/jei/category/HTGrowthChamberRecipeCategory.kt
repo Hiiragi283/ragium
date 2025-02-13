@@ -1,8 +1,8 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addItemResult
@@ -16,7 +16,7 @@ import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTGrowthChamberRecipeCategory(guiHelper: IGuiHelper) :
-    HTMachineRecipeCategory<HTGrowthChamberRecipe>(guiHelper, RagiumMachineKeys.GROWTH_CHAMBER, 3.5) {
+    HTMachineRecipeCategory<HTGrowthChamberRecipe>(guiHelper, HTMachineType.GROWTH_CHAMBER, 3.5) {
     override fun getRecipeType(): RecipeType<HTGrowthChamberRecipe> = RagiumJEIRecipeTypes.GROWTH_CHAMBER
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTGrowthChamberRecipe, focuses: IFocusGroup) {
