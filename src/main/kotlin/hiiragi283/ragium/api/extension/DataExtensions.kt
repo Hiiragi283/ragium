@@ -86,6 +86,13 @@ fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLo
     )
 }
 
+fun BlockStateProvider.uncheckedSimpleBlock(holder: DeferredBlock<*>) {
+    simpleBlock(
+        holder.get(),
+        ConfiguredModel(ModelFile.UncheckedModelFile(holder.id.withPrefix("block/"))),
+    )
+}
+
 fun BlockStateProvider.cutoutSimpleBlock(holder: DeferredBlock<*>) {
     simpleBlock(
         holder.get(),

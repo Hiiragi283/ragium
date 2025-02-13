@@ -17,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -65,7 +66,6 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
      * ブロックが右クリックされたときに呼ばれます。
      *
      * [onRightClicked]より先に呼び出されます。
-     * @see [hiiragi283.ragium.api.block.HTEntityBlock.useItemOn]
      */
     open fun onRightClickedWithItem(
         stack: ItemStack,
@@ -79,7 +79,6 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     /**
      * ブロックが右クリックされたときに呼ばれます。
-     * @see [hiiragi283.ragium.api.block.HTEntityBlock.useWithoutItem]
      */
     open fun onRightClicked(
         state: BlockState,
@@ -99,7 +98,6 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     /**
      * ブロックが左クリックされたときに呼ばれます。
-     * @see [hiiragi283.ragium.api.block.HTEntityBlock.attack]
      */
     open fun onLeftClicked(
         state: BlockState,
@@ -110,7 +108,6 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     /**
      * ブロックが設置されたときに呼ばれます。
-     * @see [hiiragi283.ragium.api.block.HTEntityBlock.setPlacedBy]
      */
     open fun setPlacedBy(
         level: Level,
@@ -122,7 +119,6 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     /**
      * ブロックが置換されたときに呼ばれます。
-     * @see [hiiragi283.ragium.api.block.HTEntityBlock.onRemove]
      */
     open fun onRemove(
         state: BlockState,
@@ -135,9 +131,21 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     /**
      * ブロックのコンパレータ出力を返します。
-     * @see [hiiragi283.ragium.api.block.HTEntityBlock.getAnalogOutputSignal]
      */
     open fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = 0
+
+    /**
+     * 隣接ブロックが更新された時に呼び出されます。
+     */
+    open fun neighborChanged(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        neighborBlock: Block,
+        neighborPos: BlockPos,
+        movedByPiston: Boolean,
+    ) {
+    }
 
     open val shouldTick: Boolean = true
     open var ticks: Int = 0
@@ -146,7 +154,7 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     /**
      * 毎tick呼び出されます。
-     * @see [hiiragi283.ragium.api.block.HTEntityBlock.getTicker]
+     * @see [hiiragi283.ragium.common.block.HTEntityBlock.getTicker]
      */
     fun tick(level: Level, pos: BlockPos, state: BlockState) {
         if (!shouldTick) return

@@ -58,6 +58,7 @@ class RagiumBlockTagProvider(
 
             add(RagiumBlocks.MANUAL_GRINDER)
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+            add(RagiumBlocks.DISENCHANTING_TABLE)
 
             add(RagiumBlocks.COPPER_DRUM)
             addAll(RagiumBlocks.ADDONS)

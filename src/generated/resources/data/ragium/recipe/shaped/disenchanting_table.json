@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:glow_reagent"
+    },
+    "B": {
+      "tag": "c:gems/ragi_crystal"
+    },
+    "C": {
+      "tag": "c:obsidians/crying"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BCB",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:disenchanting_table"
+  }
+}

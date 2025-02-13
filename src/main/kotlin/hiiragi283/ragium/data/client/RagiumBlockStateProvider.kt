@@ -84,11 +84,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Food
         simpleBlock(RagiumBlocks.SPONGE_CAKE.get())
-
-        simpleBlock(
-            RagiumBlocks.SWEET_BERRIES_CAKE.get(),
-            ConfiguredModel(ModelFile.UncheckedModelFile(RagiumAPI.id("block/sweet_berries_cake"))),
-        )
+        uncheckedSimpleBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Manual Machine
         getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
@@ -119,6 +115,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             RagiumBlocks.PRIMITIVE_BLAST_FURNACE.get(),
             ModelFile.UncheckedModelFile(RagiumAPI.id("block/primitive_blast_furnace")),
         )
+        uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
 
         // Utility
         RagiumBlocks.SHAFT.let { holder: DeferredBlock<RotatedPillarBlock> ->

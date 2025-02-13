@@ -3,11 +3,9 @@ package hiiragi283.ragium.api.block.entity
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.capability.HTSlotHandler
 import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.blockPosText
-import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.machine.HTMachineAccess
@@ -32,7 +30,6 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -233,7 +230,7 @@ abstract class HTMachineBlockEntity(
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
-        handlerSerializer.items.map(HTSlotHandler<ItemStack>::stack).forEach { dropStackAt(level, pos, it) }
+        handlerSerializer.dropItems(level, pos)
     }
 
     final override val containerData: ContainerData = object : ContainerData {

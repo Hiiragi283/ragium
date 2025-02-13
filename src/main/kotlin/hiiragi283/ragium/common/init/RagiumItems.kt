@@ -203,7 +203,7 @@ object RagiumItems {
         register(
             "ambrosia",
             ::HTAmbrosiaItem,
-            itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC).stacksTo(1),
+            itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC),
         )
 
     @JvmField

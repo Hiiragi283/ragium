@@ -12,11 +12,9 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
-import net.minecraft.world.level.CommonLevelAccessor
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.phys.Vec3
 
@@ -33,23 +31,6 @@ fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity
  * @return 存在しない場合は`null`
  */
 fun BlockGetter.getMachineEntity(pos: BlockPos): HTMachineAccess? = getBlockEntity(pos) as? HTMachineAccess
-
-/**
- * 指定した[pos]に存在する[BlockState]を置き換えようとします。
- * @param doBreak `true`の場合は[CommonLevelAccessor.destroyBlock]，それ以外の場合は[CommonLevelAccessor.setBlock]
- * @return サーバー側で置換に成功したら`true`，それ以外の場合は`false`
- */
-fun CommonLevelAccessor.replaceBlockState(pos: BlockPos, doBreak: Boolean = false, transform: (BlockState) -> BlockState?): Boolean {
-    val stateIn: BlockState = getBlockState(pos)
-    return when {
-        isClientSide -> false
-        else ->
-            transform(stateIn)?.let { state: BlockState ->
-                if (doBreak) destroyBlock(pos, false)
-                setBlock(pos, state, 3)
-            } == true
-    }
-}
 
 //    Level    //
 

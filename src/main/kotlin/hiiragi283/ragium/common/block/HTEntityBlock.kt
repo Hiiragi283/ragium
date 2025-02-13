@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.getHTBlockEntity
@@ -104,7 +104,20 @@ abstract class HTEntityBlock(properties: Properties) :
     final override fun hasAnalogOutputSignal(state: BlockState): Boolean = true
 
     final override fun getAnalogOutputSignal(state: BlockState, level: Level, pos: BlockPos): Int =
-        super.getAnalogOutputSignal(state, level, pos)
+        level.getHTBlockEntity(pos)?.getComparatorOutput(state, level, pos)
+            ?: super.getAnalogOutputSignal(state, level, pos)
+
+    override fun neighborChanged(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        neighborBlock: Block,
+        neighborPos: BlockPos,
+        movedByPiston: Boolean,
+    ) {
+        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+        level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+    }
 
     override fun getMenuProvider(state: BlockState, level: Level, pos: BlockPos): MenuProvider? =
         level.getHTBlockEntity(pos) as? MenuProvider

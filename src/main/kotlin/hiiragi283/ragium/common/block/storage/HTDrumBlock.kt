@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.fluidAmountText
 import hiiragi283.ragium.api.extension.fluidCapacityText
 import hiiragi283.ragium.api.extension.getLevel
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import net.minecraft.core.BlockPos

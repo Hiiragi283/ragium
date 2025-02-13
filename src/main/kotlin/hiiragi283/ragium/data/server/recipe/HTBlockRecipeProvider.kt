@@ -187,6 +187,17 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
             .savePrefixed(output)
 
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumBlocks.DISENCHANTING_TABLE)
+            .pattern(" A ")
+            .pattern("BCB")
+            .pattern("CCC")
+            .define('A', RagiumItems.GLOW_REAGENT)
+            .define('B', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .define('C', Tags.Items.OBSIDIANS_CRYING)
+            .unlockedBy("has_ragi_crystal", has(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL))
+            .savePrefixed(output)
+
         // Machine Casing
         fun casing(
             result: ItemLike,

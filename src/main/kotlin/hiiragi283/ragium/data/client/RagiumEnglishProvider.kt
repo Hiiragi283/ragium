@@ -37,6 +37,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addBlock(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
         addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "Primitive Blast Furnace")
+        addBlock(RagiumBlocks.DISENCHANTING_TABLE, "Disenchanting Table")
 
         addBlock(RagiumBlocks.COPPER_DRUM, "Copper Drum")
 
@@ -185,7 +186,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Bedrock Miner",
             "Collect minerals from Bedrock",
         )
-        add(RagiumMachineKeys.DISENCHANTER, "Disenchanter", "Transfer enchantment from applied item to book")
         add(
             RagiumMachineKeys.DRAIN,
             "Drain",

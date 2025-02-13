@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlockEntity
 import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
@@ -64,6 +65,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val PRIMITIVE_BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTPrimitiveBlastFurnaceBlockEntity>> =
         register("primitive_blast_furnace", ::HTPrimitiveBlastFurnaceBlockEntity, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+
+    @JvmField
+    val DISENCHANTING_TABLE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDisenchantingTableBlockEntity>> =
+        register("disenchanting_table", ::HTDisenchantingTableBlockEntity, RagiumBlocks.DISENCHANTING_TABLE)
 
     //    Consumer    //
 

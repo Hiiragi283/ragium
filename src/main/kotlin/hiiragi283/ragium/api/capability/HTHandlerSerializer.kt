@@ -2,11 +2,14 @@ package hiiragi283.ragium.api.capability
 
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.logError
+import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import org.slf4j.Logger
 
@@ -89,5 +92,11 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
                     fluids[index].stack = stack
                 }
             }.logError(LOGGER)
+    }
+
+    fun dropItems(level: Level, pos: BlockPos) {
+        items.forEach { slot: HTSlotHandler<ItemStack> ->
+            dropStackAt(level, pos, slot.stack)
+        }
     }
 }

@@ -110,6 +110,8 @@ object RagiumCreativeTabs {
                         // Manual Machines
                         add(RagiumBlocks.MANUAL_GRINDER)
                         add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+
+                        add(RagiumBlocks.DISENCHANTING_TABLE)
                         // Utilities
                         addAll(RagiumBlocks.ADDONS)
                         addAll(RagiumBlocks.BURNERS)

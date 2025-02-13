@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.extension.getOrNull
-import hiiragi283.ragium.api.extension.replaceBlockState
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -69,9 +68,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             process(level, pos, player)
         }
         if (!level.isClientSide) {
-            level.replaceBlockState(pos) { stateIn: BlockState ->
-                stateIn.setValue(BlockStateProperties.AGE_7, (step + 1) % 8)
-            }
+            level.setBlock(pos, state.cycle(BlockStateProperties.AGE_7), 2)
         }
         return InteractionResult.sidedSuccess(level.isClientSide)
     }

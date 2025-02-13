@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.itemProperty
@@ -12,11 +11,13 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
+import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
@@ -224,6 +225,13 @@ object RagiumBlocks {
         "primitive_blast_furnace",
         ::HTPrimitiveBlastFurnaceBlock,
         blockProperty(Blocks.BRICKS),
+    )
+
+    @JvmField
+    val DISENCHANTING_TABLE: DeferredBlock<HTDisenchantingTableBlock> = register(
+        "disenchanting_table",
+        ::HTDisenchantingTableBlock,
+        blockProperty(Blocks.OBSIDIAN),
     )
 
     //    Storage    //

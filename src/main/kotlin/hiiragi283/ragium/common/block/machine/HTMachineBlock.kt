@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.machine
 
-import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.get
+import hiiragi283.ragium.common.block.HTEntityBlock
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item

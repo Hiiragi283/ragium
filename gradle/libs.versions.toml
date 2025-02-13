@@ -73,8 +73,6 @@ mods-transitive = [
 ]
 
 mods-compile = [
-    "cyclops",
-    "evil",
     "jei-api"
 ]
 

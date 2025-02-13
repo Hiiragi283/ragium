@@ -61,11 +61,6 @@ internal object RagiumModEvents {
     fun modifyMachineProperties(event: HTModifyPropertyEvent.Machine) {
         // Consumer
         event
-            .getBuilder(RagiumMachineKeys.DISENCHANTER)
-            .put(HTMachinePropertyKeys.SOUND, SoundEvents.ENCHANTMENT_TABLE_USE)
-            .put(HTMachinePropertyKeys.PARTICLE, HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT))
-
-        event
             .getBuilder(RagiumMachineKeys.FISHER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, ::HTFisherBlockEntity)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.FISHING_BOBBER_SPLASH)

@@ -37,6 +37,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addBlock(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
         addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "らぎ高炉")
+        addBlock(RagiumBlocks.DISENCHANTING_TABLE, "ディスエンチャント台")
 
         addBlock(RagiumBlocks.COPPER_DRUM, "銅のドラム")
 
@@ -178,7 +179,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.SOURCE_CONDITION, "次のソース「%s」が%s側から必要です")
         // Machine Type
         add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
-        add(RagiumMachineKeys.DISENCHANTER, "ディスエンチャンター", "投入したアイテムのエンチャントを本に移す")
         add(RagiumMachineKeys.DRAIN, "排水溝", "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る")
         add(RagiumMachineKeys.FISHER, "自動釣り機", "下の水源から魚を釣る")
 
