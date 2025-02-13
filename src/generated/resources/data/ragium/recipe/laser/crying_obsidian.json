@@ -1,0 +1,14 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:magical_lens"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "c:obsidians/normal"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "minecraft:crying_obsidian"
+  }
+}

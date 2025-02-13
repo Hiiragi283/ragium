@@ -49,6 +49,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         registerCircuits(output)
         registerPressMolds(output)
+        registerLens(output)
 
         registerTool(output)
         registerMisc(output)
@@ -215,7 +216,13 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerCircuits(output: RecipeOutput) {
-        fun circuit(circuit: ItemLike, subMetal: HTMaterialKey, dopant: Ingredient) {
+        fun circuit(
+            circuit: ItemLike,
+            subMetal: HTMaterialKey,
+            dopant: Ingredient,
+            lens: ItemLike,
+        ) {
+            // Assembler
             HTMultiItemRecipeBuilder
                 .assembler()
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
@@ -223,12 +230,39 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
                 .itemInput(dopant)
                 .itemOutput(circuit)
                 .save(output)
+            // Laser Assembly
+            HTSingleItemRecipeBuilder
+                .laser()
+                .itemInput(RagiumItems.CIRCUIT_BOARD)
+                .catalyst(lens)
+                .itemOutput(circuit)
+                .save(output)
         }
 
-        circuit(RagiumItems.BASIC_CIRCUIT, VanillaMaterials.COPPER, Ingredient.of(Tags.Items.DUSTS_REDSTONE))
-        circuit(RagiumItems.ADVANCED_CIRCUIT, VanillaMaterials.GOLD, Ingredient.of(RagiumItems.GLOW_REAGENT))
-        circuit(RagiumItems.ELITE_CIRCUIT, CommonMaterials.ALUMINUM, Ingredient.of(RagiumItems.PRISMARINE_REAGENT))
-        circuit(RagiumItems.ULTIMATE_CIRCUIT, RagiumMaterials.RAGIUM, Ingredient.of(RagiumItems.ENDER_REAGENT))
+        circuit(
+            RagiumItems.BASIC_CIRCUIT,
+            VanillaMaterials.COPPER,
+            Ingredient.of(Tags.Items.DUSTS_REDSTONE),
+            RagiumItems.REDSTONE_LENS,
+        )
+        circuit(
+            RagiumItems.ADVANCED_CIRCUIT,
+            VanillaMaterials.GOLD,
+            Ingredient.of(RagiumItems.GLOW_REAGENT),
+            RagiumItems.GLOW_LENS,
+        )
+        circuit(
+            RagiumItems.ELITE_CIRCUIT,
+            CommonMaterials.ALUMINUM,
+            Ingredient.of(RagiumItems.PRISMARINE_REAGENT),
+            RagiumItems.PRISMARINE_LENS,
+        )
+        circuit(
+            RagiumItems.ULTIMATE_CIRCUIT,
+            RagiumMaterials.RAGIUM,
+            Ingredient.of(RagiumItems.ENDER_REAGENT),
+            RagiumItems.MAGICAL_LENS,
+        )
 
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumItems.BASIC_CIRCUIT)
@@ -270,6 +304,40 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         }
 
         RagiumItems.PRESS_MOLDS.forEach(::register)
+    }
+
+    private fun registerLens(output: RecipeOutput) {
+        HTMultiItemRecipeBuilder
+            .assembler()
+            .itemInput(Tags.Items.DUSTS_REDSTONE, 64)
+            .itemInput(Tags.Items.INGOTS_COPPER, 16)
+            .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS, 8)
+            .itemOutput(RagiumItems.REDSTONE_LENS)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .assembler()
+            .itemInput(RagiumItems.GLOW_REAGENT, 64)
+            .itemInput(Tags.Items.INGOTS_GOLD, 16)
+            .itemInput(Tags.Items.GLASS_BLOCKS_TINTED, 8)
+            .itemOutput(RagiumItems.GLOW_LENS)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .assembler()
+            .itemInput(RagiumItems.PRISMARINE_REAGENT, 64)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 16)
+            .itemInput(RagiumBlocks.CHEMICAL_GLASS, 8)
+            .itemOutput(RagiumItems.PRISMARINE_LENS)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .assembler()
+            .itemInput(RagiumItems.MAGICAL_REAGENT, 64)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 16)
+            .itemInput(RagiumBlocks.OBSIDIAN_GLASS, 8)
+            .itemOutput(RagiumItems.MAGICAL_LENS)
+            .save(output)
     }
 
     private fun registerTool(output: RecipeOutput) {
@@ -359,7 +427,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMultiItemRecipeBuilder
             .blastFurnace()
-            .itemInput(Tags.Items.GLASS_BLOCKS, 4)
+            .itemInput(RagiumBlocks.CHEMICAL_GLASS, 4)
             .itemInput(Tags.Items.OBSIDIANS_NORMAL)
             .itemOutput(RagiumBlocks.OBSIDIAN_GLASS)
             .save(output)

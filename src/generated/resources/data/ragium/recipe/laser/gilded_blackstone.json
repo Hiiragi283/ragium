@@ -1,0 +1,14 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:glow_lens"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:blackstone"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "minecraft:gilded_blackstone"
+  }
+}

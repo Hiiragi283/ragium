@@ -273,6 +273,18 @@ object RagiumItems {
     @JvmStatic
     fun getPressMold(prefix: HTTagPrefix): DeferredItem<HTCatalystItem> = PRESS_MOLDS[prefix] ?: error("Unregistered with $prefix")
 
+    @JvmField
+    val REDSTONE_LENS: DeferredItem<HTCatalystItem> = register("redstone_lens", ::HTCatalystItem)
+
+    @JvmField
+    val GLOW_LENS: DeferredItem<HTCatalystItem> = register("glow_lens", ::HTCatalystItem)
+
+    @JvmField
+    val PRISMARINE_LENS: DeferredItem<HTCatalystItem> = register("prismarine_lens", ::HTCatalystItem)
+
+    @JvmField
+    val MAGICAL_LENS: DeferredItem<HTCatalystItem> = register("magical_lens", ::HTCatalystItem)
+
     //    Circuits    //
 
     @JvmField
@@ -317,6 +329,9 @@ object RagiumItems {
     val GLOW_REAGENT: DeferredItem<Item> = register("glow_reagent")
 
     @JvmField
+    val MAGICAL_REAGENT: DeferredItem<Item> = register("magical_reagent")
+
+    @JvmField
     val PRISMARINE_REAGENT: DeferredItem<Item> = register("prismarine_reagent")
 
     @JvmField
@@ -336,6 +351,7 @@ object RagiumItems {
         DEEPANT_REAGENT,
         ENDER_REAGENT,
         GLOW_REAGENT,
+        MAGICAL_REAGENT,
         PRISMARINE_REAGENT,
         SCULK_REAGENT,
         SOUL_REAGENT,

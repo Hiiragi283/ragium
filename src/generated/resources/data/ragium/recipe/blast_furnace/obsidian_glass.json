@@ -2,7 +2,7 @@
   "type": "ragium:blast_furnace",
   "first_item_input": {
     "count": 4,
-    "tag": "c:glass_blocks"
+    "item": "ragium:chemical_glass"
   },
   "item_output": {
     "type": "ragium:simple",

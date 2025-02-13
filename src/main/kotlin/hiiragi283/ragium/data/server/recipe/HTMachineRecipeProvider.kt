@@ -46,6 +46,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         enchanter(output, holderLookup.lookupOrThrow(Registries.ENCHANTMENT))
         extractor(output)
         growthChamber(output)
+        laser(output)
         refinery(output)
     }
 
@@ -300,6 +301,50 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         register(Tags.Items.CROPS_SUGAR_CANE, ItemTags.SAND, Items.SUGAR_CANE, 4)
         // Soul Sand
         register(Tags.Items.CROPS_NETHER_WART, ItemTags.SOUL_FIRE_BASE_BLOCKS, Items.NETHER_WART, 3, 0)
+    }
+
+    //    Laser Assembly    //
+
+    private fun laser(output: RecipeOutput) {
+        // Gilded Blackstone
+        HTSingleItemRecipeBuilder
+            .laser()
+            .itemInput(Items.BLACKSTONE)
+            .catalyst(RagiumItems.GLOW_LENS)
+            .itemOutput(Items.GILDED_BLACKSTONE)
+            .save(output)
+
+        // Enchanted Golden Apply
+        HTSingleItemRecipeBuilder
+            .laser()
+            .itemInput(Items.GOLDEN_APPLE, 8)
+            .catalyst(RagiumItems.GLOW_LENS)
+            .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
+            .save(output)
+
+        // Crying Obsidian
+        HTSingleItemRecipeBuilder
+            .laser()
+            .itemInput(Tags.Items.OBSIDIANS_NORMAL)
+            .catalyst(RagiumItems.MAGICAL_LENS)
+            .itemOutput(Items.CRYING_OBSIDIAN)
+            .save(output)
+
+        // Budding Amethyst
+        HTSingleItemRecipeBuilder
+            .laser()
+            .itemInput(Items.AMETHYST_BLOCK, 4)
+            .catalyst(RagiumItems.MAGICAL_LENS)
+            .itemOutput(Items.BUDDING_AMETHYST)
+            .save(output)
+
+        // Heavy Core
+        HTSingleItemRecipeBuilder
+            .laser()
+            .itemInput(Tags.Items.STORAGE_BLOCKS_NETHERITE)
+            .catalyst(RagiumItems.MAGICAL_LENS)
+            .itemOutput(Items.HEAVY_CORE)
+            .save(output)
     }
 
     //    Refinery    //

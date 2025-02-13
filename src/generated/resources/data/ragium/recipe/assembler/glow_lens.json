@@ -1,0 +1,19 @@
+{
+  "type": "ragium:assembler",
+  "first_item_input": {
+    "count": 64,
+    "item": "ragium:glow_reagent"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "ragium:glow_lens"
+  },
+  "second_item_input": {
+    "count": 16,
+    "tag": "c:ingots/gold"
+  },
+  "third_item_input": {
+    "count": 8,
+    "tag": "c:glass_blocks/tinted"
+  }
+}

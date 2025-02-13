@@ -77,6 +77,11 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.ALUMINUM_CAN)
 
                     RagiumItems.PRESS_MOLDS.values.forEach(output::accept)
+
+                    output.accept(RagiumItems.REDSTONE_LENS)
+                    output.accept(RagiumItems.GLOW_LENS)
+                    output.accept(RagiumItems.PRISMARINE_LENS)
+                    output.accept(RagiumItems.MAGICAL_LENS)
                     // Circuits
                     output.accept(RagiumItems.POLYMER_RESIN)
                     output.accept(RagiumItems.PLASTIC_PLATE)

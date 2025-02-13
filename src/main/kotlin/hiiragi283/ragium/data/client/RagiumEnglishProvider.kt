@@ -134,12 +134,18 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.getPressMold(HTTagPrefix.ROD), "Press Mold (Rod)")
         addItem(RagiumItems.getPressMold(HTTagPrefix.WIRE), "Press Mold (Wire)")
 
+        addItem(RagiumItems.REDSTONE_LENS, "Redstone Lens")
+        addItem(RagiumItems.GLOW_LENS, "Glow Lens")
+        addItem(RagiumItems.PRISMARINE_LENS, "Prismarine Lens")
+        addItem(RagiumItems.MAGICAL_LENS, "Magical Lens")
+
         addItem(RagiumItems.ALKALI_REAGENT, "Alkali Reagent")
         addItem(RagiumItems.BLAZE_REAGENT, "Blaze Reagent")
         addItem(RagiumItems.CREEPER_REAGENT, "Creeper Reagent")
         addItem(RagiumItems.DEEPANT_REAGENT, "Deepant Reagent")
         addItem(RagiumItems.ENDER_REAGENT, "Ender Reagent")
         addItem(RagiumItems.GLOW_REAGENT, "Glow Reagent")
+        addItem(RagiumItems.MAGICAL_REAGENT, "Magical Reagent")
         addItem(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
         addItem(RagiumItems.SCULK_REAGENT, "Sculk Reagent")
         addItem(RagiumItems.SOUL_REAGENT, "Soul Reagent")

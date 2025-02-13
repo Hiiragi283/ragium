@@ -1,0 +1,14 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:glow_lens"
+  },
+  "item_input": {
+    "count": 8,
+    "item": "minecraft:golden_apple"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "minecraft:enchanted_golden_apple"
+  }
+}

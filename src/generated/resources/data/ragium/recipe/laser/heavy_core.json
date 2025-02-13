@@ -1,0 +1,14 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:magical_lens"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "c:storage_blocks/netherite"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "minecraft:heavy_core"
+  }
+}

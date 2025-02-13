@@ -1,0 +1,14 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:prismarine_lens"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "ragium:circuit_board"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "ragium:elite_circuit"
+  }
+}

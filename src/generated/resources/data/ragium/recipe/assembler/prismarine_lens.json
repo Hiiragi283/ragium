@@ -1,0 +1,19 @@
+{
+  "type": "ragium:assembler",
+  "first_item_input": {
+    "count": 64,
+    "item": "ragium:prismarine_reagent"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "ragium:prismarine_lens"
+  },
+  "second_item_input": {
+    "count": 16,
+    "tag": "c:ingots/aluminum"
+  },
+  "third_item_input": {
+    "count": 8,
+    "item": "ragium:chemical_glass"
+  }
+}

@@ -134,12 +134,18 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.getPressMold(HTTagPrefix.ROD), "プレス型（棒材）")
         addItem(RagiumItems.getPressMold(HTTagPrefix.WIRE), "プレス型（ワイヤー）")
 
+        addItem(RagiumItems.REDSTONE_LENS, "レッドストーンレンズ")
+        addItem(RagiumItems.GLOW_LENS, "グロウレンズ")
+        addItem(RagiumItems.PRISMARINE_LENS, "プリズマリンレンズ")
+        addItem(RagiumItems.MAGICAL_LENS, "魔術的レンズ")
+
         addItem(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
         addItem(RagiumItems.BLAZE_REAGENT, "ブレイズ試薬")
         addItem(RagiumItems.CREEPER_REAGENT, "クリーパー試薬")
         addItem(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
         addItem(RagiumItems.ENDER_REAGENT, "エンダー試薬")
         addItem(RagiumItems.GLOW_REAGENT, "グロウ試薬")
+        addItem(RagiumItems.MAGICAL_REAGENT, "魔術的試薬")
         addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
         addItem(RagiumItems.SCULK_REAGENT, "スカルク試薬")
         addItem(RagiumItems.SOUL_REAGENT, "ソウル試薬")

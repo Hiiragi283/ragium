@@ -1,0 +1,14 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:magical_lens"
+  },
+  "item_input": {
+    "count": 4,
+    "item": "minecraft:amethyst_block"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "minecraft:budding_amethyst"
+  }
+}
