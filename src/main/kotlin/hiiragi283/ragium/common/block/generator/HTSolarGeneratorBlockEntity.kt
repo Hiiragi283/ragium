@@ -28,4 +28,6 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 
     override fun interactWithFluidStorage(player: Player): Boolean = false
+
+    override val hasMenu: Boolean = false
 }

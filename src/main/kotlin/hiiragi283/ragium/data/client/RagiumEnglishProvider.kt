@@ -344,7 +344,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.FLUID_AMOUNT, "Amount: %s mb")
         add(RagiumTranslationKeys.FLUID_CAPACITY, "Capacity: %s mb")
 
-        add("config.jade.plugin_ragium.energy_network", "Energy Network")
-        add("config.jade.plugin_ragium.machine_info", "Machine Info")
+        add("config.jade.plugin_ragium.energy_network", "Show Energy Network")
+        add("config.jade.plugin_ragium.machine_info", "Show Machine Info")
+        add("config.jade.plugin_ragium.error_message", "Show Error Message")
     }
 }

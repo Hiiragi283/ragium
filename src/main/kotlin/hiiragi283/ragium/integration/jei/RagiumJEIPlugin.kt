@@ -25,15 +25,16 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import java.util.function.Supplier
-import kotlin.streams.asSequence
 import mezz.jei.api.recipe.RecipeType as JEIRecipeType
 
 @JeiPlugin
@@ -145,26 +146,23 @@ class RagiumJEIPlugin : IModPlugin {
             RagiumJEIRecipeTypes.STIRLING,
             BuiltInRegistries.ITEM
                 .getDataMap(NeoForgeDataMaps.FURNACE_FUELS)
-                .keys
-                .map(BuiltInRegistries.ITEM::getHolderOrThrow)
-                .map(::HTStirlingFuelEntry)
-                .toList(),
+                .mapNotNull { (key: ResourceKey<Item>, fuelTime: FurnaceFuel) ->
+                    val holder: Holder.Reference<Item> = BuiltInRegistries.ITEM.getHolderOrThrow(key)
+                    HTStirlingFuelEntry(holder, fuelTime.burnTime / 10)
+                }.sorted(),
         )
         // Material Info
         registration.addRecipes(RagiumJEIRecipeTypes.MATERIAL_INFO, RagiumAPI.getInstance().getMaterialRegistry().typedMaterials)
         // Soap
         registration.addRecipes(
             RagiumJEIRecipeTypes.SOAP,
-            level
-                .registryAccess()
-                .lookupOrThrow(Registries.BLOCK)
-                .listElements()
-                .asSequence()
-                .mapNotNull { holder: Holder.Reference<Block> ->
-                    val soap: HTSoap = holder.getData(RagiumDataMaps.SOAP) ?: return@mapNotNull null
+            BuiltInRegistries.BLOCK
+                .getDataMap(RagiumDataMaps.SOAP)
+                .mapNotNull { (key: ResourceKey<Block>, soap: HTSoap) ->
+                    val holder: Holder.Reference<Block> = BuiltInRegistries.BLOCK.getHolderOrThrow(key)
                     if (holder.value() == soap.block) return@mapNotNull null
                     HTSoapEntry(holder, soap)
-                }.toList(),
+                }.sorted(),
         )
     }
 

@@ -5,5 +5,5 @@ import org.apache.logging.log4j.Logger
 //    Result    //
 
 fun Result<*>.logError(logger: Logger) {
-    onFailure { logger.error(it.localizedMessage) }
+    onFailure { logger.error(it.message) }
 }

@@ -315,5 +315,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")
         add("config.jade.plugin_ragium.machine_info", "機械の情報")
+        add("config.jade.plugin_ragium.error_message", "エラーメッセージ")
     }
 }

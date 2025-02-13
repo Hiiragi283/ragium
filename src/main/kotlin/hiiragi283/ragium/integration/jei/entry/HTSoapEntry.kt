@@ -3,12 +3,13 @@ package hiiragi283.ragium.integration.jei.entry
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.data.HTSoap
+import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.world.level.block.Block
 
-data class HTSoapEntry(val input: Holder<Block>, val output: HTSoap) {
+data class HTSoapEntry(val input: Holder<Block>, val output: HTSoap) : Comparable<HTSoapEntry> {
     companion object {
         @JvmField
         val CODEC: Codec<HTSoapEntry> = RecordCodecBuilder.create { instance ->
@@ -18,5 +19,10 @@ data class HTSoapEntry(val input: Holder<Block>, val output: HTSoap) {
                     HTSoap.CODEC.fieldOf("output").forGetter(HTSoapEntry::output),
                 ).apply(instance, ::HTSoapEntry)
         }
+
+        @JvmField
+        val COMPARATOR: Comparator<HTSoapEntry> = compareBy { it.input.idOrThrow }
     }
+
+    override fun compareTo(other: HTSoapEntry): Int = COMPARATOR.compare(this, other)
 }

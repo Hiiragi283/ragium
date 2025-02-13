@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.internal
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.event.HTModifyPropertyEvent
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
@@ -235,22 +235,22 @@ internal object RagiumModEvents {
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         // from HTBlockEntityHandlerProvider
-        fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTBlockEntityHandlerProvider {
+        fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTHandlerBlockEntity {
             val type: BlockEntityType<T> = supplier.get()
             event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 type,
-                HTBlockEntityHandlerProvider::getItemHandler,
+                HTHandlerBlockEntity::getItemHandler,
             )
             event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 type,
-                HTBlockEntityHandlerProvider::getFluidHandler,
+                HTHandlerBlockEntity::getFluidHandler,
             )
             event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 type,
-                HTBlockEntityHandlerProvider::getEnergyStorage,
+                HTHandlerBlockEntity::getEnergyStorage,
             )
         }
 

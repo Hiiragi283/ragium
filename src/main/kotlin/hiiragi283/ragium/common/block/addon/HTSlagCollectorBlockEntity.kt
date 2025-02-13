@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.addon
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.dropStacks
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 class HTSlagCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.SLAG_COLLECTOR, pos, state),
-    HTBlockEntityHandlerProvider {
+    HTHandlerBlockEntity {
     private val itemHandler: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
     private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(listOf(itemHandler.createSlot(0)))

@@ -48,7 +48,7 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
         accessor.writeData(ENCHANTMENT, machineEntity.enchantments)
     }
 
-    override fun getUid(): ResourceLocation? = RagiumAPI.id("machine_info")
+    override fun getUid(): ResourceLocation = RagiumAPI.id("machine_info")
 
     //    IComponentProvider    //
 

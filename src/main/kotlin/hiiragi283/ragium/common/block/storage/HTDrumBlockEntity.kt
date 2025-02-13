@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.getLevel
@@ -31,8 +31,8 @@ import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.DRUM, pos, state),
-    HTBlockEntityHandlerProvider,
-    HTEnchantableBlockEntity {
+    HTEnchantableBlockEntity,
+    HTHandlerBlockEntity {
     private val fluidTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
     private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(fluidTank))
 

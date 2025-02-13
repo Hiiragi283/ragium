@@ -30,12 +30,12 @@ class HTStirlingFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSti
         builder
             .addInputSlot(getPosition(0), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(ItemStack(recipe.item))
+            .addItemStack(ItemStack(recipe.input))
         // Fluid Input
         builder
             .addInputSlot(getPosition(1), getPosition(0))
             .setStandardSlotBackground()
-            .addFluidStack(FluidStack(Fluids.WATER, recipe.requiredWater))
+            .addFluidStack(FluidStack(Fluids.WATER, recipe.water))
         // Item Output
         builder
             .addOutputSlot(getPosition(4), getPosition(0))

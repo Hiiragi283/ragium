@@ -9,7 +9,7 @@ import net.neoforged.neoforge.items.IItemHandler
 /**
  * [BlockEntity]に実装するインターフェース
  */
-interface HTBlockEntityHandlerProvider {
+interface HTHandlerBlockEntity {
     /**
      * 指定した[direction]から[IItemHandler]を返します。
      */

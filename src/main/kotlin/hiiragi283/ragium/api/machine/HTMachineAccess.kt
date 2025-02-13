@@ -1,8 +1,9 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
+import hiiragi283.ragium.api.block.entity.HTErrorHoldingBlockEntity
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.getLevel
@@ -21,8 +22,9 @@ import net.neoforged.neoforge.energy.IEnergyStorage
  * 機械の参照を表すインタフェース
  */
 interface HTMachineAccess :
-    HTBlockEntityHandlerProvider,
     HTEnchantableBlockEntity,
+    HTErrorHoldingBlockEntity,
+    HTHandlerBlockEntity,
     HTMultiblockController {
     /**
      * 機械の正面の向き

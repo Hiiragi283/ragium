@@ -37,7 +37,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.fml.loading.FMLLoader
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -144,13 +143,18 @@ abstract class HTMachineBlockEntity(
                     // init multiblock data
                     processData(data)
                     // open machine screen
-                    player.openMenu(this, pos)
-                    // HTInteractMachineCriterion.trigger(player, machineKey, tier)
+                    if (hasMenu) {
+                        player.openMenu(this, pos)
+                    } else {
+                        return InteractionResult.PASS
+                    }
                 }
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide)
     }
+
+    protected open val hasMenu: Boolean = true
 
     protected fun checkMultiblockOrThrow() {
         if (collectData().result == TriState.FALSE) {
@@ -194,19 +198,15 @@ abstract class HTMachineBlockEntity(
             .onSuccess {
                 energyData.handleEnergy(network, costModifier, false)
                 isActive = true
+                errorCache = null
                 machineKey.getProperty().ifPresent(HTMachinePropertyKeys.SOUND) { soundEvent: SoundEvent ->
                     level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 0.5f, 1.0f)
                 }
                 NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Success(this))
             }.onFailure { throwable: Throwable ->
                 isActive = false
+                errorCache = throwable.message
                 NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
-                val throwable1: Throwable =
-                    when (throwable) {
-                        is HTMachineException -> throwable.takeIf { it.showInLog || !FMLLoader.isProduction() }
-                        else -> throwable
-                    } ?: return@onFailure
-                LOGGER.error("Error on {} at {}: {}", machineKey, blockPosText(pos).string, throwable1.message)
             }
     }
 
@@ -252,4 +252,10 @@ abstract class HTMachineBlockEntity(
     //    HTControllerHolder    //
 
     final override var showPreview: Boolean = false
+
+    //    HTErrorHoldingBlockEntity    //
+
+    private var errorCache: String? = null
+
+    final override fun getErrorMessage(): String? = errorCache
 }

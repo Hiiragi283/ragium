@@ -26,6 +26,7 @@
   "block.ragium.white_led_block": "LEDブロック",
   "block.ragium.yellow_led_block": "LEDブロック（黄色）",
   "config.jade.plugin_ragium.energy_network": "エネルギーネットワーク",
+  "config.jade.plugin_ragium.error_message": "エラーメッセージ",
   "config.jade.plugin_ragium.machine_info": "機械の情報",
   "enchantment.ragium.capacity": "容量増加",
   "fluid_type.ragium.biodiesel": "バイオディーゼル",

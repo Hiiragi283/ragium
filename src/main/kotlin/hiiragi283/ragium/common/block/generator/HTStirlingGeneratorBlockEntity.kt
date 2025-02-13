@@ -59,6 +59,8 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: Player): Boolean = fluidInput.interactWithFluidStorage(player, HTStorageIO.GENERIC)
 
+    override val hasMenu: Boolean = false
+
     override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.INPUT.wrapItemHandler(itemInput)
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler = HTStorageIO.INPUT.wrapFluidHandler(fluidInput)

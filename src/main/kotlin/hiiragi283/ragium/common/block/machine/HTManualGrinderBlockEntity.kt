@@ -126,6 +126,8 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
     }
 
+    override fun getErrorMessage(): String? = null
+
     //    HTMachineAccess    //
 
     override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.INPUT.wrapItemHandler(itemHandler)
