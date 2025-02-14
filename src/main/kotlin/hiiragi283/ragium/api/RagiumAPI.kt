@@ -5,6 +5,7 @@ import com.google.common.collect.Table
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilderBase
 import hiiragi283.ragium.api.extension.buildMultiMap
+import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
@@ -20,12 +21,16 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -124,9 +129,24 @@ interface RagiumAPI {
 
     fun createItemHandler(size: Int, callback: () -> Unit): HTMachineItemHandler
 
-    fun createTank(callback: () -> Unit): HTMachineFluidTank = createTank(getDefaultTankCapacity(), callback)
+    /**
+     * @param capacity タンクの基本容量
+     * @param callback [FluidTank.onContentsChanged]で呼び出されるブロック
+     * @param filter 液体を搬入可能か判定するブロック
+     */
+    fun createTank(callback: () -> Unit, tagKey: TagKey<Fluid>, capacity: Int = getDefaultTankCapacity()): HTMachineFluidTank =
+        createTank(callback, { it.`is`(tagKey) }, capacity)
 
-    fun createTank(capacity: Int, callback: () -> Unit): HTMachineFluidTank
+    /**
+     * @param capacity タンクの基本容量
+     * @param callback [FluidTank.onContentsChanged]で呼び出されるブロック
+     * @param filter 液体を搬入可能か判定するブロック
+     */
+    fun createTank(
+        callback: () -> Unit,
+        filter: (FluidStack) -> Boolean = constFunction2(true),
+        capacity: Int = getDefaultTankCapacity(),
+    ): HTMachineFluidTank
 
     /**
      * @see [HTStorageIO.wrapItemHandler]

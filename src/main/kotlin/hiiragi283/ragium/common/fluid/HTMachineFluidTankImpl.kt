@@ -6,9 +6,14 @@ import hiiragi283.ragium.common.init.RagiumEnchantments
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 
-internal class HTMachineFluidTankImpl(private val baseCapacity: Int, private val callback: () -> Unit) :
-    FluidTank(baseCapacity),
+internal class HTMachineFluidTankImpl(
+    private val callback: () -> Unit,
+    private val filter: (FluidStack) -> Boolean,
+    private val baseCapacity: Int,
+) : FluidTank(baseCapacity),
     HTMachineFluidTank {
+    override fun isFluidValid(stack: FluidStack): Boolean = filter(stack)
+
     override fun onContentsChanged() {
         callback()
     }

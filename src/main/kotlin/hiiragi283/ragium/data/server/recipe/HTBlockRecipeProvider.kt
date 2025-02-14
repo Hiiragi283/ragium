@@ -129,16 +129,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     //    Machines    //
 
     private fun registerAddons(output: RecipeOutput) {
-        // Catalyst Addon
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumBlocks.CATALYST_ADDON)
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .define('B', Items.ITEM_FRAME)
-            .unlockedBy("has_iron", has(HTTagPrefix.INGOT, VanillaMaterials.IRON))
-            .savePrefixed(output)
         // E.N.I.
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumBlocks.ENERGY_NETWORK_INTERFACE)

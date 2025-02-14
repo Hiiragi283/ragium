@@ -43,7 +43,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addBlock(RagiumBlocks.COPPER_DRUM, "銅のドラム")
 
-        addBlock(RagiumBlocks.CATALYST_ADDON, "触媒アドオン")
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         addBlock(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")
 

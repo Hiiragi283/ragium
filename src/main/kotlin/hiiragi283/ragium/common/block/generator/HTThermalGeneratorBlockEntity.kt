@@ -15,6 +15,8 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         state,
         HTMachineType.THERMAL_GENERATOR,
     ) {
+    override fun isFluidValid(stack: FluidStack): Boolean = stack.`is`(RagiumFluidTags.THERMAL_FUEL)
+
     override fun getFuelAmount(stack: FluidStack): Int = when {
         stack.`is`(RagiumFluidTags.THERMAL_FUEL) -> 100
         else -> 0

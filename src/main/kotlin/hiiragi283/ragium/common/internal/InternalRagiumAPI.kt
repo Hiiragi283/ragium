@@ -31,6 +31,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
@@ -67,7 +68,8 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun createItemHandler(size: Int, callback: () -> Unit): HTMachineItemHandler = HTMachineItemHandlerImpl(size, callback)
 
-    override fun createTank(capacity: Int, callback: () -> Unit): HTMachineFluidTank = HTMachineFluidTankImpl(capacity, callback)
+    override fun createTank(callback: () -> Unit, filter: (FluidStack) -> Boolean, capacity: Int): HTMachineFluidTank =
+        HTMachineFluidTankImpl(callback, filter, capacity)
 
     override fun wrapItemHandler(storageIO: HTStorageIO, handler: IItemHandlerModifiable): IItemHandlerModifiable =
         HTLimitedItemHandler(storageIO, handler)

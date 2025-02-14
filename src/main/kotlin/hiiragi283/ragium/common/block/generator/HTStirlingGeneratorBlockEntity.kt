@@ -25,6 +25,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
@@ -33,7 +34,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, HTMachineType.STIRLING_GENERATOR) {
     private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
-    private val fluidInput: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
+    private val fluidInput: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged, Tags.Fluids.WATER)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
         listOf(itemInput.createSlot(0), itemOutput.createSlot(0)),

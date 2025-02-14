@@ -3,9 +3,10 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
+import hiiragi283.ragium.api.extension.createEnchBook
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.map
 import hiiragi283.ragium.api.extension.modifyEnchantment
-import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import it.unimi.dsi.fastutil.objects.Object2IntMap
@@ -19,7 +20,6 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.EnchantedBookItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
@@ -82,7 +82,7 @@ class HTDisenchantingTableBlockEntity(pos: BlockPos, state: BlockState) :
         val requiredBooks: Int = holders.size
         if (bookInput.getStackInSlot(0).count < requiredBooks) return dropAll(level, pos)
         // Transfer enchantments
-        toolEnch.toList().map(EnchantedBookItem::createForEnchantment).forEach { stack: ItemStack ->
+        toolEnch.map(::createEnchBook).forEach { stack: ItemStack ->
             dropStackAt(level, pos.above(), stack)
         }
         // Decrement tickets

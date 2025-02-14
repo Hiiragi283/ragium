@@ -1,12 +1,14 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
-import it.unimi.dsi.fastutil.objects.Object2IntMap
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.EnchantedBookItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
@@ -14,6 +16,9 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 
 //    ItemStack    //
+
+fun createEnchBook(holder: Holder<Enchantment>, level: Int): ItemStack =
+    EnchantedBookItem.createForEnchantment(EnchantmentInstance(holder, level))
 
 fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int =
     provider?.getHolder(Registries.ENCHANTMENT, key)?.map(this::getEnchantmentLevel)?.orElse(0) ?: 0
@@ -25,12 +30,18 @@ fun ItemEnchantments.getLevel(key: ResourceKey<Enchantment>): Int {
     return provider1.getHolder(Registries.ENCHANTMENT, key).map(this::getLevel).orElse(0)
 }
 
-operator fun ItemEnchantments.get(holder: Holder<Enchantment>): Int = getLevel(holder)
+fun ItemEnchantments.getLevel(tagKey: TagKey<Enchantment>): Int {
+    val provider1: HolderLookup.Provider = RagiumAPI.getInstance().getCurrentLookup() ?: return 0
+    return provider1
+        .lookupOrThrow(Registries.ENCHANTMENT)
+        .get(tagKey)
+        .map { holderSet: HolderSet.Named<Enchantment> -> holderSet.map(this::getLevel) }
+        .map(List<Int>::max)
+        .orElse(0)
+}
 
-operator fun ItemEnchantments.contains(key: ResourceKey<Enchantment>): Boolean = key in keySet().map(Holder<Enchantment>::keyOrThrow)
-
-fun ItemEnchantments.toList(): List<EnchantmentInstance> =
-    entrySet().map { entry: Object2IntMap.Entry<Holder<Enchantment>> -> EnchantmentInstance(entry.key, entry.intValue) }
+fun <T : Any> ItemEnchantments.map(transform: (Holder<Enchantment>, Int) -> T): List<T> =
+    entrySet().map { (holder: Holder<Enchantment>, level: Int) -> transform(holder, level) }
 
 /**
  * この[ItemEnchantments]をコピーした新しいインスタンスを返します。

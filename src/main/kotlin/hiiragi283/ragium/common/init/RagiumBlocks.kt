@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
-import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
@@ -250,17 +249,6 @@ object RagiumBlocks {
     //    Utility    //
 
     @JvmField
-    val CATALYST_ADDON: DeferredBlock<HTEntityBlock> = register(
-        "catalyst_addon",
-        { prop: BlockBehaviour.Properties -> HTEntityBlock.of(::HTCatalystAddonBlockEntity, prop) },
-        blockProperty()
-            .mapColor(MapColor.COLOR_BLACK)
-            .strength(2f)
-            .sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops(),
-    )
-
-    @JvmField
     val ENERGY_NETWORK_INTERFACE: DeferredBlock<HTEnergyNetworkBlock> = register(
         "energy_network_interface",
         ::HTEnergyNetworkBlock,
@@ -284,7 +272,6 @@ object RagiumBlocks {
 
     @JvmField
     val ADDONS: List<DeferredBlock<out Block>> = listOf(
-        CATALYST_ADDON,
         ENERGY_NETWORK_INTERFACE,
         SLAG_COLLECTOR,
     )

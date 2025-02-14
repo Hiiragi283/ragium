@@ -200,7 +200,6 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
         registerHandlers(RagiumBlockEntityTypes.REFINERY)
 
-        registerHandlers(RagiumBlockEntityTypes.CATALYST_ADDON)
         registerHandlers(RagiumBlockEntityTypes.DRUM)
         registerHandlers(RagiumBlockEntityTypes.SLAG_COLLECTOR)
 

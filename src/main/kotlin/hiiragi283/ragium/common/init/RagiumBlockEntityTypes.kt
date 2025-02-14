@@ -2,17 +2,12 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.common.block.addon.HTCatalystAddonBlockEntity
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
-import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlockEntity
-import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
-import hiiragi283.ragium.common.block.machine.HTLookSpawnerBlockEntity
-import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
-import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
+import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.block.processor.*
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.registries.Registries
@@ -142,10 +137,6 @@ object RagiumBlockEntityTypes {
         register("refinery", ::HTRefineryBlockEntity, HTMachineType.REFINERY)
 
     //    Storage    //
-
-    @JvmField
-    val CATALYST_ADDON: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCatalystAddonBlockEntity>> =
-        register("catalyst_addon", ::HTCatalystAddonBlockEntity, RagiumBlocks.CATALYST_ADDON)
 
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =

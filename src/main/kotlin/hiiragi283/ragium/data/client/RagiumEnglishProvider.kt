@@ -43,7 +43,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addBlock(RagiumBlocks.COPPER_DRUM, "Copper Drum")
 
-        addBlock(RagiumBlocks.CATALYST_ADDON, "Catalyst Holder")
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         addBlock(RagiumBlocks.SLAG_COLLECTOR, "Slag Collector")
 

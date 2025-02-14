@@ -15,6 +15,9 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         state,
         HTMachineType.COMBUSTION_GENERATOR,
     ) {
+    override fun isFluidValid(stack: FluidStack): Boolean =
+        stack.`is`(RagiumFluidTags.NON_NITRO_FUEL) || stack.`is`(RagiumFluidTags.NITRO_FUEL)
+
     override fun getFuelAmount(stack: FluidStack): Int = when {
         stack.`is`(RagiumFluidTags.NON_NITRO_FUEL) -> 100
         stack.`is`(RagiumFluidTags.NITRO_FUEL) -> 10

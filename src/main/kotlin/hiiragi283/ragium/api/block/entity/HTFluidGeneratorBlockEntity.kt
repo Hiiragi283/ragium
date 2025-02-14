@@ -28,9 +28,11 @@ abstract class HTFluidGeneratorBlockEntity(
     state: BlockState,
     machineType: HTMachineType,
 ) : HTMachineBlockEntity(type, pos, state, machineType) {
-    private val tank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
+    private val tank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged, this::isFluidValid)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(tank))
+
+    abstract fun isFluidValid(stack: FluidStack): Boolean
 
     abstract fun getFuelAmount(stack: FluidStack): Int
 

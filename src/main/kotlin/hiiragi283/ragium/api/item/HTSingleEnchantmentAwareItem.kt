@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.item
 
 import hiiragi283.ragium.api.extension.copyAndEdit
-import hiiragi283.ragium.api.extension.get
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
@@ -27,7 +26,7 @@ interface HTSingleEnchantmentAwareItem : IItemExtension {
     override fun getAllEnchantments(stack: ItemStack, lookup: HolderLookup.RegistryLookup<Enchantment>): ItemEnchantments {
         var enchantments: ItemEnchantments = super.getAllEnchantments(stack, lookup)
         lookup.get(targetEnchantment).ifPresent { holder: Holder.Reference<Enchantment> ->
-            if (enchantments[holder] == 0) {
+            if (enchantments.getLevel(holder) == 0) {
                 enchantments = enchantments.copyAndEdit { set(holder, targetLevel) }
             }
         }
