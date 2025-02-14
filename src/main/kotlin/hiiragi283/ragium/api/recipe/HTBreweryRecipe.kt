@@ -3,10 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.recipe.base.HTItemResult
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
+import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.Holder
@@ -25,16 +22,15 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
 class HTBreweryRecipe(
     group: String,
-    val firstInput: SizedIngredient,
-    val secondInput: SizedIngredient,
-    val thirdInput: Optional<SizedIngredient>,
+    val firstInput: HTItemIngredient,
+    val secondInput: HTItemIngredient,
+    val thirdInput: Optional<HTItemIngredient>,
     private val potion: Holder<Potion>,
 ) : HTMachineRecipeBase(group) {
     companion object {
@@ -43,13 +39,13 @@ class HTBreweryRecipe(
             instance
                 .group(
                     HTRecipeCodecs.group(),
-                    SizedIngredient.FLAT_CODEC
+                    HTItemIngredient.CODEC
                         .fieldOf("first_item_input")
                         .forGetter(HTBreweryRecipe::firstInput),
-                    SizedIngredient.FLAT_CODEC
+                    HTItemIngredient.CODEC
                         .fieldOf("second_item_input")
                         .forGetter(HTBreweryRecipe::secondInput),
-                    SizedIngredient.FLAT_CODEC
+                    HTItemIngredient.CODEC
                         .optionalFieldOf("third_item_input")
                         .forGetter(HTBreweryRecipe::thirdInput),
                     Potion.CODEC
@@ -62,11 +58,11 @@ class HTBreweryRecipe(
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTBreweryRecipe> = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
             HTBreweryRecipe::getGroup,
-            SizedIngredient.STREAM_CODEC,
+            HTItemIngredient.STREAM_CODEC,
             HTBreweryRecipe::firstInput,
-            SizedIngredient.STREAM_CODEC,
+            HTItemIngredient.STREAM_CODEC,
             HTBreweryRecipe::secondInput,
-            ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
+            ByteBufCodecs.optional(HTItemIngredient.STREAM_CODEC),
             HTBreweryRecipe::thirdInput,
             ByteBufCodecs.holderRegistry(Registries.POTION),
             HTBreweryRecipe::potion,
@@ -80,9 +76,9 @@ class HTBreweryRecipe(
     override val itemResults: List<HTItemResult> = listOf(PotionResult(potion))
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
-        val bool1: Boolean = this.firstInput.test(input.getItem(0))
-        val bool2: Boolean = this.secondInput.test(input.getItem(1))
-        val bool3: Boolean = this.thirdInput.map { it.test(input.getItem(2)) }.orElse(true)
+        val bool1: Boolean = this.firstInput.test(input, 0)
+        val bool2: Boolean = this.secondInput.test(input, 1)
+        val bool3: Boolean = this.thirdInput.map { it.test(input, 2) }.orElse(true)
         val bool4: Boolean = WATER_INGREDIENT.test(input.getFluid(0))
         return bool1 && bool2 && bool3 && bool4
     }

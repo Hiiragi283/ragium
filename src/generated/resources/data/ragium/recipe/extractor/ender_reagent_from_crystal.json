@@ -1,7 +1,6 @@
 {
   "type": "ragium:extractor",
   "item_input": {
-    "count": 1,
     "item": "minecraft:end_crystal"
   },
   "item_output": {

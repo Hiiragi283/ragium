@@ -210,7 +210,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         // Ragi Ticket
         HTInfuserRecipeBuilder()
             .itemInput(Items.PAPER)
-            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION)
+            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION, FluidType.BUCKET_VOLUME / 8)
             .itemOutput(RagiumItems.RAGI_TICKET)
             .save(output)
     }
@@ -219,7 +219,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         fun circuit(
             circuit: ItemLike,
             subMetal: HTMaterialKey,
-            dopant: Ingredient,
+            dopant: ItemLike,
             lens: ItemLike,
         ) {
             // Assembler
@@ -242,25 +242,25 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
         circuit(
             RagiumItems.BASIC_CIRCUIT,
             VanillaMaterials.COPPER,
-            Ingredient.of(Tags.Items.DUSTS_REDSTONE),
+            Items.REDSTONE,
             RagiumItems.REDSTONE_LENS,
         )
         circuit(
             RagiumItems.ADVANCED_CIRCUIT,
             VanillaMaterials.GOLD,
-            Ingredient.of(RagiumItems.GLOW_REAGENT),
+            RagiumItems.GLOW_REAGENT,
             RagiumItems.GLOW_LENS,
         )
         circuit(
             RagiumItems.ELITE_CIRCUIT,
             CommonMaterials.ALUMINUM,
-            Ingredient.of(RagiumItems.PRISMARINE_REAGENT),
+            RagiumItems.PRISMARINE_REAGENT,
             RagiumItems.PRISMARINE_LENS,
         )
         circuit(
             RagiumItems.ULTIMATE_CIRCUIT,
             RagiumMaterials.RAGIUM,
-            Ingredient.of(RagiumItems.ENDER_REAGENT),
+            RagiumItems.ENDER_REAGENT,
             RagiumItems.MAGICAL_LENS,
         )
 

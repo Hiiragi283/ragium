@@ -7,7 +7,6 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import java.util.Optional
 
 /**
@@ -15,34 +14,34 @@ import java.util.Optional
  */
 abstract class HTMultiItemRecipe(
     group: String,
-    val firstInput: SizedIngredient,
-    val secondInput: SizedIngredient,
-    val thirdInput: Optional<SizedIngredient>,
+    val firstInput: HTItemIngredient,
+    val secondInput: HTItemIngredient,
+    val thirdInput: Optional<HTItemIngredient>,
     itemResult: HTItemResult,
 ) : HTMachineRecipeBase(group) {
     override val itemResults: List<HTItemResult> = listOf(itemResult)
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
-        val bool1: Boolean = this.firstInput.test(input.getItem(0))
-        val bool2: Boolean = this.secondInput.test(input.getItem(1))
-        val bool3: Boolean = this.thirdInput.map { it.test(input.getItem(2)) }.orElse(true)
+        val bool1: Boolean = this.firstInput.test(input, 0)
+        val bool2: Boolean = this.secondInput.test(input, 1)
+        val bool3: Boolean = this.thirdInput.map { it.test(input, 2) }.orElse(true)
         return bool1 && bool2 && bool3
     }
 
     //    Serializer    //
 
     class Serializer<T : HTMultiItemRecipe>(
-        private val factory: (String, SizedIngredient, SizedIngredient, Optional<SizedIngredient>, HTItemResult) -> T,
+        private val factory: (String, HTItemIngredient, HTItemIngredient, Optional<HTItemIngredient>, HTItemResult) -> T,
     ) : RecipeSerializer<T> {
         private val codec: MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
                     HTRecipeCodecs.group(),
-                    SizedIngredient.FLAT_CODEC.fieldOf("first_item_input").forGetter(HTMultiItemRecipe::firstInput),
-                    SizedIngredient.FLAT_CODEC
+                    HTItemIngredient.CODEC.fieldOf("first_item_input").forGetter(HTMultiItemRecipe::firstInput),
+                    HTItemIngredient.CODEC
                         .fieldOf("second_item_input")
                         .forGetter(HTMultiItemRecipe::secondInput),
-                    SizedIngredient.FLAT_CODEC
+                    HTItemIngredient.CODEC
                         .optionalFieldOf("third_item_input")
                         .forGetter(HTMultiItemRecipe::thirdInput),
                     HTRecipeCodecs.itemResult(),
@@ -52,11 +51,11 @@ abstract class HTMultiItemRecipe(
         private val streamCodec: StreamCodec<RegistryFriendlyByteBuf, T> = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
             HTMultiItemRecipe::getGroup,
-            SizedIngredient.STREAM_CODEC,
+            HTItemIngredient.STREAM_CODEC,
             HTMultiItemRecipe::firstInput,
-            SizedIngredient.STREAM_CODEC,
+            HTItemIngredient.STREAM_CODEC,
             HTMultiItemRecipe::secondInput,
-            ByteBufCodecs.optional(SizedIngredient.STREAM_CODEC),
+            ByteBufCodecs.optional(HTItemIngredient.STREAM_CODEC),
             HTMultiItemRecipe::thirdInput,
             HTItemResult.STREAM_CODEC,
             { it.itemResults[0] },

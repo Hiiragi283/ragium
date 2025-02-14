@@ -5,7 +5,6 @@
     "tag": "c:hydrofluoric_acid"
   },
   "item_input": {
-    "count": 1,
     "tag": "c:dusts/aluminum"
   },
   "item_output": {

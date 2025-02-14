@@ -9,7 +9,6 @@
     "id": "minecraft:water"
   },
   "item_input": {
-    "count": 1,
     "tag": "c:dusts/bauxite"
   },
   "item_output": {

@@ -5,7 +5,6 @@
     "tag": "c:plant_oil"
   },
   "item_input": {
-    "count": 1,
     "item": "ragium:alkali_reagent"
   },
   "item_output": {

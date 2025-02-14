@@ -56,7 +56,7 @@ class HTChemicalRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTC
         builder
             .addInputSlot(getPosition(x), getPosition(y))
             .setStandardSlotBackground()
-            .addIngredients(recipe.itemInputs.getOrNull(index))
+        // .addIngredients(recipe.itemInputs.getOrNull(index))
     }
 
     private fun addCatalyst(builder: IRecipeLayoutBuilder, recipe: HTChemicalRecipe, y: Int) {

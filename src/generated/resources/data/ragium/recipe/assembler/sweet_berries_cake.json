@@ -1,7 +1,6 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 1,
     "item": "ragium:sponge_cake"
   },
   "item_output": {

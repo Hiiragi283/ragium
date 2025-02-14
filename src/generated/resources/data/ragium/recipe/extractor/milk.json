@@ -5,7 +5,6 @@
     "id": "minecraft:milk"
   },
   "item_input": {
-    "count": 1,
     "item": "minecraft:milk_bucket"
   },
   "item_output": {

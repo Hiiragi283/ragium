@@ -1,7 +1,6 @@
 {
   "type": "ragium:blast_furnace",
   "first_item_input": {
-    "count": 1,
     "tag": "c:ingots/iron"
   },
   "item_output": {
@@ -9,7 +8,6 @@
     "item": "ragium:steel_ingot"
   },
   "second_item_input": {
-    "count": 1,
     "tag": "c:coal_coke"
   }
 }

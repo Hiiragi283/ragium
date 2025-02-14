@@ -5,7 +5,6 @@
     "id": "ragium:crude_oil"
   },
   "item_input": {
-    "count": 1,
     "tag": "minecraft:soul_fire_base_blocks"
   },
   "item_output": {

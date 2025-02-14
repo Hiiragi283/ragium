@@ -67,4 +67,7 @@ object RagiumItemTags {
 
     @JvmField
     val END_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/end"))
+
+    @JvmField
+    val IGNORED_IN_INGREDIENT: TagKey<Item> = itemTagKey(RagiumAPI.id("ignored_in_ingredient"))
 }

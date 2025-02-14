@@ -1,7 +1,6 @@
 {
   "type": "ragium:laser_assembly",
   "item_input": {
-    "count": 1,
     "tag": "c:storage_blocks/bone_meal"
   },
   "item_output": {

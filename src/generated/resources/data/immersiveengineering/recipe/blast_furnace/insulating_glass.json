@@ -16,7 +16,6 @@
     "item": "immersiveengineering:insulating_glass"
   },
   "second_item_input": {
-    "count": 1,
     "tag": "c:dusts/iron"
   }
 }

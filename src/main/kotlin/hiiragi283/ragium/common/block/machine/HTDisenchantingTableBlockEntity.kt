@@ -9,6 +9,8 @@ import hiiragi283.ragium.api.extension.map
 import hiiragi283.ragium.api.extension.modifyEnchantment
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.inventory.HTDisenchanterContainerMenu
 import it.unimi.dsi.fastutil.objects.Object2IntMap
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -27,6 +29,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTDisenchantingTableBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.DISENCHANTING_TABLE, pos, state),
@@ -109,9 +112,13 @@ class HTDisenchantingTableBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    MenuProvider    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        HTDisenchanterContainerMenu(
+            containerId,
+            playerInventory,
+            blockPos,
+            CombinedInvWrapper(ticketInput, toolInput, bookInput)
+        )
 
-    override fun getDisplayName(): Component {
-        TODO("Not yet implemented")
-    }
+    override fun getDisplayName(): Component = RagiumBlocks.DISENCHANTING_TABLE.get().name
 }

@@ -7,7 +7,6 @@
   ],
   "type": "ragium:grinder",
   "item_input": {
-    "count": 1,
     "item": "farmersdelight:rice_panicle"
   },
   "item_output": {

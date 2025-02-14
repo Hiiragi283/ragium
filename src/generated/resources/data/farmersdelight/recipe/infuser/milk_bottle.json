@@ -11,7 +11,6 @@
     "tag": "c:milk"
   },
   "item_input": {
-    "count": 1,
     "item": "minecraft:glass_bottle"
   },
   "item_output": {

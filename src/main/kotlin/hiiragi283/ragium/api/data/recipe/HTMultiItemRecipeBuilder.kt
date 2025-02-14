@@ -2,19 +2,18 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTAssemblerRecipe
 import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.*
 
 class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
     override val prefix: String,
-    private val factory: (String, SizedIngredient, SizedIngredient, Optional<SizedIngredient>, HTItemResult) -> T,
+    private val factory: (String, HTItemIngredient, HTItemIngredient, Optional<HTItemIngredient>, HTItemResult) -> T,
 ) : HTMachineRecipeBuilderBase<HTMultiItemRecipeBuilder<T>, T>() {
     companion object {
         @JvmStatic
@@ -26,22 +25,22 @@ class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
     }
 
     private var group: String? = null
-    private lateinit var firstInput: SizedIngredient
-    private lateinit var secondInput: SizedIngredient
-    private var thirdInput: SizedIngredient? = null
+    private lateinit var firstInput: HTItemIngredient
+    private lateinit var secondInput: HTItemIngredient
+    private var thirdInput: HTItemIngredient? = null
     private lateinit var output: HTItemResult
 
-    override fun itemInput(ingredient: Ingredient, count: Int): HTMultiItemRecipeBuilder<T> = apply {
+    override fun itemInput(ingredient: HTItemIngredient): HTMultiItemRecipeBuilder<T> = apply {
         if (!::firstInput.isInitialized) {
-            this.firstInput = SizedIngredient(ingredient, count)
+            this.firstInput = ingredient
             return@apply
         }
         if (!::secondInput.isInitialized) {
-            this.secondInput = SizedIngredient(ingredient, count)
+            this.secondInput = ingredient
             return@apply
         }
         check(thirdInput == null) { "Input is already initialized" }
-        this.thirdInput = SizedIngredient(ingredient, count)
+        this.thirdInput = ingredient
     }
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTMultiItemRecipeBuilder<T> = throw UnsupportedOperationException()

@@ -58,7 +58,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         // Insert outputs
         recipe.insertOutputs(enchantments, itemOutput, outputTank, level, pos)
         // Decrement input
-        itemInput.getStackInSlot(0).shrink(recipe.input.count())
+        itemInput.getStackInSlot(0).shrink(recipe.input.count)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

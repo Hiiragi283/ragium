@@ -9,7 +9,6 @@
     "id": "ragium:nitro_fuel"
   },
   "item_input": {
-    "count": 1,
     "item": "ragium:creeper_reagent"
   }
 }

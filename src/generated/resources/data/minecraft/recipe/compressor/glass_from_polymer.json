@@ -4,7 +4,6 @@
     "tag": "c:glass_blocks"
   },
   "item_input": {
-    "count": 1,
     "item": "ragium:polymer_resin"
   },
   "item_output": {

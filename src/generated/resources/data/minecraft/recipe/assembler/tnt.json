@@ -10,7 +10,6 @@
     "item": "minecraft:tnt"
   },
   "second_item_input": {
-    "count": 1,
     "item": "ragium:creeper_reagent"
   }
 }

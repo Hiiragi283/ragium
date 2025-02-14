@@ -7,7 +7,6 @@
   ],
   "type": "ragium:grinder",
   "item_input": {
-    "count": 1,
     "tag": "c:coal_coke"
   },
   "item_output": {

@@ -22,6 +22,10 @@ object RagiumMenuTypes {
     ): DeferredHolder<MenuType<*>, HTMachineMenuType<T>> = REGISTER.register(path) { _: ResourceLocation -> HTMachineMenuType(factory) }
 
     @JvmField
+    val DISENCHANTER: DeferredHolder<MenuType<*>, HTMachineMenuType<HTDisenchanterContainerMenu>> =
+        registerMachine("disenchanter", ::HTDisenchanterContainerMenu)
+
+    @JvmField
     val EXTRACTOR: DeferredHolder<MenuType<*>, HTMachineMenuType<HTExtractorContainerMenu>> =
         registerMachine("extractor", ::HTExtractorContainerMenu)
 

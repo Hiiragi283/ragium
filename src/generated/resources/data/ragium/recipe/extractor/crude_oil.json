@@ -5,7 +5,6 @@
     "id": "ragium:crude_oil"
   },
   "item_input": {
-    "count": 1,
     "item": "ragium:crude_oil_bucket"
   },
   "item_output": {

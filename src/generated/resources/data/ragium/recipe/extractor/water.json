@@ -5,7 +5,6 @@
     "id": "minecraft:water"
   },
   "item_input": {
-    "count": 1,
     "tag": "c:buckets/water"
   },
   "item_output": {

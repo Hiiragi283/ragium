@@ -1,7 +1,6 @@
 {
   "type": "ragium:grinder",
   "item_input": {
-    "count": 1,
     "item": "minecraft:snow_block"
   },
   "item_output": {

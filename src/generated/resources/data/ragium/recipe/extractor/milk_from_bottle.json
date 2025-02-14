@@ -11,7 +11,6 @@
     "id": "minecraft:milk"
   },
   "item_input": {
-    "count": 1,
     "item": "farmersdelight:milk_bottle"
   },
   "item_output": {

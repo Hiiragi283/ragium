@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.recipe.HTBreweryRecipe
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
 import hiiragi283.ragium.api.recipe.HTMixerRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -40,7 +41,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import java.util.*
@@ -101,8 +101,8 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
                 potion.idOrThrow.withPrefix("brewery/"),
                 HTBreweryRecipe(
                     "",
-                    HTIngredientBuilder.item(Tags.Items.CROPS_NETHER_WART),
-                    HTIngredientBuilder.item(input),
+                    HTItemIngredient.of(Tags.Items.CROPS_NETHER_WART),
+                    HTItemIngredient.of(input),
                     Optional.empty(),
                     potion,
                 ),
@@ -115,9 +115,9 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
                 potion.idOrThrow.withPrefix("brewery/"),
                 HTBreweryRecipe(
                     "",
-                    HTIngredientBuilder.item(Tags.Items.CROPS_NETHER_WART),
-                    HTIngredientBuilder.item(input),
-                    Optional.of(HTIngredientBuilder.item(Items.FERMENTED_SPIDER_EYE)),
+                    HTItemIngredient.of(Tags.Items.CROPS_NETHER_WART),
+                    HTItemIngredient.of(input),
+                    Optional.of(HTItemIngredient.of(Items.FERMENTED_SPIDER_EYE)),
                     potion,
                 ),
                 null,
@@ -175,7 +175,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     //    Enchanter    //
 
     private fun enchanter(output: RecipeOutput, lookup: HolderLookup.RegistryLookup<Enchantment>) {
-        fun register(enchantment: ResourceKey<Enchantment>, input: SizedIngredient) {
+        fun register(enchantment: ResourceKey<Enchantment>, input: HTItemIngredient) {
             output.accept(
                 enchantment.location().withPrefix("enchanter/"),
                 HTEnchanterRecipe(
@@ -190,16 +190,16 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // for Armors
         // for Swords
-        register(Enchantments.SHARPNESS, HTIngredientBuilder.item(HTTagPrefix.GEM, VanillaMaterials.QUARTZ, 64))
-        register(Enchantments.BANE_OF_ARTHROPODS, HTIngredientBuilder.item(Items.SPIDER_EYE, 16))
-        register(Enchantments.LOOTING, HTIngredientBuilder.item(HTTagPrefix.GEM, VanillaMaterials.EMERALD, 16))
+        register(Enchantments.SHARPNESS, HTItemIngredient.of(HTTagPrefix.GEM, VanillaMaterials.QUARTZ, 64))
+        register(Enchantments.BANE_OF_ARTHROPODS, HTItemIngredient.of(Items.SPIDER_EYE, 16))
+        register(Enchantments.LOOTING, HTItemIngredient.of(HTTagPrefix.GEM, VanillaMaterials.EMERALD, 16))
         // for Mining Tools
         // for Bows
         // for Tridents
-        register(Enchantments.LOYALTY, HTIngredientBuilder.item(Items.LEAD, 8))
-        register(Enchantments.IMPALING, HTIngredientBuilder.item(RagiumItems.PRISMARINE_REAGENT, 64))
-        register(Enchantments.RIPTIDE, HTIngredientBuilder.item(Items.HEART_OF_THE_SEA))
-        register(Enchantments.CHANNELING, HTIngredientBuilder.item(Items.LIGHTNING_ROD, 64))
+        register(Enchantments.LOYALTY, HTItemIngredient.of(Items.LEAD, 8))
+        register(Enchantments.IMPALING, HTItemIngredient.of(RagiumItems.PRISMARINE_REAGENT, 64))
+        register(Enchantments.RIPTIDE, HTItemIngredient.of(Items.HEART_OF_THE_SEA))
+        register(Enchantments.CHANNELING, HTItemIngredient.of(Items.LIGHTNING_ROD, 64))
         // for Crossbows
         // for Maces
     }

@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
@@ -20,7 +21,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 import java.util.function.Supplier
 
@@ -60,10 +60,10 @@ abstract class HTMultiItemMachineBlockEntity(
         val output: ItemStack = recipe.itemResults[0].getItem(enchantments)
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         itemOutput.insertOrDrop(level, pos.above(), output)
-        itemInput.consumeItem(0, recipe.firstInput.count(), false)
-        itemInput.consumeItem(1, recipe.secondInput.count(), false)
-        recipe.thirdInput.ifPresent { third: SizedIngredient ->
-            itemInput.consumeItem(2, third.count(), false)
+        itemInput.consumeItem(0, recipe.firstInput.count, false)
+        itemInput.consumeItem(1, recipe.secondInput.count, false)
+        recipe.thirdInput.ifPresent { third: HTItemIngredient ->
+            itemInput.consumeItem(2, third.count, false)
         }
     }
 

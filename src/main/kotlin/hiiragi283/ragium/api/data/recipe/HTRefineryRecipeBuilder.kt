@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -17,7 +17,7 @@ class HTRefineryRecipeBuilder : HTMachineRecipeBuilderBase<HTRefineryRecipeBuild
     private var itemOutput: HTItemResult? = null
     private var fluidOutput: FluidStack? = null
 
-    override fun itemInput(ingredient: Ingredient, count: Int): HTRefineryRecipeBuilder = throw UnsupportedOperationException()
+    override fun itemInput(ingredient: HTItemIngredient): HTRefineryRecipeBuilder = throw UnsupportedOperationException()
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTRefineryRecipeBuilder = apply {
         check(!::input.isInitialized) { "Input is already initialized" }

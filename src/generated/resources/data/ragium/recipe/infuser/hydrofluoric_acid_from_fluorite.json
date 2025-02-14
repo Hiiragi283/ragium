@@ -9,7 +9,6 @@
     "id": "ragium:hydrofluoric_acid"
   },
   "item_input": {
-    "count": 1,
     "tag": "c:gems/fluorite"
   }
 }

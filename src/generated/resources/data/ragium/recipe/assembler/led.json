@@ -1,7 +1,6 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 1,
     "item": "ragium:glow_reagent"
   },
   "item_output": {
@@ -10,11 +9,9 @@
     "item": "ragium:led"
   },
   "second_item_input": {
-    "count": 1,
     "tag": "c:ingots/copper"
   },
   "third_item_input": {
-    "count": 1,
     "tag": "c:glass_blocks/colorless"
   }
 }

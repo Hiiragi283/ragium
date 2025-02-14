@@ -9,7 +9,6 @@
     "id": "ragium:sulfuric_acid"
   },
   "item_input": {
-    "count": 1,
     "item": "ragium:blaze_reagent"
   }
 }

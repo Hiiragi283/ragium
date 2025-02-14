@@ -86,7 +86,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                 // Drop output
                 ItemHandlerHelper.giveItemToPlayer(player, recipe.assemble(input, level.registryAccess()))
                 // Shrink input
-                stackIn.shrink(recipe.input.count())
+                stackIn.shrink(recipe.input.count)
                 // Play sound
                 level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS)
             }.onFailure { _: Throwable ->

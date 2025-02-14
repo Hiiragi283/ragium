@@ -5,7 +5,6 @@
     "id": "ragium:honey"
   },
   "item_input": {
-    "count": 1,
     "item": "minecraft:honeycomb_block"
   },
   "item_output": {

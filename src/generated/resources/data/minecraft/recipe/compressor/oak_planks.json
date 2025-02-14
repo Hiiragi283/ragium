@@ -4,7 +4,6 @@
     "tag": "minecraft:planks"
   },
   "item_input": {
-    "count": 1,
     "tag": "c:dusts/wood"
   },
   "item_output": {

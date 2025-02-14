@@ -1,7 +1,6 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 1,
     "item": "minecraft:skeleton_skull"
   },
   "item_output": {

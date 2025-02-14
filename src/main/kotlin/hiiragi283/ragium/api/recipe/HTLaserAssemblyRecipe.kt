@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -7,12 +8,11 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import java.util.*
 
 class HTLaserAssemblyRecipe(
     group: String,
-    input: SizedIngredient,
+    input: HTItemIngredient,
     catalyst: Optional<Ingredient>,
     itemResult: HTItemResult,
 ) : HTSingleItemRecipe(group, input, catalyst, itemResult) {

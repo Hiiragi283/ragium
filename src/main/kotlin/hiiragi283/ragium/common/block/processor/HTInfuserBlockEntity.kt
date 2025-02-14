@@ -66,7 +66,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         // Insert outputs
         recipe.insertOutputs(enchantments, itemOutput, outputTank, level, pos)
         // Decrement input
-        itemInput.getStackInSlot(0).shrink(recipe.itemInput.count())
+        itemInput.getStackInSlot(0).shrink(recipe.itemInput.count)
         inputTank.drain(recipe.fluidInput.amount(), IFluidHandler.FluidAction.EXECUTE)
     }
 

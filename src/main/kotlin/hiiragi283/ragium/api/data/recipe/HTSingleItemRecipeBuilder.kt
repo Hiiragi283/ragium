@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTLaserAssemblyRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import net.minecraft.data.recipes.RecipeBuilder
@@ -11,14 +12,13 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.*
 
 class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     override val prefix: String,
-    private val factory: (String, SizedIngredient, Optional<Ingredient>, HTItemResult) -> T,
+    private val factory: (String, HTItemIngredient, Optional<Ingredient>, HTItemResult) -> T,
 ) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>, T>() {
     companion object {
         @JvmStatic
@@ -32,13 +32,13 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     }
 
     private var group: String? = null
-    private lateinit var input: SizedIngredient
+    private lateinit var input: HTItemIngredient
     private lateinit var output: HTItemResult
     private var catalyst: Ingredient? = null
 
-    override fun itemInput(ingredient: Ingredient, count: Int): HTSingleItemRecipeBuilder<T> = apply {
+    override fun itemInput(ingredient: HTItemIngredient): HTSingleItemRecipeBuilder<T> = apply {
         check(!::input.isInitialized) { "Input is already initialized" }
-        input = SizedIngredient(ingredient, count)
+        input = ingredient
     }
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()

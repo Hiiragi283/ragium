@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
@@ -22,7 +21,7 @@ object HTRecipeCodecs {
         HTItemResult.CODEC.fieldOf("item_output").forGetter { it.itemResults[0] }
 
     @JvmField
-    val ITEM_INPUT: MapCodec<SizedIngredient> = SizedIngredient.FLAT_CODEC.fieldOf("item_input")
+    val ITEM_INPUT: MapCodec<HTItemIngredient> = HTItemIngredient.CODEC.fieldOf("item_input")
 
     @JvmField
     val FLUID_INPUT: MapCodec<SizedFluidIngredient> = SizedFluidIngredient.FLAT_CODEC.fieldOf("fluid_input")

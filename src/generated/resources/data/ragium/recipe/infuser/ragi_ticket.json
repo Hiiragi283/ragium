@@ -1,11 +1,10 @@
 {
   "type": "ragium:infuser",
   "fluid_input": {
-    "amount": 1000,
+    "amount": 125,
     "tag": "c:ragium_solution"
   },
   "item_input": {
-    "count": 1,
     "item": "minecraft:paper"
   },
   "item_output": {

@@ -5,7 +5,6 @@
     "id": "ragium:slime"
   },
   "item_input": {
-    "count": 1,
     "tag": "c:slime_balls"
   }
 }

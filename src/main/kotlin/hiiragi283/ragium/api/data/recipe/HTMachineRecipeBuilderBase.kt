@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.common.init.RagiumItems
@@ -15,14 +16,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
@@ -32,17 +31,15 @@ import java.util.function.Supplier
 abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, R : HTMachineRecipeBase> : RecipeBuilder {
     //    Item Input    //
 
-    fun itemInput(item: ItemLike, count: Int = 1): T = itemInput(Ingredient.of(item), count)
+    fun itemInput(item: ItemLike, count: Int = 1): T = itemInput(HTItemIngredient.of(item, count))
 
     fun itemInput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): T = itemInput(prefix.createTag(material), count)
 
-    fun itemInput(tagKey: TagKey<Item>, count: Int = 1): T = itemInput(Ingredient.of(tagKey), count)
+    fun itemInput(tagKey: TagKey<Item>, count: Int = 1): T = itemInput(HTItemIngredient.of(tagKey, count))
 
-    fun itemInput(ingredient: ICustomIngredient, count: Int = 1): T = itemInput(ingredient.toVanilla(), count)
+    fun itemInput(ingredient: ICustomIngredient, count: Int = 1): T = itemInput(HTItemIngredient.of(ingredient, count))
 
-    fun itemInput(ingredient: SizedIngredient): T = itemInput(ingredient.ingredient(), ingredient.count())
-
-    abstract fun itemInput(ingredient: Ingredient, count: Int = 1): T
+    abstract fun itemInput(ingredient: HTItemIngredient): T
 
     //    Fluid Input    //
 

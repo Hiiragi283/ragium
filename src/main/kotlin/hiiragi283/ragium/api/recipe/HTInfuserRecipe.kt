@@ -2,10 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemResult
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
+import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -14,14 +11,13 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
 class HTInfuserRecipe(
     group: String,
-    val itemInput: SizedIngredient,
+    val itemInput: HTItemIngredient,
     val fluidInput: SizedFluidIngredient,
     itemOutput: Optional<HTItemResult>,
     fluidOutput: Optional<FluidStack>,
@@ -44,7 +40,7 @@ class HTInfuserRecipe(
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTInfuserRecipe> = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
             HTInfuserRecipe::getGroup,
-            SizedIngredient.STREAM_CODEC,
+            HTItemIngredient.STREAM_CODEC,
             HTInfuserRecipe::itemInput,
             SizedFluidIngredient.STREAM_CODEC,
             HTInfuserRecipe::fluidInput,
@@ -57,7 +53,7 @@ class HTInfuserRecipe(
     }
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean =
-        itemInput.test(input.getItem(0)) && fluidInput.test(input.getFluid(0))
+        itemInput.test(input, 0) && fluidInput.test(input.getFluid(0))
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INFUSER.get()
 

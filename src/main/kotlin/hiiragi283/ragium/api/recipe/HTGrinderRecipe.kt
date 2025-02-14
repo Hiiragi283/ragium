@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
@@ -9,12 +10,11 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import java.util.*
 
 class HTGrinderRecipe(
     group: String,
-    input: SizedIngredient,
+    input: HTItemIngredient,
     catalyst: Optional<Ingredient>,
     itemResult: HTItemResult,
 ) : HTSingleItemRecipe(group, input, catalyst, itemResult) {
@@ -38,7 +38,7 @@ class HTGrinderRecipe(
 
     override val itemResults: List<HTItemResult> = listOf(itemResult)
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input.getItem(0))
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input, 0)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.GRINDER.get()
 

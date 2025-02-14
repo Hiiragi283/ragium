@@ -5,7 +5,6 @@
     "tag": "c:milk"
   },
   "item_input": {
-    "count": 1,
     "item": "minecraft:bucket"
   },
   "item_output": {

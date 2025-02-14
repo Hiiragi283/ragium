@@ -1,7 +1,6 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 1,
     "tag": "c:crops/pumpkin"
   },
   "item_output": {
@@ -10,7 +9,6 @@
     "item": "minecraft:pumpkin_pie"
   },
   "second_item_input": {
-    "count": 1,
     "item": "ragium:sponge_cake"
   }
 }

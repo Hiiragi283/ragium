@@ -58,6 +58,6 @@ fun ItemStack.modifyEnchantment(action: (ItemEnchantments.Mutable) -> ItemEnchan
     val type: DataComponentType<ItemEnchantments> = EnchantmentHelper.getComponentType(this)
     val current: ItemEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(this)
     val newEnch: ItemEnchantments? = action(ItemEnchantments.Mutable(current))
-    if (newEnch == null) this.remove(type) else this.set(type, newEnch)
+    this.set(type, newEnch)
     return this
 }

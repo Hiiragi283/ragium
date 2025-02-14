@@ -1,7 +1,6 @@
 {
   "type": "ragium:extractor",
   "item_input": {
-    "count": 1,
     "tag": "c:ender_pearls"
   },
   "item_output": {

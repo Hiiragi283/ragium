@@ -57,7 +57,7 @@ abstract class HTSingleItemMachineBlockEntity(
         // Insert outputs
         itemOutput.insertOrDrop(level, pos.above(), output)
         // Decrement input
-        itemInput.getStackInSlot(0).shrink(recipe.input.count())
+        itemInput.getStackInSlot(0).shrink(recipe.input.count)
     }
 
     final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =

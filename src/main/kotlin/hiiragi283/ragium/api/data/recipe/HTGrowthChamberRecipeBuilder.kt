@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemResult
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
@@ -15,11 +16,11 @@ class HTGrowthChamberRecipeBuilder : HTMachineRecipeBuilderBase<HTGrowthChamberR
     private lateinit var crop: HTItemResult
     private var waterAmount: Int = 100
 
-    override fun itemInput(ingredient: Ingredient, count: Int): HTGrowthChamberRecipeBuilder = apply {
+    override fun itemInput(ingredient: HTItemIngredient): HTGrowthChamberRecipeBuilder = apply {
         if (::seed.isInitialized) {
-            soil = ingredient
+            soil = ingredient.ingredient
         } else {
-            seed = ingredient
+            seed = ingredient.ingredient
         }
     }
 
