@@ -117,7 +117,7 @@ class HTDisenchantingTableBlockEntity(pos: BlockPos, state: BlockState) :
             containerId,
             playerInventory,
             blockPos,
-            CombinedInvWrapper(ticketInput, toolInput, bookInput)
+            CombinedInvWrapper(ticketInput, toolInput, bookInput),
         )
 
     override fun getDisplayName(): Component = RagiumBlocks.DISENCHANTING_TABLE.get().name

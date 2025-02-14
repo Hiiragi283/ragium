@@ -15,8 +15,6 @@
   "slots": [
     "any"
   ],
-  "supported_items": {
-    "type": "neoforge:any"
-  },
+  "supported_items": "#ragium:enchantable/capacity",
   "weight": 1
 }

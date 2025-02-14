@@ -66,7 +66,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTOreVariant.NETHER, "Nether %s Ore")
         add(HTOreVariant.END, "End %s Ore")
         // Enchantment
-        addEnchantment(RagiumEnchantments.CAPACITY, "Capacity")
+        addEnchantment(RagiumEnchantments.CAPACITY, "Capacity", "Increase the capacity of item or fluid storages")
         // Fluids
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.SNOW, "Powder Snow")

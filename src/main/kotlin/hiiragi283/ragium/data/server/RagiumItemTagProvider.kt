@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -172,5 +173,14 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.WIRE_MOLDS, RagiumItems.getPressMold(HTTagPrefix.WIRE))
 
         RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
+
+        buildList {
+            add(RagiumBlocks.MANUAL_GRINDER)
+            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+
+            add(RagiumBlocks.COPPER_DRUM)
+
+            addAll(HTMachineType.getBlocks())
+        }.forEach { builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, it.asHolder()) }
     }
 }

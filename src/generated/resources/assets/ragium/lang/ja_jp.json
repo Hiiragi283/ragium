@@ -30,6 +30,7 @@
   "config.jade.plugin_ragium.error_message": "エラーメッセージ",
   "config.jade.plugin_ragium.machine_info": "機械の情報",
   "enchantment.ragium.capacity": "容量増加",
+  "enchantment.ragium.capacity.desc": "アイテムや液体ストレージの容量を拡張します",
   "fluid_type.ragium.biodiesel": "バイオディーゼル",
   "fluid_type.ragium.biomass": "バイオマス",
   "fluid_type.ragium.crimson_sap": "深紅の樹液",

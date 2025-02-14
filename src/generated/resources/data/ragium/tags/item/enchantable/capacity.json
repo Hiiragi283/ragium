@@ -1,0 +1,27 @@
+{
+  "values": [
+    "ragium:alchemical_brewery",
+    "ragium:arcane_enchanter",
+    "ragium:assembler",
+    "ragium:bedrock_miner",
+    "ragium:blast_furnace",
+    "ragium:combustion_generator",
+    "ragium:compressor",
+    "ragium:copper_drum",
+    "ragium:extractor",
+    "ragium:fisher",
+    "ragium:grinder",
+    "ragium:growth_chamber",
+    "ragium:infuser",
+    "ragium:laser_assembly",
+    "ragium:loot_spawner",
+    "ragium:manual_grinder",
+    "ragium:mixer",
+    "ragium:multi_smelter",
+    "ragium:primitive_blast_furnace",
+    "ragium:refinery",
+    "ragium:solar_generator",
+    "ragium:stirling_generator",
+    "ragium:thermal_generator"
+  ]
+}

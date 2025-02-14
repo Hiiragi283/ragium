@@ -72,6 +72,14 @@ object RagiumData {
                 provider,
             ),
         )
+
+        generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
+        generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
+
+        generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
+        generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
+        generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, helper))
+
         generator.addProvider(
             event.includeServer(),
             DatapackBuiltinEntriesProvider(
@@ -85,13 +93,6 @@ object RagiumData {
                 setOf(RagiumAPI.MOD_ID),
             ),
         )
-
-        generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
-        generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
-
-        generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
-        generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
-        generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, helper))
         // client
         generator.addProvider(event.includeClient(), ::RagiumEnglishProvider)
         generator.addProvider(event.includeClient(), ::RagiumJapaneseProvider)

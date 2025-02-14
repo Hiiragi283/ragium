@@ -30,6 +30,7 @@
   "config.jade.plugin_ragium.error_message": "Show Error Message",
   "config.jade.plugin_ragium.machine_info": "Show Machine Info",
   "enchantment.ragium.capacity": "Capacity",
+  "enchantment.ragium.capacity.desc": "Increase the capacity of item or fluid storages",
   "fluid_type.ragium.biodiesel": "Biodiesel",
   "fluid_type.ragium.biomass": "Biomass",
   "fluid_type.ragium.crimson_sap": "Crimson Sap",

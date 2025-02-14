@@ -1,13 +1,12 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.core.registries.BuiltInRegistries
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.enchantment.Enchantment
-import net.neoforged.neoforge.registries.holdersets.AnyHolderSet
 
 object RagiumEnchantments {
     @JvmField
@@ -26,7 +25,7 @@ object RagiumEnchantments {
             CAPACITY,
             Enchantment.enchantment(
                 Enchantment.definition(
-                    AnyHolderSet(BuiltInRegistries.ITEM.asLookup()),
+                    context.lookup(Registries.ITEM).getOrThrow(RagiumItemTags.CAPACITY_ENCHANTABLE),
                     1,
                     5,
                     Enchantment.constantCost(1),

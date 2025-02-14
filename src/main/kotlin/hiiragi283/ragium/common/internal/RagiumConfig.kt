@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.material.HTMaterialKey
 import net.neoforged.neoforge.common.ModConfigSpec
+import kotlin.math.abs
 
 @Suppress("DEPRECATION")
 internal object RagiumConfig {
@@ -32,7 +33,7 @@ internal object RagiumConfig {
         val value: Int = STIRLING_WATER_MODIFIER.get()
         return when {
             value > 0 -> burnTime * value
-            value < 0 -> burnTime / value
+            value < 0 -> burnTime / abs(value)
             else -> 0
         }
     }
@@ -45,7 +46,7 @@ internal object RagiumConfig {
         val value: Int = STIRLING_ASH_MODIFIER.get()
         return when {
             value > 0 -> burnTime * value
-            value < 0 -> burnTime / value
+            value < 0 -> burnTime / abs(value)
             else -> 0
         }
     }
@@ -58,7 +59,7 @@ internal object RagiumConfig {
         val value: Int = STIRLING_ASH_MODIFIER.get()
         return when {
             value > 0 -> burnTime * value
-            value < 0 -> burnTime / value
+            value < 0 -> burnTime / abs(value)
             else -> 0
         }
     }

@@ -26,8 +26,10 @@ fun LanguageProvider.addFluid(fluid: Supplier<out Fluid>, value: String) {
     add(fluid.get().fluidType.descriptionId, value)
 }
 
-fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String) {
-    add(Util.makeDescriptionId("enchantment", key.location()), value)
+fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String, desc: String) {
+    val translationKey: String = Util.makeDescriptionId("enchantment", key.location())
+    add(translationKey, value)
+    add("$translationKey.desc", desc)
 }
 
 fun LanguageProvider.add(machine: HTMachineType, value: String, desc: String = "") {
