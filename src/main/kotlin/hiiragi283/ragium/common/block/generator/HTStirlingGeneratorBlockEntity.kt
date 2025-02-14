@@ -92,7 +92,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 if (burnTime > 0) {
                     return Stirling(RagiumConfig.getStirlingEnergy(burnTime))
                 }
-                return Empty
+                return Empty(false)
             }
         }
 

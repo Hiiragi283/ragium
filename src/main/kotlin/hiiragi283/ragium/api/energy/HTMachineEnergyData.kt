@@ -7,10 +7,10 @@ interface HTMachineEnergyData {
 
     fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean
 
-    data object Empty : HTMachineEnergyData {
+    data class Empty(private val result: Boolean) : HTMachineEnergyData {
         override val amount: Int = 0
 
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean = false
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean = result
     }
 
     enum class Consume(override val amount: Int) : HTMachineEnergyData {
