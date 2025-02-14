@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -127,40 +128,23 @@ abstract class HTMachineBlockEntity(
         hitResult: BlockHitResult,
     ): InteractionResult {
         if (!level.isClientSide) {
-            // Toggle multiblock preview
-            if (player.isShiftKeyDown) {
-                showPreview = !showPreview
-                return InteractionResult.SUCCESS
-            }
             // Insert fluid from holding stack
             if (interactWithFluidStorage(player)) {
                 return InteractionResult.SUCCESS
             }
-            // Validate multiblock
-            val data: HTMultiblockData = collectData { player.displayClientMessage(it, true) }
-            when (data.result) {
-                TriState.FALSE -> return InteractionResult.PASS
-                else -> {
-                    // init multiblock data
-                    processData(data)
-                    // open machine screen
-                    if (hasMenu) {
-                        player.openMenu(this, pos)
-                    } else {
-                        return InteractionResult.PASS
-                    }
-                }
-            }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide)
+        return super.onRightClicked(state, level, pos, player, hitResult)
     }
 
     protected open val hasMenu: Boolean = true
 
-    protected fun checkMultiblockOrThrow() {
-        if (collectData().result == TriState.FALSE) {
+    protected fun validateMultiblock(controller: HTMultiblockController, player: Player?): Result<HTMultiblockData> = runCatching {
+        val data: HTMultiblockData =
+            controller.collectData { text: Component -> player?.displayClientMessage(text, true) }
+        if (data.result == TriState.FALSE) {
             throw HTMachineException.Custom(true, "Multiblock validation failed!")
         }
+        data
     }
 
     //    Ticking    //
@@ -270,10 +254,6 @@ abstract class HTMachineBlockEntity(
     //    MenuProvider    //
 
     override fun getDisplayName(): Component = machineType.text
-
-    //    HTControllerHolder    //
-
-    final override var showPreview: Boolean = false
 
     //    HTErrorHoldingBlockEntity    //
 

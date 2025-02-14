@@ -19,7 +19,6 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        checkMultiblockOrThrow()
     }
 
     override fun interactWithFluidStorage(player: Player): Boolean = false

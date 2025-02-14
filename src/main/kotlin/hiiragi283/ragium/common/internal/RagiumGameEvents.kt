@@ -4,12 +4,10 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
-import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.fluidAmountText
-import hiiragi283.ragium.api.extension.fluidCapacityText
-import hiiragi283.ragium.api.extension.getLevel
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEnchantments
@@ -19,6 +17,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
@@ -26,6 +25,7 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.BaseSpawner
@@ -38,6 +38,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
+import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent
 import net.neoforged.neoforge.event.level.BlockEvent
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
@@ -111,6 +112,19 @@ internal object RagiumGameEvents {
                         ?.let(event.drops::add)
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    fun toggleMachinePreview(event: UseItemOnBlockEvent) {
+        if (event.isCanceled) return
+        val stack: ItemStack = event.itemStack
+        if (stack.isEmpty || !stack.`is`(Items.BOOK)) return
+        val level: Level = event.level
+        val pos: BlockPos = event.pos
+        (level.getHTBlockEntity(pos) as? HTMultiblockController)?.let { controller: HTMultiblockController ->
+            controller.showPreview = !controller.showPreview
+            event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide))
         }
     }
 

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.requires
@@ -7,6 +8,7 @@ import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -16,6 +18,9 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
@@ -111,5 +116,25 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
                 .itemOutput(coil, 4)
                 .save(output)
         }
+
+        // Dust -> Ingot
+        fun dustToIngot(key: HTMaterialKey, ingot: ItemLike) {
+            val dust: DeferredItem<out Item> = RagiumItems.getMaterialMap(HTTagPrefix.DUST)[key] ?: return
+            HTCookingRecipeBuilder
+                .create(
+                    Ingredient.of(dust),
+                    ingot,
+                    exp = 0.7f,
+                    types = HTCookingRecipeBuilder.BLASTING_TYPES,
+                ).unlockedBy("has_${dust.id}", has(dust))
+                .save(output)
+        }
+
+        dustToIngot(VanillaMaterials.IRON, Items.IRON_INGOT)
+        dustToIngot(VanillaMaterials.GOLD, Items.GOLD_INGOT)
+        dustToIngot(VanillaMaterials.COPPER, Items.COPPER_INGOT)
+        dustToIngot(VanillaMaterials.NETHERITE, Items.NETHERITE_INGOT)
+
+        RagiumItems.getMaterialMap(HTTagPrefix.INGOT).forEach(::dustToIngot)
     }
 }

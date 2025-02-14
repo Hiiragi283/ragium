@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRendererRegist
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.inventory.HTMachineMenuType
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
+import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.screen.HTMachineContainerScreen
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.multiblock.HTAxisMultiblockComponent
@@ -102,12 +103,11 @@ object RagiumClient {
 
     @SubscribeEvent
     fun registerBlockEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
-        fun register(type: Supplier<out BlockEntityType<out HTMachineBlockEntity>>) {
+        fun <T> register(type: Supplier<out BlockEntityType<out T>>) where T : HTMachineBlockEntity, T : HTMultiblockController {
             event.registerBlockEntityRenderer(type.get(), ::HTMachineBlockEntityRenderer)
         }
 
         register(RagiumBlockEntityTypes.BLAST_FURNACE)
-        register(RagiumBlockEntityTypes.MULTI_SMELTER)
         register(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
         event.registerEntityRenderer(RagiumEntityTypes.DYNAMITE.get(), ::ThrownItemRenderer)

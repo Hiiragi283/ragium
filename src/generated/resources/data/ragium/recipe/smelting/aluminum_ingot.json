@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": {
+    "item": "ragium:aluminum_dust"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:aluminum_ingot"
+  }
+}

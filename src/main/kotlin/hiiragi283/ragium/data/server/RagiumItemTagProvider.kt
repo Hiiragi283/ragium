@@ -57,6 +57,8 @@ class RagiumItemTagProvider(
         builder.build { tagKey: TagKey<Item>, entry: TagEntry ->
             tag(tagKey).add(entry)
         }
+
+        tag(ItemTags.COALS).remove(IEItems.Ingredients.COAL_COKE.regObject.id)
     }
 
     //    Material    //

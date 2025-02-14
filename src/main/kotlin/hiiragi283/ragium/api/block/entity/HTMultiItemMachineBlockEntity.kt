@@ -44,8 +44,7 @@ abstract class HTMultiItemMachineBlockEntity(
 
     abstract val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTMultiItemRecipe>
 
-    final override fun process(level: ServerLevel, pos: BlockPos) {
-        checkMultiblockOrThrow()
+    override fun process(level: ServerLevel, pos: BlockPos) {
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
             enchantments,
             listOf(
@@ -67,7 +66,7 @@ abstract class HTMultiItemMachineBlockEntity(
         }
     }
 
-    final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         RagiumAPI.getInstance().createMultiItemMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
 
     final override fun interactWithFluidStorage(player: Player): Boolean = false

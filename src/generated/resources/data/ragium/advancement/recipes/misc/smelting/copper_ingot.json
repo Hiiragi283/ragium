@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ragium:copper_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:copper_dust"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:smelting/copper_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ragium:copper_dust"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:smelting/copper_ingot"
+    ]
+  }
+}

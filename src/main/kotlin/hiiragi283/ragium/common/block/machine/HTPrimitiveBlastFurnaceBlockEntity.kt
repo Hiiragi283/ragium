@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.multiblock.HTControllerDefinition
+import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -30,7 +32,8 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state, HTMachineType.BLAST_FURNACE) {
+    HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state, HTMachineType.BLAST_FURNACE),
+    HTMultiblockController {
     private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(2, this::setChanged)
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
 
@@ -45,7 +48,7 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Empty(true)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        checkMultiblockOrThrow()
+        validateMultiblock(this, null).getOrThrow()
         val isIron: Boolean = itemInput.getStackInSlot(0).`is`(Tags.Items.INGOTS_IRON)
         val isCoal: Boolean = itemInput.getStackInSlot(1).let { it.`is`(ItemTags.COALS) && it.count >= 4 }
         if (isIron && isCoal) {
@@ -62,13 +65,28 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun getMultiblockMap(): HTMultiblockMap.Relative = RagiumMultiblockMaps.PRIMITIVE_BLAST_FURNACE
-
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTPrimitiveBlastFurnaceContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
+        if (validateMultiblock(this, player).isSuccess) {
+            HTPrimitiveBlastFurnaceContainerMenu(
+                containerId,
+                playerInventory,
+                blockPos,
+                CombinedInvWrapper(itemInput, itemOutput),
+            )
+        } else {
+            null
+        }
 
     override fun interactWithFluidStorage(player: Player): Boolean = false
 
     override fun getItemHandler(direction: Direction?): CombinedInvWrapper =
         CombinedInvWrapper(HTStorageIO.INPUT.wrapItemHandler(itemInput), HTStorageIO.OUTPUT.wrapItemHandler(itemOutput))
+
+    //    HTMultiblockController    //
+
+    override var showPreview: Boolean = false
+
+    override fun getMultiblockMap(): HTMultiblockMap.Relative = RagiumMultiblockMaps.PRIMITIVE_BLAST_FURNACE
+
+    override fun getController(): HTControllerDefinition? = level?.let { HTControllerDefinition(it, pos, front) }
 }

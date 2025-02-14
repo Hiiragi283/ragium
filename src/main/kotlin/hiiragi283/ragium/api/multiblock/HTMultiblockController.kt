@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.multiblock
 
 import hiiragi283.ragium.api.extension.blockPosText
-import hiiragi283.ragium.api.extension.emptyConsumer2
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
@@ -27,7 +26,7 @@ interface HTMultiblockController {
      * マルチブロックの判定結果を返します。
      * @param consumer エラーメッセージを受け取るブロック
      */
-    fun collectData(consumer: (Component) -> Unit = emptyConsumer2()): HTMultiblockData {
+    fun collectData(consumer: (Component) -> Unit): HTMultiblockData {
         val controller: HTControllerDefinition = getController() ?: return HTMultiblockData.DEFAULT
         if (controller.level.isClientSide) return HTMultiblockData.DEFAULT
         val absoluteMap: HTMultiblockMap.Absolute =

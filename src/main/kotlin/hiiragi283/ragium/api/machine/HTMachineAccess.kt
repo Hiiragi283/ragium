@@ -7,9 +7,6 @@ import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.block.entity.HTPlayerOwningBlockEntity
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.asServerLevel
-import hiiragi283.ragium.api.multiblock.HTControllerDefinition
-import hiiragi283.ragium.api.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -29,7 +26,6 @@ interface HTMachineAccess :
     HTEnchantableBlockEntity,
     HTErrorHoldingBlockEntity,
     HTHandlerBlockEntity,
-    HTMultiblockController,
     HTPlayerOwningBlockEntity {
     /**
      * 機械の正面の向き
@@ -79,10 +75,4 @@ interface HTMachineAccess :
         ?.asServerLevel()
         ?.let(RagiumAPI.getInstance()::getEnergyNetwork)
         ?.let(HTStorageIO.INPUT::wrapEnergyStorage)
-
-    //    HTControllerHolder    //
-
-    override fun getMultiblockMap(): HTMultiblockMap.Relative? = null
-
-    override fun getController(): HTControllerDefinition? = levelAccess?.let { HTControllerDefinition(it, pos, front) }
 }

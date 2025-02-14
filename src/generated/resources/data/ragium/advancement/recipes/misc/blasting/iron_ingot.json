@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ragium:iron_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:iron_dust"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:blasting/iron_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ragium:iron_dust"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:blasting/iron_ingot"
+    ]
+  }
+}

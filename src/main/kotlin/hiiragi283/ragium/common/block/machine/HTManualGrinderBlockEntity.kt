@@ -113,10 +113,9 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     override val isActive: Boolean = true
     override val levelAccess: Level?
         get() = level
-    override val machineType: HTMachineType = HTMachineType.BLAST_FURNACE
+    override val machineType: HTMachineType = HTMachineType.GRINDER
     override val pos: BlockPos
         get() = blockPos
-    override var showPreview: Boolean = false
     override val containerData: ContainerData = SimpleContainerData(2)
     override val costModifier: Int = 0
     override val ownerUUID: UUID? = null
