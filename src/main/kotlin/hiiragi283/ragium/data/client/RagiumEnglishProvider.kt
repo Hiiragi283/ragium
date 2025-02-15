@@ -59,6 +59,20 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "Magenta LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
+
+        add(RagiumTranslationKeys.MOB_GLASS, "Can be passed by only mobs")
+        add(RagiumTranslationKeys.SOUL_GLASS, "Can be passed by only player")
+
+        add(RagiumTranslationKeys.SPONGE_CAKE, "Decrease fall damage as same as Hay Bale")
+
+        add(RagiumTranslationKeys.MANUAL_GRINDER, "Right-click to rotate")
+        add(RagiumTranslationKeys.MANUAL_GRINDER_1, "Insert ingredients by hopper or pipes")
+
+        add(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE, "1x Iron Ingot + 4x Coal -> 1x Steel Ingot")
+        add(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE_1, "Required multiblock")
+
+        add(RagiumTranslationKeys.ENERGY_NETWORK_INTERFACE, "Connect to Energy Network")
+        add(RagiumTranslationKeys.SLAG_COLLECTOR, "Generate Slag when adjacent Large Blast Furnace processed")
         // Chemical
         add(RagiumMekIntegration.RAGINITE_SLURRY.cleanSlurry.translationKey, "Clean Raginite Slurry")
         add(RagiumMekIntegration.RAGINITE_SLURRY.dirtySlurry.translationKey, "Dirty Raginite Slurry")
@@ -173,6 +187,16 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
         addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
+
+        add(RagiumTranslationKeys.BEE_WAX, "Can be used as same as Honeycomb")
+
+        add(RagiumTranslationKeys.AMBROSIA, "Can be eaten for infinity times!")
+
+        add(RagiumTranslationKeys.SILKY_PICKAXE, "Always applies Silk Touch")
+
+        add(RagiumTranslationKeys.DEFOLIANT, "Changes 9x9x9 area into waste land")
+        add(RagiumTranslationKeys.DYNAMITE, "Explodes when hit")
+        add(RagiumTranslationKeys.SOAP, "Right-click to wash targeted block")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
         add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")

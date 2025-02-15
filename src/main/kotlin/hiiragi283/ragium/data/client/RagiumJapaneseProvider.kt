@@ -61,6 +61,20 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "LEDブロック（マゼンタ）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
+
+        add(RagiumTranslationKeys.MOB_GLASS, "モブのみ通過可能")
+        add(RagiumTranslationKeys.SOUL_GLASS, "プレイヤーのみ通過可能")
+
+        add(RagiumTranslationKeys.SPONGE_CAKE, "干草の俵と同じだけ落下ダメージを軽減する")
+
+        add(RagiumTranslationKeys.MANUAL_GRINDER, "右クリックで回転")
+        add(RagiumTranslationKeys.MANUAL_GRINDER_1, "ホッパーやパイプで材料を投入")
+
+        add(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE, "1x 鉄インゴット + 4x 石炭 -> 1x 鋼鉄インゴット")
+        add(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE_1, "マルチブロックが必要")
+
+        add(RagiumTranslationKeys.ENERGY_NETWORK_INTERFACE, "エネルギーネットワークに接続する")
+        add(RagiumTranslationKeys.SLAG_COLLECTOR, "隣接した大型高炉が処理を行った際にスラグを生成する")
         // Chemical
         add(RagiumMekIntegration.RAGINITE_SLURRY.cleanSlurry.translationKey, "純粋なラギナイトの懸濁液")
         add(RagiumMekIntegration.RAGINITE_SLURRY.dirtySlurry.translationKey, "汚れたラギナイトの懸濁液")
@@ -174,6 +188,16 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
         addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
+
+        add(RagiumTranslationKeys.BEE_WAX, "ハニカムと同様に使える")
+
+        add(RagiumTranslationKeys.AMBROSIA, "無限に食べられちまうんだ！")
+
+        add(RagiumTranslationKeys.SILKY_PICKAXE, "常にシルクタッチが発動する")
+
+        add(RagiumTranslationKeys.DEFOLIANT, "9x9x9の範囲を荒れ地に変える")
+        add(RagiumTranslationKeys.DYNAMITE, "着弾時に爆発を起こす")
+        add(RagiumTranslationKeys.SOAP, "右クリックで対象のブロックを洗う")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
         add(RagiumTranslationKeys.MACHINE_NAME, "- 機械: %s")

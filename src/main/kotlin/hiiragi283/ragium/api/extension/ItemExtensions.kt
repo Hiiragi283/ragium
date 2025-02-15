@@ -2,13 +2,16 @@
 
 package hiiragi283.ragium.api.extension
 
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -38,6 +41,13 @@ fun itemProperty(builderAction: Item.Properties.() -> Unit): Item.Properties = I
  * 指定した[text]をアイテムの名前に設定します。
  */
 fun Item.Properties.name(text: Component): Item.Properties = component(DataComponents.ITEM_NAME, text)
+
+fun Item.Properties.lore(vararg keys: String): Item.Properties {
+    val lines: List<MutableComponent> = keys.map(Component::translatable)
+    return component(DataComponents.LORE, ItemLore(lines, lines.onEach { it.withStyle(ChatFormatting.AQUA) }))
+}
+
+fun Item.Properties.lore(vararg lines: Component): Item.Properties = component(DataComponents.LORE, ItemLore(lines.toList()))
 
 //    ItemStack    //
 

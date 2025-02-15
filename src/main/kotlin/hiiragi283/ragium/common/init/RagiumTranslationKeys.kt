@@ -3,18 +3,19 @@ package hiiragi283.ragium.common.init
 object RagiumTranslationKeys {
     //    Block    //
 
-    const val AUTO_ILLUMINATOR = "tooltip.ragium.block.auto_illuminator"
-    const val MANUAL_GRINDER = "tooltip.ragium.block.manual_grinder"
-    const val MUTATED_SOIL = "tooltip.ragium.block.mutated_soil"
-    const val NETWORK_INTERFACE = "tooltip.ragium.block.network_interface"
-    const val OBSIDIAN_GLASS = "tooltip.ragium.block.obsidian_glass"
-    const val OPEN_CRATE = "tooltip.ragium.block.open_crate"
-    const val RAGIUM_GLASS = "tooltip.ragium.block.ragium_glass"
-    const val SPONGE_CAKE = "tooltip.ragium.block.sponge_cake"
-    const val STEEL_GLASS = "tooltip.ragium.block.steel_glass"
-    const val TRASH_BOX = "tooltip.ragium.block.trash_box"
+    const val MOB_GLASS = "tooltip.ragium.block.mob_glass"
+    const val SOUL_GLASS = "tooltip.ragium.block.soul_glass"
 
-    const val CRATE_CAPACITY = "tooltip.ragium.block.crate_capacity"
+    const val SPONGE_CAKE = "tooltip.ragium.block.sponge_cake"
+
+    const val MANUAL_GRINDER = "tooltip.ragium.block.manual_grinder"
+    const val MANUAL_GRINDER_1 = "tooltip.ragium.block.manual_grinder.1"
+
+    const val PRIMITIVE_BLAST_FURNACE = "tooltip.ragium.block.primitive_blast_furnace"
+    const val PRIMITIVE_BLAST_FURNACE_1 = "tooltip.ragium.block.primitive_blast_furnace.1"
+
+    const val ENERGY_NETWORK_INTERFACE = "tooltip.ragium.block.energy_network_interface"
+    const val SLAG_COLLECTOR = "tooltip.ragium.block.slag_collector"
 
     //    Fluid    //
 
@@ -25,6 +26,16 @@ object RagiumTranslationKeys {
 
     const val DYNAMITE_DESTROY = "tooltip.ragium.item.dynamite.destroy"
     const val DYNAMITE_POWER = "tooltip.ragium.item.dynamite.power"
+
+    const val BEE_WAX = "tooltip.ragium.item.bee_wax"
+
+    const val AMBROSIA = "tooltip.ragium.item.ambrosia"
+
+    const val SILKY_PICKAXE = "tooltip.ragium.item.silky_pickaxe"
+
+    const val DEFOLIANT = "tooltip.ragium.item.defoliant"
+    const val DYNAMITE = "tooltip.ragium.item.dynamite"
+    const val SOAP = "tooltip.ragium.item.soap"
 
     //    Machine    //
 

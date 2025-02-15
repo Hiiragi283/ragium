@@ -4,24 +4,23 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.itemProperty
-import hiiragi283.ragium.api.extension.name
+import hiiragi283.ragium.api.extension.lore
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.common.block.HTEntityBlock
-import hiiragi283.ragium.common.block.HTMobGlassBlock
-import hiiragi283.ragium.common.block.HTSoulGlassBlock
-import hiiragi283.ragium.common.block.HTSoulMagmaBlock
-import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
+import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.component.DataComponents
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
@@ -37,27 +36,39 @@ object RagiumBlocks {
     @JvmField
     val ITEM_REGISTER: DeferredRegister.Items = DeferredRegister.createItems(RagiumAPI.MOD_ID)
 
-    @JvmStatic
-    fun register(
-        name: String,
-        properties: BlockBehaviour.Properties,
-        properties1: Item.Properties = itemProperty(),
-    ): DeferredBlock<Block> {
-        val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(name, properties)
-        ITEM_REGISTER.registerSimpleBlockItem(holder, properties1)
-        return holder
-    }
+    private class Builder(val name: String) {
+        private lateinit var blockProperties: BlockBehaviour.Properties
+        private val itemProperties: Item.Properties = itemProperty()
 
-    @JvmStatic
-    fun <T : Block> register(
-        name: String,
-        factory: (BlockBehaviour.Properties) -> T,
-        properties: BlockBehaviour.Properties,
-        properties1: Item.Properties = itemProperty(),
-    ): DeferredBlock<T> {
-        val holder: DeferredBlock<T> = REGISTER.registerBlock(name, factory, properties)
-        ITEM_REGISTER.registerSimpleBlockItem(holder, properties1)
-        return holder
+        fun properties(parent: Block): Builder = properties(blockProperty(parent))
+
+        fun properties(blockProperties: BlockBehaviour.Properties): Builder = apply {
+            this.blockProperties = blockProperties
+        }
+
+        fun addLore(vararg keys: String): Builder = apply {
+            itemProperties.lore(*keys)
+        }
+
+        fun addLore(vararg lines: Component): Builder = apply {
+            itemProperties.lore(*lines)
+        }
+
+        fun <T : Any> component(type: DataComponentType<T>, value: T): Builder = apply {
+            itemProperties.component(type, value)
+        }
+
+        fun build(): DeferredBlock<Block> {
+            val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(name, blockProperties)
+            ITEM_REGISTER.registerSimpleBlockItem(holder, itemProperties)
+            return holder
+        }
+
+        fun <T : Block> build(factory: (BlockBehaviour.Properties) -> T): DeferredBlock<T> {
+            val holder: DeferredBlock<T> = REGISTER.registerBlock(name, factory, blockProperties)
+            ITEM_REGISTER.registerSimpleBlockItem(holder, itemProperties)
+            return holder
+        }
     }
 
     //    Natural Resources    //
@@ -73,29 +84,24 @@ object RagiumBlocks {
                 put(
                     variant,
                     key,
-                    register(
-                        variant.createId(key),
-                        variant.createProperty(),
-                        itemProperty().name(variant.createText(key)),
-                    ),
+                    Builder(variant.createId(key))
+                        .properties(variant.createProperty())
+                        .component(DataComponents.ITEM_NAME, variant.createText(key))
+                        .build(),
                 )
             }
         }
     }
 
     @JvmField
-    val SOUL_MAGMA_BLOCK: DeferredBlock<HTSoulMagmaBlock> = register(
-        "soul_magma_block",
-        ::HTSoulMagmaBlock,
-        blockProperty(Blocks.MAGMA_BLOCK).mapColor(MapColor.LAPIS),
-    )
+    val SOUL_MAGMA_BLOCK: DeferredBlock<HTSoulMagmaBlock> = Builder("soul_magma_block")
+        .properties(blockProperty(Blocks.MAGMA_BLOCK).mapColor(MapColor.LAPIS))
+        .build(::HTSoulMagmaBlock)
 
     @JvmField
-    val CRUDE_OIL: DeferredBlock<LiquidBlock> = REGISTER.registerBlock(
-        "crude_oil",
-        { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluids.CRUDE_OIL.get(), properties) },
-        blockProperty(Blocks.WATER).mapColor(MapColor.COLOR_BLACK),
-    )
+    val CRUDE_OIL: DeferredBlock<LiquidBlock> = Builder("crude_oil")
+        .properties(blockProperty(Blocks.WATER).mapColor(MapColor.COLOR_BLACK))
+        .build { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluids.CRUDE_OIL.get(), properties) }
 
     //    Materials    //
 
@@ -131,7 +137,10 @@ object RagiumBlocks {
             blockProperty().mapColor(MapColor.CRIMSON_HYPHAE).strength(5f).sound(SoundType.DEEPSLATE),
         )
     }.mapValues { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->
-        register("${key.name}_block", properties, itemProperty().name(HTTagPrefix.STORAGE_BLOCK.createText(key)))
+        Builder("${key.name}_block")
+            .properties(properties)
+            .component(DataComponents.ITEM_NAME, HTTagPrefix.STORAGE_BLOCK.createText(key))
+            .build()
     }
 
     @JvmStatic
@@ -143,40 +152,44 @@ object RagiumBlocks {
     }
 
     @JvmField
-    val SLAG_BLOCK: DeferredBlock<Block> = register(
-        "slag_block",
-        blockProperty().mapColor(MapColor.TERRACOTTA_CYAN).strength(3f).sound(SoundType.DEEPSLATE),
-    )
+    val SLAG_BLOCK: DeferredBlock<Block> = Builder("slag_block")
+        .properties(blockProperty().mapColor(MapColor.TERRACOTTA_CYAN).strength(3f).sound(SoundType.DEEPSLATE))
+        .build()
 
     //    Buildings    //
 
     @JvmField
-    val SHAFT: DeferredBlock<RotatedPillarBlock> = register(
-        "shaft",
-        ::RotatedPillarBlock,
-        blockProperty()
-            .forceSolidOn()
-            .requiresCorrectToolForDrops()
-            .strength(5f)
-            .sound(SoundType.COPPER)
-            .noOcclusion(),
-    )
+    val SHAFT: DeferredBlock<RotatedPillarBlock> = Builder("shaft")
+        .properties(
+            blockProperty()
+                .forceSolidOn()
+                .requiresCorrectToolForDrops()
+                .strength(5f)
+                .sound(SoundType.COPPER)
+                .noOcclusion(),
+        ).build(::RotatedPillarBlock)
 
     @JvmField
     val CHEMICAL_GLASS: DeferredBlock<TransparentBlock> =
-        register("chemical_glass", ::TransparentBlock, blockProperty(Blocks.GLASS))
+        Builder("chemical_glass").properties(Blocks.GLASS).build(::TransparentBlock)
 
     @JvmField
     val MOB_GLASS: DeferredBlock<HTMobGlassBlock> =
-        register("mob_glass", ::HTMobGlassBlock, blockProperty(Blocks.GLASS))
+        Builder("mob_glass")
+            .properties(Blocks.GLASS)
+            .addLore(RagiumTranslationKeys.MOB_GLASS)
+            .build(::HTMobGlassBlock)
 
     @JvmField
     val OBSIDIAN_GLASS: DeferredBlock<TransparentBlock> =
-        register("obsidian_glass", ::TransparentBlock, blockProperty(Blocks.GLASS).strength(5f, 1200f))
+        Builder("obsidian_glass").properties(blockProperty(Blocks.GLASS).strength(5f, 1200f)).build(::TransparentBlock)
 
     @JvmField
     val SOUL_GLASS: DeferredBlock<HTSoulGlassBlock> =
-        register("soul_glass", ::HTSoulGlassBlock, blockProperty(Blocks.GLASS))
+        Builder("soul_glass")
+            .properties(Blocks.GLASS)
+            .addLore(RagiumTranslationKeys.SOUL_GLASS)
+            .build(::HTSoulGlassBlock)
 
     @JvmField
     val GLASSES: List<DeferredBlock<out TransparentBlock>> = listOf(
@@ -196,13 +209,13 @@ object RagiumBlocks {
         DyeColor.YELLOW,
         DyeColor.WHITE,
     ).associateWith { color: DyeColor ->
-        register(
-            "${color.serializedName}_led_block",
-            blockProperty(Blocks.GLASS)
-                .mapColor(color)
-                .lightLevel { 15 }
-                .sound(SoundType.GLASS),
-        )
+        Builder("${color.serializedName}_led_block")
+            .properties(
+                blockProperty(Blocks.GLASS)
+                    .mapColor(color)
+                    .lightLevel { 15 }
+                    .sound(SoundType.GLASS),
+            ).build()
     }
 
     @JvmStatic
@@ -210,83 +223,75 @@ object RagiumBlocks {
 
     @JvmField
     val PLASTIC_BLOCK: DeferredBlock<Block> =
-        register("plastic_block", blockProperty().strength(2f).sound(SoundType.COPPER))
+        Builder("plastic_block").properties(blockProperty().strength(2f).sound(SoundType.COPPER)).build()
 
     //    Foods    //
 
     @JvmField
-    val SPONGE_CAKE: DeferredBlock<HayBlock> = register(
-        "sponge_cake",
-        ::HayBlock,
-        blockProperty().mapColor(MapColor.COLOR_YELLOW).strength(0.5f).sound(SoundType.WOOL),
-    )
+    val SPONGE_CAKE: DeferredBlock<HayBlock> = Builder("sponge_cake")
+        .properties(blockProperty().mapColor(MapColor.COLOR_YELLOW).strength(0.5f).sound(SoundType.WOOL))
+        .addLore(RagiumTranslationKeys.SPONGE_CAKE)
+        .build(::HayBlock)
 
     @JvmField
-    val SWEET_BERRIES_CAKE: DeferredBlock<HTSweetBerriesCakeBlock> = register(
-        "sweet_berries_cake",
-        ::HTSweetBerriesCakeBlock,
-        blockProperty().forceSolidOn().strength(0.5f).sound(SoundType.WOOL),
-    )
+    val SWEET_BERRIES_CAKE: DeferredBlock<HTSweetBerriesCakeBlock> = Builder("sweet_berries_cake")
+        .properties(blockProperty().forceSolidOn().strength(0.5f).sound(SoundType.WOOL))
+        .build(::HTSweetBerriesCakeBlock)
 
     //    Manual Machines    //
 
     @JvmField
-    val MANUAL_GRINDER: DeferredBlock<HTManualGrinderBlock> = register(
-        "manual_grinder",
-        ::HTManualGrinderBlock,
-        blockProperty(Blocks.BRICKS),
-    )
+    val MANUAL_GRINDER: DeferredBlock<HTManualGrinderBlock> = Builder("manual_grinder")
+        .properties(Blocks.BRICKS)
+        .addLore(RagiumTranslationKeys.MANUAL_GRINDER, RagiumTranslationKeys.MANUAL_GRINDER_1)
+        .build(::HTManualGrinderBlock)
 
     @JvmField
-    val PRIMITIVE_BLAST_FURNACE: DeferredBlock<HTPrimitiveBlastFurnaceBlock> = register(
-        "primitive_blast_furnace",
-        ::HTPrimitiveBlastFurnaceBlock,
-        blockProperty(Blocks.BRICKS),
-    )
+    val PRIMITIVE_BLAST_FURNACE: DeferredBlock<HTPrimitiveBlastFurnaceBlock> = Builder("primitive_blast_furnace")
+        .properties(Blocks.BRICKS)
+        .addLore(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE, RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE_1)
+        .build(::HTPrimitiveBlastFurnaceBlock)
 
     @JvmField
-    val DISENCHANTING_TABLE: DeferredBlock<HTDisenchantingTableBlock> = register(
-        "disenchanting_table",
-        ::HTDisenchantingTableBlock,
-        blockProperty(Blocks.OBSIDIAN),
-    )
+    val DISENCHANTING_TABLE: DeferredBlock<HTDisenchantingTableBlock> = Builder("disenchanting_table")
+        .properties(Blocks.OBSIDIAN)
+        .build(::HTDisenchantingTableBlock)
 
     //    Storage    //
 
     @JvmField
-    val COPPER_DRUM: DeferredBlock<HTEntityBlock> = register(
-        "copper_drum",
-        { properties: BlockBehaviour.Properties -> HTEntityBlock.of(::HTDrumBlockEntity, properties) },
-        blockProperty()
-            .mapColor(MapColor.STONE)
-            .strength(2f)
-            .sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops(),
-    )
+    val COPPER_DRUM: DeferredBlock<HTEntityBlock> = Builder("copper_drum")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(2f)
+                .sound(SoundType.COPPER)
+                .requiresCorrectToolForDrops(),
+        ).build { properties: BlockBehaviour.Properties -> HTEntityBlock.of(::HTDrumBlockEntity, properties) }
 
     //    Utility    //
 
     @JvmField
-    val ENERGY_NETWORK_INTERFACE: DeferredBlock<HTEnergyNetworkBlock> = register(
-        "energy_network_interface",
-        ::HTEnergyNetworkBlock,
-        blockProperty()
-            .mapColor(MapColor.STONE)
-            .strength(2f)
-            .sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops(),
-    )
+    val ENERGY_NETWORK_INTERFACE: DeferredBlock<HTEnergyNetworkBlock> = Builder("energy_network_interface")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(2f)
+                .sound(SoundType.COPPER)
+                .requiresCorrectToolForDrops(),
+        ).addLore(RagiumTranslationKeys.ENERGY_NETWORK_INTERFACE)
+        .build(::HTEnergyNetworkBlock)
 
     @JvmField
-    val SLAG_COLLECTOR: DeferredBlock<HTEntityBlock> = register(
-        "slag_collector",
-        { prop: BlockBehaviour.Properties -> HTEntityBlock.of(::HTSlagCollectorBlockEntity, prop) },
-        blockProperty()
-            .mapColor(MapColor.STONE)
-            .strength(2f)
-            .sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops(),
-    )
+    val SLAG_COLLECTOR: DeferredBlock<HTEntityBlock> = Builder("slag_collector")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(2f)
+                .sound(SoundType.COPPER)
+                .requiresCorrectToolForDrops(),
+        ).addLore(RagiumTranslationKeys.SLAG_COLLECTOR)
+        .build { prop: BlockBehaviour.Properties -> HTEntityBlock.of(::HTSlagCollectorBlockEntity, prop) }
 
     @JvmField
     val ADDONS: List<DeferredBlock<out Block>> = listOf(
@@ -295,37 +300,37 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val MAGMA_BURNER: DeferredBlock<Block> = register(
-        "magma_burner",
-        blockProperty()
-            .mapColor(MapColor.STONE)
-            .strength(5f)
-            .sound(SoundType.COPPER)
-            .noOcclusion()
-            .requiresCorrectToolForDrops(),
-    )
+    val MAGMA_BURNER: DeferredBlock<Block> = Builder("magma_burner")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(5f)
+                .sound(SoundType.COPPER)
+                .noOcclusion()
+                .requiresCorrectToolForDrops(),
+        ).build()
 
     @JvmField
-    val SOUL_BURNER: DeferredBlock<Block> = register(
-        "soul_burner",
-        blockProperty()
-            .mapColor(MapColor.STONE)
-            .strength(5f)
-            .sound(SoundType.COPPER)
-            .noOcclusion()
-            .requiresCorrectToolForDrops(),
-    )
+    val SOUL_BURNER: DeferredBlock<Block> = Builder("soul_burner")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(5f)
+                .sound(SoundType.COPPER)
+                .noOcclusion()
+                .requiresCorrectToolForDrops(),
+        ).build()
 
     @JvmField
-    val FIERY_BURNER: DeferredBlock<Block> = register(
-        "fiery_burner",
-        blockProperty()
-            .mapColor(MapColor.STONE)
-            .strength(5f)
-            .sound(SoundType.COPPER)
-            .noOcclusion()
-            .requiresCorrectToolForDrops(),
-    )
+    val FIERY_BURNER: DeferredBlock<Block> = Builder("fiery_burner")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(5f)
+                .sound(SoundType.COPPER)
+                .noOcclusion()
+                .requiresCorrectToolForDrops(),
+        ).build()
 
     @JvmField
     val BURNERS: List<DeferredBlock<Block>> = listOf(

@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.itemProperty
+import hiiragi283.ragium.api.extension.lore
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -136,7 +137,11 @@ object RagiumItems {
         getMaterialMap(prefix)[material] ?: error("Unregistered material item: ${prefix.createPath(material)}")
 
     @JvmField
-    val BEE_WAX: DeferredItem<HoneycombItem> = register("bee_wax", ::HoneycombItem, itemProperty())
+    val BEE_WAX: DeferredItem<HoneycombItem> = register(
+        "bee_wax",
+        ::HoneycombItem,
+        itemProperty().lore(RagiumTranslationKeys.BEE_WAX),
+    )
 
     @JvmField
     val SLAG: DeferredItem<Item> = register("slag")
@@ -207,7 +212,7 @@ object RagiumItems {
         register(
             "ambrosia",
             ::HTAmbrosiaItem,
-            itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC),
+            itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC).lore(RagiumTranslationKeys.AMBROSIA),
         )
 
     @JvmField
@@ -242,19 +247,32 @@ object RagiumItems {
     val SILKY_PICKAXE: DeferredItem<HTSingleEnchantmentPickaxeItem> = register(
         "silky_pickaxe",
         { properties: Item.Properties -> HTSingleEnchantmentPickaxeItem(Enchantments.SILK_TOUCH, 1, properties) },
+        itemProperty().lore(RagiumTranslationKeys.SILKY_PICKAXE),
     )
 
     @JvmField
-    val DEFOLIANT: DeferredItem<HTDefoliantItem> = register("defoliant", ::HTDefoliantItem)
+    val DEFOLIANT: DeferredItem<HTDefoliantItem> = register(
+        "defoliant",
+        ::HTDefoliantItem,
+        itemProperty().lore(RagiumTranslationKeys.SILKY_PICKAXE),
+    )
 
     @JvmField
     val DYNAMITE: DeferredItem<HTDynamiteItem> = register("dynamite", ::HTDynamiteItem)
 
     @JvmField
-    val MAGNET: DeferredItem<HTMagnetItem> = register("magnet", ::HTMagnetItem)
+    val MAGNET: DeferredItem<HTMagnetItem> = register(
+        "magnet",
+        ::HTMagnetItem,
+        itemProperty().lore(RagiumTranslationKeys.SILKY_PICKAXE),
+    )
 
     @JvmField
-    val SOAP: DeferredItem<HTSoapItem> = register("soap", ::HTSoapItem)
+    val SOAP: DeferredItem<HTSoapItem> = register(
+        "soap",
+        ::HTSoapItem,
+        itemProperty().lore(RagiumTranslationKeys.SOAP),
+    )
 
     @JvmField
     val ALUMINUM_CAN: DeferredItem<Item> = register("aluminum_can")
