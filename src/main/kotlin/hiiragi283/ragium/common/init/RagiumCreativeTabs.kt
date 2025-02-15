@@ -31,9 +31,11 @@ object RagiumCreativeTabs {
                     RagiumBlocks.STORAGE_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.SLAG_BLOCK)
                     // Decorations
+                    RagiumBlocks.RAGI_BRICK_FAMILY.blocks.forEach(output::accept)
+                    RagiumBlocks.PLASTIC_FAMILY.blocks.forEach(output::accept)
+
                     RagiumBlocks.GLASSES.forEach(output::accept)
                     RagiumBlocks.LED_BLOCKS.values.forEach(output::accept)
-                    output.accept(RagiumBlocks.PLASTIC_BLOCK)
 
                     // Material Items
                     fun registerPrefix(prefix: HTTagPrefix) {

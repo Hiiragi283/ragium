@@ -9,8 +9,8 @@ object RagiumMultiblockMaps {
     private val BRICK_WALL = HTSimpleMultiblockComponent(Blocks::BRICK_WALL)
     private val TERRACOTTA = HTSimpleMultiblockComponent(Blocks::TERRACOTTA)
 
-    private val DEEP_WALL = HTSimpleMultiblockComponent(Blocks::POLISHED_DEEPSLATE_WALL)
-    private val DEEP_TILE = HTSimpleMultiblockComponent(Blocks::DEEPSLATE_TILES)
+    private val LBF_WALL = HTSimpleMultiblockComponent(RagiumBlocks.RAGI_BRICK_FAMILY.wall)
+    private val LBF_PILLAR = HTSimpleMultiblockComponent(RagiumBlocks.RAGI_BRICKS)
 
     @JvmField
     val PRIMITIVE_BLAST_FURNACE: HTMultiblockMap.Relative = HTMultiblockMap
@@ -30,20 +30,20 @@ object RagiumMultiblockMaps {
     val BLAST_FURNACE: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
         .addLayer(-1..1, 0, 1..3, HTSimpleMultiblockComponent(Blocks::DEEPSLATE_BRICKS))
-        .addPillar(0, 1..3, 1, DEEP_TILE)
-        .addPillar(0, 1..3, 3, DEEP_TILE)
-        .addPillar(1, 1..3, 2, DEEP_TILE)
-        .addPillar(1, 1..3, 1, DEEP_WALL)
-        .addPillar(1, 1..3, 3, DEEP_WALL)
-        .addPillar(-1, 1..3, 2, DEEP_TILE)
-        .addPillar(-1, 1..3, 1, DEEP_WALL)
-        .addPillar(-1, 1..3, 3, DEEP_WALL)
+        .addPillar(0, 1..3, 1, LBF_PILLAR)
+        .addPillar(0, 1..3, 3, LBF_PILLAR)
+        .addPillar(1, 1..3, 2, LBF_PILLAR)
+        .addPillar(1, 1..3, 1, LBF_WALL)
+        .addPillar(1, 1..3, 3, LBF_WALL)
+        .addPillar(-1, 1..3, 2, LBF_PILLAR)
+        .addPillar(-1, 1..3, 1, LBF_WALL)
+        .addPillar(-1, 1..3, 3, LBF_WALL)
         .build()
 
     @JvmField
     val SPAWNER: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
-        .addLayer(-1..1, 0, -1..1, HTSimpleMultiblockComponent(Blocks::BLACKSTONE))
+        .addLayer(-1..1, 0, -1..1, HTSimpleMultiblockComponent(Blocks::NETHER_BRICKS))
         .add(0, -1, 0, HTSpawnerMultiblockComponent)
         .add(1, -1, 1, HTSimpleMultiblockComponent(Blocks::CHISELED_NETHER_BRICKS))
         .add(1, -1, -1, HTSimpleMultiblockComponent(Blocks::CHISELED_NETHER_BRICKS))

@@ -27,14 +27,22 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addBlock(RagiumBlocks.SLAG_BLOCK, "スラグブロック")
 
+        addBlock(RagiumBlocks.RAGI_BRICKS, "らぎレンガ")
+        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.stairs, "らぎレンガの階段")
+        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.slab, "らぎレンガのハーフブロック")
+        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.wall, "らぎレンガの壁")
+
+        addBlock(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
+        addBlock(RagiumBlocks.PLASTIC_FAMILY.stairs, "プラスチックブロックの階段")
+        addBlock(RagiumBlocks.PLASTIC_FAMILY.slab, "プラスチックブロックのハーフブロック")
+        addBlock(RagiumBlocks.PLASTIC_FAMILY.wall, "プラスチックブロックの壁")
+
         addBlock(RagiumBlocks.SHAFT, "シャフト")
 
         addBlock(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
         addBlock(RagiumBlocks.MOB_GLASS, "モブガラス")
         addBlock(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石ガラス")
         addBlock(RagiumBlocks.SOUL_GLASS, "ソウルガラス")
-
-        addBlock(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
 
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")

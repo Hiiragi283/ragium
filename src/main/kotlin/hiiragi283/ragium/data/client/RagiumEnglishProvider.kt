@@ -27,14 +27,22 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addBlock(RagiumBlocks.SLAG_BLOCK, "Block of Slag")
 
+        addBlock(RagiumBlocks.RAGI_BRICKS, "Ragi-Bricks")
+        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.stairs, "Ragi-Brick Stairs")
+        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.slab, "Ragi-Brick Slab")
+        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.wall, "Ragi-Brick Wall")
+
+        addBlock(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
+        addBlock(RagiumBlocks.PLASTIC_FAMILY.stairs, "Plastic Block Stairs")
+        addBlock(RagiumBlocks.PLASTIC_FAMILY.slab, "Plastic Block Slab")
+        addBlock(RagiumBlocks.PLASTIC_FAMILY.wall, "Plastic Block Wall")
+
         addBlock(RagiumBlocks.SHAFT, "Shaft")
 
         addBlock(RagiumBlocks.CHEMICAL_GLASS, "Chemical Glass")
         addBlock(RagiumBlocks.MOB_GLASS, "Mob Glass")
         addBlock(RagiumBlocks.OBSIDIAN_GLASS, "Obsidian Glass")
         addBlock(RagiumBlocks.SOUL_GLASS, "Soul Glass")
-
-        addBlock(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
 
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")

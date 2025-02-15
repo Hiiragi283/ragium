@@ -26,8 +26,14 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         buildList {
             addAll(RagiumBlocks.REGISTER.entries)
 
+            removeAll(RagiumBlocks.RAGI_BRICK_FAMILY.blocks)
+            removeAll(RagiumBlocks.PLASTIC_FAMILY.blocks)
+
             remove(RagiumBlocks.CRUDE_OIL)
         }.forEach(::simpleBlockItem)
+
+        RagiumBlocks.RAGI_BRICK_FAMILY.generateModels(this)
+        RagiumBlocks.PLASTIC_FAMILY.generateModels(this)
         // Machine
         HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->
             withUncheckedParent(holder, holder.blockId)

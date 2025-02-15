@@ -1,7 +1,7 @@
 {
   "type": "ragium:infuser",
   "fluid_input": {
-    "amount": 1000,
+    "amount": 250,
     "tag": "c:water"
   },
   "item_input": {

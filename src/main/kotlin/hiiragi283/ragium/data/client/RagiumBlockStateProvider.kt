@@ -39,10 +39,12 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
-            add(RagiumBlocks.PLASTIC_BLOCK)
             addAll(RagiumBlocks.LED_BLOCKS.values)
         }.map(Supplier<out Block>::get)
             .forEach(::simpleBlock)
+
+        RagiumBlocks.RAGI_BRICK_FAMILY.generateStates(this)
+        RagiumBlocks.PLASTIC_FAMILY.generateStates(this)
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->

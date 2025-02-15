@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.util.HTBlockFamily
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.*
@@ -159,6 +160,24 @@ object RagiumBlocks {
     //    Buildings    //
 
     @JvmField
+    val RAGI_BRICKS: DeferredBlock<Block> = Builder("ragi_bricks")
+        .properties(Blocks.BRICKS)
+        .build()
+
+    @JvmField
+    val RAGI_BRICK_FAMILY =
+        HTBlockFamily(REGISTER, ITEM_REGISTER, RAGI_BRICKS, blockProperty(Blocks.BRICKS), "ragi_brick")
+
+    @JvmField
+    val PLASTIC_BLOCK: DeferredBlock<Block> = Builder("plastic_block")
+        .properties(blockProperty().strength(2f).sound(SoundType.COPPER))
+        .build()
+
+    @JvmField
+    val PLASTIC_FAMILY =
+        HTBlockFamily(REGISTER, ITEM_REGISTER, PLASTIC_BLOCK, blockProperty().strength(2f).sound(SoundType.COPPER))
+
+    @JvmField
     val SHAFT: DeferredBlock<RotatedPillarBlock> = Builder("shaft")
         .properties(
             blockProperty()
@@ -220,10 +239,6 @@ object RagiumBlocks {
 
     @JvmStatic
     fun getLedBlock(color: DyeColor): DeferredBlock<Block> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
-
-    @JvmField
-    val PLASTIC_BLOCK: DeferredBlock<Block> =
-        Builder("plastic_block").properties(blockProperty().strength(2f).sound(SoundType.COPPER)).build()
 
     //    Foods    //
 

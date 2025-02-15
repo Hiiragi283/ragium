@@ -82,6 +82,9 @@ class RagiumItemTagProvider(
             val tagKey: TagKey<Item> = prefix.createTag(key)
             builder.addTag(prefix.commonTagKey, tagKey)
             builder.add(tagKey, holder)
+            if (prefix == HTTagPrefix.INGOT) {
+                builder.addTag(ItemTags.BEACON_PAYMENT_ITEMS, tagKey)
+            }
         }
 
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])

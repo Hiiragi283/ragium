@@ -3,6 +3,8 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -50,8 +52,6 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
 
-            add(RagiumBlocks.PLASTIC_BLOCK)
-
             add(RagiumBlocks.MANUAL_GRINDER)
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
             add(RagiumBlocks.DISENCHANTING_TABLE)
@@ -66,7 +66,22 @@ class RagiumBlockTagProvider(
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE)
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Vanilla
+        RagiumBlocks.RAGI_BRICK_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
+        RagiumBlocks.PLASTIC_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
+        // Common
+        RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
+            val oreTagKey: TagKey<Block> = HTTagPrefix.ORE.createBlockTag(key) ?: return@forEach
+            builder.addTag(Tags.Blocks.ORES, oreTagKey)
+            builder.add(oreTagKey, ore)
+        }
 
+        RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
+            val storageTag: TagKey<Block> = HTTagPrefix.STORAGE_BLOCK.createBlockTag(key) ?: return@forEach
+            builder.addTag(Tags.Blocks.STORAGE_BLOCKS, storageTag)
+            builder.add(storageTag, storage)
+
+            builder.addTag(BlockTags.BEACON_BASE_BLOCKS, storageTag)
+        }
         // Ragium
         builder.add(RagiumBlockTags.COOLING_SOURCES, Blocks.WATER)
         builder.addTag(RagiumBlockTags.COOLING_SOURCES, BlockTags.ICE)

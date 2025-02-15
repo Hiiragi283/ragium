@@ -12,7 +12,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 abstract class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, inventory: Inventory, title: Component) :
     HTContainerScreen<T>(menu, inventory, title) {
     abstract val texture: ResourceLocation
-    
+
     abstract val progressX: Int
     abstract val progressY: Int
 

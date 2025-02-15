@@ -1,0 +1,14 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:water"
+  },
+  "item_input": {
+    "tag": "c:sands"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "minecraft:clay"
+  }
+}

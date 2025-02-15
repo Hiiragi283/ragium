@@ -111,8 +111,8 @@ abstract class HTContainerMenu(
                     playerInv,
                     index + 9,
                     HTSlotPos.getSlotPosX(index % 9),
-                    HTSlotPos.getSlotPosY(3 + (index / 9)) + 12 + yOffset
-                )
+                    HTSlotPos.getSlotPosY(3 + (index / 9)) + 12 + yOffset,
+                ),
             )
         }
         // hotbar

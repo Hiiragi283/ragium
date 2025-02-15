@@ -53,6 +53,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         compressor(output)
         enchanter(output, holderLookup.lookupOrThrow(Registries.ENCHANTMENT))
         extractor(output)
+        infuser(output)
         growthChamber(output)
         laser(output)
         refinery(output)
@@ -252,6 +253,11 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Tags.Items.OBSIDIANS_CRYING)
             .itemOutput(RagiumItems.OBSIDIAN_TEAR, 4)
             .save(output)
+    }
+
+    //    Infuser    //
+
+    private fun infuser(output: RecipeOutput) {
     }
 
     //    Growth Chamber    //

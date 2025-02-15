@@ -72,10 +72,17 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.PUMPKIN_PIE, 2)
             .save(output)
 
-        // Mud
+        // Sand + Water -> Clay Block
+        HTInfuserRecipeBuilder()
+            .itemInput(Tags.Items.SANDS)
+            .waterInput()
+            .itemOutput(Items.CLAY)
+            .save(output)
+
+        // Dirt + Water -> Mud
         HTInfuserRecipeBuilder()
             .itemInput(Items.DIRT)
-            .waterInput()
+            .waterInput(250)
             .itemOutput(Items.MUD)
             .save(output)
         // Packed Mud

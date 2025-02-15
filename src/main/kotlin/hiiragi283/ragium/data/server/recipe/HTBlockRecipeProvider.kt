@@ -44,6 +44,9 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_soul", has(ItemTags.SOUL_FIRE_BASE_BLOCKS))
             .savePrefixed(output)
 
+        RagiumBlocks.RAGI_BRICK_FAMILY.buildRecipes(output, holderLookup)
+        RagiumBlocks.PLASTIC_FAMILY.buildRecipes(output, holderLookup)
+
         registerBurners(output)
         registerDrums(output)
 
@@ -118,7 +121,18 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerDecorations(output: RecipeOutput) {
-        // Shaped Crafting
+        // Ragi-Bricks
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.RAGI_BRICKS, 2)
+            .pattern("ABA")
+            .pattern("BCB")
+            .pattern("ABA")
+            .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
+            .define('B', Tags.Items.BRICKS_NORMAL)
+            .define('C', Items.CLAY)
+            .unlockedBy("has_raginite", has(HTTagPrefix.DUST, RagiumMaterials.RAGINITE))
+            .savePrefixed(output)
+        // Plastic Block
         ShapedRecipeBuilder
             .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.PLASTIC_BLOCK, 4)
             .pattern(" A ")

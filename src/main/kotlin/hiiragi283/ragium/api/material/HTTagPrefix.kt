@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
 import net.minecraft.network.chat.Component
@@ -9,6 +10,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.block.Block
 
 /**
  * [TagKey]のプレフィックスを表すクラス
@@ -23,7 +25,9 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     },
     INGOT("ingots"),
     NUGGET("nuggets"),
-    ORE("ores"),
+    ORE("ores") {
+        override fun createBlockTag(key: HTMaterialKey): TagKey<Block> = blockTagKey(createTag(key).location)
+    },
     PLATE("plates"),
     RAW_MATERIAL("raw_materials") {
         override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"
@@ -32,6 +36,8 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     ROD("rods"),
     STORAGE_BLOCK("storage_blocks") {
         override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
+
+        override fun createBlockTag(key: HTMaterialKey): TagKey<Block> = blockTagKey(createTag(key).location)
     },
 
     // IE
@@ -92,6 +98,8 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
      * 指定した[key]から，このプレフィックスで修飾された[TagKey]を返します。
      */
     fun createTag(key: HTMaterialKey): TagKey<Item> = itemTagKey(commonId("$tagPrefix${key.name}"))
+
+    open fun createBlockTag(key: HTMaterialKey): TagKey<Block>? = null
 
     fun createIngredient(key: HTMaterialKey): Ingredient = Ingredient.of(createTag(key))
 
