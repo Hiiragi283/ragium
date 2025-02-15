@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
@@ -111,6 +112,13 @@ internal object RagiumModEvents {
         event.register(VanillaMaterials.NETHERITE_SCRAP, HTMaterialType.GEM)
         event.register(VanillaMaterials.QUARTZ, HTMaterialType.GEM)
         event.register(VanillaMaterials.REDSTONE, HTMaterialType.MINERAL)
+
+        event.register(IntegrationMaterials.BLACK_QUARTZ, HTMaterialType.GEM)
+
+        event.register(IntegrationMaterials.DARK_GEM, HTMaterialType.GEM)
+
+        event.register(IntegrationMaterials.REFINED_GLOWSTONE, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.REFINED_OBSIDIAN, HTMaterialType.ALLOY)
     }
 
     @SubscribeEvent
