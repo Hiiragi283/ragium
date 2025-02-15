@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:ingots/steel"
+    },
+    "B": {
+      "tag": "c:ingots/ragi_alloy"
+    }
+  },
+  "pattern": [
+    "A A",
+    "B B",
+    " B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:magnet"
+  }
+}

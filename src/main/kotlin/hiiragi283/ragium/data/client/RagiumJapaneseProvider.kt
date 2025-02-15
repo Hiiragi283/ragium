@@ -120,6 +120,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.DEFOLIANT, "枯葉剤")
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
+        addItem(RagiumItems.MAGNET, "マグネット")
         addItem(RagiumItems.SOAP, "石鹸")
 
         addItem(RagiumItems.ALUMINUM_CAN, "アルミ缶")

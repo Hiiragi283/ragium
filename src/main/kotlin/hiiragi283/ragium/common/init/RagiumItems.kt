@@ -251,6 +251,9 @@ object RagiumItems {
     val DYNAMITE: DeferredItem<HTDynamiteItem> = register("dynamite", ::HTDynamiteItem)
 
     @JvmField
+    val MAGNET: DeferredItem<HTMagnetItem> = register("magnet", ::HTMagnetItem)
+
+    @JvmField
     val SOAP: DeferredItem<HTSoapItem> = register("soap", ::HTSoapItem)
 
     @JvmField

@@ -118,6 +118,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.DEFOLIANT, "Defoliant")
         addItem(RagiumItems.DYNAMITE, "Dynamite")
+        addItem(RagiumItems.MAGNET, "Magnet")
         addItem(RagiumItems.SOAP, "Soap")
 
         addItem(RagiumItems.ALUMINUM_CAN, "Aluminum Can")

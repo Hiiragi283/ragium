@@ -72,6 +72,7 @@ object RagiumCreativeTabs {
 
                     output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)
+                    output.accept(RagiumItems.MAGNET)
                     output.accept(RagiumItems.SOAP)
 
                     output.accept(RagiumItems.ALUMINUM_CAN)
