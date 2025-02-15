@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.toDataResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -24,9 +24,10 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
         @JvmField
         val CODEC: Codec<HTMaterialKey> =
             Codec.STRING.xmap(Companion::of, HTMaterialKey::name).validate { key: HTMaterialKey ->
-                key
-                    .takeIf(RagiumAPI.getInstance().getMaterialRegistry()::contains)
-                    .toDataResult { "Unknown material key: $key" }
+                if (key !in RagiumAPI.getInstance().getMaterialRegistry()) {
+                    return@validate DataResult.error { "Unknown material key: $key" }
+                }
+                DataResult.success(key)
             }
 
         @JvmField

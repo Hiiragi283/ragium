@@ -3,10 +3,10 @@ package hiiragi283.ragium.client
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.client.renderer.HTMachineBlockEntityRenderer
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.inventory.HTMachineMenuType
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
+import hiiragi283.ragium.client.renderer.HTBlastFurnaceBlockEntityRenderer
 import hiiragi283.ragium.client.screen.HTMachineContainerScreen
 import hiiragi283.ragium.common.init.*
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
@@ -97,7 +97,7 @@ object RagiumClient {
     @SubscribeEvent
     fun registerBlockEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         fun <T> register(type: Supplier<out BlockEntityType<out T>>) where T : HTMachineBlockEntity, T : HTMultiblockController {
-            event.registerBlockEntityRenderer(type.get(), ::HTMachineBlockEntityRenderer)
+            event.registerBlockEntityRenderer(type.get(), ::HTBlastFurnaceBlockEntityRenderer)
         }
 
         register(RagiumBlockEntityTypes.BLAST_FURNACE)
