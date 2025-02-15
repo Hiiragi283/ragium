@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.recipe.HTBreweryRecipe
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
 import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
+import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -423,7 +424,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         HTRefineryRecipeBuilder()
             .fluidInput(RagiumVirtualFluids.SAP)
             .itemOutput(Items.SLIME_BALL)
-            .save(output)
+            .saveSuffixed(output, "_from_sap")
 
         // Crimson Stem -> Crimson Sap
         HTExtractorRecipeBuilder()
@@ -450,5 +451,12 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
+
+        // Creosote -> Slime Ball + Fuel
+        HTRefineryRecipeBuilder()
+            .fluidInput(RagiumFluidTags.CREOSOTE)
+            .itemOutput(Items.SLIME_BALL)
+            .fluidOutput(RagiumVirtualFluids.FUEL)
+            .saveSuffixed(output, "_from_creosote")
     }
 }

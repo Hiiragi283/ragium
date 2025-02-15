@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refinery",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:creosote"
+  },
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:fuel"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "minecraft:slime_ball"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:extractor",
+  "type": "ragium:grinder",
   "item_input": {
     "tag": "minecraft:soul_fire_base_blocks"
   },

@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.HTTagBuilder
 import mekanism.generators.common.registries.GeneratorsItems
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
@@ -53,6 +54,7 @@ class RagiumItemTagProvider(
         foodTags()
         toolTags()
         partTags()
+        enchantmentTags()
 
         builder.build { tagKey: TagKey<Item>, entry: TagEntry ->
             tag(tagKey).add(entry)
@@ -175,7 +177,11 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.WIRE_MOLDS, RagiumItems.getPressMold(HTTagPrefix.WIRE))
 
         RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
+    }
 
+    //    Enchantment    //
+
+    private fun enchantmentTags() {
         buildList {
             add(RagiumBlocks.MANUAL_GRINDER)
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
@@ -183,6 +189,12 @@ class RagiumItemTagProvider(
             add(RagiumBlocks.COPPER_DRUM)
 
             addAll(HTMachineType.getBlocks())
-        }.forEach { builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, it.asHolder()) }
+        }.map(ItemLike::asHolder)
+            .forEach { holder: Holder.Reference<Item> ->
+                builder.add(ItemTags.DURABILITY_ENCHANTABLE, holder)
+                builder.add(ItemTags.MINING_ENCHANTABLE, holder)
+                builder.add(ItemTags.MINING_LOOT_ENCHANTABLE, holder)
+                builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, holder)
+            }
     }
 }

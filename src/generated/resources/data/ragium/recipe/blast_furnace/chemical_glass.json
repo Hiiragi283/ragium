@@ -8,7 +8,6 @@
     "item": "ragium:chemical_glass"
   },
   "second_item_input": {
-    "count": 4,
     "tag": "c:slag"
   }
 }

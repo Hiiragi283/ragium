@@ -265,7 +265,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerSoul(output: RecipeOutput) {
         // Soul Reagent
-        HTExtractorRecipeBuilder()
+        HTSingleItemRecipeBuilder
+            .grinder()
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .itemOutput(RagiumItems.SOUL_REAGENT)
             .save(output)
@@ -313,7 +314,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTMultiItemRecipeBuilder
             .blastFurnace()
             .itemInput(Tags.Items.GLASS_BLOCKS)
-            .itemInput(RagiumItemTags.SLAG, 4)
+            .itemInput(RagiumItemTags.SLAG)
             .itemOutput(RagiumBlocks.CHEMICAL_GLASS)
             .save(output)
     }

@@ -30,7 +30,6 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.BaseSpawner
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity
 import net.neoforged.bus.api.SubscribeEvent
@@ -39,11 +38,10 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent
-import net.neoforged.neoforge.event.level.BlockEvent
+import net.neoforged.neoforge.event.level.BlockDropsEvent
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
 import net.neoforged.neoforge.fluids.SimpleFluidContent
-import net.neoforged.neoforge.items.IItemHandlerModifiable
 import org.slf4j.Logger
 import java.util.function.Consumer
 
@@ -74,13 +72,12 @@ internal object RagiumGameEvents {
     }
 
     @SubscribeEvent
-    fun onSpawnerBroken(event: BlockEvent.BreakEvent) {
+    fun onSpawnerBroken(event: BlockDropsEvent) {
         if (event.isCanceled) return
-        var level: LevelAccessor = event.level
-        val pos: BlockPos = event.pos
-        val blockEntity: BlockEntity = level.getBlockEntity(pos) ?: return
+        val blockEntity: BlockEntity = event.blockEntity ?: return
+        val pos: BlockPos = blockEntity.blockPos
         if (blockEntity is SpawnerBlockEntity) {
-            level = blockEntity.level ?: return
+            val level: Level = blockEntity.level ?: return
             val baseSpawner: BaseSpawner = blockEntity.spawner
             val entity: Entity = baseSpawner.getOrCreateDisplayEntity(level, pos) ?: return
             dropStackAt(
@@ -141,8 +138,7 @@ internal object RagiumGameEvents {
             }
         }
         if (foundAddon == null) return
-        val itemHandler: IItemHandlerModifiable = foundAddon.getItemHandler(null)
-        itemHandler.insertItem(0, RagiumItems.SLAG.toStack(), false)
+        foundAddon.onReceiveEvent(event)
     }
 
     @SubscribeEvent

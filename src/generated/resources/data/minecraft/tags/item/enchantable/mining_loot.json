@@ -10,7 +10,6 @@
     "ragium:copper_drum",
     "ragium:extractor",
     "ragium:fisher",
-    "ragium:forge_hammer",
     "ragium:grinder",
     "ragium:growth_chamber",
     "ragium:infuser",
@@ -21,7 +20,6 @@
     "ragium:multi_smelter",
     "ragium:primitive_blast_furnace",
     "ragium:refinery",
-    "ragium:soap",
     "ragium:solar_generator",
     "ragium:stirling_generator",
     "ragium:thermal_generator"

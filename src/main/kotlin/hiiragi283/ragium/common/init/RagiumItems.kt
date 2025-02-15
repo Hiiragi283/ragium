@@ -80,6 +80,7 @@ object RagiumItems {
 
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALTPETER)
+        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SULFUR)
         register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
         // Ingots
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
