@@ -7,11 +7,11 @@ import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.multiblock.*
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEnchantments
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import hiiragi283.ragium.common.item.component.HTSpawnerContent
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -19,7 +19,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.damagesource.DamageSource
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
@@ -28,17 +27,14 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.enchantment.Enchantments
-import net.minecraft.world.level.BaseSpawner
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent
-import net.neoforged.neoforge.event.level.BlockDropsEvent
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -72,25 +68,6 @@ internal object RagiumGameEvents {
     }
 
     @SubscribeEvent
-    fun onSpawnerBroken(event: BlockDropsEvent) {
-        if (event.isCanceled) return
-        val blockEntity: BlockEntity = event.blockEntity ?: return
-        val pos: BlockPos = blockEntity.blockPos
-        if (blockEntity is SpawnerBlockEntity) {
-            val level: Level = blockEntity.level ?: return
-            val baseSpawner: BaseSpawner = blockEntity.spawner
-            val entity: Entity = baseSpawner.getOrCreateDisplayEntity(level, pos) ?: return
-            dropStackAt(
-                level,
-                pos,
-                RagiumItems.BROKEN_SPAWNER.toStack().apply {
-                    set(RagiumComponentTypes.SPAWNER_CONTENT, HTSpawnerContent(entity.type))
-                },
-            )
-        }
-    }
-
-    @SubscribeEvent
     fun onEntityDrops(event: LivingDropsEvent) {
         if (event.isCanceled) return
         val source: DamageSource = event.source
@@ -113,16 +90,56 @@ internal object RagiumGameEvents {
     }
 
     @SubscribeEvent
-    fun toggleMachinePreview(event: UseItemOnBlockEvent) {
+    fun useItemOnBlock(event: UseItemOnBlockEvent) {
         if (event.isCanceled) return
         val stack: ItemStack = event.itemStack
-        if (stack.isEmpty || !stack.`is`(Items.BOOK)) return
+        if (stack.isEmpty) return
+        if (stack.`is`(Items.BOOK)) {
+            togglePreview(event)
+        } else if (stack.`is`(Tags.Items.NETHER_STARS)) {
+            captureSpawner(event)
+        }
+    }
+
+    @JvmStatic
+    private fun togglePreview(event: UseItemOnBlockEvent) {
         val level: Level = event.level
         val pos: BlockPos = event.pos
         (level.getHTBlockEntity(pos) as? HTMultiblockController)?.let { controller: HTMultiblockController ->
             controller.showPreview = !controller.showPreview
             event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide))
         }
+    }
+
+    @JvmStatic
+    private fun captureSpawner(event: UseItemOnBlockEvent) {
+        val level: Level = event.level
+        val pos: BlockPos = event.pos
+        val player: Player? = event.player
+        val definition = HTControllerDefinition(level, pos, Direction.NORTH)
+        val controller: HTMultiblockController = object : HTMultiblockController {
+            override var showPreview: Boolean = false
+
+            override fun getMultiblockMap(): HTMultiblockMap.Relative = RagiumMultiblockMaps.SPAWNER
+
+            override fun getDefinition(): HTControllerDefinition = definition
+
+            override fun processData(definition: HTControllerDefinition, data: HTMultiblockData) {
+                // Get spawner data
+                val content: HTSpawnerContent =
+                    data.components.get(RagiumComponentTypes.SPAWNER_CONTENT.get()) ?: return
+                // Break structure
+                getMultiblockMap().convertAbsolute(definition).forEach { posIn: BlockPos, _: HTMultiblockComponent ->
+                    level.destroyBlock(posIn, false)
+                }
+                // Drop Spawner
+                dropStackAt(level, pos.above(), createSpawnerStack(content.entityType))
+                event.itemStack.consume(1, player)
+            }
+        }
+        val data: HTMultiblockData = controller.collectData { player?.displayClientMessage(it, true) }
+        controller.processData(definition, data)
+        event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide))
     }
 
     @SubscribeEvent
@@ -153,6 +170,7 @@ internal object RagiumGameEvents {
         stack.get(RagiumComponentTypes.SPAWNER_CONTENT)?.addToTooltip(context, event.toolTip::add, flag)
     }
 
+    @JvmStatic
     private fun fluidTooltip(stack: ItemStack, context: Item.TooltipContext, consumer: Consumer<Component>) {
         val content: SimpleFluidContent = stack.get(RagiumComponentTypes.FLUID_CONTENT) ?: return
         // Title

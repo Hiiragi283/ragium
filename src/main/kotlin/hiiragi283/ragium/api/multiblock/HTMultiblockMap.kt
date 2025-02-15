@@ -112,7 +112,6 @@ sealed class HTMultiblockMap(val map: Map<BlockPos, HTMultiblockComponent>) : Ma
         ): Builder = add(BlockPos(x, y, z), component)
 
         fun add(pos: BlockPos, component: HTMultiblockComponent): Builder = apply {
-            if (pos == BlockPos.ZERO) return@apply
             map[pos] = component
         }
 

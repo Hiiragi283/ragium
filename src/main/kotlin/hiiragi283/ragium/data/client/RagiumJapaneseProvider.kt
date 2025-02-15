@@ -52,8 +52,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SOUL_BURNER, "ソウルバーナー")
         addBlock(RagiumBlocks.FIERY_BURNER, "燃え盛るバーナー")
 
-        addItem(RagiumItems.BROKEN_SPAWNER, "壊れたスポナー")
-
         addBlock(RagiumBlocks.getLedBlock(DyeColor.RED), "LEDブロック（赤）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.GREEN), "LEDブロック（緑）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.BLUE), "LEDブロック（青）")

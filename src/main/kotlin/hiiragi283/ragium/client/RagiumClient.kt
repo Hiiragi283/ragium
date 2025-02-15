@@ -4,17 +4,11 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.client.renderer.HTMachineBlockEntityRenderer
-import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRenderer
-import hiiragi283.ragium.api.client.renderer.HTMultiblockComponentRendererRegistry
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.inventory.HTMachineMenuType
-import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.screen.HTMachineContainerScreen
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.multiblock.HTAxisMultiblockComponent
-import hiiragi283.ragium.common.multiblock.HTSimpleMultiblockComponent
-import hiiragi283.ragium.common.multiblock.HTTagMultiblockComponent
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
@@ -22,7 +16,6 @@ import net.minecraft.util.FastColor
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
@@ -126,7 +119,7 @@ object RagiumClient {
                 HTMachineTier.ELITE -> 0.8f
                 HTMachineTier.ULTIMATE -> 1f
             }
-        }*/
+        }
 
         HTMultiblockComponentRendererRegistry.register(
             RagiumMultiblockComponentTypes.SIMPLE.get(),
@@ -159,7 +152,7 @@ object RagiumClient {
                 ->
                 component.getPlacementState(controller)
             },
-        )
+        )*/
 
         LOGGER.info("Loaded client setup!")
     }

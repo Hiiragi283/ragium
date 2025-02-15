@@ -168,7 +168,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.WITHER_REAGENT, "Wither Reagent")
 
         addItem(RagiumItems.BEE_WAX, "Bee Wax")
-        addItem(RagiumItems.BROKEN_SPAWNER, "Broken Spawner")
         addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "Chemical Machine Casing")
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")

@@ -7,16 +7,24 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.SpawnData
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
+import java.util.Optional
 
 //    ItemLike    //
 
@@ -50,6 +58,26 @@ fun Item.Properties.lore(vararg keys: String): Item.Properties {
 fun Item.Properties.lore(vararg lines: Component): Item.Properties = component(DataComponents.LORE, ItemLore(lines.toList()))
 
 //    ItemStack    //
+
+fun createSpawnerStack(entityType: EntityType<*>, count: Int = 1): ItemStack {
+    val id: ResourceLocation = EntityType.getKey(entityType)
+    val stack = ItemStack(Items.SPAWNER, count)
+    val root = CompoundTag()
+    SpawnData.CODEC
+        .encodeStart(
+            NbtOps.INSTANCE,
+            SpawnData(
+                buildNbt {
+                    putId("id", id)
+                },
+                Optional.empty(),
+                Optional.empty(),
+            ),
+        ).ifSuccess { root.put("SpawnData", it) }
+    root.putString("id", "minecraft:spawner")
+    stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(root))
+    return stack
+}
 
 /**
  * 残りの耐久値を返します。

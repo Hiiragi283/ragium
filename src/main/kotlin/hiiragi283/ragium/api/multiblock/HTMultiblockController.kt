@@ -18,16 +18,16 @@ interface HTMultiblockController {
     fun getMultiblockMap(): HTMultiblockMap.Relative?
 
     /**
-     * マルチブロックのコントローラを返します。
+     * マルチブロックのコントローラのデータを返します。
      */
-    fun getController(): HTControllerDefinition?
+    fun getDefinition(): HTControllerDefinition?
 
     /**
      * マルチブロックの判定結果を返します。
      * @param consumer エラーメッセージを受け取るブロック
      */
     fun collectData(consumer: (Component) -> Unit): HTMultiblockData {
-        val controller: HTControllerDefinition = getController() ?: return HTMultiblockData.DEFAULT
+        val controller: HTControllerDefinition = getDefinition() ?: return HTMultiblockData.DEFAULT
         if (controller.level.isClientSide) return HTMultiblockData.DEFAULT
         val absoluteMap: HTMultiblockMap.Absolute =
             getMultiblockMap()?.convertAbsolute(controller) ?: return HTMultiblockData.DEFAULT
@@ -51,5 +51,5 @@ interface HTMultiblockController {
     /**
      * [collectData]で集めたデータを処理します。
      */
-    fun processData(data: HTMultiblockData) {}
+    fun processData(definition: HTControllerDefinition, data: HTMultiblockData) {}
 }

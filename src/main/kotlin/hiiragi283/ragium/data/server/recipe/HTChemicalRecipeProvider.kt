@@ -173,7 +173,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.SNOW_BLOCK)
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_block")
-        
+
         // Blue Ice -> 9x Packed Ice
         HTSingleItemRecipeBuilder
             .grinder()
@@ -192,7 +192,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.PACKED_ICE)
             .itemOutput(RagiumItems.FROZEN_REAGENT)
             .saveSuffixed(output, "_from_packed_ice")
-        
+
         // Ice
         ShapelessRecipeBuilder
             .shapeless(RecipeCategory.MISC, Items.ICE)
@@ -201,7 +201,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_reagent", has(RagiumItems.FROZEN_REAGENT))
             .savePrefixed(output)
     }
-    
+
     private fun registerGlow(output: RecipeOutput) {
         // Glowstone -> 4x Glowstone Dust
         HTSingleItemRecipeBuilder

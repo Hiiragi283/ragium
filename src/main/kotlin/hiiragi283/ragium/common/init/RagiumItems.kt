@@ -406,7 +406,4 @@ object RagiumItems {
 
     @JvmField
     val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
-
-    @JvmField
-    val BROKEN_SPAWNER: DeferredItem<Item> = register("broken_spawner")
 }

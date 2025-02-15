@@ -88,5 +88,5 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getMultiblockMap(): HTMultiblockMap.Relative = RagiumMultiblockMaps.PRIMITIVE_BLAST_FURNACE
 
-    override fun getController(): HTControllerDefinition? = level?.let { HTControllerDefinition(it, pos, front) }
+    override fun getDefinition(): HTControllerDefinition? = level?.let { HTControllerDefinition(it, pos, front) }
 }
