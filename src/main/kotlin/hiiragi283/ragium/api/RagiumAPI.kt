@@ -171,17 +171,20 @@ interface RagiumAPI {
     fun createItemResult(item: Item, count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult
 
     fun createSingleItemMenu(
-        syncId: Int,
+        containerId: Int,
         playerInv: Inventory,
         pos: BlockPos,
-        itemHandler: IItemHandler,
+        itemInput: IItemHandler,
+        itemCatalyst: IItemHandler,
+        itemOutput: IItemHandler,
     ): AbstractContainerMenu
 
     fun createMultiItemMenu(
-        syncId: Int,
+        containerId: Int,
         playerInv: Inventory,
         pos: BlockPos,
-        itemHandler: IItemHandler,
+        itemInput: IItemHandler,
+        itemOutput: IItemHandler,
     ): AbstractContainerMenu
 
     /**

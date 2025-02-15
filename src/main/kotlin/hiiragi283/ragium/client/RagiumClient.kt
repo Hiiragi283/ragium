@@ -3,17 +3,15 @@ package hiiragi283.ragium.client
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.inventory.HTMachineMenuType
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.renderer.HTBlastFurnaceBlockEntityRenderer
-import hiiragi283.ragium.client.screen.HTMachineContainerScreen
+import hiiragi283.ragium.client.screen.HTMultiItemContainer
+import hiiragi283.ragium.client.screen.HTSingleItemContainer
 import hiiragi283.ragium.common.init.*
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.FastColor
-import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -25,7 +23,6 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
-import net.neoforged.neoforge.registries.DeferredHolder
 import org.slf4j.Logger
 import java.util.function.Supplier
 
@@ -84,12 +81,8 @@ object RagiumClient {
 
     @SubscribeEvent
     fun registerMenu(event: RegisterMenuScreensEvent) {
-        RagiumMenuTypes.REGISTER.forEach { holder: DeferredHolder<MenuType<*>, out MenuType<*>> ->
-            val menuType: MenuType<*> = holder.get()
-            if (menuType is HTMachineMenuType<*>) {
-                event.register(menuType, ::HTMachineContainerScreen)
-            }
-        }
+        event.register(RagiumMenuTypes.MULTI_ITEM.get(), ::HTMultiItemContainer)
+        event.register(RagiumMenuTypes.SINGLE_ITEM.get(), ::HTSingleItemContainer)
 
         LOGGER.info("Registered machine screens!")
     }

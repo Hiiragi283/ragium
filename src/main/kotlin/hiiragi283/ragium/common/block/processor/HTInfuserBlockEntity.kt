@@ -71,7 +71,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTInfuserContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
+        HTInfuserContainerMenu(containerId, playerInventory, blockPos, itemInput, itemOutput)
 
     override fun interactWithFluidStorage(player: Player): Boolean {
         if (outputTank.interactWithFluidStorage(player, HTStorageIO.OUTPUT)) {

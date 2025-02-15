@@ -67,7 +67,7 @@ abstract class HTMultiItemMachineBlockEntity(
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        RagiumAPI.getInstance().createMultiItemMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
+        RagiumAPI.getInstance().createMultiItemMenu(containerId, playerInventory, blockPos, itemInput, itemOutput)
 
     final override fun interactWithFluidStorage(player: Player): Boolean = false
 

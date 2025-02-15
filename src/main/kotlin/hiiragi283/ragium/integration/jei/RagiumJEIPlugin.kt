@@ -4,9 +4,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTSoap
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.getAllRecipes
+import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.tag.RagiumFluidTags
+import hiiragi283.ragium.client.screen.HTMultiItemContainer
+import hiiragi283.ragium.client.screen.HTSingleItemContainer
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -172,14 +175,38 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {
+        // Assembler, Blast Furnace
+        registration.addRecipeClickArea(
+            HTMultiItemContainer::class.java,
+            HTSlotPos.getSlotPosX(4),
+            HTSlotPos.getSlotPosY(1),
+            18,
+            18,
+            RagiumJEIRecipeTypes.ASSEMBLER,
+            RagiumJEIRecipeTypes.BLAST_FURNACE,
+        )
+        // Compressor, Grinder, Laser Assembly
+        registration.addRecipeClickArea(
+            HTSingleItemContainer::class.java,
+            HTSlotPos.getSlotPosX(4.5),
+            HTSlotPos.getSlotPosY(1),
+            18,
+            18,
+            RagiumJEIRecipeTypes.COMPRESSOR,
+            RagiumJEIRecipeTypes.GRINDER,
+            RagiumJEIRecipeTypes.LASER_ASSEMBLY,
+        )
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         // Assembler
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ASSEMBLER, HTMachineType.ASSEMBLER)
         // Blast Furnace
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, HTMachineType.BLAST_FURNACE)
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+        registration.addRecipeCatalysts(
+            RagiumJEIRecipeTypes.BLAST_FURNACE,
+            HTMachineType.BLAST_FURNACE,
+            RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
+        )
         // Brewery
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BREWERY, HTMachineType.ALCHEMICAL_BREWERY)
         // Compressor
@@ -189,8 +216,11 @@ class RagiumJEIPlugin : IModPlugin {
         // Extractor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.EXTRACTOR, HTMachineType.EXTRACTOR)
         // Grinder
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, HTMachineType.GRINDER)
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, RagiumBlocks.MANUAL_GRINDER)
+        registration.addRecipeCatalysts(
+            RagiumJEIRecipeTypes.GRINDER,
+            HTMachineType.GRINDER,
+            RagiumBlocks.MANUAL_GRINDER,
+        )
         // Growth Chamber
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GROWTH_CHAMBER, HTMachineType.GROWTH_CHAMBER)
         // Infuser
@@ -203,8 +233,11 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.REFINERY, HTMachineType.REFINERY)
 
         // Generator
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GENERATOR, HTMachineType.COMBUSTION_GENERATOR)
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GENERATOR, HTMachineType.THERMAL_GENERATOR)
+        registration.addRecipeCatalysts(
+            RagiumJEIRecipeTypes.GENERATOR,
+            HTMachineType.COMBUSTION_GENERATOR,
+            HTMachineType.THERMAL_GENERATOR,
+        )
         // Stirling
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.STIRLING, HTMachineType.STIRLING_GENERATOR)
         // Material

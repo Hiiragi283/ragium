@@ -83,27 +83,33 @@ class InternalRagiumAPI : RagiumAPI {
         HTSimpleItemResult(item, count, components)
 
     override fun createSingleItemMenu(
-        syncId: Int,
+        containerId: Int,
         playerInv: Inventory,
         pos: BlockPos,
-        itemHandler: IItemHandler,
+        itemInput: IItemHandler,
+        itemCatalyst: IItemHandler,
+        itemOutput: IItemHandler,
     ): AbstractContainerMenu = HTSingleItemContainerMenu(
-        syncId,
+        containerId,
         playerInv,
         pos,
-        itemHandler,
+        itemInput,
+        itemCatalyst,
+        itemOutput,
     )
 
     override fun createMultiItemMenu(
-        syncId: Int,
+        containerId: Int,
         playerInv: Inventory,
         pos: BlockPos,
-        itemHandler: IItemHandler,
+        itemInput: IItemHandler,
+        itemOutput: IItemHandler,
     ): AbstractContainerMenu = HTMultiItemContainerMenu(
-        syncId,
+        containerId,
         playerInv,
         pos,
-        itemHandler,
+        itemInput,
+        itemOutput,
     )
 
     /*companion object {

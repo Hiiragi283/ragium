@@ -1,7 +1,8 @@
-package hiiragi283.ragium.client.screen
+package hiiragi283.ragium.api.screen
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.inventory.HTContainerMenu
+import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.common.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
@@ -17,8 +18,8 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
-abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: Inventory, title: Component) :
-    AbstractContainerScreen<T>(menu, playerInventory, title) {
+abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Inventory, title: Component) :
+    AbstractContainerScreen<T>(menu, inventory, title) {
     override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,
@@ -34,10 +35,6 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
     protected val startX: Int get() = (width - imageWidth) / 2
 
     protected val startY: Int get() = (height - imageHeight) / 2
-
-    protected fun getSlotPosX(index: Int): Int = 8 + index * 18
-
-    protected fun getSlotPosY(index: Int): Int = 18 + index * 18
 
     protected fun renderFluid(
         guiGraphics: GuiGraphics,
@@ -59,8 +56,8 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
         val floatColor: Triple<Float, Float, Float> = toFloatColor(color)
 
         guiGraphics.blit(
-            startX + getSlotPosX(x),
-            startY + getSlotPosY(y),
+            startX + HTSlotPos.getSlotPosX(x),
+            startY + HTSlotPos.getSlotPosY(y),
             0,
             sprite.contents().width(),
             sprite.contents().height(),
@@ -79,8 +76,8 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, playerInventory: 
         mouseY: Int,
         action: () -> Unit,
     ) {
-        val startX1: Int = startX + getSlotPosX(x)
-        val startY1: Int = startY + getSlotPosY(y)
+        val startX1: Int = startX + HTSlotPos.getSlotPosX(x)
+        val startY1: Int = startY + HTSlotPos.getSlotPosY(y)
         val xRange: IntRange = (startX1..startX1 + 18)
         val yRange: IntRange = (startY1..startY1 + 18)
         if (mouseX in xRange && mouseY in yRange) {

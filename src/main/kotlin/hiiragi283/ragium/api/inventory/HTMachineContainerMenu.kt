@@ -1,13 +1,11 @@
 package hiiragi283.ragium.api.inventory
 
-import hiiragi283.ragium.api.extension.getMachineEntity
+import hiiragi283.ragium.api.extension.getMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.inventory.SimpleContainerData
-import net.neoforged.neoforge.items.IItemHandler
 import java.util.function.Supplier
 
 abstract class HTMachineContainerMenu(
@@ -15,17 +13,17 @@ abstract class HTMachineContainerMenu(
     containerId: Int,
     playerInv: Inventory,
     pos: BlockPos,
-    itemHandler: IItemHandler,
 ) : HTContainerMenu(
         menuType,
         containerId,
         playerInv,
         pos,
-        itemHandler,
     ) {
-    val machineEntity: HTMachineAccess? = level.getMachineEntity(pos)
+    val machine: HTMachineAccess? = level.getMachineAccess(pos)
 
-    protected val containerData: ContainerData = machineEntity?.containerData ?: SimpleContainerData(2)
+    fun getProgress(): Float = machine?.getProgress() ?: 0f
 
-    fun getProgress(): Float = containerData.get(0).toFloat() / containerData.get(1).toFloat()
+    fun addDataSlots() {
+        addDataSlots(machine?.containerData ?: SimpleContainerData(2))
+    }
 }

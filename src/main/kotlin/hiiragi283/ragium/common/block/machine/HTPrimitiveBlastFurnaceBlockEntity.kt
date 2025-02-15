@@ -71,7 +71,8 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
                 containerId,
                 playerInventory,
                 blockPos,
-                CombinedInvWrapper(itemInput, itemOutput),
+                itemInput,
+                itemOutput,
             )
         } else {
             null

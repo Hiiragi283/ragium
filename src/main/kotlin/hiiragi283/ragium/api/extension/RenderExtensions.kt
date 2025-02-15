@@ -52,6 +52,7 @@ fun Fluid.getSpriteAndColor(): Pair<TextureAtlasSprite, Int> {
 
 //    Rendering    //
 
+@Suppress("DEPRECATION")
 fun HTMultiblockController.renderMultiblock(
     poseStack: PoseStack,
     bufferSource: MultiBufferSource,

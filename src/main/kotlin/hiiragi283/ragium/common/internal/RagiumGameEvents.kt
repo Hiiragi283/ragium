@@ -147,15 +147,15 @@ internal object RagiumGameEvents {
         val machine: HTMachineAccess = event.machine
         val level: Level = machine.levelAccess ?: return
         val pos: BlockPos = machine.pos
-        var foundAddon: HTSlagCollectorBlockEntity? = null
+        var addon: HTSlagCollectorBlockEntity? = null
         if (machine.machineType == HTMachineType.BLAST_FURNACE) {
             for (direction: Direction in Direction.entries) {
-                foundAddon = (level.getBlockEntity(pos.relative(direction)) as? HTSlagCollectorBlockEntity)
-                if (foundAddon != null) break
+                addon = (level.getBlockEntity(pos.relative(direction)) as? HTSlagCollectorBlockEntity)
+                if (addon != null) break
             }
         }
-        if (foundAddon == null) return
-        foundAddon.onReceiveEvent(event)
+        if (addon == null) return
+        addon.onReceiveEvent(event)
     }
 
     @SubscribeEvent

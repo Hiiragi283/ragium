@@ -9,21 +9,15 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTRefineryContainerMenu(
-    syncId: Int,
+    containerId: Int,
     playerInv: Inventory,
     pos: BlockPos,
-    itemHandler: IItemHandler,
-) : HTMachineContainerMenu(
-        RagiumMenuTypes.REFINERY,
-        syncId,
+    itemOutput: IItemHandler,
+) : HTMachineContainerMenu(RagiumMenuTypes.REFINERY, containerId, playerInv, pos) {
+    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+        containerId,
         playerInv,
-        pos,
-        itemHandler,
-    ) {
-    constructor(syncId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
-        syncId,
-        playerInv,
-        registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
+        decodePos(registryBuf),
         ItemStackHandler(1),
     )
 
@@ -31,12 +25,12 @@ class HTRefineryContainerMenu(
         // inputs
         addFluidSlot(0, 2, 1)
         // outputs
-        addOutputSlot(0, 6, 1)
+        addOutputSlot(itemOutput, 0, 6, 1)
         addFluidSlot(1, 7, 1)
         // player inventory
         addPlayerInv()
         // register property
-        addDataSlots(containerData)
+        addDataSlots()
     }
 
     override val inputSlots: IntRange = IntRange.EMPTY

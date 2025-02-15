@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.inventory.HTLootSpawnerContainerMenu
 import hiiragi283.ragium.common.item.HTMachineItemHandlerImpl
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -16,6 +15,7 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
@@ -59,8 +59,7 @@ class HTLookSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTLootSpawnerContainerMenu =
-        HTLootSpawnerContainerMenu(containerId, playerInventory, blockPos, spawnerInput)
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 
     override fun interactWithFluidStorage(player: Player): Boolean = false
 }

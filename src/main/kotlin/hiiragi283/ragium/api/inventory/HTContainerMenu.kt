@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.inventory
 
 import net.minecraft.core.BlockPos
+import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -17,7 +18,6 @@ abstract class HTContainerMenu(
     containerId: Int,
     val playerInv: Inventory,
     val pos: BlockPos,
-    val itemHandler: IItemHandler,
 ) : AbstractContainerMenu(menuType.get(), containerId) {
     val player: Player = playerInv.player
     val level: Level get() = player.level()
@@ -35,14 +35,14 @@ abstract class HTContainerMenu(
         if (slotIn.hasItem()) {
             val stackIn: ItemStack = slotIn.item
             result = stackIn.copy()
-            when {
-                index in inputSlots -> {
+            when (index) {
+                in inputSlots -> {
                     if (!moveItemStackTo(stackIn, playerStartIndex, playerStartIndex + 36, true)) {
                         return ItemStack.EMPTY
                     }
                 }
 
-                index in outputSlots -> {
+                in outputSlots -> {
                     if (!moveItemStackTo(stackIn, playerStartIndex, playerStartIndex + 36, true)) {
                         return ItemStack.EMPTY
                     }
@@ -79,17 +79,23 @@ abstract class HTContainerMenu(
     val itemSlots: MutableList<Pair<Int, Int>> = mutableListOf()
     val fluidSlots: MutableMap<Int, Pair<Int, Int>> = mutableMapOf()
 
-    private fun getSlotPosX(index: Int): Int = 8 + index * 18
-
-    private fun getSlotPosY(index: Int): Int = 18 + index * 18
-
-    protected fun addSlot(index: Int, x: Int, y: Int) {
-        addSlot(SlotItemHandler(itemHandler, index, getSlotPosX(x), getSlotPosY(y)))
+    protected fun addSlot(
+        handler: IItemHandler,
+        index: Int,
+        x: Int,
+        y: Int,
+    ) {
+        addSlot(SlotItemHandler(handler, index, HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y)))
         itemSlots.add(x to y)
     }
 
-    protected fun addOutputSlot(index: Int, x: Int, y: Int) {
-        addSlot(HTOutputSlot(itemHandler, index, getSlotPosX(x), getSlotPosY(y)))
+    protected fun addOutputSlot(
+        handler: IItemHandler,
+        index: Int,
+        x: Int,
+        y: Int,
+    ) {
+        addSlot(HTOutputSlot(handler, index, HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y)))
         itemSlots.add(x to y)
     }
 
@@ -100,11 +106,24 @@ abstract class HTContainerMenu(
     protected fun addPlayerInv(yOffset: Int = 0) {
         // inventory
         (0..26).forEach { index: Int ->
-            addSlot(Slot(playerInv, index + 9, getSlotPosX(index % 9), getSlotPosY(3 + (index / 9)) + 12 + yOffset))
+            addSlot(
+                Slot(
+                    playerInv,
+                    index + 9,
+                    HTSlotPos.getSlotPosX(index % 9),
+                    HTSlotPos.getSlotPosY(3 + (index / 9)) + 12 + yOffset
+                )
+            )
         }
         // hotbar
         (0..8).forEach { index: Int ->
-            addSlot(Slot(playerInv, index, getSlotPosX(index), getSlotPosY(7) - 2 + yOffset))
+            addSlot(Slot(playerInv, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) - 2 + yOffset))
         }
+    }
+
+    companion object {
+        @JvmStatic
+        protected fun decodePos(registryBuf: RegistryFriendlyByteBuf?): BlockPos =
+            registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO
     }
 }

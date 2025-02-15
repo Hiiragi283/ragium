@@ -29,7 +29,6 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 class HTDisenchantingTableBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.DISENCHANTING_TABLE, pos, state),
@@ -117,7 +116,9 @@ class HTDisenchantingTableBlockEntity(pos: BlockPos, state: BlockState) :
             containerId,
             playerInventory,
             blockPos,
-            CombinedInvWrapper(ticketInput, toolInput, bookInput),
+            ticketInput,
+            toolInput,
+            bookInput,
         )
 
     override fun getDisplayName(): Component = RagiumBlocks.DISENCHANTING_TABLE.get().name

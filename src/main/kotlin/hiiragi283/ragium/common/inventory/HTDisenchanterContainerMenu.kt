@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.inventory
 
-import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
-import hiiragi283.ragium.common.init.RagiumMenuTypes
+import hiiragi283.ragium.api.inventory.HTContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
@@ -9,34 +8,30 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTDisenchanterContainerMenu(
-    syncId: Int,
+    containerId: Int,
     playerInv: Inventory,
     pos: BlockPos,
-    itemHandler: IItemHandler,
-) : HTMachineContainerMenu(
-        RagiumMenuTypes.DISENCHANTER,
-        syncId,
+    ticketInput: IItemHandler,
+    toolInput: IItemHandler,
+    bookInput: IItemHandler,
+) : HTContainerMenu(TODO(), containerId, playerInv, pos) {
+    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+        containerId,
         playerInv,
-        pos,
-        itemHandler,
-    ) {
-    constructor(syncId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
-        syncId,
-        playerInv,
-        registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
-        ItemStackHandler(3),
+        decodePos(registryBuf),
+        ItemStackHandler(1),
+        ItemStackHandler(1),
+        ItemStackHandler(1),
     )
 
     init {
         // inputs
-        addSlot(0, 1, 1)
-        addSlot(1, 2, 1)
-        addSlot(2, 3, 1)
+        addSlot(ticketInput, 0, 1, 1)
+        addSlot(toolInput, 0, 2, 1)
+        addSlot(bookInput, 0, 3, 1)
         // outputs
         // player inventory
         addPlayerInv()
-        // register property
-        addDataSlots(containerData)
     }
 
     override val inputSlots: IntRange = (0..2)

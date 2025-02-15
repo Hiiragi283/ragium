@@ -9,35 +9,31 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTMultiItemContainerMenu(
-    syncId: Int,
+    containerId: Int,
     playerInv: Inventory,
     pos: BlockPos,
-    itemHandler: IItemHandler,
-) : HTMachineContainerMenu(
-        RagiumMenuTypes.MULTI_ITEM,
-        syncId,
+    itemInput: IItemHandler,
+    itemOutput: IItemHandler,
+) : HTMachineContainerMenu(RagiumMenuTypes.MULTI_ITEM, containerId, playerInv, pos) {
+    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+        containerId,
         playerInv,
-        pos,
-        itemHandler,
-    ) {
-    constructor(syncId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
-        syncId,
-        playerInv,
-        registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
-        ItemStackHandler(4),
+        decodePos(registryBuf),
+        ItemStackHandler(3),
+        ItemStackHandler(1),
     )
 
     init {
         // inputs
-        addSlot(0, 1, 1)
-        addSlot(1, 2, 1)
-        addSlot(2, 3, 1)
+        addSlot(itemInput, 0, 1, 1)
+        addSlot(itemInput, 1, 2, 1)
+        addSlot(itemInput, 2, 3, 1)
         // outputs
-        addOutputSlot(3, 5, 1)
+        addOutputSlot(itemOutput, 0, 6, 1)
         // player inventory
         addPlayerInv()
         // register property
-        addDataSlots(containerData)
+        addDataSlots()
     }
 
     override val inputSlots: IntRange = (0..2)

@@ -65,7 +65,9 @@ abstract class HTSingleItemMachineBlockEntity(
             containerId,
             playerInventory,
             blockPos,
-            CombinedInvWrapper(itemInput, itemCatalyst, itemOutput),
+            itemInput,
+            itemCatalyst,
+            itemOutput,
         )
 
     final override fun interactWithFluidStorage(player: Player): Boolean = false

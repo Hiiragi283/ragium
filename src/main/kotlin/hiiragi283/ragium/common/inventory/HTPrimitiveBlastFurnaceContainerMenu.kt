@@ -9,34 +9,30 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTPrimitiveBlastFurnaceContainerMenu(
-    syncId: Int,
+    containerId: Int,
     playerInv: Inventory,
     pos: BlockPos,
-    itemHandler: IItemHandler,
-) : HTMachineContainerMenu(
-        RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE,
-        syncId,
+    itemInput: IItemHandler,
+    itemOutput: IItemHandler,
+) : HTMachineContainerMenu(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE, containerId, playerInv, pos) {
+    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+        containerId,
         playerInv,
-        pos,
-        itemHandler,
-    ) {
-    constructor(syncId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
-        syncId,
-        playerInv,
-        registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
-        ItemStackHandler(3),
+        decodePos(registryBuf),
+        ItemStackHandler(2),
+        ItemStackHandler(1),
     )
 
     init {
         // inputs
-        addSlot(0, 2, 1)
-        addSlot(1, 3, 1)
+        addSlot(itemInput, 0, 2, 1)
+        addSlot(itemInput, 1, 3, 1)
         // outputs
-        addOutputSlot(2, 5, 1)
+        addOutputSlot(itemOutput, 0, 5, 1)
         // player inventory
         addPlayerInv()
         // register property
-        addDataSlots(containerData)
+        addDataSlots()
     }
 
     override val inputSlots: IntRange = (0..1)

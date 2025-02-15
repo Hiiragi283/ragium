@@ -62,7 +62,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTExtractorContainerMenu(containerId, playerInventory, blockPos, CombinedInvWrapper(itemInput, itemOutput))
+        HTExtractorContainerMenu(containerId, playerInventory, blockPos, itemInput, itemOutput)
 
     override fun interactWithFluidStorage(player: Player): Boolean = outputTank.interactWithFluidStorage(player, HTStorageIO.GENERIC)
 

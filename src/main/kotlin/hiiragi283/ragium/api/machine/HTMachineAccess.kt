@@ -57,6 +57,8 @@ interface HTMachineAccess :
      */
     val containerData: ContainerData
 
+    fun getProgress(): Float = containerData.get(0).toFloat() / containerData.get(1).toFloat()
+
     /**
      * 消費/生産エネルギーにかけられる倍率
      *

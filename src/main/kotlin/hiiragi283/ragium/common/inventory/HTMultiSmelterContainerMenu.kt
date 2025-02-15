@@ -9,33 +9,29 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTMultiSmelterContainerMenu(
-    syncId: Int,
+    containerId: Int,
     playerInv: Inventory,
     pos: BlockPos,
-    itemHandler: IItemHandler,
-) : HTMachineContainerMenu(
-        RagiumMenuTypes.MULTI_SMELTER,
-        syncId,
+    itemInput: IItemHandler,
+    itemOutput: IItemHandler,
+) : HTMachineContainerMenu(RagiumMenuTypes.MULTI_SMELTER, containerId, playerInv, pos) {
+    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+        containerId,
         playerInv,
-        pos,
-        itemHandler,
-    ) {
-    constructor(syncId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
-        syncId,
-        playerInv,
-        registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO,
-        ItemStackHandler(2),
+        decodePos(registryBuf),
+        ItemStackHandler(1),
+        ItemStackHandler(1),
     )
 
     init {
         // inputs
-        addSlot(0, 1, 1)
+        addSlot(itemInput, 0, 1, 1)
         // outputs
-        addOutputSlot(1, 7, 1)
+        addOutputSlot(itemOutput, 0, 7, 1)
         // player inventory
         addPlayerInv()
         // register property
-        addDataSlots(containerData)
+        addDataSlots()
     }
 
     override val inputSlots: IntRange = (0..0)

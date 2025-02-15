@@ -30,7 +30,7 @@ fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity
  * 指定した[pos]から[HTMachineAccess]を返します。
  * @return 存在しない場合は`null`
  */
-fun BlockGetter.getMachineEntity(pos: BlockPos): HTMachineAccess? = getBlockEntity(pos) as? HTMachineAccess
+fun BlockGetter.getMachineAccess(pos: BlockPos): HTMachineAccess? = getBlockEntity(pos) as? HTMachineAccess
 
 //    Level    //
 

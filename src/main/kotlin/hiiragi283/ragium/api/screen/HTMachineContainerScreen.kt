@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.screen
+package hiiragi283.ragium.api.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
@@ -9,16 +9,16 @@ import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.fluids.FluidStack
 
-open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerInventory: Inventory, title: Component) :
-    HTContainerScreen<T>(menu, playerInventory, title) {
-    companion object {
-        @JvmField
-        val TEXTURE: ResourceLocation = RagiumAPI.id("textures/gui/machine.png")
-    }
+abstract class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, inventory: Inventory, title: Component) :
+    HTContainerScreen<T>(menu, inventory, title) {
+    abstract val texture: ResourceLocation
+    
+    abstract val progressX: Int
+    abstract val progressY: Int
 
-    private fun getFluidStack(index: Int): FluidStack = menu.machineEntity?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
+    protected fun getFluidStack(index: Int): FluidStack = menu.machine?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
 
-    private fun getFluidCapacity(index: Int): Int = menu.machineEntity?.getFluidHandler(null)?.getTankCapacity(index) ?: 0
+    protected fun getFluidCapacity(index: Int): Int = menu.machine?.getFluidHandler(null)?.getTankCapacity(index) ?: 0
 
     override fun render(
         guiGraphics: GuiGraphics,
@@ -28,7 +28,7 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
     ) {
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         // energy amount
-        renderEnergyTooltip(guiGraphics, getSlotPosX(4), getSlotPosY(0), mouseX, mouseY)
+        renderEnergyTooltip(guiGraphics, progressX, progressY, mouseX, mouseY)
         // fluid tooltip
         menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             renderFluidTooltip(
@@ -50,7 +50,7 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
         mouseY: Int,
     ) {
         // background
-        guiGraphics.blit(TEXTURE, startX, startY, 0, 0, imageWidth, imageHeight)
+        guiGraphics.blit(texture, startX, startY, 0, 0, imageWidth, imageHeight)
         // progress bar
         guiGraphics.blitSprite(
             RagiumAPI.id("progress_bar"),
@@ -58,13 +58,13 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
             16,
             0,
             0,
-            startX + getSlotPosX(4),
-            startY + getSlotPosY(1),
+            startX + progressX,
+            startY + progressY,
             Mth.ceil(menu.getProgress() * 16f),
             16,
         )
         // item slots
-        menu.itemSlots.forEach { (slotX: Int, slotY: Int) ->
+        /*menu.itemSlots.forEach { (slotX: Int, slotY: Int) ->
             guiGraphics.blitSprite(
                 RagiumAPI.id("item_slot"),
                 startX + getSlotPosX(slotX) - 1,
@@ -83,6 +83,6 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
                 18,
             )
             renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
-        }
+        }*/
     }
 }
