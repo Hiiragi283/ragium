@@ -80,7 +80,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTBlockRecipeProvider.buildRecipes(output, holderLookup)
         HTChemicalRecipeProvider.buildRecipes(output, holderLookup)
         HTFoodRecipeProvider.buildRecipes(output, holderLookup)
-        HTIngredientRecipeProvider.buildRecipes(output, holderLookup)
+        HTCommonRecipeProvider.buildRecipes(output, holderLookup)
         HTMachineRecipeProvider.buildRecipes(output, holderLookup)
         HTMaterialRecipeProvider.buildRecipes(output, holderLookup)
 

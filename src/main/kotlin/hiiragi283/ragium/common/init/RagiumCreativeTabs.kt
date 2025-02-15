@@ -31,8 +31,7 @@ object RagiumCreativeTabs {
                     RagiumBlocks.STORAGE_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.SLAG_BLOCK)
                     // Decorations
-                    output.accept(RagiumBlocks.CHEMICAL_GLASS)
-                    output.accept(RagiumBlocks.OBSIDIAN_GLASS)
+                    RagiumBlocks.GLASSES.forEach(output::accept)
                     RagiumBlocks.LED_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.PLASTIC_BLOCK)
 

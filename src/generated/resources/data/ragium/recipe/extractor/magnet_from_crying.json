@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "tag": "c:obsidians/crying"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "count": 4,
+    "item": "ragium:magnet"
+  }
+}

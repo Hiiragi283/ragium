@@ -1,0 +1,10 @@
+{
+  "type": "ragium:extractor",
+  "item_input": {
+    "tag": "c:gems/amethyst"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "item": "ragium:magnet"
+  }
+}

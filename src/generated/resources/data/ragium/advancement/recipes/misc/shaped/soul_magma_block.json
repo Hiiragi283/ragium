@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:soul_reagent"
+            "items": "#minecraft:soul_fire_base_blocks"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shapeless/soul_magma_block"
+        "recipe": "ragium:shaped/soul_magma_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shapeless/soul_magma_block"
+      "ragium:shaped/soul_magma_block"
     ]
   }
 }

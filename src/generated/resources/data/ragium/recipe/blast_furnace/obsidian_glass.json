@@ -1,14 +1,14 @@
 {
   "type": "ragium:blast_furnace",
   "first_item_input": {
-    "count": 4,
-    "item": "ragium:chemical_glass"
+    "tag": "c:glass_blocks"
   },
   "item_output": {
     "type": "ragium:simple",
     "item": "ragium:obsidian_glass"
   },
   "second_item_input": {
+    "count": 2,
     "tag": "c:obsidians/normal"
   }
 }

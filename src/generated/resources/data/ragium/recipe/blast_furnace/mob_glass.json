@@ -5,10 +5,10 @@
   },
   "item_output": {
     "type": "ragium:simple",
-    "item": "ragium:chemical_glass"
+    "item": "ragium:mob_glass"
   },
   "second_item_input": {
     "count": 2,
-    "tag": "c:slag"
+    "tag": "minecraft:trapdoors"
   }
 }

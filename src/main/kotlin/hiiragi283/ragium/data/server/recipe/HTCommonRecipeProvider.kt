@@ -40,7 +40,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredItem
 
-object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
+object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerRaginite(output)
         registerSteels(output)
@@ -319,7 +319,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .assembler()
             .itemInput(RagiumItems.GLOW_REAGENT, 64)
             .itemInput(Tags.Items.INGOTS_GOLD, 16)
-            .itemInput(Tags.Items.GLASS_BLOCKS_TINTED, 8)
+            .itemInput(RagiumBlocks.CHEMICAL_GLASS, 8)
             .itemOutput(RagiumItems.GLOW_LENS)
             .save(output)
 
@@ -327,7 +327,7 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .assembler()
             .itemInput(RagiumItems.PRISMARINE_REAGENT, 64)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 16)
-            .itemInput(RagiumBlocks.CHEMICAL_GLASS, 8)
+            .itemInput(RagiumBlocks.SOUL_GLASS, 8)
             .itemOutput(RagiumItems.PRISMARINE_LENS)
             .save(output)
 
@@ -434,12 +434,5 @@ object HTIngredientRecipeProvider : RagiumRecipeProvider.Child {
             .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
             .unlockedBy("has_iron_block", has(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
             .savePrefixed(output)
-
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(RagiumBlocks.CHEMICAL_GLASS, 4)
-            .itemInput(Tags.Items.OBSIDIANS_NORMAL)
-            .itemOutput(RagiumBlocks.OBSIDIAN_GLASS)
-            .save(output)
     }
 }

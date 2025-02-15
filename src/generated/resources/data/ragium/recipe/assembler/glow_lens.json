@@ -14,6 +14,6 @@
   },
   "third_item_input": {
     "count": 8,
-    "tag": "c:glass_blocks/tinted"
+    "item": "ragium:chemical_glass"
   }
 }

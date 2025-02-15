@@ -1,10 +1,11 @@
 {
   "type": "ragium:grinder",
   "item_input": {
-    "tag": "minecraft:soul_fire_base_blocks"
+    "tag": "c:rods/blaze"
   },
   "item_output": {
     "type": "ragium:simple",
-    "item": "ragium:soul_reagent"
+    "count": 4,
+    "item": "minecraft:blaze_powder"
   }
 }

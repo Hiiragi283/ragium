@@ -1,0 +1,11 @@
+{
+  "type": "ragium:grinder",
+  "item_input": {
+    "item": "minecraft:glowstone"
+  },
+  "item_output": {
+    "type": "ragium:simple",
+    "count": 4,
+    "item": "minecraft:glowstone_dust"
+  }
+}

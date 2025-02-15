@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
@@ -18,6 +17,7 @@ import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -32,12 +32,12 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         registerDeepant(output)
         registerEnder(output)
         registerGlow(output)
+        registerMagical(output)
         registerPrismarine(output)
         registerSculk(output)
-        registerSoul(output)
         registerWither(output)
 
-        registerSludge(output)
+        registerSlag(output)
 
         registerUranium(output)
     }
@@ -64,6 +64,13 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerBlaze(output: RecipeOutput) {
+        // Blaze Rod -? 4x Blaze Powder
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Tags.Items.RODS_BLAZE)
+            .itemOutput(Items.BLAZE_POWDER, 4)
+            .save(output)
+
         // Blaze Reagent
         HTExtractorRecipeBuilder()
             .itemInput(Items.MAGMA_BLOCK, 8)
@@ -159,6 +166,13 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerGlow(output: RecipeOutput) {
+        // Glowstone -> 4x Glowstone Dust
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Items.GLOWSTONE)
+            .itemOutput(Items.GLOWSTONE_DUST, 4)
+            .save(output)
+
         // Glow Reagent
         HTExtractorRecipeBuilder()
             .itemInput(Items.GLOW_LICHEN, 8)
@@ -194,6 +208,24 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .saveSuffixed(output, "_from_reagent")
     }
 
+    private fun registerMagical(output: RecipeOutput) {
+        // Magical Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.GEMS_AMETHYST)
+            .itemOutput(RagiumItems.MAGNET)
+            .saveSuffixed(output, "_from_amethyst")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.OBSIDIANS_CRYING)
+            .itemOutput(RagiumItems.MAGNET, 4)
+            .saveSuffixed(output, "_from_crying")
+
+        HTExtractorRecipeBuilder()
+            .itemInput(Tags.Items.NETHER_STARS)
+            .itemOutput(RagiumItems.MAGNET, 64)
+            .saveSuffixed(output, "_from_star")
+    }
+
     private fun registerPrismarine(output: RecipeOutput) {
         // Prismarine Reagent
         HTExtractorRecipeBuilder()
@@ -222,6 +254,16 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .requires(Tags.Items.GLASS_BLOCKS)
             .requires(RagiumItems.PRISMARINE_REAGENT)
             .requires(RagiumItems.PRISMARINE_REAGENT)
+            .unlockedBy("has_reagent", has(RagiumItems.PRISMARINE_REAGENT))
+            .savePrefixed(output)
+        // Sponge
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.BUILDING_BLOCKS, Items.SPONGE)
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', RagiumItems.PRISMARINE_REAGENT)
+            .define('B', ItemTags.WOOL)
             .unlockedBy("has_reagent", has(RagiumItems.PRISMARINE_REAGENT))
             .savePrefixed(output)
     }
@@ -263,24 +305,6 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
     }
 
-    private fun registerSoul(output: RecipeOutput) {
-        // Soul Reagent
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            .itemOutput(RagiumItems.SOUL_REAGENT)
-            .save(output)
-
-        // Soul Magma
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, RagiumBlocks.SOUL_MAGMA_BLOCK)
-            .requires(Items.MAGMA_BLOCK)
-            .requires(RagiumItems.SOUL_REAGENT)
-            .requires(RagiumItems.SOUL_REAGENT)
-            .unlockedBy("has_soul", has(RagiumItems.SOUL_REAGENT))
-            .savePrefixed(output)
-    }
-
     private fun registerWither(output: RecipeOutput) {
         // Wither Reagent
         HTExtractorRecipeBuilder()
@@ -302,21 +326,13 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
     }
 
-    private fun registerSludge(output: RecipeOutput) {
+    private fun registerSlag(output: RecipeOutput) {
         // Slag -> Gravel
         HTSingleItemRecipeBuilder
             .grinder()
             .itemInput(RagiumItemTags.SLAG)
             .itemOutput(Items.GRAVEL)
             .saveSuffixed(output, "_from_slag")
-
-        // Slag -> Chemical Glass
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(Tags.Items.GLASS_BLOCKS)
-            .itemInput(RagiumItemTags.SLAG)
-            .itemOutput(RagiumBlocks.CHEMICAL_GLASS)
-            .save(output)
     }
 
     private fun registerUranium(output: RecipeOutput) {

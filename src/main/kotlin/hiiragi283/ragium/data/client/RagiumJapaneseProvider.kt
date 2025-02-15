@@ -30,7 +30,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SHAFT, "シャフト")
 
         addBlock(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
+        addBlock(RagiumBlocks.MOB_GLASS, "モブガラス")
         addBlock(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石ガラス")
+        addBlock(RagiumBlocks.SOUL_GLASS, "ソウルガラス")
 
         addBlock(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
 
@@ -150,7 +152,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MAGICAL_REAGENT, "魔術的試薬")
         addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
         addItem(RagiumItems.SCULK_REAGENT, "スカルク試薬")
-        addItem(RagiumItems.SOUL_REAGENT, "ソウル試薬")
         addItem(RagiumItems.WITHER_REAGENT, "ウィザー試薬")
 
         addItem(RagiumItems.BEE_WAX, "蜜蠟")

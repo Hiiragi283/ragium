@@ -30,7 +30,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SHAFT, "Shaft")
 
         addBlock(RagiumBlocks.CHEMICAL_GLASS, "Chemical Glass")
+        addBlock(RagiumBlocks.MOB_GLASS, "Mob Glass")
         addBlock(RagiumBlocks.OBSIDIAN_GLASS, "Obsidian Glass")
+        addBlock(RagiumBlocks.SOUL_GLASS, "Soul Glass")
 
         addBlock(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
 
@@ -148,7 +150,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MAGICAL_REAGENT, "Magical Reagent")
         addItem(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
         addItem(RagiumItems.SCULK_REAGENT, "Sculk Reagent")
-        addItem(RagiumItems.SOUL_REAGENT, "Soul Reagent")
         addItem(RagiumItems.WITHER_REAGENT, "Wither Reagent")
 
         addItem(RagiumItems.BEE_WAX, "Bee Wax")

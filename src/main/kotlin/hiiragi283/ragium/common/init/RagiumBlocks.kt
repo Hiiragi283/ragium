@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.HTEntityBlock
+import hiiragi283.ragium.common.block.HTMobGlassBlock
+import hiiragi283.ragium.common.block.HTSoulGlassBlock
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
@@ -165,8 +167,24 @@ object RagiumBlocks {
         register("chemical_glass", ::TransparentBlock, blockProperty(Blocks.GLASS))
 
     @JvmField
+    val MOB_GLASS: DeferredBlock<HTMobGlassBlock> =
+        register("mob_glass", ::HTMobGlassBlock, blockProperty(Blocks.GLASS))
+
+    @JvmField
     val OBSIDIAN_GLASS: DeferredBlock<TransparentBlock> =
         register("obsidian_glass", ::TransparentBlock, blockProperty(Blocks.GLASS).strength(5f, 1200f))
+
+    @JvmField
+    val SOUL_GLASS: DeferredBlock<HTSoulGlassBlock> =
+        register("soul_glass", ::HTSoulGlassBlock, blockProperty(Blocks.GLASS))
+
+    @JvmField
+    val GLASSES: List<DeferredBlock<out TransparentBlock>> = listOf(
+        CHEMICAL_GLASS,
+        MOB_GLASS,
+        OBSIDIAN_GLASS,
+        SOUL_GLASS,
+    )
 
     @JvmField
     val LED_BLOCKS: Map<DyeColor, DeferredBlock<Block>> = listOf(

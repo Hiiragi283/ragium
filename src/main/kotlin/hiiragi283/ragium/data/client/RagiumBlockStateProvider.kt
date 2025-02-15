@@ -122,7 +122,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             axisBlock(holder.get(), model, model)
         }
 
-        listOf(RagiumBlocks.CHEMICAL_GLASS, RagiumBlocks.OBSIDIAN_GLASS).forEach(::cutoutSimpleBlock)
+        RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)
 
         buildList {
             addAll(RagiumBlocks.ADDONS)
