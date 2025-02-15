@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:buckets/water"
+    },
+    {
+      "item": "ragium:frozen_reagent"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:ice"
+  }
+}

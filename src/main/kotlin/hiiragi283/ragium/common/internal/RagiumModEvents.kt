@@ -116,7 +116,6 @@ internal object RagiumModEvents {
     @SubscribeEvent
     fun createRegistry(event: NewRegistryEvent) {
         event.register(RagiumRegistries.ITEM_RESULT)
-        event.register(RagiumRegistries.MULTIBLOCK_COMPONENT_TYPE)
 
         LOGGER.info("Registered new registries!")
     }

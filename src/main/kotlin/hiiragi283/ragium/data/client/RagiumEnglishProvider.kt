@@ -160,6 +160,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.CREEPER_REAGENT, "Creeper Reagent")
         addItem(RagiumItems.DEEPANT_REAGENT, "Deepant Reagent")
         addItem(RagiumItems.ENDER_REAGENT, "Ender Reagent")
+        addItem(RagiumItems.FROZEN_REAGENT, "Frozen Reagent")
         addItem(RagiumItems.GLOW_REAGENT, "Glow Reagent")
         addItem(RagiumItems.MAGICAL_REAGENT, "Magical Reagent")
         addItem(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
@@ -196,6 +197,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.DEFOLIANT, "Changes 9x9x9 area into waste land")
         add(RagiumTranslationKeys.DYNAMITE, "Explodes when hit")
+        add(RagiumTranslationKeys.MAGNET, "Attracts around items")
         add(RagiumTranslationKeys.SOAP, "Right-click to wash targeted block")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")

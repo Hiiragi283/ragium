@@ -1,11 +1,11 @@
 {
   "type": "ragium:grinder",
   "item_input": {
-    "item": "minecraft:ice"
+    "item": "minecraft:packed_ice"
   },
   "item_output": {
     "type": "ragium:simple",
-    "count": 4,
-    "item": "minecraft:snowball"
+    "count": 9,
+    "item": "minecraft:ice"
   }
 }

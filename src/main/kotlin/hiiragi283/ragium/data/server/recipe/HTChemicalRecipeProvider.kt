@@ -31,6 +31,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         registerCreeper(output)
         registerDeepant(output)
         registerEnder(output)
+        registerFrozen(output)
         registerGlow(output)
         registerMagical(output)
         registerPrismarine(output)
@@ -165,6 +166,42 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .saveSuffixed(output, "_from_crystal")
     }
 
+    private fun registerFrozen(output: RecipeOutput) {
+        // Snow Block -> 4x Snow Ball
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Items.SNOW_BLOCK)
+            .itemOutput(Items.SNOWBALL, 4)
+            .saveSuffixed(output, "_from_block")
+        
+        // Blue Ice -> 9x Packed Ice
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Items.BLUE_ICE)
+            .itemOutput(Items.PACKED_ICE, 9)
+            .save(output)
+        // Packed Ice -> 9x Ice
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Items.PACKED_ICE)
+            .itemOutput(Items.ICE, 9)
+            .save(output)
+
+        // Frozen Reagent
+        HTExtractorRecipeBuilder()
+            .itemInput(Items.PACKED_ICE)
+            .itemOutput(RagiumItems.FROZEN_REAGENT)
+            .saveSuffixed(output, "_from_packed_ice")
+        
+        // Ice
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, Items.ICE)
+            .requires(Tags.Items.BUCKETS_WATER)
+            .requires(RagiumItems.FROZEN_REAGENT)
+            .unlockedBy("has_reagent", has(RagiumItems.FROZEN_REAGENT))
+            .savePrefixed(output)
+    }
+    
     private fun registerGlow(output: RecipeOutput) {
         // Glowstone -> 4x Glowstone Dust
         HTSingleItemRecipeBuilder
@@ -212,17 +249,17 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         // Magical Reagent
         HTExtractorRecipeBuilder()
             .itemInput(Tags.Items.GEMS_AMETHYST)
-            .itemOutput(RagiumItems.MAGNET)
+            .itemOutput(RagiumItems.MAGICAL_REAGENT)
             .saveSuffixed(output, "_from_amethyst")
 
         HTExtractorRecipeBuilder()
             .itemInput(Tags.Items.OBSIDIANS_CRYING)
-            .itemOutput(RagiumItems.MAGNET, 4)
+            .itemOutput(RagiumItems.MAGICAL_REAGENT, 4)
             .saveSuffixed(output, "_from_crying")
 
         HTExtractorRecipeBuilder()
             .itemInput(Tags.Items.NETHER_STARS)
-            .itemOutput(RagiumItems.MAGNET, 64)
+            .itemOutput(RagiumItems.MAGICAL_REAGENT, 64)
             .saveSuffixed(output, "_from_star")
     }
 

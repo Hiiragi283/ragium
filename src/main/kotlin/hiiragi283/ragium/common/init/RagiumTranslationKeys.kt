@@ -35,6 +35,7 @@ object RagiumTranslationKeys {
 
     const val DEFOLIANT = "tooltip.ragium.item.defoliant"
     const val DYNAMITE = "tooltip.ragium.item.dynamite"
+    const val MAGNET = "tooltip.ragium.item.magnet"
     const val SOAP = "tooltip.ragium.item.soap"
 
     //    Machine    //

@@ -6,6 +6,6 @@
   "item_output": {
     "type": "ragium:simple",
     "count": 64,
-    "item": "ragium:magnet"
+    "item": "ragium:magical_reagent"
   }
 }

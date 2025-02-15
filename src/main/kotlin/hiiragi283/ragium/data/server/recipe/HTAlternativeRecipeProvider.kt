@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
@@ -117,41 +116,5 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             ),
             null,
         )
-
-        registerSnow(output)
-    }
-
-    private fun registerSnow(output: RecipeOutput) {
-        // Water -> Ice
-        HTRefineryRecipeBuilder()
-            .waterInput()
-            .itemOutput(Items.SNOW_BLOCK)
-            .save(output)
-
-        // Snow Block -> 4x Snow Ball
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Items.SNOW_BLOCK)
-            .itemOutput(Items.SNOWBALL, 4)
-            .saveSuffixed(output, "_from_block")
-        // Ice -> 4x Snow Ball
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Items.ICE)
-            .itemOutput(Items.SNOWBALL, 4)
-            .saveSuffixed(output, "_from_ice")
-
-        // Powder Snow
-        HTExtractorRecipeBuilder()
-            .itemInput(Tags.Items.BUCKETS_POWDER_SNOW)
-            .itemOutput(Items.BUCKET)
-            .fluidOutput(RagiumFluids.SNOW)
-            .save(output, RagiumAPI.id("powder_snow"))
-
-        HTInfuserRecipeBuilder()
-            .itemInput(Items.BUCKET)
-            .fluidInput(RagiumFluids.SNOW)
-            .itemOutput(Items.POWDER_SNOW_BUCKET)
-            .save(output)
     }
 }

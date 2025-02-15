@@ -74,7 +74,6 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
-        register(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
@@ -254,7 +253,7 @@ object RagiumItems {
     val DEFOLIANT: DeferredItem<HTDefoliantItem> = register(
         "defoliant",
         ::HTDefoliantItem,
-        itemProperty().lore(RagiumTranslationKeys.SILKY_PICKAXE),
+        itemProperty().lore(RagiumTranslationKeys.DEFOLIANT),
     )
 
     @JvmField
@@ -264,7 +263,7 @@ object RagiumItems {
     val MAGNET: DeferredItem<HTMagnetItem> = register(
         "magnet",
         ::HTMagnetItem,
-        itemProperty().lore(RagiumTranslationKeys.SILKY_PICKAXE),
+        itemProperty().lore(RagiumTranslationKeys.MAGNET),
     )
 
     @JvmField
@@ -347,6 +346,9 @@ object RagiumItems {
     val ENDER_REAGENT: DeferredItem<Item> = register("ender_reagent")
 
     @JvmField
+    val FROZEN_REAGENT: DeferredItem<Item> = register("frozen_reagent")
+
+    @JvmField
     val GLOW_REAGENT: DeferredItem<Item> = register("glow_reagent")
 
     @JvmField
@@ -368,6 +370,7 @@ object RagiumItems {
         CREEPER_REAGENT,
         DEEPANT_REAGENT,
         ENDER_REAGENT,
+        FROZEN_REAGENT,
         GLOW_REAGENT,
         MAGICAL_REAGENT,
         PRISMARINE_REAGENT,

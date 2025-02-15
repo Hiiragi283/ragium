@@ -162,6 +162,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.CREEPER_REAGENT, "クリーパー試薬")
         addItem(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
         addItem(RagiumItems.ENDER_REAGENT, "エンダー試薬")
+        addItem(RagiumItems.FROZEN_REAGENT, "フローズン試薬")
         addItem(RagiumItems.GLOW_REAGENT, "グロウ試薬")
         addItem(RagiumItems.MAGICAL_REAGENT, "魔術的試薬")
         addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
@@ -197,6 +198,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.DEFOLIANT, "9x9x9の範囲を荒れ地に変える")
         add(RagiumTranslationKeys.DYNAMITE, "着弾時に爆発を起こす")
+        add(RagiumTranslationKeys.MAGNET, "周囲のアイテムをひきつける")
         add(RagiumTranslationKeys.SOAP, "右クリックで対象のブロックを洗う")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
