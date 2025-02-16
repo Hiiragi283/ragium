@@ -32,7 +32,7 @@ abstract class HTMultiItemRecipe(group: String, val itemInputs: List<HTItemIngre
                 .group(
                     HTRecipeCodecs.group(),
                     HTItemIngredient.CODEC
-                        .listOf(1, 3)
+                        .listOf(2, 3)
                         .fieldOf("item_inputs")
                         .forGetter(HTMultiItemRecipe::itemInputs),
                     HTRecipeCodecs.itemOutput(),

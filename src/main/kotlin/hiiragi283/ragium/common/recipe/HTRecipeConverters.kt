@@ -50,7 +50,7 @@ object HTRecipeConverters {
 
     @JvmStatic
     private fun compressorGem(material: HTTypedMaterial, consumer: (HTCompressorRecipe) -> Unit) {
-        val (_: HTMaterialType, key: HTMaterialKey) = material
+        val (_, key: HTMaterialKey) = material
         val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.GEM, key)
         if (!output.isValid(false)) return
         HTSingleItemRecipeBuilder
@@ -109,7 +109,7 @@ object HTRecipeConverters {
         val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
         recipeManager.getAllRecipes(RagiumRecipeTypes.GRINDER.get()).forEach(consumer)
         RagiumAPI.getInstance().getMaterialRegistry().typedMaterials.forEach { material: HTTypedMaterial ->
-            grinderOreToRaw(material, consumer)
+            grinderOreToDust(material, consumer)
             grinderMainToDust(material, consumer)
             grinderGearToDust(material, consumer)
             grinderPlateToDust(material, consumer)
@@ -118,22 +118,22 @@ object HTRecipeConverters {
     }
 
     @JvmStatic
-    private fun grinderOreToRaw(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
+    private fun grinderOreToDust(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
-        val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return
-        val output: HTItemOutput = HTItemOutput.of(rawPrefix, key)
-        if (!output.isValid(false)) return
+        val rawPrefix: HTTagPrefix = type.getOreResultPrefix() ?: return
         val count: Int = RagiumConfig.getGrinderRawCountMap()[key] ?: 1
+        val output: HTItemOutput = HTItemOutput.of(rawPrefix, key, count * 2)
+        if (!output.isValid(false)) return
         HTSingleItemRecipeBuilder
             .grinder()
             .itemInput(HTTagPrefix.ORE, key)
-            .itemOutput(output.copyWithCount(count * 2))
+            .itemOutput(output)
             .export(consumer)
     }
 
     @JvmStatic
     private fun grinderMainToDust(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
-        val (type: HTMaterialType, _: HTMaterialKey) = material
+        val (type: HTMaterialType, _) = material
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
         grinderToDust(material, mainPrefix, 1, consumer)
     }
@@ -150,7 +150,7 @@ object HTRecipeConverters {
 
     @JvmStatic
     private fun grinderRawToDust(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
-        grinderToDust(material, HTTagPrefix.RAW_MATERIAL, 2, consumer)
+        grinderToDust(material, HTTagPrefix.RAW_MATERIAL, 2, consumer, 3)
     }
 
     @JvmStatic
@@ -159,14 +159,15 @@ object HTRecipeConverters {
         inputPrefix: HTTagPrefix,
         baseCount: Int,
         consumer: (HTGrinderRecipe) -> Unit,
+        inputCount: Int = 1,
     ) {
-        val (_: HTMaterialType, key: HTMaterialKey) = material
-        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.DUST, key)
+        val (_, key: HTMaterialKey) = material
+        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.DUST, key, baseCount)
         if (!output.isValid(false)) return
         HTSingleItemRecipeBuilder
             .grinder()
-            .itemInput(inputPrefix, key)
-            .itemOutput(output.copyWithCount(baseCount))
+            .itemInput(inputPrefix, key, inputCount)
+            .itemOutput(output)
             .export(consumer)
     }
 
@@ -184,7 +185,7 @@ object HTRecipeConverters {
     @JvmStatic
     private fun infuserOreToRaw(material: HTTypedMaterial, consumer: (HTInfuserRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
-        val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return
+        val rawPrefix: HTTagPrefix = type.getOreResultPrefix() ?: return
         val output: HTItemOutput = HTItemOutput.of(rawPrefix, key)
         if (!output.isValid(false)) return
         val count: Int = RagiumConfig.getGrinderRawCountMap()[key] ?: 1

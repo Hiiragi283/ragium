@@ -117,8 +117,10 @@ internal object RagiumConfig {
             .defineList(
                 "grinderRawCountMap",
                 listOf(
+                    "fluorite=3",
                     "lapis=4",
-                    "redstone=2",
+                    "quartz=3",
+                    "redstone=4",
                 ),
             ) { true }
         builder.pop()

@@ -77,11 +77,6 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
-
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.BAUXITE)
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SALTPETER)
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.SULFUR)
-        register(HTTagPrefix.RAW_MATERIAL, VanillaMaterials.REDSTONE)
         // Ingots
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
