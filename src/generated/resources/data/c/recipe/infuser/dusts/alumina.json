@@ -1,0 +1,17 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:lapis_solution"
+  },
+  "fluid_output": {
+    "amount": 1000,
+    "id": "minecraft:water"
+  },
+  "item_input": {
+    "tag": "c:dusts/bauxite"
+  },
+  "item_output": {
+    "tag": "c:dusts/alumina"
+  }
+}

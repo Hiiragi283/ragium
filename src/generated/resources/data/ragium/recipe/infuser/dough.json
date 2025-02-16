@@ -9,8 +9,7 @@
     "item": "ragium:flour"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 3,
-    "item": "ragium:dough"
+    "id": "ragium:dough"
   }
 }

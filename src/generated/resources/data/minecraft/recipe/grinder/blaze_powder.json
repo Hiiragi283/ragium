@@ -4,8 +4,7 @@
     "tag": "c:rods/blaze"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "minecraft:blaze_powder"
+    "id": "minecraft:blaze_powder"
   }
 }

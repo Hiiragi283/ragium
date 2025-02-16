@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Ingredient
@@ -13,7 +13,7 @@ class HTGrowthChamberRecipeBuilder : HTMachineRecipeBuilderBase<HTGrowthChamberR
     private var group: String? = null
     private lateinit var seed: Ingredient
     private lateinit var soil: Ingredient
-    private lateinit var crop: HTItemResult
+    private lateinit var crop: HTItemOutput
     private var waterAmount: Int = 100
 
     override fun itemInput(ingredient: HTItemIngredient): HTGrowthChamberRecipeBuilder = apply {
@@ -26,8 +26,8 @@ class HTGrowthChamberRecipeBuilder : HTMachineRecipeBuilderBase<HTGrowthChamberR
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTGrowthChamberRecipeBuilder = throw UnsupportedOperationException()
 
-    override fun itemOutput(result: HTItemResult): HTGrowthChamberRecipeBuilder = apply {
-        this.crop = result
+    override fun itemOutput(output: HTItemOutput): HTGrowthChamberRecipeBuilder = apply {
+        this.crop = output
     }
 
     fun water(amount: Int): HTGrowthChamberRecipeBuilder = apply {
@@ -36,7 +36,7 @@ class HTGrowthChamberRecipeBuilder : HTMachineRecipeBuilderBase<HTGrowthChamberR
 
     override fun fluidOutput(stack: FluidStack): HTGrowthChamberRecipeBuilder = throw UnsupportedOperationException()
 
-    override fun getPrimalId(): ResourceLocation = crop.getResultId()
+    override fun getPrimalId(): ResourceLocation = crop.id
 
     override val prefix: String = "growth"
 

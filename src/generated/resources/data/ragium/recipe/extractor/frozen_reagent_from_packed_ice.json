@@ -4,7 +4,7 @@
     "item": "minecraft:packed_ice"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:frozen_reagent"
+    "count": 1,
+    "id": "ragium:frozen_reagent"
   }
 }

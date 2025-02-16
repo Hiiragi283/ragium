@@ -4,8 +4,7 @@
     "item": "minecraft:snow_block"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "minecraft:snowball"
+    "id": "minecraft:snowball"
   }
 }

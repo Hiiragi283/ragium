@@ -1,19 +1,21 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "count": 64,
-    "item": "ragium:magical_reagent"
-  },
+  "item_inputs": [
+    {
+      "count": 64,
+      "item": "ragium:magical_reagent"
+    },
+    {
+      "count": 16,
+      "tag": "c:ingots/netherite"
+    },
+    {
+      "count": 8,
+      "item": "ragium:obsidian_glass"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:magical_lens"
-  },
-  "second_item_input": {
-    "count": 16,
-    "tag": "c:ingots/netherite"
-  },
-  "third_item_input": {
-    "count": 8,
-    "item": "ragium:obsidian_glass"
+    "count": 1,
+    "id": "ragium:magical_lens"
   }
 }

@@ -17,13 +17,13 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
         HTGrowthChamberRecipeBuilder()
             .itemInput(ActuallyTags.Items.SEEDS_CANOLA)
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ActuallyItems.CANOLA, 2)
+            .itemOutput(ActuallyTags.Items.CROPS_CANOLA, 2)
             .save(output)
         // Coffee Seeds
         HTGrowthChamberRecipeBuilder()
             .itemInput(ActuallyTags.Items.SEEDS_COFFEE)
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ActuallyItems.COFFEE_BEANS, 2)
+            .itemOutput(ActuallyTags.Items.COFFEE_BEANS, 2)
             .save(output)
 
         // Canola Oil

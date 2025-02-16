@@ -1,13 +1,11 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
@@ -59,14 +57,15 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     //    Item Output    //
 
-    fun itemOutput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): T =
-        itemOutput(RagiumItems.getMaterialItem(prefix, material), count)
+    fun itemOutput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): T = itemOutput(HTItemOutput.of(prefix, material, count))
 
-    fun itemOutput(item: ItemLike, count: Int = 1): T = itemOutput(ItemStack(item, count))
+    fun itemOutput(tagKey: TagKey<Item>, count: Int = 1): T = itemOutput(HTItemOutput.of(tagKey, count))
 
-    fun itemOutput(stack: ItemStack): T = itemOutput(RagiumAPI.getInstance().createItemResult(stack))
+    fun itemOutput(item: ItemLike, count: Int = 1): T = itemOutput(HTItemOutput.of(item, count))
 
-    abstract fun itemOutput(result: HTItemResult): T
+    fun itemOutput(stack: ItemStack): T = itemOutput(HTItemOutput.of(stack))
+
+    abstract fun itemOutput(output: HTItemOutput): T
 
     //    Fluid Output    //
 

@@ -8,7 +8,7 @@
     "tag": "c:crops/cocoa_bean"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:chocolate"
+    "count": 1,
+    "id": "ragium:chocolate"
   }
 }

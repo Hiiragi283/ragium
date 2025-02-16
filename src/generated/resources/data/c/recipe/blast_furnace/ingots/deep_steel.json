@@ -1,0 +1,15 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "count": 4,
+      "item": "ragium:deepant_reagent"
+    }
+  ],
+  "item_output": {
+    "tag": "c:ingots/deep_steel"
+  }
+}

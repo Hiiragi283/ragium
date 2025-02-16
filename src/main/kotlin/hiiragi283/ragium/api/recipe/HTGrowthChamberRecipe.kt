@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
@@ -24,7 +24,7 @@ class HTGrowthChamberRecipe(
     val seed: Ingredient,
     val soil: Ingredient,
     val waterAmount: Int,
-    private val crop: HTItemResult,
+    private val crop: HTItemOutput,
 ) : HTMachineRecipeBase(group) {
     companion object {
         @JvmField
@@ -52,13 +52,13 @@ class HTGrowthChamberRecipe(
             HTGrowthChamberRecipe::soil,
             ByteBufCodecs.INT,
             HTGrowthChamberRecipe::waterAmount,
-            HTItemResult.STREAM_CODEC,
+            HTItemOutput.STREAM_CODEC,
             HTGrowthChamberRecipe::crop,
             ::HTGrowthChamberRecipe,
         )
     }
 
-    override val itemResults: List<HTItemResult> = listOf(crop)
+    override val itemOutputs: List<HTItemOutput> = listOf(crop)
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         val bool1: Boolean = seed.test(input.getItem(0))

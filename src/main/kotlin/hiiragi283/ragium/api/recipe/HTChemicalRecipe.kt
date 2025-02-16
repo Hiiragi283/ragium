@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import net.minecraft.world.item.ItemStack
@@ -15,7 +15,6 @@ class HTChemicalRecipe(
     group: String,
     val itemInputs: List<SizedIngredient>,
     val fluidInputs: List<SizedFluidIngredient>,
-    private val itemOutputs: List<ItemStack>,
     private val fluidOutputs: List<FluidStack>,
     // val condition: Optional<HTMachineRecipeCondition>,
 ) : HTMachineRecipeBase(group) {
@@ -66,11 +65,9 @@ class HTChemicalRecipe(
         )
     }*/
 
-    fun getItemOutputs(): List<ItemStack> = itemOutputs.map(ItemStack::copy)
-
     fun getFluidOutputs(): List<FluidStack> = fluidOutputs.map(FluidStack::copy)
 
-    override val itemResults: List<HTItemResult> = listOf()
+    override val itemOutputs: List<HTItemOutput> = listOf()
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         // Item

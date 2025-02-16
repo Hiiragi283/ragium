@@ -19,7 +19,7 @@ class HTInfuserRecipe(
     group: String,
     val itemInput: HTItemIngredient,
     val fluidInput: SizedFluidIngredient,
-    itemOutput: Optional<HTItemResult>,
+    itemOutput: Optional<HTItemOutput>,
     fluidOutput: Optional<FluidStack>,
 ) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
     companion object {
@@ -44,7 +44,7 @@ class HTInfuserRecipe(
             HTInfuserRecipe::itemInput,
             SizedFluidIngredient.STREAM_CODEC,
             HTInfuserRecipe::fluidInput,
-            ByteBufCodecs.optional(HTItemResult.STREAM_CODEC),
+            ByteBufCodecs.optional(HTItemOutput.STREAM_CODEC),
             HTInfuserRecipe::itemOutput,
             ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
             HTInfuserRecipe::fluidOutput,

@@ -100,7 +100,7 @@ class HTChemicalRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTC
         builder
             .addOutputSlot(getPosition(x), getPosition(y))
             .setStandardSlotBackground()
-            .addItemStack(recipe.getItemOutputs().getOrNull(index) ?: ItemStack.EMPTY)
+            .addItemStack(recipe.itemOutputs.getOrNull(index)?.get() ?: ItemStack.EMPTY)
     }
 
     private fun addFluidOutput(

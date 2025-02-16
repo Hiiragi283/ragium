@@ -8,7 +8,7 @@
     "item": "minecraft:dirt"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:mud"
+    "count": 1,
+    "id": "minecraft:mud"
   }
 }

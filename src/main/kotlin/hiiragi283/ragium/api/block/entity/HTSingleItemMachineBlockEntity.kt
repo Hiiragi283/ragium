@@ -51,7 +51,7 @@ abstract class HTSingleItemMachineBlockEntity(
             itemCatalyst.getStackInSlot(0),
         )
         val recipe: HTSingleItemRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
-        val output: ItemStack = recipe.itemResults[0].getItem(enchantments)
+        val output: ItemStack = recipe.itemOutputs[0].get()
         // Try to insert outputs
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         // Insert outputs

@@ -14,7 +14,7 @@
     "tag": "minecraft:planks"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "immersiveengineering:treated_wood_horizontal"
+    "count": 1,
+    "id": "immersiveengineering:treated_wood_horizontal"
   }
 }

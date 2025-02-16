@@ -1,19 +1,21 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "count": 64,
-    "item": "ragium:glow_reagent"
-  },
+  "item_inputs": [
+    {
+      "count": 64,
+      "item": "ragium:glow_reagent"
+    },
+    {
+      "count": 16,
+      "tag": "c:ingots/gold"
+    },
+    {
+      "count": 8,
+      "item": "ragium:chemical_glass"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:glow_lens"
-  },
-  "second_item_input": {
-    "count": 16,
-    "tag": "c:ingots/gold"
-  },
-  "third_item_input": {
-    "count": 8,
-    "item": "ragium:chemical_glass"
+    "count": 1,
+    "id": "ragium:glow_lens"
   }
 }

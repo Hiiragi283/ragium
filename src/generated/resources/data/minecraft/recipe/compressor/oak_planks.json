@@ -7,7 +7,7 @@
     "tag": "c:dusts/wood"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:oak_planks"
+    "count": 1,
+    "id": "minecraft:oak_planks"
   }
 }

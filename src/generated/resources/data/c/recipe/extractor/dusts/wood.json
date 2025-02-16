@@ -1,0 +1,14 @@
+{
+  "type": "ragium:extractor",
+  "fluid_output": {
+    "amount": 1000,
+    "id": "ragium:sap"
+  },
+  "item_input": {
+    "tag": "minecraft:logs_that_burn"
+  },
+  "item_output": {
+    "count": 4,
+    "tag": "c:dusts/wood"
+  }
+}

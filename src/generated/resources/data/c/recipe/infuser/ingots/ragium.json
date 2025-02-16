@@ -1,0 +1,13 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 8000,
+    "tag": "c:ragium_solution"
+  },
+  "item_input": {
+    "tag": "c:ingots/iron"
+  },
+  "item_output": {
+    "tag": "c:ingots/ragium"
+  }
+}

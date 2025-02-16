@@ -7,7 +7,7 @@
     "item": "minecraft:blackstone"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:gilded_blackstone"
+    "count": 1,
+    "id": "minecraft:gilded_blackstone"
   }
 }

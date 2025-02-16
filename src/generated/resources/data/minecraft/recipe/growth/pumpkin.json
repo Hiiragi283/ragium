@@ -1,8 +1,8 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:pumpkin"
+    "count": 1,
+    "id": "minecraft:pumpkin"
   },
   "seed": {
     "tag": "c:seeds/pumpkin"

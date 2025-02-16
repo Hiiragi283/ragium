@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import com.mojang.authlib.properties.PropertyMap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.buildCompPatch
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -19,7 +20,6 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
-import hiiragi283.ragium.common.recipe.HTSimpleItemResult
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -31,6 +31,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.alchemy.Potion
@@ -76,8 +77,8 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(Items.SKELETON_SKULL)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM, 64)
             .itemOutput(
-                HTSimpleItemResult(
-                    Items.PLAYER_HEAD,
+                ItemStack(
+                    Items.PLAYER_HEAD.asHolder(),
                     1,
                     buildCompPatch {
                         set(

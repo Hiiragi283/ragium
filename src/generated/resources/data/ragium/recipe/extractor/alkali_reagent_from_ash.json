@@ -4,7 +4,7 @@
     "tag": "c:dusts/ash"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:alkali_reagent"
+    "count": 1,
+    "id": "ragium:alkali_reagent"
   }
 }

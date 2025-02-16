@@ -8,7 +8,7 @@
     "item": "minecraft:amethyst_block"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:budding_amethyst"
+    "count": 1,
+    "id": "minecraft:budding_amethyst"
   }
 }

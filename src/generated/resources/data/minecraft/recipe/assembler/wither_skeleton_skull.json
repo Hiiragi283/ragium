@@ -1,14 +1,16 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "minecraft:skeleton_skull"
-  },
+  "item_inputs": [
+    {
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 8,
+      "item": "ragium:wither_reagent"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:wither_skeleton_skull"
-  },
-  "second_item_input": {
-    "count": 8,
-    "item": "ragium:wither_reagent"
+    "count": 1,
+    "id": "minecraft:wither_skeleton_skull"
   }
 }

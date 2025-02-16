@@ -58,7 +58,7 @@ class HTEnchanterRecipe(
         )
     }
 
-    override val itemResults: List<HTItemResult> = listOf()
+    override val itemOutputs: List<HTItemOutput> = listOf()
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         if (input.getItem(0).getEnchantmentLevel(enchantment) > 0) {

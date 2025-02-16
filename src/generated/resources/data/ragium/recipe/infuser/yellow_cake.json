@@ -9,7 +9,7 @@
     "item": "minecraft:poisonous_potato"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:yellow_cake"
+    "count": 1,
+    "id": "ragium:yellow_cake"
   }
 }

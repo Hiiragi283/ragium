@@ -1,16 +1,18 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "ragium:circuit_board"
-  },
+  "item_inputs": [
+    {
+      "item": "ragium:circuit_board"
+    },
+    {
+      "tag": "c:ingots/aluminum"
+    },
+    {
+      "item": "ragium:prismarine_reagent"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:elite_circuit"
-  },
-  "second_item_input": {
-    "tag": "c:ingots/aluminum"
-  },
-  "third_item_input": {
-    "item": "ragium:prismarine_reagent"
+    "count": 1,
+    "id": "ragium:elite_circuit"
   }
 }

@@ -4,8 +4,7 @@
     "tag": "c:nether_stars"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 64,
-    "item": "ragium:magical_reagent"
+    "id": "ragium:magical_reagent"
   }
 }

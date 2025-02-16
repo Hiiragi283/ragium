@@ -12,7 +12,6 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.world.item.crafting.RecipeSerializer
-import kotlin.jvm.optionals.getOrNull
 
 class HTMultiItemRecipeCategory<T : HTMultiItemRecipe>(
     guiHelper: IGuiHelper,
@@ -27,17 +26,17 @@ class HTMultiItemRecipeCategory<T : HTMultiItemRecipe>(
         builder
             .addInputSlot(getPosition(0), getPosition(0))
             .setStandardSlotBackground()
-            .addIngredients(recipe.firstInput)
+            .addIngredients(recipe.itemInputs[0])
         // Second Item Input
         builder
             .addInputSlot(getPosition(1), getPosition(0))
             .setStandardSlotBackground()
-            .addIngredients(recipe.secondInput)
+            .addIngredients(recipe.itemInputs.getOrNull(1))
         // Third Item Input
         builder
             .addInputSlot(getPosition(2), getPosition(0))
             .setStandardSlotBackground()
-            .addIngredients(recipe.thirdInput.getOrNull())
+            .addIngredients(recipe.itemInputs.getOrNull(2))
         // Item Output
         builder
             .addOutputSlot(getPosition(5), getPosition(0))

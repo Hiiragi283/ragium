@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -14,8 +14,8 @@ class HTLaserAssemblyRecipe(
     group: String,
     input: HTItemIngredient,
     catalyst: Optional<Ingredient>,
-    itemResult: HTItemResult,
-) : HTSingleItemRecipe(group, input, catalyst, itemResult) {
+    itemOutput: HTItemOutput,
+) : HTSingleItemRecipe(group, input, catalyst, itemOutput) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.LASER_ASSEMBLY.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.LASER_ASSEMBLY.get()

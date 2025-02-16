@@ -1,9 +1,8 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "minecraft:wheat"
+    "id": "minecraft:wheat"
   },
   "seed": {
     "tag": "c:seeds/wheat"

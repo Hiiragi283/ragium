@@ -7,7 +7,7 @@
     "item": "ragium:polymer_resin"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:string"
+    "count": 1,
+    "id": "minecraft:string"
   }
 }

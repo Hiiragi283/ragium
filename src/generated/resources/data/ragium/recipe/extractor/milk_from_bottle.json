@@ -14,7 +14,7 @@
     "item": "farmersdelight:milk_bottle"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:glass_bottle"
+    "count": 1,
+    "id": "minecraft:glass_bottle"
   }
 }

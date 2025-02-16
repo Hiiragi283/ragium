@@ -1,16 +1,18 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "ragium:circuit_board"
-  },
+  "item_inputs": [
+    {
+      "item": "ragium:circuit_board"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "item": "ragium:glow_reagent"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:advanced_circuit"
-  },
-  "second_item_input": {
-    "tag": "c:ingots/gold"
-  },
-  "third_item_input": {
-    "item": "ragium:glow_reagent"
+    "count": 1,
+    "id": "ragium:advanced_circuit"
   }
 }

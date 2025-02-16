@@ -1,15 +1,16 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "count": 4,
-    "tag": "c:ingots/aluminum"
-  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:ingots/aluminum"
+    },
+    {
+      "item": "ragium:shaft"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "ragium:aluminum_coil"
-  },
-  "second_item_input": {
-    "item": "ragium:shaft"
+    "id": "ragium:aluminum_coil"
   }
 }

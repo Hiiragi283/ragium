@@ -6,16 +6,17 @@
     }
   ],
   "type": "ragium:assembler",
-  "first_item_input": {
-    "count": 4,
-    "item": "actuallyadditions:restonia_crystal"
-  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "item": "actuallyadditions:restonia_crystal"
+    },
+    {
+      "tag": "c:gems/black_quartz"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "actuallyadditions:basic_coil"
-  },
-  "second_item_input": {
-    "tag": "c:gems/black_quartz"
+    "id": "actuallyadditions:basic_coil"
   }
 }

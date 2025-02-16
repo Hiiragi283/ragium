@@ -1,29 +1,13 @@
 package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
-import hiiragi283.ragium.api.extension.computeIfAbsent
-import hiiragi283.ragium.api.extension.constFunction3
-import hiiragi283.ragium.api.extension.createHolderSorter
-import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.util.HTTable
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
-import net.minecraft.core.HolderSet
-import net.minecraft.core.registries.Registries
-import net.minecraft.world.item.Item
-import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.ModLoader
-import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.event.TagsUpdatedEvent
 import org.slf4j.Logger
 
-@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
@@ -68,7 +52,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
     //    HTMaterialRegistry    //
 
-    private var tagItemCache: HTTable.Mutable<HTTagPrefix, HTMaterialKey, MutableList<Holder<Item>>> = mutableTableOf()
+    /*private var tagItemCache: HTTable.Mutable<HTTagPrefix, HTMaterialKey, MutableList<Holder<Item>>> = mutableTableOf()
 
     @SubscribeEvent
     fun onTagsUpdated(event: TagsUpdatedEvent) {
@@ -90,11 +74,9 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         tagItemCache.values.forEach { it.sortWith(createHolderSorter()) }
 
         LOGGER.info("Reloaded material items!")
-    }
+    }*/
 
     override val keys: Set<HTMaterialKey> get() = typeMap.keys
 
     override fun getType(key: HTMaterialKey): HTMaterialType = typeMap[key] ?: error("Unknown material key: $key")
-
-    override fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): List<Holder<Item>> = tagItemCache.get(prefix, key) ?: listOf()
 }

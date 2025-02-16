@@ -17,8 +17,8 @@ object HTRecipeCodecs {
         Codec.STRING.optionalFieldOf("group", "").forGetter(HTMachineRecipeBase::getGroup)
 
     @JvmStatic
-    fun <T : HTMachineRecipeBase> itemResult(): RecordCodecBuilder<T, HTItemResult> =
-        HTItemResult.CODEC.fieldOf("item_output").forGetter { it.itemResults[0] }
+    fun <T : HTMachineRecipeBase> itemResult(): RecordCodecBuilder<T, HTItemOutput> =
+        HTItemOutput.CODEC.fieldOf("item_output").forGetter { it.itemOutputs[0] }
 
     @JvmField
     val ITEM_INPUT: MapCodec<HTItemIngredient> = HTItemIngredient.CODEC.fieldOf("item_input")
@@ -30,7 +30,7 @@ object HTRecipeCodecs {
     val CATALYST: MapCodec<Optional<Ingredient>> = Ingredient.CODEC_NONEMPTY.optionalFieldOf("catalyst")
 
     @JvmField
-    val ITEM_OUTPUT: MapCodec<Optional<HTItemResult>> = HTItemResult.CODEC.optionalFieldOf("item_output")
+    val ITEM_OUTPUT: MapCodec<Optional<HTItemOutput>> = HTItemOutput.CODEC.optionalFieldOf("item_output")
 
     @JvmField
     val FLUID_OUTPUT: MapCodec<Optional<FluidStack>> = FluidStack.CODEC.optionalFieldOf("fluid_output")

@@ -4,6 +4,7 @@ import aztech.modern_industrialization.items.ForgeTool
 import blusunrize.immersiveengineering.api.wires.WireType
 import blusunrize.immersiveengineering.common.register.IEItems
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
@@ -17,7 +18,6 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.data.HTTagBuilder
 import mekanism.generators.common.registries.GeneratorsItems
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup

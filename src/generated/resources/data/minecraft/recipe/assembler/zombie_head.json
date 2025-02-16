@@ -1,14 +1,16 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "minecraft:skeleton_skull"
-  },
+  "item_inputs": [
+    {
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 8,
+      "item": "minecraft:rotten_flesh"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:zombie_head"
-  },
-  "second_item_input": {
-    "count": 8,
-    "item": "minecraft:rotten_flesh"
+    "count": 1,
+    "id": "minecraft:zombie_head"
   }
 }

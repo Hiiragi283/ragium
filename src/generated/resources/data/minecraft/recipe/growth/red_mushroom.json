@@ -1,9 +1,8 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "minecraft:red_mushroom"
+    "id": "minecraft:red_mushroom"
   },
   "seed": {
     "item": "minecraft:red_mushroom"

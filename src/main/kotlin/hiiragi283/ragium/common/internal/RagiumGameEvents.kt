@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineAccess
@@ -20,7 +19,6 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -79,11 +77,6 @@ internal object RagiumGameEvents {
                 if (stack.isEmpty) continue
                 if (stack.getLevel(level.registryAccess(), Enchantments.SILK_TOUCH) > 0) {
                     val attacked: LivingEntity = event.entity
-                    attacked.type
-                        .builtInRegistryHolder()
-                        .getData(RagiumDataMaps.EXECUTIONER_DROPS)
-                        ?.let { ItemEntity(level, attacked.x, attacked.y, attacked.z, it.copy()) }
-                        ?.let(event.drops::add)
                 }
             }
         }

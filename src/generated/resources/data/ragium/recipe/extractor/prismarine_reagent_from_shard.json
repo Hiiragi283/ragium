@@ -5,8 +5,7 @@
     "item": "minecraft:prismarine_shard"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "ragium:prismarine_reagent"
+    "id": "ragium:prismarine_reagent"
   }
 }

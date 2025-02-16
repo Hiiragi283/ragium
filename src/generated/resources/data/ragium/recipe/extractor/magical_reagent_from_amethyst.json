@@ -4,7 +4,7 @@
     "tag": "c:gems/amethyst"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:magical_reagent"
+    "count": 1,
+    "id": "ragium:magical_reagent"
   }
 }

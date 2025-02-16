@@ -4,7 +4,7 @@
     "item": "minecraft:sculk"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:sculk_reagent"
+    "count": 1,
+    "id": "ragium:sculk_reagent"
   }
 }

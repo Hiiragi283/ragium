@@ -3,7 +3,6 @@ package hiiragi283.ragium.api
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilderBase
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.extension.mutableTableOf
@@ -11,12 +10,10 @@ import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -24,8 +21,6 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
@@ -162,13 +157,6 @@ interface RagiumAPI {
      * @see [HTStorageIO.wrapEnergyStorage]
      */
     fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
-
-    /**
-     * @see [HTMachineRecipeBuilderBase.itemInput]
-     */
-    fun createItemResult(stack: ItemStack): HTItemResult = createItemResult(stack.item, stack.count, stack.componentsPatch)
-
-    fun createItemResult(item: Item, count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult
 
     fun createSingleItemMenu(
         containerId: Int,

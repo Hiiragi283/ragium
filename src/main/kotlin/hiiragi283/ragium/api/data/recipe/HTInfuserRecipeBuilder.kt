@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.fluids.FluidStack
@@ -15,7 +15,7 @@ class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder
     private var group: String? = null
     private lateinit var itemInput1: HTItemIngredient
     private lateinit var fluidInput1: SizedFluidIngredient
-    private var itemOutput: HTItemResult? = null
+    private var itemOutput: HTItemOutput? = null
     private var fluidOutput: FluidStack? = null
 
     override fun itemInput(ingredient: HTItemIngredient): HTInfuserRecipeBuilder = apply {
@@ -28,9 +28,9 @@ class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder
         fluidInput1 = SizedFluidIngredient(ingredient, amount)
     }
 
-    override fun itemOutput(result: HTItemResult): HTInfuserRecipeBuilder = apply {
+    override fun itemOutput(output: HTItemOutput): HTInfuserRecipeBuilder = apply {
         check(itemOutput == null) { "Output is already initialized" }
-        this.itemOutput = result
+        this.itemOutput = output
     }
 
     override fun fluidOutput(stack: FluidStack): HTInfuserRecipeBuilder = apply {
@@ -38,7 +38,7 @@ class HTInfuserRecipeBuilder : HTMachineRecipeBuilderBase<HTInfuserRecipeBuilder
         this.fluidOutput = stack
     }
 
-    override fun getPrimalId(): ResourceLocation = itemOutput?.getResultId()
+    override fun getPrimalId(): ResourceLocation = itemOutput?.id
         ?: fluidOutput?.fluidHolder?.idOrThrow
         ?: error("Either item or fluid output required!")
 

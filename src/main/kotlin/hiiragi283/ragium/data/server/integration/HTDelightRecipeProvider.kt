@@ -59,7 +59,7 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
         HTSingleItemRecipeBuilder
             .grinder()
             .itemInput(ModItems.RICE_PANICLE.get())
-            .itemOutput(ModItems.RICE.get(), 2)
+            .itemOutput(CommonTags.CROPS_RICE, 2)
             .save(output)
 
         // Milk Bottle
@@ -79,25 +79,25 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
         HTGrowthChamberRecipeBuilder()
             .itemInput(ModItems.CABBAGE_SEEDS.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ModItems.CABBAGE.get(), 2)
+            .itemOutput(CommonTags.CROPS_CABBAGE, 2)
             .save(output)
 
         HTGrowthChamberRecipeBuilder()
             .itemInput(ModItems.TOMATO_SEEDS.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ModItems.TOMATO.get(), 2)
+            .itemOutput(CommonTags.CROPS_TOMATO, 2)
             .save(output)
 
         HTGrowthChamberRecipeBuilder()
             .itemInput(ModItems.ONION.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ModItems.ONION.get(), 2)
+            .itemOutput(CommonTags.CROPS_ONION, 2)
             .save(output)
 
         HTGrowthChamberRecipeBuilder()
             .itemInput(CommonTags.CROPS_RICE)
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ModItems.WILD_RICE.get(), 2)
+            .itemOutput(CommonTags.CROPS_RICE, 2)
             .save(output)
     }
 }

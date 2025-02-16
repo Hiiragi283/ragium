@@ -4,7 +4,7 @@
     "tag": "c:foods/raw_fish"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:minced_meat"
+    "count": 1,
+    "id": "ragium:minced_meat"
   }
 }

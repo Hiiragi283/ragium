@@ -8,7 +8,7 @@
     "tag": "c:sands"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:clay"
+    "count": 1,
+    "id": "minecraft:clay"
   }
 }

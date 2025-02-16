@@ -5,7 +5,7 @@
     "tag": "c:cobblestones/deepslate"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:deepant_reagent"
+    "count": 1,
+    "id": "ragium:deepant_reagent"
   }
 }

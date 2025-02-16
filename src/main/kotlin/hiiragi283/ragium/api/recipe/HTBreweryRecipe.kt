@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -12,14 +11,12 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
@@ -73,7 +70,13 @@ class HTBreweryRecipe(
         val WATER_INGREDIENT: SizedFluidIngredient = SizedFluidIngredient.of(Tags.Fluids.WATER, FluidType.BUCKET_VOLUME)
     }
 
-    override val itemResults: List<HTItemResult> = listOf(PotionResult(potion))
+    override val itemOutputs: List<HTItemOutput> = listOf(
+        HTItemOutput.of {
+            val stack = ItemStack(Items.POTION, 3)
+            stack.set(DataComponents.POTION_CONTENTS, PotionContents(potion))
+            stack
+        },
+    )
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         val bool1: Boolean = this.firstInput.test(input, 0)
@@ -86,22 +89,4 @@ class HTBreweryRecipe(
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BREWERY.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.BREWERY.get()
-
-    class PotionResult(val potion: Holder<Potion>) : HTItemResult {
-        companion object {
-            @JvmField
-            val CODEC: MapCodec<PotionResult> =
-                Potion.CODEC.fieldOf("effect").xmap(::PotionResult, PotionResult::potion)
-        }
-
-        override fun getCodec(): MapCodec<out HTItemResult> = CODEC
-
-        override fun getResultId(): ResourceLocation = potion.idOrThrow
-
-        override fun getItem(enchantments: ItemEnchantments): ItemStack {
-            val stack = ItemStack(Items.POTION, 3)
-            stack.set(DataComponents.POTION_CONTENTS, PotionContents(potion))
-            return stack
-        }
-    }
 }

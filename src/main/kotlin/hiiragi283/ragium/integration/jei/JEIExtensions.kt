@@ -6,7 +6,6 @@ import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.neoforge.NeoForgeTypes
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -41,8 +40,8 @@ fun <T : IIngredientAcceptor<*>> T.addIngredients(ingredient: FluidIngredient?):
 //    HTItemResult    //
 
 fun <T : IIngredientAcceptor<*>> T.addItemResult(recipe: HTMachineRecipeBase, index: Int): IIngredientAcceptor<*> = addItemStacks(
-    recipe.itemResults
+    recipe.itemOutputs
         .getOrNull(index)
-        ?.getItem(ItemEnchantments.EMPTY)
+        ?.get()
         ?.let(::listOf) ?: listOf(),
 )

@@ -1,9 +1,8 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "minecraft:sweet_berries"
+    "id": "minecraft:sweet_berries"
   },
   "seed": {
     "item": "minecraft:sweet_berries"

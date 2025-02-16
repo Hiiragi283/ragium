@@ -7,7 +7,7 @@
     "item": "ragium:polymer_resin"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:plastic_plate"
+    "count": 1,
+    "id": "ragium:plastic_plate"
   }
 }

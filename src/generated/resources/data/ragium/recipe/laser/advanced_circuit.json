@@ -7,7 +7,7 @@
     "item": "ragium:circuit_board"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:advanced_circuit"
+    "count": 1,
+    "id": "ragium:advanced_circuit"
   }
 }

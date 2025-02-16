@@ -1,9 +1,8 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "minecraft:warped_fungus"
+    "id": "minecraft:warped_fungus"
   },
   "seed": {
     "item": "minecraft:warped_fungus"

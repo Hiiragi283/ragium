@@ -1,0 +1,15 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "tag": "c:dusts/alumina"
+    },
+    {
+      "tag": "c:gems/cryolite"
+    }
+  ],
+  "item_output": {
+    "count": 3,
+    "tag": "c:ingots/aluminum"
+  }
+}

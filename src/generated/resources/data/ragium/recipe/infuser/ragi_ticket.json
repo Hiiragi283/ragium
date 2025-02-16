@@ -8,7 +8,7 @@
     "item": "minecraft:paper"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:ragi_ticket"
+    "count": 1,
+    "id": "ragium:ragi_ticket"
   }
 }

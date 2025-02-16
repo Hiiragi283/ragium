@@ -1,14 +1,15 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "tag": "c:crops/pumpkin"
-  },
+  "item_inputs": [
+    {
+      "tag": "c:crops/pumpkin"
+    },
+    {
+      "item": "ragium:sponge_cake"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "minecraft:pumpkin_pie"
-  },
-  "second_item_input": {
-    "item": "ragium:sponge_cake"
+    "id": "minecraft:pumpkin_pie"
   }
 }

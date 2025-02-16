@@ -1,0 +1,15 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "tag": "c:dusts/alumina"
+    },
+    {
+      "count": 4,
+      "tag": "minecraft:coals"
+    }
+  ],
+  "item_output": {
+    "tag": "c:ingots/aluminum"
+  }
+}

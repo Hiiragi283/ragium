@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.fluids.FluidStack
@@ -13,7 +13,7 @@ import java.util.*
 class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBuilder, HTExtractorRecipe>() {
     private var group: String? = null
     private lateinit var input: HTItemIngredient
-    private var itemOutput: HTItemResult? = null
+    private var itemOutput: HTItemOutput? = null
     private var fluidOutput: FluidStack? = null
 
     override fun itemInput(ingredient: HTItemIngredient): HTExtractorRecipeBuilder = apply {
@@ -23,9 +23,9 @@ class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBui
 
     override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTExtractorRecipeBuilder = throw UnsupportedOperationException()
 
-    override fun itemOutput(result: HTItemResult): HTExtractorRecipeBuilder = apply {
+    override fun itemOutput(output: HTItemOutput): HTExtractorRecipeBuilder = apply {
         check(itemOutput == null) { "Output is already initialized" }
-        this.itemOutput = result
+        this.itemOutput = output
     }
 
     override fun fluidOutput(stack: FluidStack): HTExtractorRecipeBuilder = apply {
@@ -33,7 +33,7 @@ class HTExtractorRecipeBuilder : HTMachineRecipeBuilderBase<HTExtractorRecipeBui
         this.fluidOutput = stack
     }
 
-    override fun getPrimalId(): ResourceLocation = itemOutput?.getResultId()
+    override fun getPrimalId(): ResourceLocation = itemOutput?.id
         ?: fluidOutput?.fluidHolder?.idOrThrow
         ?: error("Either item or fluid output required!")
 

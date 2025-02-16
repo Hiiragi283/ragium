@@ -8,7 +8,7 @@
     "item": "minecraft:bucket"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:milk_bucket"
+    "count": 1,
+    "id": "minecraft:milk_bucket"
   }
 }

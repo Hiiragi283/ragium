@@ -4,8 +4,7 @@
     "item": "minecraft:sculk_shrieker"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 16,
-    "item": "ragium:sculk_reagent"
+    "id": "ragium:sculk_reagent"
   }
 }

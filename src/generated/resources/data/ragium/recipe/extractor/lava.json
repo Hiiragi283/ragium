@@ -8,7 +8,7 @@
     "tag": "c:buckets/lava"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:bucket"
+    "count": 1,
+    "id": "minecraft:bucket"
   }
 }

@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
@@ -123,8 +122,6 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun createRegistry(event: NewRegistryEvent) {
-        event.register(RagiumRegistries.ITEM_RESULT)
-
         LOGGER.info("Registered new registries!")
     }
 
@@ -244,7 +241,6 @@ internal object RagiumModEvents {
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(RagiumDataMaps.DEFOLIANT)
-        event.register(RagiumDataMaps.EXECUTIONER_DROPS)
         event.register(RagiumDataMaps.SOAP)
 
         LOGGER.info("Registered Data Map Types!")

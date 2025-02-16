@@ -8,7 +8,7 @@
     "item": "minecraft:mushroom_stew"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:bowl"
+    "count": 1,
+    "id": "minecraft:bowl"
   }
 }

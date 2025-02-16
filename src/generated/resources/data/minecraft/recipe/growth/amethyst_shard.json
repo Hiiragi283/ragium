@@ -1,8 +1,8 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:amethyst_shard"
+    "count": 1,
+    "id": "minecraft:amethyst_shard"
   },
   "seed": {
     "tag": "c:gems/amethyst"

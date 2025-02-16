@@ -1,14 +1,16 @@
 {
   "type": "ragium:blast_furnace",
-  "first_item_input": {
-    "tag": "c:glass_blocks"
-  },
+  "item_inputs": [
+    {
+      "tag": "c:glass_blocks"
+    },
+    {
+      "count": 2,
+      "tag": "minecraft:trapdoors"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:mob_glass"
-  },
-  "second_item_input": {
-    "count": 2,
-    "tag": "minecraft:trapdoors"
+    "count": 1,
+    "id": "ragium:mob_glass"
   }
 }

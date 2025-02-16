@@ -9,8 +9,7 @@
     "tag": "c:mushrooms"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "minecraft:mushroom_stew"
+    "id": "minecraft:mushroom_stew"
   }
 }

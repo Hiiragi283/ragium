@@ -7,7 +7,7 @@
     "tag": "c:ingots/deep_steel"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:shaft"
+    "count": 1,
+    "id": "ragium:shaft"
   }
 }

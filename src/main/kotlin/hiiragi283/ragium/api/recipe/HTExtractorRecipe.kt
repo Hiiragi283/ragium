@@ -17,7 +17,7 @@ import java.util.*
 class HTExtractorRecipe(
     group: String,
     val input: HTItemIngredient,
-    itemOutput: Optional<HTItemResult>,
+    itemOutput: Optional<HTItemOutput>,
     fluidOutput: Optional<FluidStack>,
 ) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
     companion object {
@@ -39,7 +39,7 @@ class HTExtractorRecipe(
             HTExtractorRecipe::getGroup,
             HTItemIngredient.STREAM_CODEC,
             HTExtractorRecipe::input,
-            ByteBufCodecs.optional(HTItemResult.STREAM_CODEC),
+            ByteBufCodecs.optional(HTItemOutput.STREAM_CODEC),
             HTExtractorRecipe::itemOutput,
             ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
             HTExtractorRecipe::fluidOutput,

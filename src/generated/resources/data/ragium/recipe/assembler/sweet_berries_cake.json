@@ -1,18 +1,20 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "ragium:sponge_cake"
-  },
+  "item_inputs": [
+    {
+      "item": "ragium:sponge_cake"
+    },
+    {
+      "count": 3,
+      "item": "ragium:chocolate"
+    },
+    {
+      "count": 2,
+      "tag": "c:foods/berry"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:sweet_berries_cake"
-  },
-  "second_item_input": {
-    "count": 3,
-    "item": "ragium:chocolate"
-  },
-  "third_item_input": {
-    "count": 2,
-    "tag": "c:foods/berry"
+    "count": 1,
+    "id": "ragium:sweet_berries_cake"
   }
 }

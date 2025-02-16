@@ -2,8 +2,6 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
@@ -21,18 +19,6 @@ object RagiumDataMaps {
             Registries.BLOCK,
             HTDefoliant.CODEC,
         ).synced(HTDefoliant.CODEC, false)
-        .build()
-
-    /**
-     * エンチャント「処刑人」のドロップテーブルで参照します。
-     */
-    @JvmField
-    val EXECUTIONER_DROPS: DataMapType<EntityType<*>, ItemStack> = DataMapType
-        .builder(
-            RagiumAPI.id("executioner_drops"),
-            Registries.ENTITY_TYPE,
-            ItemStack.CODEC,
-        ).synced(ItemStack.CODEC, false)
         .build()
 
     /**

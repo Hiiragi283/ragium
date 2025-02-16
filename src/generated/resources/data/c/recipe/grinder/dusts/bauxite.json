@@ -1,0 +1,11 @@
+{
+  "type": "ragium:grinder",
+  "item_input": {
+    "count": 8,
+    "item": "minecraft:netherrack"
+  },
+  "item_output": {
+    "count": 4,
+    "tag": "c:dusts/bauxite"
+  }
+}

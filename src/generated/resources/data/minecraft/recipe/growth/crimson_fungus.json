@@ -1,9 +1,8 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "minecraft:crimson_fungus"
+    "id": "minecraft:crimson_fungus"
   },
   "seed": {
     "item": "minecraft:crimson_fungus"

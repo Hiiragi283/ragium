@@ -1,15 +1,16 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "count": 4,
-    "tag": "c:sands"
-  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:sands"
+    },
+    {
+      "item": "ragium:creeper_reagent"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "minecraft:tnt"
-  },
-  "second_item_input": {
-    "item": "ragium:creeper_reagent"
+    "id": "minecraft:tnt"
   }
 }

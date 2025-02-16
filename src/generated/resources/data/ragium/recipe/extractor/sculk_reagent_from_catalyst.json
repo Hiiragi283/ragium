@@ -4,8 +4,7 @@
     "item": "minecraft:sculk_catalyst"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "ragium:sculk_reagent"
+    "id": "ragium:sculk_reagent"
   }
 }

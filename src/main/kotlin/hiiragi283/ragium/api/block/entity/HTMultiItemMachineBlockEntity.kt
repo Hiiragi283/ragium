@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
@@ -56,14 +55,12 @@ abstract class HTMultiItemMachineBlockEntity(
         )
         val recipe: HTMultiItemRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
         if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
-        val output: ItemStack = recipe.itemResults[0].getItem(enchantments)
+        val output: ItemStack = recipe.itemOutputs[0].get()
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         itemOutput.insertOrDrop(level, pos.above(), output)
-        itemInput.consumeItem(0, recipe.firstInput.count, false)
-        itemInput.consumeItem(1, recipe.secondInput.count, false)
-        recipe.thirdInput.ifPresent { third: HTItemIngredient ->
-            itemInput.consumeItem(2, third.count, false)
-        }
+        itemInput.consumeItem(0, recipe.itemInputs[0].count, false)
+        itemInput.consumeItem(1, recipe.itemInputs.getOrNull(1)?.count ?: 0, false)
+        itemInput.consumeItem(2, recipe.itemInputs.getOrNull(2)?.count ?: 0, false)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

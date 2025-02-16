@@ -4,7 +4,7 @@
     "tag": "c:ender_pearls"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:ender_reagent"
+    "count": 1,
+    "id": "ragium:ender_reagent"
   }
 }

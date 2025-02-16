@@ -1,13 +1,15 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "tag": "c:plastics"
-  },
+  "item_inputs": [
+    {
+      "tag": "c:plastics"
+    },
+    {
+      "tag": "c:dusts/quartz"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:circuit_board"
-  },
-  "second_item_input": {
-    "tag": "c:dusts/quartz"
+    "count": 1,
+    "id": "ragium:circuit_board"
   }
 }

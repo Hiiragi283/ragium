@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -16,8 +16,8 @@ class HTGrinderRecipe(
     group: String,
     input: HTItemIngredient,
     catalyst: Optional<Ingredient>,
-    itemResult: HTItemResult,
-) : HTSingleItemRecipe(group, input, catalyst, itemResult) {
+    itemOutput: HTItemOutput,
+) : HTSingleItemRecipe(group, input, catalyst, itemOutput) {
     /*fun getSecondOutput(machine: HTMachineAccess): Optional<ItemStack> {
         val chanced: HTChancedItemStack = this.secondOutput.getOrNull() ?: return Optional.empty()
         val level: Level = machine.levelAccess ?: return Optional.empty()
@@ -36,7 +36,7 @@ class HTGrinderRecipe(
         }
     }*/
 
-    override val itemResults: List<HTItemResult> = listOf(itemResult)
+    override val itemOutputs: List<HTItemOutput> = listOf(itemOutput)
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input, 0)
 

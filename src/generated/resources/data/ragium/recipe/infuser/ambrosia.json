@@ -9,7 +9,7 @@
     "item": "ragium:chocolate"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:ambrosia"
+    "count": 1,
+    "id": "ragium:ambrosia"
   }
 }

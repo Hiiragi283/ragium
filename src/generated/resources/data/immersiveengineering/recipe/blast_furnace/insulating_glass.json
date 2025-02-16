@@ -6,16 +6,17 @@
     }
   ],
   "type": "ragium:blast_furnace",
-  "first_item_input": {
-    "count": 2,
-    "tag": "c:glass_blocks"
-  },
+  "item_inputs": [
+    {
+      "count": 2,
+      "tag": "c:glass_blocks"
+    },
+    {
+      "tag": "c:dusts/iron"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "immersiveengineering:insulating_glass"
-  },
-  "second_item_input": {
-    "tag": "c:dusts/iron"
+    "id": "immersiveengineering:insulating_glass"
   }
 }

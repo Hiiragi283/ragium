@@ -18,7 +18,7 @@ import java.util.*
  */
 abstract class HTFluidOutputRecipe(
     group: String,
-    protected val itemOutput: Optional<HTItemResult>,
+    protected val itemOutput: Optional<HTItemOutput>,
     protected val fluidOutput: Optional<FluidStack>,
 ) : HTMachineRecipeBase(group) {
     companion object {
@@ -31,7 +31,7 @@ abstract class HTFluidOutputRecipe(
         }
     }
 
-    override val itemResults: List<HTItemResult> = itemOutput.map(::listOf).orElse(listOf())
+    override val itemOutputs: List<HTItemOutput> = itemOutput.map(::listOf).orElse(listOf())
 
     fun getFluidOutput(): FluidStack = fluidOutput.orElse(FluidStack.EMPTY).copy()
 
@@ -40,8 +40,8 @@ abstract class HTFluidOutputRecipe(
      * @throws HTMachineException 完成品を入れられなかった場合
      */
     fun canInsert(enchantments: ItemEnchantments, itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
-        itemOutput.ifPresent { output: HTItemResult ->
-            if (!itemHandler.canInsert(output.getItem(enchantments))) throw HTMachineException.MergeResult(false)
+        itemOutput.ifPresent { output: HTItemOutput ->
+            if (!itemHandler.canInsert(output.get())) throw HTMachineException.MergeResult(false)
         }
         fluidOutput.ifPresent { output: FluidStack ->
             if (!fluidHandler.canFill(output.copy())) throw HTMachineException.MergeResult(false)
@@ -60,8 +60,8 @@ abstract class HTFluidOutputRecipe(
         level: Level,
         pos: BlockPos,
     ) {
-        itemOutput.ifPresent { output: HTItemResult ->
-            itemHandler.insertOrDrop(level, pos.above(), output.getItem(enchantments))
+        itemOutput.ifPresent { output: HTItemOutput ->
+            itemHandler.insertOrDrop(level, pos.above(), output.get())
         }
         fluidOutput.ifPresent { output: FluidStack ->
             fluidHandler.fill(output.copy(), IFluidHandler.FluidAction.EXECUTE)

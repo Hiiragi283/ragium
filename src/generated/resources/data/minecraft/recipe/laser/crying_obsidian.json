@@ -7,7 +7,7 @@
     "tag": "c:obsidians/normal"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:crying_obsidian"
+    "count": 1,
+    "id": "minecraft:crying_obsidian"
   }
 }

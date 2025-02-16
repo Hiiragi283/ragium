@@ -1,0 +1,14 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:coal_coke"
+    }
+  ],
+  "item_output": {
+    "tag": "c:ingots/steel"
+  }
+}

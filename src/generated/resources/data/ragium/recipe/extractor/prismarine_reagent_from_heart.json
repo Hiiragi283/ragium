@@ -4,8 +4,7 @@
     "item": "minecraft:heart_of_the_sea"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 64,
-    "item": "ragium:prismarine_reagent"
+    "id": "ragium:prismarine_reagent"
   }
 }

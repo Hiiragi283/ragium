@@ -8,7 +8,7 @@
     "tag": "c:glass_blocks"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:honey_block"
+    "count": 1,
+    "id": "minecraft:honey_block"
   }
 }

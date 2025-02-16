@@ -1,14 +1,16 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "minecraft:skeleton_skull"
-  },
+  "item_inputs": [
+    {
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 8,
+      "item": "minecraft:gilded_blackstone"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:piglin_head"
-  },
-  "second_item_input": {
-    "count": 8,
-    "item": "minecraft:gilded_blackstone"
+    "count": 1,
+    "id": "minecraft:piglin_head"
   }
 }

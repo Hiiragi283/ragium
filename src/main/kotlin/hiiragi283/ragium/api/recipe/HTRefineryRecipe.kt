@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemResult
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -21,7 +21,7 @@ import java.util.*
 class HTRefineryRecipe(
     group: String,
     val input: SizedFluidIngredient,
-    itemOutput: Optional<HTItemResult>,
+    itemOutput: Optional<HTItemOutput>,
     fluidOutput: Optional<FluidStack>,
 ) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
     companion object {
@@ -43,7 +43,7 @@ class HTRefineryRecipe(
             HTRefineryRecipe::getGroup,
             SizedFluidIngredient.STREAM_CODEC,
             HTRefineryRecipe::input,
-            ByteBufCodecs.optional(HTItemResult.STREAM_CODEC),
+            ByteBufCodecs.optional(HTItemOutput.STREAM_CODEC),
             HTRefineryRecipe::itemOutput,
             ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
             HTRefineryRecipe::fluidOutput,

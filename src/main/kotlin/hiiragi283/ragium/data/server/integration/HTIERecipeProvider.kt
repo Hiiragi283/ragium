@@ -26,7 +26,7 @@ object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering"
         HTInfuserRecipeBuilder()
             .itemInput(ItemTags.PLANKS)
             .fluidInput(RagiumFluidTags.CREOSOTE, FluidType.BUCKET_VOLUME / 8)
-            .itemOutput(IEBlocks.WoodenDecoration.TREATED_WOOD.get(TreatedWoodStyles.HORIZONTAL)!!)
+            .itemOutput(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!)
             .save(output)
 
         // Iron Mechanical Component
@@ -48,7 +48,7 @@ object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering"
         HTSingleItemRecipeBuilder
             .grinder()
             .itemInput(RagiumItemTags.COAL_COKE)
-            .itemOutput(IEItems.Ingredients.DUST_COKE)
+            .itemOutput(IETags.coalCokeDust)
             .save(output)
 
         // Insulating Glass
@@ -63,7 +63,7 @@ object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering"
         HTGrowthChamberRecipeBuilder()
             .itemInput(IETags.seedsHemp)
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(IEItems.Ingredients.HEMP_FIBER, 2)
+            .itemOutput(IETags.fiberHemp, 2)
             .save(output)
     }
 }

@@ -6,15 +6,16 @@
     }
   ],
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "actuallyadditions:basic_coil"
-  },
+  "item_inputs": [
+    {
+      "item": "actuallyadditions:basic_coil"
+    },
+    {
+      "tag": "c:ingots/gold"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
     "count": 2,
-    "item": "actuallyadditions:advanced_coil"
-  },
-  "second_item_input": {
-    "tag": "c:ingots/gold"
+    "id": "actuallyadditions:advanced_coil"
   }
 }

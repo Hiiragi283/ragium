@@ -8,7 +8,7 @@
     "item": "ragium:alkali_reagent"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "ragium:soap"
+    "count": 1,
+    "id": "ragium:soap"
   }
 }

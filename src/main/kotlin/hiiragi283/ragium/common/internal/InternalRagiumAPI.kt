@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.recipe.base.HTItemResult
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.energy.HTEnergyNetwork
@@ -20,16 +19,13 @@ import hiiragi283.ragium.common.inventory.HTMultiItemContainerMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemContainerMenu
 import hiiragi283.ragium.common.item.HTLimitedItemHandler
 import hiiragi283.ragium.common.item.HTMachineItemHandlerImpl
-import hiiragi283.ragium.common.recipe.HTSimpleItemResult
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.Item
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -78,9 +74,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage =
         HTLimitedEnergyStorage(storageIO, storage)
-
-    override fun createItemResult(item: Item, count: Int, components: DataComponentPatch): HTItemResult =
-        HTSimpleItemResult(item, count, components)
 
     override fun createSingleItemMenu(
         containerId: Int,

@@ -4,16 +4,18 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.getAllRecipes
-import hiiragi283.ragium.api.material.*
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.common.internal.RagiumConfig
-import net.minecraft.core.Holder
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeManager
 
 object HTRecipeConverters {
@@ -23,77 +25,80 @@ object HTRecipeConverters {
     fun compressor(consumer: (HTCompressorRecipe) -> Unit) {
         val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
         recipeManager.getAllRecipes(RagiumRecipeTypes.COMPRESSOR.get()).forEach(consumer)
-
-        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
-        registry.typedMaterials.forEach { material: HTTypedMaterial ->
-            compressorGear(material, registry, consumer)
-            compressorGem(material, registry, consumer)
-            compressorPlate(material, registry, consumer)
-            compressorRod(material, registry, consumer)
-            compressorWire(material, registry, consumer)
+        RagiumAPI.getInstance().getMaterialRegistry().typedMaterials.forEach { material: HTTypedMaterial ->
+            compressorGear(material, consumer)
+            compressorGem(material, consumer)
+            compressorPlate(material, consumer)
+            compressorRod(material, consumer)
+            compressorWire(material, consumer)
         }
     }
 
     @JvmStatic
-    private fun compressorGear(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTCompressorRecipe) -> Unit) {
+    private fun compressorGear(material: HTTypedMaterial, consumer: (HTCompressorRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
-        val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.GEAR, key) ?: return
+        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.GEAR, key)
+        if (!output.isValid(false)) return
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
         HTSingleItemRecipeBuilder
             .compressor()
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItemTags.GEAR_MOLDS)
-            .itemOutput(output.value())
+            .itemOutput(output)
             .export(consumer)
     }
 
     @JvmStatic
-    private fun compressorGem(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTCompressorRecipe) -> Unit) {
+    private fun compressorGem(material: HTTypedMaterial, consumer: (HTCompressorRecipe) -> Unit) {
         val (_: HTMaterialType, key: HTMaterialKey) = material
-        val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.GEM, key) ?: return
+        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.GEM, key)
+        if (!output.isValid(false)) return
         HTSingleItemRecipeBuilder
             .compressor()
             .itemInput(HTTagPrefix.DUST, key)
-            .itemOutput(output.value())
+            .itemOutput(output)
             .export(consumer)
     }
 
     @JvmStatic
-    private fun compressorPlate(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTCompressorRecipe) -> Unit) {
+    private fun compressorPlate(material: HTTypedMaterial, consumer: (HTCompressorRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
-        val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.PLATE, key) ?: return
+        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.PLATE, key)
+        if (!output.isValid(false)) return
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
         HTSingleItemRecipeBuilder
             .compressor()
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItemTags.PLATE_MOLDS)
-            .itemOutput(output.value())
+            .itemOutput(output)
             .export(consumer)
     }
 
     @JvmStatic
-    private fun compressorRod(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTCompressorRecipe) -> Unit) {
+    private fun compressorRod(material: HTTypedMaterial, consumer: (HTCompressorRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
-        val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.ROD, key) ?: return
+        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.ROD, key)
+        if (!output.isValid(false)) return
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
         HTSingleItemRecipeBuilder
             .compressor()
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItemTags.ROD_MOLDS)
-            .itemOutput(output.value())
+            .itemOutput(output)
             .export(consumer)
     }
 
     @JvmStatic
-    private fun compressorWire(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTCompressorRecipe) -> Unit) {
+    private fun compressorWire(material: HTTypedMaterial, consumer: (HTCompressorRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
-        val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.WIRE, key) ?: return
+        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.WIRE, key, 2)
+        if (!output.isValid(false)) return
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
         HTSingleItemRecipeBuilder
             .compressor()
             .itemInput(mainPrefix, key)
             .catalyst(RagiumItemTags.WIRE_MOLDS)
-            .itemOutput(output.value(), 2)
+            .itemOutput(output)
             .export(consumer)
     }
 
@@ -103,66 +108,65 @@ object HTRecipeConverters {
     fun grinder(consumer: (HTGrinderRecipe) -> Unit) {
         val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
         recipeManager.getAllRecipes(RagiumRecipeTypes.GRINDER.get()).forEach(consumer)
-
-        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
-        registry.typedMaterials.forEach { material: HTTypedMaterial ->
-            grinderOreToRaw(material, registry, consumer)
-            grinderMainToDust(material, registry, consumer)
-            grinderGearToDust(material, registry, consumer)
-            grinderPlateToDust(material, registry, consumer)
-            grinderRawToDust(material, registry, consumer)
+        RagiumAPI.getInstance().getMaterialRegistry().typedMaterials.forEach { material: HTTypedMaterial ->
+            grinderOreToRaw(material, consumer)
+            grinderMainToDust(material, consumer)
+            grinderGearToDust(material, consumer)
+            grinderPlateToDust(material, consumer)
+            grinderRawToDust(material, consumer)
         }
     }
 
     @JvmStatic
-    private fun grinderOreToRaw(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTGrinderRecipe) -> Unit) {
+    private fun grinderOreToRaw(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return
-        val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return
+        val output: HTItemOutput = HTItemOutput.of(rawPrefix, key)
+        if (!output.isValid(false)) return
         val count: Int = RagiumConfig.getGrinderRawCountMap()[key] ?: 1
         HTSingleItemRecipeBuilder
             .grinder()
             .itemInput(HTTagPrefix.ORE, key)
-            .itemOutput(HTApplyFortuneItemResult(output.value(), count * 2, count))
+            .itemOutput(output.copyWithCount(count * 2))
             .export(consumer)
     }
 
     @JvmStatic
-    private fun grinderMainToDust(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTGrinderRecipe) -> Unit) {
+    private fun grinderMainToDust(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
         val (type: HTMaterialType, _: HTMaterialKey) = material
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
-        grinderToDust(material, registry, mainPrefix, 1, consumer)
+        grinderToDust(material, mainPrefix, 1, consumer)
     }
 
     @JvmStatic
-    private fun grinderGearToDust(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTGrinderRecipe) -> Unit) {
-        grinderToDust(material, registry, HTTagPrefix.GEAR, 4, consumer)
+    private fun grinderGearToDust(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
+        grinderToDust(material, HTTagPrefix.GEAR, 4, consumer)
     }
 
     @JvmStatic
-    private fun grinderPlateToDust(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTGrinderRecipe) -> Unit) {
-        grinderToDust(material, registry, HTTagPrefix.PLATE, 1, consumer)
+    private fun grinderPlateToDust(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
+        grinderToDust(material, HTTagPrefix.PLATE, 1, consumer)
     }
 
     @JvmStatic
-    private fun grinderRawToDust(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTGrinderRecipe) -> Unit) {
-        grinderToDust(material, registry, HTTagPrefix.RAW_MATERIAL, 2, consumer)
+    private fun grinderRawToDust(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
+        grinderToDust(material, HTTagPrefix.RAW_MATERIAL, 2, consumer)
     }
 
     @JvmStatic
     private fun grinderToDust(
         material: HTTypedMaterial,
-        registry: HTMaterialRegistry,
         inputPrefix: HTTagPrefix,
         baseCount: Int,
         consumer: (HTGrinderRecipe) -> Unit,
     ) {
         val (_: HTMaterialType, key: HTMaterialKey) = material
-        val output: Holder<Item> = registry.getFirstItem(HTTagPrefix.DUST, key) ?: return
+        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.DUST, key)
+        if (!output.isValid(false)) return
         HTSingleItemRecipeBuilder
             .grinder()
             .itemInput(inputPrefix, key)
-            .itemOutput(output.value(), baseCount)
+            .itemOutput(output.copyWithCount(baseCount))
             .export(consumer)
     }
 
@@ -172,30 +176,29 @@ object HTRecipeConverters {
     fun infuser(consumer: (HTInfuserRecipe) -> Unit) {
         val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
         recipeManager.getAllRecipes(RagiumRecipeTypes.INFUSER.get()).forEach(consumer)
-
-        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
-        registry.typedMaterials.forEach { material: HTTypedMaterial ->
-            infuserOreToRaw(material, registry, consumer)
+        RagiumAPI.getInstance().getMaterialRegistry().typedMaterials.forEach { material: HTTypedMaterial ->
+            infuserOreToRaw(material, consumer)
         }
     }
 
     @JvmStatic
-    private fun infuserOreToRaw(material: HTTypedMaterial, registry: HTMaterialRegistry, consumer: (HTInfuserRecipe) -> Unit) {
+    private fun infuserOreToRaw(material: HTTypedMaterial, consumer: (HTInfuserRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
         val rawPrefix: HTTagPrefix = type.getRawPrefix() ?: return
-        val output: Holder<Item> = registry.getFirstItem(rawPrefix, key) ?: return
+        val output: HTItemOutput = HTItemOutput.of(rawPrefix, key)
+        if (!output.isValid(false)) return
         val count: Int = RagiumConfig.getGrinderRawCountMap()[key] ?: 1
         // 3x
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.ORE, key)
             .fluidInput(RagiumVirtualFluids.SULFURIC_ACID, 500)
-            .itemOutput(output.value(), count * 3)
+            .itemOutput(output.copyWithCount(count * 3))
             .export(consumer)
         // 4x
         HTInfuserRecipeBuilder()
             .itemInput(HTTagPrefix.ORE, key)
             .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, 500)
-            .itemOutput(output.value(), count * 4)
+            .itemOutput(output.copyWithCount(count * 4))
             .export(consumer)
     }
 }

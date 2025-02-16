@@ -4,8 +4,7 @@
     "item": "minecraft:end_crystal"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "ragium:ender_reagent"
+    "id": "ragium:ender_reagent"
   }
 }

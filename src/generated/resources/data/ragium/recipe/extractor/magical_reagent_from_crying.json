@@ -4,8 +4,7 @@
     "tag": "c:obsidians/crying"
   },
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "ragium:magical_reagent"
+    "id": "ragium:magical_reagent"
   }
 }

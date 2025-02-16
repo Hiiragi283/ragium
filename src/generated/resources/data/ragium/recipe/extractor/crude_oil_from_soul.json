@@ -8,7 +8,7 @@
     "tag": "minecraft:soul_fire_base_blocks"
   },
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:sand"
+    "count": 1,
+    "id": "minecraft:sand"
   }
 }

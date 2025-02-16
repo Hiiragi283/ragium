@@ -1,8 +1,8 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:melon"
+    "count": 1,
+    "id": "minecraft:melon"
   },
   "seed": {
     "tag": "c:seeds/melon"

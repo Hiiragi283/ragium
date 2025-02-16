@@ -69,6 +69,8 @@ val DeferredHolder<Fluid, *>.commonTag: TagKey<Fluid> get() = fluidTagKey(common
  */
 val <T : Any> HolderSet<T>.isEmpty: Boolean get() = size() == 0
 
+val <T : Any> HolderSet<T>.isNotEmpty: Boolean get() = !isEmpty
+
 /**
  * この[HolderSet]を[Component]に変換します。
  * @param transform 値を[Component]に変換するブロック

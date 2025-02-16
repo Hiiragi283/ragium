@@ -1,17 +1,18 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "ragium:glow_reagent"
-  },
+  "item_inputs": [
+    {
+      "item": "ragium:glow_reagent"
+    },
+    {
+      "tag": "c:ingots/copper"
+    },
+    {
+      "tag": "c:glass_blocks/colorless"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "ragium:led"
-  },
-  "second_item_input": {
-    "tag": "c:ingots/copper"
-  },
-  "third_item_input": {
-    "tag": "c:glass_blocks/colorless"
+    "id": "ragium:led"
   }
 }

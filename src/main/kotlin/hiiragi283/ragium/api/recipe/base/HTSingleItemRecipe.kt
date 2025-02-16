@@ -18,9 +18,9 @@ abstract class HTSingleItemRecipe(
     group: String,
     val input: HTItemIngredient,
     val catalyst: Optional<Ingredient>,
-    itemResult: HTItemResult,
+    itemOutput: HTItemOutput,
 ) : HTMachineRecipeBase(group) {
-    override val itemResults: List<HTItemResult> = listOf(itemResult)
+    override val itemOutputs: List<HTItemOutput> = listOf(itemOutput)
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         if (!this.input.test(input, 0)) return false
@@ -30,7 +30,7 @@ abstract class HTSingleItemRecipe(
 
     //    Serializer    //
 
-    class Serializer<T : HTSingleItemRecipe>(private val factory: (String, HTItemIngredient, Optional<Ingredient>, HTItemResult) -> T) :
+    class Serializer<T : HTSingleItemRecipe>(private val factory: (String, HTItemIngredient, Optional<Ingredient>, HTItemOutput) -> T) :
         RecipeSerializer<T> {
         private val codec: MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
@@ -49,8 +49,8 @@ abstract class HTSingleItemRecipe(
             HTSingleItemRecipe::input,
             ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
             HTSingleItemRecipe::catalyst,
-            HTItemResult.STREAM_CODEC,
-            { it.itemResults[0] },
+            HTItemOutput.STREAM_CODEC,
+            { it.itemOutputs[0] },
             factory,
         )
 

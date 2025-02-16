@@ -1,19 +1,20 @@
 {
   "type": "ragium:blast_furnace",
-  "first_item_input": {
-    "count": 3,
-    "item": "ragium:flour"
-  },
+  "item_inputs": [
+    {
+      "count": 3,
+      "item": "ragium:flour"
+    },
+    {
+      "count": 2,
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "ragium:butter"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
     "count": 4,
-    "item": "ragium:sponge_cake"
-  },
-  "second_item_input": {
-    "count": 2,
-    "item": "minecraft:sugar"
-  },
-  "third_item_input": {
-    "item": "ragium:butter"
+    "id": "ragium:sponge_cake"
   }
 }

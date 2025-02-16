@@ -1,14 +1,16 @@
 {
   "type": "ragium:assembler",
-  "first_item_input": {
-    "item": "minecraft:skeleton_skull"
-  },
+  "item_inputs": [
+    {
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 8,
+      "item": "minecraft:golden_apple"
+    }
+  ],
   "item_output": {
-    "type": "ragium:simple",
-    "item": "minecraft:player_head"
-  },
-  "second_item_input": {
-    "count": 8,
-    "item": "minecraft:golden_apple"
+    "count": 1,
+    "id": "minecraft:player_head"
   }
 }

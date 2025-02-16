@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.recipe.HTMixerRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -118,7 +119,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
                 "",
                 HTIngredientBuilder.water(),
                 HTIngredientBuilder.fluid(Tags.Fluids.LAVA),
-                Optional.of(RagiumAPI.getInstance().createItemResult(Items.OBSIDIAN)),
+                Optional.of(HTItemOutput.of(Items.OBSIDIAN)),
                 Optional.empty(),
             ),
             null,
