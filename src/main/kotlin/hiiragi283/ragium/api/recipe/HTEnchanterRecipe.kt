@@ -4,8 +4,6 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.modifyEnchantment
 import hiiragi283.ragium.api.recipe.base.*
-import hiiragi283.ragium.common.init.RagiumRecipeSerializers
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -14,8 +12,6 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -74,7 +70,5 @@ class HTEnchanterRecipe(
             mutable.toImmutable()
         }
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ENCHANTER.get()
-
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTER.get()
+    override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.ENCHANTER
 }

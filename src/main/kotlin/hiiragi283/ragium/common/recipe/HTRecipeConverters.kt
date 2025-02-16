@@ -4,19 +4,27 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.getAllRecipes
+import hiiragi283.ragium.api.extension.isSource
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
+import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.common.internal.RagiumConfig
+import net.minecraft.core.Holder
+import net.minecraft.core.RegistryAccess
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.level.material.Fluid
 
 object HTRecipeConverters {
     //    Compressor    //
@@ -24,7 +32,7 @@ object HTRecipeConverters {
     @JvmStatic
     fun compressor(consumer: (HTCompressorRecipe) -> Unit) {
         val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
-        recipeManager.getAllRecipes(RagiumRecipeTypes.COMPRESSOR.get()).forEach(consumer)
+        recipeManager.getAllRecipes(HTRecipeTypes.COMPRESSOR).forEach(consumer)
         RagiumAPI.getInstance().getMaterialRegistry().typedMaterials.forEach { material: HTTypedMaterial ->
             compressorGear(material, consumer)
             compressorGem(material, consumer)
@@ -107,7 +115,7 @@ object HTRecipeConverters {
     @JvmStatic
     fun grinder(consumer: (HTGrinderRecipe) -> Unit) {
         val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
-        recipeManager.getAllRecipes(RagiumRecipeTypes.GRINDER.get()).forEach(consumer)
+        recipeManager.getAllRecipes(HTRecipeTypes.GRINDER).forEach(consumer)
         RagiumAPI.getInstance().getMaterialRegistry().typedMaterials.forEach { material: HTTypedMaterial ->
             grinderOreToDust(material, consumer)
             grinderMainToDust(material, consumer)
@@ -176,10 +184,28 @@ object HTRecipeConverters {
     @JvmStatic
     fun infuser(consumer: (HTInfuserRecipe) -> Unit) {
         val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
-        recipeManager.getAllRecipes(RagiumRecipeTypes.INFUSER.get()).forEach(consumer)
+        recipeManager.getAllRecipes(HTRecipeTypes.INFUSER).forEach(consumer)
         RagiumAPI.getInstance().getMaterialRegistry().typedMaterials.forEach { material: HTTypedMaterial ->
             infuserOreToRaw(material, consumer)
         }
+
+        // Bucket + Fluid -> Fluid Bucket
+        val lookup: RegistryAccess = RagiumAPI.getInstance().getCurrentLookup() ?: return
+        lookup
+            .lookupOrThrow(Registries.FLUID)
+            .listElements()
+            .forEach { holder: Holder.Reference<Fluid> ->
+                val fluid: Fluid = holder.value()
+                if (!fluid.isSource) return@forEach
+                val bucket: Item = fluid.bucket
+                if (bucket == Items.AIR) return@forEach
+                HTFluidOutputRecipeBuilder
+                    .infuser()
+                    .itemInput(Items.BUCKET)
+                    .fluidInput(fluid)
+                    .itemOutput(bucket)
+                    .export(consumer)
+            }
     }
 
     @JvmStatic
@@ -203,5 +229,30 @@ object HTRecipeConverters {
             .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, 500)
             .itemOutput(output.copyWithCount(count * 4))
             .export(consumer)
+    }
+
+    //    Extractor    //
+
+    @JvmStatic
+    fun extractor(consumer: (HTExtractorRecipe) -> Unit) {
+        val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
+        recipeManager.getAllRecipes(HTRecipeTypes.EXTRACTOR).forEach(consumer)
+        // Fluid Bucket -> Bucket + Fluid
+        val lookup: RegistryAccess = RagiumAPI.getInstance().getCurrentLookup() ?: return
+        lookup
+            .lookupOrThrow(Registries.FLUID)
+            .listElements()
+            .forEach { holder: Holder.Reference<Fluid> ->
+                val fluid: Fluid = holder.value()
+                if (!fluid.isSource) return@forEach
+                val bucket: Item = fluid.bucket
+                if (bucket == Items.AIR) return@forEach
+                HTFluidOutputRecipeBuilder
+                    .extractor()
+                    .itemInput(bucket)
+                    .itemOutput(Items.BUCKET)
+                    .fluidOutput(fluid)
+                    .export(consumer)
+            }
     }
 }

@@ -72,7 +72,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             buildModRecipes(output.withConditions(ModLoadedCondition(modId)), holderLookup)
         }
 
-        abstract fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
+        protected abstract fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
     }
 
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {

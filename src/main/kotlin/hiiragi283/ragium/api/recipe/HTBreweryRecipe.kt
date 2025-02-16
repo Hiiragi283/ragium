@@ -3,8 +3,6 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.base.*
-import hiiragi283.ragium.common.init.RagiumRecipeSerializers
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
@@ -15,8 +13,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
@@ -86,7 +82,5 @@ class HTBreweryRecipe(
         return bool1 && bool2 && bool3 && bool4
     }
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BREWERY.get()
-
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.BREWERY.get()
+    override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.BREWERY
 }

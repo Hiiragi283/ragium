@@ -6,12 +6,12 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
@@ -25,7 +25,7 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
 
     override val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTMultiItemRecipe> =
-        HTRecipeGetter.Cached(RagiumRecipeTypes.BLAST_FURNACE.get())
+        HTRecipeGetter.Cached(HTRecipeTypes.BLAST_FURNACE)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         validateMultiblock(this, null).getOrThrow()

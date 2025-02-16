@@ -23,6 +23,7 @@
     "ragium:refinery",
     "ragium:soap",
     "ragium:solar_generator",
+    "ragium:solidifier",
     "ragium:stirling_generator",
     "ragium:thermal_generator"
   ]

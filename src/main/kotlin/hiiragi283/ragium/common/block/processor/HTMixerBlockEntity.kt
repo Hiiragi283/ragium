@@ -9,12 +9,12 @@ import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTMixerRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.HTMixerContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -42,7 +42,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     )
 
     private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTMixerRecipe> =
-        HTRecipeGetter.Cached(RagiumRecipeTypes.MIXER.get())
+        HTRecipeGetter.Cached(HTRecipeTypes.MIXER)
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)

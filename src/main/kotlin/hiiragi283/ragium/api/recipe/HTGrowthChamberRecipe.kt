@@ -3,18 +3,11 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.recipe.base.HTItemOutput
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
-import hiiragi283.ragium.common.init.RagiumRecipeSerializers
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -71,7 +64,5 @@ class HTGrowthChamberRecipe(
         return bool1 && bool2 && bool3
     }
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.GROWTH_CHAMBER.get()
-
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.GROWTH_CHAMBER.get()
+    override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.GROWTH_CHAMBER
 }

@@ -159,6 +159,8 @@
   "machine_type.refinery.description": "プロジェクト・ビルド",
   "machine_type.solar_generator": "太陽光発電機",
   "machine_type.solar_generator.description": "日中に発電する",
+  "machine_type.solidifier": "固体成形機",
+  "machine_type.solidifier.description": "アンコントールスイッチ！ブラックハザード！",
   "machine_type.stirling_generator": "スターリング発電機",
   "machine_type.stirling_generator.description": "固体燃料と水から発電する",
   "machine_type.thermal_generator": "地熱発電機",

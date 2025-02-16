@@ -247,6 +247,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTMachineType.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
         add(HTMachineType.MIXER, "ミキサー", "ベストマッチ!")
         add(HTMachineType.REFINERY, "精製機", "プロジェクト・ビルド")
+        add(HTMachineType.SOLIDIFIER, "固体成形機", "アンコントールスイッチ！ブラックハザード！")
         // Material
         add(CommonMaterials.ALUMINA, "アルミナ")
         add(CommonMaterials.ALUMINUM, "アルミニウム")

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:forge_hammer"
+      "tag": "modern_industrialization:forge_hammer_tools"
     },
     "B": {
       "item": "minecraft:piston"

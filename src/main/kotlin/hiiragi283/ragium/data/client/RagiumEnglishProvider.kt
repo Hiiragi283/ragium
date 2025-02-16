@@ -270,6 +270,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTMachineType.MIXER, "Mixer", "Best Match!")
         add(HTMachineType.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
         add(HTMachineType.REFINERY, "Refinery", "Project Build")
+        add(HTMachineType.SOLIDIFIER, "Solidifier", "Uncontrol Switch! Black Hazard!")
         // Material
         add(CommonMaterials.ALUMINA, "Alumina")
         add(CommonMaterials.ALUMINUM, "Aluminum")

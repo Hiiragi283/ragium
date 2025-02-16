@@ -1,14 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTItemOutput
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
-import hiiragi283.ragium.common.init.RagiumRecipeSerializers
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import java.util.*
 
@@ -40,7 +33,5 @@ class HTGrinderRecipe(
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input, 0)
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.GRINDER.get()
-
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.GRINDER.get()
+    override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.GRINDER
 }

@@ -15,6 +15,9 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
@@ -23,6 +26,8 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.*
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
@@ -120,7 +125,6 @@ internal object RagiumModEvents {
         event.register(IntegrationMaterials.REFINED_OBSIDIAN, HTMaterialType.ALLOY)
     }
 
-    @SubscribeEvent
     fun createRegistry(event: NewRegistryEvent) {
         LOGGER.info("Registered new registries!")
     }
@@ -154,9 +158,21 @@ internal object RagiumModEvents {
                 helper.register(holder.id, BlockItem(holder.get(), itemProperty()))
             }
         }
+        // Recipe Serializer
+        event.register(Registries.RECIPE_SERIALIZER) { helper: RegisterEvent.RegisterHelper<RecipeSerializer<*>> ->
+            HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipeBase> ->
+                helper.register(RagiumAPI.id(type.toString()), type.serializer)
+            }
+        }
+        // Recipe Type
+        event.register(Registries.RECIPE_TYPE) { helper: RegisterEvent.RegisterHelper<RecipeType<*>> ->
+            HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipeBase> ->
+                helper.register(RagiumAPI.id(type.toString()), type)
+            }
+            LOGGER.info("Added machine recipe types!")
+        }
     }
 
-    @SubscribeEvent
     fun addBlockToBlockEntity(event: BlockEntityTypeAddBlocksEvent) {
         LOGGER.info("Added external blocks to BlockEntityType!")
     }
@@ -246,7 +262,6 @@ internal object RagiumModEvents {
         LOGGER.info("Registered Data Map Types!")
     }
 
-    @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         LOGGER.info("Modified item components!")
     }

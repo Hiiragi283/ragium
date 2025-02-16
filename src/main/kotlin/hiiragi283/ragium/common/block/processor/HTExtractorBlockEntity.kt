@@ -12,8 +12,8 @@ import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.HTExtractorContainerMenu
+import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -44,8 +44,8 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
-    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTExtractorRecipe> =
-        HTRecipeGetter.Cached(RagiumRecipeTypes.EXTRACTOR.get())
+    private val recipeCache: HTRecipeGetter.Listed<HTMachineRecipeInput, HTExtractorRecipe> =
+        HTRecipeGetter.Listed(HTRecipeConverters::extractor)
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 

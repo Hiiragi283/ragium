@@ -101,7 +101,6 @@ object RagiumClient {
         LOGGER.info("Registered BlockEntityRenderers!")
     }
 
-    @SubscribeEvent
     fun clientSetup(event: FMLClientSetupEvent) {
         /*ItemProperties.registerGeneric(
             RagiumAPI.id("machine_tier"),

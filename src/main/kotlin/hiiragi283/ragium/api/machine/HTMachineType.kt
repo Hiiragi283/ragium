@@ -53,6 +53,7 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     INFUSER(SoundEvents.CONDUIT_ACTIVATE, null),
     MIXER(SoundEvents.PLAYER_SWIM, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP)),
     REFINERY(null, HTMachineParticleHandler.ofSimple(ParticleTypes.SMOKE)),
+    SOLIDIFIER(null, null),
 
     // Processor - Elite
     ALCHEMICAL_BREWERY(SoundEvents.BREWING_STAND_BREW, null),

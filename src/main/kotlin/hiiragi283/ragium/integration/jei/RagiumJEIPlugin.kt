@@ -6,14 +6,13 @@ import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.getAllRecipes
 import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.client.screen.HTMultiItemContainer
 import hiiragi283.ragium.client.screen.HTSingleItemContainer
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipeSerializers
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import hiiragi283.ragium.integration.jei.category.*
 import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
@@ -40,7 +39,6 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
-import java.util.function.Supplier
 import mezz.jei.api.recipe.RecipeType as JEIRecipeType
 
 @JeiPlugin
@@ -61,20 +59,20 @@ class RagiumJEIPlugin : IModPlugin {
                 guiHelper,
                 HTMachineType.ASSEMBLER,
                 RagiumJEIRecipeTypes.ASSEMBLER,
-                RagiumRecipeSerializers.ASSEMBLER.get(),
+                HTRecipeTypes.ASSEMBLER,
             ),
             HTMultiItemRecipeCategory(
                 guiHelper,
                 HTMachineType.BLAST_FURNACE,
                 RagiumJEIRecipeTypes.BLAST_FURNACE,
-                RagiumRecipeSerializers.BLAST_FURNACE.get(),
+                HTRecipeTypes.BLAST_FURNACE,
             ),
             HTBreweryRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
                 HTMachineType.COMPRESSOR,
                 RagiumJEIRecipeTypes.COMPRESSOR,
-                RagiumRecipeSerializers.COMPRESSOR.get(),
+                HTRecipeTypes.COMPRESSOR,
             ),
             HTEnchanterRecipeCategory(guiHelper),
             HTExtractorRecipeCategory(guiHelper),
@@ -82,7 +80,7 @@ class RagiumJEIPlugin : IModPlugin {
                 guiHelper,
                 HTMachineType.GRINDER,
                 RagiumJEIRecipeTypes.GRINDER,
-                RagiumRecipeSerializers.GRINDER.get(),
+                HTRecipeTypes.GRINDER,
             ),
             HTGrowthChamberRecipeCategory(guiHelper),
             HTInfuserRecipeCategory(guiHelper),
@@ -90,10 +88,11 @@ class RagiumJEIPlugin : IModPlugin {
                 guiHelper,
                 HTMachineType.LASER_ASSEMBLY,
                 RagiumJEIRecipeTypes.LASER_ASSEMBLY,
-                RagiumRecipeSerializers.LASER_ASSEMBLY.get(),
+                HTRecipeTypes.LASER_ASSEMBLY,
             ),
             HTMixerRecipeCategory(guiHelper),
             HTRefineryRecipeCategory(guiHelper),
+            HTSolidifierRecipeCategory(guiHelper),
             HTGeneratorFuelCategory(guiHelper),
             HTStirlingFuelCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
@@ -105,40 +104,46 @@ class RagiumJEIPlugin : IModPlugin {
         val level: ClientLevel = Minecraft.getInstance().level ?: return
         val recipeManager: RecipeManager = level.recipeManager
 
-        fun <T : HTMachineRecipeBase> register(recipeType: JEIRecipeType<T>, recipe: Supplier<RecipeType<T>>) {
+        fun <T : HTMachineRecipeBase> register(recipeType: JEIRecipeType<T>, recipe: RecipeType<T>) {
             registration.addRecipes(
                 recipeType,
-                recipeManager.getAllRecipes(recipe.get()),
+                recipeManager.getAllRecipes(recipe),
             )
         }
 
-        register(RagiumJEIRecipeTypes.ASSEMBLER, RagiumRecipeTypes.ASSEMBLER)
-        register(RagiumJEIRecipeTypes.BLAST_FURNACE, RagiumRecipeTypes.BLAST_FURNACE)
+        register(RagiumJEIRecipeTypes.ASSEMBLER, HTRecipeTypes.ASSEMBLER)
+        register(RagiumJEIRecipeTypes.BLAST_FURNACE, HTRecipeTypes.BLAST_FURNACE)
         registration.addRecipes(
             RagiumJEIRecipeTypes.COMPRESSOR,
             buildList {
                 HTRecipeConverters.compressor(this::add)
             },
         )
-        register(RagiumJEIRecipeTypes.BREWERY, RagiumRecipeTypes.BREWERY)
-        register(RagiumJEIRecipeTypes.ENCHANTER, RagiumRecipeTypes.ENCHANTER)
-        register(RagiumJEIRecipeTypes.EXTRACTOR, RagiumRecipeTypes.EXTRACTOR)
+        register(RagiumJEIRecipeTypes.BREWERY, HTRecipeTypes.BREWERY)
+        register(RagiumJEIRecipeTypes.ENCHANTER, HTRecipeTypes.ENCHANTER)
+        registration.addRecipes(
+            RagiumJEIRecipeTypes.EXTRACTOR,
+            buildList {
+                HTRecipeConverters.extractor(this::add)
+            },
+        )
         registration.addRecipes(
             RagiumJEIRecipeTypes.GRINDER,
             buildList {
                 HTRecipeConverters.grinder(this::add)
             },
         )
-        register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, RagiumRecipeTypes.GROWTH_CHAMBER)
+        register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, HTRecipeTypes.GROWTH_CHAMBER)
         registration.addRecipes(
             RagiumJEIRecipeTypes.INFUSER,
             buildList {
                 HTRecipeConverters.infuser(this::add)
             },
         )
-        register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, RagiumRecipeTypes.LASER_ASSEMBLY)
-        register(RagiumJEIRecipeTypes.MIXER, RagiumRecipeTypes.MIXER)
-        register(RagiumJEIRecipeTypes.REFINERY, RagiumRecipeTypes.REFINERY)
+        register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, HTRecipeTypes.LASER_ASSEMBLY)
+        register(RagiumJEIRecipeTypes.MIXER, HTRecipeTypes.MIXER)
+        register(RagiumJEIRecipeTypes.REFINERY, HTRecipeTypes.REFINERY)
+        register(RagiumJEIRecipeTypes.SOLIDIFIER, HTRecipeTypes.SOLIDIFIER)
 
         // Generator Fuel
         registration.addRecipes(
@@ -231,6 +236,8 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MIXER, HTMachineType.MIXER)
         // Refinery
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.REFINERY, HTMachineType.REFINERY)
+        // Solidifier
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.SOLIDIFIER, HTMachineType.SOLIDIFIER)
 
         // Generator
         registration.addRecipeCatalysts(

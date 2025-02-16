@@ -8,13 +8,13 @@ import hiiragi283.ragium.api.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.HTRefineryContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -39,7 +39,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     )
 
     private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTRefineryRecipe> =
-        HTRecipeGetter.Cached(RagiumRecipeTypes.REFINERY.get())
+        HTRecipeGetter.Cached(HTRecipeTypes.REFINERY)
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)

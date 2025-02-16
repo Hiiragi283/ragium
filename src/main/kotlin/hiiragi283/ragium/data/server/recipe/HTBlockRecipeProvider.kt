@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import aztech.modern_industrialization.items.ForgeTool
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.commonTag
@@ -345,7 +346,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             output,
             HTMachineType.COMPRESSOR,
             RagiumItems.MACHINE_CASING,
-            Ingredient.of(RagiumItems.FORGE_HAMMER),
+            Ingredient.of(ForgeTool.TAG),
             Ingredient.of(Items.PISTON),
         )
         // Grinder
@@ -396,6 +397,14 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             HTMachineType.REFINERY,
             RagiumItems.CHEMICAL_MACHINE_CASING,
             Ingredient.of(RagiumItems.CRUDE_OIL_BUCKET),
+            Ingredient.of(Tags.Items.GLASS_BLOCKS),
+        )
+        // Solidifier
+        registerMachine(
+            output,
+            HTMachineType.SOLIDIFIER,
+            RagiumItems.CHEMICAL_MACHINE_CASING,
+            Ingredient.of(Items.CAULDRON),
             Ingredient.of(Tags.Items.GLASS_BLOCKS),
         )
 

@@ -41,7 +41,6 @@ import net.minecraft.world.item.component.ResolvableProfile
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
@@ -58,6 +57,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         growthChamber(output)
         laser(output)
         refinery(output)
+        solidifier(output)
     }
 
     //    Assembler    //
@@ -210,29 +210,13 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     //    Extractor    //
 
     private fun extractor(output: RecipeOutput) {
-        // Water
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Tags.Items.BUCKETS_WATER)
-            .itemOutput(Items.BUCKET)
-            .waterOutput()
-            .save(output, RagiumAPI.id("water"))
-
-        // Lava
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Tags.Items.BUCKETS_LAVA)
-            .itemOutput(Items.BUCKET)
-            .fluidOutput(Fluids.LAVA)
-            .save(output, RagiumAPI.id("lava"))
-
         // Milk
         HTFluidOutputRecipeBuilder
             .extractor()
             .itemInput(Items.MILK_BUCKET)
             .itemOutput(Items.BUCKET)
             .fluidOutput(NeoForgeMod.MILK)
-            .save(output, RagiumAPI.id("milk"))
+            .save(output, NeoForgeMod.MILK.id)
 
         // Slime
         HTFluidOutputRecipeBuilder
@@ -242,13 +226,6 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .save(output, RagiumAPI.id("slime"))
 
         // Crude Oil
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(RagiumItems.CRUDE_OIL_BUCKET)
-            .itemOutput(Items.BUCKET)
-            .fluidOutput(RagiumFluids.CRUDE_OIL)
-            .save(output, RagiumAPI.id("crude_oil"))
-
         HTFluidOutputRecipeBuilder
             .extractor()
             .itemInput(ItemTags.COALS, 8)
@@ -485,5 +462,16 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.SLIME_BALL)
             .fluidOutput(RagiumVirtualFluids.FUEL)
             .saveSuffixed(output, "_from_creosote")
+    }
+
+    //    Solidifier    //
+
+    private fun solidifier(output: RecipeOutput) {
+        // Laval + Cobblestone -> Magma Block
+        HTSolidifierRecipeBuilder()
+            .fluidInput(Tags.Fluids.LAVA)
+            .catalyst(Tags.Items.COBBLESTONES)
+            .itemOutput(Items.MAGMA_BLOCK)
+            .save(output)
     }
 }

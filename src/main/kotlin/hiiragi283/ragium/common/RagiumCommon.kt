@@ -42,8 +42,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
-        RagiumRecipeSerializers.REGISTER.register(eventBus)
-        RagiumRecipeTypes.REGISTER.register(eventBus)
 
         if (ModList.get().isLoaded("mekanism")) {
             RagiumMekIntegration.CHEMICAL_REGISTER.register(eventBus)

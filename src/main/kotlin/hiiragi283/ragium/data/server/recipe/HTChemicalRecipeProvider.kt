@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -185,6 +186,11 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_block")
 
+        // Water -> Ice
+        HTSolidifierRecipeBuilder()
+            .waterInput()
+            .itemOutput(Items.ICE)
+            .save(output)
         // Blue Ice -> 9x Packed Ice
         HTSingleItemRecipeBuilder
             .grinder()

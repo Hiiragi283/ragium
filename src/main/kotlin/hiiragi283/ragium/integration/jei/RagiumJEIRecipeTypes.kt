@@ -72,6 +72,10 @@ object RagiumJEIRecipeTypes {
         RecipeType.create(RagiumAPI.MOD_ID, "refinery", HTRefineryRecipe::class.java)
 
     @JvmField
+    val SOLIDIFIER: RecipeType<HTSolidifierRecipe> =
+        RecipeType.create(RagiumAPI.MOD_ID, "solidifier", HTSolidifierRecipe::class.java)
+
+    @JvmField
     val STIRLING: RecipeType<HTStirlingFuelEntry> =
         RecipeType.create(RagiumAPI.MOD_ID, "stirling", HTStirlingFuelEntry::class.java)
 }

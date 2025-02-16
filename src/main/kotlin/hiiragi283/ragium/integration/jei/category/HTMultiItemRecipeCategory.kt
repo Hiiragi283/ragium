@@ -3,6 +3,7 @@ package hiiragi283.ragium.integration.jei.category
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.integration.jei.addIngredients
 import hiiragi283.ragium.integration.jei.addItemOutput
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -11,13 +12,12 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
-import net.minecraft.world.item.crafting.RecipeSerializer
 
 class HTMultiItemRecipeCategory<T : HTMultiItemRecipe>(
     guiHelper: IGuiHelper,
     machine: HTMachineType,
     private val recipeType: RecipeType<T>,
-    private val serializer: RecipeSerializer<T>,
+    private val recipeType1: HTRecipeType<T>,
 ) : HTMachineRecipeCategory<T>(guiHelper, machine, 3.5) {
     override fun getRecipeType(): RecipeType<T> = recipeType
 
@@ -48,5 +48,5 @@ class HTMultiItemRecipeCategory<T : HTMultiItemRecipe>(
 
     override fun getHeight(): Int = 18 * 1 + 8
 
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<T> = serializer.codec().codec()
+    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<T> = recipeType1.serializer.codec().codec()
 }

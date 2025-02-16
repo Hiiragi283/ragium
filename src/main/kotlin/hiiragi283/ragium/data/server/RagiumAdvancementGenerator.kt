@@ -194,6 +194,8 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
 
         val crimson: AdvancementHolder = createSimple(refinery, RagiumItems.CRIMSON_CRYSTAL, Component.empty(), type = AdvancementType.GOAL)
         val warped: AdvancementHolder = createSimple(refinery, RagiumItems.WARPED_CRYSTAL, Component.empty(), type = AdvancementType.GOAL)
+        // Solidifier
+        val solidifier: AdvancementHolder = createMachine(casing, HTMachineType.SOLIDIFIER)
     }
 
     private fun registerPrecision(aluminum: AdvancementHolder) {

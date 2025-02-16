@@ -44,7 +44,6 @@ internal object RagiumGameEvents {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
-    @SubscribeEvent
     fun onRegisterCommands(event: RegisterCommandsEvent) {
         LOGGER.info("Registered Commands!")
     }

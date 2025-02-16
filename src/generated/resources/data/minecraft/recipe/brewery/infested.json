@@ -1,5 +1,5 @@
 {
-  "type": "ragium:brewery",
+  "type": "ragium:alchemical_brewery",
   "effect": "minecraft:infested",
   "first_item_input": {
     "tag": "c:crops/nether_wart"
