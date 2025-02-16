@@ -20,6 +20,7 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -190,13 +191,20 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerMilk(output: RecipeOutput) {
-        // Milk
+        // Milk + Bucket -> Milk Bucket
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(Items.BUCKET)
             .milkInput()
             .itemOutput(Items.MILK_BUCKET)
             .save(output)
+        // Milk Bucket -> Milk + Bucket
+        HTFluidOutputRecipeBuilder
+            .extractor()
+            .itemInput(Items.MILK_BUCKET)
+            .itemOutput(Items.BUCKET)
+            .fluidOutput(NeoForgeMod.MILK)
+            .save(output, NeoForgeMod.MILK.id)
 
         // Butter
         HTSolidifierRecipeBuilder()

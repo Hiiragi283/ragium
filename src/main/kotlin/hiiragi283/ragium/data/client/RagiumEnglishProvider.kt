@@ -94,7 +94,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Fluids
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.SNOW, "Powder Snow")
-        addFluid(RagiumFluids.SLIME, "Slime")
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
 
@@ -183,7 +182,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.MACHINE_CASING, "Machine Casing")
-        addItem(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "Precision Machine Casing")
@@ -218,15 +216,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
-
-        add(RagiumTranslationKeys.BIOME_CONDITION, "Required Biomes: %s")
-        add(RagiumTranslationKeys.CATALYST_CONDITION, "Required Catalyst Item")
-        add(RagiumTranslationKeys.ENCHANTMENT_CONDITION, "Required Enchantments: %s")
-        add(
-            RagiumTranslationKeys.ROCK_GENERATOR_CONDITION,
-            "Require Water and Lava Source around the machine, and Catalyst Item",
-        )
-        add(RagiumTranslationKeys.SOURCE_CONDITION, "Required Source %s from %s side")
         // Machine Type
         add(
             HTMachineType.BEDROCK_MINER,

@@ -52,14 +52,6 @@ object RagiumFluidTypes {
     }
 
     @JvmField
-    val SLIME: DeferredHolder<FluidType, FluidType> = REGISTER.register("slime") { _: ResourceLocation ->
-        object : FluidType(Properties.create()) {
-            override fun getBlockForFluidState(getter: BlockAndTintGetter, pos: BlockPos, state: FluidState): BlockState =
-                Blocks.SLIME_BLOCK.defaultBlockState()
-        }
-    }
-
-    @JvmField
     val CRUDE_OIL: DeferredHolder<FluidType, FluidType> = REGISTER.register("crude_oil") { _: ResourceLocation ->
         FluidType(
             FluidType.Properties

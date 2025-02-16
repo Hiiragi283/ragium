@@ -150,9 +150,6 @@ object RagiumItems {
     val WARPED_CRYSTAL: DeferredItem<Item> = register("warped_crystal")
 
     @JvmField
-    val OBSIDIAN_TEAR: DeferredItem<Item> = register("obsidian_tear")
-
-    @JvmField
     val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")
 
     //    Foods    //

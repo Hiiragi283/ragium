@@ -52,10 +52,4 @@ object RagiumTranslationKeys {
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
     const val MULTI_SHAPE_SUCCESS = "message.ragium.multi_shape.success"
-
-    const val BIOME_CONDITION = "tooltip.ragium.condition.biome"
-    const val CATALYST_CONDITION = "tooltip.ragium.condition.catalyst"
-    const val ENCHANTMENT_CONDITION = "tooltip.ragium.condition.enchantment"
-    const val ROCK_GENERATOR_CONDITION = "tooltip.ragium.condition.rock_generator"
-    const val SOURCE_CONDITION = "tooltip.ragium.condition.source"
 }

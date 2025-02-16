@@ -41,7 +41,6 @@ import net.minecraft.world.item.component.ResolvableProfile
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 import java.util.*
@@ -209,41 +208,11 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
     //    Extractor    //
 
-    private fun extractor(output: RecipeOutput) {
-        // Milk
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Items.MILK_BUCKET)
-            .itemOutput(Items.BUCKET)
-            .fluidOutput(NeoForgeMod.MILK)
-            .save(output, NeoForgeMod.MILK.id)
-
-        // Slime
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Tags.Items.SLIME_BALLS)
-            .fluidOutput(RagiumFluids.SLIME)
-            .save(output, RagiumAPI.id("slime"))
-
-        // Crude Oil
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(ItemTags.COALS, 8)
-            .fluidOutput(RagiumFluids.CRUDE_OIL)
-            .save(output, RagiumAPI.id("crude_oil_from_coal"))
-
-        // Obsidian Tier
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Tags.Items.OBSIDIANS_CRYING)
-            .itemOutput(RagiumItems.OBSIDIAN_TEAR, 4)
-            .save(output)
-    }
+    private fun extractor(output: RecipeOutput) {}
 
     //    Infuser    //
 
-    private fun infuser(output: RecipeOutput) {
-    }
+    private fun infuser(output: RecipeOutput) {}
 
     //    Growth Chamber    //
 
@@ -354,6 +323,12 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     //    Refinery    //
 
     private fun refinery(output: RecipeOutput) {
+        // Coal -> Crude Oil
+        HTFluidOutputRecipeBuilder
+            .extractor()
+            .itemInput(ItemTags.COALS, 8)
+            .fluidOutput(RagiumFluids.CRUDE_OIL)
+            .save(output, RagiumAPI.id("crude_oil_from_coal"))
         // Soul XX -> Crude Oil
         HTFluidOutputRecipeBuilder
             .extractor()

@@ -52,7 +52,6 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.SILKY_CRYSTAL)
                     output.accept(RagiumItems.CRIMSON_CRYSTAL)
                     output.accept(RagiumItems.WARPED_CRYSTAL)
-                    output.accept(RagiumItems.OBSIDIAN_TEAR)
 
                     output.accept(RagiumItems.RAGI_ALLOY_COMPOUND)
                     registerPrefix(HTTagPrefix.INGOT)

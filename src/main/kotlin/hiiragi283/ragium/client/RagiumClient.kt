@@ -59,10 +59,6 @@ object RagiumClient {
             RagiumFluidTypes.SNOW,
         )
         event.registerFluidType(
-            HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/slime_block")),
-            RagiumFluidTypes.SLIME,
-        )
-        event.registerFluidType(
             HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/black_concrete_powder")),
             RagiumFluidTypes.CRUDE_OIL,
         )
