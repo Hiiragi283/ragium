@@ -4,12 +4,16 @@
     "amount": 1000,
     "tag": "c:naphtha"
   },
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:fuel"
-  },
-  "item_output": {
-    "count": 2,
-    "id": "ragium:polymer_resin"
-  }
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:fuel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:polymer_resin"
+    }
+  ]
 }

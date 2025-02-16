@@ -7,8 +7,10 @@
   "item_input": {
     "tag": "c:glass_blocks"
   },
-  "item_output": {
-    "count": 1,
-    "id": "minecraft:honey_block"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:honey_block"
+    }
+  ]
 }

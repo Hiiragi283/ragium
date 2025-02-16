@@ -7,7 +7,9 @@
   "item_input": {
     "tag": "c:dusts/aluminum"
   },
-  "item_output": {
-    "tag": "c:gems/cryolite"
-  }
+  "item_outputs": [
+    {
+      "tag": "c:gems/cryolite"
+    }
+  ]
 }

@@ -4,10 +4,12 @@
     "amount": 1000,
     "tag": "c:water"
   },
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:sulfuric_acid"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:sulfuric_acid"
+    }
+  ],
   "item_input": {
     "item": "ragium:blaze_reagent"
   }

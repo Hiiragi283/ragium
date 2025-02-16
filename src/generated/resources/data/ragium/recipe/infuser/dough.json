@@ -8,8 +8,10 @@
     "count": 3,
     "item": "ragium:flour"
   },
-  "item_output": {
-    "count": 3,
-    "id": "ragium:dough"
-  }
+  "item_outputs": [
+    {
+      "count": 3,
+      "id": "ragium:dough"
+    }
+  ]
 }

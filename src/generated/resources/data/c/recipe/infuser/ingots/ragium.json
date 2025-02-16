@@ -7,7 +7,9 @@
   "item_input": {
     "tag": "c:ingots/iron"
   },
-  "item_output": {
-    "tag": "c:ingots/ragium"
-  }
+  "item_outputs": [
+    {
+      "tag": "c:ingots/ragium"
+    }
+  ]
 }

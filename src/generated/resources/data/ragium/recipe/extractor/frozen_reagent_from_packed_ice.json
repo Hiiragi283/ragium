@@ -3,8 +3,10 @@
   "item_input": {
     "item": "minecraft:packed_ice"
   },
-  "item_output": {
-    "count": 1,
-    "id": "ragium:frozen_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:frozen_reagent"
+    }
+  ]
 }

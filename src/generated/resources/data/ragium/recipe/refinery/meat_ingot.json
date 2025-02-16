@@ -10,8 +10,10 @@
     "amount": 150,
     "tag": "c:nutritional_paste"
   },
-  "item_output": {
-    "count": 1,
-    "id": "ragium:meat_ingot"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:meat_ingot"
+    }
+  ]
 }

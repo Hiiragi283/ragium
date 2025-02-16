@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.integration
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTRefineryRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -36,7 +36,8 @@ object HTMekanismRecipeProvider : RagiumRecipeProvider.ModChild("mekanism") {
             .save(output)
 
         // Nutrition Paste -> Meat Ingot
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(MekanismTags.Fluids.NUTRITIONAL_PASTE, 150)
             .itemOutput(RagiumItems.MEAT_INGOT)
             .save(output)

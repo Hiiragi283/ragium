@@ -8,7 +8,9 @@
     "count": 8,
     "item": "ragium:blaze_reagent"
   },
-  "item_output": {
-    "tag": "c:gems/fiery_coal"
-  }
+  "item_outputs": [
+    {
+      "tag": "c:gems/fiery_coal"
+    }
+  ]
 }

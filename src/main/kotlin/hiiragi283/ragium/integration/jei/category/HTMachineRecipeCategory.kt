@@ -12,12 +12,13 @@ abstract class HTMachineRecipeCategory<T : HTMachineRecipeBase>(
     val guiHelper: IGuiHelper,
     val machine: HTMachineType,
     val arrowX: Double,
+    val arrowY: Double = 0.0,
 ) : HTRecipeCategory<T> {
     final override fun getTitle(): Component = machine.text
 
     final override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(machine)
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: T, focuses: IFocusGroup) {
-        builder.addRecipeArrow().setPosition(getPosition(arrowX), getPosition(0))
+        builder.addRecipeArrow().setPosition(getPosition(arrowX), getPosition(arrowY))
     }
 }

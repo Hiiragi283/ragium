@@ -1,14 +1,18 @@
 {
   "type": "ragium:extractor",
-  "fluid_output": {
-    "amount": 1000,
-    "id": "minecraft:water"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "minecraft:water"
+    }
+  ],
   "item_input": {
     "tag": "c:buckets/water"
   },
-  "item_output": {
-    "count": 1,
-    "id": "minecraft:bucket"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:bucket"
+    }
+  ]
 }

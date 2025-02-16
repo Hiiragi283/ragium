@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.getAllRecipes
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -189,13 +189,15 @@ object HTRecipeConverters {
         if (!output.isValid(false)) return
         val count: Int = RagiumConfig.getGrinderRawCountMap()[key] ?: 1
         // 3x
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(HTTagPrefix.ORE, key)
             .fluidInput(RagiumVirtualFluids.SULFURIC_ACID, 500)
             .itemOutput(output.copyWithCount(count * 3))
             .export(consumer)
         // 4x
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(HTTagPrefix.ORE, key)
             .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, 500)
             .itemOutput(output.copyWithCount(count * 4))

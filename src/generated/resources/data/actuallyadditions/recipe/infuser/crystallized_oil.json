@@ -10,10 +10,12 @@
     "amount": 1000,
     "fluid": "actuallyadditions:refined_canola_oil"
   },
-  "fluid_output": {
-    "amount": 1000,
-    "id": "actuallyadditions:crystallized_oil"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "actuallyadditions:crystallized_oil"
+    }
+  ],
   "item_input": {
     "item": "actuallyadditions:crystallized_canola_seed"
   }

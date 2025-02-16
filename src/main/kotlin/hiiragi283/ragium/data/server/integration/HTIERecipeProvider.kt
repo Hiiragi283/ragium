@@ -4,8 +4,8 @@ import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
 import blusunrize.immersiveengineering.common.register.IEItems
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -23,7 +23,8 @@ import net.neoforged.neoforge.fluids.FluidType
 object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Treated Wood
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(ItemTags.PLANKS)
             .fluidInput(RagiumFluidTags.CREOSOTE, FluidType.BUCKET_VOLUME / 8)
             .itemOutput(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!)

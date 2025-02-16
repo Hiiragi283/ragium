@@ -4,12 +4,16 @@
     "amount": 1000,
     "tag": "c:creosote"
   },
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:fuel"
-  },
-  "item_output": {
-    "count": 1,
-    "id": "minecraft:slime_ball"
-  }
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:fuel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:slime_ball"
+    }
+  ]
 }

@@ -3,8 +3,10 @@
   "item_input": {
     "tag": "c:dusts/ash"
   },
-  "item_output": {
-    "count": 1,
-    "id": "ragium:alkali_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:alkali_reagent"
+    }
+  ]
 }

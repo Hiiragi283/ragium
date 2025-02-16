@@ -38,7 +38,7 @@ abstract class HTSingleItemRecipe(
                     HTRecipeCodecs.group(),
                     HTRecipeCodecs.ITEM_INPUT.forGetter(HTSingleItemRecipe::input),
                     HTRecipeCodecs.CATALYST.forGetter(HTSingleItemRecipe::catalyst),
-                    HTRecipeCodecs.itemResult(),
+                    HTRecipeCodecs.itemOutput(),
                 ).apply(instance, factory)
         }
 

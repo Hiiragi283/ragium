@@ -1,14 +1,18 @@
 {
   "type": "ragium:extractor",
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:mushroom_stew"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:mushroom_stew"
+    }
+  ],
   "item_input": {
     "item": "minecraft:mushroom_stew"
   },
-  "item_output": {
-    "count": 1,
-    "id": "minecraft:bowl"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:bowl"
+    }
+  ]
 }

@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
@@ -17,8 +16,20 @@ object HTRecipeCodecs {
         Codec.STRING.optionalFieldOf("group", "").forGetter(HTMachineRecipeBase::getGroup)
 
     @JvmStatic
-    fun <T : HTMachineRecipeBase> itemResult(): RecordCodecBuilder<T, HTItemOutput> =
+    fun <T : HTMachineRecipeBase> itemOutput(): RecordCodecBuilder<T, HTItemOutput> =
         HTItemOutput.CODEC.fieldOf("item_output").forGetter { it.itemOutputs[0] }
+
+    @JvmStatic
+    fun <T : HTFluidOutputRecipe> itemOutputs(min: Int, max: Int): RecordCodecBuilder<T, List<HTItemOutput>> = HTItemOutput.CODEC
+        .listOf(min, max)
+        .optionalFieldOf("item_outputs", listOf())
+        .forGetter { it.itemOutputs }
+
+    @JvmStatic
+    fun <T : HTFluidOutputRecipe> fluidOutputs(min: Int, max: Int): RecordCodecBuilder<T, List<HTFluidOutput>> = HTFluidOutput.CODEC
+        .listOf(min, max)
+        .optionalFieldOf("fluid_outputs", listOf())
+        .forGetter { it.fluidOutputs }
 
     @JvmField
     val ITEM_INPUT: MapCodec<HTItemIngredient> = HTItemIngredient.CODEC.fieldOf("item_input")
@@ -28,10 +39,4 @@ object HTRecipeCodecs {
 
     @JvmField
     val CATALYST: MapCodec<Optional<Ingredient>> = Ingredient.CODEC_NONEMPTY.optionalFieldOf("catalyst")
-
-    @JvmField
-    val ITEM_OUTPUT: MapCodec<Optional<HTItemOutput>> = HTItemOutput.CODEC.optionalFieldOf("item_output")
-
-    @JvmField
-    val FLUID_OUTPUT: MapCodec<Optional<FluidStack>> = FluidStack.CODEC.optionalFieldOf("fluid_output")
 }

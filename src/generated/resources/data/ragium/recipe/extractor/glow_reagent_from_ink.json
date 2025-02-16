@@ -3,8 +3,10 @@
   "item_input": {
     "item": "minecraft:glow_ink_sac"
   },
-  "item_output": {
-    "count": 2,
-    "id": "ragium:glow_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:glow_reagent"
+    }
+  ]
 }

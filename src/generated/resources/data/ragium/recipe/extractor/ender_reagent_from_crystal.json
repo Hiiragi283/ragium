@@ -3,8 +3,10 @@
   "item_input": {
     "item": "minecraft:end_crystal"
   },
-  "item_output": {
-    "count": 4,
-    "id": "ragium:ender_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:ender_reagent"
+    }
+  ]
 }

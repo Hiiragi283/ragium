@@ -2,10 +2,8 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemOutput
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
+import hiiragi283.ragium.api.extension.toList
+import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -14,16 +12,14 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import java.util.*
 
 class HTRefineryRecipe(
     group: String,
     val input: SizedFluidIngredient,
-    itemOutput: Optional<HTItemOutput>,
-    fluidOutput: Optional<FluidStack>,
-) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
+    itemOutputs: List<HTItemOutput>,
+    fluidOutputs: List<HTFluidOutput>,
+) : HTFluidOutputRecipe(group, itemOutputs, fluidOutputs) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTRefineryRecipe> = RecordCodecBuilder
@@ -32,8 +28,8 @@ class HTRefineryRecipe(
                     .group(
                         HTRecipeCodecs.group(),
                         HTRecipeCodecs.FLUID_INPUT.forGetter(HTRefineryRecipe::input),
-                        HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTRefineryRecipe::itemOutput),
-                        HTRecipeCodecs.FLUID_OUTPUT.forGetter(HTRefineryRecipe::fluidOutput),
+                        HTRecipeCodecs.itemOutputs(0, 1),
+                        HTRecipeCodecs.fluidOutputs(0, 3),
                     ).apply(instance, ::HTRefineryRecipe)
             }.validate(HTFluidOutputRecipe::validate)
 
@@ -43,10 +39,10 @@ class HTRefineryRecipe(
             HTRefineryRecipe::getGroup,
             SizedFluidIngredient.STREAM_CODEC,
             HTRefineryRecipe::input,
-            ByteBufCodecs.optional(HTItemOutput.STREAM_CODEC),
-            HTRefineryRecipe::itemOutput,
-            ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
-            HTRefineryRecipe::fluidOutput,
+            HTItemOutput.STREAM_CODEC.toList(),
+            HTRefineryRecipe::itemOutputs,
+            HTFluidOutput.STREAM_CODEC.toList(),
+            HTRefineryRecipe::fluidOutputs,
             ::HTRefineryRecipe,
         )
     }

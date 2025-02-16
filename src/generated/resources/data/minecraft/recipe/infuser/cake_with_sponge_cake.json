@@ -7,8 +7,10 @@
   "item_input": {
     "item": "ragium:sponge_cake"
   },
-  "item_output": {
-    "count": 1,
-    "id": "minecraft:cake"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:cake"
+    }
+  ]
 }

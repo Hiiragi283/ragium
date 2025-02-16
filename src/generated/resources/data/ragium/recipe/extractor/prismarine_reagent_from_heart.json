@@ -3,8 +3,10 @@
   "item_input": {
     "item": "minecraft:heart_of_the_sea"
   },
-  "item_output": {
-    "count": 64,
-    "id": "ragium:prismarine_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 64,
+      "id": "ragium:prismarine_reagent"
+    }
+  ]
 }

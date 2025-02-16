@@ -1,9 +1,11 @@
 {
   "type": "ragium:extractor",
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:slime"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:slime"
+    }
+  ],
   "item_input": {
     "tag": "c:slime_balls"
   }

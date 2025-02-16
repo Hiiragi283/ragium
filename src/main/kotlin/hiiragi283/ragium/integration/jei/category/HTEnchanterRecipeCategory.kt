@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
-import hiiragi283.ragium.integration.jei.addItemResult
+import hiiragi283.ragium.integration.jei.addItemOutput
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -51,7 +51,7 @@ class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HT
         builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .setStandardSlotBackground()
-            .addItemResult(recipe, 0)
+            .addItemOutput(recipe, 0)
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTEnchanterRecipe, focuses: IFocusGroup) {

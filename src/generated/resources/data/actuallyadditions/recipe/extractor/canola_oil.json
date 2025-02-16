@@ -6,10 +6,12 @@
     }
   ],
   "type": "ragium:extractor",
-  "fluid_output": {
-    "amount": 80,
-    "id": "actuallyadditions:canola_oil"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 80,
+      "id": "actuallyadditions:canola_oil"
+    }
+  ],
   "item_input": {
     "tag": "c:crops/canola"
   }

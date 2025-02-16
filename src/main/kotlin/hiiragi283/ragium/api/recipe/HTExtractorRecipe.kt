@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -11,15 +12,13 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.fluids.FluidStack
-import java.util.*
 
 class HTExtractorRecipe(
     group: String,
     val input: HTItemIngredient,
-    itemOutput: Optional<HTItemOutput>,
-    fluidOutput: Optional<FluidStack>,
-) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
+    itemOutputs: List<HTItemOutput>,
+    fluidOutputs: List<HTFluidOutput>,
+) : HTFluidOutputRecipe(group, itemOutputs, fluidOutputs) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTExtractorRecipe> = RecordCodecBuilder
@@ -28,8 +27,8 @@ class HTExtractorRecipe(
                     .group(
                         HTRecipeCodecs.group(),
                         HTRecipeCodecs.ITEM_INPUT.forGetter(HTExtractorRecipe::input),
-                        HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTExtractorRecipe::itemOutput),
-                        HTRecipeCodecs.FLUID_OUTPUT.forGetter(HTExtractorRecipe::fluidOutput),
+                        HTRecipeCodecs.itemOutputs(0, 1),
+                        HTRecipeCodecs.fluidOutputs(0, 1),
                     ).apply(instance, ::HTExtractorRecipe)
             }.validate(HTFluidOutputRecipe::validate)
 
@@ -39,10 +38,10 @@ class HTExtractorRecipe(
             HTExtractorRecipe::getGroup,
             HTItemIngredient.STREAM_CODEC,
             HTExtractorRecipe::input,
-            ByteBufCodecs.optional(HTItemOutput.STREAM_CODEC),
-            HTExtractorRecipe::itemOutput,
-            ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
-            HTExtractorRecipe::fluidOutput,
+            HTItemOutput.STREAM_CODEC.toList(),
+            HTExtractorRecipe::itemOutputs,
+            HTFluidOutput.STREAM_CODEC.toList(),
+            HTExtractorRecipe::fluidOutputs,
             ::HTExtractorRecipe,
         )
     }

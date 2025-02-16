@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.recipe.HTBreweryRecipe
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
 import hiiragi283.ragium.api.recipe.HTMixerRecipe
+import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -43,7 +44,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import java.util.*
 
@@ -211,46 +211,53 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun extractor(output: RecipeOutput) {
         // Water
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Tags.Items.BUCKETS_WATER)
             .itemOutput(Items.BUCKET)
             .waterOutput()
             .save(output, RagiumAPI.id("water"))
 
         // Lava
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Tags.Items.BUCKETS_LAVA)
             .itemOutput(Items.BUCKET)
             .fluidOutput(Fluids.LAVA)
             .save(output, RagiumAPI.id("lava"))
 
         // Milk
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Items.MILK_BUCKET)
             .itemOutput(Items.BUCKET)
             .fluidOutput(NeoForgeMod.MILK)
             .save(output, RagiumAPI.id("milk"))
 
         // Slime
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Tags.Items.SLIME_BALLS)
             .fluidOutput(RagiumFluids.SLIME)
             .save(output, RagiumAPI.id("slime"))
 
         // Crude Oil
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(RagiumItems.CRUDE_OIL_BUCKET)
             .itemOutput(Items.BUCKET)
             .fluidOutput(RagiumFluids.CRUDE_OIL)
             .save(output, RagiumAPI.id("crude_oil"))
 
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(ItemTags.COALS, 8)
             .fluidOutput(RagiumFluids.CRUDE_OIL)
             .save(output, RagiumAPI.id("crude_oil_from_coal"))
 
         // Obsidian Tier
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Tags.Items.OBSIDIANS_CRYING)
             .itemOutput(RagiumItems.OBSIDIAN_TEAR, 4)
             .save(output)
@@ -371,18 +378,21 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun refinery(output: RecipeOutput) {
         // Soul XX -> Crude Oil
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 2)
             .save(output, RagiumAPI.id("crude_oil_from_soul"))
         // Crude Oil -> Naphtha
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(RagiumFluids.CRUDE_OIL)
             .fluidOutput(RagiumVirtualFluids.NAPHTHA)
             .save(output)
         // Naphtha -> Polymer Resin + Fuel
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(RagiumVirtualFluids.NAPHTHA)
             .itemOutput(RagiumItems.POLYMER_RESIN, 2)
             .fluidOutput(RagiumVirtualFluids.FUEL)
@@ -404,7 +414,8 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         }
 
         // Biomass -> Alcohol
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(RagiumVirtualFluids.BIOMASS)
             .fluidOutput(RagiumVirtualFluids.ETHANOL)
             .save(output)
@@ -415,52 +426,61 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
                 "",
                 HTIngredientBuilder.fluid(RagiumVirtualFluids.ETHANOL, FluidType.BUCKET_VOLUME * 4),
                 HTIngredientBuilder.fluid(RagiumVirtualFluids.PLANT_OIL),
-                Optional.empty(),
-                Optional.of(FluidStack(RagiumVirtualFluids.BIODIESEL.get(), FluidType.BUCKET_VOLUME * 4)),
+                listOf(),
+                listOf(
+                    HTFluidOutput.of(RagiumVirtualFluids.BIODIESEL.get(), FluidType.BUCKET_VOLUME * 4),
+                ),
             ),
             null,
         )
 
         // XX Log -> Sap + Pulp
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
         // Sap -> Slimeball
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(RagiumVirtualFluids.SAP)
             .itemOutput(Items.SLIME_BALL)
             .saveSuffixed(output, "_from_sap")
 
         // Crimson Stem -> Crimson Sap
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(ItemTags.CRIMSON_STEMS)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumVirtualFluids.CRIMSON_SAP)
             .savePrefixed(output, "crimson_")
         // Crimson Sap -> Crimson Crystal + Sap
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(RagiumVirtualFluids.CRIMSON_SAP)
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
 
         // Warped Stem -> Warped Sap
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(ItemTags.WARPED_STEMS)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumVirtualFluids.WARPED_SAP)
             .savePrefixed(output, "warped_")
         // Warped Sap -> Warped Crystal + Sap
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(RagiumVirtualFluids.WARPED_SAP)
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
 
         // Creosote -> Slime Ball + Fuel
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(RagiumFluidTags.CREOSOTE)
             .itemOutput(Items.SLIME_BALL)
             .fluidOutput(RagiumVirtualFluids.FUEL)

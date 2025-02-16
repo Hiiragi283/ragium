@@ -1,14 +1,18 @@
 {
   "type": "ragium:extractor",
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:warped_sap"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:warped_sap"
+    }
+  ],
   "item_input": {
     "tag": "minecraft:warped_stems"
   },
-  "item_output": {
-    "count": 4,
-    "tag": "c:dusts/wood"
-  }
+  "item_outputs": [
+    {
+      "count": 4,
+      "tag": "c:dusts/wood"
+    }
+  ]
 }

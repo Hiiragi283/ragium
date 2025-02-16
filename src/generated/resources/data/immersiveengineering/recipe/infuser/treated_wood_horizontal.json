@@ -13,8 +13,10 @@
   "item_input": {
     "tag": "minecraft:planks"
   },
-  "item_output": {
-    "count": 1,
-    "id": "immersiveengineering:treated_wood_horizontal"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "immersiveengineering:treated_wood_horizontal"
+    }
+  ]
 }

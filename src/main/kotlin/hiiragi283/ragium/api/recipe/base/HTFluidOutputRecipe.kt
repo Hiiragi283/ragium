@@ -8,43 +8,34 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
-import java.util.*
 
 /**
  * アイテムまたは液体の完成品を持つレシピのクラス
  */
-abstract class HTFluidOutputRecipe(
-    group: String,
-    protected val itemOutput: Optional<HTItemOutput>,
-    protected val fluidOutput: Optional<FluidStack>,
-) : HTMachineRecipeBase(group) {
+abstract class HTFluidOutputRecipe(group: String, override val itemOutputs: List<HTItemOutput>, val fluidOutputs: List<HTFluidOutput>) :
+    HTMachineRecipeBase(group) {
     companion object {
         @JvmStatic
         fun <T : HTFluidOutputRecipe> validate(recipe: T): DataResult<T> {
-            if (recipe.itemOutput.isEmpty && recipe.fluidOutput.isEmpty) {
+            if (recipe.itemOutputs.isEmpty() && recipe.fluidOutputs.isEmpty()) {
                 return DataResult.error { "Either item or fluid output required!" }
             }
             return DataResult.success(recipe)
         }
     }
 
-    override val itemOutputs: List<HTItemOutput> = itemOutput.map(::listOf).orElse(listOf())
-
-    fun getFluidOutput(): FluidStack = fluidOutput.orElse(FluidStack.EMPTY).copy()
-
     /**
      * 指定した[itemHandler]と[fluidHandler]に完成品を入れられるか判定します。
      * @throws HTMachineException 完成品を入れられなかった場合
      */
     fun canInsert(enchantments: ItemEnchantments, itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
-        itemOutput.ifPresent { output: HTItemOutput ->
+        for (output: HTItemOutput in itemOutputs) {
             if (!itemHandler.canInsert(output.get())) throw HTMachineException.MergeResult(false)
         }
-        fluidOutput.ifPresent { output: FluidStack ->
-            if (!fluidHandler.canFill(output.copy())) throw HTMachineException.MergeResult(false)
+        for (output: HTFluidOutput in fluidOutputs) {
+            if (!fluidHandler.canFill(output.get())) throw HTMachineException.MergeResult(false)
         }
     }
 
@@ -60,11 +51,11 @@ abstract class HTFluidOutputRecipe(
         level: Level,
         pos: BlockPos,
     ) {
-        itemOutput.ifPresent { output: HTItemOutput ->
+        for (output: HTItemOutput in itemOutputs) {
             itemHandler.insertOrDrop(level, pos.above(), output.get())
         }
-        fluidOutput.ifPresent { output: FluidStack ->
-            fluidHandler.fill(output.copy(), IFluidHandler.FluidAction.EXECUTE)
+        for (output: HTFluidOutput in fluidOutputs) {
+            fluidHandler.fill(output.get(), IFluidHandler.FluidAction.EXECUTE)
         }
     }
 }

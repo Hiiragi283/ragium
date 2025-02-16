@@ -3,8 +3,10 @@
   "item_input": {
     "tag": "c:obsidians/crying"
   },
-  "item_output": {
-    "count": 4,
-    "id": "ragium:obsidian_tear"
-  }
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:obsidian_tear"
+    }
+  ]
 }

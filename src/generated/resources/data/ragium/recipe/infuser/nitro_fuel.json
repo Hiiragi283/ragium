@@ -4,10 +4,12 @@
     "amount": 8000,
     "tag": "ragium:fuels/non_nitro"
   },
-  "fluid_output": {
-    "amount": 8000,
-    "id": "ragium:nitro_fuel"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 8000,
+      "id": "ragium:nitro_fuel"
+    }
+  ],
   "item_input": {
     "item": "ragium:creeper_reagent"
   }

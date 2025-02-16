@@ -3,8 +3,10 @@
   "item_input": {
     "tag": "c:ender_pearls"
   },
-  "item_output": {
-    "count": 1,
-    "id": "ragium:ender_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:ender_reagent"
+    }
+  ]
 }

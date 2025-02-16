@@ -3,8 +3,10 @@
   "item_input": {
     "item": "minecraft:wither_skeleton_skull"
   },
-  "item_output": {
-    "count": 8,
-    "id": "ragium:wither_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 8,
+      "id": "ragium:wither_reagent"
+    }
+  ]
 }

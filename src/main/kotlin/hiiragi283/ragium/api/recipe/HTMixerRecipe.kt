@@ -2,10 +2,8 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemOutput
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeCodecs
+import hiiragi283.ragium.api.extension.toList
+import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -14,17 +12,15 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import java.util.*
 
 class HTMixerRecipe(
     group: String,
     val firstFluid: SizedFluidIngredient,
     val secondFluid: SizedFluidIngredient,
-    itemOutput: Optional<HTItemOutput>,
-    fluidOutput: Optional<FluidStack>,
-) : HTFluidOutputRecipe(group, itemOutput, fluidOutput) {
+    itemOutputs: List<HTItemOutput>,
+    fluidOutputs: List<HTFluidOutput>,
+) : HTFluidOutputRecipe(group, itemOutputs, fluidOutputs) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTMixerRecipe> = RecordCodecBuilder
@@ -38,8 +34,8 @@ class HTMixerRecipe(
                         SizedFluidIngredient.FLAT_CODEC
                             .fieldOf("second_fluidInput")
                             .forGetter(HTMixerRecipe::secondFluid),
-                        HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTMixerRecipe::itemOutput),
-                        HTRecipeCodecs.FLUID_OUTPUT.forGetter(HTMixerRecipe::fluidOutput),
+                        HTRecipeCodecs.itemOutputs(0, 1),
+                        HTRecipeCodecs.fluidOutputs(0, 1),
                     ).apply(instance, ::HTMixerRecipe)
             }.validate(HTFluidOutputRecipe::validate)
 
@@ -51,10 +47,10 @@ class HTMixerRecipe(
             HTMixerRecipe::firstFluid,
             SizedFluidIngredient.STREAM_CODEC,
             HTMixerRecipe::secondFluid,
-            ByteBufCodecs.optional(HTItemOutput.STREAM_CODEC),
-            HTMixerRecipe::itemOutput,
-            ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
-            HTMixerRecipe::fluidOutput,
+            HTItemOutput.STREAM_CODEC.toList(),
+            HTMixerRecipe::itemOutputs,
+            HTFluidOutput.STREAM_CODEC.toList(),
+            HTMixerRecipe::fluidOutputs,
             ::HTMixerRecipe,
         )
     }

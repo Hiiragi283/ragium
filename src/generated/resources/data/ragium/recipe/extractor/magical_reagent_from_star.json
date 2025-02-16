@@ -3,8 +3,10 @@
   "item_input": {
     "tag": "c:nether_stars"
   },
-  "item_output": {
-    "count": 64,
-    "id": "ragium:magical_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 64,
+      "id": "ragium:magical_reagent"
+    }
+  ]
 }

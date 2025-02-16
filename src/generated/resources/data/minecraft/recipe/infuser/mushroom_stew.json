@@ -8,8 +8,10 @@
     "count": 2,
     "tag": "c:mushrooms"
   },
-  "item_output": {
-    "count": 2,
-    "id": "minecraft:mushroom_stew"
-  }
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "minecraft:mushroom_stew"
+    }
+  ]
 }

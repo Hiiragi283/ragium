@@ -4,9 +4,9 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
-import hiiragi283.ragium.integration.jei.addFluidStack
+import hiiragi283.ragium.integration.jei.addFluidOutput
 import hiiragi283.ragium.integration.jei.addIngredients
-import hiiragi283.ragium.integration.jei.addItemResult
+import hiiragi283.ragium.integration.jei.addItemOutput
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
@@ -28,12 +28,12 @@ class HTExtractorRecipeCategory(guiHelper: IGuiHelper) :
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
             .setStandardSlotBackground()
-            .addItemResult(recipe, 0)
+            .addItemOutput(recipe, 0)
         // Fluid Output
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
-            .addFluidStack(recipe.getFluidOutput())
+            .addFluidOutput(recipe, 0)
     }
 
     override fun getWidth(): Int = 18 * 5 + 8

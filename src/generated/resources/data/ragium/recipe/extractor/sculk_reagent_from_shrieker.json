@@ -3,8 +3,10 @@
   "item_input": {
     "item": "minecraft:sculk_shrieker"
   },
-  "item_output": {
-    "count": 16,
-    "id": "ragium:sculk_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 16,
+      "id": "ragium:sculk_reagent"
+    }
+  ]
 }

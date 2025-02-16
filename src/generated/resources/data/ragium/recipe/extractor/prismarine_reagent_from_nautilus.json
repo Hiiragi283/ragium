@@ -3,8 +3,10 @@
   "item_input": {
     "item": "minecraft:nautilus_shell"
   },
-  "item_output": {
-    "count": 4,
-    "id": "ragium:prismarine_reagent"
-  }
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:prismarine_reagent"
+    }
+  ]
 }

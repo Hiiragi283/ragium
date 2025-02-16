@@ -38,7 +38,7 @@ class HTGrowthChamberRecipe(
                         .intRange(0, Int.MAX_VALUE)
                         .optionalFieldOf("water", 0)
                         .forGetter(HTGrowthChamberRecipe::waterAmount),
-                    HTRecipeCodecs.itemResult(),
+                    HTRecipeCodecs.itemOutput(),
                 ).apply(instance, ::HTGrowthChamberRecipe)
         }
 

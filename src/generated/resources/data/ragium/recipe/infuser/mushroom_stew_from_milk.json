@@ -4,10 +4,12 @@
     "amount": 1000,
     "tag": "c:milk"
   },
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:mushroom_stew"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:mushroom_stew"
+    }
+  ],
   "item_input": {
     "tag": "c:mushrooms"
   }

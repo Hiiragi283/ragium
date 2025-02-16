@@ -1,14 +1,18 @@
 {
   "type": "ragium:extractor",
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:honey"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:honey"
+    }
+  ],
   "item_input": {
     "item": "minecraft:honeycomb_block"
   },
-  "item_output": {
-    "count": 4,
-    "id": "ragium:bee_wax"
-  }
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:bee_wax"
+    }
+  ]
 }

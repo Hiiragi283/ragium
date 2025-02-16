@@ -7,8 +7,10 @@
   "item_input": {
     "item": "ragium:alkali_reagent"
   },
-  "item_output": {
-    "count": 1,
-    "id": "ragium:soap"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:soap"
+    }
+  ]
 }

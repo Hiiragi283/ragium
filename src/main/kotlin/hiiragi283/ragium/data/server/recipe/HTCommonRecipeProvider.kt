@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTInfuserRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.define
@@ -130,7 +130,8 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerAluminum(output: RecipeOutput) {
         // Lapis + Water -> Lapis Solution
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.LAPIS)
             .waterInput()
             .fluidOutput(RagiumVirtualFluids.LAPIS_SOLUTION)
@@ -143,7 +144,8 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 4)
             .save(output)
         // Bauxite + Lapis solution -> Alumina + Water
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
             .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
@@ -158,7 +160,8 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .saveSuffixed(output, "_with_coal")
 
         // Al + HF -> Cryolite
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
             .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
             .itemOutput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
@@ -174,13 +177,15 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerRagium(output: RecipeOutput) {
         // Ragium
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 8)
             .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION, FluidType.BUCKET_VOLUME)
             .fluidOutput(RagiumVirtualFluids.RAGIUM_SOLUTION)
             .save(output)
 
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
@@ -208,7 +213,8 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
                 .build(elytraId.withPrefix("recipes/combat/")),
         )
         // Ragi Ticket
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Items.PAPER)
             .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION, FluidType.BUCKET_VOLUME / 8)
             .itemOutput(RagiumItems.RAGI_TICKET)

@@ -8,8 +8,10 @@
     "count": 8,
     "item": "minecraft:poisonous_potato"
   },
-  "item_output": {
-    "count": 1,
-    "id": "ragium:yellow_cake"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:yellow_cake"
+    }
+  ]
 }

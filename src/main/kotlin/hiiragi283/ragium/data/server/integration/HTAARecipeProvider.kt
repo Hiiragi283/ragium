@@ -3,7 +3,9 @@ package hiiragi283.ragium.data.server.integration
 import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
-import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -27,23 +29,27 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
             .save(output)
 
         // Canola Oil
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(ActuallyTags.Items.CROPS_CANOLA)
             .fluidOutput(InitFluids.CANOLA_OIL, 80)
             .save(output)
         // Refined Canola Oil
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .fluidInput(InitFluids.CANOLA_OIL.get())
             .fluidOutput(InitFluids.REFINED_CANOLA_OIL)
             .save(output)
         // Crystallized Canola Oil
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(ActuallyItems.CRYSTALLIZED_CANOLA_SEED)
             .fluidInput(InitFluids.REFINED_CANOLA_OIL.get())
             .fluidOutput(InitFluids.CRYSTALLIZED_OIL)
             .save(output)
         // Empowered Canola Oil
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(ActuallyItems.EMPOWERED_CANOLA_SEED)
             .fluidInput(InitFluids.CRYSTALLIZED_OIL.get())
             .fluidOutput(InitFluids.EMPOWERED_OIL)

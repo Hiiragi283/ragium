@@ -4,8 +4,10 @@
     "amount": 1000,
     "tag": "c:crude_oil"
   },
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:naphtha"
-  }
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:naphtha"
+    }
+  ]
 }

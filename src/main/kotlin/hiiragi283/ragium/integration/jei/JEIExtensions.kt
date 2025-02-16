@@ -1,5 +1,6 @@
 package hiiragi283.ragium.integration.jei
 
+import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import mezz.jei.api.constants.VanillaTypes
@@ -39,9 +40,12 @@ fun <T : IIngredientAcceptor<*>> T.addIngredients(ingredient: FluidIngredient?):
 
 //    HTItemResult    //
 
-fun <T : IIngredientAcceptor<*>> T.addItemResult(recipe: HTMachineRecipeBase, index: Int): IIngredientAcceptor<*> = addItemStacks(
+fun <T : IIngredientAcceptor<*>> T.addItemOutput(recipe: HTMachineRecipeBase, index: Int): IIngredientAcceptor<*> = addItemStacks(
     recipe.itemOutputs
         .getOrNull(index)
         ?.get()
         ?.let(::listOf) ?: listOf(),
 )
+
+fun IRecipeSlotBuilder.addFluidOutput(recipe: HTFluidOutputRecipe, index: Int): IRecipeSlotBuilder =
+    addFluidStack(recipe.fluidOutputs.getOrNull(index)?.get())

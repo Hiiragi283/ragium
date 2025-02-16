@@ -14,7 +14,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import java.util.*
 
 object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -60,7 +59,8 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // Mushroom Stew
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Tags.Items.MUSHROOMS, 2)
             .milkInput()
             .itemOutput(Items.MUSHROOM_STEW, 2)
@@ -74,14 +74,16 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // Sand + Water -> Clay Block
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Tags.Items.SANDS)
             .waterInput()
             .itemOutput(Items.CLAY)
             .save(output)
 
         // Dirt + Water -> Mud
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Items.DIRT)
             .waterInput(250)
             .itemOutput(Items.MUD)
@@ -119,8 +121,8 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
                 "",
                 HTIngredientBuilder.water(),
                 HTIngredientBuilder.fluid(Tags.Fluids.LAVA),
-                Optional.of(HTItemOutput.of(Items.OBSIDIAN)),
-                Optional.empty(),
+                listOf(HTItemOutput.of(Items.OBSIDIAN)),
+                listOf(),
             ),
             null,
         )

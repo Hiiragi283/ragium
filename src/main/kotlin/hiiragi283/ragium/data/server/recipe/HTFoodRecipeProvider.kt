@@ -1,6 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -39,7 +42,8 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerChocolate(output: RecipeOutput) {
         // Chocolate
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput()
             .itemOutput(RagiumItems.CHOCOLATE)
@@ -89,7 +93,8 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .savePrefixed(output)
 
         // Ambrosia
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(RagiumItems.CHOCOLATE, 64)
             .fluidInput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME * 64)
             .itemOutput(RagiumItems.AMBROSIA)
@@ -98,36 +103,42 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerHoney(output: RecipeOutput) {
         // Honey
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Items.HONEY_BLOCK)
             .fluidOutput(RagiumFluids.HONEY)
             .saveSuffixed(output, "_from_block")
 
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Items.HONEY_BOTTLE)
             .itemOutput(Items.GLASS_BOTTLE)
             .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
             .saveSuffixed(output, "_from_bottle")
 
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Items.GLASS_BOTTLE)
             .fluidInput(Tags.Fluids.HONEY, FluidType.BUCKET_VOLUME / 4)
             .itemOutput(Items.HONEY_BOTTLE)
             .save(output)
 
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Tags.Items.GLASS_BLOCKS)
             .fluidInput(Tags.Fluids.HONEY)
             .itemOutput(Items.HONEY_BLOCK)
             .save(output)
         // Bee wax
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Items.HONEYCOMB_BLOCK)
             .itemOutput(RagiumItems.BEE_WAX, 4)
             .fluidOutput(RagiumFluids.HONEY)
             .saveSuffixed(output, "_from_block")
 
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Items.HONEYCOMB)
             .itemOutput(RagiumItems.BEE_WAX)
             .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
@@ -179,14 +190,16 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerMilk(output: RecipeOutput) {
         // Milk
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Items.BUCKET)
             .milkInput()
             .itemOutput(Items.MILK_BUCKET)
             .save(output)
 
         // Butter
-        HTRefineryRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .refinery()
             .milkInput()
             .itemOutput(RagiumItems.BUTTER)
             .save(output)
@@ -200,7 +213,8 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         // Cake
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .milkInput(FluidType.BUCKET_VOLUME * 3)
             .itemOutput(Items.CAKE)
@@ -209,13 +223,15 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerMushroom(output: RecipeOutput) {
         // Mushroom Stew
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(Tags.Items.MUSHROOMS)
             .milkInput()
             .fluidOutput(RagiumVirtualFluids.MUSHROOM_STEW)
             .saveSuffixed(output, "_from_milk")
 
-        HTExtractorRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .extractor()
             .itemInput(Items.MUSHROOM_STEW)
             .itemOutput(Items.BOWL)
             .fluidOutput(RagiumVirtualFluids.MUSHROOM_STEW)
@@ -230,7 +246,8 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.FLOUR)
             .save(output)
         // Dough
-        HTInfuserRecipeBuilder()
+        HTFluidOutputRecipeBuilder
+            .infuser()
             .itemInput(RagiumItems.FLOUR, 3)
             .waterInput()
             .itemOutput(RagiumItems.DOUGH, 3)

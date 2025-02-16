@@ -1,14 +1,18 @@
 {
   "type": "ragium:extractor",
-  "fluid_output": {
-    "amount": 1000,
-    "id": "ragium:crude_oil"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:crude_oil"
+    }
+  ],
   "item_input": {
     "item": "ragium:crude_oil_bucket"
   },
-  "item_output": {
-    "count": 1,
-    "id": "minecraft:bucket"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:bucket"
+    }
+  ]
 }

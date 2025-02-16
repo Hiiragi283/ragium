@@ -6,15 +6,19 @@
     }
   ],
   "type": "ragium:extractor",
-  "fluid_output": {
-    "amount": 250,
-    "id": "minecraft:milk"
-  },
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "id": "minecraft:milk"
+    }
+  ],
   "item_input": {
     "item": "farmersdelight:milk_bottle"
   },
-  "item_output": {
-    "count": 1,
-    "id": "minecraft:glass_bottle"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:glass_bottle"
+    }
+  ]
 }

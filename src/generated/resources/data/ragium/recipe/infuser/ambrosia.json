@@ -8,8 +8,10 @@
     "count": 64,
     "item": "ragium:chocolate"
   },
-  "item_output": {
-    "count": 1,
-    "id": "ragium:ambrosia"
-  }
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:ambrosia"
+    }
+  ]
 }
