@@ -1,0 +1,22 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 500,
+    "tag": "c:sulfuric_acid"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 500,
+      "id": "ragium:nitric_acid"
+    }
+  ],
+  "item_input": {
+    "tag": "c:dusts/saltpeter"
+  },
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:alkali_reagent"
+    }
+  ]
+}

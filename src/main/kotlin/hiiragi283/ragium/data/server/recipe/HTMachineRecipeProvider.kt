@@ -12,8 +12,6 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.recipe.HTBreweryRecipe
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
-import hiiragi283.ragium.api.recipe.HTMixerRecipe
-import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -372,33 +370,32 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumVirtualFluids.ETHANOL)
             .save(output)
         // Alcohol + Plant Oil -> Bio Fuel + Glycerol
-        output.accept(
-            RagiumAPI.id("mixer/biodiesel"),
-            HTMixerRecipe(
-                "",
-                HTIngredientBuilder.fluid(RagiumVirtualFluids.ETHANOL, FluidType.BUCKET_VOLUME * 4),
-                HTIngredientBuilder.fluid(RagiumVirtualFluids.PLANT_OIL),
-                listOf(),
-                listOf(
-                    HTFluidOutput.of(RagiumVirtualFluids.BIODIESEL.get(), FluidType.BUCKET_VOLUME * 4),
-                ),
-            ),
-            null,
-        )
+        HTFluidOutputRecipeBuilder
+            .mixer()
+            .fluidInput(RagiumVirtualFluids.ETHANOL, FluidType.BUCKET_VOLUME * 4)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL)
+            .fluidOutput(RagiumVirtualFluids.BIODIESEL, FluidType.BUCKET_VOLUME * 4)
+            .save(output)
 
-        // XX Log -> Sap + Pulp
+        // XX Log -> Pulp + Sap
         HTFluidOutputRecipeBuilder
             .extractor()
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
-        // Sap -> Slimeball
+        // Sap -> Slimeball + Latex
         HTFluidOutputRecipeBuilder
             .refinery()
             .fluidInput(RagiumVirtualFluids.SAP)
             .itemOutput(Items.SLIME_BALL)
+            .fluidOutput(RagiumVirtualFluids.LATEX, 250)
             .saveSuffixed(output, "_from_sap")
+        // Latex -> Raw Rubber
+        HTSolidifierRecipeBuilder()
+            .fluidInput(RagiumVirtualFluids.LATEX)
+            .itemOutput(Items.SLIME_BALL)
+            .saveSuffixed(output, "_from_latex")
 
         // Crimson Stem -> Crimson Sap
         HTFluidOutputRecipeBuilder

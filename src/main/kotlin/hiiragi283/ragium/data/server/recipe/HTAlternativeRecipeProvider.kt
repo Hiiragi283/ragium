@@ -1,9 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.*
-import hiiragi283.ragium.api.recipe.HTMixerRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemOutput
+import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -46,8 +46,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
                 Items.BLAZE_POWDER,
                 time = 500,
                 types = HTCookingRecipeBuilder.BLASTING_TYPES,
-            ).unlockedBy("has_crystal", has(RagiumItems.CRIMSON_CRYSTAL))
-            .save(output)
+            ).save(output)
         // Ender Pearl
         HTCookingRecipeBuilder
             .create(
@@ -55,8 +54,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
                 Items.ENDER_PEARL,
                 time = 500,
                 types = HTCookingRecipeBuilder.BLASTING_TYPES,
-            ).unlockedBy("has_crystal", has(RagiumItems.WARPED_CRYSTAL))
-            .save(output)
+            ).save(output)
 
         // Mushroom Stew
         HTFluidOutputRecipeBuilder
@@ -115,16 +113,11 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .save(output, RagiumAPI.id("shaped/copper_grate"))*/
 
         // Obsidian
-        output.accept(
-            RagiumAPI.id("mixer/obsidian"),
-            HTMixerRecipe(
-                "",
-                HTIngredientBuilder.water(),
-                HTIngredientBuilder.fluid(Tags.Fluids.LAVA),
-                listOf(HTItemOutput.of(Items.OBSIDIAN)),
-                listOf(),
-            ),
-            null,
-        )
+        HTFluidOutputRecipeBuilder
+            .mixer()
+            .waterInput()
+            .fluidInput(Tags.Fluids.LAVA)
+            .itemOutput(Items.OBSIDIAN)
+            .save(output)
     }
 }

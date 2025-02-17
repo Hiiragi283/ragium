@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.util
 
+import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -7,11 +8,11 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
@@ -90,39 +91,33 @@ class HTBlockFamily(
 
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Base -> Slab
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6)
+        HTShapedRecipeBuilder(slab, 6, CraftingBookCategory.BUILDING)
             .pattern("AAA")
             .define('A', base)
-            .unlockedBy("has_base", has(base))
-            .savePrefixed(output)
+            .save(output)
 
         SingleItemRecipeBuilder
             .stonecutting(Ingredient.of(base), RecipeCategory.BUILDING_BLOCKS, slab, 2)
             .unlockedBy("has_base", has(base))
             .savePrefixed(output)
         // Base -> Stairs
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
+        HTShapedRecipeBuilder(stairs, 4, CraftingBookCategory.BUILDING)
             .pattern("A  ")
             .pattern("AA ")
             .pattern("AAA")
             .define('A', base)
-            .unlockedBy("has_base", has(base))
-            .savePrefixed(output)
+            .save(output)
 
         SingleItemRecipeBuilder
             .stonecutting(Ingredient.of(base), RecipeCategory.BUILDING_BLOCKS, stairs)
             .unlockedBy("has_base", has(base))
             .savePrefixed(output)
         // Base -> Wall
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, wall, 4)
+        HTShapedRecipeBuilder(wall, 4, CraftingBookCategory.BUILDING)
             .pattern("AAA")
             .pattern("AAA")
             .define('A', base)
-            .unlockedBy("has_base", has(base))
-            .savePrefixed(output)
+            .save(output)
 
         SingleItemRecipeBuilder
             .stonecutting(Ingredient.of(base), RecipeCategory.BUILDING_BLOCKS, wall)

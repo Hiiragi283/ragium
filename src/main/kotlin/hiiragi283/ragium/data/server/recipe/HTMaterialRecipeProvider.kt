@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.requires
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -98,16 +99,14 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
         // Ingot -> Coil
         RagiumItems.getMaterialMap(HTTagPrefix.COIL).forEach { (material: HTMaterialKey, coil: DeferredItem<out Item>) ->
             // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, coil, 2)
+            HTShapedRecipeBuilder(coil, 2)
                 .pattern(" A ")
                 .pattern("BCB")
                 .pattern("BCB")
                 .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
                 .define('B', HTTagPrefix.INGOT, material)
                 .define('C', RagiumBlocks.SHAFT)
-                .unlockedBy("has_metal", has(HTTagPrefix.INGOT, material))
-                .savePrefixed(output)
+                .save(output)
             // Assembler
             HTMultiItemRecipeBuilder
                 .assembler()
@@ -126,8 +125,7 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
                     ingot,
                     exp = 0.7f,
                     types = HTCookingRecipeBuilder.BLASTING_TYPES,
-                ).unlockedBy("has_${dust.id}", has(dust))
-                .save(output)
+                ).save(output)
         }
 
         dustToIngot(VanillaMaterials.IRON, Items.IRON_INGOT)

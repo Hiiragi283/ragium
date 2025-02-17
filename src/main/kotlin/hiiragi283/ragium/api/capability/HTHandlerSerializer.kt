@@ -54,38 +54,44 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
         @JvmStatic
         fun ofFluid(fluids: List<HTSlotHandler<FluidStack>>): HTHandlerSerializer =
             if (fluids.isEmpty()) EMPTY else HTHandlerSerializer(listOf(), fluids)
+
+        @JvmStatic
+        private val ITEM_CODEC: Codec<List<ItemStack>> = ItemStack.OPTIONAL_CODEC.listOf(1, Int.MAX_VALUE)
+
+        @JvmStatic
+        private val FLUID_CODEC: Codec<List<FluidStack>> = FluidStack.OPTIONAL_CODEC.listOf(1, Int.MAX_VALUE)
     }
 
     /**
      * 指定した[nbt]に値を書き込みます。
      */
     fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        ItemStack.OPTIONAL_CODEC
-            .listOf(1, Int.MAX_VALUE)
-            .encodeStart(dynamicOps, items.map(HTSlotHandler<ItemStack>::stack))
-            .ifSuccess { nbt.put("items", it) }
-            .logError(LOGGER)
-        FluidStack.OPTIONAL_CODEC
-            .listOf(1, Int.MAX_VALUE)
-            .encodeStart(dynamicOps, fluids.map(HTSlotHandler<FluidStack>::stack))
-            .ifSuccess { nbt.put("fluids", it) }
-            .logError(LOGGER)
+        if (items.isNotEmpty()) {
+            ITEM_CODEC
+                .encodeStart(dynamicOps, items.map(HTSlotHandler<ItemStack>::stack))
+                .ifSuccess { nbt.put("items", it) }
+                .logError(LOGGER)
+        }
+        if (fluids.isNotEmpty()) {
+            FLUID_CODEC
+                .encodeStart(dynamicOps, fluids.map(HTSlotHandler<FluidStack>::stack))
+                .ifSuccess { nbt.put("fluids", it) }
+                .logError(LOGGER)
+        }
     }
 
     /**
      * 指定した[nbt]から値を読み取ります。
      */
     fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        ItemStack.OPTIONAL_CODEC
-            .listOf(1, Int.MAX_VALUE)
+        ITEM_CODEC
             .parse(dynamicOps, nbt.get("items"))
             .ifSuccess { stacks: List<ItemStack> ->
                 stacks.forEachIndexed { index: Int, stack: ItemStack ->
                     items[index].stack = stack
                 }
             }.logError(LOGGER)
-        FluidStack.OPTIONAL_CODEC
-            .listOf(1, Int.MAX_VALUE)
+        FLUID_CODEC
             .parse(dynamicOps, nbt.get("fluids"))
             .ifSuccess { stacks: List<FluidStack> ->
                 stacks.forEachIndexed { index: Int, stack: FluidStack ->

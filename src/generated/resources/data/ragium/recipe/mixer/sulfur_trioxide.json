@@ -1,0 +1,17 @@
+{
+  "type": "ragium:mixer",
+  "first_fluidInput": {
+    "amount": 1000,
+    "tag": "c:sulfur_dioxide"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:sulfur_trioxide"
+    }
+  ],
+  "second_fluidInput": {
+    "amount": 500,
+    "tag": "c:oxygen"
+  }
+}

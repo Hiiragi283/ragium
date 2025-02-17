@@ -4,6 +4,12 @@
     "amount": 1000,
     "tag": "c:sap"
   },
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "id": "ragium:latex"
+    }
+  ],
   "item_outputs": [
     {
       "count": 1,

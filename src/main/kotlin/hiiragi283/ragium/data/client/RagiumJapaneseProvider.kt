@@ -97,7 +97,16 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
 
-        addFluid(RagiumVirtualFluids.SULFURIC_ACID, "ブレイズ酸")
+        addFluid(RagiumVirtualFluids.NITROGEN, "窒素")
+        addFluid(RagiumVirtualFluids.AMMONIA, "アンモニア")
+        addFluid(RagiumVirtualFluids.NITRIC_ACID, "硝酸")
+
+        addFluid(RagiumVirtualFluids.OXYGEN, "酸素")
+
+        addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "二酸化硫黄")
+        addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
+        addFluid(RagiumVirtualFluids.SULFURIC_ACID, "硫酸")
+
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "グロウ酸")
 
         addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "ラピス溶液")

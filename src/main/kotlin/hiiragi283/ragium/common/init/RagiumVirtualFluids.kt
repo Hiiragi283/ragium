@@ -17,7 +17,18 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     Supplier<Fluid> {
     MUSHROOM_STEW(Color(0xcc9966)),
 
-    // Acid
+    // Nitrogen
+    NITROGEN(Color(0x33ccff), TextureType.GASEOUS),
+    AMMONIA(Color(0x9999ff), TextureType.GASEOUS),
+    NITRIC_ACID(Color(0xcc99ff)),
+    MIXTURE_ACID(Color(0xff9900)),
+
+    // Oxygen
+    OXYGEN(Color(0x66ccff), TextureType.GASEOUS),
+
+    // Sulfur
+    SULFUR_DIOXIDE(Color(0xff6600), TextureType.GASEOUS),
+    SULFUR_TRIOXIDE(Color(0xff6600), TextureType.GASEOUS),
     SULFURIC_ACID(Color(0xff3300), TextureType.STICKY),
     HYDROFLUORIC_ACID(Color(0xffcc33)),
 
@@ -29,6 +40,8 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     FUEL(Color(0xcc6633)),
     NITRO_FUEL(Color(0xff33333)),
 
+    AROMATIC_COMPOUND(Color(0xcc6633), TextureType.STICKY),
+
     // Bio
     PLANT_OIL(Color(0x99cc33)),
     BIOMASS(Color(0x006600), TextureType.STICKY),
@@ -39,6 +52,7 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     SAP(Color(0x996633), TextureType.STICKY),
     CRIMSON_SAP(Color(0x660000), TextureType.STICKY),
     WARPED_SAP(Color(0x006666), TextureType.STICKY),
+    LATEX(Color(0xcccccc), TextureType.STICKY),
 
     RAGIUM_SOLUTION(Color(0xff003f)),
     ;

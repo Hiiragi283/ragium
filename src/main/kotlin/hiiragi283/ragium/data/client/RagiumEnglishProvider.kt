@@ -97,7 +97,16 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
 
-        addFluid(RagiumVirtualFluids.SULFURIC_ACID, "Blaze Acid")
+        addFluid(RagiumVirtualFluids.NITROGEN, "Nitrogen")
+        addFluid(RagiumVirtualFluids.AMMONIA, "Ammonia")
+        addFluid(RagiumVirtualFluids.NITRIC_ACID, "Nitric Acid")
+
+        addFluid(RagiumVirtualFluids.OXYGEN, "Oxygen")
+
+        addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
+        addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
+        addFluid(RagiumVirtualFluids.SULFURIC_ACID, "Sulfuric Acid")
+
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Glow Acid")
 
         addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "Lapis Solution")

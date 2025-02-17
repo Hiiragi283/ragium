@@ -1,10 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -33,6 +30,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.Unbreakable
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
@@ -86,8 +84,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
                 ragiAlloy,
                 exp = 0.5f,
                 types = HTCookingRecipeBuilder.BLASTING_TYPES,
-            ).unlockedBy("has_compound", has(RagiumItems.RAGI_ALLOY_COMPOUND))
-            .save(output)
+            ).save(output)
 
         HTMultiItemRecipeBuilder
             .blastFurnace()
@@ -433,12 +430,10 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
             .savePrefixed(output)
 
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.SHAFT, 6)
+        HTShapedRecipeBuilder(RagiumBlocks.SHAFT, 6, CraftingBookCategory.BUILDING)
             .pattern("A")
             .pattern("A")
             .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
-            .unlockedBy("has_iron_block", has(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
-            .savePrefixed(output)
+            .save(output)
     }
 }

@@ -1,11 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.advancements.Advancement
-import net.minecraft.advancements.AdvancementRequirements
-import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
@@ -18,7 +14,6 @@ import java.util.function.IntUnaryOperator
 
 class HTCookingRecipeBuilder private constructor(
     private val types: Set<Type>,
-    private val category: RecipeCategory,
     private val cookingCategory: CookingBookCategory,
     private val input: Ingredient,
     private val output: Item,
@@ -36,7 +31,6 @@ class HTCookingRecipeBuilder private constructor(
             types: Collection<Type> = setOf(Type.SMELTING),
         ): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
             types.toSet(),
-            category,
             CookingBookCategory.MISC,
             input,
             output.asItem(),
@@ -51,14 +45,12 @@ class HTCookingRecipeBuilder private constructor(
         val SMOKING_TYPES: Set<Type> = setOf(Type.SMELTING, Type.SMOKING)
     }
 
-    private val criteria: MutableMap<String, Criterion<*>> = mutableMapOf()
-    private var groupName: String? = null
-
     //    RecipeBuilder    //
 
-    override fun unlockedBy(name: String, criterion: Criterion<*>): HTCookingRecipeBuilder = apply {
-        criteria[name] = criterion
-    }
+    private var groupName: String? = null
+
+    @Deprecated("Advancements not supported")
+    override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = throw UnsupportedOperationException()
 
     override fun group(groupName: String?): HTCookingRecipeBuilder = apply {
         this.groupName = groupName
@@ -82,12 +74,6 @@ class HTCookingRecipeBuilder private constructor(
 
     private fun saveInternal(recipeOutput: RecipeOutput, id: ResourceLocation, type: Type) {
         val fixedId: ResourceLocation = id.withPrefix(type.name.lowercase() + '/')
-        val builder: Advancement.Builder = recipeOutput
-            .advancement()
-            .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(fixedId))
-            .rewards(AdvancementRewards.Builder.recipe(fixedId))
-            .requirements(AdvancementRequirements.Strategy.OR)
-        criteria.forEach(builder::addCriterion)
         val recipe: AbstractCookingRecipe = type.factory.create(
             groupName ?: "",
             cookingCategory,
@@ -99,7 +85,7 @@ class HTCookingRecipeBuilder private constructor(
         recipeOutput.accept(
             fixedId,
             recipe,
-            builder.build(fixedId.withPrefix("recipes/${category.folderName}/")),
+            null,
         )
     }
 

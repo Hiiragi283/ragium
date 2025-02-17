@@ -158,7 +158,7 @@ object HTRecipeConverters {
 
     @JvmStatic
     private fun grinderRawToDust(material: HTTypedMaterial, consumer: (HTGrinderRecipe) -> Unit) {
-        grinderToDust(material, HTTagPrefix.RAW_MATERIAL, 2, consumer, 3)
+        grinderToDust(material, HTTagPrefix.RAW_MATERIAL, 3, consumer, 4)
     }
 
     @JvmStatic

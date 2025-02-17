@@ -179,8 +179,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
                 RagiumItems.COOKED_MEAT_INGOT,
                 RecipeCategory.FOOD,
                 types = HTCookingRecipeBuilder.SMOKING_TYPES,
-            ).unlockedBy("has_meat_ingot", has(RagiumItems.MEAT_INGOT))
-            .save(output)
+            ).save(output)
         // Cooked Meat Ingot -> Canned Cooked Meat
         HTMultiItemRecipeBuilder
             .assembler()
@@ -268,7 +267,6 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
                 Items.BREAD,
                 RecipeCategory.FOOD,
                 types = HTCookingRecipeBuilder.SMOKING_TYPES,
-            ).unlockedBy("has_dough", has(RagiumItems.DOUGH))
-            .save(output)
+            ).save(output)
     }
 }

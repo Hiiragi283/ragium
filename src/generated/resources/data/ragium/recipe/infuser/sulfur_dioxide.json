@@ -2,15 +2,15 @@
   "type": "ragium:infuser",
   "fluid_input": {
     "amount": 1000,
-    "tag": "c:water"
+    "tag": "c:oxygen"
   },
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:sulfuric_acid"
+      "id": "ragium:sulfur_dioxide"
     }
   ],
   "item_input": {
-    "item": "ragium:blaze_reagent"
+    "tag": "c:dusts/sulfur"
   }
 }

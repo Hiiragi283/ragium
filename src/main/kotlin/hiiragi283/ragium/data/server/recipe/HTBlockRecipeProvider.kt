@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import aztech.modern_industrialization.items.ForgeTool
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -25,6 +26,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
@@ -123,51 +125,43 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerDecorations(output: RecipeOutput) {
         // Ragi-Bricks
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.RAGI_BRICKS, 2)
+        HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICKS, 2, CraftingBookCategory.BUILDING)
             .pattern("ABA")
             .pattern("BCB")
             .pattern("ABA")
             .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .define('B', Tags.Items.BRICKS_NORMAL)
             .define('C', Items.CLAY)
-            .unlockedBy("has_raginite", has(HTTagPrefix.DUST, RagiumMaterials.RAGINITE))
-            .savePrefixed(output)
+            .save(output)
         // Plastic Block
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.PLASTIC_BLOCK, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BLOCK, 4, CraftingBookCategory.BUILDING)
             .pattern(" A ")
             .pattern("ABA")
             .pattern(" A ")
             .define('A', RagiumItemTags.PLASTICS)
             .define('B', RagiumItems.FORGE_HAMMER)
-            .unlockedBy("has_plastic", has(RagiumItemTags.PLASTICS))
-            .savePrefixed(output)
+            .save(output)
     }
 
     private fun registerLEDs(output: RecipeOutput) {
         // LED
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, RagiumBlocks.getLedBlock(DyeColor.WHITE), 4)
+        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(DyeColor.WHITE), 4, CraftingBookCategory.BUILDING)
             .pattern(" A ")
             .pattern("ABA")
             .pattern(" A ")
             .define('A', Tags.Items.GLASS_BLOCKS)
             .define('B', RagiumItems.LED)
-            .unlockedBy("has_led", has(RagiumItems.LED))
-            .save(output, RagiumAPI.id("shaped/led_block"))
+            .save(output, RagiumAPI.id("led_block"))
 
         RagiumBlocks.LED_BLOCKS.forEach { (color: DyeColor, block: DeferredBlock<Block>) ->
             // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.BUILDING_BLOCKS, block, 4)
+            HTShapedRecipeBuilder(block, 4, CraftingBookCategory.BUILDING)
                 .pattern("AAA")
                 .pattern("ABA")
                 .pattern("AAA")
                 .define('A', RagiumItemTags.LED_BLOCKS)
                 .define('B', color.commonTag)
-                .unlockedBy("has_led", has(RagiumItemTags.LED_BLOCKS))
-                .savePrefixed(output)
+                .save(output)
         }
     }
 

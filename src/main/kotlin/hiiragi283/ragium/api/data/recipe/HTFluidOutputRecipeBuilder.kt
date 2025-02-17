@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
+import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
@@ -50,6 +51,25 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
                 group,
                 itemInputs[0],
                 fluidInputs[0],
+                itemOutputs,
+                fluidOutputs,
+            )
+        }
+
+        @JvmStatic
+        fun mixer(): HTFluidOutputRecipeBuilder<HTMixerRecipe> = HTFluidOutputRecipeBuilder(
+            "mixer",
+        ) {
+            group: String,
+            itemInputs: List<HTItemIngredient>,
+            fluidInputs: List<SizedFluidIngredient>,
+            itemOutputs: List<HTItemOutput>,
+            fluidOutputs: List<HTFluidOutput>,
+            ->
+            HTMixerRecipe(
+                group,
+                fluidInputs[0],
+                fluidInputs[1],
                 itemOutputs,
                 fluidOutputs,
             )

@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -27,7 +26,6 @@ import net.neoforged.neoforge.fluids.FluidType
 object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerAlkali(output)
-        registerBlaze(output)
         registerCreeper(output)
         registerDeepant(output)
         registerEnder(output)
@@ -63,51 +61,6 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(RagiumItems.ALKALI_REAGENT)
             .fluidInput(RagiumVirtualFluids.PLANT_OIL, FluidType.BUCKET_VOLUME * 4)
             .itemOutput(RagiumItems.SOAP)
-            .save(output)
-    }
-
-    private fun registerBlaze(output: RecipeOutput) {
-        // Blaze Rod -? 4x Blaze Powder
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Tags.Items.RODS_BLAZE)
-            .itemOutput(Items.BLAZE_POWDER, 4)
-            .save(output)
-
-        // Blaze Reagent
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Items.MAGMA_BLOCK, 8)
-            .itemOutput(RagiumItems.BLAZE_REAGENT)
-            .saveSuffixed(output, "_from_magma")
-
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Items.BLAZE_POWDER)
-            .itemOutput(RagiumItems.BLAZE_REAGENT)
-            .saveSuffixed(output, "_from_powder")
-
-        // Blaze Reagent -> Blaze Acid
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(RagiumItems.BLAZE_REAGENT)
-            .waterInput()
-            .fluidOutput(RagiumVirtualFluids.SULFURIC_ACID)
-            .save(output)
-        // Fire charge
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, Items.FIRE_CHARGE, 3)
-            .requires(Tags.Items.GUNPOWDERS)
-            .requires(ItemTags.COALS)
-            .requires(RagiumItems.BLAZE_REAGENT)
-            .unlockedBy("has_reagent", has(RagiumItems.BLAZE_REAGENT))
-            .savePrefixed(output)
-        // Fiery Coal
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(RagiumItems.BLAZE_REAGENT, 8)
-            .fluidInput(RagiumFluids.CRUDE_OIL)
-            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
             .save(output)
     }
 
