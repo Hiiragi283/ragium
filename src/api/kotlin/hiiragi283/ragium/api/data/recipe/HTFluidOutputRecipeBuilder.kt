@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import java.util.Optional
+import java.util.*
 
 class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
     override val prefix: String,
@@ -30,6 +30,8 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
             itemOutputs: List<HTItemOutput>,
             fluidOutputs: List<HTFluidOutput>,
             ->
+            checkRange(itemInputs, 1..1)
+            checkEmpty(fluidInputs)
             HTExtractorRecipe(
                 group,
                 itemInputs[0],
@@ -48,6 +50,8 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
             itemOutputs: List<HTItemOutput>,
             fluidOutputs: List<HTFluidOutput>,
             ->
+            checkRange(itemInputs, 1..1)
+            checkRange(fluidInputs, 1..1)
             HTInfuserRecipe(
                 group,
                 itemInputs[0],
@@ -67,6 +71,8 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
             itemOutputs: List<HTItemOutput>,
             fluidOutputs: List<HTFluidOutput>,
             ->
+            checkRange(itemInputs, 0..1)
+            checkRange(fluidInputs, 1..2)
             HTMixerRecipe(
                 group,
                 fluidInputs[0],
@@ -87,12 +93,25 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
             itemOutputs: List<HTItemOutput>,
             fluidOutputs: List<HTFluidOutput>,
             ->
+            checkRange(itemInputs, 0..0)
+            checkRange(fluidInputs, 1..1)
             HTRefineryRecipe(
                 group,
                 fluidInputs[0],
                 itemOutputs,
                 fluidOutputs,
             )
+        }
+
+        @JvmStatic
+        private fun checkEmpty(list: List<*>) {
+            check(list.isEmpty()) { "Given list must be empty!" }
+        }
+
+        @JvmStatic
+        private fun checkRange(list: List<*>, range: IntRange) {
+            val size: Int = list.size
+            check(size in range) { "Invalid list size: $size for $range" }
         }
     }
 

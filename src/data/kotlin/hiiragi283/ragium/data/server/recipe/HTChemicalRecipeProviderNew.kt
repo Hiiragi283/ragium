@@ -67,7 +67,7 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child {
             .save(output)
 
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .mixer()
             .itemInput(Tags.Items.SANDS)
             .fluidInput(RagiumVirtualFluids.AROMATIC_COMPOUND.commonTag, 250)
             .fluidInput(RagiumVirtualFluids.MIXTURE_ACID.commonTag, 250)

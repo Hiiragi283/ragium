@@ -156,6 +156,7 @@ class RagiumItemTagProvider(
         builder.add(ItemTags.MINING_ENCHANTABLE, RagiumItems.STEEL_SHEARS)
         builder.add(ItemTags.PICKAXES, RagiumItems.FEVER_PICKAXE)
         builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)
+        builder.add(Tags.Items.TOOLS_SHEAR, RagiumItems.STEEL_SHEARS)
 
         RagiumItems.STEEL_TOOLS.appendTags(builder::add)
     }

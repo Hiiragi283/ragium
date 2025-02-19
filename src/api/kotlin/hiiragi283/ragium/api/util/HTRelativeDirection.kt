@@ -27,8 +27,21 @@ enum class HTRelativeDirection : StringRepresentable {
         fun fromDirection(front: Direction, target: Direction): HTRelativeDirection = when (front) {
             Direction.NORTH -> getHorizontalSide(target)
             Direction.SOUTH -> getHorizontalSide(target.opposite)
-            Direction.WEST -> getHorizontalSide(target.clockWise)
-            Direction.EAST -> getHorizontalSide(target.counterClockWise)
+            Direction.WEST -> getHorizontalSide(
+                when (target) {
+                    Direction.UP -> Direction.UP
+                    Direction.DOWN -> Direction.DOWN
+                    else -> target.clockWise
+                },
+            )
+
+            Direction.EAST -> getHorizontalSide(
+                when (target) {
+                    Direction.UP -> Direction.UP
+                    Direction.DOWN -> Direction.DOWN
+                    else -> target.counterClockWise
+                },
+            )
             else -> throw IllegalArgumentException("Unsupported front direction: $target!")
         }
 

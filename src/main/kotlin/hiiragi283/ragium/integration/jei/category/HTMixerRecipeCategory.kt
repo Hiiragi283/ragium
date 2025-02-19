@@ -15,7 +15,7 @@ import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import kotlin.jvm.optionals.getOrNull
 
-class HTMixerRecipeCategory(guiHelper: IGuiHelper) : HTMachineRecipeCategory<HTMixerRecipe>(guiHelper, HTMachineType.MIXER, 2.5) {
+class HTMixerRecipeCategory(guiHelper: IGuiHelper) : HTMachineRecipeCategory<HTMixerRecipe>(guiHelper, HTMachineType.MIXER, 3.5) {
     override fun getRecipeType(): RecipeType<HTMixerRecipe> = RagiumJEIRecipeTypes.MIXER
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMixerRecipe, focuses: IFocusGroup) {

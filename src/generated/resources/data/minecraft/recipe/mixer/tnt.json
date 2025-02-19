@@ -1,6 +1,6 @@
 {
-  "type": "ragium:infuser",
-  "fluid_input": {
+  "type": "ragium:mixer",
+  "first_fluidInput": {
     "amount": 250,
     "tag": "c:aromatic_compound"
   },
@@ -12,5 +12,9 @@
       "count": 1,
       "id": "minecraft:tnt"
     }
-  ]
+  ],
+  "second_fluidInput": {
+    "amount": 250,
+    "tag": "c:mixture_acid"
+  }
 }
