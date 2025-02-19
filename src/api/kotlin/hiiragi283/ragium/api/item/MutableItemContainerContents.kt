@@ -3,8 +3,7 @@ package hiiragi283.ragium.api.item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 
-class MutableItemContainerContents private constructor(private val items: MutableList<ItemStack>) :
-    Iterable<ItemStack> {
+class MutableItemContainerContents private constructor(private val items: MutableList<ItemStack>) : Iterable<ItemStack> {
     companion object {
         @JvmStatic
         fun of(content: ItemContainerContents): MutableItemContainerContents =

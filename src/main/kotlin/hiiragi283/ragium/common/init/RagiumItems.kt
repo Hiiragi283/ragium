@@ -307,7 +307,7 @@ object RagiumItems {
     val POTION_BUNDLE: DeferredItem<HTPotionBundleItem> = register(
         "potion_bundle",
         ::HTPotionBundleItem,
-        itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE, RagiumTranslationKeys.POTION_BUNDLE_1)
+        itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE, RagiumTranslationKeys.POTION_BUNDLE_1),
     )
 
     //    Molds    //
