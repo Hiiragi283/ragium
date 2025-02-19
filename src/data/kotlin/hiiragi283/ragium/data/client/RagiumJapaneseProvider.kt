@@ -98,11 +98,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
 
+        addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
+        
         addFluid(RagiumVirtualFluids.NITROGEN, "窒素")
         addFluid(RagiumVirtualFluids.AMMONIA, "アンモニア")
         addFluid(RagiumVirtualFluids.NITRIC_ACID, "硝酸")
 
         addFluid(RagiumVirtualFluids.OXYGEN, "酸素")
+        addFluid(RagiumVirtualFluids.ROCKET_FUEL, "ロケット燃料")
 
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
@@ -147,6 +150,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
         addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
+        addItem(RagiumItems.JETPACK, "ジェットパック")
 
         addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
         addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
@@ -362,7 +366,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumFluidTags.NON_NITRO_FUEL, "非ニトロ系燃料")
         add(RagiumFluidTags.THERMAL_FUEL, "発熱燃料")
         // Misc
-        add(RagiumTranslationKeys.FLUID_AMOUNT, "液体量: %s mb")
+        add(RagiumTranslationKeys.FLUID_NAME, "- %s : %s mb")
+        add(RagiumTranslationKeys.FLUID_AMOUNT, "Amount: %s mb")
         add(RagiumTranslationKeys.FLUID_CAPACITY, "容量: %s mb")
 
         add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")

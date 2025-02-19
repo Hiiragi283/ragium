@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforgespi.language.IModInfo
 
 abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Inventory, title: Component) :
     AbstractContainerScreen<T>(menu, inventory, title) {
@@ -85,7 +85,6 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
     ) {
         renderTooltip(x, y, mouseX, mouseY) {
             if (stack.isEmpty) return@renderTooltip
-            val fluidType: FluidType = stack.fluidType
             guiGraphics.renderComponentTooltip(
                 font,
                 buildList {
@@ -96,7 +95,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
                     // Fluid Capacity
                     add(fluidCapacityText(capacity).withStyle(ChatFormatting.GRAY))
                     // Mod Name
-                    val firstMod = ModList
+                    val firstMod: IModInfo = ModList
                         .get()
                         .getModFileById(stack.fluidHolder.idOrThrow.namespace)
                         .mods

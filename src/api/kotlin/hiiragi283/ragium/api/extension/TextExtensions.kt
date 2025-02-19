@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import net.minecraft.ChatFormatting
 import net.minecraft.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
@@ -8,8 +9,13 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.text.NumberFormat
+import java.util.function.Consumer
 
 //    Text    //
 
@@ -65,9 +71,38 @@ fun fluidAmountText(value: Int): MutableComponent = Component.translatable(
 )
 
 /**
+ * 指定した[stack]からツールチップを生成します
+ * @param consumer 生成したツールチップを受けとるブロック
+ */
+fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>) {
+    val fluidHandler: IFluidHandlerItem = stack.getCapability(Capabilities.FluidHandler.ITEM) ?: return
+    for (i: Int in fluidHandler.tankRange) {
+        addFluidTooltip(fluidHandler.getFluidInTank(i), consumer)
+    }
+}
+
+/**
+ * 指定した[stack]からツールチップを生成します
+ * @param consumer 生成したツールチップを受けとるブロック
+ */
+fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>) {
+    if (stack.isEmpty) return
+    // Name - Amount
+    consumer.accept(
+        Component
+            .translatable(
+                RagiumTranslationKeys.FLUID_NAME,
+                stack.hoverName.copy().withStyle(ChatFormatting.AQUA),
+                intText(stack.amount).withStyle(ChatFormatting.GRAY),
+            ).withStyle(ChatFormatting.GRAY),
+    )
+}
+
+/**
  * フォーマットされた容量の[Component]を返します。
  */
-fun fluidCapacityText(value: Int): MutableComponent = Component.translatable(
-    RagiumTranslationKeys.FLUID_CAPACITY,
-    NumberFormat.getNumberInstance().format(value),
-)
+fun fluidCapacityText(value: Int): MutableComponent = Component
+    .translatable(
+        RagiumTranslationKeys.FLUID_CAPACITY,
+        intText(value).withStyle(ChatFormatting.YELLOW),
+    ).withStyle(ChatFormatting.GRAY)

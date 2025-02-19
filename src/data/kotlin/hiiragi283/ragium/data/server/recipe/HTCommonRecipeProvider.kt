@@ -44,6 +44,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         registerPressMolds(output)
         registerLens(output)
 
+        registerArmor(output)
         registerTool(output)
         registerMisc(output)
     }
@@ -318,6 +319,32 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
     }
 
+    private fun registerArmor(output: RecipeOutput) {
+        // Diving Goggles
+        HTShapedRecipeBuilder(RagiumItems.DIVING_GOGGLE, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "AAA",
+                "ABA",
+                "C C"
+            )
+            .define('A', RagiumItemTags.PLASTICS)
+            .define('B', Tags.Items.GLASS_PANES)
+            .define('C', RagiumItemTags.ADVANCED_CIRCUIT)
+            .save(output)
+        // Jetpack
+        HTShapedRecipeBuilder(RagiumItems.JETPACK, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "ABA",
+                "ACA",
+                "D D"
+            )
+            .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .define('B', RagiumItemTags.ELITE_CIRCUIT)
+            .define('C', ItemTags.CHEST_ARMOR)
+            .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .save(output)
+    }
+    
     private fun registerTool(output: RecipeOutput) {
         HTShapedRecipeBuilder(RagiumItems.FORGE_HAMMER, category = CraftingBookCategory.EQUIPMENT)
             .pattern(" AA")

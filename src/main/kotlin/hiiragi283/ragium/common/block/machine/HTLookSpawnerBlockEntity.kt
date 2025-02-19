@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.item.HTMachineItemHandlerImpl
+import hiiragi283.ragium.common.item.capability.HTMachineItemHandlerImpl
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity

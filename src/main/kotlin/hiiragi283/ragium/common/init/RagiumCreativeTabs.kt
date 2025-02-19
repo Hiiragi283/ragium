@@ -68,6 +68,7 @@ object RagiumCreativeTabs {
                     RagiumItems.FOODS.forEach(output::accept)
                     // Armors
                     output.accept(RagiumItems.DIVING_GOGGLE)
+                    output.accept(RagiumItems.JETPACK)
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
                     output.accept(RagiumItems.FEVER_PICKAXE)

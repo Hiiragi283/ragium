@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.fluid.HTDivingGoggleFluidHandler
+import hiiragi283.ragium.common.fluid.HTJetpackFluidHandler
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -259,6 +260,9 @@ internal object RagiumModEvents {
 
         registerFluid(RagiumItems.DIVING_GOGGLE) { stack: ItemStack, capacity: Int ->
             HTDivingGoggleFluidHandler(stack, capacity)
+        }
+        registerFluid(RagiumItems.JETPACK) { stack: ItemStack, capacity: Int ->
+            HTJetpackFluidHandler(stack, capacity)
         }
 
         LOGGER.info("Registered Item Capabilities!")

@@ -21,9 +21,11 @@ import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
+import hiiragi283.ragium.common.item.HTBlockItem
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
@@ -63,13 +65,13 @@ object RagiumBlocks {
 
         fun build(): DeferredBlock<Block> {
             val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(name, blockProperties)
-            ITEM_REGISTER.registerSimpleBlockItem(holder, itemProperties)
+            ITEM_REGISTER.register(name) { _: ResourceLocation -> HTBlockItem(holder.get(), itemProperties) }
             return holder
         }
 
         fun <T : Block> build(factory: (BlockBehaviour.Properties) -> T): DeferredBlock<T> {
             val holder: DeferredBlock<T> = REGISTER.registerBlock(name, factory, blockProperties)
-            ITEM_REGISTER.registerSimpleBlockItem(holder, itemProperties)
+            ITEM_REGISTER.register(name) { _: ResourceLocation -> HTBlockItem(holder.get(), itemProperties) }
             return holder
         }
     }

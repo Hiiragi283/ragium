@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.capability
 
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag

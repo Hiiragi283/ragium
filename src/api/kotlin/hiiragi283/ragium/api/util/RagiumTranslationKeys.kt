@@ -19,6 +19,7 @@ object RagiumTranslationKeys {
 
     //    Fluid    //
 
+    const val FLUID_NAME = "tooltip.ragium.fluid.name"
     const val FLUID_AMOUNT = "tooltip.ragium.fluid.amount"
     const val FLUID_CAPACITY = "tooltip.ragium.fluid.capacity"
 

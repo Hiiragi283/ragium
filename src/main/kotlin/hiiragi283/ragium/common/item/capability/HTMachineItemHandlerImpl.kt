@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.capability
 
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler

@@ -52,17 +52,16 @@ object RagiumFluidTypes {
     }
 
     @JvmField
-    val CRUDE_OIL: DeferredHolder<FluidType, FluidType> = REGISTER.register("crude_oil") { _: ResourceLocation ->
-        FluidType(
-            FluidType.Properties
-                .create()
-                .descriptionId(RagiumBlocks.CRUDE_OIL.get().descriptionId)
-                .canSwim(false)
-                .pathType(PathType.LAVA)
-                .density(3000)
-                .viscosity(6000),
-        )
-    }
+    val CRUDE_OIL: DeferredHolder<FluidType, FluidType> = register(
+        "crude_oil", 
+        FluidType.Properties
+            .create()
+            .descriptionId(RagiumBlocks.CRUDE_OIL.get().descriptionId)
+            .canSwim(false)
+            .pathType(PathType.LAVA)
+            .density(3000)
+            .viscosity(6000)
+    )
 
     @JvmField
     val GASEOUS: DeferredHolder<FluidType, FluidType> = register(

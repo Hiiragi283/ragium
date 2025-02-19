@@ -98,11 +98,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
 
+        addFluid(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
+        
         addFluid(RagiumVirtualFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumVirtualFluids.AMMONIA, "Ammonia")
         addFluid(RagiumVirtualFluids.NITRIC_ACID, "Nitric Acid")
 
         addFluid(RagiumVirtualFluids.OXYGEN, "Oxygen")
+        addFluid(RagiumVirtualFluids.ROCKET_FUEL, "Rocket Fuel")
 
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
@@ -147,6 +150,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
 
         addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
+        addItem(RagiumItems.JETPACK, "Jetpack")
 
         addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
         addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
@@ -382,6 +386,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumFluidTags.NON_NITRO_FUEL, "Non-Nitro Fuel")
         add(RagiumFluidTags.THERMAL_FUEL, "Thermal Fuel")
         // Misc
+        add(RagiumTranslationKeys.FLUID_NAME, "- %s : %s mb")
         add(RagiumTranslationKeys.FLUID_AMOUNT, "Amount: %s mb")
         add(RagiumTranslationKeys.FLUID_CAPACITY, "Capacity: %s mb")
 

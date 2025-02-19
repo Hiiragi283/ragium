@@ -17,8 +17,8 @@ import hiiragi283.ragium.common.fluid.HTLimitedFluidHandler
 import hiiragi283.ragium.common.fluid.HTMachineFluidTankImpl
 import hiiragi283.ragium.common.inventory.HTMultiItemContainerMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemContainerMenu
-import hiiragi283.ragium.common.item.HTLimitedItemHandler
-import hiiragi283.ragium.common.item.HTMachineItemHandlerImpl
+import hiiragi283.ragium.common.item.capability.HTLimitedItemHandler
+import hiiragi283.ragium.common.item.capability.HTMachineItemHandlerImpl
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.core.BlockPos

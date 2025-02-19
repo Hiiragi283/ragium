@@ -13,6 +13,10 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.item.*
+import hiiragi283.ragium.common.item.armor.HTDivingGoggleItem
+import hiiragi283.ragium.common.item.armor.HTJetpackItem
+import hiiragi283.ragium.common.item.tool.HTCraftingToolItem
+import hiiragi283.ragium.common.item.tool.HTSingleEnchantmentPickaxeItem
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
@@ -234,6 +238,9 @@ object RagiumItems {
 
     @JvmField
     val DIVING_GOGGLE: DeferredItem<HTDivingGoggleItem> = register("diving_goggles", ::HTDivingGoggleItem)
+
+    @JvmField
+    val JETPACK: DeferredItem<HTJetpackItem> = register("jetpack", ::HTJetpackItem)
 
     //    Tools    //
 

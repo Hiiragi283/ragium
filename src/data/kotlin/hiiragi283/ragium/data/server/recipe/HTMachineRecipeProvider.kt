@@ -329,7 +329,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidInput(Tags.Fluids.LAVA)
             .itemOutput(Items.OBSIDIAN)
             .save(output)
-        
+
         // Rocket Fuel
         HTFluidOutputRecipeBuilder
             .mixer()
@@ -338,7 +338,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidOutput(RagiumVirtualFluids.ROCKET_FUEL, 300)
             .save(output)
     }
-    
+
     //    Refinery    //
 
     private fun refinery(output: RecipeOutput) {

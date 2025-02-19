@@ -53,6 +53,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             remove(RagiumItems.PRECISION_MACHINE_CASING)
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+
+            remove(RagiumItems.JETPACK) // TODO
         }.forEach(::basicItem)
 
         getBuilder(RagiumItems.CHOCOLATE_APPLE)

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:ingots/steel"
+    },
+    "B": {
+      "tag": "c:circuits/elite"
+    },
+    "C": {
+      "tag": "minecraft:chest_armor"
+    },
+    "D": {
+      "tag": "c:gems/ragi_crystal"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "ACA",
+    "D D"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:jetpack"
+  }
+}
