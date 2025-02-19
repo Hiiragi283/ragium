@@ -15,6 +15,7 @@ group = "hiiragi283.ragium"
 base.archivesName = modId
 
 val apiModule: SourceSet = sourceSets.create("api")
+val dataModule: SourceSet = sourceSets.create("data")
 
 sourceSets {
     main {
@@ -23,6 +24,13 @@ sourceSets {
         resources {
             srcDir("src/generated/resources")
         }
+    }
+    getByName("data") {
+        val main: SourceSet by main
+        compileClasspath += main.compileClasspath
+        compileClasspath += main.output
+        runtimeClasspath += main.runtimeClasspath
+        runtimeClasspath += main.output
     }
 }
 
@@ -34,6 +42,7 @@ configurations.apply {
     runtimeClasspath.get().extendsFrom(create("localRuntime"))
 
     getByName("apiCompileClasspath").extendsFrom(getByName("compileClasspath"))
+    getByName("compileClasspath").extendsFrom(getByName("dataCompileClasspath"))
 }
 
 repositories {
@@ -102,6 +111,7 @@ neoForge {
 
         create("data") {
             data()
+            sourceSet = dataModule
 
             // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
             // gameDirectory = project.file("run-data")
@@ -141,6 +151,7 @@ neoForge {
         create(modId) {
             sourceSet(sourceSets.main.get())
             sourceSet(apiModule)
+            sourceSet(dataModule)
         }
     }
 }

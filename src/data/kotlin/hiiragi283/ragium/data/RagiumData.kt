@@ -93,6 +93,7 @@ object RagiumData {
                 setOf(RagiumAPI.MOD_ID),
             ),
         )
+        LOGGER.info("Gathered server resources!")
         // client
         generator.addProvider(event.includeClient(), ::RagiumEnglishProvider)
         generator.addProvider(event.includeClient(), ::RagiumJapaneseProvider)
