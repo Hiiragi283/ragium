@@ -73,10 +73,10 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.FORGE_HAMMER)
                     output.accept(RagiumItems.FEVER_PICKAXE)
                     output.accept(RagiumItems.SILKY_PICKAXE)
+                    output.accept(RagiumItems.RAGI_LANTERN)
 
                     output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)
-                    output.accept(RagiumItems.FLARE_LAUNCHER)
                     output.accept(RagiumItems.MAGNET)
                     output.accept(RagiumItems.POTION_BUNDLE)
                     output.accept(RagiumItems.SOAP)

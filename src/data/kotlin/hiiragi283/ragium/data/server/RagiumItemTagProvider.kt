@@ -143,6 +143,7 @@ class RagiumItemTagProvider(
         builder.add(ItemTags.CHEST_ARMOR_ENCHANTABLE, RagiumItems.DIVING_GOGGLE)
 
         builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.FORGE_HAMMER)
+        builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.RAGI_LANTERN)
 
         builder.add(ItemTags.PICKAXES, RagiumItems.FEVER_PICKAXE)
         builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)

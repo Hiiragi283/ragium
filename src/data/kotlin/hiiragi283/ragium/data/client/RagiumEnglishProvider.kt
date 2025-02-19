@@ -164,10 +164,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
         addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
+        addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
 
         addItem(RagiumItems.DEFOLIANT, "Defoliant")
         addItem(RagiumItems.DYNAMITE, "Dynamite")
-        addItem(RagiumItems.FLARE_LAUNCHER, "Flare Launcher")
         addItem(RagiumItems.MAGNET, "Magnet")
         addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
         addItem(RagiumItems.SOAP, "Soap")

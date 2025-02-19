@@ -345,6 +345,12 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .define('B', Tags.Items.LEATHERS)
             .define('C', Items.GLASS_BOTTLE)
             .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN, category = CraftingBookCategory.EQUIPMENT)
+            .hollow8()
+            .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .define('B', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .save(output)
     }
 
     private fun registerMisc(output: RecipeOutput) {

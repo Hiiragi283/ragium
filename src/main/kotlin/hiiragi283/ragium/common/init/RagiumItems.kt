@@ -277,6 +277,9 @@ object RagiumItems {
     )
 
     @JvmField
+    val RAGI_LANTERN: DeferredItem<HTRagiLanternItem> = register("ragi_lantern", ::HTRagiLanternItem)
+
+    @JvmField
     val DEFOLIANT: DeferredItem<HTDefoliantItem> = register(
         "defoliant",
         ::HTDefoliantItem,
@@ -285,9 +288,6 @@ object RagiumItems {
 
     @JvmField
     val DYNAMITE: DeferredItem<HTDynamiteItem> = register("dynamite", ::HTDynamiteItem)
-
-    @JvmField
-    val FLARE_LAUNCHER: DeferredItem<HTFlareLauncherItem> = register("flare_launcher", ::HTFlareLauncherItem)
 
     @JvmField
     val MAGNET: DeferredItem<HTMagnetItem> = register(

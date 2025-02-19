@@ -20,7 +20,6 @@ import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.fluid.HTDivingGoggleFluidHandler
-import hiiragi283.ragium.common.fluid.HTFlareLauncherFluidHandler
 import hiiragi283.ragium.common.fluid.HTFluidCubeFluidHandler
 import hiiragi283.ragium.common.fluid.HTJetpackFluidHandler
 import hiiragi283.ragium.common.init.*
@@ -263,10 +262,6 @@ internal object RagiumModEvents {
         }
         registerFluid(RagiumItems.JETPACK) { stack: ItemStack, capacity: Int ->
             HTJetpackFluidHandler(stack, capacity)
-        }
-
-        registerFluid(RagiumItems.FLARE_LAUNCHER) { stack: ItemStack, capacity: Int ->
-            HTFlareLauncherFluidHandler(stack, capacity)
         }
 
         event.registerItem(

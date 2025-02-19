@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.entity
 
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumEntityTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.effect.MobEffectInstance
@@ -10,7 +13,6 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.BlockHitResult
@@ -23,7 +25,7 @@ class HTFlare : ThrowableItemProjectile {
 
     constructor(level: Level, x: Double, y: Double, z: Double) : super(RagiumEntityTypes.FLARE.get(), x, y, z, level)
 
-    override fun getDefaultItem(): Item = Items.LIGHT
+    override fun getDefaultItem(): Item = RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL).asItem()
 
     init {
         isNoGravity = true
@@ -35,7 +37,7 @@ class HTFlare : ThrowableItemProjectile {
         if (!level().isClientSide) {
             val target: Entity = result.entity
             if (target is LivingEntity) {
-                target.addEffect(MobEffectInstance(MobEffects.GLOWING, 20 * 10))
+                target.addEffect(MobEffectInstance(MobEffects.GLOWING, -1))
                 discard()
             }
         }
@@ -47,7 +49,10 @@ class HTFlare : ThrowableItemProjectile {
         if (!level().isClientSide) {
             val pos: BlockPos = result.blockPos
             val side: Direction = result.direction
-            level().setBlockAndUpdate(pos.relative(side), Blocks.LIGHT.defaultBlockState())
+            val posTo: BlockPos = pos.relative(side)
+            if (level().getBlockState(posTo).canBeReplaced()) {
+                level().setBlockAndUpdate(posTo, Blocks.LIGHT.defaultBlockState())
+            }
             discard()
         }
     }
