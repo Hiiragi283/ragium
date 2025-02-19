@@ -93,6 +93,7 @@ neoForge {
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty("neoforge.enabledGameTestNamespaces", modId)
+            devLogin = true
         }
 
         create("server") {
@@ -261,7 +262,7 @@ tasks {
 
     jar {
         from("LICENSE") {
-            rename { "${it}_${project.base.archivesName.get()}" }
+            rename { "${it}_ragium" }
         }
         from(apiModule.output)
         exclude("**/unused/**")

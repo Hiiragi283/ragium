@@ -85,14 +85,14 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
      */
     fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         ITEM_CODEC
-            .parse(dynamicOps, nbt.get("items"))
+            .parse(dynamicOps, nbt.getList("items", 10))
             .ifSuccess { stacks: List<ItemStack> ->
                 stacks.forEachIndexed { index: Int, stack: ItemStack ->
                     items[index].stack = stack
                 }
             }.logError(LOGGER)
         FLUID_CODEC
-            .parse(dynamicOps, nbt.get("fluids"))
+            .parse(dynamicOps, nbt.getList("fluids", 10))
             .ifSuccess { stacks: List<FluidStack> ->
                 stacks.forEachIndexed { index: Int, stack: FluidStack ->
                     fluids[index].stack = stack
