@@ -51,15 +51,10 @@ class HTFluidCubeFluidHandler(private var container: ItemStack, context: Void?) 
         if (resource.amount < FluidType.BUCKET_VOLUME) return FluidStack.EMPTY
         val stack: FluidStack = getFluidStack()
         if (!stack.isEmpty && FluidStack.isSameFluidSameComponents(stack, resource)) {
-            val fluidCube: ItemStack = getFluidCube(stack)
-            if (!fluidCube.isEmpty) {
-                if (action.execute()) {
-                    container = fluidCube
-                }
-                return stack
-            } else {
-                return FluidStack.EMPTY
+            if (action.execute()) {
+                container = ItemStack(RagiumItems.EMPTY_FLUID_CUBE.get())
             }
+            return stack
         }
         return FluidStack.EMPTY
     }

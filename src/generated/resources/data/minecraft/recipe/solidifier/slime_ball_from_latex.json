@@ -1,8 +1,11 @@
 {
   "type": "ragium:solidifier",
+  "catalyst": {
+    "item": "ragium:ball_press_mold"
+  },
   "fluid_input": {
     "fluid_input": {
-      "amount": 1000,
+      "amount": 250,
       "tag": "c:latex"
     }
   },

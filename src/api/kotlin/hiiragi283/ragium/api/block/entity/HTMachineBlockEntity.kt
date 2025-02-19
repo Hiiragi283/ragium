@@ -151,8 +151,7 @@ abstract class HTMachineBlockEntity(
 
     //    Ticking    //
 
-    final override var tickRate: Int = 200
-        private set
+    override var tickRate: Int = 200
 
     override fun tickEach(
         level: Level,

@@ -120,6 +120,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.FUEL, "燃料")
         addFluid(RagiumVirtualFluids.NITRO_FUEL, "ニトロ燃料")
 
+        addFluid(RagiumVirtualFluids.AROMATIC_COMPOUND, "芳香族化合物")
+
         addFluid(RagiumVirtualFluids.PLANT_OIL, "植物油")
         addFluid(RagiumVirtualFluids.BIOMASS, "バイオマス")
         addFluid(RagiumVirtualFluids.ETHANOL, "エタノール")
@@ -132,6 +134,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.SAP, "樹液")
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
+        addFluid(RagiumVirtualFluids.LATEX, "ラテックス")
 
         addFluid(RagiumVirtualFluids.LIQUID_GLOW, "リキッド・グロウ")
         addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "ラギウム溶液")

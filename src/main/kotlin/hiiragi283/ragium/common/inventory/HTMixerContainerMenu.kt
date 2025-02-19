@@ -23,8 +23,9 @@ class HTMixerContainerMenu(
 
     init {
         // inputs
-        addFluidSlot(0, 1, 1)
-        addFluidSlot(1, 2, 1)
+
+        addFluidSlot(0, 2, 1)
+        addFluidSlot(1, 3, 1)
         // outputs
         addOutputSlot(itemOutput, 0, 6, 1)
         addFluidSlot(2, 7, 1)

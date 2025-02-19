@@ -31,11 +31,12 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state, HTMachineType.REFINERY) {
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val inputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
-    private val outputTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
+    private val firstOutput: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
+    private val secondOutput: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
         listOf(itemOutput.createSlot(0)),
-        listOf(inputTank, outputTank),
+        listOf(inputTank, firstOutput, secondOutput),
     )
 
     private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTRefineryRecipe> =
@@ -44,7 +45,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)
         inputTank.updateCapacity(this)
-        outputTank.updateCapacity(this)
+        firstOutput.updateCapacity(this)
+        secondOutput.updateCapacity(this)
     }
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
@@ -54,9 +56,9 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, inputTank.fluid)
         val recipe: HTRefineryRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
-        recipe.canInsert(enchantments, itemOutput, outputTank)
+        recipe.canInsert(enchantments, itemOutput, firstOutput, secondOutput)
         // Insert outputs
-        recipe.insertOutputs(enchantments, itemOutput, outputTank, level, pos)
+        recipe.insertOutputs(level, pos, enchantments, itemOutput, firstOutput, secondOutput)
         // Decrement input
         inputTank.drain(recipe.input.amount(), IFluidHandler.FluidAction.EXECUTE)
     }
@@ -65,7 +67,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         HTRefineryContainerMenu(containerId, playerInventory, blockPos, itemOutput)
 
     override fun interactWithFluidStorage(player: Player): Boolean {
-        if (outputTank.interactWithFluidStorage(player, HTStorageIO.OUTPUT)) {
+        if (firstOutput.interactWithFluidStorage(player, HTStorageIO.OUTPUT)) {
             return true
         }
         if (inputTank.interactWithFluidStorage(player, HTStorageIO.GENERIC)) {
@@ -78,13 +80,14 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? {
         if (direction == null) {
-            return HTReadOnlyFluidHandler(inputTank, outputTank)
+            return HTReadOnlyFluidHandler(inputTank, firstOutput, secondOutput)
         }
         val relativeFront: HTRelativeDirection = HTRelativeDirection.fromDirection(front, direction)
         return when (relativeFront) {
             HTRelativeDirection.RIGHT -> HTStorageIO.INPUT.wrapFluidHandler(inputTank)
             HTRelativeDirection.LEFT -> HTStorageIO.INPUT.wrapFluidHandler(inputTank)
-            HTRelativeDirection.FRONT -> HTStorageIO.OUTPUT.wrapFluidHandler(outputTank)
+            HTRelativeDirection.FRONT -> HTStorageIO.OUTPUT.wrapFluidHandler(firstOutput)
+            HTRelativeDirection.UP -> HTStorageIO.OUTPUT.wrapFluidHandler(secondOutput)
             else -> null
         }
     }

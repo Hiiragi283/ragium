@@ -435,7 +435,8 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .saveSuffixed(output, "_from_sap")
         // Latex -> Raw Rubber
         HTSolidifierRecipeBuilder()
-            .fluidInput(RagiumVirtualFluids.LATEX.commonTag)
+            .fluidInput(RagiumVirtualFluids.LATEX.commonTag, 250)
+            .catalyst(RagiumItems.BALL_PRESS_MOLD)
             .itemOutput(Items.SLIME_BALL)
             .saveSuffixed(output, "_from_latex")
 

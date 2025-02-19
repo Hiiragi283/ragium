@@ -25,7 +25,7 @@ class HTRefineryRecipe(
                         HTRecipeCodecs.group(),
                         HTRecipeCodecs.FLUID_INPUT.forGetter(HTRefineryRecipe::input),
                         HTRecipeCodecs.itemOutputs(0, 1),
-                        HTRecipeCodecs.fluidOutputs(0, 3),
+                        HTRecipeCodecs.fluidOutputs(0, 2),
                     ).apply(instance, ::HTRefineryRecipe)
             }.validate(HTFluidOutputRecipe::validate)
 

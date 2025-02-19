@@ -27,35 +27,37 @@ abstract class HTFluidOutputRecipe(group: String, override val itemOutputs: List
     }
 
     /**
-     * 指定した[itemHandler]と[fluidHandler]に完成品を入れられるか判定します。
+     * 指定した[itemHandler]と[fluidHandlers]に完成品を入れられるか判定します。
      * @throws HTMachineException 完成品を入れられなかった場合
      */
-    fun canInsert(enchantments: ItemEnchantments, itemHandler: IItemHandler, fluidHandler: IFluidHandler) {
+    fun canInsert(enchantments: ItemEnchantments, itemHandler: IItemHandler, vararg fluidHandlers: IFluidHandler) {
         for (output: HTItemOutput in itemOutputs) {
             if (!itemHandler.canInsert(output.get())) throw HTMachineException.MergeResult(false)
         }
         for (output: HTFluidOutput in fluidOutputs) {
-            if (!fluidHandler.canFill(output.get())) throw HTMachineException.MergeResult(false)
+            if (fluidHandlers.none { it.canFill(output.get()) }) throw HTMachineException.MergeResult(false)
         }
     }
 
     /**
-     * 指定した[itemHandler]と[fluidHandler]に完成品を入れます。
+     * 指定した[itemHandler]と[fluidHandlers]に完成品を入れます。
      * @param level 入れられなかった場合にドロップする対象の[net.minecraft.world.level.Level]
      * @param pos 入れられなかった場合にドロップする座標
      */
     fun insertOutputs(
-        enchantments: ItemEnchantments,
-        itemHandler: IItemHandler,
-        fluidHandler: IFluidHandler,
         level: Level,
         pos: BlockPos,
+        enchantments: ItemEnchantments,
+        itemHandler: IItemHandler,
+        vararg fluidHandlers: IFluidHandler,
     ) {
         for (output: HTItemOutput in itemOutputs) {
             itemHandler.insertOrDrop(level, pos.above(), output.get())
         }
         for (output: HTFluidOutput in fluidOutputs) {
-            fluidHandler.fill(output.get(), IFluidHandler.FluidAction.EXECUTE)
+            for (handler: IFluidHandler in fluidHandlers) {
+                if (handler.fill(output.get(), IFluidHandler.FluidAction.EXECUTE) > 0) break
+            }
         }
     }
 }

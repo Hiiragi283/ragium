@@ -56,7 +56,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         // Try to insert outputs
         recipe.canInsert(enchantments, itemOutput, outputTank)
         // Insert outputs
-        recipe.insertOutputs(enchantments, itemOutput, outputTank, level, pos)
+        recipe.insertOutputs(level, pos, enchantments, itemOutput, outputTank)
         // Decrement input
         itemInput.getStackInSlot(0).shrink(recipe.input.count)
     }

@@ -28,7 +28,7 @@ class HTPrimitiveBlastFurnaceContainerMenu(
         addSlot(itemInput, 0, 2, 1)
         addSlot(itemInput, 1, 3, 1)
         // outputs
-        addOutputSlot(itemOutput, 0, 5, 1)
+        addOutputSlot(itemOutput, 0, 6, 1)
         // player inventory
         addPlayerInv()
         // register property

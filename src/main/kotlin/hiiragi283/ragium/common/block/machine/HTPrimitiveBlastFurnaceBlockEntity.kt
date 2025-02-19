@@ -45,6 +45,8 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         ),
     )
 
+    override var tickRate: Int = 400
+
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Empty(true)
 
     override fun process(level: ServerLevel, pos: BlockPos) {

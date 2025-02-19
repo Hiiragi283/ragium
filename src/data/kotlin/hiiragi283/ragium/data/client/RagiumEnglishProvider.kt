@@ -120,6 +120,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.FUEL, "Fuel")
         addFluid(RagiumVirtualFluids.NITRO_FUEL, "Nitro Fuel")
 
+        addFluid(RagiumVirtualFluids.AROMATIC_COMPOUND, "Aromatic Compound")
+
         addFluid(RagiumVirtualFluids.PLANT_OIL, "Plant Oil")
         addFluid(RagiumVirtualFluids.BIOMASS, "Biomass")
         addFluid(RagiumVirtualFluids.ETHANOL, "Ethanol")
@@ -132,6 +134,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.SAP, "Sap")
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "Warped Sap")
+        addFluid(RagiumVirtualFluids.LATEX, "Latex")
 
         addFluid(RagiumVirtualFluids.LIQUID_GLOW, "Liquid Glow")
         addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "Ragium Solution")

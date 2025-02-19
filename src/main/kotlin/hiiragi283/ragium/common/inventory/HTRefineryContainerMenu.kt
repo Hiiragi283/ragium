@@ -26,9 +26,8 @@ class HTRefineryContainerMenu(
         addFluidSlot(0, 2, 2)
         // outputs
         addOutputSlot(itemOutput, 0, 6, 2)
-        addFluidSlot(1, 7, 2)
-        addFluidSlot(2, 7, 1)
-        addFluidSlot(3, 7, 0)
+        addFluidSlot(1, 6, 1)
+        addFluidSlot(2, 6, 0)
         // player inventory
         addPlayerInv()
         // register property
