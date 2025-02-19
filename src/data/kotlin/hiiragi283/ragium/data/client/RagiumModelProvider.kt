@@ -58,6 +58,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
             remove(RagiumItems.JETPACK) // TODO
+            remove(RagiumItems.STEEL_SHEARS) // TODO
             remove(RagiumItems.RAGI_LANTERN)
         }.forEach(::basicItem)
 

@@ -54,6 +54,7 @@ class RagiumItemTagProvider(
 
         materialTags()
         foodTags()
+        armorTags()
         toolTags()
         partTags()
         enchantmentTags()
@@ -136,19 +137,27 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.DOUGH, RagiumItems.DOUGH)
     }
 
+    //    Armor    //
+
+    private fun armorTags() {
+        builder.add(ItemTags.HEAD_ARMOR_ENCHANTABLE, RagiumItems.DIVING_GOGGLE)
+        builder.add(ItemTags.CHEST_ARMOR_ENCHANTABLE, RagiumItems.JETPACK)
+
+        RagiumItems.STEEL_ARMORS.appendTags(builder::add)
+    }
+
     //    Tool    //
 
     private fun toolTags() {
-        builder.add(ItemTags.HEAD_ARMOR_ENCHANTABLE, RagiumItems.DIVING_GOGGLE)
-        builder.add(ItemTags.CHEST_ARMOR_ENCHANTABLE, RagiumItems.DIVING_GOGGLE)
-
+        builder.add(ForgeTool.TAG, RagiumItems.FORGE_HAMMER)
         builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.FORGE_HAMMER)
         builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.RAGI_LANTERN)
-
+        builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.STEEL_SHEARS)
+        builder.add(ItemTags.MINING_ENCHANTABLE, RagiumItems.STEEL_SHEARS)
         builder.add(ItemTags.PICKAXES, RagiumItems.FEVER_PICKAXE)
         builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)
 
-        builder.add(ForgeTool.TAG, RagiumItems.FORGE_HAMMER)
+        RagiumItems.STEEL_TOOLS.appendTags(builder::add)
     }
 
     //    Part    //

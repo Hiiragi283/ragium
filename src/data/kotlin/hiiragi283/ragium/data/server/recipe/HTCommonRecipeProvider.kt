@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.util.HTArmorSets
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
@@ -22,6 +23,7 @@ import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -304,6 +306,45 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .define('C', ItemTags.CHEST_ARMOR)
             .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
+
+        fun armorSet(armorSet: HTArmorSets) {
+            // Helmet
+            HTShapedRecipeBuilder(armorSet[ArmorItem.Type.HELMET], category = CraftingBookCategory.EQUIPMENT)
+                .pattern(
+                    "AAA",
+                    "ABA",
+                ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .save(output)
+            // Chestplate
+            HTShapedRecipeBuilder(armorSet[ArmorItem.Type.CHESTPLATE], category = CraftingBookCategory.EQUIPMENT)
+                .pattern(
+                    "ABA",
+                    "AAA",
+                    "AAA",
+                ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .save(output)
+            // Leggings
+            HTShapedRecipeBuilder(armorSet[ArmorItem.Type.LEGGINGS], category = CraftingBookCategory.EQUIPMENT)
+                .pattern(
+                    "AAA",
+                    "ABA",
+                    "A A",
+                ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .save(output)
+            // Boots
+            HTShapedRecipeBuilder(armorSet[ArmorItem.Type.BOOTS], category = CraftingBookCategory.EQUIPMENT)
+                .pattern(
+                    "A A",
+                    "ABA",
+                ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .save(output)
+        }
+
+        armorSet(RagiumItems.STEEL_ARMORS)
     }
 
     private fun registerTool(output: RecipeOutput) {
@@ -350,6 +391,14 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .hollow8()
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.STEEL_SHEARS, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                " A",
+                "AB",
+            ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .define('B', RagiumItems.FORGE_HAMMER)
             .save(output)
     }
 

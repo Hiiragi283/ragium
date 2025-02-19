@@ -1,0 +1,45 @@
+package hiiragi283.ragium.api.util
+
+import hiiragi283.ragium.api.extension.itemProperty
+import net.minecraft.core.Holder
+import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.ArmorItem
+import net.minecraft.world.item.ArmorMaterial
+import net.minecraft.world.item.Item
+import net.neoforged.neoforge.registries.DeferredItem
+import net.neoforged.neoforge.registries.DeferredRegister
+
+class HTArmorSets(register: DeferredRegister.Items, material: Holder<ArmorMaterial>, prefix: String) {
+    companion object {
+        @JvmField
+        val VALID_TYPES: List<ArmorItem.Type> = listOf(
+            ArmorItem.Type.HELMET,
+            ArmorItem.Type.CHESTPLATE,
+            ArmorItem.Type.LEGGINGS,
+            ArmorItem.Type.BOOTS,
+        )
+    }
+
+    private val armorMap: Map<ArmorItem.Type, DeferredItem<ArmorItem>> =
+        VALID_TYPES.associateWith { type: ArmorItem.Type ->
+            register.registerItem(
+                "${prefix}_${type.serializedName}",
+                { properties: Item.Properties -> ArmorItem(material, type, properties) },
+                itemProperty().durability(type.getDurability(20)),
+            )
+        }
+
+    val armors: Collection<DeferredItem<ArmorItem>> get() = armorMap.values
+
+    operator fun get(type: ArmorItem.Type): DeferredItem<ArmorItem> = armorMap[type] ?: error("Unknown armor type: $type")
+
+    //    Data Gen    //
+
+    fun appendTags(action: (TagKey<Item>, Holder<Item>) -> Unit) {
+        action(ItemTags.HEAD_ARMOR_ENCHANTABLE, get(ArmorItem.Type.HELMET))
+        action(ItemTags.CHEST_ARMOR_ENCHANTABLE, get(ArmorItem.Type.CHESTPLATE))
+        action(ItemTags.LEG_ARMOR_ENCHANTABLE, get(ArmorItem.Type.LEGGINGS))
+        action(ItemTags.FOOT_ARMOR_ENCHANTABLE, get(ArmorItem.Type.BOOTS))
+    }
+}

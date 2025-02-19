@@ -10,7 +10,9 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.util.HTArmorSets
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.HTToolSets
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.item.*
 import hiiragi283.ragium.common.item.armor.HTDivingGoggleItem
@@ -243,10 +245,16 @@ object RagiumItems {
     @JvmField
     val JETPACK: DeferredItem<HTJetpackItem> = register("jetpack", ::HTJetpackItem)
 
+    @JvmField
+    val STEEL_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.STEEL, "steel")
+
     //    Tools    //
 
     @JvmField
     val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> = register("forge_hammer", ::HTCraftingToolItem)
+
+    @JvmField
+    val RAGI_LANTERN: DeferredItem<HTRagiLanternItem> = register("ragi_lantern", ::HTRagiLanternItem)
 
     @JvmField
     val FEVER_PICKAXE: DeferredItem<HTSingleEnchantmentPickaxeItem> = register(
@@ -277,7 +285,12 @@ object RagiumItems {
     )
 
     @JvmField
-    val RAGI_LANTERN: DeferredItem<HTRagiLanternItem> = register("ragi_lantern", ::HTRagiLanternItem)
+    val STEEL_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.STEEL, "steel")
+
+    @JvmField
+    val STEEL_SHEARS: DeferredItem<ShearsItem> = register("steel_shears", ::ShearsItem)
+
+    //    Utilities    //
 
     @JvmField
     val DEFOLIANT: DeferredItem<HTDefoliantItem> = register(
@@ -297,17 +310,17 @@ object RagiumItems {
     )
 
     @JvmField
-    val SOAP: DeferredItem<HTSoapItem> = register(
-        "soap",
-        ::HTSoapItem,
-        itemProperty().lore(RagiumTranslationKeys.SOAP),
-    )
-
-    @JvmField
     val POTION_BUNDLE: DeferredItem<HTPotionBundleItem> = register(
         "potion_bundle",
         ::HTPotionBundleItem,
         itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE, RagiumTranslationKeys.POTION_BUNDLE_1),
+    )
+
+    @JvmField
+    val SOAP: DeferredItem<HTSoapItem> = register(
+        "soap",
+        ::HTSoapItem,
+        itemProperty().lore(RagiumTranslationKeys.SOAP),
     )
 
     //    Molds    //

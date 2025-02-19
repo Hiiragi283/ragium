@@ -184,6 +184,7 @@ dependencies {
 
     implementation("mekanism:Mekanism:${libs.versions.mek.get()}:additions")
     implementation("mekanism:Mekanism:${libs.versions.mek.get()}:generators")
+    implementation("mekanism:Mekanism:${libs.versions.mek.get()}:tools")
 
     implementation(libs.bundles.mods.impl)
     implementation(libs.bundles.mods.transitive) { isTransitive = false }

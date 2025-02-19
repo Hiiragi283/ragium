@@ -69,11 +69,14 @@ object RagiumCreativeTabs {
                     // Armors
                     output.accept(RagiumItems.DIVING_GOGGLE)
                     output.accept(RagiumItems.JETPACK)
+                    RagiumItems.STEEL_ARMORS.armors.forEach(output::accept)
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
+                    output.accept(RagiumItems.RAGI_LANTERN)
                     output.accept(RagiumItems.FEVER_PICKAXE)
                     output.accept(RagiumItems.SILKY_PICKAXE)
-                    output.accept(RagiumItems.RAGI_LANTERN)
+                    RagiumItems.STEEL_TOOLS.tools.forEach(output::accept)
+                    output.accept(RagiumItems.STEEL_SHEARS)
 
                     output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)

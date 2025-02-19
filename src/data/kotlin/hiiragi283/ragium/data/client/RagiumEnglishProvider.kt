@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -160,11 +161,22 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
         addItem(RagiumItems.JETPACK, "Jetpack")
+        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "Steel Helmet")
+        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "Steel Chestplate")
+        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.LEGGINGS], "Steel Leggings")
+        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.BOOTS], "Steel Boots")
 
-        addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
         addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
-        addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
+        addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
+        addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
+        addItem(RagiumItems.STEEL_SHEARS, "Steel Shears")
+
+        addItem(RagiumItems.STEEL_TOOLS.axeItem, "Steel Axe")
+        addItem(RagiumItems.STEEL_TOOLS.hoeItem, "Steel Hoe")
+        addItem(RagiumItems.STEEL_TOOLS.pickaxeItem, "Steel Pickaxe")
+        addItem(RagiumItems.STEEL_TOOLS.shovelItem, "Steel Shovel")
+        addItem(RagiumItems.STEEL_TOOLS.swordItem, "Steel Sword")
 
         addItem(RagiumItems.DEFOLIANT, "Defoliant")
         addItem(RagiumItems.DYNAMITE, "Dynamite")

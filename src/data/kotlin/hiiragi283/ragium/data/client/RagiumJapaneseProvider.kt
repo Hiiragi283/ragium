@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -160,11 +161,22 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
         addItem(RagiumItems.JETPACK, "ジェットパック")
+        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "鋼鉄のヘルメット")
+        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "鋼鉄のチェストプレート")
+        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.LEGGINGS], "鋼鉄のレギンス")
+        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.BOOTS], "鋼鉄のブーツ")
 
-        addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
         addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
-        addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
+        addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
+        addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
+        addItem(RagiumItems.STEEL_SHEARS, "鋼鉄のハサミ")
+
+        addItem(RagiumItems.STEEL_TOOLS.axeItem, "鋼鉄の斧")
+        addItem(RagiumItems.STEEL_TOOLS.hoeItem, "鋼鉄のクワ")
+        addItem(RagiumItems.STEEL_TOOLS.pickaxeItem, "鋼鉄のツルハシ")
+        addItem(RagiumItems.STEEL_TOOLS.shovelItem, "鋼鉄のシャベル")
+        addItem(RagiumItems.STEEL_TOOLS.swordItem, "鋼鉄の剣")
 
         addItem(RagiumItems.DEFOLIANT, "枯葉剤")
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
