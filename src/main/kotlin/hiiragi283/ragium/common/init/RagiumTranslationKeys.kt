@@ -31,6 +31,7 @@ object RagiumTranslationKeys {
 
     const val AMBROSIA = "tooltip.ragium.item.ambrosia"
 
+    const val FEVER_PICKAXE = "tooltip.ragium.item.fever_pickaxe"
     const val SILKY_PICKAXE = "tooltip.ragium.item.silky_pickaxe"
 
     const val DEFOLIANT = "tooltip.ragium.item.defoliant"

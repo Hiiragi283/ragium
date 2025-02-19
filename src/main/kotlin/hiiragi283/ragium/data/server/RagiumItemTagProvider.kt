@@ -137,6 +137,7 @@ class RagiumItemTagProvider(
         builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.FORGE_HAMMER)
         builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.SOAP)
 
+        builder.add(ItemTags.PICKAXES, RagiumItems.FEVER_PICKAXE)
         builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)
 
         builder.add(ForgeTool.TAG, RagiumItems.FORGE_HAMMER)

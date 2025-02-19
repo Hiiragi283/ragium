@@ -6,7 +6,10 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.Util
-import net.minecraft.data.recipes.*
+import net.minecraft.data.recipes.RecipeBuilder
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
+import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -104,13 +107,6 @@ fun ItemModelProvider.simpleBlockItem(holder: DeferredHolder<Block, *>): ItemMod
 
 private fun RecipeBuilder.savePrefixed(output: RecipeOutput, prefix: String) {
     save(output, RecipeBuilder.getDefaultRecipeId(result).withPrefix(prefix))
-}
-
-fun ShapedRecipeBuilder.define(symbol: Char, prefix: HTTagPrefix, material: HTMaterialKey): ShapedRecipeBuilder =
-    define(symbol, prefix.createTag(material))
-
-fun ShapedRecipeBuilder.savePrefixed(output: RecipeOutput) {
-    savePrefixed(output, "shaped/")
 }
 
 fun ShapelessRecipeBuilder.requires(prefix: HTTagPrefix, material: HTMaterialKey): ShapelessRecipeBuilder =

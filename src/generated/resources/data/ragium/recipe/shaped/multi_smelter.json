@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:blaze_reagent"
+      "tag": "c:rods/blaze"
     },
     "B": {
       "item": "minecraft:furnace"

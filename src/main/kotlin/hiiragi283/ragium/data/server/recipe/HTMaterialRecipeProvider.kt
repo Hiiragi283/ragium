@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.extension.define
 import hiiragi283.ragium.api.extension.requires
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -16,7 +15,6 @@ import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -32,15 +30,11 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, block: DeferredBlock<Block>) ->
             val parent: HTTagPrefix = RagiumBlocks.getStorageParent(key)
             val coreItem: DeferredItem<out Item> = RagiumItems.getMaterialMap(parent)[key] ?: return@forEach
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, block)
-                .pattern("AAA")
-                .pattern("ABA")
-                .pattern("AAA")
+            HTShapedRecipeBuilder(block)
+                .hollow8()
                 .define('A', parent, key)
                 .define('B', coreItem)
-                .unlockedBy("has_input", has(parent, key))
-                .savePrefixed(output)
+                .save(output)
         }
         // Block -> Ingot
         RagiumItems
@@ -69,32 +63,12 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
                     .getType()
                     .getMainPrefix() ?: return@forEach
                 // Shaped Recipe
-                ShapedRecipeBuilder
-                    .shaped(RecipeCategory.MISC, gear)
-                    .pattern(" A ")
-                    .pattern("ABA")
-                    .pattern(" A ")
+                HTShapedRecipeBuilder(gear)
+                    .hollow4()
                     .define('A', parentPrefix, material)
                     .define('B', RagiumItems.FORGE_HAMMER)
-                    .unlockedBy("has_input", has(parentPrefix, material))
-                    .savePrefixed(output)
+                    .save(output)
             }
-
-        // Ingot/Gem -> Rod
-        /*RagiumItems.getMaterialMap(HTTagPrefix.ROD).forEach { (material: HTMaterialKey, rod: DeferredItem<out Item>) ->
-            val parentPrefix: HTTagPrefix = material
-                .getType()
-                .getMainPrefix() ?: return@forEach
-            // Shaped Recipe
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, rod, 2)
-                .pattern("AB")
-                .pattern("A ")
-                .define('A', parentPrefix, material)
-                .define('B', RagiumItems.FORGE_HAMMER)
-                .unlockedBy("has_input", has(parentPrefix, material))
-                .savePrefixed(output)
-        }*/
 
         // Ingot -> Coil
         RagiumItems.getMaterialMap(HTTagPrefix.COIL).forEach { (material: HTMaterialKey, coil: DeferredItem<out Item>) ->

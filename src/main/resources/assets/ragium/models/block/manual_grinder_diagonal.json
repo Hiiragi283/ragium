@@ -1,0 +1,49 @@
+{
+	"credit": "Made by Hiiragi Russell Tsubasa",
+	"textures": {
+		"particle": "block/bricks",
+		"bottom": "block/bricks",
+		"top": "ragium:block/ragi_alloy_casing",
+		"hand": "block/oak_planks"
+	},
+	"elements": [
+		{
+			"name": "top",
+			"from": [0, 8, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 0, 5]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"east": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"south": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"west": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#top"}
+			}
+		},
+		{
+			"name": "bottom",
+			"from": [0, 0, 0],
+			"to": [16, 8, 16],
+			"faces": {
+				"north": {"uv": [0, 8, 16, 16], "texture": "#bottom"},
+				"east": {"uv": [0, 8, 16, 16], "texture": "#bottom"},
+				"south": {"uv": [0, 8, 16, 16], "texture": "#bottom"},
+				"west": {"uv": [0, 8, 16, 16], "texture": "#bottom"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"name": "hand",
+			"from": [7, 16, 2],
+			"to": [9, 22, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 16, 2]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 6], "texture": "#hand"},
+				"east": {"uv": [0, 0, 2, 6], "texture": "#hand"},
+				"south": {"uv": [0, 0, 2, 6], "texture": "#hand"},
+				"west": {"uv": [0, 0, 2, 6], "texture": "#hand"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#hand"}
+			}
+		}
+	]
+}

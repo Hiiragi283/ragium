@@ -1,9 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -16,7 +13,6 @@ import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -278,15 +274,11 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .unlockedBy("has_reagent", has(RagiumItems.PRISMARINE_REAGENT))
             .savePrefixed(output)
         // Sponge
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, Items.SPONGE)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
+        HTShapedRecipeBuilder(Items.SPONGE)
+            .hollow8()
             .define('A', RagiumItems.PRISMARINE_REAGENT)
             .define('B', ItemTags.WOOL)
-            .unlockedBy("has_reagent", has(RagiumItems.PRISMARINE_REAGENT))
-            .savePrefixed(output)
+            .save(output)
     }
 
     private fun registerSculk(output: RecipeOutput) {

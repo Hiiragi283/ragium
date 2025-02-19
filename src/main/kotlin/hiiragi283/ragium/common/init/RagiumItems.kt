@@ -235,9 +235,30 @@ object RagiumItems {
     val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> = register("forge_hammer", ::HTCraftingToolItem)
 
     @JvmField
+    val FEVER_PICKAXE: DeferredItem<HTSingleEnchantmentPickaxeItem> = register(
+        "fever_pickaxe",
+        { properties: Item.Properties ->
+            HTSingleEnchantmentPickaxeItem(
+                Enchantments.FORTUNE,
+                5,
+                Tiers.GOLD,
+                properties,
+            )
+        },
+        itemProperty().lore(RagiumTranslationKeys.FEVER_PICKAXE),
+    )
+
+    @JvmField
     val SILKY_PICKAXE: DeferredItem<HTSingleEnchantmentPickaxeItem> = register(
         "silky_pickaxe",
-        { properties: Item.Properties -> HTSingleEnchantmentPickaxeItem(Enchantments.SILK_TOUCH, 1, properties) },
+        { properties: Item.Properties ->
+            HTSingleEnchantmentPickaxeItem(
+                Enchantments.SILK_TOUCH,
+                1,
+                Tiers.GOLD,
+                properties,
+            )
+        },
         itemProperty().lore(RagiumTranslationKeys.SILKY_PICKAXE),
     )
 
@@ -326,9 +347,6 @@ object RagiumItems {
     val ALKALI_REAGENT: DeferredItem<Item> = register("alkali_reagent")
 
     @JvmField
-    val BLAZE_REAGENT: DeferredItem<Item> = register("blaze_reagent")
-
-    @JvmField
     val CREEPER_REAGENT: DeferredItem<Item> = register("creeper_reagent")
 
     @JvmField
@@ -358,7 +376,6 @@ object RagiumItems {
     @JvmField
     val REAGENTS: List<DeferredItem<Item>> = listOf(
         ALKALI_REAGENT,
-        BLAZE_REAGENT,
         CREEPER_REAGENT,
         DEEPANT_REAGENT,
         ENDER_REAGENT,

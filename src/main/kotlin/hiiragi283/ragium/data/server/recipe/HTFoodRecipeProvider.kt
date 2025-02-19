@@ -1,10 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix

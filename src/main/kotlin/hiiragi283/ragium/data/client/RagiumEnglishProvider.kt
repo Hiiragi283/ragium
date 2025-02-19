@@ -146,6 +146,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
 
         addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
+        addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
 
         addItem(RagiumItems.DEFOLIANT, "Defoliant")
@@ -172,7 +173,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MAGICAL_LENS, "Magical Lens")
 
         addItem(RagiumItems.ALKALI_REAGENT, "Alkali Reagent")
-        addItem(RagiumItems.BLAZE_REAGENT, "Blaze Reagent")
         addItem(RagiumItems.CREEPER_REAGENT, "Creeper Reagent")
         addItem(RagiumItems.DEEPANT_REAGENT, "Deepant Reagent")
         addItem(RagiumItems.ENDER_REAGENT, "Ender Reagent")
@@ -207,6 +207,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.AMBROSIA, "Can be eaten for infinity times!")
 
+        add(RagiumTranslationKeys.FEVER_PICKAXE, "Always applies Fortune V")
         add(RagiumTranslationKeys.SILKY_PICKAXE, "Always applies Silk Touch")
 
         add(RagiumTranslationKeys.DEFOLIANT, "Changes 9x9x9 area into waste land")

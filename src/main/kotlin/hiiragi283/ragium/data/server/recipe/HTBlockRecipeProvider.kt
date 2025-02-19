@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.commonTag
-import hiiragi283.ragium.api.extension.define
-import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -18,9 +16,7 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
@@ -37,15 +33,11 @@ import net.neoforged.neoforge.registries.DeferredBlock
 object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Soul Magma
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumBlocks.SOUL_MAGMA_BLOCK)
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
+        HTShapedRecipeBuilder(RagiumBlocks.SOUL_MAGMA_BLOCK)
+            .hollow4()
             .define('A', ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .define('B', Items.MAGMA_BLOCK)
-            .unlockedBy("has_soul", has(ItemTags.SOUL_FIRE_BASE_BLOCKS))
-            .savePrefixed(output)
+            .save(output)
 
         RagiumBlocks.RAGI_BRICK_FAMILY.buildRecipes(output, holderLookup)
         RagiumBlocks.PLASTIC_FAMILY.buildRecipes(output, holderLookup)
@@ -78,31 +70,25 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
                 else -> return
             }
             // Shaped Crafting
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, burner)
+            HTShapedRecipeBuilder(burner)
                 .pattern("A A")
                 .pattern("ABA")
                 .pattern("CCC")
                 .define('A', Items.IRON_BARS)
                 .define('B', core)
                 .define('C', base)
-                .unlockedBy("has_core", has(core))
-                .savePrefixed(output)
+                .save(output)
         }
     }
 
     private fun registerDrums(output: RecipeOutput) {
         // Shaped Crafting
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.TRANSPORTATION, RagiumBlocks.COPPER_DRUM)
-            .pattern("ABA")
-            .pattern("ACA")
-            .pattern("ABA")
+        HTShapedRecipeBuilder(RagiumBlocks.COPPER_DRUM)
+            .cross8()
             .define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .define('B', Items.SMOOTH_STONE_SLAB)
             .define('C', Items.BUCKET)
-            .unlockedBy("has_slab", has(Items.SMOOTH_STONE_SLAB))
-            .savePrefixed(output)
+            .save(output)
     }
 
     //    Decorations    //
@@ -126,18 +112,14 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerDecorations(output: RecipeOutput) {
         // Ragi-Bricks
         HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICKS, 2, CraftingBookCategory.BUILDING)
-            .pattern("ABA")
-            .pattern("BCB")
-            .pattern("ABA")
+            .cross8()
             .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .define('B', Tags.Items.BRICKS_NORMAL)
             .define('C', Items.CLAY)
             .save(output)
         // Plastic Block
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BLOCK, 4, CraftingBookCategory.BUILDING)
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
+            .hollow4()
             .define('A', RagiumItemTags.PLASTICS)
             .define('B', RagiumItems.FORGE_HAMMER)
             .save(output)
@@ -146,9 +128,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerLEDs(output: RecipeOutput) {
         // LED
         HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(DyeColor.WHITE), 4, CraftingBookCategory.BUILDING)
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
+            .hollow4()
             .define('A', Tags.Items.GLASS_BLOCKS)
             .define('B', RagiumItems.LED)
             .save(output, RagiumAPI.id("led_block"))
@@ -156,9 +136,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
         RagiumBlocks.LED_BLOCKS.forEach { (color: DyeColor, block: DeferredBlock<Block>) ->
             // Shaped Crafting
             HTShapedRecipeBuilder(block, 4, CraftingBookCategory.BUILDING)
-                .pattern("AAA")
-                .pattern("ABA")
-                .pattern("AAA")
+                .hollow8()
                 .define('A', RagiumItemTags.LED_BLOCKS)
                 .define('B', color.commonTag)
                 .save(output)
@@ -169,63 +147,49 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerAddons(output: RecipeOutput) {
         // E.N.I.
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumBlocks.ENERGY_NETWORK_INTERFACE)
-            .pattern("ABA")
-            .pattern("BCB")
-            .pattern("ABA")
+        HTShapedRecipeBuilder(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+            .cross8()
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', RagiumItemTags.ADVANCED_CIRCUIT)
             .define('C', Tags.Items.ENDER_PEARLS)
-            .unlockedBy("has_circuit", has(RagiumItemTags.ADVANCED_CIRCUIT))
-            .savePrefixed(output)
+            .save(output)
         // Slag Collector
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumBlocks.SLAG_COLLECTOR)
-            .pattern("ABA")
-            .pattern("BCB")
-            .pattern("ABA")
+        HTShapedRecipeBuilder(RagiumBlocks.SLAG_COLLECTOR)
+            .cross8()
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', Tags.Items.GRAVELS)
             .define('C', Items.HOPPER)
-            .unlockedBy("has_hopper", has(Items.HOPPER))
-            .savePrefixed(output)
+            .save(output)
     }
 
     private fun registerMachines(output: RecipeOutput) {
         // Manual Machine
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumBlocks.MANUAL_GRINDER)
+        HTShapedRecipeBuilder(RagiumBlocks.MANUAL_GRINDER)
             .pattern("A  ")
             .pattern("BBB")
             .pattern("CCC")
             .define('A', Tags.Items.RODS_WOODEN)
             .define('B', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('C', Items.BRICKS)
-            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
-            .savePrefixed(output)
+            .save(output)
 
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+        HTShapedRecipeBuilder(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
             .pattern("AAA")
             .pattern("ABA")
             .pattern("CCC")
             .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Items.BLAST_FURNACE)
             .define('C', Items.BRICKS)
-            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY))
-            .savePrefixed(output)
+            .save(output)
 
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumBlocks.DISENCHANTING_TABLE)
+        HTShapedRecipeBuilder(RagiumBlocks.DISENCHANTING_TABLE)
             .pattern(" A ")
             .pattern("BCB")
             .pattern("CCC")
             .define('A', RagiumItems.GLOW_REAGENT)
             .define('B', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .define('C', Tags.Items.OBSIDIANS_CRYING)
-            .unlockedBy("has_ragi_crystal", has(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL))
-            .savePrefixed(output)
+            .save(output)
 
         // Machine Casing
         fun casing(
@@ -234,16 +198,12 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             glass: Ingredient,
             gearMetal: HTMaterialKey,
         ) {
-            ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, result)
-                .pattern("ABA")
-                .pattern("BCB")
-                .pattern("ABA")
+            HTShapedRecipeBuilder(result)
+                .cross8()
                 .define('A', HTTagPrefix.INGOT, topMetal)
                 .define('B', glass)
                 .define('C', HTTagPrefix.GEAR, gearMetal)
-                .unlockedBy("has_gear", has(HTTagPrefix.GEAR, gearMetal))
-                .savePrefixed(output)
+                .save(output)
         }
 
         casing(
@@ -356,7 +316,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             output,
             HTMachineType.MULTI_SMELTER,
             RagiumItems.MACHINE_CASING,
-            Ingredient.of(RagiumItems.BLAZE_REAGENT),
+            Ingredient.of(Tags.Items.RODS_BLAZE),
             Ingredient.of(Items.FURNACE),
         )
 
@@ -452,8 +412,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             RagiumItems.PRECISION_MACHINE_CASING -> VanillaMaterials.DIAMOND
             else -> return
         }
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, machine)
+        HTShapedRecipeBuilder(machine)
             .pattern(" A ")
             .pattern("BCB")
             .pattern("DED")
@@ -462,8 +421,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .define('C', casing)
             .define('D', HTTagPrefix.COIL, metal)
             .define('E', HTTagPrefix.GEAR, gearMetal)
-            .unlockedBy("has_casing", has(casing))
-            .savePrefixed(output)
+            .save(output)
     }
 
     private fun registerMachine(
@@ -486,8 +444,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             RagiumItems.PRECISION_MACHINE_CASING -> RagiumItemTags.ELITE_CIRCUIT
             else -> return
         }
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, machine)
+        HTShapedRecipeBuilder(machine)
             .pattern(" A ")
             .pattern("BCD")
             .pattern("EFE")
@@ -497,7 +454,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .define('D', right)
             .define('E', HTTagPrefix.COIL, metal)
             .define('F', circuit)
-            .unlockedBy("has_casing", has(casing))
-            .savePrefixed(output)
+            .save(output)
     }
 }

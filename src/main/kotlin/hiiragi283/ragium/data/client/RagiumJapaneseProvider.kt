@@ -146,6 +146,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
         addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
+        addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
         addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
 
         addItem(RagiumItems.DEFOLIANT, "枯葉剤")
@@ -172,7 +173,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MAGICAL_LENS, "魔術的レンズ")
 
         addItem(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
-        addItem(RagiumItems.BLAZE_REAGENT, "ブレイズ試薬")
         addItem(RagiumItems.CREEPER_REAGENT, "クリーパー試薬")
         addItem(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
         addItem(RagiumItems.ENDER_REAGENT, "エンダー試薬")
@@ -207,6 +207,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.AMBROSIA, "無限に食べられちまうんだ！")
 
+        add(RagiumTranslationKeys.FEVER_PICKAXE, "常に幸運Vが発動する")
         add(RagiumTranslationKeys.SILKY_PICKAXE, "常にシルクタッチが発動する")
 
         add(RagiumTranslationKeys.DEFOLIANT, "9x9x9の範囲を荒れ地に変える")
