@@ -2,7 +2,7 @@
   "type": "ragium:assembler",
   "item_inputs": [
     {
-      "item": "ragium:glow_reagent"
+      "tag": "c:dusts/glowstone"
     },
     {
       "tag": "c:ingots/copper"

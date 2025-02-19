@@ -1,13 +1,13 @@
 {
   "type": "ragium:extractor",
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:liquid_glow"
+    }
+  ],
   "item_input": {
     "count": 4,
     "item": "minecraft:glow_berries"
-  },
-  "item_outputs": [
-    {
-      "count": 1,
-      "id": "ragium:glow_reagent"
-    }
-  ]
+  }
 }

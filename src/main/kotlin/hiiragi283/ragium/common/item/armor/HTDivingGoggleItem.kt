@@ -9,9 +9,9 @@ import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTDivingGoggleItem(properties: Properties) : HTFluidArmorItem(Type.HELMET, properties),
+class HTDivingGoggleItem(properties: Properties) :
+    HTFluidArmorItem(Type.HELMET, properties),
     HTSingleEnchantmentAwareItem {
-
     override fun onTick(stack: ItemStack, player: Player) {
         val maxAir: Int = player.maxAirSupply
         val currentAir: Int = player.airSupply

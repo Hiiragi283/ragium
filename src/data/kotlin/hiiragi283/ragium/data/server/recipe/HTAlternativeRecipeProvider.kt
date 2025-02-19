@@ -1,14 +1,15 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -93,23 +94,34 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(Items.PACKED_MUD)
             .save(output)
 
-        // Iron Bars
-        /*ShapedRecipeBuilder
-            .shaped(RecipeCategory.BUILDING_BLOCKS, Items.IRON_BARS, 8)
-            .pattern("AAA")
-            .pattern("AAA")
-            .define('A', HTTagPrefix.ROD, VanillaMaterials.IRON)
-            .unlockedBy("has_iron_rod", has(HTTagPrefix.ROD, VanillaMaterials.IRON))
-
-        // Copper Grate
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, Items.COPPER_GRATE, 4)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
-            .define('A', HTTagPrefix.ROD, VanillaMaterials.COPPER)
+        // Bucket
+        HTShapedRecipeBuilder(Items.BUCKET, 2)
+            .pattern(
+                "ABA",
+                " A ",
+            ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', RagiumItems.FORGE_HAMMER)
-            .unlockedBy("has_rod", has(HTTagPrefix.ROD, VanillaMaterials.COPPER))
-            .save(output, RagiumAPI.id("shaped/copper_grate"))*/
+            .save(output, RagiumAPI.id("bucket_by_steel"))
+        // Hopper
+        HTShapedRecipeBuilder(Items.HOPPER, 2)
+            .pattern(
+                "ABA",
+                "ACA",
+                " A ",
+            ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .define('C', Tags.Items.CHESTS)
+            .save(output, RagiumAPI.id("hopper_by_steel"))
+        // Piston
+        HTShapedRecipeBuilder(Items.PISTON, 2)
+            .pattern(
+                "AAA",
+                "BCB",
+                "BDB",
+            ).define('A', ItemTags.PLANKS)
+            .define('B', ItemTags.STONE_CRAFTING_MATERIALS)
+            .define('C', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .define('D', Tags.Items.DUSTS_REDSTONE)
+            .save(output, RagiumAPI.id("piston_by_steel"))
     }
 }

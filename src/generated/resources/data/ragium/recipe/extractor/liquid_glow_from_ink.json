@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extractor",
+  "fluid_outputs": [
+    {
+      "amount": 2,
+      "id": "ragium:liquid_glow"
+    }
+  ],
+  "item_input": {
+    "item": "minecraft:glow_ink_sac"
+  }
+}

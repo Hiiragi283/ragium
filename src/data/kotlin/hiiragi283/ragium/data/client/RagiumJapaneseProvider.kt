@@ -99,7 +99,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
 
         addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
-        
+
         addFluid(RagiumVirtualFluids.NITROGEN, "窒素")
         addFluid(RagiumVirtualFluids.AMMONIA, "アンモニア")
         addFluid(RagiumVirtualFluids.NITRIC_ACID, "硝酸")
@@ -107,13 +107,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.OXYGEN, "酸素")
         addFluid(RagiumVirtualFluids.ROCKET_FUEL, "ロケット燃料")
 
+        addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
+
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
         addFluid(RagiumVirtualFluids.SULFURIC_ACID, "硫酸")
-
-        addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "グロウ酸")
-
-        addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "ラピス溶液")
 
         addFluid(RagiumVirtualFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumVirtualFluids.FUEL, "燃料")
@@ -128,6 +126,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
 
+        addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "ラピス溶液")
+        addFluid(RagiumVirtualFluids.LIQUID_GLOW, "リキッド・グロウ")
         addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "ラギウム溶液")
         // Items
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
@@ -158,6 +158,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.DEFOLIANT, "枯葉剤")
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
+        addItem(RagiumItems.FLARE_LAUNCHER, "フレアランチャー")
         addItem(RagiumItems.MAGNET, "マグネット")
         addItem(RagiumItems.SOAP, "石鹸")
 
@@ -184,11 +185,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
         addItem(RagiumItems.ENDER_REAGENT, "エンダー試薬")
         addItem(RagiumItems.FROZEN_REAGENT, "フローズン試薬")
-        addItem(RagiumItems.GLOW_REAGENT, "グロウ試薬")
         addItem(RagiumItems.MAGICAL_REAGENT, "魔術的試薬")
         addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
         addItem(RagiumItems.SCULK_REAGENT, "スカルク試薬")
         addItem(RagiumItems.WITHER_REAGENT, "ウィザー試薬")
+
+        addItem(RagiumItems.EMPTY_FLUID_CUBE, "空の液体キューブ")
+        addItem(RagiumItems.WATER_FLUID_CUBE, "液体キューブ（水）")
+        addItem(RagiumItems.LAVA_FLUID_CUBE, "液体キューブ（溶岩）")
 
         addItem(RagiumItems.BEE_WAX, "蜜蠟")
         addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "化学機械筐体")

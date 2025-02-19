@@ -32,14 +32,13 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     OXYGEN(Color(0x66ccff), TextureType.GASEOUS),
     ROCKET_FUEL(Color(0x0066ff), TextureType.GASEOUS),
 
+    // Fluorine
+    HYDROFLUORIC_ACID(Color(0x33cc99)),
+
     // Sulfur
     SULFUR_DIOXIDE(Color(0xff6600), TextureType.GASEOUS),
     SULFUR_TRIOXIDE(Color(0xff6600), TextureType.GASEOUS),
     SULFURIC_ACID(Color(0xff3300), TextureType.STICKY),
-    HYDROFLUORIC_ACID(Color(0xffcc33)),
-
-    // Base
-    LAPIS_SOLUTION(Color(0x3333ff)),
 
     // Oil
     NAPHTHA(Color(0xff9900)),
@@ -60,6 +59,9 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     WARPED_SAP(Color(0x006666), TextureType.STICKY),
     LATEX(Color(0xcccccc), TextureType.STICKY),
 
+    // Other
+    LAPIS_SOLUTION(Color(0x003fff)),
+    LIQUID_GLOW(Color(0xffff3f)),
     RAGIUM_SOLUTION(Color(0xff003f)),
     ;
 

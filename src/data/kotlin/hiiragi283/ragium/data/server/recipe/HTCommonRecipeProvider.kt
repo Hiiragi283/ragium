@@ -204,7 +204,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         fun circuit(
             circuit: ItemLike,
             subMetal: HTMaterialKey,
-            dopant: ItemLike,
+            dopant: TagKey<Item>,
             lens: ItemLike,
         ) {
             // Assembler
@@ -227,25 +227,25 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         circuit(
             RagiumItems.BASIC_CIRCUIT,
             VanillaMaterials.COPPER,
-            Items.REDSTONE,
+            Tags.Items.DUSTS_REDSTONE,
             RagiumItems.REDSTONE_LENS,
         )
         circuit(
             RagiumItems.ADVANCED_CIRCUIT,
             VanillaMaterials.GOLD,
-            RagiumItems.GLOW_REAGENT,
+            Tags.Items.DUSTS_GLOWSTONE,
             RagiumItems.GLOW_LENS,
         )
         circuit(
             RagiumItems.ELITE_CIRCUIT,
             CommonMaterials.ALUMINUM,
-            RagiumItems.PRISMARINE_REAGENT,
+            Tags.Items.GEMS_PRISMARINE,
             RagiumItems.PRISMARINE_LENS,
         )
         circuit(
             RagiumItems.ULTIMATE_CIRCUIT,
             RagiumMaterials.RAGIUM,
-            RagiumItems.ENDER_REAGENT,
+            HTTagPrefix.DUST.createTag(RagiumMaterials.RAGI_CRYSTAL),
             RagiumItems.MAGICAL_LENS,
         )
 
@@ -296,7 +296,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMultiItemRecipeBuilder
             .assembler()
-            .itemInput(RagiumItems.GLOW_REAGENT, 64)
+            .itemInput(Tags.Items.DUSTS_GLOWSTONE, 64)
             .itemInput(Tags.Items.INGOTS_GOLD, 16)
             .itemInput(RagiumBlocks.CHEMICAL_GLASS, 8)
             .itemOutput(RagiumItems.GLOW_LENS)
@@ -325,9 +325,8 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .pattern(
                 "AAA",
                 "ABA",
-                "C C"
-            )
-            .define('A', RagiumItemTags.PLASTICS)
+                "C C",
+            ).define('A', RagiumItemTags.PLASTICS)
             .define('B', Tags.Items.GLASS_PANES)
             .define('C', RagiumItemTags.ADVANCED_CIRCUIT)
             .save(output)
@@ -336,15 +335,14 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .pattern(
                 "ABA",
                 "ACA",
-                "D D"
-            )
-            .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+                "D D",
+            ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', RagiumItemTags.ELITE_CIRCUIT)
             .define('C', ItemTags.CHEST_ARMOR)
             .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
     }
-    
+
     private fun registerTool(output: RecipeOutput) {
         HTShapedRecipeBuilder(RagiumItems.FORGE_HAMMER, category = CraftingBookCategory.EQUIPMENT)
             .pattern(" AA")
@@ -390,7 +388,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
 
         HTMultiItemRecipeBuilder
             .assembler()
-            .itemInput(RagiumItems.GLOW_REAGENT)
+            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
             .itemOutput(RagiumItems.LED, 4)

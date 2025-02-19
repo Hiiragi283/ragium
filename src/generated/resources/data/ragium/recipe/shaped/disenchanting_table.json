@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:glow_reagent"
+      "item": "minecraft:grindstone"
     },
     "B": {
       "tag": "c:gems/ragi_crystal"

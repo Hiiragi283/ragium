@@ -97,6 +97,7 @@ object RagiumClient {
         register(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
         event.registerEntityRenderer(RagiumEntityTypes.DYNAMITE.get(), ::ThrownItemRenderer)
+        event.registerEntityRenderer(RagiumEntityTypes.FLARE.get(), ::ThrownItemRenderer)
 
         LOGGER.info("Registered BlockEntityRenderers!")
     }

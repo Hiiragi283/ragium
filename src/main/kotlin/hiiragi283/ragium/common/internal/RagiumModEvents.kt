@@ -20,6 +20,8 @@ import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.fluid.HTDivingGoggleFluidHandler
+import hiiragi283.ragium.common.fluid.HTFlareLauncherFluidHandler
+import hiiragi283.ragium.common.fluid.HTFluidCubeFluidHandler
 import hiiragi283.ragium.common.fluid.HTJetpackFluidHandler
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
@@ -264,6 +266,18 @@ internal object RagiumModEvents {
         registerFluid(RagiumItems.JETPACK) { stack: ItemStack, capacity: Int ->
             HTJetpackFluidHandler(stack, capacity)
         }
+
+        registerFluid(RagiumItems.FLARE_LAUNCHER) { stack: ItemStack, capacity: Int ->
+            HTFlareLauncherFluidHandler(stack, capacity)
+        }
+
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            ::HTFluidCubeFluidHandler,
+            RagiumItems.EMPTY_FLUID_CUBE,
+            RagiumItems.WATER_FLUID_CUBE,
+            RagiumItems.LAVA_FLUID_CUBE,
+        )
 
         LOGGER.info("Registered Item Capabilities!")
     }

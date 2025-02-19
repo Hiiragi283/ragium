@@ -181,25 +181,25 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .extractor()
             .itemInput(Items.GLOW_LICHEN, 8)
-            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .fluidOutput(RagiumVirtualFluids.LIQUID_GLOW)
             .saveSuffixed(output, "_from_lichen")
 
         HTFluidOutputRecipeBuilder
             .extractor()
             .itemInput(Items.GLOW_BERRIES, 4)
-            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .fluidOutput(RagiumVirtualFluids.LIQUID_GLOW)
             .saveSuffixed(output, "_from_berry")
 
         HTFluidOutputRecipeBuilder
             .extractor()
             .itemInput(Tags.Items.DUSTS_GLOWSTONE)
-            .itemOutput(RagiumItems.GLOW_REAGENT)
+            .fluidOutput(RagiumVirtualFluids.LIQUID_GLOW)
             .saveSuffixed(output, "_from_dust")
 
         HTFluidOutputRecipeBuilder
             .extractor()
             .itemInput(Items.GLOW_INK_SAC)
-            .itemOutput(RagiumItems.GLOW_REAGENT, 2)
+            .fluidOutput(RagiumVirtualFluids.LIQUID_GLOW, 2)
             .saveSuffixed(output, "_from_ink")
 
         // CaF2 + H2SO4 -> CaSO4 + 2x HF(aq)
@@ -208,14 +208,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
             .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag)
             .fluidOutput(RagiumVirtualFluids.HYDROFLUORIC_ACID)
-            .saveSuffixed(output, "_from_fluorite")
-
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(RagiumItems.GLOW_REAGENT, 2)
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag)
-            .fluidOutput(RagiumVirtualFluids.HYDROFLUORIC_ACID)
-            .saveSuffixed(output, "_from_reagent")
+            .save(output)
     }
 
     private fun registerMagical(output: RecipeOutput) {

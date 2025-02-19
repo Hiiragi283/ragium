@@ -286,6 +286,9 @@ object RagiumItems {
     val DYNAMITE: DeferredItem<HTDynamiteItem> = register("dynamite", ::HTDynamiteItem)
 
     @JvmField
+    val FLARE_LAUNCHER: DeferredItem<HTFlareLauncherItem> = register("flare_launcher", ::HTFlareLauncherItem)
+
+    @JvmField
     val MAGNET: DeferredItem<HTMagnetItem> = register(
         "magnet",
         ::HTMagnetItem,
@@ -372,9 +375,6 @@ object RagiumItems {
     val FROZEN_REAGENT: DeferredItem<Item> = register("frozen_reagent")
 
     @JvmField
-    val GLOW_REAGENT: DeferredItem<Item> = register("glow_reagent")
-
-    @JvmField
     val MAGICAL_REAGENT: DeferredItem<Item> = register("magical_reagent")
 
     @JvmField
@@ -393,11 +393,27 @@ object RagiumItems {
         DEEPANT_REAGENT,
         ENDER_REAGENT,
         FROZEN_REAGENT,
-        GLOW_REAGENT,
         MAGICAL_REAGENT,
         PRISMARINE_REAGENT,
         SCULK_REAGENT,
         WITHER_REAGENT,
+    )
+
+    //    Fluid Cube    //
+
+    @JvmField
+    val EMPTY_FLUID_CUBE: DeferredItem<Item> = register("empty_fluid_cube")
+
+    @JvmField
+    val WATER_FLUID_CUBE: DeferredItem<Item> = register("water_fluid_cube")
+
+    @JvmField
+    val LAVA_FLUID_CUBE: DeferredItem<Item> = register("lava_fluid_cube")
+
+    @JvmField
+    val FLUID_CUBES: List<DeferredItem<Item>> = listOf(
+        WATER_FLUID_CUBE,
+        LAVA_FLUID_CUBE,
     )
 
     //    Machine Parts    //

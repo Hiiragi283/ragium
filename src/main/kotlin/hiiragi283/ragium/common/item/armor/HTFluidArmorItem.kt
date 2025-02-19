@@ -19,7 +19,6 @@ import kotlin.math.roundToInt
 
 abstract class HTFluidArmorItem(type: Type, properties: Properties) :
     ArmorItem(RagiumArmorMaterials.DEFAULT, type, properties.setNoRepair().stacksTo(1)) {
-
     protected fun getHandler(stack: ItemStack): IFluidHandlerItem? = stack.getCapability(Capabilities.FluidHandler.ITEM)
 
     //    ArmorItem    //

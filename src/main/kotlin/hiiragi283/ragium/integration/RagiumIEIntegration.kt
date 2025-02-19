@@ -4,15 +4,11 @@ import blusunrize.immersiveengineering.api.tool.RailgunHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.entity.HTDynamite
 import hiiragi283.ragium.common.init.RagiumItems
-import net.minecraft.world.effect.MobEffectInstance
-import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -58,24 +54,6 @@ object RagiumIEIntegration {
                         false,
                         Level.ExplosionInteraction.NONE,
                     )
-                }
-            },
-        )
-
-        // Glow Reagent
-        RailgunHandler.registerProjectile(
-            { Ingredient.of(RagiumItems.GLOW_REAGENT) },
-            object : RailgunHandler.IRailgunProjectile {
-                override fun onHitTarget(
-                    world: Level,
-                    target: HitResult,
-                    shooter: UUID?,
-                    projectile: Entity,
-                ) {
-                    if (target is EntityHitResult) {
-                        val entity: LivingEntity = target.entity as? LivingEntity ?: return
-                        entity.addEffect(MobEffectInstance(MobEffects.GLOWING, -1))
-                    }
                 }
             },
         )

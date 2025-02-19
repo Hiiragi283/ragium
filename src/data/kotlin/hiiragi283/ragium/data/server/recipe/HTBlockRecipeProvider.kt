@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import aztech.modern_industrialization.items.ForgeTool
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
@@ -228,7 +227,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .pattern(" A ")
             .pattern("BCB")
             .pattern("CCC")
-            .define('A', RagiumItems.GLOW_REAGENT)
+            .define('A', Items.GRINDSTONE)
             .define('B', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .define('C', Tags.Items.OBSIDIANS_CRYING)
             .save(output)
@@ -342,7 +341,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             output,
             HTMachineType.COMPRESSOR,
             RagiumItems.MACHINE_CASING,
-            Ingredient.of(ForgeTool.TAG),
+            Ingredient.of(RagiumItems.FORGE_HAMMER),
             Ingredient.of(Items.PISTON),
         )
         // Grinder

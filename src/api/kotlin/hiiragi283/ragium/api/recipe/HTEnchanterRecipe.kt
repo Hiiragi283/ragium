@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.createEnchBook
 import hiiragi283.ragium.api.extension.modifyEnchantment
 import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.core.Holder
@@ -54,7 +55,7 @@ class HTEnchanterRecipe(
         )
     }
 
-    override val itemOutputs: List<HTItemOutput> = listOf()
+    override val itemOutputs: List<HTItemOutput> = listOf(HTItemOutput.of(createEnchBook(enchantment)))
 
     override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
         if (input.getItem(0).getEnchantmentLevel(enchantment) > 0) {

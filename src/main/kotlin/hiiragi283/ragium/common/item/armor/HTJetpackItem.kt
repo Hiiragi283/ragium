@@ -14,7 +14,8 @@ class HTJetpackItem(properties: Properties) : HTFluidArmorItem(Type.CHESTPLATE, 
     override fun getDefaultAttributeModifiers(stack: ItemStack): ItemAttributeModifiers {
         val fluidHandler: IFluidHandlerItem = getHandler(stack) ?: return super.getDefaultAttributeModifiers(stack)
         if (fluidHandler.getFluidInTank(0).amount > 0) {
-            return ItemAttributeModifiers.builder()
+            return ItemAttributeModifiers
+                .builder()
                 .add(
                     NeoForgeMod.CREATIVE_FLIGHT,
                     AttributeModifier(RagiumAPI.id("jetpack_flight"), 1.0, AttributeModifier.Operation.ADD_VALUE),

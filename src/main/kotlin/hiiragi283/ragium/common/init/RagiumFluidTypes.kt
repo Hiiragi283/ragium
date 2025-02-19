@@ -53,14 +53,14 @@ object RagiumFluidTypes {
 
     @JvmField
     val CRUDE_OIL: DeferredHolder<FluidType, FluidType> = register(
-        "crude_oil", 
+        "crude_oil",
         FluidType.Properties
             .create()
-            .descriptionId(RagiumBlocks.CRUDE_OIL.get().descriptionId)
+            .descriptionId("block.ragium.crude_oil")
             .canSwim(false)
             .pathType(PathType.LAVA)
             .density(3000)
-            .viscosity(6000)
+            .viscosity(6000),
     )
 
     @JvmField

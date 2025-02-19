@@ -99,7 +99,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
 
         addFluid(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
-        
+
         addFluid(RagiumVirtualFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumVirtualFluids.AMMONIA, "Ammonia")
         addFluid(RagiumVirtualFluids.NITRIC_ACID, "Nitric Acid")
@@ -107,13 +107,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.OXYGEN, "Oxygen")
         addFluid(RagiumVirtualFluids.ROCKET_FUEL, "Rocket Fuel")
 
+        addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
+
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumVirtualFluids.SULFURIC_ACID, "Sulfuric Acid")
-
-        addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Glow Acid")
-
-        addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "Lapis Solution")
 
         addFluid(RagiumVirtualFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumVirtualFluids.FUEL, "Fuel")
@@ -128,6 +126,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "Warped Sap")
 
+        addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "Lapis Solution")
+        addFluid(RagiumVirtualFluids.LIQUID_GLOW, "Liquid Glow")
         addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "Ragium Solution")
         // Items
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
@@ -158,6 +158,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.DEFOLIANT, "Defoliant")
         addItem(RagiumItems.DYNAMITE, "Dynamite")
+        addItem(RagiumItems.FLARE_LAUNCHER, "Flare Launcher")
         addItem(RagiumItems.MAGNET, "Magnet")
         addItem(RagiumItems.SOAP, "Soap")
 
@@ -184,11 +185,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.DEEPANT_REAGENT, "Deepant Reagent")
         addItem(RagiumItems.ENDER_REAGENT, "Ender Reagent")
         addItem(RagiumItems.FROZEN_REAGENT, "Frozen Reagent")
-        addItem(RagiumItems.GLOW_REAGENT, "Glow Reagent")
         addItem(RagiumItems.MAGICAL_REAGENT, "Magical Reagent")
         addItem(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
         addItem(RagiumItems.SCULK_REAGENT, "Sculk Reagent")
         addItem(RagiumItems.WITHER_REAGENT, "Wither Reagent")
+
+        addItem(RagiumItems.EMPTY_FLUID_CUBE, "Empty Fluid Cube")
+        addItem(RagiumItems.WATER_FLUID_CUBE, "Fluid Cube (Water)")
+        addItem(RagiumItems.LAVA_FLUID_CUBE, "Fluid Cube (Lava)")
 
         addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "Chemical Machine Casing")

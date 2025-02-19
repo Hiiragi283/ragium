@@ -8,7 +8,7 @@
       "tag": "c:ingots/ragium"
     },
     {
-      "item": "ragium:ender_reagent"
+      "tag": "c:dusts/ragi_crystal"
     }
   ],
   "item_output": {

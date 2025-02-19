@@ -8,7 +8,7 @@
       "tag": "c:ingots/copper"
     },
     {
-      "item": "minecraft:redstone"
+      "tag": "c:dusts/redstone"
     }
   ],
   "item_output": {

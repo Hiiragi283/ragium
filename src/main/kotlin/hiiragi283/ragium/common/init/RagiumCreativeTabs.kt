@@ -76,6 +76,7 @@ object RagiumCreativeTabs {
 
                     output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)
+                    output.accept(RagiumItems.FLARE_LAUNCHER)
                     output.accept(RagiumItems.MAGNET)
                     output.accept(RagiumItems.SOAP)
 
@@ -97,6 +98,12 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.ELITE_CIRCUIT)
                     output.accept(RagiumItems.ULTIMATE_CIRCUIT)
                     // Ingredients
+                    output.accept(RagiumItems.EMPTY_FLUID_CUBE)
+                    output.accept(RagiumItems.WATER_FLUID_CUBE)
+                    output.accept(RagiumItems.LAVA_FLUID_CUBE)
+
+                    RagiumItems.REAGENTS.forEach(output::accept)
+
                     output.accept(RagiumBlocks.SHAFT)
                     output.accept(RagiumItems.MACHINE_CASING)
                     output.accept(RagiumItems.CHEMICAL_MACHINE_CASING)
@@ -110,8 +117,6 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.YELLOW_CAKE_PIECE)
 
                     output.accept(RagiumItems.RAGI_TICKET)
-
-                    RagiumItems.REAGENTS.forEach(output::accept)
                     // Storage
                     output.accept(RagiumBlocks.IRON_CRATE)
                     output.accept(RagiumBlocks.COPPER_DRUM)

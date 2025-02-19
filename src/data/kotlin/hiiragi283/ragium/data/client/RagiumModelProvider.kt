@@ -48,6 +48,9 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             remove(RagiumItems.CHOCOLATE_APPLE)
 
+            remove(RagiumItems.EMPTY_FLUID_CUBE)
+            removeAll(RagiumItems.FLUID_CUBES)
+
             remove(RagiumItems.MACHINE_CASING)
             remove(RagiumItems.CHEMICAL_MACHINE_CASING)
             remove(RagiumItems.PRECISION_MACHINE_CASING)
@@ -55,6 +58,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
             remove(RagiumItems.JETPACK) // TODO
+            remove(RagiumItems.FLARE_LAUNCHER) // TODO
         }.forEach(::basicItem)
 
         getBuilder(RagiumItems.CHOCOLATE_APPLE)
@@ -66,6 +70,14 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             .parent(ModelFile.UncheckedModelFile("item/generated"))
             .itemTexture("layer0", RagiumItems.POTION_CAN.id)
             .itemTexture("layer1", RagiumItems.POTION_CAN.id.withSuffix("_overlay"))
+
+        getBuilder(RagiumItems.WATER_FLUID_CUBE)
+            .parent(ModelFile.UncheckedModelFile(RagiumAPI.id("item/fluid_cube")))
+            .texture("inside", ResourceLocation.withDefaultNamespace("block/blue_concrete"))
+
+        getBuilder(RagiumItems.LAVA_FLUID_CUBE)
+            .parent(ModelFile.UncheckedModelFile(RagiumAPI.id("item/fluid_cube")))
+            .texture("inside", ResourceLocation.withDefaultNamespace("block/lava_still"))
 
         listOf(
             RagiumItems.MACHINE_CASING,

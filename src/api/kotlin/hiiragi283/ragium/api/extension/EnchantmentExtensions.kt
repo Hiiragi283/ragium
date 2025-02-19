@@ -17,7 +17,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 
 //    ItemStack    //
 
-fun createEnchBook(holder: Holder<Enchantment>, level: Int): ItemStack =
+fun createEnchBook(holder: Holder<Enchantment>, level: Int = holder.value().maxLevel): ItemStack =
     EnchantedBookItem.createForEnchantment(EnchantmentInstance(holder, level))
 
 fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int =
