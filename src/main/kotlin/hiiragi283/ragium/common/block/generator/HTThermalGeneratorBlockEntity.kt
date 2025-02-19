@@ -21,6 +21,4 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         stack.`is`(RagiumFluidTags.THERMAL_FUEL) -> 100
         else -> 0
     }
-
-    override val hasMenu: Boolean = false
 }

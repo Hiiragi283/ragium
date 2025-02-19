@@ -28,7 +28,7 @@ abstract class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, inv
     ) {
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         // energy amount
-        renderEnergyTooltip(guiGraphics, progressX, progressY, mouseX, mouseY)
+        // renderEnergyTooltip(guiGraphics, progressX, progressY, mouseX, mouseY)
         // fluid tooltip
         menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             renderFluidTooltip(
@@ -63,6 +63,10 @@ abstract class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, inv
             Mth.ceil(menu.getProgress() * 16f),
             16,
         )
+        // fluids
+        menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
+            renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
+        }
         // item slots
         /*menu.itemSlots.forEach { (slotX: Int, slotY: Int) ->
             guiGraphics.blitSprite(

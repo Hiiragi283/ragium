@@ -44,8 +44,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getForgeHammerDurability(): Int = RagiumConfig.FORGE_HAMMER_DURABILITY.get()
 
-    override fun getSoapDurability(): Int = RagiumConfig.SOAP_DURABILITY.get()
-
     //    Machine    //
 
     override fun getDefaultTankCapacity(): Int = RagiumConfig.MACHINE_TANK_CAPACITY.get()

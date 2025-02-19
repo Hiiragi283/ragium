@@ -96,8 +96,6 @@ interface RagiumAPI {
 
     fun getForgeHammerDurability(): Int
 
-    fun getSoapDurability(): Int
-
     //    Machine    //
 
     fun getTankCapacityWithEnch(enchLevel: Int): Int = getDefaultTankCapacity() * (enchLevel + 1)

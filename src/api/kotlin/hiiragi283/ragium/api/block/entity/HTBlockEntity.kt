@@ -13,6 +13,7 @@ import net.minecraft.resources.RegistryOps
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -87,15 +88,19 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
         pos: BlockPos,
         player: Player,
         hitResult: BlockHitResult,
-    ): InteractionResult = state.getMenuProvider(level, pos)?.let {
+    ): InteractionResult = state.getMenuProvider(level, pos)?.let { provider: MenuProvider ->
         when (level.isClientSide) {
             true -> InteractionResult.SUCCESS
             else -> {
-                player.openMenu(it)
+                openMenu(player, provider)
                 InteractionResult.CONSUME
             }
         }
     } ?: InteractionResult.PASS
+
+    protected open fun openMenu(player: Player, provider: MenuProvider) {
+        player.openMenu(provider)
+    }
 
     /**
      * ブロックが左クリックされたときに呼ばれます。

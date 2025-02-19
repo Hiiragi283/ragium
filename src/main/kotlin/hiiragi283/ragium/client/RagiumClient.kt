@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.renderer.HTBlastFurnaceBlockEntityRenderer
 import hiiragi283.ragium.client.screen.HTMultiItemContainer
+import hiiragi283.ragium.client.screen.HTRefineryContainer
 import hiiragi283.ragium.client.screen.HTSingleItemContainer
 import hiiragi283.ragium.common.init.*
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
@@ -81,6 +82,7 @@ object RagiumClient {
     fun registerMenu(event: RegisterMenuScreensEvent) {
         event.register(RagiumMenuTypes.MULTI_ITEM.get(), ::HTMultiItemContainer)
         event.register(RagiumMenuTypes.SINGLE_ITEM.get(), ::HTSingleItemContainer)
+        event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryContainer)
 
         LOGGER.info("Registered machine screens!")
     }

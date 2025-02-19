@@ -56,10 +56,10 @@ class HTHandlerSerializer private constructor(val items: List<HTSlotHandler<Item
             if (fluids.isEmpty()) EMPTY else HTHandlerSerializer(listOf(), fluids)
 
         @JvmStatic
-        private val ITEM_CODEC: Codec<List<ItemStack>> = ItemStack.OPTIONAL_CODEC.listOf(1, Int.MAX_VALUE)
+        private val ITEM_CODEC: Codec<List<ItemStack>> = ItemStack.OPTIONAL_CODEC.listOf()
 
         @JvmStatic
-        private val FLUID_CODEC: Codec<List<FluidStack>> = FluidStack.OPTIONAL_CODEC.listOf(1, Int.MAX_VALUE)
+        private val FLUID_CODEC: Codec<List<FluidStack>> = FluidStack.OPTIONAL_CODEC.listOf()
     }
 
     /**

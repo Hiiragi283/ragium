@@ -11,7 +11,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
@@ -42,16 +41,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         y: Int,
     ) {
         if (stack.isEmpty) return
-        renderFluid(guiGraphics, stack.fluid, x, y)
-    }
-
-    protected fun renderFluid(
-        guiGraphics: GuiGraphics,
-        fluid: Fluid,
-        x: Int,
-        y: Int,
-    ) {
-        val (sprite: TextureAtlasSprite, color: Int) = fluid.getSpriteAndColor()
+        val (sprite: TextureAtlasSprite, color: Int) = stack.getSpriteAndColor()
         val floatColor: Triple<Float, Float, Float> = toFloatColor(color)
 
         guiGraphics.blit(
@@ -100,7 +90,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
                 font,
                 buildList {
                     // Tooltips
-                    add(fluidType.description)
+                    add(stack.hoverName)
                     // Fluid Amount
                     add(fluidAmountText(stack.amount).withStyle(ChatFormatting.GRAY))
                     // Fluid Capacity

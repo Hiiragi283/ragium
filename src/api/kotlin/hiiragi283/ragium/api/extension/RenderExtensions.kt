@@ -13,9 +13,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Vec3i
 import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
+import net.neoforged.neoforge.fluids.FluidStack
 
 //    PoseStack    //
 
@@ -41,13 +41,13 @@ fun PoseStack.scale(pos: Vec3) {
 
 //    TextureAtlasSprite    //
 
-fun Fluid.getSpriteAndColor(): Pair<TextureAtlasSprite, Int> {
-    val extension: IClientFluidTypeExtensions = IClientFluidTypeExtensions.of(this)
+fun FluidStack.getSpriteAndColor(): Pair<TextureAtlasSprite, Int> {
+    val extension: IClientFluidTypeExtensions = IClientFluidTypeExtensions.of(fluid)
     val sprite: TextureAtlasSprite = Minecraft
         .getInstance()
         .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-        .apply(extension.stillTexture)
-    return sprite to extension.tintColor
+        .apply(extension.getStillTexture(this))
+    return sprite to extension.getTintColor(this)
 }
 
 //    Rendering    //

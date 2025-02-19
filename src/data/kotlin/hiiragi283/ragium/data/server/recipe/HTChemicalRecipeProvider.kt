@@ -56,7 +56,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .infuser()
             .itemInput(RagiumItems.ALKALI_REAGENT)
             .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, FluidType.BUCKET_VOLUME * 4)
-            .itemOutput(RagiumItems.SOAP)
+            .itemOutput(RagiumItems.SOAP, 8)
             .save(output)
     }
 

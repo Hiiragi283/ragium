@@ -136,7 +136,9 @@ abstract class HTMachineBlockEntity(
         return super.onRightClicked(state, level, pos, player, hitResult)
     }
 
-    protected open val hasMenu: Boolean = true
+    override fun openMenu(player: Player, provider: MenuProvider) {
+        player.openMenu(provider, pos)
+    }
 
     protected fun validateMultiblock(controller: HTMultiblockController, player: Player?): Result<HTMultiblockData> = runCatching {
         val data: HTMultiblockData =

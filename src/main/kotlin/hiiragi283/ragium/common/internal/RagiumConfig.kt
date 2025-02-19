@@ -14,9 +14,6 @@ internal object RagiumConfig {
     @JvmField
     val FORGE_HAMMER_DURABILITY: ModConfigSpec.IntValue
 
-    @JvmField
-    val SOAP_DURABILITY: ModConfigSpec.IntValue
-
     //    Machine    //
 
     @JvmField
@@ -88,10 +85,6 @@ internal object RagiumConfig {
         FORGE_HAMMER_DURABILITY = builder
             .gameRestart()
             .defineInRange("forgeHammer", 63, 1, Int.MAX_VALUE)
-
-        SOAP_DURABILITY = builder
-            .gameRestart()
-            .defineInRange("soap", 63, 1, Int.MAX_VALUE)
         builder.pop()
 
         // Machine
