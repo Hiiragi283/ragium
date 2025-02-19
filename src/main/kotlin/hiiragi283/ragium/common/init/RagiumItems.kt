@@ -95,6 +95,7 @@ object RagiumItems {
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
+        register(HTTagPrefix.GEM, CommonMaterials.COAL_COKE)
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
         // Coils
         register(HTTagPrefix.COIL, VanillaMaterials.COPPER)
@@ -308,6 +309,14 @@ object RagiumItems {
     @JvmField
     val POTION_CAN: DeferredItem<HTPotionCanItem> = register("potion_can", ::HTPotionCanItem)
 
+    //    Molds    //
+
+    @JvmField
+    val BLANK_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("blank_press_mold", ::HTCatalystItem)
+
+    @JvmField
+    val BALL_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("ball_press_mold", ::HTCatalystItem)
+
     @JvmField
     val PRESS_MOLDS: Map<HTTagPrefix, DeferredItem<HTCatalystItem>> =
         listOf(
@@ -321,6 +330,8 @@ object RagiumItems {
 
     @JvmStatic
     fun getPressMold(prefix: HTTagPrefix): DeferredItem<HTCatalystItem> = PRESS_MOLDS[prefix] ?: error("Unregistered with $prefix")
+
+    //    Lens    //
 
     @JvmField
     val REDSTONE_LENS: DeferredItem<HTCatalystItem> = register("redstone_lens", ::HTCatalystItem)
@@ -363,9 +374,6 @@ object RagiumItems {
     val ALKALI_REAGENT: DeferredItem<Item> = register("alkali_reagent")
 
     @JvmField
-    val CREEPER_REAGENT: DeferredItem<Item> = register("creeper_reagent")
-
-    @JvmField
     val DEEPANT_REAGENT: DeferredItem<Item> = register("deepant_reagent")
 
     @JvmField
@@ -389,9 +397,7 @@ object RagiumItems {
     @JvmField
     val REAGENTS: List<DeferredItem<Item>> = listOf(
         ALKALI_REAGENT,
-        CREEPER_REAGENT,
         DEEPANT_REAGENT,
-        ENDER_REAGENT,
         FROZEN_REAGENT,
         MAGICAL_REAGENT,
         PRISMARINE_REAGENT,

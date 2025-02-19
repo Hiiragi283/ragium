@@ -103,11 +103,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.NITROGEN, "窒素")
         addFluid(RagiumVirtualFluids.AMMONIA, "アンモニア")
         addFluid(RagiumVirtualFluids.NITRIC_ACID, "硝酸")
+        addFluid(RagiumVirtualFluids.MIXTURE_ACID, "混酸")
 
         addFluid(RagiumVirtualFluids.OXYGEN, "酸素")
         addFluid(RagiumVirtualFluids.ROCKET_FUEL, "ロケット燃料")
 
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
+
+        addFluid(RagiumVirtualFluids.ALKALI_SOLUTION, "アルカリ溶液")
 
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
@@ -120,13 +123,16 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.PLANT_OIL, "植物油")
         addFluid(RagiumVirtualFluids.BIOMASS, "バイオマス")
         addFluid(RagiumVirtualFluids.ETHANOL, "エタノール")
+
+        addFluid(RagiumVirtualFluids.CRUDE_BIODIESEL, "未精製のバイオディーゼル")
         addFluid(RagiumVirtualFluids.BIODIESEL, "バイオディーゼル")
+        addFluid(RagiumVirtualFluids.GLYCEROL, "グリセロール")
+        addFluid(RagiumVirtualFluids.NITROGLYCERIN, "ニトログリセリン")
 
         addFluid(RagiumVirtualFluids.SAP, "樹液")
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
 
-        addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "ラピス溶液")
         addFluid(RagiumVirtualFluids.LIQUID_GLOW, "リキッド・グロウ")
         addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "ラギウム溶液")
         // Items
@@ -170,6 +176,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
         addItem(RagiumItems.ULTIMATE_CIRCUIT, "究極回路")
 
+        addItem(RagiumItems.BLANK_PRESS_MOLD, "プレス型（なし）")
+        addItem(RagiumItems.BALL_PRESS_MOLD, "プレス型（ボール）")
         addItem(RagiumItems.getPressMold(HTTagPrefix.GEAR), "プレス型（歯車）")
         addItem(RagiumItems.getPressMold(HTTagPrefix.PLATE), "プレス型（板材）")
         addItem(RagiumItems.getPressMold(HTTagPrefix.ROD), "プレス型（棒材）")
@@ -181,9 +189,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MAGICAL_LENS, "魔術的レンズ")
 
         addItem(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
-        addItem(RagiumItems.CREEPER_REAGENT, "クリーパー試薬")
         addItem(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
-        addItem(RagiumItems.ENDER_REAGENT, "エンダー試薬")
         addItem(RagiumItems.FROZEN_REAGENT, "フローズン試薬")
         addItem(RagiumItems.MAGICAL_REAGENT, "魔術的試薬")
         addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
@@ -273,6 +279,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(CommonMaterials.CADMIUM, "カドミウム")
         add(CommonMaterials.CARBON, "炭素")
         add(CommonMaterials.CHROMIUM, "クロム")
+        add(CommonMaterials.COAL_COKE, "石炭コークス")
         add(CommonMaterials.CRYOLITE, "氷晶石")
         add(CommonMaterials.ELECTRUM, "琥珀金")
         add(CommonMaterials.FLUORITE, "蛍石")

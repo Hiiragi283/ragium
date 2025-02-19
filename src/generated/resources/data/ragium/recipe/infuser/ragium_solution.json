@@ -2,7 +2,7 @@
   "type": "ragium:infuser",
   "fluid_input": {
     "amount": 1000,
-    "tag": "c:lapis_solution"
+    "tag": "c:hydrofluoric_acid"
   },
   "fluid_outputs": [
     {

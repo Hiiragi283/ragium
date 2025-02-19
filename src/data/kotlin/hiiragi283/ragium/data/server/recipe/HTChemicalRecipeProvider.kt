@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.tag.RagiumFluidTags
-import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -17,24 +15,17 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidType
 
 object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerAlkali(output)
-        registerCreeper(output)
         registerDeepant(output)
-        registerEnder(output)
         registerFrozen(output)
         registerGlow(output)
         registerMagical(output)
         registerPrismarine(output)
         registerSculk(output)
         registerWither(output)
-
-        registerSlag(output)
-
-        registerUranium(output)
     }
 
     private fun registerAlkali(output: RecipeOutput) {
@@ -55,39 +46,8 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(RagiumItems.ALKALI_REAGENT)
-            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, FluidType.BUCKET_VOLUME * 4)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, 1000)
             .itemOutput(RagiumItems.SOAP, 8)
-            .save(output)
-    }
-
-    private fun registerCreeper(output: RecipeOutput) {
-        // Creeper Reagent
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Tags.Items.GUNPOWDERS)
-            .itemOutput(RagiumItems.CREEPER_REAGENT)
-            .saveSuffixed(output, "_from_powder")
-        // Nitration
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(RagiumItems.CREEPER_REAGENT)
-            .fluidInput(RagiumFluidTags.NON_NITRO_FUEL, FluidType.BUCKET_VOLUME * 8)
-            .fluidOutput(RagiumVirtualFluids.NITRO_FUEL, FluidType.BUCKET_VOLUME * 8)
-            .save(output)
-
-        HTMultiItemRecipeBuilder
-            .assembler()
-            .itemInput(Tags.Items.STRINGS, 4)
-            .itemInput(Items.PAPER, 4)
-            .itemInput(RagiumItems.CREEPER_REAGENT)
-            .itemOutput(RagiumItems.DYNAMITE, 8)
-            .save(output)
-
-        HTMultiItemRecipeBuilder
-            .assembler()
-            .itemInput(Tags.Items.SANDS, 4)
-            .itemInput(RagiumItems.CREEPER_REAGENT)
-            .itemOutput(Items.TNT, 4)
             .save(output)
     }
 
@@ -106,32 +66,12 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
     }
 
-    private fun registerEnder(output: RecipeOutput) {
-        // Ender Reagent
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Tags.Items.ENDER_PEARLS)
-            .itemOutput(RagiumItems.ENDER_REAGENT)
-            .saveSuffixed(output, "_from_pearl")
-
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Items.ENDER_EYE)
-            .itemOutput(RagiumItems.ENDER_REAGENT, 2)
-            .saveSuffixed(output, "_from_eye")
-
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Items.END_CRYSTAL)
-            .itemOutput(RagiumItems.ENDER_REAGENT, 4)
-            .saveSuffixed(output, "_from_crystal")
-    }
-
     private fun registerFrozen(output: RecipeOutput) {
         // Snow Block -> 4x Snow Ball
         HTSingleItemRecipeBuilder
-            .grinder()
+            .compressor()
             .itemInput(Items.SNOW_BLOCK)
+            .catalyst(RagiumItems.BALL_PRESS_MOLD)
             .itemOutput(Items.SNOWBALL, 4)
             .saveSuffixed(output, "_from_block")
 
@@ -336,31 +276,5 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .requires(RagiumItems.WITHER_REAGENT)
             .unlockedBy("has_reagent", has(RagiumItems.WITHER_REAGENT))
             .savePrefixed(output)
-    }
-
-    private fun registerSlag(output: RecipeOutput) {
-        // Slag -> Gravel
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(RagiumItemTags.SLAG)
-            .itemOutput(Items.GRAVEL)
-            .saveSuffixed(output, "_from_slag")
-    }
-
-    private fun registerUranium(output: RecipeOutput) {
-        // Poisonous Potato + H2SO4 -> Yellow Cake
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(Items.POISONOUS_POTATO, 8)
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag, FluidType.BUCKET_VOLUME * 8)
-            .itemOutput(RagiumItems.YELLOW_CAKE)
-            .save(output)
-        // Cutting Yellow Cake
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, RagiumItems.YELLOW_CAKE_PIECE, 8)
-            .requires(RagiumItems.YELLOW_CAKE)
-            .unlockedBy("has_cake", has(RagiumItems.YELLOW_CAKE))
-            .savePrefixed(output)
-        // Catastrophic Fuel
     }
 }

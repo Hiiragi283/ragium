@@ -1,0 +1,17 @@
+{
+  "type": "ragium:mixer",
+  "first_fluidInput": {
+    "amount": 100,
+    "tag": "c:glycerol"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 100,
+      "id": "ragium:nitroglycerin"
+    }
+  ],
+  "second_fluidInput": {
+    "amount": 300,
+    "tag": "c:mixture_acid"
+  }
+}

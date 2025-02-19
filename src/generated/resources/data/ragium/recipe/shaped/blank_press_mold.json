@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/steel"
+    },
+    "B": {
+      "item": "ragium:forge_hammer"
+    }
+  },
+  "pattern": [
+    "AA",
+    "AA",
+    "B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:blank_press_mold"
+  }
+}

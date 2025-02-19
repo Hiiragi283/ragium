@@ -75,6 +75,7 @@ internal object RagiumModEvents {
         event.register(CommonMaterials.CADMIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.CARBON, HTMaterialType.DUST)
         event.register(CommonMaterials.CHROMIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.COAL_COKE, HTMaterialType.GEM)
         event.register(CommonMaterials.CRYOLITE, HTMaterialType.GEM)
         event.register(CommonMaterials.ELECTRUM, HTMaterialType.ALLOY)
         event.register(CommonMaterials.FLUORITE, HTMaterialType.GEM)

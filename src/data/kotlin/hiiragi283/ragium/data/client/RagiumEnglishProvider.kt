@@ -103,11 +103,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumVirtualFluids.AMMONIA, "Ammonia")
         addFluid(RagiumVirtualFluids.NITRIC_ACID, "Nitric Acid")
+        addFluid(RagiumVirtualFluids.MIXTURE_ACID, "Mixture Acid")
 
         addFluid(RagiumVirtualFluids.OXYGEN, "Oxygen")
         addFluid(RagiumVirtualFluids.ROCKET_FUEL, "Rocket Fuel")
 
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
+
+        addFluid(RagiumVirtualFluids.ALKALI_SOLUTION, "Alkali Solution")
 
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
@@ -120,13 +123,16 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.PLANT_OIL, "Plant Oil")
         addFluid(RagiumVirtualFluids.BIOMASS, "Biomass")
         addFluid(RagiumVirtualFluids.ETHANOL, "Ethanol")
+
+        addFluid(RagiumVirtualFluids.CRUDE_BIODIESEL, "Crude Biodiesel")
         addFluid(RagiumVirtualFluids.BIODIESEL, "Biodiesel")
+        addFluid(RagiumVirtualFluids.GLYCEROL, "Glycerol")
+        addFluid(RagiumVirtualFluids.NITROGLYCERIN, "Nitroglycerin")
 
         addFluid(RagiumVirtualFluids.SAP, "Sap")
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "Warped Sap")
 
-        addFluid(RagiumVirtualFluids.LAPIS_SOLUTION, "Lapis Solution")
         addFluid(RagiumVirtualFluids.LIQUID_GLOW, "Liquid Glow")
         addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "Ragium Solution")
         // Items
@@ -170,6 +176,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
         addItem(RagiumItems.ULTIMATE_CIRCUIT, "Ultimate Circuit")
 
+        addItem(RagiumItems.BLANK_PRESS_MOLD, "Press Mold (Blank)")
+        addItem(RagiumItems.BALL_PRESS_MOLD, "Press Mold (Ball)")
         addItem(RagiumItems.getPressMold(HTTagPrefix.GEAR), "Press Mold (Gear)")
         addItem(RagiumItems.getPressMold(HTTagPrefix.PLATE), "Press Mold (Plate)")
         addItem(RagiumItems.getPressMold(HTTagPrefix.ROD), "Press Mold (Rod)")
@@ -181,9 +189,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MAGICAL_LENS, "Magical Lens")
 
         addItem(RagiumItems.ALKALI_REAGENT, "Alkali Reagent")
-        addItem(RagiumItems.CREEPER_REAGENT, "Creeper Reagent")
         addItem(RagiumItems.DEEPANT_REAGENT, "Deepant Reagent")
-        addItem(RagiumItems.ENDER_REAGENT, "Ender Reagent")
         addItem(RagiumItems.FROZEN_REAGENT, "Frozen Reagent")
         addItem(RagiumItems.MAGICAL_REAGENT, "Magical Reagent")
         addItem(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
@@ -293,6 +299,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(CommonMaterials.CADMIUM, "Cadmium")
         add(CommonMaterials.CARBON, "Carbon")
         add(CommonMaterials.CHROMIUM, "Chromium")
+        add(CommonMaterials.COAL_COKE, "Coal Coke")
         add(CommonMaterials.CRYOLITE, "Cryolite")
         add(CommonMaterials.ELECTRUM, "Electrum")
         add(CommonMaterials.FLUORITE, "Fluorite")

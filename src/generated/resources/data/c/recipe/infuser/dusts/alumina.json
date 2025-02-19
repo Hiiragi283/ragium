@@ -2,7 +2,7 @@
   "type": "ragium:infuser",
   "fluid_input": {
     "amount": 1000,
-    "tag": "c:lapis_solution"
+    "tag": "c:alkali_solution"
   },
   "fluid_outputs": [
     {

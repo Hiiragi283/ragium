@@ -1,0 +1,17 @@
+{
+  "type": "ragium:refinery",
+  "fluid_input": {
+    "amount": 100,
+    "tag": "c:crude_oil"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 30,
+      "id": "ragium:aromatic_compound"
+    },
+    {
+      "amount": 60,
+      "id": "ragium:naphtha"
+    }
+  ]
+}

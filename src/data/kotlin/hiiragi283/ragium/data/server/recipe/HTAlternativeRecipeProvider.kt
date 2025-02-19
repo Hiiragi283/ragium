@@ -37,7 +37,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
         skull(RagiumItems.WITHER_REAGENT, Items.WITHER_SKELETON_SKULL)
         skull(Items.GOLDEN_APPLE, Items.PLAYER_HEAD)
         skull(Items.ROTTEN_FLESH, Items.ZOMBIE_HEAD)
-        skull(RagiumItems.CREEPER_REAGENT, Items.CREEPER_HEAD)
+        skull(Items.GUNPOWDER, Items.CREEPER_HEAD)
         skull(Items.GILDED_BLACKSTONE, Items.PIGLIN_HEAD)
 
         // Blaze Powder

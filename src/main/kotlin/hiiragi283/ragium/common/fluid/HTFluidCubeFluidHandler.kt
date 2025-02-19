@@ -35,22 +35,28 @@ class HTFluidCubeFluidHandler(private var container: ItemStack, context: Void?) 
         if (container.count != 1) return 0
         if (resource.amount < FluidType.BUCKET_VOLUME) return 0
         if (!getFluidStack().isEmpty) return 0
-        if (action.execute()) {
+        val fluidCube: ItemStack = getFluidCube(resource)
+        if (!fluidCube.isEmpty) {
+            if (action.execute()) {
+                container = fluidCube
+            }
+            return FluidType.BUCKET_VOLUME
         }
-        return FluidType.BUCKET_VOLUME
+
+        return 0
     }
 
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
         if (container.count != 1) return FluidStack.EMPTY
         if (resource.amount < FluidType.BUCKET_VOLUME) return FluidStack.EMPTY
-        val stack: FluidStack = getFluidInTank(0)
+        val stack: FluidStack = getFluidStack()
         if (!stack.isEmpty && FluidStack.isSameFluidSameComponents(stack, resource)) {
             val fluidCube: ItemStack = getFluidCube(stack)
             if (!fluidCube.isEmpty) {
                 if (action.execute()) {
                     container = fluidCube
                 }
-                return resource
+                return stack
             } else {
                 return FluidStack.EMPTY
             }
@@ -61,7 +67,7 @@ class HTFluidCubeFluidHandler(private var container: ItemStack, context: Void?) 
     override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack {
         if (container.count != 1) return FluidStack.EMPTY
         if (maxDrain < FluidType.BUCKET_VOLUME) return FluidStack.EMPTY
-        val stack: FluidStack = getFluidInTank(0)
+        val stack: FluidStack = getFluidStack()
         if (!stack.isEmpty) {
             if (action.execute()) {
                 container = ItemStack(RagiumItems.EMPTY_FLUID_CUBE.get())

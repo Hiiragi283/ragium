@@ -1,7 +1,7 @@
 {
   "type": "ragium:infuser",
   "fluid_input": {
-    "amount": 4000,
+    "amount": 1000,
     "tag": "c:plant_oil"
   },
   "item_input": {

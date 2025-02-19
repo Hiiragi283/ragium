@@ -40,7 +40,6 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidType
 import java.util.*
 
 object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
@@ -170,6 +169,13 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .itemInput(HTTagPrefix.DUST, CommonMaterials.WOOD)
             .catalyst(ItemTags.PLANKS)
             .itemOutput(Items.OAK_PLANKS)
+            .save(output)
+        // Clay -> 4x Clay Ball
+        HTSingleItemRecipeBuilder
+            .compressor()
+            .itemInput(Items.CLAY)
+            .catalyst(RagiumItems.BALL_PRESS_MOLD)
+            .itemOutput(Items.CLAY_BALL, 4)
             .save(output)
     }
 
@@ -345,21 +351,22 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         // Coal -> Crude Oil
         HTFluidOutputRecipeBuilder
             .extractor()
-            .itemInput(ItemTags.COALS, 8)
-            .fluidOutput(RagiumFluids.CRUDE_OIL)
+            .itemInput(ItemTags.COALS)
+            .fluidOutput(RagiumFluids.CRUDE_OIL, 125)
             .save(output, RagiumAPI.id("crude_oil_from_coal"))
         // Soul XX -> Crude Oil
         HTFluidOutputRecipeBuilder
             .extractor()
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .itemOutput(Items.SAND)
-            .fluidOutput(RagiumFluids.CRUDE_OIL, FluidType.BUCKET_VOLUME / 2)
+            .fluidOutput(RagiumFluids.CRUDE_OIL, 250)
             .save(output, RagiumAPI.id("crude_oil_from_soul"))
-        // Crude Oil -> Naphtha
+        // Crude Oil -> Naphtha + Aromatic Compound
         HTFluidOutputRecipeBuilder
             .refinery()
-            .fluidInput(RagiumFluids.CRUDE_OIL)
-            .fluidOutput(RagiumVirtualFluids.NAPHTHA)
+            .fluidInput(RagiumFluids.CRUDE_OIL, 100)
+            .fluidOutput(RagiumVirtualFluids.AROMATIC_COMPOUND, 30)
+            .fluidOutput(RagiumVirtualFluids.NAPHTHA, 60)
             .save(output)
         // Naphtha -> Polymer Resin + Fuel
         HTFluidOutputRecipeBuilder
@@ -390,12 +397,26 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidInput(RagiumVirtualFluids.BIOMASS.commonTag)
             .fluidOutput(RagiumVirtualFluids.ETHANOL)
             .save(output)
-        // Alcohol + Plant Oil -> Bio Fuel + Glycerol
+        // Alcohol + Plant Oil -> Crude Biodiesel
         HTFluidOutputRecipeBuilder
             .mixer()
-            .fluidInput(RagiumVirtualFluids.ETHANOL.commonTag, FluidType.BUCKET_VOLUME * 4)
-            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag)
-            .fluidOutput(RagiumVirtualFluids.BIODIESEL, FluidType.BUCKET_VOLUME * 4)
+            .fluidInput(RagiumVirtualFluids.ETHANOL.commonTag, 400)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, 100)
+            .fluidOutput(RagiumVirtualFluids.CRUDE_BIODIESEL, 500)
+            .save(output)
+        // Crude Biodiesel -> Biodiesel + Glycerin
+        HTFluidOutputRecipeBuilder
+            .refinery()
+            .fluidInput(RagiumVirtualFluids.CRUDE_BIODIESEL.commonTag, 500)
+            .fluidOutput(RagiumVirtualFluids.BIODIESEL, 400)
+            .fluidOutput(RagiumVirtualFluids.GLYCEROL, 100)
+            .save(output)
+        // Glycerin + Mixture Acid
+        HTFluidOutputRecipeBuilder
+            .mixer()
+            .fluidInput(RagiumVirtualFluids.GLYCEROL.commonTag, 100)
+            .fluidInput(RagiumVirtualFluids.MIXTURE_ACID.commonTag, 300)
+            .fluidOutput(RagiumVirtualFluids.NITROGLYCERIN, 100)
             .save(output)
 
         // XX Log -> Pulp + Sap

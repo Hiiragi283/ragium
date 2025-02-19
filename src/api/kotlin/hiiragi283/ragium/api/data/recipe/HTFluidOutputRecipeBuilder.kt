@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import java.util.Optional
 
 class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
     override val prefix: String,
@@ -70,6 +71,7 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
                 group,
                 fluidInputs[0],
                 fluidInputs[1],
+                Optional.ofNullable(itemInputs.getOrNull(0)),
                 itemOutputs,
                 fluidOutputs,
             )

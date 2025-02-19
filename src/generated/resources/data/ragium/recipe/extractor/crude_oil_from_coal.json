@@ -2,12 +2,11 @@
   "type": "ragium:extractor",
   "fluid_outputs": [
     {
-      "amount": 1000,
+      "amount": 125,
       "id": "ragium:crude_oil"
     }
   ],
   "item_input": {
-    "count": 8,
     "tag": "minecraft:coals"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "type": "ragium:mixer",
+  "first_fluidInput": {
+    "amount": 400,
+    "tag": "c:ethanol"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 500,
+      "id": "ragium:crude_biodiesel"
+    }
+  ],
+  "second_fluidInput": {
+    "amount": 100,
+    "tag": "c:plant_oil"
+  }
+}

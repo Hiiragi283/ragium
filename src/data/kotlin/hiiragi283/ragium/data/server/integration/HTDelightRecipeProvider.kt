@@ -13,7 +13,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
-import net.neoforged.neoforge.fluids.FluidType
 import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
@@ -65,7 +64,7 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(Items.GLASS_BOTTLE)
-            .milkInput(FluidType.BUCKET_VOLUME / 4)
+            .milkInput(250)
             .itemOutput(ModItems.MILK_BOTTLE.get())
             .save(output)
 
@@ -73,7 +72,7 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
             .extractor()
             .itemInput(ModItems.MILK_BOTTLE.get())
             .itemOutput(Items.GLASS_BOTTLE)
-            .fluidOutput(NeoForgeMod.MILK, FluidType.BUCKET_VOLUME / 4)
+            .fluidOutput(NeoForgeMod.MILK, 250)
             .save(output, RagiumAPI.id("milk_from_bottle"))
 
         // Growth

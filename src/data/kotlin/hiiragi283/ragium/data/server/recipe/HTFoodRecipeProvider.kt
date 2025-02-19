@@ -18,7 +18,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidType
 
 object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -94,7 +93,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(RagiumItems.CHOCOLATE, 64)
-            .fluidInput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME * 64)
+            .fluidInput(RagiumFluids.HONEY, 1000 * 64)
             .itemOutput(RagiumItems.AMBROSIA)
             .save(output)
     }
@@ -111,13 +110,13 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .extractor()
             .itemInput(Items.HONEY_BOTTLE)
             .itemOutput(Items.GLASS_BOTTLE)
-            .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
+            .fluidOutput(RagiumFluids.HONEY, 250)
             .saveSuffixed(output, "_from_bottle")
 
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(Items.GLASS_BOTTLE)
-            .fluidInput(Tags.Fluids.HONEY, FluidType.BUCKET_VOLUME / 4)
+            .fluidInput(Tags.Fluids.HONEY, 250)
             .itemOutput(Items.HONEY_BOTTLE)
             .save(output)
 
@@ -139,7 +138,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             .extractor()
             .itemInput(Items.HONEYCOMB)
             .itemOutput(RagiumItems.BEE_WAX)
-            .fluidOutput(RagiumFluids.HONEY, FluidType.BUCKET_VOLUME / 4)
+            .fluidOutput(RagiumFluids.HONEY, 250)
             .saveSuffixed(output, "_from_comb")
     }
 
@@ -220,7 +219,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(RagiumBlocks.SPONGE_CAKE)
-            .milkInput(FluidType.BUCKET_VOLUME * 3)
+            .milkInput()
             .itemOutput(Items.CAKE)
             .saveSuffixed(output, "_with_sponge_cake")
     }
@@ -252,9 +251,9 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
         // Dough
         HTFluidOutputRecipeBuilder
             .infuser()
-            .itemInput(RagiumItems.FLOUR, 3)
-            .waterInput()
-            .itemOutput(RagiumItems.DOUGH, 3)
+            .itemInput(RagiumItems.FLOUR)
+            .waterInput(250)
+            .itemOutput(RagiumItems.DOUGH)
             .save(output)
         // Bread
         HTCookingRecipeBuilder

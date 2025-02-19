@@ -82,6 +82,8 @@ object RagiumCreativeTabs {
 
                     output.accept(RagiumItems.ALUMINUM_CAN)
 
+                    output.accept(RagiumItems.BLANK_PRESS_MOLD)
+                    output.accept(RagiumItems.BALL_PRESS_MOLD)
                     RagiumItems.PRESS_MOLDS.values.forEach(output::accept)
 
                     output.accept(RagiumItems.REDSTONE_LENS)

@@ -2,6 +2,8 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
+import hiiragi283.ragium.api.extension.blockTagKey
+import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -69,7 +71,14 @@ class RagiumBlockTagProvider(
         RagiumBlocks.RAGI_BRICK_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
         RagiumBlocks.PLASTIC_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
         // Common
-        RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
+            when (variant) {
+                HTOreVariant.OVERWORLD -> Tags.Blocks.ORES_IN_GROUND_STONE
+                HTOreVariant.DEEPSLATE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
+                HTOreVariant.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
+                HTOreVariant.END -> blockTagKey(commonId("ores_in_ground/end_stone"))
+            }?.let { builder.add(it, ore) }
+
             val oreTagKey: TagKey<Block> = HTTagPrefix.ORE.createBlockTag(key) ?: return@forEach
             builder.addTag(Tags.Blocks.ORES, oreTagKey)
             builder.add(oreTagKey, ore)
@@ -99,16 +108,6 @@ class RagiumBlockTagProvider(
         builder.add(ModTags.HEAT_SOURCES, RagiumBlocks.MAGMA_BURNER)
         builder.add(ModTags.HEAT_SOURCES, RagiumBlocks.SOUL_BURNER)
         builder.add(ModTags.HEAT_SOURCES, RagiumBlocks.FIERY_BURNER)
-
-        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, _, ore: DeferredBlock<out Block>) ->
-            builder.add(Tags.Blocks.ORES, ore)
-            when (variant) {
-                HTOreVariant.OVERWORLD -> Tags.Blocks.ORES_IN_GROUND_STONE
-                HTOreVariant.DEEPSLATE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
-                HTOreVariant.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
-                HTOreVariant.END -> null
-            }?.let { builder.add(it, ore) }
-        }
 
         builder.build { tagKey: TagKey<Block>, entry: TagEntry ->
             tag(tagKey).add(entry)

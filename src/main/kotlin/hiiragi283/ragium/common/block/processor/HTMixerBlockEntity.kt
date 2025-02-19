@@ -66,6 +66,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         // Insert outputs
         recipe.insertOutputs(enchantments, itemOutput, outputTank, level, pos)
         // Decrement input
+        // TODO
         firstTank.drain(recipe.firstFluid.amount(), IFluidHandler.FluidAction.EXECUTE)
         secondTank.drain(recipe.secondFluid.amount(), IFluidHandler.FluidAction.EXECUTE)
     }

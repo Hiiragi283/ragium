@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data.server
 
 import aztech.modern_industrialization.items.ForgeTool
+import aztech.modern_industrialization.materials.MIMaterials
+import aztech.modern_industrialization.materials.part.MIParts
 import blusunrize.immersiveengineering.api.wires.WireType
 import blusunrize.immersiveengineering.common.register.IEItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -87,9 +89,12 @@ class RagiumItemTagProvider(
             }
         }
 
+        builder.addTag(HTTagPrefix.GEM.createTag(CommonMaterials.COAL_COKE), RagiumItemTags.COAL_COKE, true)
+
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IEItems.Misc.WIRE_COILS[WireType.STEEL])
         addMaterialTag(HTTagPrefix.COIL, VanillaMaterials.COPPER, IEItems.Misc.WIRE_COILS[WireType.COPPER])
+        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, MIMaterials.COKE.getPart(MIParts.GEM), false)
         addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP, false)
 
         addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem_crushed")
@@ -173,6 +178,7 @@ class RagiumItemTagProvider(
 
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
 
+        builder.add(RagiumItemTags.BALL_MOLDS, RagiumItems.BALL_PRESS_MOLD)
         builder.add(RagiumItemTags.GEAR_MOLDS, IEItems.Molds.MOLD_GEAR.asHolder(), true)
         builder.add(RagiumItemTags.GEAR_MOLDS, RagiumItems.getPressMold(HTTagPrefix.GEAR))
         builder.add(RagiumItemTags.PLATE_MOLDS, IEItems.Molds.MOLD_PLATE.asHolder(), true)

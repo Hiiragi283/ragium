@@ -45,6 +45,9 @@ object RagiumItemTags {
     val LED_BLOCKS: TagKey<Item> = itemTagKey(RagiumAPI.id("led_blocks"))
 
     @JvmField
+    val BALL_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/ball"))
+
+    @JvmField
     val GEAR_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/gear"))
 
     @JvmField

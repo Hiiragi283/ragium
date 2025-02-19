@@ -1,0 +1,19 @@
+{
+  "type": "ragium:mixer",
+  "first_fluidInput": {
+    "amount": 6000,
+    "tag": "c:hydrofluoric_acid"
+  },
+  "item_input": {
+    "tag": "c:dusts/aluminum"
+  },
+  "item_outputs": [
+    {
+      "tag": "c:gems/cryolite"
+    }
+  ],
+  "second_fluidInput": {
+    "amount": 3000,
+    "tag": "c:alkali_solution"
+  }
+}

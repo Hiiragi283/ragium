@@ -1,0 +1,16 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 250,
+    "tag": "c:aromatic_compound"
+  },
+  "item_input": {
+    "tag": "c:sands"
+  },
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:tnt"
+    }
+  ]
+}

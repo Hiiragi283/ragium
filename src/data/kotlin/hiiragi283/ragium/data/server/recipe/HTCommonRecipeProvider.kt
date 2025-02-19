@@ -18,6 +18,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
+import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -30,14 +31,12 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredItem
 
 object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerRaginite(output)
         registerSteels(output)
-        registerAluminum(output)
         registerRagium(output)
 
         registerCircuits(output)
@@ -101,7 +100,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         HTMultiItemRecipeBuilder
             .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .itemInput(RagiumItemTags.COAL_COKE)
+            .itemInput(HTTagPrefix.GEM, CommonMaterials.COAL_COKE)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .saveSuffixed(output, "_with_coke")
         // Deep Steel
@@ -113,66 +112,19 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
     }
 
-    private fun registerAluminum(output: RecipeOutput) {
-        // Lapis + Water -> Lapis Solution
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.LAPIS)
-            .waterInput()
-            .fluidOutput(RagiumVirtualFluids.LAPIS_SOLUTION)
-            .save(output)
-
-        // 8x Netherrack -> 6x Bauxite + 2x Sulfur
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Items.NETHERRACK, 8)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 4)
-            .save(output)
-        // Bauxite + Lapis solution -> Alumina + Water
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
-            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION.commonTag)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
-            .waterOutput()
-            .save(output)
-        // Alumina + 4x Coal -> Aluminum Ingot
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
-            .itemInput(ItemTags.COALS, 4)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-            .saveSuffixed(output, "_with_coal")
-
-        // Al + HF -> Cryolite
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
-            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID.commonTag, FluidType.BUCKET_VOLUME * 6)
-            .itemOutput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
-            .save(output)
-        // Alumina + Cryolite -> 3x Aluminum Ingot
-        HTMultiItemRecipeBuilder
-            .blastFurnace()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
-            .itemInput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 3)
-            .saveSuffixed(output, "_with_cryolite")
-    }
-
     private fun registerRagium(output: RecipeOutput) {
         // Ragium
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 8)
-            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION.commonTag, FluidType.BUCKET_VOLUME)
+            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID.commonTag, 1000)
             .fluidOutput(RagiumVirtualFluids.RAGIUM_SOLUTION)
             .save(output)
 
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, FluidType.BUCKET_VOLUME * 8)
+            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, 8000)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .save(output)
 
@@ -195,7 +147,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(Items.PAPER)
-            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, FluidType.BUCKET_VOLUME / 8)
+            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, 125)
             .itemOutput(RagiumItems.RAGI_TICKET)
             .save(output)
     }
@@ -270,19 +222,27 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerPressMolds(output: RecipeOutput) {
-        fun register(entry: Map.Entry<HTTagPrefix, ItemLike>) {
-            val (prefix: HTTagPrefix, pressMold: ItemLike) = entry
-            HTShapedRecipeBuilder(pressMold)
-                .pattern("AA")
-                .pattern("AA")
-                .pattern("BC")
-                .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-                .define('B', RagiumItems.FORGE_HAMMER)
-                .define('C', prefix.commonTagKey)
-                .save(output)
+        fun register(mold: ItemLike) {
+            SingleItemRecipeBuilder
+                .stonecutting(
+                    Ingredient.of(RagiumItems.BLANK_PRESS_MOLD),
+                    RecipeCategory.MISC,
+                    mold,
+                ).unlockedBy("has_steel", has(RagiumItems.BLANK_PRESS_MOLD))
+                .savePrefixed(output)
         }
 
-        RagiumItems.PRESS_MOLDS.forEach(::register)
+        HTShapedRecipeBuilder(RagiumItems.BLANK_PRESS_MOLD)
+            .pattern(
+                "AA",
+                "AA",
+                "B ",
+            ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .save(output)
+
+        register(RagiumItems.BALL_PRESS_MOLD)
+        RagiumItems.PRESS_MOLDS.values.forEach(::register)
     }
 
     private fun registerLens(output: RecipeOutput) {

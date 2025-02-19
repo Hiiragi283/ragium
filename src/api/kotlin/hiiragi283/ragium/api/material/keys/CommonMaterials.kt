@@ -23,6 +23,9 @@ object CommonMaterials {
     //    Gem    //
 
     @JvmField
+    val COAL_COKE: HTMaterialKey = HTMaterialKey.of("coal_coke")
+
+    @JvmField
     val CRYOLITE: HTMaterialKey = HTMaterialKey.of("cryolite")
 
     @JvmField

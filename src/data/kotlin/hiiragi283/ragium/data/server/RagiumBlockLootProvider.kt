@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -38,7 +39,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             val prefix: HTTagPrefix = when (key) {
                 RagiumMaterials.RAGINITE -> HTTagPrefix.RAW_MATERIAL
                 RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
-                else -> return@forEach
+                CommonMaterials.COAL_COKE -> HTTagPrefix.GEM
+                else -> error("Undefined material: $key")
             }
             val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, key)
             add(ore.get()) { block: Block -> createOreDrop(block, rawMaterial.asItem()) }

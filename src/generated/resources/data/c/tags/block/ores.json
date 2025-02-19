@@ -1,14 +1,7 @@
 {
   "values": [
-    "ragium:deepslate_ragi_crystal_ore",
-    "ragium:deepslate_raginite_ore",
-    "ragium:end_ragi_crystal_ore",
-    "ragium:end_raginite_ore",
-    "ragium:nether_ragi_crystal_ore",
-    "ragium:nether_raginite_ore",
+    "#c:ores/coal_coke",
     "#c:ores/ragi_crystal",
-    "#c:ores/raginite",
-    "ragium:ragi_crystal_ore",
-    "ragium:raginite_ore"
+    "#c:ores/raginite"
   ]
 }

@@ -9,11 +9,13 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import java.util.Optional
 
 class HTMixerRecipe(
     group: String,
     val firstFluid: SizedFluidIngredient,
     val secondFluid: SizedFluidIngredient,
+    val itemInput: Optional<HTItemIngredient>,
     itemOutputs: List<HTItemOutput>,
     fluidOutputs: List<HTFluidOutput>,
 ) : HTFluidOutputRecipe(group, itemOutputs, fluidOutputs) {
@@ -30,6 +32,7 @@ class HTMixerRecipe(
                         SizedFluidIngredient.FLAT_CODEC
                             .fieldOf("second_fluidInput")
                             .forGetter(HTMixerRecipe::secondFluid),
+                        HTItemIngredient.CODEC.optionalFieldOf("item_input").forGetter(HTMixerRecipe::itemInput),
                         HTRecipeCodecs.itemOutputs(0, 1),
                         HTRecipeCodecs.fluidOutputs(0, 1),
                     ).apply(instance, ::HTMixerRecipe)
@@ -43,6 +46,8 @@ class HTMixerRecipe(
             HTMixerRecipe::firstFluid,
             SizedFluidIngredient.STREAM_CODEC,
             HTMixerRecipe::secondFluid,
+            ByteBufCodecs.optional(HTItemIngredient.STREAM_CODEC),
+            HTMixerRecipe::itemInput,
             HTItemOutput.STREAM_CODEC.toList(),
             HTMixerRecipe::itemOutputs,
             HTFluidOutput.STREAM_CODEC.toList(),
@@ -51,8 +56,12 @@ class HTMixerRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean =
-        firstFluid.test(input.getFluid(0)) && secondFluid.test(input.getFluid(1))
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
+        val bool1: Boolean = firstFluid.test(input.getFluid(0))
+        val bool2: Boolean = secondFluid.test(input.getFluid(1))
+        val bool3: Boolean = itemInput.map { it.test(input.getItem(0)) }.orElse(true)
+        return bool1 && bool2 && bool3
+    }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.MIXER
 }

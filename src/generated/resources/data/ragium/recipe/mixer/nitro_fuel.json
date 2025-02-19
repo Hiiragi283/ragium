@@ -1,0 +1,17 @@
+{
+  "type": "ragium:mixer",
+  "first_fluidInput": {
+    "amount": 800,
+    "tag": "ragium:fuels/non_nitro"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 800,
+      "id": "ragium:nitro_fuel"
+    }
+  ],
+  "second_fluidInput": {
+    "amount": 100,
+    "tag": "c:mixture_acid"
+  }
+}

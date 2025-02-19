@@ -1,0 +1,16 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 125,
+    "tag": "c:nitroglycerin"
+  },
+  "item_input": {
+    "item": "minecraft:paper"
+  },
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:dynamite"
+    }
+  ]
+}
