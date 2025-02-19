@@ -111,13 +111,5 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
             .define('B', RagiumItems.FORGE_HAMMER)
             .unlockedBy("has_rod", has(HTTagPrefix.ROD, VanillaMaterials.COPPER))
             .save(output, RagiumAPI.id("shaped/copper_grate"))*/
-
-        // Obsidian
-        HTFluidOutputRecipeBuilder
-            .mixer()
-            .waterInput()
-            .fluidInput(Tags.Fluids.LAVA)
-            .itemOutput(Items.OBSIDIAN)
-            .save(output)
     }
 }

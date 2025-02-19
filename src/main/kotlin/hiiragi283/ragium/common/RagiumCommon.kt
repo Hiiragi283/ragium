@@ -36,6 +36,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumItems.REGISTER.register(eventBus)
 
+        RagiumArmorMaterials.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)

@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.*
 import hiiragi283.ragium.common.block.processor.*
+import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -137,6 +138,10 @@ object RagiumBlockEntityTypes {
         register("refinery", ::HTRefineryBlockEntity, HTMachineType.REFINERY)
 
     //    Storage    //
+
+    @JvmField
+    val CRATE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCrateBlockEntity>> =
+        register("crate", ::HTCrateBlockEntity, RagiumBlocks.IRON_CRATE)
 
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =

@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
+import hiiragi283.ragium.common.fluid.HTDivingGoggleFluidHandler
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -28,6 +29,7 @@ import net.minecraft.world.item.*
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
@@ -43,6 +45,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.NewRegistryEvent
@@ -220,6 +223,7 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
         registerHandlers(RagiumBlockEntityTypes.REFINERY)
 
+        registerHandlers(RagiumBlockEntityTypes.CRATE)
         registerHandlers(RagiumBlockEntityTypes.DRUM)
         registerHandlers(RagiumBlockEntityTypes.SLAG_COLLECTOR)
 
@@ -237,19 +241,25 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            { stack: ItemStack, _: Void? ->
-                val enchLevel: Int =
-                    stack.getLevel(RagiumAPI.getInstance().getCurrentLookup(), RagiumEnchantments.CAPACITY)
-                FluidHandlerItemStack(
-                    RagiumComponentTypes.FLUID_CONTENT,
-                    stack,
-                    RagiumAPI.getInstance().getTankCapacityWithEnch(enchLevel),
-                )
-            },
-            RagiumBlocks.COPPER_DRUM,
-        )
+        fun registerFluid(vararg items: ItemLike, transform: (ItemStack, Int) -> IFluidHandlerItem?) {
+            event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                { stack: ItemStack, _: Void? ->
+                    val enchLevel: Int =
+                        stack.getLevel(RagiumAPI.getInstance().getCurrentLookup(), RagiumEnchantments.CAPACITY)
+                    transform(stack, RagiumAPI.getInstance().getTankCapacityWithEnch(enchLevel))
+                },
+                *items,
+            )
+        }
+
+        registerFluid(RagiumBlocks.COPPER_DRUM) { stack: ItemStack, capacity: Int ->
+            FluidHandlerItemStack(RagiumComponentTypes.FLUID_CONTENT, stack, capacity)
+        }
+
+        registerFluid(RagiumItems.DIVING_GOGGLE) { stack: ItemStack, capacity: Int ->
+            HTDivingGoggleFluidHandler(stack, capacity)
+        }
 
         LOGGER.info("Registered Item Capabilities!")
     }

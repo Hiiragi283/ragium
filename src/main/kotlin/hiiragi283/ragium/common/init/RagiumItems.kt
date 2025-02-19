@@ -230,6 +230,11 @@ object RagiumItems {
         AMBROSIA,
     )
 
+    //    Armors    //
+
+    @JvmField
+    val DIVING_GOGGLE: DeferredItem<HTDivingGoggleItem> = register("diving_goggles", ::HTDivingGoggleItem)
+
     //    Tools    //
 
     @JvmField

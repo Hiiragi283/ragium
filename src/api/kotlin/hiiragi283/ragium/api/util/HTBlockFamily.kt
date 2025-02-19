@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.util
 
-import hiiragi283.ragium.api.extension.simpleBlockItem
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
@@ -71,9 +70,9 @@ class HTBlockFamily(
     fun generateModels(provider: ItemModelProvider) {
         val texId: ResourceLocation = base.id.withPrefix("block/")
 
-        provider.simpleBlockItem(base)
-        provider.simpleBlockItem(stairs)
-        provider.simpleBlockItem(slab)
+        provider.simpleBlockItem(base.id)
+        provider.simpleBlockItem(stairs.id)
+        provider.simpleBlockItem(slab.id)
 
         provider
             .withExistingParent("${prefix}_wall", ResourceLocation.withDefaultNamespace("block/wall_inventory"))

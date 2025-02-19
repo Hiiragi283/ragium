@@ -66,6 +66,8 @@ object RagiumCreativeTabs {
                     output.accept(RagiumBlocks.SPONGE_CAKE)
                     output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
                     RagiumItems.FOODS.forEach(output::accept)
+                    // Armors
+                    output.accept(RagiumItems.DIVING_GOGGLE)
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
                     output.accept(RagiumItems.FEVER_PICKAXE)
@@ -110,6 +112,7 @@ object RagiumCreativeTabs {
 
                     RagiumItems.REAGENTS.forEach(output::accept)
                     // Storage
+                    output.accept(RagiumBlocks.IRON_CRATE)
                     output.accept(RagiumBlocks.COPPER_DRUM)
                     // Manual Machines
                     output.accept(RagiumBlocks.MANUAL_GRINDER)

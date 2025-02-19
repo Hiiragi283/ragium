@@ -53,6 +53,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         infuser(output)
         growthChamber(output)
         laser(output)
+        mixer(output)
         refinery(output)
         solidifier(output)
     }
@@ -318,6 +319,26 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
     }
 
+    //    Mixer    //
+
+    private fun mixer(output: RecipeOutput) {
+        // Obsidian
+        HTFluidOutputRecipeBuilder
+            .mixer()
+            .waterInput()
+            .fluidInput(Tags.Fluids.LAVA)
+            .itemOutput(Items.OBSIDIAN)
+            .save(output)
+        
+        // Rocket Fuel
+        HTFluidOutputRecipeBuilder
+            .mixer()
+            .fluidInput(RagiumVirtualFluids.HYDROGEN.commonTag, 200)
+            .fluidInput(RagiumVirtualFluids.OXYGEN.commonTag, 100)
+            .fluidOutput(RagiumVirtualFluids.ROCKET_FUEL, 300)
+            .save(output)
+    }
+    
     //    Refinery    //
 
     private fun refinery(output: RecipeOutput) {

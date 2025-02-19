@@ -146,6 +146,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
+        addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
+
         addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
         addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
         addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")

@@ -134,6 +134,8 @@ class RagiumItemTagProvider(
     //    Tool    //
 
     private fun toolTags() {
+        builder.add(ItemTags.HEAD_ARMOR_ENCHANTABLE, RagiumItems.DIVING_GOGGLE)
+
         builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.FORGE_HAMMER)
 
         builder.add(ItemTags.PICKAXES, RagiumItems.FEVER_PICKAXE)

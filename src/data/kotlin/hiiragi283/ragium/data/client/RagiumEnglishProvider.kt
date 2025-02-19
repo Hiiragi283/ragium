@@ -146,6 +146,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
 
+        addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
+
         addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
         addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")

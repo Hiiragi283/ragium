@@ -37,6 +37,13 @@ class RagiumFluidTagProvider(
             builder.add(holder.commonTag, holder)
         }
 
+        RagiumVirtualFluids.entries.forEach { fluid: RagiumVirtualFluids ->
+            // Gaseous Tag
+            if (fluid.textureType == RagiumVirtualFluids.TextureType.GASEOUS) {
+                builder.addTag(Tags.Fluids.GASEOUS, fluid.commonTag)
+            }
+        }
+
         builder.add(RagiumFluids.CRUDE_OIL.commonTag, RagiumFluids.FLOWING_CRUDE_OIL)
 
         builder.addTag(RagiumFluidTags.NITRO_FUEL, commonId("boosted_diesel"), true)

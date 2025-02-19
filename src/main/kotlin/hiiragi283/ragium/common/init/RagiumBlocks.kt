@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
@@ -274,6 +275,16 @@ object RagiumBlocks {
         .build(::HTDisenchantingTableBlock)
 
     //    Storage    //
+
+    @JvmField
+    val IRON_CRATE: DeferredBlock<HTEntityBlock.Horizontal> = Builder("iron_crate")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(2f)
+                .sound(SoundType.COPPER)
+                .requiresCorrectToolForDrops(),
+        ).build { properties: BlockBehaviour.Properties -> HTEntityBlock.horizontal(::HTCrateBlockEntity, properties) }
 
     @JvmField
     val COPPER_DRUM: DeferredBlock<HTEntityBlock> = Builder("copper_drum")
