@@ -176,12 +176,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
         addItem(RagiumItems.ULTIMATE_CIRCUIT, "究極回路")
 
-        addItem(RagiumItems.BLANK_PRESS_MOLD, "プレス型（なし）")
         addItem(RagiumItems.BALL_PRESS_MOLD, "プレス型（ボール）")
-        addItem(RagiumItems.getPressMold(HTTagPrefix.GEAR), "プレス型（歯車）")
-        addItem(RagiumItems.getPressMold(HTTagPrefix.PLATE), "プレス型（板材）")
-        addItem(RagiumItems.getPressMold(HTTagPrefix.ROD), "プレス型（棒材）")
-        addItem(RagiumItems.getPressMold(HTTagPrefix.WIRE), "プレス型（ワイヤー）")
+        addItem(RagiumItems.BLANK_PRESS_MOLD, "プレス型（なし）")
+        addItem(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
+        addItem(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板材）")
+        addItem(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒材）")
+        addItem(RagiumItems.WIRE_PRESS_MOLD, "プレス型（ワイヤー）")
 
         addItem(RagiumItems.REDSTONE_LENS, "レッドストーンレンズ")
         addItem(RagiumItems.GLOW_LENS, "グロウレンズ")

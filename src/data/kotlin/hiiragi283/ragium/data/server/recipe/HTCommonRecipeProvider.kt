@@ -242,7 +242,10 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         register(RagiumItems.BALL_PRESS_MOLD)
-        RagiumItems.PRESS_MOLDS.values.forEach(::register)
+        register(RagiumItems.GEAR_PRESS_MOLD)
+        register(RagiumItems.PLATE_PRESS_MOLD)
+        register(RagiumItems.ROD_PRESS_MOLD)
+        register(RagiumItems.WIRE_PRESS_MOLD)
     }
 
     private fun registerLens(output: RecipeOutput) {

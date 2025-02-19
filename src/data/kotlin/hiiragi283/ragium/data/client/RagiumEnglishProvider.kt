@@ -176,12 +176,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
         addItem(RagiumItems.ULTIMATE_CIRCUIT, "Ultimate Circuit")
 
-        addItem(RagiumItems.BLANK_PRESS_MOLD, "Press Mold (Blank)")
         addItem(RagiumItems.BALL_PRESS_MOLD, "Press Mold (Ball)")
-        addItem(RagiumItems.getPressMold(HTTagPrefix.GEAR), "Press Mold (Gear)")
-        addItem(RagiumItems.getPressMold(HTTagPrefix.PLATE), "Press Mold (Plate)")
-        addItem(RagiumItems.getPressMold(HTTagPrefix.ROD), "Press Mold (Rod)")
-        addItem(RagiumItems.getPressMold(HTTagPrefix.WIRE), "Press Mold (Wire)")
+        addItem(RagiumItems.BLANK_PRESS_MOLD, "Press Mold (Blank)")
+        addItem(RagiumItems.GEAR_PRESS_MOLD, "Press Mold (Gear)")
+        addItem(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
+        addItem(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
+        addItem(RagiumItems.WIRE_PRESS_MOLD, "Press Mold (Wire)")
 
         addItem(RagiumItems.REDSTONE_LENS, "Redstone Lens")
         addItem(RagiumItems.GLOW_LENS, "Glow Lens")

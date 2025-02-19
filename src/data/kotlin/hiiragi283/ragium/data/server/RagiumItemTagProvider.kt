@@ -180,13 +180,13 @@ class RagiumItemTagProvider(
 
         builder.add(RagiumItemTags.BALL_MOLDS, RagiumItems.BALL_PRESS_MOLD)
         builder.add(RagiumItemTags.GEAR_MOLDS, IEItems.Molds.MOLD_GEAR.asHolder(), true)
-        builder.add(RagiumItemTags.GEAR_MOLDS, RagiumItems.getPressMold(HTTagPrefix.GEAR))
+        builder.add(RagiumItemTags.GEAR_MOLDS, RagiumItems.GEAR_PRESS_MOLD)
         builder.add(RagiumItemTags.PLATE_MOLDS, IEItems.Molds.MOLD_PLATE.asHolder(), true)
-        builder.add(RagiumItemTags.PLATE_MOLDS, RagiumItems.getPressMold(HTTagPrefix.PLATE))
+        builder.add(RagiumItemTags.PLATE_MOLDS, RagiumItems.PLATE_PRESS_MOLD)
         builder.add(RagiumItemTags.ROD_MOLDS, IEItems.Molds.MOLD_ROD.asHolder(), true)
-        builder.add(RagiumItemTags.ROD_MOLDS, RagiumItems.getPressMold(HTTagPrefix.ROD))
+        builder.add(RagiumItemTags.ROD_MOLDS, RagiumItems.ROD_PRESS_MOLD)
         builder.add(RagiumItemTags.WIRE_MOLDS, IEItems.Molds.MOLD_WIRE.asHolder(), true)
-        builder.add(RagiumItemTags.WIRE_MOLDS, RagiumItems.getPressMold(HTTagPrefix.WIRE))
+        builder.add(RagiumItemTags.WIRE_MOLDS, RagiumItems.WIRE_PRESS_MOLD)
 
         RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
     }

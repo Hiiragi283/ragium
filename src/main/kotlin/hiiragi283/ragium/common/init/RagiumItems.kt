@@ -318,18 +318,16 @@ object RagiumItems {
     val BALL_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("ball_press_mold", ::HTCatalystItem)
 
     @JvmField
-    val PRESS_MOLDS: Map<HTTagPrefix, DeferredItem<HTCatalystItem>> =
-        listOf(
-            HTTagPrefix.GEAR,
-            HTTagPrefix.PLATE,
-            HTTagPrefix.ROD,
-            HTTagPrefix.WIRE,
-        ).associateWith { prefix: HTTagPrefix ->
-            register("${prefix.serializedName}_press_mold", ::HTCatalystItem)
-        }
+    val GEAR_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("gear_press_mold", ::HTCatalystItem)
 
-    @JvmStatic
-    fun getPressMold(prefix: HTTagPrefix): DeferredItem<HTCatalystItem> = PRESS_MOLDS[prefix] ?: error("Unregistered with $prefix")
+    @JvmField
+    val PLATE_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("plate_press_mold", ::HTCatalystItem)
+
+    @JvmField
+    val ROD_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("rod_press_mold", ::HTCatalystItem)
+
+    @JvmField
+    val WIRE_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("wire_press_mold", ::HTCatalystItem)
 
     //    Lens    //
 
