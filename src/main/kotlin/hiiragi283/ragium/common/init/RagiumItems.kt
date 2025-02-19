@@ -389,9 +389,6 @@ object RagiumItems {
     val DEEPANT_REAGENT: DeferredItem<Item> = register("deepant_reagent")
 
     @JvmField
-    val ENDER_REAGENT: DeferredItem<Item> = register("ender_reagent")
-
-    @JvmField
     val FROZEN_REAGENT: DeferredItem<Item> = register("frozen_reagent")
 
     @JvmField
