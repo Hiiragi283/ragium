@@ -7,7 +7,10 @@ import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
 
+@OnlyIn(Dist.CLIENT)
 class HTBlastFurnaceBlockEntityRenderer<T>(context: BlockEntityRendererProvider.Context) :
     BlockEntityRenderer<T> where T : HTMachineBlockEntity, T : HTMultiblockController {
     override fun render(

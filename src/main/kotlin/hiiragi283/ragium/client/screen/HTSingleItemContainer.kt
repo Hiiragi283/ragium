@@ -7,7 +7,10 @@ import hiiragi283.ragium.common.inventory.HTSingleItemContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
 
+@OnlyIn(Dist.CLIENT)
 class HTSingleItemContainer(menu: HTSingleItemContainerMenu, inventory: Inventory, title: Component) :
     HTMachineContainerScreen<HTSingleItemContainerMenu>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/single_item.png")

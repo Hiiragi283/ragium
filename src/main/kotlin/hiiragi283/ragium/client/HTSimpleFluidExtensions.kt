@@ -1,9 +1,12 @@
 package hiiragi283.ragium.client
 
 import net.minecraft.resources.ResourceLocation
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import java.awt.Color
 
+@OnlyIn(Dist.CLIENT)
 class HTSimpleFluidExtensions(val stillTex: ResourceLocation, val color: Color? = null, val floatingTex: ResourceLocation = stillTex) :
     IClientFluidTypeExtensions {
     override fun getStillTexture(): ResourceLocation = stillTex
