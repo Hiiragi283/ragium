@@ -75,6 +75,6 @@ interface HTMachineAccess :
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = levelAccess
         ?.asServerLevel()
-        ?.let(RagiumAPI.getInstance()::getEnergyNetwork)
+        ?.let(RagiumAPI.getInstance().getEnergyNetwork())
         ?.let(HTStorageIO.INPUT::wrapEnergyStorage)
 }

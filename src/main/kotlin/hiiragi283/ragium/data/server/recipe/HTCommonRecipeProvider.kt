@@ -131,7 +131,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
-            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION)
+            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION.commonTag)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
             .waterOutput()
             .save(output)
@@ -147,7 +147,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
-            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
+            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID.commonTag, FluidType.BUCKET_VOLUME * 6)
             .itemOutput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
             .save(output)
         // Alumina + Cryolite -> 3x Aluminum Ingot
@@ -164,14 +164,14 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 8)
-            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION, FluidType.BUCKET_VOLUME)
+            .fluidInput(RagiumVirtualFluids.LAPIS_SOLUTION.commonTag, FluidType.BUCKET_VOLUME)
             .fluidOutput(RagiumVirtualFluids.RAGIUM_SOLUTION)
             .save(output)
 
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION, FluidType.BUCKET_VOLUME * 8)
+            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .save(output)
 
@@ -194,7 +194,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(Items.PAPER)
-            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION, FluidType.BUCKET_VOLUME / 8)
+            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, FluidType.BUCKET_VOLUME / 8)
             .itemOutput(RagiumItems.RAGI_TICKET)
             .save(output)
     }

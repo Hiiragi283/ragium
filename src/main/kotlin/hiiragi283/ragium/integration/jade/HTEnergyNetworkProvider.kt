@@ -26,7 +26,7 @@ object HTEnergyNetworkProvider : IServerDataProvider<BlockAccessor>, IComponentP
 
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
         val network: IEnergyStorage =
-            accessor.level.asServerLevel()?.let(RagiumAPI.getInstance()::getEnergyNetwork) ?: return
+            accessor.level.asServerLevel()?.let(RagiumAPI.getInstance().getEnergyNetwork()) ?: return
         accessor.writeData(CODEC, network.energyStored)
     }
 

@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTBlockFamily
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity

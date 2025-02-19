@@ -2,7 +2,6 @@ package hiiragi283.ragium.common
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.internal.RagiumConfig
@@ -26,8 +25,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::construct)
 
         RagiumComponentTypes.REGISTER.register(eventBus)
-
-        HTMachineType
 
         RagiumFluids.init()
         RagiumFluids.REGISTER.register(eventBus)

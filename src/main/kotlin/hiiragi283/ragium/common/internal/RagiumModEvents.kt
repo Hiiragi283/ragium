@@ -227,7 +227,7 @@ internal object RagiumModEvents {
         event.registerBlock(
             Capabilities.EnergyStorage.BLOCK,
             { level: Level, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction ->
-                level.asServerLevel()?.let(RagiumAPI.getInstance()::getEnergyNetwork)
+                level.asServerLevel()?.let(RagiumAPI.getInstance().getEnergyNetwork())
             },
             RagiumBlocks.ENERGY_NETWORK_INTERFACE.get(),
         )

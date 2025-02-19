@@ -343,7 +343,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         // Naphtha -> Polymer Resin + Fuel
         HTFluidOutputRecipeBuilder
             .refinery()
-            .fluidInput(RagiumVirtualFluids.NAPHTHA)
+            .fluidInput(RagiumVirtualFluids.NAPHTHA.commonTag)
             .itemOutput(RagiumItems.POLYMER_RESIN, 2)
             .fluidOutput(RagiumVirtualFluids.FUEL)
             .save(output)
@@ -366,14 +366,14 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         // Biomass -> Alcohol
         HTFluidOutputRecipeBuilder
             .refinery()
-            .fluidInput(RagiumVirtualFluids.BIOMASS)
+            .fluidInput(RagiumVirtualFluids.BIOMASS.commonTag)
             .fluidOutput(RagiumVirtualFluids.ETHANOL)
             .save(output)
         // Alcohol + Plant Oil -> Bio Fuel + Glycerol
         HTFluidOutputRecipeBuilder
             .mixer()
-            .fluidInput(RagiumVirtualFluids.ETHANOL, FluidType.BUCKET_VOLUME * 4)
-            .fluidInput(RagiumVirtualFluids.PLANT_OIL)
+            .fluidInput(RagiumVirtualFluids.ETHANOL.commonTag, FluidType.BUCKET_VOLUME * 4)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag)
             .fluidOutput(RagiumVirtualFluids.BIODIESEL, FluidType.BUCKET_VOLUME * 4)
             .save(output)
 
@@ -387,13 +387,13 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         // Sap -> Slimeball + Latex
         HTFluidOutputRecipeBuilder
             .refinery()
-            .fluidInput(RagiumVirtualFluids.SAP)
+            .fluidInput(RagiumVirtualFluids.SAP.commonTag)
             .itemOutput(Items.SLIME_BALL)
             .fluidOutput(RagiumVirtualFluids.LATEX, 250)
             .saveSuffixed(output, "_from_sap")
         // Latex -> Raw Rubber
         HTSolidifierRecipeBuilder()
-            .fluidInput(RagiumVirtualFluids.LATEX)
+            .fluidInput(RagiumVirtualFluids.LATEX.commonTag)
             .itemOutput(Items.SLIME_BALL)
             .saveSuffixed(output, "_from_latex")
 
@@ -407,7 +407,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         // Crimson Sap -> Crimson Crystal + Sap
         HTFluidOutputRecipeBuilder
             .refinery()
-            .fluidInput(RagiumVirtualFluids.CRIMSON_SAP)
+            .fluidInput(RagiumVirtualFluids.CRIMSON_SAP.commonTag)
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
@@ -422,7 +422,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
         // Warped Sap -> Warped Crystal + Sap
         HTFluidOutputRecipeBuilder
             .refinery()
-            .fluidInput(RagiumVirtualFluids.WARPED_SAP)
+            .fluidInput(RagiumVirtualFluids.WARPED_SAP.commonTag)
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)

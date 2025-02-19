@@ -1,12 +1,11 @@
 package hiiragi283.ragium.api.screen
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.inventory.HTContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotPos
-import hiiragi283.ragium.common.energy.HTEnergyNetwork
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -128,7 +127,11 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         mouseY: Int,
     ) {
         val network: IEnergyStorage =
-            Minecraft.getInstance().getClientSavedDataMap(HTEnergyNetwork.DATA_FACTORY)[menu.level.dimension()]
+            RagiumAPI
+                .getInstance()
+                .getCurrentServer()
+                ?.getLevel(menu.level.dimension())
+                ?.let(RagiumAPI.getInstance().getEnergyNetwork())
                 ?: return
         renderTooltip(x, y, mouseX, mouseY) {
             guiGraphics.renderTooltip(

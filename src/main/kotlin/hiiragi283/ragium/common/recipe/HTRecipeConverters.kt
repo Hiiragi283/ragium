@@ -219,14 +219,14 @@ object HTRecipeConverters {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.ORE, key)
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID, 500)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag, 500)
             .itemOutput(output.copyWithCount(count * 3))
             .export(consumer)
         // 4x
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.ORE, key)
-            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID, 500)
+            .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID.commonTag, 500)
             .itemOutput(output.copyWithCount(count * 4))
             .export(consumer)
     }

@@ -55,7 +55,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(RagiumItems.ALKALI_REAGENT)
-            .fluidInput(RagiumVirtualFluids.PLANT_OIL, FluidType.BUCKET_VOLUME * 4)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, FluidType.BUCKET_VOLUME * 4)
             .itemOutput(RagiumItems.SOAP)
             .save(output)
     }
@@ -206,14 +206,14 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag)
             .fluidOutput(RagiumVirtualFluids.HYDROFLUORIC_ACID)
             .saveSuffixed(output, "_from_fluorite")
 
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(RagiumItems.GLOW_REAGENT, 2)
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag)
             .fluidOutput(RagiumVirtualFluids.HYDROFLUORIC_ACID)
             .saveSuffixed(output, "_from_reagent")
     }
@@ -359,7 +359,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(Items.POISONOUS_POTATO, 8)
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME * 8)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag, FluidType.BUCKET_VOLUME * 8)
             .itemOutput(RagiumItems.YELLOW_CAKE)
             .save(output)
         // Cutting Yellow Cake

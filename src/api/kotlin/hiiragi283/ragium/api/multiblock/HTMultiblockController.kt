@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.multiblock
 
 import hiiragi283.ragium.api.extension.blockPosText
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.network.chat.Component

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos

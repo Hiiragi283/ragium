@@ -24,7 +24,7 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID, 500)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag, 500)
             .itemOutput(RagiumItems.ALKALI_REAGENT)
             .fluidOutput(RagiumVirtualFluids.NITRIC_ACID, 500)
             .save(output, RagiumAPI.id("nitric_acid"))
@@ -32,8 +32,8 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child {
         // 3x H2SO4 + HNO3 -> Mixture Acid
         HTFluidOutputRecipeBuilder
             .mixer()
-            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID, 300)
-            .fluidInput(RagiumVirtualFluids.NITRIC_ACID, 100)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag, 300)
+            .fluidInput(RagiumVirtualFluids.NITRIC_ACID.commonTag, 100)
             .fluidOutput(RagiumVirtualFluids.MIXTURE_ACID, 400)
             .save(output)
     }
@@ -45,20 +45,20 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child {
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.SULFUR)
-            .fluidInput(RagiumVirtualFluids.OXYGEN)
+            .fluidInput(RagiumVirtualFluids.OXYGEN.commonTag)
             .fluidOutput(RagiumVirtualFluids.SULFUR_DIOXIDE)
             .save(output)
         // SO2 + O -> SO3
         HTFluidOutputRecipeBuilder
             .mixer()
-            .fluidInput(RagiumVirtualFluids.SULFUR_DIOXIDE)
-            .fluidInput(RagiumVirtualFluids.OXYGEN, 500)
+            .fluidInput(RagiumVirtualFluids.SULFUR_DIOXIDE.commonTag)
+            .fluidInput(RagiumVirtualFluids.OXYGEN.commonTag, 500)
             .fluidOutput(RagiumVirtualFluids.SULFUR_TRIOXIDE)
             .save(output)
         // SO3 + H2O -> H2SO4
         HTFluidOutputRecipeBuilder
             .mixer()
-            .fluidInput(RagiumVirtualFluids.SULFUR_TRIOXIDE)
+            .fluidInput(RagiumVirtualFluids.SULFUR_TRIOXIDE.commonTag)
             .waterInput()
             .fluidOutput(RagiumVirtualFluids.SULFURIC_ACID)
             .save(output)

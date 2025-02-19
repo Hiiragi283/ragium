@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.api.util
 
 object RagiumTranslationKeys {
     //    Block    //

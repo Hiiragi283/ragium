@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
@@ -36,10 +35,6 @@ data object HTIngredientBuilder {
     fun item(ingredient: Ingredient, count: Int = 1): SizedIngredient = SizedIngredient(ingredient, count)
 
     //    Fluid    //
-
-    @JvmStatic
-    fun fluid(content: RagiumVirtualFluids, amount: Int = FluidType.BUCKET_VOLUME): SizedFluidIngredient =
-        fluid(content.fluidHolder, amount)
 
     @JvmStatic
     fun fluid(fluid: DeferredHolder<Fluid, *>, amount: Int = FluidType.BUCKET_VOLUME): SizedFluidIngredient = fluid(fluid.commonTag, amount)

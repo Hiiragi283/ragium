@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
-import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
@@ -40,8 +39,6 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
     abstract fun itemInput(ingredient: HTItemIngredient): T
 
     //    Fluid Input    //
-
-    fun fluidInput(content: RagiumVirtualFluids, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(content.fluidHolder, amount)
 
     fun fluidInput(fluid: DeferredHolder<Fluid, *>, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(fluid.commonTag, amount)
 

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.commonTag
+import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -12,11 +13,14 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.util.HTBlockFamily
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
@@ -39,8 +43,8 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             .define('B', Items.MAGMA_BLOCK)
             .save(output)
 
-        RagiumBlocks.RAGI_BRICK_FAMILY.buildRecipes(output, holderLookup)
-        RagiumBlocks.PLASTIC_FAMILY.buildRecipes(output, holderLookup)
+        registerFamily(output, RagiumBlocks.RAGI_BRICK_FAMILY)
+        registerFamily(output, RagiumBlocks.PLASTIC_FAMILY)
 
         registerBurners(output)
         registerDrums(output)
@@ -51,6 +55,44 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
 
         registerAddons(output)
         registerMachines(output)
+    }
+
+    //    Block Family    //
+
+    private fun registerFamily(output: RecipeOutput, family: HTBlockFamily) {
+        // Base -> Slab
+        HTShapedRecipeBuilder(family.slab, 6, CraftingBookCategory.BUILDING)
+            .pattern("AAA")
+            .define('A', family.base)
+            .save(output)
+
+        SingleItemRecipeBuilder
+            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.slab, 2)
+            .unlockedBy("has_base", has(family.base))
+            .savePrefixed(output)
+        // Base -> Stairs
+        HTShapedRecipeBuilder(family.stairs, 4, CraftingBookCategory.BUILDING)
+            .pattern("A  ")
+            .pattern("AA ")
+            .pattern("AAA")
+            .define('A', family.base)
+            .save(output)
+
+        SingleItemRecipeBuilder
+            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.stairs)
+            .unlockedBy("has_base", has(family.base))
+            .savePrefixed(output)
+        // Base -> Wall
+        HTShapedRecipeBuilder(family.wall, 4, CraftingBookCategory.BUILDING)
+            .pattern("AAA")
+            .pattern("AAA")
+            .define('A', family.base)
+            .save(output)
+
+        SingleItemRecipeBuilder
+            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.wall)
+            .unlockedBy("has_base", has(family.base))
+            .savePrefixed(output)
     }
 
     //    Components    //

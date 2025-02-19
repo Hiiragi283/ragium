@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

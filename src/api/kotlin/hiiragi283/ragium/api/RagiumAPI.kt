@@ -85,6 +85,8 @@ interface RagiumAPI {
      */
     fun getCurrentServer(): MinecraftServer?
 
+    fun getEnergyNetwork(): (ServerLevel) -> IEnergyStorage = ::getEnergyNetwork
+
     /**
      * 指定した[level]からエネルギーネットワークのインスタンスを返します。
      */
