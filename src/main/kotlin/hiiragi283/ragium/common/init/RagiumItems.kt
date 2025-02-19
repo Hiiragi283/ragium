@@ -304,10 +304,11 @@ object RagiumItems {
     )
 
     @JvmField
-    val ALUMINUM_CAN: DeferredItem<Item> = register("aluminum_can")
-
-    @JvmField
-    val POTION_CAN: DeferredItem<HTPotionCanItem> = register("potion_can", ::HTPotionCanItem)
+    val POTION_BUNDLE: DeferredItem<HTPotionBundleItem> = register(
+        "potion_bundle",
+        ::HTPotionBundleItem,
+        itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE, RagiumTranslationKeys.POTION_BUNDLE_1)
+    )
 
     //    Molds    //
 

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "ragium:item/potion_can",
-    "layer1": "ragium:item/potion_can_overlay"
-  }
-}

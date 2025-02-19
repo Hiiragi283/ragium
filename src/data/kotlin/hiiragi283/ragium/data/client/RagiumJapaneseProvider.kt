@@ -169,10 +169,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
         addItem(RagiumItems.FLARE_LAUNCHER, "フレアランチャー")
         addItem(RagiumItems.MAGNET, "マグネット")
+        addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
         addItem(RagiumItems.SOAP, "石鹸")
-
-        addItem(RagiumItems.ALUMINUM_CAN, "アルミ缶")
-        addItem(RagiumItems.POTION_CAN, "ポーション缶")
 
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
@@ -233,6 +231,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.DEFOLIANT, "9x9x9の範囲を荒れ地に変える")
         add(RagiumTranslationKeys.DYNAMITE, "着弾時に爆発を起こす")
         add(RagiumTranslationKeys.MAGNET, "周囲のアイテムをひきつける")
+        add(RagiumTranslationKeys.POTION_BUNDLE, "9本までポーションをまとめられる")
+        add(RagiumTranslationKeys.POTION_BUNDLE_1, "左クリックでGUIを開く")
         add(RagiumTranslationKeys.SOAP, "右クリックで対象のブロックを洗う")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")

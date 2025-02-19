@@ -9,15 +9,15 @@ import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTDisenchanterContainerMenu(
     containerId: Int,
-    playerInv: Inventory,
+    inventory: Inventory,
     pos: BlockPos,
     ticketInput: IItemHandler,
     toolInput: IItemHandler,
     bookInput: IItemHandler,
-) : HTContainerMenu(TODO(), containerId, playerInv, pos) {
-    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+) : HTContainerMenu(TODO(), containerId, inventory, pos) {
+    constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
-        playerInv,
+        inventory,
         decodePos(registryBuf),
         ItemStackHandler(1),
         ItemStackHandler(1),

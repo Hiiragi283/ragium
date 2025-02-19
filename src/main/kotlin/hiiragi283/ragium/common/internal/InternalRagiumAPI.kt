@@ -75,14 +75,14 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun createSingleItemMenu(
         containerId: Int,
-        playerInv: Inventory,
+        inventory: Inventory,
         pos: BlockPos,
         itemInput: IItemHandler,
         itemCatalyst: IItemHandler,
         itemOutput: IItemHandler,
     ): AbstractContainerMenu = HTSingleItemContainerMenu(
         containerId,
-        playerInv,
+        inventory,
         pos,
         itemInput,
         itemCatalyst,
@@ -91,13 +91,13 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun createMultiItemMenu(
         containerId: Int,
-        playerInv: Inventory,
+        inventory: Inventory,
         pos: BlockPos,
         itemInput: IItemHandler,
         itemOutput: IItemHandler,
     ): AbstractContainerMenu = HTMultiItemContainerMenu(
         containerId,
-        playerInv,
+        inventory,
         pos,
         itemInput,
         itemOutput,

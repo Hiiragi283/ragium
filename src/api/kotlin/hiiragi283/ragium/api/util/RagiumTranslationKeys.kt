@@ -38,6 +38,8 @@ object RagiumTranslationKeys {
     const val DEFOLIANT = "tooltip.ragium.item.defoliant"
     const val DYNAMITE = "tooltip.ragium.item.dynamite"
     const val MAGNET = "tooltip.ragium.item.magnet"
+    const val POTION_BUNDLE = "tooltip.ragium.item.potion_bundle"
+    const val POTION_BUNDLE_1 = "tooltip.ragium.item.potion_bundle.1"
     const val SOAP = "tooltip.ragium.item.soap"
 
     //    Machine    //

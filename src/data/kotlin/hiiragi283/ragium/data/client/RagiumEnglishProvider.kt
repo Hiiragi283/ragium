@@ -169,10 +169,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.DYNAMITE, "Dynamite")
         addItem(RagiumItems.FLARE_LAUNCHER, "Flare Launcher")
         addItem(RagiumItems.MAGNET, "Magnet")
+        addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
         addItem(RagiumItems.SOAP, "Soap")
-
-        addItem(RagiumItems.ALUMINUM_CAN, "Aluminum Can")
-        addItem(RagiumItems.POTION_CAN, "Potion Can")
 
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
@@ -233,6 +231,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.DEFOLIANT, "Changes 9x9x9 area into waste land")
         add(RagiumTranslationKeys.DYNAMITE, "Explodes when hit")
         add(RagiumTranslationKeys.MAGNET, "Attracts around items")
+        add(RagiumTranslationKeys.POTION_BUNDLE, "Combines potions up to 9")
+        add(RagiumTranslationKeys.POTION_BUNDLE_1, "Left-click to open GUI")
         add(RagiumTranslationKeys.SOAP, "Right-click to wash targeted block")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")

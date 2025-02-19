@@ -16,10 +16,10 @@ import java.util.function.Supplier
 abstract class HTContainerMenu(
     menuType: Supplier<out MenuType<*>>,
     containerId: Int,
-    val playerInv: Inventory,
+    val inventory: Inventory,
     val pos: BlockPos,
 ) : AbstractContainerMenu(menuType.get(), containerId) {
-    val player: Player = playerInv.player
+    val player: Player = inventory.player
     val level: Level get() = player.level()
 
     override fun stillValid(player: Player): Boolean = true
@@ -108,7 +108,7 @@ abstract class HTContainerMenu(
         (0..26).forEach { index: Int ->
             addSlot(
                 Slot(
-                    playerInv,
+                    inventory,
                     index + 9,
                     HTSlotPos.getSlotPosX(index % 9),
                     HTSlotPos.getSlotPosY(3 + (index / 9)) + 12 + yOffset,
@@ -117,7 +117,7 @@ abstract class HTContainerMenu(
         }
         // hotbar
         (0..8).forEach { index: Int ->
-            addSlot(Slot(playerInv, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) - 2 + yOffset))
+            addSlot(Slot(inventory, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) - 2 + yOffset))
         }
     }
 

@@ -78,9 +78,8 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.DYNAMITE)
                     output.accept(RagiumItems.FLARE_LAUNCHER)
                     output.accept(RagiumItems.MAGNET)
+                    output.accept(RagiumItems.POTION_BUNDLE)
                     output.accept(RagiumItems.SOAP)
-
-                    output.accept(RagiumItems.ALUMINUM_CAN)
 
                     output.accept(RagiumItems.BALL_PRESS_MOLD)
                     output.accept(RagiumItems.BLANK_PRESS_MOLD)

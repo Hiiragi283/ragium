@@ -10,14 +10,14 @@ import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTPrimitiveBlastFurnaceContainerMenu(
     containerId: Int,
-    playerInv: Inventory,
+    inventory: Inventory,
     pos: BlockPos,
     itemInput: IItemHandler,
     itemOutput: IItemHandler,
-) : HTMachineContainerMenu(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE, containerId, playerInv, pos) {
-    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+) : HTMachineContainerMenu(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE, containerId, inventory, pos) {
+    constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
-        playerInv,
+        inventory,
         decodePos(registryBuf),
         ItemStackHandler(2),
         ItemStackHandler(1),

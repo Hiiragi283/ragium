@@ -11,12 +11,12 @@ import java.util.function.Supplier
 abstract class HTMachineContainerMenu(
     menuType: Supplier<out MenuType<*>>,
     containerId: Int,
-    playerInv: Inventory,
+    inventory: Inventory,
     pos: BlockPos,
 ) : HTContainerMenu(
         menuType,
         containerId,
-        playerInv,
+        inventory,
         pos,
     ) {
     val machine: HTMachineAccess? = level.getMachineAccess(pos)

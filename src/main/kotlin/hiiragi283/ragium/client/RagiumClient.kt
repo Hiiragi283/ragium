@@ -8,11 +8,7 @@ import hiiragi283.ragium.client.renderer.HTBlastFurnaceBlockEntityRenderer
 import hiiragi283.ragium.client.screen.*
 import hiiragi283.ragium.common.init.*
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
-import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.util.FastColor
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -20,7 +16,6 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import org.slf4j.Logger
@@ -31,22 +26,6 @@ import java.util.function.Supplier
 object RagiumClient {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
-
-    @SubscribeEvent
-    fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
-        event.register(
-            { stack: ItemStack, tintIndex: Int ->
-                if (tintIndex != 1) {
-                    -1
-                } else {
-                    FastColor.ARGB32.opaque(stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).color)
-                }
-            },
-            RagiumItems.POTION_CAN,
-        )
-
-        LOGGER.info("Registered ItemColor!")
-    }
 
     @SubscribeEvent
     fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
@@ -78,6 +57,8 @@ object RagiumClient {
 
     @SubscribeEvent
     fun registerMenu(event: RegisterMenuScreensEvent) {
+        event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTPotionBundleContainer)
+
         event.register(RagiumMenuTypes.EXTRACTOR.get(), ::HTExtractorContainer)
         event.register(RagiumMenuTypes.INFUSER.get(), ::HTInfuserContainer)
         event.register(RagiumMenuTypes.MIXER.get(), ::HTMixerContainer)

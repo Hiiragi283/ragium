@@ -10,13 +10,13 @@ import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTRefineryContainerMenu(
     containerId: Int,
-    playerInv: Inventory,
+    inventory: Inventory,
     pos: BlockPos,
     itemOutput: IItemHandler,
-) : HTMachineContainerMenu(RagiumMenuTypes.REFINERY, containerId, playerInv, pos) {
-    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+) : HTMachineContainerMenu(RagiumMenuTypes.REFINERY, containerId, inventory, pos) {
+    constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
-        playerInv,
+        inventory,
         decodePos(registryBuf),
         ItemStackHandler(1),
     )

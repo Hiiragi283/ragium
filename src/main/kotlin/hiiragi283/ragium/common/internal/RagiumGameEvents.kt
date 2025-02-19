@@ -12,8 +12,10 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.*
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import hiiragi283.ragium.common.item.component.HTSpawnerContent
+import hiiragi283.ragium.common.network.HTPotionBundlePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.MinecraftServer
@@ -30,9 +32,11 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
+import net.neoforged.neoforge.network.PacketDistributor
 import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -128,6 +132,14 @@ internal object RagiumGameEvents {
         val data: HTMultiblockData = controller.collectData { player?.displayClientMessage(it, true) }
         controller.processData(definition, data)
         event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide))
+    }
+
+    @SubscribeEvent
+    fun onLeftClickBlock(event: PlayerInteractEvent.LeftClickEmpty) {
+        val stack: ItemStack = event.itemStack
+        if (!stack.isEmpty && stack.`is`(RagiumItems.POTION_BUNDLE)) {
+            PacketDistributor.sendToServer(HTPotionBundlePacket)
+        }
     }
 
     @SubscribeEvent

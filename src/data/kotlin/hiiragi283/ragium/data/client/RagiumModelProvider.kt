@@ -66,11 +66,6 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             .itemTexture("layer0", ResourceLocation.withDefaultNamespace("apple"))
             .itemTexture("layer1", RagiumItems.CHOCOLATE_APPLE.id)
 
-        getBuilder(RagiumItems.POTION_CAN)
-            .parent(ModelFile.UncheckedModelFile("item/generated"))
-            .itemTexture("layer0", RagiumItems.POTION_CAN.id)
-            .itemTexture("layer1", RagiumItems.POTION_CAN.id.withSuffix("_overlay"))
-
         getBuilder(RagiumItems.WATER_FLUID_CUBE)
             .parent(ModelFile.UncheckedModelFile(RagiumAPI.id("item/fluid_cube")))
             .texture("inside", ResourceLocation.withDefaultNamespace("block/blue_concrete"))

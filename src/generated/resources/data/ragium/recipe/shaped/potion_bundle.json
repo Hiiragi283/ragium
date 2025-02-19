@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:strings"
+    },
+    "B": {
+      "tag": "c:leathers"
+    },
+    "C": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:potion_bundle"
+  }
+}

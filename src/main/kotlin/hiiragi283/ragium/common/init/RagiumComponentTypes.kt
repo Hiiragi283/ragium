@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.component.HTSpawnerContent
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
+import net.minecraft.world.item.component.ItemContainerContents
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -17,6 +18,12 @@ object RagiumComponentTypes {
     val FLUID_CONTENT: DeferredHolder<DataComponentType<*>, DataComponentType<SimpleFluidContent>> =
         REGISTER.registerComponentType("fluid_content") { builder: DataComponentType.Builder<SimpleFluidContent> ->
             builder.persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC)
+        }
+
+    @JvmField
+    val ITEM_CONTENT: DeferredHolder<DataComponentType<*>, DataComponentType<ItemContainerContents>> =
+        REGISTER.registerComponentType("item_content") { builder: DataComponentType.Builder<ItemContainerContents> ->
+            builder.persistent(ItemContainerContents.CODEC).networkSynchronized(ItemContainerContents.STREAM_CODEC)
         }
 
     @JvmField

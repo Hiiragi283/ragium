@@ -10,14 +10,14 @@ import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTMultiSmelterContainerMenu(
     containerId: Int,
-    playerInv: Inventory,
+    inventory: Inventory,
     pos: BlockPos,
     itemInput: IItemHandler,
     itemOutput: IItemHandler,
-) : HTMachineContainerMenu(RagiumMenuTypes.MULTI_SMELTER, containerId, playerInv, pos) {
-    constructor(containerId: Int, playerInv: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
+) : HTMachineContainerMenu(RagiumMenuTypes.MULTI_SMELTER, containerId, inventory, pos) {
+    constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
-        playerInv,
+        inventory,
         decodePos(registryBuf),
         ItemStackHandler(1),
         ItemStackHandler(1),

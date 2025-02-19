@@ -24,12 +24,18 @@ import hiiragi283.ragium.common.fluid.HTFlareLauncherFluidHandler
 import hiiragi283.ragium.common.fluid.HTFluidCubeFluidHandler
 import hiiragi283.ragium.common.fluid.HTJetpackFluidHandler
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.inventory.HTPotionBundleContainerMenu
+import hiiragi283.ragium.common.network.HTPotionBundlePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.*
-import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.SimpleMenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
@@ -45,13 +51,12 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
-import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import net.neoforged.neoforge.network.handling.IPayloadContext
+import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -132,10 +137,6 @@ internal object RagiumModEvents {
         event.register(IntegrationMaterials.REFINED_OBSIDIAN, HTMaterialType.ALLOY)
     }
 
-    fun createRegistry(event: NewRegistryEvent) {
-        LOGGER.info("Registered new registries!")
-    }
-
     @JvmStatic
     internal lateinit var blockMap: Map<HTMachineType, DeferredBlock<*>>
 
@@ -178,10 +179,6 @@ internal object RagiumModEvents {
             }
             LOGGER.info("Added machine recipe types!")
         }
-    }
-
-    fun addBlockToBlockEntity(event: BlockEntityTypeAddBlocksEvent) {
-        LOGGER.info("Added external blocks to BlockEntityType!")
     }
 
     @SubscribeEvent
@@ -291,23 +288,26 @@ internal object RagiumModEvents {
         LOGGER.info("Registered Data Map Types!")
     }
 
-    fun modifyComponents(event: ModifyDefaultComponentsEvent) {
-        LOGGER.info("Modified item components!")
-    }
-
     @SubscribeEvent
-    fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        // Add Potion Can
-        if (event.tabKey == CreativeModeTabs.FOOD_AND_DRINKS) {
-            val parameters: CreativeModeTab.ItemDisplayParameters = event.parameters
-            parameters
-                .holders
-                .lookupOrThrow(Registries.POTION)
-                .listElements()
-                .filter { it.value().isEnabled(parameters.enabledFeatures) }
-                .map { PotionContents.createItemStack(RagiumItems.POTION_CAN.asItem(), it) }
-                .forEach(event::accept)
-            LOGGER.info("Modified existing Creative Tags!")
+    fun registerNetworking(event: RegisterPayloadHandlersEvent) {
+        val register: PayloadRegistrar = event.registrar(RagiumAPI.MOD_ID)
+        register.playToServer(
+            HTPotionBundlePacket.TYPE,
+            HTPotionBundlePacket.STREAM_CODEC,
+        ) { payload: HTPotionBundlePacket, context: IPayloadContext ->
+            context.player().openMenu(
+                SimpleMenuProvider(
+                    { containerId: Int, inventory: Inventory, _: Player ->
+                        HTPotionBundleContainerMenu(
+                            containerId,
+                            inventory,
+                        )
+                    },
+                    RagiumItems.POTION_BUNDLE.get().description,
+                ),
+            )
         }
+
+        LOGGER.info("Registered C2S Networking!")
     }
 }

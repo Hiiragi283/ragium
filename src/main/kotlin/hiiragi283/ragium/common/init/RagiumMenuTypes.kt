@@ -15,6 +15,14 @@ object RagiumMenuTypes {
     @JvmField
     val REGISTER: DeferredRegister<MenuType<*>> = DeferredRegister.create(Registries.MENU, RagiumAPI.MOD_ID)
 
+    @JvmField
+    val POTION_BUNDLE: DeferredHolder<MenuType<*>, MenuType<HTPotionBundleContainerMenu>> =
+        REGISTER.register("potion_bundle") { _: ResourceLocation ->
+            MenuType(::HTPotionBundleContainerMenu, FeatureFlags.VANILLA_SET)
+        }
+
+    //    Machine    //
+
     @JvmStatic
     fun <T : HTMachineContainerMenu> registerMachine(
         path: String,

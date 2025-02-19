@@ -337,6 +337,14 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.POTION_BUNDLE, category = CraftingBookCategory.EQUIPMENT)
+            .pattern("ABA")
+            .pattern("CCC")
+            .define('A', Tags.Items.STRINGS)
+            .define('B', Tags.Items.LEATHERS)
+            .define('C', Items.GLASS_BOTTLE)
+            .save(output)
     }
 
     private fun registerMisc(output: RecipeOutput) {

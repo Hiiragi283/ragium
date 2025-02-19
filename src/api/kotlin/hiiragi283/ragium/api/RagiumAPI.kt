@@ -160,7 +160,7 @@ interface RagiumAPI {
 
     fun createSingleItemMenu(
         containerId: Int,
-        playerInv: Inventory,
+        inventory: Inventory,
         pos: BlockPos,
         itemInput: IItemHandler,
         itemCatalyst: IItemHandler,
@@ -169,7 +169,7 @@ interface RagiumAPI {
 
     fun createMultiItemMenu(
         containerId: Int,
-        playerInv: Inventory,
+        inventory: Inventory,
         pos: BlockPos,
         itemInput: IItemHandler,
         itemOutput: IItemHandler,
