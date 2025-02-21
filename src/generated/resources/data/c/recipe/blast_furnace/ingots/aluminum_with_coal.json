@@ -11,6 +11,6 @@
     }
   ],
   "item_output": {
-    "tag": "c:ingots/aluminum"
+    "items": "#c:ingots/aluminum"
   }
 }

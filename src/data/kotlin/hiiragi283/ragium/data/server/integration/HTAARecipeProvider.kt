@@ -16,40 +16,40 @@ import net.minecraft.data.recipes.RecipeOutput
 object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Canola Seeds
-        HTGrowthChamberRecipeBuilder()
+        HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ActuallyTags.Items.SEEDS_CANOLA)
             .itemInput(RagiumItemTags.DIRT_SOILS)
             .itemOutput(ActuallyTags.Items.CROPS_CANOLA, 2)
             .save(output)
         // Coffee Seeds
-        HTGrowthChamberRecipeBuilder()
+        HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ActuallyTags.Items.SEEDS_COFFEE)
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ActuallyTags.Items.COFFEE_BEANS, 2)
+            .itemOutput(ActuallyTags.Items.CROPS_COFFEE, 2)
             .save(output)
 
         // Canola Oil
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(ActuallyTags.Items.CROPS_CANOLA)
             .fluidOutput(InitFluids.CANOLA_OIL, 80)
             .save(output)
         // Refined Canola Oil
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(InitFluids.CANOLA_OIL.get())
             .fluidOutput(InitFluids.REFINED_CANOLA_OIL)
             .save(output)
         // Crystallized Canola Oil
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(ActuallyItems.CRYSTALLIZED_CANOLA_SEED)
             .fluidInput(InitFluids.REFINED_CANOLA_OIL.get())
             .fluidOutput(InitFluids.CRYSTALLIZED_OIL)
             .save(output)
         // Empowered Canola Oil
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(ActuallyItems.EMPOWERED_CANOLA_SEED)
             .fluidInput(InitFluids.CRYSTALLIZED_OIL.get())
             .fluidOutput(InitFluids.EMPOWERED_OIL)
@@ -57,14 +57,14 @@ object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
 
         // Basic Coil
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(ActuallyItems.RESTONIA_CRYSTAL, 4)
             .itemInput(ActuallyTags.Items.GEMS_BLACK_QUARTZ)
             .itemOutput(ActuallyItems.BASIC_COIL, 2)
             .saveSuffixed(output, "_aa")
         // Advanced Coil
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(ActuallyItems.BASIC_COIL)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.GOLD)
             .itemOutput(ActuallyItems.ADVANCED_COIL, 2)

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.recipe.HTLaserAssemblyRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
+import net.minecraft.core.HolderGetter
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -19,16 +20,20 @@ import java.util.*
 class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     override val prefix: String,
     private val factory: (String, HTItemIngredient, Optional<Ingredient>, HTItemOutput) -> T,
-) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>, T>() {
+    lookup: HolderGetter<Item>,
+) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>, T>(lookup) {
     companion object {
         @JvmStatic
-        fun compressor(): HTSingleItemRecipeBuilder<HTCompressorRecipe> = HTSingleItemRecipeBuilder("compressor", ::HTCompressorRecipe)
+        fun compressor(lookup: HolderGetter<Item>): HTSingleItemRecipeBuilder<HTCompressorRecipe> =
+            HTSingleItemRecipeBuilder("compressor", ::HTCompressorRecipe, lookup)
 
         @JvmStatic
-        fun grinder(): HTSingleItemRecipeBuilder<HTGrinderRecipe> = HTSingleItemRecipeBuilder("grinder", ::HTGrinderRecipe)
+        fun grinder(lookup: HolderGetter<Item>): HTSingleItemRecipeBuilder<HTGrinderRecipe> =
+            HTSingleItemRecipeBuilder("grinder", ::HTGrinderRecipe, lookup)
 
         @JvmStatic
-        fun laser(): HTSingleItemRecipeBuilder<HTLaserAssemblyRecipe> = HTSingleItemRecipeBuilder("laser", ::HTLaserAssemblyRecipe)
+        fun laser(lookup: HolderGetter<Item>): HTSingleItemRecipeBuilder<HTLaserAssemblyRecipe> =
+            HTSingleItemRecipeBuilder("laser", ::HTLaserAssemblyRecipe, lookup)
     }
 
     private var group: String? = null

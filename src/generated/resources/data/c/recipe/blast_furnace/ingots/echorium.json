@@ -10,6 +10,6 @@
     }
   ],
   "item_output": {
-    "tag": "c:ingots/echorium"
+    "items": "#c:ingots/echorium"
   }
 }

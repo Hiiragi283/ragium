@@ -10,7 +10,6 @@
     }
   ],
   "item_output": {
-    "count": 1,
-    "id": "ragium:melon_pie"
+    "items": "ragium:melon_pie"
   }
 }

@@ -5,6 +5,6 @@
   },
   "item_output": {
     "count": 9,
-    "id": "minecraft:ice"
+    "items": "minecraft:ice"
   }
 }

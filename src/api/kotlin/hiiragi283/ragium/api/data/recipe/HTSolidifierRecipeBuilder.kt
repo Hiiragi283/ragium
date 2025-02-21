@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.recipe.HTSolidifierRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
+import net.minecraft.core.HolderGetter
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -14,7 +15,8 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
-class HTSolidifierRecipeBuilder : HTMachineRecipeBuilderBase<HTSolidifierRecipeBuilder, HTSolidifierRecipe>() {
+class HTSolidifierRecipeBuilder(lookup: HolderGetter<Item>) :
+    HTMachineRecipeBuilderBase<HTSolidifierRecipeBuilder, HTSolidifierRecipe>(lookup) {
     private var group: String? = null
     private lateinit var input: SizedFluidIngredient
     private lateinit var output: HTItemOutput

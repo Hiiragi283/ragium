@@ -35,8 +35,8 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredItem
 
-object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+object HTCommonRecipeProvider : RagiumRecipeProvider.Child() {
+    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerRaginite(output)
         registerSteels(output)
         registerRagium(output)
@@ -76,14 +76,14 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             ).save(output)
 
         HTMultiItemRecipeBuilder
-            .blastFurnace()
+            .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .itemOutput(ragiAlloy)
             .save(output)
         // Refined Ragi-Steel
         HTMultiItemRecipeBuilder
-            .blastFurnace()
+            .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 5)
             .itemOutput(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
@@ -93,33 +93,33 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerSteels(output: RecipeOutput) {
         // Steel
         HTMultiItemRecipeBuilder
-            .blastFurnace()
+            .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(ItemTags.COALS, 2)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .save(output)
 
         HTMultiItemRecipeBuilder
-            .blastFurnace()
+            .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.COAL_COKE)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .saveSuffixed(output, "_with_coke")
         // Deep Steel
         HTSingleItemRecipeBuilder
-            .grinder()
+            .grinder(lookup)
             .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 16)
             .itemOutput(RagiumItems.DEEPANT_REAGENT)
             .save(output)
 
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 4)
             .itemOutput(RagiumItems.DEEPANT_REAGENT)
             .save(output)
 
         HTMultiItemRecipeBuilder
-            .blastFurnace()
+            .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .itemInput(RagiumItems.DEEPANT_REAGENT, 4)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
@@ -129,14 +129,14 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerRagium(output: RecipeOutput) {
         // Ragium
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL, 8)
             .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID.commonTag, 1000)
             .fluidOutput(RagiumVirtualFluids.RAGIUM_SOLUTION)
             .save(output)
 
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, 8000)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
@@ -159,7 +159,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         )
         // Ragi Ticket
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Items.PAPER)
             .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, 125)
             .itemOutput(RagiumItems.RAGI_TICKET)
@@ -175,7 +175,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
         ) {
             // Assembler
             HTMultiItemRecipeBuilder
-                .assembler()
+                .assembler(lookup)
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
                 .itemInput(HTTagPrefix.INGOT, subMetal)
                 .itemInput(dopant)
@@ -183,7 +183,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
                 .save(output)
             // Laser Assembly
             HTSingleItemRecipeBuilder
-                .laser()
+                .laser(lookup)
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
                 .catalyst(lens)
                 .itemOutput(circuit)
@@ -264,7 +264,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun registerLens(output: RecipeOutput) {
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 64)
             .itemInput(Tags.Items.INGOTS_COPPER, 16)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS, 8)
@@ -272,7 +272,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(Tags.Items.DUSTS_GLOWSTONE, 64)
             .itemInput(Tags.Items.INGOTS_GOLD, 16)
             .itemInput(RagiumBlocks.CHEMICAL_GLASS, 8)
@@ -280,7 +280,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(RagiumItems.PRISMARINE_REAGENT, 64)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 16)
             .itemInput(RagiumBlocks.SOUL_GLASS, 8)
@@ -288,7 +288,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(RagiumItems.MAGICAL_REAGENT, 64)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 16)
             .itemInput(RagiumBlocks.OBSIDIAN_GLASS, 8)
@@ -425,7 +425,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(Tags.Items.DUSTS_GLOWSTONE)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
@@ -433,7 +433,7 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .save(output)
 
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
             .itemInput(Items.PISTON, 2)

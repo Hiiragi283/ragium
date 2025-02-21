@@ -55,46 +55,46 @@ object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight")
 
         // Rice
         HTSingleItemRecipeBuilder
-            .grinder()
+            .grinder(lookup)
             .itemInput(ModItems.RICE_PANICLE.get())
             .itemOutput(CommonTags.CROPS_RICE, 2)
             .save(output)
 
         // Milk Bottle
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Items.GLASS_BOTTLE)
             .milkInput(250)
             .itemOutput(ModItems.MILK_BOTTLE.get())
             .save(output)
 
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(ModItems.MILK_BOTTLE.get())
             .itemOutput(Items.GLASS_BOTTLE)
             .fluidOutput(NeoForgeMod.MILK, 250)
             .save(output, RagiumAPI.id("milk_from_bottle"))
 
         // Growth
-        HTGrowthChamberRecipeBuilder()
+        HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ModItems.CABBAGE_SEEDS.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
             .itemOutput(CommonTags.CROPS_CABBAGE, 2)
             .save(output)
 
-        HTGrowthChamberRecipeBuilder()
+        HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ModItems.TOMATO_SEEDS.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
             .itemOutput(CommonTags.CROPS_TOMATO, 2)
             .save(output)
 
-        HTGrowthChamberRecipeBuilder()
+        HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ModItems.ONION.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
             .itemOutput(CommonTags.CROPS_ONION, 2)
             .save(output)
 
-        HTGrowthChamberRecipeBuilder()
+        HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(CommonTags.CROPS_RICE)
             .itemInput(RagiumItemTags.DIRT_SOILS)
             .itemOutput(CommonTags.CROPS_RICE, 2)

@@ -79,6 +79,8 @@ fun createSpawnerStack(entityType: EntityType<*>, count: Int = 1): ItemStack {
     return stack
 }
 
+val ItemStack.isNotEmpty: Boolean get() = !isEmpty
+
 /**
  * 残りの耐久値を返します。
  */

@@ -11,6 +11,6 @@
   },
   "item_output": {
     "count": 2,
-    "tag": "c:crops/rice"
+    "items": "#c:crops/rice"
   }
 }

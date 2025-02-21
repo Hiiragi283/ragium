@@ -33,8 +33,8 @@ import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
 
-object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+object HTBlockRecipeProvider : RagiumRecipeProvider.Child() {
+    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Soul Magma
         HTShapedRecipeBuilder(RagiumBlocks.SOUL_MAGMA_BLOCK)
             .hollow4()
@@ -142,7 +142,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child {
             ItemTags.SOUL_FIRE_BASE_BLOCKS to RagiumBlocks.SOUL_GLASS,
         ).forEach { (input: TagKey<Item>, glass: DeferredBlock<out TransparentBlock>) ->
             HTMultiItemRecipeBuilder
-                .blastFurnace()
+                .blastFurnace(lookup)
                 .itemInput(Tags.Items.GLASS_BLOCKS)
                 .itemInput(input, 2)
                 .itemOutput(glass)

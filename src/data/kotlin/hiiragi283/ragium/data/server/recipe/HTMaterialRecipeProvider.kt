@@ -24,8 +24,8 @@ import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
-object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+object HTMaterialRecipeProvider : RagiumRecipeProvider.Child() {
+    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Ingot/Gem -> Block
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, block: DeferredBlock<Block>) ->
             val parent: HTTagPrefix = RagiumBlocks.getStorageParent(key)
@@ -83,7 +83,7 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
                 .save(output)
             // Assembler
             HTMultiItemRecipeBuilder
-                .assembler()
+                .assembler(lookup)
                 .itemInput(HTTagPrefix.INGOT, material, 4)
                 .itemInput(RagiumBlocks.SHAFT)
                 .itemOutput(coil, 4)

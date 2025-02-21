@@ -4,6 +4,6 @@
     "item": "minecraft:calcite"
   },
   "item_output": {
-    "tag": "c:dusts/calcite"
+    "items": "#c:dusts/calcite"
   }
 }

@@ -6,7 +6,7 @@
   "item_outputs": [
     {
       "count": 64,
-      "id": "ragium:magical_reagent"
+      "items": "ragium:magical_reagent"
     }
   ]
 }

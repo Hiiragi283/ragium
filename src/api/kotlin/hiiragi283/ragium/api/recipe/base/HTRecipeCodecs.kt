@@ -16,10 +16,6 @@ object HTRecipeCodecs {
         Codec.STRING.optionalFieldOf("group", "").forGetter(HTMachineRecipeBase::getGroup)
 
     @JvmStatic
-    fun <T : HTMachineRecipeBase> itemOutput(): RecordCodecBuilder<T, HTItemOutput> =
-        HTItemOutput.CODEC.fieldOf("item_output").forGetter { it.itemOutputs[0] }
-
-    @JvmStatic
     fun <T : HTFluidOutputRecipe> itemOutputs(min: Int, max: Int): RecordCodecBuilder<T, List<HTItemOutput>> = HTItemOutput.CODEC
         .listOf(min, max)
         .optionalFieldOf("item_outputs", listOf())
@@ -39,4 +35,7 @@ object HTRecipeCodecs {
 
     @JvmField
     val CATALYST: MapCodec<Optional<Ingredient>> = Ingredient.CODEC_NONEMPTY.optionalFieldOf("catalyst")
+
+    @JvmField
+    val ITEM_OUTPUT: MapCodec<HTItemOutput> = HTItemOutput.CODEC.fieldOf("item_output")
 }

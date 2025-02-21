@@ -15,8 +15,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:slag"
+      "items": "ragium:slag"
     }
   ]
 }

@@ -7,7 +7,6 @@
     "item": "minecraft:blackstone"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:gilded_blackstone"
+    "items": "minecraft:gilded_blackstone"
   }
 }

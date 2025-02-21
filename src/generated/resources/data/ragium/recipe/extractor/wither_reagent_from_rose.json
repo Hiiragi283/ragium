@@ -6,7 +6,7 @@
   "item_outputs": [
     {
       "count": 4,
-      "id": "ragium:wither_reagent"
+      "items": "ragium:wither_reagent"
     }
   ]
 }

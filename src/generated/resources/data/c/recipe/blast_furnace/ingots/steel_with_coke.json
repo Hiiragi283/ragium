@@ -9,6 +9,6 @@
     }
   ],
   "item_output": {
-    "tag": "c:ingots/steel"
+    "items": "#c:ingots/steel"
   }
 }

@@ -10,6 +10,6 @@
   ],
   "item_output": {
     "count": 2,
-    "id": "minecraft:pumpkin_pie"
+    "items": "minecraft:pumpkin_pie"
   }
 }

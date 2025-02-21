@@ -15,7 +15,6 @@
     }
   ],
   "item_output": {
-    "count": 1,
-    "id": "ragium:prismarine_lens"
+    "items": "ragium:prismarine_lens"
   }
 }

@@ -14,7 +14,7 @@ import net.neoforged.neoforge.items.IItemHandler
 /**
  * アイテムまたは液体の完成品を持つレシピのクラス
  */
-abstract class HTFluidOutputRecipe(group: String, override val itemOutputs: List<HTItemOutput>, val fluidOutputs: List<HTFluidOutput>) :
+abstract class HTFluidOutputRecipe(group: String, val itemOutputs: List<HTItemOutput>, val fluidOutputs: List<HTFluidOutput>) :
     HTMachineRecipeBase(group) {
     companion object {
         @JvmStatic
@@ -60,4 +60,6 @@ abstract class HTFluidOutputRecipe(group: String, override val itemOutputs: List
             }
         }
     }
+
+    final override fun isValidOutput(): Boolean = itemOutputs.none { !it.isValid }
 }

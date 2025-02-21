@@ -5,8 +5,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:frozen_reagent"
+      "items": "ragium:frozen_reagent"
     }
   ]
 }

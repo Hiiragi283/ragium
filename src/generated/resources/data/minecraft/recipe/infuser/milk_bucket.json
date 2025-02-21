@@ -9,8 +9,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "minecraft:milk_bucket"
+      "items": "minecraft:milk_bucket"
     }
   ]
 }

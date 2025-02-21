@@ -3,7 +3,7 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTSoap
 import hiiragi283.ragium.api.data.RagiumDataMaps
-import hiiragi283.ragium.api.extension.getAllRecipes
+import hiiragi283.ragium.api.extension.getValidRecipes
 import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
@@ -26,8 +26,6 @@ import mezz.jei.api.registration.IGuiHandlerRegistration
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
-import net.minecraft.client.Minecraft
-import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
@@ -101,13 +99,12 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
-        val level: ClientLevel = Minecraft.getInstance().level ?: return
-        val recipeManager: RecipeManager = level.recipeManager
+        val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
 
         fun <T : HTMachineRecipeBase> register(recipeType: JEIRecipeType<T>, recipe: RecipeType<T>) {
             registration.addRecipes(
                 recipeType,
-                recipeManager.getAllRecipes(recipe),
+                recipeManager.getValidRecipes(recipe),
             )
         }
 

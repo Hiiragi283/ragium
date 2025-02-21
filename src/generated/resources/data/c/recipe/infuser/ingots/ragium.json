@@ -9,7 +9,7 @@
   },
   "item_outputs": [
     {
-      "tag": "c:ingots/ragium"
+      "items": "#c:ingots/ragium"
     }
   ]
 }

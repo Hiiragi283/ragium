@@ -6,8 +6,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:soap"
+      "items": "ragium:soap"
     }
   ],
   "second_fluidInput": {

@@ -3,13 +3,16 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
+import net.minecraft.core.HolderGetter
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
-class HTGrowthChamberRecipeBuilder : HTMachineRecipeBuilderBase<HTGrowthChamberRecipeBuilder, HTGrowthChamberRecipe>() {
+class HTGrowthChamberRecipeBuilder(lookup: HolderGetter<Item>) :
+    HTMachineRecipeBuilderBase<HTGrowthChamberRecipeBuilder, HTGrowthChamberRecipe>(lookup) {
     private var group: String? = null
     private lateinit var seed: Ingredient
     private lateinit var soil: Ingredient

@@ -11,7 +11,7 @@ class HTBlastFurnaceRecipe(
     group: String,
     itemInputs: List<HTItemIngredient>,
     fluidInput: Optional<SizedFluidIngredient>,
-    itemResult: HTItemOutput,
-) : HTMultiItemRecipe(group, itemInputs, fluidInput, itemResult) {
+    itemOutput: HTItemOutput,
+) : HTMultiItemRecipe(group, itemInputs, fluidInput, itemOutput) {
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.BLAST_FURNACE
 }

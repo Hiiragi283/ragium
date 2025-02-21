@@ -7,7 +7,6 @@
     "item": "ragium:circuit_board"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:basic_circuit"
+    "items": "ragium:basic_circuit"
   }
 }

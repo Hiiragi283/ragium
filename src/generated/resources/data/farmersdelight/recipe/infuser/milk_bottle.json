@@ -15,8 +15,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "farmersdelight:milk_bottle"
+      "items": "farmersdelight:milk_bottle"
     }
   ]
 }

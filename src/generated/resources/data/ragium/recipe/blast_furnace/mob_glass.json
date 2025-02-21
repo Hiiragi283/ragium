@@ -10,7 +10,6 @@
     }
   ],
   "item_output": {
-    "count": 1,
-    "id": "ragium:mob_glass"
+    "items": "ragium:mob_glass"
   }
 }

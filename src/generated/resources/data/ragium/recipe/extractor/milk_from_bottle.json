@@ -17,8 +17,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "minecraft:glass_bottle"
+      "items": "minecraft:glass_bottle"
     }
   ]
 }

@@ -13,6 +13,6 @@
   ],
   "item_output": {
     "count": 4,
-    "id": "ragium:led"
+    "items": "ragium:led"
   }
 }

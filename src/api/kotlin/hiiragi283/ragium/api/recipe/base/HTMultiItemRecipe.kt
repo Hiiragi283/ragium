@@ -8,7 +8,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
@@ -19,11 +18,11 @@ abstract class HTMultiItemRecipe(
     group: String,
     val itemInputs: List<HTItemIngredient>,
     val fluidInput: Optional<SizedFluidIngredient>,
-    itemResult: HTItemOutput,
+    val itemOutput: HTItemOutput,
 ) : HTMachineRecipeBase(group) {
-    override val itemOutputs: List<HTItemOutput> = listOf(itemResult)
+    final override fun isValidOutput(): Boolean = itemOutput.isValid
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
+    final override fun matches(input: HTMachineRecipeInput): Boolean {
         val bool1: Boolean = this.itemInputs[0].test(input, 0)
         val bool2: Boolean = this.itemInputs.getOrNull(1)?.test(input, 1) != false
         val bool3: Boolean = this.itemInputs.getOrNull(2)?.test(input, 2) != false
@@ -47,7 +46,7 @@ abstract class HTMultiItemRecipe(
                     SizedFluidIngredient.FLAT_CODEC
                         .optionalFieldOf("fluid_input")
                         .forGetter(HTMultiItemRecipe::fluidInput),
-                    HTRecipeCodecs.itemOutput(),
+                    HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTMultiItemRecipe::itemOutput),
                 ).apply(instance, factory)
         }
 
@@ -59,7 +58,7 @@ abstract class HTMultiItemRecipe(
             SizedFluidIngredient.STREAM_CODEC.toOptional(),
             HTMultiItemRecipe::fluidInput,
             HTItemOutput.STREAM_CODEC,
-            { it.itemOutputs[0] },
+            HTMultiItemRecipe::itemOutput,
             factory,
         )
 

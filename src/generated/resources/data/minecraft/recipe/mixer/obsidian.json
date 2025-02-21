@@ -6,8 +6,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "minecraft:obsidian"
+      "items": "minecraft:obsidian"
     }
   ],
   "second_fluidInput": {

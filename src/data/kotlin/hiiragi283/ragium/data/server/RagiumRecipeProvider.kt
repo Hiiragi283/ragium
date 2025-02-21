@@ -11,7 +11,9 @@ import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
@@ -25,8 +27,16 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     RecipeProvider(output, registries) {
-    fun interface Child {
-        fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
+    abstract class Child {
+        protected lateinit var lookup: HolderGetter<Item>
+            private set
+
+        fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+            lookup = holderLookup.lookupOrThrow(Registries.ITEM)
+            buildRecipeInternal(output, holderLookup)
+        }
+
+        protected abstract fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider)
 
         fun has(item: ItemLike): Criterion<InventoryChangeTrigger.TriggerInstance> = inventoryTrigger(ItemPredicate.Builder.item().of(item))
 
@@ -46,10 +56,10 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             )
     }
 
-    abstract class ModChild(val modId: String) : Child {
+    abstract class ModChild(val modId: String) : Child() {
         fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
 
-        final override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        final override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
             /*val fixedOutput: RecipeOutput = object : RecipeOutput {
                 override fun accept(
                     id: ResourceLocation,

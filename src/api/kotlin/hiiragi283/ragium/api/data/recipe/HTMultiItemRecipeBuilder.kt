@@ -5,8 +5,10 @@ import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
+import net.minecraft.core.HolderGetter
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -15,14 +17,16 @@ import java.util.*
 class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
     override val prefix: String,
     private val factory: (String, List<HTItemIngredient>, Optional<SizedFluidIngredient>, HTItemOutput) -> T,
-) : HTMachineRecipeBuilderBase<HTMultiItemRecipeBuilder<T>, T>() {
+    lookup: HolderGetter<Item>,
+) : HTMachineRecipeBuilderBase<HTMultiItemRecipeBuilder<T>, T>(lookup) {
     companion object {
         @JvmStatic
-        fun assembler(): HTMultiItemRecipeBuilder<HTAssemblerRecipe> = HTMultiItemRecipeBuilder("assembler", ::HTAssemblerRecipe)
+        fun assembler(lookup: HolderGetter<Item>): HTMultiItemRecipeBuilder<HTAssemblerRecipe> =
+            HTMultiItemRecipeBuilder("assembler", ::HTAssemblerRecipe, lookup)
 
         @JvmStatic
-        fun blastFurnace(): HTMultiItemRecipeBuilder<HTBlastFurnaceRecipe> =
-            HTMultiItemRecipeBuilder("blast_furnace", ::HTBlastFurnaceRecipe)
+        fun blastFurnace(lookup: HolderGetter<Item>): HTMultiItemRecipeBuilder<HTBlastFurnaceRecipe> =
+            HTMultiItemRecipeBuilder("blast_furnace", ::HTBlastFurnaceRecipe, lookup)
     }
 
     private var group: String? = null

@@ -15,7 +15,6 @@
     }
   ],
   "item_output": {
-    "count": 1,
-    "id": "ragium:redstone_lens"
+    "items": "ragium:redstone_lens"
   }
 }

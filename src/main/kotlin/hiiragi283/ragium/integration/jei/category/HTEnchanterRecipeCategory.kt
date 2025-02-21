@@ -1,11 +1,11 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.extension.createEnchBook
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
-import hiiragi283.ragium.integration.jei.addItemOutput
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -51,7 +51,7 @@ class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HT
         builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .setStandardSlotBackground()
-            .addItemOutput(recipe, 0)
+            .addItemStack(createEnchBook(recipe.enchantment))
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTEnchanterRecipe, focuses: IFocusGroup) {

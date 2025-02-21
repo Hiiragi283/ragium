@@ -10,6 +10,6 @@
     }
   ],
   "item_output": {
-    "tag": "c:ingots/deep_steel"
+    "items": "#c:ingots/deep_steel"
   }
 }

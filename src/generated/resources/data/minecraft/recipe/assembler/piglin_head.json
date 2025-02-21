@@ -10,7 +10,6 @@
     }
   ],
   "item_output": {
-    "count": 1,
-    "id": "minecraft:piglin_head"
+    "items": "minecraft:piglin_head"
   }
 }

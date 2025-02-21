@@ -8,7 +8,7 @@
   "type": "ragium:growth_chamber",
   "item_output": {
     "count": 2,
-    "tag": "c:crops/onion"
+    "items": "#c:crops/onion"
   },
   "seed": {
     "item": "farmersdelight:onion"

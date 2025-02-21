@@ -64,7 +64,7 @@ abstract class HTMultiItemMachineBlockEntity(
         )
         val recipe: HTMultiItemRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
         if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
-        val output: ItemStack = recipe.itemOutputs[0].get()
+        val output: ItemStack = recipe.itemOutput.get()
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
         itemOutput.insertOrDrop(level, pos.above(), output)
         itemInput.consumeItem(0, recipe.itemInputs[0].count, false)

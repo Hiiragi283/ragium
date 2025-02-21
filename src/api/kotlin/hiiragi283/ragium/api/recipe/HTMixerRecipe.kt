@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.Optional
 
@@ -57,7 +56,7 @@ class HTMixerRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
+    override fun matches(input: HTMachineRecipeInput): Boolean {
         val bool1: Boolean = firstFluid.test(input.getFluid(0))
         val bool2: Boolean = secondFluid.test(input.getFluid(1))
         val bool3: Boolean = itemInput.map { it.test(input.getItem(0)) }.orElse(true)

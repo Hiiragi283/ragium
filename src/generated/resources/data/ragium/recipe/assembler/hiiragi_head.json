@@ -17,7 +17,6 @@
       },
       "minecraft:rarity": "epic"
     },
-    "count": 1,
-    "id": "minecraft:player_head"
+    "items": "minecraft:player_head"
   }
 }

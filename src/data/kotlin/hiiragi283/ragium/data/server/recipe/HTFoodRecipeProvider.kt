@@ -19,11 +19,11 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 
-object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+object HTFoodRecipeProvider : RagiumRecipeProvider.Child() {
+    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Melon Pie
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(Tags.Items.CROPS_MELON, 4)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemOutput(RagiumItems.MELON_PIE)
@@ -40,7 +40,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerChocolate(output: RecipeOutput) {
         // Chocolate
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput()
             .itemOutput(RagiumItems.CHOCOLATE)
@@ -70,7 +70,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
         // Sweet Berries Cake
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemInput(RagiumItems.CHOCOLATE, 3)
             .itemInput(Tags.Items.FOODS_BERRY, 2)
@@ -91,7 +91,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
         // Ambrosia
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(RagiumItems.CHOCOLATE, 64)
             .fluidInput(RagiumFluids.HONEY, 1000 * 64)
             .itemOutput(RagiumItems.AMBROSIA)
@@ -101,41 +101,41 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerHoney(output: RecipeOutput) {
         // Honey
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(Items.HONEY_BLOCK)
             .fluidOutput(RagiumFluids.HONEY)
             .saveSuffixed(output, "_from_block")
 
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(Items.HONEY_BOTTLE)
             .itemOutput(Items.GLASS_BOTTLE)
             .fluidOutput(RagiumFluids.HONEY, 250)
             .saveSuffixed(output, "_from_bottle")
 
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Items.GLASS_BOTTLE)
             .fluidInput(Tags.Fluids.HONEY, 250)
             .itemOutput(Items.HONEY_BOTTLE)
             .save(output)
 
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Tags.Items.GLASS_BLOCKS)
             .fluidInput(Tags.Fluids.HONEY)
             .itemOutput(Items.HONEY_BLOCK)
             .save(output)
         // Bee wax
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(Items.HONEYCOMB_BLOCK)
             .itemOutput(RagiumItems.BEE_WAX, 4)
             .fluidOutput(RagiumFluids.HONEY)
             .saveSuffixed(output, "_from_block")
 
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(Items.HONEYCOMB)
             .itemOutput(RagiumItems.BEE_WAX)
             .fluidOutput(RagiumFluids.HONEY, 250)
@@ -145,25 +145,25 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerMeat(output: RecipeOutput) {
         // Raw Food -> Minced Meat
         HTSingleItemRecipeBuilder
-            .grinder()
+            .grinder(lookup)
             .itemInput(Tags.Items.FOODS_RAW_MEAT)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .saveSuffixed(output, "_from_meat")
 
         HTSingleItemRecipeBuilder
-            .grinder()
+            .grinder(lookup)
             .itemInput(Tags.Items.FOODS_RAW_FISH)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .saveSuffixed(output, "_from_fish")
 
         HTSingleItemRecipeBuilder
-            .grinder()
+            .grinder(lookup)
             .itemInput(Items.ROTTEN_FLESH)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .saveSuffixed(output, "_from_rotten")
         // Minced Meat -> Meat Ingot
         HTSingleItemRecipeBuilder
-            .compressor()
+            .compressor(lookup)
             .itemInput(RagiumItems.MINCED_MEAT)
             .itemOutput(RagiumItems.MEAT_INGOT)
             .save(output)
@@ -177,7 +177,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
             ).save(output)
         // Cooked Meat Ingot -> Canned Cooked Meat
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(RagiumItems.COOKED_MEAT_INGOT, 8)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemOutput(RagiumItems.CANNED_COOKED_MEAT, 8)
@@ -187,28 +187,28 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerMilk(output: RecipeOutput) {
         // Milk + Bucket -> Milk Bucket
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Items.BUCKET)
             .milkInput()
             .itemOutput(Items.MILK_BUCKET)
             .save(output)
         // Milk Bucket -> Milk + Bucket
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(Items.MILK_BUCKET)
             .itemOutput(Items.BUCKET)
             .fluidOutput(NeoForgeMod.MILK)
             .save(output, NeoForgeMod.MILK.id)
 
         // Butter
-        HTSolidifierRecipeBuilder()
+        HTSolidifierRecipeBuilder(lookup)
             .milkInput()
             .catalyst(Tags.Items.INGOTS)
             .itemOutput(RagiumItems.BUTTER)
             .save(output)
         // Sponge Cake
         HTMultiItemRecipeBuilder
-            .blastFurnace()
+            .blastFurnace(lookup)
             .itemInput(RagiumItems.FLOUR, 3)
             .itemInput(Items.SUGAR, 2)
             .itemInput(RagiumItems.BUTTER)
@@ -217,7 +217,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
 
         // Cake
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .milkInput()
             .itemOutput(Items.CAKE)
@@ -227,14 +227,14 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerMushroom(output: RecipeOutput) {
         // Mushroom Stew
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Tags.Items.MUSHROOMS)
             .milkInput()
             .fluidOutput(RagiumVirtualFluids.MUSHROOM_STEW)
             .saveSuffixed(output, "_from_milk")
 
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(Items.MUSHROOM_STEW)
             .itemOutput(Items.BOWL)
             .fluidOutput(RagiumVirtualFluids.MUSHROOM_STEW)
@@ -244,13 +244,13 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child {
     private fun registerWheat(output: RecipeOutput) {
         // Flour
         HTSingleItemRecipeBuilder
-            .grinder()
+            .grinder(lookup)
             .itemInput(Tags.Items.CROPS_WHEAT)
             .itemOutput(RagiumItems.FLOUR)
             .save(output)
         // Dough
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(RagiumItems.FLOUR)
             .waterInput(250)
             .itemOutput(RagiumItems.DOUGH)

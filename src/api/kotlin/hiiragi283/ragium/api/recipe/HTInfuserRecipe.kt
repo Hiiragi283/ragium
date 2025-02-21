@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 class HTInfuserRecipe(
@@ -47,8 +46,7 @@ class HTInfuserRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean =
-        itemInput.test(input, 0) && fluidInput.test(input.getFluid(0))
+    override fun matches(input: HTMachineRecipeInput): Boolean = itemInput.test(input, 0) && fluidInput.test(input.getFluid(0))
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.INFUSER
 }

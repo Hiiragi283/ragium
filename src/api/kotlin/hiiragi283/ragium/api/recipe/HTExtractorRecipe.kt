@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.level.Level
 
 class HTExtractorRecipe(
     group: String,
@@ -42,7 +41,7 @@ class HTExtractorRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input, 0)
+    override fun matches(input: HTMachineRecipeInput): Boolean = this.input.test(input, 0)
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.EXTRACTOR
 }

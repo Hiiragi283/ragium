@@ -12,8 +12,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:meat_ingot"
+      "items": "ragium:meat_ingot"
     }
   ]
 }

@@ -6,7 +6,7 @@
   "item_outputs": [
     {
       "count": 16,
-      "id": "ragium:sculk_reagent"
+      "items": "ragium:sculk_reagent"
     }
   ]
 }

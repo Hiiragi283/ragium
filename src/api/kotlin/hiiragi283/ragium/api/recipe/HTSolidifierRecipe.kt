@@ -9,7 +9,6 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
@@ -17,7 +16,7 @@ class HTSolidifierRecipe(
     group: String,
     val input: SizedFluidIngredient,
     val catalyst: Optional<Ingredient>,
-    output: HTItemOutput,
+    val itemOutput: HTItemOutput,
 ) : HTMachineRecipeBase(group) {
     companion object {
         @JvmField
@@ -27,7 +26,7 @@ class HTSolidifierRecipe(
                     HTRecipeCodecs.group(),
                     HTRecipeCodecs.FLUID_INPUT.fieldOf("fluid_input").forGetter(HTSolidifierRecipe::input),
                     HTRecipeCodecs.CATALYST.forGetter(HTSolidifierRecipe::catalyst),
-                    HTRecipeCodecs.itemOutput(),
+                    HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTSolidifierRecipe::itemOutput),
                 ).apply(instance, ::HTSolidifierRecipe)
         }
 
@@ -40,18 +39,18 @@ class HTSolidifierRecipe(
             Ingredient.CONTENTS_STREAM_CODEC.toOptional(),
             HTSolidifierRecipe::catalyst,
             HTItemOutput.STREAM_CODEC,
-            { it.itemOutputs[0] },
+            HTSolidifierRecipe::itemOutput,
             ::HTSolidifierRecipe,
         )
     }
 
-    override val itemOutputs: List<HTItemOutput> = listOf(output)
+    override fun isValidOutput(): Boolean = itemOutput.isValid
 
-    override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.SOLIDIFIER
-
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
+    override fun matches(input: HTMachineRecipeInput): Boolean {
         if (!this.input.test(input.getFluid(0))) return false
         val catalystItem: ItemStack = input.getItem(0)
         return catalyst.map { it.test(catalystItem) }.orElse(catalystItem.isEmpty)
     }
+
+    override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.SOLIDIFIER
 }

@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.integration.jei.addIngredients
-import hiiragi283.ragium.integration.jei.addItemOutput
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
@@ -37,7 +36,7 @@ class HTSingleItemRecipeCategory<T : HTSingleItemRecipe>(
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
-            .addItemOutput(recipe, 0)
+            .addItemStack(recipe.itemOutput.get())
     }
 
     override fun getWidth(): Int = 18 * 5 + 8

@@ -9,8 +9,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:dynamite"
+      "items": "ragium:dynamite"
     }
   ]
 }

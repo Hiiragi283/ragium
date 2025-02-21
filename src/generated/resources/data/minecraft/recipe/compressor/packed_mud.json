@@ -4,7 +4,6 @@
     "item": "minecraft:mud"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:packed_mud"
+    "items": "minecraft:packed_mud"
   }
 }

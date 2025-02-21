@@ -24,20 +24,20 @@ object HTMekanismRecipeProvider : RagiumRecipeProvider.ModChild("mekanism") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Yellow Cake -> Yellow Cake Uranium
         HTSingleItemRecipeBuilder
-            .grinder()
+            .grinder(lookup)
             .itemInput(RagiumItems.YELLOW_CAKE)
             .itemOutput(MekanismItems.YELLOW_CAKE_URANIUM, 8)
             .save(output)
         // Yellow Cake Uranium -> Yellow Cake
         HTSingleItemRecipeBuilder
-            .compressor()
+            .compressor(lookup)
             .itemInput(MekanismItems.YELLOW_CAKE_URANIUM, 8)
             .itemOutput(RagiumItems.YELLOW_CAKE)
             .save(output)
 
         // Nutrition Paste -> Meat Ingot
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(MekanismTags.Fluids.NUTRITIONAL_PASTE, 150)
             .itemOutput(RagiumItems.MEAT_INGOT)
             .save(output)

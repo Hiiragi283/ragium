@@ -11,8 +11,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:bee_wax"
+      "items": "ragium:bee_wax"
     }
   ]
 }

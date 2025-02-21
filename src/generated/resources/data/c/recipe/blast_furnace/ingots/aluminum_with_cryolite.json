@@ -11,6 +11,6 @@
   ],
   "item_output": {
     "count": 3,
-    "tag": "c:ingots/aluminum"
+    "items": "#c:ingots/aluminum"
   }
 }

@@ -9,7 +9,7 @@
   },
   "item_outputs": [
     {
-      "tag": "c:gems/cryolite"
+      "items": "#c:gems/cryolite"
     }
   ],
   "second_fluidInput": {

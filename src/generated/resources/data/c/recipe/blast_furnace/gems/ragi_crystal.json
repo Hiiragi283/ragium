@@ -11,6 +11,6 @@
     }
   ],
   "item_output": {
-    "tag": "c:gems/ragi_crystal"
+    "items": "#c:gems/ragi_crystal"
   }
 }

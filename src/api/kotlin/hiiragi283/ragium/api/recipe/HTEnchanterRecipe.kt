@@ -2,12 +2,9 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.createEnchBook
-import hiiragi283.ragium.api.extension.modifyEnchantment
 import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -15,8 +12,6 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.ItemEnchantments
-import net.minecraft.world.level.Level
 import java.util.*
 
 class HTEnchanterRecipe(
@@ -56,21 +51,15 @@ class HTEnchanterRecipe(
         )
     }
 
-    override val itemOutputs: List<HTItemOutput> = listOf(HTItemOutput.of(createEnchBook(enchantment)))
+    override fun isValidOutput(): Boolean = true
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
+    override fun matches(input: HTMachineRecipeInput): Boolean {
         if (input.getItem(0).getEnchantmentLevel(enchantment) > 0) {
             return false
         }
         val second: ItemStack = input.getItem(2)
         return firstInput.test(input, 1) && secondInput.map { it.test(second) }.orElse(second.isEmpty)
     }
-
-    override fun assemble(input: HTMachineRecipeInput, registries: HolderLookup.Provider): ItemStack =
-        input.getItem(0).copyWithCount(1).modifyEnchantment { mutable: ItemEnchantments.Mutable ->
-            mutable.set(enchantment, enchantment.value().maxLevel)
-            mutable.toImmutable()
-        }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.ENCHANTER
 }

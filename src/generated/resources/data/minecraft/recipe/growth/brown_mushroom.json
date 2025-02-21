@@ -2,7 +2,7 @@
   "type": "ragium:growth_chamber",
   "item_output": {
     "count": 2,
-    "id": "minecraft:brown_mushroom"
+    "items": "minecraft:brown_mushroom"
   },
   "seed": {
     "item": "minecraft:brown_mushroom"

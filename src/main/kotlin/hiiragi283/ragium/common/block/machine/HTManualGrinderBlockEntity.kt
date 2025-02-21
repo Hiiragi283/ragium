@@ -84,7 +84,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             .getFirstRecipe(input, level)
             .onSuccess { recipe: HTSingleItemRecipe ->
                 // Drop output
-                ItemHandlerHelper.giveItemToPlayer(player, recipe.assemble(input, level.registryAccess()))
+                ItemHandlerHelper.giveItemToPlayer(player, recipe.itemOutput.get())
                 // Shrink input
                 stackIn.shrink(recipe.input.count)
                 // Play sound

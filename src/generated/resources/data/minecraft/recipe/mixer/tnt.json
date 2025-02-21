@@ -9,8 +9,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "minecraft:tnt"
+      "items": "minecraft:tnt"
     }
   ],
   "second_fluidInput": {

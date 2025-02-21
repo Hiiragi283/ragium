@@ -22,7 +22,7 @@ object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering"
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Treated Wood
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(ItemTags.PLANKS)
             .fluidInput(RagiumFluidTags.CREOSOTE, 125)
             .itemOutput(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!)
@@ -30,14 +30,14 @@ object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering"
 
         // Iron Mechanical Component
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(HTTagPrefix.PLATE, VanillaMaterials.IRON, 2)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemOutput(IEItems.Ingredients.COMPONENT_IRON)
             .save(output)
         // Steel Mechanical Component
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(HTTagPrefix.PLATE, CommonMaterials.STEEL, 2)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemOutput(IEItems.Ingredients.COMPONENT_STEEL)
@@ -45,14 +45,14 @@ object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering"
 
         // Insulating Glass
         HTMultiItemRecipeBuilder
-            .blastFurnace()
+            .blastFurnace(lookup)
             .itemInput(Tags.Items.GLASS_BLOCKS, 2)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemOutput(IEBlocks.StoneDecoration.INSULATING_GLASS, 2)
             .save(output)
 
         // Industrial Hemp
-        HTGrowthChamberRecipeBuilder()
+        HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(IETags.seedsHemp)
             .itemInput(RagiumItemTags.DIRT_SOILS)
             .itemOutput(IETags.fiberHemp, 2)

@@ -9,8 +9,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "minecraft:honey_bottle"
+      "items": "minecraft:honey_bottle"
     }
   ]
 }

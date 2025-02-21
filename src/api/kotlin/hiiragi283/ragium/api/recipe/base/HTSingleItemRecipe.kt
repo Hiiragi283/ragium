@@ -9,7 +9,6 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.level.Level
 import java.util.*
 
 /**
@@ -19,11 +18,11 @@ abstract class HTSingleItemRecipe(
     group: String,
     val input: HTItemIngredient,
     val catalyst: Optional<Ingredient>,
-    itemOutput: HTItemOutput,
+    val itemOutput: HTItemOutput,
 ) : HTMachineRecipeBase(group) {
-    override val itemOutputs: List<HTItemOutput> = listOf(itemOutput)
+    final override fun isValidOutput(): Boolean = itemOutput.isValid
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
+    final override fun matches(input: HTMachineRecipeInput): Boolean {
         if (!this.input.test(input, 0)) return false
         val catalystItem: ItemStack = input.getItem(1)
         return catalyst.map { it.test(catalystItem) }.orElse(catalystItem.isEmpty)
@@ -39,7 +38,7 @@ abstract class HTSingleItemRecipe(
                     HTRecipeCodecs.group(),
                     HTRecipeCodecs.ITEM_INPUT.forGetter(HTSingleItemRecipe::input),
                     HTRecipeCodecs.CATALYST.forGetter(HTSingleItemRecipe::catalyst),
-                    HTRecipeCodecs.itemOutput(),
+                    HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTSingleItemRecipe::itemOutput),
                 ).apply(instance, factory)
         }
 
@@ -51,7 +50,7 @@ abstract class HTSingleItemRecipe(
             Ingredient.CONTENTS_STREAM_CODEC.toOptional(),
             HTSingleItemRecipe::catalyst,
             HTItemOutput.STREAM_CODEC,
-            { it.itemOutputs[0] },
+            HTSingleItemRecipe::itemOutput,
             factory,
         )
 

@@ -16,12 +16,12 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
-object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child() {
+    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Skulls
         fun skull(input: ItemLike, skull: Item) {
             HTMultiItemRecipeBuilder
-                .assembler()
+                .assembler(lookup)
                 .itemInput(Items.SKELETON_SKULL)
                 .itemInput(input, 8)
                 .itemOutput(skull)
@@ -29,7 +29,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
         }
 
         HTSingleItemRecipeBuilder
-            .laser()
+            .laser(lookup)
             .itemInput(Tags.Items.STORAGE_BLOCKS_BONE_MEAL)
             .itemOutput(Items.SKELETON_SKULL)
             .save(output)
@@ -59,14 +59,14 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
 
         // Mushroom Stew
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Tags.Items.MUSHROOMS, 2)
             .milkInput()
             .itemOutput(Items.MUSHROOM_STEW, 2)
             .save(output)
         // Pumpkin Pie
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(Tags.Items.CROPS_PUMPKIN)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemOutput(Items.PUMPKIN_PIE, 2)
@@ -74,7 +74,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
 
         // Sand + Water -> Clay Block
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Tags.Items.SANDS)
             .waterInput()
             .itemOutput(Items.CLAY)
@@ -82,14 +82,14 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child {
 
         // Dirt + Water -> Mud
         HTFluidOutputRecipeBuilder
-            .infuser()
+            .infuser(lookup)
             .itemInput(Items.DIRT)
             .waterInput(250)
             .itemOutput(Items.MUD)
             .save(output)
         // Packed Mud
         HTSingleItemRecipeBuilder
-            .compressor()
+            .compressor(lookup)
             .itemInput(Items.MUD)
             .itemOutput(Items.PACKED_MUD)
             .save(output)

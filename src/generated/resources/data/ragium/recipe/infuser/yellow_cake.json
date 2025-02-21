@@ -10,8 +10,7 @@
   },
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:yellow_cake"
+      "items": "ragium:yellow_cake"
     }
   ]
 }

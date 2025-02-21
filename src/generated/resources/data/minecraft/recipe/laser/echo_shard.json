@@ -5,7 +5,6 @@
     "item": "ragium:sculk_reagent"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:echo_shard"
+    "items": "minecraft:echo_shard"
   }
 }

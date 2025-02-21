@@ -8,7 +8,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
@@ -17,7 +16,7 @@ class HTGrowthChamberRecipe(
     val seed: Ingredient,
     val soil: Ingredient,
     val waterAmount: Int,
-    private val crop: HTItemOutput,
+    val crop: HTItemOutput,
 ) : HTMachineRecipeBase(group) {
     companion object {
         @JvmField
@@ -31,7 +30,7 @@ class HTGrowthChamberRecipe(
                         .intRange(0, Int.MAX_VALUE)
                         .optionalFieldOf("water", 0)
                         .forGetter(HTGrowthChamberRecipe::waterAmount),
-                    HTRecipeCodecs.itemOutput(),
+                    HTRecipeCodecs.ITEM_OUTPUT.forGetter(HTGrowthChamberRecipe::crop),
                 ).apply(instance, ::HTGrowthChamberRecipe)
         }
 
@@ -51,9 +50,9 @@ class HTGrowthChamberRecipe(
         )
     }
 
-    override val itemOutputs: List<HTItemOutput> = listOf(crop)
+    override fun isValidOutput(): Boolean = crop.isValid
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
+    override fun matches(input: HTMachineRecipeInput): Boolean {
         val bool1: Boolean = seed.test(input.getItem(0))
         val bool2: Boolean = soil.test(input.getItem(1))
         val bool3: Boolean = if (waterAmount > 0) {

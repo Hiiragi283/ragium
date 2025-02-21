@@ -1,8 +1,10 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.recipe.base.*
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
+import hiiragi283.ragium.api.recipe.base.HTRecipeType
+import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.Level
 import java.util.*
 
 class HTGrinderRecipe(
@@ -28,10 +30,6 @@ class HTGrinderRecipe(
             else -> Optional.empty()
         }
     }*/
-
-    override val itemOutputs: List<HTItemOutput> = listOf(itemOutput)
-
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = this.input.test(input, 0)
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.GRINDER
 }

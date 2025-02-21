@@ -42,8 +42,8 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import java.util.*
 
-object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+object HTMachineRecipeProvider : RagiumRecipeProvider.Child() {
+    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         assembler(output)
         brewery(output)
         compressor(output)
@@ -62,7 +62,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun assembler(output: RecipeOutput) {
         // Circuit Board
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(RagiumItemTags.PLASTICS)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
@@ -70,7 +70,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Hiiragi283's Head
         HTMultiItemRecipeBuilder
-            .assembler()
+            .assembler(lookup)
             .itemInput(Items.SKELETON_SKULL)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM, 64)
             .itemOutput(
@@ -151,28 +151,28 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun compressor(output: RecipeOutput) {
         // Shaft
         HTSingleItemRecipeBuilder
-            .compressor()
+            .compressor(lookup)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 2)
             .catalyst(RagiumBlocks.SHAFT)
             .itemOutput(RagiumBlocks.SHAFT)
             .saveSuffixed(output, "_from_steel")
 
         HTSingleItemRecipeBuilder
-            .compressor()
+            .compressor(lookup)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
             .catalyst(RagiumBlocks.SHAFT)
             .itemOutput(RagiumBlocks.SHAFT)
             .saveSuffixed(output, "_from_deep_steel")
         // Pulp -> Oak Planks
         HTSingleItemRecipeBuilder
-            .compressor()
+            .compressor(lookup)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.WOOD)
             .catalyst(ItemTags.PLANKS)
             .itemOutput(Items.OAK_PLANKS)
             .save(output)
         // Clay -> 4x Clay Ball
         HTSingleItemRecipeBuilder
-            .compressor()
+            .compressor(lookup)
             .itemInput(Items.CLAY)
             .catalyst(RagiumItems.BALL_PRESS_MOLD)
             .itemOutput(Items.CLAY_BALL, 4)
@@ -229,7 +229,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             count: Int,
             water: Int = 100,
         ) {
-            HTGrowthChamberRecipeBuilder()
+            HTGrowthChamberRecipeBuilder(lookup)
                 .itemInput(seed)
                 .itemInput(soil)
                 .water(water)
@@ -244,7 +244,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             count: Int,
             water: Int = 100,
         ) {
-            HTGrowthChamberRecipeBuilder()
+            HTGrowthChamberRecipeBuilder(lookup)
                 .itemInput(seed)
                 .itemInput(soil)
                 .water(water)
@@ -286,7 +286,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun laser(output: RecipeOutput) {
         // Gilded Blackstone
         HTSingleItemRecipeBuilder
-            .laser()
+            .laser(lookup)
             .itemInput(Items.BLACKSTONE)
             .catalyst(RagiumItems.GLOW_LENS)
             .itemOutput(Items.GILDED_BLACKSTONE)
@@ -294,7 +294,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Enchanted Golden Apply
         HTSingleItemRecipeBuilder
-            .laser()
+            .laser(lookup)
             .itemInput(Items.GOLDEN_APPLE, 8)
             .catalyst(RagiumItems.GLOW_LENS)
             .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
@@ -302,7 +302,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Crying Obsidian
         HTSingleItemRecipeBuilder
-            .laser()
+            .laser(lookup)
             .itemInput(Tags.Items.OBSIDIANS_NORMAL)
             .catalyst(RagiumItems.MAGICAL_LENS)
             .itemOutput(Items.CRYING_OBSIDIAN)
@@ -310,7 +310,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Budding Amethyst
         HTSingleItemRecipeBuilder
-            .laser()
+            .laser(lookup)
             .itemInput(Items.AMETHYST_BLOCK, 4)
             .catalyst(RagiumItems.MAGICAL_LENS)
             .itemOutput(Items.BUDDING_AMETHYST)
@@ -318,7 +318,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Heavy Core
         HTSingleItemRecipeBuilder
-            .laser()
+            .laser(lookup)
             .itemInput(Tags.Items.STORAGE_BLOCKS_NETHERITE)
             .catalyst(RagiumItems.MAGICAL_LENS)
             .itemOutput(Items.HEAVY_CORE)
@@ -330,7 +330,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun mixer(output: RecipeOutput) {
         // Obsidian
         HTFluidOutputRecipeBuilder
-            .mixer()
+            .mixer(lookup)
             .waterInput()
             .fluidInput(Tags.Fluids.LAVA)
             .itemOutput(Items.OBSIDIAN)
@@ -342,27 +342,27 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     private fun refinery(output: RecipeOutput) {
         // Coal -> Crude Oil
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(ItemTags.COALS)
             .fluidOutput(RagiumFluids.CRUDE_OIL, 125)
             .save(output, RagiumAPI.id("crude_oil_from_coal"))
         // Soul XX -> Crude Oil
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumFluids.CRUDE_OIL, 250)
             .save(output, RagiumAPI.id("crude_oil_from_soul"))
         // Crude Oil -> Naphtha + Aromatic Compound
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(RagiumFluids.CRUDE_OIL, 100)
             .fluidOutput(RagiumVirtualFluids.AROMATIC_COMPOUND, 30)
             .fluidOutput(RagiumVirtualFluids.NAPHTHA, 60)
             .save(output)
         // Naphtha -> Polymer Resin + Fuel
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.NAPHTHA.commonTag)
             .itemOutput(RagiumItems.POLYMER_RESIN, 2)
             .fluidOutput(RagiumVirtualFluids.FUEL)
@@ -376,7 +376,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             Tags.Items.GLASS_BLOCKS to Items.GLASS,
         ).forEach { (catalyst: TagKey<Item>, result: ItemLike) ->
             HTSingleItemRecipeBuilder
-                .compressor()
+                .compressor(lookup)
                 .itemInput(RagiumItems.POLYMER_RESIN)
                 .catalyst(catalyst)
                 .itemOutput(result)
@@ -385,27 +385,27 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Biomass -> Alcohol
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.BIOMASS.commonTag)
             .fluidOutput(RagiumVirtualFluids.ETHANOL)
             .save(output)
         // Alcohol + Plant Oil -> Crude Biodiesel
         HTFluidOutputRecipeBuilder
-            .mixer()
+            .mixer(lookup)
             .fluidInput(RagiumVirtualFluids.ETHANOL.commonTag, 400)
             .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, 100)
             .fluidOutput(RagiumVirtualFluids.CRUDE_BIODIESEL, 500)
             .save(output)
         // Crude Biodiesel -> Biodiesel + Glycerin
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.CRUDE_BIODIESEL.commonTag, 500)
             .fluidOutput(RagiumVirtualFluids.BIODIESEL, 400)
             .fluidOutput(RagiumVirtualFluids.GLYCEROL, 100)
             .save(output)
         // Glycerin + Mixture Acid
         HTFluidOutputRecipeBuilder
-            .mixer()
+            .mixer(lookup)
             .fluidInput(RagiumVirtualFluids.GLYCEROL.commonTag, 100)
             .fluidInput(RagiumVirtualFluids.MIXTURE_ACID.commonTag, 300)
             .fluidOutput(RagiumVirtualFluids.NITROGLYCERIN, 100)
@@ -413,20 +413,20 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // XX Log -> Pulp + Sap
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
         // Sap -> Slimeball + Latex
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.SAP.commonTag)
             .itemOutput(Items.SLIME_BALL)
             .fluidOutput(RagiumVirtualFluids.LATEX, 250)
             .saveSuffixed(output, "_from_sap")
         // Latex -> Raw Rubber
-        HTSolidifierRecipeBuilder()
+        HTSolidifierRecipeBuilder(lookup)
             .fluidInput(RagiumVirtualFluids.LATEX.commonTag, 250)
             .catalyst(RagiumItems.BALL_PRESS_MOLD)
             .itemOutput(Items.SLIME_BALL)
@@ -434,14 +434,14 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Crimson Stem -> Crimson Sap
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(ItemTags.CRIMSON_STEMS)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumVirtualFluids.CRIMSON_SAP)
             .savePrefixed(output, "crimson_")
         // Crimson Sap -> Crimson Crystal + Sap
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.CRIMSON_SAP.commonTag)
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
@@ -449,14 +449,14 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Warped Stem -> Warped Sap
         HTFluidOutputRecipeBuilder
-            .extractor()
+            .extractor(lookup)
             .itemInput(ItemTags.WARPED_STEMS)
             .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
             .fluidOutput(RagiumVirtualFluids.WARPED_SAP)
             .savePrefixed(output, "warped_")
         // Warped Sap -> Warped Crystal + Sap
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.WARPED_SAP.commonTag)
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
@@ -464,7 +464,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
         // Creosote -> Slime Ball + Fuel
         HTFluidOutputRecipeBuilder
-            .refinery()
+            .refinery(lookup)
             .fluidInput(RagiumFluidTags.CREOSOTE)
             .itemOutput(Items.SLIME_BALL)
             .fluidOutput(RagiumVirtualFluids.FUEL)
@@ -475,7 +475,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
 
     private fun solidifier(output: RecipeOutput) {
         // Laval + Cobblestone -> Magma Block
-        HTSolidifierRecipeBuilder()
+        HTSolidifierRecipeBuilder(lookup)
             .fluidInput(Tags.Fluids.LAVA)
             .catalyst(Tags.Items.COBBLESTONES)
             .itemOutput(Items.MAGMA_BLOCK)

@@ -4,7 +4,6 @@
     "tag": "c:slag"
   },
   "item_output": {
-    "count": 1,
-    "id": "minecraft:gravel"
+    "items": "minecraft:gravel"
   }
 }
