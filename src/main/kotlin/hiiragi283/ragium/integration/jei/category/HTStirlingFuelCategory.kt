@@ -1,6 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -18,6 +19,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
@@ -59,6 +61,8 @@ class HTStirlingFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSti
     override fun getWidth(): Int = 18 * 5 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
+
+    override fun getRegistryName(recipe: HTStirlingFuelEntry): ResourceLocation? = recipe.input.idOrNull
 
     override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTStirlingFuelEntry> = HTStirlingFuelEntry.CODEC
 }

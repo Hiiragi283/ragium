@@ -17,5 +17,5 @@ class HTLaserAssemblyBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.PRECISION
 
     override val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTSingleItemRecipe> =
-        HTRecipeGetter.Cached(HTRecipeTypes.LASER_ASSEMBLY)
+        HTRecipeGetter.cached(HTRecipeTypes.LASER_ASSEMBLY)
 }

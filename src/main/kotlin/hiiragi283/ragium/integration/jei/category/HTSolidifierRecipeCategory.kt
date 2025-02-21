@@ -1,23 +1,20 @@
 package hiiragi283.ragium.integration.jei.category
 
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTSolidifierRecipe
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
-import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTSolidifierRecipeCategory(guiHelper: IGuiHelper) :
     HTMachineRecipeCategory<HTSolidifierRecipe>(guiHelper, HTMachineType.SOLIDIFIER, 2.5) {
-    override fun getRecipeType(): RecipeType<HTSolidifierRecipe> = RagiumJEIRecipeTypes.SOLIDIFIER
+    override fun getRecipeType(): RecipeType<RecipeHolder<HTSolidifierRecipe>> = RagiumJEIRecipeTypes.SOLIDIFIER
 
-    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTSolidifierRecipe, focuses: IFocusGroup) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTSolidifierRecipe) {
         // Fluid Input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -38,7 +35,4 @@ class HTSolidifierRecipeCategory(guiHelper: IGuiHelper) :
     override fun getWidth(): Int = 18 * 5 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
-
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTSolidifierRecipe> =
-        HTSolidifierRecipe.CODEC.codec()
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.entry.HTSoapEntry
@@ -13,6 +14,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 
 class HTSoapCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSoapEntry> {
     override fun getRecipeType(): RecipeType<HTSoapEntry> = RagiumJEIRecipeTypes.SOAP
@@ -41,6 +43,8 @@ class HTSoapCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTSoapEntry> 
     override fun getWidth(): Int = 18 * 4 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
+
+    override fun getRegistryName(recipe: HTSoapEntry): ResourceLocation? = recipe.input.idOrNull
 
     override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTSoapEntry> = HTSoapEntry.CODEC
 }

@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
@@ -118,16 +119,16 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
         save(recipeOutput, getPrimalId().withSuffix(suffix))
     }
 
+    private fun logWarn(id: ResourceLocation) {
+        LOGGER.debug("Machine recipe: {} will not be saved!", id)
+    }
+
     final override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
         if (isErrored) {
-            LOGGER.warn("Machine recipe: $id will not be saved!")
+            logWarn(id)
             return
         }
-        recipeOutput.accept(
-            fixId(id),
-            createRecipe(),
-            null,
-        )
+        recipeOutput.accept(fixId(id), createRecipe(), null)
     }
 
     protected abstract val prefix: String
@@ -141,5 +142,13 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
     fun export(consumer: (R) -> Unit) {
         if (isErrored) return
         consumer(createRecipe())
+    }
+
+    fun exportNew(id: ResourceLocation, consumer: (RecipeHolder<R>) -> Unit) {
+        if (isErrored) {
+            logWarn(id)
+            return
+        }
+        consumer(RecipeHolder(fixId(id), createRecipe()))
     }
 }

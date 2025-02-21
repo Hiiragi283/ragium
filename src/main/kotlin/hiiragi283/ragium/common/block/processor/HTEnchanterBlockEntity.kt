@@ -32,8 +32,8 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
         ),
     )
 
-    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTEnchanterRecipe> =
-        HTRecipeGetter.Cached(HTRecipeTypes.ENCHANTER)
+    private val recipeCache: HTRecipeGetter<HTMachineRecipeInput, HTEnchanterRecipe> =
+        HTRecipeGetter.cached(HTRecipeTypes.ENCHANTER)
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.PRECISION
 

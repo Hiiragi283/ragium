@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
@@ -107,6 +108,8 @@ interface RagiumAPI {
     //    Misc    //
 
     fun getDynamitePower(): Float
+
+    fun getGrinderOutputCount(key: HTMaterialKey): Int
 
     //    Platform    //
 

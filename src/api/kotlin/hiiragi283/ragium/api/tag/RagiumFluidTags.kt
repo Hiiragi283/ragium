@@ -16,7 +16,16 @@ object RagiumFluidTags {
     val CREOSOTE: TagKey<Fluid> = fluidTagKey(commonId("creosote"))
 
     @JvmField
+    val HYDROFLUORIC_ACID: TagKey<Fluid> = fluidTagKey(commonId("hydrofluoric_acid"))
+
+    @JvmField
     val MEAT: TagKey<Fluid> = fluidTagKey(commonId("meat"))
+
+    @JvmField
+    val OXYGEN: TagKey<Fluid> = fluidTagKey(commonId("oxygen"))
+
+    @JvmField
+    val SULFURIC_ACID: TagKey<Fluid> = fluidTagKey(commonId("sulfuric_acid"))
 
     //    Ragium    //
 

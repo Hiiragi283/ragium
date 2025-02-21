@@ -1,24 +1,21 @@
 package hiiragi283.ragium.integration.jei.category
 
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addFluidStack
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
-import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTGrowthChamberRecipeCategory(guiHelper: IGuiHelper) :
     HTMachineRecipeCategory<HTGrowthChamberRecipe>(guiHelper, HTMachineType.GROWTH_CHAMBER, 3.5) {
-    override fun getRecipeType(): RecipeType<HTGrowthChamberRecipe> = RagiumJEIRecipeTypes.GROWTH_CHAMBER
+    override fun getRecipeType(): RecipeType<RecipeHolder<HTGrowthChamberRecipe>> = RagiumJEIRecipeTypes.GROWTH_CHAMBER
 
-    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTGrowthChamberRecipe, focuses: IFocusGroup) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTGrowthChamberRecipe) {
         // Seed Input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -48,7 +45,4 @@ class HTGrowthChamberRecipeCategory(guiHelper: IGuiHelper) :
     override fun getWidth(): Int = 18 * 6 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
-
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTGrowthChamberRecipe> =
-        HTGrowthChamberRecipe.CODEC.codec()
 }

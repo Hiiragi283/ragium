@@ -39,8 +39,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         listOf(inputTank, firstOutput, secondOutput),
     )
 
-    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTRefineryRecipe> =
-        HTRecipeGetter.Cached(HTRecipeTypes.REFINERY)
+    private val recipeCache: HTRecipeGetter<HTMachineRecipeInput, HTRefineryRecipe> =
+        HTRecipeGetter.cached(HTRecipeTypes.REFINERY)
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)

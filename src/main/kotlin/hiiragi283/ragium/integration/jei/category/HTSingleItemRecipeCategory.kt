@@ -1,27 +1,22 @@
 package hiiragi283.ragium.integration.jei.category
 
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
-import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTSingleItemRecipeCategory<T : HTSingleItemRecipe>(
     guiHelper: IGuiHelper,
     machine: HTMachineType,
-    private val recipeType: RecipeType<T>,
-    private val recipeType1: HTRecipeType<T>,
+    private val recipeType: RecipeType<RecipeHolder<T>>,
 ) : HTMachineRecipeCategory<T>(guiHelper, machine, 2.5) {
-    override fun getRecipeType(): RecipeType<T> = recipeType
+    override fun getRecipeType(): RecipeType<RecipeHolder<T>> = recipeType
 
-    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: T, focuses: IFocusGroup) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: T) {
         // Item Input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -42,6 +37,4 @@ class HTSingleItemRecipeCategory<T : HTSingleItemRecipe>(
     override fun getWidth(): Int = 18 * 5 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
-
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<T> = recipeType1.serializer.codec().codec()
 }

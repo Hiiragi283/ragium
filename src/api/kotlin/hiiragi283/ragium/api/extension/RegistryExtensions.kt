@@ -20,6 +20,7 @@ import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。
@@ -44,6 +45,8 @@ val <T : Any> Holder<T>.keyOrThrow: ResourceKey<T> get() = unwrapKey().orElseThr
  * @throws [Holder.unwrapKey]が空の場合
  */
 val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = keyOrThrow.location()
+
+val <T : Any> Holder<T>.idOrNull: ResourceLocation? get() = unwrapKey().map(ResourceKey<T>::location).getOrNull()
 
 /**
  * 指定した[value]が一致するか判定します。

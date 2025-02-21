@@ -41,8 +41,8 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         listOf(firstTank, secondTank, outputTank),
     )
 
-    private val recipeCache: HTRecipeGetter.Cached<HTMachineRecipeInput, HTMixerRecipe> =
-        HTRecipeGetter.Cached(HTRecipeTypes.MIXER)
+    private val recipeCache: HTRecipeGetter<HTMachineRecipeInput, HTMixerRecipe> =
+        HTRecipeGetter.cached(HTRecipeTypes.MIXER)
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)

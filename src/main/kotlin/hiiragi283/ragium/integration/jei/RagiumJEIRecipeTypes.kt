@@ -3,10 +3,13 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
 import hiiragi283.ragium.integration.jei.entry.HTSoapEntry
 import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
 import mezz.jei.api.recipe.RecipeType
+import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.item.crafting.RecipeType as MCRecipeType
 
 object RagiumJEIRecipeTypes {
     @JvmField
@@ -21,61 +24,52 @@ object RagiumJEIRecipeTypes {
     val SOAP: RecipeType<HTSoapEntry> =
         RecipeType.create(RagiumAPI.MOD_ID, "soap", HTSoapEntry::class.java)
 
-    //    Machine Recipe    //
-
-    @JvmField
-    val ASSEMBLER: RecipeType<HTAssemblerRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "assembler", HTAssemblerRecipe::class.java)
-
-    @JvmField
-    val BLAST_FURNACE: RecipeType<HTBlastFurnaceRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "blast_furnace", HTBlastFurnaceRecipe::class.java)
-
-    @JvmField
-    val BREWERY: RecipeType<HTBreweryRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "brewery", HTBreweryRecipe::class.java)
-
-    @JvmField
-    val COMPRESSOR: RecipeType<HTCompressorRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "compressor", HTCompressorRecipe::class.java)
-
-    @JvmField
-    val ENCHANTER: RecipeType<HTEnchanterRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "enchanter", HTEnchanterRecipe::class.java)
-
-    @JvmField
-    val EXTRACTOR: RecipeType<HTExtractorRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "extractor", HTExtractorRecipe::class.java)
-
-    @JvmField
-    val GRINDER: RecipeType<HTGrinderRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "grinder", HTGrinderRecipe::class.java)
-
-    @JvmField
-    val GROWTH_CHAMBER: RecipeType<HTGrowthChamberRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "growth_chamber", HTGrowthChamberRecipe::class.java)
-
-    @JvmField
-    val INFUSER: RecipeType<HTInfuserRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "infuser", HTInfuserRecipe::class.java)
-
-    @JvmField
-    val LASER_ASSEMBLY: RecipeType<HTLaserAssemblyRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "laser_assembly", HTLaserAssemblyRecipe::class.java)
-
-    @JvmField
-    val MIXER: RecipeType<HTMixerRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "mixer", HTMixerRecipe::class.java)
-
-    @JvmField
-    val REFINERY: RecipeType<HTRefineryRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "refinery", HTRefineryRecipe::class.java)
-
-    @JvmField
-    val SOLIDIFIER: RecipeType<HTSolidifierRecipe> =
-        RecipeType.create(RagiumAPI.MOD_ID, "solidifier", HTSolidifierRecipe::class.java)
-
     @JvmField
     val STIRLING: RecipeType<HTStirlingFuelEntry> =
         RecipeType.create(RagiumAPI.MOD_ID, "stirling", HTStirlingFuelEntry::class.java)
+
+    //    Machine Recipe    //
+
+    @JvmStatic
+    private fun <R : HTMachineRecipeBase> create(recipeType: MCRecipeType<R>): RecipeType<RecipeHolder<R>> =
+        RecipeType.createFromVanilla(recipeType)
+
+    @JvmField
+    val ASSEMBLER: RecipeType<RecipeHolder<HTAssemblerRecipe>> = create(HTRecipeTypes.ASSEMBLER)
+
+    @JvmField
+    val BLAST_FURNACE: RecipeType<RecipeHolder<HTBlastFurnaceRecipe>> = create(HTRecipeTypes.BLAST_FURNACE)
+
+    @JvmField
+    val BREWERY: RecipeType<RecipeHolder<HTBreweryRecipe>> = create(HTRecipeTypes.BREWERY)
+
+    @JvmField
+    val COMPRESSOR: RecipeType<RecipeHolder<HTCompressorRecipe>> = create(HTRecipeTypes.COMPRESSOR)
+
+    @JvmField
+    val ENCHANTER: RecipeType<RecipeHolder<HTEnchanterRecipe>> = create(HTRecipeTypes.ENCHANTER)
+
+    @JvmField
+    val EXTRACTOR: RecipeType<RecipeHolder<HTExtractorRecipe>> = create(HTRecipeTypes.EXTRACTOR)
+
+    @JvmField
+    val GRINDER: RecipeType<RecipeHolder<HTGrinderRecipe>> = create(HTRecipeTypes.GRINDER)
+
+    @JvmField
+    val GROWTH_CHAMBER: RecipeType<RecipeHolder<HTGrowthChamberRecipe>> = create(HTRecipeTypes.GROWTH_CHAMBER)
+
+    @JvmField
+    val INFUSER: RecipeType<RecipeHolder<HTInfuserRecipe>> = create(HTRecipeTypes.INFUSER)
+
+    @JvmField
+    val LASER_ASSEMBLY: RecipeType<RecipeHolder<HTLaserAssemblyRecipe>> = create(HTRecipeTypes.LASER_ASSEMBLY)
+
+    @JvmField
+    val MIXER: RecipeType<RecipeHolder<HTMixerRecipe>> = create(HTRecipeTypes.MIXER)
+
+    @JvmField
+    val REFINERY: RecipeType<RecipeHolder<HTRefineryRecipe>> = create(HTRecipeTypes.REFINERY)
+
+    @JvmField
+    val SOLIDIFIER: RecipeType<RecipeHolder<HTSolidifierRecipe>> = create(HTRecipeTypes.SOLIDIFIER)
 }

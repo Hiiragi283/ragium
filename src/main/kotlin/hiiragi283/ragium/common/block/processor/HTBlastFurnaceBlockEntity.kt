@@ -25,7 +25,7 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
 
     override val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTMultiItemRecipe> =
-        HTRecipeGetter.Cached(HTRecipeTypes.BLAST_FURNACE)
+        HTRecipeGetter.cached(HTRecipeTypes.BLAST_FURNACE)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         validateMultiblock(this, null).getOrThrow()

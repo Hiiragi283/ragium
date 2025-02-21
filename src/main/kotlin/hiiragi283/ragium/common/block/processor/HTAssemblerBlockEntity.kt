@@ -17,5 +17,5 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
 
     override val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTMultiItemRecipe> =
-        HTRecipeGetter.Cached(HTRecipeTypes.ASSEMBLER)
+        HTRecipeGetter.cached(HTRecipeTypes.ASSEMBLER)
 }

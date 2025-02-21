@@ -16,17 +16,19 @@ import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTEnchanterRecipe> {
-    override fun getRecipeType(): RecipeType<HTEnchanterRecipe> = RagiumJEIRecipeTypes.ENCHANTER
+class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<RecipeHolder<HTEnchanterRecipe>> {
+    override fun getRecipeType(): RecipeType<RecipeHolder<HTEnchanterRecipe>> = RagiumJEIRecipeTypes.ENCHANTER
 
     override fun getTitle(): Component = HTMachineType.ARCANE_ENCHANTER.text
 
     override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.ARCANE_ENCHANTER)
 
     @Suppress("DEPRECATION")
-    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTEnchanterRecipe, focuses: IFocusGroup) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, holder: RecipeHolder<HTEnchanterRecipe>, focuses: IFocusGroup) {
+        val recipe: HTEnchanterRecipe = holder.value
         // Target Item
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -54,7 +56,7 @@ class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HT
             .addItemStack(createEnchBook(recipe.enchantment))
     }
 
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTEnchanterRecipe, focuses: IFocusGroup) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<HTEnchanterRecipe>, focuses: IFocusGroup) {
         builder.addRecipeArrow().setPosition(getPosition(3.5), getPosition(0))
     }
 
@@ -62,6 +64,6 @@ class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HT
 
     override fun getHeight(): Int = 18 * 1 + 8
 
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTEnchanterRecipe> =
-        HTEnchanterRecipe.CODEC.codec()
+    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<RecipeHolder<HTEnchanterRecipe>> =
+        codecHelper.getRecipeHolderCodec()
 }

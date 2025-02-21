@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
@@ -53,6 +54,8 @@ class InternalRagiumAPI : RagiumAPI {
     //    Misc    //
 
     override fun getDynamitePower(): Float = RagiumConfig.DYNAMITE_POWER.get().toFloat()
+
+    override fun getGrinderOutputCount(key: HTMaterialKey): Int = RagiumConfig.getGrinderRawCountMap()[key] ?: 1
 
     //    Platform    //
 

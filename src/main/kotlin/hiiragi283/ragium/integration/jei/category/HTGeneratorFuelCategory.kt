@@ -13,6 +13,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 class HTGeneratorFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTGeneratorFuelEntry> {
@@ -46,6 +47,9 @@ class HTGeneratorFuelCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<HTGe
     override fun getWidth(): Int = 18 * 5 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
+
+    override fun getRegistryName(recipe: HTGeneratorFuelEntry): ResourceLocation =
+        recipe.fuelTag.location.withPrefix("${recipe.machine.serializedName}/")
 
     override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTGeneratorFuelEntry> =
         HTGeneratorFuelEntry.CODEC

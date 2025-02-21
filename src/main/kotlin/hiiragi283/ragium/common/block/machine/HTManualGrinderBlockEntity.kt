@@ -10,11 +10,11 @@ import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeConverters
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.recipe.HTRecipeConverters
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
@@ -72,9 +72,8 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         return InteractionResult.sidedSuccess(level.isClientSide)
     }
 
-    private val recipeGetter: HTRecipeGetter.Listed<HTMachineRecipeInput, HTGrinderRecipe> = HTRecipeGetter.Listed(
-        HTRecipeConverters::grinder,
-    )
+    private val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, HTGrinderRecipe> =
+        HTRecipeGetter.listed(HTRecipeConverters::grinder)
 
     private fun process(level: Level, pos: BlockPos, player: Player) {
         // Find matching recipe
