@@ -341,10 +341,24 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(CommonMaterials.URANIUM, "Uranium")
         add(CommonMaterials.WOOD, "Wood")
         add(CommonMaterials.ZINC, "Zinc")
+
         add(IntegrationMaterials.BLACK_QUARTZ, "Black Quartz")
+
+        add(IntegrationMaterials.COPPER_ALLOY, "Copper Alloy")
+        add(IntegrationMaterials.ENERGETIC_ALLOY, "Energetic Alloy")
+        add(IntegrationMaterials.VIBRANT_ALLOY, "Vibrant Alloy")
+        add(IntegrationMaterials.REDSTONE_ALLOY, "Redstone Alloy")
+        add(IntegrationMaterials.CONDUCTIVE_ALLOY, "Conductive Alloy")
+        add(IntegrationMaterials.PULSATING_ALLOY, "Pulsating Alloy")
+        add(IntegrationMaterials.DARK_STEEL, "Dark Steel")
+        add(IntegrationMaterials.SOULARIUM, "Soularium")
+        add(IntegrationMaterials.END_STEEL, "End Steel")
+
         add(IntegrationMaterials.DARK_GEM, "Dark Gem")
+
         add(IntegrationMaterials.REFINED_GLOWSTONE, "Refined Glowstone")
         add(IntegrationMaterials.REFINED_OBSIDIAN, "Refined Obsidian")
+
         add(RagiumMaterials.DEEP_STEEL, "Deep Steel")
         add(RagiumMaterials.ECHORIUM, "Echorium")
         add(RagiumMaterials.FIERY_COAL, "Fiery Coal")

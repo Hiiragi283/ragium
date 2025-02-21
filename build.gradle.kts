@@ -64,6 +64,7 @@ repositories {
     maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") {
         content { includeGroup("com.klikli_dev") }
     }
+    maven(url = "https://maven.rover656.dev/releases")
     mavenCentral()
 }
 

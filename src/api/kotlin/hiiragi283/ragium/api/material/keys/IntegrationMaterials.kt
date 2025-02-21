@@ -11,6 +11,53 @@ object IntegrationMaterials {
     @JvmField
     val BLACK_QUARTZ: HTMaterialKey = HTMaterialKey.of("black_quartz")
 
+    //    Ender IO    //
+
+    @JvmField
+    val COPPER_ALLOY: HTMaterialKey = HTMaterialKey.of("copper_alloy")
+
+    @JvmField
+    val ENERGETIC_ALLOY: HTMaterialKey = HTMaterialKey.of("energetic_alloy")
+
+    @JvmField
+    val VIBRANT_ALLOY: HTMaterialKey = HTMaterialKey.of("vibrant_alloy")
+
+    @JvmField
+    val REDSTONE_ALLOY: HTMaterialKey = HTMaterialKey.of("redstone_alloy")
+
+    @JvmField
+    val CONDUCTIVE_ALLOY: HTMaterialKey = HTMaterialKey.of("conductive_alloy")
+
+    @JvmField
+    val PULSATING_ALLOY: HTMaterialKey = HTMaterialKey.of("pulsating_alloy")
+
+    @JvmField
+    val DARK_STEEL: HTMaterialKey = HTMaterialKey.of("dark_steel")
+
+    @JvmField
+    val SOULARIUM: HTMaterialKey = HTMaterialKey.of("soularium")
+
+    @JvmField
+    val END_STEEL: HTMaterialKey = HTMaterialKey.of("end_steel")
+
+    @JvmField
+    val PULSATING_CRYSTAL: HTMaterialKey = HTMaterialKey.of("pulsating_crystal")
+
+    @JvmField
+    val VIBRANT_CRYSTAL: HTMaterialKey = HTMaterialKey.of("vibrant_crystal")
+
+    @JvmField
+    val ENDER_CRYSTAL: HTMaterialKey = HTMaterialKey.of("ender_crystal")
+
+    @JvmField
+    val ENTICING_CRYSTAL: HTMaterialKey = HTMaterialKey.of("enticing_crystal")
+
+    @JvmField
+    val WEATHER_CRYSTAL: HTMaterialKey = HTMaterialKey.of("weather_crystal")
+
+    @JvmField
+    val PRESCIENT_CRYSTAL: HTMaterialKey = HTMaterialKey.of("prescient_crystal")
+
     //    Evil Craft    //
 
     @JvmField

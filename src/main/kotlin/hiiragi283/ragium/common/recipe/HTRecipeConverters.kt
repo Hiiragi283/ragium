@@ -50,7 +50,7 @@ object HTRecipeConverters {
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
         HTSingleItemRecipeBuilder
             .compressor()
-            .itemInput(mainPrefix, key)
+            .itemInput(mainPrefix, key, 4)
             .catalyst(RagiumItemTags.GEAR_MOLDS)
             .itemOutput(output)
             .export(consumer)
@@ -85,7 +85,7 @@ object HTRecipeConverters {
     @JvmStatic
     private fun compressorRod(material: HTTypedMaterial, consumer: (HTCompressorRecipe) -> Unit) {
         val (type: HTMaterialType, key: HTMaterialKey) = material
-        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.ROD, key)
+        val output: HTItemOutput = HTItemOutput.of(HTTagPrefix.ROD, key, 2)
         if (!output.isValid(false)) return
         val mainPrefix: HTTagPrefix = type.getMainPrefix() ?: return
         HTSingleItemRecipeBuilder

@@ -23,15 +23,11 @@ import hiiragi283.ragium.common.fluid.HTDivingGoggleFluidHandler
 import hiiragi283.ragium.common.fluid.HTFluidCubeFluidHandler
 import hiiragi283.ragium.common.fluid.HTJetpackFluidHandler
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.inventory.HTPotionBundleContainerMenu
 import hiiragi283.ragium.common.network.HTPotionBundlePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.SimpleMenuProvider
-import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -53,7 +49,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
-import net.neoforged.neoforge.network.handling.IPayloadContext
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.RegisterEvent
@@ -129,6 +124,22 @@ internal object RagiumModEvents {
         event.register(VanillaMaterials.REDSTONE, HTMaterialType.MINERAL)
 
         event.register(IntegrationMaterials.BLACK_QUARTZ, HTMaterialType.GEM)
+
+        event.register(IntegrationMaterials.COPPER_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.ENERGETIC_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.VIBRANT_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.REDSTONE_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.CONDUCTIVE_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.PULSATING_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.DARK_STEEL, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.SOULARIUM, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.END_STEEL, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.PULSATING_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.VIBRANT_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.ENDER_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.ENTICING_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.WEATHER_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.PRESCIENT_CRYSTAL, HTMaterialType.GEM)
 
         event.register(IntegrationMaterials.DARK_GEM, HTMaterialType.GEM)
 
@@ -257,12 +268,8 @@ internal object RagiumModEvents {
             FluidHandlerItemStack(RagiumComponentTypes.FLUID_CONTENT, stack, capacity)
         }
 
-        registerFluid(RagiumItems.DIVING_GOGGLE) { stack: ItemStack, capacity: Int ->
-            HTDivingGoggleFluidHandler(stack, capacity)
-        }
-        registerFluid(RagiumItems.JETPACK) { stack: ItemStack, capacity: Int ->
-            HTJetpackFluidHandler(stack, capacity)
-        }
+        registerFluid(RagiumItems.DIVING_GOGGLE, transform = ::HTDivingGoggleFluidHandler)
+        registerFluid(RagiumItems.JETPACK, transform = ::HTJetpackFluidHandler)
 
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
@@ -289,19 +296,8 @@ internal object RagiumModEvents {
         register.playToServer(
             HTPotionBundlePacket.TYPE,
             HTPotionBundlePacket.STREAM_CODEC,
-        ) { payload: HTPotionBundlePacket, context: IPayloadContext ->
-            context.player().openMenu(
-                SimpleMenuProvider(
-                    { containerId: Int, inventory: Inventory, _: Player ->
-                        HTPotionBundleContainerMenu(
-                            containerId,
-                            inventory,
-                        )
-                    },
-                    RagiumItems.POTION_BUNDLE.get().description,
-                ),
-            )
-        }
+            HTPotionBundlePacket::onReceived,
+        )
 
         LOGGER.info("Registered C2S Networking!")
     }

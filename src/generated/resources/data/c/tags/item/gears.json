@@ -4,9 +4,11 @@
     "#c:gears/deep_steel",
     "#c:gears/diamond",
     "#c:gears/emerald",
+    "#c:gears/energetic_alloy",
     "#c:gears/gold",
     "#c:gears/iron",
     "#c:gears/netherite",
-    "#c:gears/steel"
+    "#c:gears/steel",
+    "#c:gears/vibrant_alloy"
   ]
 }

@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 
-class HTMagnetItem(properties: Properties) : Item(properties) {
+class HTMagnetItem(properties: Properties) : Item(properties.stacksTo(1)) {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         if (!level.isClientSide && player.isShiftKeyDown) {
             val stack: ItemStack = player.getItemInHand(usedHand)

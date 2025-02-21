@@ -5,6 +5,7 @@ import aztech.modern_industrialization.materials.MIMaterials
 import aztech.modern_industrialization.materials.part.MIParts
 import blusunrize.immersiveengineering.api.wires.WireType
 import blusunrize.immersiveengineering.common.register.IEItems
+import com.enderio.base.common.init.EIOItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.asHolder
@@ -95,6 +96,8 @@ class RagiumItemTagProvider(
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IEItems.Misc.WIRE_COILS[WireType.STEEL])
         addMaterialTag(HTTagPrefix.COIL, VanillaMaterials.COPPER, IEItems.Misc.WIRE_COILS[WireType.COPPER])
+        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, EIOItems.GEAR_ENERGIZED)
+        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.VIBRANT_ALLOY, EIOItems.GEAR_VIBRANT)
         addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, MIMaterials.COKE.getPart(MIParts.GEM), false)
         addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP, false)
 

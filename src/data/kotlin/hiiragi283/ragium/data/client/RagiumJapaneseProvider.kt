@@ -321,10 +321,24 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(CommonMaterials.URANIUM, "ウラニウム")
         add(CommonMaterials.WOOD, "木材")
         add(CommonMaterials.ZINC, "亜鉛")
+
         add(IntegrationMaterials.BLACK_QUARTZ, "黒水晶")
+
+        add(IntegrationMaterials.COPPER_ALLOY, "銅合金")
+        add(IntegrationMaterials.ENERGETIC_ALLOY, "エナジェティック合金")
+        add(IntegrationMaterials.VIBRANT_ALLOY, "ヴァイブラント合金")
+        add(IntegrationMaterials.REDSTONE_ALLOY, "レッドストーン合金")
+        add(IntegrationMaterials.CONDUCTIVE_ALLOY, "伝導合金")
+        add(IntegrationMaterials.PULSATING_ALLOY, "脈動合金")
+        add(IntegrationMaterials.DARK_STEEL, "ダークスチール")
+        add(IntegrationMaterials.SOULARIUM, "ソウラリウム")
+        add(IntegrationMaterials.END_STEEL, "エンドスチール")
+
         add(IntegrationMaterials.DARK_GEM, "ダークジェム")
+
         add(IntegrationMaterials.REFINED_GLOWSTONE, "精製グロウストーン")
         add(IntegrationMaterials.REFINED_OBSIDIAN, "精製黒曜石")
+
         add(RagiumMaterials.DEEP_STEEL, "深層鋼")
         add(RagiumMaterials.ECHORIUM, "エコリウム")
         add(RagiumMaterials.FIERY_COAL, "燃え盛る石炭")
