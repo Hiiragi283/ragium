@@ -18,19 +18,18 @@ class HTMachineRecipeInput private constructor(
     companion object {
         @JvmStatic
         fun of(enchantments: ItemEnchantments, items: List<ItemStack>, fluids: List<FluidStack>): HTMachineRecipeInput =
-            HTMachineRecipeInput(enchantments, items, fluids)
+            HTMachineRecipeInput(enchantments, items.map(ItemStack::copy), fluids.map(FluidStack::copy))
 
         @JvmStatic
-        fun of(enchantments: ItemEnchantments, vararg items: ItemStack): HTMachineRecipeInput =
-            HTMachineRecipeInput(enchantments, listOf(*items), listOf())
+        fun of(enchantments: ItemEnchantments, vararg items: ItemStack): HTMachineRecipeInput = of(enchantments, listOf(*items), listOf())
 
         @JvmStatic
         fun of(enchantments: ItemEnchantments, vararg fluids: FluidStack): HTMachineRecipeInput =
-            HTMachineRecipeInput(enchantments, listOf(), listOf(*fluids))
+            of(enchantments, listOf(), listOf(*fluids))
 
         @JvmStatic
         fun of(enchantments: ItemEnchantments, item: ItemStack, fluid: FluidStack): HTMachineRecipeInput =
-            HTMachineRecipeInput(enchantments, listOf(item), listOf(fluid))
+            of(enchantments, listOf(item), listOf(fluid))
     }
 
     override fun getItem(index: Int): ItemStack = items.getOrNull(index) ?: ItemStack.EMPTY

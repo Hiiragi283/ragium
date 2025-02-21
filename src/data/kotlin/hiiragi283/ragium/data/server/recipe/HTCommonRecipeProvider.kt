@@ -106,6 +106,18 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .saveSuffixed(output, "_with_coke")
         // Deep Steel
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 16)
+            .itemOutput(RagiumItems.DEEPANT_REAGENT)
+            .save(output)
+
+        HTFluidOutputRecipeBuilder
+            .extractor()
+            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 4)
+            .itemOutput(RagiumItems.DEEPANT_REAGENT)
+            .save(output)
+
         HTMultiItemRecipeBuilder
             .blastFurnace()
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL)

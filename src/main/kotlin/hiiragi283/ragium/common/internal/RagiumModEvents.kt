@@ -63,7 +63,6 @@ internal object RagiumModEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun registerMaterial(event: HTRegisterMaterialEvent) {
-        event.register(CommonMaterials.ALUMINA, HTMaterialType.DUST)
         event.register(CommonMaterials.ALUMINUM, HTMaterialType.METAL)
         event.register(CommonMaterials.ANTIMONY, HTMaterialType.METAL)
         event.register(CommonMaterials.BERYLLIUM, HTMaterialType.METAL)
@@ -72,6 +71,7 @@ internal object RagiumModEvents {
         event.register(CommonMaterials.BRASS, HTMaterialType.ALLOY)
         event.register(CommonMaterials.BRONZE, HTMaterialType.ALLOY)
         event.register(CommonMaterials.CADMIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.CALCITE, HTMaterialType.DUST)
         event.register(CommonMaterials.CARBON, HTMaterialType.DUST)
         event.register(CommonMaterials.CHROMIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.COAL_COKE, HTMaterialType.GEM)

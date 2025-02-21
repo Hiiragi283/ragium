@@ -1,11 +1,9 @@
 {
   "type": "ragium:grinder",
   "item_input": {
-    "count": 4,
     "item": "minecraft:calcite"
   },
   "item_output": {
-    "count": 1,
-    "id": "ragium:alkali_reagent"
+    "tag": "c:dusts/calcite"
   }
 }

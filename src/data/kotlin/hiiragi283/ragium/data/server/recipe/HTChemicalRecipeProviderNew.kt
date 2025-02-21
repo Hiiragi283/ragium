@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -22,14 +23,69 @@ import net.neoforged.neoforge.common.Tags
 
 object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        water(output)
+
         nitrogen(output)
+        oxygen(output)
         fluorine(output)
 
+        alkali(output)
         aluminum(output)
         sulfur(output)
 
         slag(output)
         uranium(output)
+    }
+
+    //    Water    //
+
+    private fun water(output: RecipeOutput) {
+        // Snow Block -> 4x Snow Ball
+        HTSingleItemRecipeBuilder
+            .compressor()
+            .itemInput(Items.SNOW_BLOCK)
+            .catalyst(RagiumItems.BALL_PRESS_MOLD)
+            .itemOutput(Items.SNOWBALL, 4)
+            .saveSuffixed(output, "_from_block")
+        // Water -> Snowball
+        HTSolidifierRecipeBuilder()
+            .waterInput(250)
+            .catalyst(RagiumItems.BALL_PRESS_MOLD)
+            .itemOutput(Items.SNOWBALL)
+            .save(output)
+
+        // Water -> Ice
+        HTSolidifierRecipeBuilder()
+            .waterInput()
+            .itemOutput(Items.ICE)
+            .save(output)
+        // Blue Ice -> 9x Packed Ice
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Items.BLUE_ICE)
+            .itemOutput(Items.PACKED_ICE, 9)
+            .save(output)
+        // Packed Ice -> 9x Ice
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Items.PACKED_ICE)
+            .itemOutput(Items.ICE, 9)
+            .save(output)
+
+        // Frozen Reagent
+        HTFluidOutputRecipeBuilder
+            .extractor()
+            .itemInput(Items.PACKED_ICE)
+            .itemOutput(RagiumItems.FROZEN_REAGENT)
+            .saveSuffixed(output, "_from_packed_ice")
+
+        // Ice
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, Items.ICE)
+            .requires(Tags.Items.BUCKETS_WATER)
+            .requires(RagiumItems.FROZEN_REAGENT)
+            .unlockedBy("has_reagent", has(RagiumItems.FROZEN_REAGENT))
+            .savePrefixed(output)
     }
 
     //    Nitrogen    //
@@ -40,7 +96,7 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child {
             .infuser()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
             .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag, 500)
-            .itemOutput(RagiumItems.ALKALI_REAGENT)
+            .itemOutput(RagiumItems.SLAG)
             .fluidOutput(RagiumVirtualFluids.NITRIC_ACID, 500)
             .save(output, RagiumAPI.id("nitric_acid"))
 
@@ -75,41 +131,92 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child {
             .save(output)
     }
 
+    //    Oxygen    //
+
+    private fun oxygen(output: RecipeOutput) {
+        // Air -> N2 + O2
+        HTFluidOutputRecipeBuilder
+            .refinery()
+            .fluidInput(RagiumVirtualFluids.AIR.commonTag, 50)
+            .fluidOutput(RagiumVirtualFluids.OXYGEN, 10)
+            .fluidOutput(RagiumVirtualFluids.NITROGEN, 40)
+            .save(output)
+        // Rocket Fuel
+        HTFluidOutputRecipeBuilder
+            .mixer()
+            .fluidInput(RagiumVirtualFluids.HYDROGEN.commonTag, 200)
+            .fluidInput(RagiumVirtualFluids.OXYGEN.commonTag, 100)
+            .fluidOutput(RagiumVirtualFluids.ROCKET_FUEL, 300)
+            .save(output)
+    }
+
     //    Fluorine    //
 
     private fun fluorine(output: RecipeOutput) {
     }
 
+    //    Alkali    //
+
+    private fun alkali(output: RecipeOutput) {
+        // Calcite -> Calcite Dust
+        HTSingleItemRecipeBuilder
+            .grinder()
+            .itemInput(Items.CALCITE)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.CALCITE)
+            .save(output)
+
+        // Ash + Water -> Alkali Solution
+        HTFluidOutputRecipeBuilder
+            .infuser()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ASH)
+            .waterInput(250)
+            .fluidOutput(RagiumVirtualFluids.ALKALI_SOLUTION, 250)
+            .saveSuffixed(output, "_from_ash")
+        // Calcite + Water -> Alkali Solution
+        HTFluidOutputRecipeBuilder
+            .infuser()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.CALCITE)
+            .waterInput(500)
+            .fluidOutput(RagiumVirtualFluids.ALKALI_SOLUTION, 500)
+            .saveSuffixed(output, "_from_calcite")
+
+        // Ash + Seed Oil -> Soap
+        HTFluidOutputRecipeBuilder
+            .infuser()
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ASH)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, 250)
+            .itemOutput(RagiumItems.SOAP, 2)
+            .saveSuffixed(output, "_from_ash")
+        // Alkali Solution + Seed Oil -> Soap
+        HTFluidOutputRecipeBuilder
+            .mixer()
+            .fluidInput(RagiumVirtualFluids.ALKALI_SOLUTION.commonTag, 125)
+            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, 125)
+            .itemOutput(RagiumItems.SOAP)
+            .saveSuffixed(output, "_from_alkali")
+    }
+
     //    Aluminum    //
 
     private fun aluminum(output: RecipeOutput) {
-        // Alkali + Water -> Alkali Solution
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(RagiumItems.ALKALI_REAGENT)
-            .waterInput()
-            .fluidOutput(RagiumVirtualFluids.ALKALI_SOLUTION)
-            .save(output)
-
-        // 8x Netherrack -> 6x Bauxite + 2x Sulfur
+        // 8x Netherrack -> 2x Bauxite + 2x Sulfur
         HTSingleItemRecipeBuilder
             .grinder()
             .itemInput(Items.NETHERRACK, 8)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 4)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 2)
             .save(output)
-        // Bauxite + Lapis solution -> Alumina + Water
+        // Bauxite + Lapis solution -> Alumina Solution
         HTFluidOutputRecipeBuilder
             .infuser()
             .itemInput(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
-            .fluidInput(RagiumVirtualFluids.ALKALI_SOLUTION.commonTag)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
-            .waterOutput()
+            .fluidInput(RagiumVirtualFluids.ALKALI_SOLUTION.commonTag, 400)
+            .fluidOutput(RagiumVirtualFluids.ALUMINA_SOLUTION, 400)
             .save(output)
-        // Alumina + 4x Coal -> Aluminum Ingot
+        // Alumina Solution + 4x Coal -> Aluminum Ingot
         HTMultiItemRecipeBuilder
             .blastFurnace()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
             .itemInput(ItemTags.COALS, 4)
+            .fluidInput(RagiumVirtualFluids.ALUMINA_SOLUTION.commonTag)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
             .saveSuffixed(output, "_with_coal")
 
@@ -124,8 +231,8 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child {
         // Alumina + Cryolite -> 3x Aluminum Ingot
         HTMultiItemRecipeBuilder
             .blastFurnace()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
+            .fluidInput(RagiumVirtualFluids.ALUMINA_SOLUTION.commonTag)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 3)
             .saveSuffixed(output, "_with_cryolite")
     }

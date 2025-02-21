@@ -12,13 +12,14 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
+import kotlin.jvm.optionals.getOrNull
 
 class HTMultiItemRecipeCategory<T : HTMultiItemRecipe>(
     guiHelper: IGuiHelper,
     machine: HTMachineType,
     private val recipeType: RecipeType<T>,
     private val recipeType1: HTRecipeType<T>,
-) : HTMachineRecipeCategory<T>(guiHelper, machine, 3.5) {
+) : HTMachineRecipeCategory<T>(guiHelper, machine, 4.5) {
     override fun getRecipeType(): RecipeType<T> = recipeType
 
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: T, focuses: IFocusGroup) {
@@ -37,14 +38,19 @@ class HTMultiItemRecipeCategory<T : HTMultiItemRecipe>(
             .addInputSlot(getPosition(2), getPosition(0))
             .setStandardSlotBackground()
             .addIngredients(recipe.itemInputs.getOrNull(2))
+        // Fluid Input
+        builder
+            .addInputSlot(getPosition(3), getPosition(0))
+            .setStandardSlotBackground()
+            .addIngredients(recipe.fluidInput.getOrNull())
         // Item Output
         builder
-            .addOutputSlot(getPosition(5), getPosition(0))
+            .addOutputSlot(getPosition(6), getPosition(0))
             .setStandardSlotBackground()
             .addItemOutput(recipe, 0)
     }
 
-    override fun getWidth(): Int = 18 * 6 + 8
+    override fun getWidth(): Int = 18 * 7 + 8
 
     override fun getHeight(): Int = 18 * 1 + 8
 

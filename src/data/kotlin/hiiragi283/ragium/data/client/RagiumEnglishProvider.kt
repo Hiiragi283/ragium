@@ -98,6 +98,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluids.SNOW, "Powder Snow")
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
+        addFluid(RagiumVirtualFluids.AIR, "Air")
 
         addFluid(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
 
@@ -112,6 +113,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
 
         addFluid(RagiumVirtualFluids.ALKALI_SOLUTION, "Alkali Solution")
+
+        addFluid(RagiumVirtualFluids.ALUMINA_SOLUTION, "Alumina Solution")
 
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
@@ -201,7 +204,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PRISMARINE_LENS, "Prismarine Lens")
         addItem(RagiumItems.MAGICAL_LENS, "Magical Lens")
 
-        addItem(RagiumItems.ALKALI_REAGENT, "Alkali Reagent")
         addItem(RagiumItems.DEEPANT_REAGENT, "Deepant Reagent")
         addItem(RagiumItems.FROZEN_REAGENT, "Frozen Reagent")
         addItem(RagiumItems.MAGICAL_REAGENT, "Magical Reagent")
@@ -312,6 +314,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(CommonMaterials.BRASS, "Brass")
         add(CommonMaterials.BRONZE, "Bronze")
         add(CommonMaterials.CADMIUM, "Cadmium")
+        add(CommonMaterials.CALCITE, "Calcite")
         add(CommonMaterials.CARBON, "Carbon")
         add(CommonMaterials.CHROMIUM, "Chromium")
         add(CommonMaterials.COAL_COKE, "Coal Coke")

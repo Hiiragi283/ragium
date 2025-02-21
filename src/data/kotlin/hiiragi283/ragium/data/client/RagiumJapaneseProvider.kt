@@ -98,6 +98,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluids.SNOW, "粉雪")
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
+        addFluid(RagiumVirtualFluids.AIR, "空気")
 
         addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
 
@@ -112,6 +113,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
 
         addFluid(RagiumVirtualFluids.ALKALI_SOLUTION, "アルカリ溶液")
+
+        addFluid(RagiumVirtualFluids.ALUMINA_SOLUTION, "アルミナ溶液")
 
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
@@ -201,7 +204,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PRISMARINE_LENS, "プリズマリンレンズ")
         addItem(RagiumItems.MAGICAL_LENS, "魔術的レンズ")
 
-        addItem(RagiumItems.ALKALI_REAGENT, "アルカリ試薬")
         addItem(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
         addItem(RagiumItems.FROZEN_REAGENT, "フローズン試薬")
         addItem(RagiumItems.MAGICAL_REAGENT, "魔術的試薬")
@@ -292,6 +294,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(CommonMaterials.BRASS, "真鍮")
         add(CommonMaterials.BRONZE, "青銅")
         add(CommonMaterials.CADMIUM, "カドミウム")
+        add(CommonMaterials.CALCITE, "方解石")
         add(CommonMaterials.CARBON, "炭素")
         add(CommonMaterials.CHROMIUM, "クロム")
         add(CommonMaterials.COAL_COKE, "石炭コークス")

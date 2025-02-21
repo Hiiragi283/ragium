@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -36,7 +37,7 @@ class HTSolidifierRecipe(
             HTSolidifierRecipe::getGroup,
             SizedFluidIngredient.STREAM_CODEC,
             HTSolidifierRecipe::input,
-            ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
+            Ingredient.CONTENTS_STREAM_CODEC.toOptional(),
             HTSolidifierRecipe::catalyst,
             HTItemOutput.STREAM_CODEC,
             { it.itemOutputs[0] },

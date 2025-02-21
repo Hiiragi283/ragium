@@ -1,11 +1,11 @@
 {
   "parent": "ragium:infuser",
   "criteria": {
-    "has_alumina_dust": {
+    "has_bauxite_dust": {
       "conditions": {
         "items": [
           {
-            "items": "#c:dusts/alumina"
+            "items": "#c:dusts/bauxite"
           }
         ]
       },
@@ -16,20 +16,20 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:alumina_dust"
+      "id": "ragium:bauxite_dust"
     },
     "title": {
       "translate": "tag_prefix.ragium.dust",
       "with": [
         {
-          "translate": "material.ragium.alumina"
+          "translate": "material.ragium.bauxite"
         }
       ]
     }
   },
   "requirements": [
     [
-      "has_alumina_dust"
+      "has_bauxite_dust"
     ]
   ],
   "sends_telemetry_event": true

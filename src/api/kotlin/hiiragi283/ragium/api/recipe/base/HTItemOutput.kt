@@ -80,7 +80,7 @@ class HTItemOutput private constructor(private val either: Either<SizedTag, Item
                 .map(HolderSet<Item>::isNotEmpty)
                 .orElse(false)
         },
-        constFunction2(true),
+        { stack: ItemStack -> !stack.isEmpty },
     )
 
     override fun get(): ItemStack = either

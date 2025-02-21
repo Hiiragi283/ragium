@@ -28,6 +28,7 @@ class HTMultiItemContainerMenu(
         addSlot(itemInput, 0, 1, 1)
         addSlot(itemInput, 1, 2, 1)
         addSlot(itemInput, 2, 3, 1)
+        addFluidSlot(0, 1, 2)
         // outputs
         addOutputSlot(itemOutput, 0, 6, 1)
         // player inventory

@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.createEnchBook
 import hiiragi283.ragium.api.extension.modifyEnchantment
+import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -47,7 +48,7 @@ class HTEnchanterRecipe(
             HTEnchanterRecipe::getGroup,
             HTItemIngredient.STREAM_CODEC,
             HTEnchanterRecipe::firstInput,
-            ByteBufCodecs.optional(HTItemIngredient.STREAM_CODEC),
+            HTItemIngredient.STREAM_CODEC.toOptional(),
             HTEnchanterRecipe::secondInput,
             ByteBufCodecs.holderRegistry(Registries.ENCHANTMENT),
             HTEnchanterRecipe::enchantment,

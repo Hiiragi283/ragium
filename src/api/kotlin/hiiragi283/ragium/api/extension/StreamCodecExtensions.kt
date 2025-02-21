@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import java.util.*
 
 //    StreamCodec    //
 
@@ -13,6 +14,11 @@ import net.minecraft.network.codec.StreamCodec
  * [List]の[StreamCodec]に変換します。
  */
 fun <B : ByteBuf, V : Any> StreamCodec<B, V>.toList(): StreamCodec<B, List<V>> = apply(ByteBufCodecs.list())
+
+/**
+ * [Optional]の[StreamCodec]に変換します。
+ */
+fun <B : ByteBuf, V : Any> StreamCodec<B, V>.toOptional(): StreamCodec<B, Optional<V>> = ByteBufCodecs.optional(this)
 
 /**
  * この[Codec]を[StreamCodec]に変換します。

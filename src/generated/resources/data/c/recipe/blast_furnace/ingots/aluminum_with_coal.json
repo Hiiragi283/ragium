@@ -1,9 +1,10 @@
 {
   "type": "ragium:blast_furnace",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:alumina_solution"
+  },
   "item_inputs": [
-    {
-      "tag": "c:dusts/alumina"
-    },
     {
       "count": 4,
       "tag": "minecraft:coals"

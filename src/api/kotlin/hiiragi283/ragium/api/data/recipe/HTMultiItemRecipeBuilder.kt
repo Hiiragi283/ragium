@@ -9,10 +9,12 @@ import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import java.util.*
 
 class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
     override val prefix: String,
-    private val factory: (String, List<HTItemIngredient>, HTItemOutput) -> T,
+    private val factory: (String, List<HTItemIngredient>, Optional<SizedFluidIngredient>, HTItemOutput) -> T,
 ) : HTMachineRecipeBuilderBase<HTMultiItemRecipeBuilder<T>, T>() {
     companion object {
         @JvmStatic
@@ -25,13 +27,16 @@ class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
 
     private var group: String? = null
     private val itemInputs: MutableList<HTItemIngredient> = mutableListOf()
+    private var fluidInput: SizedFluidIngredient? = null
     private lateinit var output: HTItemOutput
 
     override fun itemInput(ingredient: HTItemIngredient): HTMultiItemRecipeBuilder<T> = apply {
         itemInputs.add(ingredient)
     }
 
-    override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTMultiItemRecipeBuilder<T> = throw UnsupportedOperationException()
+    override fun fluidInput(ingredient: FluidIngredient, amount: Int): HTMultiItemRecipeBuilder<T> = apply {
+        fluidInput = SizedFluidIngredient(ingredient, amount)
+    }
 
     override fun itemOutput(output: HTItemOutput): HTMultiItemRecipeBuilder<T> = apply {
         check(!::output.isInitialized) { "Output is already initialized" }
@@ -42,7 +47,7 @@ class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
 
     override fun getPrimalId(): ResourceLocation = output.id
 
-    override fun createRecipe(): T = factory(group ?: "", itemInputs, this.output)
+    override fun createRecipe(): T = factory(group ?: "", itemInputs, Optional.ofNullable(fluidInput), this.output)
 
     override fun group(groupName: String?): RecipeBuilder = apply {
         this.group = groupName

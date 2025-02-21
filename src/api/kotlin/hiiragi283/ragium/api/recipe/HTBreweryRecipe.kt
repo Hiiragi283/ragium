@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
@@ -55,7 +56,7 @@ class HTBreweryRecipe(
             HTBreweryRecipe::firstInput,
             HTItemIngredient.STREAM_CODEC,
             HTBreweryRecipe::secondInput,
-            ByteBufCodecs.optional(HTItemIngredient.STREAM_CODEC),
+            HTItemIngredient.STREAM_CODEC.toOptional(),
             HTBreweryRecipe::thirdInput,
             ByteBufCodecs.holderRegistry(Registries.POTION),
             HTBreweryRecipe::potion,

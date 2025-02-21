@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe.base
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.toOptional
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -47,7 +48,7 @@ abstract class HTSingleItemRecipe(
             HTSingleItemRecipe::getGroup,
             HTItemIngredient.STREAM_CODEC,
             HTSingleItemRecipe::input,
-            ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
+            Ingredient.CONTENTS_STREAM_CODEC.toOptional(),
             HTSingleItemRecipe::catalyst,
             HTItemOutput.STREAM_CODEC,
             { it.itemOutputs[0] },

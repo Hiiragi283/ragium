@@ -1,16 +1,16 @@
 {
   "type": "ragium:infuser",
   "fluid_input": {
-    "amount": 1000,
+    "amount": 500,
     "tag": "c:water"
   },
   "fluid_outputs": [
     {
-      "amount": 1000,
+      "amount": 500,
       "id": "ragium:alkali_solution"
     }
   ],
   "item_input": {
-    "item": "ragium:alkali_reagent"
+    "tag": "c:dusts/calcite"
   }
 }

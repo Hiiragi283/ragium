@@ -77,10 +77,10 @@ object RagiumItems {
         register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
 
-        register(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
+        register(HTTagPrefix.DUST, CommonMaterials.CALCITE)
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
@@ -383,9 +383,6 @@ object RagiumItems {
     //    Reagents    //
 
     @JvmField
-    val ALKALI_REAGENT: DeferredItem<Item> = register("alkali_reagent")
-
-    @JvmField
     val DEEPANT_REAGENT: DeferredItem<Item> = register("deepant_reagent")
 
     @JvmField
@@ -405,7 +402,6 @@ object RagiumItems {
 
     @JvmField
     val REAGENTS: List<DeferredItem<Item>> = listOf(
-        ALKALI_REAGENT,
         DEEPANT_REAGENT,
         FROZEN_REAGENT,
         MAGICAL_REAGENT,

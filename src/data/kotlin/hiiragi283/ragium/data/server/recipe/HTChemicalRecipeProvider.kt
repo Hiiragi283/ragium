@@ -1,6 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -18,95 +21,11 @@ import net.neoforged.neoforge.common.Tags
 
 object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        registerAlkali(output)
-        registerDeepant(output)
-        registerFrozen(output)
         registerGlow(output)
         registerMagical(output)
         registerPrismarine(output)
         registerSculk(output)
         registerWither(output)
-    }
-
-    private fun registerAlkali(output: RecipeOutput) {
-        // Ash -> Alkali
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ASH)
-            .itemOutput(RagiumItems.ALKALI_REAGENT)
-            .saveSuffixed(output, "_from_ash")
-        // Calcite -> Alkali
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Items.CALCITE, 4)
-            .itemOutput(RagiumItems.ALKALI_REAGENT)
-            .saveSuffixed(output, "_from_calcite")
-
-        // Alkali + Seed Oil -> Soap
-        HTFluidOutputRecipeBuilder
-            .infuser()
-            .itemInput(RagiumItems.ALKALI_REAGENT)
-            .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, 1000)
-            .itemOutput(RagiumItems.SOAP, 8)
-            .save(output)
-    }
-
-    private fun registerDeepant(output: RecipeOutput) {
-        // Deep Reagent
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 16)
-            .itemOutput(RagiumItems.DEEPANT_REAGENT)
-            .save(output)
-
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Tags.Items.COBBLESTONES_DEEPSLATE, 4)
-            .itemOutput(RagiumItems.DEEPANT_REAGENT)
-            .save(output)
-    }
-
-    private fun registerFrozen(output: RecipeOutput) {
-        // Snow Block -> 4x Snow Ball
-        HTSingleItemRecipeBuilder
-            .compressor()
-            .itemInput(Items.SNOW_BLOCK)
-            .catalyst(RagiumItems.BALL_PRESS_MOLD)
-            .itemOutput(Items.SNOWBALL, 4)
-            .saveSuffixed(output, "_from_block")
-
-        // Water -> Ice
-        HTSolidifierRecipeBuilder()
-            .waterInput()
-            .itemOutput(Items.ICE)
-            .save(output)
-        // Blue Ice -> 9x Packed Ice
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Items.BLUE_ICE)
-            .itemOutput(Items.PACKED_ICE, 9)
-            .save(output)
-        // Packed Ice -> 9x Ice
-        HTSingleItemRecipeBuilder
-            .grinder()
-            .itemInput(Items.PACKED_ICE)
-            .itemOutput(Items.ICE, 9)
-            .save(output)
-
-        // Frozen Reagent
-        HTFluidOutputRecipeBuilder
-            .extractor()
-            .itemInput(Items.PACKED_ICE)
-            .itemOutput(RagiumItems.FROZEN_REAGENT)
-            .saveSuffixed(output, "_from_packed_ice")
-
-        // Ice
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, Items.ICE)
-            .requires(Tags.Items.BUCKETS_WATER)
-            .requires(RagiumItems.FROZEN_REAGENT)
-            .unlockedBy("has_reagent", has(RagiumItems.FROZEN_REAGENT))
-            .savePrefixed(output)
     }
 
     private fun registerGlow(output: RecipeOutput) {

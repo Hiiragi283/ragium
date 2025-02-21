@@ -22,9 +22,12 @@ import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 
 object HTRecipeConverters {
     //    Compressor    //
@@ -204,6 +207,24 @@ object HTRecipeConverters {
                     .itemInput(Items.BUCKET)
                     .fluidInput(fluid)
                     .itemOutput(bucket)
+                    .export(consumer)
+            }
+        // Oxidizables
+        lookup
+            .lookupOrThrow(Registries.BLOCK)
+            .listElements()
+            .forEach { holder: Holder.Reference<Block> ->
+                val block: Block = holder.value()
+                val input = ItemStack(block)
+                if (input.isEmpty) return@forEach
+                val block1: Block = holder.getData(NeoForgeDataMaps.OXIDIZABLES)?.nextOxidationStage ?: return@forEach
+                val output: HTItemOutput = HTItemOutput.of(block1)
+                if (!output.isValid(false)) return@forEach
+                HTFluidOutputRecipeBuilder
+                    .infuser()
+                    .itemInput(block)
+                    .fluidInput(RagiumVirtualFluids.OXYGEN.commonTag, 100)
+                    .itemOutput(output)
                     .export(consumer)
             }
     }

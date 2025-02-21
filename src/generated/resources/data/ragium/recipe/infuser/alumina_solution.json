@@ -1,21 +1,16 @@
 {
   "type": "ragium:infuser",
   "fluid_input": {
-    "amount": 1000,
+    "amount": 400,
     "tag": "c:alkali_solution"
   },
   "fluid_outputs": [
     {
-      "amount": 1000,
-      "id": "minecraft:water"
+      "amount": 400,
+      "id": "ragium:alumina_solution"
     }
   ],
   "item_input": {
     "tag": "c:dusts/bauxite"
-  },
-  "item_outputs": [
-    {
-      "tag": "c:dusts/alumina"
-    }
-  ]
+  }
 }

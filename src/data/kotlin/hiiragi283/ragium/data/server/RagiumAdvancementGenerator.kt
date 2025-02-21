@@ -154,14 +154,14 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val extractor: AdvancementHolder = createMachine(casing, HTMachineType.EXTRACTOR)
         // Infuser
         val infuser: AdvancementHolder = createMachine(casing, HTMachineType.INFUSER)
-        val alumina: AdvancementHolder = createMaterial(
+        val bauxite: AdvancementHolder = createMaterial(
             infuser,
             HTTagPrefix.DUST,
-            CommonMaterials.ALUMINA,
+            CommonMaterials.BAUXITE,
             Component.empty(),
         )
         val aluminum: AdvancementHolder = createMaterial(
-            alumina,
+            bauxite,
             HTTagPrefix.INGOT,
             CommonMaterials.ALUMINUM,
             Component.empty(),

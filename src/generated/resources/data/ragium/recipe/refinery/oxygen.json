@@ -1,0 +1,17 @@
+{
+  "type": "ragium:refinery",
+  "fluid_input": {
+    "amount": 50,
+    "tag": "c:air"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 10,
+      "id": "ragium:oxygen"
+    },
+    {
+      "amount": 40,
+      "id": "ragium:nitrogen"
+    }
+  ]
+}

@@ -5,7 +5,7 @@
     "item": "minecraft:netherrack"
   },
   "item_output": {
-    "count": 4,
+    "count": 2,
     "tag": "c:dusts/bauxite"
   }
 }

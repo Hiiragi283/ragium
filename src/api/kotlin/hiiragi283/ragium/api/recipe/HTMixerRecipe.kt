@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
+import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.base.*
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -46,7 +47,7 @@ class HTMixerRecipe(
             HTMixerRecipe::firstFluid,
             SizedFluidIngredient.STREAM_CODEC,
             HTMixerRecipe::secondFluid,
-            ByteBufCodecs.optional(HTItemIngredient.STREAM_CODEC),
+            HTItemIngredient.STREAM_CODEC.toOptional(),
             HTMixerRecipe::itemInput,
             HTItemOutput.STREAM_CODEC.toList(),
             HTMixerRecipe::itemOutputs,

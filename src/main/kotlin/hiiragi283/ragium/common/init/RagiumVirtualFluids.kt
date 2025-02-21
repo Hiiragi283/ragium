@@ -18,6 +18,7 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     StringRepresentable,
     Supplier<Fluid> {
     MUSHROOM_STEW(Color(0xcc9966)),
+    AIR(Color.WHITE),
 
     // Hydrogen
     HYDROGEN(Color(0x3333ff), TextureType.GASEOUS),
@@ -37,6 +38,9 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
 
     // Alkali
     ALKALI_SOLUTION(Color(0x0000cc)),
+
+    // Aluminum
+    ALUMINA_SOLUTION(Color(0xccccff)),
 
     // Sulfur
     SULFUR_DIOXIDE(Color(0xff6600), TextureType.GASEOUS),

@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:alumina_dust",
+  "parent": "ragium:bauxite_dust",
   "criteria": {
     "has_aluminum_ingot": {
       "conditions": {

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:solidifier",
+  "catalyst": {
+    "item": "ragium:ball_press_mold"
+  },
+  "fluid_input": {
+    "fluid_input": {
+      "amount": 250,
+      "tag": "c:water"
+    }
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:snowball"
+  }
+}

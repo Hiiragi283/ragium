@@ -335,14 +335,6 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .fluidInput(Tags.Fluids.LAVA)
             .itemOutput(Items.OBSIDIAN)
             .save(output)
-
-        // Rocket Fuel
-        HTFluidOutputRecipeBuilder
-            .mixer()
-            .fluidInput(RagiumVirtualFluids.HYDROGEN.commonTag, 200)
-            .fluidInput(RagiumVirtualFluids.OXYGEN.commonTag, 100)
-            .fluidOutput(RagiumVirtualFluids.ROCKET_FUEL, 300)
-            .save(output)
     }
 
     //    Refinery    //
