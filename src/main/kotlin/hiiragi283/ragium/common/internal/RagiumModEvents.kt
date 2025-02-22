@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMoltenFluidIngredient
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.fluid.HTDivingGoggleFluidHandler
@@ -48,9 +49,11 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
+import net.neoforged.neoforge.fluids.crafting.FluidIngredientType
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -189,6 +192,11 @@ internal object RagiumModEvents {
                 helper.register(RagiumAPI.id(type.toString()), type)
             }
             LOGGER.info("Added machine recipe types!")
+        }
+
+        // Fluid Ingredient
+        event.register(NeoForgeRegistries.Keys.FLUID_INGREDIENT_TYPES) { helper: RegisterEvent.RegisterHelper<FluidIngredientType<*>> ->
+            helper.register(RagiumAPI.id("molten_metal"), HTMoltenFluidIngredient.TYPE)
         }
     }
 

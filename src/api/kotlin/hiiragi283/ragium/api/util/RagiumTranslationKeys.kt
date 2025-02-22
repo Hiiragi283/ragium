@@ -23,6 +23,8 @@ object RagiumTranslationKeys {
     const val FLUID_AMOUNT = "tooltip.ragium.fluid.amount"
     const val FLUID_CAPACITY = "tooltip.ragium.fluid.capacity"
 
+    const val FLUID_MOLTEN = "tooltip.ragium.fluid.molten"
+
     //    Item    //
 
     const val DYNAMITE_DESTROY = "tooltip.ragium.item.dynamite.destroy"

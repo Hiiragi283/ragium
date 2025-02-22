@@ -1,7 +1,10 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
@@ -64,13 +67,22 @@ object RagiumFluidTypes {
     )
 
     @JvmField
-    val GASEOUS: DeferredHolder<FluidType, FluidType> = register(
-        "gaseous",
-        FluidType.Properties
-            .create()
-            .canSwim(false)
-            .canDrown(false)
-            .pathType(null)
-            .density(-1000),
-    )
+    val MOLTEN_METAL: DeferredHolder<FluidType, FluidType> = REGISTER.register("molten_metal") { _: ResourceLocation ->
+        object : FluidType(
+            Properties
+                .create()
+                .lightLevel(15)
+                .density(3000)
+                .temperature(1000)
+                .viscosity(6000)
+                .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
+                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA),
+        ) {
+            override fun getDescription(stack: FluidStack): Component {
+                val material: HTMaterialKey =
+                    stack.get(RagiumComponentTypes.MOLTEN_MATERIAL) ?: return super.getDescription(stack)
+                return Component.translatable(RagiumTranslationKeys.FLUID_MOLTEN, material.text)
+            }
+        }
+    }
 }

@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -36,6 +37,8 @@ interface RagiumAPI {
     companion object {
         const val MOD_ID = "ragium"
         const val MOD_NAME = "Ragium"
+
+        const val INGOT_AMOUNT = 90
 
         /**
          * 名前空間が`ragium`となる[ResourceLocation]を返します。
@@ -60,10 +63,21 @@ interface RagiumAPI {
         }
     }
 
+    //    Material    //
+
     /**
      * 素材レジストリのインスタンスを返します。
      */
     fun getMaterialRegistry(): HTMaterialRegistry
+
+    /**
+     * 指定した[key]と[amount]から，溶融金属の[FluidStack]を返します。
+     */
+    fun createMoltenMetalStack(key: HTMaterialKey, amount: Int): FluidStack
+
+    fun getMoltenMaterialComponent(): DataComponentType<HTMaterialKey>
+
+    //    Server    //
 
     /**
      * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。

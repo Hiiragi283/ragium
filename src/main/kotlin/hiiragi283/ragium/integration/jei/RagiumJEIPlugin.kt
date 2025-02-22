@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.client.screen.HTMultiItemContainer
 import hiiragi283.ragium.client.screen.HTSingleItemContainer
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.integration.jei.category.*
 import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
@@ -21,10 +23,11 @@ import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.helpers.IJeiHelpers
-import mezz.jei.api.registration.IGuiHandlerRegistration
-import mezz.jei.api.registration.IRecipeCatalystRegistration
-import mezz.jei.api.registration.IRecipeCategoryRegistration
-import mezz.jei.api.registration.IRecipeRegistration
+import mezz.jei.api.helpers.IPlatformFluidHelper
+import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter
+import mezz.jei.api.ingredients.subtypes.UidContext
+import mezz.jei.api.neoforge.NeoForgeTypes
+import mezz.jei.api.registration.*
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
@@ -37,6 +40,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import mezz.jei.api.recipe.RecipeType as JEIRecipeType
@@ -49,6 +53,20 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun getPluginUid(): ResourceLocation = PLUGIN_ID
+
+    override fun <T : Any> registerFluidSubtypes(registration: ISubtypeRegistration, helper: IPlatformFluidHelper<T>) {
+        registration.registerSubtypeInterpreter(
+            NeoForgeTypes.FLUID_STACK,
+            RagiumFluids.MOLTEN_METAL.get(),
+            object : ISubtypeInterpreter<FluidStack> {
+                override fun getSubtypeData(ingredient: FluidStack, context: UidContext): Any? =
+                    ingredient.get(RagiumComponentTypes.MOLTEN_MATERIAL)
+
+                override fun getLegacyStringSubtypeInfo(ingredient: FluidStack, context: UidContext): String =
+                    ingredient.get(RagiumComponentTypes.MOLTEN_MATERIAL)?.name ?: ""
+            },
+        )
+    }
 
     override fun registerCategories(registration: IRecipeCategoryRegistration) {
         val jeiHelper: IJeiHelpers = registration.jeiHelpers
@@ -131,7 +149,10 @@ class RagiumJEIPlugin : IModPlugin {
         register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, HTRecipeTypes.LASER_ASSEMBLY)
         register(RagiumJEIRecipeTypes.MIXER, HTRecipeTypes.MIXER)
         register(RagiumJEIRecipeTypes.REFINERY, HTRecipeTypes.REFINERY)
-        register(RagiumJEIRecipeTypes.SOLIDIFIER, HTRecipeTypes.SOLIDIFIER)
+        registration.addRecipes(
+            RagiumJEIRecipeTypes.SOLIDIFIER,
+            HTRecipeConverters.solidifier(lookup, recipeManager),
+        )
 
         // Generator Fuel
         registration.addRecipes(

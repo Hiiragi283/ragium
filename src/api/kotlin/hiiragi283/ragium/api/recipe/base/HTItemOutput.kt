@@ -51,7 +51,7 @@ class HTItemOutput(private val holderSet: HolderSet<Item>, val count: Int, val c
     val id: ResourceLocation =
         holderSet.unwrap().map(
             { tagKey: TagKey<Item> -> RagiumAPI.id(tagKey.location().path.replace(oldChar = '/', newChar = '_')) },
-            { items: List<Holder<Item>> -> items.first().idOrThrow }
+            { items: List<Holder<Item>> -> items.first().idOrThrow },
         )
 
     val isValid: Boolean

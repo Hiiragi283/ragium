@@ -3,11 +3,14 @@ package hiiragi283.ragium.api.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.isSource
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.HTTypedMaterial
+import hiiragi283.ragium.api.recipe.base.HTMoltenFluidIngredient
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.Holder
@@ -30,7 +33,7 @@ object HTRecipeConverters {
     fun compressor(lookup: HolderGetter<Item>, recipeManager: RecipeManager): List<RecipeHolder<HTCompressorRecipe>> {
         val builder: MutableList<RecipeHolder<HTCompressorRecipe>> = mutableListOf()
         recipeManager.getAllRecipesFor(HTRecipeTypes.COMPRESSOR).forEach(builder::add)
-        for ((type: HTMaterialType, key: HTMaterialKey) in RagiumAPI.Companion
+        for ((type: HTMaterialType, key: HTMaterialKey) in RagiumAPI
             .getInstance()
             .getMaterialRegistry()
             .typedMaterials) {
@@ -38,40 +41,40 @@ object HTRecipeConverters {
             val mainPrefix: HTTagPrefix? = type.getMainPrefix()
             if (mainPrefix != null) {
                 // Gear
-                HTSingleItemRecipeBuilder.Companion
+                HTSingleItemRecipeBuilder
                     .compressor(lookup)
                     .itemInput(mainPrefix, key, 4)
                     .catalyst(RagiumItemTags.GEAR_MOLDS)
                     .itemOutput(HTTagPrefix.GEAR, key)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${name}_gear"), builder::add)
+                    .export(RagiumAPI.id("runtime_${name}_gear"), builder::add)
                 // Plate
-                HTSingleItemRecipeBuilder.Companion
+                HTSingleItemRecipeBuilder
                     .compressor(lookup)
                     .itemInput(mainPrefix, key)
                     .catalyst(RagiumItemTags.PLATE_MOLDS)
                     .itemOutput(HTTagPrefix.PLATE, key)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${name}_plate"), builder::add)
+                    .export(RagiumAPI.id("runtime_${name}_plate"), builder::add)
                 // Rod
-                HTSingleItemRecipeBuilder.Companion
+                HTSingleItemRecipeBuilder
                     .compressor(lookup)
                     .itemInput(mainPrefix, key)
                     .catalyst(RagiumItemTags.ROD_MOLDS)
                     .itemOutput(HTTagPrefix.ROD, key, 2)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${name}_rod"), builder::add)
+                    .export(RagiumAPI.id("runtime_${name}_rod"), builder::add)
                 // Wire
-                HTSingleItemRecipeBuilder.Companion
+                HTSingleItemRecipeBuilder
                     .compressor(lookup)
                     .itemInput(mainPrefix, key)
                     .catalyst(RagiumItemTags.WIRE_MOLDS)
                     .itemOutput(HTTagPrefix.WIRE, key, 2)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${name}_wire"), builder::add)
+                    .export(RagiumAPI.id("runtime_${name}_wire"), builder::add)
             }
             // Gem
-            HTSingleItemRecipeBuilder.Companion
+            HTSingleItemRecipeBuilder
                 .compressor(lookup)
                 .itemInput(HTTagPrefix.DUST, key)
                 .itemOutput(HTTagPrefix.GEM, key)
-                .exportNew(RagiumAPI.Companion.id("runtime_${name}_gem"), builder::add)
+                .export(RagiumAPI.id("runtime_${name}_gem"), builder::add)
         }
         return builder
     }
@@ -82,7 +85,7 @@ object HTRecipeConverters {
     fun grinder(lookup: HolderGetter<Item>, recipeManager: RecipeManager): List<RecipeHolder<HTGrinderRecipe>> {
         val builder: MutableList<RecipeHolder<HTGrinderRecipe>> = mutableListOf()
         recipeManager.getAllRecipesFor(HTRecipeTypes.GRINDER).forEach(builder::add)
-        for ((type: HTMaterialType, key: HTMaterialKey) in RagiumAPI.Companion
+        for ((type: HTMaterialType, key: HTMaterialKey) in RagiumAPI
             .getInstance()
             .getMaterialRegistry()
             .typedMaterials) {
@@ -91,39 +94,39 @@ object HTRecipeConverters {
             val resultPrefix: HTTagPrefix? = type.getOreResultPrefix()
             // Ore
             if (resultPrefix != null) {
-                val count: Int = RagiumAPI.Companion.getInstance().getGrinderOutputCount(key)
-                HTSingleItemRecipeBuilder.Companion
+                val count: Int = RagiumAPI.getInstance().getGrinderOutputCount(key)
+                HTSingleItemRecipeBuilder
                     .grinder(lookup)
                     .itemInput(HTTagPrefix.ORE, key)
                     .itemOutput(resultPrefix, key, count * 2)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${name}_dust_from_ore"), builder::add)
+                    .export(RagiumAPI.id("runtime_${name}_dust_from_ore"), builder::add)
             }
             // Gem/Ingot
             if (mainPrefix != null) {
-                HTSingleItemRecipeBuilder.Companion
+                HTSingleItemRecipeBuilder
                     .grinder(lookup)
                     .itemInput(mainPrefix, key)
                     .itemOutput(HTTagPrefix.DUST, key)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${name}_dust_from_main"), builder::add)
+                    .export(RagiumAPI.id("runtime_${name}_dust_from_main"), builder::add)
             }
             // Gear
-            HTSingleItemRecipeBuilder.Companion
+            HTSingleItemRecipeBuilder
                 .grinder(lookup)
                 .itemInput(HTTagPrefix.GEAR, key)
                 .itemOutput(HTTagPrefix.DUST, key, 4)
-                .exportNew(RagiumAPI.Companion.id("runtime_${name}_dust_from_gear"), builder::add)
+                .export(RagiumAPI.id("runtime_${name}_dust_from_gear"), builder::add)
             // Plate
-            HTSingleItemRecipeBuilder.Companion
+            HTSingleItemRecipeBuilder
                 .grinder(lookup)
                 .itemInput(HTTagPrefix.PLATE, key)
                 .itemOutput(HTTagPrefix.DUST, key)
-                .exportNew(RagiumAPI.Companion.id("runtime_${name}_dust_from_plate"), builder::add)
+                .export(RagiumAPI.id("runtime_${name}_dust_from_plate"), builder::add)
             // Raw
-            HTSingleItemRecipeBuilder.Companion
+            HTSingleItemRecipeBuilder
                 .grinder(lookup)
                 .itemInput(HTTagPrefix.RAW_MATERIAL, key, 4)
                 .itemOutput(HTTagPrefix.DUST, key, 3)
-                .exportNew(RagiumAPI.Companion.id("runtime_${name}_dust_from_raw"), builder::add)
+                .export(RagiumAPI.id("runtime_${name}_dust_from_raw"), builder::add)
         }
         return builder
     }
@@ -134,30 +137,30 @@ object HTRecipeConverters {
     fun infuser(lookup: HolderGetter<Item>, recipeManager: RecipeManager): List<RecipeHolder<HTInfuserRecipe>> {
         val builder: MutableList<RecipeHolder<HTInfuserRecipe>> = mutableListOf()
         recipeManager.getAllRecipesFor(HTRecipeTypes.INFUSER).forEach(builder::add)
-        for ((type: HTMaterialType, key: HTMaterialKey) in RagiumAPI.Companion
+        for ((type: HTMaterialType, key: HTMaterialKey) in RagiumAPI
             .getInstance()
             .getMaterialRegistry()
             .typedMaterials) {
             val name: String = key.name
             val resultPrefix: HTTagPrefix = type.getOreResultPrefix() ?: continue
-            val count: Int = RagiumAPI.Companion.getInstance().getGrinderOutputCount(key)
+            val count: Int = RagiumAPI.getInstance().getGrinderOutputCount(key)
             // 3x
-            HTFluidOutputRecipeBuilder.Companion
+            HTFluidOutputRecipeBuilder
                 .infuser(lookup)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluidTags.SULFURIC_ACID, 500)
                 .itemOutput(resultPrefix, key, count * 3)
-                .exportNew(RagiumAPI.Companion.id("runtime_3x_$name"), builder::add)
+                .export(RagiumAPI.id("runtime_3x_$name"), builder::add)
             // 4x
-            HTFluidOutputRecipeBuilder.Companion
+            HTFluidOutputRecipeBuilder
                 .infuser(lookup)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluidTags.HYDROFLUORIC_ACID, 500)
                 .itemOutput(resultPrefix, key, count * 4)
-                .exportNew(RagiumAPI.Companion.id("runtime_4x_$name"), builder::add)
+                .export(RagiumAPI.id("runtime_4x_$name"), builder::add)
         }
         // Bucket + Fluid -> Fluid Bucket
-        val access: RegistryAccess = RagiumAPI.Companion.getInstance().getCurrentLookup() ?: return builder
+        val access: RegistryAccess = RagiumAPI.getInstance().getCurrentLookup() ?: return builder
         access
             .lookupOrThrow(Registries.FLUID)
             .listElements()
@@ -166,12 +169,12 @@ object HTRecipeConverters {
                 if (!fluid.isSource) return@forEach
                 val bucket: Item = fluid.bucket
                 if (bucket == Items.AIR) return@forEach
-                HTFluidOutputRecipeBuilder.Companion
+                HTFluidOutputRecipeBuilder
                     .infuser(lookup)
                     .itemInput(Items.BUCKET)
                     .fluidInput(fluid)
                     .itemOutput(bucket)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${holder.idOrThrow.path}_bucket"), builder::add)
+                    .export(RagiumAPI.id("runtime_${holder.idOrThrow.path}_bucket"), builder::add)
             }
         // Oxidizables
         access
@@ -182,12 +185,12 @@ object HTRecipeConverters {
                 val input = ItemStack(block)
                 if (input.isEmpty) return@forEach
                 val block1: Block = holder.getData(NeoForgeDataMaps.OXIDIZABLES)?.nextOxidationStage ?: return@forEach
-                HTFluidOutputRecipeBuilder.Companion
+                HTFluidOutputRecipeBuilder
                     .infuser(lookup)
                     .itemInput(block)
                     .fluidInput(RagiumFluidTags.OXYGEN, 100)
                     .itemOutput(block1)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${holder.idOrThrow.path}"), builder::add)
+                    .export(RagiumAPI.id("runtime_${holder.idOrThrow.path}"), builder::add)
             }
         return builder
     }
@@ -198,8 +201,32 @@ object HTRecipeConverters {
     fun extractor(lookup: HolderGetter<Item>, recipeManager: RecipeManager): List<RecipeHolder<HTExtractorRecipe>> {
         val builder: MutableList<RecipeHolder<HTExtractorRecipe>> = mutableListOf()
         recipeManager.getAllRecipesFor(HTRecipeTypes.EXTRACTOR).forEach(builder::add)
+        // XX -> Molten Metal
+        for (material: HTTypedMaterial in RagiumAPI.getInstance().getMaterialRegistry().typedMaterials) {
+            val (type: HTMaterialType, key: HTMaterialKey) = material
+            if (type.getMainPrefix() == HTTagPrefix.INGOT) {
+                // Dust
+                HTFluidOutputRecipeBuilder
+                    .extractor(lookup)
+                    .itemInput(HTTagPrefix.DUST, key)
+                    .fluidOutput(RagiumAPI.getInstance().createMoltenMetalStack(key, RagiumAPI.INGOT_AMOUNT))
+                    .export(RagiumAPI.id("runtime_molten_${key.name}_dust"), builder::add)
+                // Ingot
+                HTFluidOutputRecipeBuilder
+                    .extractor(lookup)
+                    .itemInput(HTTagPrefix.INGOT, key)
+                    .fluidOutput(RagiumAPI.getInstance().createMoltenMetalStack(key, RagiumAPI.INGOT_AMOUNT))
+                    .export(RagiumAPI.id("runtime_molten_${key.name}_ingot"), builder::add)
+                // Nugget
+                HTFluidOutputRecipeBuilder
+                    .extractor(lookup)
+                    .itemInput(HTTagPrefix.NUGGET, key)
+                    .fluidOutput(RagiumAPI.getInstance().createMoltenMetalStack(key, RagiumAPI.INGOT_AMOUNT / 9))
+                    .export(RagiumAPI.id("runtime_molten_${key.name}_nugget"), builder::add)
+            }
+        }
         // Fluid Bucket -> Bucket + Fluid
-        val access: RegistryAccess = RagiumAPI.Companion.getInstance().getCurrentLookup() ?: return builder
+        val access: RegistryAccess = RagiumAPI.getInstance().getCurrentLookup() ?: return builder
         access
             .lookupOrThrow(Registries.FLUID)
             .listElements()
@@ -208,13 +235,52 @@ object HTRecipeConverters {
                 if (!fluid.isSource) return@forEach
                 val bucket: Item = fluid.bucket
                 if (bucket == Items.AIR) return@forEach
-                HTFluidOutputRecipeBuilder.Companion
+                HTFluidOutputRecipeBuilder
                     .extractor(lookup)
                     .itemInput(bucket)
                     .itemOutput(Items.BUCKET)
                     .fluidOutput(fluid)
-                    .exportNew(RagiumAPI.Companion.id("runtime_${holder.idOrThrow.path}"), builder::add)
+                    .export(RagiumAPI.id("runtime_${holder.idOrThrow.path}"), builder::add)
             }
+        return builder
+    }
+
+    //    Solidifier    //
+
+    @JvmStatic
+    fun solidifier(lookup: HolderGetter<Item>, recipeManager: RecipeManager): List<RecipeHolder<HTSolidifierRecipe>> {
+        val builder: MutableList<RecipeHolder<HTSolidifierRecipe>> = mutableListOf()
+        recipeManager.getAllRecipesFor(HTRecipeTypes.SOLIDIFIER).forEach(builder::add)
+        // Molten Metal -> XX
+        for (material: HTTypedMaterial in RagiumAPI.getInstance().getMaterialRegistry().typedMaterials) {
+            val (type: HTMaterialType, key: HTMaterialKey) = material
+            if (type.getMainPrefix() == HTTagPrefix.INGOT) {
+                // Gear
+                HTSolidifierRecipeBuilder(lookup)
+                    .fluidInput(HTMoltenFluidIngredient(key), RagiumAPI.INGOT_AMOUNT * 4)
+                    .catalyst(RagiumItemTags.GEAR_MOLDS)
+                    .itemOutput(HTTagPrefix.GEAR, key)
+                    .export(RagiumAPI.id("runtime_molten_${key.name}_gear"), builder::add)
+                // Plate
+                HTSolidifierRecipeBuilder(lookup)
+                    .fluidInput(HTMoltenFluidIngredient(key), RagiumAPI.INGOT_AMOUNT)
+                    .catalyst(RagiumItemTags.PLATE_MOLDS)
+                    .itemOutput(HTTagPrefix.PLATE, key)
+                    .export(RagiumAPI.id("runtime_molten_${key.name}_plate"), builder::add)
+                // Rod
+                HTSolidifierRecipeBuilder(lookup)
+                    .fluidInput(HTMoltenFluidIngredient(key), RagiumAPI.INGOT_AMOUNT / 2)
+                    .catalyst(RagiumItemTags.ROD_MOLDS)
+                    .itemOutput(HTTagPrefix.ROD, key)
+                    .export(RagiumAPI.id("runtime_molten_${key.name}_rod"), builder::add)
+                // Wire
+                HTSolidifierRecipeBuilder(lookup)
+                    .fluidInput(HTMoltenFluidIngredient(key), RagiumAPI.INGOT_AMOUNT / 2)
+                    .catalyst(RagiumItemTags.WIRE_MOLDS)
+                    .itemOutput(HTTagPrefix.WIRE, key)
+                    .export(RagiumAPI.id("runtime_molten_${key.name}_wire"), builder::add)
+            }
+        }
         return builder
     }
 }

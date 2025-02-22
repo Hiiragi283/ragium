@@ -17,7 +17,7 @@ fun IRecipeSlotBuilder.addFluidStack(stack: FluidStack?): IRecipeSlotBuilder {
     val stack1: FluidStack = stack ?: return this
     if (stack1.isEmpty) return this
     val amount: Long = stack1.amount.toLong()
-    addFluidStack(stack1.fluid, amount)
+    addFluidStack(stack1.fluid, amount, stack1.componentsPatch)
     return setFluidRenderer(amount, false, 16, 16)
 }
 

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/deep_steel"
+    },
+    "B": {
+      "item": "ragium:forge_hammer"
+    },
+    "C": {
+      "tag": "c:chests"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "ACA",
+    " A "
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:hopper"
+  }
+}

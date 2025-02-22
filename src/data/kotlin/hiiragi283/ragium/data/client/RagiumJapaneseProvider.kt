@@ -96,6 +96,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Fluids
         addFluid(RagiumFluids.HONEY, "蜂蜜")
         addFluid(RagiumFluids.SNOW, "粉雪")
+        addFluid(RagiumFluids.MOLTEN_METAL, "溶融未知の金属")
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
         addFluid(RagiumVirtualFluids.AIR, "空気")
@@ -411,6 +412,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.FLUID_NAME, "- %s : %s mb")
         add(RagiumTranslationKeys.FLUID_AMOUNT, "Amount: %s mb")
         add(RagiumTranslationKeys.FLUID_CAPACITY, "容量: %s mb")
+
+        add(RagiumTranslationKeys.FLUID_MOLTEN, "溶融%s")
 
         add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")
         add("config.jade.plugin_ragium.machine_info", "機械の情報")

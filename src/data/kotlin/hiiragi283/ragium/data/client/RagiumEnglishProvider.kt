@@ -96,6 +96,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Fluids
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.SNOW, "Powder Snow")
+        addFluid(RagiumFluids.MOLTEN_METAL, "Molten Unknown Metal")
 
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
         addFluid(RagiumVirtualFluids.AIR, "Air")
@@ -431,6 +432,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.FLUID_NAME, "- %s : %s mb")
         add(RagiumTranslationKeys.FLUID_AMOUNT, "Amount: %s mb")
         add(RagiumTranslationKeys.FLUID_CAPACITY, "Capacity: %s mb")
+
+        add(RagiumTranslationKeys.FLUID_MOLTEN, "Molten %s")
 
         add("config.jade.plugin_ragium.energy_network", "Show Energy Network")
         add("config.jade.plugin_ragium.machine_info", "Show Machine Info")

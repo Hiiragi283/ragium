@@ -139,12 +139,7 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     protected abstract fun createRecipe(): R
 
-    fun export(consumer: (R) -> Unit) {
-        if (isErrored) return
-        consumer(createRecipe())
-    }
-
-    fun exportNew(id: ResourceLocation, consumer: (RecipeHolder<R>) -> Unit) {
+    fun export(id: ResourceLocation, consumer: (RecipeHolder<R>) -> Unit) {
         if (isErrored) {
             logWarn(id)
             return

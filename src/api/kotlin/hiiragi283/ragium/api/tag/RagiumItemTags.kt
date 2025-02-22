@@ -42,8 +42,12 @@ object RagiumItemTags {
     val CAPACITY_ENCHANTABLE: TagKey<Item> = itemTagKey(RagiumAPI.id("enchantable/capacity"))
 
     @JvmField
+    val IGNORED_IN_INGREDIENT: TagKey<Item> = itemTagKey(RagiumAPI.id("ignored_in_ingredient"))
+
+    @JvmField
     val LED_BLOCKS: TagKey<Item> = itemTagKey(RagiumAPI.id("led_blocks"))
 
+    // Molds
     @JvmField
     val BALL_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/ball"))
 
@@ -62,6 +66,7 @@ object RagiumItemTags {
     @JvmField
     val SOLAR_PANELS: TagKey<Item> = itemTagKey(RagiumAPI.id("solar_panels"))
 
+    // Soils
     @JvmField
     val DIRT_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/dirt"))
 
@@ -73,7 +78,4 @@ object RagiumItemTags {
 
     @JvmField
     val END_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/end"))
-
-    @JvmField
-    val IGNORED_IN_INGREDIENT: TagKey<Item> = itemTagKey(RagiumAPI.id("ignored_in_ingredient"))
 }

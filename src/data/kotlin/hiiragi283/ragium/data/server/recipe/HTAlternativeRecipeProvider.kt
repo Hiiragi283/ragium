@@ -2,8 +2,10 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -94,34 +96,40 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child() {
             .itemOutput(Items.PACKED_MUD)
             .save(output)
 
-        // Bucket
-        HTShapedRecipeBuilder(Items.BUCKET, 2)
-            .pattern(
-                "ABA",
-                " A ",
-            ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', RagiumItems.FORGE_HAMMER)
-            .save(output, RagiumAPI.id("bucket_by_steel"))
-        // Hopper
-        HTShapedRecipeBuilder(Items.HOPPER, 2)
-            .pattern(
-                "ABA",
-                "ACA",
-                " A ",
-            ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', RagiumItems.FORGE_HAMMER)
-            .define('C', Tags.Items.CHESTS)
-            .save(output, RagiumAPI.id("hopper_by_steel"))
-        // Piston
-        HTShapedRecipeBuilder(Items.PISTON, 2)
-            .pattern(
-                "AAA",
-                "BCB",
-                "BDB",
-            ).define('A', ItemTags.PLANKS)
-            .define('B', ItemTags.STONE_CRAFTING_MATERIALS)
-            .define('C', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('D', Tags.Items.DUSTS_REDSTONE)
-            .save(output, RagiumAPI.id("piston_by_steel"))
+        fun ironAlt(key: HTMaterialKey, modifier: Int) {
+            val name: String = key.name
+            // Bucket
+            HTShapedRecipeBuilder(Items.BUCKET, modifier)
+                .pattern(
+                    "ABA",
+                    " A ",
+                ).define('A', HTTagPrefix.INGOT, key)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .save(output, RagiumAPI.id("bucket_by_$name"))
+            // Hopper
+            HTShapedRecipeBuilder(Items.HOPPER, modifier)
+                .pattern(
+                    "ABA",
+                    "ACA",
+                    " A ",
+                ).define('A', HTTagPrefix.INGOT, key)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .define('C', Tags.Items.CHESTS)
+                .save(output, RagiumAPI.id("hopper_by_$name"))
+            // Piston
+            HTShapedRecipeBuilder(Items.PISTON, modifier)
+                .pattern(
+                    "AAA",
+                    "BCB",
+                    "BDB",
+                ).define('A', ItemTags.PLANKS)
+                .define('B', ItemTags.STONE_CRAFTING_MATERIALS)
+                .define('C', HTTagPrefix.INGOT, key)
+                .define('D', Tags.Items.DUSTS_REDSTONE)
+                .save(output, RagiumAPI.id("piston_by_$name"))
+        }
+
+        ironAlt(CommonMaterials.STEEL, 2)
+        ironAlt(RagiumMaterials.DEEP_STEEL, 4)
     }
 }
