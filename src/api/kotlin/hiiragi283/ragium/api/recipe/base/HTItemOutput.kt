@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe.base
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.isNotEmpty
 import net.minecraft.core.Holder
@@ -48,12 +49,13 @@ class HTItemOutput(private val holderSet: HolderSet<Item>, val count: Int, val c
     }
 
     val id: ResourceLocation =
-        holderSet.unwrap().map(TagKey<Item>::location) { items: List<Holder<Item>> -> items.first().idOrThrow }
+        holderSet.unwrap().map(
+            { tagKey: TagKey<Item> -> RagiumAPI.id(tagKey.location().path.replace(oldChar = '/', newChar = '_')) },
+            { items: List<Holder<Item>> -> items.first().idOrThrow }
+        )
 
     val isValid: Boolean
         get() = holderSet.isNotEmpty
-
-    fun copyWithCount(count: Int): HTItemOutput = HTItemOutput(holderSet, count, components)
 
     override fun get(): ItemStack = holderSet
         .stream()
