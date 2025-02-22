@@ -61,4 +61,8 @@ object RagiumMenuTypes {
     @JvmField
     val SINGLE_ITEM: DeferredHolder<MenuType<*>, MenuType<HTSingleItemContainerMenu>> =
         registerMachine("single_item", ::HTSingleItemContainerMenu)
+
+    @JvmField
+    val SOLIDIFIER: DeferredHolder<MenuType<*>, MenuType<HTSolidifierContainerMenu>> =
+        registerMachine("solidifier", ::HTSolidifierContainerMenu)
 }

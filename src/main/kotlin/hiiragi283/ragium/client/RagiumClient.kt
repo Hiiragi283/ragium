@@ -73,6 +73,7 @@ object RagiumClient {
         event.register(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE.get(), ::HTPrimitiveBlastFurnaceContainer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryContainer)
         event.register(RagiumMenuTypes.SINGLE_ITEM.get(), ::HTSingleItemContainer)
+        event.register(RagiumMenuTypes.SOLIDIFIER.get(), ::HTSolidifierContainer)
 
         LOGGER.info("Registered machine screens!")
     }

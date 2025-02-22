@@ -3,7 +3,9 @@ package hiiragi283.ragium.common.inventory
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.forEachSlot
 import hiiragi283.ragium.api.inventory.HTContainerMenu
+import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Inventory
@@ -37,7 +39,7 @@ class HTPotionBundleContainerMenu(containerId: Int, inventory: Inventory) :
         addSlot(potionHandler, 7, 7, 0)
         addSlot(potionHandler, 8, 8, 0)
         // player inventory
-        addPlayerInv()
+        addPlayerInv(-HTSlotPos.getSlotPosY(1), true)
         // load from stack
         val stack: ItemStack = inventory.getSelected()
         if (!stack.isEmpty && stack.has(RagiumComponentTypes.ITEM_CONTENT)) {
@@ -77,7 +79,7 @@ class HTPotionBundleContainerMenu(containerId: Int, inventory: Inventory) :
 
     override fun removed(player: Player) {
         val stack: ItemStack = this.inventory.getSelected()
-        if (!stack.isEmpty) {
+        if (!stack.isEmpty && stack.`is`(RagiumItems.POTION_BUNDLE)) {
             stack.set(
                 RagiumComponentTypes.ITEM_CONTENT,
                 ItemContainerContents.fromItems(

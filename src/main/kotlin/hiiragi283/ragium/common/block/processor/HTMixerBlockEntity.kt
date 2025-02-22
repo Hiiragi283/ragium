@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
@@ -29,6 +30,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.MIXER, pos, state, HTMachineType.MIXER) {
+    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
     private val firstTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
     private val secondTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
@@ -36,6 +38,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
         listOf(
+            itemInput.createSlot(0),
             itemOutput.createSlot(0),
         ),
         listOf(firstTank, secondTank, outputTank),
@@ -57,7 +60,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         // Find matching recipe
         val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
             enchantments,
-            listOf(),
+            listOf(itemInput.getStackInSlot(0)),
             listOf(firstTank.fluid, secondTank.fluid),
         )
         val recipe: HTMixerRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
@@ -66,13 +69,13 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         // Insert outputs
         recipe.insertOutputs(level, pos, enchantments, itemOutput, outputTank)
         // Decrement input
-        // TODO
+        itemInput.getStackInSlot(0).shrink(recipe.itemInput.map(HTItemIngredient::count).orElse(0))
         firstTank.drain(recipe.firstFluid.amount(), IFluidHandler.FluidAction.EXECUTE)
         secondTank.drain(recipe.secondFluid.amount(), IFluidHandler.FluidAction.EXECUTE)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTMixerContainerMenu(containerId, playerInventory, blockPos, itemOutput)
+        HTMixerContainerMenu(containerId, playerInventory, blockPos, itemInput, itemOutput)
 
     override fun interactWithFluidStorage(player: Player): Boolean {
         if (outputTank.interactWithFluidStorage(player, HTStorageIO.OUTPUT)) {

@@ -8,13 +8,13 @@ import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTMixerContainerMenu(
+class HTSolidifierContainerMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
-    itemInput: IItemHandler,
+    itemCatalyst: IItemHandler,
     itemOutput: IItemHandler,
-) : HTMachineContainerMenu(RagiumMenuTypes.MIXER, containerId, inventory, pos) {
+) : HTMachineContainerMenu(RagiumMenuTypes.SOLIDIFIER, containerId, inventory, pos) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
@@ -25,12 +25,11 @@ class HTMixerContainerMenu(
 
     init {
         // inputs
-        addSlot(itemInput, 0, 1, 1)
         addFluidSlot(0, 2, 1)
-        addFluidSlot(1, 3, 1)
+        // Catalyst
+        addSlot(itemCatalyst, 0, 4, 2)
         // outputs
         addOutputSlot(itemOutput, 0, 6, 1)
-        addFluidSlot(2, 7, 1)
         // player inventory
         addPlayerInv()
         // register property
@@ -38,5 +37,5 @@ class HTMixerContainerMenu(
     }
 
     override val inputSlots: IntRange = IntRange.EMPTY
-    override val outputSlots: IntRange = (0..0)
+    override val outputSlots: IntRange = (1..1)
 }

@@ -16,6 +16,8 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.internal.RagiumConfig
+import hiiragi283.ragium.common.inventory.HTExtractorContainerMenu
+import hiiragi283.ragium.common.inventory.HTInfuserContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -69,7 +71,8 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        HTInfuserContainerMenu(containerId, playerInventory, blockPos, itemInput, itemOutput)
 
     override fun interactWithFluidStorage(player: Player): Boolean = fluidInput.interactWithFluidStorage(player, HTStorageIO.GENERIC)
 

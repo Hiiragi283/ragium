@@ -103,7 +103,7 @@ abstract class HTContainerMenu(
         fluidSlots.put(index, x to y)
     }
 
-    protected fun addPlayerInv(yOffset: Int = 0) {
+    protected fun addPlayerInv(yOffset: Int = 0, immovable: Boolean = false) {
         // inventory
         (0..26).forEach { index: Int ->
             addSlot(
@@ -117,7 +117,12 @@ abstract class HTContainerMenu(
         }
         // hotbar
         (0..8).forEach { index: Int ->
-            addSlot(Slot(inventory, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) - 2 + yOffset))
+            addSlot(
+                when {
+                    immovable && index == inventory.selected -> ::HTImmovableSlot
+                    else -> ::Slot
+                }(inventory, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) - 2 + yOffset),
+            )
         }
     }
 
