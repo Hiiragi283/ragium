@@ -3,10 +3,7 @@ package hiiragi283.ragium.data
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.RagiumEnchantments
-import hiiragi283.ragium.data.client.RagiumBlockStateProvider
-import hiiragi283.ragium.data.client.RagiumEnglishProvider
-import hiiragi283.ragium.data.client.RagiumJapaneseProvider
-import hiiragi283.ragium.data.client.RagiumModelProvider
+import hiiragi283.ragium.data.client.*
 import hiiragi283.ragium.data.server.*
 import hiiragi283.ragium.data.server.worldgen.RagiumBiomeModifiers
 import hiiragi283.ragium.data.server.worldgen.RagiumConfiguredFeatures
@@ -99,7 +96,8 @@ object RagiumData {
         generator.addProvider(event.includeClient(), ::RagiumJapaneseProvider)
 
         generator.addProvider(event.includeClient(), RagiumBlockStateProvider(output, helper))
-        generator.addProvider(event.includeClient(), RagiumModelProvider(output, helper))
+        generator.addProvider(event.includeClient(), RagiumBlockModelProvider(output, helper))
+        generator.addProvider(event.includeClient(), RagiumItemModelProvider(output, helper))
 
         LOGGER.info("Gathered client resources!")
     }

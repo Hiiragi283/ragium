@@ -25,15 +25,17 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     ItemLike,
     StringRepresentable {
     // Consumer
-    BEDROCK_MINER(SoundEvents.STONE_BREAK, null),
     FISHER(SoundEvents.FISHING_BOBBER_SPLASH, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE)),
-    LOOT_SPAWNER(SoundEvents.ZOMBIE_AMBIENT, HTMachineParticleHandler.ofSimple(ParticleTypes.FLAME)),
+
+    BEDROCK_MINER(SoundEvents.STONE_BREAK, null),
 
     // Generator
-    COMBUSTION_GENERATOR(SoundEvents.FIRE_EXTINGUISH, HTMachineParticleHandler.ofSimple(ParticleTypes.SMOKE)),
-    SOLAR_GENERATOR(null, HTMachineParticleHandler.ofTop(ParticleTypes.ELECTRIC_SPARK)),
     STIRLING_GENERATOR(SoundEvents.FIRE_EXTINGUISH, HTMachineParticleHandler.ofSimple(ParticleTypes.LARGE_SMOKE)),
+
+    COMBUSTION_GENERATOR(SoundEvents.FIRE_EXTINGUISH, HTMachineParticleHandler.ofSimple(ParticleTypes.SMOKE)),
     THERMAL_GENERATOR(SoundEvents.LAVA_POP, HTMachineParticleHandler.ofTop(ParticleTypes.LAVA)),
+
+    SOLAR_GENERATOR(null, HTMachineParticleHandler.ofTop(ParticleTypes.ELECTRIC_SPARK)),
 
     // Processor - Basic
     ASSEMBLER(SoundEvents.DISPENSER_DISPENSE, null),

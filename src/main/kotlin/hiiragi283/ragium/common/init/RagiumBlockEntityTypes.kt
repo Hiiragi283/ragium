@@ -7,7 +7,10 @@ import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
-import hiiragi283.ragium.common.block.machine.*
+import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlockEntity
+import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
+import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
+import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
 import hiiragi283.ragium.common.block.processor.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
@@ -72,10 +75,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val FISHER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTFisherBlockEntity>> =
         register("fisher", ::HTFisherBlockEntity, HTMachineType.FISHER)
-
-    @JvmField
-    val LOOT_SPAWNER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLookSpawnerBlockEntity>> =
-        register("loot_spawner", ::HTLookSpawnerBlockEntity, HTMachineType.LOOT_SPAWNER)
 
     //    Generator    //
 

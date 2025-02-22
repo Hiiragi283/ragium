@@ -176,8 +176,6 @@
   "machine_type.infuser.description": "遠心分離機みたくないやつ",
   "machine_type.laser_assembly": "レーザーアセンブリ",
   "machine_type.laser_assembly.description": "レーザーオン…",
-  "machine_type.loot_spawner": "ルートスポナー",
-  "machine_type.loot_spawner.description": "壊れたスポナーからモブドロップを生成する",
   "machine_type.mixer": "ミキサー",
   "machine_type.mixer.description": "ベストマッチ!",
   "machine_type.multi_smelter": "並列精錬機",

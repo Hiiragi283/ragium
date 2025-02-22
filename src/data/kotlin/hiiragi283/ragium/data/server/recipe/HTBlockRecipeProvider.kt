@@ -311,14 +311,6 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child() {
             Ingredient.of(Items.FISHING_ROD),
             Ingredient.of(Tags.Items.BARRELS),
         )
-        // Loot Spawner
-        registerMachine(
-            output,
-            HTMachineType.LOOT_SPAWNER,
-            RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(Items.TOTEM_OF_UNDYING),
-            Ingredient.of(ItemTags.SWORDS),
-        )
 
         // Assembler
         registerMachine(
@@ -370,6 +362,14 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child() {
             Ingredient.of(Items.PISTON),
         )
         // Growth Chamber
+        registerMachine(
+            output,
+            HTMachineType.GROWTH_CHAMBER,
+            RagiumItems.CHEMICAL_MACHINE_CASING,
+            Ingredient.of(RagiumItems.LED),
+            Ingredient.of(ItemTags.HOES),
+            Ingredient.of(ItemTags.AXES),
+        )
         // Infuser
         registerMachine(
             output,

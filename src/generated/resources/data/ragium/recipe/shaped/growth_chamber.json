@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:totem_of_undying"
+      "item": "ragium:led"
     },
     "B": {
-      "tag": "minecraft:swords"
+      "tag": "minecraft:hoes"
     },
     "C": {
-      "item": "ragium:precision_machine_casing"
+      "item": "ragium:chemical_machine_casing"
     },
     "D": {
-      "tag": "minecraft:swords"
+      "tag": "minecraft:axes"
     },
     "E": {
-      "tag": "c:coils/aluminum"
+      "tag": "c:coils/gold"
     },
     "F": {
-      "tag": "c:circuits/elite"
+      "tag": "c:circuits/advanced"
     }
   },
   "pattern": [
@@ -28,6 +28,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:loot_spawner"
+    "id": "ragium:growth_chamber"
   }
 }

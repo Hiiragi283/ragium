@@ -4,7 +4,6 @@
 	"textures": {
 		"top": "ragium:block/ragi_alloy_casing",
 		"bottom": "ragium:block/basic_casing",
-		"front": "ragium:block/blast_furnace_front",
 		"particle": "ragium:block/ragi_alloy_casing"
 	},
 	"elements": [

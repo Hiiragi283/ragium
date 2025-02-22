@@ -176,8 +176,6 @@
   "machine_type.infuser.description": "Something not like Centrifuge",
   "machine_type.laser_assembly": "Laser Assembly",
   "machine_type.laser_assembly.description": "Laser On...",
-  "machine_type.loot_spawner": "Loot Spawner",
-  "machine_type.loot_spawner.description": "Generate mob drops from Broken Spawner",
   "machine_type.mixer": "Mixer",
   "machine_type.mixer.description": "Best Match!",
   "machine_type.multi_smelter": "Multi Smelter",

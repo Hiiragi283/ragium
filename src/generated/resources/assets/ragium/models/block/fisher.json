@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:block/basic_machine",
+  "textures": {
+    "front": "ragium:block/fisher_front"
+  }
+}

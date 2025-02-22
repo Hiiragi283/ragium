@@ -262,7 +262,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Machine Type
         add(HTMachineType.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
         add(HTMachineType.FISHER, "自動釣り機", "下の水源から魚を釣る")
-        add(HTMachineType.LOOT_SPAWNER, "ルートスポナー", "壊れたスポナーからモブドロップを生成する")
+        // add(HTMachineType.LOOT_SPAWNER, "ルートスポナー", "壊れたスポナーからモブドロップを生成する")
 
         add(HTMachineType.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
         add(HTMachineType.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")

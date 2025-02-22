@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:block/chemical_machine",
+  "textures": {
+    "front": "ragium:block/growth_chamber_front"
+  }
+}

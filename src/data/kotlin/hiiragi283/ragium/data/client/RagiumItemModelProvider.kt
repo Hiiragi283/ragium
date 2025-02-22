@@ -14,7 +14,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
-class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
+class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
     override fun registerModels() {
         registerBlocks()
@@ -38,7 +38,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         RagiumBlocks.PLASTIC_FAMILY.generateModels(this)
         // Machine
         HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->
-            withUncheckedParent(holder, holder.blockId)
+            getBuilder(holder).parent(ModelFile.UncheckedModelFile(holder.blockId))
         }
     }
 

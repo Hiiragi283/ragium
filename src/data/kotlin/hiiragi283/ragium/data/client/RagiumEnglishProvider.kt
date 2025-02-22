@@ -266,7 +266,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Collect minerals from Bedrock",
         )
         add(HTMachineType.FISHER, "Fisher", "Fishing fishes from below water source")
-        add(HTMachineType.LOOT_SPAWNER, "Loot Spawner", "Generate mob drops from Broken Spawner")
+        // add(HTMachineType.LOOT_SPAWNER, "Loot Spawner", "Generate mob drops from Broken Spawner")
 
         add(
             HTMachineType.COMBUSTION_GENERATOR,

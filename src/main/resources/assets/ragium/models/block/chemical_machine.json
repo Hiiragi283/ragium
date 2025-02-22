@@ -4,7 +4,6 @@
 	"textures": {
 		"top": "ragium:block/gold_casing",
 		"bottom": "ragium:block/advanced_casing",
-		"front": "ragium:block/infuser_front",
 		"particle": "ragium:block/gold_casing"
 	},
 	"elements": [

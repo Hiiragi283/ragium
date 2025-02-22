@@ -58,9 +58,6 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, 
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(id: ResourceLocation): T = getBuilder(id.toString())
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.withUncheckedParent(holder: DeferredBlock<*>, parent: ResourceLocation): T =
-    getBuilder(holder).parent(ModelFile.UncheckedModelFile(parent))
-
 fun <T : ModelBuilder<T>> T.blockTexture(key: String, id: ResourceLocation): T = texture(key, id.withPrefix("block/"))
 
 fun <T : ModelBuilder<T>> T.itemTexture(key: String, id: ResourceLocation): T = texture(key, id.withPrefix("item/"))
