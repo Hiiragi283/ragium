@@ -11,9 +11,11 @@
     "#c:dusts/gold",
     "#c:dusts/iron",
     "#c:dusts/lapis",
+    "#c:dusts/niobium",
     "#c:dusts/quartz",
     "#c:dusts/ragi_crystal",
     "#c:dusts/raginite",
+    "#c:dusts/tin",
     "#c:dusts/wood"
   ]
 }

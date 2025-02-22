@@ -4,7 +4,6 @@
       "id": "#c:coal_coke",
       "required": false
     },
-    "ragium:coal_coke",
     "modern_industrialization:coke"
   ]
 }

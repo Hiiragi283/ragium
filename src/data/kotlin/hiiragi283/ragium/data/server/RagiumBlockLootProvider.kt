@@ -39,7 +39,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             val prefix: HTTagPrefix = when (key) {
                 RagiumMaterials.RAGINITE -> HTTagPrefix.RAW_MATERIAL
                 RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
-                CommonMaterials.COAL_COKE -> HTTagPrefix.GEM
+                CommonMaterials.NIOBIUM -> HTTagPrefix.RAW_MATERIAL
                 else -> error("Undefined material: $key")
             }
             val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, key)

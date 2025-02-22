@@ -2,14 +2,15 @@
   "type": "ragium:blast_furnace",
   "item_inputs": [
     {
+      "count": 8,
       "tag": "c:ingots/steel"
     },
     {
-      "count": 4,
-      "item": "ragium:deepant_reagent"
+      "tag": "c:ingots/niobium"
     }
   ],
   "item_output": {
+    "count": 9,
     "items": "#c:ingots/deep_steel"
   }
 }

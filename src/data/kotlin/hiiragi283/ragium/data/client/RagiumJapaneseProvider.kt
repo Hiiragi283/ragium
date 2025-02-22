@@ -204,8 +204,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PRISMARINE_LENS, "プリズマリンレンズ")
         addItem(RagiumItems.MAGICAL_LENS, "魔術的レンズ")
 
-        addItem(RagiumItems.DEEPANT_REAGENT, "ディーパント試薬")
-        addItem(RagiumItems.FROZEN_REAGENT, "フローズン試薬")
         addItem(RagiumItems.MAGICAL_REAGENT, "魔術的試薬")
         addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
         addItem(RagiumItems.SCULK_REAGENT, "スカルク試薬")
@@ -305,6 +303,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(CommonMaterials.IRIDIUM, "イリジウム")
         add(CommonMaterials.LEAD, "鉛")
         add(CommonMaterials.NICKEL, "ニッケル")
+        add(CommonMaterials.NIOBIUM, "ニオブ")
         add(CommonMaterials.OSMIUM, "オスミウム")
         add(CommonMaterials.PERIDOT, "ペリドット")
         add(CommonMaterials.PLATINUM, "白金")

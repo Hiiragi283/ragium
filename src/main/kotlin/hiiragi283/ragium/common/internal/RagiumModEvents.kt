@@ -82,6 +82,7 @@ internal object RagiumModEvents {
         event.register(CommonMaterials.IRIDIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.LEAD, HTMaterialType.METAL)
         event.register(CommonMaterials.NICKEL, HTMaterialType.METAL)
+        event.register(CommonMaterials.NIOBIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.OSMIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.PERIDOT, HTMaterialType.GEM)
         event.register(CommonMaterials.PLATINUM, HTMaterialType.METAL)

@@ -133,9 +133,14 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
         // Grinder
         val grinder: AdvancementHolder = createMachine(casing, HTMachineType.GRINDER)
-        val deepant: AdvancementHolder = createSimple(grinder, RagiumItems.DEEPANT_REAGENT, Component.empty())
+        val niobium: AdvancementHolder = createMaterial(
+            grinder,
+            HTTagPrefix.INGOT,
+            CommonMaterials.NIOBIUM,
+            Component.empty(),
+        )
         val deepSteel: AdvancementHolder = createMaterial(
-            deepant,
+            niobium,
             HTTagPrefix.INGOT,
             RagiumMaterials.DEEP_STEEL,
             Component.empty(),

@@ -4,6 +4,12 @@
     "amount": 125,
     "tag": "c:alkali_solution"
   },
+  "fluid_outputs": [
+    {
+      "amount": 125,
+      "id": "ragium:glycerol"
+    }
+  ],
   "item_outputs": [
     {
       "items": "ragium:soap"

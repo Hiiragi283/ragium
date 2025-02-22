@@ -204,8 +204,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PRISMARINE_LENS, "Prismarine Lens")
         addItem(RagiumItems.MAGICAL_LENS, "Magical Lens")
 
-        addItem(RagiumItems.DEEPANT_REAGENT, "Deepant Reagent")
-        addItem(RagiumItems.FROZEN_REAGENT, "Frozen Reagent")
         addItem(RagiumItems.MAGICAL_REAGENT, "Magical Reagent")
         addItem(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
         addItem(RagiumItems.SCULK_REAGENT, "Sculk Reagent")
@@ -325,6 +323,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(CommonMaterials.IRIDIUM, "Iridium")
         add(CommonMaterials.LEAD, "Lead")
         add(CommonMaterials.NICKEL, "Nickel")
+        add(CommonMaterials.NIOBIUM, "Niobium")
         add(CommonMaterials.OSMIUM, "Osmium")
         add(CommonMaterials.PERIDOT, "Peridot")
         add(CommonMaterials.PLATINUM, "Platinum")

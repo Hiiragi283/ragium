@@ -4,6 +4,12 @@
     "amount": 250,
     "tag": "c:plant_oil"
   },
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "id": "ragium:glycerol"
+    }
+  ],
   "item_input": {
     "tag": "c:dusts/ash"
   },

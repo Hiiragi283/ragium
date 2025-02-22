@@ -71,21 +71,6 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child() {
             .itemInput(Items.PACKED_ICE)
             .itemOutput(Items.ICE, 9)
             .save(output)
-
-        // Frozen Reagent
-        HTFluidOutputRecipeBuilder
-            .extractor(lookup)
-            .itemInput(Items.PACKED_ICE)
-            .itemOutput(RagiumItems.FROZEN_REAGENT)
-            .saveSuffixed(output, "_from_packed_ice")
-
-        // Ice
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, Items.ICE)
-            .requires(Tags.Items.BUCKETS_WATER)
-            .requires(RagiumItems.FROZEN_REAGENT)
-            .unlockedBy("has_reagent", has(RagiumItems.FROZEN_REAGENT))
-            .savePrefixed(output)
     }
 
     //    Nitrogen    //
@@ -186,6 +171,7 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child() {
             .itemInput(HTTagPrefix.DUST, CommonMaterials.ASH)
             .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, 250)
             .itemOutput(RagiumItems.SOAP, 2)
+            .fluidOutput(RagiumVirtualFluids.GLYCEROL, 250)
             .saveSuffixed(output, "_from_ash")
         // Alkali Solution + Seed Oil -> Soap
         HTFluidOutputRecipeBuilder
@@ -193,6 +179,7 @@ object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child() {
             .fluidInput(RagiumVirtualFluids.ALKALI_SOLUTION.commonTag, 125)
             .fluidInput(RagiumVirtualFluids.PLANT_OIL.commonTag, 125)
             .itemOutput(RagiumItems.SOAP)
+            .fluidOutput(RagiumVirtualFluids.GLYCEROL, 125)
             .saveSuffixed(output, "_from_alkali")
     }
 
