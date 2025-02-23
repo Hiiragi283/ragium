@@ -217,7 +217,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "Chemical Machine Casing")
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        addItem(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.LED, "L.E.D.")
@@ -229,7 +228,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.SLAG, "Slag")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
-        addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
         addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
 
@@ -361,6 +359,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(IntegrationMaterials.REFINED_GLOWSTONE, "Refined Glowstone")
         add(IntegrationMaterials.REFINED_OBSIDIAN, "Refined Obsidian")
 
+        add(RagiumMaterials.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumMaterials.DEEP_STEEL, "Deep Steel")
         add(RagiumMaterials.ECHORIUM, "Echorium")
         add(RagiumMaterials.FIERY_COAL, "Fiery Coal")
@@ -368,6 +367,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterials.RAGI_CRYSTAL, "Ragi-Crystal")
         add(RagiumMaterials.RAGINITE, "Raginite")
         add(RagiumMaterials.RAGIUM, "Ragium")
+        add(RagiumMaterials.WARPED_CRYSTAL, "Warped Crystal")
         add(VanillaMaterials.AMETHYST, "Amethyst")
         add(VanillaMaterials.COAL, "Coal")
         add(VanillaMaterials.COPPER, "Copper")

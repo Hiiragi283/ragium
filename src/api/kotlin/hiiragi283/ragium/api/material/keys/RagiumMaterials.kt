@@ -12,6 +12,12 @@ object RagiumMaterials {
     val FIERY_COAL: HTMaterialKey = HTMaterialKey.of("fiery_coal")
 
     @JvmField
+    val CRIMSON_CRYSTAL: HTMaterialKey = HTMaterialKey.of("crimson_crystal")
+
+    @JvmField
+    val WARPED_CRYSTAL: HTMaterialKey = HTMaterialKey.of("warped_crystal")
+
+    @JvmField
     val RAGI_CRYSTAL: HTMaterialKey = HTMaterialKey.of("ragi_crystal")
 
     //    Metal    //

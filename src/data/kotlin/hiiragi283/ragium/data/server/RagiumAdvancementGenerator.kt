@@ -197,8 +197,20 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val resin: AdvancementHolder = createSimple(crudeOil, RagiumItems.POLYMER_RESIN, Component.empty())
         val plastic: AdvancementHolder = createSimple(resin, RagiumItems.PLASTIC_PLATE, Component.empty())
 
-        val crimson: AdvancementHolder = createSimple(refinery, RagiumItems.CRIMSON_CRYSTAL, Component.empty(), type = AdvancementType.GOAL)
-        val warped: AdvancementHolder = createSimple(refinery, RagiumItems.WARPED_CRYSTAL, Component.empty(), type = AdvancementType.GOAL)
+        val crimson: AdvancementHolder = createMaterial(
+            refinery,
+            HTTagPrefix.GEM,
+            RagiumMaterials.CRIMSON_CRYSTAL,
+            Component.empty(),
+            type = AdvancementType.GOAL,
+        )
+        val warped: AdvancementHolder = createMaterial(
+            refinery,
+            HTTagPrefix.GEM,
+            RagiumMaterials.WARPED_CRYSTAL,
+            Component.empty(),
+            type = AdvancementType.GOAL,
+        )
         // Solidifier
         val solidifier: AdvancementHolder = createMachine(casing, HTMachineType.SOLIDIFIER)
     }

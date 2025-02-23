@@ -14,7 +14,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -45,7 +44,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child() {
         // Blaze Powder
         HTCookingRecipeBuilder
             .create(
-                Ingredient.of(RagiumItems.CRIMSON_CRYSTAL),
+                HTTagPrefix.GEM.createIngredient(RagiumMaterials.CRIMSON_CRYSTAL),
                 Items.BLAZE_POWDER,
                 time = 500,
                 types = HTCookingRecipeBuilder.BLASTING_TYPES,
@@ -53,7 +52,7 @@ object HTAlternativeRecipeProvider : RagiumRecipeProvider.Child() {
         // Ender Pearl
         HTCookingRecipeBuilder
             .create(
-                Ingredient.of(RagiumItems.WARPED_CRYSTAL),
+                HTTagPrefix.GEM.createIngredient(RagiumMaterials.WARPED_CRYSTAL),
                 Items.ENDER_PEARL,
                 time = 500,
                 types = HTCookingRecipeBuilder.BLASTING_TYPES,

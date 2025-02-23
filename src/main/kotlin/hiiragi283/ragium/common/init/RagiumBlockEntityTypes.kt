@@ -42,15 +42,6 @@ object RagiumBlockEntityTypes {
     private fun <T : BlockEntity> register(
         path: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,
-        blocks: Collection<Supplier<out Block>> = listOf(),
-    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
-        BlockEntityType.Builder.of(factory, *blocks.map(Supplier<out Block>::get).toTypedArray()).build(null)
-    }
-
-    @JvmStatic
-    private fun <T : BlockEntity> register(
-        path: String,
-        factory: BlockEntityType.BlockEntitySupplier<T>,
         machine: HTMachineType,
     ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
         BlockEntityType.Builder.of(factory, machine.getBlock().get()).build(null)

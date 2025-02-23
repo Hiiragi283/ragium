@@ -4,7 +4,7 @@
   "cookingtime": 250,
   "experience": 0.0,
   "ingredient": {
-    "item": "ragium:crimson_crystal"
+    "tag": "c:gems/crimson_crystal"
   },
   "result": {
     "count": 1,

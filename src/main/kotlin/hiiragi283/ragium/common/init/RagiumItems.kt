@@ -103,6 +103,8 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+        register(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL)
+        register(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
@@ -146,12 +148,6 @@ object RagiumItems {
 
     @JvmField
     val SLAG: DeferredItem<Item> = register("slag")
-
-    @JvmField
-    val CRIMSON_CRYSTAL: DeferredItem<Item> = register("crimson_crystal")
-
-    @JvmField
-    val WARPED_CRYSTAL: DeferredItem<Item> = register("warped_crystal")
 
     @JvmField
     val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")

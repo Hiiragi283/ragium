@@ -217,7 +217,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BEE_WAX, "蜜蠟")
         addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "化学機械筐体")
         addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
-        addItem(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.LED, "L.E.D.")
@@ -229,7 +228,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.SLAG, "スラグ")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
-        addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
         addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 
@@ -341,6 +339,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(IntegrationMaterials.REFINED_GLOWSTONE, "精製グロウストーン")
         add(IntegrationMaterials.REFINED_OBSIDIAN, "精製黒曜石")
 
+        add(RagiumMaterials.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumMaterials.DEEP_STEEL, "深層鋼")
         add(RagiumMaterials.ECHORIUM, "エコリウム")
         add(RagiumMaterials.FIERY_COAL, "燃え盛る石炭")
@@ -348,6 +347,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterials.RAGI_CRYSTAL, "ラギクリスタリル")
         add(RagiumMaterials.RAGINITE, "ラギナイト")
         add(RagiumMaterials.RAGIUM, "ラギウム")
+        add(RagiumMaterials.WARPED_CRYSTAL, "歪んだ結晶")
         add(VanillaMaterials.AMETHYST, "アメシスト")
         add(VanillaMaterials.COAL, "石炭")
         add(VanillaMaterials.COPPER, "銅")

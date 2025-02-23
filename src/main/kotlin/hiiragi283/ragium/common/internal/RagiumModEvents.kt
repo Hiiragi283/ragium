@@ -106,6 +106,7 @@ internal object RagiumModEvents {
         event.register(CommonMaterials.WOOD, HTMaterialType.DUST)
         event.register(CommonMaterials.ZINC, HTMaterialType.METAL)
 
+        event.register(RagiumMaterials.CRIMSON_CRYSTAL, HTMaterialType.GEM)
         event.register(RagiumMaterials.DEEP_STEEL, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.ECHORIUM, HTMaterialType.METAL)
         event.register(RagiumMaterials.FIERY_COAL, HTMaterialType.GEM)
@@ -113,6 +114,7 @@ internal object RagiumModEvents {
         event.register(RagiumMaterials.RAGI_CRYSTAL, HTMaterialType.GEM)
         event.register(RagiumMaterials.RAGINITE, HTMaterialType.MINERAL)
         event.register(RagiumMaterials.RAGIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.WARPED_CRYSTAL, HTMaterialType.GEM)
 
         event.register(VanillaMaterials.AMETHYST, HTMaterialType.GEM)
         event.register(VanillaMaterials.COAL, HTMaterialType.GEM)

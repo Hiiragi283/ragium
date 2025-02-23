@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:warped_crystal"
+            "items": "#c:gems/warped_crystal"
           }
         ]
       },
@@ -20,7 +20,12 @@
       "id": "ragium:warped_crystal"
     },
     "title": {
-      "translate": "item.ragium.warped_crystal"
+      "translate": "tag_prefix.ragium.gem",
+      "with": [
+        {
+          "translate": "material.ragium.warped_crystal"
+        }
+      ]
     }
   },
   "requirements": [

@@ -4,7 +4,7 @@
   "cookingtime": 500,
   "experience": 0.0,
   "ingredient": {
-    "item": "ragium:warped_crystal"
+    "tag": "c:gems/warped_crystal"
   },
   "result": {
     "count": 1,

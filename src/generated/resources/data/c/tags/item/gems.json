@@ -1,10 +1,12 @@
 {
   "values": [
     "#c:gems/coal_coke",
+    "#c:gems/crimson_crystal",
     "#c:gems/cryolite",
     "#c:gems/dark",
     "#c:gems/fiery_coal",
     "#c:gems/netherite_scrap",
-    "#c:gems/ragi_crystal"
+    "#c:gems/ragi_crystal",
+    "#c:gems/warped_crystal"
   ]
 }

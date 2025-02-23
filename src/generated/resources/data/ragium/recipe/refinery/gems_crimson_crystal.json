@@ -2,7 +2,7 @@
   "type": "ragium:refinery",
   "fluid_input": {
     "amount": 1000,
-    "tag": "c:warped_sap"
+    "tag": "c:crimson_sap"
   },
   "fluid_outputs": [
     {
@@ -12,7 +12,7 @@
   ],
   "item_outputs": [
     {
-      "items": "ragium:warped_crystal"
+      "items": "#c:gems/crimson_crystal"
     }
   ]
 }

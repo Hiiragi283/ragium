@@ -435,7 +435,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child() {
         HTFluidOutputRecipeBuilder
             .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.CRIMSON_SAP.commonTag)
-            .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
 
@@ -450,7 +450,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child() {
         HTFluidOutputRecipeBuilder
             .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.WARPED_SAP.commonTag)
-            .itemOutput(RagiumItems.WARPED_CRYSTAL)
+            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
 
