@@ -271,7 +271,7 @@ object RagiumItems {
         ::ShearsItem,
         itemProperty()
             .component(DataComponents.TOOL, ShearsItem.createToolProperties())
-            .component(DataComponents.UNBREAKABLE, Unbreakable(true))
+            .component(DataComponents.UNBREAKABLE, Unbreakable(true)),
     )
 
     @JvmField
@@ -304,7 +304,7 @@ object RagiumItems {
 
     @JvmField
     val STEEL_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.STEEL, "steel")
-    
+
     //    Utilities    //
 
     @JvmField

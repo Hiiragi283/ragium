@@ -102,7 +102,7 @@ object HTChemicalRecipeProviderNew : HTRecipeProvider() {
 
         HTFluidOutputRecipeBuilder
             .infuser(lookup)
-            .itemInput(Items.PAPER)
+            .itemInput(RagiumItemTags.PAPER)
             .fluidInput(RagiumVirtualFluids.NITROGLYCERIN.commonTag, 125)
             .itemOutput(RagiumItems.DYNAMITE)
             .save(output)

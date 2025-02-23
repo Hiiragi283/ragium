@@ -148,7 +148,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         // Ragi Ticket
         HTFluidOutputRecipeBuilder
             .infuser(lookup)
-            .itemInput(Items.PAPER)
+            .itemInput(RagiumItemTags.PAPER)
             .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, 125)
             .itemOutput(RagiumItems.RAGI_TICKET)
             .save(output)
@@ -390,9 +390,8 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .pattern(
                 "ABA",
                 " C ",
-                " C "
-            )
-            .define('A', HTTagPrefix.GEM, VanillaMaterials.EMERALD)
+                " C ",
+            ).define('A', HTTagPrefix.GEM, VanillaMaterials.EMERALD)
             .define('B', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.EMERALD)
             .define('C', Tags.Items.RODS_WOODEN)
             .save(output)
@@ -401,9 +400,8 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .pattern(
                 "ABA",
                 " C ",
-                " C "
-            )
-            .define('A', HTTagPrefix.INGOT, VanillaMaterials.GOLD)
+                " C ",
+            ).define('A', HTTagPrefix.INGOT, VanillaMaterials.GOLD)
             .define('B', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.GOLD)
             .define('C', Tags.Items.RODS_WOODEN)
             .save(output)

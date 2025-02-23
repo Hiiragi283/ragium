@@ -5,7 +5,7 @@
     "tag": "c:ragium_solution"
   },
   "item_input": {
-    "item": "minecraft:paper"
+    "tag": "c:paper"
   },
   "item_outputs": [
     {

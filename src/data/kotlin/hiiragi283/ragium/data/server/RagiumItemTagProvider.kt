@@ -170,6 +170,8 @@ class RagiumItemTagProvider(
     //    Part    //
 
     private fun partTags() {
+        builder.add(RagiumItemTags.PAPER, Items.PAPER.asHolder())
+
         builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
         builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
 

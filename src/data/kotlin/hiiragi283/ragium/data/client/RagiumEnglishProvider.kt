@@ -369,6 +369,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(IntegrationMaterials.REFINED_GLOWSTONE, "Refined Glowstone")
         add(IntegrationMaterials.REFINED_OBSIDIAN, "Refined Obsidian")
 
+        add(IntegrationMaterials.CARMINITE, "Carminite")
+        add(IntegrationMaterials.FIERY_METAL, "Fiery")
+        add(IntegrationMaterials.IRONWOOD, "Ironwood")
+        add(IntegrationMaterials.KNIGHTMETAL, "Knightmetal")
+        add(IntegrationMaterials.STEELEAF, "Steeleaf")
+
         add(RagiumMaterials.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumMaterials.DEEP_STEEL, "Deep Steel")
         add(RagiumMaterials.ECHORIUM, "Echorium")

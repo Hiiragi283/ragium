@@ -29,6 +29,7 @@ patchouli-gen = "1.21.1-1.0.11-Snapshot.3"
 # powah = "6.1.5-neoforge"
 rc = "1.2.5"
 # rei = "18.0.796"
+tf = "4.6.3003"
 # theurgy = "1.58.2"
 
 [libraries]
@@ -41,6 +42,7 @@ aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
 # cyclops = { group = "curse.maven", name = "cyclops-core-232758", version.ref = "cyclops" }
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 eio = { group = "com.enderio", name = "enderio-base", version.ref = "eio" }
+eio-machines = { group = "com.enderio", name = "enderio-machines", version.ref = "eio" }
 # evil = { group = "curse.maven", name = "evilcraft-74610", version.ref = "evil" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 if = { group = "maven.modrinth", name = "industrial-foregoing", version.ref = "if" }
@@ -61,13 +63,14 @@ mods-impl = [
     "aa",
     "delight",
     "eio",
+    "eio-machines",
     "if",
     "immersive",
     "jade",
     "mek",
     "mi",
     "patchouli-gen",
-    "rc",
+    "rc", 
 ]
 
 mods-transitive = []

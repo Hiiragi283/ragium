@@ -70,4 +70,21 @@ object IntegrationMaterials {
 
     @JvmField
     val REFINED_OBSIDIAN: HTMaterialKey = HTMaterialKey.of("refined_obsidian")
+
+    //    Twilight Forest    //
+
+    @JvmField
+    val CARMINITE: HTMaterialKey = HTMaterialKey.of("carminite")
+
+    @JvmField
+    val FIERY_METAL: HTMaterialKey = HTMaterialKey.of("fiery")
+
+    @JvmField
+    val IRONWOOD: HTMaterialKey = HTMaterialKey.of("ironwood")
+
+    @JvmField
+    val KNIGHTMETAL: HTMaterialKey = HTMaterialKey.of("knightmetal")
+
+    @JvmField
+    val STEELEAF: HTMaterialKey = HTMaterialKey.of("steeleaf")
 }

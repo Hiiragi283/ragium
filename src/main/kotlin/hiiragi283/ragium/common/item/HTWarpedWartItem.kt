@@ -4,7 +4,6 @@ import net.minecraft.core.Holder
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -17,9 +16,6 @@ class HTWarpedWartItem(properties: Properties) : Item(properties) {
             .randomOrNull()
             ?: return super.finishUsingItem(stack, level, livingEntity)
         livingEntity.removeEffect(targetEffect)
-        if (livingEntity is Player) {
-            livingEntity.cooldowns.addCooldown(this, 20 * 60)
-        }
         return super.finishUsingItem(stack, level, livingEntity)
     }
 }

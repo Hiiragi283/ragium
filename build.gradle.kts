@@ -59,12 +59,13 @@ repositories {
     maven(url = "https://maven.theillusivec4.top/")
     maven(url = "https://maven.blamejared.com/")
     maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/") {
-        content { includeGroup("software.bernie.geckolib") }
+        content { includeGroup("software.bernie.geckolib") } // GeckoLib
     }
     maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") {
-        content { includeGroup("com.klikli_dev") }
+        content { includeGroup("com.klikli_dev") } // Theurgy
     }
-    maven(url = "https://maven.rover656.dev/releases")
+    maven(url = "https://maven.rover656.dev/releases") // EIO
+    maven(url = "https://maven.tamaized.com/releases") // Twilight
     mavenCentral()
 }
 
@@ -186,6 +187,7 @@ dependencies {
     implementation("mekanism:Mekanism:${libs.versions.mek.get()}:additions")
     implementation("mekanism:Mekanism:${libs.versions.mek.get()}:generators")
     implementation("mekanism:Mekanism:${libs.versions.mek.get()}:tools")
+    implementation("team-twilight:twilightforest:${libs.versions.tf.get()}:universal")
 
     implementation(libs.bundles.mods.impl)
     implementation(libs.bundles.mods.transitive) { isTransitive = false }

@@ -12,21 +12,31 @@ import net.minecraft.world.item.Item
 object RagiumItemTags {
     //    Common    //
 
-    @JvmField
-    val COAL_COKE: TagKey<Item> = itemTagKey(commonId("coal_coke"))
+    @JvmStatic
+    private fun commonTag(path: String): TagKey<Item> = itemTagKey(commonId(path))
 
     @JvmField
-    val CROPS_WARPED_WART: TagKey<Item> = itemTagKey(commonId("crops/warped_wart"))
+    val COAL_COKE: TagKey<Item> = commonTag("coal_coke")
 
     @JvmField
-    val DOUGH: TagKey<Item> = itemTagKey(commonId("foods/dough"))
+    val CROPS_WARPED_WART: TagKey<Item> = commonTag("crops/warped_wart")
 
     @JvmField
-    val PLASTICS: TagKey<Item> = itemTagKey(commonId("plastics"))
+    val DOUGH: TagKey<Item> = commonTag("foods/dough")
 
     @JvmField
-    val SLAG: TagKey<Item> = itemTagKey(commonId("slag"))
+    val PAPER: TagKey<Item> = commonTag("paper")
 
+    @JvmField
+    val PLASTICS: TagKey<Item> = commonTag("plastics")
+
+    @JvmField
+    val SILICON: TagKey<Item> = commonTag("silicon")
+
+    @JvmField
+    val SLAG: TagKey<Item> = commonTag("slag")
+
+    // Circuits
     @JvmField
     val BASIC_CIRCUIT: TagKey<Item> = itemTagKey(commonId("circuits/basic"))
 

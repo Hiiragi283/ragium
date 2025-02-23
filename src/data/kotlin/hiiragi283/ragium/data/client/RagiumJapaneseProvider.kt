@@ -349,6 +349,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(IntegrationMaterials.REFINED_GLOWSTONE, "精製グロウストーン")
         add(IntegrationMaterials.REFINED_OBSIDIAN, "精製黒曜石")
 
+        add(IntegrationMaterials.CARMINITE, "カーミナイト")
+        add(IntegrationMaterials.FIERY_METAL, "灼熱の")
+        add(IntegrationMaterials.IRONWOOD, "樹鉄")
+        add(IntegrationMaterials.KNIGHTMETAL, "ナイトメタル")
+        add(IntegrationMaterials.STEELEAF, "葉鋼")
+
         add(RagiumMaterials.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumMaterials.DEEP_STEEL, "深層鋼")
         add(RagiumMaterials.ECHORIUM, "エコリウム")

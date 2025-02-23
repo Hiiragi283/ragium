@@ -153,6 +153,12 @@ internal object RagiumModEvents {
 
         event.register(IntegrationMaterials.REFINED_GLOWSTONE, HTMaterialType.ALLOY)
         event.register(IntegrationMaterials.REFINED_OBSIDIAN, HTMaterialType.ALLOY)
+
+        event.register(IntegrationMaterials.CARMINITE, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.FIERY_METAL, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.IRONWOOD, HTMaterialType.METAL)
+        event.register(IntegrationMaterials.KNIGHTMETAL, HTMaterialType.METAL)
+        event.register(IntegrationMaterials.STEELEAF, HTMaterialType.METAL)
     }
 
     @JvmStatic
