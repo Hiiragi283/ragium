@@ -1,6 +1,6 @@
-package hiiragi283.ragium.common.fluid
+package hiiragi283.ragium.common.capability.fluid
 
-import hiiragi283.ragium.api.fluid.HTMachineFluidTank
+import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 

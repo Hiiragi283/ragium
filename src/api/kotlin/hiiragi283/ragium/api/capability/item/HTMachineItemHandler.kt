@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.item
+package hiiragi283.ragium.api.capability.item
 
 import hiiragi283.ragium.api.capability.HTSlotHandler
 import hiiragi283.ragium.api.extension.forEachSlot
@@ -8,7 +8,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 interface HTMachineItemHandler : IItemHandlerModifiable {
     /**
-     * 指定した[slot]に対する[HTSlotHandler]を返します。
+     * 指定した[slot]に対する[hiiragi283.ragium.api.capability.HTSlotHandler]を返します。
      */
     fun createSlot(slot: Int): HTSlotHandler<ItemStack> = object : HTSlotHandler<ItemStack> {
         override var stack: ItemStack

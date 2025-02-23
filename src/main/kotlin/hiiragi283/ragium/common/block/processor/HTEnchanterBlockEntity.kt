@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.processor
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.energy.HTMachineEnergyData
-import hiiragi283.ragium.api.item.HTMachineItemHandler
+import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes

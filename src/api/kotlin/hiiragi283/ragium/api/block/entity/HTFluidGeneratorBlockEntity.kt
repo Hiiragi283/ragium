@@ -3,9 +3,9 @@ package hiiragi283.ragium.api.block.entity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.event.HTGeneratorFuelTimeEvent
-import hiiragi283.ragium.api.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import net.minecraft.core.BlockPos

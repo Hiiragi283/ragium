@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item.capability
+package hiiragi283.ragium.common.capability.item
 
 import hiiragi283.ragium.api.capability.HTStorageIO
 import net.minecraft.world.item.ItemStack

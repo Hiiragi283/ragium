@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.extension.moveNextOrDrop
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType

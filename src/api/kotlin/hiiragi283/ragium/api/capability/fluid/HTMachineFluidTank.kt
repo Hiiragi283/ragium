@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.fluid
+package hiiragi283.ragium.api.capability.fluid
 
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.capability.HTSlotHandler

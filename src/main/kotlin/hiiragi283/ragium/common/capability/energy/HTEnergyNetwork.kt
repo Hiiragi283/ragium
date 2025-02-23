@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.energy
+package hiiragi283.ragium.common.capability.energy
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.HTSavedDataType

@@ -20,9 +20,9 @@ import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMoltenFluidIngredient
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
-import hiiragi283.ragium.common.fluid.HTDivingGoggleFluidHandler
-import hiiragi283.ragium.common.fluid.HTFluidCubeFluidHandler
-import hiiragi283.ragium.common.fluid.HTJetpackFluidHandler
+import hiiragi283.ragium.common.capability.fluid.HTDivingGoggleFluidHandler
+import hiiragi283.ragium.common.capability.fluid.HTFluidCubeFluidHandler
+import hiiragi283.ragium.common.capability.fluid.HTJetpackFluidHandler
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTPotionBundlePacket
 import net.minecraft.core.BlockPos

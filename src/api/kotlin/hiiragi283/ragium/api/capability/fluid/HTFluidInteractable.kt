@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.fluid
+package hiiragi283.ragium.api.capability.fluid
 
 import net.minecraft.world.entity.player.Player
 

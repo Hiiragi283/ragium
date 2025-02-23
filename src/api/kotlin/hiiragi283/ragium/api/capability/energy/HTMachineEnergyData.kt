@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.energy
+package hiiragi283.ragium.api.capability.energy
 
 import net.neoforged.neoforge.energy.IEnergyStorage
 

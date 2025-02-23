@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.energy.HTMachineEnergyData
-import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.item.HTMachineItemHandler
+import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
+import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
-import hiiragi283.ragium.common.fluid.HTReadOnlyFluidHandler
+import hiiragi283.ragium.common.capability.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.inventory.HTMixerContainerMenu
 import net.minecraft.core.BlockPos

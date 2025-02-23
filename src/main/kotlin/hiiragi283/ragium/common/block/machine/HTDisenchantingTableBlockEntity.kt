@@ -3,11 +3,11 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
+import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.extension.createEnchBook
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.map
 import hiiragi283.ragium.api.extension.modifyEnchantment
-import hiiragi283.ragium.api.item.HTMachineItemHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.inventory.HTDisenchanterContainerMenu

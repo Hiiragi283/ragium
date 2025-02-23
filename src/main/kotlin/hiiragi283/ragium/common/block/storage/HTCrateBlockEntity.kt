@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.storage
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
+import hiiragi283.ragium.common.capability.item.HTSingleItemVariantHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.item.capability.HTSingleItemVariantHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap

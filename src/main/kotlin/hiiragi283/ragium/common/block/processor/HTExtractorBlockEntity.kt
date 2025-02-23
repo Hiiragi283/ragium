@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.energy.HTMachineEnergyData
-import hiiragi283.ragium.api.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.item.HTMachineItemHandler
+import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
+import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeConverters

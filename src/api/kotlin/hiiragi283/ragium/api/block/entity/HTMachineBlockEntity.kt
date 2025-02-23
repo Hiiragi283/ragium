@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
+import hiiragi283.ragium.api.capability.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.getOrDefault
-import hiiragi283.ragium.api.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
