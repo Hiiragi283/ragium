@@ -19,9 +19,11 @@ import hiiragi283.ragium.common.item.armor.HTDivingGoggleItem
 import hiiragi283.ragium.common.item.armor.HTJetpackItem
 import hiiragi283.ragium.common.item.tool.HTCraftingToolItem
 import hiiragi283.ragium.common.item.tool.HTSingleEnchantmentPickaxeItem
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
+import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -264,6 +266,15 @@ object RagiumItems {
     val RAGI_LANTERN: DeferredItem<HTRagiLanternItem> = register("ragi_lantern", ::HTRagiLanternItem)
 
     @JvmField
+    val RAGI_SHEARS: DeferredItem<ShearsItem> = register(
+        "ragi_shears",
+        ::ShearsItem,
+        itemProperty()
+            .component(DataComponents.TOOL, ShearsItem.createToolProperties())
+            .component(DataComponents.UNBREAKABLE, Unbreakable(true))
+    )
+
+    @JvmField
     val FEVER_PICKAXE: DeferredItem<HTSingleEnchantmentPickaxeItem> = register(
         "fever_pickaxe",
         { properties: Item.Properties ->
@@ -293,10 +304,7 @@ object RagiumItems {
 
     @JvmField
     val STEEL_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.STEEL, "steel")
-
-    @JvmField
-    val STEEL_SHEARS: DeferredItem<ShearsItem> = register("steel_shears", ::ShearsItem)
-
+    
     //    Utilities    //
 
     @JvmField

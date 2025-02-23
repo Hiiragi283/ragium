@@ -3,25 +3,20 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.common.entity.HTFlare
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.Position
 import net.minecraft.stats.Stats
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.entity.projectile.Projectile
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.ProjectileItem
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 
-class HTRagiLanternItem(properties: Properties) :
-    Item(properties.durability(127)),
-    ProjectileItem {
+class HTRagiLanternItem(properties: Properties) : Item(properties.durability(127)) {
     override fun useOn(context: UseOnContext): InteractionResult {
         val level: Level = context.level
         val pos: BlockPos = context.clickedPos
@@ -40,19 +35,12 @@ class HTRagiLanternItem(properties: Properties) :
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
         val stack: ItemStack = player.mainHandItem
         if (!level.isClientSide) {
-            val flare = HTFlare(level, player)
-            flare.shootFromRotation(player, player.xRot, player.yRot, 0f, 3f, 1f)
+            val flare = HTFlare(player, level, player.position().x, player.position().y, player.position().z)
+            flare.shootFromRotation(player, player.xRot, player.yRot, 0f, 1.5f, 1f)
             level.addFreshEntity(flare)
             stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(usedHand))
         }
         player.awardStat(Stats.ITEM_USED.get(this))
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
     }
-
-    override fun asProjectile(
-        level: Level,
-        pos: Position,
-        stack: ItemStack,
-        direction: Direction,
-    ): Projectile = HTFlare(level, pos.x(), pos.y(), pos.z()).apply { item = stack }
 }

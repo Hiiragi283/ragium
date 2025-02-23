@@ -72,10 +72,11 @@ object RagiumCreativeTabs {
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
                     output.accept(RagiumItems.RAGI_LANTERN)
+                    output.accept(RagiumItems.RAGI_SHEARS)
+                    
                     output.accept(RagiumItems.FEVER_PICKAXE)
                     output.accept(RagiumItems.SILKY_PICKAXE)
                     RagiumItems.STEEL_TOOLS.tools.forEach(output::accept)
-                    output.accept(RagiumItems.STEEL_SHEARS)
 
                     output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)

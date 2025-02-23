@@ -180,8 +180,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
         addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
+        addItem(RagiumItems.RAGI_SHEARS, "Ragi-Shears")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
-        addItem(RagiumItems.STEEL_SHEARS, "Steel Shears")
 
         addItem(RagiumItems.STEEL_TOOLS.axeItem, "Steel Axe")
         addItem(RagiumItems.STEEL_TOOLS.hoeItem, "Steel Hoe")

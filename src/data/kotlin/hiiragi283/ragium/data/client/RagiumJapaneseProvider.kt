@@ -180,8 +180,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
         addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
+        addItem(RagiumItems.RAGI_SHEARS, "らぎハサミ")
         addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
-        addItem(RagiumItems.STEEL_SHEARS, "鋼鉄のハサミ")
 
         addItem(RagiumItems.STEEL_TOOLS.axeItem, "鋼鉄の斧")
         addItem(RagiumItems.STEEL_TOOLS.hoeItem, "鋼鉄のクワ")

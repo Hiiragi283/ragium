@@ -1,34 +1,32 @@
 package hiiragi283.ragium.common.entity
 
-import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumEntityTypes
-import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile
-import net.minecraft.world.item.Item
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 
-class HTFlare : ThrowableItemProjectile {
+class HTFlare : AbstractHurtingProjectile {
     constructor(type: EntityType<out HTFlare>, level: Level) : super(type, level)
 
-    constructor(level: Level, shooter: LivingEntity) : super(RagiumEntityTypes.FLARE.get(), shooter, level)
-
-    constructor(level: Level, x: Double, y: Double, z: Double) : super(RagiumEntityTypes.FLARE.get(), x, y, z, level)
-
-    override fun getDefaultItem(): Item = RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL).asItem()
-
-    init {
-        isNoGravity = true
+    constructor(player: Player, level: Level, x: Double, y: Double, z: Double) : super(
+        RagiumEntityTypes.FLARE.get(),
+        x,
+        y,
+        z,
+        level,
+    ) {
+        owner = player
     }
 
     // Add Glowing Effect
@@ -56,4 +54,8 @@ class HTFlare : ThrowableItemProjectile {
             discard()
         }
     }
+
+    override fun hurt(source: DamageSource, amount: Float): Boolean = false
+
+    override fun shouldBurn(): Boolean = false
 }

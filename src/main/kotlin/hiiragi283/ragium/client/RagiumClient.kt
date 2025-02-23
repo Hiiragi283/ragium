@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.renderer.HTBlastFurnaceBlockEntityRenderer
+import hiiragi283.ragium.client.renderer.HTFlareRenderer
 import hiiragi283.ragium.client.screen.*
 import hiiragi283.ragium.common.init.*
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
@@ -88,7 +89,7 @@ object RagiumClient {
         register(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
         event.registerEntityRenderer(RagiumEntityTypes.DYNAMITE.get(), ::ThrownItemRenderer)
-        event.registerEntityRenderer(RagiumEntityTypes.FLARE.get(), ::ThrownItemRenderer)
+        event.registerEntityRenderer(RagiumEntityTypes.FLARE.get(), ::HTFlareRenderer)
 
         LOGGER.info("Registered BlockEntityRenderers!")
     }

@@ -18,10 +18,10 @@
     "ragium:mixer",
     "ragium:multi_smelter",
     "ragium:primitive_blast_furnace",
+    "ragium:ragi_shears",
     "ragium:refinery",
     "ragium:solar_generator",
     "ragium:solidifier",
-    "ragium:steel_shears",
     "ragium:stirling_generator",
     "ragium:thermal_generator"
   ]

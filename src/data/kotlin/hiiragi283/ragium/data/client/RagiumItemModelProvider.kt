@@ -60,8 +60,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
             remove(RagiumItems.JETPACK) // TODO
-            remove(RagiumItems.STEEL_SHEARS) // TODO
-            remove(RagiumItems.RAGI_LANTERN)
         }.forEach(::basicItem)
 
         getBuilder(RagiumItems.CHOCOLATE_APPLE)
@@ -93,9 +91,5 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .parent(ModelFile.UncheckedModelFile("item/generated"))
             .itemTexture("layer0", ResourceLocation.withDefaultNamespace("copper_ingot"))
             .itemTexture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.id)
-
-        getBuilder(RagiumItems.RAGI_LANTERN)
-            .parent(ModelFile.UncheckedModelFile("block/template_lantern"))
-            .itemTexture("lantern", RagiumItems.RAGI_LANTERN.id)
     }
 }
