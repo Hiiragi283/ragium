@@ -2,6 +2,7 @@
 
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.item.HTItemStackBuilder
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -61,7 +62,7 @@ fun Item.Properties.lore(vararg lines: Component): Item.Properties = component(D
 
 fun createSpawnerStack(entityType: EntityType<*>, count: Int = 1): ItemStack {
     val id: ResourceLocation = EntityType.getKey(entityType)
-    val stack = ItemStack(Items.SPAWNER, count)
+    val builder = HTItemStackBuilder(Items.SPAWNER, count)
     val root = CompoundTag()
     SpawnData.CODEC
         .encodeStart(
@@ -75,8 +76,8 @@ fun createSpawnerStack(entityType: EntityType<*>, count: Int = 1): ItemStack {
             ),
         ).ifSuccess { root.put("SpawnData", it) }
     root.putString("id", "minecraft:spawner")
-    stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(root))
-    return stack
+    builder.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(root))
+    return builder.build()
 }
 
 val ItemStack.isNotEmpty: Boolean get() = !isEmpty

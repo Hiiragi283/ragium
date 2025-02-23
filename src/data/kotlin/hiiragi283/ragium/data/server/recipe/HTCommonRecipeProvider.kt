@@ -356,21 +356,6 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child() {
             .define('B', Tags.Items.RODS_WOODEN)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.SILKY_CRYSTAL)
-            .cross8()
-            .define('A', ItemTags.WOOL)
-            .define('B', Items.PAPER)
-            .define('C', HTTagPrefix.GEM, VanillaMaterials.EMERALD)
-            .save(output)
-
-        HTShapedRecipeBuilder(RagiumItems.SILKY_PICKAXE, category = CraftingBookCategory.EQUIPMENT)
-            .pattern("AAA")
-            .pattern(" B ")
-            .pattern(" B ")
-            .define('A', RagiumItems.SILKY_CRYSTAL)
-            .define('B', Tags.Items.RODS_WOODEN)
-            .save(output)
-
         HTShapedRecipeBuilder(RagiumItems.MAGNET, category = CraftingBookCategory.EQUIPMENT)
             .pattern("A A")
             .pattern("B B")
@@ -399,6 +384,23 @@ object HTCommonRecipeProvider : RagiumRecipeProvider.Child() {
                 "AB",
             ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', RagiumItems.FORGE_HAMMER)
+            .save(output)
+
+        // Custom Pickaxe
+        HTShapedRecipeBuilder(RagiumItems.FEVER_PICKAXE, category = CraftingBookCategory.EQUIPMENT)
+            .pattern("AAA")
+            .pattern(" B ")
+            .pattern(" B ")
+            .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.EMERALD)
+            .define('B', Tags.Items.RODS_WOODEN)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.SILKY_PICKAXE, category = CraftingBookCategory.EQUIPMENT)
+            .pattern("AAA")
+            .pattern(" B ")
+            .pattern(" B ")
+            .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.GOLD)
+            .define('B', Tags.Items.RODS_WOODEN)
             .save(output)
     }
 

@@ -148,9 +148,6 @@ object RagiumItems {
     val SLAG: DeferredItem<Item> = register("slag")
 
     @JvmField
-    val SILKY_CRYSTAL: DeferredItem<Item> = register("silky_crystal")
-
-    @JvmField
     val CRIMSON_CRYSTAL: DeferredItem<Item> = register("crimson_crystal")
 
     @JvmField

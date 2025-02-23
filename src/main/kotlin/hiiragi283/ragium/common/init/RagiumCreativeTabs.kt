@@ -49,7 +49,6 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.SLAG)
 
                     registerPrefix(HTTagPrefix.GEM)
-                    output.accept(RagiumItems.SILKY_CRYSTAL)
                     output.accept(RagiumItems.CRIMSON_CRYSTAL)
                     output.accept(RagiumItems.WARPED_CRYSTAL)
 

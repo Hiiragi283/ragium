@@ -227,7 +227,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "精密機械筐体")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
-        addItem(RagiumItems.SILKY_CRYSTAL, "シルキー結晶")
         addItem(RagiumItems.SLAG, "スラグ")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")

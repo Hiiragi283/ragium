@@ -227,7 +227,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "Precision Machine Casing")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
-        addItem(RagiumItems.SILKY_CRYSTAL, "Silky Crystal")
         addItem(RagiumItems.SLAG, "Slag")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
