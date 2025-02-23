@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_end",
+  "features": "ragium:end_niobium",
+  "step": "underground_ores"
+}

@@ -1,13 +1,13 @@
 package hiiragi283.ragium.data.server.integration
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
@@ -17,7 +17,7 @@ import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
-object HTDelightRecipeProvider : RagiumRecipeProvider.ModChild("farmersdelight") {
+object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Sweet Berries Cake Piece
         CuttingBoardRecipeBuilder

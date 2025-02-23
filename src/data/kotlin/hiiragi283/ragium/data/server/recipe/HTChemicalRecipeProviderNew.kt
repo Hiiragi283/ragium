@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
@@ -12,7 +13,6 @@ import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
@@ -21,7 +21,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object HTChemicalRecipeProviderNew : RagiumRecipeProvider.Child() {
+object HTChemicalRecipeProviderNew : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         water(output)
 

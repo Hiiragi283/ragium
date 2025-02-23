@@ -50,6 +50,13 @@ object RagiumItems {
         itemProperty().craftRemainder(Items.BUCKET).stacksTo(1),
     )
 
+    @JvmField
+    val HONEY_BUCKET: DeferredItem<BucketItem> = register(
+        "honey_bucket",
+        { properties: Item.Properties -> BucketItem(RagiumFluids.HONEY.get(), properties) },
+        itemProperty().craftRemainder(Items.BUCKET).stacksTo(1),
+    )
+
     //    Materials    //
 
     @JvmField

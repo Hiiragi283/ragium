@@ -4,6 +4,7 @@ import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
 import blusunrize.immersiveengineering.common.register.IEItems
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
@@ -12,13 +13,12 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.common.Tags
 
-object HTIERecipeProvider : RagiumRecipeProvider.ModChild("immersiveengineering") {
+object HTIERecipeProvider : HTRecipeProvider.Modded("immersiveengineering") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Treated Wood
         HTFluidOutputRecipeBuilder

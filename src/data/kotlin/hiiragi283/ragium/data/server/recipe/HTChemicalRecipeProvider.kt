@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
@@ -10,7 +11,6 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
@@ -19,7 +19,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object HTChemicalRecipeProvider : RagiumRecipeProvider.Child() {
+object HTChemicalRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerGlow(output)
         registerMagical(output)
@@ -168,9 +168,10 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child() {
 
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.NIOBIUM, 3)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
             .itemInput(Items.ECHO_SHARD, 4)
-            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
+            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM, 4)
             .save(output)
     }
 

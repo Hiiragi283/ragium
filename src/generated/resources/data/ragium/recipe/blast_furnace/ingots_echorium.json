@@ -2,6 +2,10 @@
   "type": "ragium:blast_furnace",
   "item_inputs": [
     {
+      "count": 3,
+      "tag": "c:ingots/niobium"
+    },
+    {
       "tag": "c:ingots/aluminum"
     },
     {
@@ -10,6 +14,7 @@
     }
   ],
   "item_output": {
+    "count": 4,
     "items": "#c:ingots/echorium"
   }
 }

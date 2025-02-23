@@ -49,6 +49,7 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
+import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper
 import net.neoforged.neoforge.fluids.crafting.FluidIngredientType
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
@@ -99,6 +100,7 @@ internal object RagiumModEvents {
         event.register(CommonMaterials.STAINLESS_STEEL, HTMaterialType.ALLOY)
         event.register(CommonMaterials.STEEL, HTMaterialType.ALLOY)
         event.register(CommonMaterials.SULFUR, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.SUPERCONDUCTOR, HTMaterialType.METAL)
         event.register(CommonMaterials.TIN, HTMaterialType.METAL)
         event.register(CommonMaterials.TITANIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.TUNGSTEN, HTMaterialType.METAL)
@@ -287,6 +289,13 @@ internal object RagiumModEvents {
             RagiumItems.EMPTY_FLUID_CUBE,
             RagiumItems.WATER_FLUID_CUBE,
             RagiumItems.LAVA_FLUID_CUBE,
+        )
+
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            { stack: ItemStack, _: Void? -> FluidBucketWrapper(stack) },
+            RagiumItems.CRUDE_OIL_BUCKET,
+            RagiumItems.HONEY_BUCKET,
         )
 
         LOGGER.info("Registered Item Capabilities!")

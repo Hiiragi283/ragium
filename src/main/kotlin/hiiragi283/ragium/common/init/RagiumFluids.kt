@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
@@ -15,10 +16,14 @@ object RagiumFluids {
     val REGISTER: DeferredRegister<Fluid> = DeferredRegister.create(Registries.FLUID, RagiumAPI.MOD_ID)
 
     @JvmField
-    val HONEY: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("honey", RagiumFluidTypes.HONEY)
+    val HONEY: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("honey", RagiumFluidTypes.HONEY) {
+        bucket(RagiumItems.HONEY_BUCKET)
+    }
 
     @JvmField
-    val SNOW: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("snow", RagiumFluidTypes.SNOW)
+    val SNOW: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("snow", RagiumFluidTypes.SNOW) {
+        bucket(Items::POWDER_SNOW_BUCKET)
+    }
 
     @JvmField
     val CRUDE_OIL: DeferredHolder<Fluid, BaseFlowingFluid.Source> =

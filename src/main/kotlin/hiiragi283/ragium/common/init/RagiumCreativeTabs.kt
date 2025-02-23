@@ -25,6 +25,7 @@ object RagiumCreativeTabs {
                 .icon { RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM).toStack() }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     output.accept(RagiumItems.CRUDE_OIL_BUCKET)
+                    output.accept(RagiumItems.HONEY_BUCKET)
                     // Material Blocks
                     output.accept(RagiumBlocks.SOUL_MAGMA_BLOCK)
                     RagiumBlocks.ORES.values.forEach(output::accept)

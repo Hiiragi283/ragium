@@ -1,12 +1,12 @@
 package hiiragi283.ragium.data.server.integration
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.integration.RagiumMekIntegration
 import mekanism.api.datagen.recipe.builder.*
 import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
@@ -20,7 +20,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.neoforged.neoforge.common.Tags
 
-object HTMekanismRecipeProvider : RagiumRecipeProvider.ModChild("mekanism") {
+object HTMekanismRecipeProvider : HTRecipeProvider.Modded("mekanism") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Yellow Cake -> Yellow Cake Uranium
         HTSingleItemRecipeBuilder

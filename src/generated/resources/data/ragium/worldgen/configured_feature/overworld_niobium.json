@@ -6,11 +6,11 @@
     "targets": [
       {
         "state": {
-          "Name": "ragium:nether_raginite_ore"
+          "Name": "ragium:deepslate_niobium_ore"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",
-          "tag": "c:netherracks"
+          "tag": "minecraft:deepslate_ore_replaceables"
         }
       }
     ]

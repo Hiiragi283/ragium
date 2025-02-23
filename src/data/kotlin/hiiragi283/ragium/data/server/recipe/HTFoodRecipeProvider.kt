@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -10,7 +11,6 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
@@ -20,7 +20,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 
-object HTFoodRecipeProvider : RagiumRecipeProvider.Child() {
+object HTFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Melon Pie
         HTMultiItemRecipeBuilder
@@ -95,7 +95,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child() {
         HTFluidOutputRecipeBuilder
             .infuser(lookup)
             .itemInput(RagiumItems.CHOCOLATE, 64)
-            .fluidInput(RagiumFluids.HONEY, 1000 * 64)
+            .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
             .itemOutput(RagiumItems.AMBROSIA)
             .save(output)
     }

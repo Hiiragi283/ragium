@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import com.mojang.authlib.properties.PropertyMap
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.item.HTItemStackBuilder
@@ -18,7 +19,6 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
@@ -40,7 +40,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import java.util.*
 
-object HTMachineRecipeProvider : RagiumRecipeProvider.Child() {
+object HTMachineRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         assembler(output)
         brewery(output)

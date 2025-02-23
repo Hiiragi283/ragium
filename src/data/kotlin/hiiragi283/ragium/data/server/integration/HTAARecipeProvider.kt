@@ -3,17 +3,17 @@ package hiiragi283.ragium.data.server.integration
 import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 
-object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
+object HTAARecipeProvider : HTRecipeProvider.Modded("actuallyadditions") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Canola Seeds
         HTGrowthChamberRecipeBuilder(lookup)

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.commonTag
@@ -15,7 +16,6 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTBlockFamily
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
@@ -33,7 +33,7 @@ import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
 
-object HTBlockRecipeProvider : RagiumRecipeProvider.Child() {
+object HTBlockRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Soul Magma
         HTShapedRecipeBuilder(RagiumBlocks.SOUL_MAGMA_BLOCK)

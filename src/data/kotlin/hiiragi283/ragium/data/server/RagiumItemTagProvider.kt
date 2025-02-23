@@ -182,6 +182,7 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.SOLAR_PANELS, GeneratorsItems.SOLAR_PANEL, true)
         builder.add(RagiumItemTags.SOLAR_PANELS, RagiumItems.SOLAR_PANEL)
         builder.add(Tags.Items.BUCKETS, RagiumItems.CRUDE_OIL_BUCKET)
+        builder.add(Tags.Items.BUCKETS, RagiumItems.HONEY_BUCKET)
 
         builder.add(RagiumItemTags.DIRT_SOILS, Items.FARMLAND.asHolder())
         builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL.get().asHolder(), true)

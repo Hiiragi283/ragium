@@ -2,15 +2,18 @@
   "type": "minecraft:ore",
   "config": {
     "discard_chance_on_air_exposure": 0.0,
-    "size": 8,
+    "size": 32,
     "targets": [
       {
         "state": {
-          "Name": "ragium:nether_raginite_ore"
+          "Name": "ragium:crude_oil",
+          "Properties": {
+            "level": "0"
+          }
         },
         "target": {
           "predicate_type": "minecraft:tag_match",
-          "tag": "c:netherracks"
+          "tag": "minecraft:base_stone_overworld"
         }
       }
     ]
