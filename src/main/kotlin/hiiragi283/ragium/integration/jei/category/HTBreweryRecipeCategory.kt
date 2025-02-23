@@ -1,5 +1,6 @@
 package hiiragi283.ragium.integration.jei.category
 
+import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTBreweryRecipe
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
@@ -7,10 +8,6 @@ import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.RecipeType
-import net.minecraft.core.component.DataComponents
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
@@ -43,14 +40,7 @@ class HTBreweryRecipeCategory(guiHelper: IGuiHelper) :
         builder
             .addOutputSlot(getPosition(6), getPosition(0))
             .setStandardSlotBackground()
-            .addItemStack(
-                ItemStack(Items.POTION).apply {
-                    set(
-                        DataComponents.POTION_CONTENTS,
-                        PotionContents(recipe.potion),
-                    )
-                },
-            )
+            .addItemStack(createPotionStack(recipe.potion))
     }
 
     override fun getWidth(): Int = 18 * 7 + 8

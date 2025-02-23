@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.item.MutableItemContainerContents
+import hiiragi283.ragium.api.extension.createPotionStack
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.stats.Stats
@@ -14,7 +14,6 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.*
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.Level
 
 class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) {
@@ -24,19 +23,16 @@ class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) 
             CriteriaTriggers.USING_ITEM.trigger(player, stack)
         }
         if (!level.isClientSide) {
-            val content: MutableItemContainerContents =
-                stack
-                    .getOrDefault(RagiumComponentTypes.ITEM_CONTENT, ItemContainerContents.EMPTY)
-                    .let(MutableItemContainerContents::of)
-            for (slot: Int in content.getSlotRange()) {
-                val stackIn: ItemStack = content.getItem(slot)
-                if (stackIn.`is`(Items.POTION)) {
-                    val usedStack: ItemStack = stackIn.finishUsingItem(level, livingEntity)
-                    content.setItem(slot, usedStack)
-                    break
-                }
-            }
-            stack.set(RagiumComponentTypes.ITEM_CONTENT, content.toImmutable())
+            val potions: List<PotionContents> = stack.getOrDefault(RagiumComponentTypes.POTION_BUNDLE_CONTENT, listOf())
+            val firstPotion: PotionContents = potions.firstOrNull() ?: return stack
+            val usedStack: ItemStack = createPotionStack(firstPotion).finishUsingItem(level, livingEntity)
+            dropStackAt(livingEntity, usedStack)
+            stack.set(
+                RagiumComponentTypes.POTION_BUNDLE_CONTENT,
+                potions.toMutableList().apply {
+                    removeFirst()
+                },
+            )
         }
         player?.awardStat(Stats.ITEM_USED.get(this))
         return stack
@@ -56,9 +52,7 @@ class HTPotionBundleItem(properties: Properties) : Item(properties.stacksTo(1)) 
         flag: TooltipFlag,
     ) {
         val allEffects: List<MobEffectInstance> = stack
-            .get(RagiumComponentTypes.ITEM_CONTENT)
-            ?.nonEmptyItemsCopy()
-            ?.mapNotNull { it.get(DataComponents.POTION_CONTENTS) }
+            .get(RagiumComponentTypes.POTION_BUNDLE_CONTENT)
             ?.flatMap(PotionContents::getAllEffects)
             ?: return
         PotionContents.addPotionTooltip(

@@ -17,6 +17,8 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.level.ItemLike
@@ -79,6 +81,12 @@ fun createSpawnerStack(entityType: EntityType<*>, count: Int = 1): ItemStack {
     builder.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(root))
     return builder.build()
 }
+
+fun createPotionStack(potion: Holder<Potion>): ItemStack = createPotionStack(PotionContents(potion))
+
+fun createPotionStack(content: PotionContents): ItemStack = HTItemStackBuilder(Items.POTION)
+    .put(DataComponents.POTION_CONTENTS, content)
+    .build()
 
 val ItemStack.isNotEmpty: Boolean get() = !isEmpty
 

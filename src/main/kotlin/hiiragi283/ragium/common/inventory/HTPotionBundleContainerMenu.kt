@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.inventory
 
+import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.forEachSlot
 import hiiragi283.ragium.api.inventory.HTContainerMenu
@@ -8,12 +9,13 @@ import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMenuTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ClickType
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.component.ItemContainerContents
+import net.minecraft.world.item.alchemy.PotionContents
 import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTPotionBundleContainerMenu(containerId: Int, inventory: Inventory) :
@@ -42,7 +44,7 @@ class HTPotionBundleContainerMenu(containerId: Int, inventory: Inventory) :
         addPlayerInv(-HTSlotPos.getSlotPosY(1), true)
         // load from stack
         val stack: ItemStack = inventory.getSelected()
-        if (!stack.isEmpty && stack.has(RagiumComponentTypes.ITEM_CONTENT)) {
+        if (!stack.isEmpty && stack.has(RagiumComponentTypes.POTION_BUNDLE_CONTENT)) {
             setStackInHandler(potionHandler, stack)
         }
     }
@@ -50,12 +52,12 @@ class HTPotionBundleContainerMenu(containerId: Int, inventory: Inventory) :
     companion object {
         @JvmStatic
         private fun setStackInHandler(handler: ItemStackHandler, stack: ItemStack) {
-            val content: ItemContainerContents =
-                stack.getOrDefault(RagiumComponentTypes.ITEM_CONTENT, ItemContainerContents.EMPTY)
+            val contents: List<PotionContents> =
+                stack.getOrDefault(RagiumComponentTypes.POTION_BUNDLE_CONTENT, listOf())
             handler.forEachSlot { slot: Int ->
-                val stackIn: ItemStack = when (slot >= content.slots) {
+                val stackIn: ItemStack = when (slot >= contents.size) {
                     true -> ItemStack.EMPTY
-                    false -> content.getStackInSlot(slot)
+                    false -> createPotionStack(contents[slot])
                 }
                 handler.setStackInSlot(slot, stackIn)
             }
@@ -81,10 +83,12 @@ class HTPotionBundleContainerMenu(containerId: Int, inventory: Inventory) :
         val stack: ItemStack = this.inventory.getSelected()
         if (!stack.isEmpty && stack.`is`(RagiumItems.POTION_BUNDLE)) {
             stack.set(
-                RagiumComponentTypes.ITEM_CONTENT,
-                ItemContainerContents.fromItems(
-                    buildList { potionHandler.forEach(this::add) },
-                ),
+                RagiumComponentTypes.POTION_BUNDLE_CONTENT,
+                buildList {
+                    potionHandler.forEach { stackIn: ItemStack ->
+                        stackIn.get(DataComponents.POTION_CONTENTS)?.let(this::add)
+                    }
+                },
             )
         }
         super.removed(player)
