@@ -55,11 +55,11 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
-            enchantments,
-            itemInput.getStackInSlot(0),
-            inputTank.fluid,
-        )
+        val input: HTMachineRecipeInput = HTMachineRecipeInput
+            .Builder()
+            .addItem(itemInput, 0)
+            .addFluid(inputTank)
+            .build()
         val recipe: HTInfuserRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(enchantments, itemOutput, outputTank)

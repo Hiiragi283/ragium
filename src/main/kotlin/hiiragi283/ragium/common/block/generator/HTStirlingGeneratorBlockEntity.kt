@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.internal.RagiumConfig
-import hiiragi283.ragium.common.inventory.HTExtractorContainerMenu
 import hiiragi283.ragium.common.inventory.HTInfuserContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

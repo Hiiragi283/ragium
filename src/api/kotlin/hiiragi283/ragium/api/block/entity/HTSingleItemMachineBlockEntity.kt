@@ -45,11 +45,12 @@ abstract class HTSingleItemMachineBlockEntity(
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
-            enchantments,
-            itemInput.getStackInSlot(0),
-            itemCatalyst.getStackInSlot(0),
-        )
+        val input: HTMachineRecipeInput =
+            HTMachineRecipeInput
+                .Builder()
+                .addItem(itemInput, 0)
+                .addItem(itemCatalyst, 0)
+                .build()
         val recipe: HTSingleItemRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
         val output: ItemStack = recipe.itemOutput.get()
         // Try to insert outputs

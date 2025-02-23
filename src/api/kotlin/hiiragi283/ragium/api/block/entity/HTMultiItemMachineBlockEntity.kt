@@ -51,17 +51,13 @@ abstract class HTMultiItemMachineBlockEntity(
     abstract val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTMultiItemRecipe>
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
-            enchantments,
-            listOf(
-                itemInput.getStackInSlot(0),
-                itemInput.getStackInSlot(1),
-                itemInput.getStackInSlot(2),
-            ),
-            listOf(
-                fluidInput.fluid,
-            ),
-        )
+        val input: HTMachineRecipeInput = HTMachineRecipeInput
+            .Builder()
+            .addItem(itemInput, 0)
+            .addItem(itemInput, 1)
+            .addItem(itemInput, 2)
+            .addFluid(fluidInput)
+            .build()
         val recipe: HTMultiItemRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
         if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
         val output: ItemStack = recipe.itemOutput.get()

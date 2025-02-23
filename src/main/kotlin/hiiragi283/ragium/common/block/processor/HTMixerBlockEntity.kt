@@ -58,11 +58,12 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(
-            enchantments,
-            listOf(itemInput.getStackInSlot(0)),
-            listOf(firstTank.fluid, secondTank.fluid),
-        )
+        val input: HTMachineRecipeInput = HTMachineRecipeInput
+            .Builder()
+            .addItem(itemInput, 0)
+            .addFluid(firstTank)
+            .addFluid(secondTank)
+            .build()
         val recipe: HTMixerRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(enchantments, itemOutput, outputTank)

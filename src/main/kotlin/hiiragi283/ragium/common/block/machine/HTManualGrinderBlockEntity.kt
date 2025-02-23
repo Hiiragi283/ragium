@@ -78,7 +78,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     private fun process(level: Level, pos: BlockPos, player: Player) {
         // Find matching recipe
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(enchantments, stackIn)
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.Builder().addItem(itemHandler, 0).build()
         recipeGetter
             .getFirstRecipe(input, level)
             .onSuccess { recipe: HTSingleItemRecipe ->
