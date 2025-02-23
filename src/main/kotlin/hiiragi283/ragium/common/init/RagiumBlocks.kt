@@ -170,8 +170,13 @@ object RagiumBlocks {
         .build()
 
     @JvmField
-    val RAGI_BRICK_FAMILY =
-        HTBlockFamily(REGISTER, ITEM_REGISTER, RAGI_BRICKS, blockProperty(Blocks.BRICKS), "ragi_brick")
+    val RAGI_BRICK_FAMILY = HTBlockFamily(
+        REGISTER,
+        ITEM_REGISTER,
+        RAGI_BRICKS,
+        blockProperty(Blocks.BRICKS),
+        "ragi_brick",
+    )
 
     @JvmField
     val PLASTIC_BLOCK: DeferredBlock<Block> = Builder("plastic_block")
@@ -179,8 +184,26 @@ object RagiumBlocks {
         .build()
 
     @JvmField
-    val PLASTIC_FAMILY =
-        HTBlockFamily(REGISTER, ITEM_REGISTER, PLASTIC_BLOCK, blockProperty().strength(2f).sound(SoundType.COPPER))
+    val PLASTIC_FAMILY = HTBlockFamily(
+        REGISTER,
+        ITEM_REGISTER,
+        PLASTIC_BLOCK,
+        blockProperty().strength(2f).sound(SoundType.COPPER),
+    )
+
+    @JvmField
+    val BLUE_NETHER_BRICKS: DeferredBlock<Block> = Builder("blue_nether_bricks")
+        .properties(Blocks.RED_NETHER_BRICKS)
+        .build()
+
+    @JvmField
+    val BLUE_NETHER_BRICK_FAMILY = HTBlockFamily(
+        REGISTER,
+        ITEM_REGISTER,
+        BLUE_NETHER_BRICKS,
+        blockProperty().strength(2f, 6f).sound(SoundType.NETHER_BRICKS),
+        "blue_nether_brick",
+    )
 
     @JvmField
     val SHAFT: DeferredBlock<RotatedPillarBlock> = Builder("shaft")

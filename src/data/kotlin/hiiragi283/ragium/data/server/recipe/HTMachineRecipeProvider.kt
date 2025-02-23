@@ -271,6 +271,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child() {
         register(Tags.Items.CROPS_SUGAR_CANE, ItemTags.SAND, Items.SUGAR_CANE, 4)
         // Soul Sand
         register(Tags.Items.CROPS_NETHER_WART, ItemTags.SOUL_FIRE_BASE_BLOCKS, Items.NETHER_WART, 3, 0)
+        register(RagiumItemTags.CROPS_WARPED_WART, ItemTags.SOUL_FIRE_BASE_BLOCKS, RagiumItems.WARPED_WART, 3, 0)
     }
 
     //    Laser Assembly    //

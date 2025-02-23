@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "tag": "c:crops/warped_wart"
+    },
+    "B": {
+      "tag": "c:bricks/nether"
+    }
+  },
+  "pattern": [
+    "AB",
+    "BA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:blue_nether_bricks"
+  }
+}

@@ -39,6 +39,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.PLASTIC_FAMILY.slab, "Plastic Block Slab")
         addBlock(RagiumBlocks.PLASTIC_FAMILY.wall, "Plastic Block Wall")
 
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.stairs, "Blue Nether Brick Stairs")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.slab, "Blue Nether Brick Slab")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.wall, "Blue Nether Brick Wall")
+
         addBlock(RagiumBlocks.SHAFT, "Shaft")
 
         addBlock(RagiumBlocks.CHEMICAL_GLASS, "Chemical Glass")
@@ -161,6 +166,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
 
+        addItem(RagiumItems.WARPED_WART, "Warped Wart")
+
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
 
         addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
@@ -233,6 +240,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.BEE_WAX, "Can be used as same as Honeycomb")
 
+        add(RagiumTranslationKeys.WARPED_WART, "Removes one random effect when eaten")
         add(RagiumTranslationKeys.AMBROSIA, "Can be eaten for infinity times!")
 
         add(RagiumTranslationKeys.FEVER_PICKAXE, "Always applies Fortune V")

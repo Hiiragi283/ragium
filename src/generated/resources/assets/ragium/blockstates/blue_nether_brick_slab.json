@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/blue_nether_brick_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/blue_nether_bricks"
+    },
+    "type=top": {
+      "model": "ragium:block/blue_nether_brick_slab_top"
+    }
+  }
+}

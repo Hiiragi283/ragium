@@ -44,6 +44,7 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child() {
 
         registerFamily(output, RagiumBlocks.RAGI_BRICK_FAMILY)
         registerFamily(output, RagiumBlocks.PLASTIC_FAMILY)
+        registerFamily(output, RagiumBlocks.BLUE_NETHER_BRICK_FAMILY)
 
         registerBurners(output)
         registerDrums(output)
@@ -163,6 +164,14 @@ object HTBlockRecipeProvider : RagiumRecipeProvider.Child() {
             .hollow4()
             .define('A', RagiumItemTags.PLASTICS)
             .define('B', RagiumItems.FORGE_HAMMER)
+            .save(output)
+        // Blue Nether Bricks
+        HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICKS, category = CraftingBookCategory.BUILDING)
+            .pattern(
+                "AB",
+                "BA",
+            ).define('A', RagiumItemTags.CROPS_WARPED_WART)
+            .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
     }
 

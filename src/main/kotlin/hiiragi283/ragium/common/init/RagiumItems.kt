@@ -199,12 +199,18 @@ object RagiumItems {
     val CANNED_COOKED_MEAT: DeferredItem<Item> = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
 
     @JvmField
-    val AMBROSIA: DeferredItem<HTAmbrosiaItem> =
-        register(
-            "ambrosia",
-            ::HTAmbrosiaItem,
-            itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC).lore(RagiumTranslationKeys.AMBROSIA),
-        )
+    val WARPED_WART: DeferredItem<HTWarpedWartItem> = register(
+        "warped_wart",
+        ::HTWarpedWartItem,
+        itemProperty().food(RagiumFoods.WARPED_WART).lore(RagiumTranslationKeys.WARPED_WART),
+    )
+
+    @JvmField
+    val AMBROSIA: DeferredItem<HTAmbrosiaItem> = register(
+        "ambrosia",
+        ::HTAmbrosiaItem,
+        itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC).lore(RagiumTranslationKeys.AMBROSIA),
+    )
 
     @JvmField
     val FOODS: List<DeferredItem<out Item>> = listOf(
@@ -225,6 +231,8 @@ object RagiumItems {
         MEAT_INGOT,
         COOKED_MEAT_INGOT,
         CANNED_COOKED_MEAT,
+        // wart
+        WARPED_WART,
         // end-contents
         AMBROSIA,
     )

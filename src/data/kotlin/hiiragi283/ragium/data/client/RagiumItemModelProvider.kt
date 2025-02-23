@@ -28,6 +28,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
             removeAll(RagiumBlocks.RAGI_BRICK_FAMILY.blocks)
             removeAll(RagiumBlocks.PLASTIC_FAMILY.blocks)
+            removeAll(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.blocks)
 
             remove(RagiumBlocks.CRUDE_OIL)
 
@@ -36,6 +37,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         RagiumBlocks.RAGI_BRICK_FAMILY.generateModels(this)
         RagiumBlocks.PLASTIC_FAMILY.generateModels(this)
+        RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.generateModels(this)
         // Machine
         HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->
             getBuilder(holder).parent(ModelFile.UncheckedModelFile(holder.blockId))

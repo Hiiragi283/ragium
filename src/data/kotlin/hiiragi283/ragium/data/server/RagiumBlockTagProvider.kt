@@ -70,6 +70,7 @@ class RagiumBlockTagProvider(
         // Vanilla
         RagiumBlocks.RAGI_BRICK_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
         RagiumBlocks.PLASTIC_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
+        RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
         // Common
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
             when (variant) {

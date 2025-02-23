@@ -46,6 +46,9 @@ object RagiumFoods {
     )
 
     @JvmStatic
+    val WARPED_WART: FoodProperties = foodComponent(alwaysEat = true)
+
+    @JvmStatic
     val AMBROSIA: FoodProperties = foodComponent(
         nutrition = 20,
         saturation = 20f,

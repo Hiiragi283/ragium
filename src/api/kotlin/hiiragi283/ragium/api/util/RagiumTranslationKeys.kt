@@ -32,6 +32,7 @@ object RagiumTranslationKeys {
 
     const val BEE_WAX = "tooltip.ragium.item.bee_wax"
 
+    const val WARPED_WART = "tooltip.ragium.item.warped_wart"
     const val AMBROSIA = "tooltip.ragium.item.ambrosia"
 
     const val FEVER_PICKAXE = "tooltip.ragium.item.fever_pickaxe"

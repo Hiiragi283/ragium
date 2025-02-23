@@ -45,6 +45,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         RagiumBlocks.RAGI_BRICK_FAMILY.generateStates(this)
         RagiumBlocks.PLASTIC_FAMILY.generateStates(this)
+        RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.generateStates(this)
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->

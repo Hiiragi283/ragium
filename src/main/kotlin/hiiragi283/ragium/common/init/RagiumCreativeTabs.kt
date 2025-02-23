@@ -33,6 +33,7 @@ object RagiumCreativeTabs {
                     // Decorations
                     RagiumBlocks.RAGI_BRICK_FAMILY.blocks.forEach(output::accept)
                     RagiumBlocks.PLASTIC_FAMILY.blocks.forEach(output::accept)
+                    RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.blocks.forEach(output::accept)
 
                     RagiumBlocks.GLASSES.forEach(output::accept)
                     RagiumBlocks.LED_BLOCKS.values.forEach(output::accept)

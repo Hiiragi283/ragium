@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
@@ -34,6 +35,7 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child() {
         registerMeat(output)
         registerMilk(output)
         registerMushroom(output)
+        registerWart(output)
         registerWheat(output)
     }
 
@@ -239,6 +241,34 @@ object HTFoodRecipeProvider : RagiumRecipeProvider.Child() {
             .itemOutput(Items.BOWL)
             .fluidOutput(RagiumVirtualFluids.MUSHROOM_STEW)
             .saveSuffixed(output, "_from_bowl")
+    }
+
+    private fun registerWart(output: RecipeOutput) {
+        // Wart Block -> Wart
+        HTSingleItemRecipeBuilder
+            .grinder(lookup)
+            .itemInput(Items.NETHER_WART_BLOCK)
+            .itemOutput(Tags.Items.CROPS_NETHER_WART, 9)
+            .save(output)
+
+        HTSingleItemRecipeBuilder
+            .grinder(lookup)
+            .itemInput(Items.WARPED_WART_BLOCK)
+            .itemOutput(RagiumItemTags.CROPS_WARPED_WART, 9)
+            .save(output)
+
+        // Wart -> XX Sap
+        HTFluidOutputRecipeBuilder
+            .extractor(lookup)
+            .itemInput(Tags.Items.CROPS_NETHER_WART)
+            .fluidOutput(RagiumVirtualFluids.CRIMSON_SAP, 10)
+            .save(output)
+
+        HTFluidOutputRecipeBuilder
+            .extractor(lookup)
+            .itemInput(RagiumItemTags.CROPS_WARPED_WART)
+            .fluidOutput(RagiumVirtualFluids.WARPED_SAP, 10)
+            .save(output)
     }
 
     private fun registerWheat(output: RecipeOutput) {

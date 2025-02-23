@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extractor",
+  "fluid_outputs": [
+    {
+      "amount": 10,
+      "id": "ragium:crimson_sap"
+    }
+  ],
+  "item_input": {
+    "tag": "c:crops/nether_wart"
+  }
+}

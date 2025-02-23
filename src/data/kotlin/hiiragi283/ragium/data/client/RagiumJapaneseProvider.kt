@@ -39,6 +39,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.PLASTIC_FAMILY.slab, "プラスチックブロックのハーフブロック")
         addBlock(RagiumBlocks.PLASTIC_FAMILY.wall, "プラスチックブロックの壁")
 
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "青いネザーレンガ")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.stairs, "青いネザーレンガの階段")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.slab, "青いネザーレンガのハーフブロック")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.wall, "青いネザーレンガの壁")
+
         addBlock(RagiumBlocks.SHAFT, "シャフト")
 
         addBlock(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
@@ -161,6 +166,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
 
+        addItem(RagiumItems.WARPED_WART, "歪んだウォート")
+
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
         addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
@@ -233,6 +240,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.BEE_WAX, "ハニカムと同様に使える")
 
+        add(RagiumTranslationKeys.WARPED_WART, "食べるとランダムなデバフを一つ消す")
         add(RagiumTranslationKeys.AMBROSIA, "無限に食べられちまうんだ！")
 
         add(RagiumTranslationKeys.FEVER_PICKAXE, "常に幸運Vが発動する")

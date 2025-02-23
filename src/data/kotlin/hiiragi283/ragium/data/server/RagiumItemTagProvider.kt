@@ -138,6 +138,9 @@ class RagiumItemTagProvider(
         }
 
         builder.add(RagiumItemTags.DOUGH, RagiumItems.DOUGH)
+
+        builder.addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
+        builder.add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
     }
 
     //    Armor    //
