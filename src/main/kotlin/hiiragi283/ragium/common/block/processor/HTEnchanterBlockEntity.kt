@@ -6,10 +6,6 @@ import hiiragi283.ragium.api.capability.HTHandlerSerializer
 import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
@@ -31,9 +27,6 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
             itemOutput.createSlot(0),
         ),
     )
-
-    private val recipeCache: HTRecipeGetter<HTMachineRecipeInput, HTEnchanterRecipe> =
-        HTRecipeGetter.cached(HTRecipeTypes.ENCHANTER)
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.PRECISION
 

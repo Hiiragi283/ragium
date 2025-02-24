@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 100,
+    "tag": "c:water"
+  },
+  "item_input": {
+    "item": "minecraft:gray_concrete_powder"
+  },
+  "item_outputs": [
+    {
+      "items": "minecraft:gray_concrete"
+    }
+  ]
+}

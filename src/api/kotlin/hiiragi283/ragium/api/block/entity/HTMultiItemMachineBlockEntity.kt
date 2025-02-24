@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
+import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -48,7 +48,7 @@ abstract class HTMultiItemMachineBlockEntity(
         ),
     )
 
-    abstract val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTMultiItemRecipe>
+    abstract val recipeType: HTRecipeType<out HTMultiItemRecipe>
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val input: HTMachineRecipeInput = HTMachineRecipeInput
@@ -58,7 +58,7 @@ abstract class HTMultiItemMachineBlockEntity(
             .addItem(itemInput, 2)
             .addFluid(fluidInput)
             .build()
-        val recipe: HTMultiItemRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTMultiItemRecipe = recipeType.getFirstRecipe(input, level).getOrThrow()
         if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
         val output: ItemStack = recipe.itemOutput.get()
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)

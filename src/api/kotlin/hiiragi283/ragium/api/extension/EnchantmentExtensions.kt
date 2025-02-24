@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
+import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -26,13 +27,13 @@ fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchan
 //    ItemEnchantments    //
 
 fun ItemEnchantments.getLevel(key: ResourceKey<Enchantment>): Int {
-    val provider1: HolderLookup.Provider = RagiumAPI.getInstance().getCurrentLookup() ?: return 0
-    return provider1.getHolder(Registries.ENCHANTMENT, key).map(this::getLevel).orElse(0)
+    val access: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return 0
+    return access.getHolder(Registries.ENCHANTMENT, key).map(this::getLevel).orElse(0)
 }
 
 fun ItemEnchantments.getLevel(tagKey: TagKey<Enchantment>): Int {
-    val provider1: HolderLookup.Provider = RagiumAPI.getInstance().getCurrentLookup() ?: return 0
-    return provider1
+    val access: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return 0
+    return access
         .lookupOrThrow(Registries.ENCHANTMENT)
         .get(tagKey)
         .map { holderSet: HolderSet.Named<Enchantment> -> holderSet.map(this::getLevel) }

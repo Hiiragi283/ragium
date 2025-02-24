@@ -9,9 +9,8 @@ import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTInfuserRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeConverters
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.capability.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -48,9 +47,6 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
-    private val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, HTInfuserRecipe> =
-        HTRecipeGetter.listed(HTRecipeConverters::infuser)
-
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
@@ -60,7 +56,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
             .addItem(itemInput, 0)
             .addFluid(inputTank)
             .build()
-        val recipe: HTInfuserRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTInfuserRecipe = HTRecipeTypes.INFUSER.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(enchantments, itemOutput, outputTank)
         // Insert outputs

@@ -30,12 +30,15 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.neoforged.fml.LogicalSide
+import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.server.ServerLifecycleHooks
 
 class InternalRagiumAPI : RagiumAPI {
     //    Material    //
@@ -52,7 +55,9 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Server    //
 
-    override fun getCurrentServer(): MinecraftServer? = RagiumGameEvents.currentServer
+    override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
+
+    override fun getCurrentSide(): LogicalSide = EffectiveSide.get()
 
     override fun getEnergyNetwork(level: ServerLevel): IEnergyStorage = level.getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
 

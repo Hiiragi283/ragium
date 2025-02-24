@@ -10,10 +10,8 @@ import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeConverters
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
-import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -72,16 +70,13 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         return InteractionResult.sidedSuccess(level.isClientSide)
     }
 
-    private val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, HTGrinderRecipe> =
-        HTRecipeGetter.listed(HTRecipeConverters::grinder)
-
     private fun process(level: Level, pos: BlockPos, player: Player) {
         // Find matching recipe
         val stackIn: ItemStack = itemHandler.getStackInSlot(0)
         val input: HTMachineRecipeInput = HTMachineRecipeInput.Builder().addItem(itemHandler, 0).build()
-        recipeGetter
+        HTRecipeTypes.GRINDER
             .getFirstRecipe(input, level)
-            .onSuccess { recipe: HTSingleItemRecipe ->
+            .onSuccess { recipe: HTGrinderRecipe ->
                 // Drop output
                 ItemHandlerHelper.giveItemToPlayer(player, recipe.itemOutput.get())
                 // Shrink input

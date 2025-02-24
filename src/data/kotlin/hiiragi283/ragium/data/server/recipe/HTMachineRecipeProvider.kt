@@ -22,12 +22,15 @@ import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
@@ -205,11 +208,32 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
 
     //    Extractor    //
 
-    private fun extractor(output: RecipeOutput) {}
+    private fun extractor(output: RecipeOutput) {
+        // Wet Sponge -> Sponge + Water
+        HTFluidOutputRecipeBuilder
+            .extractor(lookup)
+            .itemInput(Items.WET_SPONGE)
+            .itemOutput(Items.SPONGE)
+            .waterOutput()
+            .save(output)
+    }
 
     //    Infuser    //
 
-    private fun infuser(output: RecipeOutput) {}
+    private fun infuser(output: RecipeOutput) {
+        // Concrete Powder -> Concrete
+        for (color: DyeColor in DyeColor.entries) {
+            val powder: Item =
+                BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace("${color}_concrete_powder"))
+            val concrete: Item = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace("${color}_concrete"))
+            HTFluidOutputRecipeBuilder
+                .infuser(lookup)
+                .itemInput(powder)
+                .waterInput(100)
+                .itemOutput(concrete)
+                .save(output)
+        }
+    }
 
     //    Growth Chamber    //
 

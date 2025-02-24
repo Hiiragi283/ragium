@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.data.HTSoap
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.HTRecipeConverters
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.client.screen.HTMultiItemContainer
 import hiiragi283.ragium.client.screen.HTSingleItemContainer
@@ -28,17 +28,15 @@ import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter
 import mezz.jei.api.ingredients.subtypes.UidContext
 import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.registration.*
+import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeManager
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
@@ -114,46 +112,29 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
-        val lookup: HolderLookup<Item> =
-            RagiumAPI.getInstance().getCurrentLookup()?.lookupOrThrow(Registries.ITEM) ?: return
-        val recipeManager: RecipeManager = RagiumAPI.getInstance().getCurrentServer()?.recipeManager ?: return
+        val recipeManager: RecipeManager = Minecraft.getInstance().level?.recipeManager ?: return
 
-        fun <T : HTMachineRecipeBase> register(recipeType: JEIRecipeType<RecipeHolder<T>>, recipe: RecipeType<T>) {
+        fun <T : HTMachineRecipeBase> register(recipeType: JEIRecipeType<RecipeHolder<T>>, recipe: HTRecipeType<T>) {
+            recipe.reloadCache(recipeManager)
             registration.addRecipes(
                 recipeType,
-                recipeManager.getAllRecipesFor(recipe),
+                recipe.getAllRecipes(),
             )
         }
 
         register(RagiumJEIRecipeTypes.ASSEMBLER, HTRecipeTypes.ASSEMBLER)
         register(RagiumJEIRecipeTypes.BLAST_FURNACE, HTRecipeTypes.BLAST_FURNACE)
-        registration.addRecipes(
-            RagiumJEIRecipeTypes.COMPRESSOR,
-            HTRecipeConverters.compressor(lookup, recipeManager),
-        )
+        register(RagiumJEIRecipeTypes.COMPRESSOR, HTRecipeTypes.COMPRESSOR)
         register(RagiumJEIRecipeTypes.BREWERY, HTRecipeTypes.BREWERY)
         register(RagiumJEIRecipeTypes.ENCHANTER, HTRecipeTypes.ENCHANTER)
-        registration.addRecipes(
-            RagiumJEIRecipeTypes.EXTRACTOR,
-            HTRecipeConverters.extractor(lookup, recipeManager),
-        )
-        registration.addRecipes(
-            RagiumJEIRecipeTypes.GRINDER,
-            HTRecipeConverters.grinder(lookup, recipeManager),
-        )
+        register(RagiumJEIRecipeTypes.EXTRACTOR, HTRecipeTypes.EXTRACTOR)
+        register(RagiumJEIRecipeTypes.GRINDER, HTRecipeTypes.GRINDER)
         register(RagiumJEIRecipeTypes.GROWTH_CHAMBER, HTRecipeTypes.GROWTH_CHAMBER)
-        registration.addRecipes(
-            RagiumJEIRecipeTypes.INFUSER,
-            HTRecipeConverters.infuser(lookup, recipeManager),
-        )
+        register(RagiumJEIRecipeTypes.INFUSER, HTRecipeTypes.INFUSER)
         register(RagiumJEIRecipeTypes.LASER_ASSEMBLY, HTRecipeTypes.LASER_ASSEMBLY)
         register(RagiumJEIRecipeTypes.MIXER, HTRecipeTypes.MIXER)
         register(RagiumJEIRecipeTypes.REFINERY, HTRecipeTypes.REFINERY)
-        registration.addRecipes(
-            RagiumJEIRecipeTypes.SOLIDIFIER,
-            HTRecipeConverters.solidifier(lookup, recipeManager),
-        )
-
+        register(RagiumJEIRecipeTypes.SOLIDIFIER, HTRecipeTypes.SOLIDIFIER)
         // Generator Fuel
         registration.addRecipes(
             RagiumJEIRecipeTypes.GENERATOR,

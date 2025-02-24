@@ -1,11 +1,17 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.client.event.RecipesUpdatedEvent
+import net.neoforged.neoforge.event.AddReloadListenerEvent
 
+@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object HTRecipeTypes {
     @JvmField
     val ASSEMBLER = HTRecipeType<HTAssemblerRecipe>(
@@ -109,4 +115,14 @@ object HTRecipeTypes {
         REFINERY,
         SOLIDIFIER,
     )
+
+    @SubscribeEvent
+    fun onResourceReloaded(event: AddReloadListenerEvent) {
+        ALL_TYPES.forEach(HTRecipeType<*>::setChanged)
+    }
+
+    @SubscribeEvent
+    fun onRecipesUpdated(event: RecipesUpdatedEvent) {
+        ALL_TYPES.forEach { it.reloadCache(event.recipeManager) }
+    }
 }

@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.capability.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -44,9 +43,6 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         listOf(firstTank, secondTank, outputTank),
     )
 
-    private val recipeCache: HTRecipeGetter<HTMachineRecipeInput, HTMixerRecipe> =
-        HTRecipeGetter.cached(HTRecipeTypes.MIXER)
-
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)
         firstTank.updateCapacity(this)
@@ -64,7 +60,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
             .addFluid(firstTank)
             .addFluid(secondTank)
             .build()
-        val recipe: HTMixerRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTMixerRecipe = HTRecipeTypes.MIXER.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(enchantments, itemOutput, outputTank)
         // Insert outputs

@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
+import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -41,7 +41,7 @@ abstract class HTSingleItemMachineBlockEntity(
         ),
     )
 
-    abstract val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTSingleItemRecipe>
+    abstract val recipeType: HTRecipeType<out HTSingleItemRecipe>
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
@@ -51,7 +51,7 @@ abstract class HTSingleItemMachineBlockEntity(
                 .addItem(itemInput, 0)
                 .addItem(itemCatalyst, 0)
                 .build()
-        val recipe: HTSingleItemRecipe = recipeGetter.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTSingleItemRecipe = recipeType.getFirstRecipe(input, level).getOrThrow()
         val output: ItemStack = recipe.itemOutput.get()
         // Try to insert outputs
         if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)

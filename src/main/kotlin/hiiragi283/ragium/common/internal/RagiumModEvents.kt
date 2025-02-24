@@ -275,7 +275,7 @@ internal object RagiumModEvents {
                 Capabilities.FluidHandler.ITEM,
                 { stack: ItemStack, _: Void? ->
                     val enchLevel: Int =
-                        stack.getLevel(RagiumAPI.getInstance().getCurrentLookup(), RagiumEnchantments.CAPACITY)
+                        stack.getLevel(RagiumAPI.getInstance().getRegistryAccess(), RagiumEnchantments.CAPACITY)
                     transform(stack, RagiumAPI.getInstance().getTankCapacityWithEnch(enchLevel))
                 },
                 *items,

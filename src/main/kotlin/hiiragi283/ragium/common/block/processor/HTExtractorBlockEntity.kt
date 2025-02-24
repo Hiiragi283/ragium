@@ -9,9 +9,8 @@ import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTExtractorRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeConverters
+import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.inventory.HTExtractorContainerMenu
 import net.minecraft.core.BlockPos
@@ -44,15 +43,12 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         outputTank.updateCapacity(this)
     }
 
-    private val recipeCache: HTRecipeGetter<HTMachineRecipeInput, HTExtractorRecipe> =
-        HTRecipeGetter.listed(HTRecipeConverters::extractor)
-
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val input: HTMachineRecipeInput = HTMachineRecipeInput.Builder().addItem(itemInput, 0).build()
-        val recipe: HTExtractorRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTExtractorRecipe = HTRecipeTypes.EXTRACTOR.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(enchantments, itemOutput, outputTank)
         // Insert outputs

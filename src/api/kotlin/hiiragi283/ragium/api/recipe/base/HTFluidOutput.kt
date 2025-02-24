@@ -72,7 +72,7 @@ class HTFluidOutput private constructor(private val either: Either<SizedTag, Flu
 
     fun isValid(defaultValue: Boolean): Boolean = either.map(
         { sizedTag: SizedTag ->
-            val lookup: RegistryAccess = RagiumAPI.getInstance().getCurrentLookup() ?: return@map defaultValue
+            val lookup: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return@map defaultValue
             lookup
                 .lookupOrThrow(Registries.FLUID)
                 .get(sizedTag.tagKey)

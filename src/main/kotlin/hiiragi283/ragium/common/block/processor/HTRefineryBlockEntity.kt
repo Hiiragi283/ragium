@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
 import hiiragi283.ragium.api.util.HTRelativeDirection
 import hiiragi283.ragium.common.capability.fluid.HTReadOnlyFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -39,9 +38,6 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         listOf(inputTank, firstOutput, secondOutput),
     )
 
-    private val recipeCache: HTRecipeGetter<HTMachineRecipeInput, HTRefineryRecipe> =
-        HTRecipeGetter.cached(HTRecipeTypes.REFINERY)
-
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)
         inputTank.updateCapacity(this)
@@ -54,7 +50,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val input: HTMachineRecipeInput = HTMachineRecipeInput.Builder().addFluid(inputTank).build()
-        val recipe: HTRefineryRecipe = recipeCache.getFirstRecipe(input, level).getOrThrow()
+        val recipe: HTRefineryRecipe = HTRecipeTypes.REFINERY.getFirstRecipe(input, level).getOrThrow()
         // Try to insert outputs
         recipe.canInsert(enchantments, itemOutput, firstOutput, secondOutput)
         // Insert outputs

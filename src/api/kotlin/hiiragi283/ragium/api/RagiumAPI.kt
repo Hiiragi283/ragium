@@ -24,6 +24,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -92,13 +93,15 @@ interface RagiumAPI {
      * [getCurrentServer]に基づいた[RegistryAccess]のインスタンスを返します。
      * @return 存在しない場合は`null`
      */
-    fun getCurrentLookup(): RegistryAccess? = getCurrentServer()?.registryAccess()
+    fun getRegistryAccess(): RegistryAccess? = getCurrentServer()?.registryAccess()
 
     /**
      * 現在のサーバーのインスタンスを返します。
      * @return 存在しない場合は`null`
      */
     fun getCurrentServer(): MinecraftServer?
+
+    fun getCurrentSide(): LogicalSide
 
     fun getEnergyNetwork(): (ServerLevel) -> IEnergyStorage = ::getEnergyNetwork
 

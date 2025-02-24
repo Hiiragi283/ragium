@@ -4,9 +4,8 @@ import hiiragi283.ragium.api.block.entity.HTMultiItemMachineBlockEntity
 import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
-import hiiragi283.ragium.api.recipe.base.HTRecipeGetter
+import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -16,6 +15,5 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMultiItemMachineBlockEntity(RagiumBlockEntityTypes.ASSEMBLER, pos, state, HTMachineType.ASSEMBLER) {
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
 
-    override val recipeGetter: HTRecipeGetter<HTMachineRecipeInput, out HTMultiItemRecipe> =
-        HTRecipeGetter.cached(HTRecipeTypes.ASSEMBLER)
+    override val recipeType: HTRecipeType<out HTMultiItemRecipe> = HTRecipeTypes.ASSEMBLER
 }
