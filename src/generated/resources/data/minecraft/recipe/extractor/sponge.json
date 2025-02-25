@@ -1,0 +1,17 @@
+{
+  "type": "ragium:extractor",
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "minecraft:water"
+    }
+  ],
+  "item_input": {
+    "item": "minecraft:wet_sponge"
+  },
+  "item_outputs": [
+    {
+      "items": "minecraft:sponge"
+    }
+  ]
+}

@@ -125,6 +125,7 @@ class RagiumJEIPlugin : IModPlugin {
         register(RagiumJEIRecipeTypes.ASSEMBLER, HTRecipeTypes.ASSEMBLER)
         register(RagiumJEIRecipeTypes.BLAST_FURNACE, HTRecipeTypes.BLAST_FURNACE)
         register(RagiumJEIRecipeTypes.COMPRESSOR, HTRecipeTypes.COMPRESSOR)
+        register(RagiumJEIRecipeTypes.CRUSHER, HTRecipeTypes.CRUSHER)
         register(RagiumJEIRecipeTypes.BREWERY, HTRecipeTypes.BREWERY)
         register(RagiumJEIRecipeTypes.ENCHANTER, HTRecipeTypes.ENCHANTER)
         register(RagiumJEIRecipeTypes.EXTRACTOR, HTRecipeTypes.EXTRACTOR)
@@ -206,6 +207,8 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BREWERY, HTMachineType.ALCHEMICAL_BREWERY)
         // Compressor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, HTMachineType.COMPRESSOR)
+        // Crusher
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.CRUSHER, HTMachineType.CRUSHER)
         // Enchanter
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ENCHANTER, HTMachineType.ARCANE_ENCHANTER)
         // Extractor

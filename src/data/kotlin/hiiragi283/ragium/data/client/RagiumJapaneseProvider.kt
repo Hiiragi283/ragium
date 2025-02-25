@@ -280,6 +280,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTMachineType.ASSEMBLER, "組立機", "君こそが天才だ!")
         add(HTMachineType.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
         add(HTMachineType.COMPRESSOR, "圧縮機", "saves.zip.zip")
+        add(HTMachineType.CRUSHER, "破砕機", "Crush Up!")
         add(HTMachineType.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
         add(HTMachineType.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
         add(HTMachineType.GROWTH_CHAMBER, "成長チャンバー", "成長バーチャン")

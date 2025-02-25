@@ -47,6 +47,9 @@ object RagiumJEIRecipeTypes {
     val COMPRESSOR: RecipeType<RecipeHolder<HTCompressorRecipe>> = create(HTRecipeTypes.COMPRESSOR)
 
     @JvmField
+    val CRUSHER: RecipeType<RecipeHolder<HTCrusherRecipe>> = create(HTRecipeTypes.CRUSHER)
+
+    @JvmField
     val ENCHANTER: RecipeType<RecipeHolder<HTEnchanterRecipe>> = create(HTRecipeTypes.ENCHANTER)
 
     @JvmField

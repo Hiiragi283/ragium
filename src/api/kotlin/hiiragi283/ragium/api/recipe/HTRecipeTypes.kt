@@ -39,6 +39,13 @@ object HTRecipeTypes {
     )
 
     @JvmField
+    val CRUSHER = HTRecipeType<HTCrusherRecipe>(
+        HTMachineType.CRUSHER,
+        HTCrusherRecipe.CODEC,
+        HTCrusherRecipe.STREAM_CODEC,
+    )
+
+    @JvmField
     val ENCHANTER = HTRecipeType<HTEnchanterRecipe>(
         HTMachineType.ARCANE_ENCHANTER,
         HTEnchanterRecipe.CODEC,
@@ -105,6 +112,7 @@ object HTRecipeTypes {
         BLAST_FURNACE,
         BREWERY,
         COMPRESSOR,
+        CRUSHER,
         ENCHANTER,
         EXTRACTOR,
         GRINDER,

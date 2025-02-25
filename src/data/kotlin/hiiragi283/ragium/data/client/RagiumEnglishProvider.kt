@@ -300,6 +300,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTMachineType.ASSEMBLER, "Assembler", "You are the genius!")
         add(HTMachineType.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
         add(HTMachineType.COMPRESSOR, "Compressor", "saves.zip.zip")
+        add(HTMachineType.CRUSHER, "Crusher", "Crush Up!")
         add(HTMachineType.EXTRACTOR, "Extractor", "Something like Centrifuge")
         add(HTMachineType.GRINDER, "Grinder", "Unbreakable Diamond")
         add(HTMachineType.GROWTH_CHAMBER, "Growth Chamber", "Growth Gran-ma")

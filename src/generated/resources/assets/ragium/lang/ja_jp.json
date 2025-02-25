@@ -167,6 +167,8 @@
   "machine_type.combustion_generator.description": "液体燃料から発電する",
   "machine_type.compressor": "圧縮機",
   "machine_type.compressor.description": "saves.zip.zip",
+  "machine_type.crusher": "破砕機",
+  "machine_type.crusher.description": "Crush Up!",
   "machine_type.extractor": "抽出器",
   "machine_type.extractor.description": "遠心分離機みたいなやつ",
   "machine_type.fisher": "自動釣り機",

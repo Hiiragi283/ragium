@@ -167,6 +167,8 @@
   "machine_type.combustion_generator.description": "Generate energy from liquid fuels",
   "machine_type.compressor": "Compressor",
   "machine_type.compressor.description": "saves.zip.zip",
+  "machine_type.crusher": "Crusher",
+  "machine_type.crusher.description": "Crush Up!",
   "machine_type.extractor": "Extractor",
   "machine_type.extractor.description": "Something like Centrifuge",
   "machine_type.fisher": "Fisher",
