@@ -87,8 +87,12 @@ object RagiumItems {
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
 
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
-        register(HTTagPrefix.DUST, CommonMaterials.TIN)
+        register(HTTagPrefix.DUST, CommonMaterials.LEAD)
         register(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
+        register(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY)
+        register(HTTagPrefix.DUST, CommonMaterials.STEEL)
+        register(HTTagPrefix.DUST, CommonMaterials.TIN)
+        register(HTTagPrefix.DUST, CommonMaterials.ZINC)
 
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
@@ -103,9 +107,9 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
 
-        register(HTTagPrefix.INGOT, CommonMaterials.TIN)
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-        register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
+        register(HTTagPrefix.INGOT, CommonMaterials.BRONZE)
+        register(HTTagPrefix.INGOT, CommonMaterials.TIN)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
         register(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL)

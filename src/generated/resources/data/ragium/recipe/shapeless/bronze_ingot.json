@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:storage_blocks/echorium"
+      "tag": "c:storage_blocks/bronze"
     }
   ],
   "result": {
     "count": 9,
-    "id": "ragium:echorium_ingot"
+    "id": "ragium:bronze_ingot"
   }
 }

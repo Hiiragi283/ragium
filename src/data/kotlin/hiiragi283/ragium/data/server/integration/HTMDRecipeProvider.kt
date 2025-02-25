@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -33,6 +32,6 @@ object HTMDRecipeProvider : HTRecipeProvider.Modded("moderndynamics") {
         registerCable("mv_cable", VanillaMaterials.GOLD)
         registerCable("hv_cable", CommonMaterials.ALUMINUM)
         // EV Cable
-        registerCable("superconductor_cable", RagiumMaterials.ECHORIUM)
+        // Superconductor
     }
 }

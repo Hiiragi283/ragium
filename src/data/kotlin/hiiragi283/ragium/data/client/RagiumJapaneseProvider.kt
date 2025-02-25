@@ -106,6 +106,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
         addFluid(RagiumVirtualFluids.AIR, "空気")
 
+        addFluid(RagiumVirtualFluids.SOLDERING_ALLOY, "半田合金")
+
         addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
 
         addFluid(RagiumVirtualFluids.NITROGEN, "窒素")
@@ -322,6 +324,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(CommonMaterials.SAPPHIRE, "サファイア")
         add(CommonMaterials.SILICON, "シリコン")
         add(CommonMaterials.SILVER, "銀")
+        add(CommonMaterials.SOLDERING_ALLOY, "半田合金")
         add(CommonMaterials.STAINLESS_STEEL, "ステンレス鋼")
         add(CommonMaterials.STEEL, "スチール")
         add(CommonMaterials.SULFUR, "硫黄")
@@ -358,7 +361,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumMaterials.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumMaterials.DEEP_STEEL, "深層鋼")
-        add(RagiumMaterials.ECHORIUM, "エコリウム")
+        // add(RagiumMaterials.ECHORIUM, "エコリウム")
         add(RagiumMaterials.FIERY_COAL, "燃え盛る石炭")
         add(RagiumMaterials.RAGI_ALLOY, "ラギ合金")
         add(RagiumMaterials.RAGI_CRYSTAL, "ラギクリスタリル")

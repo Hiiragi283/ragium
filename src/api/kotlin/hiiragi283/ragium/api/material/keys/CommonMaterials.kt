@@ -100,6 +100,9 @@ object CommonMaterials {
     val SILVER: HTMaterialKey = HTMaterialKey.of("silver")
 
     @JvmField
+    val SOLDERING_ALLOY: HTMaterialKey = HTMaterialKey.of("soldering_alloy")
+
+    @JvmField
     val STAINLESS_STEEL: HTMaterialKey = HTMaterialKey.of("stainless_steel")
 
     @JvmField

@@ -106,6 +106,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
         addFluid(RagiumVirtualFluids.AIR, "Air")
 
+        addFluid(RagiumVirtualFluids.SOLDERING_ALLOY, "Soldering Alloy")
+
         addFluid(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
 
         addFluid(RagiumVirtualFluids.NITROGEN, "Nitrogen")
@@ -342,6 +344,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(CommonMaterials.SAPPHIRE, "Sapphire")
         add(CommonMaterials.SILICON, "Silicon")
         add(CommonMaterials.SILVER, "Silver")
+        add(CommonMaterials.SOLDERING_ALLOY, "Soldering Alloy")
         add(CommonMaterials.STAINLESS_STEEL, "Stainless Steel")
         add(CommonMaterials.STEEL, "Steel")
         add(CommonMaterials.SULFUR, "Sulfur")
@@ -378,7 +381,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumMaterials.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumMaterials.DEEP_STEEL, "Deep Steel")
-        add(RagiumMaterials.ECHORIUM, "Echorium")
+        // add(RagiumMaterials.ECHORIUM, "Echorium")
         add(RagiumMaterials.FIERY_COAL, "Fiery Coal")
         add(RagiumMaterials.RAGI_ALLOY, "Ragi-Alloy")
         add(RagiumMaterials.RAGI_CRYSTAL, "Ragi-Crystal")

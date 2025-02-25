@@ -165,14 +165,6 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumItems.SCULK_REAGENT, 16)
             .itemOutput(Items.ECHO_SHARD)
             .save(output)
-
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.NIOBIUM, 3)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
-            .itemInput(Items.ECHO_SHARD, 4)
-            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM, 4)
-            .save(output)
     }
 
     private fun registerWither(output: RecipeOutput) {

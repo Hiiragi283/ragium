@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.extension.requires
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -167,6 +168,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
                 .itemInput(HTTagPrefix.INGOT, subMetal)
                 .itemInput(dopant)
+                .fluidInput(RagiumVirtualFluids.SOLDERING_ALLOY.commonTag, RagiumAPI.INGOT_AMOUNT)
                 .itemOutput(circuit)
                 .save(output)
             // Laser Assembly
@@ -449,6 +451,31 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .pattern("A")
             .pattern("A")
             .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
+            .save(output)
+
+        ShapelessRecipeBuilder
+            .shapeless(
+                RecipeCategory.MISC,
+                RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY),
+                2,
+            ).requires(HTTagPrefix.DUST, CommonMaterials.TIN)
+            .requires(HTTagPrefix.DUST, CommonMaterials.LEAD)
+            .unlockedBy("has_tin", has(HTTagPrefix.DUST, CommonMaterials.TIN))
+            .unlockedBy("has_lead", has(HTTagPrefix.DUST, CommonMaterials.LEAD))
+            .savePrefixed(output)
+
+        HTMultiItemRecipeBuilder
+            .blastFurnace(lookup)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.TIN)
+            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.BRONZE)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .blastFurnace(lookup)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ZINC)
+            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.BRASS)
             .save(output)
     }
 }

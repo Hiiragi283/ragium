@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ingot": {
+    "has_lead": {
       "conditions": {
         "items": [
           {
-            "items": "#c:storage_blocks/echorium"
+            "items": "#c:dusts/lead"
           }
         ]
       },
@@ -13,20 +13,31 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shapeless/echorium_ingot"
+        "recipe": "ragium:shapeless/soldering_alloy_dust"
       },
       "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tin": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/tin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_ingot"
+      "has_tin",
+      "has_lead"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shapeless/echorium_ingot"
+      "ragium:shapeless/soldering_alloy_dust"
     ]
   }
 }

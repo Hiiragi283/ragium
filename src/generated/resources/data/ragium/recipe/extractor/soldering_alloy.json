@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extractor",
+  "fluid_outputs": [
+    {
+      "amount": 90,
+      "id": "ragium:soldering_alloy"
+    }
+  ],
+  "item_input": {
+    "tag": "c:dusts/soldering_alloy"
+  }
+}

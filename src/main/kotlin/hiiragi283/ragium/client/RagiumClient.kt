@@ -55,6 +55,7 @@ object RagiumClient {
             val textureId: ResourceLocation = when (fluid.textureType) {
                 RagiumVirtualFluids.TextureType.GASEOUS -> "block/white_concrete"
                 RagiumVirtualFluids.TextureType.LIQUID -> "block/bone_block_side"
+                RagiumVirtualFluids.TextureType.MOLTEN -> "block/dead_bubble_coral_block"
                 RagiumVirtualFluids.TextureType.STICKY -> "block/quartz_block_bottom"
             }.let(ResourceLocation::withDefaultNamespace)
             event.registerFluidType(HTSimpleFluidExtensions(textureId, fluid.color), fluid.get().fluidType)

@@ -290,6 +290,12 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .itemOutput(Items.SPONGE)
             .waterOutput()
             .save(output)
+        // Soldering Alloy
+        HTFluidOutputRecipeBuilder
+            .extractor(lookup)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY)
+            .fluidOutput(RagiumVirtualFluids.SOLDERING_ALLOY, RagiumAPI.INGOT_AMOUNT)
+            .save(output)
     }
 
     //    Infuser    //

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/echorium_ingot"
+    "layer0": "ragium:item/lead_dust"
   }
 }
