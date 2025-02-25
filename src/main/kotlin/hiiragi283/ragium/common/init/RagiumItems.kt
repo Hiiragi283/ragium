@@ -112,7 +112,6 @@ object RagiumItems {
 
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.INGOT, CommonMaterials.BRONZE)
-        register(HTTagPrefix.INGOT, CommonMaterials.TIN)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
         register(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL)

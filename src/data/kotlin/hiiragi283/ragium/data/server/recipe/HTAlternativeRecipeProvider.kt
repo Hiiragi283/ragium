@@ -128,6 +128,7 @@ object HTAlternativeRecipeProvider : HTRecipeProvider() {
                 .save(output, RagiumAPI.id("piston_by_$name"))
         }
 
+        ironAlt(CommonMaterials.BRONZE, 1)
         ironAlt(CommonMaterials.STEEL, 2)
         ironAlt(RagiumMaterials.DEEP_STEEL, 4)
     }

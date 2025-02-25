@@ -179,7 +179,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.CHESTPLATE], "Bronze Chestplate")
         addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.LEGGINGS], "Bronze Leggings")
         addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.BOOTS], "Bronze Boots")
-        
+
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "Steel Helmet")
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "Steel Chestplate")
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.LEGGINGS], "Steel Leggings")
