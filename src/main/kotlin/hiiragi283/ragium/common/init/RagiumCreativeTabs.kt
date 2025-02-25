@@ -66,17 +66,19 @@ object RagiumCreativeTabs {
                     output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
                     RagiumItems.FOODS.forEach(output::accept)
                     // Armors
+                    RagiumItems.BRONZE_ARMORS.armors.forEach(output::accept)
+                    RagiumItems.STEEL_ARMORS.armors.forEach(output::accept)
                     output.accept(RagiumItems.DIVING_GOGGLE)
                     output.accept(RagiumItems.JETPACK)
-                    RagiumItems.STEEL_ARMORS.armors.forEach(output::accept)
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
                     output.accept(RagiumItems.RAGI_LANTERN)
                     output.accept(RagiumItems.RAGI_SHEARS)
 
+                    RagiumItems.BRONZE_TOOLS.tools.forEach(output::accept)
+                    RagiumItems.STEEL_TOOLS.tools.forEach(output::accept)
                     output.accept(RagiumItems.FEVER_PICKAXE)
                     output.accept(RagiumItems.SILKY_PICKAXE)
-                    RagiumItems.STEEL_TOOLS.tools.forEach(output::accept)
 
                     output.accept(RagiumItems.DEFOLIANT)
                     output.accept(RagiumItems.DYNAMITE)

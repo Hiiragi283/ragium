@@ -174,6 +174,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
         addItem(RagiumItems.JETPACK, "ジェットパック")
+
+        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.HELMET], "青銅のヘルメット")
+        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.CHESTPLATE], "青銅のチェストプレート")
+        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.LEGGINGS], "青銅のレギンス")
+        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.BOOTS], "青銅のブーツ")
+
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "鋼鉄のヘルメット")
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "鋼鉄のチェストプレート")
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.LEGGINGS], "鋼鉄のレギンス")
@@ -184,6 +190,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
         addItem(RagiumItems.RAGI_SHEARS, "らぎハサミ")
         addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
+
+        addItem(RagiumItems.BRONZE_TOOLS.axeItem, "青銅の斧")
+        addItem(RagiumItems.BRONZE_TOOLS.hoeItem, "青銅のクワ")
+        addItem(RagiumItems.BRONZE_TOOLS.pickaxeItem, "青銅のツルハシ")
+        addItem(RagiumItems.BRONZE_TOOLS.shovelItem, "青銅のシャベル")
+        addItem(RagiumItems.BRONZE_TOOLS.swordItem, "青銅の剣")
 
         addItem(RagiumItems.STEEL_TOOLS.axeItem, "鋼鉄の斧")
         addItem(RagiumItems.STEEL_TOOLS.hoeItem, "鋼鉄のクワ")

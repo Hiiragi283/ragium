@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.util
 
 import hiiragi283.ragium.api.extension.itemProperty
+import hiiragi283.ragium.api.material.HTMaterialKey
 import net.minecraft.core.Holder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -10,7 +11,7 @@ import net.minecraft.world.item.Item
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
-class HTArmorSets(register: DeferredRegister.Items, material: Holder<ArmorMaterial>, prefix: String) {
+class HTArmorSets(register: DeferredRegister.Items, material: Holder<ArmorMaterial>, val key: HTMaterialKey) {
     companion object {
         @JvmField
         val VALID_TYPES: List<ArmorItem.Type> = listOf(
@@ -24,7 +25,7 @@ class HTArmorSets(register: DeferredRegister.Items, material: Holder<ArmorMateri
     private val armorMap: Map<ArmorItem.Type, DeferredItem<ArmorItem>> =
         VALID_TYPES.associateWith { type: ArmorItem.Type ->
             register.registerItem(
-                "${prefix}_${type.serializedName}",
+                "${key.name}_${type.serializedName}",
                 { properties: Item.Properties -> ArmorItem(material, type, properties) },
                 itemProperty().durability(type.getDurability(20)),
             )

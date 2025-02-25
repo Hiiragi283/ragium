@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTArmorSets
+import hiiragi283.ragium.api.util.HTToolSets
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
@@ -50,6 +51,8 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         registerTool(output)
         registerMisc(output)
     }
+
+    //    Progress    //
 
     private fun registerRaginite(output: RecipeOutput) {
         val ragiAlloy: DeferredItem<out Item> =
@@ -154,6 +157,8 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumItems.RAGI_TICKET)
             .save(output)
     }
+
+    //    Ingredient    //
 
     private fun registerCircuits(output: RecipeOutput) {
         fun circuit(
@@ -286,6 +291,93 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
+    private fun registerMisc(output: RecipeOutput) {
+        HTShapedRecipeBuilder(RagiumItems.SOLAR_PANEL)
+            .pattern("AAA")
+            .pattern("BBB")
+            .pattern("CCC")
+            .define('A', Tags.Items.GLASS_PANES)
+            .define('B', HTTagPrefix.DUST, VanillaMaterials.LAPIS)
+            .define('C', HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
+            .itemOutput(RagiumItems.LED, 4)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
+            .itemInput(Items.PISTON, 2)
+            .itemOutput(RagiumItems.ENGINE)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.SLAG_BLOCK)
+            .hollow8()
+            .define('A', RagiumItemTags.SLAG)
+            .define('B', RagiumItems.SLAG)
+            .save(output)
+
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, RagiumItems.SLAG, 9)
+            .requires(RagiumBlocks.SLAG_BLOCK)
+            .unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
+            .savePrefixed(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.SHAFT, 6, CraftingBookCategory.BUILDING)
+            .pattern("A")
+            .pattern("A")
+            .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
+            .save(output)
+
+        ShapelessRecipeBuilder
+            .shapeless(
+                RecipeCategory.MISC,
+                RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY),
+                2,
+            ).requires(HTTagPrefix.DUST, CommonMaterials.TIN)
+            .requires(HTTagPrefix.DUST, CommonMaterials.LEAD)
+            .requires(RagiumItems.FORGE_HAMMER)
+            .unlockedBy("has_tin", has(HTTagPrefix.DUST, CommonMaterials.TIN))
+            .unlockedBy("has_lead", has(HTTagPrefix.DUST, CommonMaterials.LEAD))
+            .savePrefixed(output)
+
+        ShapelessRecipeBuilder
+            .shapeless(
+                RecipeCategory.MISC,
+                RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.BRONZE),
+                4,
+            ).requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
+            .requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
+            .requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
+            .requires(HTTagPrefix.DUST, CommonMaterials.TIN)
+            .requires(RagiumItems.FORGE_HAMMER)
+            .unlockedBy("has_copper", has(HTTagPrefix.DUST, VanillaMaterials.COPPER))
+            .unlockedBy("has_tin", has(HTTagPrefix.DUST, CommonMaterials.TIN))
+            .savePrefixed(output)
+
+        HTMultiItemRecipeBuilder
+            .blastFurnace(lookup)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.TIN)
+            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.BRONZE)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .blastFurnace(lookup)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ZINC)
+            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.BRASS)
+            .save(output)
+    }
+
+    //    Armor    //
+
     private fun registerArmor(output: RecipeOutput) {
         // Diving Goggles
         HTShapedRecipeBuilder(RagiumItems.DIVING_GOGGLE, category = CraftingBookCategory.EQUIPMENT)
@@ -309,45 +401,48 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
 
-        fun armorSet(armorSet: HTArmorSets) {
-            // Helmet
-            HTShapedRecipeBuilder(armorSet[ArmorItem.Type.HELMET], category = CraftingBookCategory.EQUIPMENT)
-                .pattern(
-                    "AAA",
-                    "ABA",
-                ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-                .define('B', RagiumItems.FORGE_HAMMER)
-                .save(output)
-            // Chestplate
-            HTShapedRecipeBuilder(armorSet[ArmorItem.Type.CHESTPLATE], category = CraftingBookCategory.EQUIPMENT)
-                .pattern(
-                    "ABA",
-                    "AAA",
-                    "AAA",
-                ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-                .define('B', RagiumItems.FORGE_HAMMER)
-                .save(output)
-            // Leggings
-            HTShapedRecipeBuilder(armorSet[ArmorItem.Type.LEGGINGS], category = CraftingBookCategory.EQUIPMENT)
-                .pattern(
-                    "AAA",
-                    "ABA",
-                    "A A",
-                ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-                .define('B', RagiumItems.FORGE_HAMMER)
-                .save(output)
-            // Boots
-            HTShapedRecipeBuilder(armorSet[ArmorItem.Type.BOOTS], category = CraftingBookCategory.EQUIPMENT)
-                .pattern(
-                    "A A",
-                    "ABA",
-                ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-                .define('B', RagiumItems.FORGE_HAMMER)
-                .save(output)
-        }
-
-        armorSet(RagiumItems.STEEL_ARMORS)
+        armorSet(output, RagiumItems.BRONZE_ARMORS)
+        armorSet(output, RagiumItems.STEEL_ARMORS)
     }
+
+    private fun armorSet(output: RecipeOutput, armorSet: HTArmorSets) {
+        // Helmet
+        HTShapedRecipeBuilder(armorSet[ArmorItem.Type.HELMET], category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "AAA",
+                "ABA",
+            ).define('A', HTTagPrefix.INGOT, armorSet.key)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .save(output)
+        // Chestplate
+        HTShapedRecipeBuilder(armorSet[ArmorItem.Type.CHESTPLATE], category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "ABA",
+                "AAA",
+                "AAA",
+            ).define('A', HTTagPrefix.INGOT, armorSet.key)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .save(output)
+        // Leggings
+        HTShapedRecipeBuilder(armorSet[ArmorItem.Type.LEGGINGS], category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "AAA",
+                "ABA",
+                "A A",
+            ).define('A', HTTagPrefix.INGOT, armorSet.key)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .save(output)
+        // Boots
+        HTShapedRecipeBuilder(armorSet[ArmorItem.Type.BOOTS], category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "A A",
+                "ABA",
+            ).define('A', HTTagPrefix.INGOT, armorSet.key)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .save(output)
+    }
+
+    //    Tool    //
 
     private fun registerTool(output: RecipeOutput) {
         HTShapedRecipeBuilder(RagiumItems.FORGE_HAMMER, category = CraftingBookCategory.EQUIPMENT)
@@ -407,75 +502,56 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('B', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.GOLD)
             .define('C', Tags.Items.RODS_WOODEN)
             .save(output)
+
+        toolSet(output, RagiumItems.BRONZE_TOOLS)
+        toolSet(output, RagiumItems.STEEL_TOOLS)
     }
 
-    private fun registerMisc(output: RecipeOutput) {
-        HTShapedRecipeBuilder(RagiumItems.SOLAR_PANEL)
-            .pattern("AAA")
-            .pattern("BBB")
-            .pattern("CCC")
-            .define('A', Tags.Items.GLASS_PANES)
-            .define('B', HTTagPrefix.DUST, VanillaMaterials.LAPIS)
-            .define('C', HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+    private fun toolSet(output: RecipeOutput, toolSet: HTToolSets) {
+        // Axe
+        HTShapedRecipeBuilder(toolSet.axeItem, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "A ",
+                "AB",
+                "BB",
+            ).define('A', Tags.Items.RODS_WOODEN)
+            .define('B', HTTagPrefix.INGOT, toolSet.key)
             .save(output)
-
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
-            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
-            .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
-            .itemOutput(RagiumItems.LED, 4)
+        // Hoe
+        HTShapedRecipeBuilder(toolSet.hoeItem, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "A ",
+                "A ",
+                "BB",
+            ).define('A', Tags.Items.RODS_WOODEN)
+            .define('B', HTTagPrefix.INGOT, toolSet.key)
             .save(output)
-
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
-            .itemInput(Items.PISTON, 2)
-            .itemOutput(RagiumItems.ENGINE)
+        // Pickaxe
+        HTShapedRecipeBuilder(toolSet.pickaxeItem, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                " A ",
+                " A ",
+                "BBB",
+            ).define('A', Tags.Items.RODS_WOODEN)
+            .define('B', HTTagPrefix.INGOT, toolSet.key)
             .save(output)
-
-        HTShapedRecipeBuilder(RagiumBlocks.SLAG_BLOCK)
-            .hollow8()
-            .define('A', RagiumItemTags.SLAG)
-            .define('B', RagiumItems.SLAG)
+        // Shovel
+        HTShapedRecipeBuilder(toolSet.shovelItem, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "A",
+                "A",
+                "B",
+            ).define('A', Tags.Items.RODS_WOODEN)
+            .define('B', HTTagPrefix.INGOT, toolSet.key)
             .save(output)
-
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, RagiumItems.SLAG, 9)
-            .requires(RagiumBlocks.SLAG_BLOCK)
-            .unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
-            .savePrefixed(output)
-
-        HTShapedRecipeBuilder(RagiumBlocks.SHAFT, 6, CraftingBookCategory.BUILDING)
-            .pattern("A")
-            .pattern("A")
-            .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
-            .save(output)
-
-        ShapelessRecipeBuilder
-            .shapeless(
-                RecipeCategory.MISC,
-                RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY),
-                2,
-            ).requires(HTTagPrefix.DUST, CommonMaterials.TIN)
-            .requires(HTTagPrefix.DUST, CommonMaterials.LEAD)
-            .unlockedBy("has_tin", has(HTTagPrefix.DUST, CommonMaterials.TIN))
-            .unlockedBy("has_lead", has(HTTagPrefix.DUST, CommonMaterials.LEAD))
-            .savePrefixed(output)
-
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.TIN)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.BRONZE)
-            .save(output)
-
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ZINC)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.BRASS)
+        // Sword
+        HTShapedRecipeBuilder(toolSet.swordItem, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "A",
+                "B",
+                "B",
+            ).define('A', Tags.Items.RODS_WOODEN)
+            .define('B', HTTagPrefix.INGOT, toolSet.key)
             .save(output)
     }
 }

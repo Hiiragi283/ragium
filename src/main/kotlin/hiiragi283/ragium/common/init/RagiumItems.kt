@@ -86,11 +86,14 @@ object RagiumItems {
         register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
 
+        register(HTTagPrefix.DUST, CommonMaterials.STEEL)
+        register(HTTagPrefix.DUST, RagiumMaterials.DEEP_STEEL)
+
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
+        register(HTTagPrefix.DUST, CommonMaterials.BRONZE)
         register(HTTagPrefix.DUST, CommonMaterials.LEAD)
         register(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
         register(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY)
-        register(HTTagPrefix.DUST, CommonMaterials.STEEL)
         register(HTTagPrefix.DUST, CommonMaterials.TIN)
         register(HTTagPrefix.DUST, CommonMaterials.ZINC)
 
@@ -249,13 +252,16 @@ object RagiumItems {
     //    Armors    //
 
     @JvmField
+    val BRONZE_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.BRONZE, CommonMaterials.BRONZE)
+
+    @JvmField
+    val STEEL_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.STEEL, CommonMaterials.STEEL)
+
+    @JvmField
     val DIVING_GOGGLE: DeferredItem<HTDivingGoggleItem> = register("diving_goggles", ::HTDivingGoggleItem)
 
     @JvmField
     val JETPACK: DeferredItem<HTJetpackItem> = register("jetpack", ::HTJetpackItem)
-
-    @JvmField
-    val STEEL_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.STEEL, "steel")
 
     //    Tools    //
 
@@ -285,7 +291,9 @@ object RagiumItems {
                 properties,
             )
         },
-        itemProperty().lore(RagiumTranslationKeys.FEVER_PICKAXE),
+        itemProperty()
+            .attributes(DiggerItem.createAttributes(Tiers.GOLD, 1f, -2.8f))
+            .lore(RagiumTranslationKeys.FEVER_PICKAXE),
     )
 
     @JvmField
@@ -299,11 +307,16 @@ object RagiumItems {
                 properties,
             )
         },
-        itemProperty().lore(RagiumTranslationKeys.SILKY_PICKAXE),
+        itemProperty()
+            .attributes(DiggerItem.createAttributes(Tiers.GOLD, 1f, -2.8f))
+            .lore(RagiumTranslationKeys.SILKY_PICKAXE),
     )
 
     @JvmField
-    val STEEL_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.STEEL, "steel")
+    val BRONZE_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.BRONZE, CommonMaterials.BRONZE)
+
+    @JvmField
+    val STEEL_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.STEEL, CommonMaterials.STEEL)
 
     //    Utilities    //
 

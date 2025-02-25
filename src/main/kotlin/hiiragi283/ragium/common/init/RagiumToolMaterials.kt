@@ -9,6 +9,19 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 
 enum class RagiumToolMaterials : Tier {
+    BRONZE() {
+        override fun getUses(): Int = 256
+
+        override fun getSpeed(): Float = 5f
+
+        override fun getAttackDamageBonus(): Float = 2f
+
+        override fun getIncorrectBlocksForDrops(): TagKey<Block> = BlockTags.INCORRECT_FOR_IRON_TOOL
+
+        override fun getEnchantmentValue(): Int = 15
+
+        override fun getRepairIngredient(): Ingredient = HTTagPrefix.INGOT.createIngredient(CommonMaterials.BRONZE)
+    },
     STEEL() {
         override fun getUses(): Int = 512
 

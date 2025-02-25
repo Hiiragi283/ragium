@@ -174,6 +174,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
         addItem(RagiumItems.JETPACK, "Jetpack")
+
+        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.HELMET], "Bronze Helmet")
+        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.CHESTPLATE], "Bronze Chestplate")
+        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.LEGGINGS], "Bronze Leggings")
+        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.BOOTS], "Bronze Boots")
+        
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "Steel Helmet")
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "Steel Chestplate")
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.LEGGINGS], "Steel Leggings")
@@ -184,6 +190,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.RAGI_SHEARS, "Ragi-Shears")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
+
+        addItem(RagiumItems.BRONZE_TOOLS.axeItem, "Bronze Axe")
+        addItem(RagiumItems.BRONZE_TOOLS.hoeItem, "Bronze Hoe")
+        addItem(RagiumItems.BRONZE_TOOLS.pickaxeItem, "Bronze Pickaxe")
+        addItem(RagiumItems.BRONZE_TOOLS.shovelItem, "Bronze Shovel")
+        addItem(RagiumItems.BRONZE_TOOLS.swordItem, "Bronze Sword")
 
         addItem(RagiumItems.STEEL_TOOLS.axeItem, "Steel Axe")
         addItem(RagiumItems.STEEL_TOOLS.hoeItem, "Steel Hoe")
