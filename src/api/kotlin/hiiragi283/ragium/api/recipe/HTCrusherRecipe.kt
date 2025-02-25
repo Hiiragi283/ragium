@@ -35,7 +35,7 @@ class HTCrusherRecipe(group: String, val input: HTItemIngredient, val outputs: L
         )
     }
 
-    override fun isValidOutput(): Boolean = outputs.none(HTItemOutput::isNotValid)
+    override fun isValidOutput(): Boolean = outputs.any(HTItemOutput::isValid)
 
     override fun matches(input: HTMachineRecipeInput): Boolean = this.input.test(input, 0)
 

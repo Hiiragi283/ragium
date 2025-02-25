@@ -1,0 +1,17 @@
+{
+  "type": "ragium:crusher",
+  "item_input": {
+    "count": 64,
+    "item": "minecraft:clay"
+  },
+  "item_outputs": [
+    {
+      "count": 32,
+      "items": "minecraft:clay_ball"
+    },
+    {
+      "count": 16,
+      "items": "#c:dusts/salt"
+    }
+  ]
+}

@@ -5,23 +5,41 @@ import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.IntegrationMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import net.neoforged.fml.ModLoader
 import org.slf4j.Logger
+import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 
 internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
-    //    Init    //
-
+    @JvmStatic
     private lateinit var typeMap: Map<HTMaterialKey, HTMaterialType>
 
+    //    HTMaterialRegistry    //
+
+    override val keys: Set<HTMaterialKey> get() = typeMap.keys
+
+    override fun getType(key: HTMaterialKey): HTMaterialType = typeMap[key] ?: error("Unknown material key: $key")
+
+    //    Init    //
+
+    init {
+        MOD_BUS.addListener(::registerMaterial)
+    }
+
+    @JvmStatic
     fun initRegistry() {
         registerMaterials()
         // modifyProperties()
         LOGGER.info("Loaded material registry!")
     }
 
+    @JvmStatic
     private fun registerMaterials() {
         LOGGER.info("Invoke material events...")
         val typeCache: MutableMap<HTMaterialKey, HTMaterialType> = mutableMapOf()
@@ -36,47 +54,99 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         LOGGER.info("Registered new materials!")
     }
 
-    /*private fun modifyProperties() {
-        val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()
-        ModLoader.postEvent(
-            HTModifyPropertyEvent.Material {
-                propertyCache.computeIfAbsent(
-                    it,
-                    constFunction2(HTPropertyHolderBuilder()),
-                )
-            },
-        )
-        this.propertyMap = propertyCache.mapValues { (_, builder: HTPropertyHolderBuilder) -> builder.build() }
-        LOGGER.info("Modified material properties!")
-    }*/
+    @JvmStatic
+    private fun registerMaterial(event: HTRegisterMaterialEvent) {
+        event.register(CommonMaterials.ALUMINUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.ANTIMONY, HTMaterialType.METAL)
+        event.register(CommonMaterials.BERYLLIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.ASH, HTMaterialType.DUST)
+        event.register(CommonMaterials.BAUXITE, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.BRASS, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.BRONZE, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.CADMIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.CALCITE, HTMaterialType.DUST)
+        event.register(CommonMaterials.CARBON, HTMaterialType.DUST)
+        event.register(CommonMaterials.CHROMIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.COAL_COKE, HTMaterialType.GEM)
+        event.register(CommonMaterials.CRYOLITE, HTMaterialType.GEM)
+        event.register(CommonMaterials.ELECTRUM, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.FLUORITE, HTMaterialType.GEM)
+        event.register(CommonMaterials.INVAR, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.IRIDIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.LEAD, HTMaterialType.METAL)
+        event.register(CommonMaterials.NICKEL, HTMaterialType.METAL)
+        event.register(CommonMaterials.NIOBIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.OSMIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.PERIDOT, HTMaterialType.GEM)
+        event.register(CommonMaterials.PLATINUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.PLUTONIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.RUBY, HTMaterialType.GEM)
+        event.register(CommonMaterials.SALT, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.SALTPETER, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.SAPPHIRE, HTMaterialType.GEM)
+        event.register(CommonMaterials.SILICON, HTMaterialType.METAL)
+        event.register(CommonMaterials.SILVER, HTMaterialType.METAL)
+        event.register(CommonMaterials.STAINLESS_STEEL, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.STEEL, HTMaterialType.ALLOY)
+        event.register(CommonMaterials.SULFUR, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.SUPERCONDUCTOR, HTMaterialType.METAL)
+        event.register(CommonMaterials.TIN, HTMaterialType.METAL)
+        event.register(CommonMaterials.TITANIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.TUNGSTEN, HTMaterialType.METAL)
+        event.register(CommonMaterials.URANIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.WOOD, HTMaterialType.DUST)
+        event.register(CommonMaterials.ZINC, HTMaterialType.METAL)
 
-    //    HTMaterialRegistry    //
+        event.register(RagiumMaterials.CRIMSON_CRYSTAL, HTMaterialType.GEM)
+        event.register(RagiumMaterials.DEEP_STEEL, HTMaterialType.ALLOY)
+        event.register(RagiumMaterials.ECHORIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.FIERY_COAL, HTMaterialType.GEM)
+        event.register(RagiumMaterials.RAGI_ALLOY, HTMaterialType.ALLOY)
+        event.register(RagiumMaterials.RAGI_CRYSTAL, HTMaterialType.GEM)
+        event.register(RagiumMaterials.RAGINITE, HTMaterialType.MINERAL)
+        event.register(RagiumMaterials.RAGIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.WARPED_CRYSTAL, HTMaterialType.GEM)
 
-    /*private var tagItemCache: HTTable.Mutable<HTTagPrefix, HTMaterialKey, MutableList<Holder<Item>>> = mutableTableOf()
+        event.register(VanillaMaterials.AMETHYST, HTMaterialType.GEM)
+        event.register(VanillaMaterials.COAL, HTMaterialType.GEM)
+        event.register(VanillaMaterials.COPPER, HTMaterialType.METAL)
+        event.register(VanillaMaterials.DIAMOND, HTMaterialType.GEM)
+        event.register(VanillaMaterials.EMERALD, HTMaterialType.GEM)
+        event.register(VanillaMaterials.GOLD, HTMaterialType.METAL)
+        event.register(VanillaMaterials.IRON, HTMaterialType.METAL)
+        event.register(VanillaMaterials.LAPIS, HTMaterialType.GEM)
+        event.register(VanillaMaterials.NETHERITE, HTMaterialType.ALLOY)
+        event.register(VanillaMaterials.NETHERITE_SCRAP, HTMaterialType.GEM)
+        event.register(VanillaMaterials.QUARTZ, HTMaterialType.GEM)
+        event.register(VanillaMaterials.REDSTONE, HTMaterialType.MINERAL)
 
-    @SubscribeEvent
-    fun onTagsUpdated(event: TagsUpdatedEvent) {
-        if (event.updateCause != TagsUpdatedEvent.UpdateCause.SERVER_DATA_LOAD) return
-        val itemLookup: HolderLookup.RegistryLookup<Item> = event.registryAccess.lookupOrThrow(Registries.ITEM)
-        // Reload material items
-        tagItemCache.clear()
-        for (material: HTMaterialKey in keys) {
-            for (prefix: HTTagPrefix in HTTagPrefix.entries) {
-                itemLookup.get(prefix.createTag(material)).ifPresent { holderSet: HolderSet.Named<Item> ->
-                    for (holder: Holder<Item> in holderSet) {
-                        tagItemCache
-                            .computeIfAbsent(prefix, material, constFunction3(mutableListOf()))
-                            .add(holder)
-                    }
-                }
-            }
-        }
-        tagItemCache.values.forEach { it.sortWith(createHolderSorter()) }
+        event.register(IntegrationMaterials.BLACK_QUARTZ, HTMaterialType.GEM)
 
-        LOGGER.info("Reloaded material items!")
-    }*/
+        event.register(IntegrationMaterials.COPPER_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.ENERGETIC_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.VIBRANT_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.REDSTONE_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.CONDUCTIVE_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.PULSATING_ALLOY, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.DARK_STEEL, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.SOULARIUM, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.END_STEEL, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.PULSATING_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.VIBRANT_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.ENDER_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.ENTICING_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.WEATHER_CRYSTAL, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.PRESCIENT_CRYSTAL, HTMaterialType.GEM)
 
-    override val keys: Set<HTMaterialKey> get() = typeMap.keys
+        event.register(IntegrationMaterials.DARK_GEM, HTMaterialType.GEM)
 
-    override fun getType(key: HTMaterialKey): HTMaterialType = typeMap[key] ?: error("Unknown material key: $key")
+        event.register(IntegrationMaterials.REFINED_GLOWSTONE, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.REFINED_OBSIDIAN, HTMaterialType.ALLOY)
+
+        event.register(IntegrationMaterials.CARMINITE, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.FIERY_METAL, HTMaterialType.ALLOY)
+        event.register(IntegrationMaterials.IRONWOOD, HTMaterialType.METAL)
+        event.register(IntegrationMaterials.KNIGHTMETAL, HTMaterialType.METAL)
+        event.register(IntegrationMaterials.STEELEAF, HTMaterialType.METAL)
+    }
 }

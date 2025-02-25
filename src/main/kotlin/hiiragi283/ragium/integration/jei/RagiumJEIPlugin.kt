@@ -87,6 +87,7 @@ class RagiumJEIPlugin : IModPlugin {
                 HTMachineType.COMPRESSOR,
                 RagiumJEIRecipeTypes.COMPRESSOR,
             ),
+            HTCrusherRecipeCategory(guiHelper),
             HTEnchanterRecipeCategory(guiHelper),
             HTExtractorRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(

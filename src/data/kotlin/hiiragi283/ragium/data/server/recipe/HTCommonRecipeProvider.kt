@@ -77,7 +77,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
 
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .itemOutput(ragiAlloy)
             .save(output)
@@ -94,22 +94,22 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         // Steel
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemInput(ItemTags.COALS, 2)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .save(output)
 
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.COAL_COKE)
             .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .saveSuffixed(output, "_with_coke")
         // Deep Steel
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 8)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.NIOBIUM)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.STEEL, 8)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL, 9)
             .save(output)
     }

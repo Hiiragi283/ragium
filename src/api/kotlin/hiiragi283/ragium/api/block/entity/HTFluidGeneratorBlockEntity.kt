@@ -17,9 +17,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.function.Supplier
 
 abstract class HTFluidGeneratorBlockEntity(
@@ -43,7 +43,7 @@ abstract class HTFluidGeneratorBlockEntity(
         var amount: Int = getFuelAmount(stackIn)
         if (amount <= 0) {
             val event = HTGeneratorFuelTimeEvent(this, stackIn, amount)
-            NeoForge.EVENT_BUS.post(event)
+            FORGE_BUS.post(event)
             if (event.isCanceled) throw HTMachineException.FindFuel(false)
             amount = event.fuelTime
         }

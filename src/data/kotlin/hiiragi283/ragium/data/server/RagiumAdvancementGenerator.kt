@@ -135,7 +135,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val grinder: AdvancementHolder = createMachine(casing, HTMachineType.GRINDER)
         val niobium: AdvancementHolder = createMaterial(
             grinder,
-            HTTagPrefix.INGOT,
+            HTTagPrefix.DUST,
             CommonMaterials.NIOBIUM,
             Component.empty(),
         )

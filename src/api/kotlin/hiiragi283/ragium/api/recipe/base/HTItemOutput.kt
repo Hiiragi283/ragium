@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.extension.isEmpty
 import hiiragi283.ragium.api.extension.isNotEmpty
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -49,6 +48,12 @@ class HTItemOutput(private val holderSet: HolderSet<Item>, val count: Int, val c
         )
     }
 
+    val rawId: ResourceLocation =
+        holderSet.unwrap().map(
+            { tagKey: TagKey<Item> -> tagKey.location() },
+            { items: List<Holder<Item>> -> items.first().idOrThrow },
+        )
+
     val id: ResourceLocation =
         holderSet.unwrap().map(
             { tagKey: TagKey<Item> -> RagiumAPI.id(tagKey.location().path.replace(oldChar = '/', newChar = '_')) },
@@ -56,7 +61,6 @@ class HTItemOutput(private val holderSet: HolderSet<Item>, val count: Int, val c
         )
 
     val isValid: Boolean get() = holderSet.isNotEmpty
-    val isNotValid: Boolean get() = holderSet.isEmpty
 
     override fun get(): ItemStack = holderSet
         .stream()

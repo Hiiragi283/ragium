@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.NeoForge
+import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.*
 
 /**
@@ -99,7 +99,7 @@ class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val seri
                 val recipe: T = holder.value as? T ?: return@HTMachineRecipesUpdatedEvent
                 consumer(RecipeHolder(holder.id, recipe))
             }
-            NeoForge.EVENT_BUS.post(event)
+            FORGE_BUS.post(event)
         }
     }
 

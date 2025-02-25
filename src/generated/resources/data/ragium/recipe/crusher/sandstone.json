@@ -1,0 +1,17 @@
+{
+  "type": "ragium:crusher",
+  "item_input": {
+    "count": 64,
+    "tag": "c:sandstone/uncolored_blocks"
+  },
+  "item_outputs": [
+    {
+      "count": 32,
+      "items": "minecraft:sand"
+    },
+    {
+      "count": 16,
+      "items": "#c:dusts/saltpeter"
+    }
+  ]
+}

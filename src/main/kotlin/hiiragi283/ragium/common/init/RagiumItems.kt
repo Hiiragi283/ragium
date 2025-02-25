@@ -96,9 +96,6 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
-
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.TIN)
-        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.NIOBIUM)
         // Ingots
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
@@ -107,7 +104,6 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
 
         register(HTTagPrefix.INGOT, CommonMaterials.TIN)
-        register(HTTagPrefix.INGOT, CommonMaterials.NIOBIUM)
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM)
         // Gems

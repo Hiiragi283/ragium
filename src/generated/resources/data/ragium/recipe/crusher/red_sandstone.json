@@ -1,0 +1,21 @@
+{
+  "type": "ragium:crusher",
+  "item_input": {
+    "count": 64,
+    "tag": "c:sandstone/red_blocks"
+  },
+  "item_outputs": [
+    {
+      "count": 32,
+      "items": "minecraft:red_sand"
+    },
+    {
+      "count": 16,
+      "items": "#c:dusts/bauxite"
+    },
+    {
+      "count": 8,
+      "items": "#c:dusts/redstone"
+    }
+  ]
+}

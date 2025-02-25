@@ -15,7 +15,9 @@
     "#c:dusts/quartz",
     "#c:dusts/ragi_crystal",
     "#c:dusts/raginite",
+    "#c:dusts/steel",
     "#c:dusts/tin",
-    "#c:dusts/wood"
+    "#c:dusts/wood",
+    "#c:dusts/zinc"
   ]
 }

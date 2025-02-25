@@ -3,10 +3,10 @@
   "item_inputs": [
     {
       "count": 3,
-      "tag": "c:ingots/niobium"
+      "tag": "c:dusts/niobium"
     },
     {
-      "tag": "c:ingots/aluminum"
+      "tag": "c:dusts/aluminum"
     },
     {
       "count": 4,

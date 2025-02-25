@@ -1,0 +1,21 @@
+{
+  "type": "ragium:crusher",
+  "item_input": {
+    "count": 64,
+    "tag": "c:netherracks"
+  },
+  "item_outputs": [
+    {
+      "count": 32,
+      "items": "minecraft:gravel"
+    },
+    {
+      "count": 16,
+      "items": "#c:dusts/sulfur"
+    },
+    {
+      "count": 8,
+      "items": "#c:dusts/bauxite"
+    }
+  ]
+}

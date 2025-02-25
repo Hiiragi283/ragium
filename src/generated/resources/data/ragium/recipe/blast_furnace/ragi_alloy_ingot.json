@@ -2,7 +2,7 @@
   "type": "ragium:blast_furnace",
   "item_inputs": [
     {
-      "tag": "c:ingots/copper"
+      "tag": "c:dusts/copper"
     },
     {
       "tag": "c:dusts/raginite"

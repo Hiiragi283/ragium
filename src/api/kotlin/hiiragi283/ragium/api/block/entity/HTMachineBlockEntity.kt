@@ -34,9 +34,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
+import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.*
 import java.util.function.Supplier
 import kotlin.math.max
@@ -195,7 +195,7 @@ abstract class HTMachineBlockEntity(
                         1.0f,
                     )
                 }
-                NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Success(this))
+                FORGE_BUS.post(HTMachineProcessEvent.Success(this))
             },
             ::failed,
         )
@@ -217,7 +217,7 @@ abstract class HTMachineBlockEntity(
     private fun failed(throwable: Throwable) {
         isActive = false
         errorCache = throwable.message
-        NeoForge.EVENT_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
+        FORGE_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
     }
 
     override fun setPlacedBy(

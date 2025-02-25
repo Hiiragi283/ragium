@@ -83,7 +83,6 @@ object RagiumBlocks {
         val materials: List<HTMaterialKey> = listOf(
             RagiumMaterials.RAGINITE,
             RagiumMaterials.RAGI_CRYSTAL,
-            CommonMaterials.NIOBIUM,
         )
         for (variant: HTOreVariant in HTOreVariant.entries) {
             for (key: HTMaterialKey in materials) {

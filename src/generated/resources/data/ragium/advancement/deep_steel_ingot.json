@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:niobium_ingot",
+  "parent": "ragium:niobium_dust",
   "criteria": {
     "has_deep_steel_ingot": {
       "conditions": {

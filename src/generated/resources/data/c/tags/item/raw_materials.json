@@ -1,7 +1,5 @@
 {
   "values": [
-    "#c:raw_materials/niobium",
-    "#c:raw_materials/raginite",
-    "#c:raw_materials/tin"
+    "#c:raw_materials/raginite"
   ]
 }

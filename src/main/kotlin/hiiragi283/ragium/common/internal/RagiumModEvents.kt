@@ -4,56 +4,41 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.data.RagiumDataMaps
-import hiiragi283.ragium.api.event.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.extension.asServerLevel
-import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.getLevel
-import hiiragi283.ragium.api.extension.itemProperty
-import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.IntegrationMaterials
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.base.HTMoltenFluidIngredient
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
-import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.capability.fluid.HTDivingGoggleFluidHandler
 import hiiragi283.ragium.common.capability.fluid.HTFluidCubeFluidHandler
+import hiiragi283.ragium.common.capability.fluid.HTItemFluidHandler
 import hiiragi283.ragium.common.capability.fluid.HTJetpackFluidHandler
-import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumEnchantments
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.network.HTPotionBundlePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.MapColor
-import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
-import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper
 import net.neoforged.neoforge.fluids.crafting.FluidIngredientType
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
@@ -65,131 +50,8 @@ internal object RagiumModEvents {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    fun registerMaterial(event: HTRegisterMaterialEvent) {
-        event.register(CommonMaterials.ALUMINUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.ANTIMONY, HTMaterialType.METAL)
-        event.register(CommonMaterials.BERYLLIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.ASH, HTMaterialType.DUST)
-        event.register(CommonMaterials.BAUXITE, HTMaterialType.MINERAL)
-        event.register(CommonMaterials.BRASS, HTMaterialType.ALLOY)
-        event.register(CommonMaterials.BRONZE, HTMaterialType.ALLOY)
-        event.register(CommonMaterials.CADMIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.CALCITE, HTMaterialType.DUST)
-        event.register(CommonMaterials.CARBON, HTMaterialType.DUST)
-        event.register(CommonMaterials.CHROMIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.COAL_COKE, HTMaterialType.GEM)
-        event.register(CommonMaterials.CRYOLITE, HTMaterialType.GEM)
-        event.register(CommonMaterials.ELECTRUM, HTMaterialType.ALLOY)
-        event.register(CommonMaterials.FLUORITE, HTMaterialType.GEM)
-        event.register(CommonMaterials.INVAR, HTMaterialType.ALLOY)
-        event.register(CommonMaterials.IRIDIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.LEAD, HTMaterialType.METAL)
-        event.register(CommonMaterials.NICKEL, HTMaterialType.METAL)
-        event.register(CommonMaterials.NIOBIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.OSMIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.PERIDOT, HTMaterialType.GEM)
-        event.register(CommonMaterials.PLATINUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.PLUTONIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.RUBY, HTMaterialType.GEM)
-        event.register(CommonMaterials.SALT, HTMaterialType.MINERAL)
-        event.register(CommonMaterials.SALTPETER, HTMaterialType.MINERAL)
-        event.register(CommonMaterials.SAPPHIRE, HTMaterialType.GEM)
-        event.register(CommonMaterials.SILICON, HTMaterialType.METAL)
-        event.register(CommonMaterials.SILVER, HTMaterialType.METAL)
-        event.register(CommonMaterials.STAINLESS_STEEL, HTMaterialType.ALLOY)
-        event.register(CommonMaterials.STEEL, HTMaterialType.ALLOY)
-        event.register(CommonMaterials.SULFUR, HTMaterialType.MINERAL)
-        event.register(CommonMaterials.SUPERCONDUCTOR, HTMaterialType.METAL)
-        event.register(CommonMaterials.TIN, HTMaterialType.METAL)
-        event.register(CommonMaterials.TITANIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.TUNGSTEN, HTMaterialType.METAL)
-        event.register(CommonMaterials.URANIUM, HTMaterialType.METAL)
-        event.register(CommonMaterials.WOOD, HTMaterialType.DUST)
-        event.register(CommonMaterials.ZINC, HTMaterialType.METAL)
-
-        event.register(RagiumMaterials.CRIMSON_CRYSTAL, HTMaterialType.GEM)
-        event.register(RagiumMaterials.DEEP_STEEL, HTMaterialType.ALLOY)
-        event.register(RagiumMaterials.ECHORIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterials.FIERY_COAL, HTMaterialType.GEM)
-        event.register(RagiumMaterials.RAGI_ALLOY, HTMaterialType.ALLOY)
-        event.register(RagiumMaterials.RAGI_CRYSTAL, HTMaterialType.GEM)
-        event.register(RagiumMaterials.RAGINITE, HTMaterialType.MINERAL)
-        event.register(RagiumMaterials.RAGIUM, HTMaterialType.METAL)
-        event.register(RagiumMaterials.WARPED_CRYSTAL, HTMaterialType.GEM)
-
-        event.register(VanillaMaterials.AMETHYST, HTMaterialType.GEM)
-        event.register(VanillaMaterials.COAL, HTMaterialType.GEM)
-        event.register(VanillaMaterials.COPPER, HTMaterialType.METAL)
-        event.register(VanillaMaterials.DIAMOND, HTMaterialType.GEM)
-        event.register(VanillaMaterials.EMERALD, HTMaterialType.GEM)
-        event.register(VanillaMaterials.GOLD, HTMaterialType.METAL)
-        event.register(VanillaMaterials.IRON, HTMaterialType.METAL)
-        event.register(VanillaMaterials.LAPIS, HTMaterialType.GEM)
-        event.register(VanillaMaterials.NETHERITE, HTMaterialType.ALLOY)
-        event.register(VanillaMaterials.NETHERITE_SCRAP, HTMaterialType.GEM)
-        event.register(VanillaMaterials.QUARTZ, HTMaterialType.GEM)
-        event.register(VanillaMaterials.REDSTONE, HTMaterialType.MINERAL)
-
-        event.register(IntegrationMaterials.BLACK_QUARTZ, HTMaterialType.GEM)
-
-        event.register(IntegrationMaterials.COPPER_ALLOY, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.ENERGETIC_ALLOY, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.VIBRANT_ALLOY, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.REDSTONE_ALLOY, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.CONDUCTIVE_ALLOY, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.PULSATING_ALLOY, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.DARK_STEEL, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.SOULARIUM, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.END_STEEL, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.PULSATING_CRYSTAL, HTMaterialType.GEM)
-        event.register(IntegrationMaterials.VIBRANT_CRYSTAL, HTMaterialType.GEM)
-        event.register(IntegrationMaterials.ENDER_CRYSTAL, HTMaterialType.GEM)
-        event.register(IntegrationMaterials.ENTICING_CRYSTAL, HTMaterialType.GEM)
-        event.register(IntegrationMaterials.WEATHER_CRYSTAL, HTMaterialType.GEM)
-        event.register(IntegrationMaterials.PRESCIENT_CRYSTAL, HTMaterialType.GEM)
-
-        event.register(IntegrationMaterials.DARK_GEM, HTMaterialType.GEM)
-
-        event.register(IntegrationMaterials.REFINED_GLOWSTONE, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.REFINED_OBSIDIAN, HTMaterialType.ALLOY)
-
-        event.register(IntegrationMaterials.CARMINITE, HTMaterialType.GEM)
-        event.register(IntegrationMaterials.FIERY_METAL, HTMaterialType.ALLOY)
-        event.register(IntegrationMaterials.IRONWOOD, HTMaterialType.METAL)
-        event.register(IntegrationMaterials.KNIGHTMETAL, HTMaterialType.METAL)
-        event.register(IntegrationMaterials.STEELEAF, HTMaterialType.METAL)
-    }
-
-    @JvmStatic
-    internal lateinit var blockMap: Map<HTMachineType, DeferredBlock<*>>
-
     @SubscribeEvent
-    fun registerMachineBlocks(event: RegisterEvent) {
-        // Block
-        event.register(Registries.BLOCK) { helper: RegisterEvent.RegisterHelper<Block> ->
-            blockMap = HTMachineType.entries.associateWith { type: HTMachineType ->
-                val block = HTMachineBlock(
-                    type,
-                    blockProperty()
-                        .mapColor(MapColor.STONE)
-                        .strength(2f)
-                        .sound(SoundType.METAL)
-                        .requiresCorrectToolForDrops()
-                        .noOcclusion(),
-                )
-                val id: ResourceLocation = RagiumAPI.id(type.serializedName)
-                helper.register(id, block)
-                DeferredBlock.createBlock<Block>(id)
-            }
-            LOGGER.info("Registered machine blocks!")
-        }
-        // Item
-        event.register(Registries.ITEM) { helper: RegisterEvent.RegisterHelper<Item> ->
-            blockMap.forEach { (_, holder: DeferredBlock<*>) ->
-                helper.register(holder.id, BlockItem(holder.get(), itemProperty()))
-            }
-        }
+    fun onRegister(event: RegisterEvent) {
         // Recipe Serializer
         event.register(Registries.RECIPE_SERIALIZER) { helper: RegisterEvent.RegisterHelper<RecipeSerializer<*>> ->
             HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipeBase> ->
@@ -270,9 +132,9 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
-        fun registerFluid(vararg items: ItemLike, transform: (ItemStack, Int) -> IFluidHandlerItem?) {
+        fun <T : Any> withCapacity(capability: ItemCapability<T, Void?>, vararg items: ItemLike, transform: (ItemStack, Int) -> T?) {
             event.registerItem(
-                Capabilities.FluidHandler.ITEM,
+                capability,
                 { stack: ItemStack, _: Void? ->
                     val enchLevel: Int =
                         stack.getLevel(RagiumAPI.getInstance().getRegistryAccess(), RagiumEnchantments.CAPACITY)
@@ -282,12 +144,14 @@ internal object RagiumModEvents {
             )
         }
 
-        registerFluid(RagiumBlocks.COPPER_DRUM) { stack: ItemStack, capacity: Int ->
-            FluidHandlerItemStack(RagiumComponentTypes.FLUID_CONTENT, stack, capacity)
-        }
-
-        registerFluid(RagiumItems.DIVING_GOGGLE, transform = ::HTDivingGoggleFluidHandler)
-        registerFluid(RagiumItems.JETPACK, transform = ::HTJetpackFluidHandler)
+        // Fluid
+        withCapacity(Capabilities.FluidHandler.ITEM, RagiumBlocks.COPPER_DRUM, transform = ::HTItemFluidHandler)
+        withCapacity(
+            Capabilities.FluidHandler.ITEM,
+            RagiumItems.DIVING_GOGGLE,
+            transform = ::HTDivingGoggleFluidHandler,
+        )
+        withCapacity(Capabilities.FluidHandler.ITEM, RagiumItems.JETPACK, transform = ::HTJetpackFluidHandler)
 
         event.registerItem(
             Capabilities.FluidHandler.ITEM,

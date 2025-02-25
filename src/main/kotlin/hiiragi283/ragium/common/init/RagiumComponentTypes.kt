@@ -1,11 +1,13 @@
 package hiiragi283.ragium.common.init
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.item.component.HTSpawnerContent
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.world.item.alchemy.PotionContents
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -25,6 +27,12 @@ object RagiumComponentTypes {
         }
 
     //    Item    //
+
+    @JvmField
+    val ENERGY_CONTENT: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
+        REGISTER.registerComponentType("energy_content") { builder: DataComponentType.Builder<Int> ->
+            builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT)
+        }
 
     @JvmField
     val FLUID_CONTENT: DeferredHolder<DataComponentType<*>, DataComponentType<SimpleFluidContent>> =

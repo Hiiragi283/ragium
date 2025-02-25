@@ -168,8 +168,8 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
 
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.NIOBIUM, 3)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.NIOBIUM, 3)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
             .itemInput(Items.ECHO_SHARD, 4)
             .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.ECHORIUM, 4)
             .save(output)

@@ -48,6 +48,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         assembler(output)
         brewery(output)
         compressor(output)
+        crusher(output)
         enchanter(output, holderLookup.lookupOrThrow(Registries.ENCHANTMENT))
         extractor(output)
         infuser(output)
@@ -172,6 +173,79 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .catalyst(RagiumItems.BALL_PRESS_MOLD)
             .itemOutput(Items.CLAY_BALL, 4)
             .save(output)
+    }
+
+    //    Crusher    //
+
+    private fun crusher(output: RecipeOutput) {
+        // Granite
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.GRANITE, 64)
+            .itemOutput(Items.GRAVEL, 32)
+            .itemOutput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 16)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.NICKEL, 8)
+            .save(output, RagiumAPI.id("granite"))
+        // Diorite
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.DIORITE, 64)
+            .itemOutput(Items.GRAVEL, 32)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.TIN, 16)
+            .save(output, RagiumAPI.id("diorite"))
+        // Andesite
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.ANDESITE, 64)
+            .itemOutput(Items.GRAVEL, 32)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.ZINC, 16)
+            .save(output, RagiumAPI.id("andesite"))
+
+        // Deepslate
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.COBBLED_DEEPSLATE, 64)
+            .itemOutput(Items.GRAVEL, 32)
+            .itemOutput(HTTagPrefix.DUST, VanillaMaterials.IRON, 16)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.NIOBIUM, 8)
+            .save(output, RagiumAPI.id("deepslate"))
+        // Tuff
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.TUFF, 64)
+            .itemOutput(Items.GRAVEL, 32)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.LEAD, 16)
+            .save(output, RagiumAPI.id("tuff"))
+
+        // Clay
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.CLAY, 64)
+            .itemOutput(Items.CLAY_BALL, 32)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALT, 16)
+            .save(output, RagiumAPI.id("clay"))
+        // Sandstone
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, 64)
+            .itemOutput(Items.SAND, 32)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER, 16)
+            .save(output, RagiumAPI.id("sandstone"))
+        // Red Sandstone
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Tags.Items.SANDSTONE_RED_BLOCKS, 64)
+            .itemOutput(Items.RED_SAND, 32)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 16)
+            .itemOutput(HTTagPrefix.DUST, VanillaMaterials.REDSTONE, 8)
+            .save(output, RagiumAPI.id("red_sandstone"))
+
+        // Netherrack
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Tags.Items.NETHERRACKS, 64)
+            .itemOutput(Items.GRAVEL, 32)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SULFUR, 16)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 8)
+            .save(output, RagiumAPI.id("netherrack"))
+        // Blackstone
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.BLACKSTONE, 64)
+            .itemOutput(Items.GRAVEL, 32)
+            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER, 16)
+            .save(output, RagiumAPI.id("blackstone"))
+        // Basalt
     }
 
     //    Enchanter    //

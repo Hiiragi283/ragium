@@ -1,0 +1,17 @@
+{
+  "type": "ragium:crusher",
+  "item_input": {
+    "count": 64,
+    "item": "minecraft:blackstone"
+  },
+  "item_outputs": [
+    {
+      "count": 32,
+      "items": "minecraft:gravel"
+    },
+    {
+      "count": 16,
+      "items": "#c:dusts/saltpeter"
+    }
+  ]
+}

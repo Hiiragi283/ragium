@@ -2,7 +2,7 @@
   "type": "ragium:blast_furnace",
   "item_inputs": [
     {
-      "tag": "c:ingots/iron"
+      "tag": "c:dusts/iron"
     },
     {
       "tag": "c:gems/coal_coke"

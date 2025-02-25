@@ -186,12 +186,6 @@ object HTChemicalRecipeProviderNew : HTRecipeProvider() {
     //    Aluminum    //
 
     private fun aluminum(output: RecipeOutput) {
-        // 8x Netherrack -> 2x Bauxite + 2x Sulfur
-        HTSingleItemRecipeBuilder
-            .grinder(lookup)
-            .itemInput(Items.NETHERRACK, 8)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 2)
-            .save(output)
         // Bauxite + Lapis solution -> Alumina Solution
         HTFluidOutputRecipeBuilder
             .infuser(lookup)

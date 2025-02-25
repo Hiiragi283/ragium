@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -47,11 +46,6 @@ object RagiumWorldGenBoostrap {
             createTarget(BlockTags.DEEPSLATE_ORE_REPLACEABLES, HTOreVariant.DEEPSLATE, RagiumMaterials.RAGINITE),
         )
         addOres(
-            "overworld_niobium",
-            BiomeTags.IS_OVERWORLD,
-            createTarget(BlockTags.DEEPSLATE_ORE_REPLACEABLES, HTOreVariant.DEEPSLATE, CommonMaterials.NIOBIUM),
-        )
-        addOres(
             "overworld_crude_oil",
             BiomeTags.IS_OVERWORLD,
             OreConfiguration.target(
@@ -72,11 +66,6 @@ object RagiumWorldGenBoostrap {
             "end_raginite",
             BiomeTags.IS_END,
             createTarget(Tags.Blocks.END_STONES, HTOreVariant.END, RagiumMaterials.RAGI_CRYSTAL),
-        )
-        addOres(
-            "end_niobium",
-            BiomeTags.IS_END,
-            createTarget(Tags.Blocks.END_STONES, HTOreVariant.END, CommonMaterials.NIOBIUM),
         )
         return RegistrySetBuilder()
             .add(Registries.ENCHANTMENT, RagiumEnchantments::boostrap)
@@ -151,7 +140,7 @@ object RagiumWorldGenBoostrap {
 
     @JvmStatic
     private fun createTarget(target: TagKey<Block>, variant: HTOreVariant, key: HTMaterialKey): OreConfiguration.TargetBlockState {
-        val ore: DeferredBlock<out Block> = RagiumBlocks.ORES.get(variant, key) ?: error("Unknown ore found")
+        val ore: DeferredBlock<out Block> = RagiumBlocks.ORES.get(variant, key) ?: error("Unknown ore: ${key.name} found")
         return OreConfiguration.target(TagMatchTest(target), ore.get().defaultBlockState())
     }
 }

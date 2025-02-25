@@ -28,9 +28,9 @@ class HTCrusherRecipeBuilder(lookup: HolderGetter<Item>) : HTMachineRecipeBuilde
 
     override fun fluidOutput(stack: FluidStack): HTCrusherRecipeBuilder = throw UnsupportedOperationException()
 
-    override val prefix: String = "solidifier"
+    override val prefix: String = "crusher"
 
-    override fun getPrimalId(): ResourceLocation = outputs[0].id
+    override fun getPrimalId(): ResourceLocation = throw UnsupportedOperationException()
 
     override fun createRecipe(): HTCrusherRecipe = HTCrusherRecipe(group ?: "", input, outputs)
 

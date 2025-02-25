@@ -2,16 +2,20 @@ package hiiragi283.ragium.common.internal
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
+import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.getServerSavedData
+import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.common.block.machine.HTMachineBlock
 import hiiragi283.ragium.common.capability.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.capability.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.capability.fluid.HTLimitedFluidHandler
@@ -26,10 +30,17 @@ import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.material.MapColor
 import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -38,9 +49,16 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.server.ServerLifecycleHooks
+import org.slf4j.Logger
+import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 
 class InternalRagiumAPI : RagiumAPI {
+    init {
+        MOD_BUS.addListener(::onBlockRegister)
+    }
+
     //    Material    //
 
     override fun getMaterialRegistry(): HTMaterialRegistry = HTMaterialRegistryImpl
@@ -126,33 +144,42 @@ class InternalRagiumAPI : RagiumAPI {
         itemOutput,
     )
 
-    /*companion object {
+    companion object {
         @JvmStatic
-        private val BLOCK_REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
+        private val LOGGER: Logger = LogUtils.getLogger()
 
         @JvmStatic
         private lateinit var blockMap: Map<HTMachineType, DeferredBlock<*>>
 
         @JvmStatic
-        fun initMachineBlocks(eventBus: IEventBus) {
-            blockMap = HTMachineType.entries.associateWith { type: HTMachineType ->
-                val holder: DeferredBlock<out Block> = BLOCK_REGISTER.registerBlock(
-                    type.serializedName,
-                    { properties: BlockBehaviour.Properties -> HTMachineBlock(type, properties) },
-                    blockProperty()
-                        .mapColor(MapColor.STONE)
-                        .strength(2f)
-                        .sound(SoundType.METAL)
-                        .requiresCorrectToolForDrops()
-                        .noOcclusion(),
-                )
-                RagiumBlocks.ITEM_REGISTER.registerSimpleBlockItem(holder)
-                holder
+        private fun onBlockRegister(event: RegisterEvent) {
+            // Block
+            event.register(Registries.BLOCK) { helper: RegisterEvent.RegisterHelper<Block> ->
+                blockMap = HTMachineType.entries.associateWith { type: HTMachineType ->
+                    val block = HTMachineBlock(
+                        type,
+                        blockProperty()
+                            .mapColor(MapColor.STONE)
+                            .strength(2f)
+                            .sound(SoundType.METAL)
+                            .requiresCorrectToolForDrops()
+                            .noOcclusion(),
+                    )
+                    val id: ResourceLocation = RagiumAPI.id(type.serializedName)
+                    helper.register(id, block)
+                    DeferredBlock.createBlock<Block>(id)
+                }
+                LOGGER.info("Registered machine blocks!")
             }
-            BLOCK_REGISTER.register(eventBus)
+            // Item
+            event.register(Registries.ITEM) { helper: RegisterEvent.RegisterHelper<Item> ->
+                blockMap.forEach { (_, holder: DeferredBlock<*>) ->
+                    helper.register(holder.id, BlockItem(holder.get(), itemProperty()))
+                }
+            }
         }
-    }*/
+    }
 
     override fun getMachineBlock(type: HTMachineType): DeferredBlock<*> =
-        RagiumModEvents.blockMap[type] ?: error("Unknown machine type: ${type.serializedName} found!")
+        blockMap[type] ?: error("Unknown machine type: ${type.serializedName} found!")
 }
