@@ -2,9 +2,9 @@
 	"credit": "Made by Hiiragi Russell Tsubasa",
 	"render_type": "minecraft:cutout",
 	"textures": {
-		"top": "ragium:block/stainless_steel_casing",
-		"bottom": "ragium:block/ultimate_casing",
-		"particle": "ragium:block/stainless_steel_casing"
+		"top": "ragium:block/aluminum_casing",
+		"bottom": "ragium:block/precision_casing",
+		"particle": "ragium:block/aluminum_casing"
 	},
 	"elements": [
 		{

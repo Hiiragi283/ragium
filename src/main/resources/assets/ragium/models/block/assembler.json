@@ -3,9 +3,9 @@
 	"textures": {
 		"inside": "ragium:block/ragi_alloy_block",
 		"top": "ragium:block/assembler_top",
-		"particle": "ragium:block/advanced_machine_side",
-		"side": "ragium:block/advanced_machine_side",
-		"bottom": "ragium:block/advanced_casing"
+		"particle": "ragium:block/assembler_top",
+		"side": "ragium:block/assembler_side",
+		"bottom": "ragium:block/machine_casing"
 	},
 	"elements": [
 		{

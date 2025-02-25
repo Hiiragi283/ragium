@@ -3,7 +3,7 @@
 	"render_type": "minecraft:cutout",
 	"textures": {
 		"top": "ragium:block/gold_casing",
-		"bottom": "ragium:block/advanced_casing",
+		"bottom": "ragium:block/chemical_casing",
 		"particle": "ragium:block/gold_casing"
 	},
 	"elements": [

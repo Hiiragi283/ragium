@@ -2,10 +2,10 @@
 	"credit": "Made by Hiiragi Russell Tsubasa",
 	"render_type": "minecraft:cutout",
 	"textures": {
-		"particle": "ragium:block/distillation_tower_top",
-		"front[": "ragium:block/distillation_tower_front",
-		"top": "ragium:block/distillation_tower_top",
-		"bottom": "ragium:block/elite_casing"
+		"particle": "ragium:block/refinery_top",
+		"front[": "ragium:block/refinery_front",
+		"top": "ragium:block/refinery_top",
+		"bottom": "ragium:block/chemical_casing"
 	},
 	"elements": [
 		{
