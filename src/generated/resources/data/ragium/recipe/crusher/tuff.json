@@ -11,7 +11,11 @@
     },
     {
       "count": 16,
-      "item": "ragium:lead_dust"
+      "item": "ragium:nickel_dust"
+    },
+    {
+      "count": 4,
+      "item": "minecraft:emerald"
     }
   ]
 }

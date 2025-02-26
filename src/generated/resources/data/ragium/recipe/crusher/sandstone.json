@@ -8,6 +8,10 @@
     {
       "count": 32,
       "item": "minecraft:sand"
+    },
+    {
+      "count": 16,
+      "item": "ragium:saltpeter_dust"
     }
   ]
 }

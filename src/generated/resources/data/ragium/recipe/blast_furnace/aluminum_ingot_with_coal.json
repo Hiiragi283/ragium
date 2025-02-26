@@ -7,7 +7,7 @@
   "item_inputs": [
     {
       "count": 4,
-      "tag": "minecraft:coals"
+      "tag": "c:gems/coal"
     }
   ],
   "item_output": {

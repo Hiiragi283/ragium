@@ -99,7 +99,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
-            .itemInput(ItemTags.COALS, 2)
+            .itemInput(HTTagPrefix.GEM, VanillaMaterials.COAL, 2)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL))
             .save(output)
 

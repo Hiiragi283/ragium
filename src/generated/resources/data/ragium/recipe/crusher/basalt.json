@@ -2,7 +2,7 @@
   "type": "ragium:crusher",
   "item_input": {
     "count": 64,
-    "item": "minecraft:cobbled_deepslate"
+    "item": "minecraft:basalt"
   },
   "item_outputs": [
     {
@@ -10,12 +10,8 @@
       "item": "minecraft:gravel"
     },
     {
-      "count": 8,
-      "item": "ragium:niobium_dust"
-    },
-    {
-      "count": 4,
-      "item": "minecraft:diamond"
+      "count": 16,
+      "item": "ragium:ash_dust"
     }
   ]
 }

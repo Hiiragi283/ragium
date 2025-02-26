@@ -11,7 +11,11 @@
     },
     {
       "count": 16,
-      "item": "ragium:zinc_dust"
+      "item": "ragium:lead_dust"
+    },
+    {
+      "count": 8,
+      "item": "minecraft:quartz"
     }
   ]
 }

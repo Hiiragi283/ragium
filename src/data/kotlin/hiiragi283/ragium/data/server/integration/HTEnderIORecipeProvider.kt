@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -76,7 +75,7 @@ object HTEnderIORecipeProvider : HTRecipeProvider.Modded("enderio_base") {
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
-            .itemInput(ItemTags.COALS)
+            .itemInput(HTTagPrefix.GEM, VanillaMaterials.COAL)
             .itemInput(Tags.Items.OBSIDIANS)
             .itemOutput(EIOItems.DARK_STEEL_INGOT)
             .save(output)

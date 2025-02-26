@@ -12,6 +12,10 @@
     {
       "count": 16,
       "item": "ragium:copper_dust"
+    },
+    {
+      "count": 8,
+      "item": "minecraft:quartz"
     }
   ]
 }

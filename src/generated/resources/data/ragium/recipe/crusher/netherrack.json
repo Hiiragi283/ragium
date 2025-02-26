@@ -10,6 +10,10 @@
       "item": "minecraft:gravel"
     },
     {
+      "count": 16,
+      "item": "ragium:sulfur_dust"
+    },
+    {
       "count": 8,
       "item": "ragium:bauxite_dust"
     }

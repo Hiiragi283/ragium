@@ -21,11 +21,10 @@ class HTCrusherRecipeCategory(guiHelper: IGuiHelper) : HTMachineRecipeCategory<H
             .addIngredients(recipe.input)
         // Item Outputs
 
-        for (index: Int in (0..8)) {
+        for (index: Int in (0..2)) {
             val row: Int = index % 3
-            val column: Int = index / 3
             builder
-                .addOutputSlot(getPosition(row + 3), getPosition(column))
+                .addOutputSlot(getPosition(row + 3), getPosition(0))
                 .setStandardSlotBackground()
                 .addItemOutput(recipe.outputs.getOrNull(index))
         }
@@ -33,5 +32,5 @@ class HTCrusherRecipeCategory(guiHelper: IGuiHelper) : HTMachineRecipeCategory<H
 
     override fun getWidth(): Int = 18 * 6 + 8
 
-    override fun getHeight(): Int = 18 * 3 + 8
+    override fun getHeight(): Int = 18 * 1 + 8
 }

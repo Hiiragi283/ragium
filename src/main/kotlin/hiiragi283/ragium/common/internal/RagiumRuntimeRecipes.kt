@@ -46,7 +46,6 @@ object RagiumRuntimeRecipes {
             HTRecipeTypes.BLAST_FURNACE,
             RagiumAPI.id("brass_ingot"),
         ) { lookup: HolderGetter<Item> ->
-            event.getFirstHolder(HTTagPrefix.INGOT, CommonMaterials.BRASS)
             val ingot: Item = event
                 .getFirstItem(HTTagPrefix.INGOT, CommonMaterials.BRASS)
                 ?: return@register null

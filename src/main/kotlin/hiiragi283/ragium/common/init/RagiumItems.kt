@@ -92,7 +92,9 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.DUST, CommonMaterials.BRONZE)
         register(HTTagPrefix.DUST, CommonMaterials.LEAD)
+        register(HTTagPrefix.DUST, CommonMaterials.NICKEL)
         register(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
+        register(HTTagPrefix.DUST, CommonMaterials.SILICON)
         register(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY)
         register(HTTagPrefix.DUST, CommonMaterials.TIN)
         register(HTTagPrefix.DUST, CommonMaterials.ZINC)
@@ -100,6 +102,8 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
         register(HTTagPrefix.DUST, CommonMaterials.CALCITE)
+        register(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
+        register(HTTagPrefix.DUST, CommonMaterials.SULFUR)
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)

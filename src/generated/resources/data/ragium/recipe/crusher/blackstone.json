@@ -8,6 +8,10 @@
     {
       "count": 32,
       "item": "minecraft:gravel"
+    },
+    {
+      "count": 16,
+      "item": "ragium:iron_dust"
     }
   ]
 }

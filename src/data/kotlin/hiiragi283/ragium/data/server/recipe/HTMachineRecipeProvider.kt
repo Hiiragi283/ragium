@@ -183,46 +183,49 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .itemInput(Items.GRANITE, 64)
             .itemOutput(Items.GRAVEL, 32)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.COPPER), 16)
-            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.NICKEL, 8)
+            .itemOutput(Items.QUARTZ, 8)
             .save(output, RagiumAPI.id("granite"))
         // Diorite
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.DIORITE, 64)
             .itemOutput(Items.GRAVEL, 32)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.TIN), 16)
+            .itemOutput(Items.QUARTZ, 8)
             .save(output, RagiumAPI.id("diorite"))
         // Andesite
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.ANDESITE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ZINC), 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.LEAD), 16)
+            .itemOutput(Items.QUARTZ, 8)
             .save(output, RagiumAPI.id("andesite"))
 
         // Deepslate
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.COBBLED_DEEPSLATE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.IRON), 16)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.NIOBIUM), 8)
+            .itemOutput(Items.DIAMOND, 4)
             .save(output, RagiumAPI.id("deepslate"))
         // Tuff
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.TUFF, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.LEAD), 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.NICKEL), 16)
+            .itemOutput(Items.EMERALD, 4)
             .save(output, RagiumAPI.id("tuff"))
 
         // Clay
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.CLAY, 64)
             .itemOutput(Items.CLAY_BALL, 32)
-            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALT, 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.SILICON), 16)
             .save(output, RagiumAPI.id("clay"))
         // Sandstone
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, 64)
             .itemOutput(Items.SAND, 32)
-            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER, 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.SALTPETER), 16)
             .save(output, RagiumAPI.id("sandstone"))
         // Red Sandstone
         HTCrusherRecipeBuilder(lookup)
@@ -236,16 +239,21 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Tags.Items.NETHERRACKS, 64)
             .itemOutput(Items.GRAVEL, 32)
-            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.SULFUR, 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.SULFUR), 16)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.BAUXITE), 8)
             .save(output, RagiumAPI.id("netherrack"))
         // Blackstone
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.BLACKSTONE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER, 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.IRON), 16)
             .save(output, RagiumAPI.id("blackstone"))
         // Basalt
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.BASALT, 64)
+            .itemOutput(Items.GRAVEL, 32)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH), 16)
+            .save(output, RagiumAPI.id("basalt"))
     }
 
     //    Enchanter    //
@@ -440,7 +448,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         // Coal -> Crude Oil
         HTFluidOutputRecipeBuilder
             .extractor(lookup)
-            .itemInput(ItemTags.COALS)
+            .itemInput(HTTagPrefix.GEM, VanillaMaterials.COAL)
             .fluidOutput(RagiumFluids.CRUDE_OIL, 125)
             .save(output, RagiumAPI.id("crude_oil_from_coal"))
         // Soul XX -> Crude Oil

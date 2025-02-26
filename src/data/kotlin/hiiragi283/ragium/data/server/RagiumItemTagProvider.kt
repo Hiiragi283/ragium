@@ -60,8 +60,6 @@ class RagiumItemTagProvider(
         builder.build { tagKey: TagKey<Item>, entry: TagEntry ->
             tag(tagKey).add(entry)
         }
-
-        tag(ItemTags.COALS).remove(IEItems.Ingredients.COAL_COKE.regObject.id)
     }
 
     //    Material    //
@@ -90,13 +88,15 @@ class RagiumItemTagProvider(
 
         builder.addTag(HTTagPrefix.GEM.createTag(CommonMaterials.COAL_COKE), RagiumItemTags.COAL_COKE, true)
 
+        addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.COAL, Items.COAL, false)
+        addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP, false)
+
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IEItems.Misc.WIRE_COILS[WireType.STEEL])
         addMaterialTag(HTTagPrefix.COIL, VanillaMaterials.COPPER, IEItems.Misc.WIRE_COILS[WireType.COPPER])
         addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, EIOItems.GEAR_ENERGIZED)
         addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.VIBRANT_ALLOY, EIOItems.GEAR_VIBRANT)
-        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, MIMaterials.COKE.getPart(MIParts.GEM), false)
-        addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP, false)
+        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, MIMaterials.COKE.getPart(MIParts.GEM))
 
         addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem_crushed")
         addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem")

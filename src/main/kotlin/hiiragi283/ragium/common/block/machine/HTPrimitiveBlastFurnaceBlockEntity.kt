@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
@@ -22,7 +23,6 @@ import hiiragi283.ragium.common.inventory.HTPrimitiveBlastFurnaceContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -52,7 +52,9 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(level: ServerLevel, pos: BlockPos) {
         validateMultiblock(this, null).getOrThrow()
         val isIron: Boolean = itemInput.getStackInSlot(0).`is`(Tags.Items.INGOTS_IRON)
-        val isCoal: Boolean = itemInput.getStackInSlot(1).let { it.`is`(ItemTags.COALS) && it.count >= 4 }
+        val isCoal: Boolean = itemInput
+            .getStackInSlot(1)
+            .let { it.`is`(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL)) && it.count >= 4 }
         if (isIron && isCoal) {
             val steelIngot: ItemStack = RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL).toStack()
             if (itemOutput.canInsert(steelIngot)) {

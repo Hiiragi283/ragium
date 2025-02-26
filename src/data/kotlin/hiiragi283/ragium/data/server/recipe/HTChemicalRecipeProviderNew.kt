@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
@@ -17,7 +18,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -196,7 +196,7 @@ object HTChemicalRecipeProviderNew : HTRecipeProvider() {
         // Alumina Solution + 4x Coal -> Aluminum Ingot
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
-            .itemInput(ItemTags.COALS, 4)
+            .itemInput(HTTagPrefix.GEM, VanillaMaterials.COAL, 4)
             .fluidInput(RagiumVirtualFluids.ALUMINA_SOLUTION.commonTag)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM))
             .saveSuffixed(output, "_with_coal")

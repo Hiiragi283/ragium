@@ -8,6 +8,10 @@
     {
       "count": 32,
       "item": "minecraft:clay_ball"
+    },
+    {
+      "count": 16,
+      "item": "ragium:silicon_dust"
     }
   ]
 }

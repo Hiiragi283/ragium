@@ -17,7 +17,7 @@ class HTCrusherRecipe(group: String, val input: HTItemIngredient, val outputs: L
                     HTRecipeCodecs.group(),
                     HTRecipeCodecs.ITEM_INPUT.forGetter(HTCrusherRecipe::input),
                     HTItemOutput.CODEC
-                        .listOf(1, 9)
+                        .listOf(1, 3)
                         .fieldOf("item_outputs")
                         .forGetter(HTCrusherRecipe::outputs),
                 ).apply(instance, ::HTCrusherRecipe)
