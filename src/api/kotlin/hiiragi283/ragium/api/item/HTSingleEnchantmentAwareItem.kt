@@ -10,6 +10,9 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.common.extensions.IItemExtension
 import kotlin.math.max
 
+/**
+ * 単一の[Enchantment]を常に返す[IItemExtension]
+ */
 interface HTSingleEnchantmentAwareItem : IItemExtension {
     val targetEnchantment: ResourceKey<Enchantment>
     val targetLevel: Int

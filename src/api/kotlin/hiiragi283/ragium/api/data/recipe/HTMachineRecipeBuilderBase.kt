@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data.recipe
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -26,18 +25,16 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.registries.DeferredHolder
-import org.slf4j.Logger
 import java.util.function.Supplier
 
+/**
+ * 機械レシピのビルダーの基本クラス
+ * @param T このクラスを継承したビルダーのクラス
+ * @param R 生成する機械レシピのクラス
+ * @param lookup 現在未使用
+ */
 abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, R : HTMachineRecipeBase>(val lookup: HolderGetter<Item>) :
     RecipeBuilder {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
-
-    private var isErrored: Boolean = false
-
     //    Item Input    //
 
     fun itemInput(item: ItemLike, count: Int = 1): T = itemInput(HTItemIngredient.of(item, count))
@@ -115,15 +112,7 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
         save(recipeOutput, getPrimalId().withSuffix(suffix))
     }
 
-    private fun logWarn(id: ResourceLocation) {
-        LOGGER.debug("Machine recipe: {} will not be saved!", id)
-    }
-
     final override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        if (isErrored) {
-            logWarn(id)
-            return
-        }
         recipeOutput.accept(fixId(id), createRecipe(), null)
     }
 
@@ -136,10 +125,6 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
     protected abstract fun createRecipe(): R
 
     fun export(id: ResourceLocation, consumer: (RecipeHolder<R>) -> Unit) {
-        if (isErrored) {
-            logWarn(id)
-            return
-        }
         consumer(RecipeHolder(fixId(id), createRecipe()))
     }
 }

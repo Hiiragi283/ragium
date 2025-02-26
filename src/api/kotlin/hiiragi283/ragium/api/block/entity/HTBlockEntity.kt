@@ -25,6 +25,9 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import java.util.function.Supplier
 
+/**
+ * Ragiumで使用する[BlockEntity]の基本クラス
+ */
 abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state) {
     companion object {

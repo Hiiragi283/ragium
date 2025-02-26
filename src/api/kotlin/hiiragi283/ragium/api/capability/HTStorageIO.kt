@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.capability
 
 import hiiragi283.ragium.api.RagiumAPI
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
@@ -9,9 +10,29 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
  * ストレージの搬入出を管理するクラス
  */
 enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
+    /**
+     * ホッパーやパイプを介した搬入
+     */
     INPUT(true, false),
+
+    /**
+     * ホッパーやパイプを介した搬出
+     */
     OUTPUT(false, true),
+
+    /**
+     * デフォルトの操作
+     */
     GENERIC(true, true),
+
+    /**
+     * GUI上のでプレイヤーによる操作
+     */
+    INVENTORY(true, true),
+
+    /**
+     * [BlockEntity]内での操作
+     */
     INTERNAL(false, false),
     ;
 

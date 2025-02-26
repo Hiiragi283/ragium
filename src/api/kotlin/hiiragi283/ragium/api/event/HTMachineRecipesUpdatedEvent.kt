@@ -20,12 +20,23 @@ import net.neoforged.bus.api.Event
 import java.util.function.Function
 import kotlin.jvm.optionals.getOrNull
 
+/**
+ * 機械レシピが再読み込みされたときに呼び出されるイベント
+ * @see [HTRecipeType.reloadCache]
+ */
 class HTMachineRecipesUpdatedEvent(
     provider: HolderLookup.Provider,
     private val currentType: HTRecipeType<*>,
     private val consumer: (RecipeHolder<out HTMachineRecipeBase>) -> Unit,
 ) : Event(),
     HolderLookup.Provider by provider {
+    /**
+     * 機械レシピを登録します
+     * @param T 登録する機械レシピのクラス
+     * @param recipeType 登録するレシピの種類
+     * @param recipeId 登録するレシピのID
+     * @param function 登録するレシピのビルダーを返すブロック
+     */
     fun <T : HTMachineRecipeBase> register(
         recipeType: HTRecipeType<T>,
         recipeId: ResourceLocation,
@@ -38,10 +49,22 @@ class HTMachineRecipesUpdatedEvent(
 
     //    Helper    //
 
+    /**
+     * 指定した[prefix]と[key]に含まれる[Holder]を返します。
+     * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
+     */
     fun getFirstHolder(prefix: HTTagPrefix, key: HTMaterialKey): Holder<Item>? = getFirstHolder(prefix.createTag(key))
 
+    /**
+     * 指定した[prefix]と[key]に含まれる[Item]を返します。
+     * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
+     */
     fun getFirstItem(prefix: HTTagPrefix, key: HTMaterialKey): Item? = getFirstHolder(prefix, key)?.value()
 
+    /**
+     * 指定した[tagKey]に含まれる[Holder]を返します。
+     * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
+     */
     fun getFirstHolder(tagKey: TagKey<Item>): Holder<Item>? {
         val holderSet: HolderSet.Named<Item> = itemLookup().get(tagKey).getOrNull() ?: return null
         // Find item from Ragium
@@ -55,5 +78,9 @@ class HTMachineRecipesUpdatedEvent(
         return firstHolder ?: holderSet.firstOrNull()
     }
 
+    /**
+     * 指定した[tagKey]に含まれる[Item]を返します。
+     * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
+     */
     fun getFirstItem(tagKey: TagKey<Item>): Item? = getFirstHolder(tagKey)?.value()
 }

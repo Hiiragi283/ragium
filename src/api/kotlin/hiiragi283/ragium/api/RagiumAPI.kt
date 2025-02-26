@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.BlockPos
@@ -23,6 +24,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -101,6 +103,9 @@ interface RagiumAPI {
      */
     fun getCurrentServer(): MinecraftServer?
 
+    /**
+     * 現在の物理サイドを返します。
+     */
     fun getCurrentSide(): LogicalSide
 
     fun getEnergyNetwork(): (ServerLevel) -> IEnergyStorage = ::getEnergyNetwork
@@ -199,4 +204,15 @@ interface RagiumAPI {
      * @see [HTMachineType.getBlock]
      */
     fun getMachineBlock(type: HTMachineType): DeferredBlock<*>
+
+    /**
+     * @see [HTItemSlot.Builder.build]
+     */
+    fun buildItemSlot(
+        maxSize: Int,
+        insertFilter: (ItemStack, HTStorageIO) -> Boolean,
+        extractFilter: (ItemStack, HTStorageIO) -> Boolean,
+        validator: (ItemStack) -> Boolean,
+        callback: Runnable,
+    ): HTItemSlot
 }

@@ -11,6 +11,9 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
 
+/**
+ * 登録した[TagKey]をソートして生成するビルダー
+ */
 @Suppress("UNCHECKED_CAST")
 class HTTagBuilder<T : Any>(val lookup: HolderLookup.RegistryLookup<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()

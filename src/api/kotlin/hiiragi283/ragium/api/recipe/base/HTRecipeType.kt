@@ -39,6 +39,10 @@ class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val seri
     private var lastRecipe: ResourceLocation? = null
     private var changed: Boolean = true
 
+    /**
+     * 指定した[input]と[level]から最初に一致するレシピを返します。
+     * @return 見つからなかった場合は[Result.failure]
+     */
     fun getFirstRecipe(input: HTMachineRecipeInput, level: Level): Result<T> {
         var firstRecipe: RecipeHolder<T>? = null
         // Check cache update
@@ -62,14 +66,23 @@ class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val seri
             }
     }
 
+    /**
+     * キャッシュされたレシピの一覧を返します。
+     */
     fun getAllRecipes(): List<RecipeHolder<T>> = recipeCache.values.toList()
 
     //    Cache    //
 
+    /**
+     * レシピを更新するフラグを立てます。
+     */
     fun setChanged() {
         changed = true
     }
 
+    /**
+     * レシピを現在のサーバに基づいて更新します。
+     */
     fun reloadCache() {
         if (changed && RagiumAPI.getInstance().getCurrentSide().isServer) {
             RagiumAPI
@@ -81,6 +94,9 @@ class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val seri
         }
     }
 
+    /**
+     * 指定した[manager]からレシピを更新します。
+     */
     @Suppress("UNCHECKED_CAST")
     fun reloadCache(manager: RecipeManager) {
         lastRecipe = null

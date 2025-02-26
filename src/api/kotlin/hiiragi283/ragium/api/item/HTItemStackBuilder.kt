@@ -9,6 +9,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 
+/**
+ * コンポーネント付きの[ItemStack]のインスタンスを作るビルダー
+ */
 class HTItemStackBuilder : MutableDataComponentHolder {
     private val stack: ItemStack
 
