@@ -8,6 +8,6 @@
     "item": "minecraft:amethyst_block"
   },
   "item_output": {
-    "items": "minecraft:budding_amethyst"
+    "item": "minecraft:budding_amethyst"
   }
 }

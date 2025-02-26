@@ -2,7 +2,7 @@
   "type": "ragium:growth_chamber",
   "item_output": {
     "count": 2,
-    "items": "minecraft:crimson_fungus"
+    "item": "minecraft:crimson_fungus"
   },
   "seed": {
     "item": "minecraft:crimson_fungus"

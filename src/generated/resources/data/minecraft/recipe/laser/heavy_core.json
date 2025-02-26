@@ -7,6 +7,6 @@
     "tag": "c:storage_blocks/netherite"
   },
   "item_output": {
-    "items": "minecraft:heavy_core"
+    "item": "minecraft:heavy_core"
   }
 }

@@ -7,6 +7,6 @@
     "tag": "c:ingots/deep_steel"
   },
   "item_output": {
-    "items": "ragium:shaft"
+    "item": "ragium:shaft"
   }
 }

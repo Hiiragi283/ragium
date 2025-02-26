@@ -4,6 +4,6 @@
     "tag": "c:storage_blocks/bone_meal"
   },
   "item_output": {
-    "items": "minecraft:skeleton_skull"
+    "item": "minecraft:skeleton_skull"
   }
 }

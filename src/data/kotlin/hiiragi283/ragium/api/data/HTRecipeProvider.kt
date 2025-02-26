@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.advancements.CriteriaTriggers
@@ -8,7 +9,6 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -22,7 +22,7 @@ abstract class HTRecipeProvider {
         private set
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        lookup = holderLookup.lookupOrThrow(Registries.ITEM)
+        lookup = holderLookup.itemLookup()
         buildRecipeInternal(output, holderLookup)
     }
 

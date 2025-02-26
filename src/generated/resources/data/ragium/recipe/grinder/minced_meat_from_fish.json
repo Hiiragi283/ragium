@@ -4,6 +4,6 @@
     "tag": "c:foods/raw_fish"
   },
   "item_output": {
-    "items": "ragium:minced_meat"
+    "item": "ragium:minced_meat"
   }
 }

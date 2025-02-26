@@ -8,10 +8,7 @@ import blusunrize.immersiveengineering.common.register.IEItems
 import com.enderio.base.common.init.EIOItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
-import hiiragi283.ragium.api.extension.asHolder
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -51,7 +48,7 @@ class RagiumItemTagProvider(
     lateinit var builder: HTTagBuilder<Item>
 
     override fun addTags(provider: HolderLookup.Provider) {
-        builder = HTTagBuilder(provider.lookupOrThrow(Registries.ITEM))
+        builder = HTTagBuilder(provider.itemLookup())
 
         materialTags()
         foodTags()

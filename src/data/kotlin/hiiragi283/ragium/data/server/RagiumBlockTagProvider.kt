@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
+import hiiragi283.ragium.api.extension.blockLookup
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.forEach
@@ -40,7 +41,7 @@ class RagiumBlockTagProvider(
 
     @Suppress("DEPRECATION")
     override fun addTags(provider: HolderLookup.Provider) {
-        builder = HTTagBuilder(provider.lookupOrThrow(Registries.BLOCK))
+        builder = HTTagBuilder(provider.blockLookup())
 
         // Mineable
         HTMachineType.getBlocks().forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }

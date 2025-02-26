@@ -2,7 +2,7 @@
   "type": "ragium:growth_chamber",
   "item_output": {
     "count": 2,
-    "items": "minecraft:glow_berries"
+    "item": "minecraft:glow_berries"
   },
   "seed": {
     "item": "minecraft:glow_berries"

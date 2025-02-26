@@ -8,6 +8,6 @@
     "item": "minecraft:golden_apple"
   },
   "item_output": {
-    "items": "minecraft:enchanted_golden_apple"
+    "item": "minecraft:enchanted_golden_apple"
   }
 }

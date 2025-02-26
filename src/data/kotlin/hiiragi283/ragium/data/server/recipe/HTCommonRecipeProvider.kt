@@ -90,7 +90,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 5)
-            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL))
             .save(output)
     }
 
@@ -100,21 +100,21 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemInput(ItemTags.COALS, 2)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL))
             .save(output)
 
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.COAL_COKE)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.STEEL)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL))
             .saveSuffixed(output, "_with_coke")
         // Deep Steel
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.STEEL, 8)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
-            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL, 9)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL), 9)
             .save(output)
     }
 
@@ -131,7 +131,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .infuser(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, 8000)
-            .itemOutput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM))
             .save(output)
 
         // Unbreakable Elytra
@@ -365,14 +365,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.TIN)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.BRONZE)
-            .save(output)
-
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.ZINC)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.BRASS)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.BRONZE))
             .save(output)
     }
 

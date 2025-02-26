@@ -11,6 +11,6 @@
     "item": "mekanism:yellow_cake_uranium"
   },
   "item_output": {
-    "items": "ragium:yellow_cake"
+    "item": "ragium:yellow_cake"
   }
 }

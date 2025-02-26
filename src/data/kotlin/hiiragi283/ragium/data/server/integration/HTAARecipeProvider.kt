@@ -1,13 +1,15 @@
 package hiiragi283.ragium.data.server.integration
 
-import de.ellpeck.actuallyadditions.api.ActuallyTags
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.HolderLookup
@@ -17,21 +19,21 @@ object HTAARecipeProvider : HTRecipeProvider.Modded("actuallyadditions") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Canola Seeds
         HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ActuallyTags.Items.SEEDS_CANOLA)
+            .itemInput(ActuallyItems.CANOLA_SEEDS)
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ActuallyTags.Items.CROPS_CANOLA, 2)
+            .itemOutput(ActuallyItems.CANOLA, 2)
             .save(output)
         // Coffee Seeds
         HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ActuallyTags.Items.SEEDS_COFFEE)
+            .itemInput(ActuallyItems.COFFEE_BEANS)
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ActuallyTags.Items.CROPS_COFFEE, 2)
+            .itemOutput(ActuallyItems.COFFEE_BEANS, 2)
             .save(output)
 
         // Canola Oil
         HTFluidOutputRecipeBuilder
             .extractor(lookup)
-            .itemInput(ActuallyTags.Items.CROPS_CANOLA)
+            .itemInput(itemTagKey(commonId("crops/canola")))
             .fluidOutput(InitFluids.CANOLA_OIL, 80)
             .save(output)
         // Refined Canola Oil
@@ -59,7 +61,7 @@ object HTAARecipeProvider : HTRecipeProvider.Modded("actuallyadditions") {
         HTMultiItemRecipeBuilder
             .assembler(lookup)
             .itemInput(ActuallyItems.RESTONIA_CRYSTAL, 4)
-            .itemInput(ActuallyTags.Items.GEMS_BLACK_QUARTZ)
+            .itemInput(HTTagPrefix.GEM, IntegrationMaterials.BLACK_QUARTZ)
             .itemOutput(ActuallyItems.BASIC_COIL, 2)
             .saveSuffixed(output, "_aa")
         // Advanced Coil

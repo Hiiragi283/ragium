@@ -7,15 +7,15 @@
   "item_outputs": [
     {
       "count": 32,
-      "items": "minecraft:red_sand"
+      "item": "minecraft:red_sand"
     },
     {
       "count": 16,
-      "items": "#c:dusts/bauxite"
+      "item": "ragium:bauxite_dust"
     },
     {
       "count": 8,
-      "items": "#c:dusts/redstone"
+      "item": "minecraft:redstone"
     }
   ]
 }

@@ -11,7 +11,7 @@
   },
   "item_outputs": [
     {
-      "items": "ragium:bee_wax"
+      "item": "ragium:bee_wax"
     }
   ]
 }

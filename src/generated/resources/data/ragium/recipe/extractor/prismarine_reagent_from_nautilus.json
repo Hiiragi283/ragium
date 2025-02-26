@@ -6,7 +6,7 @@
   "item_outputs": [
     {
       "count": 4,
-      "items": "ragium:prismarine_reagent"
+      "item": "ragium:prismarine_reagent"
     }
   ]
 }

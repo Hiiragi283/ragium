@@ -1,9 +1,0 @@
-{
-  "type": "ragium:grinder",
-  "item_input": {
-    "item": "minecraft:calcite"
-  },
-  "item_output": {
-    "items": "#c:dusts/calcite"
-  }
-}

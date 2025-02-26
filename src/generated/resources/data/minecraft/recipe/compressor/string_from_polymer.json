@@ -7,6 +7,6 @@
     "item": "ragium:polymer_resin"
   },
   "item_output": {
-    "items": "minecraft:string"
+    "item": "minecraft:string"
   }
 }

@@ -4,6 +4,6 @@
     "tag": "c:slag"
   },
   "item_output": {
-    "items": "minecraft:gravel"
+    "item": "minecraft:gravel"
   }
 }

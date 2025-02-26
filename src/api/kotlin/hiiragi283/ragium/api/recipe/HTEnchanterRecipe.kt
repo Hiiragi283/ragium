@@ -51,8 +51,6 @@ class HTEnchanterRecipe(
         )
     }
 
-    override fun isValidOutput(): Boolean = true
-
     override fun matches(input: HTMachineRecipeInput): Boolean {
         if (input.getItem(0).getEnchantmentLevel(enchantment) > 0) {
             return false

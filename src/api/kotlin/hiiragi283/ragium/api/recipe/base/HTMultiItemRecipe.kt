@@ -20,8 +20,6 @@ abstract class HTMultiItemRecipe(
     val fluidInput: Optional<SizedFluidIngredient>,
     val itemOutput: HTItemOutput,
 ) : HTMachineRecipeBase(group) {
-    final override fun isValidOutput(): Boolean = itemOutput.isValid
-
     final override fun matches(input: HTMachineRecipeInput): Boolean {
         val bool1: Boolean = this.itemInputs[0].test(input, 0)
         val bool2: Boolean = this.itemInputs.getOrNull(1)?.test(input, 1) != false

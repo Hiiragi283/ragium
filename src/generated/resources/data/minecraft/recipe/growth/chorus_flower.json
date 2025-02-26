@@ -1,7 +1,7 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "items": "minecraft:chorus_flower"
+    "item": "minecraft:chorus_flower"
   },
   "seed": {
     "item": "minecraft:chorus_flower"

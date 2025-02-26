@@ -12,18 +12,13 @@ import net.minecraft.world.level.Level
  * 機械レシピの抽象クラス
  */
 abstract class HTMachineRecipeBase(private val group: String) : Recipe<HTMachineRecipeInput> {
-    abstract fun isValidOutput(): Boolean
-
     protected abstract fun matches(input: HTMachineRecipeInput): Boolean
 
     protected abstract fun getRecipeType(): HTRecipeType<*>
 
     //    Recipe    //
 
-    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean {
-        if (!isValidOutput()) return false
-        return matches(input)
-    }
+    override fun matches(input: HTMachineRecipeInput, level: Level): Boolean = matches(input)
 
     final override fun assemble(input: HTMachineRecipeInput, registries: HolderLookup.Provider): ItemStack =
         throw UnsupportedOperationException()

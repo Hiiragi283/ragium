@@ -7,6 +7,6 @@
     "tag": "c:obsidians/normal"
   },
   "item_output": {
-    "items": "minecraft:crying_obsidian"
+    "item": "minecraft:crying_obsidian"
   }
 }

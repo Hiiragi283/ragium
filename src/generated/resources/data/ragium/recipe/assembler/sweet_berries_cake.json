@@ -14,6 +14,6 @@
     }
   ],
   "item_output": {
-    "items": "ragium:sweet_berries_cake"
+    "item": "ragium:sweet_berries_cake"
   }
 }

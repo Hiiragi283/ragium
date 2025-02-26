@@ -1,7 +1,7 @@
 {
   "type": "ragium:growth_chamber",
   "item_output": {
-    "items": "minecraft:amethyst_shard"
+    "item": "minecraft:amethyst_shard"
   },
   "seed": {
     "tag": "c:gems/amethyst"

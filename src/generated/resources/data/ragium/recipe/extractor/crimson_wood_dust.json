@@ -1,0 +1,18 @@
+{
+  "type": "ragium:extractor",
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:crimson_sap"
+    }
+  ],
+  "item_input": {
+    "tag": "minecraft:crimson_stems"
+  },
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:wood_dust"
+    }
+  ]
+}

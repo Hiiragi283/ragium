@@ -7,15 +7,15 @@
   "item_outputs": [
     {
       "count": 32,
-      "items": "minecraft:gravel"
+      "item": "minecraft:gravel"
     },
     {
       "count": 16,
-      "items": "#c:dusts/iron"
+      "item": "ragium:iron_dust"
     },
     {
       "count": 8,
-      "items": "#c:dusts/niobium"
+      "item": "ragium:niobium_dust"
     }
   ]
 }

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.integration
 
-import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
 import blusunrize.immersiveengineering.common.register.IEItems
@@ -53,9 +52,9 @@ object HTIERecipeProvider : HTRecipeProvider.Modded("immersiveengineering") {
 
         // Industrial Hemp
         HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(IETags.seedsHemp)
+            .itemInput(IEItems.Misc.HEMP_SEEDS)
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(IETags.fiberHemp, 2)
+            .itemOutput(IEItems.Ingredients.HEMP_FIBER, 2)
             .save(output)
     }
 }

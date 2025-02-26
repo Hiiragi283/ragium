@@ -9,7 +9,7 @@
   },
   "item_outputs": [
     {
-      "items": "ragium:chocolate"
+      "item": "ragium:chocolate"
     }
   ]
 }

@@ -9,7 +9,7 @@
   },
   "item_outputs": [
     {
-      "items": "minecraft:cake"
+      "item": "minecraft:cake"
     }
   ]
 }

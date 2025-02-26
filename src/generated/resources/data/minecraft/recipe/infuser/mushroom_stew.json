@@ -11,7 +11,7 @@
   "item_outputs": [
     {
       "count": 2,
-      "items": "minecraft:mushroom_stew"
+      "item": "minecraft:mushroom_stew"
     }
   ]
 }

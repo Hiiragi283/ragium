@@ -4,6 +4,6 @@
     "item": "minecraft:mud"
   },
   "item_output": {
-    "items": "minecraft:packed_mud"
+    "item": "minecraft:packed_mud"
   }
 }

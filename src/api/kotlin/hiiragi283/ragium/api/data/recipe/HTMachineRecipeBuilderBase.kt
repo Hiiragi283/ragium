@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -10,7 +9,6 @@ import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.HolderGetter
-import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
@@ -68,26 +66,24 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     //    Item Output    //
 
-    fun itemOutput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): T = itemOutput(prefix.createTag(material), count)
+    /*fun itemOutput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): T = itemOutput(prefix.createTag(material), count)
 
-    @Suppress("UNCHECKED_CAST")
     fun itemOutput(tagKey: TagKey<Item>, count: Int = 1): T {
         lookup
             .get(tagKey)
             .map { HTItemOutput(it, count, DataComponentPatch.EMPTY) }
             .ifPresentOrElse(::itemOutput) { isErrored = true }
         return this as T
-    }
+    }*/
 
-    fun itemOutput(item: ItemLike, count: Int = 1): T =
-        itemOutput(HTItemOutput(HolderSet.direct(item.asHolder()), count, DataComponentPatch.EMPTY))
+    fun itemOutput(item: ItemLike, count: Int = 1): T = itemOutput(HTItemOutput(item, count, DataComponentPatch.EMPTY))
 
     fun itemOutput(stack: ItemStack): T {
         check(!stack.isEmpty) { "Empty ItemStack is not allowed!" }
-        return itemOutput(HTItemOutput(HolderSet.direct(stack.itemHolder), stack.count, stack.componentsPatch))
+        return itemOutput(HTItemOutput(stack.item, stack.count, stack.componentsPatch))
     }
 
-    abstract fun itemOutput(output: HTItemOutput): T
+    protected abstract fun itemOutput(output: HTItemOutput): T
 
     //    Fluid Output    //
 

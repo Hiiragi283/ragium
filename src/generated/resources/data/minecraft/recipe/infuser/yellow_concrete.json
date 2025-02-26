@@ -9,7 +9,7 @@
   },
   "item_outputs": [
     {
-      "items": "minecraft:yellow_concrete"
+      "item": "minecraft:yellow_concrete"
     }
   ]
 }

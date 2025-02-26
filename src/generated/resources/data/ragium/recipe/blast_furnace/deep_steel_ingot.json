@@ -1,0 +1,16 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "count": 8,
+      "tag": "c:dusts/steel"
+    },
+    {
+      "tag": "c:dusts/niobium"
+    }
+  ],
+  "item_output": {
+    "count": 9,
+    "item": "ragium:deep_steel_ingot"
+  }
+}

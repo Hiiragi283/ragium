@@ -5,7 +5,7 @@
   },
   "item_outputs": [
     {
-      "items": "ragium:prismarine_reagent"
+      "item": "ragium:prismarine_reagent"
     }
   ]
 }

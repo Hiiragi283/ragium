@@ -10,7 +10,7 @@
   },
   "item_outputs": [
     {
-      "items": "ragium:yellow_cake"
+      "item": "ragium:yellow_cake"
     }
   ]
 }

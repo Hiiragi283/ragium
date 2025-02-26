@@ -60,6 +60,4 @@ abstract class HTFluidOutputRecipe(group: String, val itemOutputs: List<HTItemOu
             }
         }
     }
-
-    final override fun isValidOutput(): Boolean = itemOutputs.any(HTItemOutput::isValid) || fluidOutputs.isNotEmpty()
 }

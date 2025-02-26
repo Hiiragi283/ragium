@@ -44,8 +44,6 @@ class HTSolidifierRecipe(
         )
     }
 
-    override fun isValidOutput(): Boolean = itemOutput.isValid
-
     override fun matches(input: HTMachineRecipeInput): Boolean {
         if (!this.input.test(input.getFluid(0))) return false
         val catalystItem: ItemStack = input.getItem(0)

@@ -62,8 +62,6 @@ class HTBreweryRecipe(
         val WATER_INGREDIENT: SizedFluidIngredient = SizedFluidIngredient.of(Tags.Fluids.WATER, FluidType.BUCKET_VOLUME)
     }
 
-    override fun isValidOutput(): Boolean = true
-
     override fun matches(input: HTMachineRecipeInput): Boolean {
         val bool1: Boolean = this.firstInput.test(input, 0)
         val bool2: Boolean = this.secondInput.test(input, 1)

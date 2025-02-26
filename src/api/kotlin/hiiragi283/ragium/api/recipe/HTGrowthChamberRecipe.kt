@@ -50,8 +50,6 @@ class HTGrowthChamberRecipe(
         )
     }
 
-    override fun isValidOutput(): Boolean = crop.isValid
-
     override fun matches(input: HTMachineRecipeInput): Boolean {
         val bool1: Boolean = seed.test(input.getItem(0))
         val bool2: Boolean = soil.test(input.getItem(1))

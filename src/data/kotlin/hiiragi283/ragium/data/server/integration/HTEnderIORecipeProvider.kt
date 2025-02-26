@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.integration
 
+import com.enderio.base.common.init.EIOItems
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -11,9 +12,9 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.common.Tags
 
-object HTEnderIORecipeProvider : HTRecipeProvider.Modded("enderio") {
+object HTEnderIORecipeProvider : HTRecipeProvider.Modded("enderio_base") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        // alloy(output)
+        alloy(output)
     }
 
     private fun alloy(output: RecipeOutput) {
@@ -22,7 +23,7 @@ object HTEnderIORecipeProvider : HTRecipeProvider.Modded("enderio") {
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(RagiumItemTags.SILICON)
-            .itemOutput(HTTagPrefix.INGOT, IntegrationMaterials.COPPER_ALLOY)
+            .itemOutput(EIOItems.COPPER_ALLOY_INGOT)
             .save(output)
         // Energetic Alloy
         HTMultiItemRecipeBuilder
@@ -30,36 +31,36 @@ object HTEnderIORecipeProvider : HTRecipeProvider.Modded("enderio") {
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.REDSTONE)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.GOLD)
             .itemInput(Tags.Items.DUSTS_GLOWSTONE)
-            .itemOutput(HTTagPrefix.INGOT, IntegrationMaterials.ENERGETIC_ALLOY)
+            .itemOutput(EIOItems.ENERGETIC_ALLOY_INGOT)
             .save(output)
         // Vibrant Alloy
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, IntegrationMaterials.ENERGETIC_ALLOY)
             .itemInput(Tags.Items.ENDER_PEARLS)
-            .itemOutput(HTTagPrefix.INGOT, IntegrationMaterials.VIBRANT_ALLOY)
+            .itemOutput(EIOItems.VIBRANT_ALLOY_INGOT)
             .save(output)
         // Redstone Alloy
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.REDSTONE)
             .itemInput(RagiumItemTags.SILICON)
-            .itemOutput(HTTagPrefix.INGOT, IntegrationMaterials.REDSTONE_ALLOY)
+            .itemOutput(EIOItems.REDSTONE_ALLOY_INGOT)
             .save(output)
         // Conductive Alloy
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.DUST, IntegrationMaterials.COPPER_ALLOY)
+            .itemInput(HTTagPrefix.INGOT, IntegrationMaterials.COPPER_ALLOY)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.REDSTONE)
-            .itemOutput(HTTagPrefix.INGOT, IntegrationMaterials.CONDUCTIVE_ALLOY)
+            .itemOutput(EIOItems.CONDUCTIVE_ALLOY_INGOT)
             .save(output)
         // Pulsating Alloy
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(Tags.Items.ENDER_PEARLS)
-            .itemOutput(HTTagPrefix.INGOT, IntegrationMaterials.PULSATING_ALLOY)
+            .itemOutput(EIOItems.PULSATING_ALLOY_INGOT)
             .save(output)
         // Dark Steel
         HTMultiItemRecipeBuilder
@@ -67,7 +68,7 @@ object HTEnderIORecipeProvider : HTRecipeProvider.Modded("enderio") {
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(ItemTags.COALS)
             .itemInput(Tags.Items.OBSIDIANS)
-            .itemOutput(HTTagPrefix.INGOT, IntegrationMaterials.DARK_STEEL)
+            .itemOutput(EIOItems.DARK_STEEL_INGOT)
             .save(output)
         // Soularium
     }

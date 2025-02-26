@@ -12,7 +12,7 @@
   },
   "item_outputs": [
     {
-      "items": "ragium:meat_ingot"
+      "item": "ragium:meat_ingot"
     }
   ]
 }

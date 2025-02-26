@@ -11,7 +11,7 @@
   },
   "item_outputs": [
     {
-      "items": "minecraft:sand"
+      "item": "minecraft:sand"
     }
   ]
 }

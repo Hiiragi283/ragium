@@ -5,6 +5,6 @@
   },
   "item_output": {
     "count": 4,
-    "items": "minecraft:glowstone_dust"
+    "item": "minecraft:glowstone_dust"
   }
 }

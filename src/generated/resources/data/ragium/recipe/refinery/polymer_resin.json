@@ -13,7 +13,7 @@
   "item_outputs": [
     {
       "count": 2,
-      "items": "ragium:polymer_resin"
+      "item": "ragium:polymer_resin"
     }
   ]
 }

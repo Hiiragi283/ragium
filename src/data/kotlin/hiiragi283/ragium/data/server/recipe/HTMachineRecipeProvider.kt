@@ -182,68 +182,68 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.GRANITE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 16)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.NICKEL, 8)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.COPPER), 16)
+            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.NICKEL, 8)
             .save(output, RagiumAPI.id("granite"))
         // Diorite
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.DIORITE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.TIN, 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.TIN), 16)
             .save(output, RagiumAPI.id("diorite"))
         // Andesite
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.ANDESITE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.ZINC, 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ZINC), 16)
             .save(output, RagiumAPI.id("andesite"))
 
         // Deepslate
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.COBBLED_DEEPSLATE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(HTTagPrefix.DUST, VanillaMaterials.IRON, 16)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.NIOBIUM, 8)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.IRON), 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.NIOBIUM), 8)
             .save(output, RagiumAPI.id("deepslate"))
         // Tuff
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.TUFF, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.LEAD, 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.LEAD), 16)
             .save(output, RagiumAPI.id("tuff"))
 
         // Clay
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.CLAY, 64)
             .itemOutput(Items.CLAY_BALL, 32)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALT, 16)
+            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALT, 16)
             .save(output, RagiumAPI.id("clay"))
         // Sandstone
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, 64)
             .itemOutput(Items.SAND, 32)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER, 16)
+            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER, 16)
             .save(output, RagiumAPI.id("sandstone"))
         // Red Sandstone
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Tags.Items.SANDSTONE_RED_BLOCKS, 64)
             .itemOutput(Items.RED_SAND, 32)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 16)
-            .itemOutput(HTTagPrefix.DUST, VanillaMaterials.REDSTONE, 8)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.BAUXITE), 16)
+            .itemOutput(Items.REDSTONE, 8)
             .save(output, RagiumAPI.id("red_sandstone"))
 
         // Netherrack
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Tags.Items.NETHERRACKS, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SULFUR, 16)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.BAUXITE, 8)
+            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.SULFUR, 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.BAUXITE), 8)
             .save(output, RagiumAPI.id("netherrack"))
         // Blackstone
         HTCrusherRecipeBuilder(lookup)
             .itemInput(Items.BLACKSTONE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER, 16)
+            // .itemOutput(HTTagPrefix.DUST, CommonMaterials.SALTPETER, 16)
             .save(output, RagiumAPI.id("blackstone"))
         // Basalt
     }
@@ -512,7 +512,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTFluidOutputRecipeBuilder
             .extractor(lookup)
             .itemInput(ItemTags.LOGS_THAT_BURN)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.WOOD), 4)
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
         // Sap -> Slimeball + Latex
@@ -533,14 +533,14 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTFluidOutputRecipeBuilder
             .extractor(lookup)
             .itemInput(ItemTags.CRIMSON_STEMS)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.WOOD), 4)
             .fluidOutput(RagiumVirtualFluids.CRIMSON_SAP)
             .savePrefixed(output, "crimson_")
         // Crimson Sap -> Crimson Crystal + Sap
         HTFluidOutputRecipeBuilder
             .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.CRIMSON_SAP.commonTag)
-            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL))
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
 
@@ -548,14 +548,14 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTFluidOutputRecipeBuilder
             .extractor(lookup)
             .itemInput(ItemTags.WARPED_STEMS)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.WOOD, 4)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.WOOD), 4)
             .fluidOutput(RagiumVirtualFluids.WARPED_SAP)
             .savePrefixed(output, "warped_")
         // Warped Sap -> Warped Crystal + Sap
         HTFluidOutputRecipeBuilder
             .refinery(lookup)
             .fluidInput(RagiumVirtualFluids.WARPED_SAP.commonTag)
-            .itemOutput(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL))
             .fluidOutput(RagiumVirtualFluids.SAP)
             .save(output)
 

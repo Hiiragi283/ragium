@@ -11,6 +11,6 @@
   ],
   "item_output": {
     "count": 8,
-    "items": "ragium:canned_cooked_meat"
+    "item": "ragium:canned_cooked_meat"
   }
 }

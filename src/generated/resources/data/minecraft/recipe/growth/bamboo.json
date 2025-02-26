@@ -2,7 +2,7 @@
   "type": "ragium:growth_chamber",
   "item_output": {
     "count": 6,
-    "items": "minecraft:bamboo"
+    "item": "minecraft:bamboo"
   },
   "seed": {
     "item": "minecraft:bamboo"

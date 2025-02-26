@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "item_input": {
+    "item": "minecraft:nether_wart_block"
+  },
+  "item_output": {
+    "count": 9,
+    "item": "minecraft:nether_wart"
+  }
+}

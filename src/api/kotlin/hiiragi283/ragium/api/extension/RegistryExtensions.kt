@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
@@ -84,6 +86,16 @@ fun <T : Any> HolderSet<T>.asHolderText(transform: (Holder<T>) -> Component): Mu
     .copy()
 
 //    HolderLookup    //
+
+fun HolderLookup<Item>.get(prefix: HTTagPrefix, key: HTMaterialKey): Optional<HolderSet.Named<Item>> = get(prefix.createTag(key))
+
+fun HolderLookup<Item>.getOrThrow(prefix: HTTagPrefix, key: HTMaterialKey): HolderSet.Named<Item> = getOrThrow(prefix.createTag(key))
+
+fun HolderLookup.Provider.blockLookup(): HolderLookup.RegistryLookup<Block> = lookupOrThrow(Registries.BLOCK)
+
+fun HolderLookup.Provider.fluidLookup(): HolderLookup.RegistryLookup<Fluid> = lookupOrThrow(Registries.FLUID)
+
+fun HolderLookup.Provider.itemLookup(): HolderLookup.RegistryLookup<Item> = lookupOrThrow(Registries.ITEM)
 
 fun <T : Any> HolderLookup.Provider.getHolder(
     registry: ResourceKey<out Registry<out T>>,

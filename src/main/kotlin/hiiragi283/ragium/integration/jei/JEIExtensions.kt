@@ -1,6 +1,5 @@
 package hiiragi283.ragium.integration.jei
 
-import hiiragi283.ragium.api.item.HTItemStackBuilder
 import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
@@ -8,10 +7,7 @@ import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.neoforge.NeoForgeTypes
-import net.minecraft.core.component.DataComponents
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -47,11 +43,6 @@ fun <T : IIngredientAcceptor<*>> T.addIngredients(ingredient: FluidIngredient?):
 
 fun IRecipeSlotBuilder.addItemOutput(output: HTItemOutput?): IRecipeSlotBuilder {
     var stack: ItemStack = output?.get() ?: return this
-    if (stack.isEmpty) {
-        stack = HTItemStackBuilder(Items.BARRIER, output.count)
-            .put(DataComponents.CUSTOM_NAME, Component.literal("Empty Output: #${output.rawId}"))
-            .build()
-    }
     return addItemStack(stack)
 }
 

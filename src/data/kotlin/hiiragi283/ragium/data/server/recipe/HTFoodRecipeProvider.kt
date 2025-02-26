@@ -248,13 +248,13 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
         HTSingleItemRecipeBuilder
             .grinder(lookup)
             .itemInput(Items.NETHER_WART_BLOCK)
-            .itemOutput(Tags.Items.CROPS_NETHER_WART, 9)
+            .itemOutput(Items.NETHER_WART, 9)
             .save(output)
 
         HTSingleItemRecipeBuilder
             .grinder(lookup)
             .itemInput(Items.WARPED_WART_BLOCK)
-            .itemOutput(RagiumItemTags.CROPS_WARPED_WART, 9)
+            .itemOutput(RagiumItems.WARPED_WART, 9)
             .save(output)
 
         // Wart -> XX Sap

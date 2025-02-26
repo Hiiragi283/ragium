@@ -8,6 +8,6 @@
     "tag": "c:ingots/steel"
   },
   "item_output": {
-    "items": "ragium:shaft"
+    "item": "ragium:shaft"
   }
 }

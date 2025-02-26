@@ -10,7 +10,7 @@
   },
   "item_outputs": [
     {
-      "items": "ragium:ambrosia"
+      "item": "ragium:ambrosia"
     }
   ]
 }

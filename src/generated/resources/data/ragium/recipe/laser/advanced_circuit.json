@@ -7,6 +7,6 @@
     "item": "ragium:circuit_board"
   },
   "item_output": {
-    "items": "ragium:advanced_circuit"
+    "item": "ragium:advanced_circuit"
   }
 }

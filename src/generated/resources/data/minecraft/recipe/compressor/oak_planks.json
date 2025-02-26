@@ -7,6 +7,6 @@
     "tag": "c:dusts/wood"
   },
   "item_output": {
-    "items": "minecraft:oak_planks"
+    "item": "minecraft:oak_planks"
   }
 }

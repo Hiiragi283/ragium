@@ -7,15 +7,11 @@
   "item_outputs": [
     {
       "count": 32,
-      "items": "minecraft:gravel"
-    },
-    {
-      "count": 16,
-      "items": "#c:dusts/sulfur"
+      "item": "minecraft:gravel"
     },
     {
       "count": 8,
-      "items": "#c:dusts/bauxite"
+      "item": "ragium:bauxite_dust"
     }
   ]
 }

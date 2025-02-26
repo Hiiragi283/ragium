@@ -10,6 +10,6 @@
     }
   },
   "item_output": {
-    "items": "minecraft:slime_ball"
+    "item": "minecraft:slime_ball"
   }
 }

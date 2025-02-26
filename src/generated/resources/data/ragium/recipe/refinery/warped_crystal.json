@@ -1,0 +1,18 @@
+{
+  "type": "ragium:refinery",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:warped_sap"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:sap"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:warped_crystal"
+    }
+  ]
+}

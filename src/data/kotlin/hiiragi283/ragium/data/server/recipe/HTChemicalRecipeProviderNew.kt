@@ -147,7 +147,7 @@ object HTChemicalRecipeProviderNew : HTRecipeProvider() {
         HTSingleItemRecipeBuilder
             .grinder(lookup)
             .itemInput(Items.CALCITE)
-            .itemOutput(HTTagPrefix.DUST, CommonMaterials.CALCITE)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.CALCITE))
             .save(output)
 
         // Ash + Water -> Alkali Solution
@@ -198,7 +198,7 @@ object HTChemicalRecipeProviderNew : HTRecipeProvider() {
             .blastFurnace(lookup)
             .itemInput(ItemTags.COALS, 4)
             .fluidInput(RagiumVirtualFluids.ALUMINA_SOLUTION.commonTag)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM))
             .saveSuffixed(output, "_with_coal")
 
         // Al + HF + Alkali -> Na3AlF6
@@ -207,14 +207,14 @@ object HTChemicalRecipeProviderNew : HTRecipeProvider() {
             .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
             .fluidInput(RagiumVirtualFluids.HYDROFLUORIC_ACID.commonTag, 6000)
             .fluidInput(RagiumVirtualFluids.ALKALI_SOLUTION.commonTag, 3000)
-            .itemOutput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.GEM, CommonMaterials.CRYOLITE))
             .save(output)
         // Alumina + Cryolite -> 3x Aluminum Ingot
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
             .fluidInput(RagiumVirtualFluids.ALUMINA_SOLUTION.commonTag)
-            .itemOutput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 3)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM), 3)
             .saveSuffixed(output, "_with_cryolite")
     }
 

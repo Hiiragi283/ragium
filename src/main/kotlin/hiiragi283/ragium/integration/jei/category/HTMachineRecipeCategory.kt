@@ -34,8 +34,6 @@ abstract class HTMachineRecipeCategory<T : HTMachineRecipeBase>(
         builder.addRecipeArrow().setPosition(getPosition(arrowX), getPosition(arrowY))
     }
 
-    override fun isHandled(recipe: RecipeHolder<T>): Boolean = recipe.value.isValidOutput()
-
     final override fun getRegistryName(recipe: RecipeHolder<T>): ResourceLocation = recipe.id
 
     final override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<RecipeHolder<T>> =

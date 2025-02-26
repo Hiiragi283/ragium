@@ -6,7 +6,7 @@
   },
   "item_outputs": [
     {
-      "items": "minecraft:obsidian"
+      "item": "minecraft:obsidian"
     }
   ],
   "second_fluidInput": {

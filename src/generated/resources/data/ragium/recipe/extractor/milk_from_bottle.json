@@ -17,7 +17,7 @@
   },
   "item_outputs": [
     {
-      "items": "minecraft:glass_bottle"
+      "item": "minecraft:glass_bottle"
     }
   ]
 }

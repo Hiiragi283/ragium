@@ -14,7 +14,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
 import vectorwing.farmersdelight.common.registry.ModItems
-import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
 object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
@@ -23,7 +22,7 @@ object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
         CuttingBoardRecipeBuilder
             .cuttingRecipe(
                 Ingredient.of(RagiumBlocks.SWEET_BERRIES_CAKE),
-                Ingredient.of(CommonTags.TOOLS_KNIFE),
+                Ingredient.of(RagiumItemTags.TOOLS_KNIFE),
                 RagiumItems.SWEET_BERRIES_CAKE_PIECE,
                 8,
             ).save(output)
@@ -31,7 +30,7 @@ object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
         CuttingBoardRecipeBuilder
             .cuttingRecipe(
                 Ingredient.of(RagiumItems.YELLOW_CAKE),
-                Ingredient.of(CommonTags.TOOLS_KNIFE),
+                Ingredient.of(RagiumItemTags.TOOLS_KNIFE),
                 RagiumItems.YELLOW_CAKE_PIECE,
                 8,
             ).save(output)
@@ -40,7 +39,7 @@ object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
         CuttingBoardRecipeBuilder
             .cuttingRecipe(
                 Ingredient.of(RagiumItems.MEAT_INGOT),
-                Ingredient.of(CommonTags.TOOLS_KNIFE),
+                Ingredient.of(RagiumItemTags.TOOLS_KNIFE),
                 ModItems.MINCED_BEEF.get(),
                 2,
             ).save(output)
@@ -48,7 +47,7 @@ object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
         CuttingBoardRecipeBuilder
             .cuttingRecipe(
                 Ingredient.of(RagiumItems.COOKED_MEAT_INGOT),
-                Ingredient.of(CommonTags.TOOLS_KNIFE),
+                Ingredient.of(RagiumItemTags.TOOLS_KNIFE),
                 ModItems.BEEF_PATTY.get(),
                 2,
             ).save(output)
@@ -57,7 +56,7 @@ object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
         HTSingleItemRecipeBuilder
             .grinder(lookup)
             .itemInput(ModItems.RICE_PANICLE.get())
-            .itemOutput(CommonTags.CROPS_RICE, 2)
+            .itemOutput(ModItems.RICE.get(), 2)
             .save(output)
 
         // Milk Bottle
@@ -79,25 +78,25 @@ object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
         HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ModItems.CABBAGE_SEEDS.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(CommonTags.CROPS_CABBAGE, 2)
+            .itemOutput(ModItems.CABBAGE.get(), 2)
             .save(output)
 
         HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ModItems.TOMATO_SEEDS.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(CommonTags.CROPS_TOMATO, 2)
+            .itemOutput(ModItems.TOMATO.get(), 2)
             .save(output)
 
         HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ModItems.ONION.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(CommonTags.CROPS_ONION, 2)
+            .itemOutput(ModItems.ONION.get(), 2)
             .save(output)
 
         HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(CommonTags.CROPS_RICE)
+            .itemInput(ModItems.RICE.get())
             .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(CommonTags.CROPS_RICE, 2)
+            .itemOutput(ModItems.RICE.get(), 2)
             .save(output)
     }
 }

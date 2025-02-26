@@ -35,8 +35,6 @@ class HTCrusherRecipe(group: String, val input: HTItemIngredient, val outputs: L
         )
     }
 
-    override fun isValidOutput(): Boolean = outputs.any(HTItemOutput::isValid)
-
     override fun matches(input: HTMachineRecipeInput): Boolean = this.input.test(input, 0)
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.CRUSHER

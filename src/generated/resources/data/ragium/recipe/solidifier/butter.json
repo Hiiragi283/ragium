@@ -10,6 +10,6 @@
     }
   },
   "item_output": {
-    "items": "ragium:butter"
+    "item": "ragium:butter"
   }
 }

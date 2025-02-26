@@ -16,7 +16,7 @@
   "item_outputs": [
     {
       "count": 2,
-      "items": "ragium:soap"
+      "item": "ragium:soap"
     }
   ]
 }

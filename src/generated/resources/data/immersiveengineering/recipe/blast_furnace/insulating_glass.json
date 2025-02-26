@@ -17,6 +17,6 @@
   ],
   "item_output": {
     "count": 2,
-    "items": "immersiveengineering:insulating_glass"
+    "item": "immersiveengineering:insulating_glass"
   }
 }

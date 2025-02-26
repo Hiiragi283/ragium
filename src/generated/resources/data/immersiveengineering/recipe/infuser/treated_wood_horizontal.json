@@ -15,7 +15,7 @@
   },
   "item_outputs": [
     {
-      "items": "immersiveengineering:treated_wood_horizontal"
+      "item": "immersiveengineering:treated_wood_horizontal"
     }
   ]
 }

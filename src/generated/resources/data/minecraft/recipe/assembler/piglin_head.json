@@ -10,6 +10,6 @@
     }
   ],
   "item_output": {
-    "items": "minecraft:piglin_head"
+    "item": "minecraft:piglin_head"
   }
 }

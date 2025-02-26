@@ -7,6 +7,6 @@
     "item": "minecraft:blackstone"
   },
   "item_output": {
-    "items": "minecraft:gilded_blackstone"
+    "item": "minecraft:gilded_blackstone"
   }
 }

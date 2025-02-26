@@ -74,7 +74,7 @@ class HTFluidOutput private constructor(private val either: Either<SizedTag, Flu
         { sizedTag: SizedTag ->
             val lookup: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return@map defaultValue
             lookup
-                .lookupOrThrow(Registries.FLUID)
+                .fluidLookup()
                 .get(sizedTag.tagKey)
                 .map(HolderSet<Fluid>::isNotEmpty)
                 .orElse(false)

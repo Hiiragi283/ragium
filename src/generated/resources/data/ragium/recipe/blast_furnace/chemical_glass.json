@@ -10,6 +10,6 @@
     }
   ],
   "item_output": {
-    "items": "ragium:chemical_glass"
+    "item": "ragium:chemical_glass"
   }
 }

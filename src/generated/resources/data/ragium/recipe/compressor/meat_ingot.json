@@ -4,6 +4,6 @@
     "item": "ragium:minced_meat"
   },
   "item_output": {
-    "items": "ragium:meat_ingot"
+    "item": "ragium:meat_ingot"
   }
 }

@@ -2,7 +2,7 @@
   "type": "ragium:growth_chamber",
   "item_output": {
     "count": 3,
-    "items": "ragium:warped_wart"
+    "item": "ragium:warped_wart"
   },
   "seed": {
     "tag": "c:crops/warped_wart"

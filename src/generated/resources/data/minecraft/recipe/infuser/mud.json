@@ -9,7 +9,7 @@
   },
   "item_outputs": [
     {
-      "items": "minecraft:mud"
+      "item": "minecraft:mud"
     }
   ]
 }

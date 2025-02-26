@@ -20,8 +20,6 @@ abstract class HTSingleItemRecipe(
     val catalyst: Optional<Ingredient>,
     val itemOutput: HTItemOutput,
 ) : HTMachineRecipeBase(group) {
-    final override fun isValidOutput(): Boolean = itemOutput.isValid
-
     final override fun matches(input: HTMachineRecipeInput): Boolean {
         if (!this.input.test(input, 0)) return false
         val catalystItem: ItemStack = input.getItem(1)

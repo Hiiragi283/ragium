@@ -7,6 +7,6 @@
     "item": "ragium:polymer_resin"
   },
   "item_output": {
-    "items": "ragium:plastic_plate"
+    "item": "ragium:plastic_plate"
   }
 }
