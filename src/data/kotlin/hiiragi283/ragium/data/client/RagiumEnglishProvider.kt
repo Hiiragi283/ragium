@@ -226,11 +226,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PRISMARINE_LENS, "Prismarine Lens")
         addItem(RagiumItems.MAGICAL_LENS, "Magical Lens")
 
-        addItem(RagiumItems.MAGICAL_REAGENT, "Magical Reagent")
-        addItem(RagiumItems.PRISMARINE_REAGENT, "Prismarine Reagent")
-        addItem(RagiumItems.SCULK_REAGENT, "Sculk Reagent")
-        addItem(RagiumItems.WITHER_REAGENT, "Wither Reagent")
-
         addItem(RagiumItems.EMPTY_FLUID_CUBE, "Empty Fluid Cube")
         addItem(RagiumItems.WATER_FLUID_CUBE, "Fluid Cube (Water)")
         addItem(RagiumItems.LAVA_FLUID_CUBE, "Fluid Cube (Lava)")

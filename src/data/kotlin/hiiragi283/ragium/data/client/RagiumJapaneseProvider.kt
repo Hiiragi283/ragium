@@ -226,11 +226,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PRISMARINE_LENS, "プリズマリンレンズ")
         addItem(RagiumItems.MAGICAL_LENS, "魔術的レンズ")
 
-        addItem(RagiumItems.MAGICAL_REAGENT, "魔術的試薬")
-        addItem(RagiumItems.PRISMARINE_REAGENT, "プリズマリン試薬")
-        addItem(RagiumItems.SCULK_REAGENT, "スカルク試薬")
-        addItem(RagiumItems.WITHER_REAGENT, "ウィザー試薬")
-
         addItem(RagiumItems.EMPTY_FLUID_CUBE, "空の液体キューブ")
         addItem(RagiumItems.WATER_FLUID_CUBE, "液体キューブ（水）")
         addItem(RagiumItems.LAVA_FLUID_CUBE, "液体キューブ（溶岩）")

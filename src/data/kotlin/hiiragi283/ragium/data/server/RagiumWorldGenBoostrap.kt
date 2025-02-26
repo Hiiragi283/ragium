@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
@@ -18,6 +19,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.entity.EquipmentSlotGroup
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.levelgen.GenerationStep
@@ -68,8 +71,26 @@ object RagiumWorldGenBoostrap {
             createTarget(Tags.Blocks.END_STONES, HTOreVariant.END, RagiumMaterials.RAGI_CRYSTAL),
         )
         return RegistrySetBuilder()
-            .add(Registries.ENCHANTMENT, RagiumEnchantments::boostrap)
-            .add(Registries.CONFIGURED_FEATURE) { context: BootstrapContext<ConfiguredFeature<*, *>> ->
+            .add(Registries.ENCHANTMENT) { context: BootstrapContext<Enchantment> ->
+                fun register(key: ResourceKey<Enchantment>, builder: Enchantment.Builder) {
+                    context.register(key, builder.build(key.location()))
+                }
+
+                register(
+                    RagiumEnchantments.CAPACITY,
+                    Enchantment.enchantment(
+                        Enchantment.definition(
+                            context.lookup(Registries.ITEM).getOrThrow(RagiumItemTags.CAPACITY_ENCHANTABLE),
+                            1,
+                            5,
+                            Enchantment.constantCost(1),
+                            Enchantment.constantCost(41),
+                            1,
+                            EquipmentSlotGroup.ANY,
+                        ),
+                    ),
+                )
+            }.add(Registries.CONFIGURED_FEATURE) { context: BootstrapContext<ConfiguredFeature<*, *>> ->
                 configuredBootstrap.forEach {
                     it.run(context)
                 }

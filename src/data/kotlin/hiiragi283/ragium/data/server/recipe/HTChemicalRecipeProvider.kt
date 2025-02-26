@@ -22,7 +22,6 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
         registerGlow(output)
         registerMagical(output)
         registerPrismarine(output)
-        registerSculk(output)
         registerWither(output)
     }
 
@@ -128,40 +127,6 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
             .hollow8()
             .define('A', RagiumItems.PRISMARINE_REAGENT)
             .define('B', ItemTags.WOOL)
-            .save(output)
-    }
-
-    private fun registerSculk(output: RecipeOutput) {
-        // Sculk Reagent
-        HTFluidOutputRecipeBuilder
-            .extractor(lookup)
-            .itemInput(Items.SCULK_VEIN, 8)
-            .itemOutput(RagiumItems.SCULK_REAGENT)
-            .saveSuffixed(output, "_from_vein")
-
-        HTFluidOutputRecipeBuilder
-            .extractor(lookup)
-            .itemInput(Items.SCULK)
-            .itemOutput(RagiumItems.SCULK_REAGENT)
-            .save(output)
-
-        HTFluidOutputRecipeBuilder
-            .extractor(lookup)
-            .itemInput(Items.SCULK_CATALYST)
-            .itemOutput(RagiumItems.SCULK_REAGENT, 4)
-            .saveSuffixed(output, "_from_catalyst")
-
-        HTFluidOutputRecipeBuilder
-            .extractor(lookup)
-            .itemInput(Items.SCULK_SHRIEKER)
-            .itemOutput(RagiumItems.SCULK_REAGENT, 16)
-            .saveSuffixed(output, "_from_shrieker")
-
-        // Echorium
-        HTSingleItemRecipeBuilder
-            .laser(lookup)
-            .itemInput(RagiumItems.SCULK_REAGENT, 16)
-            .itemOutput(Items.ECHO_SHARD)
             .save(output)
     }
 
