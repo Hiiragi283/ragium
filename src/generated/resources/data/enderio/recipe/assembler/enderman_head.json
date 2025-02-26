@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_base"
+    }
+  ],
+  "type": "ragium:assembler",
+  "item_inputs": [
+    {
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 4,
+      "tag": "c:ender_pearls"
+    }
+  ],
+  "item_output": {
+    "item": "enderio:enderman_head"
+  }
+}

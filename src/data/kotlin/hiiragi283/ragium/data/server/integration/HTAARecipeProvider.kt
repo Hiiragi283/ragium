@@ -14,20 +14,33 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.world.item.Items
 
 object HTAARecipeProvider : HTRecipeProvider.Modded("actuallyadditions") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        // Canola Seeds
+        // Canola
         HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ActuallyItems.CANOLA_SEEDS)
             .itemInput(RagiumItemTags.DIRT_SOILS)
             .itemOutput(ActuallyItems.CANOLA, 2)
             .save(output)
-        // Coffee Seeds
+        // Coffee
         HTGrowthChamberRecipeBuilder(lookup)
             .itemInput(ActuallyItems.COFFEE_BEANS)
             .itemInput(RagiumItemTags.DIRT_SOILS)
             .itemOutput(ActuallyItems.COFFEE_BEANS, 2)
+            .save(output)
+        // Flax
+        HTGrowthChamberRecipeBuilder(lookup)
+            .itemInput(ActuallyItems.FLAX_SEEDS)
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(Items.STRING, 4)
+            .save(output, id("flax"))
+        // Rice
+        HTGrowthChamberRecipeBuilder(lookup)
+            .itemInput(ActuallyItems.RICE_SEEDS)
+            .itemInput(RagiumItemTags.DIRT_SOILS)
+            .itemOutput(ActuallyItems.RICE, 2)
             .save(output)
 
         // Canola Oil

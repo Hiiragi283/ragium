@@ -37,6 +37,9 @@ object RagiumItemTags {
     val SLAG: TagKey<Item> = commonTag("slag")
 
     @JvmField
+    val SOLAR_PANELS: TagKey<Item> = itemTagKey(RagiumAPI.id("solar_panels"))
+
+    @JvmField
     val TOOLS_KNIFE: TagKey<Item> = commonTag("tools/knife")
 
     // Circuits
@@ -78,9 +81,6 @@ object RagiumItemTags {
 
     @JvmField
     val WIRE_MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/wire"))
-
-    @JvmField
-    val SOLAR_PANELS: TagKey<Item> = itemTagKey(RagiumAPI.id("solar_panels"))
 
     // Soils
     @JvmField

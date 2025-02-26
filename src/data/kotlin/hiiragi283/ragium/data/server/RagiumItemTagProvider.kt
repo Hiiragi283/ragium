@@ -180,6 +180,7 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.ULTIMATE_CIRCUIT, RagiumItems.ULTIMATE_CIRCUIT)
 
         builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
+        builder.add(RagiumItemTags.SOLAR_PANELS, EIOItems.PHOTOVOLTAIC_PLATE, true)
         builder.add(RagiumItemTags.SOLAR_PANELS, GeneratorsItems.SOLAR_PANEL, true)
         builder.add(RagiumItemTags.SOLAR_PANELS, RagiumItems.SOLAR_PANEL)
         builder.add(Tags.Items.BUCKETS, RagiumItems.CRUDE_OIL_BUCKET)
