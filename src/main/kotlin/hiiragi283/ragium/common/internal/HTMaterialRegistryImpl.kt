@@ -80,6 +80,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         event.register(CommonMaterials.PERIDOT, HTMaterialType.GEM)
         event.register(CommonMaterials.PLATINUM, HTMaterialType.METAL)
         event.register(CommonMaterials.PLUTONIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.PYRITE, HTMaterialType.MINERAL)
         event.register(CommonMaterials.RUBY, HTMaterialType.GEM)
         event.register(CommonMaterials.SALT, HTMaterialType.MINERAL)
         event.register(CommonMaterials.SALTPETER, HTMaterialType.MINERAL)

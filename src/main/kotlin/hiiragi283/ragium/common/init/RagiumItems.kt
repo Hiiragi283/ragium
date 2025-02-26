@@ -82,6 +82,7 @@ object RagiumItems {
         register(HTTagPrefix.DUST, VanillaMaterials.GOLD)
         register(HTTagPrefix.DUST, VanillaMaterials.DIAMOND)
         register(HTTagPrefix.DUST, VanillaMaterials.EMERALD)
+        register(HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
 
         register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
@@ -123,6 +124,8 @@ object RagiumItems {
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
+
+        register(HTTagPrefix.GEM, CommonMaterials.PYRITE)
         // Coils
         register(HTTagPrefix.COIL, VanillaMaterials.COPPER)
         register(HTTagPrefix.COIL, VanillaMaterials.GOLD)

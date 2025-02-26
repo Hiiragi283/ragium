@@ -325,6 +325,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(CommonMaterials.PERIDOT, "ペリドット")
         add(CommonMaterials.PLATINUM, "白金")
         add(CommonMaterials.PLUTONIUM, "プルトニウム")
+        add(CommonMaterials.PYRITE, "金")
         add(CommonMaterials.RUBY, "ルビー")
         add(CommonMaterials.SALT, "塩")
         add(CommonMaterials.SALTPETER, "硝石")

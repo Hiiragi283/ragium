@@ -1,19 +1,19 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.common.multiblock.HTSimpleMultiblockComponent
 import hiiragi283.ragium.common.multiblock.HTSpawnerMultiblockComponent
-import hiiragi283.ragium.common.multiblock.HTTagMultiblockComponent
 import net.minecraft.world.level.block.Blocks
 
 object RagiumMultiblockMaps {
     private val BRICK_WALL = HTSimpleMultiblockComponent(Blocks::BRICK_WALL)
     private val DEEPSLATE_BRICKS = HTSimpleMultiblockComponent(Blocks::DEEPSLATE_BRICKS)
+    private val DIAMOND_BLOCK = HTSimpleMultiblockComponent(Blocks::DIAMOND_BLOCK)
+    private val IRON_BLOCK = HTSimpleMultiblockComponent(Blocks::IRON_BLOCK)
     private val RAGI_BRICK_WALL = HTSimpleMultiblockComponent(RagiumBlocks.RAGI_BRICK_FAMILY.wall)
     private val RAGI_BRICKS = HTSimpleMultiblockComponent(RagiumBlocks.RAGI_BRICKS)
+    private val STEEL_BLOCK = HTSimpleMultiblockComponent { RagiumBlocks.STORAGE_BLOCKS[CommonMaterials.STEEL]!!.get() }
     private val TERRACOTTA = HTSimpleMultiblockComponent(Blocks::TERRACOTTA)
 
     @JvmField
@@ -50,17 +50,17 @@ object RagiumMultiblockMaps {
         .addLayer(-1..1, -1, 1..3, DEEPSLATE_BRICKS)
         .addLayer(-1..1, 1, 1..3, RAGI_BRICKS)
         // Iron
-        .add(-1, 0, 1, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
-        .add(1, 0, 1, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
-        .add(1, 0, 3, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
-        .add(-1, 0, 3, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON))
+        .add(-1, 0, 1, IRON_BLOCK)
+        .add(1, 0, 1, IRON_BLOCK)
+        .add(1, 0, 3, IRON_BLOCK)
+        .add(-1, 0, 3, IRON_BLOCK)
         // Steel
-        .add(0, 0, 1, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, CommonMaterials.STEEL))
-        .add(-1, 0, 2, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, CommonMaterials.STEEL))
-        .add(1, 0, 2, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, CommonMaterials.STEEL))
-        .add(0, 0, 3, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, CommonMaterials.STEEL))
+        .add(0, 0, 1, STEEL_BLOCK)
+        .add(-1, 0, 2, STEEL_BLOCK)
+        .add(1, 0, 2, STEEL_BLOCK)
+        .add(0, 0, 3, STEEL_BLOCK)
         // Diamond
-        .add(0, 0, 2, HTTagMultiblockComponent(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.DIAMOND))
+        .add(0, 0, 2, DIAMOND_BLOCK)
         .build()
 
     @JvmField

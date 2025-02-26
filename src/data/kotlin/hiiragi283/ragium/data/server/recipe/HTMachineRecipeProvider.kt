@@ -254,6 +254,17 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .itemOutput(Items.GRAVEL, 32)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH), 16)
             .save(output, RagiumAPI.id("basalt"))
+
+        // End Stone
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.END_STONE, 64)
+            .itemOutput(Items.SAND, 32)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.AMETHYST), 8)
+            .save(output, RagiumAPI.id("end_stone"))
+        // Obsidian
+        HTCrusherRecipeBuilder(lookup)
+            .itemInput(Items.OBSIDIAN, 64)
+            .itemOutput(Items.GRAVEL, 32)
     }
 
     //    Enchanter    //

@@ -1,0 +1,17 @@
+{
+  "type": "ragium:crusher",
+  "item_input": {
+    "count": 64,
+    "item": "minecraft:end_stone"
+  },
+  "item_outputs": [
+    {
+      "count": 32,
+      "item": "minecraft:sand"
+    },
+    {
+      "count": 8,
+      "item": "ragium:amethyst_dust"
+    }
+  ]
+}

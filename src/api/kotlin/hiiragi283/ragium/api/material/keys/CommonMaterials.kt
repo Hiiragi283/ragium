@@ -132,6 +132,9 @@ object CommonMaterials {
     val BAUXITE: HTMaterialKey = HTMaterialKey.of("bauxite")
 
     @JvmField
+    val PYRITE: HTMaterialKey = HTMaterialKey.of("pyrite")
+
+    @JvmField
     val SALT: HTMaterialKey = HTMaterialKey.of("salt")
 
     @JvmField

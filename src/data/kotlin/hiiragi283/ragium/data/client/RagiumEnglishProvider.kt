@@ -345,6 +345,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(CommonMaterials.PERIDOT, "Peridot")
         add(CommonMaterials.PLATINUM, "Platinum")
         add(CommonMaterials.PLUTONIUM, "Plutonium")
+        add(CommonMaterials.PYRITE, "Gold")
         add(CommonMaterials.RUBY, "Ruby")
         add(CommonMaterials.SALT, "Salt")
         add(CommonMaterials.SALTPETER, "Saltpeter")
