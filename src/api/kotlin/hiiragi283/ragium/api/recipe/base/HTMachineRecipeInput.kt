@@ -1,11 +1,10 @@
 package hiiragi283.ragium.api.recipe.base
 
+import hiiragi283.ragium.api.storage.HTFluidTank
+import hiiragi283.ragium.api.storage.HTItemSlot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.IFluidTank
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandler
 
 /**
  * 機械レシピのインプットを表すクラス
@@ -27,15 +26,11 @@ class HTMachineRecipeInput private constructor(val items: List<ItemStack>, val f
         val items: MutableList<ItemStack> = mutableListOf()
         val fluids: MutableList<FluidStack> = mutableListOf()
 
-        fun addItem(itemHandler: IItemHandler, index: Int): Builder = apply {
-            items.add(itemHandler.getStackInSlot(index))
+        fun addItem(slot: HTItemSlot): Builder = apply {
+            items.add(slot.getStack())
         }
 
-        fun addFluid(fluidHandler: IFluidHandler, index: Int): Builder = apply {
-            fluids.add(fluidHandler.getFluidInTank(index))
-        }
-
-        fun addFluid(tank: IFluidTank): Builder = apply {
+        fun addFluid(tank: HTFluidTank): Builder = apply {
             fluids.add(tank.fluid)
         }
 

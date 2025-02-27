@@ -13,7 +13,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "actuallyadditions:empowered_oil"
+      "fluid": "actuallyadditions:empowered_oil"
     }
   ],
   "item_input": {

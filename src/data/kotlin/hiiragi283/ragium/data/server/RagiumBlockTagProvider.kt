@@ -3,14 +3,10 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.blockLookup
-import hiiragi283.ragium.api.extension.blockTagKey
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumBlockTags
-import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
@@ -47,7 +43,6 @@ class RagiumBlockTagProvider(
         HTMachineType.getBlocks().forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
 
         buildList {
-            addAll(RagiumBlocks.ORES.values)
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
@@ -73,18 +68,8 @@ class RagiumBlockTagProvider(
         RagiumBlocks.PLASTIC_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
         RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
         // Common
-        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
-            when (variant) {
-                HTOreVariant.OVERWORLD -> Tags.Blocks.ORES_IN_GROUND_STONE
-                HTOreVariant.DEEPSLATE -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
-                HTOreVariant.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
-                HTOreVariant.END -> blockTagKey(commonId("ores_in_ground/end_stone"))
-            }?.let { builder.add(it, ore) }
-
-            val oreTagKey: TagKey<Block> = HTTagPrefix.ORE.createBlockTag(key) ?: return@forEach
-            builder.addTag(Tags.Blocks.ORES, oreTagKey)
-            builder.add(oreTagKey, ore)
-        }
+        RagiumBlocks.RAGINITE_ORES.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder)
+        RagiumBlocks.RAGI_CRYSTAL_ORES.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder)
 
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
             val storageTag: TagKey<Block> = HTTagPrefix.STORAGE_BLOCK.createBlockTag(key) ?: return@forEach

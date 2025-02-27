@@ -7,11 +7,11 @@
   "fluid_outputs": [
     {
       "amount": 10,
-      "id": "ragium:oxygen"
+      "fluid": "ragium:oxygen"
     },
     {
       "amount": 40,
-      "id": "ragium:nitrogen"
+      "fluid": "ragium:nitrogen"
     }
   ]
 }

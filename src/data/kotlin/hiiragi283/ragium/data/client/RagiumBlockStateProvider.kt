@@ -4,8 +4,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
@@ -48,9 +46,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.generateStates(this)
 
         // Ore
-        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
-            layeredBlock(ore, variant.baseStoneName.withPrefix("block/"), RagiumAPI.id(key.name).withPrefix("block/"))
-        }
+        RagiumBlocks.RAGINITE_ORES.generateStates(this)
+        RagiumBlocks.RAGI_CRYSTAL_ORES.generateStates(this)
 
         // Burner
         RagiumBlocks.BURNERS.forEach { burner: DeferredBlock<Block> ->

@@ -2,16 +2,14 @@ package hiiragi283.ragium.api
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
-import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.extension.buildMultiMap
-import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.storage.HTFluidTank
 import hiiragi283.ragium.api.storage.HTItemSlot
+import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.BlockPos
@@ -21,17 +19,14 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank
-import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.*
@@ -145,38 +140,12 @@ interface RagiumAPI {
      */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
-    fun createItemHandler(callback: () -> Unit): HTMachineItemHandler = createItemHandler(1, callback)
-
-    fun createItemHandler(size: Int, callback: () -> Unit): HTMachineItemHandler
-
     /**
-     * @param capacity タンクの基本容量
-     * @param callback [FluidTank.onContentsChanged]で呼び出されるブロック
-     * @param filter 液体を搬入可能か判定するブロック
+     * @see [HTStorageIO.wrapItemSlot]
      */
-    fun createTank(callback: () -> Unit, tagKey: TagKey<Fluid>, capacity: Int = getDefaultTankCapacity()): HTMachineFluidTank =
-        createTank(callback, { it.`is`(tagKey) }, capacity)
+    fun wrapItemSlot(storageIO: HTStorageIO, slot: HTItemSlot): IItemHandlerModifiable
 
-    /**
-     * @param capacity タンクの基本容量
-     * @param callback [FluidTank.onContentsChanged]で呼び出されるブロック
-     * @param filter 液体を搬入可能か判定するブロック
-     */
-    fun createTank(
-        callback: () -> Unit,
-        filter: (FluidStack) -> Boolean = constFunction2(true),
-        capacity: Int = getDefaultTankCapacity(),
-    ): HTMachineFluidTank
-
-    /**
-     * @see [HTStorageIO.wrapItemHandler]
-     */
-    fun wrapItemHandler(storageIO: HTStorageIO, handler: IItemHandlerModifiable): IItemHandlerModifiable
-
-    /**
-     * @see [HTStorageIO.wrapFluidHandler]
-     */
-    fun wrapFluidHandler(storageIO: HTStorageIO, handler: IFluidHandler): IFluidHandler
+    fun wrapFluidTank(storageIO: HTStorageIO, tank: IFluidTank): IFluidHandler
 
     /**
      * @see [HTStorageIO.wrapEnergyStorage]
@@ -187,17 +156,19 @@ interface RagiumAPI {
         containerId: Int,
         inventory: Inventory,
         pos: BlockPos,
-        itemInput: IItemHandler,
-        itemCatalyst: IItemHandler,
-        itemOutput: IItemHandler,
+        inputSlot: HTItemSlot,
+        catalystSlot: HTItemSlot,
+        outputSlot: HTItemSlot,
     ): AbstractContainerMenu
 
     fun createMultiItemMenu(
         containerId: Int,
         inventory: Inventory,
         pos: BlockPos,
-        itemInput: IItemHandler,
-        itemOutput: IItemHandler,
+        firstItemSlot: HTItemSlot,
+        secondItemSlot: HTItemSlot,
+        thirdItemSlot: HTItemSlot,
+        outputSlot: HTItemSlot,
     ): AbstractContainerMenu
 
     /**
@@ -205,14 +176,25 @@ interface RagiumAPI {
      */
     fun getMachineBlock(type: HTMachineType): DeferredBlock<*>
 
+    fun emptyItemSlot(): HTItemSlot = HTItemSlot.Builder().build("")
+
     /**
      * @see [HTItemSlot.Builder.build]
      */
     fun buildItemSlot(
+        nbtKey: String,
         maxSize: Int,
-        insertFilter: (ItemStack, HTStorageIO) -> Boolean,
-        extractFilter: (ItemStack, HTStorageIO) -> Boolean,
         validator: (ItemStack) -> Boolean,
         callback: Runnable,
     ): HTItemSlot
+
+    /**
+     * @see [HTFluidTank.Builder.build]
+     */
+    fun buildFluidTank(
+        nbtKey: String,
+        capacity: Int,
+        validator: (FluidStack) -> Boolean,
+        callback: Runnable,
+    ): HTFluidTank
 }

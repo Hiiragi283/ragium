@@ -1,12 +1,10 @@
 package hiiragi283.ragium.common.block.storage
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
+import hiiragi283.ragium.api.storage.HTFluidTank
+import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
@@ -25,23 +23,23 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.SimpleFluidContent
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.DRUM, pos, state),
     HTEnchantableBlockEntity,
     HTHandlerBlockEntity {
-    private val fluidTank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
-    private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(fluidTank))
+    private val fluidTank: HTFluidTank = HTFluidTank.Builder().setCallback(this::setChanged).build("fluid")
 
     override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        serializer.writeNbt(nbt, dynamicOps)
+        fluidTank.writeNbt(nbt, dynamicOps)
         ItemEnchantments.CODEC
             .encodeStart(dynamicOps, enchantments)
             .ifSuccess { nbt.put(ENCH_KEY, it) }
     }
 
     override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        serializer.readNbt(nbt, dynamicOps)
+        fluidTank.readNbt(nbt, dynamicOps)
         ItemEnchantments.CODEC
             .parse(dynamicOps, nbt.get(ENCH_KEY))
             .ifSuccess(::updateEnchantments)
@@ -87,11 +85,10 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
     override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        this.enchantments = newEnchantments
         fluidTank.updateCapacity(this)
     }
 
     //    HTHandlerBlockEntity    //
 
-    override fun getFluidHandler(direction: Direction?): HTMachineFluidTank = fluidTank
+    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTStorageIO.GENERIC.wrapFluidTank(fluidTank)
 }

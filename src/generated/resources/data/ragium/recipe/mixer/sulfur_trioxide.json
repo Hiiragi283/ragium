@@ -7,7 +7,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:sulfur_trioxide"
+      "fluid": "ragium:sulfur_trioxide"
     }
   ],
   "second_fluidInput": {

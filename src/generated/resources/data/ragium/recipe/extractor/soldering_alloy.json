@@ -3,7 +3,7 @@
   "fluid_outputs": [
     {
       "amount": 90,
-      "id": "ragium:soldering_alloy"
+      "fluid": "ragium:soldering_alloy"
     }
   ],
   "item_input": {

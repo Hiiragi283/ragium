@@ -1,34 +1,37 @@
 package hiiragi283.ragium.common.inventory
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
+import hiiragi283.ragium.api.storage.HTItemSlot
+import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.common.init.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTPrimitiveBlastFurnaceContainerMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
-    itemInput: IItemHandler,
-    itemOutput: IItemHandler,
+    firstItemSlot: HTItemSlot,
+    secondItemSlot: HTItemSlot,
+    outputSlot: HTItemSlot,
 ) : HTMachineContainerMenu(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE, containerId, inventory, pos) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
-        ItemStackHandler(2),
-        ItemStackHandler(1),
+        RagiumAPI.getInstance().emptyItemSlot(),
+        RagiumAPI.getInstance().emptyItemSlot(),
+        RagiumAPI.getInstance().emptyItemSlot(),
     )
 
     init {
         // inputs
-        addSlot(itemInput, 0, 2, 1)
-        addSlot(itemInput, 1, 3, 1)
+        addSlot(firstItemSlot.createContainerSlot(2, 1))
+        addSlot(secondItemSlot.createContainerSlot(3, 1))
         // outputs
-        addOutputSlot(itemOutput, 0, 6, 1)
+        addSlot(outputSlot.createContainerSlot(6, 1, HTStorageIO.OUTPUT))
         // player inventory
         addPlayerInv()
         // register property

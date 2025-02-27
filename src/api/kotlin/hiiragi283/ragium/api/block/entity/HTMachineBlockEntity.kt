@@ -1,12 +1,10 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
-import hiiragi283.ragium.api.capability.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.machine.HTMachineAccess
+import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
@@ -21,6 +19,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
@@ -36,6 +35,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.FluidUtil
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.*
 import java.util.function.Supplier
@@ -51,7 +51,6 @@ abstract class HTMachineBlockEntity(
     override val machineType: HTMachineType,
 ) : HTBlockEntity(type, pos, state),
     MenuProvider,
-    HTFluidInteractable,
     HTMachineAccess {
     override val front: Direction
         get() = blockState.getOrDefault(
@@ -65,8 +64,6 @@ abstract class HTMachineBlockEntity(
     override val pos: BlockPos
         get() = blockPos
 
-    protected abstract val handlerSerializer: HTHandlerSerializer
-
     override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
             .encodeStart(dynamicOps, enchantments)
@@ -75,7 +72,6 @@ abstract class HTMachineBlockEntity(
         HTPlayerOwningBlockEntity.UUID_CODEC
             .encodeStart(dynamicOps, Optional.ofNullable(ownerUUID))
             .ifSuccess { nbt.put(OWNER_KEY, it) }
-        handlerSerializer.writeNbt(nbt, dynamicOps)
     }
 
     override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
@@ -90,7 +86,6 @@ abstract class HTMachineBlockEntity(
                     this.ownerUUID = uuid
                 }
             }
-        handlerSerializer.readNbt(nbt, dynamicOps)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -129,7 +124,7 @@ abstract class HTMachineBlockEntity(
     ): InteractionResult {
         if (!level.isClientSide) {
             // Insert fluid from holding stack
-            if (interactWithFluidStorage(player)) {
+            if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, getFluidHandler(null))) {
                 return InteractionResult.SUCCESS
             }
         }
@@ -228,16 +223,6 @@ abstract class HTMachineBlockEntity(
         stack: ItemStack,
     ) {
         if (placer is Player) this.ownerUUID = placer.uuid
-    }
-
-    final override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        handlerSerializer.dropItems(level, pos)
     }
 
     final override val containerData: ContainerData = object : ContainerData {

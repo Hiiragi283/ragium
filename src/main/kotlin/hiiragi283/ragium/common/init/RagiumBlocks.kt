@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockProperty
-import hiiragi283.ragium.api.extension.buildTable
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.extension.lore
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -10,8 +9,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.HTBlockFamily
-import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.HTOreSets
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
@@ -79,24 +77,10 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val ORES: HTTable<HTOreVariant, HTMaterialKey, DeferredBlock<out Block>> = buildTable {
-        val materials: List<HTMaterialKey> = listOf(
-            RagiumMaterials.RAGINITE,
-            RagiumMaterials.RAGI_CRYSTAL,
-        )
-        for (variant: HTOreVariant in HTOreVariant.entries) {
-            for (key: HTMaterialKey in materials) {
-                put(
-                    variant,
-                    key,
-                    Builder(variant.createId(key))
-                        .properties(variant.createProperty())
-                        .component(DataComponents.ITEM_NAME, variant.createText(key))
-                        .build(),
-                )
-            }
-        }
-    }
+    val RAGINITE_ORES = HTOreSets(REGISTER, ITEM_REGISTER, RagiumMaterials.RAGINITE)
+
+    @JvmField
+    val RAGI_CRYSTAL_ORES = HTOreSets(REGISTER, ITEM_REGISTER, RagiumMaterials.RAGI_CRYSTAL)
 
     @JvmField
     val SOUL_MAGMA_BLOCK: DeferredBlock<HTSoulMagmaBlock> = Builder("soul_magma_block")

@@ -1,17 +1,16 @@
 package hiiragi283.ragium.common.block.machine
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
-import hiiragi283.ragium.api.extension.dropStacks
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.storage.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.HTItemSlot
+import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -24,29 +23,26 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.util.*
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
-    HTMachineAccess {
-    private val itemHandler: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
-
-    private val serializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(listOf(itemHandler.createSlot(0)))
+    HTMachineAccess,
+    HTFluidSlotHandler.Empty {
+    private val inputSlot: HTItemSlot = HTItemSlot.Builder().setCallback(this::setChanged).build("item_input")
 
     override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        serializer.writeNbt(nbt, dynamicOps)
+        inputSlot.writeNbt(nbt, dynamicOps)
     }
 
     override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        serializer.readNbt(nbt, dynamicOps)
+        inputSlot.readNbt(nbt, dynamicOps)
     }
 
     override fun onRightClicked(
@@ -72,21 +68,19 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     private fun process(level: Level, pos: BlockPos, player: Player) {
         // Find matching recipe
-        val stackIn: ItemStack = itemHandler.getStackInSlot(0)
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.Builder().addItem(itemHandler, 0).build()
+        val input: HTMachineRecipeInput = HTMachineRecipeInput.Builder().addItem(inputSlot).build()
         HTRecipeTypes.GRINDER
             .getFirstRecipe(input, level)
             .onSuccess { recipe: HTGrinderRecipe ->
                 // Drop output
                 ItemHandlerHelper.giveItemToPlayer(player, recipe.itemOutput.get())
                 // Shrink input
-                stackIn.shrink(recipe.input.count)
+                inputSlot.shrinkStack(recipe.input.count, true)
                 // Play sound
                 level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS)
             }.onFailure { _: Throwable ->
                 // Drop input
-                ItemHandlerHelper.giveItemToPlayer(player, stackIn)
-                itemHandler.setStackInSlot(0, ItemStack.EMPTY)
+                inputSlot.dropStack(player)
             }
     }
 
@@ -97,7 +91,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
-        itemHandler.dropStacks(level, pos)
+        dropStackAt(level, pos, inputSlot.getStack())
     }
 
     //    HTMachineAccess    //
@@ -119,7 +113,11 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getErrorMessage(): String? = null
 
-    //    HTMachineAccess    //
+    //    Item    //
 
-    override fun getItemHandler(direction: Direction?): IItemHandlerModifiable = HTStorageIO.INPUT.wrapItemHandler(itemHandler)
+    override fun getItemSlot(slot: Int): HTItemSlot? = inputSlot
+
+    override fun getItemIoFromSlot(slot: Int): HTStorageIO = HTStorageIO.INPUT
+
+    override fun getSlots(): Int = 1
 }

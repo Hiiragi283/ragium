@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
@@ -21,7 +22,6 @@ import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -86,9 +86,10 @@ abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, 
 
     fun fluidOutput(fluid: Supplier<out Fluid>, count: Int = FluidType.BUCKET_VOLUME): T = fluidOutput(fluid.get(), count)
 
-    fun fluidOutput(fluid: Fluid, amount: Int = FluidType.BUCKET_VOLUME): T = fluidOutput(FluidStack(fluid, amount))
+    fun fluidOutput(fluid: Fluid, amount: Int = FluidType.BUCKET_VOLUME): T =
+        fluidOutput(HTFluidOutput(fluid, amount, DataComponentPatch.EMPTY))
 
-    abstract fun fluidOutput(stack: FluidStack): T
+    protected abstract fun fluidOutput(output: HTFluidOutput): T
 
     fun waterOutput(amount: Int = FluidType.BUCKET_VOLUME): T = fluidOutput(Fluids.WATER, amount)
 

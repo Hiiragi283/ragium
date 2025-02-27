@@ -1,13 +1,13 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTCrusherRecipe
+import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import net.minecraft.core.HolderGetter
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
 class HTCrusherRecipeBuilder(lookup: HolderGetter<Item>) : HTMachineRecipeBuilderBase<HTCrusherRecipeBuilder, HTCrusherRecipe>(lookup) {
@@ -26,7 +26,7 @@ class HTCrusherRecipeBuilder(lookup: HolderGetter<Item>) : HTMachineRecipeBuilde
         outputs.add(output)
     }
 
-    override fun fluidOutput(stack: FluidStack): HTCrusherRecipeBuilder = throw UnsupportedOperationException()
+    override fun fluidOutput(output: HTFluidOutput): HTCrusherRecipeBuilder = throw UnsupportedOperationException()
 
     override val prefix: String = "crusher"
 

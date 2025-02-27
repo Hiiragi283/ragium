@@ -76,7 +76,6 @@ abstract class HTContainerMenu(
 
     //    Extensions    //
 
-    val itemSlots: MutableList<Pair<Int, Int>> = mutableListOf()
     val fluidSlots: MutableMap<Int, Pair<Int, Int>> = mutableMapOf()
 
     protected fun addSlot(
@@ -86,17 +85,6 @@ abstract class HTContainerMenu(
         y: Int,
     ) {
         addSlot(SlotItemHandler(handler, index, HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y)))
-        itemSlots.add(x to y)
-    }
-
-    protected fun addOutputSlot(
-        handler: IItemHandler,
-        index: Int,
-        x: Int,
-        y: Int,
-    ) {
-        addSlot(HTOutputSlot(handler, index, HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y)))
-        itemSlots.add(x to y)
     }
 
     protected fun addFluidSlot(index: Int, x: Int, y: Int) {

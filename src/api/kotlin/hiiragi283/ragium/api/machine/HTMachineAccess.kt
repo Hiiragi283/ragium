@@ -5,8 +5,10 @@ import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.block.entity.HTErrorHoldingBlockEntity
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.block.entity.HTPlayerOwningBlockEntity
-import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.asServerLevel
+import hiiragi283.ragium.api.storage.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.HTItemSlotHandler
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -16,6 +18,8 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.TooltipProvider
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandler
 import java.util.function.Consumer
 
 /**
@@ -26,6 +30,8 @@ interface HTMachineAccess :
     HTEnchantableBlockEntity,
     HTErrorHoldingBlockEntity,
     HTHandlerBlockEntity,
+    HTItemSlotHandler,
+    HTFluidSlotHandler,
     HTPlayerOwningBlockEntity {
     /**
      * 機械の正面の向き
@@ -72,6 +78,10 @@ interface HTMachineAccess :
     }
 
     //    HTBlockEntityHandlerProvider    //
+
+    override fun getItemHandler(direction: Direction?): IItemHandler? = if (this is HTItemSlotHandler.Empty) null else this
+
+    override fun getFluidHandler(direction: Direction?): IFluidHandler? = if (this is HTFluidSlotHandler.Empty) null else this
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = levelAccess
         ?.asServerLevel()

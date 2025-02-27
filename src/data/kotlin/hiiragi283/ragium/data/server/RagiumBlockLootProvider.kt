@@ -1,10 +1,8 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.util.HTOreSets
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -31,18 +29,19 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             remove(RagiumBlocks.CRUDE_OIL)
             remove(RagiumBlocks.COPPER_DRUM)
-            removeAll(RagiumBlocks.ORES.values)
+
+            removeAll(RagiumBlocks.RAGINITE_ORES.ores)
+            removeAll(RagiumBlocks.RAGI_CRYSTAL_ORES.ores)
         }.forEach { dropSelf(it.get()) }
 
-        RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
-            val prefix: HTTagPrefix = when (key) {
-                RagiumMaterials.RAGINITE -> HTTagPrefix.RAW_MATERIAL
-                RagiumMaterials.RAGI_CRYSTAL -> HTTagPrefix.GEM
-                else -> error("Undefined material: $key")
+        fun registerOres(oreSets: HTOreSets, prefix: HTTagPrefix) {
+            for (ore: DeferredBlock<Block> in oreSets.ores) {
+                val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, oreSets.key)
+                add(ore.get()) { block: Block -> createOreDrop(block, rawMaterial.asItem()) }
             }
-            val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, key)
-            add(ore.get()) { block: Block -> createOreDrop(block, rawMaterial.asItem()) }
         }
+        registerOres(RagiumBlocks.RAGINITE_ORES, HTTagPrefix.RAW_MATERIAL)
+        registerOres(RagiumBlocks.RAGI_CRYSTAL_ORES, HTTagPrefix.GEM)
 
         add(RagiumBlocks.COPPER_DRUM.get()) {
             copyComponent(

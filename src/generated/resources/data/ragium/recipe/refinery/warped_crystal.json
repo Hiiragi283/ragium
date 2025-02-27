@@ -7,7 +7,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:sap"
+      "fluid": "ragium:sap"
     }
   ],
   "item_outputs": [

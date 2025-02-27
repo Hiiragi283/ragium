@@ -1,26 +1,26 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
-import hiiragi283.ragium.api.extension.canInsert
-import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
+import hiiragi283.ragium.api.storage.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.HTItemSlot
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 import java.util.function.Supplier
 
 abstract class HTSingleItemMachineBlockEntity(
@@ -28,37 +28,56 @@ abstract class HTSingleItemMachineBlockEntity(
     pos: BlockPos,
     state: BlockState,
     machineType: HTMachineType,
-) : HTMachineBlockEntity(type, pos, state, machineType) {
-    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
-    private val itemCatalyst: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
-    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
-
-    final override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofItem(
-        listOf(
-            itemInput.createSlot(0),
-            itemCatalyst.createSlot(0),
-            itemOutput.createSlot(0),
-        ),
-    )
+) : HTMachineBlockEntity(type, pos, state, machineType),
+    HTFluidSlotHandler.Empty {
+    private val inputSlot: HTItemSlot = HTItemSlot
+        .Builder()
+        .setCallback(this::setChanged)
+        .build("input")
+    private val catalystSlot: HTItemSlot = HTItemSlot
+        .Builder()
+        .setMaxSize(1)
+        .setCallback(this::setChanged)
+        .build("catalyst")
+    private val outputSlot: HTItemSlot = HTItemSlot
+        .Builder()
+        .setCallback(this::setChanged)
+        .build("output")
 
     abstract val recipeType: HTRecipeType<out HTSingleItemRecipe>
+
+    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, dynamicOps)
+        inputSlot.writeNbt(nbt, dynamicOps)
+        catalystSlot.writeNbt(nbt, dynamicOps)
+        outputSlot.writeNbt(nbt, dynamicOps)
+    }
+
+    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, dynamicOps)
+        inputSlot.readNbt(nbt, dynamicOps)
+        catalystSlot.readNbt(nbt, dynamicOps)
+        outputSlot.readNbt(nbt, dynamicOps)
+    }
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val input: HTMachineRecipeInput =
             HTMachineRecipeInput
                 .Builder()
-                .addItem(itemInput, 0)
-                .addItem(itemCatalyst, 0)
+                .addItem(inputSlot)
+                .addItem(catalystSlot)
                 .build()
         val recipe: HTSingleItemRecipe = recipeType.getFirstRecipe(input, level).getOrThrow()
+
         val output: ItemStack = recipe.itemOutput.get()
-        // Try to insert outputs
-        if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
-        // Insert outputs
-        itemOutput.insertOrDrop(level, pos.above(), output)
-        // Decrement input
-        itemInput.getStackInSlot(0).shrink(recipe.input.count)
+        if (!outputSlot.canInsert(output)) throw HTMachineException.MergeOutput(false)
+
+        val inputCount: Int = recipe.input.count
+        if (!inputSlot.canShrink(inputCount, true)) throw HTMachineException.ShrinkInput(false)
+
+        outputSlot.insertItem(output, false)
+        inputSlot.extractItem(inputCount, false)
     }
 
     final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
@@ -66,16 +85,37 @@ abstract class HTSingleItemMachineBlockEntity(
             containerId,
             playerInventory,
             blockPos,
-            itemInput,
-            itemCatalyst,
-            itemOutput,
+            inputSlot,
+            catalystSlot,
+            outputSlot,
         )
 
-    final override fun interactWithFluidStorage(player: Player): Boolean = false
+    override fun onRemove(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        newState: BlockState,
+        movedByPiston: Boolean,
+    ) {
+        inputSlot.dropStack(level, pos)
+        catalystSlot.dropStack(level, pos)
+        outputSlot.dropStack(level, pos)
+    }
 
-    final override fun getItemHandler(direction: Direction?): CombinedInvWrapper = CombinedInvWrapper(
-        HTStorageIO.INPUT.wrapItemHandler(itemInput),
-        HTStorageIO.INTERNAL.wrapItemHandler(itemCatalyst),
-        HTStorageIO.OUTPUT.wrapItemHandler(itemOutput),
-    )
+    //    Item    //
+
+    override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
+        0 -> inputSlot
+        1 -> catalystSlot
+        2 -> outputSlot
+        else -> null
+    }
+
+    override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
+        0 -> HTStorageIO.INPUT
+        2 -> HTStorageIO.OUTPUT
+        else -> HTStorageIO.EMPTY
+    }
+
+    override fun getSlots(): Int = 3
 }

@@ -1,15 +1,14 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.extension.sendUpdatePacket
+import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
-import net.minecraft.nbt.Tag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
-import net.minecraft.resources.RegistryOps
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -29,7 +28,8 @@ import java.util.function.Supplier
  * Ragiumで使用する[BlockEntity]の基本クラス
  */
 abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
-    BlockEntity(type.get(), pos, state) {
+    BlockEntity(type.get(), pos, state),
+    HTNbtCodec {
     companion object {
         const val ACTIVE_KEY = "isActive"
         const val ENCH_KEY = "enchantment"
@@ -62,10 +62,6 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
     }
 
     //    Extension    //
-
-    protected open fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {}
-
-    protected open fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {}
 
     /**
      * ブロックが右クリックされたときに呼ばれます。

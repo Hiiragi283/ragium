@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.machine
 
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
@@ -19,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntityBlock.Horizontal(properties) {
     companion object {
         @JvmStatic
-        private val factoryMap: Map<HTMachineType, (BlockPos, BlockState) -> HTMachineBlockEntity?> = mapOf(
+        private val factoryMap: Map<HTMachineType, (BlockPos, BlockState) -> BlockEntity?> = mapOf(
             // Consumer
             HTMachineType.FISHER to ::HTFisherBlockEntity,
             // Generator

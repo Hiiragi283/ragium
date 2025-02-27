@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTAssemblerRecipe
 import hiiragi283.ragium.api.recipe.HTBlastFurnaceRecipe
+import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
@@ -9,7 +10,6 @@ import net.minecraft.core.HolderGetter
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
@@ -47,7 +47,7 @@ class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
         this.output = output
     }
 
-    override fun fluidOutput(stack: FluidStack): HTMultiItemRecipeBuilder<T> = throw UnsupportedOperationException()
+    override fun fluidOutput(output: HTFluidOutput): HTMultiItemRecipeBuilder<T> = throw UnsupportedOperationException()
 
     override fun getPrimalId(): ResourceLocation = output.id
 

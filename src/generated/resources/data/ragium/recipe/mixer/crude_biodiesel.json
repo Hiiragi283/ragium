@@ -7,7 +7,7 @@
   "fluid_outputs": [
     {
       "amount": 500,
-      "id": "ragium:crude_biodiesel"
+      "fluid": "ragium:crude_biodiesel"
     }
   ],
   "second_fluidInput": {

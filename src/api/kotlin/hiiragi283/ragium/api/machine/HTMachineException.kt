@@ -17,11 +17,11 @@ sealed class HTMachineException(val showInLog: Boolean, message: String) : Runti
 
     class ExtractFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to extract fluid into the storage!")
 
-    //    Item    //
+    //    Recipe    //
 
     class NoMatchingRecipe(showInLog: Boolean) : HTMachineException(showInLog, "Failed to find matching recipe!")
 
-    class ConsumeInput(showInLog: Boolean) : HTMachineException(showInLog, "Failed to consume recipe inputs!")
+    class ShrinkInput(showInLog: Boolean) : HTMachineException(showInLog, "Failed to consume recipe inputs!")
 
-    class MergeResult(showInLog: Boolean) : HTMachineException(showInLog, "Failed to merge results into outputs!")
+    class MergeOutput(showInLog: Boolean) : HTMachineException(showInLog, "Failed to merge recipe results into outputs!")
 }

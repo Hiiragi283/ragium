@@ -28,7 +28,8 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.HONEY_BUCKET)
                     // Material Blocks
                     output.accept(RagiumBlocks.SOUL_MAGMA_BLOCK)
-                    RagiumBlocks.ORES.values.forEach(output::accept)
+                    RagiumBlocks.RAGINITE_ORES.ores.forEach(output::accept)
+                    RagiumBlocks.RAGI_CRYSTAL_ORES.ores.forEach(output::accept)
                     RagiumBlocks.STORAGE_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.SLAG_BLOCK)
                     // Decorations

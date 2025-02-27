@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTSolidifierRecipe
+import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import net.minecraft.core.HolderGetter
@@ -10,7 +11,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
@@ -34,7 +34,7 @@ class HTSolidifierRecipeBuilder(lookup: HolderGetter<Item>) :
         this.output = output
     }
 
-    override fun fluidOutput(stack: FluidStack): HTSolidifierRecipeBuilder = throw UnsupportedOperationException()
+    override fun fluidOutput(output: HTFluidOutput): HTSolidifierRecipeBuilder = throw UnsupportedOperationException()
 
     fun catalyst(item: ItemLike): HTSolidifierRecipeBuilder = catalyst(Ingredient.of(item))
 

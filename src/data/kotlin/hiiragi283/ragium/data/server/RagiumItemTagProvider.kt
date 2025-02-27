@@ -65,11 +65,8 @@ class RagiumItemTagProvider(
     //    Material    //
 
     private fun materialTags() {
-        RagiumBlocks.ORES.forEach { (_, key: HTMaterialKey, ore: DeferredBlock<out Block>) ->
-            val oreTagKey: TagKey<Item> = HTTagPrefix.ORE.createTag(key)
-            builder.addTag(HTTagPrefix.ORE.commonTagKey, oreTagKey)
-            builder.add(oreTagKey, ore.asHolder())
-        }
+        RagiumBlocks.RAGINITE_ORES.appendTags(builder)
+        RagiumBlocks.RAGI_CRYSTAL_ORES.appendTags(builder)
 
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
             val storageTag: TagKey<Item> = HTTagPrefix.STORAGE_BLOCK.createTag(key)

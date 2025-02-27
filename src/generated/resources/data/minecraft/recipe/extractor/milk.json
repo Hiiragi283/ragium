@@ -3,7 +3,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "minecraft:milk"
+      "fluid": "minecraft:milk"
     }
   ],
   "item_input": {

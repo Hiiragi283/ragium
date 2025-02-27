@@ -7,7 +7,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:hydrofluoric_acid"
+      "fluid": "ragium:hydrofluoric_acid"
     }
   ],
   "item_input": {

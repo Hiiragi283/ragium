@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
+import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import net.minecraft.core.HolderGetter
@@ -8,7 +9,6 @@ import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
 class HTGrowthChamberRecipeBuilder(lookup: HolderGetter<Item>) :
@@ -37,7 +37,7 @@ class HTGrowthChamberRecipeBuilder(lookup: HolderGetter<Item>) :
         this.waterAmount = amount
     }
 
-    override fun fluidOutput(stack: FluidStack): HTGrowthChamberRecipeBuilder = throw UnsupportedOperationException()
+    override fun fluidOutput(output: HTFluidOutput): HTGrowthChamberRecipeBuilder = throw UnsupportedOperationException()
 
     override fun getPrimalId(): ResourceLocation = crop.id
 

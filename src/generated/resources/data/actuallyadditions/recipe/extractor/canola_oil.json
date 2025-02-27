@@ -9,7 +9,7 @@
   "fluid_outputs": [
     {
       "amount": 80,
-      "id": "actuallyadditions:canola_oil"
+      "fluid": "actuallyadditions:canola_oil"
     }
   ],
   "item_input": {

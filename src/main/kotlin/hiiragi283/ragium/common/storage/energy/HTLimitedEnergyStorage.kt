@@ -1,6 +1,6 @@
-package hiiragi283.ragium.common.capability.energy
+package hiiragi283.ragium.common.storage.energy
 
-import hiiragi283.ragium.api.capability.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 class HTLimitedEnergyStorage(val storageIO: HTStorageIO, val delegate: IEnergyStorage) : IEnergyStorage {

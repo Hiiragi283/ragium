@@ -7,7 +7,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:mushroom_stew"
+      "fluid": "ragium:mushroom_stew"
     }
   ],
   "item_input": {

@@ -1,29 +1,29 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
-import hiiragi283.ragium.api.extension.canInsert
-import hiiragi283.ragium.api.extension.insertOrDrop
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
+import hiiragi283.ragium.api.storage.HTFluidTank
+import hiiragi283.ragium.api.storage.HTItemSlot
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.ItemEnchantments
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 import java.util.function.Supplier
 
 abstract class HTMultiItemMachineBlockEntity(
@@ -32,54 +32,141 @@ abstract class HTMultiItemMachineBlockEntity(
     state: BlockState,
     machineType: HTMachineType,
 ) : HTMachineBlockEntity(type, pos, state, machineType) {
-    private val itemInput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(3, this::setChanged)
-    private val fluidInput: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged)
-    private val itemOutput: HTMachineItemHandler = RagiumAPI.getInstance().createItemHandler(this::setChanged)
+    private val firstItemSlot: HTItemSlot = HTItemSlot
+        .Builder()
+        .setCallback(this::setChanged)
+        .build("first_item")
+    private val secondItemSlot: HTItemSlot = HTItemSlot
+        .Builder()
+        .setCallback(this::setChanged)
+        .build("second_item")
+    private val thirdItemSlot: HTItemSlot = HTItemSlot
+        .Builder()
+        .setCallback(this::setChanged)
+        .build("third_item")
+    private val outputSlot: HTItemSlot = HTItemSlot
+        .Builder()
+        .setCallback(this::setChanged)
+        .build("output")
 
-    final override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.of(
-        listOf(
-            itemInput.createSlot(0),
-            itemInput.createSlot(1),
-            itemInput.createSlot(2),
-            itemOutput.createSlot(0),
-        ),
-        listOf(
-            fluidInput,
-        ),
-    )
+    private val inputTank: HTFluidTank = HTFluidTank
+        .Builder()
+        .setCallback(this::setChanged)
+        .build("fluid_input")
 
     abstract val recipeType: HTRecipeType<out HTMultiItemRecipe>
+
+    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, dynamicOps)
+        firstItemSlot.writeNbt(nbt, dynamicOps)
+        secondItemSlot.writeNbt(nbt, dynamicOps)
+        thirdItemSlot.writeNbt(nbt, dynamicOps)
+        outputSlot.writeNbt(nbt, dynamicOps)
+
+        inputTank.writeNbt(nbt, dynamicOps)
+    }
+
+    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, dynamicOps)
+        firstItemSlot.readNbt(nbt, dynamicOps)
+        secondItemSlot.readNbt(nbt, dynamicOps)
+        thirdItemSlot.readNbt(nbt, dynamicOps)
+        outputSlot.readNbt(nbt, dynamicOps)
+
+        inputTank.readNbt(nbt, dynamicOps)
+    }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val input: HTMachineRecipeInput = HTMachineRecipeInput
             .Builder()
-            .addItem(itemInput, 0)
-            .addItem(itemInput, 1)
-            .addItem(itemInput, 2)
-            .addFluid(fluidInput)
+            .addItem(firstItemSlot)
+            .addItem(secondItemSlot)
+            .addItem(thirdItemSlot)
+            .addFluid(inputTank)
             .build()
         val recipe: HTMultiItemRecipe = recipeType.getFirstRecipe(input, level).getOrThrow()
-        if (!itemInput.canConsumeAll()) throw HTMachineException.ConsumeInput(false)
+
         val output: ItemStack = recipe.itemOutput.get()
-        if (!itemOutput.canInsert(output)) throw HTMachineException.MergeResult(false)
-        itemOutput.insertOrDrop(level, pos.above(), output)
-        itemInput.consumeItem(0, recipe.itemInputs[0].count, false)
-        itemInput.consumeItem(1, recipe.itemInputs.getOrNull(1)?.count ?: 0, false)
-        itemInput.consumeItem(2, recipe.itemInputs.getOrNull(2)?.count ?: 0, false)
+        if (!outputSlot.canInsert(output)) throw HTMachineException.MergeOutput(false)
+
+        if (!firstItemSlot.canShrink(recipe.itemInputs[0].count, true)) throw HTMachineException.ShrinkInput(false)
+        recipe.itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
+            if (!secondItemSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
+        }
+        recipe.itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
+            if (!thirdItemSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
+        }
         recipe.fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
-            fluidInput.drain(ingredient.amount(), IFluidHandler.FluidAction.EXECUTE)
+            if (!inputTank.canShrink(ingredient.amount(), true)) throw HTMachineException.ShrinkInput(false)
+        }
+
+        outputSlot.insertItem(output, false)
+        firstItemSlot.shrinkStack(recipe.itemInputs[0].count, false)
+        recipe.itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
+            secondItemSlot.shrinkStack(ingredient.count, true)
+        }
+        recipe.itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
+            thirdItemSlot.shrinkStack(ingredient.count, true)
+        }
+        recipe.fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
+            inputTank.canShrink(ingredient.amount(), false)
         }
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        RagiumAPI.getInstance().createMultiItemMenu(containerId, playerInventory, blockPos, itemInput, itemOutput)
+        RagiumAPI.getInstance().createMultiItemMenu(
+            containerId,
+            playerInventory,
+            blockPos,
+            firstItemSlot,
+            secondItemSlot,
+            thirdItemSlot,
+            outputSlot,
+        )
 
-    final override fun interactWithFluidStorage(player: Player): Boolean = fluidInput.interactWithFluidStorage(player, HTStorageIO.INPUT)
+    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+        super.updateEnchantments(newEnchantments)
+        inputTank.updateCapacity(this)
+    }
 
-    final override fun getItemHandler(direction: Direction?): CombinedInvWrapper = CombinedInvWrapper(
-        HTStorageIO.INPUT.wrapItemHandler(itemInput),
-        HTStorageIO.OUTPUT.wrapItemHandler(itemOutput),
-    )
+    override fun onRemove(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        newState: BlockState,
+        movedByPiston: Boolean,
+    ) {
+        firstItemSlot.dropStack(level, pos)
+        secondItemSlot.dropStack(level, pos)
+        thirdItemSlot.dropStack(level, pos)
+        outputSlot.dropStack(level, pos)
+    }
 
-    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTStorageIO.INPUT.wrapFluidHandler(fluidInput)
+    //    Item    //
+
+    override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
+        0 -> firstItemSlot
+        1 -> secondItemSlot
+        2 -> thirdItemSlot
+        3 -> outputSlot
+        else -> null
+    }
+
+    override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
+        0 -> HTStorageIO.INPUT
+        1 -> HTStorageIO.INPUT
+        2 -> HTStorageIO.INPUT
+        3 -> HTStorageIO.OUTPUT
+        else -> HTStorageIO.EMPTY
+    }
+
+    override fun getSlots(): Int = 4
+
+    //    Fluid    //
+
+    override fun getFluidTank(tank: Int): HTFluidTank? = inputTank
+
+    override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.INPUT
+
+    override fun getTanks(): Int = 1
 }

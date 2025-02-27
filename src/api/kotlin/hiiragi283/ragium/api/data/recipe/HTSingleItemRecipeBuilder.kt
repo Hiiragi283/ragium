@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.recipe.HTCompressorRecipe
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTLaserAssemblyRecipe
+import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
@@ -13,7 +14,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.*
 
@@ -53,7 +53,7 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
         this.output = output
     }
 
-    override fun fluidOutput(stack: FluidStack): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()
+    override fun fluidOutput(output: HTFluidOutput): HTSingleItemRecipeBuilder<T> = throw UnsupportedOperationException()
 
     fun catalyst(item: ItemLike): HTSingleItemRecipeBuilder<T> = catalyst(Ingredient.of(item))
 

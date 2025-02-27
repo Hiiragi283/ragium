@@ -1,8 +1,8 @@
-package hiiragi283.ragium.api.capability
+package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 
@@ -10,6 +10,11 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
  * ストレージの搬入出を管理するクラス
  */
 enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
+    /**
+     * 搬入出を受け付けない
+     */
+    EMPTY(false, false),
+
     /**
      * ホッパーやパイプを介した搬入
      */
@@ -21,30 +26,20 @@ enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
     OUTPUT(false, true),
 
     /**
-     * デフォルトの操作
+     * ホッパーやパイプを介した搬入出の両方を受け付ける
      */
     GENERIC(true, true),
-
-    /**
-     * GUI上のでプレイヤーによる操作
-     */
-    INVENTORY(true, true),
-
-    /**
-     * [BlockEntity]内での操作
-     */
-    INTERNAL(false, false),
     ;
 
     /**
-     * 指定した[handler]の搬入出を制限した[IItemHandlerModifiable]を返します。
+     * 指定した[slot]の搬入出を制限した[IItemHandlerModifiable]を返します。
      */
-    fun wrapItemHandler(handler: IItemHandlerModifiable): IItemHandlerModifiable = RagiumAPI.getInstance().wrapItemHandler(this, handler)
+    fun wrapItemSlot(slot: HTItemSlot): IItemHandlerModifiable = RagiumAPI.getInstance().wrapItemSlot(this, slot)
 
     /**
-     * 指定した[handler]の搬入出を制限した[IFluidHandler]を返します。
+     * 指定した[tank]の搬入出を制限した[IFluidHandler]を返します。
      */
-    fun wrapFluidHandler(handler: IFluidHandler): IFluidHandler = RagiumAPI.getInstance().wrapFluidHandler(this, handler)
+    fun wrapFluidTank(tank: IFluidTank): IFluidHandler = RagiumAPI.getInstance().wrapFluidTank(this, tank)
 
     /**
      * 指定した[storage]の搬入出を制限した[IEnergyStorage]を返します。

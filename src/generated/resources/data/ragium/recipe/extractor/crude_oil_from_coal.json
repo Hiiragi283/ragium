@@ -3,7 +3,7 @@
   "fluid_outputs": [
     {
       "amount": 125,
-      "id": "ragium:crude_oil"
+      "fluid": "ragium:crude_oil"
     }
   ],
   "item_input": {

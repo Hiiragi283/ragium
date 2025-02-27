@@ -1,9 +1,8 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.util.HTOreSets
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
@@ -35,7 +34,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.world.BiomeModifier
 import net.neoforged.neoforge.common.world.BiomeModifiers
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 object RagiumWorldGenBoostrap {
@@ -45,8 +43,8 @@ object RagiumWorldGenBoostrap {
         addOres(
             "overworld_raginite",
             BiomeTags.IS_OVERWORLD,
-            createTarget(BlockTags.STONE_ORE_REPLACEABLES, HTOreVariant.OVERWORLD, RagiumMaterials.RAGINITE),
-            createTarget(BlockTags.DEEPSLATE_ORE_REPLACEABLES, HTOreVariant.DEEPSLATE, RagiumMaterials.RAGINITE),
+            createTarget(BlockTags.STONE_ORE_REPLACEABLES, RagiumBlocks.RAGINITE_ORES, HTOreVariant.OVERWORLD),
+            createTarget(BlockTags.DEEPSLATE_ORE_REPLACEABLES, RagiumBlocks.RAGINITE_ORES, HTOreVariant.DEEPSLATE),
         )
         addOres(
             "overworld_crude_oil",
@@ -62,13 +60,13 @@ object RagiumWorldGenBoostrap {
         addOres(
             "nether_raginite",
             BiomeTags.IS_NETHER,
-            createTarget(Tags.Blocks.NETHERRACKS, HTOreVariant.NETHER, RagiumMaterials.RAGINITE),
+            createTarget(Tags.Blocks.NETHERRACKS, RagiumBlocks.RAGINITE_ORES, HTOreVariant.NETHER),
         )
         // End
         addOres(
             "end_raginite",
             BiomeTags.IS_END,
-            createTarget(Tags.Blocks.END_STONES, HTOreVariant.END, RagiumMaterials.RAGI_CRYSTAL),
+            createTarget(Tags.Blocks.END_STONES, RagiumBlocks.RAGI_CRYSTAL_ORES, HTOreVariant.END),
         )
         return RegistrySetBuilder()
             .add(Registries.ENCHANTMENT) { context: BootstrapContext<Enchantment> ->
@@ -160,8 +158,6 @@ object RagiumWorldGenBoostrap {
     }
 
     @JvmStatic
-    private fun createTarget(target: TagKey<Block>, variant: HTOreVariant, key: HTMaterialKey): OreConfiguration.TargetBlockState {
-        val ore: DeferredBlock<out Block> = RagiumBlocks.ORES.get(variant, key) ?: error("Unknown ore: ${key.name} found")
-        return OreConfiguration.target(TagMatchTest(target), ore.get().defaultBlockState())
-    }
+    private fun createTarget(target: TagKey<Block>, oreSets: HTOreSets, variant: HTOreVariant): OreConfiguration.TargetBlockState =
+        OreConfiguration.target(TagMatchTest(target), oreSets[variant].get().defaultBlockState())
 }

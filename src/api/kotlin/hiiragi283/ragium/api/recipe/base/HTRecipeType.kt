@@ -44,16 +44,17 @@ class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val seri
      * @return 見つからなかった場合は[Result.failure]
      */
     fun getFirstRecipe(input: HTMachineRecipeInput, level: Level): Result<T> {
+        val matchingFilter: (RecipeHolder<T>) -> Boolean = { holder: RecipeHolder<T> -> holder.value.matches(input, level) }
         var firstRecipe: RecipeHolder<T>? = null
         // Check cache update
         this.reloadCache()
         // Find from cache
         if (lastRecipe != null) {
-            firstRecipe = recipeCache[lastRecipe]
+            firstRecipe = recipeCache[lastRecipe]?.takeIf(matchingFilter)
         }
         if (firstRecipe == null) {
             firstRecipe =
-                recipeCache.values.firstOrNull { holder: RecipeHolder<T> -> holder.value.matches(input, level) }
+                recipeCache.values.firstOrNull(matchingFilter)
         }
         return Optional
             .ofNullable(firstRecipe)

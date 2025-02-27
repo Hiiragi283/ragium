@@ -23,6 +23,5 @@ class HTDisenchantingTableBlock(properties: Properties) : HTEntityBlock(properti
 
     override fun isPathfindable(state: BlockState, pathComputationType: PathComputationType): Boolean = false
 
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): HTDisenchantingTableBlockEntity =
-        HTDisenchantingTableBlockEntity(pos, state)
+    override fun newBlockEntity(pos: BlockPos, state: BlockState) = null
 }

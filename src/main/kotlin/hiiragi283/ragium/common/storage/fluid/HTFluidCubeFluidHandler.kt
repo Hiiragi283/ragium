@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.capability.fluid
+package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.item.ItemStack

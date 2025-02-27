@@ -13,7 +13,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "actuallyadditions:refined_canola_oil"
+      "fluid": "actuallyadditions:refined_canola_oil"
     }
   ]
 }

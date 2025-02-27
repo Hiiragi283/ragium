@@ -7,7 +7,7 @@
   "fluid_outputs": [
     {
       "amount": 100,
-      "id": "ragium:nitroglycerin"
+      "fluid": "ragium:nitroglycerin"
     }
   ],
   "second_fluidInput": {

@@ -3,7 +3,7 @@
   "fluid_outputs": [
     {
       "amount": 10,
-      "id": "ragium:crimson_sap"
+      "fluid": "ragium:crimson_sap"
     }
   ],
   "item_input": {

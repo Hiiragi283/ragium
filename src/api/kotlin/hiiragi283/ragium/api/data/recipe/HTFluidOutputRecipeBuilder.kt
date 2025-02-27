@@ -12,7 +12,6 @@ import net.minecraft.core.HolderGetter
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
@@ -131,8 +130,8 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
         itemOutputs.add(output)
     }
 
-    override fun fluidOutput(stack: FluidStack): HTFluidOutputRecipeBuilder<T> = apply {
-        fluidOutputs.add(HTFluidOutput.of(stack))
+    override fun fluidOutput(output: HTFluidOutput): HTFluidOutputRecipeBuilder<T> = apply {
+        fluidOutputs.add(output)
     }
 
     override fun getPrimalId(): ResourceLocation = itemOutputs.firstOrNull()?.id

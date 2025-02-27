@@ -13,7 +13,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "actuallyadditions:crystallized_oil"
+      "fluid": "actuallyadditions:crystallized_oil"
     }
   ],
   "item_input": {

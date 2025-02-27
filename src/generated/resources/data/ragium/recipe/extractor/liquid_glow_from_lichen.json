@@ -3,7 +3,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:liquid_glow"
+      "fluid": "ragium:liquid_glow"
     }
   ],
   "item_input": {

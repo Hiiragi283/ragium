@@ -1,15 +1,16 @@
 package hiiragi283.ragium.api.block.entity
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.capability.HTHandlerSerializer
-import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.energy.HTMachineEnergyData
-import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
 import hiiragi283.ragium.api.event.HTGeneratorFuelTimeEvent
+import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.storage.HTFluidTank
+import hiiragi283.ragium.api.storage.HTItemSlotHandler
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -18,7 +19,6 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.function.Supplier
 
@@ -27,10 +27,23 @@ abstract class HTFluidGeneratorBlockEntity(
     pos: BlockPos,
     state: BlockState,
     machineType: HTMachineType,
-) : HTMachineBlockEntity(type, pos, state, machineType) {
-    private val tank: HTMachineFluidTank = RagiumAPI.getInstance().createTank(this::setChanged, this::isFluidValid)
+) : HTMachineBlockEntity(type, pos, state, machineType),
+    HTItemSlotHandler.Empty {
+    private val inputTank: HTFluidTank = HTFluidTank
+        .Builder()
+        .setValidator(this::isFluidValid)
+        .setCallback(this::setChanged)
+        .build("fluid_input")
 
-    override val handlerSerializer: HTHandlerSerializer = HTHandlerSerializer.ofFluid(listOf(tank))
+    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, dynamicOps)
+        inputTank.writeNbt(nbt, dynamicOps)
+    }
+
+    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, dynamicOps)
+        inputTank.readNbt(nbt, dynamicOps)
+    }
 
     abstract fun isFluidValid(stack: FluidStack): Boolean
 
@@ -39,7 +52,7 @@ abstract class HTFluidGeneratorBlockEntity(
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generate.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val stackIn: FluidStack = tank.fluid
+        val stackIn: FluidStack = inputTank.fluid
         var amount: Int = getFuelAmount(stackIn)
         if (amount <= 0) {
             val event = HTGeneratorFuelTimeEvent(this, stackIn, amount)
@@ -48,23 +61,23 @@ abstract class HTFluidGeneratorBlockEntity(
             amount = event.fuelTime
         }
         if (amount <= 0) throw HTMachineException.FindFuel(false)
-        if (tank.drain(amount, IFluidHandler.FluidAction.SIMULATE).amount == amount) {
-            tank.drain(amount, IFluidHandler.FluidAction.EXECUTE)
-            return
-        }
-        throw throw HTMachineException.ConsumeFuel(false)
+
+        if (!inputTank.canShrink(amount, true)) throw HTMachineException.ConsumeFuel(false)
+        inputTank.shrinkStack(amount, false)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 
-    override fun interactWithFluidStorage(player: Player): Boolean = tank.interactWithFluidStorage(player, HTStorageIO.GENERIC)
-
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)
-        tank.updateCapacity(this)
+        inputTank.updateCapacity(this)
     }
 
-    //    HTBlockEntityHandlerProvider    //
+    //    Fluid    //
 
-    override fun getFluidHandler(direction: Direction?): IFluidHandler = HTStorageIO.INPUT.wrapFluidHandler(tank)
+    final override fun getFluidTank(tank: Int): HTFluidTank? = inputTank
+
+    final override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.INPUT
+
+    final override fun getTanks(): Int = 1
 }

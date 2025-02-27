@@ -4,28 +4,28 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.capability.HTStorageIO
-import hiiragi283.ragium.api.capability.fluid.HTMachineFluidTank
-import hiiragi283.ragium.api.capability.item.HTMachineItemHandler
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.storage.HTFluidTank
+import hiiragi283.ragium.api.storage.HTItemSlot
+import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
-import hiiragi283.ragium.common.capability.energy.HTEnergyNetwork
-import hiiragi283.ragium.common.capability.energy.HTLimitedEnergyStorage
-import hiiragi283.ragium.common.capability.fluid.HTLimitedFluidHandler
-import hiiragi283.ragium.common.capability.fluid.HTMachineFluidTankImpl
-import hiiragi283.ragium.common.capability.item.HTLimitedItemHandler
-import hiiragi283.ragium.common.capability.item.HTMachineItemHandlerImpl
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.inventory.HTMultiItemContainerMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemContainerMenu
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
+import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
+import hiiragi283.ragium.common.storage.fluid.HTFluidTankHandler
+import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
+import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
+import hiiragi283.ragium.common.storage.item.HTSingleSlotItemHandler
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.core.BlockPos
@@ -38,6 +38,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.material.MapColor
@@ -45,8 +46,8 @@ import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.RegisterEvent
@@ -101,15 +102,9 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
 
-    override fun createItemHandler(size: Int, callback: () -> Unit): HTMachineItemHandler = HTMachineItemHandlerImpl(size, callback)
+    override fun wrapItemSlot(storageIO: HTStorageIO, slot: HTItemSlot): IItemHandlerModifiable = HTSingleSlotItemHandler(storageIO, slot)
 
-    override fun createTank(callback: () -> Unit, filter: (FluidStack) -> Boolean, capacity: Int): HTMachineFluidTank =
-        HTMachineFluidTankImpl(callback, filter, capacity)
-
-    override fun wrapItemHandler(storageIO: HTStorageIO, handler: IItemHandlerModifiable): IItemHandlerModifiable =
-        HTLimitedItemHandler(storageIO, handler)
-
-    override fun wrapFluidHandler(storageIO: HTStorageIO, handler: IFluidHandler): IFluidHandler = HTLimitedFluidHandler(storageIO, handler)
+    override fun wrapFluidTank(storageIO: HTStorageIO, tank: IFluidTank): IFluidHandler = HTFluidTankHandler(storageIO, tank)
 
     override fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage =
         HTLimitedEnergyStorage(storageIO, storage)
@@ -118,30 +113,34 @@ class InternalRagiumAPI : RagiumAPI {
         containerId: Int,
         inventory: Inventory,
         pos: BlockPos,
-        itemInput: IItemHandler,
-        itemCatalyst: IItemHandler,
-        itemOutput: IItemHandler,
+        inputSlot: HTItemSlot,
+        catalystSlot: HTItemSlot,
+        outputSlot: HTItemSlot,
     ): AbstractContainerMenu = HTSingleItemContainerMenu(
         containerId,
         inventory,
         pos,
-        itemInput,
-        itemCatalyst,
-        itemOutput,
+        inputSlot,
+        catalystSlot,
+        outputSlot,
     )
 
     override fun createMultiItemMenu(
         containerId: Int,
         inventory: Inventory,
         pos: BlockPos,
-        itemInput: IItemHandler,
-        itemOutput: IItemHandler,
+        firstItemSlot: HTItemSlot,
+        secondItemSlot: HTItemSlot,
+        thirdItemSlot: HTItemSlot,
+        outputSlot: HTItemSlot,
     ): AbstractContainerMenu = HTMultiItemContainerMenu(
         containerId,
         inventory,
         pos,
-        itemInput,
-        itemOutput,
+        firstItemSlot,
+        secondItemSlot,
+        thirdItemSlot,
+        outputSlot,
     )
 
     companion object {
@@ -182,4 +181,28 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getMachineBlock(type: HTMachineType): DeferredBlock<*> =
         blockMap[type] ?: error("Unknown machine type: ${type.serializedName} found!")
+
+    override fun buildItemSlot(
+        nbtKey: String,
+        maxSize: Int,
+        validator: (ItemStack) -> Boolean,
+        callback: Runnable,
+    ): HTItemSlot = HTItemSlotImpl(
+        nbtKey,
+        maxSize,
+        validator,
+        callback,
+    )
+
+    override fun buildFluidTank(
+        nbtKey: String,
+        capacity: Int,
+        validator: (FluidStack) -> Boolean,
+        callback: Runnable,
+    ): HTFluidTank = HTFluidTankImpl(
+        nbtKey,
+        capacity,
+        validator,
+        callback,
+    )
 }

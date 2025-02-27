@@ -3,7 +3,7 @@
   "fluid_outputs": [
     {
       "amount": 10,
-      "id": "ragium:warped_sap"
+      "fluid": "ragium:warped_sap"
     }
   ],
   "item_input": {

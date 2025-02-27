@@ -3,7 +3,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:honey"
+      "fluid": "ragium:honey"
     }
   ],
   "item_input": {

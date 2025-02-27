@@ -7,7 +7,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:ragium_solution"
+      "fluid": "ragium:ragium_solution"
     }
   ],
   "item_input": {
