@@ -165,9 +165,9 @@ interface RagiumAPI {
         containerId: Int,
         inventory: Inventory,
         pos: BlockPos,
-        firstItemSlot: HTItemSlot,
-        secondItemSlot: HTItemSlot,
-        thirdItemSlot: HTItemSlot,
+        firstInputSlot: HTItemSlot,
+        secondInputSlot: HTItemSlot,
+        thirdInputSlot: HTItemSlot,
         outputSlot: HTItemSlot,
     ): AbstractContainerMenu
 

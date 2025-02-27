@@ -129,17 +129,17 @@ class InternalRagiumAPI : RagiumAPI {
         containerId: Int,
         inventory: Inventory,
         pos: BlockPos,
-        firstItemSlot: HTItemSlot,
-        secondItemSlot: HTItemSlot,
-        thirdItemSlot: HTItemSlot,
+        firstInputSlot: HTItemSlot,
+        secondInputSlot: HTItemSlot,
+        thirdInputSlot: HTItemSlot,
         outputSlot: HTItemSlot,
     ): AbstractContainerMenu = HTMultiItemContainerMenu(
         containerId,
         inventory,
         pos,
-        firstItemSlot,
-        secondItemSlot,
-        thirdItemSlot,
+        firstInputSlot,
+        secondInputSlot,
+        thirdInputSlot,
         outputSlot,
     )
 

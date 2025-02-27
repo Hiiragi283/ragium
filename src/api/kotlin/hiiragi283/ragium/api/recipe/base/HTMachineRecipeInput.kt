@@ -12,6 +12,14 @@ import net.neoforged.neoforge.fluids.FluidStack
  * @param fluids 液体のインプットの一覧
  */
 class HTMachineRecipeInput private constructor(val items: List<ItemStack>, val fluids: List<FluidStack>) : RecipeInput {
+    companion object {
+        @JvmStatic
+        fun of(slot: HTItemSlot): HTMachineRecipeInput = Builder().addItem(slot).build()
+
+        @JvmStatic
+        fun of(tank: HTFluidTank): HTMachineRecipeInput = Builder().addFluid(tank).build()
+    }
+
     override fun getItem(index: Int): ItemStack = items.getOrNull(index) ?: ItemStack.EMPTY
 
     fun getFluid(index: Int): FluidStack = fluids.getOrNull(index) ?: FluidStack.EMPTY

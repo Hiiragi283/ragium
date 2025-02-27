@@ -32,22 +32,22 @@ abstract class HTMultiItemMachineBlockEntity(
     state: BlockState,
     machineType: HTMachineType,
 ) : HTMachineBlockEntity(type, pos, state, machineType) {
-    private val firstItemSlot: HTItemSlot = HTItemSlot
+    private val firstInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
-        .build("first_item")
-    private val secondItemSlot: HTItemSlot = HTItemSlot
+        .build("first_item_input")
+    private val secondInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
-        .build("second_item")
-    private val thirdItemSlot: HTItemSlot = HTItemSlot
+        .build("second_item_input")
+    private val thirdInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
-        .build("third_item")
+        .build("third_item_input")
     private val outputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
-        .build("output")
+        .build("item_output")
 
     private val inputTank: HTFluidTank = HTFluidTank
         .Builder()
@@ -58,9 +58,9 @@ abstract class HTMultiItemMachineBlockEntity(
 
     override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, dynamicOps)
-        firstItemSlot.writeNbt(nbt, dynamicOps)
-        secondItemSlot.writeNbt(nbt, dynamicOps)
-        thirdItemSlot.writeNbt(nbt, dynamicOps)
+        firstInputSlot.writeNbt(nbt, dynamicOps)
+        secondInputSlot.writeNbt(nbt, dynamicOps)
+        thirdInputSlot.writeNbt(nbt, dynamicOps)
         outputSlot.writeNbt(nbt, dynamicOps)
 
         inputTank.writeNbt(nbt, dynamicOps)
@@ -68,9 +68,9 @@ abstract class HTMultiItemMachineBlockEntity(
 
     override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         super.readNbt(nbt, dynamicOps)
-        firstItemSlot.readNbt(nbt, dynamicOps)
-        secondItemSlot.readNbt(nbt, dynamicOps)
-        thirdItemSlot.readNbt(nbt, dynamicOps)
+        firstInputSlot.readNbt(nbt, dynamicOps)
+        secondInputSlot.readNbt(nbt, dynamicOps)
+        thirdInputSlot.readNbt(nbt, dynamicOps)
         outputSlot.readNbt(nbt, dynamicOps)
 
         inputTank.readNbt(nbt, dynamicOps)
@@ -79,9 +79,9 @@ abstract class HTMultiItemMachineBlockEntity(
     override fun process(level: ServerLevel, pos: BlockPos) {
         val input: HTMachineRecipeInput = HTMachineRecipeInput
             .Builder()
-            .addItem(firstItemSlot)
-            .addItem(secondItemSlot)
-            .addItem(thirdItemSlot)
+            .addItem(firstInputSlot)
+            .addItem(secondInputSlot)
+            .addItem(thirdInputSlot)
             .addFluid(inputTank)
             .build()
         val recipe: HTMultiItemRecipe = recipeType.getFirstRecipe(input, level).getOrThrow()
@@ -89,24 +89,24 @@ abstract class HTMultiItemMachineBlockEntity(
         val output: ItemStack = recipe.itemOutput.get()
         if (!outputSlot.canInsert(output)) throw HTMachineException.MergeOutput(false)
 
-        if (!firstItemSlot.canShrink(recipe.itemInputs[0].count, true)) throw HTMachineException.ShrinkInput(false)
+        if (!firstInputSlot.canShrink(recipe.itemInputs[0].count, true)) throw HTMachineException.ShrinkInput(false)
         recipe.itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
-            if (!secondItemSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
+            if (!secondInputSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
         }
         recipe.itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
-            if (!thirdItemSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
+            if (!thirdInputSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
         }
         recipe.fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
             if (!inputTank.canShrink(ingredient.amount(), true)) throw HTMachineException.ShrinkInput(false)
         }
 
         outputSlot.insertItem(output, false)
-        firstItemSlot.shrinkStack(recipe.itemInputs[0].count, false)
+        firstInputSlot.shrinkStack(recipe.itemInputs[0].count, false)
         recipe.itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
-            secondItemSlot.shrinkStack(ingredient.count, true)
+            secondInputSlot.shrinkStack(ingredient.count, true)
         }
         recipe.itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
-            thirdItemSlot.shrinkStack(ingredient.count, true)
+            thirdInputSlot.shrinkStack(ingredient.count, true)
         }
         recipe.fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
             inputTank.canShrink(ingredient.amount(), false)
@@ -118,9 +118,9 @@ abstract class HTMultiItemMachineBlockEntity(
             containerId,
             playerInventory,
             blockPos,
-            firstItemSlot,
-            secondItemSlot,
-            thirdItemSlot,
+            firstInputSlot,
+            secondInputSlot,
+            thirdInputSlot,
             outputSlot,
         )
 
@@ -136,18 +136,18 @@ abstract class HTMultiItemMachineBlockEntity(
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
-        firstItemSlot.dropStack(level, pos)
-        secondItemSlot.dropStack(level, pos)
-        thirdItemSlot.dropStack(level, pos)
+        firstInputSlot.dropStack(level, pos)
+        secondInputSlot.dropStack(level, pos)
+        thirdInputSlot.dropStack(level, pos)
         outputSlot.dropStack(level, pos)
     }
 
     //    Item    //
 
     override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
-        0 -> firstItemSlot
-        1 -> secondItemSlot
-        2 -> thirdItemSlot
+        0 -> firstInputSlot
+        1 -> secondInputSlot
+        2 -> thirdInputSlot
         3 -> outputSlot
         else -> null
     }

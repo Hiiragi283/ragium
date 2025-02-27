@@ -108,7 +108,7 @@ abstract class HTMachineBlockEntity(
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments
         // Efficiency -> Increase process speed
-        this.tickRate = max(20, 200 - (getEnchantmentLevel(Enchantments.EFFICIENCY) * 30))
+        this.tickRate = max(20, baseTickRate - (getEnchantmentLevel(Enchantments.EFFICIENCY) * 30))
         // Unbreaking -> Decrease energy cost
         this.costModifier =
             max(1, getEnchantmentLevel(Enchantments.EFFICIENCY) - getEnchantmentLevel(Enchantments.UNBREAKING))
@@ -147,6 +147,8 @@ abstract class HTMachineBlockEntity(
     //    Ticking    //
 
     override var tickRate: Int = 200
+
+    private val baseTickRate: Int = tickRate
 
     override fun tickEach(
         level: Level,

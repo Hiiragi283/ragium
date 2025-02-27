@@ -13,9 +13,9 @@ class HTMultiItemContainerMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
-    firstItemSlot: HTItemSlot,
-    secondItemSlot: HTItemSlot,
-    thirdItemSlot: HTItemSlot,
+    firstInputSlot: HTItemSlot,
+    secondInputSlot: HTItemSlot,
+    thirdInputSlot: HTItemSlot,
     outputSlot: HTItemSlot,
 ) : HTMachineContainerMenu(RagiumMenuTypes.MULTI_ITEM, containerId, inventory, pos) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
@@ -30,9 +30,9 @@ class HTMultiItemContainerMenu(
 
     init {
         // inputs
-        addSlot(firstItemSlot.createContainerSlot(1, 1))
-        addSlot(secondItemSlot.createContainerSlot(2, 1))
-        addSlot(thirdItemSlot.createContainerSlot(3, 1))
+        addSlot(firstInputSlot.createContainerSlot(1, 1))
+        addSlot(secondInputSlot.createContainerSlot(2, 1))
+        addSlot(thirdInputSlot.createContainerSlot(3, 1))
         addFluidSlot(0, 1, 2)
         // outputs
         addSlot(outputSlot.createContainerSlot(6, 1, HTStorageIO.OUTPUT))
