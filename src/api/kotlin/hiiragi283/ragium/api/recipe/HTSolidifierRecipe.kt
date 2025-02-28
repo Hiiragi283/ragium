@@ -58,7 +58,7 @@ class HTSolidifierRecipe(
             throw HTMachineException.GrowItem()
         }
         // Input
-        if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(input.amount())) {
+        if (!context.getTank(HTStorageIO.INPUT, 0).canExtract(input.amount())) {
             throw HTMachineException.ShrinkFluid()
         }
     }
@@ -67,7 +67,7 @@ class HTSolidifierRecipe(
         // Output
         context.getSlot(HTStorageIO.OUTPUT, 0).insert(itemOutput.get(), false)
         // Input
-        context.getTank(HTStorageIO.INPUT, 0).shrinkStack(input.amount(), false)
+        context.getTank(HTStorageIO.INPUT, 0).extract(input.amount(), false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.SOLIDIFIER

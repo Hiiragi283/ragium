@@ -95,9 +95,9 @@ abstract class HTMultiItemMachineBlockEntity(
             outputSlot,
         )
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        super.updateEnchantments(newEnchantments)
-        inputTank.updateCapacity(this)
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        super.onUpdateEnchantment(newEnchantments)
+        inputTank.onUpdateEnchantment(newEnchantments)
     }
 
     override fun onRemove(

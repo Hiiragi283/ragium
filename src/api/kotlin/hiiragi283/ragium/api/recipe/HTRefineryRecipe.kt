@@ -52,7 +52,7 @@ class HTRefineryRecipe(
         validateFluidOutput(context, 0)
         validateFluidOutput(context, 1)
         // Input
-        if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(input.amount())) {
+        if (!context.getTank(HTStorageIO.INPUT, 0).canExtract(input.amount())) {
             throw HTMachineException.ShrinkFluid()
         }
     }
@@ -63,7 +63,7 @@ class HTRefineryRecipe(
         processFluidOutput(context, 0)
         processFluidOutput(context, 1)
         // Input
-        context.getTank(HTStorageIO.INPUT, 0).shrinkStack(input.amount(), false)
+        context.getTank(HTStorageIO.INPUT, 0).extract(input.amount(), false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.REFINERY

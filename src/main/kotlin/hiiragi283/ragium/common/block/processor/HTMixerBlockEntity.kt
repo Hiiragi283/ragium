@@ -76,11 +76,11 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTMixerContainerMenu(containerId, playerInventory, blockPos, inputSlot)
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        super.updateEnchantments(newEnchantments)
-        firstInputTank.updateCapacity(this)
-        secondInputTank.updateCapacity(this)
-        outputTank.updateCapacity(this)
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        super.onUpdateEnchantment(newEnchantments)
+        firstInputTank.onUpdateEnchantment(newEnchantments)
+        secondInputTank.onUpdateEnchantment(newEnchantments)
+        outputTank.onUpdateEnchantment(newEnchantments)
     }
 
     //    Item    //

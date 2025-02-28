@@ -71,15 +71,15 @@ class HTMixerRecipe(
         validateFluidOutput(context, 0)
         // Input
         itemInput.ifPresent { ingredient: HTItemIngredient ->
-            if (!context.getSlot(HTStorageIO.INPUT, 0).canShrink(ingredient.count)) {
+            if (!context.getSlot(HTStorageIO.INPUT, 0).canExtract(ingredient.count)) {
                 throw HTMachineException.ShrinkItem()
             }
         }
 
-        if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(firstFluid.amount())) {
+        if (!context.getTank(HTStorageIO.INPUT, 0).canExtract(firstFluid.amount())) {
             throw HTMachineException.ShrinkFluid()
         }
-        if (!context.getTank(HTStorageIO.INPUT, 1).canShrink(secondFluid.amount())) {
+        if (!context.getTank(HTStorageIO.INPUT, 1).canExtract(secondFluid.amount())) {
             throw HTMachineException.ShrinkFluid()
         }
     }
@@ -93,8 +93,8 @@ class HTMixerRecipe(
             context.getSlot(HTStorageIO.INPUT, 0).extract(ingredient.count, false)
         }
 
-        context.getTank(HTStorageIO.INPUT, 0).shrinkStack(firstFluid.amount(), false)
-        context.getTank(HTStorageIO.INPUT, 1).shrinkStack(secondFluid.amount(), false)
+        context.getTank(HTStorageIO.INPUT, 0).extract(firstFluid.amount(), false)
+        context.getTank(HTStorageIO.INPUT, 1).extract(secondFluid.amount(), false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.MIXER

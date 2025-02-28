@@ -78,7 +78,7 @@ abstract class HTMachineBlockEntity(
     override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
             .parse(dynamicOps, nbt.get(ENCH_KEY))
-            .ifSuccess(::updateEnchantments)
+            .ifSuccess(::onUpdateEnchantment)
         isActive = nbt.getBoolean(ACTIVE_KEY)
         HTPlayerOwningBlockEntity.UUID_CODEC
             .parse(dynamicOps, nbt.get(OWNER_KEY))
@@ -91,7 +91,7 @@ abstract class HTMachineBlockEntity(
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         val enchantments: ItemEnchantments = componentInput.get(DataComponents.ENCHANTMENTS) ?: return
-        updateEnchantments(enchantments)
+        onUpdateEnchantment(enchantments)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
@@ -106,7 +106,7 @@ abstract class HTMachineBlockEntity(
 
     final override var costModifier: Int = 1
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments
         // Efficiency -> Increase process speed
         this.tickRate = max(20, baseTickRate - (getEnchantmentLevel(Enchantments.EFFICIENCY) * 30))

@@ -75,10 +75,10 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTInfuserContainerMenu(containerId, playerInventory, blockPos, inputSlot, outputSlot)
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        super.updateEnchantments(newEnchantments)
-        inputTank.updateCapacity(this)
-        outputTank.updateCapacity(this)
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        super.onUpdateEnchantment(newEnchantments)
+        inputTank.onUpdateEnchantment(newEnchantments)
+        outputTank.onUpdateEnchantment(newEnchantments)
     }
 
     //    Item    //

@@ -42,7 +42,7 @@ class HTContainerItemSlot(
 
     override fun getMaxStackSize(): Int = slot.capacity
 
-    override fun mayPickup(player: Player): Boolean = storageIO.canExtract && slot.canShrink(1)
+    override fun mayPickup(player: Player): Boolean = storageIO.canExtract && slot.canExtract(1)
 
     override fun remove(amount: Int): ItemStack {
         if (!storageIO.canExtract) return ItemStack.EMPTY

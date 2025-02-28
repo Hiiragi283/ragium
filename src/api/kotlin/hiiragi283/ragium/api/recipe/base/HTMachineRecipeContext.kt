@@ -31,7 +31,7 @@ class HTMachineRecipeContext private constructor(
 
     fun getItemStack(storageIO: HTStorageIO, index: Int): ItemStack = getSlotOrNull(storageIO, index)?.stack ?: ItemStack.EMPTY
 
-    fun getFluidStack(storageIO: HTStorageIO, index: Int): FluidStack = getTankOrNull(storageIO, index)?.fluid ?: FluidStack.EMPTY
+    fun getFluidStack(storageIO: HTStorageIO, index: Int): FluidStack = getTankOrNull(storageIO, index)?.stack ?: FluidStack.EMPTY
 
     //    RecipeInput    //
 

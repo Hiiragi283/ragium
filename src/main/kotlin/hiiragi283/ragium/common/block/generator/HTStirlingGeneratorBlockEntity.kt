@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -29,8 +30,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, HTMachineType.STIRLING_GENERATOR) {
@@ -46,7 +45,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val inputTank: HTFluidTank = HTFluidTank
         .Builder()
-        .setValidator { stack: FluidStack -> stack.`is`(Tags.Fluids.WATER) }
+        .setValidator { variant: HTFluidVariant -> variant.isIn(Tags.Fluids.WATER) }
         .setCallback(this::setChanged)
         .build("fluid_input")
 
@@ -73,10 +72,10 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         if (burnTime <= 0) throw HTMachineException.Custom("Invalid furnace fuel found!")
         val requiredWater: Int = RagiumConfig.getStirlingWater(burnTime)
 
-        if (!inputTank.canShrink(requiredWater)) throw HTMachineException.ShrinkFluid()
-        if (!inputSlot.canShrink(1)) throw HTMachineException.ShrinkItem()
+        if (!inputTank.canExtract(requiredWater)) throw HTMachineException.ShrinkFluid()
+        if (!inputSlot.canExtract(1)) throw HTMachineException.ShrinkItem()
 
-        inputTank.drain(requiredWater, IFluidHandler.FluidAction.EXECUTE)
+        inputTank.extract(requiredWater, false)
         inputSlot.extract(1, false)
         outputSlot.insert(
             RagiumItems
@@ -89,9 +88,9 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTInfuserContainerMenu(containerId, playerInventory, blockPos, inputSlot, outputSlot)
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        super.updateEnchantments(newEnchantments)
-        inputTank.updateCapacity(this)
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        super.onUpdateEnchantment(newEnchantments)
+        inputTank.onUpdateEnchantment(newEnchantments)
     }
 
     override fun onRemove(

@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe.base
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.storage.HTStorageIO
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.*
 
 /**
@@ -35,7 +34,7 @@ abstract class HTFluidOutputRecipe(group: String, val itemOutputs: List<HTItemOu
 
     protected fun validateFluidOutput(context: HTMachineRecipeContext, index: Int) {
         getFluidOutput(index).ifPresent { output: HTFluidOutput ->
-            if (!context.getTank(HTStorageIO.OUTPUT, index).canFill(output.get())) {
+            if (!context.getTank(HTStorageIO.OUTPUT, index).canInsert(output.get())) {
                 throw HTMachineException.GrowFluid()
             }
         }
@@ -49,7 +48,7 @@ abstract class HTFluidOutputRecipe(group: String, val itemOutputs: List<HTItemOu
 
     protected fun processFluidOutput(context: HTMachineRecipeContext, index: Int) {
         getFluidOutput(index).ifPresent { output: HTFluidOutput ->
-            context.getTank(HTStorageIO.OUTPUT, index).fill(output.get(), IFluidHandler.FluidAction.EXECUTE)
+            context.getTank(HTStorageIO.OUTPUT, index).insert(output.get(), false)
         }
     }
 }

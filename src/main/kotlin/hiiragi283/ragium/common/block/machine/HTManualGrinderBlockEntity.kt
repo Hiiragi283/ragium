@@ -108,7 +108,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     override val costModifier: Int = 0
     override val ownerUUID: UUID? = null
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
     }
 
     override fun getErrorMessage(): String? = null

@@ -76,11 +76,11 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTRefineryContainerMenu(containerId, playerInventory, blockPos, outputSlot)
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        super.updateEnchantments(newEnchantments)
-        inputTank.updateCapacity(this)
-        firstOutputTank.updateCapacity(this)
-        secondOutputTank.updateCapacity(this)
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        super.onUpdateEnchantment(newEnchantments)
+        inputTank.onUpdateEnchantment(newEnchantments)
+        firstOutputTank.onUpdateEnchantment(newEnchantments)
+        secondOutputTank.onUpdateEnchantment(newEnchantments)
     }
 
     override fun onRemove(

@@ -14,43 +14,40 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 
 @ConsistentCopyVisibility
-data class HTItemVariant private constructor(
-    override val holder: Holder<Item>,
-    override val components: DataComponentPatch,
-) : HTVariant<Item> {
-    companion object {
-        @JvmField
-        val CODEC: Codec<HTItemVariant> = RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    ItemStack.ITEM_NON_AIR_CODEC.fieldOf("item").forGetter(HTItemVariant::holder),
-                    DataComponentPatch.CODEC
-                        .optionalFieldOf("components", DataComponentPatch.EMPTY)
-                        .forGetter(HTItemVariant::components),
-                ).apply(instance, ::HTItemVariant)
+data class HTItemVariant private constructor(override val holder: Holder<Item>, override val components: DataComponentPatch) :
+    HTVariant<Item> {
+        companion object {
+            @JvmField
+            val CODEC: Codec<HTItemVariant> = RecordCodecBuilder.create { instance ->
+                instance
+                    .group(
+                        ItemStack.ITEM_NON_AIR_CODEC.fieldOf("id").forGetter(HTItemVariant::holder),
+                        DataComponentPatch.CODEC
+                            .optionalFieldOf("components", DataComponentPatch.EMPTY)
+                            .forGetter(HTItemVariant::components),
+                    ).apply(instance, ::HTItemVariant)
+            }
+
+            @JvmField
+            val EMPTY: HTItemVariant = HTItemVariant(Items.AIR.asHolder(), DataComponentPatch.EMPTY)
+
+            @JvmStatic
+            fun of(item: ItemLike, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant =
+                of(ItemStack(item.asHolder(), 1, components))
+
+            @JvmStatic
+            fun of(stack: ItemStack): HTItemVariant = if (stack.isEmpty) EMPTY else HTItemVariant(stack.itemHolder, stack.componentsPatch)
         }
 
-        @JvmField
-        val EMPTY: HTItemVariant = HTItemVariant(Items.AIR.asHolder(), DataComponentPatch.EMPTY)
+        override val isEmpty: Boolean
+            get() = toStack().isEmpty
 
-        @JvmStatic
-        fun of(item: ItemLike, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant =
-            of(ItemStack(item.asHolder(), 1, components))
+        fun isOf(stack: ItemStack): Boolean {
+            if (stack.isEmpty) return this.isEmpty
+            return holder.isOf(stack.item) && stack.componentsPatch == this.components
+        }
 
-        @JvmStatic
-        fun of(stack: ItemStack): HTItemVariant =
-            if (stack.isEmpty) EMPTY else HTItemVariant(stack.itemHolder, stack.componentsPatch)
+        fun isIn(tagKey: TagKey<Item>): Boolean = holder.`is`(tagKey)
+
+        fun toStack(count: Int = 1): ItemStack = ItemStack(holder, count, components)
     }
-
-    override val isEmpty: Boolean
-        get() = toStack().isEmpty
-
-    fun isOf(stack: ItemStack): Boolean {
-        if (stack.isEmpty) return this.isEmpty
-        return holder.isOf(stack.item) && stack.componentsPatch == this.components
-    }
-
-    fun isIn(tagKey: TagKey<Item>): Boolean = holder.`is`(tagKey)
-
-    fun toStack(count: Int = 1): ItemStack = ItemStack(holder, count, components)
-}

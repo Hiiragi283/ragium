@@ -79,19 +79,19 @@ class HTBreweryRecipe(
             throw HTMachineException.GrowItem()
         }
         // Input
-        if (!context.getSlot(HTStorageIO.INPUT, 0).canShrink(firstInput.count)) {
+        if (!context.getSlot(HTStorageIO.INPUT, 0).canExtract(firstInput.count)) {
             throw HTMachineException.ShrinkItem()
         }
-        if (!context.getSlot(HTStorageIO.INPUT, 1).canShrink(secondInput.count)) {
+        if (!context.getSlot(HTStorageIO.INPUT, 1).canExtract(secondInput.count)) {
             throw HTMachineException.ShrinkItem()
         }
         thirdInput.ifPresent { ingredient: HTItemIngredient ->
-            if (!context.getSlot(HTStorageIO.INPUT, 2).canShrink(ingredient.count)) {
+            if (!context.getSlot(HTStorageIO.INPUT, 2).canExtract(ingredient.count)) {
                 throw HTMachineException.ShrinkItem()
             }
         }
 
-        if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(WATER_INGREDIENT.amount())) {
+        if (!context.getTank(HTStorageIO.INPUT, 0).canExtract(WATER_INGREDIENT.amount())) {
             throw HTMachineException.ShrinkFluid()
         }
     }
@@ -106,7 +106,7 @@ class HTBreweryRecipe(
             context.getSlot(HTStorageIO.INPUT, 2).extract(ingredient.count, false)
         }
 
-        context.getTank(HTStorageIO.INPUT, 0).shrinkStack(WATER_INGREDIENT.amount(), false)
+        context.getTank(HTStorageIO.INPUT, 0).extract(WATER_INGREDIENT.amount(), false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.BREWERY

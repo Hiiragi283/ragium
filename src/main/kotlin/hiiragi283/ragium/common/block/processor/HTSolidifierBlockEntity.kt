@@ -67,9 +67,9 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTSolidifierContainerMenu(containerId, playerInventory, blockPos, catalystSlot, outputSlot)
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        super.updateEnchantments(newEnchantments)
-        inputTank.updateCapacity(this)
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        super.onUpdateEnchantment(newEnchantments)
+        inputTank.onUpdateEnchantment(newEnchantments)
     }
 
     //    Item    //

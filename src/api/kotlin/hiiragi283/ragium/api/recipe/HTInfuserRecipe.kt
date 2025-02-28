@@ -59,10 +59,10 @@ class HTInfuserRecipe(
         validateItemOutput(context, 0)
         validateFluidOutput(context, 0)
         // Input
-        if (!context.getSlot(HTStorageIO.INPUT, 0).canShrink(itemInput.count)) {
+        if (!context.getSlot(HTStorageIO.INPUT, 0).canExtract(itemInput.count)) {
             throw HTMachineException.ShrinkItem()
         }
-        if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(fluidInput.amount())) {
+        if (!context.getTank(HTStorageIO.INPUT, 0).canExtract(fluidInput.amount())) {
             throw HTMachineException.ShrinkFluid()
         }
     }
@@ -73,7 +73,7 @@ class HTInfuserRecipe(
         // Input
         context.getSlot(HTStorageIO.INPUT, 0).extract(itemInput.count, false)
 
-        context.getTank(HTStorageIO.INPUT, 0).shrinkStack(fluidInput.amount(), false)
+        context.getTank(HTStorageIO.INPUT, 0).extract(fluidInput.amount(), false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.INFUSER

@@ -34,7 +34,7 @@ abstract class HTSingleItemRecipe(
             throw HTMachineException.GrowItem()
         }
         // Input
-        if (!context.getSlot(HTStorageIO.INPUT, 0).canShrink(input.count)) {
+        if (!context.getSlot(HTStorageIO.INPUT, 0).canExtract(input.count)) {
             throw HTMachineException.ShrinkItem()
         }
     }

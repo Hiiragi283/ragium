@@ -68,9 +68,9 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         HTExtractorContainerMenu(containerId, playerInventory, blockPos, inputSlot, outputSlot)
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        super.updateEnchantments(newEnchantments)
-        outputTank.updateCapacity(this)
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        super.onUpdateEnchantment(newEnchantments)
+        outputTank.onUpdateEnchantment(newEnchantments)
     }
 
     //    Item    //

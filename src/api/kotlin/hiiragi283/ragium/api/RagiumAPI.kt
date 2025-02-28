@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
@@ -144,6 +145,9 @@ interface RagiumAPI {
      */
     fun wrapItemSlot(storageIO: HTStorageIO, slot: HTItemSlot): IItemHandlerModifiable
 
+    /**
+     * @see [HTStorageIO.wrapFluidTank]
+     */
     fun wrapFluidTank(storageIO: HTStorageIO, tank: HTFluidTank): IFluidHandler
 
     /**
@@ -193,7 +197,7 @@ interface RagiumAPI {
     fun buildFluidTank(
         nbtKey: String,
         capacity: Int,
-        validator: (FluidStack) -> Boolean,
+        validator: (HTFluidVariant) -> Boolean,
         callback: Runnable,
     ): HTFluidTank
 }

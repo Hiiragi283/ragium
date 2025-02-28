@@ -42,28 +42,28 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
         fluidTank.readNbt(nbt, dynamicOps)
         ItemEnchantments.CODEC
             .parse(dynamicOps, nbt.get(ENCH_KEY))
-            .ifSuccess(::updateEnchantments)
+            .ifSuccess(::onUpdateEnchantment)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
+        // Enchantment
+        val enchantments: ItemEnchantments = componentInput.get(DataComponents.ENCHANTMENTS) ?: return
+        onUpdateEnchantment(enchantments)
         // Fluid
         val content: SimpleFluidContent =
             componentInput.getOrDefault(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.EMPTY)
-        fluidTank.fluid = content.copy()
-        // Enchantment
-        val enchantments: ItemEnchantments = componentInput.get(DataComponents.ENCHANTMENTS) ?: return
-        updateEnchantments(enchantments)
+        fluidTank.insert(content.copy(), false)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        // Fluid
-        components.set(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.copyOf(fluidTank.fluid))
         // Enchantment
         if (!enchantments.isEmpty) {
             components.set(DataComponents.ENCHANTMENTS, enchantments)
         }
+        // Fluid
+        components.set(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.copyOf(fluidTank.stack))
     }
 
     override fun onRightClickedWithItem(
@@ -84,8 +84,9 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
 
     override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
-        fluidTank.updateCapacity(this)
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        this.enchantments = newEnchantments
+        fluidTank.onUpdateEnchantment(newEnchantments)
     }
 
     //    HTHandlerBlockEntity    //

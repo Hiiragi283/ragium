@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.util.HTEnchantmentListener
 import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.Entity
@@ -14,14 +15,15 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
-abstract class HTItemSlot(override val capacity: Int, private val validator: (HTItemVariant) -> Boolean, private val callback: Runnable) :
+abstract class HTItemSlot(private val validator: (HTItemVariant) -> Boolean, private val callback: Runnable) :
     HTSingleVariantStorage<HTItemVariant>(),
+    HTEnchantmentListener,
     HTNbtCodec {
     val stack: ItemStack get() = resource.toStack(amount)
 
     fun canInsert(stack: ItemStack): Boolean = insert(stack, true) > 0
 
-    fun canShrink(maxAmount: Int): Boolean = extract(resource, maxAmount, true) > 0
+    fun canExtract(maxAmount: Int): Boolean = extract(resource, maxAmount, true) > 0
 
     fun insert(stack: ItemStack, simulate: Boolean): Int = insert(HTItemVariant.of(stack), stack.count, simulate)
 

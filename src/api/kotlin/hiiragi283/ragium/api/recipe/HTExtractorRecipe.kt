@@ -50,7 +50,7 @@ class HTExtractorRecipe(
         validateItemOutput(context, 0)
         validateFluidOutput(context, 0)
         // Input
-        if (!context.getSlot(HTStorageIO.INPUT, 0).canShrink(input.count)) {
+        if (!context.getSlot(HTStorageIO.INPUT, 0).canExtract(input.count)) {
             throw HTMachineException.ShrinkItem()
         }
     }

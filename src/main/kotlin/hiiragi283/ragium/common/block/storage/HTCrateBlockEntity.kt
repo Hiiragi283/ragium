@@ -39,7 +39,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
         itemHandler.readNbt(nbt, dynamicOps)
         ItemEnchantments.CODEC
             .parse(dynamicOps, nbt.get(ENCH_KEY))
-            .ifSuccess(::updateEnchantments)
+            .ifSuccess(::onUpdateEnchantment)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -50,7 +50,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
         itemHandler.insert(content.copyOne(), false)
         // Enchantment
         val enchantments: ItemEnchantments = componentInput.get(DataComponents.ENCHANTMENTS) ?: return
-        updateEnchantments(enchantments)
+        onUpdateEnchantment(enchantments)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
@@ -67,9 +67,9 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
 
     override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
 
-    override fun updateEnchantments(newEnchantments: ItemEnchantments) {
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments
-        // itemHandler.updateCapacity(this)
+        itemHandler.onUpdateEnchantment(newEnchantments)
     }
 
     //    HTHandlerBlockEntity    //

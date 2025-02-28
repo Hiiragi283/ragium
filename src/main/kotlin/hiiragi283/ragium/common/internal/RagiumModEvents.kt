@@ -106,6 +106,7 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.ASSEMBLER)
         registerHandlers(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerHandlers(RagiumBlockEntityTypes.COMPRESSOR)
+        registerHandlers(RagiumBlockEntityTypes.CRUSHER)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
         registerHandlers(RagiumBlockEntityTypes.GRINDER)
         registerHandlers(RagiumBlockEntityTypes.INFUSER)

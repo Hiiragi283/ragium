@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemVariant
@@ -208,7 +209,7 @@ class InternalRagiumAPI : RagiumAPI {
     override fun buildFluidTank(
         nbtKey: String,
         capacity: Int,
-        validator: (FluidStack) -> Boolean,
+        validator: (HTFluidVariant) -> Boolean,
         callback: Runnable,
     ): HTFluidTank = HTFluidTankImpl(
         nbtKey,
