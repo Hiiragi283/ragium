@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.client.screen.HTMultiItemContainer
@@ -115,7 +115,7 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerRecipes(registration: IRecipeRegistration) {
         val recipeManager: RecipeManager = Minecraft.getInstance().level?.recipeManager ?: return
 
-        fun <T : HTMachineRecipeBase> register(recipeType: JEIRecipeType<RecipeHolder<T>>, recipe: HTRecipeType<T>) {
+        fun <T : HTMachineRecipe> register(recipeType: JEIRecipeType<RecipeHolder<T>>, recipe: HTRecipeType<T>) {
             recipe.reloadCache(recipeManager)
             registration.addRecipes(
                 recipeType,

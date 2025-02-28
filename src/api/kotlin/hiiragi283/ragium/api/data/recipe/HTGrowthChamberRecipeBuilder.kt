@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
 class HTGrowthChamberRecipeBuilder(lookup: HolderGetter<Item>) :
-    HTMachineRecipeBuilderBase<HTGrowthChamberRecipeBuilder, HTGrowthChamberRecipe>(lookup) {
+    HTMachineRecipeBuilder<HTGrowthChamberRecipeBuilder, HTGrowthChamberRecipe>(lookup) {
     private var group: String? = null
     private lateinit var seed: Ingredient
     private lateinit var soil: Ingredient

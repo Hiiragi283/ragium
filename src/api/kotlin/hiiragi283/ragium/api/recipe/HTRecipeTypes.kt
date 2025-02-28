@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
@@ -107,7 +107,7 @@ object HTRecipeTypes {
     )
 
     @JvmField
-    val ALL_TYPES: List<HTRecipeType<out HTMachineRecipeBase>> = listOf(
+    val ALL_TYPES: List<HTRecipeType<out HTMachineRecipe>> = listOf(
         ASSEMBLER,
         BLAST_FURNACE,
         BREWERY,

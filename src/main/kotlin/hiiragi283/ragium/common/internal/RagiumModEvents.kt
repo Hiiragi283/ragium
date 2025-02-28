@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTMoltenFluidIngredient
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -54,13 +54,13 @@ internal object RagiumModEvents {
     fun onRegister(event: RegisterEvent) {
         // Recipe Serializer
         event.register(Registries.RECIPE_SERIALIZER) { helper: RegisterEvent.RegisterHelper<RecipeSerializer<*>> ->
-            HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipeBase> ->
+            HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipe> ->
                 helper.register(RagiumAPI.id(type.toString()), type.serializer)
             }
         }
         // Recipe Type
         event.register(Registries.RECIPE_TYPE) { helper: RegisterEvent.RegisterHelper<RecipeType<*>> ->
-            HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipeBase> ->
+            HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipe> ->
                 helper.register(RagiumAPI.id(type.toString()), type)
             }
             LOGGER.info("Added machine recipe types!")

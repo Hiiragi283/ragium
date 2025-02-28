@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTSolidifierRecipe
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import hiiragi283.ragium.integration.jei.addIngredients
-import hiiragi283.ragium.integration.jei.addItemOutput
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.RecipeType
@@ -30,7 +29,7 @@ class HTSolidifierRecipeCategory(guiHelper: IGuiHelper) :
         builder
             .addOutputSlot(getPosition(4), getPosition(0))
             .setStandardSlotBackground()
-            .addItemOutput(recipe.itemOutput)
+            .addItemStack(recipe.itemOutput.get())
     }
 
     override fun getWidth(): Int = 18 * 5 + 8

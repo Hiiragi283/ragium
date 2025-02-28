@@ -3,6 +3,8 @@ package hiiragi283.ragium.api.recipe.base
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toOptional
+import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -19,11 +21,29 @@ abstract class HTSingleItemRecipe(
     val input: HTItemIngredient,
     val catalyst: Optional<Ingredient>,
     val itemOutput: HTItemOutput,
-) : HTMachineRecipeBase(group) {
-    final override fun matches(input: HTMachineRecipeInput): Boolean {
-        if (!this.input.test(input, 0)) return false
-        val catalystItem: ItemStack = input.getItem(1)
+) : HTMachineRecipe(group) {
+    final override fun matches(context: HTMachineRecipeContext): Boolean {
+        if (!this.input.test(context.getItemStack(HTStorageIO.INPUT, 0))) return false
+        val catalystItem: ItemStack = context.getItemStack(HTStorageIO.CATALYST, 0)
         return catalyst.map { it.test(catalystItem) }.orElse(catalystItem.isEmpty)
+    }
+
+    final override fun canProcess(context: HTMachineRecipeContext): Result<Unit> = runCatching {
+        // Output
+        if (!context.getSlot(HTStorageIO.OUTPUT, 0).canInsert(itemOutput.get())) {
+            throw HTMachineException.GrowItem()
+        }
+        // Input
+        if (!context.getSlot(HTStorageIO.INPUT, 0).canShrink(input.count)) {
+            throw HTMachineException.ShrinkItem()
+        }
+    }
+
+    final override fun process(context: HTMachineRecipeContext) {
+        // Output
+        context.getSlot(HTStorageIO.OUTPUT, 0).insertItem(itemOutput.get(), false)
+        // Input
+        context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(input.count, false)
     }
 
     //    Serializer    //

@@ -3,7 +3,9 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
+import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.base.*
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -42,7 +44,27 @@ class HTRefineryRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput): Boolean = this.input.test(input.getFluid(0))
+    override fun matches(context: HTMachineRecipeContext): Boolean = this.input.test(context.getFluidStack(HTStorageIO.INPUT, 0))
+
+    override fun canProcess(context: HTMachineRecipeContext): Result<Unit> = runCatching {
+        // Output
+        validateItemOutput(context, 0)
+        validateFluidOutput(context, 0)
+        validateFluidOutput(context, 1)
+        // Input
+        if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(input.amount())) {
+            throw HTMachineException.ShrinkFluid()
+        }
+    }
+
+    override fun process(context: HTMachineRecipeContext) {
+        // Output
+        processItemOutput(context, 0)
+        processFluidOutput(context, 0)
+        processFluidOutput(context, 1)
+        // Input
+        context.getTank(HTStorageIO.INPUT, 0).shrinkStack(input.amount(), false)
+    }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.REFINERY
 }

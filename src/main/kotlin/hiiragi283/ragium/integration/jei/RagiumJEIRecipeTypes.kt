@@ -3,7 +3,7 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.api.recipe.*
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
 import hiiragi283.ragium.integration.jei.entry.HTSoapEntry
 import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
@@ -31,7 +31,7 @@ object RagiumJEIRecipeTypes {
     //    Machine Recipe    //
 
     @JvmStatic
-    private fun <R : HTMachineRecipeBase> create(recipeType: MCRecipeType<R>): RecipeType<RecipeHolder<R>> =
+    private fun <R : HTMachineRecipe> create(recipeType: MCRecipeType<R>): RecipeType<RecipeHolder<R>> =
         RecipeType.createFromVanilla(recipeType)
 
     @JvmField

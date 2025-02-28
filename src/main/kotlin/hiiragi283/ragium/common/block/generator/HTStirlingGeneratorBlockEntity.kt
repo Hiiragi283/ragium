@@ -69,12 +69,12 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val burnTime: Int = inputSlot.getStack().getBurnTime(null)
-        if (burnTime <= 0) throw HTMachineException.FindFuel(false)
+        if (burnTime <= 0) throw HTMachineException.Custom("Invalid furnace fuel found!")
         val requiredWater: Int = RagiumConfig.getStirlingWater(burnTime)
-        if (inputTank.drain(requiredWater, IFluidHandler.FluidAction.SIMULATE).amount < requiredWater) {
-            throw HTMachineException.ExtractFluid(false)
-        }
-        if (inputSlot.canShrink(1, true)) throw HTMachineException.ShrinkInput(false)
+
+        if (!inputTank.canShrink(requiredWater)) throw HTMachineException.ShrinkFluid()
+        if (!inputSlot.canShrink(1, true)) throw HTMachineException.ShrinkItem()
+
         inputTank.drain(requiredWater, IFluidHandler.FluidAction.EXECUTE)
         inputSlot.shrinkStack(1, false)
         outputSlot.insertItem(
@@ -142,10 +142,11 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             }
         }
 
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean {
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Result<Unit> = runCatching {
             val fixedAmount: Int = amount * modifier
-            if (fixedAmount <= 0) return false
-            return storage.receiveEnergy(fixedAmount, simulate) > 0
+            if (fixedAmount <= 0 || storage.receiveEnergy(fixedAmount, simulate) == 0) {
+                throw HTMachineException.GenerateEnergy()
+            }
         }
     }
 }

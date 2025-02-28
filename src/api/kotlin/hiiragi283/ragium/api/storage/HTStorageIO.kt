@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.RagiumAPI
+import net.minecraft.util.StringRepresentable
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -9,11 +10,16 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 /**
  * ストレージの搬入出を管理するクラス
  */
-enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
+enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) : StringRepresentable {
     /**
      * 搬入出を受け付けない
      */
     EMPTY(false, false),
+
+    /**
+     * 触媒スロット
+     */
+    CATALYST(false, false),
 
     /**
      * ホッパーやパイプを介した搬入
@@ -45,4 +51,8 @@ enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
      * 指定した[storage]の搬入出を制限した[IEnergyStorage]を返します。
      */
     fun wrapEnergyStorage(storage: IEnergyStorage): IEnergyStorage = RagiumAPI.getInstance().wrapEnergyStorage(this, storage)
+
+    //    StringRepresentable    //
+
+    override fun getSerializedName(): String = name.lowercase()
 }

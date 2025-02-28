@@ -18,7 +18,7 @@ class HTMultiItemRecipeBuilder<T : HTMultiItemRecipe>(
     override val prefix: String,
     private val factory: (String, List<HTItemIngredient>, Optional<SizedFluidIngredient>, HTItemOutput) -> T,
     lookup: HolderGetter<Item>,
-) : HTMachineRecipeBuilderBase<HTMultiItemRecipeBuilder<T>, T>(lookup) {
+) : HTMachineRecipeBuilder<HTMultiItemRecipeBuilder<T>, T>(lookup) {
     companion object {
         @JvmStatic
         fun assembler(lookup: HolderGetter<Item>): HTMultiItemRecipeBuilder<HTAssemblerRecipe> =

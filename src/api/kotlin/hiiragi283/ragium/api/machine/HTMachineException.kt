@@ -1,27 +1,37 @@
 package hiiragi283.ragium.api.machine
 
-sealed class HTMachineException(val showInLog: Boolean, message: String) : RuntimeException(message) {
-    class Custom(showInLog: Boolean, message: String) : HTMachineException(showInLog, message)
+import hiiragi283.ragium.api.storage.HTStorageIO
+
+sealed class HTMachineException(message: String) : RuntimeException(message) {
+    class Custom(message: String) : HTMachineException(message)
+
+    class InvalidMultiblock : HTMachineException("Invalid Multiblock!")
+
+    class MissingSlot(storageIO: HTStorageIO, index: Int) :
+        HTMachineException("Missing ${storageIO.serializedName} slot for index: $index!")
+
+    class MissingTank(storageIO: HTStorageIO, index: Int) :
+        HTMachineException("Missing ${storageIO.serializedName} tank for index: $index!")
 
     //    Energy    //
 
-    class FindFuel(showInLog: Boolean) : HTMachineException(showInLog, "Failed to find fuel!")
+    class ConsumeEnergy : HTMachineException("Failed to extract energy!")
 
-    class ConsumeFuel(showInLog: Boolean) : HTMachineException(showInLog, "Failed to consume fuel!")
-
-    class GenerateEnergy(showInLog: Boolean) : HTMachineException(showInLog, "Failed to generate energy!")
-
-    class HandleEnergy(showInLog: Boolean) : HTMachineException(showInLog, "Failed to handle required energy from network!")
+    class GenerateEnergy : HTMachineException("Failed to receive energy!")
 
     //    Fluid    //
 
-    class ExtractFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to extract fluid into the storage!")
+    class ShrinkFluid : HTMachineException("Failed to extract input fluid!")
+
+    class GrowFluid : HTMachineException("Failed to insert output fluid!")
+
+    //    Item    //
+
+    class ShrinkItem : HTMachineException("Failed to extract input item!")
+
+    class GrowItem : HTMachineException("Failed to insert output item!")
 
     //    Recipe    //
 
-    class NoMatchingRecipe(showInLog: Boolean) : HTMachineException(showInLog, "Failed to find matching recipe!")
-
-    class ShrinkInput(showInLog: Boolean) : HTMachineException(showInLog, "Failed to consume recipe inputs!")
-
-    class MergeOutput(showInLog: Boolean) : HTMachineException(showInLog, "Failed to merge recipe results into outputs!")
+    class NoMatchingRecipe : HTMachineException("Failed to find matching recipe!")
 }

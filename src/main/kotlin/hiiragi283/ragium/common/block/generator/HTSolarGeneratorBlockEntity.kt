@@ -21,9 +21,7 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generate.PRECISION
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        if (!(level.canSeeSky(pos.above()) && level.isDay)) {
-            throw HTMachineException.GenerateEnergy(false)
-        }
+        if (!(level.canSeeSky(pos.above()) && level.isDay)) throw HTMachineException.Custom("Cannot see sky above!")
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null

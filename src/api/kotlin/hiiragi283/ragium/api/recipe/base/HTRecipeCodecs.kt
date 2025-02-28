@@ -12,8 +12,8 @@ import java.util.*
  */
 object HTRecipeCodecs {
     @JvmStatic
-    fun <T : HTMachineRecipeBase> group(): RecordCodecBuilder<T, String> =
-        Codec.STRING.optionalFieldOf("group", "").forGetter(HTMachineRecipeBase::getGroup)
+    fun <T : HTMachineRecipe> group(): RecordCodecBuilder<T, String> =
+        Codec.STRING.optionalFieldOf("group", "").forGetter(HTMachineRecipe::getGroup)
 
     @JvmStatic
     fun <T : HTFluidOutputRecipe> itemOutputs(min: Int, max: Int): RecordCodecBuilder<T, List<HTItemOutput>> = HTItemOutput.CODEC

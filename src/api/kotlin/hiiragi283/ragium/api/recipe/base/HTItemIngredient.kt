@@ -56,8 +56,6 @@ class HTItemIngredient private constructor(val ingredient: Ingredient, val count
     val matchingStacks: List<ItemStack>
         get() = ingredient.items.map { it.copyWithCount(count) }
 
-    fun test(input: HTMachineRecipeInput, slot: Int): Boolean = test(input.getItem(slot))
-
     override fun test(stack: ItemStack): Boolean = when {
         this.isEmpty -> stack.isEmpty
         else -> when {

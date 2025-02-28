@@ -36,6 +36,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.*
 import java.util.function.Supplier
@@ -124,8 +125,10 @@ abstract class HTMachineBlockEntity(
     ): InteractionResult {
         if (!level.isClientSide) {
             // Insert fluid from holding stack
-            if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, getFluidHandler(null))) {
-                return InteractionResult.SUCCESS
+            getFluidHandler(null)?.let { handler: IFluidHandler ->
+                if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, handler)) {
+                    return InteractionResult.SUCCESS
+                }
             }
         }
         return super.onRightClicked(state, level, pos, player, hitResult)
@@ -139,7 +142,7 @@ abstract class HTMachineBlockEntity(
         val data: HTMultiblockData =
             controller.collectData { text: Component -> player?.displayClientMessage(text, true) }
         if (data.result == TriState.FALSE) {
-            throw HTMachineException.Custom(true, "Multiblock validation failed!")
+            throw HTMachineException.InvalidMultiblock()
         }
         data
     }
@@ -165,18 +168,16 @@ abstract class HTMachineBlockEntity(
     final override fun tickSecond(level: Level, pos: BlockPos, state: BlockState) {
         if (!level.isClientSide) {
             tickOnServer(level as ServerLevel, pos)
+            setChanged()
         }
-        setChanged()
     }
 
     private fun tickOnServer(level: ServerLevel, pos: BlockPos) {
         val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetwork(level)
         val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
         // 取得したエネルギー量を処理できるか判定
-        if (!energyData.handleEnergy(network, costModifier, true)) {
-            failed(HTMachineException.HandleEnergy(false))
-            return
-        }
+        val energyResult: Result<Unit> = energyData.handleEnergy(network, costModifier, true).onFailure(::failed)
+        if (energyResult.isFailure) return
         runCatching { process(level, pos) }.fold(
             {
                 energyData.handleEnergy(network, costModifier, false)

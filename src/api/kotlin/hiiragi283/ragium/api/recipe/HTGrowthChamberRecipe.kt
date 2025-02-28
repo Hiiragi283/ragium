@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.base.*
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -17,7 +18,7 @@ class HTGrowthChamberRecipe(
     val soil: Ingredient,
     val waterAmount: Int,
     val crop: HTItemOutput,
-) : HTMachineRecipeBase(group) {
+) : HTMachineRecipe(group) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTGrowthChamberRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -50,15 +51,28 @@ class HTGrowthChamberRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput): Boolean {
-        val bool1: Boolean = seed.test(input.getItem(0))
-        val bool2: Boolean = soil.test(input.getItem(1))
-        val bool3: Boolean = if (waterAmount > 0) {
-            SizedFluidIngredient.of(Tags.Fluids.WATER, waterAmount).test(input.getFluid(0))
-        } else {
-            true
-        }
+    private val waterIngredient: SizedFluidIngredient? = when (waterAmount > 0) {
+        true -> SizedFluidIngredient.of(Tags.Fluids.WATER, waterAmount)
+        false -> null
+    }
+
+    override fun matches(context: HTMachineRecipeContext): Boolean {
+        val bool1: Boolean = seed.test(context.getItemStack(HTStorageIO.INPUT, 0))
+        val bool2: Boolean = soil.test(context.getItemStack(HTStorageIO.INPUT, 1))
+        val bool3: Boolean = waterIngredient?.test(context.getFluidStack(HTStorageIO.INPUT, 0)) != false
         return bool1 && bool2 && bool3
+    }
+
+    override fun canProcess(context: HTMachineRecipeContext): Result<Unit> = runCatching {
+        // Output
+
+        // Input
+    }
+
+    override fun process(context: HTMachineRecipeContext) {
+        // Output
+
+        // Input
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.GROWTH_CHAMBER

@@ -64,6 +64,8 @@ interface HTFluidTank :
      */
     fun shrinkStack(amount: Int, simulate: Boolean): Int = growStack(-amount, simulate)
 
+    fun canShrink(amount: Int): Boolean = shrinkStack(amount, true) == -amount
+
     fun canShrink(amount: Int, simulate: Boolean): Boolean = shrinkStack(amount, simulate) == amount
 
     fun isEmpty(): Boolean = fluid.isEmpty

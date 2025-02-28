@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.extension.toOptional
+import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -19,13 +21,57 @@ abstract class HTMultiItemRecipe(
     val itemInputs: List<HTItemIngredient>,
     val fluidInput: Optional<SizedFluidIngredient>,
     val itemOutput: HTItemOutput,
-) : HTMachineRecipeBase(group) {
-    final override fun matches(input: HTMachineRecipeInput): Boolean {
-        val bool1: Boolean = this.itemInputs[0].test(input, 0)
-        val bool2: Boolean = this.itemInputs.getOrNull(1)?.test(input, 1) != false
-        val bool3: Boolean = this.itemInputs.getOrNull(2)?.test(input, 2) != false
-        val bool4: Boolean = this.fluidInput.map { it.test(input.getFluid(0)) }.orElse(true)
+) : HTMachineRecipe(group) {
+    final override fun matches(context: HTMachineRecipeContext): Boolean {
+        val bool1: Boolean = itemInputs[0].test(context.getItemStack(HTStorageIO.INPUT, 0))
+        val bool2: Boolean = itemInputs.getOrNull(1)?.test(context.getItemStack(HTStorageIO.INPUT, 1)) != false
+        val bool3: Boolean = itemInputs.getOrNull(2)?.test(context.getItemStack(HTStorageIO.INPUT, 2)) != false
+        val bool4: Boolean = fluidInput.map { it.test(context.getFluidStack(HTStorageIO.INPUT, 0)) }.orElse(true)
         return bool1 && bool2 && bool3 && bool4
+    }
+
+    final override fun canProcess(context: HTMachineRecipeContext): Result<Unit> = runCatching {
+        // Output
+        if (!context.getSlot(HTStorageIO.OUTPUT, 0).canInsert(itemOutput.get())) {
+            throw HTMachineException.GrowItem()
+        }
+        // Input
+        if (!context.getSlot(HTStorageIO.INPUT, 0).canShrink(itemInputs[0].count)) {
+            throw HTMachineException.ShrinkItem()
+        }
+        itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
+            if (!context.getSlot(HTStorageIO.INPUT, 1).canShrink(ingredient.count)) {
+                throw HTMachineException.ShrinkItem()
+            }
+        }
+        itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
+            if (!context.getSlot(HTStorageIO.INPUT, 2).canShrink(ingredient.count)) {
+                throw HTMachineException.ShrinkItem()
+            }
+        }
+        
+        fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
+            if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(ingredient.amount())) {
+                throw HTMachineException.ShrinkFluid()
+            }
+        }
+    }
+
+    final override fun process(context: HTMachineRecipeContext) {
+        // Output
+        context.getSlot(HTStorageIO.OUTPUT, 0).insertItem(itemOutput.get(), false)
+        // Input
+        context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(itemInputs[0].count, false)
+        itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
+            context.getSlot(HTStorageIO.INPUT, 1).shrinkStack(ingredient.count, false)
+        }
+        itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
+            context.getSlot(HTStorageIO.INPUT, 2).shrinkStack(ingredient.count, false)
+        }
+
+        fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
+            context.getTank(HTStorageIO.INPUT, 0).shrinkStack(ingredient.amount(), false)
+        }
     }
 
     //    Serializer    //

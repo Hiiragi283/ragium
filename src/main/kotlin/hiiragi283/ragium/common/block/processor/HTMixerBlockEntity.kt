@@ -2,12 +2,9 @@ package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.HTMixerRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.storage.HTFluidTank
 import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -66,31 +63,14 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput
-            .Builder()
-            .addItem(inputSlot)
-            .addFluid(firstInputTank)
-            .addFluid(secondInputTank)
+        val context: HTMachineRecipeContext = HTMachineRecipeContext
+            .builder()
+            .addInput(0, inputSlot)
+            .addInput(0, firstInputTank)
+            .addInput(1, secondInputTank)
+            .addOutput(0, outputTank)
             .build()
-        val recipe: HTMixerRecipe = HTRecipeTypes.MIXER.getFirstRecipe(input, level).getOrThrow()
-        // Try to insert outputs
-        recipe.canInsert(this, intArrayOf(), intArrayOf(1, 2))
-        // Insert outputs
-        recipe.insertOutputs(this, intArrayOf(), intArrayOf(1, 2))
-        // Decrement input
-        recipe.itemInput.ifPresent { ingredient: HTItemIngredient ->
-            if (!inputSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
-        }
-        if (!firstInputTank.canShrink(recipe.firstFluid.amount(), true)) throw HTMachineException.ShrinkInput(false)
-        if (!secondInputTank.canShrink(recipe.secondFluid.amount(), true)) throw HTMachineException.ShrinkInput(false)
-
-        recipe.itemInput.ifPresent { ingredient: HTItemIngredient ->
-            inputSlot.shrinkStack(ingredient.count, false)
-        }
-
-        firstInputTank.shrinkStack(recipe.firstFluid.amount(), false)
-        secondInputTank.shrinkStack(recipe.secondFluid.amount(), false)
+        HTRecipeTypes.MIXER.processFirstRecipe(context, level)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
@@ -122,7 +102,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFluidIoFromSlot(tank: Int): HTStorageIO = when (tank) {
         0 -> HTStorageIO.INPUT
-        1 -> HTStorageIO.OUTPUT
+        1 -> HTStorageIO.INPUT
         2 -> HTStorageIO.OUTPUT
         else -> HTStorageIO.EMPTY
     }

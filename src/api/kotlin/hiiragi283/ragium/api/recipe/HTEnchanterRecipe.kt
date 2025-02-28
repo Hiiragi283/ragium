@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.base.*
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -19,7 +20,7 @@ class HTEnchanterRecipe(
     val firstInput: HTItemIngredient,
     val secondInput: Optional<HTItemIngredient>,
     val enchantment: Holder<Enchantment>,
-) : HTMachineRecipeBase(group) {
+) : HTMachineRecipe(group) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTEnchanterRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -51,12 +52,21 @@ class HTEnchanterRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput): Boolean {
-        if (input.getItem(0).getEnchantmentLevel(enchantment) > 0) {
+    override fun matches(context: HTMachineRecipeContext): Boolean {
+        if (context.getItemStack(HTStorageIO.INPUT, 0).getEnchantmentLevel(enchantment) > 0) {
             return false
         }
-        val second: ItemStack = input.getItem(2)
-        return firstInput.test(input, 1) && secondInput.map { it.test(second) }.orElse(second.isEmpty)
+        val second: ItemStack = context.getItemStack(HTStorageIO.INPUT, 2)
+        return firstInput.test(context.getItemStack(HTStorageIO.INPUT, 1)) &&
+            secondInput
+                .map { it.test(second) }
+                .orElse(second.isEmpty)
+    }
+
+    override fun canProcess(context: HTMachineRecipeContext): Result<Unit> = runCatching {
+    }
+
+    override fun process(context: HTMachineRecipeContext) {
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.ENCHANTER

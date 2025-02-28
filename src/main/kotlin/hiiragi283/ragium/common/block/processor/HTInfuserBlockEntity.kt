@@ -2,11 +2,9 @@ package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.HTInfuserRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.storage.HTFluidTank
 import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -64,23 +62,14 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput
-            .Builder()
-            .addItem(inputSlot)
-            .addFluid(inputTank)
+        val context: HTMachineRecipeContext = HTMachineRecipeContext
+            .builder()
+            .addInput(0, inputSlot)
+            .addInput(0, inputTank)
+            .addOutput(0, outputSlot)
+            .addOutput(0, outputTank)
             .build()
-        val recipe: HTInfuserRecipe = HTRecipeTypes.INFUSER.getFirstRecipe(input, level).getOrThrow()
-        // Try to insert outputs
-        recipe.canInsert(this, intArrayOf(1), intArrayOf(1))
-        // Insert outputs
-        recipe.insertOutputs(this, intArrayOf(1), intArrayOf(1))
-        // Decrement input
-        if (!inputSlot.canShrink(recipe.itemInput.count, true)) throw HTMachineException.ShrinkInput(false)
-        if (!inputTank.canShrink(recipe.fluidInput.amount(), true)) throw HTMachineException.ShrinkInput(false)
-
-        inputSlot.shrinkStack(recipe.itemInput.count, false)
-        inputTank.shrinkStack(recipe.fluidInput.amount(), false)
+        HTRecipeTypes.INFUSER.processFirstRecipe(context, level)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

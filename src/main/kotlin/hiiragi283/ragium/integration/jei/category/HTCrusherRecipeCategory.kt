@@ -20,14 +20,20 @@ class HTCrusherRecipeCategory(guiHelper: IGuiHelper) : HTMachineRecipeCategory<H
             .setStandardSlotBackground()
             .addIngredients(recipe.input)
         // Item Outputs
+        builder
+            .addOutputSlot(getPosition(3), getPosition(0))
+            .setStandardSlotBackground()
+            .addItemOutput(recipe, 0)
 
-        for (index: Int in (0..2)) {
-            val row: Int = index % 3
-            builder
-                .addOutputSlot(getPosition(row + 3), getPosition(0))
-                .setStandardSlotBackground()
-                .addItemOutput(recipe.outputs.getOrNull(index))
-        }
+        builder
+            .addOutputSlot(getPosition(4), getPosition(0))
+            .setStandardSlotBackground()
+            .addItemOutput(recipe, 1)
+
+        builder
+            .addOutputSlot(getPosition(5), getPosition(0))
+            .setStandardSlotBackground()
+            .addItemOutput(recipe, 2)
     }
 
     override fun getWidth(): Int = 18 * 6 + 8

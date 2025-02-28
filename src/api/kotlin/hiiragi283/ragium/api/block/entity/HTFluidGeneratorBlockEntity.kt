@@ -57,12 +57,12 @@ abstract class HTFluidGeneratorBlockEntity(
         if (amount <= 0) {
             val event = HTGeneratorFuelTimeEvent(this, stackIn, amount)
             FORGE_BUS.post(event)
-            if (event.isCanceled) throw HTMachineException.FindFuel(false)
+            if (event.isCanceled) throw HTMachineException.Custom("HTGeneratorFuelTimeEvent was canceled!")
             amount = event.fuelTime
         }
-        if (amount <= 0) throw HTMachineException.FindFuel(false)
+        if (amount <= 0) throw HTMachineException.Custom("Required fuel amount is negative value!")
 
-        if (!inputTank.canShrink(amount, true)) throw HTMachineException.ConsumeFuel(false)
+        if (!inputTank.canShrink(amount, true)) throw HTMachineException.ShrinkFluid()
         inputTank.shrinkStack(amount, false)
     }
 

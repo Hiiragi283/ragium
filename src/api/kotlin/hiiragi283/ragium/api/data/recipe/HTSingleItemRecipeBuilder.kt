@@ -21,7 +21,7 @@ class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
     override val prefix: String,
     private val factory: (String, HTItemIngredient, Optional<Ingredient>, HTItemOutput) -> T,
     lookup: HolderGetter<Item>,
-) : HTMachineRecipeBuilderBase<HTSingleItemRecipeBuilder<T>, T>(lookup) {
+) : HTMachineRecipeBuilder<HTSingleItemRecipeBuilder<T>, T>(lookup) {
     companion object {
         @JvmStatic
         fun compressor(lookup: HolderGetter<Item>): HTSingleItemRecipeBuilder<HTCompressorRecipe> =

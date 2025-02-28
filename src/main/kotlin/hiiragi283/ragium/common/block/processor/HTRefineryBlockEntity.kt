@@ -2,11 +2,9 @@ package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
-import hiiragi283.ragium.api.recipe.HTRefineryRecipe
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.storage.HTFluidTank
 import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -65,16 +63,14 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(inputTank)
-        val recipe: HTRefineryRecipe = HTRecipeTypes.REFINERY.getFirstRecipe(input, level).getOrThrow()
-        // Try to insert outputs
-        recipe.canInsert(this, intArrayOf(0), intArrayOf(1, 2))
-        // Insert outputs
-        recipe.insertOutputs(this, intArrayOf(0), intArrayOf(1, 2))
-        // Decrement input
-        if (!inputTank.canShrink(recipe.input.amount(), true)) throw HTMachineException.ShrinkInput(false)
-        inputTank.shrinkStack(recipe.input.amount(), false)
+        val context: HTMachineRecipeContext = HTMachineRecipeContext
+            .builder()
+            .addInput(0, inputTank)
+            .addOutput(0, outputSlot)
+            .addOutput(0, firstOutputTank)
+            .addOutput(1, secondOutputTank)
+            .build()
+        HTRecipeTypes.REFINERY.processFirstRecipe(context, level)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

@@ -19,9 +19,9 @@ import java.util.*
 
 /**
  * [RecipeSerializer]と[RecipeType]を束ねたクラス
- * @see [HTMachineRecipeBase.getRecipeType]
+ * @see [HTMachineRecipe.getRecipeType]
  */
-class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val serializer: RecipeSerializer<T>) : RecipeType<T> {
+class HTRecipeType<T : HTMachineRecipe>(val machine: HTMachineType, val serializer: RecipeSerializer<T>) : RecipeType<T> {
     constructor(
         machine: HTMachineType,
         codec: MapCodec<T>,
@@ -40,11 +40,12 @@ class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val seri
     private var changed: Boolean = true
 
     /**
-     * 指定した[input]と[level]から最初に一致するレシピを返します。
+     * 指定した[context]と[level]から最初に一致するレシピを返します。
      * @return 見つからなかった場合は[Result.failure]
      */
-    fun getFirstRecipe(input: HTMachineRecipeInput, level: Level): Result<T> {
-        val matchingFilter: (RecipeHolder<T>) -> Boolean = { holder: RecipeHolder<T> -> holder.value.matches(input, level) }
+    fun getFirstRecipe(context: HTMachineRecipeContext, level: Level): Result<T> {
+        val matchingFilter: (RecipeHolder<T>) -> Boolean =
+            { holder: RecipeHolder<T> -> holder.value.matches(context, level) }
         var firstRecipe: RecipeHolder<T>? = null
         // Check cache update
         this.reloadCache()
@@ -63,8 +64,18 @@ class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val seri
                 Result.success(holder.value)
             }.orElseGet {
                 lastRecipe = null
-                Result.failure(HTMachineException.NoMatchingRecipe(false))
+                Result.failure(HTMachineException.NoMatchingRecipe())
             }
+    }
+
+    /**
+     * 指定した[context]と[level]から最初に一致するレシピを処理します。
+     * @throws HTMachineException 処理に失敗した場合
+     */
+    fun processFirstRecipe(context: HTMachineRecipeContext, level: Level) {
+        val recipe: T = getFirstRecipe(context, level).getOrThrow()
+        recipe.canProcess(context).getOrThrow()
+        recipe.process(context)
     }
 
     /**
@@ -112,7 +123,7 @@ class HTRecipeType<T : HTMachineRecipeBase>(val machine: HTMachineType, val seri
             val event = HTMachineRecipesUpdatedEvent(
                 access,
                 this@HTRecipeType,
-            ) { holder: RecipeHolder<out HTMachineRecipeBase> ->
+            ) { holder: RecipeHolder<out HTMachineRecipe> ->
                 val recipe: T = holder.value as? T ?: return@HTMachineRecipesUpdatedEvent
                 consumer(RecipeHolder(holder.id, recipe))
             }

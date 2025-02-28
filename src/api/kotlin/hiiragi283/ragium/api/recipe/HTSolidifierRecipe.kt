@@ -3,7 +3,9 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toOptional
+import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.base.*
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -17,7 +19,7 @@ class HTSolidifierRecipe(
     val input: SizedFluidIngredient,
     val catalyst: Optional<Ingredient>,
     val itemOutput: HTItemOutput,
-) : HTMachineRecipeBase(group) {
+) : HTMachineRecipe(group) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTSolidifierRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -44,10 +46,28 @@ class HTSolidifierRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput): Boolean {
-        if (!this.input.test(input.getFluid(0))) return false
-        val catalystItem: ItemStack = input.getItem(0)
+    override fun matches(context: HTMachineRecipeContext): Boolean {
+        if (!this.input.test(context.getFluidStack(HTStorageIO.INPUT, 0))) return false
+        val catalystItem: ItemStack = context.getItemStack(HTStorageIO.INPUT, 0)
         return catalyst.map { it.test(catalystItem) }.orElse(catalystItem.isEmpty)
+    }
+
+    override fun canProcess(context: HTMachineRecipeContext): Result<Unit> = runCatching {
+        // Output
+        if (!context.getSlot(HTStorageIO.OUTPUT, 0).canInsert(itemOutput.get())) {
+            throw HTMachineException.GrowItem()
+        }
+        // Input
+        if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(input.amount())) {
+            throw HTMachineException.ShrinkFluid()
+        }
+    }
+
+    override fun process(context: HTMachineRecipeContext) {
+        // Output
+        context.getSlot(HTStorageIO.OUTPUT, 0).insertItem(itemOutput.get(), false)
+        // Input
+        context.getTank(HTStorageIO.INPUT, 0).shrinkStack(input.amount(), false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.SOLIDIFIER

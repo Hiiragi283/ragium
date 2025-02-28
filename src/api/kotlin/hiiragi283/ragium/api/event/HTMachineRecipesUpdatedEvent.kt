@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.event
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilderBase
+import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -27,7 +27,7 @@ import kotlin.jvm.optionals.getOrNull
 class HTMachineRecipesUpdatedEvent(
     provider: HolderLookup.Provider,
     private val currentType: HTRecipeType<*>,
-    private val consumer: (RecipeHolder<out HTMachineRecipeBase>) -> Unit,
+    private val consumer: (RecipeHolder<out HTMachineRecipe>) -> Unit,
 ) : Event(),
     HolderLookup.Provider by provider {
     /**
@@ -37,10 +37,10 @@ class HTMachineRecipesUpdatedEvent(
      * @param recipeId 登録するレシピのID
      * @param function 登録するレシピのビルダーを返すブロック
      */
-    fun <T : HTMachineRecipeBase> register(
+    fun <T : HTMachineRecipe> register(
         recipeType: HTRecipeType<T>,
         recipeId: ResourceLocation,
-        function: Function<HolderGetter<Item>, HTMachineRecipeBuilderBase<*, T>?>,
+        function: Function<HolderGetter<Item>, HTMachineRecipeBuilder<*, T>?>,
     ) {
         if (currentType == recipeType) {
             function.apply(itemLookup())?.export(recipeId, consumer)

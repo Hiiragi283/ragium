@@ -4,12 +4,14 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.extension.toOptional
+import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.base.*
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import java.util.Optional
+import java.util.*
 
 class HTMixerRecipe(
     group: String,
@@ -56,11 +58,43 @@ class HTMixerRecipe(
         )
     }
 
-    override fun matches(input: HTMachineRecipeInput): Boolean {
-        val bool1: Boolean = firstFluid.test(input.getFluid(0))
-        val bool2: Boolean = secondFluid.test(input.getFluid(1))
-        val bool3: Boolean = itemInput.map { it.test(input.getItem(0)) }.orElse(true)
+    override fun matches(context: HTMachineRecipeContext): Boolean {
+        val bool1: Boolean = firstFluid.test(context.getFluidStack(HTStorageIO.INPUT, 0))
+        val bool2: Boolean = secondFluid.test(context.getFluidStack(HTStorageIO.INPUT, 1))
+        val bool3: Boolean = itemInput.map { it.test(context.getItemStack(HTStorageIO.INPUT, 0)) }.orElse(true)
         return bool1 && bool2 && bool3
+    }
+
+    override fun canProcess(context: HTMachineRecipeContext): Result<Unit> = runCatching {
+        // Output
+        validateItemOutput(context, 0)
+        validateFluidOutput(context, 0)
+        // Input
+        itemInput.ifPresent { ingredient: HTItemIngredient ->
+            if (!context.getSlot(HTStorageIO.INPUT, 0).canShrink(ingredient.count)) {
+                throw HTMachineException.ShrinkItem()
+            }
+        }
+
+        if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(firstFluid.amount())) {
+            throw HTMachineException.ShrinkFluid()
+        }
+        if (!context.getTank(HTStorageIO.INPUT, 1).canShrink(secondFluid.amount())) {
+            throw HTMachineException.ShrinkFluid()
+        }
+    }
+
+    override fun process(context: HTMachineRecipeContext) {
+        // Output
+        processItemOutput(context, 0)
+        processFluidOutput(context, 0)
+        // Input
+        itemInput.ifPresent { ingredient: HTItemIngredient ->
+            context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(ingredient.count, false)
+        }
+
+        context.getTank(HTStorageIO.INPUT, 0).shrinkStack(firstFluid.amount(), false)
+        context.getTank(HTStorageIO.INPUT, 1).shrinkStack(secondFluid.amount(), false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.MIXER

@@ -5,12 +5,12 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 interface HTMachineEnergyData {
     val amount: Int
 
-    fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean
+    fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Result<Unit>
 
     data class Empty(private val result: Boolean) : HTMachineEnergyData {
         override val amount: Int = 0
 
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean = result
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Result<Unit> = Result.success(Unit)
     }
 
     enum class Consume(override val amount: Int) : HTMachineEnergyData {
@@ -19,10 +19,11 @@ interface HTMachineEnergyData {
         PRECISION(2560),
         ;
 
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean {
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Result<Unit> = runCatching {
             val fixedAmount: Int = amount * modifier
-            if (fixedAmount <= 0) return false
-            return storage.extractEnergy(fixedAmount, simulate) == fixedAmount
+            if (fixedAmount <= 0 || storage.extractEnergy(fixedAmount, simulate) != fixedAmount) {
+                throw HTMachineException.ConsumeEnergy()
+            }
         }
     }
 
@@ -32,10 +33,11 @@ interface HTMachineEnergyData {
         PRECISION(5120),
         ;
 
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Boolean {
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Result<Unit> = runCatching {
             val fixedAmount: Int = amount * modifier
-            if (fixedAmount <= 0) return false
-            return storage.receiveEnergy(fixedAmount, simulate) > 0
+            if (fixedAmount <= 0 || storage.receiveEnergy(fixedAmount, simulate) == 0) {
+                throw HTMachineException.GenerateEnergy()
+            }
         }
     }
 }

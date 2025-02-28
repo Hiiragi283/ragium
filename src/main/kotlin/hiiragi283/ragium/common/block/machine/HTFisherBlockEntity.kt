@@ -36,10 +36,7 @@ class HTFisherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         if (!level.getFluidState(pos.below()).`is`(FluidTags.WATER)) {
-            throw HTMachineException.Custom(
-                true,
-                "Failed to find water source below!",
-            )
+            throw HTMachineException.Custom("Failed to find water source below!")
         }
         // Apply enchantment
         val rodStack = ItemStack(Items.FISHING_ROD)

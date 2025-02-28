@@ -16,7 +16,7 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
 class HTSolidifierRecipeBuilder(lookup: HolderGetter<Item>) :
-    HTMachineRecipeBuilderBase<HTSolidifierRecipeBuilder, HTSolidifierRecipe>(lookup) {
+    HTMachineRecipeBuilder<HTSolidifierRecipeBuilder, HTSolidifierRecipe>(lookup) {
     private var group: String? = null
     private lateinit var input: SizedFluidIngredient
     private lateinit var output: HTItemOutput

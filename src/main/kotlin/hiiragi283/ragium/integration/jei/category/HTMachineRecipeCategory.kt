@@ -2,7 +2,7 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTMachineRecipeCategory<T : HTMachineRecipeBase>(
+abstract class HTMachineRecipeCategory<T : HTMachineRecipe>(
     val guiHelper: IGuiHelper,
     val machine: HTMachineType,
     val arrowX: Double,

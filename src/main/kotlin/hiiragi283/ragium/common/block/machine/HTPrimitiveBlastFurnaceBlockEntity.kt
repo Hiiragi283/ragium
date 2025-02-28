@@ -76,10 +76,10 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
                 secondItemSlot.shrinkStack(1, false)
                 outputSlot.insertItem(steelIngot, false)
             } else {
-                throw HTMachineException.MergeOutput(false)
+                throw HTMachineException.GrowItem()
             }
         } else {
-            throw HTMachineException.NoMatchingRecipe(false)
+            throw HTMachineException.NoMatchingRecipe()
         }
     }
 

@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeBase
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.component.DataComponentPatch
@@ -33,7 +33,7 @@ import java.util.function.Supplier
  * @param R 生成する機械レシピのクラス
  * @param lookup 現在未使用
  */
-abstract class HTMachineRecipeBuilderBase<T : HTMachineRecipeBuilderBase<T, R>, R : HTMachineRecipeBase>(val lookup: HolderGetter<Item>) :
+abstract class HTMachineRecipeBuilder<T : HTMachineRecipeBuilder<T, R>, R : HTMachineRecipe>(val lookup: HolderGetter<Item>) :
     RecipeBuilder {
     //    Item Input    //
 

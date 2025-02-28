@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.storage.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -68,14 +68,14 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     private fun process(level: Level, pos: BlockPos, player: Player) {
         // Find matching recipe
-        val input: HTMachineRecipeInput = HTMachineRecipeInput.of(inputSlot)
+        val context: HTMachineRecipeContext = HTMachineRecipeContext.builder().addInput(0, inputSlot).build()
         HTRecipeTypes.GRINDER
-            .getFirstRecipe(input, level)
+            .getFirstRecipe(context, level)
             .onSuccess { recipe: HTGrinderRecipe ->
                 // Drop output
                 ItemHandlerHelper.giveItemToPlayer(player, recipe.itemOutput.get())
                 // Shrink input
-                inputSlot.shrinkStack(recipe.input.count, true)
+                inputSlot.shrinkStack(recipe.input.count, false)
                 // Play sound
                 level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS)
             }.onFailure { _: Throwable ->

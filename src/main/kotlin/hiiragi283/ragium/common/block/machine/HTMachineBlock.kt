@@ -37,6 +37,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             HTMachineType.INFUSER to ::HTInfuserBlockEntity,
             HTMachineType.MIXER to ::HTMixerBlockEntity,
             HTMachineType.REFINERY to ::HTRefineryBlockEntity,
+            HTMachineType.SOLIDIFIER to ::HTSolidifierBlockEntity,
             // Processor - Elite
             HTMachineType.LASER_ASSEMBLY to ::HTLaserAssemblyBlockEntity,
         )

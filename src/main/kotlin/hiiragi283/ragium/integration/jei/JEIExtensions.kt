@@ -1,5 +1,6 @@
 package hiiragi283.ragium.integration.jei
 
+import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
@@ -7,7 +8,6 @@ import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.neoforge.NeoForgeTypes
-import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -41,13 +41,14 @@ fun <T : IIngredientAcceptor<*>> T.addIngredients(ingredient: FluidIngredient?):
 
 //    HTItemOutput    //
 
-fun IRecipeSlotBuilder.addItemOutput(output: HTItemOutput?): IRecipeSlotBuilder {
-    var stack: ItemStack = output?.get() ?: return this
-    return addItemStack(stack)
-}
+fun IRecipeSlotBuilder.addItemOutput(recipe: HTFluidOutputRecipe, index: Int): IRecipeSlotBuilder = recipe
+    .getItemOutput(index)
+    .map(HTItemOutput::get)
+    .map(::addItemStack)
+    .orElse(this)
 
-fun IRecipeSlotBuilder.addItemOutput(recipe: HTFluidOutputRecipe, index: Int): IRecipeSlotBuilder =
-    addItemOutput(recipe.itemOutputs.getOrNull(index))
-
-fun IRecipeSlotBuilder.addFluidOutput(recipe: HTFluidOutputRecipe, index: Int): IRecipeSlotBuilder =
-    addFluidStack(recipe.fluidOutputs.getOrNull(index)?.get())
+fun IRecipeSlotBuilder.addFluidOutput(recipe: HTFluidOutputRecipe, index: Int): IRecipeSlotBuilder = recipe
+    .getFluidOutput(index)
+    .map(HTFluidOutput::get)
+    .map(::addFluidStack)
+    .orElse(this)

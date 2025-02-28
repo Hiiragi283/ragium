@@ -1,10 +1,8 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.base.HTItemIngredient
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.storage.HTFluidTank
@@ -18,12 +16,10 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
 
 abstract class HTMultiItemMachineBlockEntity(
@@ -77,40 +73,15 @@ abstract class HTMultiItemMachineBlockEntity(
     }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val input: HTMachineRecipeInput = HTMachineRecipeInput
-            .Builder()
-            .addItem(firstInputSlot)
-            .addItem(secondInputSlot)
-            .addItem(thirdInputSlot)
-            .addFluid(inputTank)
+        val context: HTMachineRecipeContext = HTMachineRecipeContext
+            .builder()
+            .addInput(0, firstInputSlot)
+            .addInput(1, secondInputSlot)
+            .addInput(2, thirdInputSlot)
+            .addInput(0, inputTank)
+            .addOutput(0, outputSlot)
             .build()
-        val recipe: HTMultiItemRecipe = recipeType.getFirstRecipe(input, level).getOrThrow()
-
-        val output: ItemStack = recipe.itemOutput.get()
-        if (!outputSlot.canInsert(output)) throw HTMachineException.MergeOutput(false)
-
-        if (!firstInputSlot.canShrink(recipe.itemInputs[0].count, true)) throw HTMachineException.ShrinkInput(false)
-        recipe.itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
-            if (!secondInputSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
-        }
-        recipe.itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
-            if (!thirdInputSlot.canShrink(ingredient.count, true)) throw HTMachineException.ShrinkInput(false)
-        }
-        recipe.fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
-            if (!inputTank.canShrink(ingredient.amount(), true)) throw HTMachineException.ShrinkInput(false)
-        }
-
-        outputSlot.insertItem(output, false)
-        firstInputSlot.shrinkStack(recipe.itemInputs[0].count, false)
-        recipe.itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
-            secondInputSlot.shrinkStack(ingredient.count, true)
-        }
-        recipe.itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
-            thirdInputSlot.shrinkStack(ingredient.count, true)
-        }
-        recipe.fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
-            inputTank.canShrink(ingredient.amount(), false)
-        }
+        recipeType.processFirstRecipe(context, level)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

@@ -1,9 +1,8 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.base.HTMachineRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.ragium.api.storage.HTFluidSlotHandler
@@ -17,7 +16,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -62,22 +60,13 @@ abstract class HTSingleItemMachineBlockEntity(
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val input: HTMachineRecipeInput =
-            HTMachineRecipeInput
-                .Builder()
-                .addItem(inputSlot)
-                .addItem(catalystSlot)
-                .build()
-        val recipe: HTSingleItemRecipe = recipeType.getFirstRecipe(input, level).getOrThrow()
-
-        val output: ItemStack = recipe.itemOutput.get()
-        if (!outputSlot.canInsert(output)) throw HTMachineException.MergeOutput(false)
-
-        val inputCount: Int = recipe.input.count
-        if (!inputSlot.canShrink(inputCount, true)) throw HTMachineException.ShrinkInput(false)
-
-        outputSlot.insertItem(output, false)
-        inputSlot.extractItem(inputCount, false)
+        val context: HTMachineRecipeContext = HTMachineRecipeContext
+            .builder()
+            .addInput(0, inputSlot)
+            .addCatalyst(catalystSlot)
+            .addOutput(0, outputSlot)
+            .build()
+        recipeType.processFirstRecipe(context, level)
     }
 
     final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
@@ -113,6 +102,7 @@ abstract class HTSingleItemMachineBlockEntity(
 
     override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
         0 -> HTStorageIO.INPUT
+        1 -> HTStorageIO.CATALYST
         2 -> HTStorageIO.OUTPUT
         else -> HTStorageIO.EMPTY
     }

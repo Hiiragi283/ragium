@@ -82,9 +82,9 @@ fun createSpawnerStack(entityType: EntityType<*>, count: Int = 1): ItemStack {
     return builder.build()
 }
 
-fun createPotionStack(potion: Holder<Potion>): ItemStack = createPotionStack(PotionContents(potion))
+fun createPotionStack(potion: Holder<Potion>, count: Int = 1): ItemStack = createPotionStack(PotionContents(potion), count)
 
-fun createPotionStack(content: PotionContents): ItemStack = HTItemStackBuilder(Items.POTION)
+fun createPotionStack(content: PotionContents, count: Int = 1): ItemStack = HTItemStackBuilder(Items.POTION, count)
     .put(DataComponents.POTION_CONTENTS, content)
     .build()
 

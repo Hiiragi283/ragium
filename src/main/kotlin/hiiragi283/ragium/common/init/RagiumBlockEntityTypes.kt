@@ -126,6 +126,10 @@ object RagiumBlockEntityTypes {
     val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =
         register("refinery", ::HTRefineryBlockEntity, HTMachineType.REFINERY)
 
+    @JvmField
+    val SOLIDIFIER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSolidifierBlockEntity>> =
+        register("solidifier", ::HTSolidifierBlockEntity, HTMachineType.SOLIDIFIER)
+
     //    Storage    //
 
     @JvmField
