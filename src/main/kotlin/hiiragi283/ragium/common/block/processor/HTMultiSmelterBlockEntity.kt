@@ -3,9 +3,9 @@ package hiiragi283.ragium.common.block.processor
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.storage.HTFluidSlotHandler
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
-import hiiragi283.ragium.api.storage.HTFluidTank
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag

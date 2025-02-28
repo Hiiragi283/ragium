@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.event.HTGeneratorFuelTimeEvent
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.storage.HTFluidTank
-import hiiragi283.ragium.api.storage.HTItemSlotHandler
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag

@@ -43,7 +43,7 @@ abstract class HTFluidOutputRecipe(group: String, val itemOutputs: List<HTItemOu
 
     protected fun processItemOutput(context: HTMachineRecipeContext, index: Int) {
         getItemOutput(index).ifPresent { output: HTItemOutput ->
-            context.getSlot(HTStorageIO.OUTPUT, index).insertItem(output.get(), false)
+            context.getSlot(HTStorageIO.OUTPUT, index).insert(output.get(), false)
         }
     }
 

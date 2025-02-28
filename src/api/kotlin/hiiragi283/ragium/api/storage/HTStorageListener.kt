@@ -1,5 +1,5 @@
 package hiiragi283.ragium.api.storage
 
-fun interface HTSlotListener {
+fun interface HTStorageListener {
     fun onContentsChanged()
 }

@@ -48,7 +48,7 @@ class HTSolidifierRecipe(
 
     override fun matches(context: HTMachineRecipeContext): Boolean {
         if (!this.input.test(context.getFluidStack(HTStorageIO.INPUT, 0))) return false
-        val catalystItem: ItemStack = context.getItemStack(HTStorageIO.INPUT, 0)
+        val catalystItem: ItemStack = context.getItemStack(HTStorageIO.CATALYST, 0)
         return catalyst.map { it.test(catalystItem) }.orElse(catalystItem.isEmpty)
     }
 
@@ -65,7 +65,7 @@ class HTSolidifierRecipe(
 
     override fun process(context: HTMachineRecipeContext) {
         // Output
-        context.getSlot(HTStorageIO.OUTPUT, 0).insertItem(itemOutput.get(), false)
+        context.getSlot(HTStorageIO.OUTPUT, 0).insert(itemOutput.get(), false)
         // Input
         context.getTank(HTStorageIO.INPUT, 0).shrinkStack(input.amount(), false)
     }

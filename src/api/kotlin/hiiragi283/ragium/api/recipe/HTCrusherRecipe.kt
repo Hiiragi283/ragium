@@ -56,7 +56,7 @@ class HTCrusherRecipe(group: String, val input: HTItemIngredient, itemOutputs: L
         processItemOutput(context, 1)
         processItemOutput(context, 2)
         // Input
-        context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(input.count, false)
+        context.getSlot(HTStorageIO.INPUT, 0).extract(input.count, false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.CRUSHER

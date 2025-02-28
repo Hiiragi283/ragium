@@ -60,7 +60,7 @@ class HTExtractorRecipe(
         processItemOutput(context, 0)
         processFluidOutput(context, 0)
         // Input
-        context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(input.count, false)
+        context.getSlot(HTStorageIO.INPUT, 0).extract(input.count, false)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.EXTRACTOR

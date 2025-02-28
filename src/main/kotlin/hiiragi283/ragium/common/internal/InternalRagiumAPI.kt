@@ -10,9 +10,12 @@ import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.storage.HTFluidTank
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
@@ -22,10 +25,8 @@ import hiiragi283.ragium.common.inventory.HTMultiItemContainerMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemContainerMenu
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
-import hiiragi283.ragium.common.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
-import hiiragi283.ragium.common.storage.item.HTSingleSlotItemHandler
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.core.BlockPos
@@ -38,7 +39,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.material.MapColor
@@ -46,7 +46,6 @@ import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -102,9 +101,21 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
 
-    override fun wrapItemSlot(storageIO: HTStorageIO, slot: HTItemSlot): IItemHandlerModifiable = HTSingleSlotItemHandler(storageIO, slot)
+    override fun wrapItemSlot(storageIO: HTStorageIO, slotIn: HTItemSlot): IItemHandlerModifiable = object : HTItemSlotHandler {
+        override fun getItemIoFromSlot(slot: Int): HTStorageIO = storageIO
 
-    override fun wrapFluidTank(storageIO: HTStorageIO, tank: IFluidTank): IFluidHandler = HTFluidTankHandler(storageIO, tank)
+        override fun getItemSlot(slot: Int): HTItemSlot? = slotIn
+
+        override fun getSlots(): Int = 1
+    }
+
+    override fun wrapFluidTank(storageIO: HTStorageIO, tankIn: HTFluidTank): IFluidHandler = object : HTFluidSlotHandler {
+        override fun getFluidIoFromSlot(tank: Int): HTStorageIO = storageIO
+
+        override fun getFluidTank(tank: Int): HTFluidTank? = tankIn
+
+        override fun getTanks(): Int = 1
+    }
 
     override fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage =
         HTLimitedEnergyStorage(storageIO, storage)
@@ -184,12 +195,12 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun buildItemSlot(
         nbtKey: String,
-        maxSize: Int,
-        validator: (ItemStack) -> Boolean,
+        capacity: Int,
+        validator: (HTItemVariant) -> Boolean,
         callback: Runnable,
     ): HTItemSlot = HTItemSlotImpl(
         nbtKey,
-        maxSize,
+        capacity,
         validator,
         callback,
     )

@@ -5,10 +5,11 @@ import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
-import hiiragi283.ragium.api.storage.HTFluidTank
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.inventory.HTSolidifierContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -29,7 +30,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val catalystSlot: HTItemSlot = HTItemSlot
         .Builder()
-        .setMaxSize(1)
+        .setCapacity(1)
         .setCallback(this::setChanged)
         .build("catalyst")
     private val outputSlot: HTItemSlot = HTItemSlot
@@ -63,7 +64,8 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         HTRecipeTypes.SOLIDIFIER.processFirstRecipe(context, level)
     }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        HTSolidifierContainerMenu(containerId, playerInventory, blockPos, catalystSlot, outputSlot)
 
     override fun updateEnchantments(newEnchantments: ItemEnchantments) {
         super.updateEnchantments(newEnchantments)

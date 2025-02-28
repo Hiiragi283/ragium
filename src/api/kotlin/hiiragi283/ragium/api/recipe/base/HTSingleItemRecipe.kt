@@ -41,9 +41,9 @@ abstract class HTSingleItemRecipe(
 
     final override fun process(context: HTMachineRecipeContext) {
         // Output
-        context.getSlot(HTStorageIO.OUTPUT, 0).insertItem(itemOutput.get(), false)
+        context.getSlot(HTStorageIO.OUTPUT, 0).insert(itemOutput.get(), false)
         // Input
-        context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(input.count, false)
+        context.getSlot(HTStorageIO.INPUT, 0).extract(input.count, false)
     }
 
     //    Serializer    //

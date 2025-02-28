@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
-import hiiragi283.ragium.api.storage.HTFluidSlotHandler
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -75,7 +75,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                 // Drop output
                 ItemHandlerHelper.giveItemToPlayer(player, recipe.itemOutput.get())
                 // Shrink input
-                inputSlot.shrinkStack(recipe.input.count, false)
+                inputSlot.extract(recipe.input.count, false)
                 // Play sound
                 level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS)
             }.onFailure { _: Throwable ->
@@ -91,7 +91,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
-        dropStackAt(level, pos, inputSlot.getStack())
+        dropStackAt(level, pos, inputSlot.stack)
     }
 
     //    HTMachineAccess    //

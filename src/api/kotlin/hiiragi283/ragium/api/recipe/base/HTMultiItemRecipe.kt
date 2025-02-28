@@ -49,7 +49,7 @@ abstract class HTMultiItemRecipe(
                 throw HTMachineException.ShrinkItem()
             }
         }
-        
+
         fluidInput.ifPresent { ingredient: SizedFluidIngredient ->
             if (!context.getTank(HTStorageIO.INPUT, 0).canShrink(ingredient.amount())) {
                 throw HTMachineException.ShrinkFluid()
@@ -59,14 +59,14 @@ abstract class HTMultiItemRecipe(
 
     final override fun process(context: HTMachineRecipeContext) {
         // Output
-        context.getSlot(HTStorageIO.OUTPUT, 0).insertItem(itemOutput.get(), false)
+        context.getSlot(HTStorageIO.OUTPUT, 0).insert(itemOutput.get(), false)
         // Input
-        context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(itemInputs[0].count, false)
+        context.getSlot(HTStorageIO.INPUT, 0).extract(itemInputs[0].count, false)
         itemInputs.getOrNull(1)?.let { ingredient: HTItemIngredient ->
-            context.getSlot(HTStorageIO.INPUT, 1).shrinkStack(ingredient.count, false)
+            context.getSlot(HTStorageIO.INPUT, 1).extract(ingredient.count, false)
         }
         itemInputs.getOrNull(2)?.let { ingredient: HTItemIngredient ->
-            context.getSlot(HTStorageIO.INPUT, 2).shrinkStack(ingredient.count, false)
+            context.getSlot(HTStorageIO.INPUT, 2).extract(ingredient.count, false)
         }
 
         fluidInput.ifPresent { ingredient: SizedFluidIngredient ->

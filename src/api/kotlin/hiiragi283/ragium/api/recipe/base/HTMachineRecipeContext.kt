@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.recipe.base
 
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.storage.HTFluidTank
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
@@ -29,14 +29,14 @@ class HTMachineRecipeContext private constructor(
     fun getTank(storageIO: HTStorageIO, index: Int): HTFluidTank =
         getTankOrNull(storageIO, index) ?: throw HTMachineException.MissingTank(storageIO, index)
 
-    fun getItemStack(storageIO: HTStorageIO, index: Int): ItemStack = getSlotOrNull(storageIO, index)?.getStack() ?: ItemStack.EMPTY
+    fun getItemStack(storageIO: HTStorageIO, index: Int): ItemStack = getSlotOrNull(storageIO, index)?.stack ?: ItemStack.EMPTY
 
     fun getFluidStack(storageIO: HTStorageIO, index: Int): FluidStack = getTankOrNull(storageIO, index)?.fluid ?: FluidStack.EMPTY
 
     //    RecipeInput    //
 
     @Deprecated("Use getItemStack(HTStorageIO, Int) instead of this")
-    override fun getItem(index: Int): ItemStack = getSlotOrNull(HTStorageIO.INPUT, index)?.getStack() ?: ItemStack.EMPTY
+    override fun getItem(index: Int): ItemStack = getSlotOrNull(HTStorageIO.INPUT, index)?.stack ?: ItemStack.EMPTY
 
     @Deprecated("Not used")
     override fun size(): Int = slotTable.row(HTStorageIO.INPUT).size

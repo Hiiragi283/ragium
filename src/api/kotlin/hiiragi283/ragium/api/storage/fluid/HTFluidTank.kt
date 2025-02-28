@@ -1,9 +1,11 @@
-package hiiragi283.ragium.api.storage
+package hiiragi283.ragium.api.storage.fluid
 
 import com.google.common.util.concurrent.Runnables
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.extension.constFunction2
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageListener
 import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
@@ -17,7 +19,7 @@ import kotlin.math.min
  */
 interface HTFluidTank :
     IFluidTank,
-    HTSlotListener,
+    HTStorageListener,
     HTNbtCodec {
     fun setFluid(stack: FluidStack)
 

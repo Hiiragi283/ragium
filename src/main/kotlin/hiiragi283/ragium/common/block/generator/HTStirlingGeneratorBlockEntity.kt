@@ -7,9 +7,10 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.storage.HTFluidTank
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.internal.RagiumConfig
@@ -35,7 +36,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, HTMachineType.STIRLING_GENERATOR) {
     private val inputSlot: HTItemSlot = HTItemSlot
         .Builder()
-        .setValidator { stack: ItemStack -> stack.getBurnTime(null) > 0 }
+        .setValidator { variant: HTItemVariant -> variant.toStack().getBurnTime(null) > 0 }
         .setCallback(this::setChanged)
         .build("item_input")
     private val outputSlot: HTItemSlot = HTItemSlot
@@ -65,19 +66,19 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         inputTank.readNbt(nbt, dynamicOps)
     }
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = Stirling.of(inputSlot.getStack())
+    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = Stirling.of(inputSlot.stack)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val burnTime: Int = inputSlot.getStack().getBurnTime(null)
+        val burnTime: Int = inputSlot.stack.getBurnTime(null)
         if (burnTime <= 0) throw HTMachineException.Custom("Invalid furnace fuel found!")
         val requiredWater: Int = RagiumConfig.getStirlingWater(burnTime)
 
         if (!inputTank.canShrink(requiredWater)) throw HTMachineException.ShrinkFluid()
-        if (!inputSlot.canShrink(1, true)) throw HTMachineException.ShrinkItem()
+        if (!inputSlot.canShrink(1)) throw HTMachineException.ShrinkItem()
 
         inputTank.drain(requiredWater, IFluidHandler.FluidAction.EXECUTE)
-        inputSlot.shrinkStack(1, false)
-        outputSlot.insertItem(
+        inputSlot.extract(1, false)
+        outputSlot.insert(
             RagiumItems
                 .getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH)
                 .toStack(RagiumConfig.getStirlingAsh(burnTime)),

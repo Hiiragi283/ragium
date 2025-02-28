@@ -7,9 +7,10 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.storage.HTFluidTank
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.BlockPos
@@ -21,11 +22,9 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.ItemStack
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -145,7 +144,7 @@ interface RagiumAPI {
      */
     fun wrapItemSlot(storageIO: HTStorageIO, slot: HTItemSlot): IItemHandlerModifiable
 
-    fun wrapFluidTank(storageIO: HTStorageIO, tank: IFluidTank): IFluidHandler
+    fun wrapFluidTank(storageIO: HTStorageIO, tank: HTFluidTank): IFluidHandler
 
     /**
      * @see [HTStorageIO.wrapEnergyStorage]
@@ -183,8 +182,8 @@ interface RagiumAPI {
      */
     fun buildItemSlot(
         nbtKey: String,
-        maxSize: Int,
-        validator: (ItemStack) -> Boolean,
+        capacity: Int,
+        validator: (HTItemVariant) -> Boolean,
         callback: Runnable,
     ): HTItemSlot
 

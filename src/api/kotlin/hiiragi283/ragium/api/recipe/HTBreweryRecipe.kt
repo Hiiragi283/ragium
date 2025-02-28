@@ -98,12 +98,12 @@ class HTBreweryRecipe(
 
     override fun process(context: HTMachineRecipeContext) {
         // Output
-        context.getSlot(HTStorageIO.OUTPUT, 0).insertItem(createPotionStack(potion, 3), false)
+        context.getSlot(HTStorageIO.OUTPUT, 0).insert(createPotionStack(potion, 3), false)
         // Input
-        context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(firstInput.count, false)
-        context.getSlot(HTStorageIO.INPUT, 1).shrinkStack(secondInput.count, false)
+        context.getSlot(HTStorageIO.INPUT, 0).extract(firstInput.count, false)
+        context.getSlot(HTStorageIO.INPUT, 1).extract(secondInput.count, false)
         thirdInput.ifPresent { ingredient: HTItemIngredient ->
-            context.getSlot(HTStorageIO.INPUT, 2).shrinkStack(ingredient.count, false)
+            context.getSlot(HTStorageIO.INPUT, 2).extract(ingredient.count, false)
         }
 
         context.getTank(HTStorageIO.INPUT, 0).shrinkStack(WATER_INGREDIENT.amount(), false)

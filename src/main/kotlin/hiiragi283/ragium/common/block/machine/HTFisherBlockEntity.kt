@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.extension.moveNextOrDrop
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.storage.HTFluidSlotHandler
-import hiiragi283.ragium.api.storage.HTItemSlotHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceKey

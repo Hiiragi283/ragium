@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.storage
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -24,7 +24,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
     HTHandlerBlockEntity {
     private val itemHandler: HTItemSlot = HTItemSlot
         .Builder()
-        .setMaxSize(Int.MAX_VALUE)
+        .setCapacity(Int.MAX_VALUE)
         .setCallback(this::setChanged)
         .build("item")
 
@@ -47,7 +47,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
         // Item
         val content: ItemContainerContents =
             componentInput.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
-        itemHandler.setStack(content.copyOne())
+        itemHandler.insert(content.copyOne(), false)
         // Enchantment
         val enchantments: ItemEnchantments = componentInput.get(DataComponents.ENCHANTMENTS) ?: return
         updateEnchantments(enchantments)
@@ -56,7 +56,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
         // Item
-        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(listOf(itemHandler.getStack())))
+        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(listOf(itemHandler.stack)))
         // Enchantment
         if (!enchantments.isEmpty) {
             components.set(DataComponents.ENCHANTMENTS, enchantments)

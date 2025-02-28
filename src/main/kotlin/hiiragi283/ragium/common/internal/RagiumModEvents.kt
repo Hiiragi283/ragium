@@ -113,6 +113,7 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.MIXER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
         registerHandlers(RagiumBlockEntityTypes.REFINERY)
+        registerHandlers(RagiumBlockEntityTypes.SOLIDIFIER)
 
         registerHandlers(RagiumBlockEntityTypes.CRATE)
         registerHandlers(RagiumBlockEntityTypes.DRUM)

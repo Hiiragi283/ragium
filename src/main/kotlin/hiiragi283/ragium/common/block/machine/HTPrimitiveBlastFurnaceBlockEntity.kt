@@ -10,9 +10,9 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
-import hiiragi283.ragium.api.storage.HTFluidSlotHandler
-import hiiragi283.ragium.api.storage.HTItemSlot
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
@@ -66,15 +66,15 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         validateMultiblock(this, null).getOrThrow()
-        val isIron: Boolean = firstItemSlot.getStack().`is`(Tags.Items.INGOTS_IRON)
+        val isIron: Boolean = firstItemSlot.resource.isIn(Tags.Items.INGOTS_IRON)
         val isCoal: Boolean =
-            secondItemSlot.getStack().let { it.`is`(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL)) && it.count >= 4 }
+            secondItemSlot.resource.isIn(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL)) && secondItemSlot.amount <= 4
         if (isIron && isCoal) {
             val steelIngot: ItemStack = RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL).toStack()
             if (outputSlot.canInsert(steelIngot)) {
-                firstItemSlot.shrinkStack(1, false)
-                secondItemSlot.shrinkStack(1, false)
-                outputSlot.insertItem(steelIngot, false)
+                firstItemSlot.extract(1, false)
+                secondItemSlot.extract(4, false)
+                outputSlot.insert(steelIngot, false)
             } else {
                 throw HTMachineException.GrowItem()
             }

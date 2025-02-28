@@ -90,7 +90,7 @@ class HTMixerRecipe(
         processFluidOutput(context, 0)
         // Input
         itemInput.ifPresent { ingredient: HTItemIngredient ->
-            context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(ingredient.count, false)
+            context.getSlot(HTStorageIO.INPUT, 0).extract(ingredient.count, false)
         }
 
         context.getTank(HTStorageIO.INPUT, 0).shrinkStack(firstFluid.amount(), false)

@@ -71,7 +71,7 @@ class HTInfuserRecipe(
         processItemOutput(context, 0)
         processFluidOutput(context, 0)
         // Input
-        context.getSlot(HTStorageIO.INPUT, 0).shrinkStack(itemInput.count, false)
+        context.getSlot(HTStorageIO.INPUT, 0).extract(itemInput.count, false)
 
         context.getTank(HTStorageIO.INPUT, 0).shrinkStack(fluidInput.amount(), false)
     }
