@@ -35,7 +35,7 @@ class HTRagiLanternItem(properties: Properties) : Item(properties.durability(127
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
         val stack: ItemStack = player.mainHandItem
         if (!level.isClientSide) {
-            val flare = HTFlare(player, level, player.position().x, player.position().y, player.position().z)
+            val flare = HTFlare(player, level, player.position().x, player.position().y + 1.0, player.position().z)
             flare.shootFromRotation(player, player.xRot, player.yRot, 0f, 1.5f, 1f)
             level.addFreshEntity(flare)
             stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(usedHand))
