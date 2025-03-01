@@ -114,7 +114,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Fluids
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.SNOW, "Powder Snow")
-        addFluid(RagiumFluids.MOLTEN_METAL, "Molten Unknown Metal")
 
         addFluid(RagiumVirtualFluids.CHOCOLATE, "Chocolate")
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")

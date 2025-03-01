@@ -49,13 +49,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/black_concrete_powder")),
             RagiumFluidTypes.CRUDE_OIL,
         )
-        event.registerFluidType(
-            HTSimpleFluidExtensions(
-                stillTex = ResourceLocation.withDefaultNamespace("block/lava_still"),
-                floatingTex = ResourceLocation.withDefaultNamespace("block/lava_flow"),
-            ),
-            RagiumFluidTypes.MOLTEN_METAL,
-        )
 
         RagiumVirtualFluids.entries.forEach { fluid: RagiumVirtualFluids ->
             val textureId: ResourceLocation = when (fluid.textureType) {

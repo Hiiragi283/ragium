@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.base.HTMoltenFluidIngredient
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -35,10 +34,8 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper
-import net.neoforged.neoforge.fluids.crafting.FluidIngredientType
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
-import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -63,11 +60,6 @@ internal object RagiumModEvents {
                 helper.register(RagiumAPI.id(type.toString()), type)
             }
             LOGGER.info("Added machine recipe types!")
-        }
-
-        // Fluid Ingredient
-        event.register(NeoForgeRegistries.Keys.FLUID_INGREDIENT_TYPES) { helper: RegisterEvent.RegisterHelper<FluidIngredientType<*>> ->
-            helper.register(RagiumAPI.id("molten_metal"), HTMoltenFluidIngredient.TYPE)
         }
     }
 

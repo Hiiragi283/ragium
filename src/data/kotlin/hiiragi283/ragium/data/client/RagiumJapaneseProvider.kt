@@ -114,7 +114,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Fluids
         addFluid(RagiumFluids.HONEY, "蜂蜜")
         addFluid(RagiumFluids.SNOW, "粉雪")
-        addFluid(RagiumFluids.MOLTEN_METAL, "溶融未知の金属")
 
         addFluid(RagiumVirtualFluids.CHOCOLATE, "チョコレート")
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")

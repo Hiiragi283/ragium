@@ -20,8 +20,6 @@ import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
-import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.inventory.HTMultiItemContainerMenu
 import hiiragi283.ragium.common.inventory.HTSingleItemContainerMenu
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
@@ -31,7 +29,6 @@ import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
@@ -46,7 +43,6 @@ import net.minecraft.world.level.material.MapColor
 import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -63,14 +59,6 @@ class InternalRagiumAPI : RagiumAPI {
     //    Material    //
 
     override fun getMaterialRegistry(): HTMaterialRegistry = HTMaterialRegistryImpl
-
-    override fun getMoltenMaterialComponent(): DataComponentType<HTMaterialKey> = RagiumComponentTypes.MOLTEN_MATERIAL.get()
-
-    override fun createMoltenMetalStack(key: HTMaterialKey, amount: Int): FluidStack {
-        val stack = FluidStack(RagiumFluids.MOLTEN_METAL, 90)
-        stack.set(RagiumComponentTypes.MOLTEN_MATERIAL, key)
-        return stack
-    }
 
     //    Server    //
 

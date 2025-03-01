@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -25,7 +24,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -67,13 +65,6 @@ interface RagiumAPI {
      * 素材レジストリのインスタンスを返します。
      */
     fun getMaterialRegistry(): HTMaterialRegistry
-
-    /**
-     * 指定した[key]と[amount]から，溶融金属の[FluidStack]を返します。
-     */
-    fun createMoltenMetalStack(key: HTMaterialKey, amount: Int): FluidStack
-
-    fun getMoltenMaterialComponent(): DataComponentType<HTMaterialKey>
 
     //    Server    //
 

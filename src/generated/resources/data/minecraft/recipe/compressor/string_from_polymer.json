@@ -1,7 +1,7 @@
 {
   "type": "ragium:compressor",
   "catalyst": {
-    "tag": "c:strings"
+    "tag": "ragium:molds/wire"
   },
   "item_input": {
     "item": "ragium:polymer_resin"

@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toList
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.item.component.HTSpawnerContent
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
@@ -19,12 +18,6 @@ object RagiumComponentTypes {
         DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, RagiumAPI.MOD_ID)
 
     //    Fluid    //
-
-    @JvmField
-    val MOLTEN_MATERIAL: DeferredHolder<DataComponentType<*>, DataComponentType<HTMaterialKey>> =
-        REGISTER.registerComponentType("molten_material") { builder: DataComponentType.Builder<HTMaterialKey> ->
-            builder.persistent(HTMaterialKey.CODEC).networkSynchronized(HTMaterialKey.STREAM_CODEC)
-        }
 
     //    Item    //
 

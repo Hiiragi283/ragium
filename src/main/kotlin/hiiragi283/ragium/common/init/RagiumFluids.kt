@@ -33,10 +33,6 @@ object RagiumFluids {
     val FLOWING_CRUDE_OIL: DeferredHolder<Fluid, BaseFlowingFluid.Flowing> =
         DeferredHolder.create(Registries.FLUID, RagiumAPI.id("flowing_crude_oil"))
 
-    @JvmField
-    val MOLTEN_METAL: DeferredHolder<Fluid, out BaseFlowingFluid> =
-        virtual("molten_metal", RagiumFluidTypes.MOLTEN_METAL)
-
     @JvmStatic
     fun init() {
         // Crude Oil

@@ -1,7 +1,7 @@
 {
   "type": "ragium:compressor",
   "catalyst": {
-    "tag": "c:glass_blocks"
+    "tag": "ragium:molds/block"
   },
   "item_input": {
     "item": "ragium:polymer_resin"
