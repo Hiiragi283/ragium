@@ -14,7 +14,7 @@ import net.minecraft.world.phys.HitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
-import java.util.*
+import java.util.UUID
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = RagiumAPI.MOD_ID)
 object RagiumIEIntegration {

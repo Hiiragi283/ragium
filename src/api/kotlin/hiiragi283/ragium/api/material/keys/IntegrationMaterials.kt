@@ -11,6 +11,17 @@ object IntegrationMaterials {
     @JvmField
     val BLACK_QUARTZ: HTMaterialKey = HTMaterialKey.of("black_quartz")
 
+    //    Create    //
+
+    @JvmField
+    val ANDESITE_ALLOY: HTMaterialKey = HTMaterialKey.of("andesite_alloy")
+
+    @JvmField
+    val CARDBOARD: HTMaterialKey = HTMaterialKey.of("cardboard")
+
+    @JvmField
+    val ROSE_QUARTZ: HTMaterialKey = HTMaterialKey.of("rose_quartz")
+
     //    Ender IO    //
 
     @JvmField

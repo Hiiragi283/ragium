@@ -89,32 +89,27 @@ class RagiumItemTagProvider(
             RagiumItemTags.COAL_COKE,
             HTTagBuilder.DependType.OPTIONAL,
         )
+        builder.add(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL), Items.COAL.asHolder())
+        builder.add(HTTagPrefix.GEM.createTag(VanillaMaterials.NETHERITE_SCRAP), Items.NETHERITE_SCRAP.asHolder())
 
-        addMaterialTag(
-            HTTagPrefix.GEM,
-            VanillaMaterials.COAL,
-            Items.COAL,
-            HTTagBuilder.DependType.REQUIRED,
-        )
-        addMaterialTag(
-            HTTagPrefix.GEM,
-            VanillaMaterials.NETHERITE_SCRAP,
-            Items.NETHERITE_SCRAP,
-            HTTagBuilder.DependType.REQUIRED,
-        )
-
-        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])
-        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IEItems.Misc.WIRE_COILS[WireType.STEEL])
-        addMaterialTag(HTTagPrefix.COIL, VanillaMaterials.COPPER, IEItems.Misc.WIRE_COILS[WireType.COPPER])
+        // EIO
         addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, EIOItems.GEAR_ENERGIZED)
         addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.VIBRANT_ALLOY, EIOItems.GEAR_VIBRANT)
-        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, MIMaterials.COKE.getPart(MIParts.GEM))
-
+        // Create
+        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.ROSE_QUARTZ, "create:rose_quartz")
+        addMaterialTag(HTTagPrefix.INGOT, IntegrationMaterials.ANDESITE_ALLOY, "create:andesite_alloy")
+        // Evil Craft
         addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem_crushed")
         addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem")
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore")
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore_deepslate")
         addMaterialTag(HTTagPrefix.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, "evilcraft:dark_block")
+        // IE
+        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])
+        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IEItems.Misc.WIRE_COILS[WireType.STEEL])
+        addMaterialTag(HTTagPrefix.COIL, VanillaMaterials.COPPER, IEItems.Misc.WIRE_COILS[WireType.COPPER])
+        // MI
+        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, MIMaterials.COKE.getPart(MIParts.GEM))
     }
 
     private fun addMaterialTag(
