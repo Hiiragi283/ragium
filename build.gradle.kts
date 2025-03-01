@@ -66,7 +66,8 @@ repositories {
     }
     maven(url = "https://maven.rover656.dev/releases") // EIO
     maven(url = "https://maven.tamaized.com/releases") // Twilight
-    maven(url = "https://maven.tterrag.com/") // Create
+    maven(url = "https://mvn.devos.one/snapshots") // Registrate
+    maven(url = "https://maven.createmod.net") // Create, Flywheel
     mavenCentral()
 }
 

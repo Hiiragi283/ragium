@@ -13,9 +13,10 @@ kff-version-range = "[5.7,)"
 ktlint = "12.1.2"
 
 aa = "1.3.15+mc1.21.1"
-create = "1.21.1-6.0.0"
+create = "6.0.0-4"
 delight = "1.21.1-1.2.7"
 eio = "7.1.6-alpha"
+flywheel = "1.0.0-9"
 if = "1.21-3.6.23"
 immersive = "1.21.1-12.0.0-182.88"
 jade = "15.9.4+neoforge"
@@ -24,6 +25,7 @@ mek = "1.21.1-10.7.8.70"
 mi = "2.2.34"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.3"
 rc = "1.2.5"
+registrate = "MC1.21-1.3.0+62"
 tf = "4.6.3003"
 
 [libraries]
@@ -31,10 +33,11 @@ tf = "4.6.3003"
 kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
-create = { group = "maven.modrinth", name = "create", version.ref = "create" }
+create = { group = "com.simibubi.create", name = "create-1.21.1", version.ref = "create" }
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 eio = { group = "com.enderio", name = "enderio-base", version.ref = "eio" }
 eio-machines = { group = "com.enderio", name = "enderio-machines", version.ref = "eio" }
+flywheel = { group = "dev.engine-room.flywheel", name = "flywheel-neoforge-1.21.1", version.ref = "flywheel" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 if = { group = "maven.modrinth", name = "industrial-foregoing", version.ref = "if" }
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
@@ -44,25 +47,29 @@ jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = 
 jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
 rc = { group = "maven.modrinth", name = "railcraft-reborn", version.ref = "rc" }
+registrate = { group = "com.tterrag.registrate", name = "Registrate", version.ref = "registrate" }
 
 [bundles]
 
 mods-impl = [
     "aa",
-    "create",
     "delight",
     "eio",
     "eio-machines",
+    "flywheel",
     "if",
     "immersive",
     "jade",
     "mek",
     "mi",
     "patchouli-gen",
-    "rc", 
+    "rc",
+    "registrate",
 ]
 
-mods-transitive = []
+mods-transitive = [
+    "create"
+]
 
 mods-compile = [
     "jei-api"
