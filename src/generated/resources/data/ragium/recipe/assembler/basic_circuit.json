@@ -1,9 +1,5 @@
 {
   "type": "ragium:assembler",
-  "fluid_input": {
-    "amount": 90,
-    "tag": "c:soldering_alloy"
-  },
   "item_inputs": [
     {
       "item": "ragium:circuit_board"

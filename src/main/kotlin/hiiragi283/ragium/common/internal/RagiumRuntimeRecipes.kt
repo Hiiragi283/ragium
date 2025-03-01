@@ -42,19 +42,30 @@ object RagiumRuntimeRecipes {
 
     @JvmStatic
     private fun blastFurnace(event: HTMachineRecipesUpdatedEvent) {
-        event.register(
-            HTRecipeTypes.BLAST_FURNACE,
-            RagiumAPI.id("brass_ingot"),
-        ) { lookup: HolderGetter<Item> ->
-            val ingot: Item = event
-                .getFirstItem(HTTagPrefix.INGOT, CommonMaterials.BRASS)
-                ?: return@register null
-            HTMultiItemRecipeBuilder
-                .blastFurnace(lookup)
-                .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
-                .itemInput(HTTagPrefix.DUST, CommonMaterials.ZINC)
-                .itemOutput(ingot, 4)
+        fun registerAlloy(output: HTMaterialKey, vararg pairs: Pair<HTMaterialKey, Int>) {
+            event.register(
+                HTRecipeTypes.BLAST_FURNACE,
+                RagiumAPI.id(HTTagPrefix.INGOT.createPath(output)),
+            ) { lookup: HolderGetter<Item> ->
+                val ingot: Item = event
+                    .getFirstItem(HTTagPrefix.INGOT, output)
+                    ?: return@register null
+                HTMultiItemRecipeBuilder
+                    .blastFurnace(lookup)
+                    .apply {
+                        for ((key: HTMaterialKey, count: Int) in pairs) {
+                            itemInput(HTTagPrefix.DUST, key, count)
+                        }
+                    }.itemOutput(ingot, pairs.sumOf { it.second })
+            }
         }
+
+        registerAlloy(CommonMaterials.BRASS, VanillaMaterials.COPPER to 3, CommonMaterials.ZINC to 1)
+        registerAlloy(CommonMaterials.BRONZE, VanillaMaterials.COPPER to 3, CommonMaterials.TIN to 1)
+        registerAlloy(CommonMaterials.CONSTANTAN, VanillaMaterials.COPPER to 1, CommonMaterials.NICKEL to 1)
+        registerAlloy(CommonMaterials.ELECTRUM, VanillaMaterials.GOLD to 1, CommonMaterials.SILVER to 1)
+        registerAlloy(CommonMaterials.INVAR, VanillaMaterials.IRON to 2, CommonMaterials.NICKEL to 1)
+        registerAlloy(CommonMaterials.SOLDERING_ALLOY, CommonMaterials.TIN to 1, CommonMaterials.LEAD to 1)
     }
 
     @JvmStatic

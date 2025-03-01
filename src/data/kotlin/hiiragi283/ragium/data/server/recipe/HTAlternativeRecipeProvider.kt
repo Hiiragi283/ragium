@@ -14,6 +14,7 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -94,6 +95,21 @@ object HTAlternativeRecipeProvider : HTRecipeProvider() {
             .itemInput(Items.MUD)
             .itemOutput(Items.PACKED_MUD)
             .save(output)
+
+        // Glowstone
+        HTSingleItemRecipeBuilder
+            .grinder(lookup)
+            .itemInput(Items.GLOWSTONE)
+            .itemOutput(Items.GLOWSTONE_DUST, 4)
+            .save(output)
+
+        // Iron Ingot
+        HTCookingRecipeBuilder
+            .create(
+                Ingredient.of(RagiumItems.getMaterialItem(HTTagPrefix.RAW_MATERIAL, CommonMaterials.PYRITE)),
+                Items.IRON_INGOT,
+                types = HTCookingRecipeBuilder.BLASTING_TYPES,
+            ).save(output, RagiumAPI.id("fake_iron_ingot"))
 
         fun ironAlt(key: HTMaterialKey, modifier: Int) {
             val name: String = key.name

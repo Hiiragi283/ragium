@@ -138,6 +138,13 @@ object HTChemicalRecipeProviderNew : HTRecipeProvider() {
     //    Fluorine    //
 
     private fun fluorine(output: RecipeOutput) {
+        // CaF2 + H2SO4 -> CaSO4 + 2x HF(aq)
+        HTFluidOutputRecipeBuilder
+            .infuser(lookup)
+            .itemInput(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
+            .fluidInput(RagiumVirtualFluids.SULFURIC_ACID.commonTag)
+            .fluidOutput(RagiumVirtualFluids.HYDROFLUORIC_ACID)
+            .save(output)
     }
 
     //    Alkali    //

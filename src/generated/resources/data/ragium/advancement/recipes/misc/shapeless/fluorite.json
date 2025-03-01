@@ -1,21 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_copper": {
+    "has_gem": {
       "conditions": {
         "items": [
           {
-            "items": "#c:dusts/copper"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_gold": {
-      "conditions": {
-        "items": [
-          {
-            "items": "#c:dusts/gold"
+            "items": "#c:storage_blocks/fluorite"
           }
         ]
       },
@@ -23,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shapeless/ember_alloy_dust"
+        "recipe": "ragium:shapeless/fluorite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_copper",
-      "has_gold"
+      "has_gem"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shapeless/ember_alloy_dust"
+      "ragium:shapeless/fluorite"
     ]
   }
 }

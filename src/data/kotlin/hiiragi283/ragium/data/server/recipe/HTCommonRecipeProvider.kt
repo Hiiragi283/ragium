@@ -40,7 +40,7 @@ import net.neoforged.neoforge.registries.DeferredItem
 object HTCommonRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         registerRaginite(output)
-        registerSteels(output)
+        registerMetals(output)
         registerRagium(output)
 
         registerCircuits(output)
@@ -94,7 +94,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
-    private fun registerSteels(output: RecipeOutput) {
+    private fun registerMetals(output: RecipeOutput) {
         // Steel
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
@@ -115,6 +115,22 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .itemInput(HTTagPrefix.DUST, CommonMaterials.STEEL, 8)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL), 9)
+            .save(output)
+
+        // Ember Alloy
+        HTMultiItemRecipeBuilder
+            .blastFurnace(lookup)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.GOLD)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY), 4)
+            .save(output)
+        // Duralumin
+        HTMultiItemRecipeBuilder
+            .blastFurnace(lookup)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM, 7)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN), 9)
             .save(output)
     }
 
@@ -173,7 +189,6 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
                 .itemInput(HTTagPrefix.INGOT, subMetal)
                 .itemInput(dopant)
-                .fluidInput(RagiumVirtualFluids.SOLDERING_ALLOY.commonTag, RagiumAPI.INGOT_AMOUNT)
                 .itemOutput(circuit)
                 .save(output)
             // Laser Assembly
@@ -335,37 +350,10 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
             .save(output)
 
-        ShapelessRecipeBuilder
-            .shapeless(
-                RecipeCategory.MISC,
-                RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY),
-                2,
-            ).requires(HTTagPrefix.DUST, CommonMaterials.TIN)
-            .requires(HTTagPrefix.DUST, CommonMaterials.LEAD)
-            .requires(RagiumItems.FORGE_HAMMER)
-            .unlockedBy("has_tin", has(HTTagPrefix.DUST, CommonMaterials.TIN))
-            .unlockedBy("has_lead", has(HTTagPrefix.DUST, CommonMaterials.LEAD))
-            .savePrefixed(output)
-
-        ShapelessRecipeBuilder
-            .shapeless(
-                RecipeCategory.MISC,
-                RagiumItems.getMaterialItem(HTTagPrefix.DUST, RagiumMaterials.EMBER_ALLOY),
-                4,
-            ).requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
-            .requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
-            .requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
-            .requires(HTTagPrefix.DUST, VanillaMaterials.GOLD)
-            .requires(RagiumItems.FORGE_HAMMER)
-            .unlockedBy("has_copper", has(HTTagPrefix.DUST, VanillaMaterials.COPPER))
-            .unlockedBy("has_gold", has(HTTagPrefix.DUST, VanillaMaterials.GOLD))
-            .savePrefixed(output)
-
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
-            .itemInput(HTTagPrefix.DUST, VanillaMaterials.GOLD)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY), 4)
+        HTSingleItemRecipeBuilder
+            .grinder(lookup)
+            .itemInput(Tags.Items.OBSIDIANS_NORMAL)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN), 4)
             .save(output)
     }
 

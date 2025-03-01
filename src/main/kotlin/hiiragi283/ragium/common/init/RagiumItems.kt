@@ -83,9 +83,12 @@ object RagiumItems {
         register(HTTagPrefix.DUST, VanillaMaterials.DIAMOND)
         register(HTTagPrefix.DUST, VanillaMaterials.EMERALD)
         register(HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
+        register(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN)
 
         register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
         register(HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
+
+        register(HTTagPrefix.DUST, CommonMaterials.FLUORITE)
 
         register(HTTagPrefix.DUST, CommonMaterials.STEEL)
         register(HTTagPrefix.DUST, RagiumMaterials.DEEP_STEEL)
@@ -96,7 +99,6 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.NICKEL)
         register(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
         register(HTTagPrefix.DUST, CommonMaterials.SILICON)
-        register(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY)
         register(HTTagPrefix.DUST, CommonMaterials.TIN)
         register(HTTagPrefix.DUST, CommonMaterials.ZINC)
 
@@ -108,6 +110,7 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.WOOD)
         // Raws
         register(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
+        register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.PYRITE)
         // Ingots
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
@@ -117,15 +120,17 @@ object RagiumItems {
 
         register(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+        register(HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+
         register(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL)
         register(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
+
+        register(HTTagPrefix.GEM, CommonMaterials.FLUORITE)
         register(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
 
         register(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL)
-
-        register(HTTagPrefix.GEM, CommonMaterials.PYRITE)
         // Coils
         register(HTTagPrefix.COIL, VanillaMaterials.COPPER)
         register(HTTagPrefix.COIL, VanillaMaterials.GOLD)

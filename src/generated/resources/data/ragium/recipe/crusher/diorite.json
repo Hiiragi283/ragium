@@ -11,11 +11,7 @@
     },
     {
       "count": 16,
-      "item": "ragium:tin_dust"
-    },
-    {
-      "count": 8,
-      "item": "minecraft:quartz"
+      "item": "ragium:quartz_dust"
     }
   ]
 }

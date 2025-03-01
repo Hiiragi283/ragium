@@ -184,23 +184,20 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .itemInput(Items.GRANITE, 64)
             .itemOutput(Items.GRAVEL, 32)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.COPPER), 16)
-            .itemOutput(Items.QUARTZ, 8)
             .save(output, RagiumAPI.id("granite"))
         // Diorite
         HTFluidOutputRecipeBuilder
             .crusher(lookup)
             .itemInput(Items.DIORITE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.TIN), 16)
-            .itemOutput(Items.QUARTZ, 8)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.QUARTZ), 16)
             .save(output, RagiumAPI.id("diorite"))
         // Andesite
         HTFluidOutputRecipeBuilder
             .crusher(lookup)
             .itemInput(Items.ANDESITE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.LEAD), 16)
-            .itemOutput(Items.QUARTZ, 8)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.IRON), 16)
             .save(output, RagiumAPI.id("andesite"))
 
         // Deepslate
@@ -216,7 +213,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .crusher(lookup)
             .itemInput(Items.TUFF, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.NICKEL), 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.FLUORITE), 16)
             .itemOutput(Items.EMERALD, 4)
             .save(output, RagiumAPI.id("tuff"))
 
@@ -256,7 +253,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .crusher(lookup)
             .itemInput(Items.BLACKSTONE, 64)
             .itemOutput(Items.GRAVEL, 32)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.IRON), 16)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.RAW_MATERIAL, CommonMaterials.PYRITE), 8)
             .save(output, RagiumAPI.id("blackstone"))
         // Basalt
         HTFluidOutputRecipeBuilder
@@ -321,12 +318,6 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .itemInput(Items.WET_SPONGE)
             .itemOutput(Items.SPONGE)
             .waterOutput()
-            .save(output)
-        // Soldering Alloy
-        HTFluidOutputRecipeBuilder
-            .extractor(lookup)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.SOLDERING_ALLOY)
-            .fluidOutput(RagiumVirtualFluids.SOLDERING_ALLOY, RagiumAPI.INGOT_AMOUNT)
             .save(output)
     }
 

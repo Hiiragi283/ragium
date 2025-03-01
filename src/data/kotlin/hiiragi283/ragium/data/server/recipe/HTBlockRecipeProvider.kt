@@ -163,7 +163,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         mapOf(
             RagiumItemTags.SLAG to RagiumBlocks.CHEMICAL_GLASS,
             ItemTags.TRAPDOORS to RagiumBlocks.MOB_GLASS,
-            Tags.Items.OBSIDIANS_NORMAL to RagiumBlocks.OBSIDIAN_GLASS,
+            HTTagPrefix.DUST.createTag(VanillaMaterials.OBSIDIAN) to RagiumBlocks.OBSIDIAN_GLASS,
             ItemTags.SOUL_FIRE_BASE_BLOCKS to RagiumBlocks.SOUL_GLASS,
         ).forEach { (input: TagKey<Item>, glass: DeferredBlock<out TransparentBlock>) ->
             HTMultiItemRecipeBuilder
@@ -294,7 +294,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         )
         casing(
             RagiumItems.PRECISION_MACHINE_CASING,
-            CommonMaterials.ALUMINUM,
+            RagiumMaterials.DURALUMIN,
             Ingredient.of(RagiumBlocks.OBSIDIAN_GLASS),
             VanillaMaterials.NETHERITE,
         )
@@ -476,7 +476,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         }
         val metal: HTMaterialKey = when (casing) {
             RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
-            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumMaterials.EMBER_ALLOY
+            RagiumItems.CHEMICAL_MACHINE_CASING -> VanillaMaterials.GOLD
             RagiumItems.PRECISION_MACHINE_CASING -> CommonMaterials.ALUMINUM
             else -> return
         }
@@ -509,7 +509,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         val metal: HTMaterialKey = when (casing) {
             RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
             RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumMaterials.EMBER_ALLOY
-            RagiumItems.PRECISION_MACHINE_CASING -> CommonMaterials.ALUMINUM
+            RagiumItems.PRECISION_MACHINE_CASING -> RagiumMaterials.DURALUMIN
             else -> return
         }
         val circuit: TagKey<Item> = when (casing) {

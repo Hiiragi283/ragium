@@ -6,6 +6,14 @@ import hiiragi283.ragium.api.material.HTMaterialKey
  * バニラで使用されている素材の一覧
  */
 object VanillaMaterials {
+    //    Dust    //
+
+    @JvmField
+    val GLOWSTONE: HTMaterialKey = HTMaterialKey.of("glowstone")
+
+    @JvmField
+    val OBSIDIAN: HTMaterialKey = HTMaterialKey.of("obsidian")
+
     //    Gem    //
 
     @JvmField

@@ -22,7 +22,6 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     AIR(Color.WHITE, TextureType.GASEOUS),
 
     // Metal
-    SOLDERING_ALLOY(Color(0x99cc99), TextureType.MOLTEN),
 
     // Hydrogen
     HYDROGEN(Color(0x3333ff), TextureType.GASEOUS),

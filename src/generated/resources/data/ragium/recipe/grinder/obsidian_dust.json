@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "item_input": {
+    "tag": "c:obsidians/normal"
+  },
+  "item_output": {
+    "count": 4,
+    "item": "ragium:obsidian_dust"
+  }
+}

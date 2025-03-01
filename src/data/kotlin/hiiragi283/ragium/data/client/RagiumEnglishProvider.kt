@@ -120,8 +120,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
         addFluid(RagiumVirtualFluids.AIR, "Air")
 
-        addFluid(RagiumVirtualFluids.SOLDERING_ALLOY, "Soldering Alloy")
-
         addFluid(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
 
         addFluid(RagiumVirtualFluids.NITROGEN, "Nitrogen")
@@ -347,6 +345,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(CommonMaterials.CARBON, "Carbon")
         add(CommonMaterials.CHROMIUM, "Chromium")
         add(CommonMaterials.COAL_COKE, "Coal Coke")
+        add(CommonMaterials.CONSTANTAN, "Constantan")
         add(CommonMaterials.CRYOLITE, "Cryolite")
         add(CommonMaterials.ELECTRUM, "Electrum")
         add(CommonMaterials.FLUORITE, "Fluorite")
@@ -407,6 +406,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumMaterials.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumMaterials.DEEP_STEEL, "Deep Steel")
+        add(RagiumMaterials.DURALUMIN, "Duralumin")
         add(RagiumMaterials.EMBER_ALLOY, "Ember Alloy")
         add(RagiumMaterials.FIERY_COAL, "Fiery Coal")
         add(RagiumMaterials.RAGI_ALLOY, "Ragi-Alloy")
@@ -419,11 +419,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(VanillaMaterials.COPPER, "Copper")
         add(VanillaMaterials.DIAMOND, "Diamond")
         add(VanillaMaterials.EMERALD, "Emerald")
+        add(VanillaMaterials.GLOWSTONE, "Glowstone")
         add(VanillaMaterials.GOLD, "Gold")
         add(VanillaMaterials.IRON, "Iron")
         add(VanillaMaterials.LAPIS, "Lapis")
         add(VanillaMaterials.NETHERITE, "Netherite")
         add(VanillaMaterials.NETHERITE_SCRAP, "Netherite Scrap")
+        add(VanillaMaterials.OBSIDIAN, "Obsidian")
         add(VanillaMaterials.QUARTZ, "Quartz")
         add(VanillaMaterials.REDSTONE, "Redstone")
         // Tag Prefix

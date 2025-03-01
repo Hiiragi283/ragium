@@ -76,7 +76,7 @@ object HTEnderIORecipeProvider : HTRecipeProvider.Modded("enderio_base") {
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.GEM, VanillaMaterials.COAL)
-            .itemInput(Tags.Items.OBSIDIANS)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN)
             .itemOutput(EIOItems.DARK_STEEL_INGOT)
             .save(output)
         // Soularium

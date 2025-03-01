@@ -17,6 +17,7 @@ import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CookingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
@@ -186,7 +187,7 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
             .create(
                 Ingredient.of(RagiumItems.MEAT_INGOT),
                 RagiumItems.COOKED_MEAT_INGOT,
-                RecipeCategory.FOOD,
+                CookingBookCategory.FOOD,
                 types = HTCookingRecipeBuilder.SMOKING_TYPES,
             ).save(output)
         // Cooked Meat Ingot -> Canned Cooked Meat
@@ -302,7 +303,7 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
             .create(
                 Ingredient.of(RagiumItems.DOUGH),
                 Items.BREAD,
-                RecipeCategory.FOOD,
+                CookingBookCategory.FOOD,
                 types = HTCookingRecipeBuilder.SMOKING_TYPES,
             ).save(output)
     }

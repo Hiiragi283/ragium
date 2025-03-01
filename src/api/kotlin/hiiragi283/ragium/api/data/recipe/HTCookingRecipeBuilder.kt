@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -25,7 +24,7 @@ class HTCookingRecipeBuilder private constructor(
         fun create(
             input: Ingredient,
             output: ItemLike,
-            category: RecipeCategory = RecipeCategory.MISC,
+            category: CookingBookCategory = CookingBookCategory.MISC,
             time: Int = 200,
             exp: Float = 0f,
             types: Collection<Type> = setOf(Type.SMELTING),

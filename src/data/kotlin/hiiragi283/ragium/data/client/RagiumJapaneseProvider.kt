@@ -120,8 +120,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
         addFluid(RagiumVirtualFluids.AIR, "空気")
 
-        addFluid(RagiumVirtualFluids.SOLDERING_ALLOY, "半田合金")
-
         addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
 
         addFluid(RagiumVirtualFluids.NITROGEN, "窒素")
@@ -327,6 +325,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(CommonMaterials.CARBON, "炭素")
         add(CommonMaterials.CHROMIUM, "クロム")
         add(CommonMaterials.COAL_COKE, "石炭コークス")
+        add(CommonMaterials.CONSTANTAN, "コンスタンタン")
         add(CommonMaterials.CRYOLITE, "氷晶石")
         add(CommonMaterials.ELECTRUM, "琥珀金")
         add(CommonMaterials.FLUORITE, "蛍石")
@@ -387,6 +386,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumMaterials.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumMaterials.DEEP_STEEL, "深層鋼")
+        add(RagiumMaterials.DURALUMIN, "ジュラルミン")
         add(RagiumMaterials.EMBER_ALLOY, "熾火合金")
         add(RagiumMaterials.FIERY_COAL, "燃え盛る石炭")
         add(RagiumMaterials.RAGI_ALLOY, "ラギ合金")
@@ -399,11 +399,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(VanillaMaterials.COPPER, "銅")
         add(VanillaMaterials.DIAMOND, "ダイアモンド")
         add(VanillaMaterials.EMERALD, "エメラルド")
+        add(VanillaMaterials.GLOWSTONE, "グロウストーン")
         add(VanillaMaterials.GOLD, "金")
         add(VanillaMaterials.IRON, "鉄")
         add(VanillaMaterials.LAPIS, "ラピス")
         add(VanillaMaterials.NETHERITE, "ネザライト")
         add(VanillaMaterials.NETHERITE_SCRAP, "ネザライトの欠片")
+        add(VanillaMaterials.OBSIDIAN, "黒曜石")
         add(VanillaMaterials.QUARTZ, "水晶")
         add(VanillaMaterials.REDSTONE, "レッドストーン")
         // Tag Prefix

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_lead": {
+    "has_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "#c:dusts/lead"
+            "items": "#c:storage_blocks/duralumin"
           }
         ]
       },
@@ -13,31 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shapeless/soldering_alloy_dust"
+        "recipe": "ragium:shapeless/duralumin_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
-    },
-    "has_tin": {
-      "conditions": {
-        "items": [
-          {
-            "items": "#c:dusts/tin"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_tin",
-      "has_lead"
+      "has_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shapeless/soldering_alloy_dust"
+      "ragium:shapeless/duralumin_ingot"
     ]
   }
 }

@@ -1,0 +1,19 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "count": 7,
+      "tag": "c:dusts/aluminum"
+    },
+    {
+      "tag": "c:dusts/copper"
+    },
+    {
+      "tag": "c:dusts/obsidian"
+    }
+  ],
+  "item_output": {
+    "count": 9,
+    "item": "ragium:duralumin_ingot"
+  }
+}
