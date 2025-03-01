@@ -13,6 +13,9 @@ object RagiumFluidTags {
     //    Common    //
 
     @JvmField
+    val CHOCOLATES: TagKey<Fluid> = fluidTagKey(commonId("chocolates"))
+
+    @JvmField
     val CREOSOTE: TagKey<Fluid> = fluidTagKey(commonId("creosote"))
 
     @JvmField

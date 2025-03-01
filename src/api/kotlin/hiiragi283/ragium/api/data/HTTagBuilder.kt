@@ -19,20 +19,20 @@ class HTTagBuilder<T : Any>(val lookup: HolderLookup.RegistryLookup<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
     private val registryKey: ResourceKey<out Registry<T>> = lookup.key() as ResourceKey<out Registry<T>>
 
-    fun add(tagKey: TagKey<T>, id: ResourceLocation, isOptional: Boolean = false) {
-        add(tagKey, lookup.getOrThrow(ResourceKey.create(registryKey, id)), isOptional)
+    fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED) {
+        add(tagKey, lookup.getOrThrow(ResourceKey.create(registryKey, id)), type)
     }
 
-    fun add(tagKey: TagKey<T>, holder: Holder<T>, isOptional: Boolean = false) {
-        entryCache.put(tagKey, Entry(holder.idOrThrow, false, isOptional))
+    fun add(tagKey: TagKey<T>, holder: Holder<T>, type: DependType = DependType.REQUIRED) {
+        entryCache.put(tagKey, Entry(holder.idOrThrow, false, type))
     }
 
-    fun addTag(tagKey: TagKey<T>, child: ResourceLocation, isOptional: Boolean = false) {
-        addTag(tagKey, TagKey.create(registryKey, child), isOptional)
+    fun addTag(tagKey: TagKey<T>, child: ResourceLocation, type: DependType = DependType.REQUIRED) {
+        addTag(tagKey, TagKey.create(registryKey, child), type)
     }
 
-    fun addTag(tagKey: TagKey<T>, child: TagKey<T>, isOptional: Boolean = false) {
-        entryCache.put(tagKey, Entry(child.location, true, isOptional))
+    fun addTag(tagKey: TagKey<T>, child: TagKey<T>, type: DependType = DependType.REQUIRED) {
+        entryCache.put(tagKey, Entry(child.location, true, type))
     }
 
     fun build(action: (TagKey<T>, TagEntry) -> Unit) {
@@ -43,16 +43,21 @@ class HTTagBuilder<T : Any>(val lookup: HolderLookup.RegistryLookup<T>) {
         }
     }
 
-    private data class Entry(val id: ResourceLocation, val isTag: Boolean, val isOptional: Boolean) {
+    enum class DependType {
+        OPTIONAL,
+        REQUIRED,
+    }
+
+    private data class Entry(val id: ResourceLocation, val isTag: Boolean, val type: DependType) {
         fun toTagEntry(): TagEntry = if (isTag) {
-            when (isOptional) {
-                true -> TagEntry.optionalTag(id)
-                false -> TagEntry.tag(id)
+            when (type) {
+                DependType.OPTIONAL -> TagEntry.optionalTag(id)
+                DependType.REQUIRED -> TagEntry.tag(id)
             }
         } else {
-            when (isOptional) {
-                true -> TagEntry.optionalElement(id)
-                false -> TagEntry.element(id)
+            when (type) {
+                DependType.OPTIONAL -> TagEntry.optionalElement(id)
+                DependType.REQUIRED -> TagEntry.element(id)
             }
         }
     }

@@ -20,8 +20,8 @@ import org.slf4j.Logger
 @Mod(RagiumAPI.MOD_ID)
 class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     companion object {
-        @JvmField
-        val LOGGER: Logger = LogUtils.getLogger()
+        @JvmStatic
+        private val LOGGER: Logger = LogUtils.getLogger()
     }
 
     init {

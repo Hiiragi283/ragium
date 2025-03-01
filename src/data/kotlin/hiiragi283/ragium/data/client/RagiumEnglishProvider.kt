@@ -116,6 +116,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluids.SNOW, "Powder Snow")
         addFluid(RagiumFluids.MOLTEN_METAL, "Molten Unknown Metal")
 
+        addFluid(RagiumVirtualFluids.CHOCOLATE, "Chocolate")
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
         addFluid(RagiumVirtualFluids.AIR, "Air")
 
@@ -445,7 +446,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.ADVANCED_CIRCUIT, "Advanced Circuit")
         add(RagiumItemTags.BASIC_CIRCUIT, "Basic Circuit")
         add(RagiumItemTags.COAL_COKE, "Coal Coke")
-        add(RagiumItemTags.DOUGH, "Dough")
+        add(RagiumItemTags.FOOD_DOUGH, "Dough")
         add(RagiumItemTags.ELITE_CIRCUIT, "Elite Circuit")
         add(RagiumItemTags.PLASTICS, "Plastic")
         add(RagiumItemTags.SLAG, "Slag")

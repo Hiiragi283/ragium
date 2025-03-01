@@ -1,0 +1,12 @@
+{
+  "type": "ragium:solidifier",
+  "fluid_input": {
+    "fluid_input": {
+      "amount": 250,
+      "tag": "c:chocolates"
+    }
+  },
+  "item_output": {
+    "item": "ragium:chocolate"
+  }
+}

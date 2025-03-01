@@ -19,12 +19,6 @@ object RagiumItemTags {
     val COAL_COKE: TagKey<Item> = commonTag("coal_coke")
 
     @JvmField
-    val CROPS_WARPED_WART: TagKey<Item> = commonTag("crops/warped_wart")
-
-    @JvmField
-    val DOUGH: TagKey<Item> = commonTag("foods/dough")
-
-    @JvmField
     val PAPER: TagKey<Item> = commonTag("paper")
 
     @JvmField
@@ -41,6 +35,19 @@ object RagiumItemTags {
 
     @JvmField
     val TOOLS_KNIFE: TagKey<Item> = commonTag("tools/knife")
+
+    // Foods
+    @JvmField
+    val CROPS_WARPED_WART: TagKey<Item> = commonTag("crops/warped_wart")
+
+    @JvmField
+    val FLOURS: TagKey<Item> = commonTag("flours")
+
+    @JvmField
+    val FOOD_CHOCOLATE: TagKey<Item> = commonTag("foods/chocolate")
+
+    @JvmField
+    val FOOD_DOUGH: TagKey<Item> = commonTag("foods/dough")
 
     // Circuits
     @JvmField

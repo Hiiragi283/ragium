@@ -116,6 +116,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluids.SNOW, "粉雪")
         addFluid(RagiumFluids.MOLTEN_METAL, "溶融未知の金属")
 
+        addFluid(RagiumVirtualFluids.CHOCOLATE, "チョコレート")
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
         addFluid(RagiumVirtualFluids.AIR, "空気")
 
@@ -425,7 +426,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.ADVANCED_CIRCUIT, "発展回路")
         add(RagiumItemTags.BASIC_CIRCUIT, "基本回路")
         add(RagiumItemTags.COAL_COKE, "石炭コークス")
-        add(RagiumItemTags.DOUGH, "生地")
+        add(RagiumItemTags.FOOD_DOUGH, "生地")
         add(RagiumItemTags.ELITE_CIRCUIT, "精鋭回路")
         add(RagiumItemTags.PLASTICS, "プラスチック")
         add(RagiumItemTags.SLAG, "スラグ")

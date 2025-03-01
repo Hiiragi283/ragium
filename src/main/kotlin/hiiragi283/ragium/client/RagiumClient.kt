@@ -12,9 +12,9 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.api.distmarker.Dist
-import net.neoforged.api.distmarker.OnlyIn
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.bus.api.IEventBus
+import net.neoforged.fml.ModContainer
+import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
@@ -22,14 +22,20 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import org.slf4j.Logger
 import java.util.function.Supplier
 
-@OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = [Dist.CLIENT])
-object RagiumClient {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
+@Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
+class RagiumClient(eventBus: IEventBus, container: ModContainer) {
+    companion object {
+        @JvmStatic
+        private val LOGGER: Logger = LogUtils.getLogger()
+    }
 
-    @SubscribeEvent
-    fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+    init {
+        eventBus.addListener(::registerClientExtensions)
+        eventBus.addListener(::registerMenu)
+        eventBus.addListener(::registerBlockEntityRenderer)
+    }
+
+    private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Fluid
         event.registerFluidType(
             HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
@@ -64,8 +70,7 @@ object RagiumClient {
         LOGGER.info("Registered client extensions!")
     }
 
-    @SubscribeEvent
-    fun registerMenu(event: RegisterMenuScreensEvent) {
+    private fun registerMenu(event: RegisterMenuScreensEvent) {
         event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTPotionBundleContainer)
 
         event.register(RagiumMenuTypes.EXTRACTOR.get(), ::HTExtractorContainer)
@@ -80,8 +85,7 @@ object RagiumClient {
         LOGGER.info("Registered machine screens!")
     }
 
-    @SubscribeEvent
-    fun registerBlockEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+    private fun registerBlockEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         fun <T> register(type: Supplier<out BlockEntityType<out T>>) where T : HTMachineBlockEntity, T : HTMultiblockController {
             event.registerBlockEntityRenderer(type.get(), ::HTBlastFurnaceBlockEntityRenderer)
         }

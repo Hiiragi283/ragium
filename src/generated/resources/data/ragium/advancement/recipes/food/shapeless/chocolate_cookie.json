@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:chocolate"
+            "items": "#c:foods/chocolate"
           }
         ]
       },

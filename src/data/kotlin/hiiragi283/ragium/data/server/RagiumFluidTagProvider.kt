@@ -43,18 +43,20 @@ class RagiumFluidTagProvider(
 
         builder.add(RagiumFluids.CRUDE_OIL.commonTag, RagiumFluids.FLOWING_CRUDE_OIL)
 
-        builder.addTag(RagiumFluidTags.NITRO_FUEL, commonId("boosted_diesel"), true)
-        builder.addTag(RagiumFluidTags.NITRO_FUEL, commonId("high_power_biodiesel"), true)
+        builder.add(RagiumFluidTags.CHOCOLATES, RagiumVirtualFluids.CHOCOLATE.fluidHolder)
+
+        builder.addTag(RagiumFluidTags.NITRO_FUEL, commonId("boosted_diesel"), HTTagBuilder.DependType.OPTIONAL)
+        builder.addTag(RagiumFluidTags.NITRO_FUEL, commonId("high_power_biodiesel"), HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(RagiumFluidTags.NITRO_FUEL, RagiumVirtualFluids.NITRO_FUEL.fluidHolder.commonTag)
 
-        builder.addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("biofuel"), true)
-        builder.addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("heavy_fuel"), true)
-        builder.addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("light_fuel"), true)
+        builder.addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("biofuel"), HTTagBuilder.DependType.OPTIONAL)
+        builder.addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("heavy_fuel"), HTTagBuilder.DependType.OPTIONAL)
+        builder.addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("light_fuel"), HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumVirtualFluids.BIODIESEL.fluidHolder.commonTag)
         builder.addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumVirtualFluids.FUEL.fluidHolder.commonTag)
 
-        builder.addTag(RagiumFluidTags.THERMAL_FUEL, commonId("steam"), true)
-        builder.addTag(RagiumFluidTags.THERMAL_FUEL, commonId("superheated_sodium"), true)
+        builder.addTag(RagiumFluidTags.THERMAL_FUEL, commonId("steam"), HTTagBuilder.DependType.OPTIONAL)
+        builder.addTag(RagiumFluidTags.THERMAL_FUEL, commonId("superheated_sodium"), HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(RagiumFluidTags.THERMAL_FUEL, Tags.Fluids.LAVA)
 
         builder.build { tagKey: TagKey<Fluid>, entry: TagEntry ->

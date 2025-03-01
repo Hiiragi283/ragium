@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extractor",
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "fluid": "ragium:chocolate"
+    }
+  ],
+  "item_input": {
+    "tag": "c:foods/chocolate"
+  }
+}

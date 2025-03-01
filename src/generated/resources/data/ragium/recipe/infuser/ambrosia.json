@@ -6,7 +6,7 @@
   },
   "item_input": {
     "count": 64,
-    "item": "ragium:chocolate"
+    "tag": "c:foods/chocolate"
   },
   "item_outputs": [
     {

@@ -84,10 +84,24 @@ class RagiumItemTagProvider(
             }
         }
 
-        builder.addTag(HTTagPrefix.GEM.createTag(CommonMaterials.COAL_COKE), RagiumItemTags.COAL_COKE, true)
+        builder.addTag(
+            HTTagPrefix.GEM.createTag(CommonMaterials.COAL_COKE),
+            RagiumItemTags.COAL_COKE,
+            HTTagBuilder.DependType.OPTIONAL,
+        )
 
-        addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.COAL, Items.COAL, false)
-        addMaterialTag(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP, false)
+        addMaterialTag(
+            HTTagPrefix.GEM,
+            VanillaMaterials.COAL,
+            Items.COAL,
+            HTTagBuilder.DependType.REQUIRED,
+        )
+        addMaterialTag(
+            HTTagPrefix.GEM,
+            VanillaMaterials.NETHERITE_SCRAP,
+            Items.NETHERITE_SCRAP,
+            HTTagBuilder.DependType.REQUIRED,
+        )
 
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])
         addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IEItems.Misc.WIRE_COILS[WireType.STEEL])
@@ -107,20 +121,20 @@ class RagiumItemTagProvider(
         prefix: HTTagPrefix,
         material: HTMaterialKey,
         item: ItemLike?,
-        optional: Boolean = true,
+        type: HTTagBuilder.DependType = HTTagBuilder.DependType.OPTIONAL,
     ) {
         builder.addTag(prefix.commonTagKey, prefix.createTag(material))
-        item?.let { builder.add(prefix.createTag(material), it.asHolder(), optional) }
+        item?.let { builder.add(prefix.createTag(material), it.asHolder(), type) }
     }
 
     private fun addMaterialTag(
         prefix: HTTagPrefix,
         material: HTMaterialKey,
         value: String,
-        optional: Boolean = true,
+        type: HTTagBuilder.DependType = HTTagBuilder.DependType.OPTIONAL,
     ) {
         builder.addTag(prefix.commonTagKey, prefix.createTag(material))
-        builder.add(prefix.createTag(material), DeferredItem.createItem<Item>(ResourceLocation.parse(value)), optional)
+        builder.add(prefix.createTag(material), DeferredItem.createItem<Item>(ResourceLocation.parse(value)), type)
     }
 
     //    Food    //
@@ -132,7 +146,15 @@ class RagiumItemTagProvider(
             }
         }
 
-        builder.add(RagiumItemTags.DOUGH, RagiumItems.DOUGH)
+        builder.add(RagiumItemTags.FOOD_CHOCOLATE, RagiumItems.CHOCOLATE)
+        builder.add(
+            RagiumItemTags.FOOD_CHOCOLATE,
+            ResourceLocation.fromNamespaceAndPath("create", "bar_of_chocolate"),
+            HTTagBuilder.DependType.OPTIONAL,
+        )
+
+        builder.add(RagiumItemTags.FLOURS, RagiumItems.FLOUR)
+        builder.add(RagiumItemTags.FOOD_DOUGH, RagiumItems.DOUGH)
 
         builder.addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
         builder.add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
@@ -178,15 +200,15 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.ULTIMATE_CIRCUIT, RagiumItems.ULTIMATE_CIRCUIT)
 
         builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
-        builder.add(RagiumItemTags.SOLAR_PANELS, EIOItems.PHOTOVOLTAIC_PLATE, true)
-        builder.add(RagiumItemTags.SOLAR_PANELS, GeneratorsItems.SOLAR_PANEL, true)
+        builder.add(RagiumItemTags.SOLAR_PANELS, EIOItems.PHOTOVOLTAIC_PLATE, HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.SOLAR_PANELS, GeneratorsItems.SOLAR_PANEL, HTTagBuilder.DependType.OPTIONAL)
         builder.add(RagiumItemTags.SOLAR_PANELS, RagiumItems.SOLAR_PANEL)
         builder.add(Tags.Items.BUCKETS, RagiumItems.CRUDE_OIL_BUCKET)
         builder.add(Tags.Items.BUCKETS, RagiumItems.HONEY_BUCKET)
 
         builder.add(RagiumItemTags.DIRT_SOILS, Items.FARMLAND.asHolder())
-        builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL.get().asHolder(), true)
-        builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL_FARMLAND.get().asHolder(), true)
+        builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL.get().asHolder(), HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL_FARMLAND.get().asHolder(), HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(RagiumItemTags.DIRT_SOILS, ItemTags.DIRT)
 
         builder.add(RagiumItemTags.MUSHROOM_SOILS, Items.MYCELIUM.asHolder())
@@ -197,13 +219,13 @@ class RagiumItemTagProvider(
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
 
         builder.add(RagiumItemTags.BALL_MOLDS, RagiumItems.BALL_PRESS_MOLD)
-        builder.add(RagiumItemTags.GEAR_MOLDS, IEItems.Molds.MOLD_GEAR.asHolder(), true)
+        builder.add(RagiumItemTags.GEAR_MOLDS, IEItems.Molds.MOLD_GEAR.asHolder(), HTTagBuilder.DependType.OPTIONAL)
         builder.add(RagiumItemTags.GEAR_MOLDS, RagiumItems.GEAR_PRESS_MOLD)
-        builder.add(RagiumItemTags.PLATE_MOLDS, IEItems.Molds.MOLD_PLATE.asHolder(), true)
+        builder.add(RagiumItemTags.PLATE_MOLDS, IEItems.Molds.MOLD_PLATE.asHolder(), HTTagBuilder.DependType.OPTIONAL)
         builder.add(RagiumItemTags.PLATE_MOLDS, RagiumItems.PLATE_PRESS_MOLD)
-        builder.add(RagiumItemTags.ROD_MOLDS, IEItems.Molds.MOLD_ROD.asHolder(), true)
+        builder.add(RagiumItemTags.ROD_MOLDS, IEItems.Molds.MOLD_ROD.asHolder(), HTTagBuilder.DependType.OPTIONAL)
         builder.add(RagiumItemTags.ROD_MOLDS, RagiumItems.ROD_PRESS_MOLD)
-        builder.add(RagiumItemTags.WIRE_MOLDS, IEItems.Molds.MOLD_WIRE.asHolder(), true)
+        builder.add(RagiumItemTags.WIRE_MOLDS, IEItems.Molds.MOLD_WIRE.asHolder(), HTTagBuilder.DependType.OPTIONAL)
         builder.add(RagiumItemTags.WIRE_MOLDS, RagiumItems.WIRE_PRESS_MOLD)
 
         RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }

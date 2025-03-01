@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "ragium:chocolate"
+      "tag": "c:foods/chocolate"
     },
     {
       "item": "ragium:flour"
