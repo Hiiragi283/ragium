@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:alchemical_brewery",
+    "ragium:aluminum_drum",
     "ragium:arcane_enchanter",
     "ragium:assembler",
     "ragium:bedrock_miner",
@@ -9,20 +10,29 @@
     "ragium:compressor",
     "ragium:copper_drum",
     "ragium:crusher",
+    "ragium:deep_steel_crate",
+    "ragium:diamond_crate",
+    "ragium:emerald_drum",
     "ragium:extractor",
     "ragium:fisher",
+    "ragium:gold_drum",
     "ragium:grinder",
     "ragium:growth_chamber",
     "ragium:infuser",
+    "ragium:iron_crate",
     "ragium:laser_assembly",
     "ragium:manual_grinder",
     "ragium:mixer",
     "ragium:multi_smelter",
+    "ragium:netherite_crate",
     "ragium:primitive_blast_furnace",
+    "ragium:ragium_drum",
     "ragium:refinery",
     "ragium:solar_generator",
     "ragium:solidifier",
+    "ragium:steel_crate",
     "ragium:stirling_generator",
-    "ragium:thermal_generator"
+    "ragium:thermal_generator",
+    "ragium:wooden_crate"
   ]
 }

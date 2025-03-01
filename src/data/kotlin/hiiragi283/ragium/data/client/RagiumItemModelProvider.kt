@@ -31,8 +31,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             removeAll(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.blocks)
 
             remove(RagiumBlocks.CRUDE_OIL)
-
-            remove(RagiumBlocks.IRON_CRATE) // TODO
         }.forEach(::simpleBlockItem)
 
         RagiumBlocks.RAGI_BRICK_FAMILY.generateModels(this)

@@ -129,8 +129,8 @@ object RagiumCreativeTabs {
 
                     output.accept(RagiumItems.RAGI_TICKET)
                     // Storage
-                    output.accept(RagiumBlocks.IRON_CRATE)
-                    output.accept(RagiumBlocks.COPPER_DRUM)
+                    RagiumBlocks.CRATES.values.forEach(output::accept)
+                    RagiumBlocks.DRUMS.values.forEach(output::accept)
                     // Manual Machines
                     output.accept(RagiumBlocks.MANUAL_GRINDER)
                     output.accept(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)

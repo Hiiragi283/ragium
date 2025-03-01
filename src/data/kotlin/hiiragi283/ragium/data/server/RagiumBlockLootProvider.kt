@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreSets
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -28,7 +29,9 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             addAll(RagiumBlocks.REGISTER.entries)
 
             remove(RagiumBlocks.CRUDE_OIL)
-            remove(RagiumBlocks.COPPER_DRUM)
+
+            // removeAll(RagiumBlocks.CRATES.values)
+            removeAll(RagiumBlocks.DRUMS.values)
 
             removeAll(RagiumBlocks.RAGINITE_ORES.ores)
             removeAll(RagiumBlocks.RAGI_CRYSTAL_ORES.ores)
@@ -43,12 +46,14 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         registerOres(RagiumBlocks.RAGINITE_ORES, HTTagPrefix.RAW_MATERIAL)
         registerOres(RagiumBlocks.RAGI_CRYSTAL_ORES, HTTagPrefix.GEM)
 
-        add(RagiumBlocks.COPPER_DRUM.get()) {
-            copyComponent(
-                it,
-                RagiumComponentTypes.FLUID_CONTENT.get(),
-                DataComponents.ENCHANTMENTS,
-            )
+        for (drum: DeferredBlock<HTEntityBlock> in RagiumBlocks.DRUMS.values) {
+            add(drum.get()) {
+                copyComponent(
+                    it,
+                    RagiumComponentTypes.FLUID_CONTENT.get(),
+                    DataComponents.ENCHANTMENTS,
+                )
+            }
         }
 
         HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->

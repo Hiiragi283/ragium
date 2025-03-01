@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/cube_top",
+  "parent": "ragium:block/drum",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "side": "ragium:block/copper_drum_side",
-    "top": "ragium:block/copper_drum_top"
+    "side": "minecraft:block/copper_block"
   }
 }

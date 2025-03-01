@@ -9,12 +9,12 @@
       "item": "minecraft:smooth_stone_slab"
     },
     "C": {
-      "item": "minecraft:bucket"
+      "tag": "c:buckets/empty"
     }
   },
   "pattern": [
     "ABA",
-    "BCB",
+    "ACA",
     "ABA"
   ],
   "result": {

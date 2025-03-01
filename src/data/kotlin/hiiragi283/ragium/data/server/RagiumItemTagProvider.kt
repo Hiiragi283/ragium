@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import mekanism.generators.common.registries.GeneratorsItems
@@ -215,8 +216,6 @@ class RagiumItemTagProvider(
             add(RagiumBlocks.MANUAL_GRINDER)
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
-            add(RagiumBlocks.COPPER_DRUM)
-
             addAll(HTMachineType.getBlocks())
         }.map(ItemLike::asHolder)
             .forEach { holder: Holder.Reference<Item> ->
@@ -225,5 +224,12 @@ class RagiumItemTagProvider(
                 builder.add(ItemTags.MINING_LOOT_ENCHANTABLE, holder)
                 builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, holder)
             }
+
+        for (block: DeferredBlock<out HTEntityBlock> in buildList {
+            addAll(RagiumBlocks.CRATES.values)
+            addAll(RagiumBlocks.DRUMS.values)
+        }) {
+            builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, block.asHolder())
+        }
     }
 }

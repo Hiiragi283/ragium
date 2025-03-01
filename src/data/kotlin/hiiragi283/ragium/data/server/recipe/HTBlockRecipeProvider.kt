@@ -14,6 +14,9 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTBlockFamily
+import hiiragi283.ragium.api.util.HTCrateVariant
+import hiiragi283.ragium.api.util.HTDrumVariant
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -47,6 +50,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         registerFamily(output, RagiumBlocks.BLUE_NETHER_BRICK_FAMILY)
 
         registerBurners(output)
+        registerCrates(output)
         registerDrums(output)
 
         registerGlasses(output)
@@ -123,14 +127,34 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         }
     }
 
+    private fun registerCrates(output: RecipeOutput) {
+        for ((variant: HTCrateVariant, crate: DeferredBlock<HTEntityBlock.Horizontal>) in RagiumBlocks.CRATES) {
+            // Shaped Crafting
+            HTShapedRecipeBuilder(crate)
+                .pattern(
+                    "ABA",
+                    "ACA",
+                    "ABA",
+                ).define('A', variant.baseTag)
+                .define('B', ItemTags.WOODEN_SLABS)
+                .define('C', Tags.Items.BARRELS)
+                .save(output)
+        }
+    }
+
     private fun registerDrums(output: RecipeOutput) {
-        // Shaped Crafting
-        HTShapedRecipeBuilder(RagiumBlocks.COPPER_DRUM)
-            .cross8()
-            .define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
-            .define('B', Items.SMOOTH_STONE_SLAB)
-            .define('C', Items.BUCKET)
-            .save(output)
+        for ((variant: HTDrumVariant, drum: DeferredBlock<HTEntityBlock>) in RagiumBlocks.DRUMS) {
+            // Shaped Crafting
+            HTShapedRecipeBuilder(drum)
+                .pattern(
+                    "ABA",
+                    "ACA",
+                    "ABA",
+                ).define('A', variant.baseTag)
+                .define('B', Items.SMOOTH_STONE_SLAB)
+                .define('C', Tags.Items.BUCKETS_EMPTY)
+                .save(output)
+        }
     }
 
     //    Decorations    //

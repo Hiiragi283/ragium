@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.network.HTPotionBundlePacket
 import hiiragi283.ragium.common.storage.fluid.HTDivingGoggleFluidHandler
 import hiiragi283.ragium.common.storage.fluid.HTFluidCubeFluidHandler
-import hiiragi283.ragium.common.storage.fluid.HTItemFluidHandler
 import hiiragi283.ragium.common.storage.fluid.HTJetpackFluidHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -147,7 +146,7 @@ internal object RagiumModEvents {
         }
 
         // Fluid
-        withCapacity(Capabilities.FluidHandler.ITEM, RagiumBlocks.COPPER_DRUM, transform = ::HTItemFluidHandler)
+        // withCapacity(Capabilities.FluidHandler.ITEM, RagiumBlocks.COPPER_DRUM, transform = ::HTItemFluidHandler)
         withCapacity(
             Capabilities.FluidHandler.ITEM,
             RagiumItems.DIVING_GOGGLE,

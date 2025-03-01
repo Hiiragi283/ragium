@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.util.HTCrateVariant
+import hiiragi283.ragium.api.util.HTDrumVariant
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
@@ -75,10 +77,46 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             )
         }
 
+        // Crate
+        for ((variant: HTCrateVariant, crate: DeferredBlock<HTEntityBlock.Horizontal>) in RagiumBlocks.CRATES) {
+            val baseTexId: ResourceLocation = when (variant) {
+                HTCrateVariant.WOODEN -> ResourceLocation.withDefaultNamespace("oak_log")
+                HTCrateVariant.IRON -> ResourceLocation.withDefaultNamespace("iron_block")
+                HTCrateVariant.STEEL -> RagiumAPI.id("steel_block")
+                HTCrateVariant.DEEP_STEEL -> RagiumAPI.id("deep_steel_block")
+                HTCrateVariant.DIAMOND -> ResourceLocation.withDefaultNamespace("diamond_block")
+                HTCrateVariant.NETHERITE -> ResourceLocation.withDefaultNamespace("netherite_block")
+            }
+            simpleBlock(
+                crate.get(),
+                ConfiguredModel(
+                    models()
+                        .withExistingParent(crate.id.path, RagiumAPI.id("block/layered"))
+                        .blockTexture("layer0", baseTexId)
+                        .blockTexture("layer1", RagiumAPI.id("crate_overlay"))
+                        .renderType("cutout"),
+                ),
+            )
+        }
+
         // Drum
-        RagiumBlocks.COPPER_DRUM.let { drum: DeferredBlock<HTEntityBlock> ->
-            val id: ResourceLocation = drum.blockId
-            simpleBlock(drum.get(), models().cubeTop(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
+        for ((variant: HTDrumVariant, drum: DeferredBlock<HTEntityBlock>) in RagiumBlocks.DRUMS) {
+            val baseTexId: ResourceLocation = when (variant) {
+                HTDrumVariant.COPPER -> ResourceLocation.withDefaultNamespace("copper_block")
+                HTDrumVariant.GOLD -> ResourceLocation.withDefaultNamespace("gold_block")
+                HTDrumVariant.ALUMINUM -> RagiumAPI.id("aluminum_block")
+                HTDrumVariant.EMERALD -> ResourceLocation.withDefaultNamespace("emerald_block")
+                HTDrumVariant.RAGIUM -> RagiumAPI.id("ragium_block")
+            }
+            simpleBlock(
+                drum.get(),
+                ConfiguredModel(
+                    models()
+                        .withExistingParent(drum.id.path, RagiumAPI.id("block/drum"))
+                        .blockTexture("side", baseTexId)
+                        .renderType("cutout"),
+                ),
+            )
         }
 
         // Food

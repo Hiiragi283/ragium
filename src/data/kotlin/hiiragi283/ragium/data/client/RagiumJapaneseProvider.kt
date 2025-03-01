@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.util.HTCrateVariant
+import hiiragi283.ragium.api.util.HTDrumVariant
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
@@ -58,7 +60,18 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "らぎ高炉")
         addBlock(RagiumBlocks.DISENCHANTING_TABLE, "ディスエンチャント台")
 
-        addBlock(RagiumBlocks.COPPER_DRUM, "銅のドラム")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.WOODEN), "木製のクレート")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.IRON), "鉄のクレート")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.STEEL), "鋼鉄のクレート")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.DEEP_STEEL), "深層鋼のクレート")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.DIAMOND), "ダイヤモンドのクレート")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.NETHERITE), "ネザライトのクレート")
+
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.COPPER), "銅のドラム")
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.GOLD), "金のドラム")
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.ALUMINUM), "アルミニウムのドラム")
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.EMERALD), "エメラルドのドラム")
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.RAGIUM), "ラギウムのドラム")
 
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         addBlock(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")

@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.util.HTCrateVariant
+import hiiragi283.ragium.api.util.HTDrumVariant
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
@@ -58,7 +60,18 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "Primitive Blast Furnace")
         addBlock(RagiumBlocks.DISENCHANTING_TABLE, "Disenchanting Table")
 
-        addBlock(RagiumBlocks.COPPER_DRUM, "Copper Drum")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.WOODEN), "Wooden Crate")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.IRON), "Iron Crate")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.STEEL), "Steel Crate")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.DEEP_STEEL), "Deep Steel Crate")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.DIAMOND), "Diamond Crate")
+        addBlock(RagiumBlocks.getCrate(HTCrateVariant.NETHERITE), "Netherite Crate")
+
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.COPPER), "Copper Drum")
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.GOLD), "Gold Drum")
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.ALUMINUM), "Aluminum Drum")
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.EMERALD), "Emerald Drum")
+        addBlock(RagiumBlocks.getDrum(HTDrumVariant.RAGIUM), "Ragium Drum")
 
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         addBlock(RagiumBlocks.SLAG_COLLECTOR, "Slag Collector")

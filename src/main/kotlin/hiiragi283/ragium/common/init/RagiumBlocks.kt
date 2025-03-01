@@ -8,9 +8,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.util.HTBlockFamily
-import hiiragi283.ragium.api.util.HTOreSets
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
@@ -20,6 +18,7 @@ import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.item.HTBlockItem
+import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
@@ -28,6 +27,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -286,24 +286,41 @@ object RagiumBlocks {
     //    Storage    //
 
     @JvmField
-    val IRON_CRATE: DeferredBlock<HTEntityBlock.Horizontal> = Builder("iron_crate")
-        .properties(
-            blockProperty()
-                .mapColor(MapColor.STONE)
-                .strength(2f)
-                .sound(SoundType.COPPER)
-                .requiresCorrectToolForDrops(),
-        ).build { properties: BlockBehaviour.Properties -> HTEntityBlock.horizontal(::HTCrateBlockEntity, properties) }
+    val CRATES: Map<HTCrateVariant, DeferredBlock<HTEntityBlock.Horizontal>> =
+        HTCrateVariant.entries.associateWith { variant: HTCrateVariant ->
+            Builder("${variant.serializedName}_crate")
+                .properties(
+                    blockProperty()
+                        .mapColor(MapColor.STONE)
+                        .strength(2f)
+                        .sound(SoundType.COPPER)
+                        .requiresCorrectToolForDrops(),
+                ).build { properties: BlockBehaviour.Properties ->
+                    HTEntityBlock.horizontal(
+                        { pos: BlockPos, state: BlockState -> HTCrateBlockEntity(pos, state, variant) },
+                        properties,
+                    )
+                }
+        }
+
+    @JvmStatic
+    fun getCrate(variant: HTCrateVariant): DeferredBlock<HTEntityBlock.Horizontal> = CRATES[variant]!!
 
     @JvmField
-    val COPPER_DRUM: DeferredBlock<HTEntityBlock> = Builder("copper_drum")
-        .properties(
-            blockProperty()
-                .mapColor(MapColor.STONE)
-                .strength(2f)
-                .sound(SoundType.COPPER)
-                .requiresCorrectToolForDrops(),
-        ).build { properties: BlockBehaviour.Properties -> HTEntityBlock.of(::HTDrumBlockEntity, properties) }
+    val DRUMS: Map<HTDrumVariant, DeferredBlock<HTEntityBlock>> =
+        HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
+            Builder("${variant.serializedName}_drum")
+                .properties(
+                    blockProperty()
+                        .mapColor(MapColor.STONE)
+                        .strength(2f)
+                        .sound(SoundType.COPPER)
+                        .requiresCorrectToolForDrops(),
+                ).build { properties: BlockBehaviour.Properties -> HTEntityBlock.of(::HTDrumBlockEntity, properties) }
+        }
+
+    @JvmStatic
+    fun getDrum(variant: HTDrumVariant): DeferredBlock<HTEntityBlock> = DRUMS[variant]!!
 
     //    Utility    //
 

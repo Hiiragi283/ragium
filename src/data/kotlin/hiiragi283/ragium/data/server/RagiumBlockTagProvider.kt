@@ -54,7 +54,9 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
             add(RagiumBlocks.DISENCHANTING_TABLE)
 
-            add(RagiumBlocks.COPPER_DRUM)
+            addAll(RagiumBlocks.CRATES.values)
+            addAll(RagiumBlocks.DRUMS.values)
+
             addAll(RagiumBlocks.ADDONS)
             addAll(RagiumBlocks.BURNERS)
         }.forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }

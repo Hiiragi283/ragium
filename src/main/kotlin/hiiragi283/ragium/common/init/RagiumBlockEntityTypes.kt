@@ -41,6 +41,15 @@ object RagiumBlockEntityTypes {
     private fun <T : BlockEntity> register(
         path: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,
+        blocks: Iterable<Supplier<out Block>>,
+    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
+        BlockEntityType.Builder.of(factory, *blocks.map(Supplier<out Block>::get).toTypedArray()).build(null)
+    }
+
+    @JvmStatic
+    private fun <T : BlockEntity> register(
+        path: String,
+        factory: BlockEntityType.BlockEntitySupplier<T>,
         machine: HTMachineType,
     ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
         BlockEntityType.Builder.of(factory, machine.getBlock().get()).build(null)
@@ -134,11 +143,11 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val CRATE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCrateBlockEntity>> =
-        register("crate", ::HTCrateBlockEntity, RagiumBlocks.IRON_CRATE)
+        register("crate", ::HTCrateBlockEntity, RagiumBlocks.CRATES.values)
 
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =
-        register("drum", ::HTDrumBlockEntity, RagiumBlocks.COPPER_DRUM)
+        register("drum", ::HTDrumBlockEntity, RagiumBlocks.DRUMS.values)
 
     @JvmField
     val SLAG_COLLECTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSlagCollectorBlockEntity>> =

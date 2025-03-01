@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/drum",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "side": "minecraft:block/gold_block"
+  }
+}
