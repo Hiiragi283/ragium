@@ -46,18 +46,18 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         .setCallback(this::setChanged)
         .build("output")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, dynamicOps)
-        firstItemSlot.writeNbt(nbt, dynamicOps)
-        secondItemSlot.writeNbt(nbt, dynamicOps)
-        outputSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, registryOps)
+        firstItemSlot.writeNbt(nbt, registryOps)
+        secondItemSlot.writeNbt(nbt, registryOps)
+        outputSlot.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, dynamicOps)
-        firstItemSlot.readNbt(nbt, dynamicOps)
-        secondItemSlot.readNbt(nbt, dynamicOps)
-        outputSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, registryOps)
+        firstItemSlot.readNbt(nbt, registryOps)
+        secondItemSlot.readNbt(nbt, registryOps)
+        outputSlot.readNbt(nbt, registryOps)
     }
 
     override var tickRate: Int = 400

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
+import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
@@ -65,23 +66,23 @@ abstract class HTMachineBlockEntity(
     override val pos: BlockPos
         get() = blockPos
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
-            .encodeStart(dynamicOps, enchantments)
+            .encodeStart(registryOps, enchantments)
             .ifSuccess { nbt.put(ENCH_KEY, it) }
         nbt.putBoolean(ACTIVE_KEY, isActive)
         HTPlayerOwningBlockEntity.UUID_CODEC
-            .encodeStart(dynamicOps, Optional.ofNullable(ownerUUID))
+            .encodeStart(registryOps, Optional.ofNullable(ownerUUID))
             .ifSuccess { nbt.put(OWNER_KEY, it) }
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
-            .parse(dynamicOps, nbt.get(ENCH_KEY))
+            .parse(registryOps, nbt.get(ENCH_KEY))
             .ifSuccess(::onUpdateEnchantment)
         isActive = nbt.getBoolean(ACTIVE_KEY)
         HTPlayerOwningBlockEntity.UUID_CODEC
-            .parse(dynamicOps, nbt.get(OWNER_KEY))
+            .parse(registryOps, nbt.get(OWNER_KEY))
             .ifSuccess { optional: Optional<UUID> ->
                 optional.ifPresent { uuid: UUID ->
                     this.ownerUUID = uuid
@@ -226,6 +227,16 @@ abstract class HTMachineBlockEntity(
         stack: ItemStack,
     ) {
         if (placer is Player) this.ownerUUID = placer.uuid
+    }
+
+    override fun onRemove(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        newState: BlockState,
+        movedByPiston: Boolean,
+    ) {
+        getItemHandler(null)?.dropStacks(level, pos)
     }
 
     final override val containerData: ContainerData = object : ContainerData {

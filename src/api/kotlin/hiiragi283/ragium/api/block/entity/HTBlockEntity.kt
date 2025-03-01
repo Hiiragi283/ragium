@@ -159,7 +159,6 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     /**
      * 毎tick呼び出されます。
-     * @see [hiiragi283.ragium.common.block.HTEntityBlock.getTicker]
      */
     fun tick(level: Level, pos: BlockPos, state: BlockState) {
         if (!shouldTick) return

@@ -19,7 +19,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
@@ -42,22 +41,22 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         .setCallback(this::setChanged)
         .build("second_fluid_output")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, dynamicOps)
-        outputSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, registryOps)
+        outputSlot.writeNbt(nbt, registryOps)
 
-        inputTank.writeNbt(nbt, dynamicOps)
-        firstOutputTank.writeNbt(nbt, dynamicOps)
-        secondOutputTank.writeNbt(nbt, dynamicOps)
+        inputTank.writeNbt(nbt, registryOps)
+        firstOutputTank.writeNbt(nbt, registryOps)
+        secondOutputTank.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, dynamicOps)
-        outputSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, registryOps)
+        outputSlot.readNbt(nbt, registryOps)
 
-        inputTank.readNbt(nbt, dynamicOps)
-        firstOutputTank.readNbt(nbt, dynamicOps)
-        secondOutputTank.readNbt(nbt, dynamicOps)
+        inputTank.readNbt(nbt, registryOps)
+        firstOutputTank.readNbt(nbt, registryOps)
+        secondOutputTank.readNbt(nbt, registryOps)
     }
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
@@ -81,16 +80,6 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         inputTank.onUpdateEnchantment(newEnchantments)
         firstOutputTank.onUpdateEnchantment(newEnchantments)
         secondOutputTank.onUpdateEnchantment(newEnchantments)
-    }
-
-    override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        outputSlot.dropStack(level, pos)
     }
 
     //    Item    //

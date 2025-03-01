@@ -35,14 +35,14 @@ abstract class HTFluidGeneratorBlockEntity(
         .setCallback(this::setChanged)
         .build("fluid_input")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, dynamicOps)
-        inputTank.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, registryOps)
+        inputTank.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, dynamicOps)
-        inputTank.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, registryOps)
+        inputTank.readNbt(nbt, registryOps)
     }
 
     abstract fun isFluidValid(variant: HTFluidVariant): Boolean

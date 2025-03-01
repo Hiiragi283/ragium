@@ -37,20 +37,20 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         .setCallback(this::setChanged)
         .build("fluid_output")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, dynamicOps)
-        inputSlot.writeNbt(nbt, dynamicOps)
-        outputSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, registryOps)
+        inputSlot.writeNbt(nbt, registryOps)
+        outputSlot.writeNbt(nbt, registryOps)
 
-        outputTank.writeNbt(nbt, dynamicOps)
+        outputTank.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, dynamicOps)
-        inputSlot.readNbt(nbt, dynamicOps)
-        outputSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, registryOps)
+        inputSlot.readNbt(nbt, registryOps)
+        outputSlot.readNbt(nbt, registryOps)
 
-        outputTank.readNbt(nbt, dynamicOps)
+        outputTank.readNbt(nbt, registryOps)
     }
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL

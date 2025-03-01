@@ -16,7 +16,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Supplier
@@ -44,18 +43,18 @@ abstract class HTSingleItemMachineBlockEntity(
 
     abstract val recipeType: HTRecipeType<out HTSingleItemRecipe>
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, dynamicOps)
-        inputSlot.writeNbt(nbt, dynamicOps)
-        catalystSlot.writeNbt(nbt, dynamicOps)
-        outputSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, registryOps)
+        inputSlot.writeNbt(nbt, registryOps)
+        catalystSlot.writeNbt(nbt, registryOps)
+        outputSlot.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, dynamicOps)
-        inputSlot.readNbt(nbt, dynamicOps)
-        catalystSlot.readNbt(nbt, dynamicOps)
-        outputSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, registryOps)
+        inputSlot.readNbt(nbt, registryOps)
+        catalystSlot.readNbt(nbt, registryOps)
+        outputSlot.readNbt(nbt, registryOps)
     }
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
@@ -78,18 +77,6 @@ abstract class HTSingleItemMachineBlockEntity(
             catalystSlot,
             outputSlot,
         )
-
-    override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        inputSlot.dropStack(level, pos)
-        catalystSlot.dropStack(level, pos)
-        outputSlot.dropStack(level, pos)
-    }
 
     //    Item    //
 

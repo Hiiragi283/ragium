@@ -26,7 +26,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.ItemEnchantments
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -49,20 +48,20 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         .setCallback(this::setChanged)
         .build("fluid_input")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, dynamicOps)
-        inputSlot.writeNbt(nbt, dynamicOps)
-        outputSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, registryOps)
+        inputSlot.writeNbt(nbt, registryOps)
+        outputSlot.writeNbt(nbt, registryOps)
 
-        inputTank.writeNbt(nbt, dynamicOps)
+        inputTank.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, dynamicOps)
-        inputSlot.readNbt(nbt, dynamicOps)
-        outputSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, registryOps)
+        inputSlot.readNbt(nbt, registryOps)
+        outputSlot.readNbt(nbt, registryOps)
 
-        inputTank.readNbt(nbt, dynamicOps)
+        inputTank.readNbt(nbt, registryOps)
     }
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = Stirling.of(inputSlot.stack)
@@ -91,17 +90,6 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         super.onUpdateEnchantment(newEnchantments)
         inputTank.onUpdateEnchantment(newEnchantments)
-    }
-
-    override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        inputSlot.dropStack(level, pos)
-        outputSlot.dropStack(level, pos)
     }
 
     //    Item    //

@@ -38,18 +38,18 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         .setCallback(this::setChanged)
         .build("output")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, dynamicOps)
-        inputTank.writeNbt(nbt, dynamicOps)
-        catalystSlot.writeNbt(nbt, dynamicOps)
-        outputSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, registryOps)
+        inputTank.writeNbt(nbt, registryOps)
+        catalystSlot.writeNbt(nbt, registryOps)
+        outputSlot.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, dynamicOps)
-        inputTank.readNbt(nbt, dynamicOps)
-        catalystSlot.readNbt(nbt, dynamicOps)
-        outputSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, registryOps)
+        inputTank.readNbt(nbt, registryOps)
+        catalystSlot.readNbt(nbt, registryOps)
+        outputSlot.readNbt(nbt, registryOps)
     }
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL

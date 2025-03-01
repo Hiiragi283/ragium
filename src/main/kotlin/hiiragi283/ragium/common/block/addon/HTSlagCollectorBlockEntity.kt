@@ -28,12 +28,12 @@ class HTSlagCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         .setValidator { variant: HTItemVariant -> variant.isIn(RagiumItemTags.SLAG) }
         .build("item")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        itemSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        itemSlot.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        itemSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        itemSlot.readNbt(nbt, registryOps)
     }
 
     override fun onRemove(

@@ -31,17 +31,17 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
     HTHandlerBlockEntity {
     private val fluidTank: HTFluidTank = HTFluidTank.Builder().setCallback(this::setChanged).build("fluid")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        fluidTank.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        fluidTank.writeNbt(nbt, registryOps)
         ItemEnchantments.CODEC
-            .encodeStart(dynamicOps, enchantments)
+            .encodeStart(registryOps, enchantments)
             .ifSuccess { nbt.put(ENCH_KEY, it) }
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        fluidTank.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        fluidTank.readNbt(nbt, registryOps)
         ItemEnchantments.CODEC
-            .parse(dynamicOps, nbt.get(ENCH_KEY))
+            .parse(registryOps, nbt.get(ENCH_KEY))
             .ifSuccess(::onUpdateEnchantment)
     }
 

@@ -17,7 +17,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Supplier
@@ -52,24 +51,24 @@ abstract class HTMultiItemMachineBlockEntity(
 
     abstract val recipeType: HTRecipeType<out HTMultiItemRecipe>
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, dynamicOps)
-        firstInputSlot.writeNbt(nbt, dynamicOps)
-        secondInputSlot.writeNbt(nbt, dynamicOps)
-        thirdInputSlot.writeNbt(nbt, dynamicOps)
-        outputSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.writeNbt(nbt, registryOps)
+        firstInputSlot.writeNbt(nbt, registryOps)
+        secondInputSlot.writeNbt(nbt, registryOps)
+        thirdInputSlot.writeNbt(nbt, registryOps)
+        outputSlot.writeNbt(nbt, registryOps)
 
-        inputTank.writeNbt(nbt, dynamicOps)
+        inputTank.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, dynamicOps)
-        firstInputSlot.readNbt(nbt, dynamicOps)
-        secondInputSlot.readNbt(nbt, dynamicOps)
-        thirdInputSlot.readNbt(nbt, dynamicOps)
-        outputSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        super.readNbt(nbt, registryOps)
+        firstInputSlot.readNbt(nbt, registryOps)
+        secondInputSlot.readNbt(nbt, registryOps)
+        thirdInputSlot.readNbt(nbt, registryOps)
+        outputSlot.readNbt(nbt, registryOps)
 
-        inputTank.readNbt(nbt, dynamicOps)
+        inputTank.readNbt(nbt, registryOps)
     }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
@@ -98,19 +97,6 @@ abstract class HTMultiItemMachineBlockEntity(
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         super.onUpdateEnchantment(newEnchantments)
         inputTank.onUpdateEnchantment(newEnchantments)
-    }
-
-    override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        firstInputSlot.dropStack(level, pos)
-        secondInputSlot.dropStack(level, pos)
-        thirdInputSlot.dropStack(level, pos)
-        outputSlot.dropStack(level, pos)
     }
 
     //    Item    //

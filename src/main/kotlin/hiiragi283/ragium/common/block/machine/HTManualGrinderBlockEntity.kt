@@ -37,12 +37,12 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSlotHandler.Empty {
     private val inputSlot: HTItemSlot = HTItemSlot.Builder().setCallback(this::setChanged).build("item_input")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        inputSlot.writeNbt(nbt, dynamicOps)
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        inputSlot.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
-        inputSlot.readNbt(nbt, dynamicOps)
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        inputSlot.readNbt(nbt, registryOps)
     }
 
     override fun onRightClicked(
@@ -96,7 +96,6 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTMachineAccess    //
 
-    override val enchantments: ItemEnchantments = ItemEnchantments.EMPTY
     override val front: Direction = Direction.NORTH
     override val isActive: Boolean = true
     override val levelAccess: Level?
@@ -106,7 +105,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         get() = blockPos
     override val containerData: ContainerData = SimpleContainerData(2)
     override val costModifier: Int = 0
-    override val ownerUUID: UUID? = null
+    override val enchantments: ItemEnchantments = ItemEnchantments.EMPTY
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
     }
@@ -120,4 +119,6 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getItemIoFromSlot(slot: Int): HTStorageIO = HTStorageIO.INPUT
 
     override fun getSlots(): Int = 1
+
+    override val ownerUUID: UUID? = null
 }

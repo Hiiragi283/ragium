@@ -28,24 +28,24 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, var variant: HTCrateV
         .setCallback(this::setChanged)
         .build("item")
 
-    override fun writeNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
-            .encodeStart(dynamicOps, enchantments)
+            .encodeStart(registryOps, enchantments)
             .ifSuccess { nbt.put(ENCH_KEY, it) }
         HTCrateVariant.CODEC
-            .encodeStart(dynamicOps, variant)
+            .encodeStart(registryOps, variant)
             .ifSuccess { nbt.put("variant", it) }
-        itemSlot.writeNbt(nbt, dynamicOps)
+        itemSlot.writeNbt(nbt, registryOps)
     }
 
-    override fun readNbt(nbt: CompoundTag, dynamicOps: RegistryOps<Tag>) {
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
-            .parse(dynamicOps, nbt.get(ENCH_KEY))
+            .parse(registryOps, nbt.get(ENCH_KEY))
             .ifSuccess(::onUpdateEnchantment)
         HTCrateVariant.CODEC
-            .parse(dynamicOps, nbt.get("variant"))
+            .parse(registryOps, nbt.get("variant"))
             .ifSuccess { variant = it }
-        itemSlot.readNbt(nbt, dynamicOps)
+        itemSlot.readNbt(nbt, registryOps)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
