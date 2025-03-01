@@ -73,12 +73,9 @@ abstract class HTMachineRecipeBuilder<T : HTMachineRecipeBuilder<T, R>, R : HTMa
         return this as T
     }*/
 
-    fun itemOutput(item: ItemLike, count: Int = 1): T = itemOutput(HTItemOutput(item, count, DataComponentPatch.EMPTY))
+    fun itemOutput(item: ItemLike, count: Int = 1): T = itemOutput(HTItemOutput.of(item, count))
 
-    fun itemOutput(stack: ItemStack): T {
-        check(!stack.isEmpty) { "Empty ItemStack is not allowed!" }
-        return itemOutput(HTItemOutput(stack.item, stack.count, stack.componentsPatch))
-    }
+    fun itemOutput(stack: ItemStack): T = itemOutput(HTItemOutput.of(stack))
 
     protected abstract fun itemOutput(output: HTItemOutput): T
 

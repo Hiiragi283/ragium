@@ -1,0 +1,15 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "tag": "c:glass_blocks"
+    },
+    {
+      "count": 4,
+      "tag": "c:slag"
+    }
+  ],
+  "item_output": {
+    "item": "ragium:chemical_glass"
+  }
+}

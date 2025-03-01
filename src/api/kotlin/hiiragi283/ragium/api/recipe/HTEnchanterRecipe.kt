@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toOptional
+import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.core.Holder
@@ -13,6 +14,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentHelper
 import java.util.*
 
 class HTEnchanterRecipe(
@@ -64,9 +66,45 @@ class HTEnchanterRecipe(
     }
 
     override fun canProcess(context: HTMachineRecipeContext): Result<Unit> = runCatching {
+        // Check enchantment application
+        val stack1: ItemStack = context.getItemStack(HTStorageIO.INPUT, 0)
+        val bool1: Boolean = stack1.supportsEnchantment(enchantment)
+        val bool2: Boolean = EnchantmentHelper.isEnchantmentCompatible(
+            EnchantmentHelper.getEnchantmentsForCrafting(stack1).keySet(),
+            enchantment,
+        )
+        if (!bool1 || !bool2) throw HTMachineException.Custom("Cannot apply enchantment for the target input!")
+        // Output
+        val outputCopy: ItemStack = stack1.copy()
+        outputCopy.enchant(enchantment, enchantment.value().maxLevel)
+        if (!context.getSlot(HTStorageIO.OUTPUT, 0).canInsert(outputCopy)) {
+            throw HTMachineException.GrowItem()
+        }
+        // Input
+        if (!context.getSlot(HTStorageIO.INPUT, 0).canExtract(1)) {
+            throw HTMachineException.ShrinkItem()
+        }
+        if (!context.getSlot(HTStorageIO.INPUT, 1).canExtract(firstInput.count)) {
+            throw HTMachineException.ShrinkItem()
+        }
+        secondInput.ifPresent { ingredient: HTItemIngredient ->
+            if (!context.getSlot(HTStorageIO.INPUT, 2).canExtract(ingredient.count)) {
+                throw HTMachineException.ShrinkItem()
+            }
+        }
     }
 
     override fun process(context: HTMachineRecipeContext) {
+        // Apply enchantments
+        val stackIn: ItemStack = context.getItemStack(HTStorageIO.OUTPUT, 0)
+        stackIn.enchant(enchantment, enchantment.value().maxLevel)
+        context.getSlot(HTStorageIO.OUTPUT, 0).insert(stackIn, false)
+        // Input
+        context.getSlot(HTStorageIO.INPUT, 0).extract(1, false)
+        context.getSlot(HTStorageIO.INPUT, 1).extract(firstInput.count, false)
+        secondInput.ifPresent { ingredient: HTItemIngredient ->
+            context.getSlot(HTStorageIO.INPUT, 2).extract(ingredient.count, false)
+        }
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.ENCHANTER

@@ -15,6 +15,6 @@ class HTPrimitiveBlastFurnaceContainer(menu: HTPrimitiveBlastFurnaceContainerMen
     HTMachineContainerScreen<HTPrimitiveBlastFurnaceContainerMenu>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/primitive_blast_furnace.png")
 
-    override val progressX: Int = HTSlotPos.getSlotPosX(4)
+    override val progressX: Int = HTSlotPos.getSlotPosX(4.5)
     override val progressY: Int = HTSlotPos.getSlotPosY(1)
 }

@@ -36,10 +36,12 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     private val firstItemSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
+        .setValidator(Tags.Items.INGOTS_IRON)
         .build("first_item")
     private val secondItemSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
+        .setValidator(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL))
         .build("second_item")
     private val outputSlot: HTItemSlot = HTItemSlot
         .Builder()
@@ -66,10 +68,10 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         validateMultiblock(this, null).getOrThrow()
-        val isIron: Boolean = firstItemSlot.resource.isIn(Tags.Items.INGOTS_IRON)
-        val isCoal: Boolean =
-            secondItemSlot.resource.isIn(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL)) && secondItemSlot.amount <= 4
-        if (isIron && isCoal) {
+        // val isIron: Boolean = firstItemSlot.resource.isIn(Tags.Items.INGOTS_IRON)
+        val isCoal: Boolean = secondItemSlot.amount >= 4
+        // secondItemSlot.resource.isIn(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL)) && secondItemSlot.amount <= 4
+        if (isCoal) {
             val steelIngot: ItemStack = RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL).toStack()
             if (outputSlot.canInsert(steelIngot)) {
                 firstItemSlot.extract(1, false)

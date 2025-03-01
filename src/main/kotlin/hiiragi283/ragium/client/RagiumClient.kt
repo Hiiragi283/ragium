@@ -70,6 +70,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun registerMenu(event: RegisterMenuScreensEvent) {
         event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTPotionBundleContainer)
 
+        event.register(RagiumMenuTypes.BREWERY.get(), ::HTBreweryContainer)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), ::HTExtractorContainer)
         event.register(RagiumMenuTypes.INFUSER.get(), ::HTInfuserContainer)
         event.register(RagiumMenuTypes.MIXER.get(), ::HTMixerContainer)

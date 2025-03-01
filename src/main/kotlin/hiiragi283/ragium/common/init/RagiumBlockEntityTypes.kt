@@ -100,6 +100,10 @@ object RagiumBlockEntityTypes {
         register("blast_furnace", ::HTBlastFurnaceBlockEntity, HTMachineType.BLAST_FURNACE)
 
     @JvmField
+    val BREWERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBreweryBlockEntity>> =
+        register("brewery", ::HTBreweryBlockEntity, HTMachineType.ALCHEMICAL_BREWERY)
+
+    @JvmField
     val COMPRESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCompressorBlockEntity>> =
         register("compressor", ::HTCompressorBlockEntity, HTMachineType.COMPRESSOR)
 

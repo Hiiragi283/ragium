@@ -1,10 +1,12 @@
 {
   "type": "ragium:alchemical_brewery",
   "effect": "minecraft:oozing",
-  "first_item_input": {
-    "tag": "c:crops/nether_wart"
-  },
-  "second_item_input": {
-    "item": "minecraft:slime_block"
-  }
+  "item_inputs": [
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:slime_block"
+    }
+  ]
 }

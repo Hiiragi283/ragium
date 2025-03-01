@@ -57,9 +57,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         HTRecipeTypes.CRUSHER.processFirstRecipe(context, level)
     }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
-        TODO("Not yet implemented")
-    }
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 
     //    Item    //
 

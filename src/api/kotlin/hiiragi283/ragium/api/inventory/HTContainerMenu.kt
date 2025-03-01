@@ -99,7 +99,7 @@ abstract class HTContainerMenu(
                     inventory,
                     index + 9,
                     HTSlotPos.getSlotPosX(index % 9),
-                    HTSlotPos.getSlotPosY(3 + (index / 9)) + 12 + yOffset,
+                    HTSlotPos.getSlotPosY(3 + (index / 9)) + 16 + yOffset,
                 ),
             )
         }
@@ -109,7 +109,7 @@ abstract class HTContainerMenu(
                 when {
                     immovable && index == inventory.selected -> ::HTImmovableSlot
                     else -> ::Slot
-                }(inventory, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) - 2 + yOffset),
+                }(inventory, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) + 2 + yOffset),
             )
         }
     }

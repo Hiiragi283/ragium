@@ -1,13 +1,15 @@
 {
   "type": "ragium:alchemical_brewery",
   "effect": "minecraft:slowness",
-  "first_item_input": {
-    "tag": "c:crops/nether_wart"
-  },
-  "second_item_input": {
-    "item": "minecraft:sugar"
-  },
-  "third_item_input": {
-    "item": "minecraft:fermented_spider_eye"
-  }
+  "item_inputs": [
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:fermented_spider_eye"
+    }
+  ]
 }

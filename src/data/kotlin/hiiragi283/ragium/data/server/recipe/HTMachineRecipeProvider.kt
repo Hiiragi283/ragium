@@ -98,9 +98,10 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
                 potion.idOrThrow.withPrefix("brewery/"),
                 HTBreweryRecipe(
                     "",
-                    HTItemIngredient.of(Tags.Items.CROPS_NETHER_WART),
-                    HTItemIngredient.of(input),
-                    Optional.empty(),
+                    listOf(
+                        HTItemIngredient.of(Tags.Items.CROPS_NETHER_WART),
+                        HTItemIngredient.of(input),
+                    ),
                     potion,
                 ),
                 null,
@@ -112,9 +113,11 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
                 potion.idOrThrow.withPrefix("brewery/"),
                 HTBreweryRecipe(
                     "",
-                    HTItemIngredient.of(Tags.Items.CROPS_NETHER_WART),
-                    HTItemIngredient.of(input),
-                    Optional.of(HTItemIngredient.of(Items.FERMENTED_SPIDER_EYE)),
+                    listOf(
+                        HTItemIngredient.of(Tags.Items.CROPS_NETHER_WART),
+                        HTItemIngredient.of(input),
+                        HTItemIngredient.of(Items.FERMENTED_SPIDER_EYE),
+                    ),
                     potion,
                 ),
                 null,

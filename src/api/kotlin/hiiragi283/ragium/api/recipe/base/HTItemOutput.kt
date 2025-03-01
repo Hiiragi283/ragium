@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe.base
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
@@ -43,9 +42,16 @@ class HTItemOutput private constructor(private val holder: Holder<Item>, val cou
                 HTItemOutput::components,
                 ::HTItemOutput,
             )
-        }
 
-        constructor(item: ItemLike, count: Int, components: DataComponentPatch) : this(item.asHolder(), count, components)
+            @JvmStatic
+            fun of(item: ItemLike, count: Int): HTItemOutput = of(ItemStack(item, count))
+
+            @JvmStatic
+            fun of(stack: ItemStack): HTItemOutput {
+                check(!stack.isEmpty)
+                return HTItemOutput(stack.itemHolder, stack.count, stack.componentsPatch)
+            }
+        }
 
         val id: ResourceLocation = holder.idOrThrow
 

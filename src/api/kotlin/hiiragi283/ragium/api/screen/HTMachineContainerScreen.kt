@@ -20,6 +20,10 @@ abstract class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, inv
 
     protected fun getFluidCapacity(index: Int): Int = menu.machine?.getFluidHandler(null)?.getTankCapacity(index) ?: 0
 
+    init {
+        inventoryLabelY = imageHeight - 90
+    }
+
     override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,

@@ -25,7 +25,7 @@ class HTSlagCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     private val itemSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
-        .setValidator { variant: HTItemVariant -> variant.isIn(RagiumItemTags.SLAG) }
+        .setValidator(RagiumItemTags.SLAG)
         .build("item")
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {

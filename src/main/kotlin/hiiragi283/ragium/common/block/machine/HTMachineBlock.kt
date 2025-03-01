@@ -32,6 +32,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             HTMachineType.COMPRESSOR to ::HTCompressorBlockEntity,
             HTMachineType.GRINDER to ::HTGrinderBlockEntity,
             HTMachineType.MULTI_SMELTER to ::HTMultiSmelterBlockEntity,
+            HTMachineType.CRUSHER to ::HTCrusherBlockEntity,
             // Processor - Advanced
             HTMachineType.EXTRACTOR to ::HTExtractorBlockEntity,
             HTMachineType.INFUSER to ::HTInfuserBlockEntity,
@@ -39,6 +40,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             HTMachineType.REFINERY to ::HTRefineryBlockEntity,
             HTMachineType.SOLIDIFIER to ::HTSolidifierBlockEntity,
             // Processor - Elite
+            HTMachineType.ALCHEMICAL_BREWERY to ::HTBreweryBlockEntity,
             HTMachineType.LASER_ASSEMBLY to ::HTLaserAssemblyBlockEntity,
         )
     }

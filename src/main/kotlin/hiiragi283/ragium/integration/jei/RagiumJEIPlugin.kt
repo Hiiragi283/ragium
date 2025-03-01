@@ -63,7 +63,11 @@ class RagiumJEIPlugin : IModPlugin {
                 HTMachineType.BLAST_FURNACE,
                 RagiumJEIRecipeTypes.BLAST_FURNACE,
             ),
-            HTBreweryRecipeCategory(guiHelper),
+            HTMultiItemRecipeCategory(
+                guiHelper,
+                HTMachineType.ALCHEMICAL_BREWERY,
+                RagiumJEIRecipeTypes.BREWERY,
+            ),
             HTSingleItemRecipeCategory(
                 guiHelper,
                 HTMachineType.COMPRESSOR,

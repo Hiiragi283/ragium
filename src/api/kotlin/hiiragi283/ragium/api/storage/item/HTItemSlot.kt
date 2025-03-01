@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.util.HTEnchantmentListener
 import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
+import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
@@ -64,6 +65,8 @@ abstract class HTItemSlot(private val validator: (HTItemVariant) -> Boolean, pri
             this.capacity = capacity
         }
 
+        fun setValidator(tagKey: TagKey<Item>): Builder = setValidator { variant: HTItemVariant -> variant.isIn(tagKey) }
+        
         fun setValidator(validator: (HTItemVariant) -> Boolean): Builder = apply {
             this.validator = validator
         }

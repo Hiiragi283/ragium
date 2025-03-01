@@ -27,29 +27,29 @@ abstract class HTMultiItemMachineBlockEntity(
     state: BlockState,
     machineType: HTMachineType,
 ) : HTMachineBlockEntity(type, pos, state, machineType) {
-    private val firstInputSlot: HTItemSlot = HTItemSlot
+    protected val firstInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("first_item_input")
-    private val secondInputSlot: HTItemSlot = HTItemSlot
+    protected val secondInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("second_item_input")
-    private val thirdInputSlot: HTItemSlot = HTItemSlot
+    protected val thirdInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("third_item_input")
-    private val outputSlot: HTItemSlot = HTItemSlot
+    protected val outputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("item_output")
 
-    private val inputTank: HTFluidTank = HTFluidTank
+    protected val inputTank: HTFluidTank = HTFluidTank
         .Builder()
         .setCallback(this::setChanged)
         .build("fluid_input")
 
-    abstract val recipeType: HTRecipeType<out HTMultiItemRecipe>
+    protected abstract val recipeType: HTRecipeType<out HTMultiItemRecipe>
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
