@@ -1,0 +1,13 @@
+{
+  "type": "ragium:compressor",
+  "catalyst": {
+    "tag": "ragium:molds/rod"
+  },
+  "item_input": {
+    "count": 4,
+    "item": "minecraft:wind_charge"
+  },
+  "item_output": {
+    "item": "minecraft:breeze_rod"
+  }
+}

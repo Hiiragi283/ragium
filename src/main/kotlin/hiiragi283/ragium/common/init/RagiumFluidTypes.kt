@@ -33,9 +33,23 @@ object RagiumFluidTypes {
             )
         }
 
+    @JvmStatic
+    private val DEFAULT_PROPERTY: FluidType.Properties = FluidType.Properties
+        .create()
+        .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
+        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
+
+    @JvmField
+    val GLASS: DeferredHolder<FluidType, FluidType> = REGISTER.register("glass") { _: ResourceLocation ->
+        object : FluidType(DEFAULT_PROPERTY) {
+            override fun getBlockForFluidState(getter: BlockAndTintGetter, pos: BlockPos, state: FluidState): BlockState =
+                Blocks.GLASS.defaultBlockState()
+        }
+    }
+
     @JvmField
     val HONEY: DeferredHolder<FluidType, FluidType> = REGISTER.register("honey") { _: ResourceLocation ->
-        object : FluidType(Properties.create()) {
+        object : FluidType(DEFAULT_PROPERTY) {
             override fun getBlockForFluidState(getter: BlockAndTintGetter, pos: BlockPos, state: FluidState): BlockState =
                 Blocks.HONEY_BLOCK.defaultBlockState()
         }
@@ -43,7 +57,7 @@ object RagiumFluidTypes {
 
     @JvmField
     val SNOW: DeferredHolder<FluidType, FluidType> = REGISTER.register("snow") { _: ResourceLocation ->
-        object : FluidType(Properties.create()) {
+        object : FluidType(DEFAULT_PROPERTY) {
             override fun getBucket(stack: FluidStack): ItemStack = ItemStack(Items.POWDER_SNOW_BUCKET)
 
             override fun getBlockForFluidState(getter: BlockAndTintGetter, pos: BlockPos, state: FluidState): BlockState =

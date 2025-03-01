@@ -16,6 +16,9 @@ object RagiumFluids {
     val REGISTER: DeferredRegister<Fluid> = DeferredRegister.create(Registries.FLUID, RagiumAPI.MOD_ID)
 
     @JvmField
+    val GLASS: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("glass", RagiumFluidTypes.GLASS)
+
+    @JvmField
     val HONEY: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("honey", RagiumFluidTypes.HONEY) {
         bucket(RagiumItems.HONEY_BUCKET)
     }

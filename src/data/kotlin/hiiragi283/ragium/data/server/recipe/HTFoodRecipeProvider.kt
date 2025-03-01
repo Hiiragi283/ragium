@@ -295,7 +295,7 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
         // Dough
         HTFluidOutputRecipeBuilder
             .infuser(lookup)
-            .itemInput(RagiumItems.FLOUR)
+            .itemInput(RagiumItemTags.FLOURS)
             .waterInput(250)
             .itemOutput(RagiumItems.DOUGH)
             .save(output)

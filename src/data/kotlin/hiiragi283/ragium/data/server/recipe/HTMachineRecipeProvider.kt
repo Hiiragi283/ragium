@@ -4,6 +4,7 @@ import com.mojang.authlib.properties.PropertyMap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.item.HTItemStackBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -152,13 +153,13 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .catalyst(RagiumBlocks.SHAFT)
             .itemOutput(RagiumBlocks.SHAFT)
             .saveSuffixed(output, "_from_steel")
-
         HTSingleItemRecipeBuilder
             .compressor(lookup)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
             .catalyst(RagiumBlocks.SHAFT)
             .itemOutput(RagiumBlocks.SHAFT)
             .saveSuffixed(output, "_from_deep_steel")
+
         // Pulp -> Oak Planks
         HTSingleItemRecipeBuilder
             .compressor(lookup)
@@ -166,12 +167,38 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .catalyst(ItemTags.PLANKS)
             .itemOutput(Items.OAK_PLANKS)
             .save(output)
+
         // Clay -> 4x Clay Ball
         HTSingleItemRecipeBuilder
             .compressor(lookup)
             .itemInput(Items.CLAY)
             .catalyst(RagiumItems.BALL_PRESS_MOLD)
             .itemOutput(Items.CLAY_BALL, 4)
+            .save(output)
+
+        // Blaze Powder <-> Blaze Rod
+        HTSingleItemRecipeBuilder
+            .grinder(lookup)
+            .itemInput(Tags.Items.RODS_BLAZE)
+            .itemOutput(Items.BLAZE_POWDER, 4)
+            .save(output)
+        HTSingleItemRecipeBuilder
+            .compressor(lookup)
+            .itemInput(Items.BLAZE_POWDER, 4)
+            .catalyst(RagiumItemTags.MOLD_ROD)
+            .itemOutput(Items.BLAZE_ROD)
+            .save(output)
+        // Breeze Rod <-> Wind Charge
+        HTSingleItemRecipeBuilder
+            .grinder(lookup)
+            .itemInput(Tags.Items.RODS_BREEZE)
+            .itemOutput(Items.WIND_CHARGE, 4)
+            .save(output)
+        HTSingleItemRecipeBuilder
+            .compressor(lookup)
+            .itemInput(Items.WIND_CHARGE, 4)
+            .catalyst(RagiumItemTags.MOLD_ROD)
+            .itemOutput(Items.BREEZE_ROD)
             .save(output)
     }
 
@@ -473,6 +500,13 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumFluids.CRUDE_OIL, 250)
             .save(output, RagiumAPI.id("crude_oil_from_soul"))
+        // Crude Oil -> Tar
+        HTSolidifierRecipeBuilder(lookup)
+            .fluidInput(RagiumFluids.CRUDE_OIL.commonTag, 250)
+            .catalyst(RagiumItemTags.MOLD_BALL)
+            .itemOutput(RagiumItems.TAR)
+            .save(output)
+
         // Crude Oil -> Naphtha + Aromatic Compound
         HTFluidOutputRecipeBuilder
             .refinery(lookup)

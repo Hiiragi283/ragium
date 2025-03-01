@@ -112,6 +112,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Enchantment
         addEnchantment(RagiumEnchantments.CAPACITY, "Capacity", "Increase the capacity of item or fluid storages")
         // Fluids
+        addFluid(RagiumFluids.GLASS, "Molten Glass")
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.SNOW, "Powder Snow")
 
@@ -258,6 +259,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.SLAG, "Slag")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
+        addItem(RagiumItems.TAR, "Tar")
         addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
 

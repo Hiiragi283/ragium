@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extractor",
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "fluid": "ragium:glass"
+    }
+  ],
+  "item_input": {
+    "tag": "c:sands"
+  }
+}

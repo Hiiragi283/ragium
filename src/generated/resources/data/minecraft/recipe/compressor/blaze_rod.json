@@ -1,0 +1,13 @@
+{
+  "type": "ragium:compressor",
+  "catalyst": {
+    "tag": "ragium:molds/rod"
+  },
+  "item_input": {
+    "count": 4,
+    "item": "minecraft:blaze_powder"
+  },
+  "item_output": {
+    "item": "minecraft:blaze_rod"
+  }
+}

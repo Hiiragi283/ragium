@@ -1,0 +1,16 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:glass"
+  },
+  "item_input": {
+    "count": 2,
+    "tag": "c:slag"
+  },
+  "item_outputs": [
+    {
+      "item": "ragium:chemical_glass"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "item_input": {
+    "tag": "c:rods/breeze"
+  },
+  "item_output": {
+    "count": 4,
+    "item": "minecraft:wind_charge"
+  }
+}

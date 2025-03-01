@@ -1,0 +1,16 @@
+{
+  "type": "ragium:infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:glass"
+  },
+  "item_input": {
+    "tag": "c:dusts/calcite"
+  },
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "minecraft:glass"
+    }
+  ]
+}

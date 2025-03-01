@@ -126,6 +126,7 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.LED)
                     output.accept(RagiumItems.SOLAR_PANEL)
 
+                    output.accept(RagiumItems.TAR)
                     output.accept(RagiumItems.YELLOW_CAKE)
                     output.accept(RagiumItems.YELLOW_CAKE_PIECE)
 

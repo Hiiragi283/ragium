@@ -109,16 +109,6 @@ class RagiumItemTagProvider(
     private fun addMaterialTag(
         prefix: HTTagPrefix,
         material: HTMaterialKey,
-        item: ItemLike?,
-        type: HTTagBuilder.DependType = HTTagBuilder.DependType.OPTIONAL,
-    ) {
-        builder.addTag(prefix.commonTagKey, prefix.createTag(material))
-        item?.let { builder.add(prefix.createTag(material), it.asHolder(), type) }
-    }
-
-    private fun addMaterialTag(
-        prefix: HTTagPrefix,
-        material: HTMaterialKey,
         mod: IntegrationMods,
         path: String,
         type: HTTagBuilder.DependType = HTTagBuilder.DependType.OPTIONAL,
@@ -181,7 +171,14 @@ class RagiumItemTagProvider(
 
     //    Part    //
 
+    @Suppress("DEPRECATION")
     private fun partTags() {
+        builder.add(Tags.Items.BUCKETS, RagiumItems.CRUDE_OIL_BUCKET)
+        builder.add(Tags.Items.BUCKETS, RagiumItems.HONEY_BUCKET)
+
+        builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
+        builder.add(Tags.Items.SLIMEBALLS, RagiumItems.TAR)
+
         builder.add(RagiumItemTags.PAPER, Items.PAPER.asHolder())
 
         builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
@@ -193,9 +190,6 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.CIRCUIT_ULTIMATE, RagiumItems.ULTIMATE_CIRCUIT)
 
         builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
-
-        builder.add(Tags.Items.BUCKETS, RagiumItems.CRUDE_OIL_BUCKET)
-        builder.add(Tags.Items.BUCKETS, RagiumItems.HONEY_BUCKET)
 
         builder.add(RagiumItemTags.DIRT_SOILS, Items.FARMLAND.asHolder())
         builder.add(RagiumItemTags.DIRT_SOILS, IntegrationMods.FD, "rich_soil", HTTagBuilder.DependType.OPTIONAL)

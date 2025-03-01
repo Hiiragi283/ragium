@@ -112,6 +112,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Enchantment
         addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します")
         // Fluids
+        addFluid(RagiumFluids.GLASS, "溶融ガラス")
         addFluid(RagiumFluids.HONEY, "蜂蜜")
         addFluid(RagiumFluids.SNOW, "粉雪")
 
@@ -258,6 +259,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.SLAG, "スラグ")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
+        addItem(RagiumItems.TAR, "タール")
         addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 

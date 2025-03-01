@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
@@ -35,11 +36,12 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     private fun <T : Any> Builder<T, Block>.addBlock(block: Block, value: T, replace: Boolean = false): Builder<T, Block> =
         add(block.defaultBlockState().blockHolder, value, replace)
 
-    override fun gather() {
+    override fun gather(provider: HolderLookup.Provider) {
         // Furnace Fuel
         builder(NeoForgeDataMaps.FURNACE_FUELS)
-            .addItem(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL, FurnaceFuel(64 * 200))
             .addItem(HTTagPrefix.BLOCK, RagiumMaterials.FIERY_COAL, FurnaceFuel(640 * 200))
+            .addItem(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL, FurnaceFuel(64 * 200))
+            .addItem(RagiumItems.TAR, FurnaceFuel(6 * 200))
 
         // Defoliant
         builder(RagiumDataMaps.DEFOLIANT)

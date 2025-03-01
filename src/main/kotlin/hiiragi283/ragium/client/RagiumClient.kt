@@ -38,6 +38,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Fluid
         event.registerFluidType(
+            HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/glass")),
+            RagiumFluidTypes.GLASS,
+        )
+        event.registerFluidType(
             HTSimpleFluidExtensions(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
             RagiumFluidTypes.HONEY,
         )

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:solidifier",
+  "catalyst": {
+    "tag": "ragium:molds/ball"
+  },
+  "fluid_input": {
+    "fluid_input": {
+      "amount": 250,
+      "tag": "c:crude_oil"
+    }
+  },
+  "item_output": {
+    "item": "ragium:tar"
+  }
+}

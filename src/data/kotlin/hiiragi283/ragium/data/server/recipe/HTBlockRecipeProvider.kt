@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -32,7 +31,6 @@ import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
 
@@ -53,7 +51,6 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         registerCrates(output)
         registerDrums(output)
 
-        registerGlasses(output)
         registerDecorations(output)
         registerLEDs(output)
 
@@ -158,22 +155,6 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     }
 
     //    Decorations    //
-
-    private fun registerGlasses(output: RecipeOutput) {
-        mapOf(
-            RagiumItemTags.SLAG to RagiumBlocks.CHEMICAL_GLASS,
-            ItemTags.TRAPDOORS to RagiumBlocks.MOB_GLASS,
-            HTTagPrefix.DUST.createTag(VanillaMaterials.OBSIDIAN) to RagiumBlocks.OBSIDIAN_GLASS,
-            ItemTags.SOUL_FIRE_BASE_BLOCKS to RagiumBlocks.SOUL_GLASS,
-        ).forEach { (input: TagKey<Item>, glass: DeferredBlock<out TransparentBlock>) ->
-            HTMultiItemRecipeBuilder
-                .blastFurnace(lookup)
-                .itemInput(Tags.Items.GLASS_BLOCKS)
-                .itemInput(input, 2)
-                .itemOutput(glass)
-                .save(output)
-        }
-    }
 
     private fun registerDecorations(output: RecipeOutput) {
         // Ragi-Bricks

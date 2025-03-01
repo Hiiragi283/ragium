@@ -5,6 +5,9 @@
     },
     "#c:storage_blocks/fiery_coal": {
       "burn_time": 128000
+    },
+    "ragium:tar": {
+      "burn_time": 1200
     }
   }
 }

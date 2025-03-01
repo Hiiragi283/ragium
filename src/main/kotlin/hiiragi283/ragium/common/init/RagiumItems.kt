@@ -480,9 +480,16 @@ object RagiumItems {
     @JvmField
     val SOLAR_PANEL: DeferredItem<Item> = register("solar_panel")
 
+    //    Misc    //
+
+    @JvmField
+    val TAR: DeferredItem<Item> = register("tar")
+
+    @JvmField
     val YELLOW_CAKE: DeferredItem<Item> =
         register("yellow_cake")
 
+    @JvmField
     val YELLOW_CAKE_PIECE: DeferredItem<Item> =
         registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
 

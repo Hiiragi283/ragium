@@ -5,7 +5,7 @@
     "tag": "c:water"
   },
   "item_input": {
-    "item": "ragium:flour"
+    "tag": "c:flours"
   },
   "item_outputs": [
     {

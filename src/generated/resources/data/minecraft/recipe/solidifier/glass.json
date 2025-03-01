@@ -1,0 +1,15 @@
+{
+  "type": "ragium:solidifier",
+  "catalyst": {
+    "tag": "ragium:molds/block"
+  },
+  "fluid_input": {
+    "fluid_input": {
+      "amount": 1000,
+      "tag": "c:glass"
+    }
+  },
+  "item_output": {
+    "item": "minecraft:glass"
+  }
+}
