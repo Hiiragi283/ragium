@@ -1,6 +1,6 @@
-package hiiragi283.ragium.api.block.entity
+package hiiragi283.ragium.common.block.processor
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
@@ -13,9 +13,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Supplier
@@ -27,16 +24,16 @@ abstract class HTSingleItemMachineBlockEntity(
     machineType: HTMachineType,
 ) : HTMachineBlockEntity(type, pos, state, machineType),
     HTFluidSlotHandler.Empty {
-    private val inputSlot: HTItemSlot = HTItemSlot
+    protected val inputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("input")
-    private val catalystSlot: HTItemSlot = HTItemSlot
+    protected val catalystSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCapacity(1)
         .setCallback(this::setChanged)
         .build("catalyst")
-    private val outputSlot: HTItemSlot = HTItemSlot
+    protected val outputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("output")
@@ -59,7 +56,7 @@ abstract class HTSingleItemMachineBlockEntity(
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
-        val context: HTMachineRecipeContext = HTMachineRecipeContext
+        val context: HTMachineRecipeContext = HTMachineRecipeContext.Companion
             .builder()
             .addInput(0, inputSlot)
             .addCatalyst(catalystSlot)
@@ -67,16 +64,6 @@ abstract class HTSingleItemMachineBlockEntity(
             .build()
         recipeType.processFirstRecipe(context, level)
     }
-
-    final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
-        RagiumAPI.getInstance().createSingleItemMenu(
-            containerId,
-            playerInventory,
-            blockPos,
-            inputSlot,
-            catalystSlot,
-            outputSlot,
-        )
 
     //    Item    //
 

@@ -66,7 +66,7 @@ abstract class HTItemSlot(private val validator: (HTItemVariant) -> Boolean, pri
         }
 
         fun setValidator(tagKey: TagKey<Item>): Builder = setValidator { variant: HTItemVariant -> variant.isIn(tagKey) }
-        
+
         fun setValidator(validator: (HTItemVariant) -> Boolean): Builder = apply {
             this.validator = validator
         }

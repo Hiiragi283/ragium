@@ -1,6 +1,6 @@
-package hiiragi283.ragium.api.block.entity
+package hiiragi283.ragium.common.block.processor
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
@@ -13,9 +13,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -72,7 +69,7 @@ abstract class HTMultiItemMachineBlockEntity(
     }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val context: HTMachineRecipeContext = HTMachineRecipeContext
+        val context: HTMachineRecipeContext = HTMachineRecipeContext.Companion
             .builder()
             .addInput(0, firstInputSlot)
             .addInput(1, secondInputSlot)
@@ -82,17 +79,6 @@ abstract class HTMultiItemMachineBlockEntity(
             .build()
         recipeType.processFirstRecipe(context, level)
     }
-
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        RagiumAPI.getInstance().createMultiItemMenu(
-            containerId,
-            playerInventory,
-            blockPos,
-            firstInputSlot,
-            secondInputSlot,
-            thirdInputSlot,
-            outputSlot,
-        )
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         super.onUpdateEnchantment(newEnchantments)

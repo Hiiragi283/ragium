@@ -17,9 +17,11 @@ import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import hiiragi283.ragium.common.inventory.HTPrimitiveBlastFurnaceContainerMenu
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
@@ -68,10 +70,9 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         validateMultiblock(this, null).getOrThrow()
-        // val isIron: Boolean = firstItemSlot.resource.isIn(Tags.Items.INGOTS_IRON)
+        val isIron: Boolean = !firstItemSlot.isEmpty
         val isCoal: Boolean = secondItemSlot.amount >= 4
-        // secondItemSlot.resource.isIn(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL)) && secondItemSlot.amount <= 4
-        if (isCoal) {
+        if (isIron && isCoal) {
             val steelIngot: ItemStack = RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL).toStack()
             if (outputSlot.canInsert(steelIngot)) {
                 firstItemSlot.extract(1, false)
@@ -98,6 +99,8 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         } else {
             null
         }
+
+    override fun getDisplayName(): Component = machineType.text.withStyle(ChatFormatting.WHITE)
 
     //    Item    //
 

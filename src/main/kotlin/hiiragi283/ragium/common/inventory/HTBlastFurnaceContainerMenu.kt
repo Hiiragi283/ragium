@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTMultiItemContainerMenu(
+class HTBlastFurnaceContainerMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
@@ -17,7 +17,7 @@ class HTMultiItemContainerMenu(
     secondInputSlot: HTItemSlot,
     thirdInputSlot: HTItemSlot,
     outputSlot: HTItemSlot,
-) : HTMachineContainerMenu(RagiumMenuTypes.MULTI_ITEM, containerId, inventory, pos) {
+) : HTMachineContainerMenu(RagiumMenuTypes.BLAST_FURNACE, containerId, inventory, pos) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
@@ -30,12 +30,12 @@ class HTMultiItemContainerMenu(
 
     init {
         // inputs
-        addSlot(firstInputSlot.createContainerSlot(1, 1))
-        addSlot(secondInputSlot.createContainerSlot(2, 1))
-        addSlot(thirdInputSlot.createContainerSlot(3, 1))
-        addFluidSlot(0, 1, 2)
+        addSlot(firstInputSlot.createContainerSlot(2, 0))
+        addSlot(secondInputSlot.createContainerSlot(4, 0))
+        addSlot(thirdInputSlot.createContainerSlot(6, 0))
+        addFluidSlot(0, 2, 2)
         // outputs
-        addSlot(outputSlot.createContainerSlot(6, 1, HTStorageIO.OUTPUT))
+        addSlot(outputSlot.createContainerSlot(6, 2, HTStorageIO.OUTPUT))
         // player inventory
         addPlayerInv()
         // register property

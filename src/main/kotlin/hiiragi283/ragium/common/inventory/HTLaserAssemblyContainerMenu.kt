@@ -9,24 +9,26 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTSolidifierContainerMenu(
+class HTLaserAssemblyContainerMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
+    inputSlot: HTItemSlot,
     catalystSlot: HTItemSlot,
     outputSlot: HTItemSlot,
-) : HTMachineContainerMenu(RagiumMenuTypes.SOLIDIFIER, containerId, inventory, pos) {
+) : HTMachineContainerMenu(RagiumMenuTypes.LASER_ASSEMBLY, containerId, inventory, pos) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
         RagiumAPI.getInstance().emptyItemSlot(),
         RagiumAPI.getInstance().emptyItemSlot(),
+        RagiumAPI.getInstance().emptyItemSlot(),
     )
 
     init {
         // inputs
-        addFluidSlot(0, 2, 1)
+        addSlot(inputSlot.createContainerSlot(2, 1))
         // Catalyst
         addSlot(catalystSlot.createContainerSlot(4, 1))
         // outputs
@@ -37,6 +39,6 @@ class HTSolidifierContainerMenu(
         addDataSlots()
     }
 
-    override val inputSlots: IntRange = IntRange.EMPTY
-    override val outputSlots: IntRange = (1..1)
+    override val inputSlots: IntRange = (0..0)
+    override val outputSlots: IntRange = (2..2)
 }

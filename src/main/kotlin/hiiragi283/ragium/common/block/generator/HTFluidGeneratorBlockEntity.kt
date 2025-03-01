@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.block.entity
+package hiiragi283.ragium.common.block.generator
 
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.event.HTGeneratorFuelTimeEvent
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException

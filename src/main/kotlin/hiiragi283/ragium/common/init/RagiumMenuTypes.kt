@@ -31,6 +31,14 @@ object RagiumMenuTypes {
         REGISTER.register(path) { _: ResourceLocation -> MenuType(factory, FeatureFlags.VANILLA_SET) }
 
     @JvmField
+    val ASSEMBLER: DeferredHolder<MenuType<*>, MenuType<HTAssemblerContainerMenu>> =
+        registerMachine("assembler", ::HTAssemblerContainerMenu)
+
+    @JvmField
+    val BLAST_FURNACE: DeferredHolder<MenuType<*>, MenuType<HTBlastFurnaceContainerMenu>> =
+        registerMachine("blast_furnace", ::HTBlastFurnaceContainerMenu)
+
+    @JvmField
     val BREWERY: DeferredHolder<MenuType<*>, MenuType<HTBreweryContainerMenu>> =
         registerMachine("brewery", ::HTBreweryContainerMenu)
 
@@ -43,12 +51,12 @@ object RagiumMenuTypes {
         registerMachine("infuser", ::HTInfuserContainerMenu)
 
     @JvmField
-    val MIXER: DeferredHolder<MenuType<*>, MenuType<HTMixerContainerMenu>> =
-        registerMachine("mixer", ::HTMixerContainerMenu)
+    val LASER_ASSEMBLY: DeferredHolder<MenuType<*>, MenuType<HTLaserAssemblyContainerMenu>> =
+        registerMachine("laser_assembly", ::HTLaserAssemblyContainerMenu)
 
     @JvmField
-    val MULTI_ITEM: DeferredHolder<MenuType<*>, MenuType<HTMultiItemContainerMenu>> =
-        registerMachine("multi_item", ::HTMultiItemContainerMenu)
+    val MIXER: DeferredHolder<MenuType<*>, MenuType<HTMixerContainerMenu>> =
+        registerMachine("mixer", ::HTMixerContainerMenu)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<MenuType<*>, MenuType<HTMultiSmelterContainerMenu>> =

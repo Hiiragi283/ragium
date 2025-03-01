@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.tag.RagiumFluidTags
-import hiiragi283.ragium.client.screen.HTMultiItemContainer
 import hiiragi283.ragium.client.screen.HTSingleItemContainer
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -158,17 +157,7 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {
-        // Assembler, Blast Furnace
-        registration.addRecipeClickArea(
-            HTMultiItemContainer::class.java,
-            HTSlotPos.getSlotPosX(4),
-            HTSlotPos.getSlotPosY(1),
-            18,
-            18,
-            RagiumJEIRecipeTypes.ASSEMBLER,
-            RagiumJEIRecipeTypes.BLAST_FURNACE,
-        )
-        // Compressor, Grinder, Laser Assembly
+        // Compressor, Grinder
         registration.addRecipeClickArea(
             HTSingleItemContainer::class.java,
             HTSlotPos.getSlotPosX(4.5),

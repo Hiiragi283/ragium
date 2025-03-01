@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.generator
 
-import hiiragi283.ragium.api.block.entity.HTFluidGeneratorBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.tag.RagiumFluidTags
+import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState

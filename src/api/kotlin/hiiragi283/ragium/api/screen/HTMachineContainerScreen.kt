@@ -56,17 +56,7 @@ abstract class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, inv
         // background
         guiGraphics.blit(texture, startX, startY, 0, 0, imageWidth, imageHeight)
         // progress bar
-        guiGraphics.blitSprite(
-            RagiumAPI.id("progress_bar"),
-            16,
-            16,
-            0,
-            0,
-            startX + progressX,
-            startY + progressY,
-            Mth.ceil(menu.getProgress() * 16f),
-            16,
-        )
+        renderProgress(guiGraphics)
         // fluids
         menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
@@ -92,5 +82,19 @@ abstract class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, inv
             )
             renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
         }*/
+    }
+
+    protected open fun renderProgress(guiGraphics: GuiGraphics) {
+        guiGraphics.blitSprite(
+            RagiumAPI.id("progress_bar"),
+            16,
+            16,
+            0,
+            0,
+            startX + progressX,
+            startY + progressY,
+            Mth.ceil(menu.getProgress() * 16f),
+            16,
+        )
     }
 }

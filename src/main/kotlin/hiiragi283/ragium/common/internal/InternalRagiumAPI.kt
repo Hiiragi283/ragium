@@ -20,21 +20,16 @@ import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
-import hiiragi283.ragium.common.inventory.HTMultiItemContainerMenu
-import hiiragi283.ragium.common.inventory.HTSingleItemContainerMenu
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
-import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -108,40 +103,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage =
         HTLimitedEnergyStorage(storageIO, storage)
-
-    override fun createSingleItemMenu(
-        containerId: Int,
-        inventory: Inventory,
-        pos: BlockPos,
-        inputSlot: HTItemSlot,
-        catalystSlot: HTItemSlot,
-        outputSlot: HTItemSlot,
-    ): AbstractContainerMenu = HTSingleItemContainerMenu(
-        containerId,
-        inventory,
-        pos,
-        inputSlot,
-        catalystSlot,
-        outputSlot,
-    )
-
-    override fun createMultiItemMenu(
-        containerId: Int,
-        inventory: Inventory,
-        pos: BlockPos,
-        firstInputSlot: HTItemSlot,
-        secondInputSlot: HTItemSlot,
-        thirdInputSlot: HTItemSlot,
-        outputSlot: HTItemSlot,
-    ): AbstractContainerMenu = HTMultiItemContainerMenu(
-        containerId,
-        inventory,
-        pos,
-        firstInputSlot,
-        secondInputSlot,
-        thirdInputSlot,
-        outputSlot,
-    )
 
     companion object {
         @JvmStatic

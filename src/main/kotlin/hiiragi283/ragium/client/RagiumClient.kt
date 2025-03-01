@@ -70,11 +70,13 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     private fun registerMenu(event: RegisterMenuScreensEvent) {
         event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTPotionBundleContainer)
 
+        event.register(RagiumMenuTypes.ASSEMBLER.get(), ::HTAssemblerContainer)
+        event.register(RagiumMenuTypes.BLAST_FURNACE.get(), ::HTBlastFurnaceContainer)
         event.register(RagiumMenuTypes.BREWERY.get(), ::HTBreweryContainer)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), ::HTExtractorContainer)
         event.register(RagiumMenuTypes.INFUSER.get(), ::HTInfuserContainer)
+        event.register(RagiumMenuTypes.LASER_ASSEMBLY.get(), ::HTLaserAssemblyContainer)
         event.register(RagiumMenuTypes.MIXER.get(), ::HTMixerContainer)
-        event.register(RagiumMenuTypes.MULTI_ITEM.get(), ::HTMultiItemContainer)
         event.register(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE.get(), ::HTPrimitiveBlastFurnaceContainer)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryContainer)
         event.register(RagiumMenuTypes.SINGLE_ITEM.get(), ::HTSingleItemContainer)

@@ -14,14 +14,11 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -145,25 +142,6 @@ interface RagiumAPI {
      * @see [HTStorageIO.wrapEnergyStorage]
      */
     fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
-
-    fun createSingleItemMenu(
-        containerId: Int,
-        inventory: Inventory,
-        pos: BlockPos,
-        inputSlot: HTItemSlot,
-        catalystSlot: HTItemSlot,
-        outputSlot: HTItemSlot,
-    ): AbstractContainerMenu
-
-    fun createMultiItemMenu(
-        containerId: Int,
-        inventory: Inventory,
-        pos: BlockPos,
-        firstInputSlot: HTItemSlot,
-        secondInputSlot: HTItemSlot,
-        thirdInputSlot: HTItemSlot,
-        outputSlot: HTItemSlot,
-    ): AbstractContainerMenu
 
     /**
      * @see [HTMachineType.getBlock]

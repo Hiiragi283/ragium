@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.processor
 
-import hiiragi283.ragium.api.block.entity.HTMultiItemMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
@@ -11,6 +10,7 @@ import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
+import hiiragi283.ragium.common.inventory.HTBlastFurnaceContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
@@ -31,7 +31,19 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        if (validateMultiblock(this, player).isSuccess) super.createMenu(containerId, playerInventory, player) else null
+        if (validateMultiblock(this, player).isSuccess) {
+            HTBlastFurnaceContainerMenu(
+                containerId,
+                playerInventory,
+                blockPos,
+                firstInputSlot,
+                secondInputSlot,
+                thirdInputSlot,
+                outputSlot,
+            )
+        } else {
+            null
+        }
 
     //    HTMultiblockController    //
 

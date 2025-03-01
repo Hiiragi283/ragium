@@ -489,8 +489,8 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     ) {
         val metal: HTMaterialKey = when (casing) {
             RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
-            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumMaterials.EMBER_ALLOY
-            RagiumItems.PRECISION_MACHINE_CASING -> RagiumMaterials.DURALUMIN
+            RagiumItems.CHEMICAL_MACHINE_CASING -> VanillaMaterials.GOLD
+            RagiumItems.PRECISION_MACHINE_CASING -> CommonMaterials.ALUMINUM
             else -> return
         }
         val circuit: TagKey<Item> = when (casing) {
