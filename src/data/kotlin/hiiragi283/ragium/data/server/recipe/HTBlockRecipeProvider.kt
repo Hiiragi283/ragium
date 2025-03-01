@@ -224,7 +224,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
             .cross8()
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', RagiumItemTags.ADVANCED_CIRCUIT)
+            .define('B', RagiumItemTags.CIRCUIT_ADVANCED)
             .define('C', Tags.Items.ENDER_PEARLS)
             .save(output)
         // Slag Collector
@@ -311,7 +311,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             output,
             HTMachineType.SOLAR_GENERATOR,
             RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(RagiumItemTags.SOLAR_PANELS),
+            Ingredient.of(RagiumItems.SOLAR_PANEL),
         )
         // Stirling Generator
         registerGenerator(
@@ -351,7 +351,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             HTMachineType.ASSEMBLER,
             RagiumItems.MACHINE_CASING,
             Ingredient.of(Items.CRAFTER),
-            Ingredient.of(RagiumItemTags.ADVANCED_CIRCUIT),
+            Ingredient.of(RagiumItemTags.CIRCUIT_ADVANCED),
         )
         // Blast Furnace
         registerMachine(
@@ -513,9 +513,9 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             else -> return
         }
         val circuit: TagKey<Item> = when (casing) {
-            RagiumItems.MACHINE_CASING -> RagiumItemTags.BASIC_CIRCUIT
-            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumItemTags.ADVANCED_CIRCUIT
-            RagiumItems.PRECISION_MACHINE_CASING -> RagiumItemTags.ELITE_CIRCUIT
+            RagiumItems.MACHINE_CASING -> RagiumItemTags.CIRCUIT_BASIC
+            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumItemTags.CIRCUIT_ADVANCED
+            RagiumItems.PRECISION_MACHINE_CASING -> RagiumItemTags.CIRCUIT_ELITE
             else -> return
         }
         HTShapedRecipeBuilder(machine)

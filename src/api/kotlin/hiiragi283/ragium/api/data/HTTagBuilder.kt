@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.multiMapOf
 import hiiragi283.ragium.api.util.HTMultiMap
@@ -18,6 +19,15 @@ import net.minecraft.tags.TagKey
 class HTTagBuilder<T : Any>(val lookup: HolderLookup.RegistryLookup<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
     private val registryKey: ResourceKey<out Registry<T>> = lookup.key() as ResourceKey<out Registry<T>>
+
+    fun add(
+        tagKey: TagKey<T>,
+        mod: IntegrationMods,
+        path: String,
+        type: DependType = DependType.REQUIRED,
+    ) {
+        add(tagKey, mod.id(path), type)
+    }
 
     fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED) {
         add(tagKey, lookup.getOrThrow(ResourceKey.create(registryKey, id)), type)

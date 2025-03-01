@@ -128,7 +128,7 @@ object RagiumBlocks {
     }.mapValues { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->
         Builder("${key.name}_block")
             .properties(properties)
-            .component(DataComponents.ITEM_NAME, HTTagPrefix.STORAGE_BLOCK.createText(key))
+            .component(DataComponents.ITEM_NAME, HTTagPrefix.BLOCK.createText(key))
             .build()
     }
 

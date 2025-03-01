@@ -57,6 +57,7 @@ object HTChemicalRecipeProviderNew : HTRecipeProvider() {
         // Water -> Ice
         HTSolidifierRecipeBuilder(lookup)
             .waterInput()
+            .catalyst(RagiumItems.BLOCK_PRESS_MOLD)
             .itemOutput(Items.ICE)
             .save(output)
         // Blue Ice -> 9x Packed Ice

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.integration
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
+import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
@@ -16,7 +17,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 
-object HTAARecipeProvider : HTRecipeProvider.Modded("actuallyadditions") {
+object HTAARecipeProvider : HTRecipeProvider.Modded(IntegrationMods.AA) {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Canola
         HTGrowthChamberRecipeBuilder(lookup)

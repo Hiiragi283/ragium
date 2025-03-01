@@ -39,7 +39,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         // Furnace Fuel
         builder(NeoForgeDataMaps.FURNACE_FUELS)
             .addItem(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL, FurnaceFuel(64 * 200))
-            .addItem(HTTagPrefix.STORAGE_BLOCK, RagiumMaterials.FIERY_COAL, FurnaceFuel(640 * 200))
+            .addItem(HTTagPrefix.BLOCK, RagiumMaterials.FIERY_COAL, FurnaceFuel(640 * 200))
 
         // Defoliant
         builder(RagiumDataMaps.DEFOLIANT)

@@ -74,7 +74,7 @@ class RagiumBlockTagProvider(
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder)
 
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
-            val storageTag: TagKey<Block> = HTTagPrefix.STORAGE_BLOCK.createBlockTag(key) ?: return@forEach
+            val storageTag: TagKey<Block> = HTTagPrefix.BLOCK.createBlockTag(key) ?: return@forEach
             builder.addTag(Tags.Blocks.STORAGE_BLOCKS, storageTag)
             builder.add(storageTag, storage)
 

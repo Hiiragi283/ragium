@@ -490,10 +490,10 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
 
         // Polymer Resin -> XX
         mapOf(
-            RagiumItemTags.PLATE_MOLDS to RagiumItems.PLASTIC_PLATE,
-            Tags.Items.STRINGS to Items.STRING,
+            RagiumItemTags.MOLD_PLATE to RagiumItems.PLASTIC_PLATE,
+            RagiumItemTags.MOLD_WIRE to Items.STRING,
             Tags.Items.LEATHERS to Items.LEATHER,
-            Tags.Items.GLASS_BLOCKS to Items.GLASS,
+            RagiumItemTags.MOLD_BLOCK to Items.GLASS,
         ).forEach { (catalyst: TagKey<Item>, result: ItemLike) ->
             HTSingleItemRecipeBuilder
                 .compressor(lookup)
@@ -594,10 +594,10 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
     //    Solidifier    //
 
     private fun solidifier(output: RecipeOutput) {
-        // Laval + Cobblestone -> Magma Block
+        // Lava + Cobblestone -> Magma Block
         HTSolidifierRecipeBuilder(lookup)
             .fluidInput(Tags.Fluids.LAVA)
-            .catalyst(Tags.Items.COBBLESTONES)
+            .catalyst(RagiumItems.BLOCK_PRESS_MOLD)
             .itemOutput(Items.MAGMA_BLOCK)
             .save(output)
     }

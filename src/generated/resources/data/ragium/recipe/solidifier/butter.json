@@ -1,7 +1,7 @@
 {
   "type": "ragium:solidifier",
   "catalyst": {
-    "tag": "c:ingots"
+    "tag": "ragium:molds/ingot"
   },
   "fluid_input": {
     "fluid_input": {

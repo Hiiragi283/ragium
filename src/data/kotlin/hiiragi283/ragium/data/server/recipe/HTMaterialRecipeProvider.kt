@@ -42,16 +42,16 @@ object HTMaterialRecipeProvider : HTRecipeProvider() {
             .forEach { (material: HTMaterialKey, ingot: DeferredItem<out Item>) ->
                 ShapelessRecipeBuilder
                     .shapeless(RecipeCategory.MISC, ingot, 9)
-                    .requires(HTTagPrefix.STORAGE_BLOCK, material)
-                    .unlockedBy("has_ingot", has(HTTagPrefix.STORAGE_BLOCK, material))
+                    .requires(HTTagPrefix.BLOCK, material)
+                    .unlockedBy("has_ingot", has(HTTagPrefix.BLOCK, material))
                     .savePrefixed(output)
             }
         // Block -> Gem
         RagiumItems.getMaterialMap(HTTagPrefix.GEM).forEach { (material: HTMaterialKey, gem: DeferredItem<out Item>) ->
             ShapelessRecipeBuilder
                 .shapeless(RecipeCategory.MISC, gem, 9)
-                .requires(HTTagPrefix.STORAGE_BLOCK, material)
-                .unlockedBy("has_gem", has(HTTagPrefix.STORAGE_BLOCK, material))
+                .requires(HTTagPrefix.BLOCK, material)
+                .unlockedBy("has_gem", has(HTTagPrefix.BLOCK, material))
                 .savePrefixed(output)
         }
 

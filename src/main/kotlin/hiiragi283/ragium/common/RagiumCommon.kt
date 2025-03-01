@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
@@ -9,7 +10,6 @@ import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
-import net.neoforged.fml.ModList
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
@@ -45,7 +45,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumCreativeTabs.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
 
-        if (ModList.get().isLoaded("mekanism")) {
+        IntegrationMods.MEK.runIfLoaded {
             RagiumMekIntegration.CHEMICAL_REGISTER.register(eventBus)
         }
 

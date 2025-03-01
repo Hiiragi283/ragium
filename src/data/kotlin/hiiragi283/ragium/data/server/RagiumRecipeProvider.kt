@@ -21,6 +21,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTMaterialRecipeProvider.buildRecipes(output, holderLookup)
 
         HTAARecipeProvider.buildRecipes(output, holderLookup)
+        HTCreateRecipeProvider.buildRecipes(output, holderLookup)
         HTDelightRecipeProvider.buildRecipes(output, holderLookup)
         HTEnderIORecipeProvider.buildRecipes(output, holderLookup)
         HTIERecipeProvider.buildRecipes(output, holderLookup)

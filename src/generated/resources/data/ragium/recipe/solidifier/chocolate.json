@@ -1,5 +1,8 @@
 {
   "type": "ragium:solidifier",
+  "catalyst": {
+    "tag": "ragium:molds/ingot"
+  },
   "fluid_input": {
     "fluid_input": {
       "amount": 250,

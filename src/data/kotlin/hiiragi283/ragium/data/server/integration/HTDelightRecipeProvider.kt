@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.integration
 
+import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
@@ -16,7 +17,7 @@ import net.neoforged.neoforge.common.NeoForgeMod
 import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
-object HTDelightRecipeProvider : HTRecipeProvider.Modded("farmersdelight") {
+object HTDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD) {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Sweet Berries Cake Piece
         CuttingBoardRecipeBuilder

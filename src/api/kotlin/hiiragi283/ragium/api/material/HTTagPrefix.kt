@@ -17,6 +17,11 @@ import net.minecraft.world.level.block.Block
  */
 enum class HTTagPrefix(private val commonName: String, private val tagPrefix: String = "$commonName/") : StringRepresentable {
     // Common
+    BLOCK("storage_blocks") {
+        override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
+
+        override fun createBlockTag(key: HTMaterialKey): TagKey<Block> = blockTagKey(createTag(key).location)
+    },
     COIL("coils"),
     DUST("dusts"),
     GEAR("gears"),
@@ -34,11 +39,6 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     },
     RAW_STORAGE("storage_blocks", "storage_blocks/raw_"),
     ROD("rods"),
-    STORAGE_BLOCK("storage_blocks") {
-        override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
-
-        override fun createBlockTag(key: HTMaterialKey): TagKey<Block> = blockTagKey(createTag(key).location)
-    },
 
     // IE
     SHEETMETAL("sheetmetals"),
@@ -71,7 +71,7 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
             INGOT,
             PLATE,
             ROD,
-            STORAGE_BLOCK,
+            BLOCK,
         )
 
         @JvmField

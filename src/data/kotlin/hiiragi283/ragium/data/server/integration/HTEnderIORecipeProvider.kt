@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.integration
 
 import com.enderio.base.common.init.EIOBlocks
 import com.enderio.base.common.init.EIOItems
+import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -13,7 +14,7 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object HTEnderIORecipeProvider : HTRecipeProvider.Modded("enderio_base") {
+object HTEnderIORecipeProvider : HTRecipeProvider.Modded(IntegrationMods.EIO_BASE) {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Enderman Skull
         HTMultiItemRecipeBuilder

@@ -1,7 +1,7 @@
 {
   "type": "ragium:solidifier",
   "catalyst": {
-    "tag": "c:cobblestones"
+    "item": "ragium:block_press_mold"
   },
   "fluid_input": {
     "fluid_input": {

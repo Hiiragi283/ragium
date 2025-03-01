@@ -6,7 +6,7 @@
       "tag": "c:gems/ragi_crystal"
     },
     "B": {
-      "tag": "ragium:solar_panels"
+      "item": "ragium:solar_panel"
     },
     "C": {
       "item": "ragium:precision_machine_casing"

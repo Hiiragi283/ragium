@@ -1,11 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import aztech.modern_industrialization.items.ForgeTool
-import aztech.modern_industrialization.materials.MIMaterials
-import aztech.modern_industrialization.materials.part.MIParts
-import blusunrize.immersiveengineering.api.wires.WireType
-import blusunrize.immersiveengineering.common.register.IEItems
-import com.enderio.base.common.init.EIOItems
+import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.*
@@ -19,7 +15,6 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import mekanism.generators.common.registries.GeneratorsItems
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
@@ -38,7 +33,6 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
-import vectorwing.farmersdelight.common.registry.ModBlocks
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagProvider(
@@ -70,8 +64,8 @@ class RagiumItemTagProvider(
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendTags(builder)
 
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
-            val storageTag: TagKey<Item> = HTTagPrefix.STORAGE_BLOCK.createTag(key)
-            builder.addTag(HTTagPrefix.STORAGE_BLOCK.commonTagKey, storageTag)
+            val storageTag: TagKey<Item> = HTTagPrefix.BLOCK.createTag(key)
+            builder.addTag(HTTagPrefix.BLOCK.commonTagKey, storageTag)
             builder.add(storageTag, storage.asHolder())
         }
 
@@ -93,23 +87,23 @@ class RagiumItemTagProvider(
         builder.add(HTTagPrefix.GEM.createTag(VanillaMaterials.NETHERITE_SCRAP), Items.NETHERITE_SCRAP.asHolder())
 
         // EIO
-        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, EIOItems.GEAR_ENERGIZED)
-        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.VIBRANT_ALLOY, EIOItems.GEAR_VIBRANT)
+        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, IntegrationMods.EIO, "energized_gear")
+        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.VIBRANT_ALLOY, IntegrationMods.EIO, "vibrant_gear")
         // Create
-        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.ROSE_QUARTZ, "create:rose_quartz")
-        addMaterialTag(HTTagPrefix.INGOT, IntegrationMaterials.ANDESITE_ALLOY, "create:andesite_alloy")
+        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.ROSE_QUARTZ, IntegrationMods.CREATE, "rose_quartz")
+        addMaterialTag(HTTagPrefix.INGOT, IntegrationMaterials.ANDESITE_ALLOY, IntegrationMods.CREATE, "andesite_alloy")
         // Evil Craft
-        addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem_crushed")
-        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, "evilcraft:dark_gem")
-        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore")
-        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, "evilcraft:dark_ore_deepslate")
-        addMaterialTag(HTTagPrefix.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, "evilcraft:dark_block")
+        addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem_crushed")
+        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem")
+        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore")
+        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore_deepslate")
+        addMaterialTag(HTTagPrefix.BLOCK, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_block")
         // IE
-        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IEItems.Misc.WIRE_COILS[WireType.ELECTRUM])
-        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IEItems.Misc.WIRE_COILS[WireType.STEEL])
-        addMaterialTag(HTTagPrefix.COIL, VanillaMaterials.COPPER, IEItems.Misc.WIRE_COILS[WireType.COPPER])
+        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.ELECTRUM, IntegrationMods.IE, "wirecoil_electrum")
+        addMaterialTag(HTTagPrefix.COIL, CommonMaterials.STEEL, IntegrationMods.IE, "wirecoil_steel")
+        addMaterialTag(HTTagPrefix.COIL, VanillaMaterials.COPPER, IntegrationMods.IE, "wirecoil_copper")
         // MI
-        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, MIMaterials.COKE.getPart(MIParts.GEM))
+        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, IntegrationMods.MI, "coke")
     }
 
     private fun addMaterialTag(
@@ -125,11 +119,12 @@ class RagiumItemTagProvider(
     private fun addMaterialTag(
         prefix: HTTagPrefix,
         material: HTMaterialKey,
-        value: String,
+        mod: IntegrationMods,
+        path: String,
         type: HTTagBuilder.DependType = HTTagBuilder.DependType.OPTIONAL,
     ) {
         builder.addTag(prefix.commonTagKey, prefix.createTag(material))
-        builder.add(prefix.createTag(material), DeferredItem.createItem<Item>(ResourceLocation.parse(value)), type)
+        builder.add(prefix.createTag(material), mod.createItemHolder<Item>(path), type)
     }
 
     //    Food    //
@@ -141,6 +136,10 @@ class RagiumItemTagProvider(
             }
         }
 
+        builder.addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
+        builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_CHOCOLATE)
+        builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_DOUGH)
+
         builder.add(RagiumItemTags.FOOD_CHOCOLATE, RagiumItems.CHOCOLATE)
         builder.add(
             RagiumItemTags.FOOD_CHOCOLATE,
@@ -151,7 +150,6 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.FLOURS, RagiumItems.FLOUR)
         builder.add(RagiumItemTags.FOOD_DOUGH, RagiumItems.DOUGH)
 
-        builder.addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
         builder.add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
     }
 
@@ -189,21 +187,19 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
         builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
 
-        builder.add(RagiumItemTags.BASIC_CIRCUIT, RagiumItems.BASIC_CIRCUIT)
-        builder.add(RagiumItemTags.ADVANCED_CIRCUIT, RagiumItems.ADVANCED_CIRCUIT)
-        builder.add(RagiumItemTags.ELITE_CIRCUIT, RagiumItems.ELITE_CIRCUIT)
-        builder.add(RagiumItemTags.ULTIMATE_CIRCUIT, RagiumItems.ULTIMATE_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUIT_BASIC, RagiumItems.BASIC_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUIT_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUIT_ELITE, RagiumItems.ELITE_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUIT_ULTIMATE, RagiumItems.ULTIMATE_CIRCUIT)
 
         builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
-        builder.add(RagiumItemTags.SOLAR_PANELS, EIOItems.PHOTOVOLTAIC_PLATE, HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.SOLAR_PANELS, GeneratorsItems.SOLAR_PANEL, HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.SOLAR_PANELS, RagiumItems.SOLAR_PANEL)
+
         builder.add(Tags.Items.BUCKETS, RagiumItems.CRUDE_OIL_BUCKET)
         builder.add(Tags.Items.BUCKETS, RagiumItems.HONEY_BUCKET)
 
         builder.add(RagiumItemTags.DIRT_SOILS, Items.FARMLAND.asHolder())
-        builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL.get().asHolder(), HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL_FARMLAND.get().asHolder(), HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.DIRT_SOILS, IntegrationMods.FD, "rich_soil", HTTagBuilder.DependType.OPTIONAL)
+        // builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL_FARMLAND.get().asHolder(), HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(RagiumItemTags.DIRT_SOILS, ItemTags.DIRT)
 
         builder.add(RagiumItemTags.MUSHROOM_SOILS, Items.MYCELIUM.asHolder())
@@ -213,15 +209,17 @@ class RagiumItemTagProvider(
 
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
 
-        builder.add(RagiumItemTags.BALL_MOLDS, RagiumItems.BALL_PRESS_MOLD)
-        builder.add(RagiumItemTags.GEAR_MOLDS, IEItems.Molds.MOLD_GEAR.asHolder(), HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.GEAR_MOLDS, RagiumItems.GEAR_PRESS_MOLD)
-        builder.add(RagiumItemTags.PLATE_MOLDS, IEItems.Molds.MOLD_PLATE.asHolder(), HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.PLATE_MOLDS, RagiumItems.PLATE_PRESS_MOLD)
-        builder.add(RagiumItemTags.ROD_MOLDS, IEItems.Molds.MOLD_ROD.asHolder(), HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.ROD_MOLDS, RagiumItems.ROD_PRESS_MOLD)
-        builder.add(RagiumItemTags.WIRE_MOLDS, IEItems.Molds.MOLD_WIRE.asHolder(), HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.WIRE_MOLDS, RagiumItems.WIRE_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLD_BALL, RagiumItems.BALL_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLD_BLOCK, RagiumItems.BLOCK_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLD_GEAR, IntegrationMods.IE, "mold_gear", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLD_GEAR, RagiumItems.GEAR_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLD_INGOT, RagiumItems.INGOT_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLD_PLATE, IntegrationMods.IE, "mold_plate", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLD_PLATE, RagiumItems.PLATE_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLD_ROD, IntegrationMods.IE, "mold_rod", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLD_ROD, RagiumItems.ROD_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLD_WIRE, IntegrationMods.IE, "mold_wire", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLD_WIRE, RagiumItems.WIRE_PRESS_MOLD)
 
         RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
     }

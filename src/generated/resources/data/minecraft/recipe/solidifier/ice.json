@@ -1,5 +1,8 @@
 {
   "type": "ragium:solidifier",
+  "catalyst": {
+    "item": "ragium:block_press_mold"
+  },
   "fluid_input": {
     "fluid_input": {
       "amount": 1000,

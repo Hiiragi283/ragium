@@ -89,8 +89,10 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.SOAP)
 
                     output.accept(RagiumItems.BALL_PRESS_MOLD)
+                    output.accept(RagiumItems.BLOCK_PRESS_MOLD)
                     output.accept(RagiumItems.BLANK_PRESS_MOLD)
                     output.accept(RagiumItems.GEAR_PRESS_MOLD)
+                    output.accept(RagiumItems.INGOT_PRESS_MOLD)
                     output.accept(RagiumItems.PLATE_PRESS_MOLD)
                     output.accept(RagiumItems.ROD_PRESS_MOLD)
                     output.accept(RagiumItems.WIRE_PRESS_MOLD)

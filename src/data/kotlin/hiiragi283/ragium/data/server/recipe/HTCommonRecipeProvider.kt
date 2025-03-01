@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.*
-import hiiragi283.ragium.api.extension.requires
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -241,7 +240,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('A', Tags.Items.GEMS_LAPIS)
             .define('B', Tags.Items.DUSTS_REDSTONE)
             .define('C', Tags.Items.DUSTS_GLOWSTONE)
-            .define('D', RagiumItemTags.BASIC_CIRCUIT)
+            .define('D', RagiumItemTags.CIRCUIT_BASIC)
             .save(output)
     }
 
@@ -266,7 +265,9 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         register(RagiumItems.BALL_PRESS_MOLD)
+        register(RagiumItems.BLOCK_PRESS_MOLD)
         register(RagiumItems.GEAR_PRESS_MOLD)
+        register(RagiumItems.INGOT_PRESS_MOLD)
         register(RagiumItems.PLATE_PRESS_MOLD)
         register(RagiumItems.ROD_PRESS_MOLD)
         register(RagiumItems.WIRE_PRESS_MOLD)
@@ -347,7 +348,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.SHAFT, 6, CraftingBookCategory.BUILDING)
             .pattern("A")
             .pattern("A")
-            .define('A', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.IRON)
+            .define('A', HTTagPrefix.BLOCK, VanillaMaterials.IRON)
             .save(output)
 
         HTSingleItemRecipeBuilder
@@ -368,7 +369,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "C C",
             ).define('A', RagiumItemTags.PLASTICS)
             .define('B', Tags.Items.GLASS_PANES)
-            .define('C', RagiumItemTags.ADVANCED_CIRCUIT)
+            .define('C', RagiumItemTags.CIRCUIT_ADVANCED)
             .save(output)
         // Jetpack
         HTShapedRecipeBuilder(RagiumItems.JETPACK, category = CraftingBookCategory.EQUIPMENT)
@@ -377,7 +378,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "ACA",
                 "D D",
             ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', RagiumItemTags.ELITE_CIRCUIT)
+            .define('B', RagiumItemTags.CIRCUIT_ELITE)
             .define('C', ItemTags.CHEST_ARMOR)
             .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
@@ -470,7 +471,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 " C ",
                 " C ",
             ).define('A', HTTagPrefix.GEM, VanillaMaterials.EMERALD)
-            .define('B', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.EMERALD)
+            .define('B', HTTagPrefix.BLOCK, VanillaMaterials.EMERALD)
             .define('C', Tags.Items.RODS_WOODEN)
             .save(output)
 
@@ -480,7 +481,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 " C ",
                 " C ",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
-            .define('B', HTTagPrefix.STORAGE_BLOCK, RagiumMaterials.EMBER_ALLOY)
+            .define('B', HTTagPrefix.BLOCK, RagiumMaterials.EMBER_ALLOY)
             .define('C', Tags.Items.RODS_WOODEN)
             .save(output)
 

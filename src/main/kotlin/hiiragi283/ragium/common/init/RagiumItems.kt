@@ -371,7 +371,13 @@ object RagiumItems {
     val BALL_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("ball_press_mold", ::HTCatalystItem)
 
     @JvmField
+    val BLOCK_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("block_press_mold", ::HTCatalystItem)
+
+    @JvmField
     val GEAR_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("gear_press_mold", ::HTCatalystItem)
+
+    @JvmField
+    val INGOT_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("ingot_press_mold", ::HTCatalystItem)
 
     @JvmField
     val PLATE_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("plate_press_mold", ::HTCatalystItem)

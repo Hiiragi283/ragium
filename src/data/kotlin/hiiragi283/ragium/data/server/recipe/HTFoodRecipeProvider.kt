@@ -58,6 +58,7 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
 
         HTSolidifierRecipeBuilder(lookup)
             .fluidInput(RagiumFluidTags.CHOCOLATES, 250)
+            .catalyst(RagiumItemTags.MOLD_INGOT)
             .itemOutput(RagiumItems.CHOCOLATE)
             .save(output)
         // Chocolate Apple
@@ -218,7 +219,7 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
         // Butter
         HTSolidifierRecipeBuilder(lookup)
             .milkInput()
-            .catalyst(Tags.Items.INGOTS)
+            .catalyst(RagiumItemTags.MOLD_INGOT)
             .itemOutput(RagiumItems.BUTTER)
             .save(output)
         // Sponge Cake

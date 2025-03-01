@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -47,8 +48,8 @@ abstract class HTRecipeProvider {
 
     //    Modded    //
 
-    abstract class Modded(val modId: String) : HTRecipeProvider() {
-        fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
+    abstract class Modded(val mod: IntegrationMods) : HTRecipeProvider() {
+        fun id(path: String): ResourceLocation = mod.id(path)
 
         final override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
             /*val fixedOutput: RecipeOutput = object : RecipeOutput {
@@ -70,7 +71,7 @@ abstract class HTRecipeProvider {
 
                 override fun advancement(): Advancement.Builder = output.advancement()
             }*/
-            buildModRecipes(output.withConditions(ModLoadedCondition(modId)), holderLookup)
+            buildModRecipes(output.withConditions(ModLoadedCondition(mod.modId)), holderLookup)
         }
 
         protected abstract fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
