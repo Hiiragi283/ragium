@@ -288,7 +288,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         )
         casing(
             RagiumItems.CHEMICAL_MACHINE_CASING,
-            VanillaMaterials.GOLD,
+            RagiumMaterials.EMBER_ALLOY,
             Ingredient.of(RagiumBlocks.CHEMICAL_GLASS),
             RagiumMaterials.DEEP_STEEL,
         )
@@ -476,7 +476,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         }
         val metal: HTMaterialKey = when (casing) {
             RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
-            RagiumItems.CHEMICAL_MACHINE_CASING -> VanillaMaterials.GOLD
+            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumMaterials.EMBER_ALLOY
             RagiumItems.PRECISION_MACHINE_CASING -> CommonMaterials.ALUMINUM
             else -> return
         }
@@ -508,7 +508,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     ) {
         val metal: HTMaterialKey = when (casing) {
             RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
-            RagiumItems.CHEMICAL_MACHINE_CASING -> VanillaMaterials.GOLD
+            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumMaterials.EMBER_ALLOY
             RagiumItems.PRECISION_MACHINE_CASING -> CommonMaterials.ALUMINUM
             else -> return
         }

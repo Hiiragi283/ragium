@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvents
@@ -30,7 +31,7 @@ object RagiumArmorMaterials {
     }
 
     @JvmField
-    val BRONZE: DeferredHolder<ArmorMaterial, ArmorMaterial> = REGISTER.register("bronze") { id: ResourceLocation ->
+    val EMBER_ALLOY: DeferredHolder<ArmorMaterial, ArmorMaterial> = REGISTER.register("bronze") { id: ResourceLocation ->
         ArmorMaterial(
             mapOf(
                 ArmorItem.Type.BOOTS to 2,
@@ -41,7 +42,7 @@ object RagiumArmorMaterials {
             ),
             15,
             SoundEvents.ARMOR_EQUIP_IRON,
-            { HTTagPrefix.INGOT.createIngredient(CommonMaterials.BRONZE) },
+            { HTTagPrefix.INGOT.createIngredient(RagiumMaterials.EMBER_ALLOY) },
             listOf(ArmorMaterial.Layer(id)),
             0.5f,
             0f,

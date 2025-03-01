@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:rods/wooden"
+    },
+    "B": {
+      "tag": "c:ingots/ember_alloy"
+    }
+  },
+  "pattern": [
+    " A ",
+    " A ",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ember_alloy_pickaxe"
+  }
+}

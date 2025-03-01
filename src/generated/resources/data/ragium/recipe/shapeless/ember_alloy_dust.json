@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:dusts/copper"
+    },
+    {
+      "tag": "c:dusts/copper"
+    },
+    {
+      "tag": "c:dusts/copper"
+    },
+    {
+      "tag": "c:dusts/gold"
+    },
+    {
+      "item": "ragium:forge_hammer"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:ember_alloy_dust"
+  }
+}

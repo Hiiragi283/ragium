@@ -101,7 +101,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
         event.register(RagiumMaterials.CRIMSON_CRYSTAL, HTMaterialType.GEM)
         event.register(RagiumMaterials.DEEP_STEEL, HTMaterialType.ALLOY)
-        // event.register(RagiumMaterials.ECHORIUM, HTMaterialType.METAL)
+        event.register(RagiumMaterials.EMBER_ALLOY, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.FIERY_COAL, HTMaterialType.GEM)
         event.register(RagiumMaterials.RAGI_ALLOY, HTMaterialType.ALLOY)
         event.register(RagiumMaterials.RAGI_CRYSTAL, HTMaterialType.GEM)

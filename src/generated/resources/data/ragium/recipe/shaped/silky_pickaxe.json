@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:ingots/gold"
+      "tag": "c:ingots/ember_alloy"
     },
     "B": {
-      "tag": "c:storage_blocks/gold"
+      "tag": "c:storage_blocks/ember_alloy"
     },
     "C": {
       "tag": "c:rods/wooden"

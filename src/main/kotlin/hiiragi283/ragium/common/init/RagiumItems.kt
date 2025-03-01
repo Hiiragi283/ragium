@@ -90,8 +90,8 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.STEEL)
         register(HTTagPrefix.DUST, RagiumMaterials.DEEP_STEEL)
 
+        register(HTTagPrefix.DUST, RagiumMaterials.EMBER_ALLOY)
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
-        register(HTTagPrefix.DUST, CommonMaterials.BRONZE)
         register(HTTagPrefix.DUST, CommonMaterials.LEAD)
         register(HTTagPrefix.DUST, CommonMaterials.NICKEL)
         register(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
@@ -115,8 +115,8 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
 
+        register(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-        register(HTTagPrefix.INGOT, CommonMaterials.BRONZE)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
         register(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL)
@@ -258,7 +258,7 @@ object RagiumItems {
     //    Armors    //
 
     @JvmField
-    val BRONZE_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.BRONZE, CommonMaterials.BRONZE)
+    val EMBER_ALLOY_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.EMBER_ALLOY, RagiumMaterials.EMBER_ALLOY)
 
     @JvmField
     val STEEL_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.STEEL, CommonMaterials.STEEL)
@@ -319,7 +319,7 @@ object RagiumItems {
     )
 
     @JvmField
-    val BRONZE_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.BRONZE, CommonMaterials.BRONZE)
+    val EMBER_ALLOY_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.EMBER_ALLOY, RagiumMaterials.EMBER_ALLOY)
 
     @JvmField
     val STEEL_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.STEEL, CommonMaterials.STEEL)

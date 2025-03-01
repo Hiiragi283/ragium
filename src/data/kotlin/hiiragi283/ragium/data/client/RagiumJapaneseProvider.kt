@@ -189,10 +189,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
         addItem(RagiumItems.JETPACK, "ジェットパック")
 
-        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.HELMET], "青銅のヘルメット")
-        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.CHESTPLATE], "青銅のチェストプレート")
-        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.LEGGINGS], "青銅のレギンス")
-        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.BOOTS], "青銅のブーツ")
+        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.HELMET], "熾火合金のヘルメット")
+        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.CHESTPLATE], "熾火合金のチェストプレート")
+        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.LEGGINGS], "熾火合金のレギンス")
+        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.BOOTS], "熾火合金のブーツ")
 
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "鋼鉄のヘルメット")
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "鋼鉄のチェストプレート")
@@ -205,11 +205,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_SHEARS, "らぎハサミ")
         addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
 
-        addItem(RagiumItems.BRONZE_TOOLS.axeItem, "青銅の斧")
-        addItem(RagiumItems.BRONZE_TOOLS.hoeItem, "青銅のクワ")
-        addItem(RagiumItems.BRONZE_TOOLS.pickaxeItem, "青銅のツルハシ")
-        addItem(RagiumItems.BRONZE_TOOLS.shovelItem, "青銅のシャベル")
-        addItem(RagiumItems.BRONZE_TOOLS.swordItem, "青銅の剣")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.axeItem, "熾火合金の斧")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.hoeItem, "熾火合金のクワ")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.pickaxeItem, "熾火合金のツルハシ")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.shovelItem, "熾火合金のシャベル")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.swordItem, "熾火合金の剣")
 
         addItem(RagiumItems.STEEL_TOOLS.axeItem, "鋼鉄の斧")
         addItem(RagiumItems.STEEL_TOOLS.hoeItem, "鋼鉄のクワ")
@@ -387,7 +387,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumMaterials.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumMaterials.DEEP_STEEL, "深層鋼")
-        // add(RagiumMaterials.ECHORIUM, "エコリウム")
+        add(RagiumMaterials.EMBER_ALLOY, "熾火合金")
         add(RagiumMaterials.FIERY_COAL, "燃え盛る石炭")
         add(RagiumMaterials.RAGI_ALLOY, "ラギ合金")
         add(RagiumMaterials.RAGI_CRYSTAL, "ラギクリスタリル")

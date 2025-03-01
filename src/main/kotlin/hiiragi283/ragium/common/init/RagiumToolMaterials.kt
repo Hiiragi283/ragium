@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Tier
@@ -9,7 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 
 enum class RagiumToolMaterials : Tier {
-    BRONZE() {
+    EMBER_ALLOY() {
         override fun getUses(): Int = 256
 
         override fun getSpeed(): Float = 5f
@@ -20,7 +21,7 @@ enum class RagiumToolMaterials : Tier {
 
         override fun getEnchantmentValue(): Int = 15
 
-        override fun getRepairIngredient(): Ingredient = HTTagPrefix.INGOT.createIngredient(CommonMaterials.BRONZE)
+        override fun getRepairIngredient(): Ingredient = HTTagPrefix.INGOT.createIngredient(RagiumMaterials.EMBER_ALLOY)
     },
     STEEL() {
         override fun getUses(): Int = 512

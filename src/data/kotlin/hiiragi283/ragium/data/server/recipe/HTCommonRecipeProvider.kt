@@ -350,22 +350,22 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         ShapelessRecipeBuilder
             .shapeless(
                 RecipeCategory.MISC,
-                RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.BRONZE),
+                RagiumItems.getMaterialItem(HTTagPrefix.DUST, RagiumMaterials.EMBER_ALLOY),
                 4,
             ).requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
             .requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
             .requires(HTTagPrefix.DUST, VanillaMaterials.COPPER)
-            .requires(HTTagPrefix.DUST, CommonMaterials.TIN)
+            .requires(HTTagPrefix.DUST, VanillaMaterials.GOLD)
             .requires(RagiumItems.FORGE_HAMMER)
             .unlockedBy("has_copper", has(HTTagPrefix.DUST, VanillaMaterials.COPPER))
-            .unlockedBy("has_tin", has(HTTagPrefix.DUST, CommonMaterials.TIN))
+            .unlockedBy("has_gold", has(HTTagPrefix.DUST, VanillaMaterials.GOLD))
             .savePrefixed(output)
 
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
-            .itemInput(HTTagPrefix.DUST, CommonMaterials.TIN)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.BRONZE))
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.GOLD)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY), 4)
             .save(output)
     }
 
@@ -394,7 +394,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
 
-        armorSet(output, RagiumItems.BRONZE_ARMORS)
+        armorSet(output, RagiumItems.EMBER_ALLOY_ARMORS)
         armorSet(output, RagiumItems.STEEL_ARMORS)
     }
 
@@ -491,12 +491,12 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "ABA",
                 " C ",
                 " C ",
-            ).define('A', HTTagPrefix.INGOT, VanillaMaterials.GOLD)
-            .define('B', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.GOLD)
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
+            .define('B', HTTagPrefix.STORAGE_BLOCK, RagiumMaterials.EMBER_ALLOY)
             .define('C', Tags.Items.RODS_WOODEN)
             .save(output)
 
-        toolSet(output, RagiumItems.BRONZE_TOOLS)
+        toolSet(output, RagiumItems.EMBER_ALLOY_TOOLS)
         toolSet(output, RagiumItems.STEEL_TOOLS)
     }
 

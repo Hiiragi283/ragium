@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/gold"
+      "tag": "c:ingots/ember_alloy"
     },
     "B": {
       "item": "ragium:chemical_glass"

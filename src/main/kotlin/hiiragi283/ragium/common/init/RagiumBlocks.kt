@@ -115,8 +115,8 @@ object RagiumBlocks {
         put(CommonMaterials.STEEL, metal(MapColor.DEEPSLATE))
         put(RagiumMaterials.DEEP_STEEL, metal(MapColor.COLOR_CYAN))
         // Metal
+        put(RagiumMaterials.EMBER_ALLOY, metal(MapColor.COLOR_ORANGE))
         put(CommonMaterials.ALUMINUM, metal(MapColor.ICE))
-        put(CommonMaterials.BRONZE, metal(MapColor.COLOR_ORANGE))
         // Gem
         put(RagiumMaterials.RAGI_CRYSTAL, gem(MapColor.COLOR_RED))
         put(CommonMaterials.CRYOLITE, gem(MapColor.NONE))

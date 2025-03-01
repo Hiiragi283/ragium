@@ -161,7 +161,7 @@ class RagiumItemTagProvider(
         builder.add(ItemTags.HEAD_ARMOR_ENCHANTABLE, RagiumItems.DIVING_GOGGLE)
         builder.add(ItemTags.CHEST_ARMOR_ENCHANTABLE, RagiumItems.JETPACK)
 
-        RagiumItems.BRONZE_ARMORS.appendTags(builder::add)
+        RagiumItems.EMBER_ALLOY_ARMORS.appendTags(builder::add)
         RagiumItems.STEEL_ARMORS.appendTags(builder::add)
     }
 
@@ -177,7 +177,7 @@ class RagiumItemTagProvider(
         builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)
         builder.add(Tags.Items.TOOLS_SHEAR, RagiumItems.RAGI_SHEARS)
 
-        RagiumItems.BRONZE_TOOLS.appendTags(builder::add)
+        RagiumItems.EMBER_ALLOY_TOOLS.appendTags(builder::add)
         RagiumItems.STEEL_TOOLS.appendTags(builder::add)
     }
 

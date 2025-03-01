@@ -189,10 +189,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
         addItem(RagiumItems.JETPACK, "Jetpack")
 
-        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.HELMET], "Bronze Helmet")
-        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.CHESTPLATE], "Bronze Chestplate")
-        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.LEGGINGS], "Bronze Leggings")
-        addItem(RagiumItems.BRONZE_ARMORS[ArmorItem.Type.BOOTS], "Bronze Boots")
+        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.HELMET], "Ember Alloy Helmet")
+        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.CHESTPLATE], "Ember Alloy Chestplate")
+        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.LEGGINGS], "Ember Alloy Leggings")
+        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.BOOTS], "Ember Alloy Boots")
 
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "Steel Helmet")
         addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "Steel Chestplate")
@@ -205,11 +205,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_SHEARS, "Ragi-Shears")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
 
-        addItem(RagiumItems.BRONZE_TOOLS.axeItem, "Bronze Axe")
-        addItem(RagiumItems.BRONZE_TOOLS.hoeItem, "Bronze Hoe")
-        addItem(RagiumItems.BRONZE_TOOLS.pickaxeItem, "Bronze Pickaxe")
-        addItem(RagiumItems.BRONZE_TOOLS.shovelItem, "Bronze Shovel")
-        addItem(RagiumItems.BRONZE_TOOLS.swordItem, "Bronze Sword")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.axeItem, "Ember Alloy Axe")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.hoeItem, "Ember Alloy Hoe")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.pickaxeItem, "Ember Alloy Pickaxe")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.shovelItem, "Ember Alloy Shovel")
+        addItem(RagiumItems.EMBER_ALLOY_TOOLS.swordItem, "Ember Alloy Sword")
 
         addItem(RagiumItems.STEEL_TOOLS.axeItem, "Steel Axe")
         addItem(RagiumItems.STEEL_TOOLS.hoeItem, "Steel Hoe")
@@ -407,7 +407,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumMaterials.CRIMSON_CRYSTAL, "Crimson Crystal")
         add(RagiumMaterials.DEEP_STEEL, "Deep Steel")
-        // add(RagiumMaterials.ECHORIUM, "Echorium")
+        add(RagiumMaterials.EMBER_ALLOY, "Ember Alloy")
         add(RagiumMaterials.FIERY_COAL, "Fiery Coal")
         add(RagiumMaterials.RAGI_ALLOY, "Ragi-Alloy")
         add(RagiumMaterials.RAGI_CRYSTAL, "Ragi-Crystal")

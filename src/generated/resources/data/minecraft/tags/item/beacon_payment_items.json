@@ -1,8 +1,8 @@
 {
   "values": [
     "#c:ingots/aluminum",
-    "#c:ingots/bronze",
     "#c:ingots/deep_steel",
+    "#c:ingots/ember_alloy",
     "#c:ingots/ragi_alloy",
     "#c:ingots/ragium",
     "#c:ingots/steel"
