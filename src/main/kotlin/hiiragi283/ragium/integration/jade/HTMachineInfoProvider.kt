@@ -3,14 +3,13 @@ package hiiragi283.ragium.integration.jade
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTPlayerOwningBlockEntity
 import hiiragi283.ragium.api.extension.boolText
 import hiiragi283.ragium.api.extension.floatText
-import hiiragi283.ragium.api.extension.identifyFunction
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import net.minecraft.core.UUIDUtil
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -27,7 +26,7 @@ import kotlin.jvm.optionals.getOrNull
 
 object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentProvider<BlockAccessor> {
     @JvmField
-    val OWNER: MapCodec<Optional<UUID>> = HTPlayerOwningBlockEntity.UUID_CODEC.fieldOf("owner")
+    val OWNER: MapCodec<UUID> = UUIDUtil.STRING_CODEC.fieldOf("owner")
 
     @JvmField
     val IS_ACTIVE: MapCodec<Boolean> = Codec.BOOL.fieldOf("is_active")
@@ -38,21 +37,18 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     @JvmField
     val COST_MODIFIER: MapCodec<Int> = Codec.INT.fieldOf("cost_modifier")
 
-    // val SHOW_PREVIEW: MapCodec<Boolean> = Codec.BOOL.fieldOf("show_preview")
-
     @JvmField
     val ENCHANTMENT: MapCodec<ItemEnchantments> = ItemEnchantments.CODEC.fieldOf("enchantments")
 
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
         val machineEntity: HTMachineAccess = accessor.blockEntity as? HTMachineAccess ?: return
         accessor.writeData(HTMachineType.FIELD_CODEC, machineEntity.machineType)
-        accessor.writeData(OWNER, Optional.ofNullable(machineEntity.owner?.uuid))
+        machineEntity.owner?.uuid?.let {
+            accessor.writeData(OWNER, it)
+        }
         accessor.writeData(TICK_RATE, machineEntity.containerData.get(1))
         accessor.writeData(COST_MODIFIER, machineEntity.costModifier)
         accessor.writeData(IS_ACTIVE, machineEntity.isActive)
-        /*if (machineEntity is HTMultiblockController) {
-            accessor.writeData(SHOW_PREVIEW, machineEntity.showPreview)
-        }*/
         accessor.writeData(ENCHANTMENT, machineEntity.enchantments)
     }
 
@@ -66,7 +62,6 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
 
         accessor
             .readData(OWNER)
-            .flatMap(identifyFunction())
             .getOrNull()
             ?.let(RagiumAPI.getInstance()::getPlayer)
             ?.displayName
@@ -86,10 +81,6 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
 
         val costModifier: Int = accessor.readData(COST_MODIFIER).orElse(1)
         tooltip.add(Component.literal("- Cost Modifier: x$costModifier"))
-
-        /*accessor.readData(SHOW_PREVIEW).ifPresent { showPreview: Boolean ->
-            tooltip.add(Component.translatable(RagiumTranslationKeys.MACHINE_PREVIEW, boolText(showPreview)))
-        }*/
 
         val enchantments: ItemEnchantments = accessor.readData(ENCHANTMENT).orElse(ItemEnchantments.EMPTY)
         enchantments.addToTooltip(Item.TooltipContext.of(accessor.level), tooltip::add, TooltipFlag.ADVANCED)

@@ -110,7 +110,7 @@ object HTAlternativeRecipeProvider : HTRecipeProvider() {
             .itemInput(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST)
             .itemOutput(Items.AMETHYST_SHARD, 4)
             .save(output)
-        
+
         // Iron Ingot
         HTCookingRecipeBuilder
             .create(

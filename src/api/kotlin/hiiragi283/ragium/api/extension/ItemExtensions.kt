@@ -120,21 +120,6 @@ fun IItemHandler.dropStacks(level: Level, pos: BlockPos) {
     forEach { dropStackAt(level, pos, it) }
 }
 
-/**
- * 指定した[stack]がこの[IItemHandler]に入れられるか判定します。
- */
-fun IItemHandler.canInsert(stack: ItemStack): Boolean = ItemHandlerHelper.insertItem(this, stack, true).isEmpty
-
-/**
- * 指定した[stack]をこの[IItemHandler]に入れようとします。
- *
- * 入らなかった場合は[dropStackAt]を通じてドロップします。
- */
-fun IItemHandler.insertOrDrop(level: Level, pos: BlockPos, stack: ItemStack) {
-    val remain: ItemStack = ItemHandlerHelper.insertItem(this, stack, false)
-    dropStackAt(level, pos, remain)
-}
-
 fun moveNextOrDrop(level: Level, pos: BlockPos, stack: ItemStack) {
     var remaining: ItemStack = stack
     for (direction: Direction in Direction.entries) {

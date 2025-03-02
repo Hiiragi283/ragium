@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.storage.item
 
+import com.google.common.base.Predicates
 import com.google.common.util.concurrent.Runnables
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -58,7 +58,7 @@ abstract class HTItemSlot(private val validator: (HTItemVariant) -> Boolean, pri
 
     class Builder {
         private var capacity: Int = Item.ABSOLUTE_MAX_STACK_SIZE
-        private var validator: (HTItemVariant) -> Boolean = constFunction2(true)
+        private var validator: (HTItemVariant) -> Boolean = Predicates.alwaysTrue<HTItemVariant>()::test
         private var callback: Runnable = Runnables.doNothing()
 
         fun setCapacity(capacity: Int): Builder = apply {

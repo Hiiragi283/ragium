@@ -26,16 +26,16 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         buildList {
             addAll(RagiumBlocks.REGISTER.entries)
 
-            removeAll(RagiumBlocks.RAGI_BRICK_FAMILY.blocks)
-            removeAll(RagiumBlocks.PLASTIC_FAMILY.blocks)
-            removeAll(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.blocks)
+            removeAll(RagiumBlocks.RAGI_BRICK_SETS.blocks)
+            removeAll(RagiumBlocks.PLASTIC_SETS.blocks)
+            removeAll(RagiumBlocks.BLUE_NETHER_BRICK_SETS.blocks)
 
             remove(RagiumBlocks.CRUDE_OIL)
         }.forEach(::simpleBlockItem)
 
-        RagiumBlocks.RAGI_BRICK_FAMILY.generateModels(this)
-        RagiumBlocks.PLASTIC_FAMILY.generateModels(this)
-        RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.generateModels(this)
+        RagiumBlocks.RAGI_BRICK_SETS.generateModels(this)
+        RagiumBlocks.PLASTIC_SETS.generateModels(this)
+        RagiumBlocks.BLUE_NETHER_BRICK_SETS.generateModels(this)
         // Machine
         HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->
             getBuilder(holder).parent(ModelFile.UncheckedModelFile(holder.blockId))

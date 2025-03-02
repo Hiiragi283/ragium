@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.api.util.HTBlockFamily
+import hiiragi283.ragium.api.util.HTBuildingBlockSets
 import hiiragi283.ragium.api.util.HTCrateVariant
 import hiiragi283.ragium.api.util.HTDrumVariant
 import hiiragi283.ragium.common.block.HTEntityBlock
@@ -43,9 +43,9 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .define('B', Items.MAGMA_BLOCK)
             .save(output)
 
-        registerFamily(output, RagiumBlocks.RAGI_BRICK_FAMILY)
-        registerFamily(output, RagiumBlocks.PLASTIC_FAMILY)
-        registerFamily(output, RagiumBlocks.BLUE_NETHER_BRICK_FAMILY)
+        registerFamily(output, RagiumBlocks.RAGI_BRICK_SETS)
+        registerFamily(output, RagiumBlocks.PLASTIC_SETS)
+        registerFamily(output, RagiumBlocks.BLUE_NETHER_BRICK_SETS)
 
         registerBurners(output)
         registerCrates(output)
@@ -60,7 +60,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
 
     //    Block Family    //
 
-    private fun registerFamily(output: RecipeOutput, family: HTBlockFamily) {
+    private fun registerFamily(output: RecipeOutput, family: HTBuildingBlockSets) {
         // Base -> Slab
         HTShapedRecipeBuilder(family.slab, 6, CraftingBookCategory.BUILDING)
             .pattern("AAA")

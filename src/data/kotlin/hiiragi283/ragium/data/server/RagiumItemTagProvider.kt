@@ -63,8 +63,8 @@ class RagiumItemTagProvider(
 
     fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: Item) {
         add(tagKey, item.asHolder())
-    }    
-    
+    }
+
     //    Material    //
 
     private fun materialTags() {

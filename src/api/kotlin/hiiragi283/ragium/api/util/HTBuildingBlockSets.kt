@@ -14,7 +14,7 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
 
-class HTBlockFamily(
+class HTBuildingBlockSets(
     blockRegister: DeferredRegister.Blocks,
     itemRegister: DeferredRegister.Items,
     val base: DeferredBlock<*>,

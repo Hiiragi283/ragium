@@ -32,19 +32,19 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SLAG_BLOCK, "Block of Slag")
 
         addBlock(RagiumBlocks.RAGI_BRICKS, "Ragi-Bricks")
-        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.stairs, "Ragi-Brick Stairs")
-        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.slab, "Ragi-Brick Slab")
-        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.wall, "Ragi-Brick Wall")
+        addBlock(RagiumBlocks.RAGI_BRICK_SETS.stairs, "Ragi-Brick Stairs")
+        addBlock(RagiumBlocks.RAGI_BRICK_SETS.slab, "Ragi-Brick Slab")
+        addBlock(RagiumBlocks.RAGI_BRICK_SETS.wall, "Ragi-Brick Wall")
 
         addBlock(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
-        addBlock(RagiumBlocks.PLASTIC_FAMILY.stairs, "Plastic Block Stairs")
-        addBlock(RagiumBlocks.PLASTIC_FAMILY.slab, "Plastic Block Slab")
-        addBlock(RagiumBlocks.PLASTIC_FAMILY.wall, "Plastic Block Wall")
+        addBlock(RagiumBlocks.PLASTIC_SETS.stairs, "Plastic Block Stairs")
+        addBlock(RagiumBlocks.PLASTIC_SETS.slab, "Plastic Block Slab")
+        addBlock(RagiumBlocks.PLASTIC_SETS.wall, "Plastic Block Wall")
 
         addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "Blue Nether Bricks")
-        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.stairs, "Blue Nether Brick Stairs")
-        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.slab, "Blue Nether Brick Slab")
-        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.wall, "Blue Nether Brick Wall")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_SETS.stairs, "Blue Nether Brick Stairs")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_SETS.slab, "Blue Nether Brick Slab")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_SETS.wall, "Blue Nether Brick Wall")
 
         addBlock(RagiumBlocks.SHAFT, "Shaft")
 

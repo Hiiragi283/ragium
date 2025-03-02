@@ -33,9 +33,9 @@ object RagiumCreativeTabs {
                     RagiumBlocks.STORAGE_BLOCKS.values.forEach(output::accept)
                     output.accept(RagiumBlocks.SLAG_BLOCK)
                     // Decorations
-                    RagiumBlocks.RAGI_BRICK_FAMILY.blocks.forEach(output::accept)
-                    RagiumBlocks.PLASTIC_FAMILY.blocks.forEach(output::accept)
-                    RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.blocks.forEach(output::accept)
+                    RagiumBlocks.RAGI_BRICK_SETS.blocks.forEach(output::accept)
+                    RagiumBlocks.PLASTIC_SETS.blocks.forEach(output::accept)
+                    RagiumBlocks.BLUE_NETHER_BRICK_SETS.blocks.forEach(output::accept)
 
                     RagiumBlocks.GLASSES.forEach(output::accept)
                     RagiumBlocks.LED_BLOCKS.values.forEach(output::accept)

@@ -66,9 +66,9 @@ class RagiumBlockTagProvider(
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE)
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Vanilla
-        RagiumBlocks.RAGI_BRICK_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
-        RagiumBlocks.PLASTIC_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
-        RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
+        RagiumBlocks.RAGI_BRICK_SETS.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
+        RagiumBlocks.PLASTIC_SETS.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
+        RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
         // Common
         RagiumBlocks.RAGINITE_ORES.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder)
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder)

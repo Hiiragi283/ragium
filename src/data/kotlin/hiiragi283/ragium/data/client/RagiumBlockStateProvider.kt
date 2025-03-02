@@ -43,9 +43,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }.map(Supplier<out Block>::get)
             .forEach(::simpleBlock)
 
-        RagiumBlocks.RAGI_BRICK_FAMILY.generateStates(this)
-        RagiumBlocks.PLASTIC_FAMILY.generateStates(this)
-        RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.generateStates(this)
+        RagiumBlocks.RAGI_BRICK_SETS.generateStates(this)
+        RagiumBlocks.PLASTIC_SETS.generateStates(this)
+        RagiumBlocks.BLUE_NETHER_BRICK_SETS.generateStates(this)
 
         // Ore
         RagiumBlocks.RAGINITE_ORES.generateStates(this)

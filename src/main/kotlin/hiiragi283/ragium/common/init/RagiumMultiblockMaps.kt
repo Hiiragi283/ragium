@@ -11,7 +11,7 @@ object RagiumMultiblockMaps {
     private val DEEPSLATE_BRICKS = HTSimpleMultiblockComponent(Blocks::DEEPSLATE_BRICKS)
     private val DIAMOND_BLOCK = HTSimpleMultiblockComponent(Blocks::DIAMOND_BLOCK)
     private val IRON_BLOCK = HTSimpleMultiblockComponent(Blocks::IRON_BLOCK)
-    private val RAGI_BRICK_WALL = HTSimpleMultiblockComponent(RagiumBlocks.RAGI_BRICK_FAMILY.wall)
+    private val RAGI_BRICK_WALL = HTSimpleMultiblockComponent(RagiumBlocks.RAGI_BRICK_SETS.wall)
     private val RAGI_BRICKS = HTSimpleMultiblockComponent(RagiumBlocks.RAGI_BRICKS)
     private val STEEL_BLOCK = HTSimpleMultiblockComponent { RagiumBlocks.STORAGE_BLOCKS[CommonMaterials.STEEL]!!.get() }
     private val TERRACOTTA = HTSimpleMultiblockComponent(Blocks::TERRACOTTA)

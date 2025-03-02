@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
@@ -72,9 +73,11 @@ abstract class HTMachineBlockEntity(
             .encodeStart(registryOps, enchantments)
             .ifSuccess { nbt.put(ENCH_KEY, it) }
         nbt.putBoolean(ACTIVE_KEY, isActive)
-        HTPlayerOwningBlockEntity.UUID_CODEC
-            .encodeStart(registryOps, Optional.ofNullable(ownerUUID))
-            .ifSuccess { nbt.put(OWNER_KEY, it) }
+        ownerUUID?.let { uuid: UUID ->
+            UUIDUtil.STRING_CODEC
+                .encodeStart(registryOps, uuid)
+                .ifSuccess { nbt.put(OWNER_KEY, it) }
+        }
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
@@ -82,12 +85,10 @@ abstract class HTMachineBlockEntity(
             .parse(registryOps, nbt.get(ENCH_KEY))
             .ifSuccess(::onUpdateEnchantment)
         isActive = nbt.getBoolean(ACTIVE_KEY)
-        HTPlayerOwningBlockEntity.UUID_CODEC
+        UUIDUtil.STRING_CODEC
             .parse(registryOps, nbt.get(OWNER_KEY))
-            .ifSuccess { optional: Optional<UUID> ->
-                optional.ifPresent { uuid: UUID ->
-                    this.ownerUUID = uuid
-                }
+            .ifSuccess { uuid: UUID ->
+                this.ownerUUID = uuid
             }
     }
 

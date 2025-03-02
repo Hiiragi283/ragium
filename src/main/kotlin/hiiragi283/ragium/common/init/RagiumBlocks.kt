@@ -154,7 +154,7 @@ object RagiumBlocks {
         .build()
 
     @JvmField
-    val RAGI_BRICK_FAMILY = HTBlockFamily(
+    val RAGI_BRICK_SETS = HTBuildingBlockSets(
         REGISTER,
         ITEM_REGISTER,
         RAGI_BRICKS,
@@ -168,7 +168,7 @@ object RagiumBlocks {
         .build()
 
     @JvmField
-    val PLASTIC_FAMILY = HTBlockFamily(
+    val PLASTIC_SETS = HTBuildingBlockSets(
         REGISTER,
         ITEM_REGISTER,
         PLASTIC_BLOCK,
@@ -181,7 +181,7 @@ object RagiumBlocks {
         .build()
 
     @JvmField
-    val BLUE_NETHER_BRICK_FAMILY = HTBlockFamily(
+    val BLUE_NETHER_BRICK_SETS = HTBuildingBlockSets(
         REGISTER,
         ITEM_REGISTER,
         BLUE_NETHER_BRICKS,

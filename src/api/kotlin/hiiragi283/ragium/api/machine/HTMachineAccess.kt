@@ -11,22 +11,16 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.network.chat.Component
 import net.minecraft.world.inventory.ContainerData
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.item.component.TooltipProvider
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
-import java.util.function.Consumer
 
 /**
  * 機械の参照を表すインタフェース
  */
 interface HTMachineAccess :
-    TooltipProvider,
     HTEnchantableBlockEntity,
     HTErrorHoldingBlockEntity,
     HTHandlerBlockEntity,
@@ -71,11 +65,6 @@ interface HTMachineAccess :
      * 最小値は`1`
      */
     val costModifier: Int
-
-    //    TooltipProvider    //
-
-    override fun addToTooltip(context: Item.TooltipContext, consumer: Consumer<Component>, flag: TooltipFlag) {
-    }
 
     //    HTBlockEntityHandlerProvider    //
 

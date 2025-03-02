@@ -32,19 +32,19 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SLAG_BLOCK, "スラグブロック")
 
         addBlock(RagiumBlocks.RAGI_BRICKS, "らぎレンガ")
-        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.stairs, "らぎレンガの階段")
-        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.slab, "らぎレンガのハーフブロック")
-        addBlock(RagiumBlocks.RAGI_BRICK_FAMILY.wall, "らぎレンガの壁")
+        addBlock(RagiumBlocks.RAGI_BRICK_SETS.stairs, "らぎレンガの階段")
+        addBlock(RagiumBlocks.RAGI_BRICK_SETS.slab, "らぎレンガのハーフブロック")
+        addBlock(RagiumBlocks.RAGI_BRICK_SETS.wall, "らぎレンガの壁")
 
         addBlock(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
-        addBlock(RagiumBlocks.PLASTIC_FAMILY.stairs, "プラスチックブロックの階段")
-        addBlock(RagiumBlocks.PLASTIC_FAMILY.slab, "プラスチックブロックのハーフブロック")
-        addBlock(RagiumBlocks.PLASTIC_FAMILY.wall, "プラスチックブロックの壁")
+        addBlock(RagiumBlocks.PLASTIC_SETS.stairs, "プラスチックブロックの階段")
+        addBlock(RagiumBlocks.PLASTIC_SETS.slab, "プラスチックブロックのハーフブロック")
+        addBlock(RagiumBlocks.PLASTIC_SETS.wall, "プラスチックブロックの壁")
 
         addBlock(RagiumBlocks.BLUE_NETHER_BRICKS, "青いネザーレンガ")
-        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.stairs, "青いネザーレンガの階段")
-        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.slab, "青いネザーレンガのハーフブロック")
-        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_FAMILY.wall, "青いネザーレンガの壁")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_SETS.stairs, "青いネザーレンガの階段")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_SETS.slab, "青いネザーレンガのハーフブロック")
+        addBlock(RagiumBlocks.BLUE_NETHER_BRICK_SETS.wall, "青いネザーレンガの壁")
 
         addBlock(RagiumBlocks.SHAFT, "シャフト")
 

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.storage.fluid
 
+import com.google.common.base.Predicates
 import com.google.common.util.concurrent.Runnables
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.constFunction2
 import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.util.HTEnchantmentListener
@@ -43,7 +43,7 @@ abstract class HTFluidTank(private val validator: (HTFluidVariant) -> Boolean, p
 
     class Builder {
         private var capacity: Int = 8000
-        private var validator: (HTFluidVariant) -> Boolean = constFunction2(true)
+        private var validator: (HTFluidVariant) -> Boolean = Predicates.alwaysTrue<HTFluidVariant>()::test
         private var callback: Runnable = Runnables.doNothing()
 
         fun setCapacity(capacity: Int): Builder = apply {
