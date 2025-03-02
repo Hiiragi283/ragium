@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.createSpawnerStack
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.getHTBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.*
@@ -46,21 +45,20 @@ internal object RagiumGameEvents {
         val stack: ItemStack = event.itemStack
         if (stack.isEmpty) return
         if (stack.`is`(Items.BOOK)) {
-            togglePreview(event)
+            // togglePreview(event)
         } else if (stack.`is`(Tags.Items.NETHER_STARS)) {
             captureSpawner(event)
         }
     }
 
-    @JvmStatic
-    private fun togglePreview(event: UseItemOnBlockEvent) {
+    /*private fun togglePreview(event: UseItemOnBlockEvent) {
         val level: Level = event.level
         val pos: BlockPos = event.pos
         (level.getHTBlockEntity(pos) as? HTMultiblockController)?.let { controller: HTMultiblockController ->
             controller.showPreview = !controller.showPreview
             event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide))
         }
-    }
+    }*/
 
     @JvmStatic
     private fun captureSpawner(event: UseItemOnBlockEvent) {
@@ -69,8 +67,6 @@ internal object RagiumGameEvents {
         val player: Player? = event.player
         val definition = HTControllerDefinition(level, pos, Direction.NORTH)
         val controller: HTMultiblockController = object : HTMultiblockController {
-            override var showPreview: Boolean = false
-
             override fun getMultiblockMap(): HTMultiblockMap.Relative = RagiumMultiblockMaps.SPAWNER
 
             override fun getDefinition(): HTControllerDefinition = definition

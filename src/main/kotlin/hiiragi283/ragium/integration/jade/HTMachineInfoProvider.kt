@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.extension.identifyFunction
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
@@ -39,8 +38,7 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     @JvmField
     val COST_MODIFIER: MapCodec<Int> = Codec.INT.fieldOf("cost_modifier")
 
-    @JvmField
-    val SHOW_PREVIEW: MapCodec<Boolean> = Codec.BOOL.fieldOf("show_preview")
+    // val SHOW_PREVIEW: MapCodec<Boolean> = Codec.BOOL.fieldOf("show_preview")
 
     @JvmField
     val ENCHANTMENT: MapCodec<ItemEnchantments> = ItemEnchantments.CODEC.fieldOf("enchantments")
@@ -52,9 +50,9 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
         accessor.writeData(TICK_RATE, machineEntity.containerData.get(1))
         accessor.writeData(COST_MODIFIER, machineEntity.costModifier)
         accessor.writeData(IS_ACTIVE, machineEntity.isActive)
-        if (machineEntity is HTMultiblockController) {
+        /*if (machineEntity is HTMultiblockController) {
             accessor.writeData(SHOW_PREVIEW, machineEntity.showPreview)
-        }
+        }*/
         accessor.writeData(ENCHANTMENT, machineEntity.enchantments)
     }
 
@@ -89,9 +87,9 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
         val costModifier: Int = accessor.readData(COST_MODIFIER).orElse(1)
         tooltip.add(Component.literal("- Cost Modifier: x$costModifier"))
 
-        accessor.readData(SHOW_PREVIEW).ifPresent { showPreview: Boolean ->
+        /*accessor.readData(SHOW_PREVIEW).ifPresent { showPreview: Boolean ->
             tooltip.add(Component.translatable(RagiumTranslationKeys.MACHINE_PREVIEW, boolText(showPreview)))
-        }
+        }*/
 
         val enchantments: ItemEnchantments = accessor.readData(ENCHANTMENT).orElse(ItemEnchantments.EMPTY)
         enchantments.addToTooltip(Item.TooltipContext.of(accessor.level), tooltip::add, TooltipFlag.ADVANCED)

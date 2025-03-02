@@ -117,6 +117,7 @@ object RagiumBlocks {
         // Metal
         put(RagiumMaterials.EMBER_ALLOY, metal(MapColor.COLOR_ORANGE))
         put(CommonMaterials.ALUMINUM, metal(MapColor.ICE))
+        put(RagiumMaterials.DURALUMIN, metal(MapColor.COLOR_PURPLE))
         // Gem
         put(RagiumMaterials.RAGI_CRYSTAL, gem(MapColor.COLOR_RED))
         put(CommonMaterials.CRYOLITE, gem(MapColor.NONE))

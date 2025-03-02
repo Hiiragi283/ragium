@@ -24,6 +24,7 @@ jei = "19.21.0.247"
 mek = "1.21.1-10.7.8.70"
 mi = "2.2.34"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.3"
+ponder = "1.0.39"
 rc = "1.2.5"
 registrate = "MC1.21-1.3.0+62"
 tf = "4.6.3003"
@@ -46,6 +47,7 @@ mi = { group = "aztech", name = "Modern-Industrialization", version.ref = "mi" }
 jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
 jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
+ponder = { group = "net.createmod.ponder", name = "Ponder-NeoForge-1.21.1", version.ref = "ponder" }
 rc = { group = "maven.modrinth", name = "railcraft-reborn", version.ref = "rc" }
 registrate = { group = "com.tterrag.registrate", name = "Registrate", version.ref = "registrate" }
 
@@ -68,7 +70,8 @@ mods-impl = [
 ]
 
 mods-transitive = [
-    "create"
+    "create",
+    "ponder",
 ]
 
 mods-compile = [

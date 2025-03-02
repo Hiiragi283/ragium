@@ -47,8 +47,6 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTMultiblockController    //
 
-    override var showPreview: Boolean = false
-
     override fun getMultiblockMap(): HTMultiblockMap.Relative = RagiumMultiblockMaps.BLAST_FURNACE
 
     override fun getDefinition(): HTControllerDefinition? = level?.let { HTControllerDefinition(it, pos, front) }

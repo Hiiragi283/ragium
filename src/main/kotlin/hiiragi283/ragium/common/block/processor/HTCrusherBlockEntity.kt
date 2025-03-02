@@ -81,8 +81,6 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTMultiblockController    //
 
-    override var showPreview: Boolean = false
-
     override fun getMultiblockMap(): HTMultiblockMap.Relative = RagiumMultiblockMaps.CRUSHER
 
     override fun getDefinition(): HTControllerDefinition? = level?.let { HTControllerDefinition(it, pos, front) }

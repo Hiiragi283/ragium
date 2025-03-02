@@ -8,11 +8,6 @@ import net.minecraft.network.chat.Component
 
 interface HTMultiblockController {
     /**
-     * マルチブロックのプレビューを表示するかどうか判定します。
-     */
-    var showPreview: Boolean
-
-    /**
      * マルチブロックのパターンを返します。
      */
     fun getMultiblockMap(): HTMultiblockMap.Relative?
