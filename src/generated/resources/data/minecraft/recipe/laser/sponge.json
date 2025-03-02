@@ -4,9 +4,9 @@
     "item": "ragium:diamond_lens"
   },
   "item_input": {
-    "item": "ragium:circuit_board"
+    "tag": "minecraft:wool"
   },
   "item_output": {
-    "item": "ragium:elite_circuit"
+    "item": "minecraft:sponge"
   }
 }

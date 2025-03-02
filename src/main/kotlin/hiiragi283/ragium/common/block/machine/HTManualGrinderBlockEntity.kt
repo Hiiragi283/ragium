@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTGrinderRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCache
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
@@ -66,10 +67,12 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         return InteractionResult.sidedSuccess(level.isClientSide)
     }
 
+    private val recipeCache: HTMachineRecipeCache<HTGrinderRecipe> = HTMachineRecipeCache(HTRecipeTypes.GRINDER)
+
     private fun process(level: Level, pos: BlockPos, player: Player) {
         // Find matching recipe
         val context: HTMachineRecipeContext = HTMachineRecipeContext.builder().addInput(0, inputSlot).build()
-        HTRecipeTypes.GRINDER
+        recipeCache
             .getFirstRecipe(context, level)
             .onSuccess { recipe: HTGrinderRecipe ->
                 // Drop output

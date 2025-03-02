@@ -88,9 +88,9 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.POTION_BUNDLE)
                     output.accept(RagiumItems.SOAP)
 
+                    output.accept(RagiumItems.BLANK_PRESS_MOLD)
                     output.accept(RagiumItems.BALL_PRESS_MOLD)
                     output.accept(RagiumItems.BLOCK_PRESS_MOLD)
-                    output.accept(RagiumItems.BLANK_PRESS_MOLD)
                     output.accept(RagiumItems.GEAR_PRESS_MOLD)
                     output.accept(RagiumItems.INGOT_PRESS_MOLD)
                     output.accept(RagiumItems.PLATE_PRESS_MOLD)
@@ -98,9 +98,10 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.WIRE_PRESS_MOLD)
 
                     output.accept(RagiumItems.REDSTONE_LENS)
-                    output.accept(RagiumItems.GLOW_LENS)
-                    output.accept(RagiumItems.PRISMARINE_LENS)
-                    output.accept(RagiumItems.MAGICAL_LENS)
+                    output.accept(RagiumItems.GLOWSTONE_LENS)
+                    output.accept(RagiumItems.DIAMOND_LENS)
+                    output.accept(RagiumItems.EMERALD_LENS)
+                    output.accept(RagiumItems.AMETHYST_LENS)
                     // Circuits
                     output.accept(RagiumItems.POLYMER_RESIN)
                     output.accept(RagiumItems.PLASTIC_PLATE)
@@ -114,8 +115,6 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.EMPTY_FLUID_CUBE)
                     output.accept(RagiumItems.WATER_FLUID_CUBE)
                     output.accept(RagiumItems.LAVA_FLUID_CUBE)
-
-                    RagiumItems.REAGENTS.forEach(output::accept)
 
                     output.accept(RagiumBlocks.SHAFT)
                     output.accept(RagiumItems.MACHINE_CASING)

@@ -3,18 +3,18 @@
   "item_inputs": [
     {
       "count": 64,
-      "tag": "c:dusts/glowstone"
+      "tag": "c:gems/diamond"
     },
     {
       "count": 16,
-      "tag": "c:ingots/gold"
+      "tag": "c:ingots/aluminum"
     },
     {
       "count": 8,
-      "item": "ragium:chemical_glass"
+      "item": "ragium:soul_glass"
     }
   ],
   "item_output": {
-    "item": "ragium:glow_lens"
+    "item": "ragium:diamond_lens"
   }
 }

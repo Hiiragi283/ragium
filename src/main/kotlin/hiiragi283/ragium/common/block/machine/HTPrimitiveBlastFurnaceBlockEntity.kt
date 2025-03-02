@@ -32,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
 
 class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state, HTMachineType.BLAST_FURNACE),
+    HTMachineBlockEntity(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE, pos, state, HTMachineType.BLAST_FURNACE, 400),
     HTFluidSlotHandler.Empty,
     HTMultiblockController {
     private val firstItemSlot: HTItemSlot = HTItemSlot
@@ -63,8 +63,6 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         secondItemSlot.readNbt(nbt, registryOps)
         outputSlot.readNbt(nbt, registryOps)
     }
-
-    override var tickRate: Int = 400
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Empty(true)
 

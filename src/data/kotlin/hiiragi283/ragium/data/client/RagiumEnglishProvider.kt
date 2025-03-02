@@ -236,9 +236,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.WIRE_PRESS_MOLD, "Press Mold (Wire)")
 
         addItem(RagiumItems.REDSTONE_LENS, "Redstone Lens")
-        addItem(RagiumItems.GLOW_LENS, "Glow Lens")
-        addItem(RagiumItems.PRISMARINE_LENS, "Prismarine Lens")
-        addItem(RagiumItems.MAGICAL_LENS, "Magical Lens")
+        addItem(RagiumItems.GLOWSTONE_LENS, "Glowstone Lens")
+        addItem(RagiumItems.DIAMOND_LENS, "Diamond Lens")
+        addItem(RagiumItems.EMERALD_LENS, "Emerald Lens")
+        addItem(RagiumItems.AMETHYST_LENS, "Amethyst Lens")
 
         addItem(RagiumItems.EMPTY_FLUID_CUBE, "Empty Fluid Cube")
         addItem(RagiumItems.WATER_FLUID_CUBE, "Fluid Cube (Water)")

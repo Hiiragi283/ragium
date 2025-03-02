@@ -13,7 +13,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         HTAlternativeRecipeProvider.buildRecipes(output, holderLookup)
         HTBlockRecipeProvider.buildRecipes(output, holderLookup)
-        HTChemicalRecipeProviderOld.buildRecipes(output, holderLookup)
         HTChemicalRecipeProvider.buildRecipes(output, holderLookup)
         HTFoodRecipeProvider.buildRecipes(output, holderLookup)
         HTCommonRecipeProvider.buildRecipes(output, holderLookup)

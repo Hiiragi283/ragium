@@ -6,7 +6,9 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
+import hiiragi283.ragium.api.recipe.HTCrusherRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCache
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
@@ -21,7 +23,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state, HTMachineType.CRUSHER),
+    HTMachineBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state, HTMachineType.CRUSHER, 600),
     HTFluidSlotHandler.Empty,
     HTMultiblockController {
     private val inputSlot: HTItemSlot = HTItemSlot
@@ -41,9 +43,9 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         .setCallback(this::setChanged)
         .build("third_item_output")
 
-    override var tickRate: Int = 1000
-
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
+
+    private val recipeCache: HTMachineRecipeCache<HTCrusherRecipe> = HTMachineRecipeCache(HTRecipeTypes.CRUSHER)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         validateMultiblock(this, null).getOrThrow()
@@ -54,7 +56,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             .addOutput(1, secondOutputSlot)
             .addOutput(2, thirdOutputSlot)
             .build()
-        HTRecipeTypes.CRUSHER.processFirstRecipe(context, level)
+        recipeCache.processFirstRecipe(context, level)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null

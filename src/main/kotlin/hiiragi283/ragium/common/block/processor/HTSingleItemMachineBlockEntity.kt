@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCache
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
@@ -22,6 +23,7 @@ abstract class HTSingleItemMachineBlockEntity(
     pos: BlockPos,
     state: BlockState,
     machineType: HTMachineType,
+    protected val recipeType: HTRecipeType<out HTSingleItemRecipe>,
 ) : HTMachineBlockEntity(type, pos, state, machineType),
     HTFluidSlotHandler.Empty {
     protected val inputSlot: HTItemSlot = HTItemSlot
@@ -38,8 +40,6 @@ abstract class HTSingleItemMachineBlockEntity(
         .setCallback(this::setChanged)
         .build("output")
 
-    abstract val recipeType: HTRecipeType<out HTSingleItemRecipe>
-
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
         inputSlot.writeNbt(nbt, registryOps)
@@ -54,6 +54,8 @@ abstract class HTSingleItemMachineBlockEntity(
         outputSlot.readNbt(nbt, registryOps)
     }
 
+    private val recipeCache: HTMachineRecipeCache<out HTSingleItemRecipe> = HTMachineRecipeCache(recipeType)
+
     final override fun process(level: ServerLevel, pos: BlockPos) {
         // Find matching recipe
         val context: HTMachineRecipeContext = HTMachineRecipeContext.Companion
@@ -62,7 +64,7 @@ abstract class HTSingleItemMachineBlockEntity(
             .addCatalyst(catalystSlot)
             .addOutput(0, outputSlot)
             .build()
-        recipeType.processFirstRecipe(context, level)
+        recipeCache.processFirstRecipe(context, level)
     }
 
     //    Item    //

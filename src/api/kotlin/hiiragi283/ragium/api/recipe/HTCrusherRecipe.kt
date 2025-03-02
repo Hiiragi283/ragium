@@ -45,7 +45,7 @@ class HTCrusherRecipe(group: String, val input: HTItemIngredient, itemOutputs: L
         validateItemOutput(context, 1)
         validateItemOutput(context, 2)
         // Input
-        if (context.getSlot(HTStorageIO.INPUT, 0).canExtract(input.count)) {
+        if (!context.getSlot(HTStorageIO.INPUT, 0).canExtract(input.count)) {
             throw HTMachineException.ShrinkItem()
         }
     }

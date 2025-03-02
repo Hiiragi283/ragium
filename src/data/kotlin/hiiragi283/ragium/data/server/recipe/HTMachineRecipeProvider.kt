@@ -332,7 +332,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         // for Bows
         // for Tridents
         register(Enchantments.LOYALTY, HTItemIngredient.of(Items.LEAD, 8))
-        register(Enchantments.IMPALING, HTItemIngredient.of(RagiumItems.PRISMARINE_REAGENT, 64))
+        register(Enchantments.IMPALING, HTItemIngredient.of(Items.PRISMARINE_SHARD, 64))
         register(Enchantments.RIPTIDE, HTItemIngredient.of(Items.HEART_OF_THE_SEA))
         register(Enchantments.CHANNELING, HTItemIngredient.of(Items.LIGHTNING_ROD, 64))
         // for Crossbows
@@ -434,11 +434,18 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
     //    Laser Assembly    //
 
     private fun laser(output: RecipeOutput) {
+        glowstoneLens(output)
+        diamondLens(output)
+
+        amethystLens(output)
+    }
+
+    private fun glowstoneLens(output: RecipeOutput) {
         // Gilded Blackstone
         HTSingleItemRecipeBuilder
             .laser(lookup)
             .itemInput(Items.BLACKSTONE)
-            .catalyst(RagiumItems.GLOW_LENS)
+            .catalyst(RagiumItems.GLOWSTONE_LENS)
             .itemOutput(Items.GILDED_BLACKSTONE)
             .save(output)
 
@@ -446,15 +453,34 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTSingleItemRecipeBuilder
             .laser(lookup)
             .itemInput(Items.GOLDEN_APPLE, 8)
-            .catalyst(RagiumItems.GLOW_LENS)
+            .catalyst(RagiumItems.GLOWSTONE_LENS)
             .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
             .save(output)
+    }
 
+    private fun diamondLens(output: RecipeOutput) {
+        // Sea Lantern
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(Tags.Items.GLASS_BLOCKS)
+            .catalyst(RagiumItems.DIAMOND_LENS)
+            .itemOutput(Items.SEA_LANTERN)
+            .save(output)
+        // Sponge
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(ItemTags.WOOL)
+            .catalyst(RagiumItems.DIAMOND_LENS)
+            .itemOutput(Items.SPONGE)
+            .save(output)
+    }
+
+    private fun amethystLens(output: RecipeOutput) {
         // Crying Obsidian
         HTSingleItemRecipeBuilder
             .laser(lookup)
             .itemInput(Tags.Items.OBSIDIANS_NORMAL)
-            .catalyst(RagiumItems.MAGICAL_LENS)
+            .catalyst(RagiumItems.AMETHYST_LENS)
             .itemOutput(Items.CRYING_OBSIDIAN)
             .save(output)
 
@@ -462,7 +488,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTSingleItemRecipeBuilder
             .laser(lookup)
             .itemInput(Items.AMETHYST_BLOCK, 4)
-            .catalyst(RagiumItems.MAGICAL_LENS)
+            .catalyst(RagiumItems.AMETHYST_LENS)
             .itemOutput(Items.BUDDING_AMETHYST)
             .save(output)
 
@@ -470,7 +496,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTSingleItemRecipeBuilder
             .laser(lookup)
             .itemInput(Tags.Items.STORAGE_BLOCKS_NETHERITE)
-            .catalyst(RagiumItems.MAGICAL_LENS)
+            .catalyst(RagiumItems.AMETHYST_LENS)
             .itemOutput(Items.HEAVY_CORE)
             .save(output)
     }

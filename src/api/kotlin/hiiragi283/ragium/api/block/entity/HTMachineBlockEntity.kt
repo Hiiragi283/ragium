@@ -51,6 +51,7 @@ abstract class HTMachineBlockEntity(
     pos: BlockPos,
     state: BlockState,
     override val machineType: HTMachineType,
+    private val baseTickRate: Int = 200,
 ) : HTBlockEntity(type, pos, state),
     MenuProvider,
     HTMachineAccess {
@@ -110,7 +111,10 @@ abstract class HTMachineBlockEntity(
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments
         // Efficiency -> Increase process speed
-        this.tickRate = max(20, baseTickRate - (getEnchantmentLevel(Enchantments.EFFICIENCY) * 30))
+        val effLevel: Int = getEnchantmentLevel(Enchantments.EFFICIENCY)
+        if (effLevel > 0) {
+            this.tickRate = max(baseTickRate / 10, baseTickRate * (10 - effLevel))
+        }
         // Unbreaking -> Decrease energy cost
         this.costModifier =
             max(1, getEnchantmentLevel(Enchantments.EFFICIENCY) - getEnchantmentLevel(Enchantments.UNBREAKING))
@@ -150,9 +154,8 @@ abstract class HTMachineBlockEntity(
 
     //    Ticking    //
 
-    override var tickRate: Int = 200
-
-    private val baseTickRate: Int = tickRate
+    final override var tickRate: Int = baseTickRate
+        protected set
 
     override fun tickEach(
         level: Level,

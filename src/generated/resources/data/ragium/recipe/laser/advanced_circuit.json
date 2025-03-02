@@ -1,7 +1,7 @@
 {
   "type": "ragium:laser_assembly",
   "catalyst": {
-    "item": "ragium:glow_lens"
+    "item": "ragium:glowstone_lens"
   },
   "item_input": {
     "item": "ragium:circuit_board"

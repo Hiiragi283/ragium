@@ -3,6 +3,6 @@
   "enchantment_output": "minecraft:impaling",
   "first_item_input": {
     "count": 64,
-    "item": "ragium:prismarine_reagent"
+    "item": "minecraft:prismarine_shard"
   }
 }

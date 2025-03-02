@@ -209,19 +209,19 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             RagiumItems.ADVANCED_CIRCUIT,
             VanillaMaterials.GOLD,
             Tags.Items.DUSTS_GLOWSTONE,
-            RagiumItems.GLOW_LENS,
+            RagiumItems.GLOWSTONE_LENS,
         )
         circuit(
             RagiumItems.ELITE_CIRCUIT,
             CommonMaterials.ALUMINUM,
             Tags.Items.GEMS_PRISMARINE,
-            RagiumItems.PRISMARINE_LENS,
+            RagiumItems.DIAMOND_LENS,
         )
         circuit(
             RagiumItems.ULTIMATE_CIRCUIT,
             RagiumMaterials.RAGIUM,
             HTTagPrefix.DUST.createTag(RagiumMaterials.RAGI_CRYSTAL),
-            RagiumItems.MAGICAL_LENS,
+            RagiumItems.AMETHYST_LENS,
         )
 
         HTShapedRecipeBuilder(RagiumItems.BASIC_CIRCUIT)
@@ -287,23 +287,23 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .itemInput(Tags.Items.DUSTS_GLOWSTONE, 64)
             .itemInput(Tags.Items.INGOTS_GOLD, 16)
             .itemInput(RagiumBlocks.CHEMICAL_GLASS, 8)
-            .itemOutput(RagiumItems.GLOW_LENS)
+            .itemOutput(RagiumItems.GLOWSTONE_LENS)
             .save(output)
 
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(RagiumItems.PRISMARINE_REAGENT, 64)
+            .itemInput(Tags.Items.GEMS_DIAMOND, 64)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 16)
             .itemInput(RagiumBlocks.SOUL_GLASS, 8)
-            .itemOutput(RagiumItems.PRISMARINE_LENS)
+            .itemOutput(RagiumItems.DIAMOND_LENS)
             .save(output)
 
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(RagiumItems.MAGICAL_REAGENT, 64)
+            .itemInput(Items.AMETHYST_BLOCK, 64)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 16)
             .itemInput(RagiumBlocks.OBSIDIAN_GLASS, 8)
-            .itemOutput(RagiumItems.MAGICAL_LENS)
+            .itemOutput(RagiumItems.AMETHYST_LENS)
             .save(output)
     }
 

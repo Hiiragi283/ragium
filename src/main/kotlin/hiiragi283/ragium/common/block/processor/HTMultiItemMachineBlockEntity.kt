@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCache
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
@@ -23,6 +24,7 @@ abstract class HTMultiItemMachineBlockEntity(
     pos: BlockPos,
     state: BlockState,
     machineType: HTMachineType,
+    protected val recipeType: HTRecipeType<out HTMultiItemRecipe>,
 ) : HTMachineBlockEntity(type, pos, state, machineType) {
     protected val firstInputSlot: HTItemSlot = HTItemSlot
         .Builder()
@@ -46,8 +48,6 @@ abstract class HTMultiItemMachineBlockEntity(
         .setCallback(this::setChanged)
         .build("fluid_input")
 
-    protected abstract val recipeType: HTRecipeType<out HTMultiItemRecipe>
-
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
         firstInputSlot.writeNbt(nbt, registryOps)
@@ -68,6 +68,8 @@ abstract class HTMultiItemMachineBlockEntity(
         inputTank.readNbt(nbt, registryOps)
     }
 
+    private val recipeCache: HTMachineRecipeCache<out HTMultiItemRecipe> = HTMachineRecipeCache(recipeType)
+
     override fun process(level: ServerLevel, pos: BlockPos) {
         val context: HTMachineRecipeContext = HTMachineRecipeContext.Companion
             .builder()
@@ -77,7 +79,7 @@ abstract class HTMultiItemMachineBlockEntity(
             .addInput(0, inputTank)
             .addOutput(0, outputSlot)
             .build()
-        recipeType.processFirstRecipe(context, level)
+        recipeCache.processFirstRecipe(context, level)
     }
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {

@@ -394,13 +394,16 @@ object RagiumItems {
     val REDSTONE_LENS: DeferredItem<HTCatalystItem> = register("redstone_lens", ::HTCatalystItem)
 
     @JvmField
-    val GLOW_LENS: DeferredItem<HTCatalystItem> = register("glow_lens", ::HTCatalystItem)
+    val GLOWSTONE_LENS: DeferredItem<HTCatalystItem> = register("glowstone_lens", ::HTCatalystItem)
 
     @JvmField
-    val PRISMARINE_LENS: DeferredItem<HTCatalystItem> = register("prismarine_lens", ::HTCatalystItem)
+    val DIAMOND_LENS: DeferredItem<HTCatalystItem> = register("diamond_lens", ::HTCatalystItem)
 
     @JvmField
-    val MAGICAL_LENS: DeferredItem<HTCatalystItem> = register("magical_lens", ::HTCatalystItem)
+    val EMERALD_LENS: DeferredItem<HTCatalystItem> = register("emerald_lens", ::HTCatalystItem)
+
+    @JvmField
+    val AMETHYST_LENS: DeferredItem<HTCatalystItem> = register("amethyst_lens", ::HTCatalystItem)
 
     //    Circuits    //
 
@@ -428,20 +431,7 @@ object RagiumItems {
     //    Reagents    //
 
     @JvmField
-    val MAGICAL_REAGENT: DeferredItem<Item> = register("magical_reagent")
-
-    @JvmField
-    val PRISMARINE_REAGENT: DeferredItem<Item> = register("prismarine_reagent")
-
-    @JvmField
     val WITHER_REAGENT: DeferredItem<Item> = register("wither_reagent")
-
-    @JvmField
-    val REAGENTS: List<DeferredItem<Item>> = listOf(
-        MAGICAL_REAGENT,
-        PRISMARINE_REAGENT,
-        WITHER_REAGENT,
-    )
 
     //    Fluid Cube    //
 

@@ -236,9 +236,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.WIRE_PRESS_MOLD, "プレス型（ワイヤー）")
 
         addItem(RagiumItems.REDSTONE_LENS, "レッドストーンレンズ")
-        addItem(RagiumItems.GLOW_LENS, "グロウレンズ")
-        addItem(RagiumItems.PRISMARINE_LENS, "プリズマリンレンズ")
-        addItem(RagiumItems.MAGICAL_LENS, "魔術的レンズ")
+        addItem(RagiumItems.GLOWSTONE_LENS, "グロウストーンレンズ")
+        addItem(RagiumItems.DIAMOND_LENS, "ダイヤモンドレンズ")
+        addItem(RagiumItems.EMERALD_LENS, "エメラルドレンズ")
+        addItem(RagiumItems.AMETHYST_LENS, "アメシストレンズ")
 
         addItem(RagiumItems.EMPTY_FLUID_CUBE, "空の液体キューブ")
         addItem(RagiumItems.WATER_FLUID_CUBE, "液体キューブ（水）")

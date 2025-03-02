@@ -3,18 +3,18 @@
   "item_inputs": [
     {
       "count": 64,
-      "item": "ragium:prismarine_reagent"
+      "item": "minecraft:amethyst_block"
     },
     {
       "count": 16,
-      "tag": "c:ingots/aluminum"
+      "tag": "c:ingots/netherite"
     },
     {
       "count": 8,
-      "item": "ragium:soul_glass"
+      "item": "ragium:obsidian_glass"
     }
   ],
   "item_output": {
-    "item": "ragium:prismarine_lens"
+    "item": "ragium:amethyst_lens"
   }
 }

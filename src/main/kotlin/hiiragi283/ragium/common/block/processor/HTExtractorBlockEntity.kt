@@ -3,7 +3,9 @@ package hiiragi283.ragium.common.block.processor
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.HTExtractorRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
+import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCache
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -55,6 +57,8 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
 
+    private val recipeCache: HTMachineRecipeCache<HTExtractorRecipe> = HTMachineRecipeCache(HTRecipeTypes.EXTRACTOR)
+
     override fun process(level: ServerLevel, pos: BlockPos) {
         val context: HTMachineRecipeContext = HTMachineRecipeContext
             .builder()
@@ -62,7 +66,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
             .addOutput(0, outputSlot)
             .addOutput(0, outputTank)
             .build()
-        HTRecipeTypes.EXTRACTOR.processFirstRecipe(context, level)
+        recipeCache.processFirstRecipe(context, level)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

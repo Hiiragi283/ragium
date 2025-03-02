@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe.base
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTMachineRecipesUpdatedEvent
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import net.minecraft.core.RegistryAccess
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -15,7 +14,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
-import java.util.*
 
 /**
  * [RecipeSerializer]と[RecipeType]を束ねたクラス
@@ -36,46 +34,17 @@ class HTRecipeType<T : HTMachineRecipe>(val machine: HTMachineType, val serializ
     )
 
     private var recipeCache: Map<ResourceLocation, RecipeHolder<T>> = mapOf()
-    private var lastRecipe: ResourceLocation? = null
     private var changed: Boolean = true
 
     /**
      * 指定した[context]と[level]から最初に一致するレシピを返します。
      * @return 見つからなかった場合は[Result.failure]
      */
-    fun getFirstRecipe(context: HTMachineRecipeContext, level: Level): Result<T> {
-        val matchingFilter: (RecipeHolder<T>) -> Boolean =
-            { holder: RecipeHolder<T> -> holder.value.matches(context, level) }
-        var firstRecipe: RecipeHolder<T>? = null
+    fun getFirstRecipe(context: HTMachineRecipeContext, level: Level): RecipeHolder<T>? {
         // Check cache update
         this.reloadCache()
         // Find from cache
-        if (lastRecipe != null) {
-            firstRecipe = recipeCache[lastRecipe]?.takeIf(matchingFilter)
-        }
-        if (firstRecipe == null) {
-            firstRecipe =
-                recipeCache.values.firstOrNull(matchingFilter)
-        }
-        return Optional
-            .ofNullable(firstRecipe)
-            .map { holder: RecipeHolder<T> ->
-                lastRecipe = holder.id
-                Result.success(holder.value)
-            }.orElseGet {
-                lastRecipe = null
-                Result.failure(HTMachineException.NoMatchingRecipe())
-            }
-    }
-
-    /**
-     * 指定した[context]と[level]から最初に一致するレシピを処理します。
-     * @throws HTMachineException 処理に失敗した場合
-     */
-    fun processFirstRecipe(context: HTMachineRecipeContext, level: Level) {
-        val recipe: T = getFirstRecipe(context, level).getOrThrow()
-        recipe.canProcess(context).getOrThrow()
-        recipe.process(context)
+        return recipeCache.values.firstOrNull { holder: RecipeHolder<T> -> holder.value.matches(context, level) }
     }
 
     /**
@@ -83,7 +52,7 @@ class HTRecipeType<T : HTMachineRecipe>(val machine: HTMachineType, val serializ
      */
     fun getAllRecipes(): List<RecipeHolder<T>> = recipeCache.values.toList()
 
-    //    Cache    //
+    //    Reloading    //
 
     /**
      * レシピを更新するフラグを立てます。
@@ -111,7 +80,6 @@ class HTRecipeType<T : HTMachineRecipe>(val machine: HTMachineType, val serializ
      */
     @Suppress("UNCHECKED_CAST")
     fun reloadCache(manager: RecipeManager) {
-        lastRecipe = null
         recipeCache = buildMap {
             val consumer: (RecipeHolder<T>) -> Unit = { holder: RecipeHolder<T> ->
                 put(holder.id, holder)

@@ -3,18 +3,18 @@
   "item_inputs": [
     {
       "count": 64,
-      "item": "ragium:magical_reagent"
+      "tag": "c:dusts/glowstone"
     },
     {
       "count": 16,
-      "tag": "c:ingots/netherite"
+      "tag": "c:ingots/gold"
     },
     {
       "count": 8,
-      "item": "ragium:obsidian_glass"
+      "item": "ragium:chemical_glass"
     }
   ],
   "item_output": {
-    "item": "ragium:magical_lens"
+    "item": "ragium:glowstone_lens"
   }
 }

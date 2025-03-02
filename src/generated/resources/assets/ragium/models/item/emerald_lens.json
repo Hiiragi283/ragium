@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/glow_lens"
+    "layer0": "ragium:item/emerald_lens"
   }
 }
