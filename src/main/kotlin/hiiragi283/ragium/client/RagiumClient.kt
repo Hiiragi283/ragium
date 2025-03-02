@@ -51,7 +51,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             RagiumFluidTypes.CRUDE_OIL,
         )
 
-        RagiumVirtualFluids.entries.forEach { fluid: RagiumVirtualFluids ->
+        for (fluid: RagiumVirtualFluids in RagiumVirtualFluids.entries) {
             val textureId: ResourceLocation = when (fluid.textureType) {
                 RagiumVirtualFluids.TextureType.GASEOUS -> "block/white_concrete"
                 RagiumVirtualFluids.TextureType.LIQUID -> "block/bone_block_side"

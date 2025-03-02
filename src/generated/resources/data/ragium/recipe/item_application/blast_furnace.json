@@ -16,7 +16,9 @@
   ],
   "results": [
     {
-      "item": "ragium:blast_furnace"
+      "item": {
+        "id": "ragium:blast_furnace"
+      }
     }
   ]
 }

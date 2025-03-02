@@ -50,13 +50,13 @@ internal object RagiumModEvents {
     fun onRegister(event: RegisterEvent) {
         // Recipe Serializer
         event.register(Registries.RECIPE_SERIALIZER) { helper: RegisterEvent.RegisterHelper<RecipeSerializer<*>> ->
-            HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipe> ->
+            for (type: HTRecipeType<out HTMachineRecipe> in HTRecipeTypes.ALL_TYPES) {
                 helper.register(RagiumAPI.id(type.toString()), type.serializer)
             }
         }
         // Recipe Type
         event.register(Registries.RECIPE_TYPE) { helper: RegisterEvent.RegisterHelper<RecipeType<*>> ->
-            HTRecipeTypes.ALL_TYPES.forEach { type: HTRecipeType<out HTMachineRecipe> ->
+            for (type: HTRecipeType<out HTMachineRecipe> in HTRecipeTypes.ALL_TYPES) {
                 helper.register(RagiumAPI.id(type.toString()), type)
             }
             LOGGER.info("Added machine recipe types!")

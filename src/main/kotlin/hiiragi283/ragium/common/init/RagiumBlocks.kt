@@ -15,19 +15,15 @@ import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
-import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
-import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.item.HTBlockItem
-import net.minecraft.core.BlockPos
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -63,13 +59,13 @@ object RagiumBlocks {
 
         fun build(): DeferredBlock<Block> {
             val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(name, blockProperties)
-            ITEM_REGISTER.register(name) { _: ResourceLocation -> HTBlockItem(holder.get(), itemProperties) }
+            ITEM_REGISTER.registerSimpleBlockItem(holder)
             return holder
         }
 
         fun <T : Block> build(factory: (BlockBehaviour.Properties) -> T): DeferredBlock<T> {
             val holder: DeferredBlock<T> = REGISTER.registerBlock(name, factory, blockProperties)
-            ITEM_REGISTER.register(name) { _: ResourceLocation -> HTBlockItem(holder.get(), itemProperties) }
+            ITEM_REGISTER.registerSimpleBlockItem(holder)
             return holder
         }
     }
@@ -287,7 +283,7 @@ object RagiumBlocks {
     //    Storage    //
 
     @JvmField
-    val CRATES: Map<HTCrateVariant, DeferredBlock<HTEntityBlock.Horizontal>> =
+    val CRATES: Map<HTCrateVariant, DeferredBlock<HTCrateBlock>> =
         HTCrateVariant.entries.associateWith { variant: HTCrateVariant ->
             Builder("${variant.serializedName}_crate")
                 .properties(
@@ -296,19 +292,14 @@ object RagiumBlocks {
                         .strength(2f)
                         .sound(SoundType.COPPER)
                         .requiresCorrectToolForDrops(),
-                ).build { properties: BlockBehaviour.Properties ->
-                    HTEntityBlock.horizontal(
-                        { pos: BlockPos, state: BlockState -> HTCrateBlockEntity(pos, state, variant) },
-                        properties,
-                    )
-                }
+                ).build { properties: BlockBehaviour.Properties -> HTCrateBlock(variant, properties) }
         }
 
     @JvmStatic
-    fun getCrate(variant: HTCrateVariant): DeferredBlock<HTEntityBlock.Horizontal> = CRATES[variant]!!
+    fun getCrate(variant: HTCrateVariant): DeferredBlock<HTCrateBlock> = CRATES[variant]!!
 
     @JvmField
-    val DRUMS: Map<HTDrumVariant, DeferredBlock<HTEntityBlock>> =
+    val DRUMS: Map<HTDrumVariant, DeferredBlock<HTDrumBlock>> =
         HTDrumVariant.entries.associateWith { variant: HTDrumVariant ->
             Builder("${variant.serializedName}_drum")
                 .properties(
@@ -317,11 +308,11 @@ object RagiumBlocks {
                         .strength(2f)
                         .sound(SoundType.COPPER)
                         .requiresCorrectToolForDrops(),
-                ).build { properties: BlockBehaviour.Properties -> HTEntityBlock.of(::HTDrumBlockEntity, properties) }
+                ).build { properties: BlockBehaviour.Properties -> HTDrumBlock(variant, properties) }
         }
 
     @JvmStatic
-    fun getDrum(variant: HTDrumVariant): DeferredBlock<HTEntityBlock> = DRUMS[variant]!!
+    fun getDrum(variant: HTDrumVariant): DeferredBlock<HTDrumBlock> = DRUMS[variant]!!
 
     //    Utility    //
 

@@ -131,7 +131,7 @@ class RagiumItemTagProvider(
     //    Food    //
 
     private fun foodTags() {
-        RagiumItems.FOODS.forEach { foodItem: DeferredItem<out Item> ->
+        for (foodItem: DeferredItem<out Item> in RagiumItems.FOODS) {
             if (foodItem.get().components().has(DataComponents.FOOD)) {
                 builder.add(Tags.Items.FOODS, foodItem)
             }
@@ -232,18 +232,17 @@ class RagiumItemTagProvider(
     //    Enchantment    //
 
     private fun enchantmentTags() {
-        buildList {
-            add(RagiumBlocks.MANUAL_GRINDER)
-            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+        fun machine(item: ItemLike) {
+            val holder: Holder.Reference<Item> = item.asHolder()
+            builder.add(ItemTags.DURABILITY_ENCHANTABLE, holder)
+            builder.add(ItemTags.MINING_ENCHANTABLE, holder)
+            builder.add(ItemTags.MINING_LOOT_ENCHANTABLE, holder)
+            builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, holder)
+        }
 
-            addAll(HTMachineType.getBlocks())
-        }.map(ItemLike::asHolder)
-            .forEach { holder: Holder.Reference<Item> ->
-                builder.add(ItemTags.DURABILITY_ENCHANTABLE, holder)
-                builder.add(ItemTags.MINING_ENCHANTABLE, holder)
-                builder.add(ItemTags.MINING_LOOT_ENCHANTABLE, holder)
-                builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, holder)
-            }
+        machine(RagiumBlocks.MANUAL_GRINDER)
+        machine(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+        HTMachineType.getBlocks().forEach(::machine)
 
         for (block: DeferredBlock<out HTEntityBlock> in buildList {
             addAll(RagiumBlocks.CRATES.values)

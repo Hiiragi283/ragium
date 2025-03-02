@@ -40,9 +40,11 @@ class RagiumBlockTagProvider(
         builder = HTTagBuilder(provider.blockLookup())
 
         // Mineable
-        HTMachineType.getBlocks().forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
+        for (block: DeferredBlock<*> in HTMachineType.getBlocks()) {
+            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, block)
+        }
 
-        buildList {
+        for (block: DeferredBlock<out Block> in buildList {
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
@@ -59,7 +61,9 @@ class RagiumBlockTagProvider(
 
             addAll(RagiumBlocks.ADDONS)
             addAll(RagiumBlocks.BURNERS)
-        }.forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
+        }) {
+            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, block)
+        }
 
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SLAG_BLOCK)
 
@@ -73,8 +77,8 @@ class RagiumBlockTagProvider(
         RagiumBlocks.RAGINITE_ORES.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder)
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder)
 
-        RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
-            val storageTag: TagKey<Block> = HTTagPrefix.BLOCK.createBlockTag(key) ?: return@forEach
+        for ((key: HTMaterialKey, storage: DeferredBlock<Block>) in RagiumBlocks.STORAGE_BLOCKS) {
+            val storageTag: TagKey<Block> = HTTagPrefix.BLOCK.createBlockTag(key) ?: continue
             builder.addTag(Tags.Blocks.STORAGE_BLOCKS, storageTag)
             builder.add(storageTag, storage)
 

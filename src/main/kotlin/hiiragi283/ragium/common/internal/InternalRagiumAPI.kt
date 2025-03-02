@@ -133,7 +133,7 @@ class InternalRagiumAPI : RagiumAPI {
             }
             // Item
             event.register(Registries.ITEM) { helper: RegisterEvent.RegisterHelper<Item> ->
-                blockMap.forEach { (_, holder: DeferredBlock<*>) ->
+                for ((_, holder: DeferredBlock<*>) in blockMap) {
                     helper.register(holder.id, BlockItem(holder.get(), itemProperty()))
                 }
             }

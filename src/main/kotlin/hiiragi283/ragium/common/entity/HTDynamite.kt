@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.entity
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.init.RagiumAttachmentTypes
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.entity.EntityType
@@ -27,7 +27,7 @@ class HTDynamite : ThrowableItemProjectile {
                 x,
                 y,
                 z,
-                RagiumAPI.getInstance().getDynamitePower(),
+                getData(RagiumAttachmentTypes.DYNAMITE_POWER),
                 false,
                 Level.ExplosionInteraction.TNT,
             )

@@ -37,7 +37,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         RagiumBlocks.PLASTIC_SETS.generateModels(this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.generateModels(this)
         // Machine
-        HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->
+        for (holder: DeferredBlock<*> in HTMachineType.getBlocks()) {
             getBuilder(holder).parent(ModelFile.UncheckedModelFile(holder.blockId))
         }
     }
@@ -73,11 +73,11 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .parent(ModelFile.UncheckedModelFile(RagiumAPI.id("item/fluid_cube")))
             .texture("inside", ResourceLocation.withDefaultNamespace("block/lava_still"))
 
-        listOf(
+        for (holder: DeferredItem<Item> in listOf(
             RagiumItems.MACHINE_CASING,
             RagiumItems.CHEMICAL_MACHINE_CASING,
             RagiumItems.PRECISION_MACHINE_CASING,
-        ).forEach { holder: DeferredItem<Item> ->
+        )) {
             val path: String = holder.id.path
             withExistingParent(path, RagiumAPI.id("block/machine_casing"))
                 .texture("side", RagiumAPI.id("block/${path}_side"))

@@ -14,7 +14,9 @@ fun <K : Any, V : Any> buildMultiMap(builderAction: HTMultiMap.Mutable<K, V>.() 
     multiMapOf<K, V>().apply(builderAction)
 
 fun <K : Any, V : Any> HTMultiMap<K, V>.forEach(action: (K, V) -> Unit) {
-    entries.forEach { (k: K, v: V) -> action(k, v) }
+    for ((k: K, v: V) in entries) {
+        action(k, v)
+    }
 }
 
 //    Table    //
@@ -43,7 +45,7 @@ fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.asPairMap(): Map<Pair<R, C>, V>
     entries.associate { (row: R, column: C, value: V) -> (row to column) to value }
 
 fun <R : Any, C : Any, V : Any> Map<Pair<R, C>, V>.toTable(): HTTable<R, C, V> = buildTable {
-    this@toTable.forEach { (pair: Pair<R, C>, value: V) ->
+    for ((pair: Pair<R, C>, value: V) in this@toTable) {
         put(pair.first, pair.second, value)
     }
 }

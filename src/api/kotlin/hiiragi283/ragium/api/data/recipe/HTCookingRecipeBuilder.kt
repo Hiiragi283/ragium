@@ -30,7 +30,7 @@ class HTCookingRecipeBuilder private constructor(
             types: Collection<Type> = setOf(Type.SMELTING),
         ): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
             types.toSet(),
-            CookingBookCategory.MISC,
+            category,
             input,
             output.asItem(),
             time,
@@ -66,7 +66,7 @@ class HTCookingRecipeBuilder private constructor(
     }
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        types.forEach { type: Type ->
+        for (type: Type in types) {
             saveInternal(recipeOutput, RagiumAPI.wrapId(id), type)
         }
     }

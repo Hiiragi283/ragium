@@ -16,7 +16,9 @@
   ],
   "results": [
     {
-      "item": "ragium:grinder"
+      "item": {
+        "id": "ragium:grinder"
+      }
     }
   ]
 }

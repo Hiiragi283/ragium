@@ -73,8 +73,7 @@ internal object RagiumGameEvents {
 
             override fun processData(definition: HTControllerDefinition, data: HTMultiblockData) {
                 // Get spawner data
-                val content: HTSpawnerContent =
-                    data.components.get(RagiumComponentTypes.SPAWNER_CONTENT.get()) ?: return
+                val content: HTSpawnerContent = data.get(RagiumComponentTypes.SPAWNER_CONTENT.get()) ?: return
                 // Break structure
                 getMultiblockMap().convertAbsolute(definition).forEach { posIn: BlockPos, _: HTMultiblockComponent ->
                     level.destroyBlock(posIn, false)

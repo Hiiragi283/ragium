@@ -230,7 +230,8 @@ abstract class HTMachineBlockEntity(
         placer: LivingEntity?,
         stack: ItemStack,
     ) {
-        if (placer is Player) this.ownerUUID = placer.uuid
+        if (placer == null) return
+        this.ownerUUID = placer.uuid
     }
 
     override fun onRemove(

@@ -28,6 +28,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::construct)
         eventBus.addListener(::commonSetup)
 
+        RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumComponentTypes.REGISTER.register(eventBus)
 
         RagiumFluids.init()

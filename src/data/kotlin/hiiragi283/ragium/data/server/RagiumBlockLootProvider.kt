@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreSets
-import hiiragi283.ragium.common.block.HTEntityBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -21,6 +21,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.neoforge.registries.DeferredBlock
+import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
@@ -35,7 +36,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             removeAll(RagiumBlocks.RAGINITE_ORES.ores)
             removeAll(RagiumBlocks.RAGI_CRYSTAL_ORES.ores)
-        }.forEach { dropSelf(it.get()) }
+        }.map(Supplier<out Block>::get).forEach(::dropSelf)
 
         fun registerOres(oreSets: HTOreSets, prefix: HTTagPrefix) {
             for (ore: DeferredBlock<Block> in oreSets.ores) {
@@ -46,7 +47,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         registerOres(RagiumBlocks.RAGINITE_ORES, HTTagPrefix.RAW_MATERIAL)
         registerOres(RagiumBlocks.RAGI_CRYSTAL_ORES, HTTagPrefix.GEM)
 
-        for (drum: DeferredBlock<HTEntityBlock> in RagiumBlocks.DRUMS.values) {
+        for (drum: DeferredBlock<HTDrumBlock> in RagiumBlocks.DRUMS.values) {
             add(drum.get()) {
                 copyComponent(
                     it,
@@ -56,7 +57,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             }
         }
 
-        HTMachineType.getBlocks().forEach { holder: DeferredBlock<*> ->
+        for (holder: DeferredBlock<*> in HTMachineType.getBlocks()) {
             add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }
         }
     }

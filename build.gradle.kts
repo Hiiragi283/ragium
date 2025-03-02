@@ -57,7 +57,7 @@ repositories {
     maven(url = "https://maven.parchmentmc.org")
     maven(url = "https://maven.saps.dev/releases")
     maven(url = "https://maven.theillusivec4.top/")
-    maven(url = "https://maven.blamejared.com/")
+    maven(url = "https://maven.blamejared.com/") // Patchouli
     maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/") {
         content { includeGroup("software.bernie.geckolib") } // GeckoLib
     }

@@ -15,7 +15,8 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTBuildingBlockSets
 import hiiragi283.ragium.api.util.HTCrateVariant
 import hiiragi283.ragium.api.util.HTDrumVariant
-import hiiragi283.ragium.common.block.HTEntityBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -99,18 +100,18 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     //    Components    //
 
     private fun registerBurners(output: RecipeOutput) {
-        RagiumBlocks.BURNERS.forEach { burner: DeferredBlock<Block> ->
+        for (burner: DeferredBlock<Block> in RagiumBlocks.BURNERS) {
             val core: ItemLike = when (burner) {
                 RagiumBlocks.MAGMA_BURNER -> Items.MAGMA_BLOCK
                 RagiumBlocks.SOUL_BURNER -> RagiumBlocks.SOUL_MAGMA_BLOCK
                 RagiumBlocks.FIERY_BURNER -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!
-                else -> return
+                else -> continue
             }
             val base: Item = when (burner) {
                 RagiumBlocks.MAGMA_BURNER -> Items.POLISHED_BLACKSTONE_BRICKS
                 RagiumBlocks.SOUL_BURNER -> Items.END_STONE_BRICKS
                 RagiumBlocks.FIERY_BURNER -> Items.RED_NETHER_BRICKS
-                else -> return
+                else -> continue
             }
             // Shaped Crafting
             HTShapedRecipeBuilder(burner)
@@ -125,7 +126,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     }
 
     private fun registerCrates(output: RecipeOutput) {
-        for ((variant: HTCrateVariant, crate: DeferredBlock<HTEntityBlock.Horizontal>) in RagiumBlocks.CRATES) {
+        for ((variant: HTCrateVariant, crate: DeferredBlock<HTCrateBlock>) in RagiumBlocks.CRATES) {
             // Shaped Crafting
             HTShapedRecipeBuilder(crate)
                 .pattern(
@@ -140,7 +141,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     }
 
     private fun registerDrums(output: RecipeOutput) {
-        for ((variant: HTDrumVariant, drum: DeferredBlock<HTEntityBlock>) in RagiumBlocks.DRUMS) {
+        for ((variant: HTDrumVariant, drum: DeferredBlock<HTDrumBlock>) in RagiumBlocks.DRUMS) {
             // Shaped Crafting
             HTShapedRecipeBuilder(drum)
                 .pattern(
@@ -188,7 +189,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .define('B', RagiumItems.LED)
             .save(output, RagiumAPI.id("led_block"))
 
-        RagiumBlocks.LED_BLOCKS.forEach { (color: DyeColor, block: DeferredBlock<Block>) ->
+        for ((color: DyeColor, block: DeferredBlock<Block>) in RagiumBlocks.LED_BLOCKS) {
             // Shaped Crafting
             HTShapedRecipeBuilder(block, 4, CraftingBookCategory.BUILDING)
                 .hollow8()

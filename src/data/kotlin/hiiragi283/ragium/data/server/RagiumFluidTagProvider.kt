@@ -34,7 +34,7 @@ class RagiumFluidTagProvider(
             builder.add(holder.commonTag, holder)
         }
 
-        RagiumVirtualFluids.entries.forEach { fluid: RagiumVirtualFluids ->
+        for (fluid: RagiumVirtualFluids in RagiumVirtualFluids.entries) {
             // Gaseous Tag
             if (fluid.textureType == RagiumVirtualFluids.TextureType.GASEOUS) {
                 builder.addTag(Tags.Fluids.GASEOUS, fluid.commonTag)

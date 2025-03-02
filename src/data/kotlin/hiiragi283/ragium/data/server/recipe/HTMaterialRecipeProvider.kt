@@ -27,9 +27,9 @@ import net.neoforged.neoforge.registries.DeferredItem
 object HTMaterialRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Ingot/Gem -> Block
-        RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, block: DeferredBlock<Block>) ->
+        for ((key: HTMaterialKey, block: DeferredBlock<Block>) in RagiumBlocks.STORAGE_BLOCKS) {
             val parent: HTTagPrefix = RagiumBlocks.getStorageParent(key)
-            val coreItem: DeferredItem<out Item> = RagiumItems.getMaterialMap(parent)[key] ?: return@forEach
+            val coreItem: DeferredItem<out Item> = RagiumItems.getMaterialMap(parent)[key] ?: continue
             HTShapedRecipeBuilder(block)
                 .hollow8()
                 .define('A', parent, key)
@@ -37,17 +37,15 @@ object HTMaterialRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
         // Block -> Ingot
-        RagiumItems
-            .getMaterialMap(HTTagPrefix.INGOT)
-            .forEach { (material: HTMaterialKey, ingot: DeferredItem<out Item>) ->
-                ShapelessRecipeBuilder
-                    .shapeless(RecipeCategory.MISC, ingot, 9)
-                    .requires(HTTagPrefix.BLOCK, material)
-                    .unlockedBy("has_ingot", has(HTTagPrefix.BLOCK, material))
-                    .savePrefixed(output)
-            }
+        for ((material: HTMaterialKey, ingot: DeferredItem<out Item>) in RagiumItems.getMaterialMap(HTTagPrefix.INGOT)) {
+            ShapelessRecipeBuilder
+                .shapeless(RecipeCategory.MISC, ingot, 9)
+                .requires(HTTagPrefix.BLOCK, material)
+                .unlockedBy("has_ingot", has(HTTagPrefix.BLOCK, material))
+                .savePrefixed(output)
+        }
         // Block -> Gem
-        RagiumItems.getMaterialMap(HTTagPrefix.GEM).forEach { (material: HTMaterialKey, gem: DeferredItem<out Item>) ->
+        for ((material: HTMaterialKey, gem: DeferredItem<out Item>) in RagiumItems.getMaterialMap(HTTagPrefix.GEM)) {
             ShapelessRecipeBuilder
                 .shapeless(RecipeCategory.MISC, gem, 9)
                 .requires(HTTagPrefix.BLOCK, material)
@@ -56,22 +54,20 @@ object HTMaterialRecipeProvider : HTRecipeProvider() {
         }
 
         // Ingot/Gem -> Gear
-        RagiumItems
-            .getMaterialMap(HTTagPrefix.GEAR)
-            .forEach { (material: HTMaterialKey, gear: DeferredItem<out Item>) ->
-                val parentPrefix: HTTagPrefix = material
-                    .getType()
-                    .getMainPrefix() ?: return@forEach
-                // Shaped Recipe
-                HTShapedRecipeBuilder(gear)
-                    .hollow4()
-                    .define('A', parentPrefix, material)
-                    .define('B', RagiumItems.FORGE_HAMMER)
-                    .save(output)
-            }
+        for ((material: HTMaterialKey, gear: DeferredItem<out Item>) in RagiumItems.getMaterialMap(HTTagPrefix.GEAR)) {
+            val parentPrefix: HTTagPrefix = material
+                .getType()
+                .getMainPrefix() ?: continue
+            // Shaped Recipe
+            HTShapedRecipeBuilder(gear)
+                .hollow4()
+                .define('A', parentPrefix, material)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .save(output)
+        }
 
         // Ingot -> Coil
-        RagiumItems.getMaterialMap(HTTagPrefix.COIL).forEach { (material: HTMaterialKey, coil: DeferredItem<out Item>) ->
+        for ((material: HTMaterialKey, coil: DeferredItem<out Item>) in RagiumItems.getMaterialMap(HTTagPrefix.COIL)) {
             // Shaped Crafting
             HTShapedRecipeBuilder(coil, 2)
                 .pattern(" A ")

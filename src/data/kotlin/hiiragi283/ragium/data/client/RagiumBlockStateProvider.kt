@@ -6,7 +6,8 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.util.HTCrateVariant
 import hiiragi283.ragium.api.util.HTDrumVariant
-import hiiragi283.ragium.common.block.HTEntityBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
@@ -52,18 +53,18 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.RAGI_CRYSTAL_ORES.generateStates(this)
 
         // Burner
-        RagiumBlocks.BURNERS.forEach { burner: DeferredBlock<Block> ->
+        for (burner: DeferredBlock<Block> in RagiumBlocks.BURNERS) {
             val core: ResourceLocation = when (burner) {
                 RagiumBlocks.MAGMA_BURNER -> ResourceLocation.withDefaultNamespace("magma")
                 RagiumBlocks.SOUL_BURNER -> RagiumAPI.id("soul_magma_block")
                 RagiumBlocks.FIERY_BURNER -> RagiumAPI.id("ultimate_burner")
-                else -> return
+                else -> continue
             }
             val base: ResourceLocation = when (burner) {
                 RagiumBlocks.MAGMA_BURNER -> "polished_blackstone_bricks"
                 RagiumBlocks.SOUL_BURNER -> "end_stone_bricks"
                 RagiumBlocks.FIERY_BURNER -> "red_nether_bricks"
-                else -> return
+                else -> continue
             }.let(ResourceLocation::withDefaultNamespace)
             simpleBlock(
                 burner.get(),
@@ -78,7 +79,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Crate
-        for ((variant: HTCrateVariant, crate: DeferredBlock<HTEntityBlock.Horizontal>) in RagiumBlocks.CRATES) {
+        for ((variant: HTCrateVariant, crate: DeferredBlock<HTCrateBlock>) in RagiumBlocks.CRATES) {
             val baseTexId: ResourceLocation = when (variant) {
                 HTCrateVariant.WOODEN -> ResourceLocation.withDefaultNamespace("oak_log")
                 HTCrateVariant.IRON -> ResourceLocation.withDefaultNamespace("iron_block")
@@ -100,7 +101,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Drum
-        for ((variant: HTDrumVariant, drum: DeferredBlock<HTEntityBlock>) in RagiumBlocks.DRUMS) {
+        for ((variant: HTDrumVariant, drum: DeferredBlock<HTDrumBlock>) in RagiumBlocks.DRUMS) {
             val baseTexId: ResourceLocation = when (variant) {
                 HTDrumVariant.COPPER -> ResourceLocation.withDefaultNamespace("copper_block")
                 HTDrumVariant.GOLD -> ResourceLocation.withDefaultNamespace("gold_block")
@@ -125,7 +126,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Manual Machine
         getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
-            BlockStateProperties.AGE_7.possibleValues.forEach { step: Int ->
+            for (step: Int in BlockStateProperties.AGE_7.possibleValues) {
                 val modelId: ResourceLocation = RagiumAPI.id(
                     when (step % 2 == 0) {
                         true -> "block/manual_grinder"
@@ -168,8 +169,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             .forEach(::simpleBlock)
 
         // Machine
-        HTMachineType.entries.forEach { type: HTMachineType ->
-            val block: Block = type.getBlock().get() ?: return@forEach
+        for (type: HTMachineType in HTMachineType.entries) {
+            val block: Block = type.getBlock().get() ?: continue
             getVariantBuilder(block)
                 .forAllStates { state: BlockState ->
                     ConfiguredModel

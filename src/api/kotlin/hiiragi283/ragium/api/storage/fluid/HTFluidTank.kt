@@ -7,8 +7,10 @@ import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.util.HTEnchantmentListener
 import hiiragi283.ragium.api.util.HTNbtCodec
+import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidUtil
 
@@ -17,6 +19,8 @@ abstract class HTFluidTank(private val validator: (HTFluidVariant) -> Boolean, p
     HTEnchantmentListener,
     HTNbtCodec {
     val stack: FluidStack get() = resource.toStack(amount)
+
+    fun canInsert(variant: HTFluidVariant, amount: Int): Boolean = insert(variant, amount, true) > 0
 
     fun canInsert(stack: FluidStack): Boolean = insert(stack, true) > 0
 
@@ -49,6 +53,8 @@ abstract class HTFluidTank(private val validator: (HTFluidVariant) -> Boolean, p
         fun setCapacity(capacity: Int): Builder = apply {
             this.capacity = capacity
         }
+
+        fun setValidator(tagKey: TagKey<Fluid>): Builder = setValidator { variant: HTFluidVariant -> variant.isIn(tagKey) }
 
         fun setValidator(validator: (HTFluidVariant) -> Boolean): Builder = apply {
             this.validator = validator
