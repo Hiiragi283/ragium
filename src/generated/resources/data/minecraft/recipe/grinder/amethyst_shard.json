@@ -1,10 +1,10 @@
 {
   "type": "ragium:grinder",
   "item_input": {
-    "tag": "c:storage_blocks/glowstone"
+    "tag": "c:storage_blocks/amethyst"
   },
   "item_output": {
     "count": 4,
-    "item": "minecraft:glowstone_dust"
+    "item": "minecraft:amethyst_shard"
   }
 }

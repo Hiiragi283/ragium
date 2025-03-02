@@ -300,7 +300,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
 
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(Items.AMETHYST_BLOCK, 64)
+            .itemInput(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST, 64)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 16)
             .itemInput(RagiumBlocks.OBSIDIAN_GLASS, 8)
             .itemOutput(RagiumItems.AMETHYST_LENS)

@@ -487,7 +487,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         // Budding Amethyst
         HTSingleItemRecipeBuilder
             .laser(lookup)
-            .itemInput(Items.AMETHYST_BLOCK, 4)
+            .itemInput(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST, 4)
             .catalyst(RagiumItems.AMETHYST_LENS)
             .itemOutput(Items.BUDDING_AMETHYST)
             .save(output)

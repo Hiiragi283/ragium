@@ -57,6 +57,14 @@ class RagiumItemTagProvider(
         }
     }
 
+    fun HTTagBuilder<Item>.addItem(prefix: HTTagPrefix, key: HTMaterialKey, item: Item) {
+        addItem(prefix.createTag(key), item)
+    }
+
+    fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: Item) {
+        add(tagKey, item.asHolder())
+    }    
+    
     //    Material    //
 
     private fun materialTags() {
@@ -83,8 +91,11 @@ class RagiumItemTagProvider(
             RagiumItemTags.COAL_COKE,
             HTTagBuilder.DependType.OPTIONAL,
         )
-        builder.add(HTTagPrefix.GEM.createTag(VanillaMaterials.COAL), Items.COAL.asHolder())
-        builder.add(HTTagPrefix.GEM.createTag(VanillaMaterials.NETHERITE_SCRAP), Items.NETHERITE_SCRAP.asHolder())
+
+        builder.addItem(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST, Items.AMETHYST_BLOCK)
+        builder.addItem(HTTagPrefix.BLOCK, VanillaMaterials.GLOWSTONE, Items.GLOWSTONE)
+        builder.addItem(HTTagPrefix.GEM, VanillaMaterials.COAL, Items.COAL)
+        builder.addItem(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP)
 
         // EIO
         addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, IntegrationMods.EIO, "energized_gear")
@@ -179,7 +190,7 @@ class RagiumItemTagProvider(
         builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
         builder.add(Tags.Items.SLIMEBALLS, RagiumItems.TAR)
 
-        builder.add(RagiumItemTags.PAPER, Items.PAPER.asHolder())
+        builder.addItem(RagiumItemTags.PAPER, Items.PAPER)
 
         builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
         builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
@@ -191,15 +202,15 @@ class RagiumItemTagProvider(
 
         builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
 
-        builder.add(RagiumItemTags.DIRT_SOILS, Items.FARMLAND.asHolder())
+        builder.addItem(RagiumItemTags.DIRT_SOILS, Items.FARMLAND)
         builder.add(RagiumItemTags.DIRT_SOILS, IntegrationMods.FD, "rich_soil", HTTagBuilder.DependType.OPTIONAL)
-        // builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL_FARMLAND.get().asHolder(), HTTagBuilder.DependType.OPTIONAL)
+        // builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL_FARMLAND.get(), HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(RagiumItemTags.DIRT_SOILS, ItemTags.DIRT)
 
-        builder.add(RagiumItemTags.MUSHROOM_SOILS, Items.MYCELIUM.asHolder())
+        builder.addItem(RagiumItemTags.MUSHROOM_SOILS, Items.MYCELIUM)
 
-        builder.add(RagiumItemTags.NETHER_SOILS, Items.CRIMSON_NYLIUM.asHolder())
-        builder.add(RagiumItemTags.NETHER_SOILS, Items.WARPED_NYLIUM.asHolder())
+        builder.addItem(RagiumItemTags.NETHER_SOILS, Items.CRIMSON_NYLIUM)
+        builder.addItem(RagiumItemTags.NETHER_SOILS, Items.WARPED_NYLIUM)
 
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
 

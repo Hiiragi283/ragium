@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -99,10 +100,17 @@ object HTAlternativeRecipeProvider : HTRecipeProvider() {
         // Glowstone
         HTSingleItemRecipeBuilder
             .grinder(lookup)
-            .itemInput(Items.GLOWSTONE)
+            .itemInput(HTTagPrefix.BLOCK, VanillaMaterials.GLOWSTONE)
             .itemOutput(Items.GLOWSTONE_DUST, 4)
             .save(output)
 
+        // Amethyst
+        HTSingleItemRecipeBuilder
+            .grinder(lookup)
+            .itemInput(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST)
+            .itemOutput(Items.AMETHYST_SHARD, 4)
+            .save(output)
+        
         // Iron Ingot
         HTCookingRecipeBuilder
             .create(

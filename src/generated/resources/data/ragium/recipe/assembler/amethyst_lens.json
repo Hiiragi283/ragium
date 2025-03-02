@@ -3,7 +3,7 @@
   "item_inputs": [
     {
       "count": 64,
-      "item": "minecraft:amethyst_block"
+      "tag": "c:storage_blocks/amethyst"
     },
     {
       "count": 16,
