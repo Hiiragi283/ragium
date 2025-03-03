@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTDisenchanterContainerMenu(
+class HTDisenchanterMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,

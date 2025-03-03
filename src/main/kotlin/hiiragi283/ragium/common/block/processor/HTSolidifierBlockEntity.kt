@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.inventory.HTSolidifierContainerMenu
+import hiiragi283.ragium.common.inventory.HTSolidifierMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -69,7 +69,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTSolidifierContainerMenu(containerId, playerInventory, blockPos, catalystSlot, outputSlot)
+        HTSolidifierMenu(containerId, playerInventory, blockPos, catalystSlot, outputSlot)
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         super.onUpdateEnchantment(newEnchantments)

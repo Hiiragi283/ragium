@@ -1,40 +1,43 @@
 package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
+import hiiragi283.ragium.api.inventory.HTMachineMenu
+import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTMixerContainerMenu(
+class HTPrimitiveBlastFurnaceMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
-    inputSlot: HTItemSlot,
-) : HTMachineContainerMenu(RagiumMenuTypes.MIXER, containerId, inventory, pos) {
+    firstItemSlot: HTItemSlot,
+    secondItemSlot: HTItemSlot,
+    outputSlot: HTItemSlot,
+) : HTMachineMenu(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE, containerId, inventory, pos) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
         RagiumAPI.getInstance().emptyItemSlot(),
+        RagiumAPI.getInstance().emptyItemSlot(),
+        RagiumAPI.getInstance().emptyItemSlot(),
     )
 
     init {
         // inputs
-        addSlot(inputSlot.createContainerSlot(1, 1))
-        addFluidSlot(0, 2, 1)
-        addFluidSlot(1, 3, 1)
+        addSlot(firstItemSlot.createContainerSlot(1, 1))
+        addSlot(secondItemSlot.createContainerSlot(3, 1))
         // outputs
-        // addSlot(outputSlot.createContainerSlot(6, 1, HTStorageIO.OUTPUT))
-        addFluidSlot(2, 7, 1)
+        addSlot(outputSlot.createContainerSlot(6, 1, HTStorageIO.OUTPUT))
         // player inventory
         addPlayerInv()
         // register property
         addDataSlots()
     }
 
-    override val inputSlots: IntRange = IntRange.EMPTY
-    override val outputSlots: IntRange = (0..0)
+    override val inputSlots: IntRange = (0..1)
+    override val outputSlots: IntRange = (2..2)
 }

@@ -1,41 +1,40 @@
 package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
-import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.inventory.HTMachineMenu
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTExtractorContainerMenu(
+class HTMixerMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
     inputSlot: HTItemSlot,
-    outputSlot: HTItemSlot,
-) : HTMachineContainerMenu(RagiumMenuTypes.EXTRACTOR, containerId, inventory, pos) {
+) : HTMachineMenu(RagiumMenuTypes.MIXER, containerId, inventory, pos) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
         RagiumAPI.getInstance().emptyItemSlot(),
-        RagiumAPI.getInstance().emptyItemSlot(),
     )
 
     init {
         // inputs
-        addSlot(inputSlot.createContainerSlot(2, 1))
+        addSlot(inputSlot.createContainerSlot(1, 1))
+        addFluidSlot(0, 2, 1)
+        addFluidSlot(1, 3, 1)
         // outputs
-        addSlot(outputSlot.createContainerSlot(6, 1, HTStorageIO.OUTPUT))
-        addFluidSlot(0, 7, 1)
+        // addSlot(outputSlot.createContainerSlot(6, 1, HTStorageIO.OUTPUT))
+        addFluidSlot(2, 7, 1)
         // player inventory
         addPlayerInv()
         // register property
         addDataSlots()
     }
 
-    override val inputSlots: IntRange = (0..0)
-    override val outputSlots: IntRange = (1..1)
+    override val inputSlots: IntRange = IntRange.EMPTY
+    override val outputSlots: IntRange = (0..0)
 }

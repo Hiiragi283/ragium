@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.screen
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
+import hiiragi283.ragium.api.inventory.HTMachineMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -9,7 +9,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.fluids.FluidStack
 
-abstract class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, inventory: Inventory, title: Component) :
+abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory, title: Component) :
     HTContainerScreen<T>(menu, inventory, title) {
     abstract val texture: ResourceLocation
 

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.network
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.inventory.HTPotionBundleContainerMenu
+import hiiragi283.ragium.common.inventory.HTPotionBundleMenu
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
@@ -24,7 +24,7 @@ data object HTPotionBundlePacket : CustomPacketPayload {
         context.player().openMenu(
             SimpleMenuProvider(
                 { containerId: Int, inventory: Inventory, _: Player ->
-                    HTPotionBundleContainerMenu(
+                    HTPotionBundleMenu(
                         containerId,
                         inventory,
                     )

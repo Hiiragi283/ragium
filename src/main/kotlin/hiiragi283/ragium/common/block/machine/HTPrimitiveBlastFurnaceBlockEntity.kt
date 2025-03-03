@@ -16,7 +16,7 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
-import hiiragi283.ragium.common.inventory.HTPrimitiveBlastFurnaceContainerMenu
+import hiiragi283.ragium.common.inventory.HTPrimitiveBlastFurnaceMenu
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
@@ -86,7 +86,7 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         if (validateMultiblock(this, player).isSuccess) {
-            HTPrimitiveBlastFurnaceContainerMenu(
+            HTPrimitiveBlastFurnaceMenu(
                 containerId,
                 playerInventory,
                 blockPos,

@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
-import hiiragi283.ragium.common.inventory.HTBlastFurnaceContainerMenu
+import hiiragi283.ragium.common.inventory.HTBlastFurnaceMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
@@ -34,7 +34,7 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
         if (validateMultiblock(this, player).isSuccess) {
-            HTBlastFurnaceContainerMenu(
+            HTBlastFurnaceMenu(
                 containerId,
                 playerInventory,
                 blockPos,

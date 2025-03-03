@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.inventory.HTMixerContainerMenu
+import hiiragi283.ragium.common.inventory.HTMixerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -78,7 +78,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTMixerContainerMenu(containerId, playerInventory, blockPos, inputSlot)
+        HTMixerMenu(containerId, playerInventory, blockPos, inputSlot)
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         super.onUpdateEnchantment(newEnchantments)

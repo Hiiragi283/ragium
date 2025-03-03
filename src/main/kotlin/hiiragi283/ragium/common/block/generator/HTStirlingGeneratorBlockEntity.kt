@@ -15,7 +15,7 @@ import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.internal.RagiumConfig
-import hiiragi283.ragium.common.inventory.HTInfuserContainerMenu
+import hiiragi283.ragium.common.inventory.HTInfuserMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -85,7 +85,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        HTInfuserContainerMenu(containerId, playerInventory, blockPos, inputSlot, outputSlot)
+        HTInfuserMenu(containerId, playerInventory, blockPos, inputSlot, outputSlot)
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         super.onUpdateEnchantment(newEnchantments)

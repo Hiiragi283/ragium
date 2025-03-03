@@ -8,7 +8,7 @@ import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.inventory.SimpleContainerData
 import java.util.function.Supplier
 
-abstract class HTMachineContainerMenu(
+abstract class HTMachineMenu(
     menuType: Supplier<out MenuType<*>>,
     containerId: Int,
     inventory: Inventory,

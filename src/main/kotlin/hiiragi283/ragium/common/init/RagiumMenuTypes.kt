@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
+import hiiragi283.ragium.api.inventory.HTMachineMenu
 import hiiragi283.ragium.common.inventory.*
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -16,65 +16,62 @@ object RagiumMenuTypes {
     val REGISTER: DeferredRegister<MenuType<*>> = DeferredRegister.create(Registries.MENU, RagiumAPI.MOD_ID)
 
     @JvmField
-    val POTION_BUNDLE: DeferredHolder<MenuType<*>, MenuType<HTPotionBundleContainerMenu>> =
+    val POTION_BUNDLE: DeferredHolder<MenuType<*>, MenuType<HTPotionBundleMenu>> =
         REGISTER.register("potion_bundle") { _: ResourceLocation ->
-            MenuType(::HTPotionBundleContainerMenu, FeatureFlags.VANILLA_SET)
+            MenuType(::HTPotionBundleMenu, FeatureFlags.VANILLA_SET)
         }
 
     //    Machine    //
 
     @JvmStatic
-    fun <T : HTMachineContainerMenu> registerMachine(
-        path: String,
-        factory: IContainerFactory<T>,
-    ): DeferredHolder<MenuType<*>, MenuType<T>> =
+    fun <T : HTMachineMenu> registerMachine(path: String, factory: IContainerFactory<T>): DeferredHolder<MenuType<*>, MenuType<T>> =
         REGISTER.register(path) { _: ResourceLocation -> MenuType(factory, FeatureFlags.VANILLA_SET) }
 
     @JvmField
-    val ASSEMBLER: DeferredHolder<MenuType<*>, MenuType<HTAssemblerContainerMenu>> =
-        registerMachine("assembler", ::HTAssemblerContainerMenu)
+    val ASSEMBLER: DeferredHolder<MenuType<*>, MenuType<HTAssemblerMenu>> =
+        registerMachine("assembler", ::HTAssemblerMenu)
 
     @JvmField
-    val BLAST_FURNACE: DeferredHolder<MenuType<*>, MenuType<HTBlastFurnaceContainerMenu>> =
-        registerMachine("blast_furnace", ::HTBlastFurnaceContainerMenu)
+    val BLAST_FURNACE: DeferredHolder<MenuType<*>, MenuType<HTBlastFurnaceMenu>> =
+        registerMachine("blast_furnace", ::HTBlastFurnaceMenu)
 
     @JvmField
-    val BREWERY: DeferredHolder<MenuType<*>, MenuType<HTBreweryContainerMenu>> =
-        registerMachine("brewery", ::HTBreweryContainerMenu)
+    val BREWERY: DeferredHolder<MenuType<*>, MenuType<HTBreweryMenu>> =
+        registerMachine("brewery", ::HTBreweryMenu)
 
     @JvmField
-    val EXTRACTOR: DeferredHolder<MenuType<*>, MenuType<HTExtractorContainerMenu>> =
-        registerMachine("extractor", ::HTExtractorContainerMenu)
+    val EXTRACTOR: DeferredHolder<MenuType<*>, MenuType<HTExtractorMenu>> =
+        registerMachine("extractor", ::HTExtractorMenu)
 
     @JvmField
-    val INFUSER: DeferredHolder<MenuType<*>, MenuType<HTInfuserContainerMenu>> =
-        registerMachine("infuser", ::HTInfuserContainerMenu)
+    val INFUSER: DeferredHolder<MenuType<*>, MenuType<HTInfuserMenu>> =
+        registerMachine("infuser", ::HTInfuserMenu)
 
     @JvmField
-    val LASER_ASSEMBLY: DeferredHolder<MenuType<*>, MenuType<HTLaserAssemblyContainerMenu>> =
-        registerMachine("laser_assembly", ::HTLaserAssemblyContainerMenu)
+    val LASER_ASSEMBLY: DeferredHolder<MenuType<*>, MenuType<HTLaserAssemblyMenu>> =
+        registerMachine("laser_assembly", ::HTLaserAssemblyMenu)
 
     @JvmField
-    val MIXER: DeferredHolder<MenuType<*>, MenuType<HTMixerContainerMenu>> =
-        registerMachine("mixer", ::HTMixerContainerMenu)
+    val MIXER: DeferredHolder<MenuType<*>, MenuType<HTMixerMenu>> =
+        registerMachine("mixer", ::HTMixerMenu)
 
     @JvmField
-    val MULTI_SMELTER: DeferredHolder<MenuType<*>, MenuType<HTMultiSmelterContainerMenu>> =
-        registerMachine("multi_smelter", ::HTMultiSmelterContainerMenu)
+    val MULTI_SMELTER: DeferredHolder<MenuType<*>, MenuType<HTMultiSmelterMenu>> =
+        registerMachine("multi_smelter", ::HTMultiSmelterMenu)
 
     @JvmField
-    val PRIMITIVE_BLAST_FURNACE: DeferredHolder<MenuType<*>, MenuType<HTPrimitiveBlastFurnaceContainerMenu>> =
-        registerMachine("primitive_blast_furnace", ::HTPrimitiveBlastFurnaceContainerMenu)
+    val PRIMITIVE_BLAST_FURNACE: DeferredHolder<MenuType<*>, MenuType<HTPrimitiveBlastFurnaceMenu>> =
+        registerMachine("primitive_blast_furnace", ::HTPrimitiveBlastFurnaceMenu)
 
     @JvmField
-    val REFINERY: DeferredHolder<MenuType<*>, MenuType<HTRefineryContainerMenu>> =
-        registerMachine("refinery", ::HTRefineryContainerMenu)
+    val REFINERY: DeferredHolder<MenuType<*>, MenuType<HTRefineryMenu>> =
+        registerMachine("refinery", ::HTRefineryMenu)
 
     @JvmField
-    val SINGLE_ITEM: DeferredHolder<MenuType<*>, MenuType<HTSingleItemContainerMenu>> =
-        registerMachine("single_item", ::HTSingleItemContainerMenu)
+    val SINGLE_ITEM: DeferredHolder<MenuType<*>, MenuType<HTSingleItemMenu>> =
+        registerMachine("single_item", ::HTSingleItemMenu)
 
     @JvmField
-    val SOLIDIFIER: DeferredHolder<MenuType<*>, MenuType<HTSolidifierContainerMenu>> =
-        registerMachine("solidifier", ::HTSolidifierContainerMenu)
+    val SOLIDIFIER: DeferredHolder<MenuType<*>, MenuType<HTSolidifierMenu>> =
+        registerMachine("solidifier", ::HTSolidifierMenu)
 }

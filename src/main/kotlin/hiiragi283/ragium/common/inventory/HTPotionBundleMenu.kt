@@ -18,7 +18,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionContents
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTPotionBundleContainerMenu(containerId: Int, inventory: Inventory) :
+class HTPotionBundleMenu(containerId: Int, inventory: Inventory) :
     HTContainerMenu(
         RagiumMenuTypes.POTION_BUNDLE,
         containerId,

@@ -2,13 +2,13 @@ package hiiragi283.ragium.client.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.screen.HTContainerScreen
-import hiiragi283.ragium.common.inventory.HTPotionBundleContainerMenu
+import hiiragi283.ragium.common.inventory.HTPotionBundleMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
-class HTPotionBundleContainer(menu: HTPotionBundleContainerMenu, inventory: Inventory, title: Component) :
-    HTContainerScreen<HTPotionBundleContainerMenu>(menu, inventory, title) {
+class HTPotionBundleScreen(menu: HTPotionBundleMenu, inventory: Inventory, title: Component) :
+    HTContainerScreen<HTPotionBundleMenu>(menu, inventory, title) {
     init {
         imageHeight = 130
         inventoryLabelY = imageHeight - 94
