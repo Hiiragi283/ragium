@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.integration.RagiumMekIntegration
+import hiiragi283.ragium.integration.RagiumMekAddon
 import mekanism.api.datagen.recipe.builder.*
 import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
@@ -57,7 +57,7 @@ object HTMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.MEK) {
                 .dissolution(
                     itemAccess.from(input.createTag(RagiumMaterials.RAGINITE), countIn),
                     chemicalAccess.from(MekanismChemicals.SULFURIC_ACID, 100),
-                    RagiumMekIntegration.RAGINITE_SLURRY.dirtySlurry.getStack(countOut),
+                    RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.getStack(countOut),
                     true,
                 ).build(output, RagiumAPI.id("processing/raginite/slurry/from_${input.serializedName}"))
         }
@@ -68,14 +68,14 @@ object HTMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.MEK) {
         FluidChemicalToChemicalRecipeBuilder
             .washing(
                 fluidAccess.from(Tags.Fluids.WATER, 5),
-                chemicalAccess.from(RagiumMekIntegration.RAGINITE_SLURRY.dirtySlurry, 1),
-                RagiumMekIntegration.RAGINITE_SLURRY.cleanSlurry.getStack(1),
+                chemicalAccess.from(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry, 1),
+                RagiumMekAddon.RAGINITE_SLURRY.cleanSlurry.getStack(1),
             ).build(output, RagiumAPI.id("processing/raginite/slurry/clean"))
 
         // Clean Slurry -> Crystal
         ChemicalCrystallizerRecipeBuilder
             .crystallizing(
-                chemicalAccess.from(RagiumMekIntegration.RAGINITE_SLURRY.cleanSlurry, 200),
+                chemicalAccess.from(RagiumMekAddon.RAGINITE_SLURRY.cleanSlurry, 200),
                 RagiumItems.getMaterialItem(HTTagPrefix.CRYSTAL, RagiumMaterials.RAGINITE).toStack(),
             ).build(output, RagiumAPI.id("processing/raginite/crystal/from_clean"))
 

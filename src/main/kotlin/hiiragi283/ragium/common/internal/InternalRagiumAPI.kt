@@ -4,6 +4,8 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.addon.HTAddonCollector
+import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.extension.itemProperty
@@ -24,6 +26,7 @@ import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
+import hiiragi283.ragium.common.storage.item.HTSculkItemStorage
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.core.registries.Registries
@@ -31,6 +34,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
@@ -39,6 +43,7 @@ import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.fluids.capability.templates.EmptyFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.RegisterEvent
@@ -49,6 +54,23 @@ import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 class InternalRagiumAPI : RagiumAPI {
     init {
         MOD_BUS.addListener(::onBlockRegister)
+    }
+
+    //    Addon    //
+
+    private lateinit var addonCache: List<RagiumAddon>
+
+    override fun getAddons(): List<RagiumAddon> {
+        if (!::addonCache.isInitialized) {
+            LOGGER.info("Collecting addons for Ragium...")
+            addonCache = HTAddonCollector
+                .collectInstances<RagiumAddon>()
+                .sortedBy(RagiumAddon::priority)
+                .onEach { addon: RagiumAddon ->
+                    LOGGER.info("Loaded addon from ${addon::class.qualifiedName}!")
+                }
+        }
+        return addonCache
     }
 
     //    Material    //
@@ -62,6 +84,11 @@ class InternalRagiumAPI : RagiumAPI {
     override fun getCurrentSide(): LogicalSide = EffectiveSide.get()
 
     override fun getEnergyNetwork(level: ServerLevel): IEnergyStorage = level.getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
+
+    override fun getSculkItemStorage(level: ServerLevel, color: DyeColor): IItemHandlerModifiable =
+        level.getServerSavedData(HTSculkItemStorage.DATA_FACTORY).getHandler(color)
+
+    override fun getSculkFluidTank(level: ServerLevel, color: DyeColor): IFluidHandler = EmptyFluidHandler.INSTANCE
 
     //    Durability    //
 

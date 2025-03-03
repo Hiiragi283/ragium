@@ -27,8 +27,8 @@ class RagiumBlockModelProvider(output: PackOutput, existingFileHelper: ExistingF
         basicMachine(HTMachineType.BLAST_FURNACE)
         basicMachine(HTMachineType.COMPRESSOR)
         basicMachine(HTMachineType.CRUSHER)
+        basicMachine(HTMachineType.ELECTRIC_FURNACE)
         basicMachine(HTMachineType.GRINDER)
-        basicMachine(HTMachineType.MULTI_SMELTER)
 
         fun chemicalMachine(type: HTMachineType) {
             getBuilder(type.getBlock())

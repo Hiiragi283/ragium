@@ -20,11 +20,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:multi_smelter"
+          "name": "ragium:auto_chisel"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/multi_smelter"
+  "random_sequence": "ragium:blocks/auto_chisel"
 }

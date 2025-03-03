@@ -17,7 +17,7 @@ import hiiragi283.ragium.api.util.HTDrumVariant
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.integration.RagiumMekIntegration
+import hiiragi283.ragium.integration.RagiumMekAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.DyeColor
@@ -102,8 +102,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.ENERGY_NETWORK_INTERFACE, "Connect to Energy Network")
         add(RagiumTranslationKeys.SLAG_COLLECTOR, "Generate Slag when adjacent Large Blast Furnace processed")
         // Chemical
-        add(RagiumMekIntegration.RAGINITE_SLURRY.cleanSlurry.translationKey, "Clean Raginite Slurry")
-        add(RagiumMekIntegration.RAGINITE_SLURRY.dirtySlurry.translationKey, "Dirty Raginite Slurry")
+        add(RagiumMekAddon.RAGINITE_SLURRY.cleanSlurry.translationKey, "Clean Raginite Slurry")
+        add(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.translationKey, "Dirty Raginite Slurry")
         // Content
         add(HTOreVariant.OVERWORLD, "%s Ore")
         add(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
@@ -323,16 +323,17 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTMachineType.ALCHEMICAL_BREWERY, "Alchemical Brewery", "Sequential Brewing")
         add(HTMachineType.ARCANE_ENCHANTER, "Arcane Enchanter", "Stable Enchanting")
         add(HTMachineType.ASSEMBLER, "Assembler", "You are the genius!")
+        add(HTMachineType.AUTO_CHISEL, "Auto Chisel", "Automated Stonecutter")
         add(HTMachineType.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
         add(HTMachineType.COMPRESSOR, "Compressor", "saves.zip.zip")
         add(HTMachineType.CRUSHER, "Crusher", "Crush Up!")
+        add(HTMachineType.ELECTRIC_FURNACE, "Electric Furnace", "Smelting with energy or below heat")
         add(HTMachineType.EXTRACTOR, "Extractor", "Something like Centrifuge")
         add(HTMachineType.GRINDER, "Grinder", "Unbreakable Diamond")
         add(HTMachineType.GROWTH_CHAMBER, "Growth Chamber", "Growth Gran-ma")
         add(HTMachineType.INFUSER, "Infuser", "Something not like Centrifuge")
         add(HTMachineType.LASER_ASSEMBLY, "Laser Assembly", "Laser On...")
         add(HTMachineType.MIXER, "Mixer", "Best Match!")
-        add(HTMachineType.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
         add(HTMachineType.REFINERY, "Refinery", "Project Build")
         add(HTMachineType.SOLIDIFIER, "Solidifier", "Uncontrol Switch! Black Hazard!")
         // Material

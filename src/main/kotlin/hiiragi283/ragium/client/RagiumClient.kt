@@ -4,15 +4,16 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.renderer.HTFlareRenderer
 import hiiragi283.ragium.client.screen.*
-import hiiragi283.ragium.common.init.*
-import net.createmod.ponder.foundation.PonderIndex
+import hiiragi283.ragium.common.init.RagiumEntityTypes
+import hiiragi283.ragium.common.init.RagiumFluidTypes
+import hiiragi283.ragium.common.init.RagiumMenuTypes
+import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
@@ -29,7 +30,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::registerClientExtensions)
         eventBus.addListener(::registerMenu)
         eventBus.addListener(::registerBlockEntityRenderer)
-        eventBus.addListener(::clientSetup)
     }
 
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
@@ -94,11 +94,5 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.registerEntityRenderer(RagiumEntityTypes.FLARE.get(), ::HTFlareRenderer)
 
         LOGGER.info("Registered BlockEntityRenderers!")
-    }
-
-    private fun clientSetup(event: FMLClientSetupEvent) {
-        PonderIndex.addPlugin(RagiumPonderPlugin)
-
-        LOGGER.info("Loaded client setup!")
     }
 }

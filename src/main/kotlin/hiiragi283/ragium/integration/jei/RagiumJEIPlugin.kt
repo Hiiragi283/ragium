@@ -18,6 +18,7 @@ import hiiragi283.ragium.integration.jei.entry.HTSoapEntry
 import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
+import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.helpers.IJeiHelpers
 import mezz.jei.api.registration.IGuiHandlerRegistration
@@ -220,5 +221,11 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MATERIAL_INFO, Items.IRON_INGOT)
         // Soap
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.SOAP, RagiumItems.SOAP)
+        
+        // Vanilla
+        registration.addRecipeCatalyst(HTMachineType.AUTO_CHISEL, RecipeTypes.STONECUTTING)
+        registration.addRecipeCatalyst(HTMachineType.ELECTRIC_FURNACE, RecipeTypes.BLASTING)
+        registration.addRecipeCatalyst(HTMachineType.ELECTRIC_FURNACE, RecipeTypes.SMELTING)
+        registration.addRecipeCatalyst(HTMachineType.ELECTRIC_FURNACE, RecipeTypes.SMOKING)
     }
 }

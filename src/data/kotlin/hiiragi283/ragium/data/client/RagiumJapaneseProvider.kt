@@ -17,7 +17,7 @@ import hiiragi283.ragium.api.util.HTDrumVariant
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.integration.RagiumMekIntegration
+import hiiragi283.ragium.integration.RagiumMekAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.DyeColor
@@ -102,8 +102,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.ENERGY_NETWORK_INTERFACE, "エネルギーネットワークに接続する")
         add(RagiumTranslationKeys.SLAG_COLLECTOR, "隣接した大型高炉が処理を行った際にスラグを生成する")
         // Chemical
-        add(RagiumMekIntegration.RAGINITE_SLURRY.cleanSlurry.translationKey, "純粋なラギナイトの懸濁液")
-        add(RagiumMekIntegration.RAGINITE_SLURRY.dirtySlurry.translationKey, "汚れたラギナイトの懸濁液")
+        add(RagiumMekAddon.RAGINITE_SLURRY.cleanSlurry.translationKey, "純粋なラギナイトの懸濁液")
+        add(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.translationKey, "汚れたラギナイトの懸濁液")
         // Content
         add(HTOreVariant.OVERWORLD, "%s鉱石")
         add(HTOreVariant.DEEPSLATE, "深層%s鉱石")
@@ -303,15 +303,16 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTMachineType.ALCHEMICAL_BREWERY, "錬金醸造機", "連続した醸造")
         add(HTMachineType.ARCANE_ENCHANTER, "神秘的エンチャント機", "安定したエンチャント")
         add(HTMachineType.ASSEMBLER, "組立機", "君こそが天才だ!")
+        add(HTMachineType.AUTO_CHISEL, "自動彫刻機", "自動化した石切台")
         add(HTMachineType.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
         add(HTMachineType.COMPRESSOR, "圧縮機", "saves.zip.zip")
         add(HTMachineType.CRUSHER, "破砕機", "Crush Up!")
+        add(HTMachineType.ELECTRIC_FURNACE, "電気かまど", "エネルギーまたは下部の熱源で製錬する")
         add(HTMachineType.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
         add(HTMachineType.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
         add(HTMachineType.GROWTH_CHAMBER, "成長チャンバー", "成長バーチャン")
         add(HTMachineType.INFUSER, "注入機", "遠心分離機みたくないやつ")
         add(HTMachineType.LASER_ASSEMBLY, "レーザーアセンブリ", "レーザーオン…")
-        add(HTMachineType.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
         add(HTMachineType.MIXER, "ミキサー", "ベストマッチ!")
         add(HTMachineType.REFINERY, "精製機", "プロジェクト・ビルド")
         add(HTMachineType.SOLIDIFIER, "固体成形機", "アンコントールスイッチ！ブラックハザード！")

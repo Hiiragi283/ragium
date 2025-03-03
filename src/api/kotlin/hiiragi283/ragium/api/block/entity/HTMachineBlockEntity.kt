@@ -43,6 +43,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.*
 import java.util.function.Supplier
 import kotlin.math.max
+import kotlin.math.roundToInt
 
 /**
  * 機械のベースとなる[HTBlockEntity]
@@ -113,12 +114,12 @@ abstract class HTMachineBlockEntity(
         this.enchantments = newEnchantments
         // Efficiency -> Increase process speed
         val effLevel: Int = getEnchantmentLevel(Enchantments.EFFICIENCY)
-        if (effLevel > 0) {
-            this.tickRate = max(baseTickRate / 10, baseTickRate * (10 - effLevel))
+        if (effLevel in (1..9)) {
+            this.tickRate = (baseTickRate * ((10 - effLevel) / 10f)).roundToInt()
         }
         // Unbreaking -> Decrease energy cost
         this.costModifier =
-            max(1, getEnchantmentLevel(Enchantments.EFFICIENCY) - getEnchantmentLevel(Enchantments.UNBREAKING))
+            max(1, effLevel - getEnchantmentLevel(Enchantments.UNBREAKING))
     }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")

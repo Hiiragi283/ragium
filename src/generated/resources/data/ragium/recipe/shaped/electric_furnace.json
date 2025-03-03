@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:rods/blaze"
+      "tag": "c:storage_blocks/copper"
     },
     "B": {
       "item": "minecraft:furnace"
@@ -28,6 +28,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:multi_smelter"
+    "id": "ragium:electric_furnace"
   }
 }

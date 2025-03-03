@@ -40,7 +40,7 @@ data class HTItemVariant private constructor(override val holder: Holder<Item>, 
         }
 
         override val isEmpty: Boolean
-            get() = toStack().isEmpty
+            get() = this == EMPTY || holder.isOf(Items.AIR)
 
         fun isOf(stack: ItemStack): Boolean {
             if (stack.isEmpty) return this.isEmpty
@@ -49,5 +49,8 @@ data class HTItemVariant private constructor(override val holder: Holder<Item>, 
 
         fun isIn(tagKey: TagKey<Item>): Boolean = holder.`is`(tagKey)
 
-        fun toStack(count: Int = 1): ItemStack = ItemStack(holder, count, components)
+        fun toStack(count: Int = 1): ItemStack = when {
+            isEmpty -> ItemStack.EMPTY
+            else -> ItemStack(holder, count, components)
+        }
     }

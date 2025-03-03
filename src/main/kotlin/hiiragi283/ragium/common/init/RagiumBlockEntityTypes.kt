@@ -96,6 +96,10 @@ object RagiumBlockEntityTypes {
         register("assembler", ::HTAssemblerBlockEntity, HTMachineType.ASSEMBLER)
 
     @JvmField
+    val AUTO_CHISEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTAutoChiselBlockEntity>> =
+        register("auto_chisel", ::HTAutoChiselBlockEntity, HTMachineType.AUTO_CHISEL)
+
+    @JvmField
     val BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBlastFurnaceBlockEntity>> =
         register("blast_furnace", ::HTBlastFurnaceBlockEntity, HTMachineType.BLAST_FURNACE)
 
@@ -110,6 +114,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val CRUSHER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCrusherBlockEntity>> =
         register("crusher", ::HTCrusherBlockEntity, HTMachineType.CRUSHER)
+
+    @JvmField
+    val ELECTRIC_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTElectricFurnaceBlockEntity>> =
+        register("electric_furnace", ::HTElectricFurnaceBlockEntity, HTMachineType.ELECTRIC_FURNACE)
 
     @JvmField
     val EXTRACTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTExtractorBlockEntity>> =
@@ -130,10 +138,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val MIXER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMixerBlockEntity>> =
         register("mixer", ::HTMixerBlockEntity, HTMachineType.MIXER)
-
-    @JvmField
-    val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =
-        register("multi_smelter", ::HTMultiSmelterBlockEntity, HTMachineType.MULTI_SMELTER)
 
     @JvmField
     val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =

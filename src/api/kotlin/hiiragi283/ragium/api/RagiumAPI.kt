@@ -2,6 +2,7 @@ package hiiragi283.ragium.api
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
+import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -19,6 +20,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.item.DyeColor
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -55,6 +57,10 @@ interface RagiumAPI {
             return instance
         }
     }
+
+    //    Addon    //
+
+    fun getAddons(): List<RagiumAddon>
 
     //    Material    //
 
@@ -97,6 +103,16 @@ interface RagiumAPI {
      * 指定した[level]からエネルギーネットワークのインスタンスを返します。
      */
     fun getEnergyNetwork(level: ServerLevel): IEnergyStorage
+
+    /**
+     * 指定した[level]と[color]からスカルクストレージのインスタンスを返します。
+     */
+    fun getSculkItemStorage(level: ServerLevel, color: DyeColor): IItemHandlerModifiable
+
+    /**
+     * 指定した[level]と[color]からスカルクタンクのインスタンスを返します。
+     */
+    fun getSculkFluidTank(level: ServerLevel, color: DyeColor): IFluidHandler
 
     //    Durability    //
 

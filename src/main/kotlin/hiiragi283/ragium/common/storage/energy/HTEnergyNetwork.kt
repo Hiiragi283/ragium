@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.storage.energy
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.util.HTSavedDataType
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -23,8 +24,9 @@ internal class HTEnergyNetwork(amount: Int) :
 
     constructor(tag: CompoundTag) : this(tag.getInt(KEY))
 
-    override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag =
-        CompoundTag().apply { putInt(KEY, delegated.energyStored) }
+    override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag = buildNbt {
+        putInt(KEY, delegated.energyStored)
+    }
 
     //    IEnergyStorage    //
 

@@ -1,7 +1,8 @@
 package hiiragi283.ragium.integration
 
 import blusunrize.immersiveengineering.api.tool.RailgunHandler
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.addon.HTAddon
+import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.common.entity.HTDynamite
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.entity.Entity
@@ -11,15 +12,16 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.HitResult
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
-import java.util.UUID
+import java.util.*
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = RagiumAPI.MOD_ID)
-object RagiumIEIntegration {
-    @SubscribeEvent
-    fun commonSetup(event: FMLCommonSetupEvent) {
+@HTAddon("immersiveengineering")
+object RagiumIEAddon : RagiumAddon {
+    //    RagiumAddon    //
+
+    override val priority: Int = 0
+
+    override fun onCommonSetup(event: FMLCommonSetupEvent) {
         // Dynamite
         RailgunHandler.registerProjectile(
             { Ingredient.of(RagiumItems.DYNAMITE) },

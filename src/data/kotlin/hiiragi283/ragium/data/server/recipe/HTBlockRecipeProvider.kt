@@ -351,6 +351,14 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             Ingredient.of(RagiumItems.FORGE_HAMMER),
             Ingredient.of(Items.PISTON),
         )
+        // Electric Furnace
+        registerMachine(
+            output,
+            HTMachineType.ELECTRIC_FURNACE,
+            RagiumItems.MACHINE_CASING,
+            Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER),
+            Ingredient.of(Items.FURNACE),
+        )
         // Grinder
         registerMachine(
             output,
@@ -358,14 +366,6 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             RagiumItems.MACHINE_CASING,
             Ingredient.of(RagiumBlocks.MANUAL_GRINDER),
             Ingredient.of(Items.FLINT),
-        )
-        // Multi Smelter
-        registerMachine(
-            output,
-            HTMachineType.MULTI_SMELTER,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(Tags.Items.RODS_BLAZE),
-            Ingredient.of(Items.FURNACE),
         )
 
         // Extractor

@@ -1,6 +1,6 @@
 {
   "parent": "ragium:block/basic_machine",
   "textures": {
-    "front": "ragium:block/multi_smelter_front"
+    "front": "ragium:block/electric_furnace_front"
   }
 }

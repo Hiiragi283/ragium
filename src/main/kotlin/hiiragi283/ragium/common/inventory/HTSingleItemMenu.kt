@@ -39,6 +39,6 @@ class HTSingleItemMenu(
         addDataSlots()
     }
 
-    override val inputSlots: IntRange = (0..0)
+    override val inputSlots: IntRange = (0..1)
     override val outputSlots: IntRange = (2..2)
 }

@@ -28,11 +28,12 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             HTMachineType.THERMAL_GENERATOR to ::HTThermalGeneratorBlockEntity,
             // Processor - Basic
             HTMachineType.ASSEMBLER to ::HTAssemblerBlockEntity,
+            HTMachineType.AUTO_CHISEL to ::HTAutoChiselBlockEntity,
             HTMachineType.BLAST_FURNACE to ::HTBlastFurnaceBlockEntity,
             HTMachineType.COMPRESSOR to ::HTCompressorBlockEntity,
-            HTMachineType.GRINDER to ::HTGrinderBlockEntity,
-            HTMachineType.MULTI_SMELTER to ::HTMultiSmelterBlockEntity,
             HTMachineType.CRUSHER to ::HTCrusherBlockEntity,
+            HTMachineType.ELECTRIC_FURNACE to ::HTElectricFurnaceBlockEntity,
+            HTMachineType.GRINDER to ::HTGrinderBlockEntity,
             // Processor - Advanced
             HTMachineType.EXTRACTOR to ::HTExtractorBlockEntity,
             HTMachineType.INFUSER to ::HTInfuserBlockEntity,

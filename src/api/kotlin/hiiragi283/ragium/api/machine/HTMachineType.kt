@@ -39,6 +39,7 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
 
     // Processor - Basic
     ASSEMBLER(SoundEvents.DISPENSER_DISPENSE, null),
+    AUTO_CHISEL(SoundEvents.UI_STONECUTTER_TAKE_RESULT, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
     BLAST_FURNACE(
         SoundEvents.BLASTFURNACE_FIRE_CRACKLE,
         HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, front: Direction ->
@@ -47,10 +48,12 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     ),
     COMPRESSOR(SoundEvents.ANVIL_USE, null),
     CRUSHER(SoundEvents.TUFF_BREAK, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
+    ELECTRIC_FURNACE(SoundEvents.FURNACE_FIRE_CRACKLE, HTMachineParticleHandler.ofFront(ParticleTypes.FLAME)),
     GRINDER(SoundEvents.GRINDSTONE_USE, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
-    MULTI_SMELTER(SoundEvents.FURNACE_FIRE_CRACKLE, HTMachineParticleHandler.ofFront(ParticleTypes.SOUL_FIRE_FLAME)),
 
-    // Processor - Advanced
+    // Processor - Heating
+
+    // Processor - Chemical
     EXTRACTOR(SoundEvents.PISTON_EXTEND, null),
     GROWTH_CHAMBER(null, HTMachineParticleHandler.ofSimple(ParticleTypes.HAPPY_VILLAGER)),
     INFUSER(SoundEvents.CONDUIT_ACTIVATE, null),
@@ -58,7 +61,7 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     REFINERY(null, HTMachineParticleHandler.ofSimple(ParticleTypes.SMOKE)),
     SOLIDIFIER(null, null),
 
-    // Processor - Elite
+    // Processor - Precision
     ALCHEMICAL_BREWERY(SoundEvents.BREWING_STAND_BREW, null),
     ARCANE_ENCHANTER(SoundEvents.ENCHANTMENT_TABLE_USE, HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT)),
     LASER_ASSEMBLY(SoundEvents.BEACON_ACTIVATE, HTMachineParticleHandler.ofFront(ParticleTypes.ELECTRIC_SPARK)),

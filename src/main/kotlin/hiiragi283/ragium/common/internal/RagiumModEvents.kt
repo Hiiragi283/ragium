@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.getLevel
+import hiiragi283.ragium.api.heat.HTHeatTier
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
@@ -25,9 +26,11 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -95,22 +98,50 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.THERMAL_GENERATOR)
 
         registerHandlers(RagiumBlockEntityTypes.ASSEMBLER)
+        registerHandlers(RagiumBlockEntityTypes.AUTO_CHISEL)
         registerHandlers(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerHandlers(RagiumBlockEntityTypes.BREWERY)
         registerHandlers(RagiumBlockEntityTypes.COMPRESSOR)
         registerHandlers(RagiumBlockEntityTypes.CRUSHER)
+        registerHandlers(RagiumBlockEntityTypes.ELECTRIC_FURNACE)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
         registerHandlers(RagiumBlockEntityTypes.GRINDER)
         registerHandlers(RagiumBlockEntityTypes.INFUSER)
         registerHandlers(RagiumBlockEntityTypes.LASER_ASSEMBLY)
         registerHandlers(RagiumBlockEntityTypes.MIXER)
-        registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
         registerHandlers(RagiumBlockEntityTypes.REFINERY)
         registerHandlers(RagiumBlockEntityTypes.SOLIDIFIER)
 
         registerHandlers(RagiumBlockEntityTypes.CRATE)
         registerHandlers(RagiumBlockEntityTypes.DRUM)
         registerHandlers(RagiumBlockEntityTypes.SLAG_COLLECTOR)
+
+        // Heat
+        event.registerBlock(
+            HTHeatTier.BLOCK_CAPABILITY,
+            { level: Level, pos: BlockPos, state: BlockState, blockEntity: BlockEntity?, direction: Direction ->
+                when (state.getValue(BlockStateProperties.LIT)) {
+                    true -> HTHeatTier.LOW
+                    false -> HTHeatTier.NONE
+                }
+            },
+            Blocks.CAMPFIRE,
+            Blocks.SOUL_CAMPFIRE,
+        )
+
+        event.registerBlock(
+            HTHeatTier.BLOCK_CAPABILITY,
+            { level: Level, pos: BlockPos, state: BlockState, blockEntity: BlockEntity?, direction: Direction -> HTHeatTier.LOW },
+            Blocks.MAGMA_BLOCK,
+        )
+
+        event.registerBlock(
+            HTHeatTier.BLOCK_CAPABILITY,
+            { level: Level, pos: BlockPos, state: BlockState, blockEntity: BlockEntity?, direction: Direction -> HTHeatTier.MEDIUM },
+            Blocks.FIRE,
+            Blocks.LAVA,
+            RagiumBlocks.SOUL_MAGMA_BLOCK.get(),
+        )
 
         // Other
         event.registerBlock(
