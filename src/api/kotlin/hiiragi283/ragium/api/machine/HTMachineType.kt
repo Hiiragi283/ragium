@@ -65,6 +65,7 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     ALCHEMICAL_BREWERY(SoundEvents.BREWING_STAND_BREW, null),
     ARCANE_ENCHANTER(SoundEvents.ENCHANTMENT_TABLE_USE, HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT)),
     LASER_ASSEMBLY(SoundEvents.BEACON_ACTIVATE, HTMachineParticleHandler.ofFront(ParticleTypes.ELECTRIC_SPARK)),
+    MULTI_SMELTER(SoundEvents.ENDER_DRAGON_GROWL, HTMachineParticleHandler.ofFront(ParticleTypes.DRAGON_BREATH)),
     ;
 
     companion object {

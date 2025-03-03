@@ -1,12 +1,12 @@
 {
   "type": "ragium:growth_chamber",
-  "item_output": {
+  "catalyst": {
+    "tag": "c:budding_blocks"
+  },
+  "item_input": {
     "item": "minecraft:amethyst_shard"
   },
-  "seed": {
-    "tag": "c:gems/amethyst"
-  },
-  "soil": {
-    "tag": "c:budding_blocks"
+  "item_output": {
+    "item": "minecraft:amethyst_shard"
   }
 }

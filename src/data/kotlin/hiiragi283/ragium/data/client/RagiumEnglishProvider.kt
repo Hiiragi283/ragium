@@ -334,6 +334,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTMachineType.INFUSER, "Infuser", "Something not like Centrifuge")
         add(HTMachineType.LASER_ASSEMBLY, "Laser Assembly", "Laser On...")
         add(HTMachineType.MIXER, "Mixer", "Best Match!")
+        add(HTMachineType.MULTI_SMELTER, "Multi Smelter", "Allow bulk smelting")
         add(HTMachineType.REFINERY, "Refinery", "Project Build")
         add(HTMachineType.SOLIDIFIER, "Solidifier", "Uncontrol Switch! Black Hazard!")
         // Material

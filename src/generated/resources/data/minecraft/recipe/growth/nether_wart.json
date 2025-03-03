@@ -1,13 +1,13 @@
 {
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "minecraft:soul_fire_base_blocks"
+  },
+  "item_input": {
+    "item": "minecraft:nether_wart"
+  },
   "item_output": {
     "count": 3,
     "item": "minecraft:nether_wart"
-  },
-  "seed": {
-    "tag": "c:crops/nether_wart"
-  },
-  "soil": {
-    "tag": "minecraft:soul_fire_base_blocks"
   }
 }

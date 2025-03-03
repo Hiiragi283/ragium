@@ -81,7 +81,11 @@ class RagiumJEIPlugin : IModPlugin {
                 HTMachineType.GRINDER,
                 RagiumJEIRecipeTypes.GRINDER,
             ),
-            HTGrowthChamberRecipeCategory(guiHelper),
+            HTSingleItemRecipeCategory(
+                guiHelper,
+                HTMachineType.GROWTH_CHAMBER,
+                RagiumJEIRecipeTypes.GROWTH_CHAMBER,
+            ),
             HTInfuserRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
@@ -221,11 +225,12 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MATERIAL_INFO, Items.IRON_INGOT)
         // Soap
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.SOAP, RagiumItems.SOAP)
-        
+
         // Vanilla
         registration.addRecipeCatalyst(HTMachineType.AUTO_CHISEL, RecipeTypes.STONECUTTING)
         registration.addRecipeCatalyst(HTMachineType.ELECTRIC_FURNACE, RecipeTypes.BLASTING)
         registration.addRecipeCatalyst(HTMachineType.ELECTRIC_FURNACE, RecipeTypes.SMELTING)
         registration.addRecipeCatalyst(HTMachineType.ELECTRIC_FURNACE, RecipeTypes.SMOKING)
+        registration.addRecipeCatalyst(HTMachineType.MULTI_SMELTER, RecipeTypes.SMELTING)
     }
 }

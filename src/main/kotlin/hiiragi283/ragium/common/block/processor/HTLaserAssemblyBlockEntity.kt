@@ -19,6 +19,7 @@ class HTLaserAssemblyBlockEntity(pos: BlockPos, state: BlockState) :
         state,
         HTMachineType.LASER_ASSEMBLY,
         HTRecipeTypes.LASER_ASSEMBLY,
+        600,
     ) {
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.PRECISION
 

@@ -6,11 +6,11 @@ import blusunrize.immersiveengineering.common.register.IEItems
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.HolderLookup
@@ -52,10 +52,14 @@ object HTIERecipeProvider : HTRecipeProvider.Modded(IntegrationMods.IE) {
             .save(output)
 
         // Industrial Hemp
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(IEItems.Misc.HEMP_SEEDS)
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(IEItems.Ingredients.HEMP_FIBER, 2)
-            .save(output)
+        output.accept(
+            id("growth/hemp_fiber"),
+            HTGrowthChamberRecipe(
+                IEItems.Misc.HEMP_SEEDS,
+                RagiumItemTags.DIRT_SOILS,
+                IEItems.Ingredients.HEMP_FIBER,
+            ),
+            null,
+        )
     }
 }

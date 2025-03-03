@@ -207,6 +207,8 @@
   "machine_type.laser_assembly.description": "レーザーオン…",
   "machine_type.mixer": "ミキサー",
   "machine_type.mixer.description": "ベストマッチ!",
+  "machine_type.multi_smelter": "並列精錬機",
+  "machine_type.multi_smelter.description": "まとめて製錬することが可能",
   "machine_type.refinery": "精製機",
   "machine_type.refinery.description": "プロジェクト・ビルド",
   "machine_type.solar_generator": "太陽光発電機",

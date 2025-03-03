@@ -6,15 +6,14 @@
     }
   ],
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "ragium:soils/dirt"
+  },
+  "item_input": {
+    "item": "farmersdelight:rice"
+  },
   "item_output": {
     "count": 2,
     "item": "farmersdelight:rice"
-  },
-  "seed": {
-    "item": "farmersdelight:rice"
-  },
-  "soil": {
-    "tag": "ragium:soils/dirt"
-  },
-  "water": 100
+  }
 }

@@ -17,7 +17,8 @@ abstract class HTSingleItemMachineBlockEntity(
     state: BlockState,
     machineType: HTMachineType,
     protected val recipeType: HTRecipeType<out HTSingleItemRecipe>,
-) : HTSimpleMachineBlockEntity(type, pos, state, machineType) {
+    baseTickRate: Int = 200,
+) : HTSimpleMachineBlockEntity(type, pos, state, machineType, baseTickRate) {
     private val recipeCache: HTMachineRecipeCache<out HTSingleItemRecipe> = HTMachineRecipeCache(recipeType)
 
     final override fun process(level: ServerLevel, pos: BlockPos) {

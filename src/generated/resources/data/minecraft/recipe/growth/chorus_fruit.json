@@ -1,13 +1,13 @@
 {
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "ragium:soils/end"
+  },
+  "item_input": {
+    "item": "minecraft:chorus_fruit"
+  },
   "item_output": {
     "count": 4,
     "item": "minecraft:chorus_fruit"
-  },
-  "seed": {
-    "item": "minecraft:chorus_fruit"
-  },
-  "soil": {
-    "tag": "ragium:soils/end"
   }
 }

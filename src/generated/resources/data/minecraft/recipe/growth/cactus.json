@@ -1,13 +1,13 @@
 {
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "minecraft:sand"
+  },
+  "item_input": {
+    "item": "minecraft:cactus"
+  },
   "item_output": {
     "count": 4,
     "item": "minecraft:cactus"
-  },
-  "seed": {
-    "tag": "c:crops/cactus"
-  },
-  "soil": {
-    "tag": "minecraft:sand"
   }
 }

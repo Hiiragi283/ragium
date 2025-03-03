@@ -36,6 +36,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             HTMachineType.GRINDER to ::HTGrinderBlockEntity,
             // Processor - Advanced
             HTMachineType.EXTRACTOR to ::HTExtractorBlockEntity,
+            HTMachineType.GROWTH_CHAMBER to ::HTGrowthChamberBlockEntity,
             HTMachineType.INFUSER to ::HTInfuserBlockEntity,
             HTMachineType.MIXER to ::HTMixerBlockEntity,
             HTMachineType.REFINERY to ::HTRefineryBlockEntity,
@@ -43,6 +44,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             // Processor - Elite
             HTMachineType.ALCHEMICAL_BREWERY to ::HTBreweryBlockEntity,
             HTMachineType.LASER_ASSEMBLY to ::HTLaserAssemblyBlockEntity,
+            HTMachineType.MULTI_SMELTER to ::HTMultiSmelterBlockEntity,
         )
     }
 

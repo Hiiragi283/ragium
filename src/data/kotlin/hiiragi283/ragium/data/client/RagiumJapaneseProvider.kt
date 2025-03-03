@@ -314,6 +314,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTMachineType.INFUSER, "注入機", "遠心分離機みたくないやつ")
         add(HTMachineType.LASER_ASSEMBLY, "レーザーアセンブリ", "レーザーオン…")
         add(HTMachineType.MIXER, "ミキサー", "ベストマッチ!")
+        add(HTMachineType.MULTI_SMELTER, "並列精錬機", "まとめて製錬することが可能")
         add(HTMachineType.REFINERY, "精製機", "プロジェクト・ビルド")
         add(HTMachineType.SOLIDIFIER, "固体成形機", "アンコントールスイッチ！ブラックハザード！")
         // Material

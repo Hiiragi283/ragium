@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -76,28 +76,44 @@ object HTDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD) {
             .save(output, RagiumAPI.id("milk_from_bottle"))
 
         // Growth
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ModItems.CABBAGE_SEEDS.get())
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ModItems.CABBAGE.get(), 2)
-            .save(output)
+        output.accept(
+            id("growth/cabbage"),
+            HTGrowthChamberRecipe(
+                ModItems.CABBAGE_SEEDS.get(),
+                RagiumItemTags.DIRT_SOILS,
+                ModItems.CABBAGE.get(),
+            ),
+            null,
+        )
 
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ModItems.TOMATO_SEEDS.get())
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ModItems.TOMATO.get(), 2)
-            .save(output)
+        output.accept(
+            id("growth/tomato"),
+            HTGrowthChamberRecipe(
+                ModItems.TOMATO_SEEDS.get(),
+                RagiumItemTags.DIRT_SOILS,
+                ModItems.TOMATO.get(),
+            ),
+            null,
+        )
 
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ModItems.ONION.get())
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ModItems.ONION.get(), 2)
-            .save(output)
+        output.accept(
+            id("growth/onion"),
+            HTGrowthChamberRecipe(
+                ModItems.ONION.get(),
+                RagiumItemTags.DIRT_SOILS,
+                ModItems.ONION.get(),
+            ),
+            null,
+        )
 
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ModItems.RICE.get())
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ModItems.RICE.get(), 2)
-            .save(output)
+        output.accept(
+            id("growth/rice"),
+            HTGrowthChamberRecipe(
+                ModItems.RICE.get(),
+                RagiumItemTags.DIRT_SOILS,
+                ModItems.RICE.get(),
+            ),
+            null,
+        )
     }
 }

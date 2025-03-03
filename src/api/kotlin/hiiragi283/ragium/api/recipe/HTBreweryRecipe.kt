@@ -12,7 +12,6 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.alchemy.Potion
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
 
@@ -49,9 +48,6 @@ class HTBreweryRecipe(group: String, itemInputs: List<HTItemIngredient>, val pot
             HTBreweryRecipe::potion,
             ::HTBreweryRecipe,
         )
-
-        @JvmField
-        val WATER_INGREDIENT: SizedFluidIngredient = SizedFluidIngredient.of(Tags.Fluids.WATER, FluidType.BUCKET_VOLUME)
     }
 
     override fun getRecipeType(): HTRecipeType<*> = HTRecipeTypes.BREWERY

@@ -3,7 +3,11 @@ package hiiragi283.ragium.data.server.recipe
 import com.mojang.authlib.properties.PropertyMap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
+import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.item.HTItemStackBuilder
@@ -13,6 +17,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.recipe.HTBreweryRecipe
 import hiiragi283.ragium.api.recipe.HTEnchanterRecipe
+import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -375,60 +380,48 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             seed: ItemLike,
             soil: TagKey<Item>,
             crop: ItemLike,
-            count: Int,
-            water: Int = 100,
+            count: Int = 2,
         ) {
-            HTGrowthChamberRecipeBuilder(lookup)
-                .itemInput(seed)
-                .itemInput(soil)
-                .water(water)
-                .itemOutput(crop, count)
-                .save(output)
-        }
-
-        fun register(
-            seed: TagKey<Item>,
-            soil: TagKey<Item>,
-            crop: ItemLike,
-            count: Int,
-            water: Int = 100,
-        ) {
-            HTGrowthChamberRecipeBuilder(lookup)
-                .itemInput(seed)
-                .itemInput(soil)
-                .water(water)
-                .itemOutput(crop, count)
-                .save(output)
+            output.accept(
+                crop.asHolder().idOrThrow.withPrefix("growth/"),
+                HTGrowthChamberRecipe(
+                    seed,
+                    soil,
+                    crop,
+                    count,
+                ),
+                null,
+            )
         }
 
         // Amethyst
-        register(Tags.Items.GEMS_AMETHYST, Tags.Items.BUDDING_BLOCKS, Items.AMETHYST_SHARD, 1, 0)
+        register(Items.AMETHYST_SHARD, Tags.Items.BUDDING_BLOCKS, Items.AMETHYST_SHARD, 1)
         // Dirt
         register(Items.BAMBOO, RagiumItemTags.DIRT_SOILS, Items.BAMBOO, 6)
-        register(Items.GLOW_BERRIES, RagiumItemTags.DIRT_SOILS, Items.GLOW_BERRIES, 2)
-        register(Items.SWEET_BERRIES, RagiumItemTags.DIRT_SOILS, Items.SWEET_BERRIES, 2)
-        register(Tags.Items.CROPS_CARROT, RagiumItemTags.DIRT_SOILS, Items.CARROT, 4)
-        register(Tags.Items.CROPS_COCOA_BEAN, ItemTags.JUNGLE_LOGS, Items.COCOA_BEANS, 3)
-        register(Tags.Items.CROPS_POTATO, RagiumItemTags.DIRT_SOILS, Items.POTATO, 4)
-        register(Tags.Items.SEEDS_BEETROOT, RagiumItemTags.DIRT_SOILS, Items.BEETROOT, 2)
-        register(Tags.Items.SEEDS_MELON, RagiumItemTags.DIRT_SOILS, Items.MELON, 1)
-        register(Tags.Items.SEEDS_PUMPKIN, RagiumItemTags.DIRT_SOILS, Items.PUMPKIN, 1)
-        register(Tags.Items.SEEDS_WHEAT, RagiumItemTags.DIRT_SOILS, Items.WHEAT, 2)
+        register(Items.GLOW_BERRIES, RagiumItemTags.DIRT_SOILS, Items.GLOW_BERRIES)
+        register(Items.SWEET_BERRIES, RagiumItemTags.DIRT_SOILS, Items.SWEET_BERRIES)
+        register(Items.CARROT, RagiumItemTags.DIRT_SOILS, Items.CARROT, 4)
+        register(Items.COCOA_BEANS, ItemTags.JUNGLE_LOGS, Items.COCOA_BEANS, 3)
+        register(Items.POTATO, RagiumItemTags.DIRT_SOILS, Items.POTATO, 4)
+        register(Items.BEETROOT_SEEDS, RagiumItemTags.DIRT_SOILS, Items.BEETROOT)
+        register(Items.MELON_SEEDS, RagiumItemTags.DIRT_SOILS, Items.MELON, 1)
+        register(Items.PUMPKIN_SEEDS, RagiumItemTags.DIRT_SOILS, Items.PUMPKIN, 1)
+        register(Items.WHEAT_SEEDS, RagiumItemTags.DIRT_SOILS, Items.WHEAT)
         // End
-        register(Items.CHORUS_FLOWER, RagiumItemTags.END_SOILS, Items.CHORUS_FLOWER, 1, 0)
-        register(Items.CHORUS_FRUIT, RagiumItemTags.END_SOILS, Items.CHORUS_FRUIT, 4, 0)
+        register(Items.CHORUS_FLOWER, RagiumItemTags.END_SOILS, Items.CHORUS_FLOWER, 1)
+        register(Items.CHORUS_FRUIT, RagiumItemTags.END_SOILS, Items.CHORUS_FRUIT, 4)
         // Mushroom Soil
-        register(Items.BROWN_MUSHROOM, RagiumItemTags.MUSHROOM_SOILS, Items.BROWN_MUSHROOM, 2, 200)
-        register(Items.RED_MUSHROOM, RagiumItemTags.MUSHROOM_SOILS, Items.RED_MUSHROOM, 2, 200)
+        register(Items.BROWN_MUSHROOM, RagiumItemTags.MUSHROOM_SOILS, Items.BROWN_MUSHROOM)
+        register(Items.RED_MUSHROOM, RagiumItemTags.MUSHROOM_SOILS, Items.RED_MUSHROOM)
 
-        register(Items.CRIMSON_FUNGUS, RagiumItemTags.NETHER_SOILS, Items.CRIMSON_FUNGUS, 2, 0)
-        register(Items.WARPED_FUNGUS, RagiumItemTags.NETHER_SOILS, Items.WARPED_FUNGUS, 2, 0)
+        register(Items.CRIMSON_FUNGUS, RagiumItemTags.NETHER_SOILS, Items.CRIMSON_FUNGUS)
+        register(Items.WARPED_FUNGUS, RagiumItemTags.NETHER_SOILS, Items.WARPED_FUNGUS)
         // Sand
-        register(Tags.Items.CROPS_CACTUS, ItemTags.SAND, Items.CACTUS, 4, 0)
-        register(Tags.Items.CROPS_SUGAR_CANE, ItemTags.SAND, Items.SUGAR_CANE, 4)
+        register(Items.CACTUS, ItemTags.SAND, Items.CACTUS, 4)
+        register(Items.SUGAR_CANE, ItemTags.SAND, Items.SUGAR_CANE, 4)
         // Soul Sand
-        register(Tags.Items.CROPS_NETHER_WART, ItemTags.SOUL_FIRE_BASE_BLOCKS, Items.NETHER_WART, 3, 0)
-        register(RagiumItemTags.CROPS_WARPED_WART, ItemTags.SOUL_FIRE_BASE_BLOCKS, RagiumItems.WARPED_WART, 3, 0)
+        register(Items.NETHER_WART, ItemTags.SOUL_FIRE_BASE_BLOCKS, Items.NETHER_WART, 3)
+        register(RagiumItems.WARPED_WART, ItemTags.SOUL_FIRE_BASE_BLOCKS, RagiumItems.WARPED_WART, 3)
     }
 
     //    Laser Assembly    //

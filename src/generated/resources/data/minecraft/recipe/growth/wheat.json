@@ -1,14 +1,13 @@
 {
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "ragium:soils/dirt"
+  },
+  "item_input": {
+    "item": "minecraft:wheat_seeds"
+  },
   "item_output": {
     "count": 2,
     "item": "minecraft:wheat"
-  },
-  "seed": {
-    "tag": "c:seeds/wheat"
-  },
-  "soil": {
-    "tag": "ragium:soils/dirt"
-  },
-  "water": 100
+  }
 }

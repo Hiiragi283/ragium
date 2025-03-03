@@ -1,14 +1,13 @@
 {
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "ragium:soils/dirt"
+  },
+  "item_input": {
+    "item": "minecraft:carrot"
+  },
   "item_output": {
     "count": 4,
     "item": "minecraft:carrot"
-  },
-  "seed": {
-    "tag": "c:crops/carrot"
-  },
-  "soil": {
-    "tag": "ragium:soils/dirt"
-  },
-  "water": 100
+  }
 }

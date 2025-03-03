@@ -68,8 +68,7 @@ object HTRecipeTypes {
     @JvmField
     val GROWTH_CHAMBER = HTRecipeType<HTGrowthChamberRecipe>(
         HTMachineType.GROWTH_CHAMBER,
-        HTGrowthChamberRecipe.CODEC,
-        HTGrowthChamberRecipe.STREAM_CODEC,
+        HTGrowthChamberRecipe.SERIALIZER,
     )
 
     @JvmField

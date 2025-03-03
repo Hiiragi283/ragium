@@ -1,14 +1,13 @@
 {
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "ragium:soils/mushroom"
+  },
+  "item_input": {
+    "item": "minecraft:brown_mushroom"
+  },
   "item_output": {
     "count": 2,
     "item": "minecraft:brown_mushroom"
-  },
-  "seed": {
-    "item": "minecraft:brown_mushroom"
-  },
-  "soil": {
-    "tag": "ragium:soils/mushroom"
-  },
-  "water": 200
+  }
 }

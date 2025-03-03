@@ -6,15 +6,14 @@
     }
   ],
   "type": "ragium:growth_chamber",
-  "item_output": {
-    "count": 4,
-    "item": "minecraft:string"
-  },
-  "seed": {
-    "item": "actuallyadditions:flax_seeds"
-  },
-  "soil": {
+  "catalyst": {
     "tag": "ragium:soils/dirt"
   },
-  "water": 100
+  "item_input": {
+    "item": "actuallyadditions:flax_seeds"
+  },
+  "item_output": {
+    "count": 2,
+    "item": "minecraft:string"
+  }
 }

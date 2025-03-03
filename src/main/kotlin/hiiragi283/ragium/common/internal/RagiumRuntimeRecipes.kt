@@ -2,11 +2,13 @@ package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.event.HTMachineRecipesUpdatedEvent
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.blockLookup
+import hiiragi283.ragium.api.extension.fluidLookup
+import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.extension.isSource
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -17,9 +19,6 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
-import net.minecraft.core.HolderSet
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -231,30 +230,6 @@ object RagiumRuntimeRecipes {
                     .itemOutput(dust, 3)
             }
         }
-    }
-
-    @JvmStatic
-    private fun growth(event: HTMachineRecipesUpdatedEvent) {
-        event
-            .itemLookup()
-            .listTags()
-            .forEach { holderSet: HolderSet.Named<Item> ->
-                val tagKey: TagKey<Item> = holderSet.key()
-                val tagId: ResourceLocation = tagKey.location
-                if (tagId.namespace != "c") return@forEach
-                if (!tagId.path.startsWith("crops/")) return@forEach
-                val cropName: String = tagId.path.removePrefix("crops/")
-                val firstCrop: Holder<Item> = holderSet.firstOrNull() ?: return@forEach
-                event.register(
-                    HTRecipeTypes.GROWTH_CHAMBER,
-                    RagiumAPI.id("runtime_crops_$cropName"),
-                ) { lookup: HolderGetter<Item> ->
-                    HTGrowthChamberRecipeBuilder(lookup)
-                        .itemInput(itemTagKey(commonId("seeds/$cropName")))
-                        .itemInput(RagiumItemTags.DIRT_SOILS)
-                        .itemOutput(firstCrop.value(), 2)
-                }
-            }
     }
 
     @JvmStatic

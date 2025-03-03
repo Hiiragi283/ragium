@@ -128,6 +128,10 @@ object RagiumBlockEntityTypes {
         register("grinder", ::HTGrinderBlockEntity, HTMachineType.GRINDER)
 
     @JvmField
+    val GROWTH_CHAMBER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTGrowthChamberBlockEntity>> =
+        register("growth_chamber", ::HTGrowthChamberBlockEntity, HTMachineType.GROWTH_CHAMBER)
+
+    @JvmField
     val INFUSER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTInfuserBlockEntity>> =
         register("infuser", ::HTInfuserBlockEntity, HTMachineType.INFUSER)
 
@@ -138,6 +142,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val MIXER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMixerBlockEntity>> =
         register("mixer", ::HTMixerBlockEntity, HTMachineType.MIXER)
+
+    @JvmField
+    val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =
+        register("multi_smelter", ::HTMultiSmelterBlockEntity, HTMachineType.MULTI_SMELTER)
 
     @JvmField
     val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =

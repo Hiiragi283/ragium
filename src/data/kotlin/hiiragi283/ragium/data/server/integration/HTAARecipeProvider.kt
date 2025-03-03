@@ -5,13 +5,13 @@ import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTGrowthChamberRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.recipe.HTGrowthChamberRecipe
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
@@ -20,30 +20,45 @@ import net.minecraft.world.item.Items
 object HTAARecipeProvider : HTRecipeProvider.Modded(IntegrationMods.AA) {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Canola
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ActuallyItems.CANOLA_SEEDS)
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ActuallyItems.CANOLA, 2)
-            .save(output)
+        output.accept(
+            id("growth/canola"),
+            HTGrowthChamberRecipe(
+                ActuallyItems.CANOLA_SEEDS,
+                RagiumItemTags.DIRT_SOILS,
+                ActuallyItems.CANOLA,
+            ),
+            null,
+        )
         // Coffee
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ActuallyItems.COFFEE_BEANS)
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ActuallyItems.COFFEE_BEANS, 2)
-            .save(output)
+        output.accept(
+            id("growth/coffee"),
+            HTGrowthChamberRecipe(
+                ActuallyItems.COFFEE_BEANS,
+                RagiumItemTags.DIRT_SOILS,
+                ActuallyItems.COFFEE_BEANS,
+            ),
+            null,
+        )
         // Flax
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ActuallyItems.FLAX_SEEDS)
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(Items.STRING, 4)
-            .save(output, id("flax"))
+        output.accept(
+            id("growth/flax"),
+            HTGrowthChamberRecipe(
+                ActuallyItems.FLAX_SEEDS,
+                RagiumItemTags.DIRT_SOILS,
+                Items.STRING,
+            ),
+            null,
+        )
         // Rice
-        HTGrowthChamberRecipeBuilder(lookup)
-            .itemInput(ActuallyItems.RICE_SEEDS)
-            .itemInput(RagiumItemTags.DIRT_SOILS)
-            .itemOutput(ActuallyItems.RICE, 2)
-            .save(output)
-
+        output.accept(
+            id("growth/rice"),
+            HTGrowthChamberRecipe(
+                ActuallyItems.RICE_SEEDS,
+                RagiumItemTags.DIRT_SOILS,
+                ActuallyItems.RICE,
+            ),
+            null,
+        )
         // Canola Oil
         HTFluidOutputRecipeBuilder
             .extractor(lookup)

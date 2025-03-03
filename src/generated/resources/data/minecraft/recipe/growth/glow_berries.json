@@ -1,14 +1,13 @@
 {
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "ragium:soils/dirt"
+  },
+  "item_input": {
+    "item": "minecraft:glow_berries"
+  },
   "item_output": {
     "count": 2,
     "item": "minecraft:glow_berries"
-  },
-  "seed": {
-    "item": "minecraft:glow_berries"
-  },
-  "soil": {
-    "tag": "ragium:soils/dirt"
-  },
-  "water": 100
+  }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:block/precision_machine",
+  "textures": {
+    "front": "ragium:block/alchemical_brewery_front"
+  }
+}

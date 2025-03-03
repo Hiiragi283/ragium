@@ -106,9 +106,11 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.ELECTRIC_FURNACE)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
         registerHandlers(RagiumBlockEntityTypes.GRINDER)
+        registerHandlers(RagiumBlockEntityTypes.GROWTH_CHAMBER)
         registerHandlers(RagiumBlockEntityTypes.INFUSER)
         registerHandlers(RagiumBlockEntityTypes.LASER_ASSEMBLY)
         registerHandlers(RagiumBlockEntityTypes.MIXER)
+        registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
         registerHandlers(RagiumBlockEntityTypes.REFINERY)
         registerHandlers(RagiumBlockEntityTypes.SOLIDIFIER)
 

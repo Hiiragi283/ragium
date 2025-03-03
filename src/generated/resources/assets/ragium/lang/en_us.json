@@ -207,6 +207,8 @@
   "machine_type.laser_assembly.description": "Laser On...",
   "machine_type.mixer": "Mixer",
   "machine_type.mixer.description": "Best Match!",
+  "machine_type.multi_smelter": "Multi Smelter",
+  "machine_type.multi_smelter.description": "Allow bulk smelting",
   "machine_type.refinery": "Refinery",
   "machine_type.refinery.description": "Project Build",
   "machine_type.solar_generator": "Solar Generator",

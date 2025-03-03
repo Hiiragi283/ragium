@@ -1,13 +1,12 @@
 {
   "type": "ragium:growth_chamber",
-  "item_output": {
-    "item": "minecraft:pumpkin"
-  },
-  "seed": {
-    "tag": "c:seeds/pumpkin"
-  },
-  "soil": {
+  "catalyst": {
     "tag": "ragium:soils/dirt"
   },
-  "water": 100
+  "item_input": {
+    "item": "minecraft:pumpkin_seeds"
+  },
+  "item_output": {
+    "item": "minecraft:pumpkin"
+  }
 }

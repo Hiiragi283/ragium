@@ -1,13 +1,12 @@
 {
   "type": "ragium:growth_chamber",
-  "item_output": {
-    "item": "minecraft:melon"
-  },
-  "seed": {
-    "tag": "c:seeds/melon"
-  },
-  "soil": {
+  "catalyst": {
     "tag": "ragium:soils/dirt"
   },
-  "water": 100
+  "item_input": {
+    "item": "minecraft:melon_seeds"
+  },
+  "item_output": {
+    "item": "minecraft:melon"
+  }
 }

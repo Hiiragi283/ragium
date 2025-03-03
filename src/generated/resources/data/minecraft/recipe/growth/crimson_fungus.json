@@ -1,13 +1,13 @@
 {
   "type": "ragium:growth_chamber",
+  "catalyst": {
+    "tag": "ragium:soils/nether"
+  },
+  "item_input": {
+    "item": "minecraft:crimson_fungus"
+  },
   "item_output": {
     "count": 2,
     "item": "minecraft:crimson_fungus"
-  },
-  "seed": {
-    "item": "minecraft:crimson_fungus"
-  },
-  "soil": {
-    "tag": "ragium:soils/nether"
   }
 }
