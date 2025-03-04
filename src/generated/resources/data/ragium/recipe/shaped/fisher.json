@@ -3,27 +3,27 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:fishing_rod"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "tag": "c:barrels"
+      "tag": "c:tools/fishing_rod"
     },
     "C": {
-      "item": "ragium:machine_casing"
+      "tag": "c:barrels/wooden"
     },
     "D": {
-      "tag": "c:barrels"
+      "item": "ragium:machine_casing"
     },
     "E": {
-      "tag": "c:coils/copper"
+      "tag": "c:gears/copper"
     },
     "F": {
       "tag": "c:circuits/basic"
     }
   },
   "pattern": [
-    " A ",
-    "BCD",
+    "ABA",
+    "CDC",
     "EFE"
   ],
   "result": {

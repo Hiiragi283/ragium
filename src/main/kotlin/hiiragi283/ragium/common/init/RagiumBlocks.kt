@@ -9,9 +9,11 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.util.*
-import hiiragi283.ragium.common.block.*
+import hiiragi283.ragium.common.block.HTMobGlassBlock
+import hiiragi283.ragium.common.block.HTSoulGlassBlock
+import hiiragi283.ragium.common.block.HTSoulMagmaBlock
+import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
-import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
@@ -59,13 +61,13 @@ object RagiumBlocks {
 
         fun build(): DeferredBlock<Block> {
             val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(name, blockProperties)
-            ITEM_REGISTER.registerSimpleBlockItem(holder)
+            ITEM_REGISTER.registerSimpleBlockItem(holder, itemProperties)
             return holder
         }
 
         fun <T : Block> build(factory: (BlockBehaviour.Properties) -> T): DeferredBlock<T> {
             val holder: DeferredBlock<T> = REGISTER.registerBlock(name, factory, blockProperties)
-            ITEM_REGISTER.registerSimpleBlockItem(holder)
+            ITEM_REGISTER.registerSimpleBlockItem(holder, itemProperties)
             return holder
         }
     }
@@ -197,8 +199,8 @@ object RagiumBlocks {
         ).build(::RotatedPillarBlock)
 
     @JvmField
-    val CHEMICAL_GLASS: DeferredBlock<TransparentBlock> =
-        Builder("chemical_glass").properties(Blocks.GLASS).build(::TransparentBlock)
+    val QUARTZ_GLASS: DeferredBlock<TransparentBlock> =
+        Builder("quartz_glass").properties(Blocks.GLASS).build(::TransparentBlock)
 
     @JvmField
     val MOB_GLASS: DeferredBlock<HTMobGlassBlock> =
@@ -220,7 +222,7 @@ object RagiumBlocks {
 
     @JvmField
     val GLASSES: List<DeferredBlock<out TransparentBlock>> = listOf(
-        CHEMICAL_GLASS,
+        QUARTZ_GLASS,
         MOB_GLASS,
         OBSIDIAN_GLASS,
         SOUL_GLASS,
@@ -328,20 +330,8 @@ object RagiumBlocks {
         .build(::HTEnergyNetworkBlock)
 
     @JvmField
-    val SLAG_COLLECTOR: DeferredBlock<HTEntityBlock> = Builder("slag_collector")
-        .properties(
-            blockProperty()
-                .mapColor(MapColor.STONE)
-                .strength(2f)
-                .sound(SoundType.COPPER)
-                .requiresCorrectToolForDrops(),
-        ).addLore(RagiumTranslationKeys.SLAG_COLLECTOR)
-        .build { prop: BlockBehaviour.Properties -> HTEntityBlock.of(::HTSlagCollectorBlockEntity, prop) }
-
-    @JvmField
     val ADDONS: List<DeferredBlock<out Block>> = listOf(
         ENERGY_NETWORK_INTERFACE,
-        SLAG_COLLECTOR,
     )
 
     @JvmField

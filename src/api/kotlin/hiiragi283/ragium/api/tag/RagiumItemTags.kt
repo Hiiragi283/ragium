@@ -48,16 +48,27 @@ object RagiumItemTags {
 
     // Circuits
     @JvmField
-    val CIRCUIT_BASIC: TagKey<Item> = itemTagKey(commonId("circuits/basic"))
+    val CIRCUITS: TagKey<Item> = itemTagKey(commonId("circuits"))
 
     @JvmField
-    val CIRCUIT_ADVANCED: TagKey<Item> = itemTagKey(commonId("circuits/advanced"))
+    val CIRCUITS_BASIC: TagKey<Item> = itemTagKey(commonId("circuits/basic"))
 
     @JvmField
-    val CIRCUIT_ELITE: TagKey<Item> = itemTagKey(commonId("circuits/elite"))
+    val CIRCUITS_ADVANCED: TagKey<Item> = itemTagKey(commonId("circuits/advanced"))
 
     @JvmField
-    val CIRCUIT_ULTIMATE: TagKey<Item> = itemTagKey(commonId("circuits/ultimate"))
+    val CIRCUITS_ELITE: TagKey<Item> = itemTagKey(commonId("circuits/elite"))
+
+    @JvmField
+    val CIRCUITS_ULTIMATE: TagKey<Item> = itemTagKey(commonId("circuits/ultimate"))
+
+    // Glasses
+
+    @JvmField
+    val GLASS_BLOCKS_OBSIDIAN: TagKey<Item> = commonTag("glass_blocks/obsidian")
+
+    @JvmField
+    val GLASS_BLOCKS_QUARTZ: TagKey<Item> = commonTag("glass_blocks/quartz")
 
     //    Ragium    //
 
@@ -72,25 +83,28 @@ object RagiumItemTags {
 
     // Molds
     @JvmField
-    val MOLD_BALL: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/ball"))
+    val MOLDS: TagKey<Item> = itemTagKey(RagiumAPI.id("molds"))
 
     @JvmField
-    val MOLD_BLOCK: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/block"))
+    val MOLDS_BALL: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/ball"))
 
     @JvmField
-    val MOLD_GEAR: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/gear"))
+    val MOLDS_BLOCK: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/block"))
 
     @JvmField
-    val MOLD_INGOT: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/ingot"))
+    val MOLDS_GEAR: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/gear"))
 
     @JvmField
-    val MOLD_PLATE: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/plate"))
+    val MOLDS_INGOT: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/ingot"))
 
     @JvmField
-    val MOLD_ROD: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/rod"))
+    val MOLDS_PLATE: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/plate"))
 
     @JvmField
-    val MOLD_WIRE: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/wire"))
+    val MOLDS_ROD: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/rod"))
+
+    @JvmField
+    val MOLDS_WIRE: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/wire"))
 
     // Soils
     @JvmField

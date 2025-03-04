@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:led"
+      "tag": "c:ingots/ember_alloy"
     },
     "B": {
-      "tag": "minecraft:hoes"
+      "tag": "c:glass_blocks/colorless"
     },
     "C": {
       "item": "ragium:chemical_machine_casing"
@@ -15,16 +15,16 @@
       "tag": "minecraft:axes"
     },
     "E": {
-      "tag": "c:coils/gold"
+      "item": "minecraft:hopper"
     },
     "F": {
-      "tag": "c:circuits/advanced"
+      "tag": "minecraft:hoes"
     }
   },
   "pattern": [
-    " A ",
-    "BCD",
-    "EFE"
+    "AAA",
+    "BCB",
+    "DEF"
   ],
   "result": {
     "count": 1,

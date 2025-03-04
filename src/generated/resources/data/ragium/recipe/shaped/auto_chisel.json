@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_alloy"
+    },
+    "B": {
+      "item": "ragium:machine_casing"
+    },
+    "C": {
+      "tag": "c:gears/steel"
+    },
+    "D": {
+      "item": "minecraft:stonecutter"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " B ",
+    "CDC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:auto_chisel"
+  }
+}

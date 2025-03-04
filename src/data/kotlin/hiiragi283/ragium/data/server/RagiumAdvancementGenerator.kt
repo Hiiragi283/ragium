@@ -118,10 +118,8 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
         // Blast Furnace
         val blastFurnace: AdvancementHolder = createMachine(casing, HTMachineType.BLAST_FURNACE)
-        val slagCollector: AdvancementHolder =
-            createSimple(blastFurnace, RagiumBlocks.SLAG_COLLECTOR, Component.empty())
-        val chemicalGlass: AdvancementHolder =
-            createSimple(slagCollector, RagiumBlocks.CHEMICAL_GLASS, Component.empty())
+        val quartzGlass: AdvancementHolder =
+            createSimple(blastFurnace, RagiumBlocks.QUARTZ_GLASS, Component.empty())
         // Compressor
         val compressor: AdvancementHolder = createMachine(casing, HTMachineType.COMPRESSOR)
         val meatIngot: AdvancementHolder = createSimple(compressor, RagiumItems.MEAT_INGOT, Component.empty())
@@ -223,9 +221,9 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         )
 
         // Alchemical Brewery
-        val brewery: AdvancementHolder = createMachine(casing, HTMachineType.ALCHEMICAL_BREWERY)
+        val brewery: AdvancementHolder = createMachine(casing, HTMachineType.BREWERY)
         // Arcane Enchanter
-        val enchanter: AdvancementHolder = createMachine(casing, HTMachineType.ARCANE_ENCHANTER)
+        val enchanter: AdvancementHolder = createMachine(casing, HTMachineType.ENCHANTER)
         // Laser Assembly
         val assembly: AdvancementHolder = createMachine(casing, HTMachineType.LASER_ASSEMBLY)
     }

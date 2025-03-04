@@ -22,12 +22,8 @@ import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.block.TransparentBlock
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredBlock
 
 object HTChemicalRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -259,7 +255,7 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
         // Molten Glass -> Glass
         HTSolidifierRecipeBuilder(lookup)
             .fluidInput(RagiumFluids.GLASS.commonTag)
-            .catalyst(RagiumItemTags.MOLD_BLOCK)
+            .catalyst(RagiumItemTags.MOLDS_BLOCK)
             .itemOutput(Items.GLASS)
             .save(output)
 
@@ -272,24 +268,23 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
         // Custom Glasses
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
-            .itemInput(Tags.Items.GLASS_BLOCKS)
-            .itemInput(RagiumItemTags.SLAG, 4)
-            .itemOutput(RagiumBlocks.CHEMICAL_GLASS)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ, 4)
+            .itemOutput(RagiumBlocks.QUARTZ_GLASS)
             .save(output)
 
-        mapOf(
-            RagiumItemTags.SLAG to RagiumBlocks.CHEMICAL_GLASS,
-            ItemTags.TRAPDOORS to RagiumBlocks.MOB_GLASS,
-            HTTagPrefix.DUST.createTag(VanillaMaterials.OBSIDIAN) to RagiumBlocks.OBSIDIAN_GLASS,
-            ItemTags.SOUL_FIRE_BASE_BLOCKS to RagiumBlocks.SOUL_GLASS,
-        ).forEach { (input: TagKey<Item>, glass: DeferredBlock<out TransparentBlock>) ->
-            HTFluidOutputRecipeBuilder
-                .infuser(lookup)
-                .itemInput(input, 2)
-                .fluidInput(RagiumFluids.GLASS.commonTag)
-                .itemOutput(glass)
-                .save(output)
-        }
+        HTMultiItemRecipeBuilder
+            .blastFurnace(lookup)
+            .itemInput(RagiumItemTags.GLASS_BLOCKS_QUARTZ)
+            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .itemOutput(RagiumBlocks.SOUL_GLASS)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .blastFurnace(lookup)
+            .itemInput(RagiumItemTags.GLASS_BLOCKS_QUARTZ)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN, 4)
+            .itemOutput(RagiumBlocks.OBSIDIAN_GLASS)
+            .save(output)
     }
 
     //    Sulfur    //

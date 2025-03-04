@@ -94,6 +94,7 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.FISHER)
 
         registerHandlers(RagiumBlockEntityTypes.COMBUSTION_GENERATOR)
+        registerHandlers(RagiumBlockEntityTypes.ENCH_GENERATOR)
         registerHandlers(RagiumBlockEntityTypes.STIRLING_GENERATOR)
         registerHandlers(RagiumBlockEntityTypes.THERMAL_GENERATOR)
 
@@ -116,7 +117,6 @@ internal object RagiumModEvents {
 
         registerHandlers(RagiumBlockEntityTypes.CRATE)
         registerHandlers(RagiumBlockEntityTypes.DRUM)
-        registerHandlers(RagiumBlockEntityTypes.SLAG_COLLECTOR)
 
         // Heat
         event.registerBlock(

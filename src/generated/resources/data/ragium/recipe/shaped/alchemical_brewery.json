@@ -3,28 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:brewing_stand"
+      "tag": "c:ingots/duralumin"
     },
     "B": {
-      "tag": "c:gems/emerald"
+      "item": "minecraft:brewing_stand"
     },
     "C": {
       "item": "ragium:precision_machine_casing"
     },
     "D": {
-      "tag": "c:gems/emerald"
+      "tag": "c:gears/netherite"
     },
     "E": {
-      "tag": "c:coils/aluminum"
-    },
-    "F": {
       "tag": "c:circuits/elite"
     }
   },
   "pattern": [
-    " A ",
-    "BCD",
-    "EFE"
+    "AAA",
+    "BCB",
+    "DED"
   ],
   "result": {
     "count": 1,

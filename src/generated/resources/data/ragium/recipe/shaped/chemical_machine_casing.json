@@ -6,10 +6,10 @@
       "tag": "c:ingots/ember_alloy"
     },
     "B": {
-      "item": "ragium:chemical_glass"
+      "tag": "c:glass_blocks/quartz"
     },
     "C": {
-      "tag": "c:gears/deep_steel"
+      "tag": "c:dusts/glowstone"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "ABA"
   ],
   "result": {
-    "count": 1,
+    "count": 2,
     "id": "ragium:chemical_machine_casing"
   }
 }

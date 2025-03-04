@@ -15,6 +15,6 @@ class HTRefineryScreen(menu: HTRefineryMenu, inventory: Inventory, title: Compon
     HTMachineScreen<HTRefineryMenu>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/refinery.png")
 
-    override val progressX: Int = HTSlotPos.getSlotPosX(4)
-    override val progressY: Int = HTSlotPos.getSlotPosY(1)
+    override val progressPosX: Int = HTSlotPos.getSlotPosX(4)
+    override val progressPosY: Int = HTSlotPos.getSlotPosY(1)
 }

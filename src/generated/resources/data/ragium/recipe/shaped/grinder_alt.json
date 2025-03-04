@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_alloy"
+    },
+    "B": {
+      "item": "ragium:manual_grinder"
+    },
+    "C": {
+      "tag": "c:gears/steel"
+    },
+    "D": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " B ",
+    "CDC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:grinder"
+  }
+}

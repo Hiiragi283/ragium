@@ -13,8 +13,12 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
     HTContainerScreen<T>(menu, inventory, title) {
     abstract val texture: ResourceLocation
 
-    abstract val progressX: Int
-    abstract val progressY: Int
+    abstract val progressPosX: Int
+    abstract val progressPosY: Int
+
+    open val progressSizeX: Int = 16
+    open val progressSizeY: Int = 16
+    open val progressTex: ResourceLocation = RagiumAPI.id("progress_bar")
 
     protected fun getFluidStack(index: Int): FluidStack = menu.machine?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
 
@@ -86,15 +90,15 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
 
     protected open fun renderProgress(guiGraphics: GuiGraphics) {
         guiGraphics.blitSprite(
-            RagiumAPI.id("progress_bar"),
-            16,
-            16,
+            progressTex,
+            progressSizeX,
+            progressSizeY,
             0,
             0,
-            startX + progressX,
-            startY + progressY,
-            Mth.ceil(menu.getProgress() * 16f),
-            16,
+            startX + progressPosX,
+            startY + progressPosY,
+            Mth.ceil(menu.getProgress() * progressSizeX.toFloat()),
+            progressSizeY,
         )
     }
 }

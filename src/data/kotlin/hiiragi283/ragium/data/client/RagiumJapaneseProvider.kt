@@ -48,9 +48,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addBlock(RagiumBlocks.SHAFT, "シャフト")
 
-        addBlock(RagiumBlocks.CHEMICAL_GLASS, "化学ガラス")
         addBlock(RagiumBlocks.MOB_GLASS, "モブガラス")
         addBlock(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石ガラス")
+        addBlock(RagiumBlocks.QUARTZ_GLASS, "クォーツガラス")
         addBlock(RagiumBlocks.SOUL_GLASS, "ソウルガラス")
 
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
@@ -74,7 +74,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getDrum(HTDrumVariant.RAGIUM), "ラギウムのドラム")
 
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
-        addBlock(RagiumBlocks.SLAG_COLLECTOR, "スラグ回収器")
 
         addBlock(RagiumBlocks.MAGMA_BURNER, "マグマバーナー")
         addBlock(RagiumBlocks.SOUL_BURNER, "ソウルバーナー")
@@ -296,18 +295,19 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // add(HTMachineType.LOOT_SPAWNER, "ルートスポナー", "壊れたスポナーからモブドロップを生成する")
 
         add(HTMachineType.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
+        add(HTMachineType.ENCH_GENERATOR, "エンチャント発電機", "周囲のエンチャント源から発電する")
         add(HTMachineType.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")
         add(HTMachineType.STIRLING_GENERATOR, "スターリング発電機", "固体燃料と水から発電する")
         add(HTMachineType.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
 
-        add(HTMachineType.ALCHEMICAL_BREWERY, "錬金醸造機", "連続した醸造")
-        add(HTMachineType.ARCANE_ENCHANTER, "神秘的エンチャント機", "安定したエンチャント")
         add(HTMachineType.ASSEMBLER, "組立機", "君こそが天才だ!")
         add(HTMachineType.AUTO_CHISEL, "自動彫刻機", "自動化した石切台")
         add(HTMachineType.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
+        add(HTMachineType.BREWERY, "錬金醸造機", "連続した醸造")
         add(HTMachineType.COMPRESSOR, "圧縮機", "saves.zip.zip")
         add(HTMachineType.CRUSHER, "破砕機", "Crush Up!")
         add(HTMachineType.ELECTRIC_FURNACE, "電気かまど", "エネルギーまたは下部の熱源で製錬する")
+        add(HTMachineType.ENCHANTER, "神秘的エンチャント機", "安定したエンチャント")
         add(HTMachineType.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
         add(HTMachineType.GRINDER, "粉砕機", "ダイヤモンドは壊れない")
         add(HTMachineType.GROWTH_CHAMBER, "成長チャンバー", "成長バーチャン")
@@ -446,20 +446,25 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.FOOD_CHOCOLATE, "チョコレート")
         add(RagiumItemTags.FOOD_DOUGH, "生地")
 
-        add(RagiumItemTags.CIRCUIT_ADVANCED, "発展回路")
-        add(RagiumItemTags.CIRCUIT_BASIC, "基本回路")
-        add(RagiumItemTags.CIRCUIT_ELITE, "精鋭回路")
-        add(RagiumItemTags.CIRCUIT_ULTIMATE, "究極回路")
+        add(RagiumItemTags.CIRCUITS, "回路")
+        add(RagiumItemTags.CIRCUITS_ADVANCED, "発展回路")
+        add(RagiumItemTags.CIRCUITS_BASIC, "基本回路")
+        add(RagiumItemTags.CIRCUITS_ELITE, "精鋭回路")
+        add(RagiumItemTags.CIRCUITS_ULTIMATE, "究極回路")
+
+        add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "黒曜石ガラス")
+        add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "クォーツガラス")
 
         add(RagiumItemTags.LED_BLOCKS, "LEDブロック")
 
-        add(RagiumItemTags.MOLD_BALL, "プレス型（ボール）")
-        add(RagiumItemTags.MOLD_BLOCK, "プレス型（ブロック）")
-        add(RagiumItemTags.MOLD_GEAR, "プレス型（歯車）")
-        add(RagiumItemTags.MOLD_INGOT, "プレス型（インゴット）")
-        add(RagiumItemTags.MOLD_PLATE, "プレス型（板材）")
-        add(RagiumItemTags.MOLD_ROD, "プレス型（棒材）")
-        add(RagiumItemTags.MOLD_WIRE, "プレス型（ワイヤー）")
+        add(RagiumItemTags.MOLDS_BALL, "プレス型")
+        add(RagiumItemTags.MOLDS_BALL, "プレス型（ボール）")
+        add(RagiumItemTags.MOLDS_BLOCK, "プレス型（ブロック）")
+        add(RagiumItemTags.MOLDS_GEAR, "プレス型（歯車）")
+        add(RagiumItemTags.MOLDS_INGOT, "プレス型（インゴット）")
+        add(RagiumItemTags.MOLDS_PLATE, "プレス型（板材）")
+        add(RagiumItemTags.MOLDS_ROD, "プレス型（棒材）")
+        add(RagiumItemTags.MOLDS_WIRE, "プレス型（ワイヤー）")
 
         add(RagiumItemTags.DIRT_SOILS, "土壌")
         add(RagiumItemTags.END_SOILS, "エンドの土壌")

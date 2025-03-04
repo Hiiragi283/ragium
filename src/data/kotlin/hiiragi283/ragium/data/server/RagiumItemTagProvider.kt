@@ -195,12 +195,21 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
         builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
 
-        builder.add(RagiumItemTags.CIRCUIT_BASIC, RagiumItems.BASIC_CIRCUIT)
-        builder.add(RagiumItemTags.CIRCUIT_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
-        builder.add(RagiumItemTags.CIRCUIT_ELITE, RagiumItems.ELITE_CIRCUIT)
-        builder.add(RagiumItemTags.CIRCUIT_ULTIMATE, RagiumItems.ULTIMATE_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUITS_ELITE, RagiumItems.ELITE_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUITS_ULTIMATE, RagiumItems.ULTIMATE_CIRCUIT)
+        builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_BASIC)
+        builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ADVANCED)
+        builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ELITE)
+        builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ULTIMATE)
 
         builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
+
+        builder.add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, RagiumBlocks.OBSIDIAN_GLASS.asHolder())
+        builder.add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, RagiumBlocks.QUARTZ_GLASS.asHolder())
+        builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
+        builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
 
         builder.addItem(RagiumItemTags.DIRT_SOILS, Items.FARMLAND)
         builder.add(RagiumItemTags.DIRT_SOILS, IntegrationMods.FD, "rich_soil", HTTagBuilder.DependType.OPTIONAL)
@@ -214,17 +223,25 @@ class RagiumItemTagProvider(
 
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
 
-        builder.add(RagiumItemTags.MOLD_BALL, RagiumItems.BALL_PRESS_MOLD)
-        builder.add(RagiumItemTags.MOLD_BLOCK, RagiumItems.BLOCK_PRESS_MOLD)
-        builder.add(RagiumItemTags.MOLD_GEAR, IntegrationMods.IE, "mold_gear", HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.MOLD_GEAR, RagiumItems.GEAR_PRESS_MOLD)
-        builder.add(RagiumItemTags.MOLD_INGOT, RagiumItems.INGOT_PRESS_MOLD)
-        builder.add(RagiumItemTags.MOLD_PLATE, IntegrationMods.IE, "mold_plate", HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.MOLD_PLATE, RagiumItems.PLATE_PRESS_MOLD)
-        builder.add(RagiumItemTags.MOLD_ROD, IntegrationMods.IE, "mold_rod", HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.MOLD_ROD, RagiumItems.ROD_PRESS_MOLD)
-        builder.add(RagiumItemTags.MOLD_WIRE, IntegrationMods.IE, "mold_wire", HTTagBuilder.DependType.OPTIONAL)
-        builder.add(RagiumItemTags.MOLD_WIRE, RagiumItems.WIRE_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_BALL, RagiumItems.BALL_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_BLOCK, RagiumItems.BLOCK_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_GEAR, IntegrationMods.IE, "mold_gear", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLDS_GEAR, RagiumItems.GEAR_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_INGOT, RagiumItems.INGOT_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_PLATE, IntegrationMods.IE, "mold_plate", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLDS_PLATE, RagiumItems.PLATE_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_ROD, IntegrationMods.IE, "mold_rod", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLDS_ROD, RagiumItems.ROD_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_WIRE, IntegrationMods.IE, "mold_wire", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLDS_WIRE, RagiumItems.WIRE_PRESS_MOLD)
+
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_BALL)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_BLOCK)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_GEAR)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_INGOT)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_PLATE)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_ROD)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_WIRE)
 
         RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
     }

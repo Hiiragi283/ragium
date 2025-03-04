@@ -1,0 +1,14 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "tag": "c:glass_blocks/quartz"
+    },
+    {
+      "tag": "minecraft:soul_fire_base_blocks"
+    }
+  ],
+  "item_output": {
+    "item": "ragium:soul_glass"
+  }
+}

@@ -27,7 +27,7 @@ object HTRecipeTypes {
 
     @JvmField
     val BREWERY = HTRecipeType<HTBreweryRecipe>(
-        HTMachineType.ALCHEMICAL_BREWERY,
+        HTMachineType.BREWERY,
         HTBreweryRecipe.CODEC,
         HTBreweryRecipe.STREAM_CODEC,
     )
@@ -47,7 +47,7 @@ object HTRecipeTypes {
 
     @JvmField
     val ENCHANTER = HTRecipeType<HTEnchanterRecipe>(
-        HTMachineType.ARCANE_ENCHANTER,
+        HTMachineType.ENCHANTER,
         HTEnchanterRecipe.CODEC,
         HTEnchanterRecipe.STREAM_CODEC,
     )

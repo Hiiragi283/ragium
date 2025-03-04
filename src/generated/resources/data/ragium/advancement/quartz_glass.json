@@ -1,11 +1,11 @@
 {
   "parent": "ragium:slag_collector",
   "criteria": {
-    "has_chemical_glass": {
+    "has_quartz_glass": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:chemical_glass"
+            "items": "ragium:quartz_glass"
           }
         ]
       },
@@ -16,15 +16,15 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:chemical_glass"
+      "id": "ragium:quartz_glass"
     },
     "title": {
-      "translate": "block.ragium.chemical_glass"
+      "translate": "block.ragium.quartz_glass"
     }
   },
   "requirements": [
     [
-      "has_chemical_glass"
+      "has_quartz_glass"
     ]
   ],
   "sends_telemetry_event": true

@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -10,8 +11,9 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.api.util.HTArmorSets
-import hiiragi283.ragium.api.util.HTToolSets
+import hiiragi283.ragium.api.util.*
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
@@ -24,16 +26,15 @@ import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.ArmorItem
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
+import net.minecraft.world.item.*
 import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
 object HTCommonRecipeProvider : HTRecipeProvider() {
@@ -41,6 +42,13 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         registerRaginite(output)
         registerMetals(output)
         registerRagium(output)
+
+        registerBurners(output)
+        registerCrates(output)
+        registerDrums(output)
+
+        registerDecorations(output)
+        registerLEDs(output)
 
         registerCircuits(output)
         registerPressMolds(output)
@@ -173,6 +181,148 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
+    //    Components    //
+
+    private fun registerBurners(output: RecipeOutput) {
+        for (burner: DeferredBlock<Block> in RagiumBlocks.BURNERS) {
+            val core: ItemLike = when (burner) {
+                RagiumBlocks.MAGMA_BURNER -> Items.MAGMA_BLOCK
+                RagiumBlocks.SOUL_BURNER -> RagiumBlocks.SOUL_MAGMA_BLOCK
+                RagiumBlocks.FIERY_BURNER -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!
+                else -> continue
+            }
+            val base: Item = when (burner) {
+                RagiumBlocks.MAGMA_BURNER -> Items.POLISHED_BLACKSTONE_BRICKS
+                RagiumBlocks.SOUL_BURNER -> Items.END_STONE_BRICKS
+                RagiumBlocks.FIERY_BURNER -> Items.RED_NETHER_BRICKS
+                else -> continue
+            }
+            // Shaped Crafting
+            HTShapedRecipeBuilder(burner)
+                .pattern("A A")
+                .pattern("ABA")
+                .pattern("CCC")
+                .define('A', Items.IRON_BARS)
+                .define('B', core)
+                .define('C', base)
+                .save(output)
+        }
+    }
+
+    private fun registerCrates(output: RecipeOutput) {
+        for ((variant: HTCrateVariant, crate: DeferredBlock<HTCrateBlock>) in RagiumBlocks.CRATES) {
+            // Shaped Crafting
+            HTShapedRecipeBuilder(crate)
+                .pattern(
+                    "ABA",
+                    "ACA",
+                    "ABA",
+                ).define('A', variant.baseTag)
+                .define('B', ItemTags.WOODEN_SLABS)
+                .define('C', Tags.Items.BARRELS)
+                .save(output)
+        }
+    }
+
+    private fun registerDrums(output: RecipeOutput) {
+        for ((variant: HTDrumVariant, drum: DeferredBlock<HTDrumBlock>) in RagiumBlocks.DRUMS) {
+            // Shaped Crafting
+            HTShapedRecipeBuilder(drum)
+                .pattern(
+                    "ABA",
+                    "ACA",
+                    "ABA",
+                ).define('A', variant.baseTag)
+                .define('B', Items.SMOOTH_STONE_SLAB)
+                .define('C', Tags.Items.BUCKETS_EMPTY)
+                .save(output)
+        }
+    }
+
+    //    Decorations    //
+
+    private fun registerDecorations(output: RecipeOutput) {
+        // Ragi-Bricks
+        HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICKS, 2, CraftingBookCategory.BUILDING)
+            .cross8()
+            .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
+            .define('B', Tags.Items.BRICKS_NORMAL)
+            .define('C', Items.CLAY)
+            .save(output)
+        // Plastic Block
+        HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BLOCK, 4, CraftingBookCategory.BUILDING)
+            .hollow4()
+            .define('A', RagiumItemTags.PLASTICS)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .save(output)
+        // Blue Nether Bricks
+        HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICKS, category = CraftingBookCategory.BUILDING)
+            .pattern(
+                "AB",
+                "BA",
+            ).define('A', RagiumItemTags.CROPS_WARPED_WART)
+            .define('B', Tags.Items.BRICKS_NETHER)
+            .save(output)
+
+        registerFamily(output, RagiumBlocks.RAGI_BRICK_SETS)
+        registerFamily(output, RagiumBlocks.PLASTIC_SETS)
+        registerFamily(output, RagiumBlocks.BLUE_NETHER_BRICK_SETS)
+    }
+
+    private fun registerFamily(output: RecipeOutput, family: HTBuildingBlockSets) {
+        // Base -> Slab
+        HTShapedRecipeBuilder(family.slab, 6, CraftingBookCategory.BUILDING)
+            .pattern("AAA")
+            .define('A', family.base)
+            .save(output)
+
+        SingleItemRecipeBuilder
+            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.slab, 2)
+            .unlockedBy("has_base", has(family.base))
+            .savePrefixed(output)
+        // Base -> Stairs
+        HTShapedRecipeBuilder(family.stairs, 4, CraftingBookCategory.BUILDING)
+            .pattern("A  ")
+            .pattern("AA ")
+            .pattern("AAA")
+            .define('A', family.base)
+            .save(output)
+
+        SingleItemRecipeBuilder
+            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.stairs)
+            .unlockedBy("has_base", has(family.base))
+            .savePrefixed(output)
+        // Base -> Wall
+        HTShapedRecipeBuilder(family.wall, 4, CraftingBookCategory.BUILDING)
+            .pattern("AAA")
+            .pattern("AAA")
+            .define('A', family.base)
+            .save(output)
+
+        SingleItemRecipeBuilder
+            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.wall)
+            .unlockedBy("has_base", has(family.base))
+            .savePrefixed(output)
+    }
+
+    private fun registerLEDs(output: RecipeOutput) {
+        // LED
+        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(DyeColor.WHITE), 4, CraftingBookCategory.BUILDING)
+            .hollow4()
+            .define('A', Tags.Items.GLASS_BLOCKS)
+            .define('B', RagiumItems.LED)
+            .save(output, RagiumAPI.id("led_block"))
+
+        for ((color: DyeColor, block: DeferredBlock<Block>) in RagiumBlocks.LED_BLOCKS) {
+            // Shaped Crafting
+            HTShapedRecipeBuilder(block, 4, CraftingBookCategory.BUILDING)
+                .hollow8()
+                .define('A', RagiumItemTags.LED_BLOCKS)
+                .define('B', color.commonTag)
+                .save(output)
+        }
+    }
+
     //    Ingredient    //
 
     private fun registerCircuits(output: RecipeOutput) {
@@ -240,7 +390,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('A', Tags.Items.GEMS_LAPIS)
             .define('B', Tags.Items.DUSTS_REDSTONE)
             .define('C', Tags.Items.DUSTS_GLOWSTONE)
-            .define('D', RagiumItemTags.CIRCUIT_BASIC)
+            .define('D', RagiumItemTags.CIRCUITS_BASIC)
             .save(output)
     }
 
@@ -286,7 +436,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .assembler(lookup)
             .itemInput(Tags.Items.DUSTS_GLOWSTONE, 64)
             .itemInput(Tags.Items.INGOTS_GOLD, 16)
-            .itemInput(RagiumBlocks.CHEMICAL_GLASS, 8)
+            .itemInput(RagiumBlocks.QUARTZ_GLASS, 8)
             .itemOutput(RagiumItems.GLOWSTONE_LENS)
             .save(output)
 
@@ -294,7 +444,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .assembler(lookup)
             .itemInput(Tags.Items.GEMS_DIAMOND, 64)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 16)
-            .itemInput(RagiumBlocks.SOUL_GLASS, 8)
+            .itemInput(Tags.Items.GLASS_BLOCKS_TINTED, 8)
             .itemOutput(RagiumItems.DIAMOND_LENS)
             .save(output)
 
@@ -304,57 +454,6 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 16)
             .itemInput(RagiumBlocks.OBSIDIAN_GLASS, 8)
             .itemOutput(RagiumItems.AMETHYST_LENS)
-            .save(output)
-    }
-
-    private fun registerMisc(output: RecipeOutput) {
-        HTShapedRecipeBuilder(RagiumItems.SOLAR_PANEL)
-            .pattern("AAA")
-            .pattern("BBB")
-            .pattern("CCC")
-            .define('A', Tags.Items.GLASS_PANES)
-            .define('B', HTTagPrefix.DUST, VanillaMaterials.LAPIS)
-            .define('C', HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
-            .save(output)
-
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
-            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
-            .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
-            .itemOutput(RagiumItems.LED, 4)
-            .save(output)
-
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
-            .itemInput(Items.PISTON, 2)
-            .itemOutput(RagiumItems.ENGINE)
-            .save(output)
-
-        HTShapedRecipeBuilder(RagiumBlocks.SLAG_BLOCK)
-            .hollow8()
-            .define('A', RagiumItemTags.SLAG)
-            .define('B', RagiumItems.SLAG)
-            .save(output)
-
-        ShapelessRecipeBuilder
-            .shapeless(RecipeCategory.MISC, RagiumItems.SLAG, 9)
-            .requires(RagiumBlocks.SLAG_BLOCK)
-            .unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
-            .savePrefixed(output)
-
-        HTShapedRecipeBuilder(RagiumBlocks.SHAFT, 6, CraftingBookCategory.BUILDING)
-            .pattern("A")
-            .pattern("A")
-            .define('A', HTTagPrefix.BLOCK, VanillaMaterials.IRON)
-            .save(output)
-
-        HTSingleItemRecipeBuilder
-            .grinder(lookup)
-            .itemInput(Tags.Items.OBSIDIANS_NORMAL)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN), 4)
             .save(output)
     }
 
@@ -369,7 +468,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "C C",
             ).define('A', RagiumItemTags.PLASTICS)
             .define('B', Tags.Items.GLASS_PANES)
-            .define('C', RagiumItemTags.CIRCUIT_ADVANCED)
+            .define('C', RagiumItemTags.CIRCUITS_ADVANCED)
             .save(output)
         // Jetpack
         HTShapedRecipeBuilder(RagiumItems.JETPACK, category = CraftingBookCategory.EQUIPMENT)
@@ -378,7 +477,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "ACA",
                 "D D",
             ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', RagiumItemTags.CIRCUIT_ELITE)
+            .define('B', RagiumItemTags.CIRCUITS_ELITE)
             .define('C', ItemTags.CHEST_ARMOR)
             .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
@@ -534,6 +633,65 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "B",
             ).define('A', Tags.Items.RODS_WOODEN)
             .define('B', HTTagPrefix.INGOT, toolSet.key)
+            .save(output)
+    }
+
+    //    Misc    //
+
+    private fun registerMisc(output: RecipeOutput) {
+        HTShapedRecipeBuilder(RagiumBlocks.SOUL_MAGMA_BLOCK)
+            .hollow4()
+            .define('A', ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .define('B', Items.MAGMA_BLOCK)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.SOLAR_PANEL)
+            .pattern("AAA")
+            .pattern("BBB")
+            .pattern("CCC")
+            .define('A', Tags.Items.GLASS_PANES)
+            .define('B', HTTagPrefix.DUST, VanillaMaterials.LAPIS)
+            .define('C', HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
+            .itemOutput(RagiumItems.LED, 4)
+            .save(output)
+
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
+            .itemInput(Items.PISTON, 2)
+            .itemOutput(RagiumItems.ENGINE)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.SLAG_BLOCK)
+            .hollow8()
+            .define('A', RagiumItemTags.SLAG)
+            .define('B', RagiumItems.SLAG)
+            .save(output)
+
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, RagiumItems.SLAG, 9)
+            .requires(RagiumBlocks.SLAG_BLOCK)
+            .unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
+            .savePrefixed(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.SHAFT, 6, CraftingBookCategory.BUILDING)
+            .pattern("A")
+            .pattern("A")
+            .define('A', HTTagPrefix.BLOCK, VanillaMaterials.IRON)
+            .save(output)
+
+        HTSingleItemRecipeBuilder
+            .grinder(lookup)
+            .itemInput(Tags.Items.OBSIDIANS_NORMAL)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN), 4)
             .save(output)
     }
 }

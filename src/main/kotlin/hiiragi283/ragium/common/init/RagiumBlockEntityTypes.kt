@@ -2,11 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.*
 import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
@@ -78,6 +74,10 @@ object RagiumBlockEntityTypes {
         register("combustion_generator", ::HTCombustionGeneratorBlockEntity, HTMachineType.COMBUSTION_GENERATOR)
 
     @JvmField
+    val ENCH_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTEnchantmentGeneratorBlockEntity>> =
+        register("enchantment_generator", ::HTEnchantmentGeneratorBlockEntity, HTMachineType.ENCH_GENERATOR)
+
+    @JvmField
     val SOLAR_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSolarGeneratorBlockEntity>> =
         register("solar_generator", ::HTSolarGeneratorBlockEntity, HTMachineType.SOLAR_GENERATOR)
 
@@ -105,7 +105,7 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val BREWERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBreweryBlockEntity>> =
-        register("brewery", ::HTBreweryBlockEntity, HTMachineType.ALCHEMICAL_BREWERY)
+        register("brewery", ::HTBreweryBlockEntity, HTMachineType.BREWERY)
 
     @JvmField
     val COMPRESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCompressorBlockEntity>> =
@@ -164,10 +164,4 @@ object RagiumBlockEntityTypes {
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =
         register("drum", ::HTDrumBlockEntity, RagiumBlocks.DRUMS.values)
-
-    //    Addon    //
-
-    @JvmField
-    val SLAG_COLLECTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSlagCollectorBlockEntity>> =
-        register("slag_collector", ::HTSlagCollectorBlockEntity, RagiumBlocks.SLAG_COLLECTOR)
 }

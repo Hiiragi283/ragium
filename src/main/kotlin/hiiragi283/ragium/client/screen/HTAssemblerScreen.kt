@@ -15,6 +15,8 @@ class HTAssemblerScreen(menu: HTAssemblerMenu, inventory: Inventory, title: Comp
     HTMachineScreen<HTAssemblerMenu>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/assembler.png")
 
-    override val progressX: Int = HTSlotPos.getSlotPosX(4)
-    override val progressY: Int = HTSlotPos.getSlotPosY(2)
+    override val progressPosX: Int = HTSlotPos.getSlotPosX(7)
+    override val progressPosY: Int = HTSlotPos.getSlotPosY(1)
+
+    override val progressTex: ResourceLocation = RagiumAPI.id("progress/assembler")
 }

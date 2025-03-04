@@ -48,9 +48,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addBlock(RagiumBlocks.SHAFT, "Shaft")
 
-        addBlock(RagiumBlocks.CHEMICAL_GLASS, "Chemical Glass")
         addBlock(RagiumBlocks.MOB_GLASS, "Mob Glass")
         addBlock(RagiumBlocks.OBSIDIAN_GLASS, "Obsidian Glass")
+        addBlock(RagiumBlocks.QUARTZ_GLASS, "Quartz Glass")
         addBlock(RagiumBlocks.SOUL_GLASS, "Soul Glass")
 
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
@@ -74,7 +74,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getDrum(HTDrumVariant.RAGIUM), "Ragium Drum")
 
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
-        addBlock(RagiumBlocks.SLAG_COLLECTOR, "Slag Collector")
 
         addBlock(RagiumBlocks.MAGMA_BURNER, "Magma Burner")
         addBlock(RagiumBlocks.SOUL_BURNER, "Soul Burner")
@@ -291,43 +290,23 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
         // Machine Type
-        add(
-            HTMachineType.BEDROCK_MINER,
-            "Bedrock Miner",
-            "Collect minerals from Bedrock",
-        )
+        add(HTMachineType.BEDROCK_MINER, "Bedrock Miner", "Collect minerals from Bedrock")
         add(HTMachineType.FISHER, "Fisher", "Fishing fishes from below water source")
-        // add(HTMachineType.LOOT_SPAWNER, "Loot Spawner", "Generate mob drops from Broken Spawner")
 
-        add(
-            HTMachineType.COMBUSTION_GENERATOR,
-            "Combustion Generator",
-            "Generate energy from liquid fuels",
-        )
-        add(
-            HTMachineType.SOLAR_GENERATOR,
-            "Solar Generator",
-            "Generate energy in daytime",
-        )
-        add(
-            HTMachineType.STIRLING_GENERATOR,
-            "Stirling Generator",
-            "Generate energy from solid fuel and water",
-        )
-        add(
-            HTMachineType.THERMAL_GENERATOR,
-            "Thermal Generator",
-            "Generate energy from hot fluids",
-        )
+        add(HTMachineType.COMBUSTION_GENERATOR, "Combustion Generator", "Generate energy from liquid fuels")
+        add(HTMachineType.ENCH_GENERATOR, "Enchantment Generator", "Generate energy from around enchantment sources")
+        add(HTMachineType.SOLAR_GENERATOR, "Solar Generator", "Generate energy in daytime")
+        add(HTMachineType.STIRLING_GENERATOR, "Stirling Generator", "Generate energy from solid fuel and water")
+        add(HTMachineType.THERMAL_GENERATOR, "Thermal Generator", "Generate energy from hot fluids")
 
-        add(HTMachineType.ALCHEMICAL_BREWERY, "Alchemical Brewery", "Sequential Brewing")
-        add(HTMachineType.ARCANE_ENCHANTER, "Arcane Enchanter", "Stable Enchanting")
         add(HTMachineType.ASSEMBLER, "Assembler", "You are the genius!")
         add(HTMachineType.AUTO_CHISEL, "Auto Chisel", "Automated Stonecutter")
         add(HTMachineType.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
+        add(HTMachineType.BREWERY, "Alchemical Brewery", "Sequential Brewing")
         add(HTMachineType.COMPRESSOR, "Compressor", "saves.zip.zip")
         add(HTMachineType.CRUSHER, "Crusher", "Crush Up!")
         add(HTMachineType.ELECTRIC_FURNACE, "Electric Furnace", "Smelting with energy or below heat")
+        add(HTMachineType.ENCHANTER, "Arcane Enchanter", "Stable Enchanting")
         add(HTMachineType.EXTRACTOR, "Extractor", "Something like Centrifuge")
         add(HTMachineType.GRINDER, "Grinder", "Unbreakable Diamond")
         add(HTMachineType.GROWTH_CHAMBER, "Growth Chamber", "Growth Gran-ma")
@@ -466,20 +445,25 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.FOOD_CHOCOLATE, "Chocolate")
         add(RagiumItemTags.FOOD_DOUGH, "Dough")
 
-        add(RagiumItemTags.CIRCUIT_BASIC, "Basic Circuit")
-        add(RagiumItemTags.CIRCUIT_ADVANCED, "Advanced Circuit")
-        add(RagiumItemTags.CIRCUIT_ELITE, "Elite Circuit")
-        add(RagiumItemTags.CIRCUIT_ULTIMATE, "Ultimate Circuit")
+        add(RagiumItemTags.CIRCUITS, "Circuit")
+        add(RagiumItemTags.CIRCUITS_BASIC, "Basic Circuit")
+        add(RagiumItemTags.CIRCUITS_ADVANCED, "Advanced Circuit")
+        add(RagiumItemTags.CIRCUITS_ELITE, "Elite Circuit")
+        add(RagiumItemTags.CIRCUITS_ULTIMATE, "Ultimate Circuit")
+
+        add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "Obsidian Glass")
+        add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "Quartz Glass")
 
         add(RagiumItemTags.LED_BLOCKS, "LED Block")
 
-        add(RagiumItemTags.MOLD_BALL, "Press Mold (Ball)")
-        add(RagiumItemTags.MOLD_BLOCK, "Press Mold (Block)")
-        add(RagiumItemTags.MOLD_GEAR, "Press Mold (Gear)")
-        add(RagiumItemTags.MOLD_INGOT, "Press Mold (Ingot)")
-        add(RagiumItemTags.MOLD_PLATE, "Press Mold (Plate)")
-        add(RagiumItemTags.MOLD_ROD, "Press Mold (Rod)")
-        add(RagiumItemTags.MOLD_WIRE, "Press Mold (Wire)")
+        add(RagiumItemTags.MOLDS, "Press Mold")
+        add(RagiumItemTags.MOLDS_BALL, "Press Mold (Ball)")
+        add(RagiumItemTags.MOLDS_BLOCK, "Press Mold (Block)")
+        add(RagiumItemTags.MOLDS_GEAR, "Press Mold (Gear)")
+        add(RagiumItemTags.MOLDS_INGOT, "Press Mold (Ingot)")
+        add(RagiumItemTags.MOLDS_PLATE, "Press Mold (Plate)")
+        add(RagiumItemTags.MOLDS_ROD, "Press Mold (Rod)")
+        add(RagiumItemTags.MOLDS_WIRE, "Press Mold (Wire)")
 
         add(RagiumItemTags.DIRT_SOILS, "Dirt Soil")
         add(RagiumItemTags.END_SOILS, "End Soil")

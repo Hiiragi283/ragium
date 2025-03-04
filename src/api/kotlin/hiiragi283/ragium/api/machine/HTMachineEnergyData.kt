@@ -10,7 +10,10 @@ interface HTMachineEnergyData {
     data class Empty(private val result: Boolean) : HTMachineEnergyData {
         override val amount: Int = 0
 
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Result<Unit> = Result.success(Unit)
+        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Result<Unit> = when (result) {
+            true -> Result.failure(HTMachineException.Custom("Failed to interact energy network!"))
+            false -> Result.success(Unit)
+        }
     }
 
     enum class Consume(override val amount: Int) : HTMachineEnergyData {

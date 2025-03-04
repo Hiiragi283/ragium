@@ -193,7 +193,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTSingleItemRecipeBuilder
             .compressor(lookup)
             .itemInput(Items.BLAZE_POWDER, 4)
-            .catalyst(RagiumItemTags.MOLD_ROD)
+            .catalyst(RagiumItemTags.MOLDS_ROD)
             .itemOutput(Items.BLAZE_ROD)
             .save(output)
         // Breeze Rod <-> Wind Charge
@@ -205,7 +205,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         HTSingleItemRecipeBuilder
             .compressor(lookup)
             .itemInput(Items.WIND_CHARGE, 4)
-            .catalyst(RagiumItemTags.MOLD_ROD)
+            .catalyst(RagiumItemTags.MOLDS_ROD)
             .itemOutput(Items.BREEZE_ROD)
             .save(output)
     }
@@ -525,7 +525,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         // Crude Oil -> Tar
         HTSolidifierRecipeBuilder(lookup)
             .fluidInput(RagiumFluids.CRUDE_OIL.commonTag, 250)
-            .catalyst(RagiumItemTags.MOLD_BALL)
+            .catalyst(RagiumItemTags.MOLDS_BALL)
             .itemOutput(RagiumItems.TAR)
             .save(output)
 
@@ -546,10 +546,10 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
 
         // Polymer Resin -> XX
         mapOf(
-            RagiumItemTags.MOLD_PLATE to RagiumItems.PLASTIC_PLATE,
-            RagiumItemTags.MOLD_WIRE to Items.STRING,
+            RagiumItemTags.MOLDS_PLATE to RagiumItems.PLASTIC_PLATE,
+            RagiumItemTags.MOLDS_WIRE to Items.STRING,
             Tags.Items.LEATHERS to Items.LEATHER,
-            RagiumItemTags.MOLD_BLOCK to Items.GLASS,
+            RagiumItemTags.MOLDS_BLOCK to Items.GLASS,
         ).forEach { (catalyst: TagKey<Item>, result: ItemLike) ->
             HTSingleItemRecipeBuilder
                 .compressor(lookup)

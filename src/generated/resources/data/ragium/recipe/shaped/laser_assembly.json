@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:end_crystal"
+      "tag": "c:ingots/duralumin"
     },
     "B": {
-      "tag": "c:gems/ragi_crystal"
+      "tag": "c:glass_blocks/obsidian"
     },
     "C": {
       "item": "ragium:precision_machine_casing"
@@ -15,16 +15,13 @@
       "tag": "c:gems/ragi_crystal"
     },
     "E": {
-      "tag": "c:coils/aluminum"
-    },
-    "F": {
       "tag": "c:circuits/elite"
     }
   },
   "pattern": [
-    " A ",
-    "BCD",
-    "EFE"
+    "AAA",
+    "BCB",
+    "DED"
   ],
   "result": {
     "count": 1,

@@ -14,6 +14,6 @@ import net.neoforged.api.distmarker.OnlyIn
 class HTMixerScreen(menu: HTMixerMenu, inventory: Inventory, title: Component) : HTMachineScreen<HTMixerMenu>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/mixer.png")
 
-    override val progressX: Int = HTSlotPos.getSlotPosX(4.5)
-    override val progressY: Int = HTSlotPos.getSlotPosY(1)
+    override val progressPosX: Int = HTSlotPos.getSlotPosX(4.5)
+    override val progressPosY: Int = HTSlotPos.getSlotPosY(1)
 }

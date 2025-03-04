@@ -17,11 +17,9 @@ import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import hiiragi283.ragium.common.inventory.HTPrimitiveBlastFurnaceMenu
-import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
@@ -97,8 +95,6 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         } else {
             null
         }
-
-    override fun getDisplayName(): Component = machineType.text.withStyle(ChatFormatting.WHITE)
 
     //    Item    //
 

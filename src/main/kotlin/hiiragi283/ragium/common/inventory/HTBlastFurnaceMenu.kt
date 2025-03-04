@@ -17,11 +17,13 @@ class HTBlastFurnaceMenu(
     secondInputSlot: HTItemSlot,
     thirdInputSlot: HTItemSlot,
     outputSlot: HTItemSlot,
+    slagSlot: HTItemSlot,
 ) : HTMachineMenu(RagiumMenuTypes.BLAST_FURNACE, containerId, inventory, pos) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
+        RagiumAPI.getInstance().emptyItemSlot(),
         RagiumAPI.getInstance().emptyItemSlot(),
         RagiumAPI.getInstance().emptyItemSlot(),
         RagiumAPI.getInstance().emptyItemSlot(),
@@ -36,6 +38,7 @@ class HTBlastFurnaceMenu(
         addFluidSlot(0, 2, 2)
         // outputs
         addSlot(outputSlot.createContainerSlot(6, 2, HTStorageIO.OUTPUT))
+        addSlot(slagSlot.createContainerSlot(7, 2, HTStorageIO.OUTPUT))
         // player inventory
         addPlayerInv()
         // register property
@@ -43,5 +46,5 @@ class HTBlastFurnaceMenu(
     }
 
     override val inputSlots: IntRange = (0..2)
-    override val outputSlots: IntRange = (3..3)
+    override val outputSlots: IntRange = (3..4)
 }

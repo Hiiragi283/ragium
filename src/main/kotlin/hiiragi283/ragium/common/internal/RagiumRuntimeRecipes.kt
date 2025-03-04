@@ -85,7 +85,7 @@ object RagiumRuntimeRecipes {
                     HTSingleItemRecipeBuilder
                         .compressor(lookup)
                         .itemInput(mainPrefix, key, 4)
-                        .catalyst(RagiumItemTags.MOLD_GEAR)
+                        .catalyst(RagiumItemTags.MOLDS_GEAR)
                         .itemOutput(gear)
                 }
                 // Plate
@@ -97,7 +97,7 @@ object RagiumRuntimeRecipes {
                     HTSingleItemRecipeBuilder
                         .compressor(lookup)
                         .itemInput(mainPrefix, key)
-                        .catalyst(RagiumItemTags.MOLD_PLATE)
+                        .catalyst(RagiumItemTags.MOLDS_PLATE)
                         .itemOutput(plate)
                 }
                 // Rod
@@ -109,7 +109,7 @@ object RagiumRuntimeRecipes {
                     HTSingleItemRecipeBuilder
                         .compressor(lookup)
                         .itemInput(mainPrefix, key)
-                        .catalyst(RagiumItemTags.MOLD_ROD)
+                        .catalyst(RagiumItemTags.MOLDS_ROD)
                         .itemOutput(rod, 2)
                 }
                 // Wire
@@ -121,7 +121,7 @@ object RagiumRuntimeRecipes {
                     HTSingleItemRecipeBuilder
                         .compressor(lookup)
                         .itemInput(mainPrefix, key)
-                        .catalyst(RagiumItemTags.MOLD_WIRE)
+                        .catalyst(RagiumItemTags.MOLDS_WIRE)
                         .itemOutput(wire, 2)
                 }
             }

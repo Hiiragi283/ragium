@@ -20,11 +20,11 @@ abstract class HTFluidTank(private val validator: (HTFluidVariant) -> Boolean, p
     HTNbtCodec {
     val stack: FluidStack get() = resource.toStack(amount)
 
-    fun canInsert(variant: HTFluidVariant, amount: Int): Boolean = insert(variant, amount, true) > 0
+    fun canInsert(variant: HTFluidVariant, amount: Int): Boolean = insert(variant, amount, true) == amount
 
-    fun canInsert(stack: FluidStack): Boolean = insert(stack, true) > 0
+    fun canInsert(stack: FluidStack): Boolean = insert(stack, true) == stack.amount
 
-    fun canExtract(maxAmount: Int): Boolean = extract(resource, maxAmount, true) > 0
+    fun canExtract(maxAmount: Int): Boolean = extract(resource, maxAmount, true) == maxAmount
 
     fun insert(stack: FluidStack, simulate: Boolean): Int = insert(HTFluidVariant.of(stack), stack.amount, simulate)
 

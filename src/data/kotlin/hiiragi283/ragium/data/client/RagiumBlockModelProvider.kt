@@ -50,7 +50,7 @@ class RagiumBlockModelProvider(output: PackOutput, existingFileHelper: ExistingF
         }
 
         // Enchanter
-        precisionMachine(HTMachineType.ALCHEMICAL_BREWERY)
+        precisionMachine(HTMachineType.BREWERY)
         precisionMachine(HTMachineType.LASER_ASSEMBLY)
         precisionMachine(HTMachineType.MULTI_SMELTER)
     }

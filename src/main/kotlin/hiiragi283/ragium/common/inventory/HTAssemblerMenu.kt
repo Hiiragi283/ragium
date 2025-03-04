@@ -30,12 +30,12 @@ class HTAssemblerMenu(
 
     init {
         // inputs
-        addSlot(firstInputSlot.createContainerSlot(2, 0))
-        addSlot(secondInputSlot.createContainerSlot(4, 0))
-        addSlot(thirdInputSlot.createContainerSlot(6, 0))
-        addFluidSlot(0, 2, 2)
+        addSlot(firstInputSlot.createContainerSlot(0, 1))
+        addSlot(secondInputSlot.createContainerSlot(2, 1))
+        addSlot(thirdInputSlot.createContainerSlot(4, 1))
+        addFluidSlot(0, 6, 1)
         // outputs
-        addSlot(outputSlot.createContainerSlot(6, 2, HTStorageIO.OUTPUT))
+        addSlot(outputSlot.createContainerSlot(8, 1, HTStorageIO.OUTPUT))
         // player inventory
         addPlayerInv()
         // register property

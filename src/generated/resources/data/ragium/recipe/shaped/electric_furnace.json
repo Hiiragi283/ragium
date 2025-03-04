@@ -3,28 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:storage_blocks/copper"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "tag": "c:player_workstations/furnaces"
     },
     "C": {
       "item": "ragium:machine_casing"
     },
     "D": {
-      "item": "minecraft:furnace"
-    },
-    "E": {
       "tag": "c:coils/copper"
     },
-    "F": {
-      "tag": "c:circuits/basic"
+    "E": {
+      "tag": "c:storage_blocks/copper"
     }
   },
   "pattern": [
-    " A ",
-    "BCD",
-    "EFE"
+    "AAA",
+    "BCB",
+    "DED"
   ],
   "result": {
     "count": 1,

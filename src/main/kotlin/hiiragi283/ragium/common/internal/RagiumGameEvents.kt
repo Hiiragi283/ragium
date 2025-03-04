@@ -2,13 +2,9 @@ package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.createSpawnerStack
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.machine.HTMachineAccess
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.*
-import hiiragi283.ragium.common.block.addon.HTSlagCollectorBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
@@ -94,21 +90,5 @@ internal object RagiumGameEvents {
         if (!stack.isEmpty && stack.`is`(RagiumItems.POTION_BUNDLE)) {
             PacketDistributor.sendToServer(HTPotionBundlePacket)
         }
-    }
-
-    @SubscribeEvent
-    fun onBlastFurnaceSucceeded(event: HTMachineProcessEvent.Success) {
-        val machine: HTMachineAccess = event.machine
-        val level: Level = machine.levelAccess ?: return
-        val pos: BlockPos = machine.pos
-        var addon: HTSlagCollectorBlockEntity? = null
-        if (machine.machineType == HTMachineType.BLAST_FURNACE) {
-            for (direction: Direction in Direction.entries) {
-                addon = (level.getBlockEntity(pos.relative(direction)) as? HTSlagCollectorBlockEntity)
-                if (addon != null) break
-            }
-        }
-        if (addon == null) return
-        addon.onReceiveEvent(event)
     }
 }

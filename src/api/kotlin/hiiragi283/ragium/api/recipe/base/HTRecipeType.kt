@@ -40,11 +40,16 @@ class HTRecipeType<T : HTMachineRecipe>(val machine: HTMachineType, val serializ
      * 指定した[context]と[level]から最初に一致するレシピを返します。
      * @return 見つからなかった場合は[Result.failure]
      */
-    fun getFirstRecipe(context: HTMachineRecipeContext, level: Level): RecipeHolder<T>? {
+    fun getFirstRecipe(context: HTMachineRecipeContext, level: Level, lastRecipe: ResourceLocation?): RecipeHolder<T>? {
         // Check cache update
         this.reloadCache()
         // Find from cache
-        return recipeCache.values.firstOrNull { holder: RecipeHolder<T> -> holder.value.matches(context, level) }
+        var firstRecipe: RecipeHolder<T>? = null
+        if (lastRecipe != null) {
+            firstRecipe = recipeCache[lastRecipe]?.takeIf { it.value.matches(context, level) }
+        }
+        return firstRecipe ?: recipeCache.values
+            .firstOrNull { holder: RecipeHolder<T> -> holder.value.matches(context, level) }
     }
 
     /**

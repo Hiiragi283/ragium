@@ -3,28 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:dusts/redstone"
+      "tag": "c:ingots/duralumin"
     },
     "B": {
       "tag": "c:player_workstations/furnaces"
     },
     "C": {
-      "item": "ragium:machine_casing"
+      "item": "ragium:precision_machine_casing"
     },
     "D": {
-      "tag": "c:coils/copper"
+      "tag": "c:coils/aluminum"
     },
     "E": {
-      "tag": "c:gears/iron"
+      "tag": "c:storage_blocks/aluminum"
     }
   },
   "pattern": [
-    " A ",
+    "AAA",
     "BCB",
     "DED"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:stirling_generator"
+    "id": "ragium:multi_smelter"
   }
 }

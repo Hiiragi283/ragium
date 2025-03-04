@@ -3,8 +3,6 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.extension.commonTag
-import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -12,191 +10,26 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.api.util.HTBuildingBlockSets
-import hiiragi283.ragium.api.util.HTCrateVariant
-import hiiragi283.ragium.api.util.HTDrumVariant
-import hiiragi283.ragium.common.block.storage.HTCrateBlock
-import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredBlock
 
 object HTBlockRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        // Soul Magma
-        HTShapedRecipeBuilder(RagiumBlocks.SOUL_MAGMA_BLOCK)
-            .hollow4()
-            .define('A', ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            .define('B', Items.MAGMA_BLOCK)
-            .save(output)
-
-        registerFamily(output, RagiumBlocks.RAGI_BRICK_SETS)
-        registerFamily(output, RagiumBlocks.PLASTIC_SETS)
-        registerFamily(output, RagiumBlocks.BLUE_NETHER_BRICK_SETS)
-
-        registerBurners(output)
-        registerCrates(output)
-        registerDrums(output)
-
-        registerDecorations(output)
-        registerLEDs(output)
-
         registerAddons(output)
+        registerCasings(output)
+
         registerMachines(output)
-    }
-
-    //    Block Family    //
-
-    private fun registerFamily(output: RecipeOutput, family: HTBuildingBlockSets) {
-        // Base -> Slab
-        HTShapedRecipeBuilder(family.slab, 6, CraftingBookCategory.BUILDING)
-            .pattern("AAA")
-            .define('A', family.base)
-            .save(output)
-
-        SingleItemRecipeBuilder
-            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.slab, 2)
-            .unlockedBy("has_base", has(family.base))
-            .savePrefixed(output)
-        // Base -> Stairs
-        HTShapedRecipeBuilder(family.stairs, 4, CraftingBookCategory.BUILDING)
-            .pattern("A  ")
-            .pattern("AA ")
-            .pattern("AAA")
-            .define('A', family.base)
-            .save(output)
-
-        SingleItemRecipeBuilder
-            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.stairs)
-            .unlockedBy("has_base", has(family.base))
-            .savePrefixed(output)
-        // Base -> Wall
-        HTShapedRecipeBuilder(family.wall, 4, CraftingBookCategory.BUILDING)
-            .pattern("AAA")
-            .pattern("AAA")
-            .define('A', family.base)
-            .save(output)
-
-        SingleItemRecipeBuilder
-            .stonecutting(Ingredient.of(family.base), RecipeCategory.BUILDING_BLOCKS, family.wall)
-            .unlockedBy("has_base", has(family.base))
-            .savePrefixed(output)
-    }
-
-    //    Components    //
-
-    private fun registerBurners(output: RecipeOutput) {
-        for (burner: DeferredBlock<Block> in RagiumBlocks.BURNERS) {
-            val core: ItemLike = when (burner) {
-                RagiumBlocks.MAGMA_BURNER -> Items.MAGMA_BLOCK
-                RagiumBlocks.SOUL_BURNER -> RagiumBlocks.SOUL_MAGMA_BLOCK
-                RagiumBlocks.FIERY_BURNER -> RagiumBlocks.STORAGE_BLOCKS[RagiumMaterials.FIERY_COAL]!!
-                else -> continue
-            }
-            val base: Item = when (burner) {
-                RagiumBlocks.MAGMA_BURNER -> Items.POLISHED_BLACKSTONE_BRICKS
-                RagiumBlocks.SOUL_BURNER -> Items.END_STONE_BRICKS
-                RagiumBlocks.FIERY_BURNER -> Items.RED_NETHER_BRICKS
-                else -> continue
-            }
-            // Shaped Crafting
-            HTShapedRecipeBuilder(burner)
-                .pattern("A A")
-                .pattern("ABA")
-                .pattern("CCC")
-                .define('A', Items.IRON_BARS)
-                .define('B', core)
-                .define('C', base)
-                .save(output)
-        }
-    }
-
-    private fun registerCrates(output: RecipeOutput) {
-        for ((variant: HTCrateVariant, crate: DeferredBlock<HTCrateBlock>) in RagiumBlocks.CRATES) {
-            // Shaped Crafting
-            HTShapedRecipeBuilder(crate)
-                .pattern(
-                    "ABA",
-                    "ACA",
-                    "ABA",
-                ).define('A', variant.baseTag)
-                .define('B', ItemTags.WOODEN_SLABS)
-                .define('C', Tags.Items.BARRELS)
-                .save(output)
-        }
-    }
-
-    private fun registerDrums(output: RecipeOutput) {
-        for ((variant: HTDrumVariant, drum: DeferredBlock<HTDrumBlock>) in RagiumBlocks.DRUMS) {
-            // Shaped Crafting
-            HTShapedRecipeBuilder(drum)
-                .pattern(
-                    "ABA",
-                    "ACA",
-                    "ABA",
-                ).define('A', variant.baseTag)
-                .define('B', Items.SMOOTH_STONE_SLAB)
-                .define('C', Tags.Items.BUCKETS_EMPTY)
-                .save(output)
-        }
-    }
-
-    //    Decorations    //
-
-    private fun registerDecorations(output: RecipeOutput) {
-        // Ragi-Bricks
-        HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICKS, 2, CraftingBookCategory.BUILDING)
-            .cross8()
-            .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
-            .define('B', Tags.Items.BRICKS_NORMAL)
-            .define('C', Items.CLAY)
-            .save(output)
-        // Plastic Block
-        HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BLOCK, 4, CraftingBookCategory.BUILDING)
-            .hollow4()
-            .define('A', RagiumItemTags.PLASTICS)
-            .define('B', RagiumItems.FORGE_HAMMER)
-            .save(output)
-        // Blue Nether Bricks
-        HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICKS, category = CraftingBookCategory.BUILDING)
-            .pattern(
-                "AB",
-                "BA",
-            ).define('A', RagiumItemTags.CROPS_WARPED_WART)
-            .define('B', Tags.Items.BRICKS_NETHER)
-            .save(output)
-    }
-
-    private fun registerLEDs(output: RecipeOutput) {
-        // LED
-        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(DyeColor.WHITE), 4, CraftingBookCategory.BUILDING)
-            .hollow4()
-            .define('A', Tags.Items.GLASS_BLOCKS)
-            .define('B', RagiumItems.LED)
-            .save(output, RagiumAPI.id("led_block"))
-
-        for ((color: DyeColor, block: DeferredBlock<Block>) in RagiumBlocks.LED_BLOCKS) {
-            // Shaped Crafting
-            HTShapedRecipeBuilder(block, 4, CraftingBookCategory.BUILDING)
-                .hollow8()
-                .define('A', RagiumItemTags.LED_BLOCKS)
-                .define('B', color.commonTag)
-                .save(output)
-        }
+        registerConsumers(output)
+        registerGenerators(output)
+        registerProcessors(output)
     }
 
     //    Machines    //
@@ -206,16 +39,44 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
             .cross8()
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', RagiumItemTags.CIRCUIT_ADVANCED)
+            .define('B', RagiumItemTags.CIRCUITS_ADVANCED)
             .define('C', Tags.Items.ENDER_PEARLS)
             .save(output)
-        // Slag Collector
-        HTShapedRecipeBuilder(RagiumBlocks.SLAG_COLLECTOR)
-            .cross8()
-            .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', Tags.Items.GRAVELS)
-            .define('C', Items.HOPPER)
-            .save(output)
+    }
+
+    private fun registerCasings(output: RecipeOutput) {
+        fun register(
+            result: ItemLike,
+            topMetal: HTMaterialKey,
+            glass: TagKey<Item>,
+            center: TagKey<Item>,
+        ) {
+            HTShapedRecipeBuilder(result, 2)
+                .cross8()
+                .define('A', HTTagPrefix.INGOT, topMetal)
+                .define('B', glass)
+                .define('C', center)
+                .save(output)
+        }
+
+        register(
+            RagiumItems.MACHINE_CASING,
+            RagiumMaterials.RAGI_ALLOY,
+            Tags.Items.GLASS_BLOCKS_COLORLESS,
+            Tags.Items.DUSTS_REDSTONE,
+        )
+        register(
+            RagiumItems.CHEMICAL_MACHINE_CASING,
+            RagiumMaterials.EMBER_ALLOY,
+            RagiumItemTags.GLASS_BLOCKS_QUARTZ,
+            Tags.Items.DUSTS_GLOWSTONE,
+        )
+        register(
+            RagiumItems.PRECISION_MACHINE_CASING,
+            RagiumMaterials.DURALUMIN,
+            RagiumItemTags.GLASS_BLOCKS_OBSIDIAN,
+            HTTagPrefix.GEM.createTag(RagiumMaterials.WARPED_CRYSTAL),
+        )
     }
 
     private fun registerMachines(output: RecipeOutput) {
@@ -246,270 +107,220 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .define('B', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .define('C', Tags.Items.OBSIDIANS_CRYING)
             .save(output)
-
-        // Machine Casing
-        fun casing(
-            result: ItemLike,
-            topMetal: HTMaterialKey,
-            glass: Ingredient,
-            gearMetal: HTMaterialKey,
-        ) {
-            HTShapedRecipeBuilder(result)
-                .cross8()
-                .define('A', HTTagPrefix.INGOT, topMetal)
-                .define('B', glass)
-                .define('C', HTTagPrefix.GEAR, gearMetal)
-                .save(output)
-        }
-
-        casing(
-            RagiumItems.MACHINE_CASING,
-            RagiumMaterials.RAGI_ALLOY,
-            Ingredient.of(Tags.Items.GLASS_BLOCKS),
-            CommonMaterials.STEEL,
-        )
-        casing(
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            RagiumMaterials.EMBER_ALLOY,
-            Ingredient.of(RagiumBlocks.CHEMICAL_GLASS),
-            RagiumMaterials.DEEP_STEEL,
-        )
-        casing(
-            RagiumItems.PRECISION_MACHINE_CASING,
-            RagiumMaterials.DURALUMIN,
-            Ingredient.of(RagiumBlocks.OBSIDIAN_GLASS),
-            VanillaMaterials.NETHERITE,
-        )
-
-        // Combustion Generator
-        registerGenerator(
-            output,
-            HTMachineType.COMBUSTION_GENERATOR,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(RagiumItems.ENGINE),
-        )
-        // Solar Generator
-        registerGenerator(
-            output,
-            HTMachineType.SOLAR_GENERATOR,
-            RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(RagiumItems.SOLAR_PANEL),
-        )
-        // Stirling Generator
-        registerGenerator(
-            output,
-            HTMachineType.STIRLING_GENERATOR,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(Tags.Items.PLAYER_WORKSTATIONS_FURNACES),
-        )
-        // Thermal Generator
-        registerGenerator(
-            output,
-            HTMachineType.THERMAL_GENERATOR,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(Tags.Items.BUCKETS_LAVA),
-        )
-
-        // Bedrock Miner
-        registerMachine(
-            output,
-            HTMachineType.BEDROCK_MINER,
-            RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(Items.BEACON),
-            Ingredient.of(Items.NETHERITE_PICKAXE),
-        )
-        // Fisher
-        registerMachine(
-            output,
-            HTMachineType.FISHER,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(Items.FISHING_ROD),
-            Ingredient.of(Tags.Items.BARRELS),
-        )
-
-        // Assembler
-        registerMachine(
-            output,
-            HTMachineType.ASSEMBLER,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(Items.CRAFTER),
-            Ingredient.of(RagiumItemTags.CIRCUIT_ADVANCED),
-        )
-        // Blast Furnace
-        registerMachine(
-            output,
-            HTMachineType.BLAST_FURNACE,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(RagiumBlocks.PRIMITIVE_BLAST_FURNACE),
-            Ingredient.of(Items.MAGMA_BLOCK),
-        )
-        // Compressor
-        registerMachine(
-            output,
-            HTMachineType.COMPRESSOR,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(RagiumItems.FORGE_HAMMER),
-            Ingredient.of(Items.PISTON),
-        )
-        // Electric Furnace
-        registerMachine(
-            output,
-            HTMachineType.ELECTRIC_FURNACE,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER),
-            Ingredient.of(Items.FURNACE),
-        )
-        // Grinder
-        registerMachine(
-            output,
-            HTMachineType.GRINDER,
-            RagiumItems.MACHINE_CASING,
-            Ingredient.of(RagiumBlocks.MANUAL_GRINDER),
-            Ingredient.of(Items.FLINT),
-        )
-
-        // Extractor
-        registerMachine(
-            output,
-            HTMachineType.EXTRACTOR,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(Items.HOPPER),
-            Ingredient.of(Items.PISTON),
-        )
-        // Growth Chamber
-        registerMachine(
-            output,
-            HTMachineType.GROWTH_CHAMBER,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(RagiumItems.LED),
-            Ingredient.of(ItemTags.HOES),
-            Ingredient.of(ItemTags.AXES),
-        )
-        // Infuser
-        registerMachine(
-            output,
-            HTMachineType.INFUSER,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(Items.HOPPER),
-            Ingredient.of(Items.BUCKET),
-        )
-        // Mixer
-        registerMachine(
-            output,
-            HTMachineType.MIXER,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(Tags.Items.GLASS_BLOCKS),
-            Ingredient.of(Items.CAULDRON),
-        )
-        // Refinery
-        registerMachine(
-            output,
-            HTMachineType.REFINERY,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(RagiumItems.CRUDE_OIL_BUCKET),
-            Ingredient.of(Tags.Items.GLASS_BLOCKS),
-        )
-        // Solidifier
-        registerMachine(
-            output,
-            HTMachineType.SOLIDIFIER,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            Ingredient.of(Items.CAULDRON),
-            Ingredient.of(Tags.Items.GLASS_BLOCKS),
-        )
-
-        // Alchemical Brewery
-        registerMachine(
-            output,
-            HTMachineType.ALCHEMICAL_BREWERY,
-            RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(Items.BREWING_STAND),
-            HTTagPrefix.GEM.createIngredient(VanillaMaterials.EMERALD),
-        )
-        // Arcane Enchanter
-        registerMachine(
-            output,
-            HTMachineType.ARCANE_ENCHANTER,
-            RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(Items.ENCHANTING_TABLE),
-            HTTagPrefix.GEM.createIngredient(VanillaMaterials.AMETHYST),
-        )
-        // Laser Assembly
-        registerMachine(
-            output,
-            HTMachineType.LASER_ASSEMBLY,
-            RagiumItems.PRECISION_MACHINE_CASING,
-            Ingredient.of(Items.END_CRYSTAL),
-            HTTagPrefix.GEM.createIngredient(RagiumMaterials.RAGI_CRYSTAL),
-        )
     }
 
-    private fun registerGenerator(
-        output: RecipeOutput,
-        machine: HTMachineType,
-        casing: ItemLike,
-        bottom: Ingredient,
-    ) {
-        val top: TagKey<Item> = when (casing) {
-            RagiumItems.MACHINE_CASING -> Tags.Items.DUSTS_REDSTONE
-            RagiumItems.CHEMICAL_MACHINE_CASING -> Tags.Items.STORAGE_BLOCKS_REDSTONE
-            RagiumItems.PRECISION_MACHINE_CASING -> HTTagPrefix.GEM.createTag(RagiumMaterials.RAGI_CRYSTAL)
-            else -> return
-        }
-        val metal: HTMaterialKey = when (casing) {
-            RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
-            RagiumItems.CHEMICAL_MACHINE_CASING -> VanillaMaterials.GOLD
-            RagiumItems.PRECISION_MACHINE_CASING -> CommonMaterials.ALUMINUM
-            else -> return
-        }
-        val gearMetal: HTMaterialKey = when (casing) {
-            RagiumItems.MACHINE_CASING -> VanillaMaterials.IRON
-            RagiumItems.CHEMICAL_MACHINE_CASING -> CommonMaterials.STEEL
-            RagiumItems.PRECISION_MACHINE_CASING -> VanillaMaterials.DIAMOND
-            else -> return
-        }
-        HTShapedRecipeBuilder(machine)
-            .pattern(" A ")
-            .pattern("BCB")
-            .pattern("DED")
-            .define('A', top)
-            .define('B', bottom)
-            .define('C', casing)
-            .define('D', HTTagPrefix.COIL, metal)
-            .define('E', HTTagPrefix.GEAR, gearMetal)
+    private fun registerConsumers(output: RecipeOutput) {
+        // Fisher
+        HTShapedRecipeBuilder(HTMachineType.FISHER)
+            .pattern(
+                "ABA",
+                "CDC",
+                "EFE",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', Tags.Items.TOOLS_FISHING_ROD)
+            .define('C', Tags.Items.BARRELS_WOODEN)
+            .define('D', RagiumItems.MACHINE_CASING)
+            .define('E', HTTagPrefix.GEAR, VanillaMaterials.COPPER)
+            .define('F', RagiumItemTags.CIRCUITS_BASIC)
             .save(output)
     }
 
-    private fun registerMachine(
-        output: RecipeOutput,
-        machine: HTMachineType,
-        casing: ItemLike,
-        top: Ingredient,
-        left: Ingredient,
-        right: Ingredient = left,
-    ) {
-        val metal: HTMaterialKey = when (casing) {
-            RagiumItems.MACHINE_CASING -> VanillaMaterials.COPPER
-            RagiumItems.CHEMICAL_MACHINE_CASING -> VanillaMaterials.GOLD
-            RagiumItems.PRECISION_MACHINE_CASING -> CommonMaterials.ALUMINUM
-            else -> return
-        }
-        val circuit: TagKey<Item> = when (casing) {
-            RagiumItems.MACHINE_CASING -> RagiumItemTags.CIRCUIT_BASIC
-            RagiumItems.CHEMICAL_MACHINE_CASING -> RagiumItemTags.CIRCUIT_ADVANCED
-            RagiumItems.PRECISION_MACHINE_CASING -> RagiumItemTags.CIRCUIT_ELITE
-            else -> return
-        }
-        HTShapedRecipeBuilder(machine)
-            .pattern(" A ")
-            .pattern("BCD")
-            .pattern("EFE")
-            .define('A', top)
-            .define('B', left)
-            .define('C', casing)
-            .define('D', right)
-            .define('E', HTTagPrefix.COIL, metal)
-            .define('F', circuit)
+    private fun registerGenerators(output: RecipeOutput) {
+    }
+
+    private fun registerProcessors(output: RecipeOutput) {
+        // Assembler
+        HTShapedRecipeBuilder(HTMachineType.ASSEMBLER)
+            .pattern(
+                "ABA",
+                " C ",
+                "DED",
+            ).define('A', HTTagPrefix.BLOCK, CommonMaterials.STEEL)
+            .define('B', Items.CRAFTER)
+            .define('C', RagiumItems.MACHINE_CASING)
+            .define('D', HTTagPrefix.GEAR, CommonMaterials.STEEL)
+            .define('E', RagiumItemTags.CIRCUITS_ADVANCED)
+            .save(output)
+        // Auto Chisel
+        HTShapedRecipeBuilder(HTMachineType.AUTO_CHISEL)
+            .pattern(
+                "AAA",
+                " B ",
+                "CDC",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', RagiumItems.MACHINE_CASING)
+            .define('C', HTTagPrefix.GEAR, CommonMaterials.STEEL)
+            .define('D', Items.STONECUTTER)
+            .save(output)
+        // Blast Furnace
+        HTShapedRecipeBuilder(HTMachineType.BLAST_FURNACE)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', Items.BLAST_FURNACE)
+            .define('C', RagiumItems.MACHINE_CASING)
+            .define('D', Items.DEEPSLATE_BRICKS)
+            .save(output)
+
+        HTShapedRecipeBuilder(HTMachineType.BLAST_FURNACE)
+            .pattern(
+                "AAA",
+                "ABA",
+                "CCC",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+            .define('C', Items.DEEPSLATE_BRICKS)
+            .save(output, RagiumAPI.id("blast_furnace_alt"))
+        // Compressor
+        HTShapedRecipeBuilder(HTMachineType.COMPRESSOR)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', Items.PISTON)
+            .define('C', RagiumItems.MACHINE_CASING)
+            .define('D', HTTagPrefix.GEAR, CommonMaterials.STEEL)
+            .define('E', ItemTags.ANVIL)
+            .save(output)
+        // Crusher
+        // Electric Furnace
+        HTShapedRecipeBuilder(HTMachineType.ELECTRIC_FURNACE)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', Tags.Items.PLAYER_WORKSTATIONS_FURNACES)
+            .define('C', RagiumItems.MACHINE_CASING)
+            .define('D', HTTagPrefix.COIL, VanillaMaterials.COPPER)
+            .define('E', HTTagPrefix.BLOCK, VanillaMaterials.COPPER)
+            .save(output)
+        // Grinder
+        HTShapedRecipeBuilder(HTMachineType.GRINDER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', Items.FLINT)
+            .define('C', RagiumItems.MACHINE_CASING)
+            .define('D', HTTagPrefix.GEAR, CommonMaterials.STEEL)
+            .define('E', Items.HOPPER)
+            .save(output)
+
+        HTShapedRecipeBuilder(HTMachineType.GRINDER)
+            .pattern(
+                "AAA",
+                " B ",
+                "CDC",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', RagiumBlocks.MANUAL_GRINDER)
+            .define('C', HTTagPrefix.GEAR, CommonMaterials.STEEL)
+            .define('D', Items.HOPPER)
+            .save(output, RagiumAPI.id("grinder_alt"))
+
+        // Extractor
+        HTShapedRecipeBuilder(HTMachineType.EXTRACTOR)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
+            .define('B', Tags.Items.BUCKETS_EMPTY)
+            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
+            .define('E', Items.HOPPER)
+            .save(output)
+        // Growth Chamber
+        HTShapedRecipeBuilder(HTMachineType.GROWTH_CHAMBER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DEF",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
+            .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
+            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('D', ItemTags.AXES)
+            .define('E', Items.HOPPER)
+            .define('F', ItemTags.HOES)
+            .save(output)
+        // Infuser
+        HTShapedRecipeBuilder(HTMachineType.INFUSER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
+            .define('B', Items.DISPENSER)
+            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
+            .define('E', Items.HOPPER)
+            .save(output)
+        // Mixer
+        HTShapedRecipeBuilder(HTMachineType.MIXER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
+            .define('B', Tags.Items.BUCKETS_EMPTY)
+            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
+            .define('E', Items.CAULDRON)
+            .save(output)
+        // Refinery
+        // Solidifier
+        HTShapedRecipeBuilder(HTMachineType.SOLIDIFIER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
+            .define('B', RagiumItemTags.MOLDS)
+            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
+            .define('E', Items.CAULDRON)
+            .save(output)
+
+        // Brewery
+        HTShapedRecipeBuilder(HTMachineType.BREWERY)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
+            .define('B', Items.BREWING_STAND)
+            .define('C', RagiumItems.PRECISION_MACHINE_CASING)
+            .define('D', HTTagPrefix.GEAR, VanillaMaterials.NETHERITE)
+            .define('E', RagiumItemTags.CIRCUITS_ELITE)
+            .save(output)
+        // Enchanter
+        // Laser Assembly
+        HTShapedRecipeBuilder(HTMachineType.LASER_ASSEMBLY)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
+            .define('B', RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
+            .define('C', RagiumItems.PRECISION_MACHINE_CASING)
+            .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .define('E', RagiumItemTags.CIRCUITS_ELITE)
+            .save(output)
+        // Multi Smelter
+        HTShapedRecipeBuilder(HTMachineType.MULTI_SMELTER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
+            .define('B', Tags.Items.PLAYER_WORKSTATIONS_FURNACES)
+            .define('C', RagiumItems.PRECISION_MACHINE_CASING)
+            .define('D', HTTagPrefix.COIL, CommonMaterials.ALUMINUM)
+            .define('E', HTTagPrefix.BLOCK, CommonMaterials.ALUMINUM)
             .save(output)
     }
 }

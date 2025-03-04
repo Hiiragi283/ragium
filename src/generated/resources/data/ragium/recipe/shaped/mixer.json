@@ -3,28 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:glass_blocks"
+      "tag": "c:ingots/ember_alloy"
     },
     "B": {
-      "item": "minecraft:cauldron"
+      "tag": "c:buckets/empty"
     },
     "C": {
       "item": "ragium:chemical_machine_casing"
     },
     "D": {
-      "item": "minecraft:cauldron"
-    },
-    "E": {
       "tag": "c:coils/gold"
     },
-    "F": {
-      "tag": "c:circuits/advanced"
+    "E": {
+      "item": "minecraft:cauldron"
     }
   },
   "pattern": [
-    " A ",
-    "BCD",
-    "EFE"
+    "AAA",
+    "BCB",
+    "DED"
   ],
   "result": {
     "count": 1,

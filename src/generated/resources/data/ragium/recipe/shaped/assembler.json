@@ -3,28 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:crafter"
+      "tag": "c:storage_blocks/steel"
     },
     "B": {
-      "tag": "c:circuits/advanced"
+      "item": "minecraft:crafter"
     },
     "C": {
       "item": "ragium:machine_casing"
     },
     "D": {
-      "tag": "c:circuits/advanced"
+      "tag": "c:gears/steel"
     },
     "E": {
-      "tag": "c:coils/copper"
-    },
-    "F": {
-      "tag": "c:circuits/basic"
+      "tag": "c:circuits/advanced"
     }
   },
   "pattern": [
-    " A ",
-    "BCD",
-    "EFE"
+    "ABA",
+    " C ",
+    "DED"
   ],
   "result": {
     "count": 1,

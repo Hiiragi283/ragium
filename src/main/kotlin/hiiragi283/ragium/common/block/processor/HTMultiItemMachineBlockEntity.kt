@@ -71,7 +71,7 @@ abstract class HTMultiItemMachineBlockEntity(
     private val recipeCache: HTMachineRecipeCache<out HTMultiItemRecipe> = HTMachineRecipeCache(recipeType)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        val context: HTMachineRecipeContext = HTMachineRecipeContext.Companion
+        val context: HTMachineRecipeContext = HTMachineRecipeContext
             .builder()
             .addInput(0, firstInputSlot)
             .addInput(1, secondInputSlot)

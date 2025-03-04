@@ -13,21 +13,15 @@ class HTMachineRecipeCache<T : HTMachineRecipe>(val recipeType: HTRecipeType<T>)
      * 指定した[context]と[level]から最初に一致するレシピを返します。
      * @return 見つからなかった場合は[Result.failure]
      */
-    fun getFirstRecipe(context: HTMachineRecipeContext, level: Level): Result<T> {
-        var firstRecipe: RecipeHolder<T>? = null
-        if (lastRecipe != null) {
-            firstRecipe = recipeType.getFirstRecipe(context, level)
+    fun getFirstRecipe(context: HTMachineRecipeContext, level: Level): Result<T> = Optional
+        .ofNullable(recipeType.getFirstRecipe(context, level, lastRecipe))
+        .map { holder: RecipeHolder<T> ->
+            lastRecipe = holder.id
+            Result.success(holder.value)
+        }.orElseGet {
+            lastRecipe = null
+            Result.failure(HTMachineException.NoMatchingRecipe())
         }
-        return Optional
-            .ofNullable(firstRecipe)
-            .map { holder: RecipeHolder<T> ->
-                lastRecipe = holder.id
-                Result.success(holder.value)
-            }.orElseGet {
-                lastRecipe = null
-                Result.failure(HTMachineException.NoMatchingRecipe())
-            }
-    }
 
     /**
      * 指定した[context]と[level]から最初に一致するレシピを処理します。

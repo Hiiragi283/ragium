@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTEnchantmentGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
@@ -23,6 +24,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             HTMachineType.FISHER to ::HTFisherBlockEntity,
             // Generator
             HTMachineType.COMBUSTION_GENERATOR to ::HTCombustionGeneratorBlockEntity,
+            HTMachineType.ENCH_GENERATOR to ::HTEnchantmentGeneratorBlockEntity,
             HTMachineType.SOLAR_GENERATOR to ::HTSolarGeneratorBlockEntity,
             HTMachineType.STIRLING_GENERATOR to ::HTStirlingGeneratorBlockEntity,
             HTMachineType.THERMAL_GENERATOR to ::HTThermalGeneratorBlockEntity,
@@ -42,7 +44,7 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             HTMachineType.REFINERY to ::HTRefineryBlockEntity,
             HTMachineType.SOLIDIFIER to ::HTSolidifierBlockEntity,
             // Processor - Elite
-            HTMachineType.ALCHEMICAL_BREWERY to ::HTBreweryBlockEntity,
+            HTMachineType.BREWERY to ::HTBreweryBlockEntity,
             HTMachineType.LASER_ASSEMBLY to ::HTLaserAssemblyBlockEntity,
             HTMachineType.MULTI_SMELTER to ::HTMultiSmelterBlockEntity,
         )

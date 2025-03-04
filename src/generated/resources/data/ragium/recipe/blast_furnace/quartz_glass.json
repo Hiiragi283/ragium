@@ -2,14 +2,11 @@
   "type": "ragium:blast_furnace",
   "item_inputs": [
     {
-      "tag": "c:glass_blocks"
-    },
-    {
       "count": 4,
-      "tag": "c:slag"
+      "tag": "c:dusts/quartz"
     }
   ],
   "item_output": {
-    "item": "ragium:chemical_glass"
+    "item": "ragium:quartz_glass"
   }
 }

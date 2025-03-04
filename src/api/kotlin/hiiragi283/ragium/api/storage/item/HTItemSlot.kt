@@ -22,9 +22,9 @@ abstract class HTItemSlot(private val validator: (HTItemVariant) -> Boolean, pri
     HTNbtCodec {
     val stack: ItemStack get() = resource.toStack(amount)
 
-    fun canInsert(stack: ItemStack): Boolean = insert(stack, true) > 0
+    fun canInsert(stack: ItemStack): Boolean = insert(stack, true) == stack.count
 
-    fun canExtract(maxAmount: Int): Boolean = extract(resource, maxAmount, true) > 0
+    fun canExtract(maxAmount: Int): Boolean = extract(resource, maxAmount, true) == maxAmount
 
     fun insert(stack: ItemStack, simulate: Boolean): Int = insert(HTItemVariant.of(stack), stack.count, simulate)
 

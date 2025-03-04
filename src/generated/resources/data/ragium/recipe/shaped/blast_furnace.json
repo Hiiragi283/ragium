@@ -3,28 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:primitive_blast_furnace"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:magma_block"
+      "item": "minecraft:blast_furnace"
     },
     "C": {
       "item": "ragium:machine_casing"
     },
     "D": {
-      "item": "minecraft:magma_block"
-    },
-    "E": {
-      "tag": "c:coils/copper"
-    },
-    "F": {
-      "tag": "c:circuits/basic"
+      "item": "minecraft:deepslate_bricks"
     }
   },
   "pattern": [
-    " A ",
-    "BCD",
-    "EFE"
+    "AAA",
+    "BCB",
+    "DDD"
   ],
   "result": {
     "count": 1,

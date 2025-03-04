@@ -5,9 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.inventory.HTAssemblerMenu
-import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -33,6 +31,4 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
         thirdInputSlot,
         outputSlot,
     )
-
-    override fun getDisplayName(): Component = machineType.text.withStyle(ChatFormatting.WHITE)
 }

@@ -22,9 +22,9 @@ import kotlin.jvm.optionals.getOrNull
 class HTEnchanterRecipeCategory(val guiHelper: IGuiHelper) : HTRecipeCategory<RecipeHolder<HTEnchanterRecipe>> {
     override fun getRecipeType(): RecipeType<RecipeHolder<HTEnchanterRecipe>> = RagiumJEIRecipeTypes.ENCHANTER
 
-    override fun getTitle(): Component = HTMachineType.ARCANE_ENCHANTER.text
+    override fun getTitle(): Component = HTMachineType.ENCHANTER.text
 
-    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.ARCANE_ENCHANTER)
+    override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(HTMachineType.ENCHANTER)
 
     @Suppress("DEPRECATION")
     override fun setRecipe(builder: IRecipeLayoutBuilder, holder: RecipeHolder<HTEnchanterRecipe>, focuses: IFocusGroup) {

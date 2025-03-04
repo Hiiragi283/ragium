@@ -65,7 +65,7 @@ class RagiumJEIPlugin : IModPlugin {
             ),
             HTMultiItemRecipeCategory(
                 guiHelper,
-                HTMachineType.ALCHEMICAL_BREWERY,
+                HTMachineType.BREWERY,
                 RagiumJEIRecipeTypes.BREWERY,
             ),
             HTSingleItemRecipeCategory(
@@ -185,13 +185,13 @@ class RagiumJEIPlugin : IModPlugin {
             RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
         )
         // Brewery
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BREWERY, HTMachineType.ALCHEMICAL_BREWERY)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BREWERY, HTMachineType.BREWERY)
         // Compressor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, HTMachineType.COMPRESSOR)
         // Crusher
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.CRUSHER, HTMachineType.CRUSHER)
         // Enchanter
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ENCHANTER, HTMachineType.ARCANE_ENCHANTER)
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ENCHANTER, HTMachineType.ENCHANTER)
         // Extractor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.EXTRACTOR, HTMachineType.EXTRACTOR)
         // Grinder

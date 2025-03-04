@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.CampfireBlock
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Consumer
 
-enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMachineParticleHandler?) :
+enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMachineParticleHandler?, val altName: String? = null) :
     ItemLike,
     StringRepresentable {
     // Consumer
@@ -36,6 +36,11 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     THERMAL_GENERATOR(SoundEvents.LAVA_POP, HTMachineParticleHandler.ofTop(ParticleTypes.LAVA)),
 
     SOLAR_GENERATOR(null, HTMachineParticleHandler.ofTop(ParticleTypes.ELECTRIC_SPARK)),
+    ENCH_GENERATOR(
+        SoundEvents.ENCHANTMENT_TABLE_USE,
+        HTMachineParticleHandler.ofTop(ParticleTypes.ENCHANT),
+        "enchantment_generator",
+    ),
 
     // Processor - Basic
     ASSEMBLER(SoundEvents.DISPENSER_DISPENSE, null),
@@ -62,8 +67,12 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     SOLIDIFIER(null, null),
 
     // Processor - Precision
-    ALCHEMICAL_BREWERY(SoundEvents.BREWING_STAND_BREW, null),
-    ARCANE_ENCHANTER(SoundEvents.ENCHANTMENT_TABLE_USE, HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT)),
+    BREWERY(SoundEvents.BREWING_STAND_BREW, null, "alchemical_brewery"),
+    ENCHANTER(
+        SoundEvents.ENCHANTMENT_TABLE_USE,
+        HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT),
+        "arcane_enchanter",
+    ),
     LASER_ASSEMBLY(SoundEvents.BEACON_ACTIVATE, HTMachineParticleHandler.ofFront(ParticleTypes.ELECTRIC_SPARK)),
     MULTI_SMELTER(SoundEvents.ENDER_DRAGON_GROWL, HTMachineParticleHandler.ofFront(ParticleTypes.DRAGON_BREATH)),
     ;
@@ -129,5 +138,5 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
 
     override fun asItem(): Item = getBlock().asItem()
 
-    override fun getSerializedName(): String = name.lowercase()
+    override fun getSerializedName(): String = altName ?: name.lowercase()
 }

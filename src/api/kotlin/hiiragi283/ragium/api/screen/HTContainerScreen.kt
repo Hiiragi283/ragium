@@ -84,12 +84,16 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         mouseY: Int,
     ) {
         renderTooltip(x, y, mouseX, mouseY) {
-            if (stack.isEmpty) return@renderTooltip
             guiGraphics.renderComponentTooltip(
                 font,
                 buildList {
                     // Tooltips
-                    add(stack.hoverName)
+                    add(
+                        when {
+                            stack.isEmpty -> Component.literal("Empty")
+                            else -> stack.hoverName
+                        }
+                    )
                     // Fluid Amount
                     add(fluidAmountText(stack.amount).withStyle(ChatFormatting.GRAY))
                     // Fluid Capacity

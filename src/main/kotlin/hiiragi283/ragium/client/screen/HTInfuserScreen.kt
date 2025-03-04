@@ -15,6 +15,6 @@ class HTInfuserScreen(menu: HTInfuserMenu, inventory: Inventory, title: Componen
     HTMachineScreen<HTInfuserMenu>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/infuser.png")
 
-    override val progressX: Int = HTSlotPos.getSlotPosX(4)
-    override val progressY: Int = HTSlotPos.getSlotPosY(1)
+    override val progressPosX: Int = HTSlotPos.getSlotPosX(4)
+    override val progressPosY: Int = HTSlotPos.getSlotPosY(1)
 }

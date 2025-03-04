@@ -30,8 +30,8 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             .value
         // Bulk process
         var output: ItemStack = recipe.assemble(input, level.registryAccess())
-        val inputCount: Int = 64 / output.count
-        output = output.copyWithCount(64)
+        val inputCount: Int = inputSlot.amount
+        output = output.copyWithCount(output.count * inputCount)
 
         if (!outputSlot.canInsert(output)) throw HTMachineException.GrowItem()
         if (!inputSlot.canExtract(inputCount)) throw HTMachineException.ShrinkItem()

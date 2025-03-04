@@ -1,0 +1,15 @@
+{
+  "type": "ragium:blast_furnace",
+  "item_inputs": [
+    {
+      "tag": "c:glass_blocks/quartz"
+    },
+    {
+      "count": 4,
+      "tag": "c:dusts/obsidian"
+    }
+  ],
+  "item_output": {
+    "item": "ragium:obsidian_glass"
+  }
+}

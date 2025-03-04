@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.UUIDUtil
@@ -199,6 +200,7 @@ abstract class HTMachineBlockEntity(
                         1.0f,
                     )
                 }
+                onSucceeded()
                 FORGE_BUS.post(HTMachineProcessEvent.Success(this))
             },
             ::failed,
@@ -221,8 +223,13 @@ abstract class HTMachineBlockEntity(
     private fun failed(throwable: Throwable) {
         isActive = false
         errorCache = throwable.message
+        onFailed(throwable)
         FORGE_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
     }
+
+    protected open fun onSucceeded() {}
+
+    protected open fun onFailed(throwable: Throwable) {}
 
     override fun setPlacedBy(
         level: Level,
@@ -259,7 +266,7 @@ abstract class HTMachineBlockEntity(
 
     //    MenuProvider    //
 
-    override fun getDisplayName(): Component = machineType.text
+    override fun getDisplayName(): Component = machineType.text.withStyle(ChatFormatting.WHITE)
 
     //    HTErrorHoldingBlockEntity    //
 
