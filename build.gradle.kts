@@ -47,27 +47,30 @@ configurations.apply {
 
 repositories {
     mavenLocal()
-    maven(url = "https://thedarkcolour.github.io/KotlinForForge/")
-    maven(url = "https://maven.architectury.dev/")
+
     maven(url = "https://api.modrinth.com/maven") {
         content { includeGroup("maven.modrinth") }
     }
     maven(url = "https://cursemaven.com")
-    maven(url = "https://modmaven.dev/")
     maven(url = "https://maven.parchmentmc.org")
-    maven(url = "https://maven.saps.dev/releases")
-    maven(url = "https://maven.theillusivec4.top/")
+    maven(url = "https://modmaven.dev/")
+
+    maven(url = "https://maven.architectury.dev/") // Arch
     maven(url = "https://maven.blamejared.com/") // Patchouli
+    maven(url = "https://maven.createmod.net") // Create, Flywheel
+    maven(url = "https://maven.rover656.dev/releases") // EIO
+    maven(url = "https://maven.saps.dev/releases") // AA
+    maven(url = "https://maven.tamaized.com/releases") // Twilight
+    maven(url = "https://maven.theillusivec4.top/") // Curios
+    maven(url = "https://mvn.devos.one/snapshots") // Registrate
+    maven(url = "https://thedarkcolour.github.io/KotlinForForge/") // KFF
+
     maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/") {
         content { includeGroup("software.bernie.geckolib") } // GeckoLib
     }
     maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") {
         content { includeGroup("com.klikli_dev") } // Theurgy
     }
-    maven(url = "https://maven.rover656.dev/releases") // EIO
-    maven(url = "https://maven.tamaized.com/releases") // Twilight
-    maven(url = "https://mvn.devos.one/snapshots") // Registrate
-    maven(url = "https://maven.createmod.net") // Create, Flywheel
     mavenCentral()
 }
 

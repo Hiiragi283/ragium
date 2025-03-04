@@ -6,7 +6,7 @@
       "tag": "c:ingots/duralumin"
     },
     "B": {
-      "item": "minecraft:brewing_stand"
+      "item": "minecraft:enchanted_book"
     },
     "C": {
       "item": "ragium:precision_machine_casing"
@@ -15,7 +15,7 @@
       "tag": "c:circuits/elite"
     },
     "E": {
-      "item": "minecraft:cauldron"
+      "item": "minecraft:enchanting_table"
     }
   },
   "pattern": [
@@ -25,6 +25,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:alchemical_brewery"
+    "id": "ragium:arcane_enchanter"
   }
 }

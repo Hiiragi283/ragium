@@ -15,6 +15,9 @@ class HTSolidifierScreen(menu: HTSolidifierMenu, inventory: Inventory, title: Co
     HTMachineScreen<HTSolidifierMenu>(menu, inventory, title) {
     override val texture: ResourceLocation = RagiumAPI.id("textures/gui/solidifier.png")
 
-    override val progressPosX: Int = HTSlotPos.getSlotPosX(4)
+    override val progressPosX: Int = HTSlotPos.getSlotPosX(3)
     override val progressPosY: Int = HTSlotPos.getSlotPosY(1)
+
+    override val progressSizeX: Int = 52
+    override val progressTex: ResourceLocation = RagiumAPI.id("progress_catalyst")
 }

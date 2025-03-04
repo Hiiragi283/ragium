@@ -18,5 +18,5 @@ class HTAssemblerScreen(menu: HTAssemblerMenu, inventory: Inventory, title: Comp
     override val progressPosX: Int = HTSlotPos.getSlotPosX(7)
     override val progressPosY: Int = HTSlotPos.getSlotPosY(1)
 
-    override val progressTex: ResourceLocation = RagiumAPI.id("progress/assembler")
+    override val progressTex: ResourceLocation = RagiumAPI.id("progress_assembler")
 }

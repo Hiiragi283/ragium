@@ -244,7 +244,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
             .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
             .define('D', ItemTags.AXES)
-            .define('E', Items.HOPPER)
+            .define('E', Tags.Items.BUCKETS_WATER)
             .define('F', ItemTags.HOES)
             .save(output)
         // Infuser
@@ -272,6 +272,17 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .define('E', Items.CAULDRON)
             .save(output)
         // Refinery
+        HTShapedRecipeBuilder(HTMachineType.REFINERY)
+            .pattern(
+                "ABA",
+                "BCB",
+                "DED",
+            ).define('A', Items.REDSTONE_TORCH)
+            .define('B', RagiumItemTags.GLASS_BLOCKS_QUARTZ)
+            .define('C', HTTagPrefix.GEAR, VanillaMaterials.DIAMOND)
+            .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
+            .define('E', HTTagPrefix.BLOCK, VanillaMaterials.GOLD)
+            .save(output)
         // Solidifier
         HTShapedRecipeBuilder(HTMachineType.SOLIDIFIER)
             .pattern(
@@ -294,10 +305,21 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
             .define('B', Items.BREWING_STAND)
             .define('C', RagiumItems.PRECISION_MACHINE_CASING)
-            .define('D', HTTagPrefix.GEAR, VanillaMaterials.NETHERITE)
-            .define('E', RagiumItemTags.CIRCUITS_ELITE)
+            .define('D', RagiumItemTags.CIRCUITS_ELITE)
+            .define('E', Items.CAULDRON)
             .save(output)
         // Enchanter
+        HTShapedRecipeBuilder(HTMachineType.ENCHANTER)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
+            .define('B', Items.ENCHANTED_BOOK)
+            .define('C', RagiumItems.PRECISION_MACHINE_CASING)
+            .define('D', RagiumItemTags.CIRCUITS_ELITE)
+            .define('E', Items.ENCHANTING_TABLE)
+            .save(output)
         // Laser Assembly
         HTShapedRecipeBuilder(HTMachineType.LASER_ASSEMBLY)
             .pattern(
@@ -307,8 +329,8 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
             .define('B', RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
             .define('C', RagiumItems.PRECISION_MACHINE_CASING)
-            .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
-            .define('E', RagiumItemTags.CIRCUITS_ELITE)
+            .define('D', RagiumItemTags.CIRCUITS_ELITE)
+            .define('E', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
         // Multi Smelter
         HTShapedRecipeBuilder(HTMachineType.MULTI_SMELTER)

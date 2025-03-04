@@ -37,6 +37,6 @@ class HTSolidifierMenu(
         addDataSlots()
     }
 
-    override val inputSlots: IntRange = IntRange.EMPTY
+    override val inputSlots: IntRange = (0..0)
     override val outputSlots: IntRange = (1..1)
 }

@@ -150,6 +150,8 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
         event.register(IntegrationMaterials.DARK_GEM, HTMaterialType.GEM)
 
+        event.register(IntegrationMaterials.HOP_GRAPHITE, HTMaterialType.ALLOY)
+
         event.register(IntegrationMaterials.REFINED_GLOWSTONE, HTMaterialType.ALLOY)
         event.register(IntegrationMaterials.REFINED_OBSIDIAN, HTMaterialType.ALLOY)
 

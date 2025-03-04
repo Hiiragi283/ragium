@@ -30,7 +30,7 @@ class HTSingleItemMenu(
         // inputs
         addSlot(inputSlot.createContainerSlot(2, 1))
         // Catalyst
-        addSlot(catalystSlot.createContainerSlot(4, 2))
+        addSlot(catalystSlot.createContainerSlot(4, 1))
         // outputs
         addSlot(outputSlot.createContainerSlot(6, 1, HTStorageIO.OUTPUT))
         // player inventory

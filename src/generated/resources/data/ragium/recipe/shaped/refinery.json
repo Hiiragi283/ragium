@@ -3,28 +3,28 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/duralumin"
+      "item": "minecraft:redstone_torch"
     },
     "B": {
-      "item": "minecraft:brewing_stand"
+      "tag": "c:glass_blocks/quartz"
     },
     "C": {
-      "item": "ragium:precision_machine_casing"
+      "tag": "c:gears/diamond"
     },
     "D": {
-      "tag": "c:circuits/elite"
+      "tag": "c:coils/gold"
     },
     "E": {
-      "item": "minecraft:cauldron"
+      "tag": "c:storage_blocks/gold"
     }
   },
   "pattern": [
-    "AAA",
+    "ABA",
     "BCB",
     "DED"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:alchemical_brewery"
+    "id": "ragium:refinery"
   }
 }

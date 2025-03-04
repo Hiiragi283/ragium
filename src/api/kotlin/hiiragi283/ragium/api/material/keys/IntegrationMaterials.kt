@@ -74,6 +74,11 @@ object IntegrationMaterials {
     @JvmField
     val DARK_GEM: HTMaterialKey = HTMaterialKey.of("dark")
 
+    //    Immersive Engineering    //
+
+    @JvmField
+    val HOP_GRAPHITE: HTMaterialKey = HTMaterialKey.of("hop_graphite")
+
     //    Mekanism    //
 
     @JvmField

@@ -381,6 +381,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(IntegrationMaterials.DARK_GEM, "ダークジェム")
 
+        add(IntegrationMaterials.HOP_GRAPHITE, "高配向パイログラファイト")
+
         add(IntegrationMaterials.REFINED_GLOWSTONE, "精製グロウストーン")
         add(IntegrationMaterials.REFINED_OBSIDIAN, "精製黒曜石")
 
@@ -457,7 +459,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumItemTags.LED_BLOCKS, "LEDブロック")
 
-        add(RagiumItemTags.MOLDS_BALL, "プレス型")
+        add(RagiumItemTags.MOLDS, "プレス型")
         add(RagiumItemTags.MOLDS_BALL, "プレス型（ボール）")
         add(RagiumItemTags.MOLDS_BLOCK, "プレス型（ブロック）")
         add(RagiumItemTags.MOLDS_GEAR, "プレス型（歯車）")

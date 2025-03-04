@@ -15,7 +15,7 @@
       "tag": "minecraft:axes"
     },
     "E": {
-      "item": "minecraft:hopper"
+      "tag": "c:buckets/water"
     },
     "F": {
       "tag": "minecraft:hoes"

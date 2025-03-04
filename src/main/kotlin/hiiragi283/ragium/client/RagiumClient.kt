@@ -72,7 +72,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.BREWERY.get(), ::HTBreweryScreen)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), ::HTExtractorScreen)
         event.register(RagiumMenuTypes.INFUSER.get(), ::HTInfuserScreen)
-        event.register(RagiumMenuTypes.LASER_ASSEMBLY.get(), ::HTLaserAssemblyScreen)
         event.register(RagiumMenuTypes.MIXER.get(), ::HTMixerScreen)
         event.register(RagiumMenuTypes.PRIMITIVE_BLAST_FURNACE.get(), ::HTPrimitiveBlastFurnaceScreen)
         event.register(RagiumMenuTypes.REFINERY.get(), ::HTRefineryScreen)

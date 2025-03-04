@@ -380,6 +380,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(IntegrationMaterials.DARK_GEM, "Dark Gem")
 
+        add(IntegrationMaterials.HOP_GRAPHITE, "HOP Graphite")
+
         add(IntegrationMaterials.REFINED_GLOWSTONE, "Refined Glowstone")
         add(IntegrationMaterials.REFINED_OBSIDIAN, "Refined Obsidian")
 

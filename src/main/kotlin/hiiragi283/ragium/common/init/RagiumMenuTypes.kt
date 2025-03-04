@@ -48,10 +48,6 @@ object RagiumMenuTypes {
         registerMachine("infuser", ::HTInfuserMenu)
 
     @JvmField
-    val LASER_ASSEMBLY: DeferredHolder<MenuType<*>, MenuType<HTLaserAssemblyMenu>> =
-        registerMachine("laser_assembly", ::HTLaserAssemblyMenu)
-
-    @JvmField
     val MIXER: DeferredHolder<MenuType<*>, MenuType<HTMixerMenu>> =
         registerMachine("mixer", ::HTMixerMenu)
 
