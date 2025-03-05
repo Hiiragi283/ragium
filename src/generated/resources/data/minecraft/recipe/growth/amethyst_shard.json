@@ -7,6 +7,7 @@
     "item": "minecraft:amethyst_shard"
   },
   "item_output": {
+    "count": 2,
     "item": "minecraft:amethyst_shard"
   }
 }

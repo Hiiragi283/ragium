@@ -7,6 +7,7 @@
     "item": "minecraft:chorus_flower"
   },
   "item_output": {
+    "count": 2,
     "item": "minecraft:chorus_flower"
   }
 }

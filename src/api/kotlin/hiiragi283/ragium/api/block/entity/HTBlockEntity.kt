@@ -160,7 +160,13 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
     /**
      * クライアント側で毎tick呼び出されます。
      */
-    open fun tickClient(level: Level, pos: BlockPos, state: BlockState) {}
+    open fun tickClient(level: Level, pos: BlockPos, state: BlockState) {
+        if (ticks >= tickRate) {
+            ticks = 0
+        } else {
+            ticks++
+        }
+    }
 
     /**
      * サーバー側で毎tick呼び出されます。

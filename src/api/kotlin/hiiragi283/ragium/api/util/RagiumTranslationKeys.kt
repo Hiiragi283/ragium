@@ -48,14 +48,11 @@ object RagiumTranslationKeys {
     //    Machine    //
 
     const val MACHINE_COST = "tooltip.ragium.machine.cost"
+    const val MACHINE_COST_MODIFIER = "tooltip.ragium.machine.cost_modifier"
     const val MACHINE_NAME = "tooltip.ragium.machine.name"
     const val MACHINE_NETWORK_ENERGY = "tooltip.ragium.machine.network_energy"
-    const val MACHINE_TIER = "tooltip.ragium.machine.tier"
-
-    const val MACHINE_OWNER = "tooltip.ragium.machine.owner"
-    const val MACHINE_PREVIEW = "tooltip.ragium.machine.preview"
     const val MACHINE_TICK_RATE = "tooltip.ragium.machine.tick_rate"
-    const val MACHINE_WORKING = "tooltip.ragium.machine.working"
+    const val MACHINE_WORKING_SUCCESS = "tooltip.ragium.machine.working_success"
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
     const val MULTI_SHAPE_SUCCESS = "message.ragium.multi_shape.success"

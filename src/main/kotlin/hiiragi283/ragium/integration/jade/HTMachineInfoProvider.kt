@@ -3,53 +3,34 @@ package hiiragi283.ragium.integration.jade
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.boolText
 import hiiragi283.ragium.api.extension.floatText
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import net.minecraft.core.UUIDUtil
+import net.minecraft.ChatFormatting
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import snownee.jade.api.BlockAccessor
 import snownee.jade.api.IComponentProvider
 import snownee.jade.api.IServerDataProvider
 import snownee.jade.api.ITooltip
 import snownee.jade.api.config.IPluginConfig
-import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentProvider<BlockAccessor> {
-    @JvmField
-    val OWNER: MapCodec<UUID> = UUIDUtil.STRING_CODEC.fieldOf("owner")
-
-    @JvmField
-    val IS_ACTIVE: MapCodec<Boolean> = Codec.BOOL.fieldOf("is_active")
-
     @JvmField
     val TICK_RATE: MapCodec<Int> = Codec.INT.fieldOf("tick_rate")
 
     @JvmField
     val COST_MODIFIER: MapCodec<Int> = Codec.INT.fieldOf("cost_modifier")
 
-    @JvmField
-    val ENCHANTMENT: MapCodec<ItemEnchantments> = ItemEnchantments.CODEC.fieldOf("enchantments")
-
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
         val machineEntity: HTMachineAccess = accessor.blockEntity as? HTMachineAccess ?: return
         accessor.writeData(HTMachineType.FIELD_CODEC, machineEntity.machineType)
-        machineEntity.owner?.uuid?.let {
-            accessor.writeData(OWNER, it)
-        }
         accessor.writeData(TICK_RATE, machineEntity.containerData.get(1))
         accessor.writeData(COST_MODIFIER, machineEntity.costModifier)
-        accessor.writeData(IS_ACTIVE, machineEntity.isActive)
-        accessor.writeData(ENCHANTMENT, machineEntity.enchantments)
     }
 
     override fun getUid(): ResourceLocation = RagiumAPI.id("machine_info")
@@ -60,29 +41,21 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
         val machineType: HTMachineType = accessor.readData(HTMachineType.FIELD_CODEC).getOrNull() ?: return
         machineType.appendTooltip(tooltip::add, false)
 
-        accessor
-            .readData(OWNER)
-            .getOrNull()
-            ?.let(RagiumAPI.getInstance()::getPlayer)
-            ?.displayName
-            ?.let { Component.translatable(RagiumTranslationKeys.MACHINE_OWNER, it) }
-
-        val isActive: Boolean = accessor.readData(IS_ACTIVE).orElse(false)
-        tooltip.add(Component.translatable(RagiumTranslationKeys.MACHINE_WORKING, boolText(isActive)))
-
         val tickRate: Int = accessor.readData(TICK_RATE).orElse(200)
         tooltip.add(
             Component.translatable(
                 RagiumTranslationKeys.MACHINE_TICK_RATE,
-                intText(tickRate),
-                floatText(tickRate / 20f),
+                intText(tickRate).withStyle(ChatFormatting.WHITE),
+                floatText(tickRate / 20f).withStyle(ChatFormatting.WHITE),
             ),
         )
 
         val costModifier: Int = accessor.readData(COST_MODIFIER).orElse(1)
-        tooltip.add(Component.literal("- Cost Modifier: x$costModifier"))
-
-        val enchantments: ItemEnchantments = accessor.readData(ENCHANTMENT).orElse(ItemEnchantments.EMPTY)
-        enchantments.addToTooltip(Item.TooltipContext.of(accessor.level), tooltip::add, TooltipFlag.ADVANCED)
+        tooltip.add(
+            Component.translatable(
+                RagiumTranslationKeys.MACHINE_COST_MODIFIER,
+                intText(costModifier).withStyle(ChatFormatting.WHITE),
+            ),
+        )
     }
 }

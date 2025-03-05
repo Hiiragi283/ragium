@@ -83,18 +83,18 @@ class HTPrimitiveBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-        if (validateMultiblock(this, player).isSuccess) {
-            HTPrimitiveBlastFurnaceMenu(
-                containerId,
-                playerInventory,
-                blockPos,
-                firstItemSlot,
-                secondItemSlot,
-                outputSlot,
-            )
-        } else {
-            null
-        }
+        validateMultiblock(this, player)
+            .map {
+                HTPrimitiveBlastFurnaceMenu(
+                    containerId,
+                    playerInventory,
+                    blockPos,
+                    firstItemSlot,
+                    secondItemSlot,
+                    outputSlot,
+                )
+            }.onFailure(::onFailed)
+            .getOrNull()
 
     //    Item    //
 

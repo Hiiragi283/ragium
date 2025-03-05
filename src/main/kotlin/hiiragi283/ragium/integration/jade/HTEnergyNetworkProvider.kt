@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerLevel
+import hiiragi283.ragium.api.extension.intText
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -15,7 +17,6 @@ import snownee.jade.api.ITooltip
 import snownee.jade.api.config.IPluginConfig
 import snownee.jade.api.ui.BoxStyle
 import snownee.jade.api.ui.IElementHelper
-import java.text.NumberFormat
 import kotlin.jvm.optionals.getOrNull
 
 object HTEnergyNetworkProvider : IServerDataProvider<BlockAccessor>, IComponentProvider<BlockAccessor> {
@@ -41,7 +42,7 @@ object HTEnergyNetworkProvider : IServerDataProvider<BlockAccessor>, IComponentP
             helper
                 .progress(
                     amount / Int.MAX_VALUE.toFloat(),
-                    Component.literal("${NumberFormat.getNumberInstance().format(amount)} FE"),
+                    Component.translatable(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, intText(amount)),
                     helper.progressStyle().color(-5636096, -10092544),
                     BoxStyle.getNestedBox(),
                     true,

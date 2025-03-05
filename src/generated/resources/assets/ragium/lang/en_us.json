@@ -48,6 +48,7 @@
   "block.ragium.yellow_led_block": "Yellow LED Block",
   "chemical.ragium.clean_raginite": "Clean Raginite Slurry",
   "chemical.ragium.dirty_raginite": "Dirty Raginite Slurry",
+  "config.jade.plugin_ragium.enchantable_block": "Enchantable Block",
   "config.jade.plugin_ragium.energy_network": "Show Energy Network",
   "config.jade.plugin_ragium.error_message": "Show Error Message",
   "config.jade.plugin_ragium.machine_info": "Show Machine Info",
@@ -395,10 +396,9 @@
   "tooltip.ragium.item.soap": "Right-click to wash targeted block",
   "tooltip.ragium.item.warped_wart": "Removes one random effect when eaten",
   "tooltip.ragium.machine.cost": "- Process Cost: %s FE/times",
+  "tooltip.ragium.machine.cost_modifier": "- Energy Cost Modifier: %sx",
   "tooltip.ragium.machine.name": "- Machine Name: %s",
-  "tooltip.ragium.machine.owner": "- Owner: %s",
-  "tooltip.ragium.machine.preview": "- Show Preview: %s",
+  "tooltip.ragium.machine.network_energy": "%s FE",
   "tooltip.ragium.machine.tick_rate": "- Tick Rate: %s ticks (%s sec)",
-  "tooltip.ragium.machine.tier": "- Tier: %s",
-  "tooltip.ragium.machine.working": "- Working: %s"
+  "tooltip.ragium.machine.working_success": "Working Successfully!"
 }

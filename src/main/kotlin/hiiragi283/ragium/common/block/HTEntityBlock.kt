@@ -109,7 +109,7 @@ abstract class HTEntityBlock(properties: Properties) : BaseEntityBlock(propertie
             if (blockEntity is HTMachineBlockEntity) {
                 when (level.isClientSide) {
                     true -> blockEntity::tickClient
-                    false -> blockEntity::tickSecond
+                    false -> blockEntity::tickServer
                 }(level, pos, state)
             }
         }

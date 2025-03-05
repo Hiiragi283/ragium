@@ -279,13 +279,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.SOAP, "Right-click to wash targeted block")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
+        add(RagiumTranslationKeys.MACHINE_COST_MODIFIER, "- Energy Cost Modifier: %sx")
         add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")
-        add(RagiumTranslationKeys.MACHINE_TIER, "- Tier: %s")
-
-        add(RagiumTranslationKeys.MACHINE_OWNER, "- Owner: %s")
-        add(RagiumTranslationKeys.MACHINE_PREVIEW, "- Show Preview: %s")
+        add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "%s FE")
         add(RagiumTranslationKeys.MACHINE_TICK_RATE, "- Tick Rate: %s ticks (%s sec)")
-        add(RagiumTranslationKeys.MACHINE_WORKING, "- Working: %s")
+        add(RagiumTranslationKeys.MACHINE_WORKING_SUCCESS, "Working Successfully!")
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
@@ -486,8 +484,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.FLUID_MOLTEN, "Molten %s")
 
+        add("config.jade.plugin_ragium.enchantable_block", "Enchantable Block")
         add("config.jade.plugin_ragium.energy_network", "Show Energy Network")
-        add("config.jade.plugin_ragium.machine_info", "Show Machine Info")
         add("config.jade.plugin_ragium.error_message", "Show Error Message")
+        add("config.jade.plugin_ragium.machine_info", "Show Machine Info")
     }
 }

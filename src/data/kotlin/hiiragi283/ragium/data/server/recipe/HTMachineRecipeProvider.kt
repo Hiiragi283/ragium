@@ -395,7 +395,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         }
 
         // Amethyst
-        register(Items.AMETHYST_SHARD, Tags.Items.BUDDING_BLOCKS, Items.AMETHYST_SHARD, 1)
+        register(Items.AMETHYST_SHARD, Tags.Items.BUDDING_BLOCKS, Items.AMETHYST_SHARD)
         // Dirt
         register(Items.BAMBOO, RagiumItemTags.DIRT_SOILS, Items.BAMBOO, 6)
         register(Items.GLOW_BERRIES, RagiumItemTags.DIRT_SOILS, Items.GLOW_BERRIES)
@@ -408,8 +408,8 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         register(Items.PUMPKIN_SEEDS, RagiumItemTags.DIRT_SOILS, Items.PUMPKIN, 1)
         register(Items.WHEAT_SEEDS, RagiumItemTags.DIRT_SOILS, Items.WHEAT)
         // End
-        register(Items.CHORUS_FLOWER, RagiumItemTags.END_SOILS, Items.CHORUS_FLOWER, 1)
-        register(Items.CHORUS_FRUIT, RagiumItemTags.END_SOILS, Items.CHORUS_FRUIT, 4)
+        register(Items.CHORUS_FLOWER, RagiumItemTags.END_SOILS, Items.CHORUS_FLOWER, 2)
+        register(Items.CHORUS_FRUIT, RagiumItemTags.END_SOILS, Items.CHORUS_FRUIT, 8)
         // Mushroom Soil
         register(Items.BROWN_MUSHROOM, RagiumItemTags.MUSHROOM_SOILS, Items.BROWN_MUSHROOM)
         register(Items.RED_MUSHROOM, RagiumItemTags.MUSHROOM_SOILS, Items.RED_MUSHROOM)

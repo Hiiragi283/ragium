@@ -165,6 +165,7 @@ abstract class HTMachineBlockEntity(
             // spawn particles
             machineType.particleHandler?.addParticle(level, pos, level.random, front)
         }
+        super.tickClient(level, pos, state)
     }
 
     final override fun tickSecond(level: Level, pos: BlockPos, state: BlockState) {

@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.tag.RagiumFluidTags
-import hiiragi283.ragium.client.screen.HTSingleItemScreen
+import hiiragi283.ragium.client.screen.*
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.integration.jei.category.*
@@ -162,15 +162,93 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {
-        // Compressor, Grinder
         registration.addRecipeClickArea(
-            HTSingleItemScreen::class.java,
-            HTSlotPos.getSlotPosX(4.5),
+            HTAssemblerScreen::class.java,
+            HTSlotPos.getSlotPosX(7),
             HTSlotPos.getSlotPosY(1),
             18,
             18,
+            RagiumJEIRecipeTypes.ASSEMBLER,
+        )
+
+        registration.addRecipeClickArea(
+            HTBlastFurnaceScreen::class.java,
+            HTSlotPos.getSlotPosX(4),
+            HTSlotPos.getSlotPosY(2),
+            18,
+            18,
+            RagiumJEIRecipeTypes.BLAST_FURNACE,
+        )
+
+        registration.addRecipeClickArea(
+            HTBreweryScreen::class.java,
+            HTSlotPos.getSlotPosX(4),
+            HTSlotPos.getSlotPosY(2),
+            18,
+            18,
+            RagiumJEIRecipeTypes.BREWERY,
+        )
+
+        registration.addRecipeClickArea(
+            HTExtractorScreen::class.java,
+            HTSlotPos.getSlotPosX(4),
+            HTSlotPos.getSlotPosY(1),
+            18,
+            18,
+            RagiumJEIRecipeTypes.EXTRACTOR,
+        )
+
+        registration.addRecipeClickArea(
+            HTInfuserScreen::class.java,
+            HTSlotPos.getSlotPosX(4),
+            HTSlotPos.getSlotPosY(1),
+            18,
+            18,
+            RagiumJEIRecipeTypes.INFUSER,
+        )
+
+        registration.addRecipeClickArea(
+            HTMixerScreen::class.java,
+            HTSlotPos.getSlotPosX(4),
+            HTSlotPos.getSlotPosY(1),
+            18,
+            18,
+            RagiumJEIRecipeTypes.MIXER,
+        )
+
+        registration.addRecipeClickArea(
+            HTRefineryScreen::class.java,
+            HTSlotPos.getSlotPosX(3),
+            HTSlotPos.getSlotPosY(0),
+            18 * 3,
+            18 * 3,
+            RagiumJEIRecipeTypes.REFINERY,
+        )
+
+        registration.addRecipeClickArea(
+            HTSolidifierScreen::class.java,
+            HTSlotPos.getSlotPosX(5),
+            HTSlotPos.getSlotPosY(1),
+            18 * 3,
+            18 * 3,
+            RagiumJEIRecipeTypes.SOLIDIFIER,
+        )
+
+        registration.addRecipeClickArea(
+            HTSingleItemScreen::class.java,
+            HTSlotPos.getSlotPosX(5),
+            HTSlotPos.getSlotPosY(1),
+            18,
+            18,
+            // Vanilla
+            RecipeTypes.STONECUTTING,
+            RecipeTypes.BLASTING,
+            RecipeTypes.SMELTING,
+            RecipeTypes.SMOKING,
+            // Ragium
             RagiumJEIRecipeTypes.COMPRESSOR,
             RagiumJEIRecipeTypes.GRINDER,
+            RagiumJEIRecipeTypes.GROWTH_CHAMBER,
             RagiumJEIRecipeTypes.LASER_ASSEMBLY,
         )
     }

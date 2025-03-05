@@ -48,6 +48,7 @@
   "block.ragium.yellow_led_block": "LEDブロック（黄色）",
   "chemical.ragium.clean_raginite": "純粋なラギナイトの懸濁液",
   "chemical.ragium.dirty_raginite": "汚れたラギナイトの懸濁液",
+  "config.jade.plugin_ragium.enchantable_block": "エンチャント可能なブロック",
   "config.jade.plugin_ragium.energy_network": "エネルギーネットワーク",
   "config.jade.plugin_ragium.error_message": "エラーメッセージ",
   "config.jade.plugin_ragium.machine_info": "機械の情報",
@@ -395,10 +396,9 @@
   "tooltip.ragium.item.soap": "右クリックで対象のブロックを洗う",
   "tooltip.ragium.item.warped_wart": "食べるとランダムなデバフを一つ消す",
   "tooltip.ragium.machine.cost": "- 処理コスト: %s FE/回",
+  "tooltip.ragium.machine.cost_modifier": "- 消費/生産エネルギーの倍率: %sx",
   "tooltip.ragium.machine.name": "- 機械: %s",
-  "tooltip.ragium.machine.owner": "- 所有者: %s",
-  "tooltip.ragium.machine.preview": "- プレビューの表示: %s",
+  "tooltip.ragium.machine.network_energy": "%s FE",
   "tooltip.ragium.machine.tick_rate": "- 処理時間: %s ティック（%s秒）",
-  "tooltip.ragium.machine.tier": "- ティア: %s",
-  "tooltip.ragium.machine.working": "- 稼働中: %s"
+  "tooltip.ragium.machine.working_success": "正常に稼働中！"
 }

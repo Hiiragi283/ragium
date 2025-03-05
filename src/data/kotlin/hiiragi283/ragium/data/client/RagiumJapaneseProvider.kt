@@ -279,13 +279,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.SOAP, "右クリックで対象のブロックを洗う")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
+        add(RagiumTranslationKeys.MACHINE_COST_MODIFIER, "- 消費/生産エネルギーの倍率: %sx")
         add(RagiumTranslationKeys.MACHINE_NAME, "- 機械: %s")
-        add(RagiumTranslationKeys.MACHINE_TIER, "- ティア: %s")
-
-        add(RagiumTranslationKeys.MACHINE_OWNER, "- 所有者: %s")
-        add(RagiumTranslationKeys.MACHINE_PREVIEW, "- プレビューの表示: %s")
+        add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "%s FE")
         add(RagiumTranslationKeys.MACHINE_TICK_RATE, "- 処理時間: %s ティック（%s秒）")
-        add(RagiumTranslationKeys.MACHINE_WORKING, "- 稼働中: %s")
+        add(RagiumTranslationKeys.MACHINE_WORKING_SUCCESS, "正常に稼働中！")
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "機械の構造は有効です！")
@@ -487,8 +485,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.FLUID_MOLTEN, "溶融%s")
 
+        add("config.jade.plugin_ragium.enchantable_block", "エンチャント可能なブロック")
         add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")
-        add("config.jade.plugin_ragium.machine_info", "機械の情報")
         add("config.jade.plugin_ragium.error_message", "エラーメッセージ")
+        add("config.jade.plugin_ragium.machine_info", "機械の情報")
     }
 }
