@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreSets
@@ -10,11 +11,9 @@ import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
@@ -45,7 +44,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }.map(Supplier<out Block>::get).forEach(::dropSelf)
 
         fun registerOres(oreSets: HTOreSets, prefix: HTTagPrefix) {
-            val enchLookup: HolderLookup.RegistryLookup<Enchantment> = registries.lookupOrThrow(Registries.ENCHANTMENT)
             for (ore: DeferredBlock<Block> in oreSets.ores) {
                 val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, oreSets.key)
                 add(ore.get()) { block: Block ->
@@ -56,7 +54,11 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                             LootItem
                                 .lootTableItem(rawMaterial)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f)))
-                                .apply(ApplyBonusCount.addOreBonusCount(enchLookup.getOrThrow(Enchantments.FORTUNE))),
+                                .apply(
+                                    ApplyBonusCount.addOreBonusCount(
+                                        registries.enchLookup().getOrThrow(Enchantments.FORTUNE),
+                                    ),
+                                ),
                         ),
                     )
                 }

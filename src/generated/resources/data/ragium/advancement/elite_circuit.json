@@ -14,6 +14,7 @@
   },
   "display": {
     "description": "",
+    "frame": "goal",
     "icon": {
       "count": 1,
       "id": "ragium:elite_circuit"

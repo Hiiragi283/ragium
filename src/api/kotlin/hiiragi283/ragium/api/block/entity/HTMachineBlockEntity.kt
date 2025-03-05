@@ -58,13 +58,9 @@ abstract class HTMachineBlockEntity(
 ) : HTBlockEntity(type, pos, state),
     MenuProvider,
     HTMachineAccess {
-    override val front: Direction
-        get() = blockState.getOrDefault(
-            BlockStateProperties.HORIZONTAL_FACING,
-            Direction.NORTH,
-        )
-    override var isActive: Boolean = false
-        protected set
+    val front: Direction
+        get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+    protected var isActive: Boolean = false
     override val levelAccess: Level?
         get() = level
     override val pos: BlockPos

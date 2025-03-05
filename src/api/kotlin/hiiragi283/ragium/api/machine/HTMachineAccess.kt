@@ -28,16 +28,6 @@ interface HTMachineAccess :
     HTFluidSlotHandler,
     HTPlayerOwningBlockEntity {
     /**
-     * 機械の正面の向き
-     */
-    val front: Direction
-
-    /**
-     * 機械が稼働状態かどうか判定します。
-     */
-    val isActive: Boolean
-
-    /**
      * 機械がおかれている[Level]
      */
     val levelAccess: Level?

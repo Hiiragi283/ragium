@@ -101,10 +101,9 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
         val assembler: AdvancementHolder = createMachine(casing, HTMachineType.ASSEMBLER)
         val basicCircuit: AdvancementHolder = createSimple(assembler, RagiumItems.BASIC_CIRCUIT, Component.empty())
         val advancedCircuit: AdvancementHolder = createSimple(basicCircuit, RagiumItems.ADVANCED_CIRCUIT, Component.empty())
-        val eliteCircuit: AdvancementHolder = createSimple(advancedCircuit, RagiumItems.ELITE_CIRCUIT, Component.empty())
-        val ultimateCircuit: AdvancementHolder = createSimple(
-            eliteCircuit,
-            RagiumItems.ULTIMATE_CIRCUIT,
+        val eliteCircuit: AdvancementHolder = createSimple(
+            advancedCircuit,
+            RagiumItems.ELITE_CIRCUIT,
             Component.empty(),
             type = AdvancementType.GOAL,
         )

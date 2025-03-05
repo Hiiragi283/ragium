@@ -150,7 +150,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.BASIC_CIRCUIT)
             add(RagiumItems.ADVANCED_CIRCUIT)
             add(RagiumItems.ELITE_CIRCUIT)
-            add(RagiumItems.ULTIMATE_CIRCUIT)
             // Lens
             add(RagiumItems.REDSTONE_LENS)
             add(RagiumItems.GLOWSTONE_LENS)

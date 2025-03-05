@@ -1,0 +1,19 @@
+{
+  "type": "ragium:assembler",
+  "item_inputs": [
+    {
+      "item": "ragium:chemical_machine_casing"
+    },
+    {
+      "count": 8,
+      "item": "minecraft:magma_block"
+    },
+    {
+      "count": 2,
+      "tag": "c:circuits/advanced"
+    }
+  ],
+  "item_output": {
+    "item": "ragium:thermal_generator"
+  }
+}

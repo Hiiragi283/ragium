@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.commonTag
+import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.item.HTItemStackBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -29,7 +30,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -55,7 +55,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
         brewery(output)
         compressor(output)
         crusher(output)
-        enchanter(output, holderLookup.lookupOrThrow(Registries.ENCHANTMENT))
+        enchanter(output, holderLookup.enchLookup())
         extractor(output)
         infuser(output)
         growthChamber(output)

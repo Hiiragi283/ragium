@@ -223,7 +223,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
-        addItem(RagiumItems.ULTIMATE_CIRCUIT, "Ultimate Circuit")
 
         addItem(RagiumItems.BALL_PRESS_MOLD, "Press Mold (Ball)")
         addItem(RagiumItems.BLOCK_PRESS_MOLD, "Press Mold (Block)")
@@ -449,7 +448,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.CIRCUITS_BASIC, "Basic Circuit")
         add(RagiumItemTags.CIRCUITS_ADVANCED, "Advanced Circuit")
         add(RagiumItemTags.CIRCUITS_ELITE, "Elite Circuit")
-        add(RagiumItemTags.CIRCUITS_ULTIMATE, "Ultimate Circuit")
 
         add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "Obsidian Glass")
         add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "Quartz Glass")

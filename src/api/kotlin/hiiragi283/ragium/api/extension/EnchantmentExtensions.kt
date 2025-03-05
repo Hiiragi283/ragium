@@ -5,7 +5,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.EnchantedBookItem
 import net.minecraft.world.item.ItemStack
@@ -19,14 +18,21 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 fun createEnchBook(holder: Holder<Enchantment>, level: Int = holder.value().maxLevel): ItemStack =
     EnchantedBookItem.createForEnchantment(EnchantmentInstance(holder, level))
 
-fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int =
-    provider?.getHolder(Registries.ENCHANTMENT, key)?.map(this::getEnchantmentLevel)?.orElse(0) ?: 0
+fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int = provider
+    ?.enchLookup()
+    ?.get(key)
+    ?.map(this::getEnchantmentLevel)
+    ?.orElse(0) ?: 0
 
 //    ItemEnchantments    //
 
 fun ItemEnchantments.getLevel(key: ResourceKey<Enchantment>): Int {
     val access: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return 0
-    return access.getHolder(Registries.ENCHANTMENT, key).map(this::getLevel).orElse(0)
+    return access
+        .enchLookup()
+        .get(key)
+        .map(this::getLevel)
+        .orElse(0)
 }
 
 fun <T : Any> ItemEnchantments.map(transform: (Holder<Enchantment>, Int) -> T): List<T> =

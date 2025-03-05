@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.util
 
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialKey
 import net.minecraft.core.Holder
@@ -8,6 +9,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -35,6 +37,9 @@ class HTArmorSets(register: DeferredRegister.Items, material: Holder<ArmorMateri
 
     operator fun get(type: ArmorItem.Type): DeferredItem<ArmorItem> = armorMap[type] ?: error("Unknown armor type: $type")
 
+    operator fun contains(item: ItemLike): Boolean =
+        armors.any { holder: DeferredItem<ArmorItem> -> holder.isOf(item.asItem()) }
+    
     //    Data Gen    //
 
     fun appendTags(action: (TagKey<Item>, Holder<Item>) -> Unit) {

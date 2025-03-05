@@ -198,11 +198,9 @@ class RagiumItemTagProvider(
         builder.add(RagiumItemTags.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
         builder.add(RagiumItemTags.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
         builder.add(RagiumItemTags.CIRCUITS_ELITE, RagiumItems.ELITE_CIRCUIT)
-        builder.add(RagiumItemTags.CIRCUITS_ULTIMATE, RagiumItems.ULTIMATE_CIRCUIT)
         builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_BASIC)
         builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ADVANCED)
         builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ELITE)
-        builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ULTIMATE)
 
         builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
 

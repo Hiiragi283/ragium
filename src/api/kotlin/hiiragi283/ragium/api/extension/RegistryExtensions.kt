@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
-import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -15,6 +14,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -97,10 +97,7 @@ fun HolderLookup.Provider.fluidLookup(): HolderLookup.RegistryLookup<Fluid> = lo
 
 fun HolderLookup.Provider.itemLookup(): HolderLookup.RegistryLookup<Item> = lookupOrThrow(Registries.ITEM)
 
-fun <T : Any> HolderLookup.Provider.getHolder(
-    registry: ResourceKey<out Registry<out T>>,
-    key: ResourceKey<T>,
-): Optional<Holder.Reference<T>> = lookupOrThrow(registry).get(key)
+fun HolderLookup.Provider.enchLookup(): HolderLookup.RegistryLookup<Enchantment> = lookupOrThrow(Registries.ENCHANTMENT)
 
 //    DeferredRegister    //
 

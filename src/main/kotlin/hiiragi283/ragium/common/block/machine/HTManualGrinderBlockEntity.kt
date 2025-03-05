@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
@@ -99,8 +98,6 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTMachineAccess    //
 
-    override val front: Direction = Direction.NORTH
-    override val isActive: Boolean = true
     override val levelAccess: Level?
         get() = level
     override val machineType: HTMachineType = HTMachineType.GRINDER

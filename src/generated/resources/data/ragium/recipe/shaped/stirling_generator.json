@@ -3,22 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/copper"
     },
     "B": {
-      "tag": "c:glass_blocks/colorless"
+      "item": "ragium:machine_casing"
     },
     "C": {
       "tag": "c:dusts/redstone"
+    },
+    "D": {
+      "tag": "c:player_workstations/furnaces"
     }
   },
   "pattern": [
+    "AAA",
     "ABA",
-    "BCB",
-    "ABA"
+    "CDC"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:machine_casing"
+    "id": "ragium:stirling_generator"
   }
 }

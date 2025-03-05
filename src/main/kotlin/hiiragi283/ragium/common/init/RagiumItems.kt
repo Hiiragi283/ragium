@@ -425,9 +425,6 @@ object RagiumItems {
     @JvmField
     val ELITE_CIRCUIT: DeferredItem<Item> = register("elite_circuit")
 
-    @JvmField
-    val ULTIMATE_CIRCUIT: DeferredItem<Item> = register("ultimate_circuit")
-
     //    Reagents    //
 
     @JvmField

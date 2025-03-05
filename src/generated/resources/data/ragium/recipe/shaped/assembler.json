@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:storage_blocks/steel"
+      "tag": "c:storage_blocks/deep_steel"
     },
     "B": {
       "item": "minecraft:crafter"
@@ -12,7 +12,7 @@
       "item": "ragium:machine_casing"
     },
     "D": {
-      "tag": "c:gears/steel"
+      "tag": "c:gears/deep_steel"
     },
     "E": {
       "tag": "c:circuits/advanced"

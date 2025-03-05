@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.createSpawnerStack
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.enchLookup
+import hiiragi283.ragium.api.extension.modifyEnchantment
 import hiiragi283.ragium.api.multiblock.*
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -12,15 +14,23 @@ import hiiragi283.ragium.common.item.component.HTSpawnerContent
 import hiiragi283.ragium.common.network.HTPotionBundlePacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistryAccess
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.event.AnvilUpdateEvent
 import net.neoforged.neoforge.event.RegisterCommandsEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent
 import net.neoforged.neoforge.network.PacketDistributor
@@ -90,5 +100,28 @@ internal object RagiumGameEvents {
         if (!stack.isEmpty && stack.`is`(RagiumItems.POTION_BUNDLE)) {
             PacketDistributor.sendToServer(HTPotionBundlePacket)
         }
+    }
+    
+    fun onItemCrafted(event: PlayerEvent.ItemCraftedEvent) {
+        val result: ItemStack = event.crafting
+        if (result.isEmpty) return
+        val access: RegistryAccess = event.entity.level().registryAccess()
+        val enchLookup: HolderLookup.RegistryLookup<Enchantment> = access.enchLookup()
+        val enchMap: Map<ResourceKey<Enchantment>, Int> = when {
+            result.`is`(RagiumItems.EMBER_ALLOY_TOOLS.swordItem) -> mapOf(Enchantments.FIRE_ASPECT to 2)
+            result.item in RagiumItems.EMBER_ALLOY_ARMORS -> mapOf(Enchantments.FIRE_PROTECTION to 2)
+            else -> return
+        }
+        result.modifyEnchantment { mutable: ItemEnchantments.Mutable ->
+            for ((key: ResourceKey<Enchantment>, value: Int) in enchMap) {
+                enchLookup.get(key).ifPresent { mutable.set(it, value) }
+            }
+            mutable.toImmutable()
+        }
+    }
+
+    @SubscribeEvent
+    fun onAnvilUpdated(event: AnvilUpdateEvent) {
+        if (event.isCanceled) return
     }
 }

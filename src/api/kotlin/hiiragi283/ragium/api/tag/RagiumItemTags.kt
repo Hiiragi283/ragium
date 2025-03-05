@@ -59,9 +59,6 @@ object RagiumItemTags {
     @JvmField
     val CIRCUITS_ELITE: TagKey<Item> = itemTagKey(commonId("circuits/elite"))
 
-    @JvmField
-    val CIRCUITS_ULTIMATE: TagKey<Item> = itemTagKey(commonId("circuits/ultimate"))
-
     // Glasses
 
     @JvmField

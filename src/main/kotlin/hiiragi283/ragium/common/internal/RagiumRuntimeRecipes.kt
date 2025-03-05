@@ -229,6 +229,16 @@ object RagiumRuntimeRecipes {
                     .itemInput(HTTagPrefix.RAW_MATERIAL, key, 4)
                     .itemOutput(dust, 3)
             }
+            // Wire
+            event.register(
+                HTRecipeTypes.GRINDER,
+                RagiumAPI.id("runtime_${name}_dust_from_wire"),
+            ) { lookup: HolderGetter<Item> ->
+                HTSingleItemRecipeBuilder
+                    .grinder(lookup)
+                    .itemInput(HTTagPrefix.WIRE, key, 2)
+                    .itemOutput(dust)
+            }
         }
     }
 

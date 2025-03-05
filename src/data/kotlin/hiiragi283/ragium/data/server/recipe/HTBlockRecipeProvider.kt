@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -15,10 +15,7 @@ import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object HTBlockRecipeProvider : HTRecipeProvider() {
@@ -45,38 +42,37 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     }
 
     private fun registerCasings(output: RecipeOutput) {
-        fun register(
-            result: ItemLike,
-            topMetal: HTMaterialKey,
-            glass: TagKey<Item>,
-            center: TagKey<Item>,
-        ) {
-            HTShapedRecipeBuilder(result, 2)
-                .cross8()
-                .define('A', HTTagPrefix.INGOT, topMetal)
-                .define('B', glass)
-                .define('C', center)
-                .save(output)
-        }
+        // Basic
+        HTShapedRecipeBuilder(RagiumItems.MACHINE_CASING)
+            .cross8()
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
+            .define('C', Tags.Items.DUSTS_REDSTONE)
+            .save(output)
 
-        register(
-            RagiumItems.MACHINE_CASING,
-            RagiumMaterials.RAGI_ALLOY,
-            Tags.Items.GLASS_BLOCKS_COLORLESS,
-            Tags.Items.DUSTS_REDSTONE,
-        )
-        register(
-            RagiumItems.CHEMICAL_MACHINE_CASING,
-            RagiumMaterials.EMBER_ALLOY,
-            RagiumItemTags.GLASS_BLOCKS_QUARTZ,
-            Tags.Items.DUSTS_GLOWSTONE,
-        )
-        register(
-            RagiumItems.PRECISION_MACHINE_CASING,
-            RagiumMaterials.DURALUMIN,
-            RagiumItemTags.GLASS_BLOCKS_OBSIDIAN,
-            HTTagPrefix.GEM.createTag(RagiumMaterials.WARPED_CRYSTAL),
-        )
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
+            .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS, 4)
+            .itemInput(Tags.Items.DUSTS_REDSTONE)
+            .itemOutput(RagiumItems.MACHINE_CASING)
+            .save(output)
+        // Chemical
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY, 4)
+            .itemInput(RagiumItemTags.GLASS_BLOCKS_QUARTZ, 4)
+            .itemInput(Tags.Items.DUSTS_GLOWSTONE)
+            .itemOutput(RagiumItems.CHEMICAL_MACHINE_CASING)
+            .save(output)
+        // Precision
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN, 4)
+            .itemInput(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, 4)
+            .itemInput(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
+            .itemOutput(RagiumItems.PRECISION_MACHINE_CASING)
+            .save(output)
     }
 
     private fun registerMachines(output: RecipeOutput) {
@@ -126,6 +122,51 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     }
 
     private fun registerGenerators(output: RecipeOutput) {
+        // Stirling Generator
+        HTShapedRecipeBuilder(HTMachineType.STIRLING_GENERATOR)
+            .pattern(
+                "AAA",
+                "ABA",
+                "CDC",
+            ).define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .define('B', RagiumItems.MACHINE_CASING)
+            .define('C', Tags.Items.DUSTS_REDSTONE)
+            .define('D', Tags.Items.PLAYER_WORKSTATIONS_FURNACES)
+            .save(output)
+
+        // Combustion Generator
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(RagiumItems.CHEMICAL_MACHINE_CASING)
+            .itemInput(RagiumItems.ENGINE, 2)
+            .itemInput(RagiumItemTags.CIRCUITS_ADVANCED, 2)
+            .itemOutput(HTMachineType.COMBUSTION_GENERATOR)
+            .save(output)
+        // Thermal Generator
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(RagiumItems.CHEMICAL_MACHINE_CASING)
+            .itemInput(Items.MAGMA_BLOCK, 8)
+            .itemInput(RagiumItemTags.CIRCUITS_ADVANCED, 2)
+            .itemOutput(HTMachineType.THERMAL_GENERATOR)
+            .save(output)
+
+        // Enchantment Generator
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(RagiumItems.PRECISION_MACHINE_CASING)
+            .itemInput(Items.ENCHANTING_TABLE)
+            .itemInput(RagiumItemTags.CIRCUITS_ELITE, 4)
+            .itemOutput(HTMachineType.ENCH_GENERATOR)
+            .save(output)
+        // Solar Generator
+        HTMultiItemRecipeBuilder
+            .assembler(lookup)
+            .itemInput(RagiumItems.PRECISION_MACHINE_CASING)
+            .itemInput(RagiumItems.SOLAR_PANEL)
+            .itemInput(RagiumItemTags.CIRCUITS_ELITE)
+            .itemOutput(HTMachineType.SOLAR_GENERATOR)
+            .save(output)
     }
 
     private fun registerProcessors(output: RecipeOutput) {
@@ -135,10 +176,10 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "ABA",
                 " C ",
                 "DED",
-            ).define('A', HTTagPrefix.BLOCK, CommonMaterials.STEEL)
+            ).define('A', HTTagPrefix.BLOCK, RagiumMaterials.DEEP_STEEL)
             .define('B', Items.CRAFTER)
             .define('C', RagiumItems.MACHINE_CASING)
-            .define('D', HTTagPrefix.GEAR, CommonMaterials.STEEL)
+            .define('D', HTTagPrefix.GEAR, RagiumMaterials.DEEP_STEEL)
             .define('E', RagiumItemTags.CIRCUITS_ADVANCED)
             .save(output)
         // Auto Chisel

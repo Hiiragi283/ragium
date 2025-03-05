@@ -223,7 +223,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
-        addItem(RagiumItems.ULTIMATE_CIRCUIT, "究極回路")
 
         addItem(RagiumItems.BLANK_PRESS_MOLD, "プレス型（なし）")
         addItem(RagiumItems.BALL_PRESS_MOLD, "プレス型（ボール）")
@@ -450,7 +449,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.CIRCUITS_ADVANCED, "発展回路")
         add(RagiumItemTags.CIRCUITS_BASIC, "基本回路")
         add(RagiumItemTags.CIRCUITS_ELITE, "精鋭回路")
-        add(RagiumItemTags.CIRCUITS_ULTIMATE, "究極回路")
 
         add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "黒曜石ガラス")
         add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "クォーツガラス")
