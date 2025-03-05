@@ -160,12 +160,7 @@ abstract class HTMachineBlockEntity(
     final override var tickRate: Int = baseTickRate
         protected set
 
-    override fun tickEach(
-        level: Level,
-        pos: BlockPos,
-        state: BlockState,
-        ticks: Int,
-    ) {
+    override fun tickClient(level: Level, pos: BlockPos, state: BlockState) {
         if (isActive) {
             // spawn particles
             machineType.particleHandler?.addParticle(level, pos, level.random, front)

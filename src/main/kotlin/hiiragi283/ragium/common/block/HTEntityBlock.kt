@@ -1,23 +1,20 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.getHTBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.EntityBlock
-import net.minecraft.world.level.block.Mirror
-import net.minecraft.world.level.block.Rotation
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -26,22 +23,10 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 
-abstract class HTEntityBlock(properties: Properties) :
-    Block(properties),
-    EntityBlock {
-    companion object {
-        @JvmStatic
-        fun of(factory: (BlockPos, BlockState) -> HTBlockEntity?, properties: Properties): HTEntityBlock =
-            object : HTEntityBlock(properties) {
-                override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = factory(pos, state)
-            }
+abstract class HTEntityBlock(properties: Properties) : BaseEntityBlock(properties) {
+    override fun codec(): MapCodec<out BaseEntityBlock> = throw UnsupportedOperationException()
 
-        @JvmStatic
-        fun horizontal(factory: (BlockPos, BlockState) -> HTBlockEntity?, properties: Properties): Horizontal =
-            object : Horizontal(properties) {
-                override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = factory(pos, state)
-            }
-    }
+    override fun getRenderShape(state: BlockState): RenderShape = RenderShape.MODEL
 
     final override fun useWithoutItem(
         state: BlockState,
@@ -119,16 +104,15 @@ abstract class HTEntityBlock(properties: Properties) :
         level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
     }
 
-    override fun getMenuProvider(state: BlockState, level: Level, pos: BlockPos): MenuProvider? =
-        level.getHTBlockEntity(pos) as? MenuProvider
-
-    final override fun <T : BlockEntity> getTicker(
-        level: Level,
-        state: BlockState,
-        blockEntityType: BlockEntityType<T>,
-    ): BlockEntityTicker<T>? = BlockEntityTicker<T> { level: Level, pos: BlockPos, state: BlockState, blockEntity: T ->
-        (blockEntity as? HTBlockEntity)?.tick(level, pos, state)
-    }
+    override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, blockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? =
+        BlockEntityTicker<T> { level: Level, pos: BlockPos, state: BlockState, blockEntity: T ->
+            if (blockEntity is HTMachineBlockEntity) {
+                when (level.isClientSide) {
+                    true -> blockEntity::tickClient
+                    false -> blockEntity::tickSecond
+                }(level, pos, state)
+            }
+        }
 
     //    Horizontal    //
 

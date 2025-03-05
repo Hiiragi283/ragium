@@ -158,9 +158,14 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
     open val tickRate: Int = 200
 
     /**
-     * 毎tick呼び出されます。
+     * クライアント側で毎tick呼び出されます。
      */
-    fun tick(level: Level, pos: BlockPos, state: BlockState) {
+    open fun tickClient(level: Level, pos: BlockPos, state: BlockState) {}
+
+    /**
+     * サーバー側で毎tick呼び出されます。
+     */
+    fun tickServer(level: Level, pos: BlockPos, state: BlockState) {
         if (!shouldTick) return
         tickEach(level, pos, state, ticks)
         if (ticks >= tickRate) {
@@ -172,7 +177,7 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
     }
 
     /**
-     * 毎[tick]呼び出されます。
+     * 毎tickごとに[tickServer]で呼び出されます。
      */
     open fun tickEach(
         level: Level,
