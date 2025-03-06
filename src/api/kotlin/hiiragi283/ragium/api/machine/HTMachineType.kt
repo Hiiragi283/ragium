@@ -17,6 +17,7 @@ import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CampfireBlock
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Consumer
@@ -85,7 +86,7 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
         val FIELD_CODEC: MapCodec<HTMachineType> = CODEC.fieldOf("machine_type")
 
         @JvmStatic
-        fun getBlocks(): List<DeferredBlock<*>> = HTMachineType.entries.map(HTMachineType::getBlock)
+        fun getBlocks(): List<DeferredBlock<*>> = HTMachineType.entries.map(HTMachineType::holder)
     }
 
     /**
@@ -110,18 +111,7 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     val descriptionText: MutableComponent
         get() = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
 
-    private lateinit var blockCache: DeferredBlock<*>
-
-    /**
-     * このキーに紐づいたブロックを返します。
-     * @throws IllegalStateException このキーにブロックが登録されていない場合
-     */
-    fun getBlock(): DeferredBlock<*> {
-        if (!::blockCache.isInitialized) {
-            blockCache = RagiumAPI.getInstance().getMachineBlock(this)
-        }
-        return blockCache
-    }
+    val holder: DeferredBlock<*> = DeferredBlock.createBlock<Block>(RagiumAPI.id(serializedName))
 
     fun appendTooltip(consumer: Consumer<Component>, allowDescription: Boolean = true) {
         consumer.accept(
@@ -136,7 +126,7 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
         }
     }
 
-    override fun asItem(): Item = getBlock().asItem()
+    override fun asItem(): Item = holder.asItem()
 
     override fun getSerializedName(): String = altName ?: name.lowercase()
 }

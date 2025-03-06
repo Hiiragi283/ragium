@@ -21,10 +21,9 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     private fun <T : BlockEntity> register(
-        path: String,
-        factory: BlockEntityType.BlockEntitySupplier<T>,
         machine: HTMachineType,
-    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.registerType(path, factory, machine.getBlock())
+        factory: BlockEntityType.BlockEntitySupplier<T>,
+    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.registerType(machine.serializedName, factory, machine.holder)
 
     //    Manual Machine    //
 
@@ -44,95 +43,95 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val FISHER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTFisherBlockEntity>> =
-        register("fisher", ::HTFisherBlockEntity, HTMachineType.FISHER)
+        register(HTMachineType.FISHER, ::HTFisherBlockEntity)
 
     //    Generator    //
 
     @JvmField
     val COMBUSTION_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCombustionGeneratorBlockEntity>> =
-        register("combustion_generator", ::HTCombustionGeneratorBlockEntity, HTMachineType.COMBUSTION_GENERATOR)
+        register(HTMachineType.COMBUSTION_GENERATOR, ::HTCombustionGeneratorBlockEntity)
 
     @JvmField
     val ENCH_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTEnchantmentGeneratorBlockEntity>> =
-        register("enchantment_generator", ::HTEnchantmentGeneratorBlockEntity, HTMachineType.ENCH_GENERATOR)
+        register(HTMachineType.ENCH_GENERATOR, ::HTEnchantmentGeneratorBlockEntity)
 
     @JvmField
     val SOLAR_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSolarGeneratorBlockEntity>> =
-        register("solar_generator", ::HTSolarGeneratorBlockEntity, HTMachineType.SOLAR_GENERATOR)
+        register(HTMachineType.SOLAR_GENERATOR, ::HTSolarGeneratorBlockEntity)
 
     @JvmField
     val STIRLING_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTStirlingGeneratorBlockEntity>> =
-        register("stirling_generator", ::HTStirlingGeneratorBlockEntity, HTMachineType.STIRLING_GENERATOR)
+        register(HTMachineType.STIRLING_GENERATOR, ::HTStirlingGeneratorBlockEntity)
 
     @JvmField
     val THERMAL_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTThermalGeneratorBlockEntity>> =
-        register("thermal_generator", ::HTThermalGeneratorBlockEntity, HTMachineType.THERMAL_GENERATOR)
+        register(HTMachineType.THERMAL_GENERATOR, ::HTThermalGeneratorBlockEntity)
 
     //    Processor    //
 
     @JvmField
     val ASSEMBLER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTAssemblerBlockEntity>> =
-        register("assembler", ::HTAssemblerBlockEntity, HTMachineType.ASSEMBLER)
+        register(HTMachineType.ASSEMBLER, ::HTAssemblerBlockEntity)
 
     @JvmField
     val AUTO_CHISEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTAutoChiselBlockEntity>> =
-        register("auto_chisel", ::HTAutoChiselBlockEntity, HTMachineType.AUTO_CHISEL)
+        register(HTMachineType.AUTO_CHISEL, ::HTAutoChiselBlockEntity)
 
     @JvmField
     val BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBlastFurnaceBlockEntity>> =
-        register("blast_furnace", ::HTBlastFurnaceBlockEntity, HTMachineType.BLAST_FURNACE)
+        register(HTMachineType.BLAST_FURNACE, ::HTBlastFurnaceBlockEntity)
 
     @JvmField
     val BREWERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBreweryBlockEntity>> =
-        register("brewery", ::HTBreweryBlockEntity, HTMachineType.BREWERY)
+        register(HTMachineType.BREWERY, ::HTBreweryBlockEntity)
 
     @JvmField
     val COMPRESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCompressorBlockEntity>> =
-        register("compressor", ::HTCompressorBlockEntity, HTMachineType.COMPRESSOR)
+        register(HTMachineType.COMPRESSOR, ::HTCompressorBlockEntity)
 
     @JvmField
     val CRUSHER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCrusherBlockEntity>> =
-        register("crusher", ::HTCrusherBlockEntity, HTMachineType.CRUSHER)
+        register(HTMachineType.CRUSHER, ::HTCrusherBlockEntity)
 
     @JvmField
     val ELECTRIC_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTElectricFurnaceBlockEntity>> =
-        register("electric_furnace", ::HTElectricFurnaceBlockEntity, HTMachineType.ELECTRIC_FURNACE)
+        register(HTMachineType.ELECTRIC_FURNACE, ::HTElectricFurnaceBlockEntity)
 
     @JvmField
     val EXTRACTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTExtractorBlockEntity>> =
-        register("extractor", ::HTExtractorBlockEntity, HTMachineType.EXTRACTOR)
+        register(HTMachineType.EXTRACTOR, ::HTExtractorBlockEntity)
 
     @JvmField
     val GRINDER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTGrinderBlockEntity>> =
-        register("grinder", ::HTGrinderBlockEntity, HTMachineType.GRINDER)
+        register(HTMachineType.GRINDER, ::HTGrinderBlockEntity)
 
     @JvmField
     val GROWTH_CHAMBER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTGrowthChamberBlockEntity>> =
-        register("growth_chamber", ::HTGrowthChamberBlockEntity, HTMachineType.GROWTH_CHAMBER)
+        register(HTMachineType.GROWTH_CHAMBER, ::HTGrowthChamberBlockEntity)
 
     @JvmField
     val INFUSER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTInfuserBlockEntity>> =
-        register("infuser", ::HTInfuserBlockEntity, HTMachineType.INFUSER)
+        register(HTMachineType.INFUSER, ::HTInfuserBlockEntity)
 
     @JvmField
     val LASER_ASSEMBLY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLaserAssemblyBlockEntity>> =
-        register("laser_assembly", ::HTLaserAssemblyBlockEntity, HTMachineType.LASER_ASSEMBLY)
+        register(HTMachineType.LASER_ASSEMBLY, ::HTLaserAssemblyBlockEntity)
 
     @JvmField
     val MIXER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMixerBlockEntity>> =
-        register("mixer", ::HTMixerBlockEntity, HTMachineType.MIXER)
+        register(HTMachineType.MIXER, ::HTMixerBlockEntity)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =
-        register("multi_smelter", ::HTMultiSmelterBlockEntity, HTMachineType.MULTI_SMELTER)
+        register(HTMachineType.MULTI_SMELTER, ::HTMultiSmelterBlockEntity)
 
     @JvmField
     val REFINERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTRefineryBlockEntity>> =
-        register("refinery", ::HTRefineryBlockEntity, HTMachineType.REFINERY)
+        register(HTMachineType.REFINERY, ::HTRefineryBlockEntity)
 
     @JvmField
     val SOLIDIFIER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTSolidifierBlockEntity>> =
-        register("solidifier", ::HTSolidifierBlockEntity, HTMachineType.SOLIDIFIER)
+        register(HTMachineType.SOLIDIFIER, ::HTSolidifierBlockEntity)
 
     //    Storage    //
 

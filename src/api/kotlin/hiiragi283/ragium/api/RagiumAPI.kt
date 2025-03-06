@@ -5,7 +5,6 @@ import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -25,7 +24,6 @@ import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
-import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.*
 
 interface RagiumAPI {
@@ -158,11 +156,6 @@ interface RagiumAPI {
      * @see [HTStorageIO.wrapEnergyStorage]
      */
     fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
-
-    /**
-     * @see [HTMachineType.getBlock]
-     */
-    fun getMachineBlock(type: HTMachineType): DeferredBlock<*>
 
     fun emptyItemSlot(): HTItemSlot = HTItemSlot.Builder().build("")
 

@@ -11,12 +11,14 @@ import net.neoforged.neoforge.registries.DeferredRegister
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class HTBlockEntityTypeRegister(namespace: String) : DeferredRegister<BlockEntityType<*>>(Registries.BLOCK_ENTITY_TYPE, namespace) {
+    @JvmName("registerDeferredType")
     fun <T : BlockEntity> registerType(
         name: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,
         blocks: Collection<DeferredBlock<*>>,
     ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = registerType(name, factory, *blocks.toTypedArray())
 
+    @JvmName("registerDeferredType")
     fun <T : BlockEntity> registerType(
         name: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,

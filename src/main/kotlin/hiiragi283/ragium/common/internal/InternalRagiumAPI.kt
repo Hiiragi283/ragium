@@ -167,9 +167,6 @@ class InternalRagiumAPI : RagiumAPI {
         }
     }
 
-    override fun getMachineBlock(type: HTMachineType): DeferredBlock<*> =
-        blockMap[type] ?: error("Unknown machine type: ${type.serializedName} found!")
-
     override fun buildItemSlot(
         nbtKey: String,
         capacity: Int,

@@ -14,7 +14,7 @@ class RagiumBlockModelProvider(output: PackOutput, existingFileHelper: ExistingF
     override fun registerModels() {
         // Machine
         fun basicMachine(type: HTMachineType) {
-            getBuilder(type.getBlock())
+            getBuilder(type.holder)
                 .parent(ModelFile.UncheckedModelFile(RagiumAPI.id("block/basic_machine")))
                 .blockTexture("front", RagiumAPI.id(type.serializedName + "_front"))
         }
@@ -31,7 +31,7 @@ class RagiumBlockModelProvider(output: PackOutput, existingFileHelper: ExistingF
         basicMachine(HTMachineType.GRINDER)
 
         fun chemicalMachine(type: HTMachineType) {
-            getBuilder(type.getBlock())
+            getBuilder(type.holder)
                 .parent(ModelFile.UncheckedModelFile(RagiumAPI.id("block/chemical_machine")))
                 .blockTexture("front", RagiumAPI.id(type.serializedName + "_front"))
         }
@@ -44,7 +44,7 @@ class RagiumBlockModelProvider(output: PackOutput, existingFileHelper: ExistingF
         chemicalMachine(HTMachineType.SOLIDIFIER)
 
         fun precisionMachine(type: HTMachineType) {
-            getBuilder(type.getBlock())
+            getBuilder(type.holder)
                 .parent(ModelFile.UncheckedModelFile(RagiumAPI.id("block/precision_machine")))
                 .blockTexture("front", RagiumAPI.id(type.serializedName + "_front"))
         }

@@ -170,7 +170,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Machine
         for (type: HTMachineType in HTMachineType.entries) {
-            val block: Block = type.getBlock().get() ?: continue
+            val block: Block = type.holder.get()
             getVariantBuilder(block)
                 .forAllStates { state: BlockState ->
                     ConfiguredModel
