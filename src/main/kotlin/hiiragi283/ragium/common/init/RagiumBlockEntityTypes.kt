@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.common.block.generator.*
 import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
@@ -9,57 +10,35 @@ import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
 import hiiragi283.ragium.common.block.processor.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredRegister
-import java.util.function.Supplier
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 object RagiumBlockEntityTypes {
     @JvmField
-    val REGISTER: DeferredRegister<BlockEntityType<*>> =
-        DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, RagiumAPI.MOD_ID)
-
-    @JvmStatic
-    private fun <T : BlockEntity> register(
-        path: String,
-        factory: BlockEntityType.BlockEntitySupplier<T>,
-        block: Supplier<out Block>,
-    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
-        BlockEntityType.Builder.of(factory, block.get()).build(null)
-    }
-
-    @JvmStatic
-    private fun <T : BlockEntity> register(
-        path: String,
-        factory: BlockEntityType.BlockEntitySupplier<T>,
-        blocks: Iterable<Supplier<out Block>>,
-    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
-        BlockEntityType.Builder.of(factory, *blocks.map(Supplier<out Block>::get).toTypedArray()).build(null)
-    }
+    val REGISTER = HTBlockEntityTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
     private fun <T : BlockEntity> register(
         path: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,
         machine: HTMachineType,
-    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
-        BlockEntityType.Builder.of(factory, machine.getBlock().get()).build(null)
-    }
+    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.registerType(path, factory, machine.getBlock())
 
     //    Manual Machine    //
 
     @JvmField
     val MANUAL_GRINDER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTManualGrinderBlockEntity>> =
-        register("manual_grinder", ::HTManualGrinderBlockEntity, RagiumBlocks.MANUAL_GRINDER)
+        REGISTER.registerType("manual_grinder", ::HTManualGrinderBlockEntity, RagiumBlocks.MANUAL_GRINDER)
 
     @JvmField
     val PRIMITIVE_BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTPrimitiveBlastFurnaceBlockEntity>> =
-        register("primitive_blast_furnace", ::HTPrimitiveBlastFurnaceBlockEntity, RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
+        REGISTER.registerType(
+            "primitive_blast_furnace",
+            ::HTPrimitiveBlastFurnaceBlockEntity,
+            RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
+        )
 
     //    Consumer    //
 
@@ -159,9 +138,9 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val CRATE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCrateBlockEntity>> =
-        register("crate", ::HTCrateBlockEntity, RagiumBlocks.CRATES.values)
+        REGISTER.registerType("crate", ::HTCrateBlockEntity, RagiumBlocks.CRATES.values)
 
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =
-        register("drum", ::HTDrumBlockEntity, RagiumBlocks.DRUMS.values)
+        REGISTER.registerType("drum", ::HTDrumBlockEntity, RagiumBlocks.DRUMS.values)
 }

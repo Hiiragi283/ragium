@@ -1,16 +1,14 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.commonTag
-import net.minecraft.core.registries.Registries
+import hiiragi283.ragium.api.registry.HTDeferredFluid
+import hiiragi283.ragium.api.registry.HTDeferredFluidType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.NeoForgeRegistries
 import java.awt.Color
 import java.util.function.Supplier
 
@@ -81,9 +79,8 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
 
     private val id: ResourceLocation = RagiumAPI.id(serializedName)
 
-    val fluidHolder: DeferredHolder<Fluid, FlowingFluid> = DeferredHolder.create(Registries.FLUID, id)
-    val typeHolder: DeferredHolder<FluidType, FluidType> =
-        DeferredHolder.create(NeoForgeRegistries.Keys.FLUID_TYPES, id)
+    val fluidHolder: HTDeferredFluid<FlowingFluid> = HTDeferredFluid.createFluid<FlowingFluid>(id)
+    val typeHolder: HTDeferredFluidType<FluidType> = HTDeferredFluidType.createType<FluidType>(id)
 
     val commonTag: TagKey<Fluid> get() = fluidHolder.commonTag
 

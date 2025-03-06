@@ -27,6 +27,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
+import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -36,6 +37,15 @@ object RagiumBlocks {
 
     @JvmField
     val ITEM_REGISTER: DeferredRegister.Items = DeferredRegister.createItems(RagiumAPI.MOD_ID)
+
+    @JvmStatic
+    fun init(eventBus: IEventBus) {
+        REGISTER.register(eventBus)
+        ITEM_REGISTER.register(eventBus)
+
+        RAGINITE_ORES.init(eventBus)
+        RAGI_CRYSTAL_ORES.init(eventBus)
+    }
 
     private class Builder(val name: String) {
         private lateinit var blockProperties: BlockBehaviour.Properties
@@ -75,10 +85,10 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val RAGINITE_ORES = HTOreSets(REGISTER, ITEM_REGISTER, RagiumMaterials.RAGINITE)
+    val RAGINITE_ORES = HTOreSets(RagiumMaterials.RAGINITE)
 
     @JvmField
-    val RAGI_CRYSTAL_ORES = HTOreSets(REGISTER, ITEM_REGISTER, RagiumMaterials.RAGI_CRYSTAL)
+    val RAGI_CRYSTAL_ORES = HTOreSets(RagiumMaterials.RAGI_CRYSTAL)
 
     @JvmField
     val SOUL_MAGMA_BLOCK: DeferredBlock<HTSoulMagmaBlock> = Builder("soul_magma_block")

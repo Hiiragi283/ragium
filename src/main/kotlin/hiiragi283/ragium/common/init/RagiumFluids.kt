@@ -1,40 +1,39 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.core.registries.Registries
+import hiiragi283.ragium.api.registry.HTDeferredFluid
+import hiiragi283.ragium.api.registry.HTDeferredFluidType
+import hiiragi283.ragium.api.registry.HTFluidRegister
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredRegister
-import java.util.function.Supplier
 
 object RagiumFluids {
     @JvmField
-    val REGISTER: DeferredRegister<Fluid> = DeferredRegister.create(Registries.FLUID, RagiumAPI.MOD_ID)
+    val REGISTER = HTFluidRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val GLASS: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("glass", RagiumFluidTypes.GLASS)
+    val GLASS: HTDeferredFluid<out BaseFlowingFluid> = virtual("glass", RagiumFluidTypes.GLASS)
 
     @JvmField
-    val HONEY: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("honey", RagiumFluidTypes.HONEY) {
+    val HONEY: HTDeferredFluid<out BaseFlowingFluid> = virtual("honey", RagiumFluidTypes.HONEY) {
         bucket(RagiumItems.HONEY_BUCKET)
     }
 
     @JvmField
-    val SNOW: DeferredHolder<Fluid, out BaseFlowingFluid> = virtual("snow", RagiumFluidTypes.SNOW) {
+    val SNOW: HTDeferredFluid<out BaseFlowingFluid> = virtual("snow", RagiumFluidTypes.SNOW) {
         bucket(Items::POWDER_SNOW_BUCKET)
     }
 
     @JvmField
-    val CRUDE_OIL: DeferredHolder<Fluid, BaseFlowingFluid.Source> =
-        DeferredHolder.create(Registries.FLUID, RagiumAPI.id("crude_oil"))
+    val CRUDE_OIL: HTDeferredFluid<BaseFlowingFluid.Source> =
+        HTDeferredFluid.createFluid<BaseFlowingFluid.Source>(RagiumAPI.id("crude_oil"))
 
     @JvmField
-    val FLOWING_CRUDE_OIL: DeferredHolder<Fluid, BaseFlowingFluid.Flowing> =
-        DeferredHolder.create(Registries.FLUID, RagiumAPI.id("flowing_crude_oil"))
+    val FLOWING_CRUDE_OIL: HTDeferredFluid<BaseFlowingFluid.Flowing> =
+        HTDeferredFluid.createFluid<BaseFlowingFluid.Flowing>(RagiumAPI.id("flowing_crude_oil"))
 
     @JvmStatic
     fun init() {
@@ -60,10 +59,10 @@ object RagiumFluids {
     @JvmStatic
     private fun virtual(
         name: String,
-        typeHolder: Supplier<out FluidType>,
+        typeHolder: HTDeferredFluidType<out FluidType>,
         builderAction: BaseFlowingFluid.Properties.() -> Unit = {},
-    ): DeferredHolder<Fluid, out BaseFlowingFluid> {
-        val stillHolder: DeferredHolder<Fluid, Fluid> = DeferredHolder.create(Registries.FLUID, RagiumAPI.id(name))
+    ): HTDeferredFluid<out BaseFlowingFluid> {
+        val stillHolder: HTDeferredFluid<Fluid> = HTDeferredFluid.createFluid<Fluid>(RagiumAPI.id(name))
         return REGISTER.register(name) { _: ResourceLocation ->
             BaseFlowingFluid.Source(
                 BaseFlowingFluid

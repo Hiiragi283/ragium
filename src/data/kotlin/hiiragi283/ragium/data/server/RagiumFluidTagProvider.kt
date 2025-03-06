@@ -2,7 +2,10 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.fluidLookup
+import hiiragi283.ragium.api.extension.isSource
+import hiiragi283.ragium.api.registry.HTDeferredFluid
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
@@ -15,7 +18,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.concurrent.CompletableFuture
 
 class RagiumFluidTagProvider(
@@ -28,7 +30,7 @@ class RagiumFluidTagProvider(
     override fun addTags(provider: HolderLookup.Provider) {
         builder = HTTagBuilder(provider.fluidLookup())
 
-        RagiumFluids.REGISTER.forEach { holder: DeferredHolder<Fluid, out Fluid> ->
+        RagiumFluids.REGISTER.entries.forEach { holder: HTDeferredFluid<Fluid> ->
             if (!holder.get().isSource) return@forEach
             // Common Tag
             builder.add(holder.commonTag, holder)

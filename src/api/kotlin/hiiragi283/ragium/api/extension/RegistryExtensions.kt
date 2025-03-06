@@ -20,6 +20,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
@@ -57,15 +58,12 @@ fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
 
 fun <T : Block> DeferredHolder<Block, T>.toBlockHolder(): DeferredBlock<T> = DeferredBlock.createBlock<T>(this.id)
 
+fun <T : Item> DeferredHolder<Item, T>.toItemHolder(): DeferredItem<T> = DeferredItem.createItem<T>(this.id)
+
 /**
  * `block/`で前置された[DeferredBlock.getId]
  */
 val DeferredBlock<*>.blockId: ResourceLocation get() = id.withPrefix("block/")
-
-/**
- * 液体のIDから名前空間が`c`となる[TagKey]を返します。
- */
-val DeferredHolder<Fluid, *>.commonTag: TagKey<Fluid> get() = fluidTagKey(commonId(id.path))
 
 //    HolderSet    //
 
@@ -104,6 +102,12 @@ fun HolderLookup.Provider.enchLookup(): HolderLookup.RegistryLookup<Enchantment>
 fun <T : Any> DeferredRegister<T>.forEach(action: (DeferredHolder<T, out T>) -> Unit) {
     entries.forEach(action)
 }
+
+val DeferredRegister.Blocks.blockEntries: List<DeferredBlock<out Block>>
+    get() = this.entries.map(DeferredHolder<Block, out Block>::toBlockHolder)
+
+val DeferredRegister.Items.itemEntries: List<DeferredItem<out Item>>
+    get() = this.entries.map(DeferredHolder<Item, out Item>::toItemHolder)
 
 //    TagKey    //
 

@@ -49,8 +49,8 @@ object RagiumCreativeTabs {
             add(RagiumItems.HONEY_BUCKET)
             // Material Blocks
             add(RagiumBlocks.SOUL_MAGMA_BLOCK)
-            addAll(RagiumBlocks.RAGINITE_ORES.ores)
-            addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.ores)
+            addAll(RagiumBlocks.RAGINITE_ORES.oreItems)
+            addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.oreItems)
             addAll(RagiumBlocks.STORAGE_BLOCKS.values)
             add(RagiumBlocks.SLAG_BLOCK)
             // Decorations

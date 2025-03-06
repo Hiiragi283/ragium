@@ -25,6 +25,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         // Blocks
         buildList {
             addAll(RagiumBlocks.REGISTER.entries)
+            addAll(RagiumBlocks.RAGINITE_ORES.oreBlocks)
+            addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.oreBlocks)
 
             removeAll(RagiumBlocks.RAGI_BRICK_SETS.blocks)
             removeAll(RagiumBlocks.PLASTIC_SETS.blocks)

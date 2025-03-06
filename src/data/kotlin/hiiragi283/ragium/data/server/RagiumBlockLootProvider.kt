@@ -38,13 +38,10 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
             // removeAll(RagiumBlocks.CRATES.values)
             removeAll(RagiumBlocks.DRUMS.values)
-
-            removeAll(RagiumBlocks.RAGINITE_ORES.ores)
-            removeAll(RagiumBlocks.RAGI_CRYSTAL_ORES.ores)
         }.map(Supplier<out Block>::get).forEach(::dropSelf)
 
         fun registerOres(oreSets: HTOreSets, prefix: HTTagPrefix) {
-            for (ore: DeferredBlock<Block> in oreSets.ores) {
+            for (ore: DeferredBlock<out Block> in oreSets.oreBlocks) {
                 val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, oreSets.key)
                 add(ore.get()) { block: Block ->
                     createSilkTouchDispatchTable(

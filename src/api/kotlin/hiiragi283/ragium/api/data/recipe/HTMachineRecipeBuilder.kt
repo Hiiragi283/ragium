@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.extension.commonTag
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
+import hiiragi283.ragium.api.registry.HTDeferredFluid
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.component.DataComponentPatch
@@ -24,7 +24,6 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
-import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
 /**
@@ -49,7 +48,7 @@ abstract class HTMachineRecipeBuilder<T : HTMachineRecipeBuilder<T, R>, R : HTMa
 
     //    Fluid Input    //
 
-    fun fluidInput(fluid: DeferredHolder<Fluid, *>, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(fluid.commonTag, amount)
+    fun fluidInput(fluid: HTDeferredFluid<*>, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(fluid.commonTag, amount)
 
     fun fluidInput(fluid: Fluid, amount: Int = FluidType.BUCKET_VOLUME): T = fluidInput(FluidIngredient.of(fluid), amount)
 

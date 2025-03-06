@@ -38,9 +38,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumFluids.REGISTER.register(eventBus)
         RagiumFluidTypes.REGISTER.register(eventBus)
 
-        RagiumBlocks.REGISTER.register(eventBus)
-
-        RagiumBlocks.ITEM_REGISTER.register(eventBus)
+        RagiumBlocks.init(eventBus)
         RagiumEntityTypes.REGISTER.register(eventBus)
         RagiumItems.REGISTER.register(eventBus)
 
