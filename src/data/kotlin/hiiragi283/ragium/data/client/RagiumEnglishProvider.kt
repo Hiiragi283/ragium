@@ -255,12 +255,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "Precision Machine Casing")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.SLAG, "Slag")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.TAR, "Tar")
         addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
+
+        addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
+        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
 
         add(RagiumTranslationKeys.BEE_WAX, "Can be used as same as Honeycomb")
 

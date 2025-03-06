@@ -37,9 +37,8 @@ class HTArmorSets(register: DeferredRegister.Items, material: Holder<ArmorMateri
 
     operator fun get(type: ArmorItem.Type): DeferredItem<ArmorItem> = armorMap[type] ?: error("Unknown armor type: $type")
 
-    operator fun contains(item: ItemLike): Boolean =
-        armors.any { holder: DeferredItem<ArmorItem> -> holder.isOf(item.asItem()) }
-    
+    operator fun contains(item: ItemLike): Boolean = armors.any { holder: DeferredItem<ArmorItem> -> holder.isOf(item.asItem()) }
+
     //    Data Gen    //
 
     fun appendTags(action: (TagKey<Item>, Holder<Item>) -> Unit) {

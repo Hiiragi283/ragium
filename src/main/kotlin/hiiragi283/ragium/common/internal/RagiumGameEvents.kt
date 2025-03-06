@@ -28,7 +28,6 @@ import net.minecraft.world.level.Level
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.event.AnvilUpdateEvent
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -101,7 +100,7 @@ internal object RagiumGameEvents {
             PacketDistributor.sendToServer(HTPotionBundlePacket)
         }
     }
-    
+
     fun onItemCrafted(event: PlayerEvent.ItemCraftedEvent) {
         val result: ItemStack = event.crafting
         if (result.isEmpty) return
@@ -118,10 +117,5 @@ internal object RagiumGameEvents {
             }
             mutable.toImmutable()
         }
-    }
-
-    @SubscribeEvent
-    fun onAnvilUpdated(event: AnvilUpdateEvent) {
-        if (event.isCanceled) return
     }
 }

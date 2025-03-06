@@ -102,6 +102,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.YELLOW_CAKE)
             add(RagiumItems.YELLOW_CAKE_PIECE)
 
+            add(RagiumItems.BLANK_TICKET)
             add(RagiumItems.RAGI_TICKET)
         }
 

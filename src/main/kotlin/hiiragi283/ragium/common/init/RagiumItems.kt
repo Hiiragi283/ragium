@@ -467,6 +467,14 @@ object RagiumItems {
     @JvmField
     val SOLAR_PANEL: DeferredItem<Item> = register("solar_panel")
 
+    //    Tickets    //
+
+    @JvmField
+    val BLANK_TICKET: DeferredItem<Item> = register("blank_ticket", itemProperty().rarity(Rarity.RARE))
+
+    @JvmField
+    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
+
     //    Misc    //
 
     @JvmField
@@ -479,7 +487,4 @@ object RagiumItems {
     @JvmField
     val YELLOW_CAKE_PIECE: DeferredItem<Item> =
         registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
-
-    @JvmField
-    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
 }

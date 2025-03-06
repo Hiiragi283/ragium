@@ -255,12 +255,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "精密機械筐体")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.SLAG, "スラグ")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.TAR, "タール")
         addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
+
+        addItem(RagiumItems.BLANK_TICKET, "空のチケット")
+        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
 
         add(RagiumTranslationKeys.BEE_WAX, "ハニカムと同様に使える")
 
