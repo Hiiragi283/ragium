@@ -198,6 +198,8 @@ dependencies {
     implementation(libs.bundles.mods.transitive) { isTransitive = false }
     compileOnly(libs.bundles.mods.compile)
     runtimeOnly(libs.bundles.mods.runtime)
+
+    jarJar(libs.ponder)
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
