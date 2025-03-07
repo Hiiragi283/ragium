@@ -110,6 +110,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTOreVariant.END, "エンド%s鉱石")
         // Enchantment
         addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します")
+        // Entity
+        addEntityType(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
+        addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
+        addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
         // Fluids
         addFluid(RagiumFluids.GLASS, "溶融ガラス")
         addFluid(RagiumFluids.HONEY, "蜂蜜")
@@ -215,10 +219,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.STEEL_TOOLS.swordItem, "鋼鉄の剣")
 
         addItem(RagiumItems.DEFOLIANT, "枯葉剤")
-        addItem(RagiumItems.DYNAMITE, "ダイナマイト")
-        addItem(RagiumItems.MAGNET, "マグネット")
         addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
-        addItem(RagiumItems.SOAP, "石鹸")
+
+        addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
+        addItem(RagiumItems.EXP_MAGNET, "経験値マグネット")
+
+        addItem(RagiumItems.DYNAMITE, "ダイナマイト")
+        addItem(RagiumItems.FLATTEN_DYNAMITE, "整地用ダイナマイト")
+        addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")
 
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
@@ -256,6 +264,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "精密機械筐体")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         addItem(RagiumItems.SLAG, "スラグ")
+        addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.TAR, "タール")
         addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
@@ -264,20 +273,22 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BLANK_TICKET, "空のチケット")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
 
-        add(RagiumTranslationKeys.BEE_WAX, "ハニカムと同様に使える")
-
-        add(RagiumTranslationKeys.WARPED_WART, "食べるとランダムなデバフを一つ消す")
         add(RagiumTranslationKeys.AMBROSIA, "無限に食べられちまうんだ！")
-
-        add(RagiumTranslationKeys.FEVER_PICKAXE, "常に幸運Vが発動する")
-        add(RagiumTranslationKeys.SILKY_PICKAXE, "常にシルクタッチが発動する")
-
+        add(RagiumTranslationKeys.BEE_WAX, "ハニカムと同様に使える")
         add(RagiumTranslationKeys.DEFOLIANT, "9x9x9の範囲を荒れ地に変える")
         add(RagiumTranslationKeys.DYNAMITE, "着弾時に爆発を起こす")
-        add(RagiumTranslationKeys.MAGNET, "周囲のアイテムをひきつける")
+        add(RagiumTranslationKeys.EFFECT_RANGE, "効果範囲: %s ブロック")
+        add(RagiumTranslationKeys.EXP_MAGNET, "周囲の経験値オーブをひきつける")
+        add(RagiumTranslationKeys.EXPLOSION_POWER, "爆発の威力: %s")
+        add(RagiumTranslationKeys.FEVER_PICKAXE, "常に幸運Vが発動する")
+        add(RagiumTranslationKeys.FLATTEN_DYNAMITE, "着弾点より上のブロックを「すべて」整地する")
+        add(RagiumTranslationKeys.ITEM_MAGNET, "周囲のアイテムをひきつける")
+        add(RagiumTranslationKeys.POISON_DYNAMITE, "範囲内のエンティティに毒デバフを与える")
         add(RagiumTranslationKeys.POTION_BUNDLE, "9本までポーションをまとめられる")
         add(RagiumTranslationKeys.POTION_BUNDLE_1, "左クリックでGUIを開く")
+        add(RagiumTranslationKeys.SILKY_PICKAXE, "常にシルクタッチが発動する")
         add(RagiumTranslationKeys.SOAP, "右クリックで対象のブロックを洗う")
+        add(RagiumTranslationKeys.WARPED_WART, "食べるとランダムなデバフを一つ消す")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
         add(RagiumTranslationKeys.MACHINE_COST_MODIFIER, "- 消費/生産エネルギーの倍率: %sx")
@@ -455,6 +466,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "黒曜石ガラス")
         add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "クォーツガラス")
 
+        add(RagiumItemTags.DYNAMITES, "ダイナマイト")
         add(RagiumItemTags.LED_BLOCKS, "LEDブロック")
 
         add(RagiumItemTags.MOLDS, "プレス型")

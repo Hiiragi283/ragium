@@ -98,6 +98,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.LED)
             add(RagiumItems.SOLAR_PANEL)
 
+            add(RagiumItems.SOAP)
             add(RagiumItems.TAR)
             add(RagiumItems.YELLOW_CAKE)
             add(RagiumItems.YELLOW_CAKE_PIECE)
@@ -129,10 +130,11 @@ object RagiumCreativeTabs {
             add(RagiumItems.SILKY_PICKAXE)
 
             add(RagiumItems.DEFOLIANT)
-            add(RagiumItems.DYNAMITE)
-            add(RagiumItems.MAGNET)
             add(RagiumItems.POTION_BUNDLE)
-            add(RagiumItems.SOAP)
+            // Magnets
+            addAll(RagiumItems.MAGNETS)
+            // Dynamites
+            addAll(RagiumItems.DYNAMITES)
             // Molds
             add(RagiumItems.BLANK_PRESS_MOLD)
             add(RagiumItems.BALL_PRESS_MOLD)

@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.block.machine.HTMachineBlock
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
@@ -36,6 +37,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.material.MapColor
@@ -190,4 +192,6 @@ class InternalRagiumAPI : RagiumAPI {
         validator,
         callback,
     )
+
+    override fun getEffectRange(stack: ItemStack): Int = stack.getOrDefault(RagiumComponentTypes.EFFECT_RANGE, 5)
 }

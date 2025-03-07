@@ -4,15 +4,16 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.renderer.HTFlareRenderer
 import hiiragi283.ragium.client.screen.*
+import hiiragi283.ragium.common.entity.HTDynamite
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluidTypes
 import hiiragi283.ragium.common.init.RagiumMenuTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.EntityType
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
@@ -20,7 +21,7 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import org.slf4j.Logger
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
-class RagiumClient(eventBus: IEventBus, container: ModContainer) {
+class RagiumClient(eventBus: IEventBus) {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
@@ -89,7 +90,9 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         // register(RagiumBlockEntityTypes.BLAST_FURNACE)
         // register(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
-        event.registerEntityRenderer(RagiumEntityTypes.DYNAMITE.get(), ::ThrownItemRenderer)
+        for (entityType: EntityType<out HTDynamite> in RagiumEntityTypes.getDynamites()) {
+            event.registerEntityRenderer(entityType, ::ThrownItemRenderer)
+        }
         event.registerEntityRenderer(RagiumEntityTypes.FLARE.get(), ::HTFlareRenderer)
 
         LOGGER.info("Registered BlockEntityRenderers!")

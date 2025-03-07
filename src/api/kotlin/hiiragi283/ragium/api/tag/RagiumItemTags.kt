@@ -73,6 +73,9 @@ object RagiumItemTags {
     val CAPACITY_ENCHANTABLE: TagKey<Item> = itemTagKey(RagiumAPI.id("enchantable/capacity"))
 
     @JvmField
+    val DYNAMITES: TagKey<Item> = itemTagKey(RagiumAPI.id("dynamites"))
+
+    @JvmField
     val IGNORED_IN_INGREDIENT: TagKey<Item> = itemTagKey(RagiumAPI.id("ignored_in_ingredient"))
 
     @JvmField

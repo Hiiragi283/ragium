@@ -110,6 +110,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTOreVariant.END, "End %s Ore")
         // Enchantment
         addEnchantment(RagiumEnchantments.CAPACITY, "Capacity", "Increase the capacity of item or fluid storages")
+        // Entity
+        addEntityType(RagiumEntityTypes.DYNAMITE, "Dynamite")
+        addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
+        addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
         // Fluids
         addFluid(RagiumFluids.GLASS, "Molten Glass")
         addFluid(RagiumFluids.HONEY, "Honey")
@@ -215,10 +219,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.STEEL_TOOLS.swordItem, "Steel Sword")
 
         addItem(RagiumItems.DEFOLIANT, "Defoliant")
-        addItem(RagiumItems.DYNAMITE, "Dynamite")
-        addItem(RagiumItems.MAGNET, "Magnet")
         addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
-        addItem(RagiumItems.SOAP, "Soap")
+
+        addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
+        addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
+
+        addItem(RagiumItems.DYNAMITE, "Dynamite")
+        addItem(RagiumItems.FLATTEN_DYNAMITE, "Flatten Dynamite")
+        addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")
 
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
@@ -256,6 +264,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PRECISION_MACHINE_CASING, "Precision Machine Casing")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         addItem(RagiumItems.SLAG, "Slag")
+        addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.TAR, "Tar")
         addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")
@@ -264,20 +273,22 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
 
-        add(RagiumTranslationKeys.BEE_WAX, "Can be used as same as Honeycomb")
-
-        add(RagiumTranslationKeys.WARPED_WART, "Removes one random effect when eaten")
         add(RagiumTranslationKeys.AMBROSIA, "Can be eaten for infinity times!")
-
-        add(RagiumTranslationKeys.FEVER_PICKAXE, "Always applies Fortune V")
-        add(RagiumTranslationKeys.SILKY_PICKAXE, "Always applies Silk Touch")
-
+        add(RagiumTranslationKeys.BEE_WAX, "Can be used as same as Honeycomb")
         add(RagiumTranslationKeys.DEFOLIANT, "Changes 9x9x9 area into waste land")
         add(RagiumTranslationKeys.DYNAMITE, "Explodes when hit")
-        add(RagiumTranslationKeys.MAGNET, "Attracts around items")
+        add(RagiumTranslationKeys.EFFECT_RANGE, "Effect Range: %s blocks")
+        add(RagiumTranslationKeys.EXP_MAGNET, "Attracts around exp orbs")
+        add(RagiumTranslationKeys.EXPLOSION_POWER, "Explosion Power: %s")
+        add(RagiumTranslationKeys.FEVER_PICKAXE, "Always applies Fortune V")
+        add(RagiumTranslationKeys.FLATTEN_DYNAMITE, "Flatten ALL blocks above hit position")
+        add(RagiumTranslationKeys.ITEM_MAGNET, "Attracts around items")
+        add(RagiumTranslationKeys.POISON_DYNAMITE, "Give Poison effect for entities in range")
         add(RagiumTranslationKeys.POTION_BUNDLE, "Combines potions up to 9")
         add(RagiumTranslationKeys.POTION_BUNDLE_1, "Left-click to open GUI")
+        add(RagiumTranslationKeys.SILKY_PICKAXE, "Always applies Silk Touch")
         add(RagiumTranslationKeys.SOAP, "Right-click to wash targeted block")
+        add(RagiumTranslationKeys.WARPED_WART, "Removes one random effect when eaten")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
         add(RagiumTranslationKeys.MACHINE_COST_MODIFIER, "- Energy Cost Modifier: %sx")
@@ -454,6 +465,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "Obsidian Glass")
         add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "Quartz Glass")
 
+        add(RagiumItemTags.DYNAMITES, "Dynamite")
         add(RagiumItemTags.LED_BLOCKS, "LED Block")
 
         add(RagiumItemTags.MOLDS, "Press Mold")

@@ -1,0 +1,13 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:emerald_lens"
+  },
+  "item_input": {
+    "count": 4,
+    "item": "minecraft:honey_bottle"
+  },
+  "item_output": {
+    "item": "minecraft:experience_bottle"
+  }
+}

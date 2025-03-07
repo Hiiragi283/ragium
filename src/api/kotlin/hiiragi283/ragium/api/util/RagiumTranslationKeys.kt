@@ -27,23 +27,22 @@ object RagiumTranslationKeys {
 
     //    Item    //
 
-    const val DYNAMITE_DESTROY = "tooltip.ragium.item.dynamite.destroy"
-    const val DYNAMITE_POWER = "tooltip.ragium.item.dynamite.power"
-
-    const val BEE_WAX = "tooltip.ragium.item.bee_wax"
-
-    const val WARPED_WART = "tooltip.ragium.item.warped_wart"
     const val AMBROSIA = "tooltip.ragium.item.ambrosia"
-
-    const val FEVER_PICKAXE = "tooltip.ragium.item.fever_pickaxe"
-    const val SILKY_PICKAXE = "tooltip.ragium.item.silky_pickaxe"
-
+    const val BEE_WAX = "tooltip.ragium.item.bee_wax"
     const val DEFOLIANT = "tooltip.ragium.item.defoliant"
     const val DYNAMITE = "tooltip.ragium.item.dynamite"
-    const val MAGNET = "tooltip.ragium.item.magnet"
+    const val EFFECT_RANGE = "tooltip.ragium.item.effect_range"
+    const val EXP_MAGNET = "tooltip.ragium.item.exp_magnet"
+    const val EXPLOSION_POWER = "tooltip.ragium.item.explosion_power"
+    const val FEVER_PICKAXE = "tooltip.ragium.item.fever_pickaxe"
+    const val FLATTEN_DYNAMITE = "tooltip.ragium.item.flatten_dynamite"
+    const val ITEM_MAGNET = "tooltip.ragium.item.item_magnet"
+    const val POISON_DYNAMITE = "tooltip.ragium.item.poison_dynamite"
     const val POTION_BUNDLE = "tooltip.ragium.item.potion_bundle"
     const val POTION_BUNDLE_1 = "tooltip.ragium.item.potion_bundle.1"
+    const val SILKY_PICKAXE = "tooltip.ragium.item.silky_pickaxe"
     const val SOAP = "tooltip.ragium.item.soap"
+    const val WARPED_WART = "tooltip.ragium.item.warped_wart"
 
     //    Machine    //
 

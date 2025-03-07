@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.buildMultiMap
+import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -14,12 +15,16 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import net.minecraft.ChatFormatting
 import net.minecraft.core.RegistryAccess
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.ItemStack
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -178,4 +183,12 @@ interface RagiumAPI {
         validator: (HTFluidVariant) -> Boolean,
         callback: Runnable,
     ): HTFluidTank
+
+    fun createRangeText(stack: ItemStack): Component = Component
+        .translatable(
+            RagiumTranslationKeys.EFFECT_RANGE,
+            intText(getEffectRange(stack)).withStyle(ChatFormatting.WHITE),
+        ).withStyle(ChatFormatting.GRAY)
+
+    fun getEffectRange(stack: ItemStack): Int
 }

@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.item.HTThrowableItem
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
@@ -178,6 +179,10 @@ class RagiumItemTagProvider(
 
         RagiumItems.EMBER_ALLOY_TOOLS.appendTags(builder::add)
         RagiumItems.STEEL_TOOLS.appendTags(builder::add)
+
+        for (dynamite: DeferredItem<out HTThrowableItem> in RagiumItems.DYNAMITES) {
+            builder.add(RagiumItemTags.DYNAMITES, dynamite)
+        }
     }
 
     //    Part    //
@@ -240,7 +245,7 @@ class RagiumItemTagProvider(
         builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_PLATE)
         builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_ROD)
         builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_WIRE)
-
+        
         RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
     }
 

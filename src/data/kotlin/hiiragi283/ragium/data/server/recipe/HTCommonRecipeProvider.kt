@@ -528,7 +528,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.RODS_WOODEN)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.MAGNET, category = CraftingBookCategory.EQUIPMENT)
+        HTShapedRecipeBuilder(RagiumItems.ITEM_MAGNET, category = CraftingBookCategory.EQUIPMENT)
             .pattern("A A")
             .pattern("B B")
             .pattern(" B ")

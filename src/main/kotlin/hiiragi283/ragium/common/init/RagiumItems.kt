@@ -17,9 +17,16 @@ import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.item.*
 import hiiragi283.ragium.common.item.armor.HTDivingGoggleItem
 import hiiragi283.ragium.common.item.armor.HTJetpackItem
+import hiiragi283.ragium.common.item.dynamite.HTFlattenDynamiteItem
+import hiiragi283.ragium.common.item.dynamite.HTPoisonDynamiteItem
+import hiiragi283.ragium.common.item.dynamite.HTSimpleDynamiteItem
+import hiiragi283.ragium.common.item.magnet.HTExpMagnetItem
+import hiiragi283.ragium.common.item.magnet.HTMagnetItem
+import hiiragi283.ragium.common.item.magnet.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.tool.HTCraftingToolItem
 import hiiragi283.ragium.common.item.tool.HTSingleEnchantmentPickaxeItem
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
@@ -339,27 +346,62 @@ object RagiumItems {
     )
 
     @JvmField
-    val DYNAMITE: DeferredItem<HTDynamiteItem> = register("dynamite", ::HTDynamiteItem)
-
-    @JvmField
-    val MAGNET: DeferredItem<HTMagnetItem> = register(
-        "magnet",
-        ::HTMagnetItem,
-        itemProperty().lore(RagiumTranslationKeys.MAGNET),
-    )
-
-    @JvmField
     val POTION_BUNDLE: DeferredItem<HTPotionBundleItem> = register(
         "potion_bundle",
         ::HTPotionBundleItem,
         itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE, RagiumTranslationKeys.POTION_BUNDLE_1),
     )
 
+    //    Magnets    //
+
     @JvmField
-    val SOAP: DeferredItem<HTSoapItem> = register(
-        "soap",
-        ::HTSoapItem,
-        itemProperty().lore(RagiumTranslationKeys.SOAP),
+    val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> = register(
+        "item_magnet",
+        ::HTSimpleMagnetItem,
+        itemProperty().lore(RagiumTranslationKeys.ITEM_MAGNET),
+    )
+
+    @JvmField
+    val EXP_MAGNET: DeferredItem<HTExpMagnetItem> = register(
+        "exp_magnet",
+        ::HTExpMagnetItem,
+        itemProperty().lore(RagiumTranslationKeys.EXP_MAGNET),
+    )
+
+    @JvmField
+    val MAGNETS: List<DeferredItem<out HTMagnetItem<out Entity>>> = listOf(
+        ITEM_MAGNET,
+        EXP_MAGNET,
+    )
+
+    //    Dynamites    //
+
+    @JvmField
+    val DYNAMITE: DeferredItem<HTSimpleDynamiteItem> = register(
+        "dynamite",
+        ::HTSimpleDynamiteItem,
+        itemProperty().lore(RagiumTranslationKeys.DYNAMITE),
+    )
+
+    @JvmField
+    val FLATTEN_DYNAMITE: DeferredItem<HTFlattenDynamiteItem> = register(
+        "flatten_dynamite",
+        ::HTFlattenDynamiteItem,
+        itemProperty().lore(RagiumTranslationKeys.FLATTEN_DYNAMITE),
+    )
+
+    @JvmField
+    val POISON_DYNAMITE: DeferredItem<HTPoisonDynamiteItem> = register(
+        "poison_dynamite",
+        ::HTPoisonDynamiteItem,
+        itemProperty().lore(RagiumTranslationKeys.POISON_DYNAMITE),
+    )
+
+    @JvmField
+    val DYNAMITES: List<DeferredItem<out HTThrowableItem>> = listOf(
+        DYNAMITE,
+        FLATTEN_DYNAMITE,
+        POISON_DYNAMITE,
     )
 
     //    Molds    //
@@ -476,6 +518,13 @@ object RagiumItems {
     val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
 
     //    Misc    //
+
+    @JvmField
+    val SOAP: DeferredItem<HTSoapItem> = register(
+        "soap",
+        ::HTSoapItem,
+        itemProperty().lore(RagiumTranslationKeys.SOAP),
+    )
 
     @JvmField
     val TAR: DeferredItem<Item> = register("tar")

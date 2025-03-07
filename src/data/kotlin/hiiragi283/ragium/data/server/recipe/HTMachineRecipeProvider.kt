@@ -428,7 +428,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
     private fun laser(output: RecipeOutput) {
         glowstoneLens(output)
         diamondLens(output)
-
+        emeraldLens(output)
         amethystLens(output)
     }
 
@@ -464,6 +464,24 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .itemInput(ItemTags.WOOL)
             .catalyst(RagiumItems.DIAMOND_LENS)
             .itemOutput(Items.SPONGE)
+            .save(output)
+    }
+
+    private fun emeraldLens(output: RecipeOutput) {
+        // Exp Bottle
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(Items.HONEY_BOTTLE, 4)
+            .catalyst(RagiumItems.EMERALD_LENS)
+            .itemOutput(Items.EXPERIENCE_BOTTLE)
+            .save(output)
+
+        // Exp Magnet
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(RagiumItems.ITEM_MAGNET)
+            .catalyst(RagiumItems.EMERALD_LENS)
+            .itemOutput(RagiumItems.EXP_MAGNET)
             .save(output)
     }
 
