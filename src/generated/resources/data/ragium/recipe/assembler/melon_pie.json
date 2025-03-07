@@ -2,7 +2,6 @@
   "type": "ragium:assembler",
   "item_inputs": [
     {
-      "count": 4,
       "tag": "c:crops/melon"
     },
     {
@@ -10,6 +9,7 @@
     }
   ],
   "item_output": {
+    "count": 2,
     "item": "ragium:melon_pie"
   }
 }

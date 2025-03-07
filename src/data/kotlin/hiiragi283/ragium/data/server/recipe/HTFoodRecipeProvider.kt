@@ -27,9 +27,9 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
         // Melon Pie
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(Tags.Items.CROPS_MELON, 4)
+            .itemInput(Tags.Items.CROPS_MELON)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
-            .itemOutput(RagiumItems.MELON_PIE)
+            .itemOutput(RagiumItems.MELON_PIE, 2)
             .save(output)
 
         registerChocolate(output)

@@ -1,11 +1,9 @@
-package hiiragi283.ragium.data.server
+package hiiragi283.ragium.data.server.bootstrap
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreSets
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumEnchantments
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
@@ -18,8 +16,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.entity.EquipmentSlotGroup
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.levelgen.GenerationStep
@@ -38,7 +34,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 object RagiumWorldGenBoostrap {
     @JvmStatic
-    fun createBuilder(): RegistrySetBuilder {
+    fun bootstrap(builder: RegistrySetBuilder): RegistrySetBuilder {
         // Overworld
         addOres(
             "overworld_raginite",
@@ -68,39 +64,23 @@ object RagiumWorldGenBoostrap {
             BiomeTags.IS_END,
             createTarget(Tags.Blocks.END_STONES, RagiumBlocks.RAGI_CRYSTAL_ORES, HTOreVariant.END),
         )
-        return RegistrySetBuilder()
-            .add(Registries.ENCHANTMENT) { context: BootstrapContext<Enchantment> ->
-                fun register(key: ResourceKey<Enchantment>, builder: Enchantment.Builder) {
-                    context.register(key, builder.build(key.location()))
-                }
 
-                register(
-                    RagiumEnchantments.CAPACITY,
-                    Enchantment.enchantment(
-                        Enchantment.definition(
-                            context.lookup(Registries.ITEM).getOrThrow(RagiumItemTags.CAPACITY_ENCHANTABLE),
-                            1,
-                            5,
-                            Enchantment.constantCost(1),
-                            Enchantment.constantCost(41),
-                            1,
-                            EquipmentSlotGroup.ANY,
-                        ),
-                    ),
-                )
-            }.add(Registries.CONFIGURED_FEATURE) { context: BootstrapContext<ConfiguredFeature<*, *>> ->
-                configuredBootstrap.forEach {
-                    it.run(context)
-                }
-            }.add(Registries.PLACED_FEATURE) { context: BootstrapContext<PlacedFeature> ->
-                placedBootstrap.forEach {
-                    it.run(context)
-                }
-            }.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS) { context: BootstrapContext<BiomeModifier> ->
-                modifierBootstrap.forEach {
-                    it.run(context)
-                }
+        builder.add(Registries.CONFIGURED_FEATURE) { context: BootstrapContext<ConfiguredFeature<*, *>> ->
+            configuredBootstrap.forEach {
+                it.run(context)
             }
+        }
+        builder.add(Registries.PLACED_FEATURE) { context: BootstrapContext<PlacedFeature> ->
+            placedBootstrap.forEach {
+                it.run(context)
+            }
+        }
+        builder.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS) { context: BootstrapContext<BiomeModifier> ->
+            modifierBootstrap.forEach {
+                it.run(context)
+            }
+        }
+        return builder
     }
 
     private val configuredBootstrap: MutableList<RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>>> =
@@ -118,7 +98,7 @@ object RagiumWorldGenBoostrap {
         size: Int = 8,
         count: Int = 16,
     ) {
-        val id: ResourceLocation = RagiumAPI.id(path)
+        val id: ResourceLocation = RagiumAPI.Companion.id(path)
         var configured: Holder<ConfiguredFeature<*, *>>? = null
         // Configured Feature
         configuredBootstrap.add { context: BootstrapContext<ConfiguredFeature<*, *>> ->

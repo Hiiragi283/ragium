@@ -1,11 +1,17 @@
 package hiiragi283.ragium.data
 
 import com.mojang.logging.LogUtils
+import com.simibubi.create.api.registry.CreateRegistries
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.client.*
 import hiiragi283.ragium.data.server.*
+import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentBootstrap
+import hiiragi283.ragium.data.server.bootstrap.RagiumPotatoCannonBootstrap
+import hiiragi283.ragium.data.server.bootstrap.RagiumWorldGenBoostrap
 import net.minecraft.DetectedVersion
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
 import net.minecraft.data.loot.LootTableProvider
@@ -75,7 +81,10 @@ object RagiumData {
             DatapackBuiltinEntriesProvider(
                 output,
                 provider,
-                RagiumWorldGenBoostrap.createBuilder(),
+                RegistrySetBuilder()
+                    .let(RagiumWorldGenBoostrap::bootstrap)
+                    .add(Registries.ENCHANTMENT, RagiumEnchantmentBootstrap)
+                    .add(CreateRegistries.POTATO_PROJECTILE_TYPE, RagiumPotatoCannonBootstrap),
                 setOf(RagiumAPI.MOD_ID),
             ),
         )

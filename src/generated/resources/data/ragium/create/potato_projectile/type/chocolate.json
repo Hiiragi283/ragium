@@ -1,0 +1,32 @@
+{
+  "items": "ragium:chocolate",
+  "knockback": 0.5,
+  "on_entity_hit": {
+    "type": "create:food_effects",
+    "food_property": {
+      "can_always_eat": true,
+      "eat_seconds": 0.8,
+      "effects": [
+        {
+          "effect": {
+            "duration": 200,
+            "id": "minecraft:strength",
+            "neoforge:cures": [
+              "milk",
+              "protected_by_totem"
+            ],
+            "show_icon": true
+          }
+        }
+      ],
+      "nutrition": 3,
+      "saturation": 0.3
+    },
+    "recoverable": false
+  },
+  "reload_ticks": 15,
+  "render_mode": {
+    "type": "create:tumble"
+  },
+  "velocity_multiplier": 1.45
+}

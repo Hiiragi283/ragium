@@ -245,7 +245,7 @@ class RagiumItemTagProvider(
         builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_PLATE)
         builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_ROD)
         builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_WIRE)
-        
+
         RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
     }
 
