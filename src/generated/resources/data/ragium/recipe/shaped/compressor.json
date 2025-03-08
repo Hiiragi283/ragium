@@ -9,7 +9,7 @@
       "item": "minecraft:piston"
     },
     "C": {
-      "item": "ragium:machine_casing"
+      "item": "ragium:machine_frame"
     },
     "D": {
       "tag": "c:gears/steel"

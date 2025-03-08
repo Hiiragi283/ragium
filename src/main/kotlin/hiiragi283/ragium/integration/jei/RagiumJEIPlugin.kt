@@ -257,11 +257,7 @@ class RagiumJEIPlugin : IModPlugin {
         // Assembler
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ASSEMBLER, HTMachineType.ASSEMBLER)
         // Blast Furnace
-        registration.addRecipeCatalysts(
-            RagiumJEIRecipeTypes.BLAST_FURNACE,
-            HTMachineType.BLAST_FURNACE,
-            RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
-        )
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, HTMachineType.BLAST_FURNACE)
         // Brewery
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BREWERY, HTMachineType.BREWERY)
         // Compressor

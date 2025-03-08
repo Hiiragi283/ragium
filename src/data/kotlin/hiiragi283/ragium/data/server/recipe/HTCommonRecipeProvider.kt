@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.*
 import hiiragi283.ragium.api.extension.commonTag
+import hiiragi283.ragium.api.extension.requires
+import hiiragi283.ragium.api.extension.requiresFor
 import hiiragi283.ragium.api.extension.savePrefixed
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -103,6 +105,23 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
 
     private fun registerMetals(output: RecipeOutput) {
         // Steel
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.MISC, RagiumItems.STEEL_COMPOUND)
+            .requires(HTTagPrefix.DUST, VanillaMaterials.IRON)
+            .requiresFor(4, HTTagPrefix.GEM.createIngredient(VanillaMaterials.COAL))
+            .requires(RagiumItems.FORGE_HAMMER)
+            .unlockedBy("has_iron", has(HTTagPrefix.DUST, VanillaMaterials.IRON))
+            .savePrefixed(output)
+
+        HTCookingRecipeBuilder
+            .create(
+                Ingredient.of(RagiumItems.STEEL_COMPOUND),
+                RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL),
+                time = 400,
+                exp = 1f,
+                types = HTCookingRecipeBuilder.BLASTING_TYPES,
+            ).save(output, RagiumAPI.id("steel_ingot_from_compound"))
+
         HTMultiItemRecipeBuilder
             .blastFurnace(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)

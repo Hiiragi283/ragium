@@ -182,6 +182,9 @@ object RagiumItems {
     @JvmField
     val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")
 
+    @JvmField
+    val STEEL_COMPOUND: DeferredItem<Item> = register("steel_compound")
+
     //    Foods    //
 
     @JvmStatic
@@ -472,33 +475,7 @@ object RagiumItems {
     @JvmField
     val WITHER_REAGENT: DeferredItem<Item> = register("wither_reagent")
 
-    //    Fluid Cube    //
-
-    @JvmField
-    val EMPTY_FLUID_CUBE: DeferredItem<Item> = register("empty_fluid_cube")
-
-    @JvmField
-    val WATER_FLUID_CUBE: DeferredItem<Item> = register("water_fluid_cube")
-
-    @JvmField
-    val LAVA_FLUID_CUBE: DeferredItem<Item> = register("lava_fluid_cube")
-
-    @JvmField
-    val FLUID_CUBES: List<DeferredItem<Item>> = listOf(
-        WATER_FLUID_CUBE,
-        LAVA_FLUID_CUBE,
-    )
-
     //    Machine Parts    //
-
-    @JvmField
-    val MACHINE_CASING: DeferredItem<Item> = register("machine_casing")
-
-    @JvmField
-    val CHEMICAL_MACHINE_CASING: DeferredItem<Item> = register("chemical_machine_casing")
-
-    @JvmField
-    val PRECISION_MACHINE_CASING: DeferredItem<Item> = register("precision_machine_casing")
 
     @JvmField
     val ENGINE: DeferredItem<Item> = register("engine")
@@ -508,6 +485,9 @@ object RagiumItems {
 
     @JvmField
     val SOLAR_PANEL: DeferredItem<Item> = register("solar_panel")
+
+    @JvmField
+    val STONE_BOARD: DeferredItem<Item> = register("stone_board")
 
     //    Tickets    //
 

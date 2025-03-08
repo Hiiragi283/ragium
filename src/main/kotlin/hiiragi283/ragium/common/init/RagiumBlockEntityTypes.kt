@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.common.block.generator.*
 import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
-import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlockEntity
 import hiiragi283.ragium.common.block.processor.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
@@ -30,14 +29,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val MANUAL_GRINDER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTManualGrinderBlockEntity>> =
         REGISTER.registerType("manual_grinder", ::HTManualGrinderBlockEntity, RagiumBlocks.MANUAL_GRINDER)
-
-    @JvmField
-    val PRIMITIVE_BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTPrimitiveBlastFurnaceBlockEntity>> =
-        REGISTER.registerType(
-            "primitive_blast_furnace",
-            ::HTPrimitiveBlastFurnaceBlockEntity,
-            RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
-        )
 
     //    Consumer    //
 

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.client
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -21,16 +20,10 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
-import org.slf4j.Logger
 import java.util.function.Supplier
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
-
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildList {
@@ -124,6 +117,24 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         simpleBlock(RagiumBlocks.SPONGE_CAKE.get())
         uncheckedSimpleBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
+        // Machine Frame
+        simpleBlock(RagiumBlocks.WOODEN_CASING, ResourceLocation.withDefaultNamespace("block/note_block"))
+        simpleBlock(RagiumBlocks.COBBLESTONE_CASING, ResourceLocation.withDefaultNamespace("block/piston_bottom"))
+
+        for (frame: DeferredBlock<Block> in listOf(
+            RagiumBlocks.MACHINE_FRAME,
+            RagiumBlocks.CHEMICAL_MACHINE_FRAME,
+            RagiumBlocks.PRECISION_MACHINE_FRAME,
+        )) {
+            val id: ResourceLocation = frame.id
+            simpleBlock(
+                frame.get(),
+                models()
+                    .withExistingParent(id.path, RagiumAPI.id("block/machine_casing"))
+                    .blockTexture("all", id),
+            )
+        }
+
         // Manual Machine
         getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
             for (step: Int in BlockStateProperties.AGE_7.possibleValues) {
@@ -149,10 +160,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             }
         }
 
-        horizontalBlock(
-            RagiumBlocks.PRIMITIVE_BLAST_FURNACE.get(),
-            ModelFile.UncheckedModelFile(RagiumAPI.id("block/primitive_blast_furnace")),
-        )
         uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
 
         // Utility

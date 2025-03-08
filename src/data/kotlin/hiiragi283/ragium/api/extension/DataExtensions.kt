@@ -69,6 +69,13 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.cutoutSimpleBlock(name: String, textu
         .texture("all", texture)
         .cutout()
 
+fun BlockStateProvider.simpleBlock(holder: DeferredBlock<*>, all: ResourceLocation) {
+    simpleBlock(
+        holder.get(),
+        ConfiguredModel(models().cubeAll(holder.id.path, all)),
+    )
+}
+
 fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation) {
     simpleBlock(
         holder.get(),

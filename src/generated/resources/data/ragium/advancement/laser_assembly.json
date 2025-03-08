@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:precision_machine_casing",
+  "parent": "ragium:precision_machine_frame",
   "criteria": {
     "has_laser_assembly": {
       "conditions": {

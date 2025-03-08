@@ -12,7 +12,7 @@
       "tag": "c:barrels/wooden"
     },
     "D": {
-      "item": "ragium:machine_casing"
+      "item": "ragium:machine_frame"
     },
     "E": {
       "tag": "c:gears/copper"

@@ -1,0 +1,117 @@
+{
+	"credit": "Made by Hiiragi Russell Tsubasa",
+	"textures": {
+		"bottom": "ragium:block/machine_casing_bottom",
+		"particle": "ragium:block/machine_casing_side",
+		"side": "ragium:block/machine_casing_side",
+		"top": "ragium:block/machine_casing_top"
+	},
+	"elements": [
+		{
+			"name": "top",
+			"from": [0, 11, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 11, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 5], "texture": "#side"},
+				"east": {"uv": [0, 0, 16, 5], "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 5], "texture": "#side"},
+				"west": {"uv": [0, 0, 16, 5], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#top"}
+			}
+		},
+		{
+			"name": "bottom",
+			"from": [0, 0, 0],
+			"to": [16, 5, 16],
+			"faces": {
+				"north": {"uv": [0, 11, 16, 16], "texture": "#side"},
+				"east": {"uv": [0, 11, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 11, 16, 16], "texture": "#side"},
+				"west": {"uv": [0, 11, 16, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#bottom"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"name": "north",
+			"from": [0, 5, 0],
+			"to": [5, 11, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 5, 8]},
+			"faces": {
+				"north": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"east": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"south": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"west": {"uv": [0, 5, 5, 11], "texture": "#side"}
+			}
+		},
+		{
+			"name": "east",
+			"from": [11, 5, 0],
+			"to": [16, 11, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 5, 8]},
+			"faces": {
+				"north": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"east": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"south": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"west": {"uv": [0, 5, 5, 11], "texture": "#side"}
+			}
+		},
+		{
+			"name": "south",
+			"from": [11, 5, 11],
+			"to": [16, 11, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 5, 8]},
+			"faces": {
+				"north": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"east": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"south": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"west": {"uv": [0, 5, 5, 11], "texture": "#side"}
+			}
+		},
+		{
+			"name": "west",
+			"from": [0, 5, 11],
+			"to": [5, 11, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 5, 8]},
+			"faces": {
+				"north": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"east": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"south": {"uv": [0, 5, 5, 11], "texture": "#side"},
+				"west": {"uv": [0, 5, 5, 11], "texture": "#side"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

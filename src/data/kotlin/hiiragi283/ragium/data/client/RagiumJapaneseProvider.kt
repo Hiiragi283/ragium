@@ -56,8 +56,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
+        addBlock(RagiumBlocks.CHEMICAL_MACHINE_FRAME, "化学機械フレーム")
+        addBlock(RagiumBlocks.COBBLESTONE_CASING, "丸石筐体")
+        addBlock(RagiumBlocks.MACHINE_FRAME, "機械フレーム")
+        addBlock(RagiumBlocks.PRECISION_MACHINE_FRAME, "精密機械フレーム")
+        addBlock(RagiumBlocks.WOODEN_CASING, "木製筐体")
+
         addBlock(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
-        addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "らぎ高炉")
         addBlock(RagiumBlocks.DISENCHANTING_TABLE, "ディスエンチャント台")
 
         addBlock(RagiumBlocks.getCrate(HTCrateVariant.WOODEN), "木製のクレート")
@@ -94,9 +99,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.MANUAL_GRINDER, "右クリックで回転")
         add(RagiumTranslationKeys.MANUAL_GRINDER_1, "ホッパーやパイプで材料を投入")
-
-        add(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE, "1x 鉄インゴット + 4x 石炭 -> 1x 鋼鉄インゴット")
-        add(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE_1, "マルチブロックが必要")
 
         add(RagiumTranslationKeys.ENERGY_NETWORK_INTERFACE, "エネルギーネットワークに接続する")
         add(RagiumTranslationKeys.SLAG_COLLECTOR, "隣接した大型高炉が処理を行った際にスラグを生成する")
@@ -247,25 +249,20 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.EMERALD_LENS, "エメラルドレンズ")
         addItem(RagiumItems.AMETHYST_LENS, "アメシストレンズ")
 
-        addItem(RagiumItems.EMPTY_FLUID_CUBE, "空の液体キューブ")
-        addItem(RagiumItems.WATER_FLUID_CUBE, "液体キューブ（水）")
-        addItem(RagiumItems.LAVA_FLUID_CUBE, "液体キューブ（溶岩）")
-
         addItem(RagiumItems.BEE_WAX, "蜜蠟")
-        addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "化学機械筐体")
         addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.HONEY_BUCKET, "蜂蜜入りバケツ")
         addItem(RagiumItems.LED, "L.E.D.")
-        addItem(RagiumItems.MACHINE_CASING, "機械筐体")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
-        addItem(RagiumItems.PRECISION_MACHINE_CASING, "精密機械筐体")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         addItem(RagiumItems.SLAG, "スラグ")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
+        addItem(RagiumItems.STEEL_COMPOUND, "鋼鉄混合物")
+        addItem(RagiumItems.STONE_BOARD, "石版")
         addItem(RagiumItems.TAR, "タール")
         addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")

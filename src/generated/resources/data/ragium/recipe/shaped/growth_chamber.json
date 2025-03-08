@@ -9,7 +9,7 @@
       "tag": "c:glass_blocks/colorless"
     },
     "C": {
-      "item": "ragium:chemical_machine_casing"
+      "item": "ragium:chemical_machine_frame"
     },
     "D": {
       "tag": "minecraft:axes"

@@ -42,36 +42,51 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     }
 
     private fun registerCasings(output: RecipeOutput) {
-        // Basic
-        HTShapedRecipeBuilder(RagiumItems.MACHINE_CASING)
+        // Wooden
+        HTShapedRecipeBuilder(RagiumBlocks.WOODEN_CASING)
             .cross8()
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('A', ItemTags.LOGS)
+            .define('B', ItemTags.PLANKS)
+            .define('C', RagiumItems.FORGE_HAMMER)
+            .save(output)
+        // Cobblestone
+        HTShapedRecipeBuilder(RagiumBlocks.COBBLESTONE_CASING)
+            .cross8()
+            .define('A', Items.STONE)
+            .define('B', Items.COBBLESTONE)
+            .define('C', RagiumItems.FORGE_HAMMER)
+            .save(output)
+
+        // Basic
+        HTShapedRecipeBuilder(RagiumBlocks.MACHINE_FRAME)
+            .cross8()
+            .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
             .define('C', Tags.Items.DUSTS_REDSTONE)
             .save(output)
 
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE)
-            .itemOutput(RagiumItems.MACHINE_CASING)
+            .itemOutput(RagiumBlocks.MACHINE_FRAME)
             .save(output)
         // Chemical
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY, 4)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL, 4)
             .itemInput(RagiumItemTags.GLASS_BLOCKS_QUARTZ, 4)
             .itemInput(Tags.Items.DUSTS_GLOWSTONE)
-            .itemOutput(RagiumItems.CHEMICAL_MACHINE_CASING)
+            .itemOutput(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .save(output)
         // Precision
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN, 4)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 4)
             .itemInput(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, 4)
             .itemInput(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
-            .itemOutput(RagiumItems.PRECISION_MACHINE_CASING)
+            .itemOutput(RagiumBlocks.PRECISION_MACHINE_FRAME)
             .save(output)
     }
 
@@ -83,15 +98,6 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .pattern("CCC")
             .define('A', Tags.Items.RODS_WOODEN)
             .define('B', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('C', Items.BRICKS)
-            .save(output)
-
-        HTShapedRecipeBuilder(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("CCC")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', Items.BLAST_FURNACE)
             .define('C', Items.BRICKS)
             .save(output)
 
@@ -115,7 +121,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Tags.Items.TOOLS_FISHING_ROD)
             .define('C', Tags.Items.BARRELS_WOODEN)
-            .define('D', RagiumItems.MACHINE_CASING)
+            .define('D', RagiumBlocks.MACHINE_FRAME)
             .define('E', HTTagPrefix.GEAR, VanillaMaterials.COPPER)
             .define('F', RagiumItemTags.CIRCUITS_BASIC)
             .save(output)
@@ -129,7 +135,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "ABA",
                 "CDC",
             ).define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
-            .define('B', RagiumItems.MACHINE_CASING)
+            .define('B', RagiumBlocks.MACHINE_FRAME)
             .define('C', Tags.Items.DUSTS_REDSTONE)
             .define('D', Tags.Items.PLAYER_WORKSTATIONS_FURNACES)
             .save(output)
@@ -137,7 +143,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         // Combustion Generator
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(RagiumItems.CHEMICAL_MACHINE_CASING)
+            .itemInput(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .itemInput(RagiumItems.ENGINE, 2)
             .itemInput(RagiumItemTags.CIRCUITS_ADVANCED, 2)
             .itemOutput(HTMachineType.COMBUSTION_GENERATOR)
@@ -145,7 +151,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         // Thermal Generator
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(RagiumItems.CHEMICAL_MACHINE_CASING)
+            .itemInput(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .itemInput(Items.MAGMA_BLOCK, 8)
             .itemInput(RagiumItemTags.CIRCUITS_ADVANCED, 2)
             .itemOutput(HTMachineType.THERMAL_GENERATOR)
@@ -154,7 +160,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         // Enchantment Generator
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(RagiumItems.PRECISION_MACHINE_CASING)
+            .itemInput(RagiumBlocks.PRECISION_MACHINE_FRAME)
             .itemInput(Items.ENCHANTING_TABLE)
             .itemInput(RagiumItemTags.CIRCUITS_ELITE, 4)
             .itemOutput(HTMachineType.ENCH_GENERATOR)
@@ -162,7 +168,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         // Solar Generator
         HTMultiItemRecipeBuilder
             .assembler(lookup)
-            .itemInput(RagiumItems.PRECISION_MACHINE_CASING)
+            .itemInput(RagiumBlocks.PRECISION_MACHINE_FRAME)
             .itemInput(RagiumItems.SOLAR_PANEL)
             .itemInput(RagiumItemTags.CIRCUITS_ELITE)
             .itemOutput(HTMachineType.SOLAR_GENERATOR)
@@ -178,7 +184,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.BLOCK, RagiumMaterials.DEEP_STEEL)
             .define('B', Items.CRAFTER)
-            .define('C', RagiumItems.MACHINE_CASING)
+            .define('C', RagiumBlocks.MACHINE_FRAME)
             .define('D', HTTagPrefix.GEAR, RagiumMaterials.DEEP_STEEL)
             .define('E', RagiumItemTags.CIRCUITS_ADVANCED)
             .save(output)
@@ -189,7 +195,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 " B ",
                 "CDC",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', RagiumItems.MACHINE_CASING)
+            .define('B', RagiumBlocks.MACHINE_FRAME)
             .define('C', HTTagPrefix.GEAR, CommonMaterials.STEEL)
             .define('D', Items.STONECUTTER)
             .save(output)
@@ -201,19 +207,9 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DDD",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Items.BLAST_FURNACE)
-            .define('C', RagiumItems.MACHINE_CASING)
+            .define('C', RagiumBlocks.MACHINE_FRAME)
             .define('D', Items.DEEPSLATE_BRICKS)
             .save(output)
-
-        HTShapedRecipeBuilder(HTMachineType.BLAST_FURNACE)
-            .pattern(
-                "AAA",
-                "ABA",
-                "CCC",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
-            .define('C', Items.DEEPSLATE_BRICKS)
-            .save(output, RagiumAPI.id("blast_furnace_alt"))
         // Compressor
         HTShapedRecipeBuilder(HTMachineType.COMPRESSOR)
             .pattern(
@@ -222,7 +218,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Items.PISTON)
-            .define('C', RagiumItems.MACHINE_CASING)
+            .define('C', RagiumBlocks.MACHINE_FRAME)
             .define('D', HTTagPrefix.GEAR, CommonMaterials.STEEL)
             .define('E', ItemTags.ANVIL)
             .save(output)
@@ -235,7 +231,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Tags.Items.PLAYER_WORKSTATIONS_FURNACES)
-            .define('C', RagiumItems.MACHINE_CASING)
+            .define('C', RagiumBlocks.MACHINE_FRAME)
             .define('D', HTTagPrefix.COIL, VanillaMaterials.COPPER)
             .define('E', HTTagPrefix.BLOCK, VanillaMaterials.COPPER)
             .save(output)
@@ -247,7 +243,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', Items.FLINT)
-            .define('C', RagiumItems.MACHINE_CASING)
+            .define('C', RagiumBlocks.MACHINE_FRAME)
             .define('D', HTTagPrefix.GEAR, CommonMaterials.STEEL)
             .define('E', Items.HOPPER)
             .save(output)
@@ -271,7 +267,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
             .define('B', Tags.Items.BUCKETS_EMPTY)
-            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('C', RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
             .define('E', Items.HOPPER)
             .save(output)
@@ -283,7 +279,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DEF",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
             .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
-            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('C', RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .define('D', ItemTags.AXES)
             .define('E', Tags.Items.BUCKETS_WATER)
             .define('F', ItemTags.HOES)
@@ -296,7 +292,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
             .define('B', Items.DISPENSER)
-            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('C', RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
             .define('E', Items.HOPPER)
             .save(output)
@@ -308,7 +304,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
             .define('B', Tags.Items.BUCKETS_EMPTY)
-            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('C', RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
             .define('E', Items.CAULDRON)
             .save(output)
@@ -332,7 +328,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
             .define('B', RagiumItemTags.MOLDS)
-            .define('C', RagiumItems.CHEMICAL_MACHINE_CASING)
+            .define('C', RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .define('D', HTTagPrefix.COIL, VanillaMaterials.GOLD)
             .define('E', Items.CAULDRON)
             .save(output)
@@ -345,7 +341,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
             .define('B', Items.BREWING_STAND)
-            .define('C', RagiumItems.PRECISION_MACHINE_CASING)
+            .define('C', RagiumBlocks.PRECISION_MACHINE_FRAME)
             .define('D', RagiumItemTags.CIRCUITS_ELITE)
             .define('E', Items.CAULDRON)
             .save(output)
@@ -357,7 +353,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
             .define('B', Items.ENCHANTED_BOOK)
-            .define('C', RagiumItems.PRECISION_MACHINE_CASING)
+            .define('C', RagiumBlocks.PRECISION_MACHINE_FRAME)
             .define('D', RagiumItemTags.CIRCUITS_ELITE)
             .define('E', Items.ENCHANTING_TABLE)
             .save(output)
@@ -369,7 +365,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
             .define('B', RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
-            .define('C', RagiumItems.PRECISION_MACHINE_CASING)
+            .define('C', RagiumBlocks.PRECISION_MACHINE_FRAME)
             .define('D', RagiumItemTags.CIRCUITS_ELITE)
             .define('E', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
@@ -381,7 +377,7 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
             .define('B', Tags.Items.PLAYER_WORKSTATIONS_FURNACES)
-            .define('C', RagiumItems.PRECISION_MACHINE_CASING)
+            .define('C', RagiumBlocks.PRECISION_MACHINE_FRAME)
             .define('D', HTTagPrefix.COIL, CommonMaterials.ALUMINUM)
             .define('E', HTTagPrefix.BLOCK, CommonMaterials.ALUMINUM)
             .save(output)

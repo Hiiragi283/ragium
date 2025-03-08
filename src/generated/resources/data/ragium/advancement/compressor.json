@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:machine_casing",
+  "parent": "ragium:machine_frame",
   "criteria": {
     "has_compressor": {
       "conditions": {

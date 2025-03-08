@@ -1,0 +1,19 @@
+{
+  "type": "ragium:assembler",
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:ingots/netherite"
+    },
+    {
+      "count": 4,
+      "tag": "c:glass_blocks/obsidian"
+    },
+    {
+      "tag": "c:gems/warped_crystal"
+    }
+  ],
+  "item_output": {
+    "item": "ragium:precision_machine_frame"
+  }
+}

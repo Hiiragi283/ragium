@@ -9,7 +9,7 @@
       "tag": "c:player_workstations/furnaces"
     },
     "C": {
-      "item": "ragium:machine_casing"
+      "item": "ragium:machine_frame"
     },
     "D": {
       "tag": "c:coils/copper"

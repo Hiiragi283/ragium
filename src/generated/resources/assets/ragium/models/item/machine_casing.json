@@ -1,8 +1,0 @@
-{
-  "parent": "ragium:block/machine_casing",
-  "textures": {
-    "bottom": "ragium:block/machine_casing_bottom",
-    "side": "ragium:block/machine_casing_side",
-    "top": "ragium:block/machine_casing_top"
-  }
-}

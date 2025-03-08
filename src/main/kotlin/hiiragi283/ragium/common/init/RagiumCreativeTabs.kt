@@ -75,6 +75,7 @@ object RagiumCreativeTabs {
             registerPrefix(HTTagPrefix.GEM)
 
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
+            add(RagiumItems.STEEL_COMPOUND)
             registerPrefix(HTTagPrefix.INGOT)
 
             registerPrefix(HTTagPrefix.GEAR)
@@ -84,16 +85,40 @@ object RagiumCreativeTabs {
             registerPrefix(HTTagPrefix.CLUMP)
             registerPrefix(HTTagPrefix.SHARD)
             registerPrefix(HTTagPrefix.CRYSTAL)
+            // Molds
+            add(RagiumItems.BLANK_PRESS_MOLD)
+            add(RagiumItems.BALL_PRESS_MOLD)
+
+            add(RagiumItems.BLOCK_PRESS_MOLD)
+            add(RagiumItems.GEAR_PRESS_MOLD)
+            add(RagiumItems.INGOT_PRESS_MOLD)
+            add(RagiumItems.PLATE_PRESS_MOLD)
+            add(RagiumItems.ROD_PRESS_MOLD)
+            add(RagiumItems.WIRE_PRESS_MOLD)
+            // Circuits
+            add(RagiumItems.POLYMER_RESIN)
+            add(RagiumItems.PLASTIC_PLATE)
+            add(RagiumItems.CIRCUIT_BOARD)
+
+            add(RagiumItems.BASIC_CIRCUIT)
+            add(RagiumItems.ADVANCED_CIRCUIT)
+            add(RagiumItems.ELITE_CIRCUIT)
+
+            add(RagiumItems.STONE_BOARD)
+            // Lens
+            add(RagiumItems.REDSTONE_LENS)
+            add(RagiumItems.GLOWSTONE_LENS)
+            add(RagiumItems.DIAMOND_LENS)
+            add(RagiumItems.EMERALD_LENS)
+            add(RagiumItems.AMETHYST_LENS)
             // Ingredients
-            add(RagiumItems.EMPTY_FLUID_CUBE)
-            add(RagiumItems.WATER_FLUID_CUBE)
-            add(RagiumItems.LAVA_FLUID_CUBE)
+            add(RagiumBlocks.WOODEN_CASING)
+            add(RagiumBlocks.COBBLESTONE_CASING)
+            add(RagiumBlocks.MACHINE_FRAME)
+            add(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
+            add(RagiumBlocks.PRECISION_MACHINE_FRAME)
 
             add(RagiumBlocks.SHAFT)
-            add(RagiumItems.MACHINE_CASING)
-            add(RagiumItems.CHEMICAL_MACHINE_CASING)
-            add(RagiumItems.PRECISION_MACHINE_CASING)
-
             add(RagiumItems.ENGINE)
             add(RagiumItems.LED)
             add(RagiumItems.SOLAR_PANEL)
@@ -135,30 +160,6 @@ object RagiumCreativeTabs {
             addAll(RagiumItems.MAGNETS)
             // Dynamites
             addAll(RagiumItems.DYNAMITES)
-            // Molds
-            add(RagiumItems.BLANK_PRESS_MOLD)
-            add(RagiumItems.BALL_PRESS_MOLD)
-
-            add(RagiumItems.BLOCK_PRESS_MOLD)
-            add(RagiumItems.GEAR_PRESS_MOLD)
-            add(RagiumItems.INGOT_PRESS_MOLD)
-            add(RagiumItems.PLATE_PRESS_MOLD)
-            add(RagiumItems.ROD_PRESS_MOLD)
-            add(RagiumItems.WIRE_PRESS_MOLD)
-            // Circuits
-            add(RagiumItems.POLYMER_RESIN)
-            add(RagiumItems.PLASTIC_PLATE)
-            add(RagiumItems.CIRCUIT_BOARD)
-
-            add(RagiumItems.BASIC_CIRCUIT)
-            add(RagiumItems.ADVANCED_CIRCUIT)
-            add(RagiumItems.ELITE_CIRCUIT)
-            // Lens
-            add(RagiumItems.REDSTONE_LENS)
-            add(RagiumItems.GLOWSTONE_LENS)
-            add(RagiumItems.DIAMOND_LENS)
-            add(RagiumItems.EMERALD_LENS)
-            add(RagiumItems.AMETHYST_LENS)
         }
 
     @JvmField
@@ -169,7 +170,6 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.DRUMS.values)
             // Manual Machines
             add(RagiumBlocks.MANUAL_GRINDER)
-            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
 
             add(RagiumBlocks.DISENCHANTING_TABLE)
             // Utilities

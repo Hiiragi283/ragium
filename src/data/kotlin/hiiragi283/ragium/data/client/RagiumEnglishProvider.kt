@@ -56,8 +56,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
+        addBlock(RagiumBlocks.CHEMICAL_MACHINE_FRAME, "Chemical Machine Frame")
+        addBlock(RagiumBlocks.COBBLESTONE_CASING, "Cobblestone Casing")
+        addBlock(RagiumBlocks.MACHINE_FRAME, "Machine Frame")
+        addBlock(RagiumBlocks.PRECISION_MACHINE_FRAME, "Precision Machine Frame")
+        addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
+
         addBlock(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
-        addBlock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "Primitive Blast Furnace")
         addBlock(RagiumBlocks.DISENCHANTING_TABLE, "Disenchanting Table")
 
         addBlock(RagiumBlocks.getCrate(HTCrateVariant.WOODEN), "Wooden Crate")
@@ -94,9 +99,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.MANUAL_GRINDER, "Right-click to rotate")
         add(RagiumTranslationKeys.MANUAL_GRINDER_1, "Insert ingredients by hopper or pipes")
-
-        add(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE, "1x Iron Ingot + 4x Coal -> 1x Steel Ingot")
-        add(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE_1, "Required multiblock")
 
         add(RagiumTranslationKeys.ENERGY_NETWORK_INTERFACE, "Connect to Energy Network")
         add(RagiumTranslationKeys.SLAG_COLLECTOR, "Generate Slag when adjacent Large Blast Furnace processed")
@@ -247,25 +249,20 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.EMERALD_LENS, "Emerald Lens")
         addItem(RagiumItems.AMETHYST_LENS, "Amethyst Lens")
 
-        addItem(RagiumItems.EMPTY_FLUID_CUBE, "Empty Fluid Cube")
-        addItem(RagiumItems.WATER_FLUID_CUBE, "Fluid Cube (Water)")
-        addItem(RagiumItems.LAVA_FLUID_CUBE, "Fluid Cube (Lava)")
-
         addItem(RagiumItems.BEE_WAX, "Bee Wax")
-        addItem(RagiumItems.CHEMICAL_MACHINE_CASING, "Chemical Machine Casing")
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.HONEY_BUCKET, "Honey Bucket")
         addItem(RagiumItems.LED, "L.E.D.")
-        addItem(RagiumItems.MACHINE_CASING, "Machine Casing")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
-        addItem(RagiumItems.PRECISION_MACHINE_CASING, "Precision Machine Casing")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         addItem(RagiumItems.SLAG, "Slag")
         addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
+        addItem(RagiumItems.STEEL_COMPOUND, "Steel Compound")
+        addItem(RagiumItems.STONE_BOARD, "Stone Board")
         addItem(RagiumItems.TAR, "Tar")
         addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")

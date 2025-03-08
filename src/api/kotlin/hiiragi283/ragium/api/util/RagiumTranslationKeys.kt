@@ -11,9 +11,6 @@ object RagiumTranslationKeys {
     const val MANUAL_GRINDER = "tooltip.ragium.block.manual_grinder"
     const val MANUAL_GRINDER_1 = "tooltip.ragium.block.manual_grinder.1"
 
-    const val PRIMITIVE_BLAST_FURNACE = "tooltip.ragium.block.primitive_blast_furnace"
-    const val PRIMITIVE_BLAST_FURNACE_1 = "tooltip.ragium.block.primitive_blast_furnace.1"
-
     const val ENERGY_NETWORK_INTERFACE = "tooltip.ragium.block.energy_network_interface"
     const val SLAG_COLLECTOR = "tooltip.ragium.block.slag_collector"
 

@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:steel_ingot",
+  "criteria": {
+    "has_machine_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:machine_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:machine_frame"
+    },
+    "title": {
+      "translate": "block.ragium.machine_frame"
+    }
+  },
+  "requirements": [
+    [
+      "has_machine_frame"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

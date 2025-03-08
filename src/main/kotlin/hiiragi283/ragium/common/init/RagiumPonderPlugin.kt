@@ -46,7 +46,6 @@ object RagiumPonderPlugin : PonderPlugin {
             )
         }
 
-        multiblock(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, "multiblock/primitive_blast_furnace", 4)
         multiblock(HTMachineType.BLAST_FURNACE, "multiblock/blast_furnace", 4)
         multiblock(HTMachineType.CRUSHER, "multiblock/crusher", 3)
 
@@ -94,19 +93,11 @@ object RagiumPonderPlugin : PonderPlugin {
             .title("Machines")
             .register()
 
-        itemHelper
-            .registerTag(MULTIBLOCK)
-            .addToIndex()
-            .item(RagiumBlocks.PRIMITIVE_BLAST_FURNACE, true, false)
-            .title("Multiblocks")
-            .register()
-
         val machineTag: MultiTagBuilder.Tag<ItemLike> = itemHelper.addToTag(MACHINES)
         HTMachineType.getBlocks().forEach(machineTag::add)
 
         itemHelper
             .addToTag(MULTIBLOCK)
-            .add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
             .add(HTMachineType.BLAST_FURNACE)
             .add(HTMachineType.CRUSHER)
     }

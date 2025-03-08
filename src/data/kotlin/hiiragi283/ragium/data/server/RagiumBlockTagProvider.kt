@@ -40,6 +40,8 @@ class RagiumBlockTagProvider(
         builder = HTTagBuilder(provider.blockLookup())
 
         // Mineable
+        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
+
         for (block: DeferredBlock<*> in HTMachineType.getBlocks()) {
             builder.add(BlockTags.MINEABLE_WITH_PICKAXE, block)
         }
@@ -52,8 +54,12 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.SHAFT)
             addAll(RagiumBlocks.GLASSES)
 
+            add(RagiumBlocks.COBBLESTONE_CASING)
+            add(RagiumBlocks.MACHINE_FRAME)
+            add(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
+            add(RagiumBlocks.PRECISION_MACHINE_FRAME)
+
             add(RagiumBlocks.MANUAL_GRINDER)
-            add(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
             add(RagiumBlocks.DISENCHANTING_TABLE)
 
             addAll(RagiumBlocks.CRATES.values)

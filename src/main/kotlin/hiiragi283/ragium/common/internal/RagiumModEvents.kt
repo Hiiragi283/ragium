@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.network.HTPotionBundlePacket
 import hiiragi283.ragium.common.storage.fluid.HTDivingGoggleFluidHandler
-import hiiragi283.ragium.common.storage.fluid.HTFluidCubeFluidHandler
 import hiiragi283.ragium.common.storage.fluid.HTJetpackFluidHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -89,7 +88,6 @@ internal object RagiumModEvents {
         }
 
         registerHandlers(RagiumBlockEntityTypes.MANUAL_GRINDER)
-        registerHandlers(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
 
         registerHandlers(RagiumBlockEntityTypes.FISHER)
 
@@ -179,14 +177,6 @@ internal object RagiumModEvents {
             transform = ::HTDivingGoggleFluidHandler,
         )
         withCapacity(Capabilities.FluidHandler.ITEM, RagiumItems.JETPACK, transform = ::HTJetpackFluidHandler)
-
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            ::HTFluidCubeFluidHandler,
-            RagiumItems.EMPTY_FLUID_CUBE,
-            RagiumItems.WATER_FLUID_CUBE,
-            RagiumItems.LAVA_FLUID_CUBE,
-        )
 
         event.registerItem(
             Capabilities.FluidHandler.ITEM,

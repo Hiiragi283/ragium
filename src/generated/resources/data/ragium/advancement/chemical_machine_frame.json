@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:deep_steel_ingot",
+  "criteria": {
+    "has_chemical_machine_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:chemical_machine_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:chemical_machine_frame"
+    },
+    "title": {
+      "translate": "block.ragium.chemical_machine_frame"
+    }
+  },
+  "requirements": [
+    [
+      "has_chemical_machine_frame"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:redstone_lens"
+  },
+  "item_input": {
+    "item": "minecraft:torch"
+  },
+  "item_output": {
+    "item": "minecraft:redstone_torch"
+  }
+}

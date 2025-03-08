@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
 import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
-import hiiragi283.ragium.common.block.machine.HTPrimitiveBlastFurnaceBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.core.component.DataComponentType
@@ -273,6 +272,44 @@ object RagiumBlocks {
         .properties(blockProperty().forceSolidOn().strength(0.5f).sound(SoundType.WOOL))
         .build(::HTSweetBerriesCakeBlock)
 
+    //    Casing    //
+
+    @JvmField
+    val WOODEN_CASING: DeferredBlock<Block> = Builder("wooden_casing").properties(Blocks.NOTE_BLOCK).build()
+
+    @JvmField
+    val COBBLESTONE_CASING: DeferredBlock<Block> = Builder("cobblestone_casing").properties(Blocks.COBBLESTONE).build()
+
+    @JvmField
+    val MACHINE_FRAME: DeferredBlock<Block> = Builder("machine_frame")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(2f)
+                .sound(SoundType.COPPER)
+                .requiresCorrectToolForDrops(),
+        ).build()
+
+    @JvmField
+    val CHEMICAL_MACHINE_FRAME: DeferredBlock<Block> = Builder("chemical_machine_frame")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(2f)
+                .sound(SoundType.COPPER)
+                .requiresCorrectToolForDrops(),
+        ).build()
+
+    @JvmField
+    val PRECISION_MACHINE_FRAME: DeferredBlock<Block> = Builder("precision_machine_frame")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(2f)
+                .sound(SoundType.COPPER)
+                .requiresCorrectToolForDrops(),
+        ).build()
+
     //    Manual Machines    //
 
     @JvmField
@@ -280,12 +317,6 @@ object RagiumBlocks {
         .properties(Blocks.BRICKS)
         .addLore(RagiumTranslationKeys.MANUAL_GRINDER, RagiumTranslationKeys.MANUAL_GRINDER_1)
         .build(::HTManualGrinderBlock)
-
-    @JvmField
-    val PRIMITIVE_BLAST_FURNACE: DeferredBlock<HTPrimitiveBlastFurnaceBlock> = Builder("primitive_blast_furnace")
-        .properties(Blocks.BRICKS)
-        .addLore(RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE, RagiumTranslationKeys.PRIMITIVE_BLAST_FURNACE_1)
-        .build(::HTPrimitiveBlastFurnaceBlock)
 
     @JvmField
     val DISENCHANTING_TABLE: DeferredBlock<HTDisenchantingTableBlock> = Builder("disenchanting_table")

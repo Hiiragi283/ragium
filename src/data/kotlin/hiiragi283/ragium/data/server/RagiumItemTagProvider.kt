@@ -261,7 +261,6 @@ class RagiumItemTagProvider(
         }
 
         machine(RagiumBlocks.MANUAL_GRINDER)
-        machine(RagiumBlocks.PRIMITIVE_BLAST_FURNACE)
         HTMachineType.getBlocks().forEach(::machine)
 
         for (block: DeferredBlock<out HTEntityBlock> in buildList {

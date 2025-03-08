@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:dusts/iron"
+    },
+    {
+      "tag": "c:gems/coal"
+    },
+    {
+      "tag": "c:gems/coal"
+    },
+    {
+      "tag": "c:gems/coal"
+    },
+    {
+      "tag": "c:gems/coal"
+    },
+    {
+      "item": "ragium:forge_hammer"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:steel_compound"
+  }
+}

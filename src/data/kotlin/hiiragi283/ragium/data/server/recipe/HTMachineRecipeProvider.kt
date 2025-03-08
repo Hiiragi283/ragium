@@ -426,10 +426,56 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
     //    Laser Assembly    //
 
     private fun laser(output: RecipeOutput) {
+        redstoneLens(output)
         glowstoneLens(output)
         diamondLens(output)
         emeraldLens(output)
         amethystLens(output)
+    }
+
+    private fun redstoneLens(output: RecipeOutput) {
+        // Redstone Torch
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(Items.TORCH)
+            .catalyst(RagiumItems.REDSTONE_LENS)
+            .itemOutput(Items.REDSTONE_TORCH)
+            .save(output)
+        // Repeater
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(RagiumItems.STONE_BOARD)
+            .catalyst(RagiumItems.REDSTONE_LENS)
+            .itemOutput(Items.REPEATER)
+            .save(output)
+        // Comparator
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(Items.REPEATER)
+            .catalyst(RagiumItems.REDSTONE_LENS)
+            .itemOutput(Items.COMPARATOR)
+            .save(output)
+        // Target
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(Tags.Items.STORAGE_BLOCKS_WHEAT)
+            .catalyst(RagiumItems.REDSTONE_LENS)
+            .itemOutput(Items.TARGET)
+            .save(output)
+        // Note
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(RagiumBlocks.WOODEN_CASING)
+            .catalyst(RagiumItems.REDSTONE_LENS)
+            .itemOutput(Items.NOTE_BLOCK)
+            .save(output)
+        // Lamp
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(HTTagPrefix.BLOCK, VanillaMaterials.GLOWSTONE)
+            .catalyst(RagiumItems.REDSTONE_LENS)
+            .itemOutput(Items.REDSTONE_LAMP)
+            .save(output)
     }
 
     private fun glowstoneLens(output: RecipeOutput) {
@@ -464,6 +510,13 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .itemInput(ItemTags.WOOL)
             .catalyst(RagiumItems.DIAMOND_LENS)
             .itemOutput(Items.SPONGE)
+            .save(output)
+        // Jukebox
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(RagiumBlocks.WOODEN_CASING)
+            .catalyst(RagiumItems.DIAMOND_LENS)
+            .itemOutput(Items.JUKEBOX)
             .save(output)
     }
 

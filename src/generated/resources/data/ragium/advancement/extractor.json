@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:chemical_machine_casing",
+  "parent": "ragium:chemical_machine_frame",
   "criteria": {
     "has_extractor": {
       "conditions": {

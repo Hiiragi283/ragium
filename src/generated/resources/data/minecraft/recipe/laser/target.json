@@ -1,0 +1,12 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:redstone_lens"
+  },
+  "item_input": {
+    "tag": "c:storage_blocks/wheat"
+  },
+  "item_output": {
+    "item": "minecraft:target"
+  }
+}

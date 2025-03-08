@@ -9,7 +9,7 @@
       "item": "minecraft:crafter"
     },
     "C": {
-      "item": "ragium:machine_casing"
+      "item": "ragium:machine_frame"
     },
     "D": {
       "tag": "c:gears/deep_steel"

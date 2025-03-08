@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:block/machine_casing",
+  "textures": {
+    "all": "ragium:block/precision_machine_frame"
+  }
+}

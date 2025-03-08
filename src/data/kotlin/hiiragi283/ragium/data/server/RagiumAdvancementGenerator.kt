@@ -74,13 +74,8 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             Component.empty(),
         )
 
-        val pbf: AdvancementHolder = createSimple(
-            ragiAlloy,
-            RagiumBlocks.PRIMITIVE_BLAST_FURNACE,
-            Component.empty(),
-        )
         val steel: AdvancementHolder = createMaterial(
-            pbf,
+            grinder,
             HTTagPrefix.INGOT,
             CommonMaterials.STEEL,
             Component.empty(),
@@ -92,7 +87,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     private fun registerMachines(steel: AdvancementHolder) {
         val casing: AdvancementHolder = createSimple(
             steel,
-            RagiumItems.MACHINE_CASING,
+            RagiumBlocks.MACHINE_FRAME,
             Component.empty(),
             type = AdvancementType.GOAL,
         )
@@ -148,7 +143,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     private fun registerChemical(deepSteel: AdvancementHolder) {
         val casing: AdvancementHolder = createSimple(
             deepSteel,
-            RagiumItems.CHEMICAL_MACHINE_CASING,
+            RagiumBlocks.CHEMICAL_MACHINE_FRAME,
             Component.empty(),
             type = AdvancementType.GOAL,
         )
@@ -215,7 +210,7 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
     private fun registerPrecision(aluminum: AdvancementHolder) {
         val casing: AdvancementHolder = createSimple(
             aluminum,
-            RagiumItems.PRECISION_MACHINE_CASING,
+            RagiumBlocks.PRECISION_MACHINE_FRAME,
             Component.empty(),
         )
 
