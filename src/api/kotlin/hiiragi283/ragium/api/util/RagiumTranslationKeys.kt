@@ -14,6 +14,10 @@ object RagiumTranslationKeys {
     const val ENERGY_NETWORK_INTERFACE = "tooltip.ragium.block.energy_network_interface"
     const val SLAG_COLLECTOR = "tooltip.ragium.block.slag_collector"
 
+    //    Component    //
+
+    const val ENTITY_DATA = "tooltip.ragium.component.entity_data"
+
     //    Fluid    //
 
     const val FLUID_NAME = "tooltip.ragium.fluid.name"
@@ -27,6 +31,7 @@ object RagiumTranslationKeys {
     const val AMBROSIA = "tooltip.ragium.item.ambrosia"
     const val BEE_WAX = "tooltip.ragium.item.bee_wax"
     const val DEFOLIANT = "tooltip.ragium.item.defoliant"
+    const val DURALUMIN_CASE = "tooltip.ragium.item.duralumin_case"
     const val DYNAMITE = "tooltip.ragium.item.dynamite"
     const val EFFECT_RANGE = "tooltip.ragium.item.effect_range"
     const val EXP_MAGNET = "tooltip.ragium.item.exp_magnet"

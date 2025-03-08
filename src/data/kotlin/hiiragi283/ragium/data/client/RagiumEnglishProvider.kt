@@ -105,6 +105,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Chemical
         add(RagiumMekAddon.RAGINITE_SLURRY.cleanSlurry.translationKey, "Clean Raginite Slurry")
         add(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.translationKey, "Dirty Raginite Slurry")
+        // Component
+        add(RagiumTranslationKeys.ENTITY_DATA, "Holding Entity: %s")
         // Content
         add(HTOreVariant.OVERWORLD, "%s Ore")
         add(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
@@ -184,6 +186,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MEAT_INGOT, "Meat Ingot")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
+        addItem(RagiumItems.MEAT_SANDWICH, "Meat Sandwich")
 
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
 
@@ -220,8 +223,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.STEEL_TOOLS.shovelItem, "Steel Shovel")
         addItem(RagiumItems.STEEL_TOOLS.swordItem, "Steel Sword")
 
-        addItem(RagiumItems.DEFOLIANT, "Defoliant")
         addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
+        addItem(RagiumItems.DEFOLIANT, "Defoliant")
+        addItem(RagiumItems.DURALUMIN_CASE, "Duralumin Case")
 
         addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
         addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
@@ -273,6 +277,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.AMBROSIA, "Can be eaten for infinity times!")
         add(RagiumTranslationKeys.BEE_WAX, "Can be used as same as Honeycomb")
         add(RagiumTranslationKeys.DEFOLIANT, "Changes 9x9x9 area into waste land")
+        add(RagiumTranslationKeys.DURALUMIN_CASE, "Right-click to collect or place Spawner")
         add(RagiumTranslationKeys.DYNAMITE, "Explodes when hit")
         add(RagiumTranslationKeys.EFFECT_RANGE, "Effect Range: %s blocks")
         add(RagiumTranslationKeys.EXP_MAGNET, "Attracts around exp orbs")

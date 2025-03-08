@@ -105,6 +105,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Chemical
         add(RagiumMekAddon.RAGINITE_SLURRY.cleanSlurry.translationKey, "純粋なラギナイトの懸濁液")
         add(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.translationKey, "汚れたラギナイトの懸濁液")
+        // Component
+        add(RagiumTranslationKeys.ENTITY_DATA, "保持しているエンティティ: %s")
         // Content
         add(HTOreVariant.OVERWORLD, "%s鉱石")
         add(HTOreVariant.DEEPSLATE, "深層%s鉱石")
@@ -184,6 +186,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MEAT_INGOT, "生肉インゴット")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
+        addItem(RagiumItems.MEAT_SANDWICH, "ミートサンドイッチ")
 
         addItem(RagiumItems.WARPED_WART, "歪んだウォート")
 
@@ -220,8 +223,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.STEEL_TOOLS.shovelItem, "鋼鉄のシャベル")
         addItem(RagiumItems.STEEL_TOOLS.swordItem, "鋼鉄の剣")
 
-        addItem(RagiumItems.DEFOLIANT, "枯葉剤")
         addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
+        addItem(RagiumItems.DEFOLIANT, "枯葉剤")
+        addItem(RagiumItems.DURALUMIN_CASE, "ジュラルミンケース")
 
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.EXP_MAGNET, "経験値マグネット")
@@ -272,6 +276,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.AMBROSIA, "無限に食べられちまうんだ！")
         add(RagiumTranslationKeys.BEE_WAX, "ハニカムと同様に使える")
         add(RagiumTranslationKeys.DEFOLIANT, "9x9x9の範囲を荒れ地に変える")
+        add(RagiumTranslationKeys.DURALUMIN_CASE, "右クリックでスポナーを回収/設置する")
         add(RagiumTranslationKeys.DYNAMITE, "着弾時に爆発を起こす")
         add(RagiumTranslationKeys.EFFECT_RANGE, "効果範囲: %s ブロック")
         add(RagiumTranslationKeys.EXP_MAGNET, "周囲の経験値オーブをひきつける")

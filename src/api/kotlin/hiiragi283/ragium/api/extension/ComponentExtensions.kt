@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.food.FoodConstants
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.ItemStack
 import java.util.*
@@ -24,7 +25,7 @@ fun foodComponent(
     effects: Map<Supplier<MobEffectInstance>, Float> = mapOf(),
 ): FoodProperties = FoodProperties(
     nutrition,
-    saturation,
+    FoodConstants.saturationByModifier(nutrition, saturation),
     alwaysEat,
     eatSeconds,
     Optional.ofNullable(convertTo),

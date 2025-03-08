@@ -27,6 +27,8 @@ import hiiragi283.ragium.common.item.magnet.HTExpMagnetItem
 import hiiragi283.ragium.common.item.magnet.HTMagnetItem
 import hiiragi283.ragium.common.item.magnet.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.tool.HTCraftingToolItem
+import hiiragi283.ragium.common.item.tool.HTDuraluminCaseItem
+import hiiragi283.ragium.common.item.tool.HTRagiLanternItem
 import hiiragi283.ragium.common.item.tool.HTSingleEnchantmentPickaxeItem
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.Entity
@@ -238,6 +240,9 @@ object RagiumItems {
     val CANNED_COOKED_MEAT: DeferredItem<Item> = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
 
     @JvmField
+    val MEAT_SANDWICH: DeferredItem<Item> = registerFood("meat_sandwich", RagiumFoods.MEAT_SANDWICH)
+
+    @JvmField
     val WARPED_WART: DeferredItem<HTWarpedWartItem> = register(
         "warped_wart",
         ::HTWarpedWartItem,
@@ -270,6 +275,7 @@ object RagiumItems {
         MEAT_INGOT,
         COOKED_MEAT_INGOT,
         CANNED_COOKED_MEAT,
+        MEAT_SANDWICH,
         // wart
         WARPED_WART,
         // end-contents
@@ -348,6 +354,13 @@ object RagiumItems {
     //    Utilities    //
 
     @JvmField
+    val POTION_BUNDLE: DeferredItem<HTPotionBundleItem> = register(
+        "potion_bundle",
+        ::HTPotionBundleItem,
+        itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE, RagiumTranslationKeys.POTION_BUNDLE_1),
+    )
+
+    @JvmField
     val DEFOLIANT: DeferredItem<HTDefoliantItem> = register(
         "defoliant",
         ::HTDefoliantItem,
@@ -355,10 +368,10 @@ object RagiumItems {
     )
 
     @JvmField
-    val POTION_BUNDLE: DeferredItem<HTPotionBundleItem> = register(
-        "potion_bundle",
-        ::HTPotionBundleItem,
-        itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE, RagiumTranslationKeys.POTION_BUNDLE_1),
+    val DURALUMIN_CASE: DeferredItem<HTDuraluminCaseItem> = register(
+        "duralumin_case",
+        ::HTDuraluminCaseItem,
+        itemProperty().lore(RagiumTranslationKeys.DURALUMIN_CASE),
     )
 
     //    Magnets    //

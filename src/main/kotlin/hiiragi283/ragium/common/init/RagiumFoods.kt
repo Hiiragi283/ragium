@@ -33,6 +33,16 @@ object RagiumFoods {
     )
 
     @JvmField
+    val MEAT_SANDWICH: FoodProperties = foodComponent(
+        nutrition = 14,
+        saturation = 0.8f,
+        eatSeconds = 1.2f,
+        effects = mapOf(
+            supply(MobEffectInstance(MobEffects.SATURATION, 10 * 30, 0)) to 1f,
+        ),
+    )
+
+    @JvmField
     val CANNED_COOKED_MEAT: FoodProperties = foodComponent(
         nutrition = 8,
         saturation = 0.8f,

@@ -564,6 +564,16 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .save(output)
 
+        HTShapedRecipeBuilder(RagiumItems.DURALUMIN_CASE, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                " A ",
+                "BCB",
+                "BBB",
+            ).define('A', HTTagPrefix.ROD, CommonMaterials.STEEL)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
+            .define('C', HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
+            .save(output)
+
         // Custom Pickaxe
         HTShapedRecipeBuilder(RagiumItems.FEVER_PICKAXE, category = CraftingBookCategory.EQUIPMENT)
             .pattern(

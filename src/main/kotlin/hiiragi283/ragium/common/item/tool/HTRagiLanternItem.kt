@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.common.entity.HTFlare
 import net.minecraft.core.BlockPos

@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toList
+import hiiragi283.ragium.common.component.HTSpawnerData
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
@@ -61,6 +62,14 @@ object RagiumComponentTypes {
             builder
                 .persistent(ExtraCodecs.POSITIVE_INT)
                 .networkSynchronized(ByteBufCodecs.VAR_INT)
+        }
+
+    @JvmField
+    val SPAWNER_DATA: DeferredHolder<DataComponentType<*>, DataComponentType<HTSpawnerData>> =
+        REGISTER.registerComponentType("spawner_data") { builder: DataComponentType.Builder<HTSpawnerData> ->
+            builder
+                .persistent(HTSpawnerData.CODEC)
+                .networkSynchronized(HTSpawnerData.STREAM_CODEC)
         }
 
     @JvmField

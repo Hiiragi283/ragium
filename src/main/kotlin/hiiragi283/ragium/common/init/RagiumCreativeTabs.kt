@@ -156,8 +156,9 @@ object RagiumCreativeTabs {
             add(RagiumItems.FEVER_PICKAXE)
             add(RagiumItems.SILKY_PICKAXE)
 
-            add(RagiumItems.DEFOLIANT)
             add(RagiumItems.POTION_BUNDLE)
+            add(RagiumItems.DEFOLIANT)
+            add(RagiumItems.DURALUMIN_CASE)
             // Magnets
             addAll(RagiumItems.MAGNETS)
             // Dynamites

@@ -195,6 +195,15 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemOutput(RagiumItems.CANNED_COOKED_MEAT, 8)
             .save(output)
+        // 2x Bread + Cooked Meat Ingot -> Meat Sandwich
+        HTShapedRecipeBuilder(RagiumItems.MEAT_SANDWICH)
+            .pattern(
+                "A",
+                "B",
+                "A",
+            ).define('A', Tags.Items.FOODS_BREAD)
+            .define('B', RagiumItems.COOKED_MEAT_INGOT)
+            .save(output)
     }
 
     private fun registerMilk(output: RecipeOutput) {
