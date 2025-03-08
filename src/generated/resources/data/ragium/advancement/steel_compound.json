@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_steel_compound": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:steel_compound"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:steel_compound"
+    },
+    "title": {
+      "translate": "item.ragium.steel_compound"
+    }
+  },
+  "requirements": [
+    [
+      "has_steel_compound"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

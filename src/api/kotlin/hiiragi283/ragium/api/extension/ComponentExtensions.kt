@@ -18,7 +18,7 @@ import java.util.function.Supplier
  */
 fun foodComponent(
     nutrition: Int = 0,
-    saturation: Float = 0f,
+    saturation: Float = 1f,
     alwaysEat: Boolean = false,
     eatSeconds: Float = 1.0f,
     convertTo: ItemStack? = null,

@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:tier2/refinery",
+  "criteria": {
+    "has_crimson_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/crimson_crystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:crimson_crystal"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.gem",
+      "with": [
+        {
+          "translate": "material.ragium.crimson_crystal"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_crimson_crystal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

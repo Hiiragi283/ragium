@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "has_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:chemical_machine_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "ragium:textures/block/ember_alloy_casing.png",
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:deep_steel_ingot"
+    },
+    "show_toast": false,
+    "title": "Ragium - Tier 2"
+  },
+  "requirements": [
+    [
+      "has_frame"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier1/flour",
+  "criteria": {
+    "has_sponge_cake": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:sponge_cake"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:sponge_cake"
+    },
+    "title": {
+      "translate": "block.ragium.sponge_cake"
+    }
+  },
+  "requirements": [
+    [
+      "has_sponge_cake"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:manual_grinder",
+  "parent": "ragium:steel_compound",
   "criteria": {
     "has_steel_ingot": {
       "conditions": {

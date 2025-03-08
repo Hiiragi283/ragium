@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -21,7 +22,7 @@ class HTSolarGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generate.PRECISION
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        if (!(level.canSeeSky(pos.above()) && level.isDay)) throw HTMachineException.Custom("Cannot see sky above!")
+        if (!(level.canSeeSky(pos.above()) && level.isDay)) throw HTMachineException.Custom(RagiumTranslationKeys.EXCEPTION_NO_SUNLIGHT)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null

@@ -1,0 +1,48 @@
+{
+  "parent": "ragium:steel_ingot",
+  "criteria": {
+    "has_molds": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ball_press_mold"
+          },
+          {
+            "items": "ragium:block_press_mold"
+          },
+          {
+            "items": "ragium:gear_press_mold"
+          },
+          {
+            "items": "ragium:ingot_press_mold"
+          },
+          {
+            "items": "ragium:plastic_plate"
+          },
+          {
+            "items": "ragium:rod_press_mold"
+          },
+          {
+            "items": "ragium:wire_press_mold"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ingot_press_mold"
+    },
+    "title": "Cast Off!"
+  },
+  "requirements": [
+    [
+      "has_molds"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

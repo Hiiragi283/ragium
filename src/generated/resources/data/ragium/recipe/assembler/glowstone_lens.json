@@ -1,8 +1,8 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 64,
-    "tag": "c:dusts/glowstone"
+    "count": 32,
+    "tag": "c:storage_blocks/glowstone"
   },
   "item_output": {
     "item": "ragium:glowstone_lens"

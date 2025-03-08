@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier3/laser_assembly",
+  "criteria": {
+    "has_diamond_lens": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:diamond_lens"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:diamond_lens"
+    },
+    "title": {
+      "translate": "item.ragium.diamond_lens"
+    }
+  },
+  "requirements": [
+    [
+      "has_diamond_lens"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

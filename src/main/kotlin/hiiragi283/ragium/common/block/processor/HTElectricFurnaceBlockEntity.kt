@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.heat.HTHeatTier
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -19,7 +20,11 @@ import net.minecraft.world.level.block.state.BlockState
 class HTElectricFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     HTSimpleMachineBlockEntity(RagiumBlockEntityTypes.ELECTRIC_FURNACE, pos, state, HTMachineType.ELECTRIC_FURNACE) {
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = when {
-        HTHeatTier.getHeatTier(level, pos.below(), Direction.UP) >= HTHeatTier.MEDIUM -> HTMachineEnergyData.Empty(true)
+        HTHeatTier.getHeatTier(
+            level,
+            pos.below(),
+            Direction.UP,
+        ) >= HTHeatTier.MEDIUM -> HTMachineEnergyData.Consume.EMPTY
         else -> HTMachineEnergyData.Consume.DEFAULT
     }
 
@@ -30,7 +35,7 @@ class HTElectricFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
             Items.FURNACE -> RecipeType.SMELTING
             Items.SMOKER -> RecipeType.SMOKING
             Items.BLAST_FURNACE -> RecipeType.BLASTING
-            else -> throw HTMachineException.Custom("Unknown recipe type for catalyst slot!")
+            else -> throw HTMachineException.Custom(RagiumTranslationKeys.EXCEPTION_UNKNOWN_RECIPE_TYPE)
         }
 
         val input = SingleRecipeInput(inputSlot.stack)

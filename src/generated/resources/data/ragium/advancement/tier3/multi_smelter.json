@@ -1,0 +1,35 @@
+{
+  "parent": "ragium:tier3/root",
+  "criteria": {
+    "has_machine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:multi_smelter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.multi_smelter.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:multi_smelter"
+    },
+    "title": {
+      "translate": "machine_type.multi_smelter"
+    }
+  },
+  "requirements": [
+    [
+      "has_machine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

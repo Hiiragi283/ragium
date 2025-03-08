@@ -265,6 +265,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.HONEY_BUCKET, "Honey Bucket")
+        addItem(RagiumItems.INERT_RAGIUM_INGOT, "Inert Ragium Ingot")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
@@ -281,6 +282,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
         addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
+
+        add(RagiumTranslationKeys.REDSTONE_LENS, "Fever Boost!!")
+        add(RagiumTranslationKeys.GLOWSTONE_LENS, "Gorgeous Time")
+        add(RagiumTranslationKeys.DIAMOND_LENS, "Shining Destroyer")
+        add(RagiumTranslationKeys.EMERALD_LENS, "Deneb, Altair, and Vega")
+        add(RagiumTranslationKeys.AMETHYST_LENS, "Final Form Ride")
 
         add(RagiumTranslationKeys.AMBROSIA, "Can be eaten for infinity times!")
         add(RagiumTranslationKeys.BEE_WAX, "Can be used as same as Honeycomb")
@@ -306,6 +313,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "%s FE")
         add(RagiumTranslationKeys.MACHINE_TICK_RATE, "- Tick Rate: %s ticks (%s sec)")
         add(RagiumTranslationKeys.MACHINE_WORKING_SUCCESS, "Working Successfully!")
+
+        add(RagiumTranslationKeys.EXCEPTION_CONSUME_ENERGY, "Failed to consumer energy!")
+        add(RagiumTranslationKeys.EXCEPTION_GENERATE_ENERGY, "Failed to generate energy!")
+        add(RagiumTranslationKeys.EXCEPTION_MISSING_SLOT, "Missing %s slot for index: %s!")
+        add(RagiumTranslationKeys.EXCEPTION_MISSING_TANK, "Missing %s tank for index: %s!")
+        add(RagiumTranslationKeys.EXCEPTION_NO_MATCHING_RECIPE, "There is no matching recipe for current input!")
+        add(RagiumTranslationKeys.EXCEPTION_NO_SUNLIGHT, "Cannot take sunlight from here!")
+        add(RagiumTranslationKeys.EXCEPTION_UNKNOWN_RECIPE_TYPE, "Unknown recipe type for catalyst slot found!")
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")

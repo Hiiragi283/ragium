@@ -126,7 +126,6 @@ object RagiumItems {
         register(HTTagPrefix.RAW_MATERIAL, CommonMaterials.PYRITE)
         // Ingots
         register(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-        register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
 
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
@@ -134,6 +133,8 @@ object RagiumItems {
         register(HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
 
         register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
+
+        register(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
 
@@ -192,6 +193,9 @@ object RagiumItems {
 
     @JvmField
     val STEEL_COMPOUND: DeferredItem<Item> = register("steel_compound")
+
+    @JvmField
+    val INERT_RAGIUM_INGOT: DeferredItem<Item> = register("inert_ragium_ingot")
 
     //    Foods    //
 
@@ -475,19 +479,39 @@ object RagiumItems {
     //    Lens    //
 
     @JvmField
-    val REDSTONE_LENS: DeferredItem<HTCatalystItem> = register("redstone_lens", ::HTCatalystItem)
+    val REDSTONE_LENS: DeferredItem<HTCatalystItem> = register(
+        "redstone_lens",
+        ::HTCatalystItem,
+        itemProperty().lore(RagiumTranslationKeys.REDSTONE_LENS),
+    )
 
     @JvmField
-    val GLOWSTONE_LENS: DeferredItem<HTCatalystItem> = register("glowstone_lens", ::HTCatalystItem)
+    val GLOWSTONE_LENS: DeferredItem<HTCatalystItem> = register(
+        "glowstone_lens",
+        ::HTCatalystItem,
+        itemProperty().lore(RagiumTranslationKeys.GLOWSTONE_LENS),
+    )
 
     @JvmField
-    val DIAMOND_LENS: DeferredItem<HTCatalystItem> = register("diamond_lens", ::HTCatalystItem)
+    val DIAMOND_LENS: DeferredItem<HTCatalystItem> = register(
+        "diamond_lens",
+        ::HTCatalystItem,
+        itemProperty().lore(RagiumTranslationKeys.DIAMOND_LENS),
+    )
 
     @JvmField
-    val EMERALD_LENS: DeferredItem<HTCatalystItem> = register("emerald_lens", ::HTCatalystItem)
+    val EMERALD_LENS: DeferredItem<HTCatalystItem> = register(
+        "emerald_lens",
+        ::HTCatalystItem,
+        itemProperty().lore(RagiumTranslationKeys.EMERALD_LENS),
+    )
 
     @JvmField
-    val AMETHYST_LENS: DeferredItem<HTCatalystItem> = register("amethyst_lens", ::HTCatalystItem)
+    val AMETHYST_LENS: DeferredItem<HTCatalystItem> = register(
+        "amethyst_lens",
+        ::HTCatalystItem,
+        itemProperty().lore(RagiumTranslationKeys.AMETHYST_LENS),
+    )
 
     //    Machine Parts    //
 

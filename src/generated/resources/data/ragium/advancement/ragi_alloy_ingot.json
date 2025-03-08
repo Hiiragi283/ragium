@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:root",
+  "parent": "ragium:ragi_alloy_compound",
   "criteria": {
     "has_ragi_alloy_ingot": {
       "conditions": {

@@ -441,6 +441,20 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .catalyst(RagiumItems.REDSTONE_LENS)
             .itemOutput(Items.TARGET)
             .save(output)
+        // Piston
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(RagiumBlocks.COBBLESTONE_CASING)
+            .catalyst(RagiumItems.REDSTONE_LENS)
+            .itemOutput(Items.PISTON)
+            .save(output)
+        // Crafter
+        HTSingleItemRecipeBuilder
+            .laser(lookup)
+            .itemInput(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES)
+            .catalyst(RagiumItems.REDSTONE_LENS)
+            .itemOutput(Items.CRAFTER)
+            .save(output)
         // Note
         HTSingleItemRecipeBuilder
             .laser(lookup)

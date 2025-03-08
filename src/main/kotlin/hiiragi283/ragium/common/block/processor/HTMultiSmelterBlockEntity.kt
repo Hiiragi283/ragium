@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTSimpleMachineBlockEntity(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state, HTMachineType.MULTI_SMELTER) {
     override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = when {
-        HTHeatTier.getHeatTier(level, pos.below(), Direction.UP) >= HTHeatTier.HIGH -> HTMachineEnergyData.Empty(true)
+        HTHeatTier.getHeatTier(level, pos.below(), Direction.UP) >= HTHeatTier.HIGH -> HTMachineEnergyData.Consume.EMPTY
         else -> HTMachineEnergyData.Consume.PRECISION
     }
 

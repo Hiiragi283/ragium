@@ -1,8 +1,11 @@
 package hiiragi283.ragium.common.item.tool
 
+import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.common.entity.HTFlare
+import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.stats.Stats
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -24,9 +27,12 @@ class HTRagiLanternItem(properties: Properties) : Item(properties.durability(127
         val posTo: BlockPos = pos.relative(face)
         if (level.getBlockState(posTo).canBeReplaced(BlockPlaceContext(context))) {
             level.setBlockAndUpdate(posTo, Blocks.LIGHT.defaultBlockState())
-            context.player?.let { player: Player ->
-                context.itemInHand.hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.hand))
-            }
+            context.player
+                .asServerPlayer()
+                ?.let { serverPlayer: ServerPlayer ->
+                    CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, context.itemInHand)
+                    context.itemInHand.hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(context.hand))
+                }
             return InteractionResult.sidedSuccess(level.isClientSide)
         }
         return super.useOn(context)

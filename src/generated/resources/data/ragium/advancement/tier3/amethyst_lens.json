@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:tier3/laser_assembly",
+  "criteria": {
+    "has_amethyst_lens": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:amethyst_lens"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "ragium:amethyst_lens"
+    },
+    "title": {
+      "translate": "item.ragium.amethyst_lens"
+    }
+  },
+  "requirements": [
+    [
+      "has_amethyst_lens"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

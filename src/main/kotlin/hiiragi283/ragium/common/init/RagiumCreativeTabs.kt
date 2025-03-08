@@ -77,6 +77,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
             add(RagiumItems.STEEL_COMPOUND)
             registerPrefix(HTTagPrefix.INGOT)
+            add(RagiumItems.INERT_RAGIUM_INGOT)
 
             registerPrefix(HTTagPrefix.GEAR)
             registerPrefix(HTTagPrefix.ROD)

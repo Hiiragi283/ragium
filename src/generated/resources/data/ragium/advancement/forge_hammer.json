@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:ragi_alloy_ingot",
+  "criteria": {
+    "has_forge_hammer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:forge_hammer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:forge_hammer"
+    },
+    "title": {
+      "translate": "item.ragium.forge_hammer"
+    }
+  },
+  "requirements": [
+    [
+      "has_forge_hammer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

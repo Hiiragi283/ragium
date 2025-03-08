@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier1/meat_ingot",
+  "criteria": {
+    "has_canned_cooked_meat": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:canned_cooked_meat"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:canned_cooked_meat"
+    },
+    "title": {
+      "translate": "item.ragium.canned_cooked_meat"
+    }
+  },
+  "requirements": [
+    [
+      "has_canned_cooked_meat"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

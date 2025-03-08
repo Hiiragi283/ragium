@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier2/infuser",
+  "criteria": {
+    "has_chocolate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:chocolate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:chocolate"
+    },
+    "title": {
+      "translate": "item.ragium.chocolate"
+    }
+  },
+  "requirements": [
+    [
+      "has_chocolate"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

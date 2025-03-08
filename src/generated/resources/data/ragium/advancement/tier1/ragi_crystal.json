@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:tier1/alloy_furnace",
+  "criteria": {
+    "has_ragi_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/ragi_crystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_crystal"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.gem",
+      "with": [
+        {
+          "translate": "material.ragium.ragi_crystal"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_ragi_crystal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

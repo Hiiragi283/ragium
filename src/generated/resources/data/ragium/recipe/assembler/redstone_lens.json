@@ -1,8 +1,8 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 64,
-    "tag": "c:dusts/redstone"
+    "count": 16,
+    "tag": "c:storage_blocks/redstone"
   },
   "item_output": {
     "item": "ragium:redstone_lens"

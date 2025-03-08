@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:tier1/root",
+  "criteria": {
+    "has_machine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:assembler"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.assembler.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:assembler"
+    },
+    "title": {
+      "translate": "machine_type.assembler"
+    }
+  },
+  "requirements": [
+    [
+      "has_machine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

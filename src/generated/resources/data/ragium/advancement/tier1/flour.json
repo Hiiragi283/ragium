@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier1/grinder",
+  "criteria": {
+    "has_flour": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:flour"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:flour"
+    },
+    "title": {
+      "translate": "item.ragium.flour"
+    }
+  },
+  "requirements": [
+    [
+      "has_flour"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

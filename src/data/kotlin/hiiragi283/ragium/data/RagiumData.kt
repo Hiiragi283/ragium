@@ -5,6 +5,10 @@ import com.simibubi.create.api.registry.CreateRegistries
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.client.*
 import hiiragi283.ragium.data.server.*
+import hiiragi283.ragium.data.server.advancement.HTProtoTierAdvancements
+import hiiragi283.ragium.data.server.advancement.HTTierOneAdvancements
+import hiiragi283.ragium.data.server.advancement.HTTierThreeAdvancements
+import hiiragi283.ragium.data.server.advancement.HTTierTwoAdvancements
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentBootstrap
 import hiiragi283.ragium.data.server.bootstrap.RagiumPotatoCannonBootstrap
 import hiiragi283.ragium.data.server.bootstrap.RagiumWorldGenBoostrap
@@ -104,5 +108,15 @@ object RagiumData {
         output: PackOutput,
         registries: CompletableFuture<HolderLookup.Provider>,
         existingFileHelper: ExistingFileHelper,
-    ) : AdvancementProvider(output, registries, existingFileHelper, listOf(RagiumAdvancementGenerator))
+    ) : AdvancementProvider(
+            output,
+            registries,
+            existingFileHelper,
+            listOf(
+                HTProtoTierAdvancements,
+                HTTierOneAdvancements,
+                HTTierTwoAdvancements,
+                HTTierThreeAdvancements,
+            ),
+        )
 }

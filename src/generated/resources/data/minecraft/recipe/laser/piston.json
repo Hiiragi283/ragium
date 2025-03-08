@@ -1,0 +1,12 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:redstone_lens"
+  },
+  "item_input": {
+    "item": "ragium:cobblestone_casing"
+  },
+  "item_output": {
+    "item": "minecraft:piston"
+  }
+}

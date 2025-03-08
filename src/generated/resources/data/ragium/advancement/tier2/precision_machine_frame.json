@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:tier2/warped_crystal",
+  "criteria": {
+    "has_precision_machine_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:precision_machine_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "ragium:precision_machine_frame"
+    },
+    "title": {
+      "translate": "block.ragium.precision_machine_frame"
+    }
+  },
+  "requirements": [
+    [
+      "has_precision_machine_frame"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

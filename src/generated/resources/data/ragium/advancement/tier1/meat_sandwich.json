@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier1/meat_ingot",
+  "criteria": {
+    "has_meat_sandwich": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:meat_sandwich"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:meat_sandwich"
+    },
+    "title": {
+      "translate": "item.ragium.meat_sandwich"
+    }
+  },
+  "requirements": [
+    [
+      "has_meat_sandwich"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

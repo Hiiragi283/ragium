@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "has_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:machine_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "ragium:textures/block/ragi_alloy_casing.png",
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:steel_ingot"
+    },
+    "show_toast": false,
+    "title": "Ragium - Tier 1"
+  },
+  "requirements": [
+    [
+      "has_frame"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

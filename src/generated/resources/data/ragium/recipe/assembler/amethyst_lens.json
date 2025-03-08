@@ -1,7 +1,7 @@
 {
   "type": "ragium:assembler",
   "first_item_input": {
-    "count": 64,
+    "count": 32,
     "tag": "c:storage_blocks/amethyst"
   },
   "item_output": {

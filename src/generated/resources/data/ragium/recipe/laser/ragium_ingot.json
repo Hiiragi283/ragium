@@ -1,0 +1,12 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:amethyst_lens"
+  },
+  "item_input": {
+    "item": "ragium:inert_ragium_ingot"
+  },
+  "item_output": {
+    "item": "ragium:ragium_ingot"
+  }
+}

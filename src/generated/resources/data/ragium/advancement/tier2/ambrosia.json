@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier2/infuser",
+  "criteria": {
+    "has_ambrosia": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ambrosia"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ambrosia"
+    },
+    "title": {
+      "translate": "item.ragium.ambrosia"
+    }
+  },
+  "requirements": [
+    [
+      "has_ambrosia"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:ragi_alloy_ingot",
+  "criteria": {
+    "has_item_magnet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:item_magnet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:item_magnet"
+    },
+    "title": {
+      "translate": "item.ragium.item_magnet"
+    }
+  },
+  "requirements": [
+    [
+      "has_item_magnet"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

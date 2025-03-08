@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "has_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:precision_machine_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "ragium:textures/block/aluminum_casing.png",
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:duralumin_ingot"
+    },
+    "show_toast": false,
+    "title": "Ragium - Tier 3"
+  },
+  "requirements": [
+    [
+      "has_frame"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

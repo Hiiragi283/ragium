@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:tier2/aluminum_ingot",
+  "criteria": {
+    "has_duralumin_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/duralumin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:duralumin_ingot"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.ingot",
+      "with": [
+        {
+          "translate": "material.ragium.duralumin"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_duralumin_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

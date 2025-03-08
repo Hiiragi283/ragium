@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier1/assembler",
+  "criteria": {
+    "has_basic_circuit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:basic_circuit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:basic_circuit"
+    },
+    "title": {
+      "translate": "item.ragium.basic_circuit"
+    }
+  },
+  "requirements": [
+    [
+      "has_basic_circuit"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

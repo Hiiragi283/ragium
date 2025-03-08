@@ -1,23 +1,31 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import net.minecraft.network.chat.Component
 
-sealed class HTMachineException(message: String) : RuntimeException(message) {
+sealed class HTMachineException(private val component: Component) : RuntimeException(component.string) {
+    constructor(translationKey: String, vararg args: Any) : this(Component.translatable(translationKey, *args))
+
+    override fun getLocalizedMessage(): String? = component.string
+
+    //    Impl    //
+
     class Custom(message: String) : HTMachineException(message)
 
     class InvalidMultiblock : HTMachineException("Invalid Multiblock!")
 
     class MissingSlot(storageIO: HTStorageIO, index: Int) :
-        HTMachineException("Missing ${storageIO.serializedName} slot for index: $index!")
+        HTMachineException(RagiumTranslationKeys.EXCEPTION_MISSING_SLOT, storageIO.serializedName, index)
 
     class MissingTank(storageIO: HTStorageIO, index: Int) :
-        HTMachineException("Missing ${storageIO.serializedName} tank for index: $index!")
+        HTMachineException(RagiumTranslationKeys.EXCEPTION_MISSING_TANK, storageIO.serializedName, index)
 
     //    Energy    //
 
-    class ConsumeEnergy : HTMachineException("Failed to extract energy!")
+    class ConsumeEnergy : HTMachineException(RagiumTranslationKeys.EXCEPTION_CONSUME_ENERGY)
 
-    class GenerateEnergy : HTMachineException("Failed to receive energy!")
+    class GenerateEnergy : HTMachineException(RagiumTranslationKeys.EXCEPTION_GENERATE_ENERGY)
 
     //    Fluid    //
 
@@ -33,5 +41,5 @@ sealed class HTMachineException(message: String) : RuntimeException(message) {
 
     //    Recipe    //
 
-    class NoMatchingRecipe : HTMachineException("Failed to find matching recipe!")
+    class NoMatchingRecipe : HTMachineException(RagiumTranslationKeys.EXCEPTION_NO_MATCHING_RECIPE)
 }

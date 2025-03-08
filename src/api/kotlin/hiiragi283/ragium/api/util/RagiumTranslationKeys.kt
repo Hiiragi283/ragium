@@ -34,6 +34,12 @@ object RagiumTranslationKeys {
 
     //    Item    //
 
+    const val REDSTONE_LENS = "tooltip.ragium.item.redstone_lens"
+    const val GLOWSTONE_LENS = "tooltip.ragium.item.glowstone_lens"
+    const val DIAMOND_LENS = "tooltip.ragium.item.diamond_lens"
+    const val EMERALD_LENS = "tooltip.ragium.item.emerald_lens"
+    const val AMETHYST_LENS = "tooltip.ragium.item.amethyst_lens"
+
     const val AMBROSIA = "tooltip.ragium.item.ambrosia"
     const val BEE_WAX = "tooltip.ragium.item.bee_wax"
     const val DEFOLIANT = "tooltip.ragium.item.defoliant"
@@ -60,6 +66,14 @@ object RagiumTranslationKeys {
     const val MACHINE_NETWORK_ENERGY = "tooltip.ragium.machine.network_energy"
     const val MACHINE_TICK_RATE = "tooltip.ragium.machine.tick_rate"
     const val MACHINE_WORKING_SUCCESS = "tooltip.ragium.machine.working_success"
+
+    const val EXCEPTION_CONSUME_ENERGY = "tooltip.ragium.exception.consumer_energy"
+    const val EXCEPTION_GENERATE_ENERGY = "tooltip.ragium.exception.generate_energy"
+    const val EXCEPTION_MISSING_SLOT = "tooltip.ragium.exception.missing_slot"
+    const val EXCEPTION_MISSING_TANK = "tooltip.ragium.exception.missing_tank"
+    const val EXCEPTION_NO_MATCHING_RECIPE = "tooltip.ragium.exception.no_matching_recipe"
+    const val EXCEPTION_NO_SUNLIGHT = "tooltip.ragium.exception.no_sunlight"
+    const val EXCEPTION_UNKNOWN_RECIPE_TYPE = "tooltip.ragium.exception.unknown_recipe_type"
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
     const val MULTI_SHAPE_SUCCESS = "message.ragium.multi_shape.success"

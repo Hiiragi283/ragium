@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.generator
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.event.HTGeneratorFuelTimeEvent
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -20,7 +19,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.function.Supplier
 
 abstract class HTFluidGeneratorBlockEntity(
@@ -55,12 +53,6 @@ abstract class HTFluidGeneratorBlockEntity(
     override fun process(level: ServerLevel, pos: BlockPos) {
         val resourceIn: HTFluidVariant = inputTank.resource
         var amount: Int = getFuelAmount(resourceIn)
-        if (amount <= 0) {
-            val event = HTGeneratorFuelTimeEvent(this, resourceIn, amount)
-            FORGE_BUS.post(event)
-            if (event.isCanceled) throw HTMachineException.Custom("HTGeneratorFuelTimeEvent was canceled!")
-            amount = event.fuelTime
-        }
         if (amount <= 0) throw HTMachineException.Custom("Required fuel amount is negative value!")
 
         if (!inputTank.canExtract(amount)) throw HTMachineException.ShrinkFluid()

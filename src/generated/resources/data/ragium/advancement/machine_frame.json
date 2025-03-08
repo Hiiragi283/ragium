@@ -14,7 +14,7 @@
   },
   "display": {
     "description": "",
-    "frame": "goal",
+    "frame": "challenge",
     "icon": {
       "count": 1,
       "id": "ragium:machine_frame"

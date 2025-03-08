@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.generator
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineEnergyData.Empty
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -126,7 +125,7 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 if (burnTime > 0) {
                     return Stirling(RagiumConfig.getStirlingEnergy(burnTime))
                 }
-                return Empty(false)
+                return HTMachineEnergyData.Generate.EMPTY
             }
         }
 

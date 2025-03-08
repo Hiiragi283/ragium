@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier2/extractor",
+  "criteria": {
+    "has_bee_wax": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:bee_wax"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:bee_wax"
+    },
+    "title": {
+      "translate": "item.ragium.bee_wax"
+    }
+  },
+  "requirements": [
+    [
+      "has_bee_wax"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

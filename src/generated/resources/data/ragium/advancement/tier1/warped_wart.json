@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier1/grinder",
+  "criteria": {
+    "has_warped_wart": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:warped_wart"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:warped_wart"
+    },
+    "title": {
+      "translate": "item.ragium.warped_wart"
+    }
+  },
+  "requirements": [
+    [
+      "has_warped_wart"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

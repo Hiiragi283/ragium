@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier3/laser_assembly",
+  "criteria": {
+    "has_redstone_lens": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:redstone_lens"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:redstone_lens"
+    },
+    "title": {
+      "translate": "item.ragium.redstone_lens"
+    }
+  },
+  "requirements": [
+    [
+      "has_redstone_lens"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

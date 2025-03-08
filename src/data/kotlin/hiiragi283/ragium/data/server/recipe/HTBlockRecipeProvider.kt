@@ -50,14 +50,14 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
 
     private fun registerCasings(output: RecipeOutput) {
         // Wooden
-        HTShapedRecipeBuilder(RagiumBlocks.WOODEN_CASING)
+        HTShapedRecipeBuilder(RagiumBlocks.WOODEN_CASING, 4)
             .cross8()
             .define('A', ItemTags.LOGS)
             .define('B', ItemTags.PLANKS)
             .define('C', RagiumItems.FORGE_HAMMER)
             .save(output)
         // Cobblestone
-        HTShapedRecipeBuilder(RagiumBlocks.COBBLESTONE_CASING)
+        HTShapedRecipeBuilder(RagiumBlocks.COBBLESTONE_CASING, 4)
             .cross8()
             .define('A', Items.STONE)
             .define('B', Items.COBBLESTONE)

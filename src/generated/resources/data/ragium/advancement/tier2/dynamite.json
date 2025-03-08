@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier2/infuser",
+  "criteria": {
+    "has_dynamite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:dynamite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:dynamite"
+    },
+    "title": {
+      "translate": "item.ragium.dynamite"
+    }
+  },
+  "requirements": [
+    [
+      "has_dynamite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

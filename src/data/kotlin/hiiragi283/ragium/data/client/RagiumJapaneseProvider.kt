@@ -264,6 +264,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.HONEY_BUCKET, "蜂蜜入りバケツ")
+        addItem(RagiumItems.INERT_RAGIUM_INGOT, "不活性ラギウムインゴット")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
@@ -280,6 +281,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BLANK_TICKET, "空のチケット")
         addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
+
+        add(RagiumTranslationKeys.REDSTONE_LENS, "フィーバーブースト！！")
+        add(RagiumTranslationKeys.GLOWSTONE_LENS, "ゴージャスタイムだ")
+        add(RagiumTranslationKeys.DIAMOND_LENS, "輝きのデストロイヤー")
+        add(RagiumTranslationKeys.EMERALD_LENS, "デネブ，アルタイル，そしてベガ")
+        add(RagiumTranslationKeys.AMETHYST_LENS, "ファイナルフォームライドｫ")
 
         add(RagiumTranslationKeys.AMBROSIA, "無限に食べられちまうんだ！")
         add(RagiumTranslationKeys.BEE_WAX, "ハニカムと同様に使える")
@@ -305,6 +312,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "%s FE")
         add(RagiumTranslationKeys.MACHINE_TICK_RATE, "- 処理時間: %s ティック（%s秒）")
         add(RagiumTranslationKeys.MACHINE_WORKING_SUCCESS, "正常に稼働中！")
+
+        add(RagiumTranslationKeys.EXCEPTION_CONSUME_ENERGY, "エネルギーを消費できません！")
+        add(RagiumTranslationKeys.EXCEPTION_GENERATE_ENERGY, "エネルギーを生産できません！")
+        add(RagiumTranslationKeys.EXCEPTION_MISSING_SLOT, "次の%sスロットが見つかりません: %s番目!")
+        add(RagiumTranslationKeys.EXCEPTION_MISSING_TANK, "次の%sタンクが見つかりません: %s番目!")
+        add(RagiumTranslationKeys.EXCEPTION_NO_MATCHING_RECIPE, "現在のインプットに一致するレシピがありません！")
+        add(RagiumTranslationKeys.EXCEPTION_NO_SUNLIGHT, "現在の位置から太陽光を得られません！")
+        add(RagiumTranslationKeys.EXCEPTION_UNKNOWN_RECIPE_TYPE, "触媒スロットのアイテムからレシピの種類を参照できません！")
 
         add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")
         add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "機械の構造は有効です！")

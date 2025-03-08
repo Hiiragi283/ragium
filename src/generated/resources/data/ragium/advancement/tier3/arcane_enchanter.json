@@ -1,0 +1,35 @@
+{
+  "parent": "ragium:tier3/root",
+  "criteria": {
+    "has_machine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:arcane_enchanter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.arcane_enchanter.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:arcane_enchanter"
+    },
+    "title": {
+      "translate": "machine_type.arcane_enchanter"
+    }
+  },
+  "requirements": [
+    [
+      "has_machine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

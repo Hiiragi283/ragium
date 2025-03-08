@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.component.HTTeleportPos
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.ChatFormatting
+import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
@@ -74,6 +75,7 @@ class HTTeleportTicket(properties: Properties) : Item(properties) {
             serverPlayer.changeDimension(transition)
             serverPlayer.resetFallDistance()
             serverPlayer.resetCurrentImpulseContext()
+            CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack)
             stack.consume(1, serverPlayer)
             level.playSound(
                 null,

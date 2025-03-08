@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier1/compressor",
+  "criteria": {
+    "has_meat_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:meat_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:meat_ingot"
+    },
+    "title": {
+      "translate": "item.ragium.meat_ingot"
+    }
+  },
+  "requirements": [
+    [
+      "has_meat_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

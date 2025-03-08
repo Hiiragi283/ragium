@@ -1,0 +1,29 @@
+{
+  "parent": "ragium:tier1/ragi_crystal",
+  "criteria": {
+    "use_ragi_lantern": {
+      "conditions": {
+        "item": {
+          "items": "ragium:ragi_lantern"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_lantern"
+    },
+    "title": {
+      "translate": "item.ragium.ragi_lantern"
+    }
+  },
+  "requirements": [
+    [
+      "use_ragi_lantern"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier3/laser_assembly",
+  "criteria": {
+    "has_emerald_lens": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:emerald_lens"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:emerald_lens"
+    },
+    "title": {
+      "translate": "item.ragium.emerald_lens"
+    }
+  },
+  "requirements": [
+    [
+      "has_emerald_lens"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

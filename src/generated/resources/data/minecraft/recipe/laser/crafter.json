@@ -1,0 +1,12 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:redstone_lens"
+  },
+  "item_input": {
+    "tag": "c:player_workstations/crafting_tables"
+  },
+  "item_output": {
+    "item": "minecraft:crafter"
+  }
+}

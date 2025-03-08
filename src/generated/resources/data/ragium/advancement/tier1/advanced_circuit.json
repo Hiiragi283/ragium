@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier1/basic_circuit",
+  "criteria": {
+    "has_advanced_circuit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:advanced_circuit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:advanced_circuit"
+    },
+    "title": {
+      "translate": "item.ragium.advanced_circuit"
+    }
+  },
+  "requirements": [
+    [
+      "has_advanced_circuit"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

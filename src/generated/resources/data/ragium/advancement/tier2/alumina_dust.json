@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:tier2/solidifier",
+  "criteria": {
+    "has_alumina_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/alumina"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:alumina_dust"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.dust",
+      "with": [
+        {
+          "translate": "material.ragium.alumina"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_alumina_dust"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

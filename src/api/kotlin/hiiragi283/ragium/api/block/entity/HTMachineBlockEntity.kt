@@ -214,7 +214,7 @@ abstract class HTMachineBlockEntity(
 
     private fun failed(throwable: Throwable) {
         isActive = false
-        errorCache = throwable.message
+        errorCache = throwable.localizedMessage
         onFailed(throwable)
         FORGE_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
     }

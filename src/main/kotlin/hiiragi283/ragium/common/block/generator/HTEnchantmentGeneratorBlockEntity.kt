@@ -30,7 +30,7 @@ class HTEnchantmentGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             }.sum()
         return when {
             enchPower >= 1f -> EnchPower(enchPower)
-            else -> HTMachineEnergyData.Empty(false)
+            else -> HTMachineEnergyData.Generate.EMPTY
         }
     }
 

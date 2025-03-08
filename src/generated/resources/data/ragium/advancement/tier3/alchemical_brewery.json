@@ -1,0 +1,35 @@
+{
+  "parent": "ragium:tier3/root",
+  "criteria": {
+    "has_machine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:alchemical_brewery"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.alchemical_brewery.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:alchemical_brewery"
+    },
+    "title": {
+      "translate": "machine_type.alchemical_brewery"
+    }
+  },
+  "requirements": [
+    [
+      "has_machine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

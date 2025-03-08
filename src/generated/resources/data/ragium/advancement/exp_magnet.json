@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:item_magnet",
+  "criteria": {
+    "has_exp_magnet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:exp_magnet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:exp_magnet"
+    },
+    "title": {
+      "translate": "item.ragium.exp_magnet"
+    }
+  },
+  "requirements": [
+    [
+      "has_exp_magnet"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

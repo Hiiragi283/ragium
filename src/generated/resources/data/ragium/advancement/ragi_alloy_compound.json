@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_ragi_alloy_compound": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ragi_alloy_compound"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_alloy_compound"
+    },
+    "title": {
+      "translate": "item.ragium.ragi_alloy_compound"
+    }
+  },
+  "requirements": [
+    [
+      "has_ragi_alloy_compound"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

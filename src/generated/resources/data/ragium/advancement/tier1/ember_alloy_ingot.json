@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:tier1/alloy_furnace",
+  "criteria": {
+    "has_ember_alloy_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/ember_alloy"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ember_alloy_ingot"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.ingot",
+      "with": [
+        {
+          "translate": "material.ragium.ember_alloy"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_ember_alloy_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

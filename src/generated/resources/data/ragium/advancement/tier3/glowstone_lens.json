@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier3/laser_assembly",
+  "criteria": {
+    "has_glowstone_lens": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:glowstone_lens"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:glowstone_lens"
+    },
+    "title": {
+      "translate": "item.ragium.glowstone_lens"
+    }
+  },
+  "requirements": [
+    [
+      "has_glowstone_lens"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
