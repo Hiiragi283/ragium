@@ -147,18 +147,16 @@ object RagiumCreativeTabs {
             add(RagiumItems.DIVING_GOGGLE)
             add(RagiumItems.JETPACK)
             // Tools
-            add(RagiumItems.FORGE_HAMMER)
-            add(RagiumItems.RAGI_LANTERN)
-            add(RagiumItems.RAGI_SHEARS)
-
-            addAll(RagiumItems.EMBER_ALLOY_TOOLS.tools)
+            addAll(RagiumItems.RAGI_ALLOY_TOOLS.tools)
             addAll(RagiumItems.STEEL_TOOLS.tools)
+            addAll(RagiumItems.DURALUMIN_TOOLS.tools)
+
             add(RagiumItems.FEVER_PICKAXE)
             add(RagiumItems.SILKY_PICKAXE)
 
             add(RagiumItems.POTION_BUNDLE)
-            add(RagiumItems.DEFOLIANT)
             add(RagiumItems.DURALUMIN_CASE)
+            add(RagiumItems.RAGI_LANTERN)
             // Magnets
             addAll(RagiumItems.MAGNETS)
             // Dynamites

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.entity
 
+import hiiragi283.ragium.api.extension.emptyBlock
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.BlockPos
@@ -27,7 +28,7 @@ class HTFlattenDynamite : HTDynamite {
             for (y: Int in (hitPos.y..level.maxBuildHeight)) {
                 for (x: Int in (chunkPos.minBlockX..chunkPos.maxBlockX)) {
                     for (z: Int in (chunkPos.minBlockZ..chunkPos.maxBlockZ)) {
-                        level.removeBlock(BlockPos(x, y, z), false)
+                        level.emptyBlock(BlockPos(x, y, z))
                     }
                 }
             }

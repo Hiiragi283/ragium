@@ -21,6 +21,6 @@ class HTPoisonDynamiteItem(properties: Properties) : HTThrowableItem(properties)
         tooltips.add(RagiumAPI.getInstance().createRangeText(stack))
     }
 
-    override fun throwDynamite(level: Level, player: Player, stack: ItemStack): Projectile =
+    override fun throwProjectile(level: Level, player: Player, stack: ItemStack): Projectile =
         HTDynamite.withItem(level, player, stack, ::HTPoisonDynamite)
 }

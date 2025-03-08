@@ -24,6 +24,7 @@
     "ragium:solar_generator",
     "ragium:solidifier",
     "ragium:stirling_generator",
-    "ragium:thermal_generator"
+    "ragium:thermal_generator",
+    "#c:tools/forge_hammer"
   ]
 }

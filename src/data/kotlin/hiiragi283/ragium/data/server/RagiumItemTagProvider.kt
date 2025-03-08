@@ -168,17 +168,17 @@ class RagiumItemTagProvider(
     //    Tool    //
 
     private fun toolTags() {
-        builder.add(ForgeTool.TAG, RagiumItems.FORGE_HAMMER)
-        builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.FORGE_HAMMER)
         builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.RAGI_LANTERN)
-        builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.RAGI_SHEARS)
-        builder.add(ItemTags.MINING_ENCHANTABLE, RagiumItems.RAGI_SHEARS)
         builder.add(ItemTags.PICKAXES, RagiumItems.FEVER_PICKAXE)
         builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)
-        builder.add(Tags.Items.TOOLS_SHEAR, RagiumItems.RAGI_SHEARS)
+        builder.addTag(ForgeTool.TAG, RagiumItemTags.TOOLS_FORGE_HAMMER)
+        builder.addTag(ItemTags.DURABILITY_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)
+        builder.addTag(ItemTags.MINING_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)
+        builder.addTag(ItemTags.MINING_LOOT_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)
 
-        RagiumItems.EMBER_ALLOY_TOOLS.appendTags(builder::add)
+        RagiumItems.RAGI_ALLOY_TOOLS.appendTags(builder::add)
         RagiumItems.STEEL_TOOLS.appendTags(builder::add)
+        RagiumItems.DURALUMIN_TOOLS.appendTags(builder::add)
 
         for (dynamite: DeferredItem<out HTThrowableItem> in RagiumItems.DYNAMITES) {
             builder.add(RagiumItemTags.DYNAMITES, dynamite)

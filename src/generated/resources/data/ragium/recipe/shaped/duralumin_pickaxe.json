@@ -3,15 +3,19 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:ingots/ragium"
+      "tag": "c:rods/wooden"
+    },
+    "B": {
+      "tag": "c:ingots/duralumin"
     }
   },
   "pattern": [
-    " A",
-    "A "
+    " A ",
+    " A ",
+    "BBB"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ragi_shears"
+    "id": "ragium:duralumin_pickaxe"
   }
 }

@@ -9,6 +9,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
 class HTFlattenDynamiteItem(properties: Properties) : HTThrowableItem(properties) {
-    override fun throwDynamite(level: Level, player: Player, stack: ItemStack): Projectile =
+    override fun throwProjectile(level: Level, player: Player, stack: ItemStack): Projectile =
         HTDynamite.withItem(level, player, stack, ::HTFlattenDynamite)
 }

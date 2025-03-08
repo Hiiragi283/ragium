@@ -3,19 +3,19 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:rods/wooden"
+      "tag": "c:ingots/duralumin"
     },
     "B": {
-      "tag": "c:ingots/ember_alloy"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
-    "A",
-    "B",
-    "B"
+    " AA",
+    "BBA",
+    " AA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ember_alloy_sword"
+    "id": "ragium:duralumin_hammer"
   }
 }

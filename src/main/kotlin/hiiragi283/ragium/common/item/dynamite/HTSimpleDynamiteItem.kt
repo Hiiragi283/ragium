@@ -30,6 +30,6 @@ class HTSimpleDynamiteItem(properties: Properties) : HTThrowableItem(properties)
         )
     }
 
-    override fun throwDynamite(level: Level, player: Player, stack: ItemStack): Projectile =
+    override fun throwProjectile(level: Level, player: Player, stack: ItemStack): Projectile =
         HTDynamite.withItem(level, player, stack, ::HTSimpleDynamite)
 }

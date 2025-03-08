@@ -18,7 +18,7 @@
       "tag": "minecraft:coals"
     },
     {
-      "item": "ragium:forge_hammer"
+      "tag": "c:tools/forge_hammer"
     }
   ],
   "result": {

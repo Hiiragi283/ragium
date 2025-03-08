@@ -44,7 +44,6 @@ internal object RagiumGameEvents {
         val access: RegistryAccess = event.entity.level().registryAccess()
         val enchLookup: HolderLookup.RegistryLookup<Enchantment> = access.enchLookup()
         val enchMap: Map<ResourceKey<Enchantment>, Int> = when {
-            result.`is`(RagiumItems.EMBER_ALLOY_TOOLS.swordItem) -> mapOf(Enchantments.FIRE_ASPECT to 2)
             result.item in RagiumItems.EMBER_ALLOY_ARMORS -> mapOf(Enchantments.FIRE_PROTECTION to 2)
             else -> return
         }

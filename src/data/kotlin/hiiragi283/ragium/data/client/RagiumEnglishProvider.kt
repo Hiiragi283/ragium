@@ -19,7 +19,6 @@ import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.integration.RagiumMekAddon
 import net.minecraft.data.PackOutput
-import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -125,6 +124,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addEntityType(RagiumEntityTypes.DYNAMITE, "Dynamite")
         addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
         addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
+        addEntityType(RagiumEntityTypes.WITHER_DYNAMITE, "Wither Dynamite")
         // Fluids
         addFluid(RagiumFluids.GLASS, "Molten Glass")
         addFluid(RagiumFluids.HONEY, "Honey")
@@ -202,37 +202,19 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
         addItem(RagiumItems.JETPACK, "Jetpack")
 
-        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.HELMET], "Ember Alloy Helmet")
-        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.CHESTPLATE], "Ember Alloy Chestplate")
-        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.LEGGINGS], "Ember Alloy Leggings")
-        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.BOOTS], "Ember Alloy Boots")
-
-        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "Steel Helmet")
-        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "Steel Chestplate")
-        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.LEGGINGS], "Steel Leggings")
-        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.BOOTS], "Steel Boots")
+        RagiumItems.EMBER_ALLOY_ARMORS.addTranslationsEn("Ember Alloy", ::addItem)
+        RagiumItems.STEEL_ARMORS.addTranslationsEn("Steel", ::addItem)
 
         addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
-        addItem(RagiumItems.FORGE_HAMMER, "Forge Hammer")
-        addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
-        addItem(RagiumItems.RAGI_SHEARS, "Ragi-Shears")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
 
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.axeItem, "Ember Alloy Axe")
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.hoeItem, "Ember Alloy Hoe")
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.pickaxeItem, "Ember Alloy Pickaxe")
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.shovelItem, "Ember Alloy Shovel")
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.swordItem, "Ember Alloy Sword")
-
-        addItem(RagiumItems.STEEL_TOOLS.axeItem, "Steel Axe")
-        addItem(RagiumItems.STEEL_TOOLS.hoeItem, "Steel Hoe")
-        addItem(RagiumItems.STEEL_TOOLS.pickaxeItem, "Steel Pickaxe")
-        addItem(RagiumItems.STEEL_TOOLS.shovelItem, "Steel Shovel")
-        addItem(RagiumItems.STEEL_TOOLS.swordItem, "Steel Sword")
+        RagiumItems.RAGI_ALLOY_TOOLS.addTranslationsEn("Ragi-Alloy", ::addItem)
+        RagiumItems.STEEL_TOOLS.addTranslationsEn("Steel", ::addItem)
+        RagiumItems.DURALUMIN_TOOLS.addTranslationsEn("Duralumin", ::addItem)
 
         addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
-        addItem(RagiumItems.DEFOLIANT, "Defoliant")
         addItem(RagiumItems.DURALUMIN_CASE, "Duralumin Case")
+        addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
 
         addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
         addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
@@ -240,6 +222,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.DYNAMITE, "Dynamite")
         addItem(RagiumItems.FLATTEN_DYNAMITE, "Flatten Dynamite")
         addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")
+        addItem(RagiumItems.WITHER_DYNAMITE, "Wither Dynamite")
 
         addItem(RagiumItems.BALL_PRESS_MOLD, "Press Mold (Ball)")
         addItem(RagiumItems.BLOCK_PRESS_MOLD, "Press Mold (Block)")
@@ -291,7 +274,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.AMBROSIA, "Can be eaten for infinity times!")
         add(RagiumTranslationKeys.BEE_WAX, "Can be used as same as Honeycomb")
-        add(RagiumTranslationKeys.DEFOLIANT, "Changes 9x9x9 area into waste land")
+
         add(RagiumTranslationKeys.DURALUMIN_CASE, "Right-click to collect or place Spawner")
         add(RagiumTranslationKeys.DYNAMITE, "Explodes when hit")
         add(RagiumTranslationKeys.EFFECT_RANGE, "Effect Range: %s blocks")
@@ -306,6 +289,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.SILKY_PICKAXE, "Always applies Silk Touch")
         add(RagiumTranslationKeys.SOAP, "Right-click to wash targeted block")
         add(RagiumTranslationKeys.WARPED_WART, "Removes one random effect when eaten")
+        add(RagiumTranslationKeys.WITHER_DYNAMITE_0, "Give Wither effect for entities in range")
+        add(RagiumTranslationKeys.WITHER_DYNAMITE_1, "Degrade block in range")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
         add(RagiumTranslationKeys.MACHINE_COST_MODIFIER, "- Energy Cost Modifier: %sx")

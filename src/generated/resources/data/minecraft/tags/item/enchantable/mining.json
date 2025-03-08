@@ -20,11 +20,11 @@
     "ragium:manual_grinder",
     "ragium:mixer",
     "ragium:multi_smelter",
-    "ragium:ragi_shears",
     "ragium:refinery",
     "ragium:solar_generator",
     "ragium:solidifier",
     "ragium:stirling_generator",
-    "ragium:thermal_generator"
+    "ragium:thermal_generator",
+    "#c:tools/forge_hammer"
   ]
 }

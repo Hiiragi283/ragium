@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/ember_alloy_pickaxe"
+    "layer0": "ragium:item/wither_dynamite"
   }
 }

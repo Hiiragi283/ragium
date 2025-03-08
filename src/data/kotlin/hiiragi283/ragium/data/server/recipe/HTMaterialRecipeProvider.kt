@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -62,7 +63,7 @@ object HTMaterialRecipeProvider : HTRecipeProvider() {
             HTShapedRecipeBuilder(gear)
                 .hollow4()
                 .define('A', parentPrefix, material)
-                .define('B', RagiumItems.FORGE_HAMMER)
+                .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
                 .save(output)
         }
 

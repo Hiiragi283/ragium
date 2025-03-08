@@ -45,17 +45,22 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         // Defoliant
         builder(RagiumDataMaps.DEFOLIANT)
-            .add(BlockTags.CROPS, HTDefoliant(Blocks.AIR), false)
-            .add(BlockTags.DIRT, HTDefoliant(Blocks.COARSE_DIRT), false)
-            .add(BlockTags.LEAVES, HTDefoliant(Blocks.AIR), false)
-            .add(BlockTags.REPLACEABLE_BY_TREES, HTDefoliant(Blocks.AIR), false)
-            .add(BlockTags.SAPLINGS, HTDefoliant(Blocks.DEAD_BUSH), false)
-            .add(BlockTags.WART_BLOCKS, HTDefoliant(Blocks.AIR), false)
-            .addBlock(Blocks.BROWN_MUSHROOM_BLOCK, HTDefoliant(Blocks.AIR), false)
-            .addBlock(Blocks.CRIMSON_NYLIUM, HTDefoliant(Blocks.NETHERRACK), false)
-            .addBlock(Blocks.MOSS_CARPET, HTDefoliant(Blocks.AIR), false)
-            .addBlock(Blocks.RED_MUSHROOM_BLOCK, HTDefoliant(Blocks.AIR), false)
-            .addBlock(Blocks.WARPED_NYLIUM, HTDefoliant(Blocks.NETHERRACK), false)
+            .add(BlockTags.CROPS, HTDefoliant.AIR, false)
+            .add(BlockTags.DIRT, HTDefoliant.of(Blocks.COARSE_DIRT), false)
+            .add(BlockTags.LEAVES, HTDefoliant.AIR, false)
+            .add(BlockTags.REPLACEABLE_BY_TREES, HTDefoliant.AIR, false)
+            .add(BlockTags.SAPLINGS, HTDefoliant.of(Blocks.DEAD_BUSH), false)
+            .add(BlockTags.WART_BLOCKS, HTDefoliant.AIR, false)
+            .addBlock(Blocks.BROWN_MUSHROOM_BLOCK, HTDefoliant.AIR, false)
+            .addBlock(Blocks.CRIMSON_NYLIUM, HTDefoliant.of(Blocks.NETHERRACK), false)
+            .addBlock(Blocks.MOSS_CARPET, HTDefoliant.AIR, false)
+            .addBlock(Blocks.RED_MUSHROOM_BLOCK, HTDefoliant.AIR, false)
+            .addBlock(Blocks.WARPED_NYLIUM, HTDefoliant.of(Blocks.NETHERRACK), false)
+            // Sea Grasses
+            .addBlock(Blocks.KELP, HTDefoliant.AIR, false)
+            .addBlock(Blocks.KELP_PLANT, HTDefoliant.AIR, false)
+            .addBlock(Blocks.SEAGRASS, HTDefoliant.AIR, false)
+            .addBlock(Blocks.TALL_SEAGRASS, HTDefoliant.AIR, false)
 
         // Soap
         builder(RagiumDataMaps.SOAP)

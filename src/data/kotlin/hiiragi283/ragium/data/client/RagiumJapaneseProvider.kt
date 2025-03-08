@@ -19,7 +19,6 @@ import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.integration.RagiumMekAddon
 import net.minecraft.data.PackOutput
-import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -125,6 +124,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addEntityType(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
         addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
         addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
+        addEntityType(RagiumEntityTypes.WITHER_DYNAMITE, "ウィザーダイナマイト")
         // Fluids
         addFluid(RagiumFluids.GLASS, "溶融ガラス")
         addFluid(RagiumFluids.HONEY, "蜂蜜")
@@ -202,36 +202,18 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
         addItem(RagiumItems.JETPACK, "ジェットパック")
 
-        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.HELMET], "熾火合金のヘルメット")
-        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.CHESTPLATE], "熾火合金のチェストプレート")
-        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.LEGGINGS], "熾火合金のレギンス")
-        addItem(RagiumItems.EMBER_ALLOY_ARMORS[ArmorItem.Type.BOOTS], "熾火合金のブーツ")
-
-        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.HELMET], "鋼鉄のヘルメット")
-        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.CHESTPLATE], "鋼鉄のチェストプレート")
-        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.LEGGINGS], "鋼鉄のレギンス")
-        addItem(RagiumItems.STEEL_ARMORS[ArmorItem.Type.BOOTS], "鋼鉄のブーツ")
+        RagiumItems.EMBER_ALLOY_ARMORS.addTranslationsJp("熾火合金", ::addItem)
+        RagiumItems.STEEL_ARMORS.addTranslationsJp("鋼鉄", ::addItem)
 
         addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
-        addItem(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
-        addItem(RagiumItems.RAGI_SHEARS, "らぎハサミ")
         addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
 
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.axeItem, "熾火合金の斧")
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.hoeItem, "熾火合金のクワ")
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.pickaxeItem, "熾火合金のツルハシ")
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.shovelItem, "熾火合金のシャベル")
-        addItem(RagiumItems.EMBER_ALLOY_TOOLS.swordItem, "熾火合金の剣")
-
-        addItem(RagiumItems.STEEL_TOOLS.axeItem, "鋼鉄の斧")
-        addItem(RagiumItems.STEEL_TOOLS.hoeItem, "鋼鉄のクワ")
-        addItem(RagiumItems.STEEL_TOOLS.pickaxeItem, "鋼鉄のツルハシ")
-        addItem(RagiumItems.STEEL_TOOLS.shovelItem, "鋼鉄のシャベル")
-        addItem(RagiumItems.STEEL_TOOLS.swordItem, "鋼鉄の剣")
+        RagiumItems.RAGI_ALLOY_TOOLS.addTranslationsJp("ラギ合金", ::addItem)
+        RagiumItems.STEEL_TOOLS.addTranslationsJp("鋼鉄", ::addItem)
+        RagiumItems.DURALUMIN_TOOLS.addTranslationsJp("ジュラルミン", ::addItem)
 
         addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
-        addItem(RagiumItems.DEFOLIANT, "枯葉剤")
         addItem(RagiumItems.DURALUMIN_CASE, "ジュラルミンケース")
 
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
@@ -240,6 +222,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
         addItem(RagiumItems.FLATTEN_DYNAMITE, "整地用ダイナマイト")
         addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")
+        addItem(RagiumItems.WITHER_DYNAMITE, "ウィザーダイナマイト")
+
         addItem(RagiumItems.BLANK_PRESS_MOLD, "プレス型（なし）")
         addItem(RagiumItems.BALL_PRESS_MOLD, "プレス型（ボール）")
         addItem(RagiumItems.BLOCK_PRESS_MOLD, "プレス型（ブロック）")
@@ -290,7 +274,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.AMBROSIA, "無限に食べられちまうんだ！")
         add(RagiumTranslationKeys.BEE_WAX, "ハニカムと同様に使える")
-        add(RagiumTranslationKeys.DEFOLIANT, "9x9x9の範囲を荒れ地に変える")
         add(RagiumTranslationKeys.DURALUMIN_CASE, "右クリックでスポナーを回収/設置する")
         add(RagiumTranslationKeys.DYNAMITE, "着弾時に爆発を起こす")
         add(RagiumTranslationKeys.EFFECT_RANGE, "効果範囲: %s ブロック")
@@ -305,6 +288,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.SILKY_PICKAXE, "常にシルクタッチが発動する")
         add(RagiumTranslationKeys.SOAP, "右クリックで対象のブロックを洗う")
         add(RagiumTranslationKeys.WARPED_WART, "食べるとランダムなデバフを一つ消す")
+        add(RagiumTranslationKeys.WITHER_DYNAMITE_0, "範囲内のエンティティに衰退デバフを与える")
+        add(RagiumTranslationKeys.WITHER_DYNAMITE_1, "範囲内のブロックを劣化させる")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
         add(RagiumTranslationKeys.MACHINE_COST_MODIFIER, "- 消費/生産エネルギーの倍率: %sx")

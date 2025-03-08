@@ -13,14 +13,14 @@ abstract class HTThrowableItem(properties: Properties) : Item(properties) {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
         val stack: ItemStack = player.mainHandItem
         if (!level.isClientSide) {
-            val dynamite: Projectile = throwDynamite(level, player, stack)
-            dynamite.shootFromRotation(player, player.xRot, player.yRot, 0f, 1.5f, 1f)
-            level.addFreshEntity(dynamite)
+            val projectile: Projectile = throwProjectile(level, player, stack)
+            projectile.shootFromRotation(player, player.xRot, player.yRot, 0f, 1.5f, 1f)
+            level.addFreshEntity(projectile)
         }
         player.awardStat(Stats.ITEM_USED.get(this))
         stack.consume(1, player)
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
     }
 
-    abstract fun throwDynamite(level: Level, player: Player, stack: ItemStack): Projectile
+    abstract fun throwProjectile(level: Level, player: Player, stack: ItemStack): Projectile
 }

@@ -14,11 +14,13 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelWriter
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.phys.Vec3
 
-//    BlockGetter    //
+//    Level    //
 
 /**
  * 指定した[pos]から[HTBlockEntity]を返します。
@@ -32,7 +34,9 @@ fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity
  */
 fun BlockGetter.getMachineAccess(pos: BlockPos): HTMachineAccess? = getBlockEntity(pos) as? HTMachineAccess
 
-//    Level    //
+fun LevelWriter.emptyBlock(pos: BlockPos) {
+    setBlock(pos, Blocks.AIR.defaultBlockState(), 0)
+}
 
 /**
  * [Level]を[ServerLevel]にキャストしようとします。

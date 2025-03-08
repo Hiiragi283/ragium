@@ -6,7 +6,7 @@
       "tag": "c:ingots/bronze"
     },
     "B": {
-      "item": "ragium:forge_hammer"
+      "tag": "c:tools/forge_hammer"
     }
   },
   "pattern": [

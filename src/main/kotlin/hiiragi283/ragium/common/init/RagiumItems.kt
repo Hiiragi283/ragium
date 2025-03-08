@@ -14,28 +14,29 @@ import hiiragi283.ragium.api.util.HTArmorSets
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTToolSets
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import hiiragi283.ragium.common.item.*
+import hiiragi283.ragium.common.item.HTCatalystItem
+import hiiragi283.ragium.common.item.HTSoapItem
+import hiiragi283.ragium.common.item.HTTeleportTicket
+import hiiragi283.ragium.common.item.HTThrowableItem
 import hiiragi283.ragium.common.item.armor.HTDivingGoggleItem
 import hiiragi283.ragium.common.item.armor.HTJetpackItem
 import hiiragi283.ragium.common.item.dynamite.HTFlattenDynamiteItem
 import hiiragi283.ragium.common.item.dynamite.HTPoisonDynamiteItem
 import hiiragi283.ragium.common.item.dynamite.HTSimpleDynamiteItem
+import hiiragi283.ragium.common.item.dynamite.HTWitherDynamiteItem
 import hiiragi283.ragium.common.item.food.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.food.HTPotionBundleItem
 import hiiragi283.ragium.common.item.food.HTWarpedWartItem
 import hiiragi283.ragium.common.item.magnet.HTExpMagnetItem
 import hiiragi283.ragium.common.item.magnet.HTMagnetItem
 import hiiragi283.ragium.common.item.magnet.HTSimpleMagnetItem
-import hiiragi283.ragium.common.item.tool.HTCraftingToolItem
 import hiiragi283.ragium.common.item.tool.HTDuraluminCaseItem
 import hiiragi283.ragium.common.item.tool.HTRagiLanternItem
 import hiiragi283.ragium.common.item.tool.HTSingleEnchantmentPickaxeItem
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
-import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -303,19 +304,13 @@ object RagiumItems {
     //    Tools    //
 
     @JvmField
-    val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> = register("forge_hammer", ::HTCraftingToolItem)
+    val RAGI_ALLOY_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.RAGI_ALLOY, RagiumMaterials.RAGI_ALLOY)
 
     @JvmField
-    val RAGI_LANTERN: DeferredItem<HTRagiLanternItem> = register("ragi_lantern", ::HTRagiLanternItem)
+    val STEEL_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.STEEL, CommonMaterials.STEEL)
 
     @JvmField
-    val RAGI_SHEARS: DeferredItem<ShearsItem> = register(
-        "ragi_shears",
-        ::ShearsItem,
-        itemProperty()
-            .component(DataComponents.TOOL, ShearsItem.createToolProperties())
-            .component(DataComponents.UNBREAKABLE, Unbreakable(true)),
-    )
+    val DURALUMIN_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.DURALUMIN, RagiumMaterials.DURALUMIN)
 
     @JvmField
     val FEVER_PICKAXE: DeferredItem<HTSingleEnchantmentPickaxeItem> = register(
@@ -324,12 +319,12 @@ object RagiumItems {
             HTSingleEnchantmentPickaxeItem(
                 Enchantments.FORTUNE,
                 5,
-                Tiers.GOLD,
+                RagiumToolMaterials.CUSTOM,
                 properties,
             )
         },
         itemProperty()
-            .attributes(DiggerItem.createAttributes(Tiers.GOLD, 1f, -2.8f))
+            .attributes(DiggerItem.createAttributes(RagiumToolMaterials.CUSTOM, 1f, -2.8f))
             .lore(RagiumTranslationKeys.FEVER_PICKAXE),
     )
 
@@ -340,20 +335,14 @@ object RagiumItems {
             HTSingleEnchantmentPickaxeItem(
                 Enchantments.SILK_TOUCH,
                 1,
-                Tiers.GOLD,
+                RagiumToolMaterials.CUSTOM,
                 properties,
             )
         },
         itemProperty()
-            .attributes(DiggerItem.createAttributes(Tiers.GOLD, 1f, -2.8f))
+            .attributes(DiggerItem.createAttributes(RagiumToolMaterials.CUSTOM, 1f, -2.8f))
             .lore(RagiumTranslationKeys.SILKY_PICKAXE),
     )
-
-    @JvmField
-    val EMBER_ALLOY_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.EMBER_ALLOY, RagiumMaterials.EMBER_ALLOY)
-
-    @JvmField
-    val STEEL_TOOLS = HTToolSets(REGISTER, RagiumToolMaterials.STEEL, CommonMaterials.STEEL)
 
     //    Utilities    //
 
@@ -365,18 +354,14 @@ object RagiumItems {
     )
 
     @JvmField
-    val DEFOLIANT: DeferredItem<HTDefoliantItem> = register(
-        "defoliant",
-        ::HTDefoliantItem,
-        itemProperty().lore(RagiumTranslationKeys.DEFOLIANT),
-    )
-
-    @JvmField
     val DURALUMIN_CASE: DeferredItem<HTDuraluminCaseItem> = register(
         "duralumin_case",
         ::HTDuraluminCaseItem,
         itemProperty().lore(RagiumTranslationKeys.DURALUMIN_CASE),
     )
+
+    @JvmField
+    val RAGI_LANTERN: DeferredItem<HTRagiLanternItem> = register("ragi_lantern", ::HTRagiLanternItem)
 
     //    Magnets    //
 
@@ -424,10 +409,18 @@ object RagiumItems {
     )
 
     @JvmField
+    val WITHER_DYNAMITE: DeferredItem<HTWitherDynamiteItem> = register(
+        "wither_dynamite",
+        ::HTWitherDynamiteItem,
+        itemProperty().lore(RagiumTranslationKeys.POISON_DYNAMITE),
+    )
+
+    @JvmField
     val DYNAMITES: List<DeferredItem<out HTThrowableItem>> = listOf(
         DYNAMITE,
         FLATTEN_DYNAMITE,
         POISON_DYNAMITE,
+        WITHER_DYNAMITE,
     )
 
     //    Molds    //

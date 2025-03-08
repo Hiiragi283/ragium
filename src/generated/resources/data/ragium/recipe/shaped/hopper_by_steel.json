@@ -6,7 +6,7 @@
       "tag": "c:ingots/steel"
     },
     "B": {
-      "item": "ragium:forge_hammer"
+      "tag": "c:tools/forge_hammer"
     },
     "C": {
       "tag": "c:chests"

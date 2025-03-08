@@ -39,7 +39,7 @@ object RagiumIEAddon : RagiumAddon {
                 override fun getProjectile(shooter: Player?, ammo: ItemStack, defaultProjectile: Entity): Entity? {
                     val dynamiteItem: HTThrowableItem? = ammo.item as? HTThrowableItem
                     if (dynamiteItem != null && shooter != null) {
-                        val dynamite: Projectile = dynamiteItem.throwDynamite(shooter.level(), shooter, ammo)
+                        val dynamite: Projectile = dynamiteItem.throwProjectile(shooter.level(), shooter, ammo)
                         dynamite.shootFromRotation(shooter, shooter.xRot, shooter.yRot, 0f, 3f, 0f)
                         ammo.consume(1, shooter)
                         return dynamite

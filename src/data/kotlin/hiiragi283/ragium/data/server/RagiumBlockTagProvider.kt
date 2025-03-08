@@ -44,6 +44,7 @@ class RagiumBlockTagProvider(
 
         for (block: DeferredBlock<*> in HTMachineType.getBlocks()) {
             builder.add(BlockTags.MINEABLE_WITH_PICKAXE, block)
+            builder.add(RagiumBlockTags.MINEABLE_WITH_HAMMER, block)
         }
 
         for (block: DeferredBlock<out Block> in buildList {
@@ -99,9 +100,6 @@ class RagiumBlockTagProvider(
         builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.FIRE)
         builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.LAVA)
         builder.add(RagiumBlockTags.HEATING_SOURCES, Blocks.MAGMA_BLOCK)
-
-        builder.addTag(RagiumBlockTags.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_PICKAXE)
-        builder.addTag(RagiumBlockTags.MINEABLE_WITH_DRILL, BlockTags.MINEABLE_WITH_SHOVEL)
 
         // Farmer's Delight
         builder.add(ModTags.HEAT_SOURCES, RagiumBlocks.MAGMA_BURNER)

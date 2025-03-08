@@ -2,6 +2,7 @@
   "values": [
     "ragium:dynamite",
     "ragium:flatten_dynamite",
-    "ragium:poison_dynamite"
+    "ragium:poison_dynamite",
+    "ragium:wither_dynamite"
   ]
 }

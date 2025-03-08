@@ -77,10 +77,6 @@ object RagiumBlockEntityTypes {
         register(HTMachineType.COMPRESSOR, ::HTCompressorBlockEntity)
 
     @JvmField
-    val CRUSHER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTCrusherBlockEntity>> =
-        register(HTMachineType.CRUSHER, ::HTCrusherBlockEntity)
-
-    @JvmField
     val ELECTRIC_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTElectricFurnaceBlockEntity>> =
         register(HTMachineType.ELECTRIC_FURNACE, ::HTElectricFurnaceBlockEntity)
 

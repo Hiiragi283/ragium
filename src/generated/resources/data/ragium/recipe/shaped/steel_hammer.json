@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/steel"
     },
     "B": {
       "tag": "c:rods/wooden"
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:forge_hammer"
+    "id": "ragium:steel_hammer"
   }
 }

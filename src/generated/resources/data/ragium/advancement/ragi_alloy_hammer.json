@@ -1,11 +1,11 @@
 {
   "parent": "ragium:ragi_alloy_ingot",
   "criteria": {
-    "has_forge_hammer": {
+    "has_ragi_alloy_hammer": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:forge_hammer"
+            "items": "ragium:ragi_alloy_hammer"
           }
         ]
       },
@@ -16,15 +16,15 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:forge_hammer"
+      "id": "ragium:ragi_alloy_hammer"
     },
     "title": {
-      "translate": "item.ragium.forge_hammer"
+      "translate": "item.ragium.ragi_alloy_hammer"
     }
   },
   "requirements": [
     [
-      "has_forge_hammer"
+      "has_ragi_alloy_hammer"
     ]
   ],
   "sends_telemetry_event": true

@@ -6,16 +6,16 @@
       "tag": "c:rods/wooden"
     },
     "B": {
-      "tag": "c:ingots/ember_alloy"
+      "tag": "c:ingots/ragi_alloy"
     }
   },
   "pattern": [
-    "A",
-    "A",
-    "B"
+    "A ",
+    "A ",
+    "BB"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ember_alloy_shovel"
+    "id": "ragium:ragi_alloy_hoe"
   }
 }

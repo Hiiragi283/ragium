@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.entity.HTFlare
 import hiiragi283.ragium.common.entity.HTFlattenDynamite
 import hiiragi283.ragium.common.entity.HTPoisonDynamite
 import hiiragi283.ragium.common.entity.HTSimpleDynamite
+import hiiragi283.ragium.common.entity.HTWitherDynamite
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
@@ -48,10 +49,15 @@ object RagiumEntityTypes {
     val POISON_DYNAMITE: DeferredHolder<EntityType<*>, EntityType<HTPoisonDynamite>> =
         register("poison_dynamite", ::HTPoisonDynamite, 0.25f)
 
+    @JvmField
+    val WITHER_DYNAMITE: DeferredHolder<EntityType<*>, EntityType<HTWitherDynamite>> =
+        register("wither_dynamite", ::HTWitherDynamite, 0.25f)
+
     @JvmStatic
     fun getDynamites(): List<EntityType<out HTDynamite>> = listOf(
         DYNAMITE.get(),
         FLATTEN_DYNAMITE.get(),
         POISON_DYNAMITE.get(),
+        WITHER_DYNAMITE.get(),
     )
 }

@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -125,7 +126,7 @@ object HTAlternativeRecipeProvider : HTRecipeProvider() {
                     "ABA",
                     " A ",
                 ).define('A', HTTagPrefix.INGOT, key)
-                .define('B', RagiumItems.FORGE_HAMMER)
+                .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
                 .save(output, RagiumAPI.id("bucket_by_$name"))
             // Hopper
             HTShapedRecipeBuilder(Items.HOPPER, modifier)
@@ -134,7 +135,7 @@ object HTAlternativeRecipeProvider : HTRecipeProvider() {
                     "ACA",
                     " A ",
                 ).define('A', HTTagPrefix.INGOT, key)
-                .define('B', RagiumItems.FORGE_HAMMER)
+                .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
                 .define('C', Tags.Items.CHESTS)
                 .save(output, RagiumAPI.id("hopper_by_$name"))
             // Piston

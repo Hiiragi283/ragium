@@ -33,6 +33,9 @@ object RagiumItemTags {
     @JvmField
     val TOOLS_KNIFE: TagKey<Item> = commonTag("tools/knife")
 
+    @JvmField
+    val TOOLS_FORGE_HAMMER: TagKey<Item> = commonTag("tools/forge_hammer")
+
     // Foods
     @JvmField
     val CROPS_WARPED_WART: TagKey<Item> = commonTag("crops/warped_wart")

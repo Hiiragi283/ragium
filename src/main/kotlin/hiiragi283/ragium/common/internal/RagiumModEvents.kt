@@ -100,7 +100,6 @@ internal object RagiumModEvents {
         registerHandlers(RagiumBlockEntityTypes.AUTO_CHISEL)
         registerHandlers(RagiumBlockEntityTypes.BREWERY)
         registerHandlers(RagiumBlockEntityTypes.COMPRESSOR)
-        registerHandlers(RagiumBlockEntityTypes.CRUSHER)
         registerHandlers(RagiumBlockEntityTypes.ELECTRIC_FURNACE)
         registerHandlers(RagiumBlockEntityTypes.EXTRACTOR)
         registerHandlers(RagiumBlockEntityTypes.GRINDER)

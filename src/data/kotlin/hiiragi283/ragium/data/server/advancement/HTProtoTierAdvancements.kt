@@ -30,7 +30,7 @@ object HTProtoTierAdvancements : HTAdvancementGenerator("") {
         val ragiAlloy: AdvancementHolder =
             createMaterial(ragiAlloyCompound, HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
 
-        val forgeHammer: AdvancementHolder = createSimple(ragiAlloy, RagiumItems.FORGE_HAMMER)
+        val forgeHammer: AdvancementHolder = createSimple(ragiAlloy, RagiumItems.RAGI_ALLOY_TOOLS.hammerItem)
         val itemMagnet: AdvancementHolder = createSimple(ragiAlloy, RagiumItems.ITEM_MAGNET)
         val expMagnet: AdvancementHolder =
             createSimple(itemMagnet, RagiumItems.EXP_MAGNET, HTDisplayInfoBuilder::setGoal)

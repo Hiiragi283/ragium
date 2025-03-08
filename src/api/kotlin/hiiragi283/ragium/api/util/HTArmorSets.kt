@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
+import java.util.function.Supplier
 
 class HTArmorSets(register: DeferredRegister.Items, material: Holder<ArmorMaterial>, val key: HTMaterialKey) {
     companion object {
@@ -46,5 +47,19 @@ class HTArmorSets(register: DeferredRegister.Items, material: Holder<ArmorMateri
         action(ItemTags.CHEST_ARMOR_ENCHANTABLE, get(ArmorItem.Type.CHESTPLATE))
         action(ItemTags.LEG_ARMOR_ENCHANTABLE, get(ArmorItem.Type.LEGGINGS))
         action(ItemTags.FOOT_ARMOR_ENCHANTABLE, get(ArmorItem.Type.BOOTS))
+    }
+
+    fun addTranslationsEn(name: String, action: (Supplier<out Item>, String) -> Unit) {
+        action(get(ArmorItem.Type.HELMET), "$name Helmet")
+        action(get(ArmorItem.Type.CHESTPLATE), "$name Chestplate")
+        action(get(ArmorItem.Type.LEGGINGS), "$name Leggings")
+        action(get(ArmorItem.Type.BOOTS), "$name Boots")
+    }
+
+    fun addTranslationsJp(name: String, action: (Supplier<out Item>, String) -> Unit) {
+        action(get(ArmorItem.Type.HELMET), "${name}のヘルメット")
+        action(get(ArmorItem.Type.CHESTPLATE), "${name}のチェストプレート")
+        action(get(ArmorItem.Type.LEGGINGS), "${name}のレギンス")
+        action(get(ArmorItem.Type.BOOTS), "${name}のブーツ")
     }
 }

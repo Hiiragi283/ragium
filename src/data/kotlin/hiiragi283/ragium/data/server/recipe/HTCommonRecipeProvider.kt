@@ -108,7 +108,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .shapeless(RecipeCategory.MISC, RagiumItems.STEEL_COMPOUND)
             .requires(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .requiresFor(4, Ingredient.of(ItemTags.COALS))
-            .requires(RagiumItems.FORGE_HAMMER)
+            .requires(RagiumItemTags.TOOLS_FORGE_HAMMER)
             .unlockedBy("has_iron", has(HTTagPrefix.DUST, VanillaMaterials.IRON))
             .savePrefixed(output)
 
@@ -266,7 +266,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_BLOCK, 4, CraftingBookCategory.BUILDING)
             .hollow4()
             .define('A', RagiumItemTags.PLASTICS)
-            .define('B', RagiumItems.FORGE_HAMMER)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICKS, category = CraftingBookCategory.BUILDING)
@@ -417,7 +417,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "AA",
                 "B ",
             ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', RagiumItems.FORGE_HAMMER)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
 
         register(RagiumItems.BALL_PRESS_MOLD)
@@ -502,7 +502,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "AAA",
                 "ABA",
             ).define('A', HTTagPrefix.INGOT, armorSet.key)
-            .define('B', RagiumItems.FORGE_HAMMER)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Chestplate
         HTShapedRecipeBuilder(armorSet[ArmorItem.Type.CHESTPLATE], category = CraftingBookCategory.EQUIPMENT)
@@ -511,7 +511,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "AAA",
                 "AAA",
             ).define('A', HTTagPrefix.INGOT, armorSet.key)
-            .define('B', RagiumItems.FORGE_HAMMER)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Leggings
         HTShapedRecipeBuilder(armorSet[ArmorItem.Type.LEGGINGS], category = CraftingBookCategory.EQUIPMENT)
@@ -520,7 +520,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "ABA",
                 "A A",
             ).define('A', HTTagPrefix.INGOT, armorSet.key)
-            .define('B', RagiumItems.FORGE_HAMMER)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Boots
         HTShapedRecipeBuilder(armorSet[ArmorItem.Type.BOOTS], category = CraftingBookCategory.EQUIPMENT)
@@ -528,21 +528,13 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "A A",
                 "ABA",
             ).define('A', HTTagPrefix.INGOT, armorSet.key)
-            .define('B', RagiumItems.FORGE_HAMMER)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
     }
 
     //    Tool    //
 
     private fun registerTool(output: RecipeOutput) {
-        HTShapedRecipeBuilder(RagiumItems.FORGE_HAMMER, category = CraftingBookCategory.EQUIPMENT)
-            .pattern(" AA")
-            .pattern("BBA")
-            .pattern(" AA")
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', Tags.Items.RODS_WOODEN)
-            .save(output)
-
         HTShapedRecipeBuilder(RagiumItems.ITEM_MAGNET, category = CraftingBookCategory.EQUIPMENT)
             .pattern("A A")
             .pattern("B B")
@@ -563,13 +555,6 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .hollow8()
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
-            .save(output)
-
-        HTShapedRecipeBuilder(RagiumItems.RAGI_SHEARS, category = CraftingBookCategory.EQUIPMENT)
-            .pattern(
-                " A",
-                "A ",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.DURALUMIN_CASE, category = CraftingBookCategory.EQUIPMENT)
@@ -603,8 +588,9 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('C', Tags.Items.RODS_WOODEN)
             .save(output)
 
-        toolSet(output, RagiumItems.EMBER_ALLOY_TOOLS)
+        toolSet(output, RagiumItems.RAGI_ALLOY_TOOLS)
         toolSet(output, RagiumItems.STEEL_TOOLS)
+        toolSet(output, RagiumItems.DURALUMIN_TOOLS)
     }
 
     private fun toolSet(output: RecipeOutput, toolSet: HTToolSets) {
@@ -652,6 +638,14 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 "B",
             ).define('A', Tags.Items.RODS_WOODEN)
             .define('B', HTTagPrefix.INGOT, toolSet.key)
+            .save(output)
+        // Forge Hammer
+        HTShapedRecipeBuilder(toolSet.hammerItem, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(" AA")
+            .pattern("BBA")
+            .pattern(" AA")
+            .define('A', HTTagPrefix.INGOT, toolSet.key)
+            .define('B', Tags.Items.RODS_WOODEN)
             .save(output)
     }
 

@@ -32,7 +32,6 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
             HTMachineType.ASSEMBLER to ::HTAssemblerBlockEntity,
             HTMachineType.AUTO_CHISEL to ::HTAutoChiselBlockEntity,
             HTMachineType.COMPRESSOR to ::HTCompressorBlockEntity,
-            HTMachineType.CRUSHER to ::HTCrusherBlockEntity,
             HTMachineType.ELECTRIC_FURNACE to ::HTElectricFurnaceBlockEntity,
             HTMachineType.GRINDER to ::HTGrinderBlockEntity,
             // Processor - Advanced

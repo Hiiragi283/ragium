@@ -24,10 +24,22 @@
     "minecraft:crimson_nylium": {
       "Name": "minecraft:netherrack"
     },
+    "minecraft:kelp": {
+      "Name": "minecraft:air"
+    },
+    "minecraft:kelp_plant": {
+      "Name": "minecraft:air"
+    },
     "minecraft:moss_carpet": {
       "Name": "minecraft:air"
     },
     "minecraft:red_mushroom_block": {
+      "Name": "minecraft:air"
+    },
+    "minecraft:seagrass": {
+      "Name": "minecraft:air"
+    },
+    "minecraft:tall_seagrass": {
       "Name": "minecraft:air"
     },
     "minecraft:warped_nylium": {
