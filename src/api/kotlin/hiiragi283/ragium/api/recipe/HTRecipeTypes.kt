@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.base.HTMultiItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
 import net.neoforged.bus.api.SubscribeEvent
@@ -14,15 +13,17 @@ import net.neoforged.neoforge.event.AddReloadListenerEvent
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object HTRecipeTypes {
     @JvmField
-    val ASSEMBLER = HTRecipeType<HTAssemblerRecipe>(
-        HTMachineType.ASSEMBLER,
-        HTMultiItemRecipe.Serializer(::HTAssemblerRecipe),
+    val ALLOY_FURNACE = HTRecipeType<HTAlloyFurnaceRecipe>(
+        HTMachineType.ALLOY_FURNACE,
+        HTAlloyFurnaceRecipe.CODEC,
+        HTAlloyFurnaceRecipe.STREAM_CODEC,
     )
 
     @JvmField
-    val BLAST_FURNACE = HTRecipeType<HTBlastFurnaceRecipe>(
-        HTMachineType.BLAST_FURNACE,
-        HTMultiItemRecipe.Serializer(::HTBlastFurnaceRecipe),
+    val ASSEMBLER = HTRecipeType<HTAssemblerRecipe>(
+        HTMachineType.ASSEMBLER,
+        HTAssemblerRecipe.CODEC,
+        HTAssemblerRecipe.STREAM_CODEC,
     )
 
     @JvmField
@@ -107,8 +108,8 @@ object HTRecipeTypes {
 
     @JvmField
     val ALL_TYPES: List<HTRecipeType<out HTMachineRecipe>> = listOf(
+        ALLOY_FURNACE,
         ASSEMBLER,
-        BLAST_FURNACE,
         BREWERY,
         COMPRESSOR,
         CRUSHER,

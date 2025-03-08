@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.recipe.HTAlloyFurnaceRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.event.HTMachineRecipesUpdatedEvent
 import hiiragi283.ragium.api.extension.blockLookup
@@ -32,7 +32,7 @@ import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 object RagiumRuntimeRecipes {
     @SubscribeEvent
     fun onMachineRecipesUpdated(event: HTMachineRecipesUpdatedEvent) {
-        blastFurnace(event)
+        alloyFurnace(event)
         compressor(event)
         extractor(event)
         grinder(event)
@@ -40,17 +40,16 @@ object RagiumRuntimeRecipes {
     }
 
     @JvmStatic
-    private fun blastFurnace(event: HTMachineRecipesUpdatedEvent) {
+    private fun alloyFurnace(event: HTMachineRecipesUpdatedEvent) {
         fun registerAlloy(output: HTMaterialKey, vararg pairs: Pair<HTMaterialKey, Int>) {
             event.register(
-                HTRecipeTypes.BLAST_FURNACE,
+                HTRecipeTypes.ALLOY_FURNACE,
                 RagiumAPI.id(HTTagPrefix.INGOT.createPath(output)),
             ) { lookup: HolderGetter<Item> ->
                 val ingot: Item = event
                     .getFirstItem(HTTagPrefix.INGOT, output)
                     ?: return@register null
-                HTMultiItemRecipeBuilder
-                    .blastFurnace(lookup)
+                HTAlloyFurnaceRecipeBuilder(lookup)
                     .apply {
                         for ((key: HTMaterialKey, count: Int) in pairs) {
                             itemInput(HTTagPrefix.DUST, key, count)

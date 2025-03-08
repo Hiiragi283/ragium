@@ -69,7 +69,6 @@ class RagiumClient(eventBus: IEventBus) {
         event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTPotionBundleScreen)
 
         event.register(RagiumMenuTypes.ASSEMBLER.get(), ::HTAssemblerScreen)
-        event.register(RagiumMenuTypes.BLAST_FURNACE.get(), ::HTBlastFurnaceScreen)
         event.register(RagiumMenuTypes.BREWERY.get(), ::HTBreweryScreen)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), ::HTExtractorScreen)
         event.register(RagiumMenuTypes.INFUSER.get(), ::HTInfuserScreen)

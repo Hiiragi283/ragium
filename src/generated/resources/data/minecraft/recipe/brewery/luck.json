@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:luck",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:emerald"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:emerald"
+  },
+  "potion_output": "minecraft:luck"
 }

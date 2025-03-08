@@ -1,14 +1,8 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "item": "minecraft:skeleton_skull"
-    },
-    {
-      "count": 64,
-      "tag": "c:ingots/ragium"
-    }
-  ],
+  "first_item_input": {
+    "item": "minecraft:skeleton_skull"
+  },
   "item_output": {
     "components": {
       "minecraft:item_name": "\"Hiiragi 283\"",
@@ -18,5 +12,9 @@
       "minecraft:rarity": "epic"
     },
     "item": "minecraft:player_head"
+  },
+  "second_item_input": {
+    "count": 64,
+    "tag": "c:ingots/ragium"
   }
 }

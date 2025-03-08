@@ -1,0 +1,17 @@
+{
+  "type": "ragium:assembler",
+  "first_item_input": {
+    "count": 7,
+    "tag": "c:dusts/aluminum"
+  },
+  "item_output": {
+    "count": 9,
+    "item": "ragium:duralumin_dust"
+  },
+  "second_item_input": {
+    "tag": "c:dusts/copper"
+  },
+  "third_item_input": {
+    "tag": "c:dusts/obsidian"
+  }
+}

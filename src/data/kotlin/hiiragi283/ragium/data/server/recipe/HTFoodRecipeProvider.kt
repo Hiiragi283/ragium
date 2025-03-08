@@ -25,8 +25,7 @@ import net.neoforged.neoforge.common.Tags
 object HTFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Melon Pie
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(Tags.Items.CROPS_MELON)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemOutput(RagiumItems.MELON_PIE, 2)
@@ -85,8 +84,7 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
             .savePrefixed(output)
 
         // Sweet Berries Cake
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemInput(RagiumItemTags.FOOD_CHOCOLATE, 3)
             .itemInput(Tags.Items.FOODS_BERRY, 2)
@@ -192,8 +190,7 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
                 types = HTCookingRecipeBuilder.SMOKING_TYPES,
             ).save(output)
         // Cooked Meat Ingot -> Canned Cooked Meat
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(RagiumItems.COOKED_MEAT_INGOT, 8)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.IRON)
             .itemOutput(RagiumItems.CANNED_COOKED_MEAT, 8)
@@ -223,8 +220,7 @@ object HTFoodRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumItems.BUTTER)
             .save(output)
         // Sponge Cake
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(RagiumItems.FLOUR, 3)
             .itemInput(Items.SUGAR, 2)
             .itemInput(RagiumItems.BUTTER)

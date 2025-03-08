@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:strength",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:blaze_powder"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:blaze_powder"
+  },
+  "potion_output": "minecraft:strength"
 }

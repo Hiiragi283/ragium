@@ -1,17 +1,15 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "item": "ragium:circuit_board"
-    },
-    {
-      "tag": "c:ingots/gold"
-    },
-    {
-      "tag": "c:dusts/glowstone"
-    }
-  ],
+  "first_item_input": {
+    "item": "ragium:circuit_board"
+  },
   "item_output": {
     "item": "ragium:advanced_circuit"
+  },
+  "second_item_input": {
+    "tag": "c:ingots/gold"
+  },
+  "third_item_input": {
+    "tag": "c:dusts/glowstone"
   }
 }

@@ -4,8 +4,8 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTAssemblerRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -87,15 +87,13 @@ object HTAARecipeProvider : HTRecipeProvider.Modded(IntegrationMods.AA) {
             .save(output)
 
         // Basic Coil
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(ActuallyItems.RESTONIA_CRYSTAL, 4)
             .itemInput(HTTagPrefix.GEM, IntegrationMaterials.BLACK_QUARTZ)
             .itemOutput(ActuallyItems.BASIC_COIL, 2)
             .saveSuffixed(output, "_aa")
         // Advanced Coil
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(ActuallyItems.BASIC_COIL)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.GOLD)
             .itemOutput(ActuallyItems.ADVANCED_COIL, 2)

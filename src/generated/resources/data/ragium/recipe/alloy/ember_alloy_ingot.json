@@ -1,0 +1,14 @@
+{
+  "type": "ragium:alloy_furnace",
+  "first_item_input": {
+    "count": 3,
+    "tag": "c:dusts/copper"
+  },
+  "item_output": {
+    "count": 4,
+    "item": "ragium:ember_alloy_ingot"
+  },
+  "second_item_input": {
+    "tag": "c:dusts/gold"
+  }
+}

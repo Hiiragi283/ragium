@@ -1,0 +1,13 @@
+{
+  "type": "ragium:alloy_furnace",
+  "first_item_input": {
+    "tag": "c:dusts/alumina"
+  },
+  "item_output": {
+    "item": "ragium:aluminum_ingot"
+  },
+  "second_item_input": {
+    "count": 4,
+    "tag": "c:gems/coal"
+  }
+}

@@ -1,15 +1,13 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "tag": "c:crops/melon"
-    },
-    {
-      "item": "ragium:sponge_cake"
-    }
-  ],
+  "first_item_input": {
+    "tag": "c:crops/melon"
+  },
   "item_output": {
     "count": 2,
     "item": "ragium:melon_pie"
+  },
+  "second_item_input": {
+    "item": "ragium:sponge_cake"
   }
 }

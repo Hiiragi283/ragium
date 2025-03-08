@@ -229,11 +229,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
         addItem(RagiumItems.FLATTEN_DYNAMITE, "整地用ダイナマイト")
         addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")
-
-        addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
-        addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
-        addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
-
         addItem(RagiumItems.BLANK_PRESS_MOLD, "プレス型（なし）")
         addItem(RagiumItems.BALL_PRESS_MOLD, "プレス型（ボール）")
         addItem(RagiumItems.BLOCK_PRESS_MOLD, "プレス型（ブロック）")
@@ -242,6 +237,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板材）")
         addItem(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒材）")
         addItem(RagiumItems.WIRE_PRESS_MOLD, "プレス型（ワイヤー）")
+
+        addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
+        addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
+        addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
 
         addItem(RagiumItems.REDSTONE_LENS, "レッドストーンレンズ")
         addItem(RagiumItems.GLOWSTONE_LENS, "グロウストーンレンズ")
@@ -307,9 +306,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTMachineType.STIRLING_GENERATOR, "スターリング発電機", "固体燃料と水から発電する")
         add(HTMachineType.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
 
+        add(HTMachineType.ALLOY_FURNACE, "合金かまど", "A = A")
         add(HTMachineType.ASSEMBLER, "組立機", "君こそが天才だ!")
         add(HTMachineType.AUTO_CHISEL, "自動彫刻機", "自動化した石切台")
-        add(HTMachineType.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
         add(HTMachineType.BREWERY, "錬金醸造機", "連続した醸造")
         add(HTMachineType.COMPRESSOR, "圧縮機", "saves.zip.zip")
         add(HTMachineType.CRUSHER, "破砕機", "Crush Up!")

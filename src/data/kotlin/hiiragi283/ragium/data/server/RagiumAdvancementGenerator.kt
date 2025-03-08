@@ -110,10 +110,10 @@ object RagiumAdvancementGenerator : AdvancementProvider.AdvancementGenerator {
             Component.empty(),
             type = AdvancementType.CHALLENGE,
         )
-        // Blast Furnace
-        val blastFurnace: AdvancementHolder = createMachine(casing, HTMachineType.BLAST_FURNACE)
+        // Alloy Furnace
+        val alloyFurnace: AdvancementHolder = createMachine(casing, HTMachineType.ALLOY_FURNACE)
         val quartzGlass: AdvancementHolder =
-            createSimple(blastFurnace, RagiumBlocks.QUARTZ_GLASS, Component.empty())
+            createSimple(alloyFurnace, RagiumBlocks.QUARTZ_GLASS, Component.empty())
         // Compressor
         val compressor: AdvancementHolder = createMachine(casing, HTMachineType.COMPRESSOR)
         val meatIngot: AdvancementHolder = createSimple(compressor, RagiumItems.MEAT_INGOT, Component.empty())

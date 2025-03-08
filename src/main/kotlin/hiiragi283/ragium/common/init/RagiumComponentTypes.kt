@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toList
-import hiiragi283.ragium.common.item.component.HTSpawnerContent
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
@@ -50,12 +49,6 @@ object RagiumComponentTypes {
             builder
                 .persistent(PotionContents.CODEC.listOf(0, 9))
                 .networkSynchronized(PotionContents.STREAM_CODEC.toList())
-        }
-
-    @JvmField
-    val SPAWNER_CONTENT: DeferredHolder<DataComponentType<*>, DataComponentType<HTSpawnerContent>> =
-        REGISTER.registerComponentType("spawner") { builder: DataComponentType.Builder<HTSpawnerContent> ->
-            builder.persistent(HTSpawnerContent.CODEC).networkSynchronized(HTSpawnerContent.STREAM_CODEC)
         }
 
     // Tools

@@ -44,14 +44,14 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     ),
 
     // Processor - Basic
-    ASSEMBLER(SoundEvents.DISPENSER_DISPENSE, null),
-    AUTO_CHISEL(SoundEvents.UI_STONECUTTER_TAKE_RESULT, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
-    BLAST_FURNACE(
-        SoundEvents.BLASTFURNACE_FIRE_CRACKLE,
+    ALLOY_FURNACE(
+        null,
         HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, front: Direction ->
-            CampfireBlock.makeParticles(level, pos.relative(front.opposite, 2), false, false)
+            CampfireBlock.makeParticles(level, pos.above(), false, false)
         },
     ),
+    ASSEMBLER(SoundEvents.DISPENSER_DISPENSE, null),
+    AUTO_CHISEL(SoundEvents.UI_STONECUTTER_TAKE_RESULT, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
     COMPRESSOR(SoundEvents.ANVIL_USE, null),
     CRUSHER(SoundEvents.TUFF_BREAK, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
     ELECTRIC_FURNACE(SoundEvents.FURNACE_FIRE_CRACKLE, HTMachineParticleHandler.ofFront(ParticleTypes.FLAME)),

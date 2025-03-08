@@ -58,9 +58,10 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     private fun registerMaterial(event: HTRegisterMaterialEvent) {
         event.register(CommonMaterials.ALUMINUM, HTMaterialType.METAL)
         event.register(CommonMaterials.ANTIMONY, HTMaterialType.METAL)
-        event.register(CommonMaterials.BERYLLIUM, HTMaterialType.METAL)
+        event.register(CommonMaterials.ALUMINA, HTMaterialType.DUST)
         event.register(CommonMaterials.ASH, HTMaterialType.DUST)
         event.register(CommonMaterials.BAUXITE, HTMaterialType.MINERAL)
+        event.register(CommonMaterials.BERYLLIUM, HTMaterialType.METAL)
         event.register(CommonMaterials.BRASS, HTMaterialType.ALLOY)
         event.register(CommonMaterials.BRONZE, HTMaterialType.ALLOY)
         event.register(CommonMaterials.CADMIUM, HTMaterialType.METAL)

@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTAssemblerRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -65,24 +65,21 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .define('C', Tags.Items.DUSTS_REDSTONE)
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE)
             .itemOutput(RagiumBlocks.MACHINE_FRAME)
             .save(output)
         // Chemical
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL, 4)
             .itemInput(RagiumItemTags.GLASS_BLOCKS_QUARTZ, 4)
             .itemInput(Tags.Items.DUSTS_GLOWSTONE)
             .itemOutput(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .save(output)
         // Precision
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 4)
             .itemInput(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, 4)
             .itemInput(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
@@ -141,16 +138,14 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         // Combustion Generator
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .itemInput(RagiumItems.ENGINE, 2)
             .itemInput(RagiumItemTags.CIRCUITS_ADVANCED, 2)
             .itemOutput(HTMachineType.COMBUSTION_GENERATOR)
             .save(output)
         // Thermal Generator
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             .itemInput(Items.MAGMA_BLOCK, 8)
             .itemInput(RagiumItemTags.CIRCUITS_ADVANCED, 2)
@@ -158,16 +153,14 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         // Enchantment Generator
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(RagiumBlocks.PRECISION_MACHINE_FRAME)
             .itemInput(Items.ENCHANTING_TABLE)
             .itemInput(RagiumItemTags.CIRCUITS_ELITE, 4)
             .itemOutput(HTMachineType.ENCH_GENERATOR)
             .save(output)
         // Solar Generator
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(RagiumBlocks.PRECISION_MACHINE_FRAME)
             .itemInput(RagiumItems.SOLAR_PANEL)
             .itemInput(RagiumItemTags.CIRCUITS_ELITE)
@@ -176,6 +169,17 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
     }
 
     private fun registerProcessors(output: RecipeOutput) {
+        // Alloy Furnace
+        HTShapedRecipeBuilder(HTMachineType.ALLOY_FURNACE)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('B', Tags.Items.PLAYER_WORKSTATIONS_FURNACES)
+            .define('C', RagiumBlocks.MACHINE_FRAME)
+            .define('D', Items.DEEPSLATE_BRICKS)
+            .save(output)
         // Assembler
         HTShapedRecipeBuilder(HTMachineType.ASSEMBLER)
             .pattern(
@@ -198,17 +202,6 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .define('B', RagiumBlocks.MACHINE_FRAME)
             .define('C', HTTagPrefix.GEAR, CommonMaterials.STEEL)
             .define('D', Items.STONECUTTER)
-            .save(output)
-        // Blast Furnace
-        HTShapedRecipeBuilder(HTMachineType.BLAST_FURNACE)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', Items.BLAST_FURNACE)
-            .define('C', RagiumBlocks.MACHINE_FRAME)
-            .define('D', Items.DEEPSLATE_BRICKS)
             .save(output)
         // Compressor
         HTShapedRecipeBuilder(HTMachineType.COMPRESSOR)

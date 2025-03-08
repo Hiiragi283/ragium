@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.server.recipe
 import com.mojang.authlib.properties.PropertyMap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTAssemblerRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
 import hiiragi283.ragium.api.extension.asHolder
@@ -68,15 +68,13 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
 
     private fun assembler(output: RecipeOutput) {
         // Circuit Board
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(RagiumItemTags.PLASTICS)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ)
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
             .save(output)
         // Hiiragi283's Head
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(Items.SKELETON_SKULL)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGIUM, 64)
             .itemOutput(
@@ -102,10 +100,8 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
                 potion.idOrThrow.withPrefix("brewery/"),
                 HTBreweryRecipe(
                     "",
-                    listOf(
-                        HTItemIngredient.of(Tags.Items.CROPS_NETHER_WART),
-                        HTItemIngredient.of(input),
-                    ),
+                    HTItemIngredient.of(input),
+                    Optional.empty(),
                     potion,
                 ),
                 null,
@@ -117,11 +113,8 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
                 potion.idOrThrow.withPrefix("brewery/"),
                 HTBreweryRecipe(
                     "",
-                    listOf(
-                        HTItemIngredient.of(Tags.Items.CROPS_NETHER_WART),
-                        HTItemIngredient.of(input),
-                        HTItemIngredient.of(Items.FERMENTED_SPIDER_EYE),
-                    ),
+                    HTItemIngredient.of(input),
+                    Optional.of(HTItemIngredient.of(Items.FERMENTED_SPIDER_EYE)),
                     potion,
                 ),
                 null,
@@ -153,20 +146,6 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
     //    Compressor    //
 
     private fun compressor(output: RecipeOutput) {
-        // Shaft
-        HTSingleItemRecipeBuilder
-            .compressor(lookup)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 2)
-            .catalyst(RagiumBlocks.SHAFT)
-            .itemOutput(RagiumBlocks.SHAFT)
-            .saveSuffixed(output, "_from_steel")
-        HTSingleItemRecipeBuilder
-            .compressor(lookup)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
-            .catalyst(RagiumBlocks.SHAFT)
-            .itemOutput(RagiumBlocks.SHAFT)
-            .saveSuffixed(output, "_from_deep_steel")
-
         // Pulp -> Oak Planks
         HTSingleItemRecipeBuilder
             .compressor(lookup)
@@ -302,7 +281,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             .crusher(lookup)
             .itemInput(Items.END_STONE, 64)
             .itemOutput(Items.SAND, 32)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.AMETHYST), 8)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.NICKEL), 8)
             .save(output, RagiumAPI.id("end_stone"))
         // Obsidian
         HTFluidOutputRecipeBuilder

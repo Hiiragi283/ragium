@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "ragium:alloy_furnace",
+  "first_item_input": {
+    "count": 2,
+    "tag": "c:glass_blocks"
+  },
+  "item_output": {
+    "count": 2,
+    "item": "immersiveengineering:insulating_glass"
+  },
+  "second_item_input": {
+    "tag": "c:dusts/iron"
+  }
+}

@@ -1,19 +1,17 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "item": "ragium:chemical_machine_frame"
-    },
-    {
-      "count": 2,
-      "item": "ragium:engine"
-    },
-    {
-      "count": 2,
-      "tag": "c:circuits/advanced"
-    }
-  ],
+  "first_item_input": {
+    "item": "ragium:chemical_machine_frame"
+  },
   "item_output": {
     "item": "ragium:combustion_generator"
+  },
+  "second_item_input": {
+    "count": 2,
+    "item": "ragium:engine"
+  },
+  "third_item_input": {
+    "count": 2,
+    "tag": "c:circuits/advanced"
   }
 }

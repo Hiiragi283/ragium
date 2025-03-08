@@ -1,20 +1,18 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "count": 64,
-      "tag": "c:storage_blocks/amethyst"
-    },
-    {
-      "count": 16,
-      "tag": "c:ingots/netherite"
-    },
-    {
-      "count": 8,
-      "item": "ragium:obsidian_glass"
-    }
-  ],
+  "first_item_input": {
+    "count": 64,
+    "tag": "c:storage_blocks/amethyst"
+  },
   "item_output": {
     "item": "ragium:amethyst_lens"
+  },
+  "second_item_input": {
+    "count": 16,
+    "tag": "c:ingots/netherite"
+  },
+  "third_item_input": {
+    "count": 8,
+    "item": "ragium:obsidian_glass"
   }
 }

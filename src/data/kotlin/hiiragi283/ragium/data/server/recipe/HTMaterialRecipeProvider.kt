@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTAssemblerRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.requires
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -70,18 +70,14 @@ object HTMaterialRecipeProvider : HTRecipeProvider() {
         for ((material: HTMaterialKey, coil: DeferredItem<out Item>) in RagiumItems.getMaterialMap(HTTagPrefix.COIL)) {
             // Shaped Crafting
             HTShapedRecipeBuilder(coil, 2)
-                .pattern(" A ")
-                .pattern("BCB")
-                .pattern("BCB")
-                .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-                .define('B', HTTagPrefix.INGOT, material)
-                .define('C', RagiumBlocks.SHAFT)
+                .hollow4()
+                .define('A', HTTagPrefix.INGOT, material)
+                .define('B', HTTagPrefix.ROD, CommonMaterials.STEEL)
                 .save(output)
             // Assembler
-            HTMultiItemRecipeBuilder
-                .assembler(lookup)
+            HTAssemblerRecipeBuilder(lookup)
                 .itemInput(HTTagPrefix.INGOT, material, 4)
-                .itemInput(RagiumBlocks.SHAFT)
+                .itemInput(HTTagPrefix.ROD, CommonMaterials.STEEL)
                 .itemOutput(coil, 4)
                 .save(output)
         }

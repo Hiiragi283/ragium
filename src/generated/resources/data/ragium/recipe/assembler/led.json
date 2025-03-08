@@ -1,18 +1,16 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "tag": "c:dusts/glowstone"
-    },
-    {
-      "tag": "c:ingots/copper"
-    },
-    {
-      "tag": "c:glass_blocks/colorless"
-    }
-  ],
+  "first_item_input": {
+    "tag": "c:dusts/glowstone"
+  },
   "item_output": {
     "count": 4,
     "item": "ragium:led"
+  },
+  "second_item_input": {
+    "tag": "c:ingots/copper"
+  },
+  "third_item_input": {
+    "tag": "c:glass_blocks/colorless"
   }
 }

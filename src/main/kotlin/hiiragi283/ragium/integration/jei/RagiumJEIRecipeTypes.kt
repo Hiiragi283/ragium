@@ -35,10 +35,10 @@ object RagiumJEIRecipeTypes {
         RecipeType.createFromVanilla(recipeType)
 
     @JvmField
-    val ASSEMBLER: RecipeType<RecipeHolder<HTAssemblerRecipe>> = create(HTRecipeTypes.ASSEMBLER)
+    val ALLOY_FURNACE: RecipeType<RecipeHolder<HTAlloyFurnaceRecipe>> = create(HTRecipeTypes.ALLOY_FURNACE)
 
     @JvmField
-    val BLAST_FURNACE: RecipeType<RecipeHolder<HTBlastFurnaceRecipe>> = create(HTRecipeTypes.BLAST_FURNACE)
+    val ASSEMBLER: RecipeType<RecipeHolder<HTAssemblerRecipe>> = create(HTRecipeTypes.ASSEMBLER)
 
     @JvmField
     val BREWERY: RecipeType<RecipeHolder<HTBreweryRecipe>> = create(HTRecipeTypes.BREWERY)

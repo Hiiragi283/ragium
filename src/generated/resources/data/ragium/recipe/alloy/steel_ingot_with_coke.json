@@ -1,0 +1,12 @@
+{
+  "type": "ragium:alloy_furnace",
+  "first_item_input": {
+    "tag": "c:dusts/iron"
+  },
+  "item_output": {
+    "item": "ragium:steel_ingot"
+  },
+  "second_item_input": {
+    "tag": "c:gems/coal_coke"
+  }
+}

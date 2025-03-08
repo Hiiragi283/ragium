@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
@@ -83,7 +82,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTMultiblockController    //
 
-    override fun getMultiblockMap(): HTMultiblockMap.Relative = RagiumMultiblockMaps.CRUSHER
+    override fun getMultiblockMap(): HTMultiblockMap.Relative? = null
 
     override fun getDefinition(): HTControllerDefinition? = level?.let { HTControllerDefinition(it, pos, front) }
 }

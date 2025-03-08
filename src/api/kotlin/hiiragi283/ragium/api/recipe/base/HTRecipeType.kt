@@ -19,7 +19,9 @@ import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
  * [RecipeSerializer]と[RecipeType]を束ねたクラス
  * @see [HTMachineRecipe.getRecipeType]
  */
-class HTRecipeType<T : HTMachineRecipe>(val machine: HTMachineType, val serializer: RecipeSerializer<T>) : RecipeType<T> {
+class HTRecipeType<T : HTMachineRecipe>(val name: String, val serializer: RecipeSerializer<T>) : RecipeType<T> {
+    constructor(machine: HTMachineType, serializer: RecipeSerializer<T>) : this(machine.serializedName, serializer)
+
     constructor(
         machine: HTMachineType,
         codec: MapCodec<T>,
@@ -104,5 +106,5 @@ class HTRecipeType<T : HTMachineRecipe>(val machine: HTMachineType, val serializ
         }
     }
 
-    override fun toString(): String = machine.serializedName
+    override fun toString(): String = name
 }

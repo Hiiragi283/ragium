@@ -1,11 +1,11 @@
 {
   "values": [
     "ragium:alchemical_brewery",
+    "ragium:alloy_furnace",
     "ragium:arcane_enchanter",
     "ragium:assembler",
     "ragium:auto_chisel",
     "ragium:bedrock_miner",
-    "ragium:blast_furnace",
     "ragium:combustion_generator",
     "ragium:compressor",
     "ragium:crusher",

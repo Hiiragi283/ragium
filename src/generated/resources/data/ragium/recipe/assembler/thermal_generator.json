@@ -1,19 +1,17 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "item": "ragium:chemical_machine_frame"
-    },
-    {
-      "count": 8,
-      "item": "minecraft:magma_block"
-    },
-    {
-      "count": 2,
-      "tag": "c:circuits/advanced"
-    }
-  ],
+  "first_item_input": {
+    "item": "ragium:chemical_machine_frame"
+  },
   "item_output": {
     "item": "ragium:thermal_generator"
+  },
+  "second_item_input": {
+    "count": 8,
+    "item": "minecraft:magma_block"
+  },
+  "third_item_input": {
+    "count": 2,
+    "tag": "c:circuits/advanced"
   }
 }

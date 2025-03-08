@@ -23,8 +23,7 @@ object HTAlternativeRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Skulls
         fun skull(input: ItemLike, skull: Item) {
-            HTMultiItemRecipeBuilder
-                .assembler(lookup)
+            HTAssemblerRecipeBuilder(lookup)
                 .itemInput(Items.SKELETON_SKULL)
                 .itemInput(input, 8)
                 .itemOutput(skull)
@@ -68,8 +67,7 @@ object HTAlternativeRecipeProvider : HTRecipeProvider() {
             .itemOutput(Items.MUSHROOM_STEW, 2)
             .save(output)
         // Pumpkin Pie
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(Tags.Items.CROPS_PUMPKIN)
             .itemInput(RagiumBlocks.SPONGE_CAKE)
             .itemOutput(Items.PUMPKIN_PIE, 2)

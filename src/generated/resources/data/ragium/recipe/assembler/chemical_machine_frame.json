@@ -1,19 +1,17 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "count": 4,
-      "tag": "c:ingots/deep_steel"
-    },
-    {
-      "count": 4,
-      "tag": "c:glass_blocks/quartz"
-    },
-    {
-      "tag": "c:dusts/glowstone"
-    }
-  ],
+  "first_item_input": {
+    "count": 4,
+    "tag": "c:ingots/deep_steel"
+  },
   "item_output": {
     "item": "ragium:chemical_machine_frame"
+  },
+  "second_item_input": {
+    "count": 4,
+    "tag": "c:glass_blocks/quartz"
+  },
+  "third_item_input": {
+    "tag": "c:dusts/glowstone"
   }
 }

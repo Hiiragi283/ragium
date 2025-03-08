@@ -1,17 +1,15 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "item": "ragium:circuit_board"
-    },
-    {
-      "tag": "c:ingots/aluminum"
-    },
-    {
-      "tag": "c:gems/prismarine"
-    }
-  ],
+  "first_item_input": {
+    "item": "ragium:circuit_board"
+  },
   "item_output": {
     "item": "ragium:elite_circuit"
+  },
+  "second_item_input": {
+    "tag": "c:ingots/aluminum"
+  },
+  "third_item_input": {
+    "tag": "c:gems/prismarine"
   }
 }

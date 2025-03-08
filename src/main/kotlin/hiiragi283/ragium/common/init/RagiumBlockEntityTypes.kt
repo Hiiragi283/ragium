@@ -69,10 +69,6 @@ object RagiumBlockEntityTypes {
         register(HTMachineType.AUTO_CHISEL, ::HTAutoChiselBlockEntity)
 
     @JvmField
-    val BLAST_FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBlastFurnaceBlockEntity>> =
-        register(HTMachineType.BLAST_FURNACE, ::HTBlastFurnaceBlockEntity)
-
-    @JvmField
     val BREWERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBreweryBlockEntity>> =
         register(HTMachineType.BREWERY, ::HTBreweryBlockEntity)
 

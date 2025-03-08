@@ -32,10 +32,6 @@ object RagiumMenuTypes {
         registerMachine("assembler", ::HTAssemblerMenu)
 
     @JvmField
-    val BLAST_FURNACE: DeferredHolder<MenuType<*>, MenuType<HTBlastFurnaceMenu>> =
-        registerMachine("blast_furnace", ::HTBlastFurnaceMenu)
-
-    @JvmField
     val BREWERY: DeferredHolder<MenuType<*>, MenuType<HTBreweryMenu>> =
         registerMachine("brewery", ::HTBreweryMenu)
 

@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:leaping",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:rabbit_foot"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:rabbit_foot"
+  },
+  "potion_output": "minecraft:leaping"
 }

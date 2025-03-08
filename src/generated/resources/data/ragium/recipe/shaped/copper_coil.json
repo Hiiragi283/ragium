@@ -3,19 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/steel"
-    },
-    "B": {
       "tag": "c:ingots/copper"
     },
-    "C": {
-      "item": "ragium:shaft"
+    "B": {
+      "tag": "c:rods/steel"
     }
   },
   "pattern": [
     " A ",
-    "BCB",
-    "BCB"
+    "ABA",
+    " A "
   ],
   "result": {
     "count": 2,

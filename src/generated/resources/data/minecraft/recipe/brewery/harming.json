@@ -1,15 +1,10 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:harming",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:glistering_melon_slice"
-    },
-    {
-      "item": "minecraft:fermented_spider_eye"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:glistering_melon_slice"
+  },
+  "potion_output": "minecraft:harming",
+  "second_item_input": {
+    "item": "minecraft:fermented_spider_eye"
+  }
 }

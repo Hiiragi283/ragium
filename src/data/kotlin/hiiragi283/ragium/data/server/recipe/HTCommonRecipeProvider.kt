@@ -88,15 +88,13 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 types = HTCookingRecipeBuilder.BLASTING_TYPES,
             ).save(output)
 
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .itemOutput(ragiAlloy)
             .save(output)
         // Refined Ragi-Steel
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.DUST, RagiumMaterials.RAGINITE, 4)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 5)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL))
@@ -122,41 +120,36 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
                 types = HTCookingRecipeBuilder.BLASTING_TYPES,
             ).save(output, RagiumAPI.id("steel_ingot_from_compound"))
 
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.GEM, VanillaMaterials.COAL, 2)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL))
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.COAL_COKE)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.STEEL))
             .saveSuffixed(output, "_with_coke")
         // Deep Steel
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.STEEL, 8)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.NIOBIUM)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL), 9)
             .save(output)
 
         // Ember Alloy
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER, 3)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.GOLD)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY), 4)
             .save(output)
         // Duralumin
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINUM, 7)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.COPPER)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN)
-            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN), 9)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, RagiumMaterials.DURALUMIN), 9)
             .save(output)
     }
 
@@ -352,8 +345,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             lens: ItemLike,
         ) {
             // Assembler
-            HTMultiItemRecipeBuilder
-                .assembler(lookup)
+            HTAssemblerRecipeBuilder(lookup)
                 .itemInput(RagiumItems.CIRCUIT_BOARD)
                 .itemInput(HTTagPrefix.INGOT, subMetal)
                 .itemInput(dopant)
@@ -437,32 +429,28 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
     }
 
     private fun registerLens(output: RecipeOutput) {
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(Tags.Items.DUSTS_REDSTONE, 64)
             .itemInput(Tags.Items.INGOTS_COPPER, 16)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS, 8)
             .itemOutput(RagiumItems.REDSTONE_LENS)
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(Tags.Items.DUSTS_GLOWSTONE, 64)
             .itemInput(Tags.Items.INGOTS_GOLD, 16)
             .itemInput(RagiumBlocks.QUARTZ_GLASS, 8)
             .itemOutput(RagiumItems.GLOWSTONE_LENS)
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(Tags.Items.GEMS_DIAMOND, 64)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 16)
             .itemInput(Tags.Items.GLASS_BLOCKS_TINTED, 8)
             .itemOutput(RagiumItems.DIAMOND_LENS)
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST, 64)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 16)
             .itemInput(RagiumBlocks.OBSIDIAN_GLASS, 8)
@@ -668,24 +656,21 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('C', HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(Tags.Items.GLASS_PANES, 2)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.LAPIS, 2)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 2)
             .itemOutput(RagiumItems.SOLAR_PANEL)
             .save(output)
         // LED
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(Tags.Items.DUSTS_GLOWSTONE)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
             .itemOutput(RagiumItems.LED, 4)
             .save(output)
         // Engine
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.INGOT, CommonMaterials.STEEL, 4)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY, 4)
             .itemInput(Items.PISTON, 2)
@@ -703,12 +688,6 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .requires(RagiumBlocks.SLAG_BLOCK)
             .unlockedBy("has_slag", has(RagiumBlocks.SLAG_BLOCK))
             .savePrefixed(output)
-        // Shaft
-        HTShapedRecipeBuilder(RagiumBlocks.SHAFT, 6, CraftingBookCategory.BUILDING)
-            .pattern("A")
-            .pattern("A")
-            .define('A', HTTagPrefix.BLOCK, VanillaMaterials.IRON)
-            .save(output)
         // Obsidian Dust
         HTSingleItemRecipeBuilder
             .grinder(lookup)

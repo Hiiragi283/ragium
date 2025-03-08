@@ -5,8 +5,9 @@ import blusunrize.immersiveengineering.common.register.IEBlocks
 import blusunrize.immersiveengineering.common.register.IEItems
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTAlloyFurnaceRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTAssemblerRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
@@ -29,23 +30,20 @@ object HTIERecipeProvider : HTRecipeProvider.Modded(IntegrationMods.IE) {
             .save(output)
 
         // Iron Mechanical Component
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.PLATE, VanillaMaterials.IRON, 2)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemOutput(IEItems.Ingredients.COMPONENT_IRON)
             .save(output)
         // Steel Mechanical Component
-        HTMultiItemRecipeBuilder
-            .assembler(lookup)
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.PLATE, CommonMaterials.STEEL, 2)
             .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER)
             .itemOutput(IEItems.Ingredients.COMPONENT_STEEL)
             .save(output)
 
         // Insulating Glass
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(Tags.Items.GLASS_BLOCKS, 2)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.IRON)
             .itemOutput(IEBlocks.StoneDecoration.INSULATING_GLASS, 2)

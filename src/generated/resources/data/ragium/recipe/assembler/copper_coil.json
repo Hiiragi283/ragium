@@ -1,16 +1,14 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "count": 4,
-      "tag": "c:ingots/copper"
-    },
-    {
-      "item": "ragium:shaft"
-    }
-  ],
+  "first_item_input": {
+    "count": 4,
+    "tag": "c:ingots/copper"
+  },
   "item_output": {
     "count": 4,
     "item": "ragium:copper_coil"
+  },
+  "second_item_input": {
+    "tag": "c:rods/steel"
   }
 }

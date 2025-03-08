@@ -20,6 +20,9 @@ import hiiragi283.ragium.common.item.armor.HTJetpackItem
 import hiiragi283.ragium.common.item.dynamite.HTFlattenDynamiteItem
 import hiiragi283.ragium.common.item.dynamite.HTPoisonDynamiteItem
 import hiiragi283.ragium.common.item.dynamite.HTSimpleDynamiteItem
+import hiiragi283.ragium.common.item.food.HTAmbrosiaItem
+import hiiragi283.ragium.common.item.food.HTPotionBundleItem
+import hiiragi283.ragium.common.item.food.HTWarpedWartItem
 import hiiragi283.ragium.common.item.magnet.HTExpMagnetItem
 import hiiragi283.ragium.common.item.magnet.HTMagnetItem
 import hiiragi283.ragium.common.item.magnet.HTSimpleMagnetItem
@@ -89,7 +92,6 @@ object RagiumItems {
         register(HTTagPrefix.DUST, VanillaMaterials.GOLD)
         register(HTTagPrefix.DUST, VanillaMaterials.DIAMOND)
         register(HTTagPrefix.DUST, VanillaMaterials.EMERALD)
-        register(HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
         register(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN)
 
         register(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
@@ -99,8 +101,9 @@ object RagiumItems {
 
         register(HTTagPrefix.DUST, CommonMaterials.STEEL)
         register(HTTagPrefix.DUST, RagiumMaterials.DEEP_STEEL)
-
         register(HTTagPrefix.DUST, RagiumMaterials.EMBER_ALLOY)
+        register(HTTagPrefix.DUST, RagiumMaterials.DURALUMIN)
+
         register(HTTagPrefix.DUST, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.DUST, CommonMaterials.LEAD)
         register(HTTagPrefix.DUST, CommonMaterials.NICKEL)
@@ -110,6 +113,7 @@ object RagiumItems {
         register(HTTagPrefix.DUST, CommonMaterials.ZINC)
 
         register(HTTagPrefix.DUST, CommonMaterials.ASH)
+        register(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
         register(HTTagPrefix.DUST, CommonMaterials.BAUXITE)
         register(HTTagPrefix.DUST, CommonMaterials.CALCITE)
         register(HTTagPrefix.DUST, CommonMaterials.SALTPETER)
@@ -124,10 +128,10 @@ object RagiumItems {
 
         register(HTTagPrefix.INGOT, CommonMaterials.STEEL)
         register(HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
-
         register(HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
-        register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
         register(HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN)
+
+        register(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM)
         // Gems
         register(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
 
@@ -152,6 +156,8 @@ object RagiumItems {
         register(HTTagPrefix.GEAR, CommonMaterials.STEEL)
         register(HTTagPrefix.GEAR, RagiumMaterials.DEEP_STEEL)
         register(HTTagPrefix.GEAR, VanillaMaterials.NETHERITE)
+        // Rods
+        register(HTTagPrefix.ROD, CommonMaterials.STEEL)
         // Mekanism
         register(HTTagPrefix.DIRTY_DUST, RagiumMaterials.RAGINITE)
         register(HTTagPrefix.CLUMP, RagiumMaterials.RAGINITE)
@@ -433,23 +439,6 @@ object RagiumItems {
     @JvmField
     val WIRE_PRESS_MOLD: DeferredItem<HTCatalystItem> = register("wire_press_mold", ::HTCatalystItem)
 
-    //    Lens    //
-
-    @JvmField
-    val REDSTONE_LENS: DeferredItem<HTCatalystItem> = register("redstone_lens", ::HTCatalystItem)
-
-    @JvmField
-    val GLOWSTONE_LENS: DeferredItem<HTCatalystItem> = register("glowstone_lens", ::HTCatalystItem)
-
-    @JvmField
-    val DIAMOND_LENS: DeferredItem<HTCatalystItem> = register("diamond_lens", ::HTCatalystItem)
-
-    @JvmField
-    val EMERALD_LENS: DeferredItem<HTCatalystItem> = register("emerald_lens", ::HTCatalystItem)
-
-    @JvmField
-    val AMETHYST_LENS: DeferredItem<HTCatalystItem> = register("amethyst_lens", ::HTCatalystItem)
-
     //    Circuits    //
 
     @JvmField
@@ -470,10 +459,22 @@ object RagiumItems {
     @JvmField
     val ELITE_CIRCUIT: DeferredItem<Item> = register("elite_circuit")
 
-    //    Reagents    //
+    //    Lens    //
 
     @JvmField
-    val WITHER_REAGENT: DeferredItem<Item> = register("wither_reagent")
+    val REDSTONE_LENS: DeferredItem<HTCatalystItem> = register("redstone_lens", ::HTCatalystItem)
+
+    @JvmField
+    val GLOWSTONE_LENS: DeferredItem<HTCatalystItem> = register("glowstone_lens", ::HTCatalystItem)
+
+    @JvmField
+    val DIAMOND_LENS: DeferredItem<HTCatalystItem> = register("diamond_lens", ::HTCatalystItem)
+
+    @JvmField
+    val EMERALD_LENS: DeferredItem<HTCatalystItem> = register("emerald_lens", ::HTCatalystItem)
+
+    @JvmField
+    val AMETHYST_LENS: DeferredItem<HTCatalystItem> = register("amethyst_lens", ::HTCatalystItem)
 
     //    Machine Parts    //
 
@@ -508,6 +509,9 @@ object RagiumItems {
 
     @JvmField
     val TAR: DeferredItem<Item> = register("tar")
+
+    @JvmField
+    val WITHER_REAGENT: DeferredItem<Item> = register("wither_reagent")
 
     @JvmField
     val YELLOW_CAKE: DeferredItem<Item> =

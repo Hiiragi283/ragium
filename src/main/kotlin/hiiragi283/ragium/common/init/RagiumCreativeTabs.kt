@@ -79,6 +79,8 @@ object RagiumCreativeTabs {
             registerPrefix(HTTagPrefix.INGOT)
 
             registerPrefix(HTTagPrefix.GEAR)
+            registerPrefix(HTTagPrefix.ROD)
+
             registerPrefix(HTTagPrefix.COIL)
 
             registerPrefix(HTTagPrefix.DIRTY_DUST)

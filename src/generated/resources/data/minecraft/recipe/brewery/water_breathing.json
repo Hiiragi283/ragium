@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:water_breathing",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:pufferfish"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:pufferfish"
+  },
+  "potion_output": "minecraft:water_breathing"
 }

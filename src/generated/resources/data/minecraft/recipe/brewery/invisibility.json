@@ -1,15 +1,10 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:invisibility",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:golden_carrot"
-    },
-    {
-      "item": "minecraft:fermented_spider_eye"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:golden_carrot"
+  },
+  "potion_output": "minecraft:invisibility",
+  "second_item_input": {
+    "item": "minecraft:fermented_spider_eye"
+  }
 }

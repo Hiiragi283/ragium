@@ -1,0 +1,12 @@
+{
+  "type": "ragium:alloy_furnace",
+  "first_item_input": {
+    "tag": "c:dusts/copper"
+  },
+  "item_output": {
+    "item": "ragium:ragi_alloy_ingot"
+  },
+  "second_item_input": {
+    "tag": "c:dusts/raginite"
+  }
+}

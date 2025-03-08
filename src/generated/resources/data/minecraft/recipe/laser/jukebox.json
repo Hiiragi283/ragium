@@ -1,0 +1,12 @@
+{
+  "type": "ragium:laser_assembly",
+  "catalyst": {
+    "item": "ragium:diamond_lens"
+  },
+  "item_input": {
+    "item": "ragium:wooden_casing"
+  },
+  "item_output": {
+    "item": "minecraft:jukebox"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "ragium:alloy_furnace",
+  "first_item_input": {
+    "count": 4,
+    "tag": "c:dusts/raginite"
+  },
+  "item_output": {
+    "item": "ragium:ragi_crystal"
+  },
+  "second_item_input": {
+    "count": 5,
+    "tag": "c:dusts/redstone"
+  }
+}

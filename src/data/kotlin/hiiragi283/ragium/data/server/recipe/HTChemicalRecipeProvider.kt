@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTAlloyFurnaceRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMultiItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
 import hiiragi283.ragium.api.extension.savePrefixed
@@ -205,11 +205,15 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
             .fluidInput(RagiumVirtualFluids.ALKALI_SOLUTION.commonTag, 400)
             .fluidOutput(RagiumVirtualFluids.ALUMINA_SOLUTION, 400)
             .save(output)
-        // Alumina Solution + 4x Coal -> Aluminum Ingot
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
-            .itemInput(HTTagPrefix.GEM, VanillaMaterials.COAL, 4)
+        // Alumina Solution -> Alumina
+        HTSolidifierRecipeBuilder(lookup)
             .fluidInput(RagiumVirtualFluids.ALUMINA_SOLUTION.commonTag)
+            .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ALUMINA))
+            .save(output)
+        // Alumina + 4x Coal -> Aluminum Ingot
+        HTAlloyFurnaceRecipeBuilder(lookup)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
+            .itemInput(HTTagPrefix.GEM, VanillaMaterials.COAL, 4)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM))
             .saveSuffixed(output, "_with_coal")
 
@@ -222,10 +226,9 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.GEM, CommonMaterials.CRYOLITE))
             .save(output)
         // Alumina + Cryolite -> 3x Aluminum Ingot
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
+            .itemInput(HTTagPrefix.DUST, CommonMaterials.ALUMINA)
             .itemInput(HTTagPrefix.GEM, CommonMaterials.CRYOLITE)
-            .fluidInput(RagiumVirtualFluids.ALUMINA_SOLUTION.commonTag)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM), 3)
             .saveSuffixed(output, "_with_cryolite")
     }
@@ -265,21 +268,19 @@ object HTChemicalRecipeProvider : HTRecipeProvider() {
             .itemOutput(Items.GLASS, 2)
             .save(output)
         // Custom Glasses
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
+            .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.QUARTZ, 4)
             .itemOutput(RagiumBlocks.QUARTZ_GLASS)
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(RagiumItemTags.GLASS_BLOCKS_QUARTZ)
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .itemOutput(RagiumBlocks.SOUL_GLASS)
             .save(output)
 
-        HTMultiItemRecipeBuilder
-            .blastFurnace(lookup)
+        HTAlloyFurnaceRecipeBuilder(lookup)
             .itemInput(RagiumItemTags.GLASS_BLOCKS_QUARTZ)
             .itemInput(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN, 4)
             .itemOutput(RagiumBlocks.OBSIDIAN_GLASS)

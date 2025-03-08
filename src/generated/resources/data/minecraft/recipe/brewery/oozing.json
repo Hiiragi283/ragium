@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:oozing",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:slime_block"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:slime_block"
+  },
+  "potion_output": "minecraft:oozing"
 }

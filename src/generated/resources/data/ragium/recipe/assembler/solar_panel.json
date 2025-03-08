@@ -1,20 +1,18 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "count": 2,
-      "tag": "c:glass_panes"
-    },
-    {
-      "count": 2,
-      "tag": "c:dusts/lapis"
-    },
-    {
-      "count": 2,
-      "tag": "c:ingots/aluminum"
-    }
-  ],
+  "first_item_input": {
+    "count": 2,
+    "tag": "c:glass_panes"
+  },
   "item_output": {
     "item": "ragium:solar_panel"
+  },
+  "second_item_input": {
+    "count": 2,
+    "tag": "c:dusts/lapis"
+  },
+  "third_item_input": {
+    "count": 2,
+    "tag": "c:ingots/aluminum"
   }
 }

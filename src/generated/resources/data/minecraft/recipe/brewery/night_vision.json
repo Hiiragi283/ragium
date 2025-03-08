@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:night_vision",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:golden_carrot"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:golden_carrot"
+  },
+  "potion_output": "minecraft:night_vision"
 }

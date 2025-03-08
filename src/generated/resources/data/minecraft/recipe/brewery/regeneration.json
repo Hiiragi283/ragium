@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:regeneration",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:ghast_tear"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:ghast_tear"
+  },
+  "potion_output": "minecraft:regeneration"
 }

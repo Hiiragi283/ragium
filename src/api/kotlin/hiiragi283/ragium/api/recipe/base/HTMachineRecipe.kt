@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe.base
 
-import hiiragi283.ragium.api.extension.toStack
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
@@ -32,8 +31,6 @@ abstract class HTMachineRecipe(private val group: String) : Recipe<HTMachineReci
     final override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
 
     final override fun getGroup(): String = group
-
-    override fun getToastSymbol(): ItemStack = getRecipeType().machine.toStack()
 
     final override fun getSerializer(): RecipeSerializer<*> = getRecipeType().serializer
 

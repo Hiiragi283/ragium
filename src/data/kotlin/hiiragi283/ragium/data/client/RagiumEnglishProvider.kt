@@ -230,10 +230,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.FLATTEN_DYNAMITE, "Flatten Dynamite")
         addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")
 
-        addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
-        addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
-        addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
-
         addItem(RagiumItems.BALL_PRESS_MOLD, "Press Mold (Ball)")
         addItem(RagiumItems.BLOCK_PRESS_MOLD, "Press Mold (Block)")
         addItem(RagiumItems.BLANK_PRESS_MOLD, "Press Mold (Blank)")
@@ -242,6 +238,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
         addItem(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
         addItem(RagiumItems.WIRE_PRESS_MOLD, "Press Mold (Wire)")
+
+        addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
+        addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
+        addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
 
         addItem(RagiumItems.REDSTONE_LENS, "Redstone Lens")
         addItem(RagiumItems.GLOWSTONE_LENS, "Glowstone Lens")
@@ -306,9 +306,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTMachineType.STIRLING_GENERATOR, "Stirling Generator", "Generate energy from solid fuel and water")
         add(HTMachineType.THERMAL_GENERATOR, "Thermal Generator", "Generate energy from hot fluids")
 
+        add(HTMachineType.ALLOY_FURNACE, "Alloy Furnace", "A = A")
         add(HTMachineType.ASSEMBLER, "Assembler", "You are the genius!")
         add(HTMachineType.AUTO_CHISEL, "Auto Chisel", "Automated Stonecutter")
-        add(HTMachineType.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
         add(HTMachineType.BREWERY, "Alchemical Brewery", "Sequential Brewing")
         add(HTMachineType.COMPRESSOR, "Compressor", "saves.zip.zip")
         add(HTMachineType.CRUSHER, "Crusher", "Crush Up!")

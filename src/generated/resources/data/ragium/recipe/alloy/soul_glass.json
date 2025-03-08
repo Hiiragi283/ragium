@@ -1,0 +1,12 @@
+{
+  "type": "ragium:alloy_furnace",
+  "first_item_input": {
+    "tag": "c:glass_blocks/quartz"
+  },
+  "item_output": {
+    "item": "ragium:soul_glass"
+  },
+  "second_item_input": {
+    "tag": "minecraft:soul_fire_base_blocks"
+  }
+}

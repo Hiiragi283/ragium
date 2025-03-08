@@ -1,18 +1,16 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "item": "ragium:precision_machine_frame"
-    },
-    {
-      "item": "minecraft:enchanting_table"
-    },
-    {
-      "count": 4,
-      "tag": "c:circuits/elite"
-    }
-  ],
+  "first_item_input": {
+    "item": "ragium:precision_machine_frame"
+  },
   "item_output": {
     "item": "ragium:enchantment_generator"
+  },
+  "second_item_input": {
+    "item": "minecraft:enchanting_table"
+  },
+  "third_item_input": {
+    "count": 4,
+    "tag": "c:circuits/elite"
   }
 }

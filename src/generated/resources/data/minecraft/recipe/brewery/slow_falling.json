@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:slow_falling",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:phantom_membrane"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:phantom_membrane"
+  },
+  "potion_output": "minecraft:slow_falling"
 }

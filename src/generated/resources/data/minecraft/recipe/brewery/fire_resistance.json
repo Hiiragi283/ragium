@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:fire_resistance",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:magma_cream"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:magma_cream"
+  },
+  "potion_output": "minecraft:fire_resistance"
 }

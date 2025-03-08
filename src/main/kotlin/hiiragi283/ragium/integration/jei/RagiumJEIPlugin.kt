@@ -53,21 +53,9 @@ class RagiumJEIPlugin : IModPlugin {
         val guiHelper: IGuiHelper = jeiHelper.guiHelper
 
         registration.addRecipeCategories(
-            HTMultiItemRecipeCategory(
-                guiHelper,
-                HTMachineType.ASSEMBLER,
-                RagiumJEIRecipeTypes.ASSEMBLER,
-            ),
-            HTMultiItemRecipeCategory(
-                guiHelper,
-                HTMachineType.BLAST_FURNACE,
-                RagiumJEIRecipeTypes.BLAST_FURNACE,
-            ),
-            HTMultiItemRecipeCategory(
-                guiHelper,
-                HTMachineType.BREWERY,
-                RagiumJEIRecipeTypes.BREWERY,
-            ),
+            HTAlloyFurnaceRecipeCategory(guiHelper),
+            HTAssemblerRecipeCategory(guiHelper),
+            HTBreweryRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
                 guiHelper,
                 HTMachineType.COMPRESSOR,
@@ -113,8 +101,8 @@ class RagiumJEIPlugin : IModPlugin {
             )
         }
 
+        register(RagiumJEIRecipeTypes.ALLOY_FURNACE, HTRecipeTypes.ALLOY_FURNACE)
         register(RagiumJEIRecipeTypes.ASSEMBLER, HTRecipeTypes.ASSEMBLER)
-        register(RagiumJEIRecipeTypes.BLAST_FURNACE, HTRecipeTypes.BLAST_FURNACE)
         register(RagiumJEIRecipeTypes.COMPRESSOR, HTRecipeTypes.COMPRESSOR)
         register(RagiumJEIRecipeTypes.CRUSHER, HTRecipeTypes.CRUSHER)
         register(RagiumJEIRecipeTypes.BREWERY, HTRecipeTypes.BREWERY)
@@ -169,15 +157,6 @@ class RagiumJEIPlugin : IModPlugin {
             18,
             18,
             RagiumJEIRecipeTypes.ASSEMBLER,
-        )
-
-        registration.addRecipeClickArea(
-            HTBlastFurnaceScreen::class.java,
-            HTSlotPos.getSlotPosX(4),
-            HTSlotPos.getSlotPosY(2),
-            18,
-            18,
-            RagiumJEIRecipeTypes.BLAST_FURNACE,
         )
 
         registration.addRecipeClickArea(
@@ -254,10 +233,10 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
+        // Alloy Furnace
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ALLOY_FURNACE, HTMachineType.ALLOY_FURNACE)
         // Assembler
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ASSEMBLER, HTMachineType.ASSEMBLER)
-        // Blast Furnace
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BLAST_FURNACE, HTMachineType.BLAST_FURNACE)
         // Brewery
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BREWERY, HTMachineType.BREWERY)
         // Compressor

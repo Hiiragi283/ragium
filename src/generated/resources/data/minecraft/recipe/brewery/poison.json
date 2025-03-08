@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:poison",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:spider_eye"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:spider_eye"
+  },
+  "potion_output": "minecraft:poison"
 }

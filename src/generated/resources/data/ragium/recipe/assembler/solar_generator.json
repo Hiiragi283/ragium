@@ -1,17 +1,15 @@
 {
   "type": "ragium:assembler",
-  "item_inputs": [
-    {
-      "item": "ragium:precision_machine_frame"
-    },
-    {
-      "item": "ragium:solar_panel"
-    },
-    {
-      "tag": "c:circuits/elite"
-    }
-  ],
+  "first_item_input": {
+    "item": "ragium:precision_machine_frame"
+  },
   "item_output": {
     "item": "ragium:solar_generator"
+  },
+  "second_item_input": {
+    "item": "ragium:solar_panel"
+  },
+  "third_item_input": {
+    "tag": "c:circuits/elite"
   }
 }

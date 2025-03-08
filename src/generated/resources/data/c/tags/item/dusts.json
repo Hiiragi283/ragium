@@ -1,7 +1,7 @@
 {
   "values": [
+    "#c:dusts/alumina",
     "#c:dusts/aluminum",
-    "#c:dusts/amethyst",
     "#c:dusts/ash",
     "#c:dusts/bauxite",
     "#c:dusts/calcite",
@@ -9,6 +9,7 @@
     "#c:dusts/dark",
     "#c:dusts/deep_steel",
     "#c:dusts/diamond",
+    "#c:dusts/duralumin",
     "#c:dusts/ember_alloy",
     "#c:dusts/emerald",
     "#c:dusts/fluorite",

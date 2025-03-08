@@ -1,12 +1,7 @@
 {
   "type": "ragium:alchemical_brewery",
-  "effect": "minecraft:infested",
-  "item_inputs": [
-    {
-      "tag": "c:crops/nether_wart"
-    },
-    {
-      "item": "minecraft:stone"
-    }
-  ]
+  "first_item_input": {
+    "item": "minecraft:stone"
+  },
+  "potion_output": "minecraft:infested"
 }

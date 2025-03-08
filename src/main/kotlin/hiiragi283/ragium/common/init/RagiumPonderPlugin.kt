@@ -4,11 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.machine.HTMachineType
-import net.createmod.ponder.api.registration.MultiTagBuilder
 import net.createmod.ponder.api.registration.PonderPlugin
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper
-import net.createmod.ponder.api.scene.PonderStoryBoard
 import net.createmod.ponder.api.scene.SceneBuilder
 import net.createmod.ponder.api.scene.SceneBuildingUtil
 import net.minecraft.core.BlockPos
@@ -28,26 +26,6 @@ object RagiumPonderPlugin : PonderPlugin {
     override fun registerScenes(helper: PonderSceneRegistrationHelper<ResourceLocation>) {
         val itemHelper: PonderSceneRegistrationHelper<ItemLike> =
             helper.withKeyFunction { item: ItemLike -> item.asHolder().idOrThrow }
-
-        fun multiblock(item: ItemLike, path: String, maxY: Int) {
-            itemHelper.addStoryBoard(
-                item,
-                path,
-                PonderStoryBoard { builder: SceneBuilder, util: SceneBuildingUtil ->
-                    builder.title("multiblock", "Coordinate Space")
-                    builder.showBasePlate()
-                    builder.idle(10)
-                    for (y: Int in (1..maxY)) {
-                        builder.world().showSection(util.select().layer(y), Direction.DOWN)
-                        builder.idle(20)
-                    }
-                },
-                MULTIBLOCK,
-            )
-        }
-
-        multiblock(HTMachineType.BLAST_FURNACE, "multiblock/blast_furnace", 4)
-        multiblock(HTMachineType.CRUSHER, "multiblock/crusher", 3)
 
         itemHelper.addStoryBoard(
             HTMachineType.FISHER,
@@ -85,20 +63,5 @@ object RagiumPonderPlugin : PonderPlugin {
     override fun registerTags(helper: PonderTagRegistrationHelper<ResourceLocation>) {
         val itemHelper: PonderTagRegistrationHelper<ItemLike> =
             helper.withKeyFunction { item: ItemLike -> item.asHolder().idOrThrow }
-
-        itemHelper
-            .registerTag(MACHINES)
-            .addToIndex()
-            .item(HTMachineType.ASSEMBLER, true, false)
-            .title("Machines")
-            .register()
-
-        val machineTag: MultiTagBuilder.Tag<ItemLike> = itemHelper.addToTag(MACHINES)
-        HTMachineType.getBlocks().forEach(machineTag::add)
-
-        itemHelper
-            .addToTag(MULTIBLOCK)
-            .add(HTMachineType.BLAST_FURNACE)
-            .add(HTMachineType.CRUSHER)
     }
 }
