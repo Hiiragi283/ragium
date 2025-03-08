@@ -12,15 +12,15 @@
             "duration": 200,
             "id": "minecraft:strength",
             "neoforge:cures": [
-              "milk",
-              "protected_by_totem"
+              "protected_by_totem",
+              "milk"
             ],
             "show_icon": true
           }
         }
       ],
       "nutrition": 3,
-      "saturation": 0.3
+      "saturation": 1.8000001
     },
     "recoverable": false
   },

@@ -2,14 +2,14 @@
   "type": "ragium:assembler",
   "first_item_input": {
     "count": 64,
-    "tag": "c:dusts/redstone"
+    "tag": "c:dusts/emerald"
   },
   "item_output": {
-    "item": "ragium:redstone_lens"
+    "item": "ragium:emerald_lens"
   },
   "second_item_input": {
-    "count": 64,
-    "tag": "c:ingots/copper"
+    "count": 16,
+    "item": "minecraft:ghast_tear"
   },
   "third_item_input": {
     "count": 16,

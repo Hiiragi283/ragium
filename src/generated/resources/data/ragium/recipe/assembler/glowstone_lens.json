@@ -8,11 +8,11 @@
     "item": "ragium:glowstone_lens"
   },
   "second_item_input": {
-    "count": 16,
+    "count": 64,
     "tag": "c:ingots/gold"
   },
   "third_item_input": {
-    "count": 8,
+    "count": 16,
     "item": "ragium:quartz_glass"
   }
 }

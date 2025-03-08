@@ -2,17 +2,17 @@
   "type": "ragium:assembler",
   "first_item_input": {
     "count": 64,
-    "tag": "c:gems/diamond"
+    "tag": "c:dusts/diamond"
   },
   "item_output": {
     "item": "ragium:diamond_lens"
   },
   "second_item_input": {
-    "count": 16,
+    "count": 64,
     "tag": "c:ingots/aluminum"
   },
   "third_item_input": {
-    "count": 8,
-    "tag": "c:glass_blocks/tinted"
+    "count": 16,
+    "item": "ragium:quartz_glass"
   }
 }

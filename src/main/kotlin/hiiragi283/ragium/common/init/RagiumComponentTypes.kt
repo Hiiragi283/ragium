@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.common.component.HTSpawnerData
+import hiiragi283.ragium.common.component.HTTeleportPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
@@ -65,6 +66,14 @@ object RagiumComponentTypes {
         }
 
     @JvmField
+    val EXPLOSION_POWER: DeferredHolder<DataComponentType<*>, DataComponentType<Float>> =
+        REGISTER.registerComponentType("explosion_power") { builder: DataComponentType.Builder<Float> ->
+            builder
+                .persistent(Codec.floatRange(0f, 16f))
+                .networkSynchronized(ByteBufCodecs.FLOAT)
+        }
+
+    @JvmField
     val SPAWNER_DATA: DeferredHolder<DataComponentType<*>, DataComponentType<HTSpawnerData>> =
         REGISTER.registerComponentType("spawner_data") { builder: DataComponentType.Builder<HTSpawnerData> ->
             builder
@@ -73,10 +82,10 @@ object RagiumComponentTypes {
         }
 
     @JvmField
-    val EXPLOSION_POWER: DeferredHolder<DataComponentType<*>, DataComponentType<Float>> =
-        REGISTER.registerComponentType("explosion_power") { builder: DataComponentType.Builder<Float> ->
+    val TELEPORT_POS: DeferredHolder<DataComponentType<*>, DataComponentType<HTTeleportPos>> =
+        REGISTER.registerComponentType("teleport_pos") { builder: DataComponentType.Builder<HTTeleportPos> ->
             builder
-                .persistent(Codec.floatRange(0f, 16f))
-                .networkSynchronized(ByteBufCodecs.FLOAT)
+                .persistent(HTTeleportPos.CODEC)
+                .networkSynchronized(HTTeleportPos.STREAM_CODEC)
         }
 }

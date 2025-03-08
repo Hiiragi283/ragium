@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/steel"
+      "tag": "c:ingots/deep_steel"
     },
     "B": {
-      "tag": "c:circuits/advanced"
+      "tag": "c:circuits/elite"
     },
     "C": {
-      "tag": "c:gems/ragi_crystal"
+      "tag": "c:gems/warped_crystal"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:energy_network_interface"
+    "id": "ragium:teleport_anchor"
   }
 }

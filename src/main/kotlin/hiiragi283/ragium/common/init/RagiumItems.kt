@@ -357,7 +357,7 @@ object RagiumItems {
     val POTION_BUNDLE: DeferredItem<HTPotionBundleItem> = register(
         "potion_bundle",
         ::HTPotionBundleItem,
-        itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE, RagiumTranslationKeys.POTION_BUNDLE_1),
+        itemProperty().lore(RagiumTranslationKeys.POTION_BUNDLE_0, RagiumTranslationKeys.POTION_BUNDLE_1),
     )
 
     @JvmField
@@ -509,7 +509,18 @@ object RagiumItems {
     val BLANK_TICKET: DeferredItem<Item> = register("blank_ticket", itemProperty().rarity(Rarity.RARE))
 
     @JvmField
+    val TELEPORT_TICKET: DeferredItem<HTTeleportTicket> =
+        register("teleport_ticket", ::HTTeleportTicket, itemProperty().rarity(Rarity.EPIC))
+
+    @JvmField
     val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
+
+    @JvmField
+    val TICKETS: List<DeferredItem<out Item>> = listOf(
+        BLANK_TICKET,
+        TELEPORT_TICKET,
+        RAGI_TICKET,
+    )
 
     //    Misc    //
 

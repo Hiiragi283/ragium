@@ -371,8 +371,19 @@ object RagiumBlocks {
         .build(::HTEnergyNetworkBlock)
 
     @JvmField
+    val TELEPORT_ANCHOR: DeferredBlock<Block> = Builder("teleport_anchor")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.STONE)
+                .strength(2f)
+                .sound(SoundType.COPPER)
+                .requiresCorrectToolForDrops(),
+        ).build()
+
+    @JvmField
     val ADDONS: List<DeferredBlock<out Block>> = listOf(
         ENERGY_NETWORK_INTERFACE,
+        TELEPORT_ANCHOR,
     )
 
     @JvmField

@@ -59,6 +59,7 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         registerArmor(output)
         registerTool(output)
         registerMisc(output)
+        registerTicket(output)
     }
 
     //    Progress    //
@@ -184,13 +185,6 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             ),
             null,
         )
-        // Ragi Ticket
-        HTFluidOutputRecipeBuilder
-            .infuser(lookup)
-            .itemInput(RagiumItemTags.PAPER)
-            .fluidInput(RagiumVirtualFluids.RAGIUM_SOLUTION.commonTag, 125)
-            .itemOutput(RagiumItems.RAGI_TICKET)
-            .save(output)
     }
 
     //    Components    //
@@ -430,29 +424,36 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
 
     private fun registerLens(output: RecipeOutput) {
         HTAssemblerRecipeBuilder(lookup)
-            .itemInput(Tags.Items.DUSTS_REDSTONE, 64)
-            .itemInput(Tags.Items.INGOTS_COPPER, 16)
-            .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS, 8)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.REDSTONE, 64)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.COPPER, 64)
+            .itemInput(RagiumBlocks.QUARTZ_GLASS, 16)
             .itemOutput(RagiumItems.REDSTONE_LENS)
             .save(output)
 
         HTAssemblerRecipeBuilder(lookup)
-            .itemInput(Tags.Items.DUSTS_GLOWSTONE, 64)
-            .itemInput(Tags.Items.INGOTS_GOLD, 16)
-            .itemInput(RagiumBlocks.QUARTZ_GLASS, 8)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.GLOWSTONE, 64)
+            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.GOLD, 64)
+            .itemInput(RagiumBlocks.QUARTZ_GLASS, 16)
             .itemOutput(RagiumItems.GLOWSTONE_LENS)
             .save(output)
 
         HTAssemblerRecipeBuilder(lookup)
-            .itemInput(Tags.Items.GEMS_DIAMOND, 64)
-            .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 16)
-            .itemInput(Tags.Items.GLASS_BLOCKS_TINTED, 8)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.DIAMOND, 64)
+            .itemInput(HTTagPrefix.INGOT, CommonMaterials.ALUMINUM, 64)
+            .itemInput(RagiumBlocks.QUARTZ_GLASS, 16)
             .itemOutput(RagiumItems.DIAMOND_LENS)
             .save(output)
 
         HTAssemblerRecipeBuilder(lookup)
+            .itemInput(HTTagPrefix.DUST, VanillaMaterials.EMERALD, 64)
+            .itemInput(Items.GHAST_TEAR, 16)
+            .itemInput(RagiumBlocks.QUARTZ_GLASS, 16)
+            .itemOutput(RagiumItems.EMERALD_LENS)
+            .save(output)
+
+        HTAssemblerRecipeBuilder(lookup)
             .itemInput(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST, 64)
-            .itemInput(HTTagPrefix.INGOT, VanillaMaterials.NETHERITE, 16)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterials.DURALUMIN, 64)
             .itemInput(RagiumBlocks.OBSIDIAN_GLASS, 8)
             .itemOutput(RagiumItems.AMETHYST_LENS)
             .save(output)
@@ -703,6 +704,21 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .grinder(lookup)
             .itemInput(Tags.Items.OBSIDIANS_NORMAL)
             .itemOutput(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.OBSIDIAN), 4)
+            .save(output)
+    }
+
+    private fun registerTicket(output: RecipeOutput) {
+        // Teleport Ticket
+        HTShapedRecipeBuilder(RagiumItems.TELEPORT_TICKET, 8)
+            .hollow8()
+            .define('A', RagiumItems.BLANK_TICKET)
+            .define('B', HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
+            .save(output)
+        // Ragi Ticket
+        HTShapedRecipeBuilder(RagiumItems.RAGI_TICKET, 8)
+            .hollow8()
+            .define('A', RagiumItems.BLANK_TICKET)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterials.RAGIUM)
             .save(output)
     }
 }

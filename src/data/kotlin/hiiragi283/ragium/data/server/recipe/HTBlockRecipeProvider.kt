@@ -37,7 +37,14 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .cross8()
             .define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
             .define('B', RagiumItemTags.CIRCUITS_ADVANCED)
-            .define('C', Tags.Items.ENDER_PEARLS)
+            .define('C', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .save(output)
+        // Teleport Anchor
+        HTShapedRecipeBuilder(RagiumBlocks.TELEPORT_ANCHOR)
+            .cross8()
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
+            .define('B', RagiumItemTags.CIRCUITS_ELITE)
+            .define('C', HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
             .save(output)
     }
 

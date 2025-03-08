@@ -79,6 +79,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getDrum(HTDrumVariant.RAGIUM), "ラギウムのドラム")
 
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
+        addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
 
         addBlock(RagiumBlocks.MAGMA_BURNER, "マグマバーナー")
         addBlock(RagiumBlocks.SOUL_BURNER, "ソウルバーナー")
@@ -107,6 +108,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.translationKey, "汚れたラギナイトの懸濁液")
         // Component
         add(RagiumTranslationKeys.ENTITY_DATA, "保持しているエンティティ: %s")
+        add(RagiumTranslationKeys.TELEPORT_POS_0, "テレポート先の次元: %s")
+        add(RagiumTranslationKeys.TELEPORT_POS_1, "テレポート先の座標: %s")
+
+        add(RagiumTranslationKeys.TELEPORT_POS_MISSING_ANCHOR, "テレポート先の地面にテレポートアンカーが見つかりません！")
+        add(RagiumTranslationKeys.TELEPORT_POS_MISSING_LEVEL, "テレポート先の次元は存在しません！")
+        add(RagiumTranslationKeys.TELEPORT_POS_MISSING_POS, "テレポート先の座標は読み込まれていません！")
         // Content
         add(HTOreVariant.OVERWORLD, "%s鉱石")
         add(HTOreVariant.DEEPSLATE, "深層%s鉱石")
@@ -271,6 +278,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 
         addItem(RagiumItems.BLANK_TICKET, "空のチケット")
+        addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
 
         add(RagiumTranslationKeys.AMBROSIA, "無限に食べられちまうんだ！")
@@ -285,7 +293,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.FLATTEN_DYNAMITE, "着弾点より上のブロックを「すべて」整地する")
         add(RagiumTranslationKeys.ITEM_MAGNET, "周囲のアイテムをひきつける")
         add(RagiumTranslationKeys.POISON_DYNAMITE, "範囲内のエンティティに毒デバフを与える")
-        add(RagiumTranslationKeys.POTION_BUNDLE, "9本までポーションをまとめられる")
+        add(RagiumTranslationKeys.POTION_BUNDLE_0, "9本までポーションをまとめられる")
         add(RagiumTranslationKeys.POTION_BUNDLE_1, "左クリックでGUIを開く")
         add(RagiumTranslationKeys.SILKY_PICKAXE, "常にシルクタッチが発動する")
         add(RagiumTranslationKeys.SOAP, "右クリックで対象のブロックを洗う")

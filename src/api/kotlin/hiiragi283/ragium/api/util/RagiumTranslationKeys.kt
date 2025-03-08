@@ -17,6 +17,12 @@ object RagiumTranslationKeys {
     //    Component    //
 
     const val ENTITY_DATA = "tooltip.ragium.component.entity_data"
+    const val TELEPORT_POS_0 = "tooltip.ragium.component.teleport_pos.0"
+    const val TELEPORT_POS_1 = "tooltip.ragium.component.teleport_pos.1"
+
+    const val TELEPORT_POS_MISSING_ANCHOR = "tooltip.ragium.component.teleport_pos.missing_anchor"
+    const val TELEPORT_POS_MISSING_LEVEL = "tooltip.ragium.component.teleport_pos.missing_level"
+    const val TELEPORT_POS_MISSING_POS = "tooltip.ragium.component.teleport_pos.missing_pos"
 
     //    Fluid    //
 
@@ -40,7 +46,7 @@ object RagiumTranslationKeys {
     const val FLATTEN_DYNAMITE = "tooltip.ragium.item.flatten_dynamite"
     const val ITEM_MAGNET = "tooltip.ragium.item.item_magnet"
     const val POISON_DYNAMITE = "tooltip.ragium.item.poison_dynamite"
-    const val POTION_BUNDLE = "tooltip.ragium.item.potion_bundle"
+    const val POTION_BUNDLE_0 = "tooltip.ragium.item.potion_bundle.0"
     const val POTION_BUNDLE_1 = "tooltip.ragium.item.potion_bundle.1"
     const val SILKY_PICKAXE = "tooltip.ragium.item.silky_pickaxe"
     const val SOAP = "tooltip.ragium.item.soap"

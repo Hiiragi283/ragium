@@ -8,8 +8,8 @@
     "item": "ragium:amethyst_lens"
   },
   "second_item_input": {
-    "count": 16,
-    "tag": "c:ingots/netherite"
+    "count": 64,
+    "tag": "c:ingots/duralumin"
   },
   "third_item_input": {
     "count": 8,

@@ -79,6 +79,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getDrum(HTDrumVariant.RAGIUM), "Ragium Drum")
 
         addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
+        addBlock(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
 
         addBlock(RagiumBlocks.MAGMA_BURNER, "Magma Burner")
         addBlock(RagiumBlocks.SOUL_BURNER, "Soul Burner")
@@ -107,6 +108,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.translationKey, "Dirty Raginite Slurry")
         // Component
         add(RagiumTranslationKeys.ENTITY_DATA, "Holding Entity: %s")
+        add(RagiumTranslationKeys.TELEPORT_POS_0, "Target Dimension: %s")
+        add(RagiumTranslationKeys.TELEPORT_POS_1, "Target Position: %s")
+
+        add(RagiumTranslationKeys.TELEPORT_POS_MISSING_ANCHOR, "Missing Teleport Anchor below the destination!")
+        add(RagiumTranslationKeys.TELEPORT_POS_MISSING_LEVEL, "Missing target dimension!")
+        add(RagiumTranslationKeys.TELEPORT_POS_MISSING_POS, "The destination is not loaded!")
         // Content
         add(HTOreVariant.OVERWORLD, "%s Ore")
         add(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
@@ -272,6 +279,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
 
         addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
+        addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
 
         add(RagiumTranslationKeys.AMBROSIA, "Can be eaten for infinity times!")
@@ -286,7 +294,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.FLATTEN_DYNAMITE, "Flatten ALL blocks above hit position")
         add(RagiumTranslationKeys.ITEM_MAGNET, "Attracts around items")
         add(RagiumTranslationKeys.POISON_DYNAMITE, "Give Poison effect for entities in range")
-        add(RagiumTranslationKeys.POTION_BUNDLE, "Combines potions up to 9")
+        add(RagiumTranslationKeys.POTION_BUNDLE_0, "Combines potions up to 9")
         add(RagiumTranslationKeys.POTION_BUNDLE_1, "Left-click to open GUI")
         add(RagiumTranslationKeys.SILKY_PICKAXE, "Always applies Silk Touch")
         add(RagiumTranslationKeys.SOAP, "Right-click to wash targeted block")
