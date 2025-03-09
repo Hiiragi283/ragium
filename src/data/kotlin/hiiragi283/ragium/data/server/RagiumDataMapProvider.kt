@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -66,10 +67,10 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         // Napalm
         builder(RagiumDataMaps.NAPALM)
             .add(BlockTags.CROPS, HTNapalm.EMPTY, false)
-            .add(BlockTags.ICE, HTNapalm.of(Blocks.WATER), false)
             .add(BlockTags.LEAVES, HTNapalm.EMPTY, false)
+            .add(BlockTags.LOGS, HTNapalm.of(RagiumBlocks.ASH_LOG.get()), false)
             .add(BlockTags.REPLACEABLE_BY_TREES, HTNapalm.EMPTY, false)
-            .add(BlockTags.SAPLINGS, HTNapalm.EMPTY, false)
+            .add(BlockTags.SAPLINGS, HTNapalm.of(Blocks.DEAD_BUSH), false)
             .add(BlockTags.SNOW, HTNapalm.EMPTY, false)
             .add(BlockTags.WART_BLOCKS, HTNapalm.EMPTY, false)
             .addBlock(Blocks.BROWN_MUSHROOM_BLOCK, HTNapalm.EMPTY, false)

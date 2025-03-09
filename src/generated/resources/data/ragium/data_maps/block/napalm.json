@@ -1,15 +1,17 @@
 {
   "values": {
     "#minecraft:crops": {},
-    "#minecraft:ice": {
-      "Name": "minecraft:water",
+    "#minecraft:leaves": {},
+    "#minecraft:logs": {
+      "Name": "ragium:ash_log",
       "Properties": {
-        "level": "0"
+        "axis": "y"
       }
     },
-    "#minecraft:leaves": {},
     "#minecraft:replaceable_by_trees": {},
-    "#minecraft:saplings": {},
+    "#minecraft:saplings": {
+      "Name": "minecraft:dead_bush"
+    },
     "#minecraft:snow": {},
     "#minecraft:wart_blocks": {},
     "minecraft:brown_mushroom_block": {},

@@ -1,5 +1,6 @@
 {
   "block.ragium.aluminum_drum": "アルミニウムのドラム",
+  "block.ragium.ash_log": "灰化した原木",
   "block.ragium.blue_led_block": "LEDブロック（青）",
   "block.ragium.blue_nether_brick_slab": "青いネザーレンガのハーフブロック",
   "block.ragium.blue_nether_brick_stairs": "青いネザーレンガの階段",
@@ -59,7 +60,7 @@
   "config.jade.plugin_ragium.machine_info": "機械の情報",
   "enchantment.ragium.capacity": "容量増加",
   "enchantment.ragium.capacity.desc": "アイテムや液体ストレージの容量を拡張します",
-  "entity.ragium.defoliant_dynamite": "ウィザーダイナマイト",
+  "entity.ragium.defoliant_dynamite": "枯葉剤ダイナマイト",
   "entity.ragium.dynamite": "ダイナマイト",
   "entity.ragium.flatten_dynamite": "整地用ダイナマイト",
   "entity.ragium.napalm_dynamite": "ナパームダイナマイト",

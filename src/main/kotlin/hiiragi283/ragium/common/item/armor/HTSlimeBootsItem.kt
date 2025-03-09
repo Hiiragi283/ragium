@@ -8,12 +8,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.component.ItemAttributeModifiers
 
-class HTSlimeBootsItem(properties: Properties) : ArmorItem(
-    RagiumArmorMaterials.DEFAULT,
-    Type.BOOTS,
-    properties
-        .attributes(ATTRIBUTE)
-) {
+class HTSlimeBootsItem(properties: Properties) :
+    ArmorItem(
+        RagiumArmorMaterials.DEFAULT,
+        Type.BOOTS,
+        properties
+            .attributes(ATTRIBUTE),
+    ) {
     companion object {
         @JvmStatic
         private val ATTRIBUTE: ItemAttributeModifiers = ItemAttributeModifiers
@@ -22,7 +23,7 @@ class HTSlimeBootsItem(properties: Properties) : ArmorItem(
                 Attributes.FALL_DAMAGE_MULTIPLIER,
                 AttributeModifier(
                     RagiumAPI.id("slime_boots_fall"),
-                    0.0,
+                    -100.0,
                     AttributeModifier.Operation.ADD_VALUE,
                 ),
                 EquipmentSlotGroup.FEET,

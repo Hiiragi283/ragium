@@ -16,10 +16,11 @@ data class HTNapalm private constructor(val state: BlockState) {
         private val RAW_CODEC: Codec<HTNapalm> = BlockState.CODEC.xmap(::of, HTNapalm::state)
 
         @JvmField
-        val CODEC: Codec<HTNapalm> = ExtraCodecs.optionalEmptyMap(RAW_CODEC)
+        val CODEC: Codec<HTNapalm> = ExtraCodecs
+            .optionalEmptyMap(RAW_CODEC)
             .xmap(
                 { optional: Optional<HTNapalm> -> optional.orElse(EMPTY) },
-                { napalm: HTNapalm -> if (napalm.state.`is`(Blocks.FIRE)) Optional.empty() else Optional.of(napalm) }
+                { napalm: HTNapalm -> if (napalm.state.`is`(Blocks.FIRE)) Optional.empty() else Optional.of(napalm) },
             )
 
         @JvmField
@@ -33,6 +34,7 @@ data class HTNapalm private constructor(val state: BlockState) {
     }
 
     fun updateState(level: Level, pos: BlockPos) {
+        if (level.isEmptyBlock(pos)) return
         if (this == EMPTY) {
             if (!state.canSurvive(level, pos)) return
         }

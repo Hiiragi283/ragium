@@ -37,7 +37,6 @@ class HTNapalmDynamite : HTRangedEntityDynamite<LivingEntity> {
                     hitPos.y + range,
                     hitPos.z + range,
                 ).forEach { posIn: BlockPos ->
-                    if (level.isEmptyBlock(posIn)) return@forEach
                     level
                         .getBlockState(posIn)
                         .blockHolder
@@ -51,6 +50,6 @@ class HTNapalmDynamite : HTRangedEntityDynamite<LivingEntity> {
     override val entityClass: Class<LivingEntity> = LivingEntity::class.java
 
     override fun forEachEntity(entity: LivingEntity) {
-        entity.lavaHurt()
+        entity.igniteForSeconds(60f)
     }
 }

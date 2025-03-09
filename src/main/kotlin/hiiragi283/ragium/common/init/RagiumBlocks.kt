@@ -99,6 +99,15 @@ object RagiumBlocks {
         .properties(blockProperty(Blocks.WATER).mapColor(MapColor.COLOR_BLACK))
         .build { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluids.CRUDE_OIL.get(), properties) }
 
+    @JvmField
+    val ASH_LOG: DeferredBlock<RotatedPillarBlock> = Builder("ash_log")
+        .properties(
+            blockProperty()
+                .mapColor(MapColor.COLOR_GRAY)
+                .strength(1f)
+                .sound(SoundType.SAND),
+        ).build(::RotatedPillarBlock)
+
     //    Materials    //
 
     @JvmField

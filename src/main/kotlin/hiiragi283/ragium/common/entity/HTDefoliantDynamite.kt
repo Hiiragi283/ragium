@@ -39,7 +39,6 @@ class HTDefoliantDynamite : HTRangedEntityDynamite<LivingEntity> {
                     hitPos.y + range,
                     hitPos.z + range,
                 ).forEach { posIn: BlockPos ->
-                    if (level.isEmptyBlock(posIn)) return@forEach
                     level
                         .getBlockState(posIn)
                         .blockHolder

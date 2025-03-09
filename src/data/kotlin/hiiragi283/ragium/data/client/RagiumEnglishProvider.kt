@@ -27,6 +27,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Block
         addBlock(RagiumBlocks.SOUL_MAGMA_BLOCK, "Soul Magma Block")
         addBlock(RagiumBlocks.CRUDE_OIL, "Crude Oil")
+        addBlock(RagiumBlocks.ASH_LOG, "Ashen Log")
 
         addBlock(RagiumBlocks.SLAG_BLOCK, "Block of Slag")
 

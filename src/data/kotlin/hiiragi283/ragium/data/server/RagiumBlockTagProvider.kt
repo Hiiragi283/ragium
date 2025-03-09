@@ -40,6 +40,7 @@ class RagiumBlockTagProvider(
         builder = HTTagBuilder(provider.blockLookup())
 
         // Mineable
+        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.ASH_LOG)
         builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
 
         for (block: DeferredBlock<*> in HTMachineType.getBlocks()) {

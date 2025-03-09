@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.util.HTOreSets
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -24,6 +25,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Supplier
@@ -35,30 +37,22 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             addAll(RagiumBlocks.REGISTER.entries)
 
             remove(RagiumBlocks.CRUDE_OIL)
+            remove(RagiumBlocks.ASH_LOG)
 
             // removeAll(RagiumBlocks.CRATES.values)
             removeAll(RagiumBlocks.DRUMS.values)
         }.map(Supplier<out Block>::get).forEach(::dropSelf)
 
+        fortuneDrop(
+            RagiumBlocks.ASH_LOG,
+            UniformGenerator.between(1f, 3f),
+            RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH),
+        )
+
         fun registerOres(oreSets: HTOreSets, prefix: HTTagPrefix) {
             for (ore: DeferredBlock<out Block> in oreSets.oreBlocks) {
                 val rawMaterial: ItemLike = RagiumItems.getMaterialItem(prefix, oreSets.key)
-                add(ore.get()) { block: Block ->
-                    createSilkTouchDispatchTable(
-                        block,
-                        applyExplosionDecay(
-                            block,
-                            LootItem
-                                .lootTableItem(rawMaterial)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f)))
-                                .apply(
-                                    ApplyBonusCount.addOreBonusCount(
-                                        registries.enchLookup().getOrThrow(Enchantments.FORTUNE),
-                                    ),
-                                ),
-                        ),
-                    )
-                }
+                fortuneDrop(ore, UniformGenerator.between(1f, 3f), rawMaterial)
             }
         }
         registerOres(RagiumBlocks.RAGINITE_ORES, HTTagPrefix.RAW_MATERIAL)
@@ -76,6 +70,25 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
         for (holder: DeferredBlock<*> in HTMachineType.getBlocks()) {
             add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }
+        }
+    }
+
+    private fun fortuneDrop(holder: DeferredBlock<*>, range: NumberProvider, drop: ItemLike = holder) {
+        add(holder.get()) { block: Block ->
+            createSilkTouchDispatchTable(
+                block,
+                applyExplosionDecay(
+                    block,
+                    LootItem
+                        .lootTableItem(drop)
+                        .apply(SetItemCountFunction.setCount(range))
+                        .apply(
+                            ApplyBonusCount.addOreBonusCount(
+                                registries.enchLookup().getOrThrow(Enchantments.FORTUNE),
+                            ),
+                        ),
+                ),
+            )
         }
     }
 

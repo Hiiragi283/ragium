@@ -1,5 +1,6 @@
 {
   "block.ragium.aluminum_drum": "Aluminum Drum",
+  "block.ragium.ash_log": "Ashen Log",
   "block.ragium.blue_led_block": "Blue LED Block",
   "block.ragium.blue_nether_brick_slab": "Blue Nether Brick Slab",
   "block.ragium.blue_nether_brick_stairs": "Blue Nether Brick Stairs",
@@ -59,7 +60,7 @@
   "config.jade.plugin_ragium.machine_info": "Show Machine Info",
   "enchantment.ragium.capacity": "Capacity",
   "enchantment.ragium.capacity.desc": "Increase the capacity of item or fluid storages",
-  "entity.ragium.defoliant_dynamite": "Wither Dynamite",
+  "entity.ragium.defoliant_dynamite": "Defoliant Dynamite",
   "entity.ragium.dynamite": "Dynamite",
   "entity.ragium.flatten_dynamite": "Flatten Dynamite",
   "entity.ragium.napalm_dynamite": "Napalm Dynamite",

@@ -45,6 +45,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.RAGINITE_ORES.generateStates(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.generateStates(this)
 
+        // Log
+        logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
+
         // Burner
         for (burner: DeferredBlock<Block> in RagiumBlocks.BURNERS) {
             val core: ResourceLocation = when (burner) {
