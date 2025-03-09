@@ -12,9 +12,9 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.CommonLevelAccessor
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelWriter
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.chunk.ChunkAccess
@@ -34,8 +34,11 @@ fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity
  */
 fun BlockGetter.getMachineAccess(pos: BlockPos): HTMachineAccess? = getBlockEntity(pos) as? HTMachineAccess
 
-fun LevelWriter.emptyBlock(pos: BlockPos) {
-    setBlock(pos, Blocks.AIR.defaultBlockState(), 0)
+fun CommonLevelAccessor.emptyBlock(pos: BlockPos) {
+    removeBlock(pos, false)
+    if (!getFluidState(pos).isEmpty) {
+        setBlock(pos, Blocks.AIR.defaultBlockState(), 3)
+    }
 }
 
 /**

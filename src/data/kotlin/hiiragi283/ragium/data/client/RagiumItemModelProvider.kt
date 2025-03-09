@@ -55,6 +55,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             removeAll(RagiumItems.DURALUMIN_TOOLS.tools)
 
             remove(RagiumItems.JETPACK) // TODO
+            remove(RagiumItems.NAPALM_DYNAMITE) // TODO
         }.forEach(::basicItem)
 
         getBuilder(RagiumItems.CHOCOLATE_APPLE)

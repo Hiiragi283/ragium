@@ -160,6 +160,7 @@ class RagiumItemTagProvider(
     private fun armorTags() {
         builder.add(ItemTags.HEAD_ARMOR_ENCHANTABLE, RagiumItems.DIVING_GOGGLE)
         builder.add(ItemTags.CHEST_ARMOR_ENCHANTABLE, RagiumItems.JETPACK)
+        builder.add(ItemTags.FOOT_ARMOR_ENCHANTABLE, RagiumItems.SLIME_BOOTS)
 
         RagiumItems.EMBER_ALLOY_ARMORS.appendTags(builder::add)
         RagiumItems.STEEL_ARMORS.appendTags(builder::add)

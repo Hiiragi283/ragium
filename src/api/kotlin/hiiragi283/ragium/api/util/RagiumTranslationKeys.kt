@@ -42,6 +42,8 @@ object RagiumTranslationKeys {
 
     const val AMBROSIA = "tooltip.ragium.item.ambrosia"
     const val BEE_WAX = "tooltip.ragium.item.bee_wax"
+    const val DEFOLIANT_DYNAMITE_0 = "tooltip.ragium.item.defoliant_dynamite.0"
+    const val DEFOLIANT_DYNAMITE_1 = "tooltip.ragium.item.defoliant_dynamite.1"
     const val DURALUMIN_CASE = "tooltip.ragium.item.duralumin_case"
     const val DYNAMITE = "tooltip.ragium.item.dynamite"
     const val EFFECT_RANGE = "tooltip.ragium.item.effect_range"
@@ -56,8 +58,6 @@ object RagiumTranslationKeys {
     const val SILKY_PICKAXE = "tooltip.ragium.item.silky_pickaxe"
     const val SOAP = "tooltip.ragium.item.soap"
     const val WARPED_WART = "tooltip.ragium.item.warped_wart"
-    const val WITHER_DYNAMITE_0 = "tooltip.ragium.item.wither_dynamite.0"
-    const val WITHER_DYNAMITE_1 = "tooltip.ragium.item.wither_dynamite.1"
 
     //    Machine    //
 

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.item.dynamite
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.entity.HTDynamite
-import hiiragi283.ragium.common.entity.HTWitherDynamite
+import hiiragi283.ragium.common.entity.HTNapalmDynamite
 import hiiragi283.ragium.common.item.HTThrowableItem
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 
-class HTWitherDynamiteItem(properties: Properties) : HTThrowableItem(properties) {
+class HTNapalmDynamiteItem(properties: Properties) : HTThrowableItem(properties) {
     override fun appendHoverText(
         stack: ItemStack,
         context: TooltipContext,
@@ -22,5 +22,5 @@ class HTWitherDynamiteItem(properties: Properties) : HTThrowableItem(properties)
     }
 
     override fun throwProjectile(level: Level, player: Player, stack: ItemStack): Projectile =
-        HTDynamite.withItem(level, player, stack, ::HTWitherDynamite)
+        HTDynamite.withItem(level, player, stack, ::HTNapalmDynamite)
 }

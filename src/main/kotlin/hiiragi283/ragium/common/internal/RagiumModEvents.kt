@@ -188,6 +188,7 @@ internal object RagiumModEvents {
 
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
+        event.register(RagiumDataMaps.NAPALM)
         event.register(RagiumDataMaps.DEFOLIANT)
         event.register(RagiumDataMaps.SOAP)
 

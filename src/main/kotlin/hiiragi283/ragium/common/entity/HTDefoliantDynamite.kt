@@ -13,16 +13,16 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 
-class HTWitherDynamite : HTRangedEntityDynamite<LivingEntity> {
-    constructor(type: EntityType<out HTWitherDynamite>, level: Level) : super(type, level)
+class HTDefoliantDynamite : HTRangedEntityDynamite<LivingEntity> {
+    constructor(type: EntityType<out HTDefoliantDynamite>, level: Level) : super(type, level)
 
     constructor(level: Level, shooter: LivingEntity) : super(
-        RagiumEntityTypes.WITHER_DYNAMITE.get(),
+        RagiumEntityTypes.DEFOLIANT_DYNAMITE.get(),
         level,
         shooter,
     )
 
-    override fun getDefaultItem(): Item = RagiumItems.WITHER_DYNAMITE.get()
+    override fun getDefaultItem(): Item = RagiumItems.DEFOLIANT_DYNAMITE.get()
 
     override fun onHitBlock(result: BlockHitResult) {
         super.onHitBlock(result)
@@ -39,7 +39,12 @@ class HTWitherDynamite : HTRangedEntityDynamite<LivingEntity> {
                     hitPos.y + range,
                     hitPos.z + range,
                 ).forEach { posIn: BlockPos ->
-                    level.getBlockState(posIn).blockHolder.getData(RagiumDataMaps.DEFOLIANT)?.updateState(level, posIn)
+                    if (level.isEmptyBlock(posIn)) return@forEach
+                    level
+                        .getBlockState(posIn)
+                        .blockHolder
+                        .getData(RagiumDataMaps.DEFOLIANT)
+                        ?.updateState(level, posIn)
                 }
             discard()
         }

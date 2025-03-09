@@ -146,6 +146,7 @@ object RagiumCreativeTabs {
             addAll(RagiumItems.STEEL_ARMORS.armors)
             add(RagiumItems.DIVING_GOGGLE)
             add(RagiumItems.JETPACK)
+            add(RagiumItems.SLIME_BOOTS)
             // Tools
             addAll(RagiumItems.RAGI_ALLOY_TOOLS.tools)
             addAll(RagiumItems.STEEL_TOOLS.tools)

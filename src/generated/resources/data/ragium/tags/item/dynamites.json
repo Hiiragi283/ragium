@@ -1,8 +1,9 @@
 {
   "values": [
+    "ragium:defoliant_dynamite",
     "ragium:dynamite",
     "ragium:flatten_dynamite",
-    "ragium:poison_dynamite",
-    "ragium:wither_dynamite"
+    "ragium:napalm_dynamite",
+    "ragium:poison_dynamite"
   ]
 }

@@ -20,10 +20,8 @@ import hiiragi283.ragium.common.item.HTTeleportTicket
 import hiiragi283.ragium.common.item.HTThrowableItem
 import hiiragi283.ragium.common.item.armor.HTDivingGoggleItem
 import hiiragi283.ragium.common.item.armor.HTJetpackItem
-import hiiragi283.ragium.common.item.dynamite.HTFlattenDynamiteItem
-import hiiragi283.ragium.common.item.dynamite.HTPoisonDynamiteItem
-import hiiragi283.ragium.common.item.dynamite.HTSimpleDynamiteItem
-import hiiragi283.ragium.common.item.dynamite.HTWitherDynamiteItem
+import hiiragi283.ragium.common.item.armor.HTSlimeBootsItem
+import hiiragi283.ragium.common.item.dynamite.*
 import hiiragi283.ragium.common.item.food.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.food.HTPotionBundleItem
 import hiiragi283.ragium.common.item.food.HTWarpedWartItem
@@ -301,6 +299,9 @@ object RagiumItems {
     @JvmField
     val JETPACK: DeferredItem<HTJetpackItem> = register("jetpack", ::HTJetpackItem)
 
+    @JvmField
+    val SLIME_BOOTS: DeferredItem<HTSlimeBootsItem> = register("slime_boots", ::HTSlimeBootsItem)
+
     //    Tools    //
 
     @JvmField
@@ -395,10 +396,24 @@ object RagiumItems {
     )
 
     @JvmField
+    val DEFOLIANT_DYNAMITE: DeferredItem<HTDefoliantDynamiteItem> = register(
+        "defoliant_dynamite",
+        ::HTDefoliantDynamiteItem,
+        itemProperty().lore(RagiumTranslationKeys.DEFOLIANT_DYNAMITE_0, RagiumTranslationKeys.DEFOLIANT_DYNAMITE_1),
+    )
+
+    @JvmField
     val FLATTEN_DYNAMITE: DeferredItem<HTFlattenDynamiteItem> = register(
         "flatten_dynamite",
         ::HTFlattenDynamiteItem,
         itemProperty().lore(RagiumTranslationKeys.FLATTEN_DYNAMITE),
+    )
+
+    @JvmField
+    val NAPALM_DYNAMITE: DeferredItem<HTNapalmDynamiteItem> = register(
+        "napalm_dynamite",
+        ::HTNapalmDynamiteItem,
+        itemProperty(),
     )
 
     @JvmField
@@ -409,18 +424,12 @@ object RagiumItems {
     )
 
     @JvmField
-    val WITHER_DYNAMITE: DeferredItem<HTWitherDynamiteItem> = register(
-        "wither_dynamite",
-        ::HTWitherDynamiteItem,
-        itemProperty().lore(RagiumTranslationKeys.POISON_DYNAMITE),
-    )
-
-    @JvmField
     val DYNAMITES: List<DeferredItem<out HTThrowableItem>> = listOf(
         DYNAMITE,
+        DEFOLIANT_DYNAMITE,
         FLATTEN_DYNAMITE,
+        NAPALM_DYNAMITE,
         POISON_DYNAMITE,
-        WITHER_DYNAMITE,
     )
 
     //    Molds    //

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:slime_balls"
+    },
+    "B": {
+      "tag": "c:storage_blocks/slime"
+    },
+    "C": {
+      "tag": "c:tools/forge_hammer"
+    }
+  },
+  "pattern": [
+    "A A",
+    "BCB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:slime_boots"
+  }
+}

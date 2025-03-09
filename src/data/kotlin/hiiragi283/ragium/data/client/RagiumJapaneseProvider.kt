@@ -122,9 +122,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します")
         // Entity
         addEntityType(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
+        addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
         addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
+        addEntityType(RagiumEntityTypes.NAPALM_DYNAMITE, "ナパームダイナマイト")
         addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
-        addEntityType(RagiumEntityTypes.WITHER_DYNAMITE, "ウィザーダイナマイト")
         // Fluids
         addFluid(RagiumFluids.GLASS, "溶融ガラス")
         addFluid(RagiumFluids.HONEY, "蜂蜜")
@@ -201,6 +202,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
         addItem(RagiumItems.JETPACK, "ジェットパック")
+        addItem(RagiumItems.SLIME_BOOTS, "スライムブーツ")
 
         RagiumItems.EMBER_ALLOY_ARMORS.addTranslationsJp("熾火合金", ::addItem)
         RagiumItems.STEEL_ARMORS.addTranslationsJp("鋼鉄", ::addItem)
@@ -220,9 +222,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.EXP_MAGNET, "経験値マグネット")
 
         addItem(RagiumItems.DYNAMITE, "ダイナマイト")
+        addItem(RagiumItems.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
         addItem(RagiumItems.FLATTEN_DYNAMITE, "整地用ダイナマイト")
+        addItem(RagiumItems.NAPALM_DYNAMITE, "ナパームダイナマイト")
         addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")
-        addItem(RagiumItems.WITHER_DYNAMITE, "ウィザーダイナマイト")
 
         addItem(RagiumItems.BLANK_PRESS_MOLD, "プレス型（なし）")
         addItem(RagiumItems.BALL_PRESS_MOLD, "プレス型（ボール）")
@@ -288,8 +291,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.SILKY_PICKAXE, "常にシルクタッチが発動する")
         add(RagiumTranslationKeys.SOAP, "右クリックで対象のブロックを洗う")
         add(RagiumTranslationKeys.WARPED_WART, "食べるとランダムなデバフを一つ消す")
-        add(RagiumTranslationKeys.WITHER_DYNAMITE_0, "範囲内のエンティティに衰退デバフを与える")
-        add(RagiumTranslationKeys.WITHER_DYNAMITE_1, "範囲内のブロックを劣化させる")
+        add(RagiumTranslationKeys.DEFOLIANT_DYNAMITE_0, "範囲内のエンティティに衰退デバフを与える")
+        add(RagiumTranslationKeys.DEFOLIANT_DYNAMITE_1, "範囲内のブロックを劣化させる")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
         add(RagiumTranslationKeys.MACHINE_COST_MODIFIER, "- 消費/生産エネルギーの倍率: %sx")

@@ -10,7 +10,19 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
  */
 object RagiumDataMaps {
     /**
-     * 枯葉剤でのブロック置き換えで参照します。
+     * ナパームダイナマイトでのブロック置き換えで参照します。
+     */
+    @JvmField
+    val NAPALM: DataMapType<Block, HTNapalm> = DataMapType
+        .builder(
+            RagiumAPI.id("napalm"),
+            Registries.BLOCK,
+            HTNapalm.CODEC,
+        ).synced(HTNapalm.CODEC, false)
+        .build()
+
+    /**
+     * 枯葉剤ダイナマイトでのブロック置き換えで参照します。
      */
     @JvmField
     val DEFOLIANT: DataMapType<Block, HTDefoliant> = DataMapType

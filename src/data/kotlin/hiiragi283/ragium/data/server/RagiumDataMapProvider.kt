@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.data.HTDefoliant
+import hiiragi283.ragium.api.data.HTNapalm
 import hiiragi283.ragium.api.data.HTSoap
 import hiiragi283.ragium.api.data.RagiumDataMaps
 import hiiragi283.ragium.api.extension.asHolder
@@ -45,22 +46,41 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         // Defoliant
         builder(RagiumDataMaps.DEFOLIANT)
-            .add(BlockTags.CROPS, HTDefoliant.AIR, false)
+            .add(BlockTags.CROPS, HTDefoliant.EMPTY, false)
             .add(BlockTags.DIRT, HTDefoliant.of(Blocks.COARSE_DIRT), false)
-            .add(BlockTags.LEAVES, HTDefoliant.AIR, false)
-            .add(BlockTags.REPLACEABLE_BY_TREES, HTDefoliant.AIR, false)
+            .add(BlockTags.LEAVES, HTDefoliant.EMPTY, false)
+            .add(BlockTags.REPLACEABLE_BY_TREES, HTDefoliant.EMPTY, false)
             .add(BlockTags.SAPLINGS, HTDefoliant.of(Blocks.DEAD_BUSH), false)
-            .add(BlockTags.WART_BLOCKS, HTDefoliant.AIR, false)
-            .addBlock(Blocks.BROWN_MUSHROOM_BLOCK, HTDefoliant.AIR, false)
+            .add(BlockTags.WART_BLOCKS, HTDefoliant.EMPTY, false)
+            .addBlock(Blocks.BROWN_MUSHROOM_BLOCK, HTDefoliant.EMPTY, false)
             .addBlock(Blocks.CRIMSON_NYLIUM, HTDefoliant.of(Blocks.NETHERRACK), false)
-            .addBlock(Blocks.MOSS_CARPET, HTDefoliant.AIR, false)
-            .addBlock(Blocks.RED_MUSHROOM_BLOCK, HTDefoliant.AIR, false)
+            .addBlock(Blocks.MOSS_CARPET, HTDefoliant.EMPTY, false)
+            .addBlock(Blocks.RED_MUSHROOM_BLOCK, HTDefoliant.EMPTY, false)
             .addBlock(Blocks.WARPED_NYLIUM, HTDefoliant.of(Blocks.NETHERRACK), false)
             // Sea Grasses
-            .addBlock(Blocks.KELP, HTDefoliant.AIR, false)
-            .addBlock(Blocks.KELP_PLANT, HTDefoliant.AIR, false)
-            .addBlock(Blocks.SEAGRASS, HTDefoliant.AIR, false)
-            .addBlock(Blocks.TALL_SEAGRASS, HTDefoliant.AIR, false)
+            .addBlock(Blocks.KELP, HTDefoliant.EMPTY, false)
+            .addBlock(Blocks.KELP_PLANT, HTDefoliant.EMPTY, false)
+            .addBlock(Blocks.SEAGRASS, HTDefoliant.EMPTY, false)
+            .addBlock(Blocks.TALL_SEAGRASS, HTDefoliant.EMPTY, false)
+
+        // Napalm
+        builder(RagiumDataMaps.NAPALM)
+            .add(BlockTags.CROPS, HTNapalm.EMPTY, false)
+            .add(BlockTags.ICE, HTNapalm.of(Blocks.WATER), false)
+            .add(BlockTags.LEAVES, HTNapalm.EMPTY, false)
+            .add(BlockTags.REPLACEABLE_BY_TREES, HTNapalm.EMPTY, false)
+            .add(BlockTags.SAPLINGS, HTNapalm.EMPTY, false)
+            .add(BlockTags.SNOW, HTNapalm.EMPTY, false)
+            .add(BlockTags.WART_BLOCKS, HTNapalm.EMPTY, false)
+            .addBlock(Blocks.BROWN_MUSHROOM_BLOCK, HTNapalm.EMPTY, false)
+            .addBlock(Blocks.CRIMSON_NYLIUM, HTNapalm.of(Blocks.NETHERRACK), false)
+            .addBlock(Blocks.GRASS_BLOCK, HTNapalm.of(Blocks.DIRT), false)
+            .addBlock(Blocks.MOSS_BLOCK, HTNapalm.EMPTY, false)
+            .addBlock(Blocks.MOSS_CARPET, HTNapalm.EMPTY, false)
+            .addBlock(Blocks.MYCELIUM, HTNapalm.of(Blocks.DIRT), false)
+            .addBlock(Blocks.PODZOL, HTNapalm.of(Blocks.DIRT), false)
+            .addBlock(Blocks.RED_MUSHROOM_BLOCK, HTNapalm.EMPTY, false)
+            .addBlock(Blocks.WARPED_NYLIUM, HTNapalm.of(Blocks.NETHERRACK), false)
 
         // Soap
         builder(RagiumDataMaps.SOAP)

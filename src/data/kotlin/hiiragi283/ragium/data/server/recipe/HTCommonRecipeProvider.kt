@@ -490,6 +490,15 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('C', ItemTags.CHEST_ARMOR)
             .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
+        // Slime Boots
+        HTShapedRecipeBuilder(RagiumItems.SLIME_BOOTS, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "A A",
+                "BCB",
+            ).define('A', Tags.Items.SLIME_BALLS)
+            .define('B', Tags.Items.STORAGE_BLOCKS_SLIME)
+            .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .save(output)
 
         armorSet(output, RagiumItems.EMBER_ALLOY_ARMORS)
         armorSet(output, RagiumItems.STEEL_ARMORS)

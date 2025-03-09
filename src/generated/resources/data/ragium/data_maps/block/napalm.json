@@ -1,25 +1,33 @@
 {
   "values": {
     "#minecraft:crops": {},
-    "#minecraft:dirt": {
-      "Name": "minecraft:coarse_dirt"
+    "#minecraft:ice": {
+      "Name": "minecraft:water",
+      "Properties": {
+        "level": "0"
+      }
     },
     "#minecraft:leaves": {},
     "#minecraft:replaceable_by_trees": {},
-    "#minecraft:saplings": {
-      "Name": "minecraft:dead_bush"
-    },
+    "#minecraft:saplings": {},
+    "#minecraft:snow": {},
     "#minecraft:wart_blocks": {},
     "minecraft:brown_mushroom_block": {},
     "minecraft:crimson_nylium": {
       "Name": "minecraft:netherrack"
     },
-    "minecraft:kelp": {},
-    "minecraft:kelp_plant": {},
+    "minecraft:grass_block": {
+      "Name": "minecraft:dirt"
+    },
+    "minecraft:moss_block": {},
     "minecraft:moss_carpet": {},
+    "minecraft:mycelium": {
+      "Name": "minecraft:dirt"
+    },
+    "minecraft:podzol": {
+      "Name": "minecraft:dirt"
+    },
     "minecraft:red_mushroom_block": {},
-    "minecraft:seagrass": {},
-    "minecraft:tall_seagrass": {},
     "minecraft:warped_nylium": {
       "Name": "minecraft:netherrack"
     }

@@ -122,9 +122,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addEnchantment(RagiumEnchantments.CAPACITY, "Capacity", "Increase the capacity of item or fluid storages")
         // Entity
         addEntityType(RagiumEntityTypes.DYNAMITE, "Dynamite")
+        addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
         addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
+        addEntityType(RagiumEntityTypes.NAPALM_DYNAMITE, "Napalm Dynamite")
         addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
-        addEntityType(RagiumEntityTypes.WITHER_DYNAMITE, "Wither Dynamite")
         // Fluids
         addFluid(RagiumFluids.GLASS, "Molten Glass")
         addFluid(RagiumFluids.HONEY, "Honey")
@@ -201,6 +202,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
         addItem(RagiumItems.JETPACK, "Jetpack")
+        addItem(RagiumItems.SLIME_BOOTS, "Slime Boots")
 
         RagiumItems.EMBER_ALLOY_ARMORS.addTranslationsEn("Ember Alloy", ::addItem)
         RagiumItems.STEEL_ARMORS.addTranslationsEn("Steel", ::addItem)
@@ -220,9 +222,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
 
         addItem(RagiumItems.DYNAMITE, "Dynamite")
+        addItem(RagiumItems.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
         addItem(RagiumItems.FLATTEN_DYNAMITE, "Flatten Dynamite")
+        addItem(RagiumItems.NAPALM_DYNAMITE, "Napalm Dynamite")
         addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")
-        addItem(RagiumItems.WITHER_DYNAMITE, "Wither Dynamite")
 
         addItem(RagiumItems.BALL_PRESS_MOLD, "Press Mold (Ball)")
         addItem(RagiumItems.BLOCK_PRESS_MOLD, "Press Mold (Block)")
@@ -289,8 +292,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.SILKY_PICKAXE, "Always applies Silk Touch")
         add(RagiumTranslationKeys.SOAP, "Right-click to wash targeted block")
         add(RagiumTranslationKeys.WARPED_WART, "Removes one random effect when eaten")
-        add(RagiumTranslationKeys.WITHER_DYNAMITE_0, "Give Wither effect for entities in range")
-        add(RagiumTranslationKeys.WITHER_DYNAMITE_1, "Degrade block in range")
+        add(RagiumTranslationKeys.DEFOLIANT_DYNAMITE_0, "Give Wither effect for entities in range")
+        add(RagiumTranslationKeys.DEFOLIANT_DYNAMITE_1, "Degrade block in range")
         // Machine
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
         add(RagiumTranslationKeys.MACHINE_COST_MODIFIER, "- Energy Cost Modifier: %sx")
