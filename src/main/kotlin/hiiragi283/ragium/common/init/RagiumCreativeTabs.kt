@@ -142,10 +142,12 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
             addAll(RagiumItems.FOODS)
             // Armors
-            addAll(RagiumItems.EMBER_ALLOY_ARMORS.armors)
             addAll(RagiumItems.STEEL_ARMORS.armors)
+            addAll(RagiumItems.DURALUMIN_ARMORS.armors)
+
             add(RagiumItems.DIVING_GOGGLE)
             add(RagiumItems.JETPACK)
+            add(RagiumItems.CLIMBING_LEGGINGS)
             add(RagiumItems.SLIME_BOOTS)
             // Tools
             addAll(RagiumItems.RAGI_ALLOY_TOOLS.tools)

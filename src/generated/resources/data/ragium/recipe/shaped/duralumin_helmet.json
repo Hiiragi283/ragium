@@ -3,19 +3,18 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:ingots/ember_alloy"
+      "tag": "c:ingots/duralumin"
     },
     "B": {
       "tag": "c:tools/forge_hammer"
     }
   },
   "pattern": [
-    "ABA",
     "AAA",
-    "AAA"
+    "ABA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ember_alloy_chestplate"
+    "id": "ragium:duralumin_helmet"
   }
 }

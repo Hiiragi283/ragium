@@ -203,10 +203,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
         addItem(RagiumItems.JETPACK, "Jetpack")
+        addItem(RagiumItems.CLIMBING_LEGGINGS, "Climbing Leggings")
         addItem(RagiumItems.SLIME_BOOTS, "Slime Boots")
 
-        RagiumItems.EMBER_ALLOY_ARMORS.addTranslationsEn("Ember Alloy", ::addItem)
         RagiumItems.STEEL_ARMORS.addTranslationsEn("Steel", ::addItem)
+        RagiumItems.DURALUMIN_ARMORS.addTranslationsEn("Duralumin", ::addItem)
 
         addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
         addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")

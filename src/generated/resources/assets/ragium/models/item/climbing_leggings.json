@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/ember_alloy_helmet"
+    "layer0": "ragium:item/climbing_leggings"
   }
 }

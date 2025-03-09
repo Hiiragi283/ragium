@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.item.HTCatalystItem
 import hiiragi283.ragium.common.item.HTSoapItem
 import hiiragi283.ragium.common.item.HTTeleportTicket
 import hiiragi283.ragium.common.item.HTThrowableItem
+import hiiragi283.ragium.common.item.armor.HTClimbingLeggingsItem
 import hiiragi283.ragium.common.item.armor.HTDivingGoggleItem
 import hiiragi283.ragium.common.item.armor.HTJetpackItem
 import hiiragi283.ragium.common.item.armor.HTSlimeBootsItem
@@ -288,16 +289,20 @@ object RagiumItems {
     //    Armors    //
 
     @JvmField
-    val EMBER_ALLOY_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.EMBER_ALLOY, RagiumMaterials.EMBER_ALLOY)
+    val STEEL_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.STEEL, CommonMaterials.STEEL)
 
     @JvmField
-    val STEEL_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.STEEL, CommonMaterials.STEEL)
+    val DURALUMIN_ARMORS = HTArmorSets(REGISTER, RagiumArmorMaterials.DURALUMIN, RagiumMaterials.DURALUMIN)
 
     @JvmField
     val DIVING_GOGGLE: DeferredItem<HTDivingGoggleItem> = register("diving_goggles", ::HTDivingGoggleItem)
 
     @JvmField
     val JETPACK: DeferredItem<HTJetpackItem> = register("jetpack", ::HTJetpackItem)
+
+    @JvmField
+    val CLIMBING_LEGGINGS: DeferredItem<HTClimbingLeggingsItem> =
+        register("climbing_leggings", ::HTClimbingLeggingsItem)
 
     @JvmField
     val SLIME_BOOTS: DeferredItem<HTSlimeBootsItem> = register("slime_boots", ::HTSlimeBootsItem)

@@ -203,10 +203,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
         addItem(RagiumItems.JETPACK, "ジェットパック")
+        addItem(RagiumItems.CLIMBING_LEGGINGS, "登山用レギンス")
         addItem(RagiumItems.SLIME_BOOTS, "スライムブーツ")
 
-        RagiumItems.EMBER_ALLOY_ARMORS.addTranslationsJp("熾火合金", ::addItem)
         RagiumItems.STEEL_ARMORS.addTranslationsJp("鋼鉄", ::addItem)
+        RagiumItems.DURALUMIN_ARMORS.addTranslationsJp("ジュラルミン", ::addItem)
 
         addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")

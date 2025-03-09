@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:ingots/ember_alloy"
+      "tag": "c:ingots/duralumin"
     },
     "B": {
       "tag": "c:tools/forge_hammer"
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ember_alloy_leggings"
+    "id": "ragium:duralumin_leggings"
   }
 }

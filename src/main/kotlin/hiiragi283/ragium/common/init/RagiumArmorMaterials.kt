@@ -18,33 +18,14 @@ object RagiumArmorMaterials {
     val REGISTER: DeferredRegister<ArmorMaterial> = DeferredRegister.create(Registries.ARMOR_MATERIAL, RagiumAPI.MOD_ID)
 
     @JvmField
-    val DEFAULT: DeferredHolder<ArmorMaterial, ArmorMaterial> = REGISTER.register("default") { _: ResourceLocation ->
+    val DEFAULT: DeferredHolder<ArmorMaterial, ArmorMaterial> = REGISTER.register("default") { id: ResourceLocation ->
         ArmorMaterial(
             mapOf(),
             0,
             SoundEvents.ARMOR_EQUIP_GENERIC,
             Ingredient::of,
-            listOf(),
-            0f,
-            0f,
-        )
-    }
-
-    @JvmField
-    val EMBER_ALLOY: DeferredHolder<ArmorMaterial, ArmorMaterial> = REGISTER.register("bronze") { id: ResourceLocation ->
-        ArmorMaterial(
-            mapOf(
-                ArmorItem.Type.BOOTS to 2,
-                ArmorItem.Type.LEGGINGS to 6,
-                ArmorItem.Type.CHESTPLATE to 7,
-                ArmorItem.Type.BODY to 7,
-                ArmorItem.Type.HELMET to 3,
-            ),
-            15,
-            SoundEvents.ARMOR_EQUIP_IRON,
-            { HTTagPrefix.INGOT.createIngredient(RagiumMaterials.EMBER_ALLOY) },
             listOf(ArmorMaterial.Layer(id)),
-            0.5f,
+            0f,
             0f,
         )
     }
@@ -62,6 +43,25 @@ object RagiumArmorMaterials {
             10,
             SoundEvents.ARMOR_EQUIP_IRON,
             { HTTagPrefix.INGOT.createIngredient(CommonMaterials.STEEL) },
+            listOf(ArmorMaterial.Layer(id)),
+            1.2f,
+            0f,
+        )
+    }
+
+    @JvmField
+    val DURALUMIN: DeferredHolder<ArmorMaterial, ArmorMaterial> = REGISTER.register("duralumin") { id: ResourceLocation ->
+        ArmorMaterial(
+            mapOf(
+                ArmorItem.Type.BOOTS to 5,
+                ArmorItem.Type.LEGGINGS to 8,
+                ArmorItem.Type.CHESTPLATE to 12,
+                ArmorItem.Type.BODY to 12,
+                ArmorItem.Type.HELMET to 6,
+            ),
+            18,
+            SoundEvents.ARMOR_EQUIP_DIAMOND,
+            { HTTagPrefix.INGOT.createIngredient(RagiumMaterials.DURALUMIN) },
             listOf(ArmorMaterial.Layer(id)),
             1.2f,
             0f,

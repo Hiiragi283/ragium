@@ -3,22 +3,22 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:ingots/steel"
+      "tag": "c:leathers"
     },
     "B": {
-      "tag": "c:circuits/elite"
+      "tag": "c:ingots/deep_steel"
     },
     "C": {
-      "tag": "minecraft:chest_armor"
+      "tag": "c:storage_blocks/ragi_crystal"
     },
     "D": {
-      "tag": "c:gems/ragi_crystal"
+      "tag": "c:circuits/elite"
     }
   },
   "pattern": [
-    "ABA",
-    "ACA",
-    "D D"
+    "A A",
+    "BCB",
+    "DBD"
   ],
   "result": {
     "count": 1,

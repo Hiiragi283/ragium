@@ -53,8 +53,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
             removeAll(RagiumItems.RAGI_ALLOY_TOOLS.tools)
             removeAll(RagiumItems.DURALUMIN_TOOLS.tools)
+            removeAll(RagiumItems.DURALUMIN_ARMORS.armors)
 
-            remove(RagiumItems.JETPACK) // TODO
             remove(RagiumItems.NAPALM_DYNAMITE) // TODO
         }.forEach(::basicItem)
 

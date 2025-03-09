@@ -482,13 +482,23 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
         // Jetpack
         HTShapedRecipeBuilder(RagiumItems.JETPACK, category = CraftingBookCategory.EQUIPMENT)
             .pattern(
-                "ABA",
-                "ACA",
-                "D D",
-            ).define('A', HTTagPrefix.INGOT, CommonMaterials.STEEL)
-            .define('B', RagiumItemTags.CIRCUITS_ELITE)
-            .define('C', ItemTags.CHEST_ARMOR)
-            .define('D', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+                "A A",
+                "BCB",
+                "DBD",
+            ).define('A', Tags.Items.LEATHERS)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
+            .define('C', HTTagPrefix.BLOCK, RagiumMaterials.RAGI_CRYSTAL)
+            .define('D', RagiumItemTags.CIRCUITS_ELITE)
+            .save(output)
+        // Climbing Leggings
+        HTShapedRecipeBuilder(RagiumItems.CLIMBING_LEGGINGS, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "AAA",
+                "BCB",
+                "A A",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.EMBER_ALLOY)
+            .define('B', RagiumItemTags.CIRCUITS_ADVANCED)
+            .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Slime Boots
         HTShapedRecipeBuilder(RagiumItems.SLIME_BOOTS, category = CraftingBookCategory.EQUIPMENT)
@@ -500,8 +510,8 @@ object HTCommonRecipeProvider : HTRecipeProvider() {
             .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
 
-        armorSet(output, RagiumItems.EMBER_ALLOY_ARMORS)
         armorSet(output, RagiumItems.STEEL_ARMORS)
+        armorSet(output, RagiumItems.DURALUMIN_ARMORS)
     }
 
     private fun armorSet(output: RecipeOutput, armorSet: HTArmorSets) {
