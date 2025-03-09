@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTAssemblerRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
@@ -23,7 +22,6 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
         registerAddons(output)
         registerCasings(output)
 
-        registerMachines(output)
         registerConsumers(output)
         registerGenerators(output)
         registerProcessors(output)
@@ -91,27 +89,6 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, 4)
             .itemInput(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL)
             .itemOutput(RagiumBlocks.PRECISION_MACHINE_FRAME)
-            .save(output)
-    }
-
-    private fun registerMachines(output: RecipeOutput) {
-        // Manual Machine
-        HTShapedRecipeBuilder(RagiumBlocks.MANUAL_GRINDER)
-            .pattern("A  ")
-            .pattern("BBB")
-            .pattern("CCC")
-            .define('A', Tags.Items.RODS_WOODEN)
-            .define('B', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('C', Items.BRICKS)
-            .save(output)
-
-        HTShapedRecipeBuilder(RagiumBlocks.DISENCHANTING_TABLE)
-            .pattern(" A ")
-            .pattern("BCB")
-            .pattern("CCC")
-            .define('A', Items.GRINDSTONE)
-            .define('B', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
-            .define('C', Tags.Items.OBSIDIANS_CRYING)
             .save(output)
     }
 
@@ -247,17 +224,6 @@ object HTBlockRecipeProvider : HTRecipeProvider() {
             .define('D', HTTagPrefix.GEAR, CommonMaterials.STEEL)
             .define('E', Items.HOPPER)
             .save(output)
-
-        HTShapedRecipeBuilder(HTMachineType.GRINDER)
-            .pattern(
-                "AAA",
-                " B ",
-                "CDC",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', RagiumBlocks.MANUAL_GRINDER)
-            .define('C', HTTagPrefix.GEAR, CommonMaterials.STEEL)
-            .define('D', Items.HOPPER)
-            .save(output, RagiumAPI.id("grinder_alt"))
 
         // Extractor
         HTShapedRecipeBuilder(HTMachineType.EXTRACTOR)

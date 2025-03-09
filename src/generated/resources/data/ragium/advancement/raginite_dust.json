@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:manual_grinder",
+  "parent": "ragium:ragi_alloy_hammer",
   "criteria": {
     "has_raginite_dust": {
       "conditions": {

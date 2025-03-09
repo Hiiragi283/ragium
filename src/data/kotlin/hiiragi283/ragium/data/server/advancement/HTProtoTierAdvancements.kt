@@ -35,9 +35,8 @@ object HTProtoTierAdvancements : HTAdvancementGenerator("") {
         val expMagnet: AdvancementHolder =
             createSimple(itemMagnet, RagiumItems.EXP_MAGNET, HTDisplayInfoBuilder::setGoal)
 
-        val manualGrinder: AdvancementHolder = createSimple(ragiAlloy, RagiumBlocks.MANUAL_GRINDER)
         val raginiteDust: AdvancementHolder =
-            createMaterial(manualGrinder, HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
+            createMaterial(forgeHammer, HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
 
         // Steel
         val steelCompound: AdvancementHolder = createSimple(root, RagiumItems.STEEL_COMPOUND)

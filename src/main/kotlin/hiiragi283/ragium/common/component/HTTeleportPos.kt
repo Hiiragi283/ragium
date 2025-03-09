@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockPosText
+import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.RagiumBlocks
 import io.netty.buffer.ByteBuf
@@ -21,7 +22,6 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.TooltipProvider
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.portal.DimensionTransition
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
 import java.util.function.Consumer
 
 data class HTTeleportPos(val levelKey: ResourceKey<Level>, val pos: BlockPos) : TooltipProvider {
@@ -63,7 +63,7 @@ data class HTTeleportPos(val levelKey: ResourceKey<Level>, val pos: BlockPos) : 
         val targetLevel: ServerLevel = targetLevel ?: return null
         return DimensionTransition(
             targetLevel,
-            pos.toVec3().add(0.5, 0.0, 0.5),
+            pos.toCenterVec3(),
             target.deltaMovement,
             target.yRot,
             target.xRot,

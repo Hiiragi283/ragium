@@ -1,28 +1,6 @@
 {
   "values": [
-    "ragium:alchemical_brewery",
-    "ragium:alloy_furnace",
-    "ragium:arcane_enchanter",
-    "ragium:assembler",
-    "ragium:auto_chisel",
-    "ragium:bedrock_miner",
-    "ragium:combustion_generator",
-    "ragium:compressor",
-    "ragium:crusher",
-    "ragium:electric_furnace",
-    "ragium:enchantment_generator",
-    "ragium:extractor",
-    "ragium:fisher",
-    "ragium:grinder",
-    "ragium:growth_chamber",
-    "ragium:infuser",
-    "ragium:laser_assembly",
-    "ragium:mixer",
-    "ragium:multi_smelter",
-    "ragium:refinery",
-    "ragium:solar_generator",
-    "ragium:solidifier",
-    "ragium:stirling_generator",
-    "ragium:thermal_generator"
+    "#minecraft:mineable/pickaxe",
+    "#minecraft:mineable/shovel"
   ]
 }

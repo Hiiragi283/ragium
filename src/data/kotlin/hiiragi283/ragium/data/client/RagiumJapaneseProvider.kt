@@ -62,9 +62,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.PRECISION_MACHINE_FRAME, "精密機械フレーム")
         addBlock(RagiumBlocks.WOODEN_CASING, "木製筐体")
 
-        addBlock(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
-        addBlock(RagiumBlocks.DISENCHANTING_TABLE, "ディスエンチャント台")
-
         addBlock(RagiumBlocks.getCrate(HTCrateVariant.WOODEN), "木製のクレート")
         addBlock(RagiumBlocks.getCrate(HTCrateVariant.IRON), "鉄のクレート")
         addBlock(RagiumBlocks.getCrate(HTCrateVariant.STEEL), "鋼鉄のクレート")
@@ -329,7 +326,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTMachineType.AUTO_CHISEL, "自動彫刻機", "自動化した石切台")
         add(HTMachineType.BREWERY, "錬金醸造機", "連続した醸造")
         add(HTMachineType.COMPRESSOR, "圧縮機", "saves.zip.zip")
-        add(HTMachineType.CRUSHER, "破砕機", "Crush Up!")
         add(HTMachineType.ELECTRIC_FURNACE, "電気かまど", "エネルギーまたは下部の熱源で製錬する")
         add(HTMachineType.ENCHANTER, "神秘的エンチャント機", "安定したエンチャント")
         add(HTMachineType.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")

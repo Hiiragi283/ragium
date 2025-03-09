@@ -34,6 +34,18 @@ object RagiumDataMaps {
         .build()
 
     /**
+     * ハンマーによる採掘でのドロップを登録します。
+     */
+    @JvmField
+    val HAMMER_DROP: DataMapType<Block, HTHammerDrop> = DataMapType
+        .builder(
+            RagiumAPI.id("hammer_drop"),
+            Registries.BLOCK,
+            HTHammerDrop.CODEC,
+        ).synced(HTHammerDrop.CODEC, false)
+        .build()
+
+    /**
      * 石鹸でブロックを洗った後のブロックを登録します。
      */
     @JvmField

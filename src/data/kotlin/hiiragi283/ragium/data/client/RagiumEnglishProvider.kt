@@ -62,9 +62,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.PRECISION_MACHINE_FRAME, "Precision Machine Frame")
         addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
 
-        addBlock(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
-        addBlock(RagiumBlocks.DISENCHANTING_TABLE, "Disenchanting Table")
-
         addBlock(RagiumBlocks.getCrate(HTCrateVariant.WOODEN), "Wooden Crate")
         addBlock(RagiumBlocks.getCrate(HTCrateVariant.IRON), "Iron Crate")
         addBlock(RagiumBlocks.getCrate(HTCrateVariant.STEEL), "Steel Crate")
@@ -329,7 +326,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTMachineType.AUTO_CHISEL, "Auto Chisel", "Automated Stonecutter")
         add(HTMachineType.BREWERY, "Alchemical Brewery", "Sequential Brewing")
         add(HTMachineType.COMPRESSOR, "Compressor", "saves.zip.zip")
-        add(HTMachineType.CRUSHER, "Crusher", "Crush Up!")
         add(HTMachineType.ELECTRIC_FURNACE, "Electric Furnace", "Smelting with energy or below heat")
         add(HTMachineType.ENCHANTER, "Arcane Enchanter", "Stable Enchanting")
         add(HTMachineType.EXTRACTOR, "Extractor", "Something like Centrifuge")

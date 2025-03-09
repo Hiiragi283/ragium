@@ -1,19 +1,22 @@
 package hiiragi283.ragium.integration.jei
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTHammerDrop
 import hiiragi283.ragium.api.data.HTSoap
 import hiiragi283.ragium.api.data.RagiumDataMaps
+import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.tag.RagiumFluidTags
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.client.screen.*
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.integration.jei.category.*
 import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
+import hiiragi283.ragium.integration.jei.entry.HTHammerDropEntry
 import hiiragi283.ragium.integration.jei.entry.HTSoapEntry
 import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
 import mezz.jei.api.IModPlugin
@@ -61,7 +64,6 @@ class RagiumJEIPlugin : IModPlugin {
                 HTMachineType.COMPRESSOR,
                 RagiumJEIRecipeTypes.COMPRESSOR,
             ),
-            HTCrusherRecipeCategory(guiHelper),
             HTEnchanterRecipeCategory(guiHelper),
             HTExtractorRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(
@@ -83,10 +85,12 @@ class RagiumJEIPlugin : IModPlugin {
             HTMixerRecipeCategory(guiHelper),
             HTRefineryRecipeCategory(guiHelper),
             HTSolidifierRecipeCategory(guiHelper),
+            // Custom
             HTGeneratorFuelCategory(guiHelper),
-            HTStirlingFuelCategory(guiHelper),
+            HTHammerDropCategory(guiHelper),
             HTMaterialInfoCategory(guiHelper),
             HTSoapCategory(guiHelper),
+            HTStirlingFuelCategory(guiHelper),
         )
     }
 
@@ -104,7 +108,6 @@ class RagiumJEIPlugin : IModPlugin {
         register(RagiumJEIRecipeTypes.ALLOY_FURNACE, HTRecipeTypes.ALLOY_FURNACE)
         register(RagiumJEIRecipeTypes.ASSEMBLER, HTRecipeTypes.ASSEMBLER)
         register(RagiumJEIRecipeTypes.COMPRESSOR, HTRecipeTypes.COMPRESSOR)
-        register(RagiumJEIRecipeTypes.CRUSHER, HTRecipeTypes.CRUSHER)
         register(RagiumJEIRecipeTypes.BREWERY, HTRecipeTypes.BREWERY)
         register(RagiumJEIRecipeTypes.ENCHANTER, HTRecipeTypes.ENCHANTER)
         register(RagiumJEIRecipeTypes.EXTRACTOR, HTRecipeTypes.EXTRACTOR)
@@ -145,6 +148,16 @@ class RagiumJEIPlugin : IModPlugin {
                     val holder: Holder.Reference<Block> = BuiltInRegistries.BLOCK.getHolderOrThrow(key)
                     if (holder.value() == soap.block) return@mapNotNull null
                     HTSoapEntry(holder, soap)
+                }.sorted(),
+        )
+        // Hammer Drop
+        registration.addRecipes(
+            RagiumJEIRecipeTypes.HAMMER_DROP,
+            BuiltInRegistries.BLOCK
+                .getDataMap(RagiumDataMaps.HAMMER_DROP)
+                .mapNotNull { (key: ResourceKey<Block>, hammerDrop: HTHammerDrop) ->
+                    val holder: Holder.Reference<Block> = BuiltInRegistries.BLOCK.getHolderOrThrow(key)
+                    HTHammerDropEntry(holder, hammerDrop)
                 }.sorted(),
         )
     }
@@ -241,18 +254,12 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.BREWERY, HTMachineType.BREWERY)
         // Compressor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.COMPRESSOR, HTMachineType.COMPRESSOR)
-        // Crusher
-        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.CRUSHER, HTMachineType.CRUSHER)
         // Enchanter
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.ENCHANTER, HTMachineType.ENCHANTER)
         // Extractor
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.EXTRACTOR, HTMachineType.EXTRACTOR)
         // Grinder
-        registration.addRecipeCatalysts(
-            RagiumJEIRecipeTypes.GRINDER,
-            HTMachineType.GRINDER,
-            RagiumBlocks.MANUAL_GRINDER,
-        )
+        registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GRINDER, HTMachineType.GRINDER)
         // Growth Chamber
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.GROWTH_CHAMBER, HTMachineType.GROWTH_CHAMBER)
         // Infuser
@@ -278,6 +285,17 @@ class RagiumJEIPlugin : IModPlugin {
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.MATERIAL_INFO, Items.IRON_INGOT)
         // Soap
         registration.addRecipeCatalysts(RagiumJEIRecipeTypes.SOAP, RagiumItems.SOAP)
+        // Hammer Drop
+        val hammers: Iterable<Holder<Item>> = Minecraft
+            .getInstance()
+            .singleplayerServer
+            ?.registryAccess()
+            ?.itemLookup()
+            ?.getOrThrow(RagiumItemTags.TOOLS_FORGE_HAMMER)
+            ?: listOf()
+        for (hammer: Holder<Item> in hammers) {
+            registration.addRecipeCatalyst(hammer.value(), RagiumJEIRecipeTypes.HAMMER_DROP)
+        }
 
         // Vanilla
         registration.addRecipeCatalyst(HTMachineType.AUTO_CHISEL, RecipeTypes.STONECUTTING)

@@ -1,6 +1,9 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.HTExtractorRecipe
+import hiiragi283.ragium.api.recipe.HTInfuserRecipe
+import hiiragi283.ragium.api.recipe.HTMixerRecipe
+import hiiragi283.ragium.api.recipe.HTRefineryRecipe
 import hiiragi283.ragium.api.recipe.base.HTFluidOutput
 import hiiragi283.ragium.api.recipe.base.HTFluidOutputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemIngredient
@@ -19,25 +22,6 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
     private val factory: (String, List<HTItemIngredient>, List<SizedFluidIngredient>, List<HTItemOutput>, List<HTFluidOutput>) -> T,
 ) : HTMachineRecipeBuilder<HTFluidOutputRecipeBuilder<T>, T>(lookup) {
     companion object {
-        @JvmStatic
-        fun crusher(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTCrusherRecipe> =
-            HTFluidOutputRecipeBuilder(lookup, "crusher") {
-                group: String,
-                itemInputs: List<HTItemIngredient>,
-                fluidInputs: List<SizedFluidIngredient>,
-                itemOutputs: List<HTItemOutput>,
-                fluidOutputs: List<HTFluidOutput>,
-                ->
-                checkRange(itemInputs, 1..1)
-                checkEmpty(fluidInputs)
-                checkEmpty(fluidOutputs)
-                HTCrusherRecipe(
-                    group,
-                    itemInputs[0],
-                    itemOutputs,
-                )
-            }
-
         @JvmStatic
         fun extractor(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTExtractorRecipe> =
             HTFluidOutputRecipeBuilder(lookup, "extractor") {

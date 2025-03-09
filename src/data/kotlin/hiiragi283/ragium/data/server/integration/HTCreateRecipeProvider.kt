@@ -7,8 +7,6 @@ import com.simibubi.create.foundation.fluid.FluidIngredient
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -23,12 +21,6 @@ object HTCreateRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.CREATE) 
 
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Upgrading manual machines
-        manualProcess("grinder")
-            .withItemIngredients(
-                Ingredient.of(RagiumBlocks.MANUAL_GRINDER),
-                Ingredient.of(RagiumBlocks.MACHINE_FRAME),
-            ).withSingleItemOutput(HTMachineType.GRINDER.toStack())
-            .build(output)
 
         // Sweet Berries Cake
         ProcessingRecipeBuilder(::FillingRecipe, RagiumBlocks.SWEET_BERRIES_CAKE.id)

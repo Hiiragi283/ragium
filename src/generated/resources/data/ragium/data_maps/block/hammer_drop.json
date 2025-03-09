@@ -1,0 +1,44 @@
+{
+  "values": {
+    "#c:cobblestones": {
+      "output": {
+        "item": "minecraft:gravel"
+      },
+      "replace": true
+    },
+    "#c:glass_blocks/colorless": {
+      "chance": 0.25,
+      "output": {
+        "item": "ragium:quartz_dust"
+      },
+      "replace": false
+    },
+    "#c:gravels": {
+      "output": {
+        "item": "minecraft:sand"
+      },
+      "replace": true
+    },
+    "#c:netherracks": {
+      "chance": 0.25,
+      "output": {
+        "item": "ragium:bauxite_dust"
+      },
+      "replace": false
+    },
+    "#c:ore_bearing_ground/deepslate": {
+      "chance": 0.25,
+      "output": {
+        "item": "ragium:niobium_dust"
+      },
+      "replace": false
+    },
+    "minecraft:magma_block": {
+      "chance": 0.0625,
+      "output": {
+        "item": "ragium:fiery_coal"
+      },
+      "replace": false
+    }
+  }
+}

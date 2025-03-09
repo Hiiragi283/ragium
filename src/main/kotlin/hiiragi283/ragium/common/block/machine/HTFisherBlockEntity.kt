@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.moveNextOrDrop
+import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.machine.HTMachineEnergyData
 import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -26,7 +27,6 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
 
 class HTFisherBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.FISHER, pos, state, HTMachineType.FISHER),
@@ -50,7 +50,7 @@ class HTFisherBlockEntity(pos: BlockPos, state: BlockState) :
         }
         val lootParams: LootParams = LootParams
             .Builder(level)
-            .withParameter(LootContextParams.ORIGIN, pos.below().toVec3())
+            .withParameter(LootContextParams.ORIGIN, pos.below().toCenterVec3())
             .withParameter(LootContextParams.TOOL, rodStack)
             .withOptionalParameter(LootContextParams.ATTACKING_ENTITY, owner)
             .withLuck(

@@ -28,7 +28,6 @@ import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -254,16 +253,13 @@ class RagiumItemTagProvider(
     //    Enchantment    //
 
     private fun enchantmentTags() {
-        fun machine(item: ItemLike) {
-            val holder: Holder.Reference<Item> = item.asHolder()
+        for (block: DeferredBlock<*> in HTMachineType.getBlocks()) {
+            val holder: Holder.Reference<Item> = block.asHolder()
             builder.add(ItemTags.DURABILITY_ENCHANTABLE, holder)
             builder.add(ItemTags.MINING_ENCHANTABLE, holder)
             builder.add(ItemTags.MINING_LOOT_ENCHANTABLE, holder)
             builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, holder)
         }
-
-        machine(RagiumBlocks.MANUAL_GRINDER)
-        HTMachineType.getBlocks().forEach(::machine)
 
         for (block: DeferredBlock<out HTEntityBlock> in buildList {
             addAll(RagiumBlocks.CRATES.values)

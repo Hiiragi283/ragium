@@ -15,7 +15,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import java.util.function.Supplier
 
-class HTItemOutput private constructor(private val holder: Holder<Item>, val count: Int, val components: DataComponentPatch) :
+@ConsistentCopyVisibility
+data class HTItemOutput private constructor(private val holder: Holder<Item>, val count: Int, val components: DataComponentPatch) :
     Supplier<ItemStack> {
         companion object {
             @JvmField

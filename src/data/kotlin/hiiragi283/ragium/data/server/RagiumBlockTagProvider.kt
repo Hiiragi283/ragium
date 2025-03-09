@@ -45,7 +45,6 @@ class RagiumBlockTagProvider(
 
         for (block: DeferredBlock<*> in HTMachineType.getBlocks()) {
             builder.add(BlockTags.MINEABLE_WITH_PICKAXE, block)
-            builder.add(RagiumBlockTags.MINEABLE_WITH_HAMMER, block)
         }
 
         for (block: DeferredBlock<out Block> in buildList {
@@ -61,9 +60,6 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.CHEMICAL_MACHINE_FRAME)
             add(RagiumBlocks.PRECISION_MACHINE_FRAME)
 
-            add(RagiumBlocks.MANUAL_GRINDER)
-            add(RagiumBlocks.DISENCHANTING_TABLE)
-
             addAll(RagiumBlocks.CRATES.values)
             addAll(RagiumBlocks.DRUMS.values)
 
@@ -77,6 +73,9 @@ class RagiumBlockTagProvider(
 
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE)
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
+
+        builder.addTag(RagiumBlockTags.MINEABLE_WITH_HAMMER, BlockTags.MINEABLE_WITH_PICKAXE)
+        builder.addTag(RagiumBlockTags.MINEABLE_WITH_HAMMER, BlockTags.MINEABLE_WITH_SHOVEL)
         // Vanilla
         RagiumBlocks.RAGI_BRICK_SETS.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)
         RagiumBlocks.PLASTIC_SETS.appendTags(BlockTags.MINEABLE_WITH_PICKAXE, builder::add)

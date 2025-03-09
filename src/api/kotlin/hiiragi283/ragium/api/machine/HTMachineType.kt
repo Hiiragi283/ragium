@@ -53,7 +53,6 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     ASSEMBLER(SoundEvents.DISPENSER_DISPENSE, null),
     AUTO_CHISEL(SoundEvents.UI_STONECUTTER_TAKE_RESULT, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
     COMPRESSOR(SoundEvents.ANVIL_USE, null),
-    CRUSHER(SoundEvents.TUFF_BREAK, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
     ELECTRIC_FURNACE(SoundEvents.FURNACE_FIRE_CRACKLE, HTMachineParticleHandler.ofFront(ParticleTypes.FLAME)),
     GRINDER(SoundEvents.GRINDSTONE_USE, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
 

@@ -26,7 +26,6 @@ class RagiumBlockModelProvider(output: PackOutput, existingFileHelper: ExistingF
         basicMachine(HTMachineType.ALLOY_FURNACE)
         // Assembler
         basicMachine(HTMachineType.COMPRESSOR)
-        basicMachine(HTMachineType.CRUSHER)
         basicMachine(HTMachineType.ELECTRIC_FURNACE)
         basicMachine(HTMachineType.GRINDER)
 

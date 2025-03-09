@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.material.HTTypedMaterial
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.integration.jei.entry.HTGeneratorFuelEntry
+import hiiragi283.ragium.integration.jei.entry.HTHammerDropEntry
 import hiiragi283.ragium.integration.jei.entry.HTSoapEntry
 import hiiragi283.ragium.integration.jei.entry.HTStirlingFuelEntry
 import mezz.jei.api.recipe.RecipeType
@@ -19,6 +20,10 @@ object RagiumJEIRecipeTypes {
     @JvmField
     val GENERATOR: RecipeType<HTGeneratorFuelEntry> =
         RecipeType.create(RagiumAPI.MOD_ID, "generator", HTGeneratorFuelEntry::class.java)
+
+    @JvmField
+    val HAMMER_DROP: RecipeType<HTHammerDropEntry> =
+        RecipeType.create(RagiumAPI.MOD_ID, "hammer_drop", HTHammerDropEntry::class.java)
 
     @JvmField
     val SOAP: RecipeType<HTSoapEntry> =
@@ -45,9 +50,6 @@ object RagiumJEIRecipeTypes {
 
     @JvmField
     val COMPRESSOR: RecipeType<RecipeHolder<HTCompressorRecipe>> = create(HTRecipeTypes.COMPRESSOR)
-
-    @JvmField
-    val CRUSHER: RecipeType<RecipeHolder<HTCrusherRecipe>> = create(HTRecipeTypes.CRUSHER)
 
     @JvmField
     val ENCHANTER: RecipeType<RecipeHolder<HTEnchanterRecipe>> = create(HTRecipeTypes.ENCHANTER)

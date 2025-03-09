@@ -19,6 +19,9 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.phys.Vec3
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
+
+fun BlockPos.toCenterVec3(): Vec3 = toVec3().add(0.5, 0.0, 0.5)
 
 //    Level    //
 

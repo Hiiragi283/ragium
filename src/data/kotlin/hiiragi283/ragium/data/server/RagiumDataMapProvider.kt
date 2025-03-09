@@ -1,19 +1,21 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.data.HTDefoliant
-import hiiragi283.ragium.api.data.HTNapalm
-import hiiragi283.ragium.api.data.HTSoap
-import hiiragi283.ragium.api.data.RagiumDataMaps
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -104,5 +106,58 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             .addBlock(Blocks.INFESTED_CRACKED_STONE_BRICKS, HTSoap(Blocks.CRACKED_STONE_BRICKS), false)
             .addBlock(Blocks.INFESTED_CHISELED_STONE_BRICKS, HTSoap(Blocks.CHISELED_STONE_BRICKS), false)
             .addBlock(Blocks.INFESTED_DEEPSLATE, HTSoap(Blocks.DEEPSLATE), false)
+
+        // Hammer Drop
+        val hammerBuilder: Builder<HTHammerDrop, Block> = builder(RagiumDataMaps.HAMMER_DROP)
+
+        fun addHammer(
+            tagKey: TagKey<Block>,
+            output: HTItemOutput,
+            chance: Float,
+            replace: Boolean = false,
+        ) {
+            hammerBuilder.add(
+                tagKey,
+                HTHammerDrop(output, chance, replace),
+                false,
+            )
+        }
+
+        fun addHammer(
+            block: Block,
+            output: HTItemOutput,
+            chance: Float,
+            replace: Boolean = false,
+        ) {
+            hammerBuilder.addBlock(
+                block,
+                HTHammerDrop(output, chance, replace),
+                false,
+            )
+        }
+
+        addHammer(Tags.Blocks.COBBLESTONES, HTItemOutput.of(Items.GRAVEL, 1), 1f, true)
+        addHammer(Tags.Blocks.GRAVELS, HTItemOutput.of(Items.SAND, 1), 1f, true)
+
+        addHammer(
+            Tags.Blocks.NETHERRACKS,
+            HTItemOutput.of(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.BAUXITE), 1),
+            0.25f,
+        )
+        addHammer(
+            Tags.Blocks.GLASS_BLOCKS_COLORLESS,
+            HTItemOutput.of(RagiumItems.getMaterialItem(HTTagPrefix.DUST, VanillaMaterials.QUARTZ), 1),
+            0.25f,
+        )
+        addHammer(
+            Tags.Blocks.ORE_BEARING_GROUND_DEEPSLATE,
+            HTItemOutput.of(RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.NIOBIUM), 1),
+            0.25f,
+        )
+        addHammer(
+            Blocks.MAGMA_BLOCK,
+            HTItemOutput.of(RagiumItems.getMaterialItem(HTTagPrefix.GEM, RagiumMaterials.FIERY_COAL), 1),
+            0.0625f,
+        )
     }
 }

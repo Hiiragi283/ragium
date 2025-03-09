@@ -168,14 +168,10 @@ object RagiumCreativeTabs {
 
     @JvmField
     val MACHINE: DeferredHolder<CreativeModeTab, CreativeModeTab> =
-        register("machine", "Ragium - Machines", RagiumBlocks.MANUAL_GRINDER) { provider: HolderLookup.Provider ->
+        register("machine", "Ragium - Machines", HTMachineType.ASSEMBLER) { provider: HolderLookup.Provider ->
             // Storage
             addAll(RagiumBlocks.CRATES.values)
             addAll(RagiumBlocks.DRUMS.values)
-            // Manual Machines
-            add(RagiumBlocks.MANUAL_GRINDER)
-
-            add(RagiumBlocks.DISENCHANTING_TABLE)
             // Utilities
             addAll(RagiumBlocks.ADDONS)
             addAll(RagiumBlocks.BURNERS)
