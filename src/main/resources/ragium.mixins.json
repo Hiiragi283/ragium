@@ -1,0 +1,9 @@
+{
+  "required" : true,
+  "package" : "hiiragi283.ragium.mixin",
+  "compatibilityLevel" : "JAVA_21",
+  "mixins" : [
+    "RecipeManagerMixin"
+  ],
+  "minVersion" : "0.8"
+}

@@ -7,8 +7,8 @@ import hiiragi283.ragium.common.block.generator.*
 import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.processor.*
-import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
-import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
+import hiiragi283.ragium.common.tile.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.tile.storage.HTDrumBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder

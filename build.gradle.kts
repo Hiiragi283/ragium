@@ -100,6 +100,7 @@ neoForge {
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty("neoforge.enabledGameTestNamespaces", modId)
+            jvmArgument("-Dmixin.debug.export=true")
             devLogin = true
         }
 
