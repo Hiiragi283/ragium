@@ -14,8 +14,6 @@ import hiiragi283.ragium.common.block.HTSoulGlassBlock
 import hiiragi283.ragium.common.block.HTSoulMagmaBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.addon.HTEnergyNetworkBlock
-import hiiragi283.ragium.common.block.machine.HTDisenchantingTableBlock
-import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.core.component.DataComponentType
@@ -318,19 +316,6 @@ object RagiumBlocks {
                 .sound(SoundType.COPPER)
                 .requiresCorrectToolForDrops(),
         ).build()
-
-    //    Manual Machines    //
-
-    @JvmField
-    val MANUAL_GRINDER: DeferredBlock<HTManualGrinderBlock> = Builder("manual_grinder")
-        .properties(Blocks.BRICKS)
-        .addLore(RagiumTranslationKeys.MANUAL_GRINDER, RagiumTranslationKeys.MANUAL_GRINDER_1)
-        .build(::HTManualGrinderBlock)
-
-    @JvmField
-    val DISENCHANTING_TABLE: DeferredBlock<HTDisenchantingTableBlock> = Builder("disenchanting_table")
-        .properties(Blocks.OBSIDIAN)
-        .build(::HTDisenchantingTableBlock)
 
     //    Storage    //
 

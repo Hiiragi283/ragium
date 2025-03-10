@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.util.HTCrateVariant
 import hiiragi283.ragium.common.block.HTEntityBlock
+import hiiragi283.ragium.common.tile.storage.HTCrateBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 

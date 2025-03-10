@@ -139,7 +139,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Manual Machine
-        getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
+        /*getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
             for (step: Int in BlockStateProperties.AGE_7.possibleValues) {
                 val modelId: ResourceLocation = RagiumAPI.id(
                     when (step % 2 == 0) {
@@ -161,9 +161,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .addModel()
                     .condition(BlockStateProperties.AGE_7, step)
             }
-        }
+        }*/
 
-        uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
+        // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
 
         // Utility
         RagiumBlocks.SHAFT.let { holder: DeferredBlock<RotatedPillarBlock> ->

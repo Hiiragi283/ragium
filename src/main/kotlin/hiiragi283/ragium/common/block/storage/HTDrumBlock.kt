@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.storage
 import hiiragi283.ragium.api.extension.addFluidTooltip
 import hiiragi283.ragium.api.util.HTDrumVariant
 import hiiragi283.ragium.common.block.HTEntityBlock
+import hiiragi283.ragium.common.tile.storage.HTDrumBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item

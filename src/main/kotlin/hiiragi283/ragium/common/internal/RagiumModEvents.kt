@@ -87,8 +87,6 @@ internal object RagiumModEvents {
             )
         }
 
-        registerHandlers(RagiumBlockEntityTypes.MANUAL_GRINDER)
-
         registerHandlers(RagiumBlockEntityTypes.FISHER)
 
         registerHandlers(RagiumBlockEntityTypes.COMBUSTION_GENERATOR)

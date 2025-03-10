@@ -3,10 +3,9 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
-import hiiragi283.ragium.common.block.generator.*
-import hiiragi283.ragium.common.block.machine.HTFisherBlockEntity
-import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
-import hiiragi283.ragium.common.block.processor.*
+import hiiragi283.ragium.common.tile.consumer.HTFisherBlockEntity
+import hiiragi283.ragium.common.tile.generator.*
+import hiiragi283.ragium.common.tile.processor.*
 import hiiragi283.ragium.common.tile.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.tile.storage.HTDrumBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -23,12 +22,6 @@ object RagiumBlockEntityTypes {
         machine: HTMachineType,
         factory: BlockEntityType.BlockEntitySupplier<T>,
     ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.registerType(machine.serializedName, factory, machine.holder)
-
-    //    Manual Machine    //
-
-    @JvmField
-    val MANUAL_GRINDER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTManualGrinderBlockEntity>> =
-        REGISTER.registerType("manual_grinder", ::HTManualGrinderBlockEntity, RagiumBlocks.MANUAL_GRINDER)
 
     //    Consumer    //
 

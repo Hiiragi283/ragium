@@ -4,28 +4,19 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTHammerDrop
 import hiiragi283.ragium.api.data.RagiumDataMaps
-import hiiragi283.ragium.api.extension.enchLookup
-import hiiragi283.ragium.api.extension.modifyEnchantment
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.recipe.base.HTItemOutput
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.network.HTPotionBundlePacket
-import net.minecraft.core.HolderLookup
-import net.minecraft.core.RegistryAccess
-import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.Enchantments
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.Vec3
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.RegisterCommandsEvent
-import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.event.level.BlockDropsEvent
 import net.neoforged.neoforge.network.PacketDistributor
@@ -67,20 +58,13 @@ internal object RagiumGameEvents {
         }
     }
 
-    fun onItemCrafted(event: PlayerEvent.ItemCraftedEvent) {
-        val result: ItemStack = event.crafting
-        if (result.isEmpty) return
-        val access: RegistryAccess = event.entity.level().registryAccess()
-        val enchLookup: HolderLookup.RegistryLookup<Enchantment> = access.enchLookup()
-        val enchMap: Map<ResourceKey<Enchantment>, Int> = when {
-            TODO() -> mapOf(Enchantments.FIRE_PROTECTION to 2)
-            else -> return
-        }
-        result.modifyEnchantment { mutable: ItemEnchantments.Mutable ->
-            for ((key: ResourceKey<Enchantment>, value: Int) in enchMap) {
-                enchLookup.get(key).ifPresent { mutable.set(it, value) }
+    /*fun onRecipeLoading(event: HTRecipeLoadingEvent) {
+        val recipe: Recipe<*> = event.recipe
+        if (recipe is AbstractCookingRecipe) {
+            val output: ItemStack = recipe.getResultItem(null)
+            if (output.`is`(Items.IRON_INGOT)) {
+                event.isCanceled = true
             }
-            mutable.toImmutable()
         }
-    }
+    }*/
 }

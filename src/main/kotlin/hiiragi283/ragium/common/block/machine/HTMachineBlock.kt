@@ -2,12 +2,9 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.block.HTEntityBlock
-import hiiragi283.ragium.common.block.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTEnchantmentGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTSolarGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTStirlingGeneratorBlockEntity
-import hiiragi283.ragium.common.block.generator.HTThermalGeneratorBlockEntity
-import hiiragi283.ragium.common.block.processor.*
+import hiiragi283.ragium.common.tile.consumer.HTFisherBlockEntity
+import hiiragi283.ragium.common.tile.generator.*
+import hiiragi283.ragium.common.tile.processor.*
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
