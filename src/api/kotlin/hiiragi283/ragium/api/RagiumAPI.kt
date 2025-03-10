@@ -3,6 +3,7 @@ package hiiragi283.ragium.api
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.mutableTableOf
@@ -25,6 +26,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -100,7 +102,7 @@ interface RagiumAPI {
      */
     fun getCurrentSide(): LogicalSide
 
-    fun getEnergyNetwork(): (ServerLevel) -> IEnergyStorage = ::getEnergyNetwork
+    fun getEnergyNetwork(level: Level?): IEnergyStorage? = level.asServerLevel()?.let(::getEnergyNetwork)
 
     /**
      * 指定した[level]からエネルギーネットワークのインスタンスを返します。

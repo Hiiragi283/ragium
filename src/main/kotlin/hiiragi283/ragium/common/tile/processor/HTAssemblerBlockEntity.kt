@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -71,6 +72,11 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
             .addOutput(0, outputSlot)
             .build()
         recipeCache.processFirstRecipe(context, level)
+    }
+
+    override fun onSucceeded() {
+        super.onSucceeded()
+        playSound(SoundEvents.DISPENSER_DISPENSE)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = HTAssemblerMenu(

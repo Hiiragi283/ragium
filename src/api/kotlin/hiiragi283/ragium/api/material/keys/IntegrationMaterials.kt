@@ -11,6 +11,14 @@ object IntegrationMaterials {
     @JvmField
     val BLACK_QUARTZ: HTMaterialKey = HTMaterialKey.of("black_quartz")
 
+    //    Applied Energistics    //
+
+    @JvmField
+    val CERTUS_QUARTZ: HTMaterialKey = HTMaterialKey.of("certus_quartz")
+
+    @JvmField
+    val FLUIX: HTMaterialKey = HTMaterialKey.of("fluix")
+
     //    Create    //
 
     @JvmField

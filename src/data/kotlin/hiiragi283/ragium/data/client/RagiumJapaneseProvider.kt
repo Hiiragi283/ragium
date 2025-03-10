@@ -385,6 +385,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(IntegrationMaterials.BLACK_QUARTZ, "黒水晶")
 
+        add(IntegrationMaterials.CERTUS_QUARTZ, "ケルタスクォーツ")
+        add(IntegrationMaterials.FLUIX, "フルーシュ")
+
         add(IntegrationMaterials.ANDESITE_ALLOY, "安山岩合金")
         add(IntegrationMaterials.CARDBOARD, "段ボール")
         add(IntegrationMaterials.ROSE_QUARTZ, "ローズクォーツ")

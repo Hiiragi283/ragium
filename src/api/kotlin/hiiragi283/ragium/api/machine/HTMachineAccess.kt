@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.entity.HTEnchantableBlockEntity
 import hiiragi283.ragium.api.block.entity.HTErrorHoldingBlockEntity
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.block.entity.HTPlayerOwningBlockEntity
-import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
@@ -33,14 +32,16 @@ interface HTMachineAccess :
     val levelAccess: Level?
 
     /**
+     * 機械の座標
+     */
+    val pos: BlockPos
+
+    /**
      * 機械の種類
      */
     val machineType: HTMachineType
 
-    /**
-     * 機械の座標
-     */
-    val pos: BlockPos
+    val isActive: Boolean
 
     /**
      * 機械のtickを返す
@@ -62,8 +63,8 @@ interface HTMachineAccess :
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? = if (this is HTFluidSlotHandler.Empty) null else this
 
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = levelAccess
-        ?.asServerLevel()
-        ?.let(RagiumAPI.getInstance().getEnergyNetwork())
+    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = RagiumAPI
+        .getInstance()
+        .getEnergyNetwork(levelAccess)
         ?.let(HTStorageIO.INPUT::wrapEnergyStorage)
 }

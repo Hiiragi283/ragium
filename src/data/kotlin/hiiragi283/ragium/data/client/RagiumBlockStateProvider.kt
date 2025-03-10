@@ -186,7 +186,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     ConfiguredModel
                         .builder()
                         .modelFile(ModelFile.UncheckedModelFile(RagiumAPI.id("block/${type.serializedName}")))
-                        .rotationY(state.getValue(BlockStateProperties.HORIZONTAL_FACING).getRotationY())
+                        .rotationY(state.getOrNull(BlockStateProperties.HORIZONTAL_FACING)?.getRotationY() ?: 0)
                         .build()
                 }
         }

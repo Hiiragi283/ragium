@@ -23,6 +23,7 @@ interface HTFluidSlotHandler : IFluidHandler {
             if (!getFluidIoFromSlot(index).canInsert) continue
             val tank: HTFluidTank = getFluidTank(index) ?: continue
             filled += tank.insert(resource, action.simulate())
+            if (resource.isEmpty) break
         }
         return filled
     }

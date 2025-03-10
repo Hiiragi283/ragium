@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.addon
+package hiiragi283.ragium.common.tile.addon
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
@@ -58,7 +58,7 @@ class HTExpBankBlockEntity(pos: BlockPos, state: BlockState) :
         if (expAmountMayRemove < 0) return InteractionResult.FAIL
         val fluidAmount: Int = expAmountMayRemove * 20
         // Try to insert exp fluid
-        var expVariant: HTFluidVariant = HTFluidVariant.of(RagiumVirtualFluids.EXPERIENCE.get())
+        var expVariant: HTFluidVariant = HTFluidVariant.Companion.of(RagiumVirtualFluids.EXPERIENCE.get())
         if (!fluidTank.isEmpty) {
             expVariant = fluidTank.resource
         }

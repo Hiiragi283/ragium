@@ -385,6 +385,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(IntegrationMaterials.BLACK_QUARTZ, "Black Quartz")
 
+        add(IntegrationMaterials.CERTUS_QUARTZ, "Certus Quartz")
+        add(IntegrationMaterials.FLUIX, "Fluix")
+
         add(IntegrationMaterials.ANDESITE_ALLOY, "Andesite Alloy")
         add(IntegrationMaterials.CARDBOARD, "Cardboard")
         add(IntegrationMaterials.ROSE_QUARTZ, "Rose Quartz")

@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -74,6 +75,11 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
             .addOutput(1, secondOutputTank)
             .build()
         recipeCache.processFirstRecipe(context, level)
+    }
+
+    override fun onSucceeded() {
+        super.onSucceeded()
+        playSound(SoundEvents.LAVA_POP)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =

@@ -29,6 +29,10 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         .Builder()
         .setCallback(this::setChanged)
         .build("item_input")
+    private val outputSlot: HTItemSlot = HTItemSlot
+        .Builder()
+        .setCallback(this::setChanged)
+        .build("item_output")
 
     private val firstInputTank: HTFluidTank = HTFluidTank
         .Builder()
@@ -47,6 +51,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
         inputSlot.writeNbt(nbt, registryOps)
+        outputSlot.writeNbt(nbt, registryOps)
 
         firstInputTank.writeNbt(nbt, registryOps)
         secondInputTank.writeNbt(nbt, registryOps)
@@ -56,6 +61,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.readNbt(nbt, registryOps)
         inputSlot.readNbt(nbt, registryOps)
+        outputSlot.readNbt(nbt, registryOps)
 
         firstInputTank.readNbt(nbt, registryOps)
         secondInputTank.readNbt(nbt, registryOps)
@@ -72,6 +78,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
             .addInput(0, inputSlot)
             .addInput(0, firstInputTank)
             .addInput(1, secondInputTank)
+            .addOutput(0, outputSlot)
             .addOutput(0, outputTank)
             .build()
         recipeCache.processFirstRecipe(context, level)
@@ -89,11 +96,19 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Item    //
 
-    override fun getItemSlot(slot: Int): HTItemSlot? = inputSlot
+    override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
+        0 -> inputSlot
+        1 -> outputSlot
+        else -> null
+    }
 
-    override fun getItemIoFromSlot(slot: Int): HTStorageIO = HTStorageIO.INPUT
+    override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
+        0 -> HTStorageIO.INPUT
+        1 -> HTStorageIO.OUTPUT
+        else -> HTStorageIO.EMPTY
+    }
 
-    override fun getSlots(): Int = 1
+    override fun getSlots(): Int = 2
 
     //    Fluid    //
 

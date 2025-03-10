@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.data.RagiumDataMaps
-import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.heat.HTHeatTier
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
@@ -143,7 +142,7 @@ internal object RagiumModEvents {
         event.registerBlock(
             Capabilities.EnergyStorage.BLOCK,
             { level: Level, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction ->
-                level.asServerLevel()?.let(RagiumAPI.getInstance().getEnergyNetwork())
+                RagiumAPI.getInstance().getEnergyNetwork(level)
             },
             RagiumBlocks.ENERGY_NETWORK_INTERFACE.get(),
         )

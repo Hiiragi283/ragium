@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import aztech.modern_industrialization.items.ForgeTool
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -12,7 +13,6 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.item.HTThrowableItem

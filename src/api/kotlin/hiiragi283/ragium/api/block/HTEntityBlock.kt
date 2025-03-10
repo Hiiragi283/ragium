@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
@@ -14,7 +14,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
-import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.BaseEntityBlock
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Mirror
+import net.minecraft.world.level.block.RenderShape
+import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -122,6 +126,8 @@ abstract class HTEntityBlock(properties: Properties) : BaseEntityBlock(propertie
                 stateDefinition.any().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH),
             )
         }
+
+        fun getFront(state: BlockState): Direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING)
 
         override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
             builder.add(BlockStateProperties.HORIZONTAL_FACING)

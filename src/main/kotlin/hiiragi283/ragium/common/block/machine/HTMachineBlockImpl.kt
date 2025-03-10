@@ -1,19 +1,15 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.block.HTHorizontalMachineBlock
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.tile.consumer.HTFisherBlockEntity
 import hiiragi283.ragium.common.tile.generator.*
 import hiiragi283.ragium.common.tile.processor.*
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
-class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntityBlock.Horizontal(properties) {
+class HTMachineBlockImpl(machineType: HTMachineType, properties: Properties) : HTHorizontalMachineBlock(machineType, properties) {
     companion object {
         @JvmStatic
         private val factoryMap: Map<HTMachineType, (BlockPos, BlockState) -> BlockEntity?> = mapOf(
@@ -45,16 +41,5 @@ class HTMachineBlock(val type: HTMachineType, properties: Properties) : HTEntity
         )
     }
 
-    override fun getDescriptionId(): String = type.translationKey
-
-    override fun appendHoverText(
-        stack: ItemStack,
-        context: Item.TooltipContext,
-        tooltipComponents: MutableList<Component>,
-        tooltipFlag: TooltipFlag,
-    ) {
-        tooltipComponents.add(type.descriptionText)
-    }
-
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = factoryMap[type]?.invoke(pos, state)
+    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = factoryMap[machineType]?.invoke(pos, state)
 }

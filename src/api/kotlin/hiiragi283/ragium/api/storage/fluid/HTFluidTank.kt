@@ -26,7 +26,11 @@ abstract class HTFluidTank(private val validator: (HTFluidVariant) -> Boolean, p
 
     fun canExtract(maxAmount: Int): Boolean = extract(resource, maxAmount, true) == maxAmount
 
-    fun insert(stack: FluidStack, simulate: Boolean): Int = insert(HTFluidVariant.of(stack), stack.amount, simulate)
+    fun insert(stack: FluidStack, simulate: Boolean): Int {
+        val inserted: Int = insert(HTFluidVariant.of(stack), stack.amount, simulate)
+        stack.amount -= inserted
+        return inserted
+    }
 
     fun extract(maxAmount: Int, simulate: Boolean): Int = extract(resource, maxAmount, simulate)
 

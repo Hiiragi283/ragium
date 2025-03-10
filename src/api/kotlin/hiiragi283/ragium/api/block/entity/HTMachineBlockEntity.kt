@@ -21,6 +21,7 @@ import net.minecraft.nbt.Tag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -60,7 +61,8 @@ abstract class HTMachineBlockEntity(
     HTMachineAccess {
     val front: Direction
         get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-    protected var isActive: Boolean = false
+    override var isActive: Boolean = false
+        protected set
     override val levelAccess: Level?
         get() = level
     override val pos: BlockPos
@@ -156,14 +158,6 @@ abstract class HTMachineBlockEntity(
     final override var tickRate: Int = baseTickRate
         protected set
 
-    override fun tickClient(level: Level, pos: BlockPos, state: BlockState) {
-        if (isActive) {
-            // spawn particles
-            machineType.particleHandler?.addParticle(level, pos, level.random, front)
-        }
-        super.tickClient(level, pos, state)
-    }
-
     final override fun tickSecond(level: Level, pos: BlockPos, state: BlockState) {
         if (!level.isClientSide) {
             tickOnServer(level as ServerLevel, pos)
@@ -182,16 +176,6 @@ abstract class HTMachineBlockEntity(
                 energyData.handleEnergy(network, costModifier, false)
                 isActive = true
                 errorCache = null
-                machineType.soundEvent?.let {
-                    level.playSound(
-                        null,
-                        pos,
-                        it,
-                        SoundSource.BLOCKS,
-                        RagiumAPI.getInstance().getMachineSoundVolume(),
-                        1.0f,
-                    )
-                }
                 onSucceeded()
                 FORGE_BUS.post(HTMachineProcessEvent.Success(this))
             },
@@ -214,7 +198,7 @@ abstract class HTMachineBlockEntity(
 
     private fun failed(throwable: Throwable) {
         isActive = false
-        errorCache = throwable.localizedMessage
+        errorCache = throwable
         onFailed(throwable)
         FORGE_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
     }
@@ -222,6 +206,10 @@ abstract class HTMachineBlockEntity(
     protected open fun onSucceeded() {}
 
     protected open fun onFailed(throwable: Throwable) {}
+
+    protected fun playSound(sound: SoundEvent, volume: Float = 1f, pitch: Float = 1f) {
+        level?.playSound(null, blockPos, sound, SoundSource.BLOCKS, volume, pitch)
+    }
 
     override fun setPlacedBy(
         level: Level,
@@ -262,9 +250,9 @@ abstract class HTMachineBlockEntity(
 
     //    HTErrorHoldingBlockEntity    //
 
-    private var errorCache: String? = null
+    private var errorCache: Throwable? = null
 
-    final override fun getErrorMessage(): String? = errorCache
+    final override fun getErrorMessage(): String? = errorCache?.localizedMessage
 
     //    HTPlayerOwningBlockEntity    //
 

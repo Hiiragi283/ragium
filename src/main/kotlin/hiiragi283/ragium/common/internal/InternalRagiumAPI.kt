@@ -21,25 +21,34 @@ import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.common.block.machine.HTMachineBlock
+import hiiragi283.ragium.common.block.machine.HTAssemblerBlock
+import hiiragi283.ragium.common.block.machine.HTFrontParticleMachineBlock
+import hiiragi283.ragium.common.block.machine.HTFurnaceMachineBlock
+import hiiragi283.ragium.common.block.machine.HTMachineBlockImpl
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.common.storage.item.HTSculkItemStorage
+import hiiragi283.ragium.common.tile.processor.*
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
+import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
@@ -145,15 +154,108 @@ class InternalRagiumAPI : RagiumAPI {
             // Block
             event.register(Registries.BLOCK) { helper: RegisterEvent.RegisterHelper<Block> ->
                 blockMap = HTMachineType.entries.associateWith { type: HTMachineType ->
-                    val block = HTMachineBlock(
-                        type,
-                        blockProperty()
-                            .mapColor(MapColor.STONE)
-                            .strength(2f)
-                            .sound(SoundType.METAL)
-                            .requiresCorrectToolForDrops()
-                            .noOcclusion(),
-                    )
+                    val properties: BlockBehaviour.Properties = blockProperty()
+                        .mapColor(MapColor.STONE)
+                        .strength(2f)
+                        .sound(SoundType.METAL)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion()
+                    val block = when (type) {
+                        // Consumer
+                        HTMachineType.FISHER -> null
+                        HTMachineType.BEDROCK_MINER -> null
+                        // Generator
+                        HTMachineType.STIRLING_GENERATOR -> null
+                        HTMachineType.COMBUSTION_GENERATOR -> null
+                        HTMachineType.THERMAL_GENERATOR -> null
+                        HTMachineType.SOLAR_GENERATOR -> null
+                        HTMachineType.ENCH_GENERATOR -> null
+                        // Processor
+                        HTMachineType.ALLOY_FURNACE -> HTFurnaceMachineBlock(
+                            SoundEvents.BLASTFURNACE_FIRE_CRACKLE,
+                            listOf(ParticleTypes.SMOKE, ParticleTypes.FLAME),
+                            { _: BlockPos, _: BlockState -> null },
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.ASSEMBLER -> HTAssemblerBlock(properties)
+                        HTMachineType.AUTO_CHISEL -> HTFrontParticleMachineBlock(
+                            listOf(ParticleTypes.CRIT),
+                            ::HTAutoChiselBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.COMPRESSOR -> null
+                        HTMachineType.ELECTRIC_FURNACE -> HTFurnaceMachineBlock(
+                            SoundEvents.FURNACE_FIRE_CRACKLE,
+                            listOf(ParticleTypes.SMOKE, ParticleTypes.FLAME),
+                            ::HTElectricFurnaceBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.GRINDER -> HTFrontParticleMachineBlock(
+                            listOf(ParticleTypes.CRIT),
+                            ::HTGrinderBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.EXTRACTOR -> HTFrontParticleMachineBlock(
+                            listOf(ParticleTypes.DRIPPING_WATER),
+                            ::HTExtractorBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.GROWTH_CHAMBER -> null
+                        HTMachineType.INFUSER -> HTFrontParticleMachineBlock(
+                            listOf(ParticleTypes.DRIPPING_HONEY),
+                            ::HTInfuserBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.MIXER -> HTFrontParticleMachineBlock(
+                            listOf(ParticleTypes.BUBBLE_POP),
+                            ::HTMixerBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.REFINERY -> HTFrontParticleMachineBlock(
+                            listOf(ParticleTypes.LARGE_SMOKE),
+                            ::HTRefineryBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.SOLIDIFIER -> HTFrontParticleMachineBlock(
+                            listOf(ParticleTypes.LANDING_LAVA),
+                            ::HTSolidifierBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.BREWERY -> null
+                        HTMachineType.ENCHANTER -> null
+                        HTMachineType.LASER_ASSEMBLY -> HTFrontParticleMachineBlock(
+                            listOf(ParticleTypes.ELECTRIC_SPARK),
+                            ::HTLaserAssemblyBlockEntity,
+                            type,
+                            properties,
+                        )
+
+                        HTMachineType.MULTI_SMELTER -> HTFurnaceMachineBlock(
+                            SoundEvents.BLAZE_AMBIENT,
+                            listOf(ParticleTypes.SMOKE, ParticleTypes.FLAME),
+                            ::HTMultiSmelterBlockEntity,
+                            type,
+                            properties,
+                        )
+                    } ?: HTMachineBlockImpl(type, properties)
                     val id: ResourceLocation = RagiumAPI.id(type.serializedName)
                     helper.register(id, block)
                     DeferredBlock.createBlock<Block>(id)

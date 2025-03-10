@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeType
@@ -35,5 +36,10 @@ class HTAutoChiselBlockEntity(pos: BlockPos, state: BlockState) :
 
         outputSlot.insert(output, false)
         inputSlot.extract(inputCount, false)
+    }
+
+    override fun onSucceeded() {
+        super.onSucceeded()
+        playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
     }
 }

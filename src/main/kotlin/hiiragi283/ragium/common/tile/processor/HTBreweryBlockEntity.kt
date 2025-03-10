@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -25,24 +26,24 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.BREWERY, pos, state, HTMachineType.BREWERY) {
-    protected val firstInputSlot: HTItemSlot = HTItemSlot
+    private val firstInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("first_item_input")
-    protected val secondInputSlot: HTItemSlot = HTItemSlot
+    private val secondInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("second_item_input")
-    protected val thirdInputSlot: HTItemSlot = HTItemSlot
+    private val thirdInputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("third_item_input")
-    protected val outputSlot: HTItemSlot = HTItemSlot
+    private val outputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setCallback(this::setChanged)
         .build("item_output")
 
-    protected val inputTank: HTFluidTank = HTFluidTank
+    private val inputTank: HTFluidTank = HTFluidTank
         .Builder()
         .setCallback(this::setChanged)
         .build("fluid_input")
@@ -86,6 +87,11 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
             .addOutput(0, outputSlot)
             .build()
         recipeCache.processFirstRecipe(context, level)
+    }
+
+    override fun onSucceeded() {
+        super.onSucceeded()
+        playSound(SoundEvents.BREWING_STAND_BREW)
     }
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = HTBreweryMenu(

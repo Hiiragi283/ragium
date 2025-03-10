@@ -3,7 +3,6 @@ package hiiragi283.ragium.integration.jade
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.nbt.CompoundTag
@@ -26,8 +25,7 @@ object HTEnergyNetworkProvider : IServerDataProvider<BlockAccessor>, IComponentP
     //    IServerDataProvider    //
 
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
-        val network: IEnergyStorage =
-            accessor.level.asServerLevel()?.let(RagiumAPI.getInstance().getEnergyNetwork()) ?: return
+        val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetwork(accessor.level) ?: return
         accessor.writeData(CODEC, network.energyStored)
     }
 

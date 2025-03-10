@@ -129,6 +129,9 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
 
         event.register(IntegrationMaterials.BLACK_QUARTZ, HTMaterialType.GEM)
 
+        event.register(IntegrationMaterials.CERTUS_QUARTZ, HTMaterialType.GEM)
+        event.register(IntegrationMaterials.FLUIX, HTMaterialType.GEM)
+
         event.register(IntegrationMaterials.ANDESITE_ALLOY, HTMaterialType.ALLOY)
         event.register(IntegrationMaterials.CARDBOARD, HTMaterialType.ALLOY)
         event.register(IntegrationMaterials.ROSE_QUARTZ, HTMaterialType.GEM)

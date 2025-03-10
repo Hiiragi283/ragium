@@ -124,7 +124,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
                 .getInstance()
                 .getCurrentServer()
                 ?.getLevel(menu.level.dimension())
-                ?.let(RagiumAPI.getInstance().getEnergyNetwork())
+                ?.let(RagiumAPI.getInstance()::getEnergyNetwork)
                 ?: return
         renderTooltip(x, y, mouseX, mouseY) {
             guiGraphics.renderTooltip(

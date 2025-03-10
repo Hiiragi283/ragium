@@ -5,24 +5,19 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
-import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.util.RandomSource
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.CampfireBlock
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Consumer
 
-enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMachineParticleHandler?, val altName: String? = null) :
+enum class HTMachineType(soundEvent: SoundEvent?, particleHandler: HTMachineParticleHandler?, val altName: String? = null) :
     ItemLike,
     StringRepresentable {
     // Consumer
@@ -44,27 +39,22 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
     ),
 
     // Processor - Basic
-    ALLOY_FURNACE(
-        null,
-        HTMachineParticleHandler { level: Level, pos: BlockPos, random: RandomSource, front: Direction ->
-            CampfireBlock.makeParticles(level, pos.above(), false, false)
-        },
-    ),
-    ASSEMBLER(SoundEvents.DISPENSER_DISPENSE, null),
-    AUTO_CHISEL(SoundEvents.UI_STONECUTTER_TAKE_RESULT, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
-    COMPRESSOR(SoundEvents.ANVIL_USE, null),
-    ELECTRIC_FURNACE(SoundEvents.FURNACE_FIRE_CRACKLE, HTMachineParticleHandler.ofFront(ParticleTypes.FLAME)),
-    GRINDER(SoundEvents.GRINDSTONE_USE, HTMachineParticleHandler.ofFront(ParticleTypes.CRIT)),
+    ALLOY_FURNACE,
+    ASSEMBLER,
+    AUTO_CHISEL,
+    COMPRESSOR,
+    ELECTRIC_FURNACE,
+    GRINDER,
 
     // Processor - Heating
 
     // Processor - Chemical
-    EXTRACTOR(SoundEvents.PISTON_EXTEND, null),
-    GROWTH_CHAMBER(null, HTMachineParticleHandler.ofSimple(ParticleTypes.HAPPY_VILLAGER)),
-    INFUSER(SoundEvents.CONDUIT_ACTIVATE, null),
-    MIXER(SoundEvents.PLAYER_SWIM, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE_POP)),
-    REFINERY(null, HTMachineParticleHandler.ofSimple(ParticleTypes.SMOKE)),
-    SOLIDIFIER(null, null),
+    EXTRACTOR,
+    GROWTH_CHAMBER,
+    INFUSER,
+    MIXER,
+    REFINERY,
+    SOLIDIFIER,
 
     // Processor - Precision
     BREWERY(SoundEvents.BREWING_STAND_BREW, null, "alchemical_brewery"),
@@ -73,8 +63,8 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
         HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT),
         "arcane_enchanter",
     ),
-    LASER_ASSEMBLY(SoundEvents.BEACON_ACTIVATE, HTMachineParticleHandler.ofFront(ParticleTypes.ELECTRIC_SPARK)),
-    MULTI_SMELTER(SoundEvents.ENDER_DRAGON_GROWL, HTMachineParticleHandler.ofFront(ParticleTypes.DRAGON_BREATH)),
+    LASER_ASSEMBLY,
+    MULTI_SMELTER,
     ;
 
     companion object {
@@ -87,6 +77,8 @@ enum class HTMachineType(val soundEvent: SoundEvent?, val particleHandler: HTMac
         @JvmStatic
         fun getBlocks(): List<DeferredBlock<*>> = HTMachineType.entries.map(HTMachineType::holder)
     }
+
+    constructor() : this(null, null)
 
     /**
      * 機械の名前の翻訳キー
