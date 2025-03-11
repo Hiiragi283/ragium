@@ -62,7 +62,7 @@ class RagiumItemTagProvider(
     }
 
     fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: Item) {
-        add(tagKey, item.asHolder())
+        add(tagKey, item.asItemHolder())
     }
 
     //    Material    //
@@ -74,7 +74,7 @@ class RagiumItemTagProvider(
         RagiumBlocks.STORAGE_BLOCKS.forEach { (key: HTMaterialKey, storage: DeferredBlock<Block>) ->
             val storageTag: TagKey<Item> = HTTagPrefix.BLOCK.createTag(key)
             builder.addTag(HTTagPrefix.BLOCK.commonTagKey, storageTag)
-            builder.add(storageTag, storage.asHolder())
+            builder.add(storageTag, storage.asItemHolder())
         }
 
         RagiumItems.MATERIAL_ITEMS.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, holder: DeferredItem<out Item>) ->
@@ -210,8 +210,8 @@ class RagiumItemTagProvider(
 
         builder.add(RagiumItemTags.SLAG, RagiumItems.SLAG)
 
-        builder.add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, RagiumBlocks.OBSIDIAN_GLASS.asHolder())
-        builder.add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, RagiumBlocks.QUARTZ_GLASS.asHolder())
+        builder.add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, RagiumBlocks.OBSIDIAN_GLASS.asItemHolder())
+        builder.add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, RagiumBlocks.QUARTZ_GLASS.asItemHolder())
         builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
         builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
 
@@ -247,14 +247,14 @@ class RagiumItemTagProvider(
         builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_ROD)
         builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_WIRE)
 
-        RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asHolder()) }
+        RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asItemHolder()) }
     }
 
     //    Enchantment    //
 
     private fun enchantmentTags() {
         for (block: DeferredBlock<*> in HTMachineType.getBlocks()) {
-            val holder: Holder.Reference<Item> = block.asHolder()
+            val holder: Holder.Reference<Item> = block.asItemHolder()
             builder.add(ItemTags.DURABILITY_ENCHANTABLE, holder)
             builder.add(ItemTags.MINING_ENCHANTABLE, holder)
             builder.add(ItemTags.MINING_LOOT_ENCHANTABLE, holder)
@@ -265,7 +265,7 @@ class RagiumItemTagProvider(
             addAll(RagiumBlocks.CRATES.values)
             addAll(RagiumBlocks.DRUMS.values)
         }) {
-            builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, block.asHolder())
+            builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, block.asItemHolder())
         }
     }
 }

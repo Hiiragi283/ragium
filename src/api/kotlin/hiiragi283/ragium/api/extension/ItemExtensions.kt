@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.item.HTItemStackBuilder
@@ -23,11 +21,6 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 //    ItemLike    //
-
-/**
- * この[ItemLike]から[Holder]を返します。
- */
-fun ItemLike.asHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
 
 /**
  * この[ItemLike]から[ItemStack]を返します。

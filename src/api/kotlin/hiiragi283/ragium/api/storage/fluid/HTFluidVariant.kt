@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.storage.fluid
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.asFluidHolder
 import hiiragi283.ragium.api.storage.HTVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
@@ -27,11 +28,11 @@ data class HTFluidVariant private constructor(override val holder: Holder<Fluid>
             }
 
             @JvmField
-            val EMPTY: HTFluidVariant = HTFluidVariant(Fluids.EMPTY.builtInRegistryHolder(), DataComponentPatch.EMPTY)
+            val EMPTY: HTFluidVariant = HTFluidVariant(Fluids.EMPTY.asFluidHolder(), DataComponentPatch.EMPTY)
 
             @JvmStatic
             fun of(fluid: Fluid, components: DataComponentPatch = DataComponentPatch.EMPTY): HTFluidVariant =
-                of(FluidStack(fluid.builtInRegistryHolder(), 1, components))
+                of(FluidStack(fluid.asFluidHolder(), 1, components))
 
             @JvmStatic
             fun of(stack: FluidStack): HTFluidVariant =

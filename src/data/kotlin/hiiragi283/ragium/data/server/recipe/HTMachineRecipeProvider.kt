@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.data.recipe.HTAssemblerRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTFluidOutputRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSolidifierRecipeBuilder
-import hiiragi283.ragium.api.extension.asHolder
+import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.item.HTItemStackBuilder
@@ -360,7 +360,7 @@ object HTMachineRecipeProvider : HTRecipeProvider() {
             count: Int = 2,
         ) {
             output.accept(
-                crop.asHolder().idOrThrow.withPrefix("growth/"),
+                crop.asItemHolder().idOrThrow.withPrefix("growth/"),
                 HTGrowthChamberRecipe(
                     seed,
                     soil,

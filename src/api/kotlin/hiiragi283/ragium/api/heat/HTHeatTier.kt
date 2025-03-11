@@ -20,6 +20,9 @@ enum class HTHeatTier : StringRepresentable {
             BlockCapability.createSided(RagiumAPI.id("heat"), HTHeatTier::class.java)
 
         @JvmStatic
+        fun getHeatTierFromIndex(index: Int): HTHeatTier? = entries.firstOrNull { it.ordinal == index }
+        
+        @JvmStatic
         fun getHeatTier(level: Level, pos: BlockPos, direction: Direction): HTHeatTier =
             level.getCapability(BLOCK_CAPABILITY, pos, direction) ?: NONE
     }

@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.storage.item
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.asHolder
+import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.storage.HTVariant
 import net.minecraft.core.Holder
@@ -29,11 +29,11 @@ data class HTItemVariant private constructor(override val holder: Holder<Item>, 
             }
 
             @JvmField
-            val EMPTY: HTItemVariant = HTItemVariant(Items.AIR.asHolder(), DataComponentPatch.EMPTY)
+            val EMPTY: HTItemVariant = HTItemVariant(Items.AIR.asItemHolder(), DataComponentPatch.EMPTY)
 
             @JvmStatic
             fun of(item: ItemLike, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant =
-                of(ItemStack(item.asHolder(), 1, components))
+                of(ItemStack(item.asItemHolder(), 1, components))
 
             @JvmStatic
             fun of(stack: ItemStack): HTItemVariant = if (stack.isEmpty) EMPTY else HTItemVariant(stack.itemHolder, stack.componentsPatch)

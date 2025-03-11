@@ -5,11 +5,8 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
-import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.sounds.SoundEvent
-import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
@@ -17,26 +14,20 @@ import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Consumer
 
-enum class HTMachineType(soundEvent: SoundEvent?, particleHandler: HTMachineParticleHandler?, val altName: String? = null) :
+enum class HTMachineType(val altName: String? = null) :
     ItemLike,
     StringRepresentable {
     // Consumer
-    FISHER(SoundEvents.FISHING_BOBBER_SPLASH, HTMachineParticleHandler.ofTop(ParticleTypes.BUBBLE)),
-
-    BEDROCK_MINER(SoundEvents.STONE_BREAK, null),
+    FISHER,
+    BEDROCK_MINER,
 
     // Generator
-    STIRLING_GENERATOR(SoundEvents.FIRE_EXTINGUISH, HTMachineParticleHandler.ofSimple(ParticleTypes.LARGE_SMOKE)),
+    STIRLING_GENERATOR,
+    COMBUSTION_GENERATOR,
+    THERMAL_GENERATOR,
 
-    COMBUSTION_GENERATOR(SoundEvents.FIRE_EXTINGUISH, HTMachineParticleHandler.ofSimple(ParticleTypes.SMOKE)),
-    THERMAL_GENERATOR(SoundEvents.LAVA_POP, HTMachineParticleHandler.ofTop(ParticleTypes.LAVA)),
-
-    SOLAR_GENERATOR(null, HTMachineParticleHandler.ofTop(ParticleTypes.ELECTRIC_SPARK)),
-    ENCH_GENERATOR(
-        SoundEvents.ENCHANTMENT_TABLE_USE,
-        HTMachineParticleHandler.ofTop(ParticleTypes.ENCHANT),
-        "enchantment_generator",
-    ),
+    SOLAR_GENERATOR,
+    ENCH_GENERATOR("enchantment_generator"),
 
     // Processor - Basic
     ALLOY_FURNACE,
@@ -57,12 +48,8 @@ enum class HTMachineType(soundEvent: SoundEvent?, particleHandler: HTMachinePart
     SOLIDIFIER,
 
     // Processor - Precision
-    BREWERY(SoundEvents.BREWING_STAND_BREW, null, "alchemical_brewery"),
-    ENCHANTER(
-        SoundEvents.ENCHANTMENT_TABLE_USE,
-        HTMachineParticleHandler.ofSimple(ParticleTypes.ENCHANT),
-        "arcane_enchanter",
-    ),
+    BREWERY("alchemical_brewery"),
+    ENCHANTER("arcane_enchanter"),
     LASER_ASSEMBLY,
     MULTI_SMELTER,
     ;
@@ -77,8 +64,6 @@ enum class HTMachineType(soundEvent: SoundEvent?, particleHandler: HTMachinePart
         @JvmStatic
         fun getBlocks(): List<DeferredBlock<*>> = HTMachineType.entries.map(HTMachineType::holder)
     }
-
-    constructor() : this(null, null)
 
     /**
      * 機械の名前の翻訳キー

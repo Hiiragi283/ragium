@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration
 
 import com.simibubi.create.AllBlocks
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlock
+import com.simibubi.create.content.fluids.tank.BoilerHeaters
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.heat.HTHeatTier
@@ -19,13 +19,8 @@ object RagiumCreateAddon : RagiumAddon {
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         event.registerBlock(
             HTHeatTier.BLOCK_CAPABILITY,
-            { level: Level, pos: BlockPos, state: BlockState, blockEntity: BlockEntity?, direction: Direction ->
-                when (state.getValue(BlazeBurnerBlock.HEAT_LEVEL)) {
-                    BlazeBurnerBlock.HeatLevel.FADING -> HTHeatTier.LOW
-                    BlazeBurnerBlock.HeatLevel.KINDLED -> HTHeatTier.MEDIUM
-                    BlazeBurnerBlock.HeatLevel.SEETHING -> HTHeatTier.HIGH
-                    else -> HTHeatTier.NONE
-                }
+            { level: Level, pos: BlockPos, state: BlockState, _: BlockEntity?, _: Direction ->
+                HTHeatTier.getHeatTierFromIndex(BoilerHeaters.blazeBurner(level, pos, state))
             },
             AllBlocks.BLAZE_BURNER.get(),
         )

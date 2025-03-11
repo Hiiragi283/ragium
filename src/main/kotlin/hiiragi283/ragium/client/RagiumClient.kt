@@ -1,7 +1,11 @@
 package hiiragi283.ragium.client
 
 import com.mojang.logging.LogUtils
+import guideme.Guide
+import guideme.GuideItemSettings
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.client.renderer.HTFlareRenderer
 import hiiragi283.ragium.client.screen.*
 import hiiragi283.ragium.common.entity.HTDynamite
@@ -10,27 +14,41 @@ import hiiragi283.ragium.common.init.RagiumFluidTypes
 import hiiragi283.ragium.common.init.RagiumMenuTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
 import net.neoforged.api.distmarker.Dist
-import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import org.slf4j.Logger
+import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
+import java.util.*
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
-class RagiumClient(eventBus: IEventBus) {
-    companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-    }
+object RagiumClient {
+    @JvmStatic
+    private val LOGGER: Logger = LogUtils.getLogger()
+
+    @JvmField
+    val GUIDE: Guide = Guide
+        .builder(RagiumAPI.id("guide"))
+        .folder("ragium_guide")
+        .itemSettings(
+            GuideItemSettings(
+                Optional.of(Component.translatable(RagiumTranslationKeys.GUIDE_NAME)),
+                listOf(),
+                Optional.of(RagiumAPI.id("item/ragi_navi")),
+            ),
+        ).build()
 
     init {
-        eventBus.addListener(::registerClientExtensions)
-        eventBus.addListener(::registerMenu)
-        eventBus.addListener(::registerBlockEntityRenderer)
+        MOD_BUS.addListener(::registerClientExtensions)
+        MOD_BUS.addListener(::registerMenu)
+        MOD_BUS.addListener(::registerBlockEntityRenderer)
+        MOD_BUS.addListener(::clientSetup)
     }
 
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
@@ -82,18 +100,19 @@ class RagiumClient(eventBus: IEventBus) {
     }
 
     private fun registerBlockEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
-        /*fun <T> register(type: Supplier<out BlockEntityType<out T>>) where T : HTMachineBlockEntity, T : HTMultiblockController {
-            event.registerBlockEntityRenderer(type.get(), ::HTBlastFurnaceBlockEntityRenderer)
-        }*/
-
-        // register(RagiumBlockEntityTypes.BLAST_FURNACE)
-        // register(RagiumBlockEntityTypes.PRIMITIVE_BLAST_FURNACE)
-
         for (entityType: EntityType<out HTDynamite> in RagiumEntityTypes.getDynamites()) {
             event.registerEntityRenderer(entityType, ::ThrownItemRenderer)
         }
         event.registerEntityRenderer(RagiumEntityTypes.FLARE.get(), ::HTFlareRenderer)
 
         LOGGER.info("Registered BlockEntityRenderers!")
+    }
+
+    private fun clientSetup(event: FMLClientSetupEvent) {
+        for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
+            addon.onClientSetup(event)
+        }
+
+        LOGGER.info("Loaded client setup!")
     }
 }

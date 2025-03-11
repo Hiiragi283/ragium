@@ -509,7 +509,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.FLUID_CAPACITY, "Capacity: %s mb")
 
         add(RagiumTranslationKeys.FLUID_MOLTEN, "Molten %s")
-
+        // Guide ME
+        add(RagiumTranslationKeys.GUIDE_NAME, "Ragi-Navi")
+        // Jade
         add("config.jade.plugin_ragium.enchantable_block", "Enchantable Block")
         add("config.jade.plugin_ragium.energy_network", "Show Energy Network")
         add("config.jade.plugin_ragium.error_message", "Show Error Message")

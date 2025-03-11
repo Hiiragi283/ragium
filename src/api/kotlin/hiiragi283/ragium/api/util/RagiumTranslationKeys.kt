@@ -78,4 +78,8 @@ object RagiumTranslationKeys {
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
     const val MULTI_SHAPE_SUCCESS = "message.ragium.multi_shape.success"
+
+    //    Guide ME    //
+
+    const val GUIDE_NAME = "item.ragium.guide"
 }

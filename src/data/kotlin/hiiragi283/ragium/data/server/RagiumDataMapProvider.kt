@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.data.*
-import hiiragi283.ragium.api.extension.asHolder
+import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -28,7 +28,7 @@ import java.util.concurrent.CompletableFuture
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(packOutput, lookupProvider) {
     private fun <T : Any> Builder<T, Item>.addItem(item: ItemLike, value: T, replace: Boolean = false): Builder<T, Item> =
-        add(item.asHolder(), value, replace)
+        add(item.asItemHolder(), value, replace)
 
     private fun <T : Any> Builder<T, Item>.addItem(
         prefix: HTTagPrefix,

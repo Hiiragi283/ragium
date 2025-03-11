@@ -6,14 +6,12 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.internal.RagiumConfig
-import net.createmod.ponder.foundation.PonderIndex
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.fluids.DispenseFluidContainer
@@ -29,7 +27,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     init {
         eventBus.addListener(::construct)
         eventBus.addListener(::commonSetup)
-        eventBus.addListener(::clientSetup)
 
         RagiumComponentTypes.REGISTER.register(eventBus)
 
@@ -67,15 +64,5 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             addon.onCommonSetup(event)
         }
         LOGGER.info("Loaded common setup!")
-    }
-
-    private fun clientSetup(event: FMLClientSetupEvent) {
-        PonderIndex.addPlugin(RagiumPonderPlugin)
-
-        for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
-            addon.onClientSetup(event)
-        }
-
-        LOGGER.info("Loaded client setup!")
     }
 }

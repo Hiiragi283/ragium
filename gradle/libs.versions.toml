@@ -18,6 +18,7 @@ create = "6.0.2-35"
 delight = "1.21.1-1.2.7"
 eio = "7.1.6-alpha"
 flywheel = "1.0.1-11"
+guide = "21.1.1"
 if = "1.21-3.6.23"
 immersive = "1.21.1-12.1.0-185"
 jade = "15.9.4+neoforge"
@@ -25,7 +26,7 @@ jei = "19.21.0.247"
 mek = "1.21.1-10.7.8.70"
 mi = "2.2.34"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
-ponder = "1.0.44"
+#ponder = "1.0.44"
 rc = "1.2.5"
 registrate = "MC1.21-1.3.0+62"
 tf = "4.6.3003"
@@ -41,15 +42,16 @@ delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "d
 eio = { group = "com.enderio", name = "enderio-base", version.ref = "eio" }
 eio-machines = { group = "com.enderio", name = "enderio-machines", version.ref = "eio" }
 flywheel = { group = "dev.engine-room.flywheel", name = "flywheel-neoforge-1.21.1", version.ref = "flywheel" }
-jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 if = { group = "maven.modrinth", name = "industrial-foregoing", version.ref = "if" }
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
+jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
+jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 mi = { group = "aztech", name = "Modern-Industrialization", version.ref = "mi" }
-jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
-jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
-ponder = { group = "net.createmod.ponder", name = "Ponder-NeoForge-1.21.1", version.ref = "ponder" }
+#ponder = { group = "net.createmod.ponder", name = "Ponder-NeoForge-1.21.1", version.ref = "ponder" }
 rc = { group = "maven.modrinth", name = "railcraft-reborn", version.ref = "rc" }
 registrate = { group = "com.tterrag.registrate", name = "Registrate", version.ref = "registrate" }
 
@@ -62,6 +64,7 @@ mods-impl = [
     "eio",
     "eio-machines",
     "flywheel",
+    "guide",
     "if",
     "immersive",
     "jade",
@@ -74,7 +77,6 @@ mods-impl = [
 
 mods-transitive = [
     "create",
-    "ponder",
 ]
 
 mods-compile = [

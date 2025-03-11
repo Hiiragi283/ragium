@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -15,6 +17,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -33,21 +36,10 @@ fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAnd
 //    Holder    //
 
 /**
- * [Holder.idOrThrow]に基づいた[Comparator]を返します。
- */
-fun <T : Any> createHolderSorter(): Comparator<Holder<T>> = compareBy(Holder<T>::idOrThrow)
-
-/**
- * [Holder]から[ResourceKey]を返します。
- * @throws [Holder.unwrapKey]が空の場合
- */
-val <T : Any> Holder<T>.keyOrThrow: ResourceKey<T> get() = unwrapKey().orElseThrow()
-
-/**
  * [Holder]から[ResourceLocation]を返します。
  * @throws [Holder.unwrapKey]が空の場合
  */
-val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = keyOrThrow.location()
+val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = unwrapKey().orElseThrow().location()
 
 val <T : Any> Holder<T>.idOrNull: ResourceLocation? get() = unwrapKey().map(ResourceKey<T>::location).getOrNull()
 
@@ -60,19 +52,19 @@ fun <T : Block> DeferredHolder<Block, T>.toBlockHolder(): DeferredBlock<T> = Def
 
 fun <T : Item> DeferredHolder<Item, T>.toItemHolder(): DeferredItem<T> = DeferredItem.createItem<T>(this.id)
 
+fun Fluid.asFluidHolder(): Holder.Reference<Fluid> = builtInRegistryHolder()
+
+/**
+ * この[ItemLike]から[Holder]を返します。
+ */
+fun ItemLike.asItemHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
+
 /**
  * `block/`で前置された[DeferredBlock.getId]
  */
 val DeferredBlock<*>.blockId: ResourceLocation get() = id.withPrefix("block/")
 
 //    HolderSet    //
-
-/**
- * この[HolderSet]に要素が含まれているか判定します。
- */
-val <T : Any> HolderSet<T>.isEmpty: Boolean get() = size() == 0
-
-val <T : Any> HolderSet<T>.isNotEmpty: Boolean get() = !isEmpty
 
 /**
  * この[HolderSet]を[Component]に変換します。

@@ -509,7 +509,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.FLUID_CAPACITY, "容量: %s mb")
 
         add(RagiumTranslationKeys.FLUID_MOLTEN, "溶融%s")
-
+        // Guide ME
+        add(RagiumTranslationKeys.GUIDE_NAME, "らぎナビ")
+        // Jade
         add("config.jade.plugin_ragium.enchantable_block", "エンチャント可能なブロック")
         add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")
         add("config.jade.plugin_ragium.error_message", "エラーメッセージ")
