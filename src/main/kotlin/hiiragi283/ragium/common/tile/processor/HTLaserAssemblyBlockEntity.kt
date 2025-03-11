@@ -1,7 +1,5 @@
 package hiiragi283.ragium.common.tile.processor
 
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -14,11 +12,11 @@ class HTLaserAssemblyBlockEntity(pos: BlockPos, state: BlockState) :
         RagiumBlockEntityTypes.LASER_ASSEMBLY,
         pos,
         state,
-        HTMachineType.LASER_ASSEMBLY,
         HTRecipeTypes.LASER_ASSEMBLY,
         600,
     ) {
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.PRECISION
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> =
+        checkEnergyConsume(level, 2560, simulate)
 
     override fun onSucceeded() {
         super.onSucceeded()

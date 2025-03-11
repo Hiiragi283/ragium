@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe.base
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTMachineRecipesUpdatedEvent
-import hiiragi283.ragium.api.machine.HTMachineType
 import net.minecraft.core.RegistryAccess
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -20,14 +19,12 @@ import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
  * @see [HTMachineRecipe.getRecipeType]
  */
 class HTRecipeType<T : HTMachineRecipe>(val name: String, val serializer: RecipeSerializer<T>) : RecipeType<T> {
-    constructor(machine: HTMachineType, serializer: RecipeSerializer<T>) : this(machine.serializedName, serializer)
-
     constructor(
-        machine: HTMachineType,
+        name: String,
         codec: MapCodec<T>,
         streamCodec: StreamCodec<RegistryFriendlyByteBuf, T>,
     ) : this(
-        machine,
+        name,
         object : RecipeSerializer<T> {
             override fun codec(): MapCodec<T> = codec
 

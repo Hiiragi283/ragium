@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.tile.processor
 
 import hiiragi283.ragium.api.heat.HTHeatTier
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -18,14 +16,11 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTElectricFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSimpleMachineBlockEntity(RagiumBlockEntityTypes.ELECTRIC_FURNACE, pos, state, HTMachineType.ELECTRIC_FURNACE) {
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = when {
-        HTHeatTier.getHeatTier(
-            level,
-            pos.below(),
-            Direction.UP,
-        ) >= HTHeatTier.MEDIUM -> HTMachineEnergyData.Consume.EMPTY
-        else -> HTMachineEnergyData.Consume.DEFAULT
+    HTSimpleMachineBlockEntity(RagiumBlockEntityTypes.ELECTRIC_FURNACE, pos, state) {
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> {
+        val heatTier: HTHeatTier = HTHeatTier.getHeatTier(level, pos.below(), Direction.UP)
+        if (heatTier >= HTHeatTier.MEDIUM) return Result.success(Unit)
+        return checkEnergyConsume(level, 160, simulate)
     }
 
     private var lastRecipe: RecipeHolder<out AbstractCookingRecipe>? = null

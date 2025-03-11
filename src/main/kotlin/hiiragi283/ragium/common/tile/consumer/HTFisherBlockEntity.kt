@@ -3,11 +3,9 @@ package hiiragi283.ragium.common.tile.consumer
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.moveNextOrDrop
 import hiiragi283.ragium.api.extension.toCenterVec3
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceKey
@@ -29,15 +27,17 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 
 class HTFisherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.FISHER, pos, state, HTMachineType.FISHER),
+    HTMachineBlockEntity(RagiumBlockEntityTypes.FISHER, pos, state),
     HTFluidSlotHandler.Empty,
     HTItemSlotHandler.Empty {
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> {
+        if (!level.getFluidState(pos.below()).`is`(FluidTags.WATER)) {
+            return Result.failure(HTMachineException.Custom("Failed to find water source below!"))
+        }
+        return checkEnergyConsume(level, 160, simulate)
+    }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
-        if (!level.getFluidState(pos.below()).`is`(FluidTags.WATER)) {
-            throw HTMachineException.Custom("Failed to find water source below!")
-        }
         // Apply enchantment
         val rodStack = ItemStack(Items.FISHING_ROD)
         EnchantmentHelper.setEnchantments(rodStack, enchantments)

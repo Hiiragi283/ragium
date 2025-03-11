@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
 import hiiragi283.ragium.api.recipe.base.HTSingleItemRecipe
@@ -13,91 +12,49 @@ import net.neoforged.neoforge.event.AddReloadListenerEvent
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object HTRecipeTypes {
     @JvmField
-    val ALLOY_FURNACE = HTRecipeType<HTAlloyFurnaceRecipe>(
-        HTMachineType.ALLOY_FURNACE,
-        HTAlloyFurnaceRecipe.CODEC,
-        HTAlloyFurnaceRecipe.STREAM_CODEC,
-    )
+    val ALLOY_FURNACE =
+        HTRecipeType<HTAlloyFurnaceRecipe>("alloy", HTAlloyFurnaceRecipe.CODEC, HTAlloyFurnaceRecipe.STREAM_CODEC)
 
     @JvmField
-    val ASSEMBLER = HTRecipeType<HTAssemblerRecipe>(
-        HTMachineType.ASSEMBLER,
-        HTAssemblerRecipe.CODEC,
-        HTAssemblerRecipe.STREAM_CODEC,
-    )
+    val ASSEMBLER =
+        HTRecipeType<HTAssemblerRecipe>("assembler", HTAssemblerRecipe.CODEC, HTAssemblerRecipe.STREAM_CODEC)
 
     @JvmField
-    val BREWERY = HTRecipeType<HTBreweryRecipe>(
-        HTMachineType.BREWERY,
-        HTBreweryRecipe.CODEC,
-        HTBreweryRecipe.STREAM_CODEC,
-    )
+    val BREWERY = HTRecipeType<HTBreweryRecipe>("brewery", HTBreweryRecipe.CODEC, HTBreweryRecipe.STREAM_CODEC)
 
     @JvmField
-    val COMPRESSOR = HTRecipeType<HTCompressorRecipe>(
-        HTMachineType.COMPRESSOR,
-        HTSingleItemRecipe.Serializer(::HTCompressorRecipe),
-    )
+    val COMPRESSOR = HTRecipeType<HTCompressorRecipe>("compressor", HTSingleItemRecipe.Serializer(::HTCompressorRecipe))
 
     @JvmField
-    val ENCHANTER = HTRecipeType<HTEnchanterRecipe>(
-        HTMachineType.ENCHANTER,
-        HTEnchanterRecipe.CODEC,
-        HTEnchanterRecipe.STREAM_CODEC,
-    )
+    val ENCHANTER =
+        HTRecipeType<HTEnchanterRecipe>("enchanter", HTEnchanterRecipe.CODEC, HTEnchanterRecipe.STREAM_CODEC)
 
     @JvmField
-    val EXTRACTOR = HTRecipeType<HTExtractorRecipe>(
-        HTMachineType.EXTRACTOR,
-        HTExtractorRecipe.CODEC,
-        HTExtractorRecipe.STREAM_CODEC,
-    )
+    val EXTRACTOR =
+        HTRecipeType<HTExtractorRecipe>("extractor", HTExtractorRecipe.CODEC, HTExtractorRecipe.STREAM_CODEC)
 
     @JvmField
-    val GRINDER = HTRecipeType<HTGrinderRecipe>(
-        HTMachineType.GRINDER,
-        HTSingleItemRecipe.Serializer(::HTGrinderRecipe),
-    )
+    val GRINDER = HTRecipeType<HTGrinderRecipe>("grinder", HTSingleItemRecipe.Serializer(::HTGrinderRecipe))
 
     @JvmField
-    val GROWTH_CHAMBER = HTRecipeType<HTGrowthChamberRecipe>(
-        HTMachineType.GROWTH_CHAMBER,
-        HTGrowthChamberRecipe.SERIALIZER,
-    )
+    val GROWTH_CHAMBER = HTRecipeType<HTGrowthChamberRecipe>("growth", HTGrowthChamberRecipe.SERIALIZER)
 
     @JvmField
-    val INFUSER = HTRecipeType<HTInfuserRecipe>(
-        HTMachineType.INFUSER,
-        HTInfuserRecipe.CODEC,
-        HTInfuserRecipe.STREAM_CODEC,
-    )
+    val INFUSER = HTRecipeType<HTInfuserRecipe>("infuser", HTInfuserRecipe.CODEC, HTInfuserRecipe.STREAM_CODEC)
 
     @JvmField
-    val LASER_ASSEMBLY = HTRecipeType<HTLaserAssemblyRecipe>(
-        HTMachineType.LASER_ASSEMBLY,
-        HTSingleItemRecipe.Serializer(::HTLaserAssemblyRecipe),
-    )
+    val LASER_ASSEMBLY =
+        HTRecipeType<HTLaserAssemblyRecipe>("laser", HTSingleItemRecipe.Serializer(::HTLaserAssemblyRecipe))
 
     @JvmField
-    val MIXER = HTRecipeType<HTMixerRecipe>(
-        HTMachineType.MIXER,
-        HTMixerRecipe.CODEC,
-        HTMixerRecipe.STREAM_CODEC,
-    )
+    val MIXER = HTRecipeType<HTMixerRecipe>("mixer", HTMixerRecipe.CODEC, HTMixerRecipe.STREAM_CODEC)
 
     @JvmField
-    val REFINERY = HTRecipeType<HTRefineryRecipe>(
-        HTMachineType.REFINERY,
-        HTRefineryRecipe.CODEC,
-        HTRefineryRecipe.STREAM_CODEC,
-    )
+    val REFINERY = HTRecipeType<HTRefineryRecipe>("refinery", HTRefineryRecipe.CODEC, HTRefineryRecipe.STREAM_CODEC)
 
     @JvmField
-    val SOLIDIFIER = HTRecipeType<HTSolidifierRecipe>(
-        HTMachineType.SOLIDIFIER,
-        HTSolidifierRecipe.CODEC,
-        HTSolidifierRecipe.STREAM_CODEC,
-    )
+    val SOLIDIFIER =
+        HTRecipeType<HTSolidifierRecipe>("solidifier", HTSolidifierRecipe.CODEC, HTSolidifierRecipe.STREAM_CODEC)
 
     @JvmField
     val ALL_TYPES: List<HTRecipeType<out HTMachineRecipe>> = listOf(

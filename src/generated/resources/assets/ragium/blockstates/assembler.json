@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "active=false": {
+      "model": "ragium:block/assembler"
+    },
+    "active=true": {
       "model": "ragium:block/assembler"
     }
   }

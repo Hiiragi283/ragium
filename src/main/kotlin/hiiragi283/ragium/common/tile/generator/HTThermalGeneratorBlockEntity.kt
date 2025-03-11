@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.tile.generator
 
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -12,7 +11,6 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         RagiumBlockEntityTypes.THERMAL_GENERATOR,
         pos,
         state,
-        HTMachineType.THERMAL_GENERATOR,
     ) {
     override fun isFluidValid(variant: HTFluidVariant): Boolean = variant.isIn(RagiumFluidTags.THERMAL_FUEL)
 

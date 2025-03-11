@@ -1,13 +1,11 @@
 package hiiragi283.ragium.common.tile.generator
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.util.HTMachineException
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -21,12 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Supplier
 
-abstract class HTFluidGeneratorBlockEntity(
-    type: Supplier<out BlockEntityType<*>>,
-    pos: BlockPos,
-    state: BlockState,
-    machineType: HTMachineType,
-) : HTMachineBlockEntity(type, pos, state, machineType),
+abstract class HTFluidGeneratorBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(type, pos, state),
     HTItemSlotHandler.Empty {
     private val inputTank: HTFluidTank = HTFluidTank
         .Builder()
@@ -48,7 +42,8 @@ abstract class HTFluidGeneratorBlockEntity(
 
     abstract fun getFuelAmount(variant: HTFluidVariant): Int
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Generate.CHEMICAL
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> =
+        checkEnergyGenerate(level, 1280, simulate)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val resourceIn: HTFluidVariant = inputTank.resource

@@ -1,15 +1,17 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.event.HTMachineProcessEvent
 import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.extension.getOrDefault
-import hiiragi283.ragium.api.machine.HTMachineAccess
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.util.HTMachineException
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -41,6 +43,7 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandler
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import java.util.*
 import java.util.function.Supplier
@@ -54,25 +57,23 @@ abstract class HTMachineBlockEntity(
     type: Supplier<out BlockEntityType<*>>,
     pos: BlockPos,
     state: BlockState,
-    override val machineType: HTMachineType,
     private val baseTickRate: Int = 200,
 ) : HTBlockEntity(type, pos, state),
     MenuProvider,
-    HTMachineAccess {
+    HTEnchantableBlockEntity,
+    HTErrorHoldingBlockEntity,
+    HTHandlerBlockEntity,
+    HTItemSlotHandler,
+    HTFluidSlotHandler,
+    HTPlayerOwningBlockEntity {
     val front: Direction
         get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-    override var isActive: Boolean = false
-        protected set
-    override val levelAccess: Level?
-        get() = level
-    override val pos: BlockPos
-        get() = blockPos
+    val isActive: Boolean get() = blockState.getOrNull(HTBlockStateProperties.IS_ACTIVE) ?: false
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
             .encodeStart(registryOps, enchantments)
             .ifSuccess { nbt.put(ENCH_KEY, it) }
-        nbt.putBoolean(ACTIVE_KEY, isActive)
         ownerUUID?.let { uuid: UUID ->
             UUIDUtil.STRING_CODEC
                 .encodeStart(registryOps, uuid)
@@ -84,7 +85,6 @@ abstract class HTMachineBlockEntity(
         ItemEnchantments.CODEC
             .parse(registryOps, nbt.get(ENCH_KEY))
             .ifSuccess(::onUpdateEnchantment)
-        isActive = nbt.getBoolean(ACTIVE_KEY)
         UUIDUtil.STRING_CODEC
             .parse(registryOps, nbt.get(OWNER_KEY))
             .ifSuccess { uuid: UUID ->
@@ -107,7 +107,8 @@ abstract class HTMachineBlockEntity(
 
     final override var enchantments: ItemEnchantments = ItemEnchantments.EMPTY
 
-    final override var costModifier: Int = 1
+    var costModifier: Int = 1
+        protected set
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         this.enchantments = newEnchantments
@@ -119,29 +120,6 @@ abstract class HTMachineBlockEntity(
         // Unbreaking -> Decrease energy cost
         this.costModifier =
             max(1, effLevel - getEnchantmentLevel(Enchantments.UNBREAKING))
-    }
-
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    final override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult {
-        if (!level.isClientSide) {
-            // Insert fluid from holding stack
-            getFluidHandler(null)?.let { handler: IFluidHandler ->
-                if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, handler)) {
-                    return InteractionResult.SUCCESS
-                }
-            }
-        }
-        return super.onRightClicked(state, level, pos, player, hitResult)
-    }
-
-    override fun openMenu(player: Player, provider: MenuProvider) {
-        player.openMenu(provider, pos)
     }
 
     protected fun validateMultiblock(controller: HTMultiblockController, player: Player?): Result<HTMultiblockData> = runCatching {
@@ -166,15 +144,13 @@ abstract class HTMachineBlockEntity(
     }
 
     private fun tickOnServer(level: ServerLevel, pos: BlockPos) {
-        val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetwork(level)
-        val energyData: HTMachineEnergyData = getRequiredEnergy(level, pos)
-        // 取得したエネルギー量を処理できるか判定
-        val energyResult: Result<Unit> = energyData.handleEnergy(network, costModifier, true).onFailure(::failed)
-        if (energyResult.isFailure) return
-        runCatching { process(level, pos) }.fold(
+        if (checkCondition(level, pos, true).isFailure) return
+        runCatching {
+            process(level, pos)
+            checkCondition(level, pos, false)
+        }.fold(
             {
-                energyData.handleEnergy(network, costModifier, false)
-                isActive = true
+                activate()
                 errorCache = null
                 onSucceeded()
                 FORGE_BUS.post(HTMachineProcessEvent.Success(this))
@@ -182,11 +158,28 @@ abstract class HTMachineBlockEntity(
             ::failed,
         )
     }
-
+    
     /**
-     * 機械が要求するエネルギー量を返します。
+     * 機械のが稼働できるか判定します。
+     *
+     * 投げられた例外は安全に処理されます。
+     * @throws HTMachineException 機械が稼働できない場合
      */
-    protected abstract fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData
+    protected abstract fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit>
+
+    protected fun checkEnergyConsume(level: ServerLevel, baseAmount: Int, simulate: Boolean): Result<Unit> = runCatching {
+        val amount: Int = baseAmount * costModifier
+        if (RagiumAPI.getInstance().getEnergyNetwork(level).extractEnergy(amount, simulate) != amount) {
+            throw HTMachineException.ConsumeEnergy()
+        }
+    }
+
+    protected fun checkEnergyGenerate(level: ServerLevel, baseAmount: Int, simulate: Boolean): Result<Unit> = runCatching {
+        val amount: Int = baseAmount * costModifier
+        if (RagiumAPI.getInstance().getEnergyNetwork(level).receiveEnergy(amount, simulate) > 0) {
+            throw HTMachineException.GenerateEnergy()
+        }
+    }
 
     /**
      * 機械の処理を行います。
@@ -197,7 +190,7 @@ abstract class HTMachineBlockEntity(
     protected abstract fun process(level: ServerLevel, pos: BlockPos)
 
     private fun failed(throwable: Throwable) {
-        isActive = false
+        inactivate()
         errorCache = throwable
         onFailed(throwable)
         FORGE_BUS.post(HTMachineProcessEvent.Failed(this, throwable))
@@ -207,8 +200,47 @@ abstract class HTMachineBlockEntity(
 
     protected open fun onFailed(throwable: Throwable) {}
 
+    protected fun activate() {
+        val oldActive: Boolean = isActive
+        if (!oldActive) {
+            level?.setBlockAndUpdate(blockPos, blockState.setValue(HTBlockStateProperties.IS_ACTIVE, true))
+        }
+    }
+
+    protected fun inactivate() {
+        val oldActive: Boolean = isActive
+        if (oldActive) {
+            level?.setBlockAndUpdate(blockPos, blockState.setValue(HTBlockStateProperties.IS_ACTIVE, false))
+        }
+    }
+
     protected fun playSound(sound: SoundEvent, volume: Float = 1f, pitch: Float = 1f) {
         level?.playSound(null, blockPos, sound, SoundSource.BLOCKS, volume, pitch)
+    }
+
+    //    HTEntityBlock    //
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    final override fun onRightClicked(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult,
+    ): InteractionResult {
+        if (!level.isClientSide) {
+            // Insert fluid from holding stack
+            getFluidHandler(null)?.let { handler: IFluidHandler ->
+                if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, handler)) {
+                    return InteractionResult.SUCCESS
+                }
+            }
+        }
+        return super.onRightClicked(state, level, pos, player, hitResult)
+    }
+
+    override fun openMenu(player: Player, provider: MenuProvider) {
+        player.openMenu(provider, blockPos)
     }
 
     override fun setPlacedBy(
@@ -232,7 +264,7 @@ abstract class HTMachineBlockEntity(
         getItemHandler(null)?.dropStacks(level, pos)
     }
 
-    final override val containerData: ContainerData = object : ContainerData {
+    val containerData: ContainerData = object : ContainerData {
         override fun get(index: Int): Int = when (index) {
             0 -> ticks
             1 -> tickRate
@@ -244,15 +276,28 @@ abstract class HTMachineBlockEntity(
         override fun getCount(): Int = 2
     }
 
+    fun getProgress(): Float = containerData.get(0).toFloat() / containerData.get(1).toFloat()
+
     //    MenuProvider    //
 
-    override fun getDisplayName(): Component = machineType.text.withStyle(ChatFormatting.WHITE)
+    override fun getDisplayName(): Component = blockState.block.name.withStyle(ChatFormatting.WHITE)
 
     //    HTErrorHoldingBlockEntity    //
 
     private var errorCache: Throwable? = null
 
     final override fun getErrorMessage(): String? = errorCache?.localizedMessage
+
+    //    HTBlockEntityHandlerProvider    //
+
+    override fun getItemHandler(direction: Direction?): IItemHandler? = if (this is HTItemSlotHandler.Empty) null else this
+
+    override fun getFluidHandler(direction: Direction?): IFluidHandler? = if (this is HTFluidSlotHandler.Empty) null else this
+
+    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = RagiumAPI
+        .getInstance()
+        .getEnergyNetwork(level)
+        ?.let(HTStorageIO.INPUT::wrapEnergyStorage)
 
     //    HTPlayerOwningBlockEntity    //
 

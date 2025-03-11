@@ -1,5 +1,5 @@
 {
-  "type": "ragium:growth_chamber",
+  "type": "ragium:growth",
   "catalyst": {
     "tag": "minecraft:soul_fire_base_blocks"
   },

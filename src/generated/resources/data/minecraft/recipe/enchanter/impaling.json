@@ -1,5 +1,5 @@
 {
-  "type": "ragium:arcane_enchanter",
+  "type": "ragium:enchanter",
   "enchantment_output": "minecraft:impaling",
   "first_item_input": {
     "count": 64,

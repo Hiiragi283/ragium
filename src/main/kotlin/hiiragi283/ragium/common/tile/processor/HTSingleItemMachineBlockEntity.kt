@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.tile.processor
 
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCache
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeContext
 import hiiragi283.ragium.api.recipe.base.HTRecipeType
@@ -15,10 +14,9 @@ abstract class HTSingleItemMachineBlockEntity(
     type: Supplier<out BlockEntityType<*>>,
     pos: BlockPos,
     state: BlockState,
-    machineType: HTMachineType,
     protected val recipeType: HTRecipeType<out HTSingleItemRecipe>,
     baseTickRate: Int = 200,
-) : HTSimpleMachineBlockEntity(type, pos, state, machineType, baseTickRate) {
+) : HTSimpleMachineBlockEntity(type, pos, state, baseTickRate) {
     private val recipeCache: HTMachineRecipeCache<out HTSingleItemRecipe> = HTMachineRecipeCache(recipeType)
 
     final override fun process(level: ServerLevel, pos: BlockPos) {

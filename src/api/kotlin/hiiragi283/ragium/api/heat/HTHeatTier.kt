@@ -21,7 +21,7 @@ enum class HTHeatTier : StringRepresentable {
 
         @JvmStatic
         fun getHeatTierFromIndex(index: Int): HTHeatTier? = entries.firstOrNull { it.ordinal == index }
-        
+
         @JvmStatic
         fun getHeatTier(level: Level, pos: BlockPos, direction: Direction): HTHeatTier =
             level.getCapability(BLOCK_CAPABILITY, pos, direction) ?: NONE

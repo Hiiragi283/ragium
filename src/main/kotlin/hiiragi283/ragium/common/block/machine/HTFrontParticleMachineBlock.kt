@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.block.HTHorizontalMachineBlock
-import hiiragi283.ragium.api.extension.getMachineAccess
 import hiiragi283.ragium.api.extension.toCenterVec3
-import hiiragi283.ragium.api.machine.HTMachineAccess
 import hiiragi283.ragium.api.machine.HTMachineType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -26,8 +25,7 @@ open class HTFrontParticleMachineBlock(
         pos: BlockPos,
         random: RandomSource,
     ) {
-        val machine: HTMachineAccess = level.getMachineAccess(pos) ?: return
-        if (!machine.isActive) return
+        if (!state.getValue(HTBlockStateProperties.IS_ACTIVE)) return
         val centerPos: Vec3 = pos.toCenterVec3()
         val front: Direction = getFront(state)
         val axis: Direction.Axis = front.axis

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:arcane_enchanter",
+  "type": "ragium:enchanter",
   "enchantment_output": "minecraft:bane_of_arthropods",
   "first_item_input": {
     "count": 16,

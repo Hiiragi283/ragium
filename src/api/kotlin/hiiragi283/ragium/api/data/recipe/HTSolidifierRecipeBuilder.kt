@@ -45,8 +45,6 @@ class HTSolidifierRecipeBuilder(lookup: HolderGetter<Item>) :
         this.catalyst = catalyst
     }
 
-    override val prefix: String = "solidifier"
-
     override fun getPrimalId(): ResourceLocation = output.id
 
     override fun createRecipe(): HTSolidifierRecipe = HTSolidifierRecipe(group ?: "", input, Optional.ofNullable(catalyst), output)

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:arcane_enchanter",
+  "type": "ragium:enchanter",
   "enchantment_output": "minecraft:riptide",
   "first_item_input": {
     "item": "minecraft:heart_of_the_sea"

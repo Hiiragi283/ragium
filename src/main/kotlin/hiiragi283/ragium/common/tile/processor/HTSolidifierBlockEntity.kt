@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.tile.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.HTSolidifierRecipe
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCache
@@ -24,8 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 
-class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.SOLIDIFIER, pos, state, HTMachineType.SOLIDIFIER) {
+class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.SOLIDIFIER, pos, state) {
     private val inputTank: HTFluidTank = HTFluidTank
         .Builder()
         .setCallback(this::setChanged)
@@ -55,7 +52,8 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.readNbt(nbt, registryOps)
     }
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> =
+        checkEnergyConsume(level, 640, simulate)
 
     private val recipeCache: HTMachineRecipeCache<HTSolidifierRecipe> = HTMachineRecipeCache(HTRecipeTypes.SOLIDIFIER)
 

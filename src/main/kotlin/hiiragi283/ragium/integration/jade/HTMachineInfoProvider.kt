@@ -3,10 +3,9 @@ package hiiragi283.ragium.integration.jade
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.floatText
 import hiiragi283.ragium.api.extension.intText
-import hiiragi283.ragium.api.machine.HTMachineAccess
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.nbt.CompoundTag
@@ -17,7 +16,6 @@ import snownee.jade.api.IComponentProvider
 import snownee.jade.api.IServerDataProvider
 import snownee.jade.api.ITooltip
 import snownee.jade.api.config.IPluginConfig
-import kotlin.jvm.optionals.getOrNull
 
 object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentProvider<BlockAccessor> {
     @JvmField
@@ -27,9 +25,8 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     val COST_MODIFIER: MapCodec<Int> = Codec.INT.fieldOf("cost_modifier")
 
     override fun appendServerData(tag: CompoundTag, accessor: BlockAccessor) {
-        val machineEntity: HTMachineAccess = accessor.blockEntity as? HTMachineAccess ?: return
-        accessor.writeData(HTMachineType.FIELD_CODEC, machineEntity.machineType)
-        accessor.writeData(TICK_RATE, machineEntity.containerData.get(1))
+        val machineEntity: HTMachineBlockEntity = accessor.blockEntity as? HTMachineBlockEntity ?: return
+        accessor.writeData(TICK_RATE, machineEntity.tickRate)
         accessor.writeData(COST_MODIFIER, machineEntity.costModifier)
     }
 
@@ -38,9 +35,6 @@ object HTMachineInfoProvider : IServerDataProvider<BlockAccessor>, IComponentPro
     //    IComponentProvider    //
 
     override fun appendTooltip(tooltip: ITooltip, accessor: BlockAccessor, config: IPluginConfig) {
-        val machineType: HTMachineType = accessor.readData(HTMachineType.FIELD_CODEC).getOrNull() ?: return
-        machineType.appendTooltip(tooltip::add, false)
-
         val tickRate: Int = accessor.readData(TICK_RATE).orElse(200)
         tooltip.add(
             Component.translatable(

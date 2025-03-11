@@ -1,9 +1,6 @@
 package hiiragi283.ragium.common.tile.generator
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -11,6 +8,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.internal.RagiumConfig
@@ -23,14 +21,12 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.energy.IEnergyStorage
 
 class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state, HTMachineType.STIRLING_GENERATOR) {
+    HTMachineBlockEntity(RagiumBlockEntityTypes.STIRLING_GENERATOR, pos, state) {
     private val inputSlot: HTItemSlot = HTItemSlot
         .Builder()
         .setValidator { variant: HTItemVariant -> variant.toStack().getBurnTime(null) > 0 }
@@ -63,7 +59,13 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         inputTank.readNbt(nbt, registryOps)
     }
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = Stirling.of(inputSlot.stack)
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> {
+        val burnTime: Int = inputSlot.stack.getBurnTime(null)
+        if (burnTime > 0) {
+            return checkEnergyGenerate(level, 640, simulate)
+        }
+        return Result.failure(HTMachineException.GenerateEnergy())
+    }
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val burnTime: Int = inputSlot.stack.getBurnTime(null)
@@ -114,26 +116,4 @@ class HTStirlingGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.INPUT
 
     override fun getTanks(): Int = 1
-
-    //    EnergyData    //
-
-    private class Stirling private constructor(override val amount: Int) : HTMachineEnergyData {
-        companion object {
-            @JvmStatic
-            fun of(stack: ItemStack): HTMachineEnergyData {
-                val burnTime: Int = stack.getBurnTime(null)
-                if (burnTime > 0) {
-                    return Stirling(RagiumConfig.getStirlingEnergy(burnTime))
-                }
-                return HTMachineEnergyData.Generate.EMPTY
-            }
-        }
-
-        override fun handleEnergy(storage: IEnergyStorage, modifier: Int, simulate: Boolean): Result<Unit> = runCatching {
-            val fixedAmount: Int = amount * modifier
-            if (fixedAmount <= 0 || storage.receiveEnergy(fixedAmount, simulate) == 0) {
-                throw HTMachineException.GenerateEnergy()
-            }
-        }
-    }
 }

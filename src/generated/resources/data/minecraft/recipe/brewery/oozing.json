@@ -1,5 +1,5 @@
 {
-  "type": "ragium:alchemical_brewery",
+  "type": "ragium:brewery",
   "first_item_input": {
     "item": "minecraft:slime_block"
   },

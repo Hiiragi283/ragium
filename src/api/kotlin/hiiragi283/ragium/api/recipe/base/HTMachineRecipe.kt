@@ -19,6 +19,8 @@ abstract class HTMachineRecipe(private val group: String) : Recipe<HTMachineReci
 
     protected abstract fun getRecipeType(): HTRecipeType<*>
 
+    fun getRecipePrefix(): String = getRecipeType().name
+    
     //    Recipe    //
 
     override fun matches(input: HTMachineRecipeContext, level: Level): Boolean = matches(input)

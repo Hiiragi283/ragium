@@ -18,51 +18,48 @@ import java.util.*
 
 class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
     lookup: HolderGetter<Item>,
-    override val prefix: String,
     private val factory: (String, List<HTItemIngredient>, List<SizedFluidIngredient>, List<HTItemOutput>, List<HTFluidOutput>) -> T,
 ) : HTMachineRecipeBuilder<HTFluidOutputRecipeBuilder<T>, T>(lookup) {
     companion object {
         @JvmStatic
-        fun extractor(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTExtractorRecipe> =
-            HTFluidOutputRecipeBuilder(lookup, "extractor") {
-                group: String,
-                itemInputs: List<HTItemIngredient>,
-                fluidInputs: List<SizedFluidIngredient>,
-                itemOutputs: List<HTItemOutput>,
-                fluidOutputs: List<HTFluidOutput>,
-                ->
-                checkRange(itemInputs, 1..1)
-                checkEmpty(fluidInputs)
-                HTExtractorRecipe(
-                    group,
-                    itemInputs[0],
-                    itemOutputs,
-                    fluidOutputs,
-                )
-            }
+        fun extractor(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTExtractorRecipe> = HTFluidOutputRecipeBuilder(lookup) {
+            group: String,
+            itemInputs: List<HTItemIngredient>,
+            fluidInputs: List<SizedFluidIngredient>,
+            itemOutputs: List<HTItemOutput>,
+            fluidOutputs: List<HTFluidOutput>,
+            ->
+            checkRange(itemInputs, 1..1)
+            checkEmpty(fluidInputs)
+            HTExtractorRecipe(
+                group,
+                itemInputs[0],
+                itemOutputs,
+                fluidOutputs,
+            )
+        }
 
         @JvmStatic
-        fun infuser(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTInfuserRecipe> =
-            HTFluidOutputRecipeBuilder(lookup, "infuser") {
-                group: String,
-                itemInputs: List<HTItemIngredient>,
-                fluidInputs: List<SizedFluidIngredient>,
-                itemOutputs: List<HTItemOutput>,
-                fluidOutputs: List<HTFluidOutput>,
-                ->
-                checkRange(itemInputs, 1..1)
-                checkRange(fluidInputs, 1..1)
-                HTInfuserRecipe(
-                    group,
-                    itemInputs[0],
-                    fluidInputs[0],
-                    itemOutputs,
-                    fluidOutputs,
-                )
-            }
+        fun infuser(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTInfuserRecipe> = HTFluidOutputRecipeBuilder(lookup) {
+            group: String,
+            itemInputs: List<HTItemIngredient>,
+            fluidInputs: List<SizedFluidIngredient>,
+            itemOutputs: List<HTItemOutput>,
+            fluidOutputs: List<HTFluidOutput>,
+            ->
+            checkRange(itemInputs, 1..1)
+            checkRange(fluidInputs, 1..1)
+            HTInfuserRecipe(
+                group,
+                itemInputs[0],
+                fluidInputs[0],
+                itemOutputs,
+                fluidOutputs,
+            )
+        }
 
         @JvmStatic
-        fun mixer(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTMixerRecipe> = HTFluidOutputRecipeBuilder(lookup, "mixer") {
+        fun mixer(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTMixerRecipe> = HTFluidOutputRecipeBuilder(lookup) {
             group: String,
             itemInputs: List<HTItemIngredient>,
             fluidInputs: List<SizedFluidIngredient>,
@@ -82,23 +79,22 @@ class HTFluidOutputRecipeBuilder<T : HTFluidOutputRecipe>(
         }
 
         @JvmStatic
-        fun refinery(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTRefineryRecipe> =
-            HTFluidOutputRecipeBuilder(lookup, "refinery") {
-                group: String,
-                itemInputs: List<HTItemIngredient>,
-                fluidInputs: List<SizedFluidIngredient>,
-                itemOutputs: List<HTItemOutput>,
-                fluidOutputs: List<HTFluidOutput>,
-                ->
-                checkRange(itemInputs, 0..0)
-                checkRange(fluidInputs, 1..1)
-                HTRefineryRecipe(
-                    group,
-                    fluidInputs[0],
-                    itemOutputs,
-                    fluidOutputs,
-                )
-            }
+        fun refinery(lookup: HolderGetter<Item>): HTFluidOutputRecipeBuilder<HTRefineryRecipe> = HTFluidOutputRecipeBuilder(lookup) {
+            group: String,
+            itemInputs: List<HTItemIngredient>,
+            fluidInputs: List<SizedFluidIngredient>,
+            itemOutputs: List<HTItemOutput>,
+            fluidOutputs: List<HTFluidOutput>,
+            ->
+            checkRange(itemInputs, 0..0)
+            checkRange(fluidInputs, 1..1)
+            HTRefineryRecipe(
+                group,
+                fluidInputs[0],
+                itemOutputs,
+                fluidOutputs,
+            )
+        }
 
         @JvmStatic
         private fun checkEmpty(list: List<*>) {

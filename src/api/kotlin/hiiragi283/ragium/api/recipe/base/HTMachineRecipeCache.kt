@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.recipe.base
 
-import hiiragi283.ragium.api.machine.HTMachineException
+import hiiragi283.ragium.api.util.HTMachineException
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level

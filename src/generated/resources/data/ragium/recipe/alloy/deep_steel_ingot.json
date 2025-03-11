@@ -1,5 +1,5 @@
 {
-  "type": "ragium:alloy_furnace",
+  "type": "ragium:alloy",
   "first_item_input": {
     "count": 8,
     "tag": "c:dusts/steel"

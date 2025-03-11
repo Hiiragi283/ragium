@@ -39,8 +39,6 @@ class HTAlloyFurnaceRecipeBuilder(lookup: HolderGetter<Item>) :
 
     override fun getPrimalId(): ResourceLocation = output.id
 
-    override val prefix: String = "alloy"
-
     override fun createRecipe(): HTAlloyFurnaceRecipe = HTAlloyFurnaceRecipe(
         group ?: "",
         firstInput,

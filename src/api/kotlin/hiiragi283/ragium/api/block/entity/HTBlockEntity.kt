@@ -31,7 +31,6 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
     BlockEntity(type.get(), pos, state),
     HTNbtCodec {
     companion object {
-        const val ACTIVE_KEY = "isActive"
         const val ENCH_KEY = "enchantment"
         const val OWNER_KEY = "owner"
     }

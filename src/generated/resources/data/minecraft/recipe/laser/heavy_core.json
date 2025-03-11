@@ -1,5 +1,5 @@
 {
-  "type": "ragium:laser_assembly",
+  "type": "ragium:laser",
   "catalyst": {
     "item": "ragium:amethyst_lens"
   },

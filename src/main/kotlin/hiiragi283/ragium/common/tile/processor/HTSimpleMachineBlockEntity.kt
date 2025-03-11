@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.tile.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -21,13 +20,11 @@ abstract class HTSimpleMachineBlockEntity(
     type: Supplier<out BlockEntityType<*>>,
     pos: BlockPos,
     state: BlockState,
-    machineType: HTMachineType,
     baseTickRate: Int = 200,
 ) : HTMachineBlockEntity(
         type,
         pos,
         state,
-        machineType,
         baseTickRate,
     ),
     HTFluidSlotHandler.Empty {

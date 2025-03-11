@@ -5,7 +5,7 @@
       "modid": "immersiveengineering"
     }
   ],
-  "type": "ragium:growth_chamber",
+  "type": "ragium:growth",
   "catalyst": {
     "tag": "ragium:soils/dirt"
   },

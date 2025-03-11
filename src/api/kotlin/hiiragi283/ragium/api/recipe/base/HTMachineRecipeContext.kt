@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.recipe.base
 
 import hiiragi283.ragium.api.extension.mutableTableOf
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput

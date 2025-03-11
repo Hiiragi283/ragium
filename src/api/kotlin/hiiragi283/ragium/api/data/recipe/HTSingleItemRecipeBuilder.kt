@@ -18,22 +18,21 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.*
 
 class HTSingleItemRecipeBuilder<T : HTSingleItemRecipe>(
-    override val prefix: String,
     private val factory: (String, HTItemIngredient, Optional<Ingredient>, HTItemOutput) -> T,
     lookup: HolderGetter<Item>,
 ) : HTMachineRecipeBuilder<HTSingleItemRecipeBuilder<T>, T>(lookup) {
     companion object {
         @JvmStatic
         fun compressor(lookup: HolderGetter<Item>): HTSingleItemRecipeBuilder<HTCompressorRecipe> =
-            HTSingleItemRecipeBuilder("compressor", ::HTCompressorRecipe, lookup)
+            HTSingleItemRecipeBuilder(::HTCompressorRecipe, lookup)
 
         @JvmStatic
         fun grinder(lookup: HolderGetter<Item>): HTSingleItemRecipeBuilder<HTGrinderRecipe> =
-            HTSingleItemRecipeBuilder("grinder", ::HTGrinderRecipe, lookup)
+            HTSingleItemRecipeBuilder(::HTGrinderRecipe, lookup)
 
         @JvmStatic
         fun laser(lookup: HolderGetter<Item>): HTSingleItemRecipeBuilder<HTLaserAssemblyRecipe> =
-            HTSingleItemRecipeBuilder("laser", ::HTLaserAssemblyRecipe, lookup)
+            HTSingleItemRecipeBuilder(::HTLaserAssemblyRecipe, lookup)
     }
 
     private var group: String? = null

@@ -1,7 +1,6 @@
-package hiiragi283.ragium.api.machine
+package hiiragi283.ragium.api.util
 
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.network.chat.Component
 
 sealed class HTMachineException(private val component: Component) : RuntimeException(component.string) {

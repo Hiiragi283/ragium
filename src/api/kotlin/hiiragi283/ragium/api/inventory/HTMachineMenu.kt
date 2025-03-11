@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.inventory
 
-import hiiragi283.ragium.api.extension.getMachineAccess
-import hiiragi283.ragium.api.machine.HTMachineAccess
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.MenuType
@@ -19,7 +18,7 @@ abstract class HTMachineMenu(
         inventory,
         pos,
     ) {
-    val machine: HTMachineAccess? = level.getMachineAccess(pos)
+    val machine: HTMachineBlockEntity? = level.getBlockEntity(pos) as? HTMachineBlockEntity
 
     fun getProgress(): Float = machine?.getProgress() ?: 0f
 

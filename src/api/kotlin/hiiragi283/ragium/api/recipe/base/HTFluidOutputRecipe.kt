@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.recipe.base
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.util.HTMachineException
 import java.util.*
 
 /**

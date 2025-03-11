@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.tile.processor
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTAssemblerRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.api.recipe.base.HTMachineRecipeCache
@@ -24,7 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.ASSEMBLER, pos, state, HTMachineType.ASSEMBLER),
+    HTMachineBlockEntity(RagiumBlockEntityTypes.ASSEMBLER, pos, state),
     HTFluidSlotHandler.Empty {
     private val firstInputSlot: HTItemSlot = HTItemSlot
         .Builder()
@@ -59,7 +57,8 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.readNbt(nbt, registryOps)
     }
 
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> =
+        checkEnergyConsume(level, 320, simulate)
 
     private val recipeCache: HTMachineRecipeCache<HTAssemblerRecipe> = HTMachineRecipeCache(HTRecipeTypes.ASSEMBLER)
 

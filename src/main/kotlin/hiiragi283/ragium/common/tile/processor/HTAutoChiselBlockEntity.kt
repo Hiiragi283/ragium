@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.tile.processor
 
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineException
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -15,8 +13,9 @@ import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAutoChiselBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSimpleMachineBlockEntity(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state, HTMachineType.AUTO_CHISEL) {
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.DEFAULT
+    HTSimpleMachineBlockEntity(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state) {
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> =
+        checkEnergyConsume(level, 160, simulate)
 
     override fun process(level: ServerLevel, pos: BlockPos) {
         val input = SingleRecipeInput(inputSlot.stack)

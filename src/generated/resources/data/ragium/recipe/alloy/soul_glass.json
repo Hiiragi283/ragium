@@ -1,5 +1,5 @@
 {
-  "type": "ragium:alloy_furnace",
+  "type": "ragium:alloy",
   "first_item_input": {
     "tag": "c:glass_blocks/quartz"
   },

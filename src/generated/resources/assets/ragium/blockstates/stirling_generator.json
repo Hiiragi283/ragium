@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
-      "model": "ragium:block/stirling_generator",
+    "active=false,facing=east": {
+      "model": "ragium:stirling_generator",
       "y": 90
     },
-    "facing=north": {
-      "model": "ragium:block/stirling_generator"
+    "active=false,facing=north": {
+      "model": "ragium:stirling_generator"
     },
-    "facing=south": {
-      "model": "ragium:block/stirling_generator",
+    "active=false,facing=south": {
+      "model": "ragium:stirling_generator",
       "y": 180
     },
-    "facing=west": {
-      "model": "ragium:block/stirling_generator",
+    "active=false,facing=west": {
+      "model": "ragium:stirling_generator",
+      "y": 270
+    },
+    "active=true,facing=east": {
+      "model": "ragium:active_stirling_generator",
+      "y": 90
+    },
+    "active=true,facing=north": {
+      "model": "ragium:active_stirling_generator"
+    },
+    "active=true,facing=south": {
+      "model": "ragium:active_stirling_generator",
+      "y": 180
+    },
+    "active=true,facing=west": {
+      "model": "ragium:active_stirling_generator",
       "y": 270
     }
   }

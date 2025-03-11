@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.machine.HTMachineAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
@@ -30,12 +29,6 @@ fun BlockPos.toCenterVec3(): Vec3 = toVec3().add(0.5, 0.0, 0.5)
  * @return 存在しない場合は`null`
  */
 fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
-
-/**
- * 指定した[pos]から[HTMachineAccess]を返します。
- * @return 存在しない場合は`null`
- */
-fun BlockGetter.getMachineAccess(pos: BlockPos): HTMachineAccess? = getBlockEntity(pos) as? HTMachineAccess
 
 fun CommonLevelAccessor.emptyBlock(pos: BlockPos) {
     removeBlock(pos, false)

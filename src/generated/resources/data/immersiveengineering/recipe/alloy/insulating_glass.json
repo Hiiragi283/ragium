@@ -5,7 +5,7 @@
       "modid": "immersiveengineering"
     }
   ],
-  "type": "ragium:alloy_furnace",
+  "type": "ragium:alloy",
   "first_item_input": {
     "count": 2,
     "tag": "c:glass_blocks"

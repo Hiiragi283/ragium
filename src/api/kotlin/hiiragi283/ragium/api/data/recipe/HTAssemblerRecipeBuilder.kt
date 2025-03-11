@@ -41,8 +41,6 @@ class HTAssemblerRecipeBuilder(lookup: HolderGetter<Item>) :
 
     override fun getPrimalId(): ResourceLocation = output.id
 
-    override val prefix: String = "assembler"
-
     override fun createRecipe(): HTAssemblerRecipe = HTAssemblerRecipe(
         group ?: "",
         firstInput,

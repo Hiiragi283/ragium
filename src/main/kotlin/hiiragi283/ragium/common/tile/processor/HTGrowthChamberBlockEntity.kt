@@ -1,7 +1,5 @@
 package hiiragi283.ragium.common.tile.processor
 
-import hiiragi283.ragium.api.machine.HTMachineEnergyData
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeTypes
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -13,9 +11,9 @@ class HTGrowthChamberBlockEntity(pos: BlockPos, state: BlockState) :
         RagiumBlockEntityTypes.GROWTH_CHAMBER,
         pos,
         state,
-        HTMachineType.GROWTH_CHAMBER,
         HTRecipeTypes.GROWTH_CHAMBER,
         600,
     ) {
-    override fun getRequiredEnergy(level: ServerLevel, pos: BlockPos): HTMachineEnergyData = HTMachineEnergyData.Consume.CHEMICAL
+    override fun checkCondition(level: ServerLevel, pos: BlockPos, simulate: Boolean): Result<Unit> =
+        checkEnergyConsume(level, 640, simulate)
 }

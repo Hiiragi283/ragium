@@ -110,18 +110,18 @@ abstract class HTMachineRecipeBuilder<T : HTMachineRecipeBuilder<T, R>, R : HTMa
     }
 
     final override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        recipeOutput.accept(fixId(id), createRecipe(), null)
+        val recipe: R = createRecipe()
+        recipeOutput.accept(fixId(id, recipe), recipe, null)
     }
 
-    protected abstract val prefix: String
-
-    private fun fixId(id: ResourceLocation): ResourceLocation = id.withPrefix("$prefix/")
+    private fun fixId(id: ResourceLocation, recipe: R): ResourceLocation = id.withPrefix("${recipe.getRecipePrefix()}/")
 
     //    Export    //
 
     protected abstract fun createRecipe(): R
 
     fun export(id: ResourceLocation, consumer: (RecipeHolder<R>) -> Unit) {
-        consumer(RecipeHolder(fixId(id), createRecipe()))
+        val recipe: R = createRecipe()
+        consumer(RecipeHolder(fixId(id, recipe), recipe))
     }
 }

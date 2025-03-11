@@ -12,6 +12,8 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.block.state.BlockState
 
 class HTDrumBlock(private val variant: HTDrumVariant, properties: Properties) : HTEntityBlock(properties) {
+    override fun initDefaultState(): BlockState = stateDefinition.any()
+
     override fun appendHoverText(
         stack: ItemStack,
         context: Item.TooltipContext,

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.util.HTCrateVariant
@@ -12,7 +13,6 @@ import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -27,15 +27,17 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildList {
-            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
-
             add(RagiumBlocks.SLAG_BLOCK)
+            add(RagiumBlocks.SOUL_MAGMA_BLOCK)
+            add(RagiumBlocks.SPONGE_CAKE)
 
-            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
-
+            addAll(RagiumBlocks.ADDONS)
             addAll(RagiumBlocks.LED_BLOCKS.values)
+            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
         }.map(Supplier<out Block>::get)
             .forEach(::simpleBlock)
+
+        RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)
 
         RagiumBlocks.RAGI_BRICK_SETS.generateStates(this)
         RagiumBlocks.PLASTIC_SETS.generateStates(this)
@@ -117,7 +119,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Food
-        simpleBlock(RagiumBlocks.SPONGE_CAKE.get())
         uncheckedSimpleBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Machine Frame
@@ -165,23 +166,12 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
 
-        // Utility
-        RagiumBlocks.SHAFT.let { holder: DeferredBlock<RotatedPillarBlock> ->
-            val model = ModelFile.UncheckedModelFile(holder.blockId)
-            axisBlock(holder.get(), model, model)
-        }
+        registerMachines()
+    }
 
-        RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)
-
-        buildList {
-            addAll(RagiumBlocks.ADDONS)
-        }.map(Supplier<out Block>::get)
-            .forEach(::simpleBlock)
-
-        // Machine
-        for (type: HTMachineType in HTMachineType.entries) {
-            val block: Block = type.holder.get()
-            getVariantBuilder(block)
+    private fun registerMachines() {
+        fun register(type: HTMachineType) {
+            getVariantBuilder(type.holder.get())
                 .forAllStates { state: BlockState ->
                     ConfiguredModel
                         .builder()
@@ -190,6 +180,29 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                         .build()
                 }
         }
+
+        fun registerActive(type: HTMachineType) {
+            getVariantBuilder(type.holder.get())
+                .forAllStates { state: BlockState ->
+                    val model: ModelFile = when (state.getValue(HTBlockStateProperties.IS_ACTIVE)) {
+                        true -> "active_" + type.serializedName
+                        false -> type.serializedName
+                    }.let(RagiumAPI::id).let(ModelFile::UncheckedModelFile)
+
+                    ConfiguredModel
+                        .builder()
+                        .modelFile(model)
+                        .rotationY(state.getOrNull(BlockStateProperties.HORIZONTAL_FACING)?.getRotationY() ?: 0)
+                        .build()
+                }
+        }
+
+        register(HTMachineType.FISHER)
+
+        registerActive(HTMachineType.STIRLING_GENERATOR)
+
+        registerActive(HTMachineType.ALLOY_FURNACE)
+        register(HTMachineType.ASSEMBLER)
     }
 
     private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()

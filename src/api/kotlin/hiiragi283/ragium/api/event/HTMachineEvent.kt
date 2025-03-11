@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.event
 
-import hiiragi283.ragium.api.machine.HTMachineAccess
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import net.neoforged.bus.api.Event
 
 /**
- * [HTMachineAccess]に関連したイベントのクラス
+ * [HTMachineBlockEntity]に関連したイベントのクラス
  */
-abstract class HTMachineEvent(val machine: HTMachineAccess) : Event()
+abstract class HTMachineEvent(val machine: HTMachineBlockEntity) : Event()

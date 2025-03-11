@@ -28,6 +28,14 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 
 abstract class HTEntityBlock(properties: Properties) : BaseEntityBlock(properties) {
+    init {
+        registerDefaultState(initDefaultState())
+    }
+
+    protected abstract fun initDefaultState(): BlockState
+
+    //    Block    //
+
     override fun codec(): MapCodec<out BaseEntityBlock> = throw UnsupportedOperationException()
 
     override fun getRenderShape(state: BlockState): RenderShape = RenderShape.MODEL

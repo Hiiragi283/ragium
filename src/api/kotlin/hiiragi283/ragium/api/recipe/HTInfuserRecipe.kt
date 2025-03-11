@@ -3,9 +3,9 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
-import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.recipe.base.*
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.util.HTMachineException
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
