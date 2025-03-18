@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.mutableTableOf
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -16,7 +15,6 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
@@ -24,7 +22,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.fml.LogicalSide
@@ -109,34 +106,6 @@ interface RagiumAPI {
      */
     fun getEnergyNetwork(level: ServerLevel): IEnergyStorage
 
-    /**
-     * 指定した[level]と[color]からスカルクストレージのインスタンスを返します。
-     */
-    fun getSculkItemStorage(level: ServerLevel, color: DyeColor): IItemHandlerModifiable
-
-    /**
-     * 指定した[level]と[color]からスカルクタンクのインスタンスを返します。
-     */
-    fun getSculkFluidTank(level: ServerLevel, color: DyeColor): IFluidHandler
-
-    //    Durability    //
-
-    fun getForgeHammerDurability(): Int
-
-    //    Machine    //
-
-    fun getTankCapacityWithEnch(enchLevel: Int): Int = getDefaultTankCapacity() * (enchLevel + 1)
-
-    fun getDefaultTankCapacity(): Int
-
-    fun getMachineSoundVolume(): Float
-
-    //    Misc    //
-
-    fun getDynamitePower(): Float
-
-    fun getGrinderOutputCount(key: HTMaterialKey): Int
-
     //    Platform    //
 
     /**
@@ -188,7 +157,7 @@ interface RagiumAPI {
 
     fun createRangeText(stack: ItemStack): Component = Component
         .translatable(
-            RagiumTranslationKeys.EFFECT_RANGE,
+            TODO(),
             intText(getEffectRange(stack)).withStyle(ChatFormatting.WHITE),
         ).withStyle(ChatFormatting.GRAY)
 

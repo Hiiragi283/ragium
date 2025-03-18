@@ -1,13 +1,9 @@
 package hiiragi283.ragium.api.util
 
-import hiiragi283.ragium.api.block.entity.HTBlockEntityOld
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 
-/**
- * @see [HTBlockEntityOld]
- */
 interface HTNbtCodec {
     /**
      * 指定した[nbt]に値を書き込みます。

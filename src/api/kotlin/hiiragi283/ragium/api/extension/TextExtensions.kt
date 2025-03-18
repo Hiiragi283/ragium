@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.Util
 import net.minecraft.core.BlockPos
@@ -66,7 +65,7 @@ fun worldText(value: ResourceKey<Level>): MutableComponent = Component.translata
  * フォーマットされた液体量の[Component]を返します。
  */
 fun fluidAmountText(value: Int): MutableComponent = Component.translatable(
-    RagiumTranslationKeys.FLUID_AMOUNT,
+    TODO(),
     NumberFormat.getNumberInstance().format(value),
 )
 
@@ -91,7 +90,7 @@ fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>) {
     consumer.accept(
         Component
             .translatable(
-                RagiumTranslationKeys.FLUID_NAME,
+                TODO(),
                 stack.hoverName.copy().withStyle(ChatFormatting.AQUA),
                 intText(stack.amount).withStyle(ChatFormatting.GRAY),
             ).withStyle(ChatFormatting.GRAY),
@@ -103,6 +102,6 @@ fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>) {
  */
 fun fluidCapacityText(value: Int): MutableComponent = Component
     .translatable(
-        RagiumTranslationKeys.FLUID_CAPACITY,
+        TODO(),
         intText(value).withStyle(ChatFormatting.YELLOW),
     ).withStyle(ChatFormatting.GRAY)
