@@ -5,6 +5,6 @@ import net.minecraft.world.level.ItemLike
 
 interface HTMaterialItemLike : ItemLike {
     val prefix: HTTagPrefix
-    val material: HTMaterialKey
+    val key: HTMaterialKey
     val id: ResourceLocation
 }

@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#c:coal_coke",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:coke",
+      "required": false
+    }
+  ]
+}

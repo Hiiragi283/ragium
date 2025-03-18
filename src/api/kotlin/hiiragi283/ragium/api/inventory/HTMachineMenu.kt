@@ -11,11 +11,11 @@ abstract class HTMachineMenu(
     inventory: Inventory,
     pos: BlockPos,
 ) : HTContainerMenu(
-    menuType,
-    containerId,
-    inventory,
-    pos,
-) {
+        menuType,
+        containerId,
+        inventory,
+        pos,
+    ) {
     /*val machine: HTMachineBlockEntity? = level.getBlockEntity(pos) as? HTMachineBlockEntity
 
     fun getProgress(): Float = machine?.getProgress() ?: 0f

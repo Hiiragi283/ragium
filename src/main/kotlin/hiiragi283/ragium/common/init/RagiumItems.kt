@@ -26,6 +26,11 @@ object RagiumItems {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
+        Dusts.entries
+        Ingots.entries
+        RawResources.entries
+        MekResources.entries
+
         REGISTER.register(eventBus)
     }
 
@@ -48,7 +53,7 @@ object RagiumItems {
 
     //    Materials    //
 
-    enum class Dusts(override val material: HTMaterialKey) : HTMaterialItemLike {
+    enum class Dusts(override val key: HTMaterialKey) : HTMaterialItemLike {
         // Vanilla
         WOOD(VanillaMaterials.WOOD),
         CALCITE(VanillaMaterials.CALCITE),
@@ -77,13 +82,13 @@ object RagiumItems {
         ;
 
         override val prefix: HTTagPrefix = HTTagPrefix.DUST
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, material)
+        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
         override val id: ResourceLocation = holder.id
 
         override fun asItem(): Item = holder.asItem()
     }
 
-    enum class Ingots(override val material: HTMaterialKey) : HTMaterialItemLike {
+    enum class Ingots(override val key: HTMaterialKey) : HTMaterialItemLike {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         ADVANCED_RAGI_ALLOY(RagiumMaterials.ADVANCED_RAGI_ALLOY),
         AZURE_STEEL(RagiumMaterials.AZURE_STEEL),
@@ -91,13 +96,13 @@ object RagiumItems {
         ;
 
         override val prefix: HTTagPrefix = HTTagPrefix.INGOT
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, material)
+        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
         override val id: ResourceLocation = holder.id
 
         override fun asItem(): Item = holder.asItem()
     }
 
-    enum class RawResources(override val prefix: HTTagPrefix, override val material: HTMaterialKey) : HTMaterialItemLike {
+    enum class RawResources(override val prefix: HTTagPrefix, override val key: HTMaterialKey) : HTMaterialItemLike {
         // Raw
         RAGINITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE),
 
@@ -107,7 +112,7 @@ object RagiumItems {
         WARPED_CRYSTAL(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL),
         ;
 
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, material)
+        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
         override val id: ResourceLocation = holder.id
 
         override fun asItem(): Item = holder.asItem()
@@ -120,8 +125,8 @@ object RagiumItems {
         CRYSTAL(HTTagPrefix.CRYSTAL),
         ;
 
-        override val material: HTMaterialKey = RagiumMaterials.RAGINITE
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, material)
+        override val key: HTMaterialKey = RagiumMaterials.RAGINITE
+        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
         override val id: ResourceLocation = holder.id
 
         override fun asItem(): Item = holder.asItem()
@@ -221,4 +226,42 @@ object RagiumItems {
         // end-contents
         AMBROSIA,
     )
+
+    //    Circuits    //
+
+    @JvmField
+    val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
+
+    @JvmField
+    val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
+
+    //    Machine Parts    //
+
+    @JvmField
+    val ENGINE: DeferredItem<Item> = register("engine")
+
+    @JvmField
+    val LED: DeferredItem<Item> = register("led")
+
+    @JvmField
+    val SOLAR_PANEL: DeferredItem<Item> = register("solar_panel")
+
+    @JvmField
+    val STONE_BOARD: DeferredItem<Item> = register("stone_board")
+
+    //    Misc    //
+
+    @JvmField
+    val SOAP: DeferredItem<Item> = register("soap")
+
+    @JvmField
+    val TAR: DeferredItem<Item> = register("tar")
+
+    @JvmField
+    val YELLOW_CAKE: DeferredItem<Item> =
+        register("yellow_cake")
+
+    @JvmField
+    val YELLOW_CAKE_PIECE: DeferredItem<Item> =
+        registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
 }

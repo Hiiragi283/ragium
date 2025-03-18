@@ -2,14 +2,18 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockProperty
+import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
@@ -28,6 +32,8 @@ object RagiumBlocks {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
+        StorageBlocks.entries
+
         REGISTER.register(eventBus)
         ITEM_REGISTER.register(eventBus)
 
@@ -68,33 +74,49 @@ object RagiumBlocks {
 
     //    Materials    //
 
-    @JvmField
-    val STORAGE_BLOCKS: Map<HTMaterialKey, DeferredBlock<Block>> = buildMap {
-        fun metal(color: MapColor): BlockBehaviour.Properties = blockProperty()
-            .mapColor(color)
-            .strength(5f)
-            .sound(SoundType.METAL)
-            .requiresCorrectToolForDrops()
+    enum class StorageBlocks(properties: BlockBehaviour.Properties, override val key: HTMaterialKey) : HTMaterialItemLike {
+        RAGI_ALLOY(metal(MapColor.COLOR_RED), RagiumMaterials.RAGI_ALLOY),
+        ADVANCED_RAGI_ALLOY(metal(MapColor.COLOR_ORANGE), RagiumMaterials.ADVANCED_RAGI_ALLOY),
+        RAGI_CRYSTAL(gem(MapColor.COLOR_PINK), RagiumMaterials.RAGI_CRYSTAL),
+        AZURE_STEEL(metal(MapColor.TERRACOTTA_BLUE), RagiumMaterials.AZURE_STEEL),
+        DEEP_STEEL(metal(MapColor.COLOR_CYAN), RagiumMaterials.DEEP_STEEL),
+        ;
 
-        fun gem(color: MapColor): BlockBehaviour.Properties = blockProperty()
-            .mapColor(color)
-            .strength(5f)
-            .sound(SoundType.AMETHYST)
-            .requiresCorrectToolForDrops()
+        val holder: DeferredBlock<HTMaterialStorageBlock> = register(
+            "${key.name}_block",
+            properties,
+        ) { prop: BlockBehaviour.Properties -> HTMaterialStorageBlock(key, prop) }
 
-        // Ragium
-        put(RagiumMaterials.RAGI_ALLOY, metal(MapColor.COLOR_RED))
-        put(RagiumMaterials.ADVANCED_RAGI_ALLOY, metal(MapColor.COLOR_ORANGE))
-        put(RagiumMaterials.RAGI_CRYSTAL, gem(MapColor.COLOR_RED))
-        put(RagiumMaterials.RAGIUM, metal(MapColor.COLOR_RED))
-        // Steel
-        put(RagiumMaterials.AZURE_STEEL, metal(MapColor.TERRACOTTA_BLUE))
-        put(RagiumMaterials.DEEP_STEEL, metal(MapColor.COLOR_CYAN))
-    }.mapValues { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->
-        register("${key.name}_block", properties) { prop: BlockBehaviour.Properties ->
-            HTMaterialStorageBlock(key, prop)
+        val baseItem: HTMaterialItemLike get() = when (this) {
+            RAGI_ALLOY -> RagiumItems.Ingots.RAGI_ALLOY
+            ADVANCED_RAGI_ALLOY -> RagiumItems.Ingots.ADVANCED_RAGI_ALLOY
+            RAGI_CRYSTAL -> RagiumItems.RawResources.RAGI_CRYSTAL
+            AZURE_STEEL -> RagiumItems.Ingots.AZURE_STEEL
+            DEEP_STEEL -> RagiumItems.Ingots.DEEP_STEEL
+        }
+
+        override val prefix: HTTagPrefix = HTTagPrefix.BLOCK
+        override val id: ResourceLocation = holder.id
+
+        override fun asItem(): Item = holder.asItem()
+
+        companion object {
+            @JvmStatic
+            val blocks: List<DeferredBlock<*>> get() = entries.map(StorageBlocks::holder)
         }
     }
+
+    private fun metal(color: MapColor): BlockBehaviour.Properties = blockProperty()
+        .mapColor(color)
+        .strength(5f)
+        .sound(SoundType.METAL)
+        .requiresCorrectToolForDrops()
+
+    private fun gem(color: MapColor): BlockBehaviour.Properties = blockProperty()
+        .mapColor(color)
+        .strength(5f)
+        .sound(SoundType.AMETHYST)
+        .requiresCorrectToolForDrops()
 
     //    Buildings    //
 

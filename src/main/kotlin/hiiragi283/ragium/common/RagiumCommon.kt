@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumCreativeTabs
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import net.neoforged.api.distmarker.Dist
@@ -27,6 +28,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         RagiumBlocks.init(eventBus)
         RagiumItems.init(eventBus)
+
+        RagiumCreativeTabs.REGISTER.register(eventBus)
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onModConstruct(eventBus, dist)

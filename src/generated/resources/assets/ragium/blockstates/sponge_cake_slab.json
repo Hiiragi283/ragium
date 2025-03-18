@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/sponge_cake_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/sponge_cake"
+    },
+    "type=top": {
+      "model": "ragium:block/sponge_cake_slab_top"
+    }
+  }
+}

@@ -1,0 +1,249 @@
+package hiiragi283.ragium.data.server.tag
+
+import hiiragi283.ragium.api.IntegrationMods
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTTagBuilder
+import hiiragi283.ragium.api.extension.asItemHolder
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.itemLookup
+import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.material.HTMaterialItemLike
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
+import hiiragi283.ragium.api.material.keys.IntegrationMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.registry.HTDeferredMachine
+import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.PackOutput
+import net.minecraft.data.tags.TagsProvider
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagEntry
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredItem
+import java.util.concurrent.CompletableFuture
+
+class RagiumItemTagProvider(
+    output: PackOutput,
+    provider: CompletableFuture<HolderLookup.Provider>,
+    existingFileHelper: ExistingFileHelper,
+) : TagsProvider<Item>(output, Registries.ITEM, provider, RagiumAPI.MOD_ID, existingFileHelper) {
+    lateinit var builder: HTTagBuilder<Item>
+
+    override fun addTags(provider: HolderLookup.Provider) {
+        builder = HTTagBuilder(provider.itemLookup())
+
+        materialTags()
+        foodTags()
+        // armorTags()
+        // toolTags()
+        partTags()
+        enchantmentTags()
+
+        builder.build { tagKey: TagKey<Item>, entry: TagEntry ->
+            tag(tagKey).add(entry)
+        }
+    }
+
+    fun HTTagBuilder<Item>.addItem(prefix: HTTagPrefix, key: HTMaterialKey, item: Item) {
+        addItem(prefix.createTag(key), item)
+    }
+
+    fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: Item) {
+        add(tagKey, item.asItemHolder())
+    }
+
+    //    Material    //
+
+    private fun materialTags() {
+        RagiumBlocks.RAGINITE_ORES.appendItemTags(builder)
+        RagiumBlocks.RAGI_CRYSTAL_ORES.appendItemTags(builder)
+
+        fun register(entries: List<HTMaterialItemLike>) {
+            for (item: HTMaterialItemLike in entries) {
+                val storageTag: TagKey<Item> = HTTagPrefix.BLOCK.createTag(item.key)
+                builder.addTag(HTTagPrefix.BLOCK.commonTagKey, storageTag)
+                builder.add(storageTag, item.asItemHolder())
+            }
+        }
+
+        register(RagiumBlocks.StorageBlocks.entries)
+        register(RagiumItems.Dusts.entries)
+        register(RagiumItems.Ingots.entries)
+        register(RagiumItems.RawResources.entries)
+        register(RagiumItems.MekResources.entries)
+
+        builder.addTag(
+            HTTagPrefix.GEM.createTag(CommonMaterials.COAL_COKE),
+            RagiumItemTags.COAL_COKE,
+            HTTagBuilder.DependType.OPTIONAL,
+        )
+
+        builder.addItem(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST, Items.AMETHYST_BLOCK)
+        builder.addItem(HTTagPrefix.BLOCK, VanillaMaterials.GLOWSTONE, Items.GLOWSTONE)
+        builder.addItem(HTTagPrefix.GEM, VanillaMaterials.COAL, Items.COAL)
+        builder.addItem(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP)
+
+        // EIO
+        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, IntegrationMods.EIO, "energized_gear")
+        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.VIBRANT_ALLOY, IntegrationMods.EIO, "vibrant_gear")
+        // Create
+        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.ROSE_QUARTZ, IntegrationMods.CREATE, "rose_quartz")
+        addMaterialTag(HTTagPrefix.INGOT, IntegrationMaterials.ANDESITE_ALLOY, IntegrationMods.CREATE, "andesite_alloy")
+        // Evil Craft
+        addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem_crushed")
+        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem")
+        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore")
+        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore_deepslate")
+        addMaterialTag(HTTagPrefix.BLOCK, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_block")
+        // MI
+        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, IntegrationMods.MI, "coke")
+    }
+
+    private fun addMaterialTag(
+        prefix: HTTagPrefix,
+        material: HTMaterialKey,
+        mod: IntegrationMods,
+        path: String,
+        type: HTTagBuilder.DependType = HTTagBuilder.DependType.OPTIONAL,
+    ) {
+        builder.addTag(prefix.commonTagKey, prefix.createTag(material))
+        builder.add(prefix.createTag(material), mod.createItemHolder<Item>(path), type)
+    }
+
+    //    Food    //
+
+    private fun foodTags() {
+        for (foodItem: DeferredItem<out Item> in RagiumItems.FOODS) {
+            if (foodItem.get().components().has(DataComponents.FOOD)) {
+                builder.add(Tags.Items.FOODS, foodItem)
+            }
+        }
+
+        builder.addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
+        builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_CHOCOLATE)
+        builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_DOUGH)
+
+        builder.add(RagiumItemTags.FOOD_CHOCOLATE, RagiumItems.CHOCOLATE)
+        builder.add(
+            RagiumItemTags.FOOD_CHOCOLATE,
+            ResourceLocation.fromNamespaceAndPath("create", "bar_of_chocolate"),
+            HTTagBuilder.DependType.OPTIONAL,
+        )
+
+        builder.add(RagiumItemTags.FLOURS, RagiumItems.FLOUR)
+        builder.add(RagiumItemTags.FOOD_DOUGH, RagiumItems.DOUGH)
+
+        builder.add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
+    }
+
+    //    Armor    //
+
+    /*private fun armorTags() {
+        builder.add(ItemTags.HEAD_ARMOR_ENCHANTABLE, RagiumItems.DIVING_GOGGLE)
+        builder.add(ItemTags.CHEST_ARMOR_ENCHANTABLE, RagiumItems.JETPACK)
+        builder.add(ItemTags.LEG_ARMOR_ENCHANTABLE, RagiumItems.CLIMBING_LEGGINGS)
+        builder.add(ItemTags.FOOT_ARMOR_ENCHANTABLE, RagiumItems.SLIME_BOOTS)
+
+        RagiumItems.AZURE_STEEL_ARMORS.appendItemTags(builder)
+        RagiumItems.DURALUMIN_ARMORS.appendItemTags(builder)
+    }
+
+    //    Tool    //
+
+    private fun toolTags() {
+        builder.add(ItemTags.DURABILITY_ENCHANTABLE, RagiumItems.RAGI_LANTERN)
+        builder.add(ItemTags.PICKAXES, RagiumItems.FEVER_PICKAXE)
+        builder.add(ItemTags.PICKAXES, RagiumItems.SILKY_PICKAXE)
+        builder.addTag(ForgeTool.TAG, RagiumItemTags.TOOLS_FORGE_HAMMER)
+        builder.addTag(ItemTags.DURABILITY_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)
+        builder.addTag(ItemTags.MINING_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)
+        builder.addTag(ItemTags.MINING_LOOT_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)
+
+        RagiumItems.RAGI_ALLOY_TOOLS.appendItemTags(builder)
+        RagiumItems.AZURE_STEEL_TOOLS.appendItemTags(builder)
+        RagiumItems.DURALUMIN_TOOLS.appendItemTags(builder)
+
+        for (dynamite: DeferredItem<out HTThrowableItem> in RagiumItems.DYNAMITES) {
+            builder.add(RagiumItemTags.DYNAMITES, dynamite)
+        }
+    }*/
+
+    //    Part    //
+
+    @Suppress("DEPRECATION")
+    private fun partTags() {
+        builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
+        builder.add(Tags.Items.SLIMEBALLS, RagiumItems.TAR)
+
+        builder.addItem(RagiumItemTags.PAPER, Items.PAPER)
+
+        builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
+        builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
+
+        builder.add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, RagiumBlocks.OBSIDIAN_GLASS.asItemHolder())
+        builder.add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, RagiumBlocks.QUARTZ_GLASS.asItemHolder())
+        builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
+        builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
+
+        builder.addItem(RagiumItemTags.DIRT_SOILS, Items.FARMLAND)
+        builder.add(RagiumItemTags.DIRT_SOILS, IntegrationMods.FD, "rich_soil", HTTagBuilder.DependType.OPTIONAL)
+        // builder.add(RagiumItemTags.DIRT_SOILS, ModBlocks.RICH_SOIL_FARMLAND.get(), HTTagBuilder.DependType.OPTIONAL)
+        builder.addTag(RagiumItemTags.DIRT_SOILS, ItemTags.DIRT)
+
+        builder.addItem(RagiumItemTags.MUSHROOM_SOILS, Items.MYCELIUM)
+
+        builder.addItem(RagiumItemTags.NETHER_SOILS, Items.CRIMSON_NYLIUM)
+        builder.addItem(RagiumItemTags.NETHER_SOILS, Items.WARPED_NYLIUM)
+
+        builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
+
+        /*builder.add(RagiumItemTags.MOLDS_BALL, RagiumItems.BALL_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_BLOCK, RagiumItems.BLOCK_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_GEAR, IntegrationMods.IE, "mold_gear", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLDS_GEAR, RagiumItems.GEAR_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_INGOT, RagiumItems.INGOT_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_PLATE, IntegrationMods.IE, "mold_plate", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLDS_PLATE, RagiumItems.PLATE_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_ROD, IntegrationMods.IE, "mold_rod", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLDS_ROD, RagiumItems.ROD_PRESS_MOLD)
+        builder.add(RagiumItemTags.MOLDS_WIRE, IntegrationMods.IE, "mold_wire", HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumItemTags.MOLDS_WIRE, RagiumItems.WIRE_PRESS_MOLD)
+
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_BALL)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_BLOCK)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_GEAR)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_INGOT)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_PLATE)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_ROD)
+        builder.addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_WIRE)*/
+
+        RagiumBlocks.LED_BLOCKS.values.forEach { builder.add(RagiumItemTags.LED_BLOCKS, it.asItemHolder()) }
+
+        RagiumBlocks.RAGI_BRICK_SETS.appendItemTags(builder)
+        RagiumBlocks.AZURE_TILE_SETS.appendItemTags(builder)
+        RagiumBlocks.PLASTIC_SETS.appendItemTags(builder)
+        RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendItemTags(builder)
+    }
+
+    //    Enchantment    //
+
+    private fun enchantmentTags() {
+        for (item: DeferredItem<out Item> in HTDeferredMachine.getItems()) {
+            builder.add(ItemTags.DURABILITY_ENCHANTABLE, item)
+            builder.add(ItemTags.MINING_ENCHANTABLE, item)
+            builder.add(ItemTags.MINING_LOOT_ENCHANTABLE, item)
+            builder.add(RagiumItemTags.CAPACITY_ENCHANTABLE, item)
+        }
+    }
+}

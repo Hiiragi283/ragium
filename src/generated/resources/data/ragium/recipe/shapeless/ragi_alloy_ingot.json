@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/ragi_alloy"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:ragi_alloy_ingot"
+  }
+}

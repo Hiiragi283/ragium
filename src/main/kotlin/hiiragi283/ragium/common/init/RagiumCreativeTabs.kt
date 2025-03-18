@@ -45,7 +45,7 @@ object RagiumCreativeTabs {
             // Material Blocks
             addAll(RagiumBlocks.RAGINITE_ORES.getItems())
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
-            addAll(RagiumBlocks.STORAGE_BLOCKS.values)
+            addAll(RagiumBlocks.StorageBlocks.entries)
             // Decorations
             addAll(RagiumBlocks.RAGI_BRICK_SETS.getItems())
             addAll(RagiumBlocks.AZURE_TILE_SETS.getItems())
@@ -63,35 +63,26 @@ object RagiumCreativeTabs {
             addAll(RagiumItems.RawResources.entries)
             addAll(RagiumItems.MekResources.entries)
             // Foods
-            addAll(RagiumItems.FOODS)
-            // Ingredients
-            addAll(RagiumBlocks.CASINGS)
-
-            // add(RagiumItems.ENGINE)
-            // add(RagiumItems.LED)
-            // add(RagiumItems.SOLAR_PANEL)
-
-            // add(RagiumItems.SOAP)
-            // add(RagiumItems.TAR)
-            // add(RagiumItems.YELLOW_CAKE)
-            // add(RagiumItems.YELLOW_CAKE_PIECE)
-
-            // addAll(RagiumItems.TICKETS)
-        }
-
-    @JvmField
-    val UTILITIES: DeferredHolder<CreativeModeTab, CreativeModeTab> =
-        register(
-            "utilities",
-            "Ragium - Utilities",
-            RagiumBlocks.SWEET_BERRIES_CAKE,
-        ) { provider: HolderLookup.Provider ->
-            // Foods
             add(RagiumBlocks.SPONGE_CAKE)
             add(RagiumBlocks.SPONGE_CAKE_SLAB)
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
             addAll(RagiumItems.FOODS)
-            // Armors
-            // Tools
+            // Ingredients
+            addAll(RagiumBlocks.CASINGS)
+
+            add(RagiumItems.ENGINE)
+            add(RagiumItems.LED)
+            add(RagiumItems.SOLAR_PANEL)
+            add(RagiumItems.STONE_BOARD)
+
+            add(RagiumItems.POLYMER_RESIN)
+            add(RagiumItems.PLASTIC_PLATE)
+
+            add(RagiumItems.SOAP)
+            add(RagiumItems.TAR)
+            add(RagiumItems.YELLOW_CAKE)
+            add(RagiumItems.YELLOW_CAKE_PIECE)
+
+            // addAll(RagiumItems.TICKETS)
         }
 }

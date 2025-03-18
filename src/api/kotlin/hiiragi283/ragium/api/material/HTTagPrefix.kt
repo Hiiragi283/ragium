@@ -22,7 +22,6 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
 
         override fun createBlockTag(key: HTMaterialKey): TagKey<Block> = blockTagKey(createTag(key).location)
     },
-    COIL("coils"),
     DUST("dusts"),
     GEAR("gears"),
     GEM("gems") {

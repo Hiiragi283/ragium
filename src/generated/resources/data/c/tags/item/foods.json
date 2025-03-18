@@ -1,0 +1,19 @@
+{
+  "values": [
+    "ragium:ambrosia",
+    "ragium:butter",
+    "ragium:canned_cooked_meat",
+    "ragium:chocolate",
+    "ragium:chocolate_apple",
+    "ragium:chocolate_bread",
+    "ragium:chocolate_cookie",
+    "ragium:cooked_meat_ingot",
+    "#c:foods/chocolate",
+    "#c:foods/dough",
+    "ragium:meat_ingot",
+    "ragium:meat_sandwich",
+    "ragium:melon_pie",
+    "ragium:sweet_berries_cake_piece",
+    "ragium:warped_wart"
+  ]
+}
