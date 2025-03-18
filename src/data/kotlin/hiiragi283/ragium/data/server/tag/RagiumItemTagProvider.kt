@@ -71,9 +71,10 @@ class RagiumItemTagProvider(
 
         fun register(entries: List<HTMaterialItemLike>) {
             for (item: HTMaterialItemLike in entries) {
-                val storageTag: TagKey<Item> = HTTagPrefix.BLOCK.createTag(item.key)
-                builder.addTag(HTTagPrefix.BLOCK.commonTagKey, storageTag)
-                builder.add(storageTag, item.asItemHolder())
+                val prefix: HTTagPrefix = item.prefix
+                val materialTag: TagKey<Item> = prefix.createTag(item.key)
+                builder.addTag(prefix.commonTagKey, materialTag)
+                builder.add(materialTag, item.asItemHolder())
             }
         }
 

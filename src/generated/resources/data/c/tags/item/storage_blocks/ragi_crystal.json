@@ -1,7 +1,5 @@
 {
   "values": [
-    "ragium:ragi_crystal",
-    "ragium:ragi_crystal_block",
-    "ragium:ragi_crystal_dust"
+    "ragium:ragi_crystal_block"
   ]
 }

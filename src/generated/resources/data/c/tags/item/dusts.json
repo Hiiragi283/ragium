@@ -1,5 +1,25 @@
 {
   "values": [
-    "#c:dusts/dark"
+    "#c:dusts/advanced_ragi_alloy",
+    "#c:dusts/ash",
+    "#c:dusts/azure_steel",
+    "#c:dusts/calcite",
+    "#c:dusts/coal",
+    "#c:dusts/copper",
+    "#c:dusts/dark",
+    "#c:dusts/deep_steel",
+    "#c:dusts/diamond",
+    "#c:dusts/emerald",
+    "#c:dusts/gold",
+    "#c:dusts/iron",
+    "#c:dusts/lapis",
+    "#c:dusts/obsidian",
+    "#c:dusts/quartz",
+    "#c:dusts/ragi_alloy",
+    "#c:dusts/ragi_crystal",
+    "#c:dusts/raginite",
+    "#c:dusts/saltpeter",
+    "#c:dusts/sulfur",
+    "#c:dusts/wood"
   ]
 }

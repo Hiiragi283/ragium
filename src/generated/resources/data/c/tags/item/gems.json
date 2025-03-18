@@ -1,7 +1,10 @@
 {
   "values": [
     "#c:gems/coal_coke",
+    "#c:gems/crimson_crystal",
     "#c:gems/dark",
-    "#c:gems/rose_quartz"
+    "#c:gems/ragi_crystal",
+    "#c:gems/rose_quartz",
+    "#c:gems/warped_crystal"
   ]
 }
