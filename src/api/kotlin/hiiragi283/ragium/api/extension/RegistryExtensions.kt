@@ -5,8 +5,10 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
+import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
@@ -45,6 +47,10 @@ fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAnd
 val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = unwrapKey().orElseThrow().location()
 
 val <T : Any> Holder<T>.idOrNull: ResourceLocation? get() = unwrapKey().map(ResourceKey<T>::location).getOrNull()
+
+fun <T : Any> Holder<T>.asReference(lookup: HolderGetter<T>): Holder.Reference<T> = unwrapKey().flatMap(lookup::get).orElseThrow()
+
+fun <T : Any> Holder<T>.asReference(registry: Registry<T>): Holder.Reference<T> = asReference(registry.asLookup())
 
 /**
  * 指定した[value]が一致するか判定します。
