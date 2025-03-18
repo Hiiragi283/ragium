@@ -1,0 +1,118 @@
+package hiiragi283.ragium.api.material
+
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.blockTagKey
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.itemTagKey
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.tags.TagKey
+import net.minecraft.util.StringRepresentable
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.block.Block
+
+/**
+ * [TagKey]のプレフィックスを表すクラス
+ */
+enum class HTTagPrefix(private val commonName: String, private val tagPrefix: String = "$commonName/") : StringRepresentable {
+    // Common
+    BLOCK("storage_blocks") {
+        override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
+
+        override fun createBlockTag(key: HTMaterialKey): TagKey<Block> = blockTagKey(createTag(key).location)
+    },
+    COIL("coils"),
+    DUST("dusts"),
+    GEAR("gears"),
+    GEM("gems") {
+        override fun createPath(key: HTMaterialKey): String = key.name
+    },
+    INGOT("ingots"),
+    NUGGET("nuggets"),
+    ORE("ores") {
+        override fun createBlockTag(key: HTMaterialKey): TagKey<Block> = blockTagKey(createTag(key).location)
+    },
+    PLATE("plates"),
+    RAW_MATERIAL("raw_materials") {
+        override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"
+    },
+    RAW_STORAGE("storage_blocks", "storage_blocks/raw_"),
+    ROD("rods"),
+
+    // IE
+    SHEETMETAL("sheetmetals"),
+    WIRE("wires"),
+
+    // Mekanism
+    DIRTY_DUST("dirty_dusts") {
+        override fun createPath(key: HTMaterialKey): String = "dirty_${key.name}_dust"
+    },
+    CLUMP("clumps"),
+    SHARD("shards"),
+    CRYSTAL("crystals"),
+
+    // MI
+    TINY_DUST("tiny_dusts"),
+    ;
+
+    companion object {
+        @JvmField
+        val ORE_PARTS: List<HTTagPrefix> = listOf(
+            ORE,
+            RAW_MATERIAL,
+            RAW_STORAGE,
+        )
+
+        @JvmField
+        val METAL_PARTS: List<HTTagPrefix> = listOf(
+            DUST,
+            GEAR,
+            INGOT,
+            PLATE,
+            ROD,
+            BLOCK,
+        )
+
+        @JvmField
+        val MEKANISM_PARTS: List<HTTagPrefix> = listOf(
+            DIRTY_DUST,
+            CLUMP,
+            SHARD,
+            CRYSTAL,
+        )
+    }
+
+    //    Id    //
+
+    /**
+     * 指定した[key]から，このプレフィックスで修飾された文字列を返します。
+     */
+    open fun createPath(key: HTMaterialKey): String = "${key.name}_$serializedName"
+
+    //    TagKey    //
+
+    val commonTagKey: TagKey<Item> = itemTagKey(commonId(commonName))
+
+    /**
+     * 指定した[key]から，このプレフィックスで修飾された[TagKey]を返します。
+     */
+    fun createTag(key: HTMaterialKey): TagKey<Item> = itemTagKey(commonId("$tagPrefix${key.name}"))
+
+    open fun createBlockTag(key: HTMaterialKey): TagKey<Block>? = null
+
+    fun createIngredient(key: HTMaterialKey): Ingredient = Ingredient.of(createTag(key))
+
+    //    Translation    //
+
+    val translationKey = "tag_prefix.${RagiumAPI.MOD_ID}.$serializedName"
+
+    /**
+     * 指定した[key]から，このプレフィックスで修飾された[MutableComponent]を返します。
+     */
+    fun createText(key: HTMaterialKey): MutableComponent = Component.translatable(translationKey, key.text)
+
+    //    StringRepresentable    //
+
+    override fun getSerializedName(): String = name.lowercase()
+}
