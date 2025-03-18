@@ -36,6 +36,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun block() {
+        addBlock(RagiumBlocks.SILT, "シルト")
+
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationJp("らぎレンガ", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationJp("紺碧のタイル", this)
         RagiumBlocks.PLASTIC_SETS.addTranslationJp("プラスチックブロック", this)

@@ -1,0 +1,10 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "item": "minecraft:torchflower"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:orange_dye"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "brown_mushroom",
+  "ingredient": {
+    "item": "minecraft:brown_mushroom_block"
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:brown_mushroom"
+  }
+}

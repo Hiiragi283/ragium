@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "flour",
+  "ingredient": {
+    "tag": "c:crops/wheat"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:flour"
+  }
+}

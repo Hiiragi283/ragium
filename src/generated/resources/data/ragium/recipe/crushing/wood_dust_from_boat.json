@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "wood_dust",
+  "ingredient": {
+    "tag": "minecraft:boats"
+  },
+  "result": {
+    "count": 5,
+    "id": "ragium:wood_dust"
+  }
+}

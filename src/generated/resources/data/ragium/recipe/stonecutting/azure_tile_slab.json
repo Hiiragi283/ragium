@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ragium:azure_tiles"
+  },
+  "result": {
+    "count": 2,
+    "id": "ragium:azure_tile_slab"
+  }
+}

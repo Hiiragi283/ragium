@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "sulfur_dust",
+  "ingredient": {
+    "tag": "c:netherracks"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:sulfur_dust"
+  }
+}

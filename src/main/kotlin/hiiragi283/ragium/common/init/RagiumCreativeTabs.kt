@@ -45,6 +45,8 @@ object RagiumCreativeTabs {
             // Material Blocks
             addAll(RagiumBlocks.RAGINITE_ORES.getItems())
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
+            add(RagiumBlocks.SILT)
+
             addAll(RagiumBlocks.StorageBlocks.entries)
             // Decorations
             addAll(RagiumBlocks.RAGI_BRICK_SETS.getItems())

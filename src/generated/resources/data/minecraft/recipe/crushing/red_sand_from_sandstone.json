@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "red_sand",
+  "ingredient": {
+    "tag": "c:sandstone/red_blocks"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:red_sand"
+  }
+}

@@ -56,7 +56,6 @@ object RagiumItems {
     enum class Dusts(override val key: HTMaterialKey) : HTMaterialItemLike {
         // Vanilla
         WOOD(VanillaMaterials.WOOD),
-        CALCITE(VanillaMaterials.CALCITE),
         COAL(VanillaMaterials.COAL),
         COPPER(VanillaMaterials.COPPER),
         IRON(VanillaMaterials.IRON),
@@ -65,6 +64,7 @@ object RagiumItems {
         GOLD(VanillaMaterials.GOLD),
         DIAMOND(VanillaMaterials.DIAMOND),
         EMERALD(VanillaMaterials.EMERALD),
+        AMETHYST(VanillaMaterials.AMETHYST),
         OBSIDIAN(VanillaMaterials.OBSIDIAN),
 
         // Ragium

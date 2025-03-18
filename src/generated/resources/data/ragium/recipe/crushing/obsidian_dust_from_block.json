@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "obsidian_dust",
+  "ingredient": {
+    "tag": "c:obsidians/normal"
+  },
+  "result": {
+    "count": 4,
+    "id": "ragium:obsidian_dust"
+  }
+}

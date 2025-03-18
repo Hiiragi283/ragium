@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "string",
+  "ingredient": {
+    "item": "minecraft:cobweb"
+  },
+  "result": {
+    "count": 5,
+    "id": "minecraft:string"
+  }
+}

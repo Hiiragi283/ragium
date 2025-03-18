@@ -12,12 +12,10 @@ import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.SoundType
-import net.minecraft.world.level.block.TransparentBlock
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
@@ -71,6 +69,12 @@ object RagiumBlocks {
 
     @JvmField
     val RAGI_CRYSTAL_ORES = HTOreSets(RagiumMaterials.RAGI_CRYSTAL)
+
+    @JvmField
+    val SILT: DeferredBlock<ColoredFallingBlock> = register(
+        "silt",
+        blockProperty(Blocks.SAND),
+    ) { prop: BlockBehaviour.Properties -> ColoredFallingBlock(ColorRGBA(0xccccff), prop) }
 
     //    Materials    //
 

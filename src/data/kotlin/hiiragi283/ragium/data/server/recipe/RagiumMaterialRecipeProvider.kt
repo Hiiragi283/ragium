@@ -17,7 +17,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 
-object HTMaterialRecipeProvider : HTRecipeProvider() {
+object RagiumMaterialRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Ragi-Alloy
         HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)

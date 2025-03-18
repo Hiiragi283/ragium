@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "mud",
+  "ingredient": {
+    "item": "minecraft:muddy_mangrove_roots"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:mud"
+  }
+}

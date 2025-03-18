@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "tag": "c:dusts/lapis"
+    },
+    "B": {
+      "tag": "c:dusts/calcite"
+    },
+    "C": {
+      "item": "minecraft:deepslate_tiles"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:azure_tiles"
+  }
+}

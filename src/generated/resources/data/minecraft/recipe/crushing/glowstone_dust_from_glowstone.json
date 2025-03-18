@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "glowstone_dust",
+  "ingredient": {
+    "tag": "c:storage_blocks/glowstone"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:glowstone_dust"
+  }
+}

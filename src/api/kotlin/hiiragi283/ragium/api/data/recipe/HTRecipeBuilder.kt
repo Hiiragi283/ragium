@@ -11,8 +11,6 @@ interface HTRecipeBuilder<T : Recipe<*>> : RecipeBuilder {
     @Deprecated("Advancements not supported")
     override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = throw UnsupportedOperationException()
 
-    override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
-
     override fun getResult(): Item = throw UnsupportedOperationException()
 
     fun getPrimalId(): ResourceLocation

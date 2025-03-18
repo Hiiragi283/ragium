@@ -34,6 +34,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun block() {
+        addBlock(RagiumBlocks.SILT, "Silt")
+
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationEn("Ragi-Brick", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationEn("Azure Tile", this)
         RagiumBlocks.PLASTIC_SETS.addTranslationEn("Plastic Block", this)

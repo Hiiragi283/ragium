@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "ice",
+  "ingredient": {
+    "item": "minecraft:packed_ice"
+  },
+  "result": {
+    "count": 9,
+    "id": "minecraft:ice"
+  }
+}

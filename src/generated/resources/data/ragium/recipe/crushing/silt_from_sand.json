@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "silt",
+  "ingredient": {
+    "tag": "c:sands"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:silt"
+  }
+}

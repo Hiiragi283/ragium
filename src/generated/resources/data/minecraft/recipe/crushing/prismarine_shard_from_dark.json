@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "prismarine_shard",
+  "ingredient": {
+    "item": "minecraft:dark_prismarine"
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:prismarine_shard"
+  }
+}

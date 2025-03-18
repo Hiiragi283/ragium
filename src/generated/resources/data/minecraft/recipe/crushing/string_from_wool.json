@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "string",
+  "ingredient": {
+    "tag": "minecraft:wool"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:string"
+  }
+}

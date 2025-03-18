@@ -3,6 +3,8 @@ package hiiragi283.ragium.common
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.recipe.RagiumRecipes
+import hiiragi283.ragium.api.registry.HTDeferredRecipe
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumCreativeTabs
 import hiiragi283.ragium.common.init.RagiumItems
@@ -30,6 +32,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumItems.init(eventBus)
 
         RagiumCreativeTabs.REGISTER.register(eventBus)
+
+        RagiumRecipes
+        HTDeferredRecipe.init(eventBus)
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onModConstruct(eventBus, dist)

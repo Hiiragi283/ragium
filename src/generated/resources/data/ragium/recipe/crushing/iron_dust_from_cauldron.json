@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "iron_dust",
+  "ingredient": {
+    "item": "minecraft:cauldron"
+  },
+  "result": {
+    "count": 7,
+    "id": "ragium:iron_dust"
+  }
+}

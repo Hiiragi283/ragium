@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "blaze_powder",
+  "ingredient": {
+    "tag": "c:rods/blaze"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:blaze_powder"
+  }
+}

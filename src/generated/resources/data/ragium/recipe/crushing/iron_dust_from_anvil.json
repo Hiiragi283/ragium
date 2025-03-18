@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "iron_dust",
+  "ingredient": {
+    "tag": "minecraft:anvil"
+  },
+  "result": {
+    "count": 31,
+    "id": "ragium:iron_dust"
+  }
+}

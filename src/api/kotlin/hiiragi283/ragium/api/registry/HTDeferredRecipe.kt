@@ -23,8 +23,8 @@ class HTDeferredRecipe<I : RecipeInput, R : Recipe<I>>(val name: String, val ser
         private val SERIALIZER_REGISTER: DeferredRegister<RecipeSerializer<*>> =
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, RagiumAPI.MOD_ID)
 
-        @JvmField
-        val TYPE_REGISTER: DeferredRegister<RecipeType<*>> =
+        @JvmStatic
+        private val TYPE_REGISTER: DeferredRegister<RecipeType<*>> =
             DeferredRegister.create(Registries.RECIPE_TYPE, RagiumAPI.MOD_ID)
 
         @JvmStatic
