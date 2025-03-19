@@ -4,6 +4,8 @@ import net.minecraft.core.Holder
 import net.minecraft.world.item.enchantment.Enchantment
 
 /**
- * [Enchantment]の[Holder.Reference]とそのレベルを束ねたデータクラス
+ * [Enchantment]の[Holder]とそのレベルを束ねたデータクラス
  */
-data class HTEnchantmentEntry(val holder: Holder.Reference<Enchantment>, val level: Int)
+data class HTEnchantmentEntry(val holder: Holder<Enchantment>, val level: Int) {
+    constructor(entry: Map.Entry<Holder<Enchantment>, Int>) : this(entry.key, entry.value)
+}

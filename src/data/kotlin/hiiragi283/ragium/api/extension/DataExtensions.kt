@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.registry.HTDeferredMachine
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.Util
 import net.minecraft.resources.ResourceKey
@@ -32,27 +31,21 @@ fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String
     add("$translationKey.desc", desc)
 }
 
-fun LanguageProvider.add(machine: HTDeferredMachine<*, *>, value: String) {
-    addBlock(machine.blockHolder, value)
-}
-
-fun LanguageProvider.add(material: HTMaterialKey, value: String) {
+fun LanguageProvider.addMaterialKey(material: HTMaterialKey, value: String) {
     add(material.translationKey, value)
 }
 
-fun LanguageProvider.add(prefix: HTTagPrefix, value: String) {
+fun LanguageProvider.addTagPrefix(prefix: HTTagPrefix, value: String) {
     add(prefix.translationKey, value)
 }
 
-fun LanguageProvider.add(variant: HTOreVariant, value: String) {
+fun LanguageProvider.addOreVariant(variant: HTOreVariant, value: String) {
     add(variant.translationKey, value)
 }
 
 //    ModelBuilder    //
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
-
-fun modelFile(machine: HTDeferredMachine<*, *>): ModelFile = modelFile(machine.blockId)
 
 fun activeModel(state: BlockState, active: ModelFile, inactive: ModelFile): ModelFile =
     when (state.getValue(HTBlockStateProperties.IS_ACTIVE)) {
@@ -73,36 +66,6 @@ fun BlockModelProvider.machine(
     .texture("bottom", bottom)
     .texture("front", front)
     .renderType("cutout")
-
-fun BlockModelProvider.machine(machine: HTDeferredMachine<*, *>, top: ResourceLocation, bottom: ResourceLocation): BlockModelBuilder =
-    machine(
-        machine.blockId.path,
-        top,
-        bottom,
-        machine.blockId.withSuffix("_front"),
-    )
-
-fun BlockModelProvider.activeMachine(
-    machine: HTDeferredMachine<*, *>,
-    top: ResourceLocation,
-    bottom: ResourceLocation,
-): BlockModelBuilder = machine(
-    machine.blockId.path + "_active",
-    top,
-    bottom,
-    machine.blockId.withSuffix("_front_active"),
-)
-
-fun BlockModelProvider.activeMachine(
-    state: BlockState,
-    machine: HTDeferredMachine<*, *>,
-    top: ResourceLocation,
-    bottom: ResourceLocation,
-): ModelFile = activeModel(
-    state,
-    activeMachine(machine, top, bottom),
-    machine(machine, top, bottom),
-)
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, *>): T = getBuilder(holder.id.toString())
 

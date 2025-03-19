@@ -38,14 +38,4 @@ interface HTItemSlotHandler : IItemHandlerModifiable {
     override fun getSlotLimit(slot: Int): Int = getItemSlot(slot)?.capacity ?: 0
 
     override fun isItemValid(slot: Int, stack: ItemStack): Boolean = getItemSlot(slot)?.canInsert(stack) == true
-
-    //    Empty    //
-
-    interface Empty : HTItemSlotHandler {
-        override fun getItemIoFromSlot(slot: Int): HTStorageIO = HTStorageIO.EMPTY
-
-        override fun getItemSlot(slot: Int): HTItemSlot? = null
-
-        override fun getSlots(): Int = 0
-    }
 }

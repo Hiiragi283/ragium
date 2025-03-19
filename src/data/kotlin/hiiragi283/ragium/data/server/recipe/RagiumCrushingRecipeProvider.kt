@@ -132,13 +132,13 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         HTSingleItemRecipeBuilder
             .crush(RagiumItems.Dusts.WOOD)
-            .addIngredient(ItemTags.WOODEN_FENCES)
+            .addIngredient(Tags.Items.FENCES_WOODEN)
             .group("wood_dust")
             .saveSuffixed(output, "_from_fence")
 
         HTSingleItemRecipeBuilder
             .crush(RagiumItems.Dusts.WOOD, 2)
-            .addIngredient(ItemTags.FENCE_GATES)
+            .addIngredient(Tags.Items.FENCE_GATES_WOODEN)
             .group("wood_dust")
             .saveSuffixed(output, "_from_fence_gate")
 

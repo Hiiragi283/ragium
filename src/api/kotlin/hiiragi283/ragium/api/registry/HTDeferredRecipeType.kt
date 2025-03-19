@@ -90,12 +90,12 @@ class HTDeferredRecipeType<I : RecipeInput, R : Recipe<I>>(val name: String, val
      */
     fun reloadCache() {
         if (changed &&
-            RagiumAPI.Companion
+            RagiumAPI
                 .getInstance()
                 .getCurrentSide()
                 .isServer
         ) {
-            RagiumAPI.Companion
+            RagiumAPI
                 .getInstance()
                 .getCurrentServer()
                 ?.recipeManager
@@ -116,7 +116,7 @@ class HTDeferredRecipeType<I : RecipeInput, R : Recipe<I>>(val name: String, val
             // Reload from RecipeManager
             manager.getAllRecipesFor(this@HTDeferredRecipeType).forEach(consumer)
             // Reload from Event
-            val access: RegistryAccess = RagiumAPI.Companion.getInstance().getRegistryAccess() ?: return@buildMap
+            val access: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return@buildMap
             val event = HTRecipesUpdatedEvent(
                 access,
                 this@HTDeferredRecipeType,

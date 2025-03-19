@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.registry.HTDeferredMachine
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
@@ -82,19 +81,6 @@ abstract class HTAdvancementGenerator(protected val prefix: String) : Advancemen
             builderAction()
         }
         useItem("use_${holder.id.path}", holder)
-    }
-
-    protected fun createMachine(
-        parent: AdvancementHolder,
-        machine: HTDeferredMachine<*, *>,
-        builderAction: HTDisplayInfoBuilder.() -> Unit = {},
-    ): AdvancementHolder = create(machine.serializedName, parent) {
-        display {
-            setIcon(machine)
-            setTitleFromItem(machine)
-            builderAction()
-        }
-        hasItem("has_machine", machine)
     }
 
     protected inline fun Advancement.Builder.display(builderAction: HTDisplayInfoBuilder.() -> Unit): Advancement.Builder =

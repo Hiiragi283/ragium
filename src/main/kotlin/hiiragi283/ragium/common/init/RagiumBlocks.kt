@@ -62,6 +62,46 @@ object RagiumBlocks {
         return holder
     }
 
+    @JvmStatic
+    private fun wooden(): BlockBehaviour.Properties = blockProperty()
+        .mapColor(MapColor.WOOD)
+        .requiresCorrectToolForDrops()
+        .strength(0.8f)
+        .sound(SoundType.WOOD)
+        .ignitedByLava()
+
+    @JvmStatic
+    private fun stone(): BlockBehaviour.Properties = blockProperty()
+        .requiresCorrectToolForDrops()
+        .strength(2f)
+        .sound(SoundType.DEEPSLATE_BRICKS)
+
+    @JvmStatic
+    private fun lightMetal(): BlockBehaviour.Properties = blockProperty()
+        .requiresCorrectToolForDrops()
+        .strength(3f)
+        .sound(SoundType.COPPER)
+
+    @JvmStatic
+    private fun heavyMetal(): BlockBehaviour.Properties = blockProperty()
+        .requiresCorrectToolForDrops()
+        .strength(6f)
+        .sound(SoundType.METAL)
+
+    @JvmStatic
+    private fun crystal(): BlockBehaviour.Properties = blockProperty()
+        .requiresCorrectToolForDrops()
+        .strength(5f)
+        .sound(SoundType.AMETHYST)
+
+    @JvmStatic
+    private fun glass(): BlockBehaviour.Properties = blockProperty(Blocks.GLASS)
+
+    @JvmStatic
+    private fun soft(): BlockBehaviour.Properties = blockProperty()
+        .strength(0.5f)
+        .sound(SoundType.WOOL)
+
     //    Natural Resources    //
 
     @JvmField
@@ -79,11 +119,11 @@ object RagiumBlocks {
     //    Materials    //
 
     enum class StorageBlocks(properties: BlockBehaviour.Properties, override val key: HTMaterialKey) : HTMaterialItemLike {
-        RAGI_ALLOY(metal(MapColor.COLOR_RED), RagiumMaterials.RAGI_ALLOY),
-        ADVANCED_RAGI_ALLOY(metal(MapColor.COLOR_ORANGE), RagiumMaterials.ADVANCED_RAGI_ALLOY),
-        RAGI_CRYSTAL(gem(MapColor.COLOR_PINK), RagiumMaterials.RAGI_CRYSTAL),
-        AZURE_STEEL(metal(MapColor.TERRACOTTA_BLUE), RagiumMaterials.AZURE_STEEL),
-        DEEP_STEEL(metal(MapColor.COLOR_CYAN), RagiumMaterials.DEEP_STEEL),
+        RAGI_ALLOY(lightMetal().mapColor(MapColor.COLOR_RED), RagiumMaterials.RAGI_ALLOY),
+        ADVANCED_RAGI_ALLOY(heavyMetal().mapColor(MapColor.COLOR_ORANGE), RagiumMaterials.ADVANCED_RAGI_ALLOY),
+        RAGI_CRYSTAL(crystal().mapColor(MapColor.COLOR_PINK), RagiumMaterials.RAGI_CRYSTAL),
+        AZURE_STEEL(heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE), RagiumMaterials.AZURE_STEEL),
+        DEEP_STEEL(heavyMetal().mapColor(MapColor.COLOR_CYAN), RagiumMaterials.DEEP_STEEL),
         ;
 
         val holder: DeferredBlock<HTMaterialStorageBlock> = register(
@@ -110,68 +150,56 @@ object RagiumBlocks {
         }
     }
 
-    private fun metal(color: MapColor): BlockBehaviour.Properties = blockProperty()
-        .mapColor(color)
-        .strength(5f)
-        .sound(SoundType.METAL)
-        .requiresCorrectToolForDrops()
-
-    private fun gem(color: MapColor): BlockBehaviour.Properties = blockProperty()
-        .mapColor(color)
-        .strength(5f)
-        .sound(SoundType.AMETHYST)
-        .requiresCorrectToolForDrops()
-
     //    Buildings    //
 
     @JvmField
     val RAGI_BRICK_SETS = HTBuildingBlockSets(
         "ragi_bricks",
-        blockProperty(Blocks.BRICKS),
+        stone().mapColor(MapColor.COLOR_RED),
         prefix = "ragi_brick",
     )
 
     @JvmField
     val AZURE_TILE_SETS = HTBuildingBlockSets(
         "azure_tiles",
-        blockProperty(Blocks.DEEPSLATE_TILES),
+        stone().mapColor(MapColor.TERRACOTTA_BLUE),
         prefix = "azure_tile",
     )
 
     @JvmField
     val PLASTIC_SETS = HTBuildingBlockSets(
         "plastic_block",
-        blockProperty().strength(2f).sound(SoundType.COPPER),
+        stone().sound(SoundType.COPPER),
     )
 
     @JvmField
     val BLUE_NETHER_BRICK_SETS = HTBuildingBlockSets(
         "blue_nether_bricks",
-        blockProperty().strength(2f, 6f).sound(SoundType.NETHER_BRICKS),
+        stone().mapColor(MapColor.COLOR_BLUE).sound(SoundType.NETHER_BRICKS),
         prefix = "blue_nether_brick",
     )
 
     @JvmField
     val QUARTZ_GLASS: DeferredBlock<TransparentBlock> =
-        register("quartz_glass", blockProperty(Blocks.GLASS), ::TransparentBlock)
+        register("quartz_glass", glass(), ::TransparentBlock)
 
     @JvmField
     val OBSIDIAN_GLASS: DeferredBlock<TransparentBlock> =
-        register("obsidian_glass", blockProperty(Blocks.GLASS).strength(5f, 1200f), ::TransparentBlock)
+        register("obsidian_glass", glass().strength(5f, 1200f), ::TransparentBlock)
 
     @JvmField
     val SOUL_GLASS: DeferredBlock<HTSoulGlassBlock> =
-        register("soul_glass", blockProperty(Blocks.GLASS), ::HTSoulGlassBlock)
+        register("soul_glass", glass(), ::HTSoulGlassBlock)
 
     @JvmField
-    val GLASSES: List<DeferredBlock<out TransparentBlock>> = listOf(
+    val GLASSES: List<DeferredBlock<*>> = listOf(
         QUARTZ_GLASS,
         OBSIDIAN_GLASS,
         SOUL_GLASS,
     )
 
     @JvmField
-    val LED_BLOCKS: Map<DyeColor, DeferredBlock<Block>> = listOf(
+    val LED_BLOCKS: Map<DyeColor, DeferredBlock<*>> = listOf(
         DyeColor.RED,
         DyeColor.GREEN,
         DyeColor.BLUE,
@@ -182,67 +210,70 @@ object RagiumBlocks {
     ).associateWith { color: DyeColor ->
         register(
             "${color.serializedName}_led_block",
-            blockProperty(Blocks.GLASS)
-                .mapColor(color)
-                .lightLevel { 15 }
-                .sound(SoundType.GLASS),
+            glass().mapColor(color).lightLevel { 15 },
         )
     }
 
     @JvmStatic
-    fun getLedBlock(color: DyeColor): DeferredBlock<Block> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
+    fun getLedBlock(color: DyeColor): DeferredBlock<*> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
 
     //    Foods    //
 
     @JvmField
     val SPONGE_CAKE: DeferredBlock<HTSpongeCakeBlock> = register(
         "sponge_cake",
-        blockProperty().mapColor(MapColor.COLOR_YELLOW).strength(0.5f).sound(SoundType.WOOL),
+        soft().mapColor(MapColor.COLOR_YELLOW),
         ::HTSpongeCakeBlock,
     )
 
     @JvmField
     val SPONGE_CAKE_SLAB: DeferredBlock<HTSpongeCakeSlabBlock> = register(
         "sponge_cake_slab",
-        blockProperty().mapColor(MapColor.COLOR_YELLOW).strength(0.5f).sound(SoundType.WOOL),
+        soft().mapColor(MapColor.COLOR_YELLOW),
         ::HTSpongeCakeSlabBlock,
     )
 
     @JvmField
     val SWEET_BERRIES_CAKE: DeferredBlock<HTSweetBerriesCakeBlock> = register(
         "sweet_berries_cake",
-        blockProperty().forceSolidOn().strength(0.5f).sound(SoundType.WOOL),
+        soft().forceSolidOn(),
         ::HTSweetBerriesCakeBlock,
     )
 
-    //    Casing    //
+    //    Casings    //
 
     @JvmField
-    val WOODEN_CASING: DeferredBlock<Block> = register("wooden_casing", blockProperty(Blocks.NOTE_BLOCK))
+    val WOODEN_CASING: DeferredBlock<Block> = register("wooden_casing", wooden())
 
     @JvmField
-    val STONE_CASING: DeferredBlock<Block> = register("stone_casing", blockProperty(Blocks.COBBLESTONE))
+    val STONE_CASING: DeferredBlock<Block> = register("stone_casing", stone())
 
     @JvmField
     val MACHINE_CASING: DeferredBlock<Block> = register(
         "machine_casing",
-        blockProperty()
-            .mapColor(MapColor.STONE)
-            .strength(2f)
-            .sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops(),
+        lightMetal(),
     )
 
     @JvmField
     val DEVICE_CASING: DeferredBlock<Block> = register(
         "device_casing",
-        blockProperty()
-            .mapColor(MapColor.STONE)
-            .strength(2f)
-            .sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops(),
+        heavyMetal(),
     )
 
     @JvmField
-    val CASINGS: List<DeferredBlock<Block>> = listOf(WOODEN_CASING, STONE_CASING, MACHINE_CASING, DEVICE_CASING)
+    val CASINGS: List<DeferredBlock<*>> = listOf(WOODEN_CASING, STONE_CASING, MACHINE_CASING, DEVICE_CASING)
+
+    //    Machines    //
+
+    @JvmField
+    val CRUSHER: DeferredBlock<HTCrusherBlock> = register("crusher", heavyMetal(), ::HTCrusherBlock)
+
+    @JvmField
+    val EXTRACTOR: DeferredBlock<HTExtractorBlock> = register("extractor", heavyMetal(), ::HTExtractorBlock)
+
+    @JvmField
+    val MACHINES: List<DeferredBlock<*>> = listOf(
+        CRUSHER,
+        EXTRACTOR,
+    )
 }

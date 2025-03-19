@@ -65,14 +65,4 @@ interface HTFluidSlotHandler : IFluidHandler {
             else -> FluidStack.EMPTY
         }
     }
-
-    //    Empty    //
-
-    interface Empty : HTFluidSlotHandler {
-        override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.EMPTY
-
-        override fun getFluidTank(tank: Int): HTFluidTank? = null
-
-        override fun getTanks(): Int = 0
-    }
 }

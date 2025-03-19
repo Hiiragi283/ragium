@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "group": "wood_dust",
   "ingredient": {
-    "tag": "minecraft:fence_gates"
+    "tag": "c:fence_gates/wooden"
   },
   "result": {
     "count": 2,

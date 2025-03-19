@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.extension.sendUpdatePacket
-import hiiragi283.ragium.api.registry.HTDeferredMachine
+import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -19,37 +19,19 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.level.block.entity.BlockEntityTicker
-import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import java.util.function.Supplier
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
  */
-abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
+abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),
-    HTHandlerBlockEntity,
     HTNbtCodec {
     companion object {
         const val ENCH_KEY = "enchantment"
         const val OWNER_KEY = "owner"
-
-        @JvmStatic
-        fun <T : BlockEntity> getTicker(): BlockEntityTicker<T> =
-            BlockEntityTicker<T> { level: Level, pos: BlockPos, state: BlockState, blockEntity: T ->
-                if (blockEntity is HTBlockEntity) {
-                    blockEntity.tick(level, pos, state)
-                }
-            }
     }
-
-    constructor(machine: HTDeferredMachine<*, *>, pos: BlockPos, state: BlockState) : this(
-        machine.blockEntityHolder,
-        pos,
-        state,
-    )
 
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag =
         CompoundTag().apply { saveAdditional(this, registries) }
@@ -182,19 +164,4 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
      */
     var totalTick: Int = 0
         protected set
-
-    fun tick(level: Level, pos: BlockPos, state: BlockState) {
-        when (level.isClientSide) {
-            true -> clientTick(level, pos, state)
-            false -> serverTick(level, pos, state)
-        }
-    }
-
-    protected open fun clientTick(level: Level, pos: BlockPos, state: BlockState) {
-        totalTick++
-    }
-
-    protected open fun serverTick(level: Level, pos: BlockPos, state: BlockState) {
-        totalTick++
-    }
 }

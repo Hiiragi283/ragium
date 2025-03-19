@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.recipe.RagiumRecipes
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumCreativeTabs
 import hiiragi283.ragium.common.init.RagiumItems
@@ -31,6 +32,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumBlocks.init(eventBus)
         RagiumItems.init(eventBus)
 
+        RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
 
         RagiumRecipes

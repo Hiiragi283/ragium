@@ -2,6 +2,8 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -13,13 +15,17 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
 /**
  * `Ragium`で使用する[BaseEntityBlock]の拡張クラス
  */
-abstract class HTEntityBlock(properties: Properties) : BaseEntityBlock(properties) {
+abstract class HTEntityBlock<BE : HTMachineBlockEntity>(val type: HTDeferredBlockEntityType<BE>, properties: Properties) :
+    BaseEntityBlock(properties) {
     init {
         registerDefaultState(initDefaultState())
     }
@@ -111,5 +117,16 @@ abstract class HTEntityBlock(properties: Properties) : BaseEntityBlock(propertie
     ) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
         level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+    }
+
+    final override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.create(pos, state)
+
+    final override fun <T : BlockEntity> getTicker(
+        level: Level,
+        state: BlockState,
+        blockEntityType: BlockEntityType<T>,
+    ): BlockEntityTicker<T>? {
+        val ticker: BlockEntityTicker<in BE> = type.getTicker(level.isClientSide) ?: return null
+        return createTickerHelper(blockEntityType, type.get(), ticker)
     }
 }

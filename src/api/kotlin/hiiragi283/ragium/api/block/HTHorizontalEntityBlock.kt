@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.block
 
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext
@@ -14,7 +16,8 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty
 /**
  * 水平方向の回転を行える[HTEntityBlock]
  */
-abstract class HTHorizontalEntityBlock(properties: Properties) : HTEntityBlock(properties) {
+abstract class HTHorizontalEntityBlock<BE : HTMachineBlockEntity>(type: HTDeferredBlockEntityType<BE>, properties: Properties) :
+    HTEntityBlock<BE>(type, properties) {
     companion object {
         @JvmField
         val HORIZONTAL: DirectionProperty = HTBlockStateProperties.HORIZONTAL

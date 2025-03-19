@@ -24,7 +24,7 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
 
         @JvmField
         val CODEC: Codec<HTMaterialKey> =
-            Codec.STRING.xmap(Companion::of, HTMaterialKey::name).validate { key: HTMaterialKey ->
+            Codec.STRING.xmap(::of, HTMaterialKey::name).validate { key: HTMaterialKey ->
                 if (key !in RagiumAPI.getInstance().getMaterialRegistry()) {
                     return@validate DataResult.error { "Unknown material key: $key" }
                 }
@@ -36,7 +36,7 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTMaterialKey> =
-            ByteBufCodecs.STRING_UTF8.map(Companion::of, HTMaterialKey::name)
+            ByteBufCodecs.STRING_UTF8.map(::of, HTMaterialKey::name)
 
         /**
          * 指定された[name]から単一のインスタンスを返します。

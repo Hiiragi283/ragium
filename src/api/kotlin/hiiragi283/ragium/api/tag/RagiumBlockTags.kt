@@ -10,8 +10,5 @@ import net.minecraft.world.level.block.Block
  */
 object RagiumBlockTags {
     @JvmField
-    val MINEABLE_WITH_HAMMER: TagKey<Block> = blockTagKey(RagiumAPI.id("mineable/forge_hammer"))
-
-    @JvmField
     val STONES_ROCK_GENERATIONS: TagKey<Block> = blockTagKey(RagiumAPI.id("stones/rock_generation"))
 }

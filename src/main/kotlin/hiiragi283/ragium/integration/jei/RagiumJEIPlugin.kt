@@ -3,6 +3,7 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipes
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.integration.jei.category.HTCentrifugingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.HTSingleItemRecipeCategory
 import mezz.jei.api.IModPlugin
@@ -15,7 +16,6 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.client.Minecraft
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
@@ -31,8 +31,8 @@ class RagiumJEIPlugin : IModPlugin {
 
         val categories = listOf(
             HTCentrifugingRecipeCategory(guiHelper),
-            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.CRUSHING, Items.CRAFTING_TABLE),
-            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.EXTRACTING, Items.CRAFTING_TABLE),
+            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER),
+            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR),
         )
         for (category in categories) {
             registration.addRecipeCategories(category)
@@ -57,8 +57,8 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-        registration.addRecipeCatalyst(Items.CRAFTING_TABLE, RagiumJEIRecipeTypes.CENTRIFUGING)
-        registration.addRecipeCatalyst(Items.CRAFTING_TABLE, RagiumJEIRecipeTypes.CRUSHING)
-        registration.addRecipeCatalyst(Items.CRAFTING_TABLE, RagiumJEIRecipeTypes.EXTRACTING)
+        registration.addRecipeCatalyst(RagiumBlocks.CRUSHER, RagiumJEIRecipeTypes.CENTRIFUGING)
+        registration.addRecipeCatalyst(RagiumBlocks.CRUSHER, RagiumJEIRecipeTypes.CRUSHING)
+        registration.addRecipeCatalyst(RagiumBlocks.EXTRACTOR, RagiumJEIRecipeTypes.EXTRACTING)
     }
 }
