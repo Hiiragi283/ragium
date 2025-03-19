@@ -1,10 +1,10 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addOreVariant
-import hiiragi283.ragium.api.extension.addMaterialKey
-import hiiragi283.ragium.api.extension.addTagPrefix
 import hiiragi283.ragium.api.extension.addEnchantment
+import hiiragi283.ragium.api.extension.addMaterialKey
+import hiiragi283.ragium.api.extension.addOreVariant
+import hiiragi283.ragium.api.extension.addTagPrefix
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
