@@ -6,6 +6,7 @@ import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
+import hiiragi283.ragium.data.server.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagProvider
@@ -13,11 +14,13 @@ import net.minecraft.DetectedVersion
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
+import net.minecraft.data.loot.LootTableProvider
 import net.minecraft.data.metadata.PackMetadataGenerator
 import net.minecraft.network.chat.Component
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection
 import net.minecraft.util.InclusiveRange
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -52,6 +55,16 @@ object RagiumDatagen {
         )
 
         // server
+        generator.addProvider(
+            event.includeServer(),
+            LootTableProvider(
+                output,
+                setOf(),
+                listOf(LootTableProvider.SubProviderEntry(::RagiumBlockLootProvider, LootContextParamSets.BLOCK)),
+                provider,
+            ),
+        )
+
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
 
         generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))

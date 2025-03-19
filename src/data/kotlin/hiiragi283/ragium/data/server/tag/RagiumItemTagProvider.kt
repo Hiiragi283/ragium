@@ -118,7 +118,7 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         // Food
         builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_CHOCOLATE)
         builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_DOUGH)
-        
+
         for (foodItem: DeferredItem<out Item> in RagiumItems.FOODS) {
             if (foodItem.get().components().has(DataComponents.FOOD)) {
                 builder.add(Tags.Items.FOODS, foodItem)
@@ -131,7 +131,7 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
             ResourceLocation.fromNamespaceAndPath("create", "bar_of_chocolate"),
             HTTagBuilder.DependType.OPTIONAL,
         )
-        
+
         builder.add(RagiumItemTags.FLOURS, RagiumItems.FLOUR)
         builder.add(RagiumItemTags.FOOD_DOUGH, RagiumItems.DOUGH)
     }
