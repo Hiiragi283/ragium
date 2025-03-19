@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:ingots/azure_steel"
+    },
+    "B": {
+      "tag": "c:tools/forge_hammer"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:azure_steel_helmet"
+  }
+}

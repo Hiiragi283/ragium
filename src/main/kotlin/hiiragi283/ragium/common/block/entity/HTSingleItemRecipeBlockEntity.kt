@@ -31,6 +31,11 @@ abstract class HTSingleItemRecipeBlockEntity(
     protected val inputSlot: HTItemSlot = HTItemSlot.builder(this).build("item_input")
     protected val outputSlot: HTItemSlot = HTItemSlot.builder(this).build("item_output")
 
+    override fun onCreated() {
+        addEnchListener(inputSlot)
+        addEnchListener(outputSlot)
+    }
+
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
         inputSlot.writeNbt(nbt, registryOps)

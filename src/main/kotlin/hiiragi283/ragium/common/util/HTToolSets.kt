@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.itemProperty
+import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.registry.HTItemRegister
@@ -55,7 +56,7 @@ class HTToolSets(material: Tier, val key: HTMaterialKey) : HTItemSet {
 
     val hammerItem: DeferredItem<*> = itemRegister.registerItem(
         "${key.name}_hammer",
-        { TODO() },
+        { HTForgeHammerItem(material, it) },
         itemProperty().durability(material.uses),
     )
 

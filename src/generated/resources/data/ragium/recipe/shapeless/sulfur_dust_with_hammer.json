@@ -3,14 +3,14 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:dusts/raginite"
+      "tag": "c:raw_materials/sulfur"
     },
     {
-      "tag": "c:dusts/copper"
+      "tag": "c:tools/forge_hammer"
     }
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ragi_alloy_dust"
+    "id": "ragium:sulfur_dust"
   }
 }

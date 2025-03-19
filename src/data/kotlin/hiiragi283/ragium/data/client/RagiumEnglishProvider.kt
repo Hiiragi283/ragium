@@ -68,6 +68,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // addBlock(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
 
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
+        addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
     }
 
     private fun enchantment() {
@@ -160,22 +161,20 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
 
-        /*addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
-        addItem(RagiumItems.JETPACK, "Jetpack")
-        addItem(RagiumItems.CLIMBING_LEGGINGS, "Climbing Leggings")
-        addItem(RagiumItems.SLIME_BOOTS, "Slime Boots")
+        // addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
+        // addItem(RagiumItems.JETPACK, "Jetpack")
+        // addItem(RagiumItems.CLIMBING_LEGGINGS, "Climbing Leggings")
+        // addItem(RagiumItems.SLIME_BOOTS, "Slime Boots")
 
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
-        RagiumItems.DURALUMIN_ARMORS.addTranslationEn("Duralumin", this)
 
-        addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
-        addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
+        // addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
+        // addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
 
         RagiumItems.RAGI_ALLOY_TOOLS.addTranslationEn("Ragi-Alloy", this)
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
-        RagiumItems.DURALUMIN_TOOLS.addTranslationEn("Duralumin", this)
 
-        addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
+        /*addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
         addItem(RagiumItems.DURALUMIN_CASE, "Duralumin Case")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
 

@@ -26,7 +26,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILE_SETS.base, 4, CraftingBookCategory.BUILDING)
             .cross8()
             .define('A', HTTagPrefix.DUST, VanillaMaterials.LAPIS)
-            .define('B', HTTagPrefix.DUST, VanillaMaterials.CALCITE)
+            .define('B', HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
             .define('C', Items.DEEPSLATE_TILES)
             .save(output)
         // Plastic Block

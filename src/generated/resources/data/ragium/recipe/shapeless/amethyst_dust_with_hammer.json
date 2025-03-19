@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:gems/amethyst"
+    },
+    {
+      "tag": "c:tools/forge_hammer"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:amethyst_dust"
+  }
+}

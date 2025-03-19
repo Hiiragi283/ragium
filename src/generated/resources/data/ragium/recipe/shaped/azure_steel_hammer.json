@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:ingots/azure_steel"
+    },
+    "B": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    " AA",
+    "BBA",
+    " AA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:azure_steel_hammer"
+  }
+}

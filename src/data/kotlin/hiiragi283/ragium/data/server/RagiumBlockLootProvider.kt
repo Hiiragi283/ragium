@@ -30,6 +30,20 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     override fun generate() {
         RagiumBlocks.REGISTER.entries.forEach(::dropSelf)
 
+        add(RagiumBlocks.SPONGE_CAKE_SLAB.get(), ::createSlabItemTable)
+
+        add(RagiumBlocks.SWEET_BERRIES_CAKE.get()) { block: Block ->
+            createSilkTouchDispatchTable(
+                block,
+                applyExplosionDecay(
+                    block,
+                    LootItem
+                        .lootTableItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(8f))),
+                ),
+            )
+        }
+
         buildList {
             add(RagiumBlocks.RAGI_BRICK_SETS)
             add(RagiumBlocks.AZURE_TILE_SETS)
@@ -64,9 +78,9 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     }
 
     override fun getKnownBlocks(): Iterable<Block> = blocks
-    
+
     //    Extensions    //
-    
+
     private fun dropSelf(holder: DeferredBlock<*>) {
         dropSelf(holder.get())
     }
@@ -109,14 +123,14 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                     ),
             ),
         )
-    
+
     private fun HTBuildingBlockSets.addBlockLoot() {
         // Base
         dropSelf(this.base)
         // Stairs
-        add(this.slab.get(), ::createSlabItemTable)   
+        dropSelf(this.stairs)
         // Slab
-        dropSelf(this.slab)
+        add(this.slab.get(), ::createSlabItemTable)
         // Wall
         dropSelf(this.wall)
     }

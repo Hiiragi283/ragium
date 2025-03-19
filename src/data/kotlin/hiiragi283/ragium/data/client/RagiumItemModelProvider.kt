@@ -60,9 +60,9 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .texture("layer1", RagiumItems.AZURE_STEEL_COMPOUND.id.withPrefix("item/"))
 
         // Tool
-        // RagiumItems.RAGI_ALLOY_TOOLS.addItemModels(this)
-        // RagiumItems.AZURE_STEEL_TOOLS.addItemModels(this)
+        RagiumItems.RAGI_ALLOY_TOOLS.addItemModels(this)
+        RagiumItems.AZURE_STEEL_TOOLS.addItemModels(this)
         // Armor
-        // RagiumItems.AZURE_STEEL_ARMORS.addItemModels(this)
+        RagiumItems.AZURE_STEEL_ARMORS.addItemModels(this)
     }
 }

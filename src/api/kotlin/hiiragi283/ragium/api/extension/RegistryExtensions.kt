@@ -80,11 +80,15 @@ fun <T : Any> HolderSet<T>.asHolderText(transform: (Holder<T>) -> Component): Mu
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
 
+//    HolderGetter    //
+
+operator fun <T> HolderGetter<T>.contains(tagKey: TagKey<T>): Boolean = get(tagKey).isPresent
+
+fun HolderGetter<Item>.get(prefix: HTTagPrefix, key: HTMaterialKey): Optional<HolderSet.Named<Item>> = get(prefix.createTag(key))
+
+fun HolderGetter<Item>.getOrThrow(prefix: HTTagPrefix, key: HTMaterialKey): HolderSet.Named<Item> = getOrThrow(prefix.createTag(key))
+
 //    HolderLookup    //
-
-fun HolderLookup<Item>.get(prefix: HTTagPrefix, key: HTMaterialKey): Optional<HolderSet.Named<Item>> = get(prefix.createTag(key))
-
-fun HolderLookup<Item>.getOrThrow(prefix: HTTagPrefix, key: HTMaterialKey): HolderSet.Named<Item> = getOrThrow(prefix.createTag(key))
 
 fun HolderLookup.Provider.blockLookup(): HolderLookup.RegistryLookup<Block> = lookupOrThrow(Registries.BLOCK)
 

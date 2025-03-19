@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:rods/wooden"
+    },
+    "B": {
+      "tag": "c:ingots/ragi_alloy"
+    }
+  },
+  "pattern": [
+    "A ",
+    "AB",
+    "BB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_alloy_axe"
+  }
+}

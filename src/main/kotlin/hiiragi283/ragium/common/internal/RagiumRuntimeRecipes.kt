@@ -36,7 +36,7 @@ object RagiumRuntimeRecipes {
                 ) { lookup: HolderGetter<Item> ->
                     val result: Item = event.getFirstItem(resultPrefix, key) ?: return@register null
                     HTSingleItemRecipeBuilder
-                        .crush(result, 2)
+                        .crush(result, 3)
                         .addIngredient(HTTagPrefix.ORE, key)
                         .createRecipe()
                 }
@@ -72,6 +72,16 @@ object RagiumRuntimeRecipes {
                 HTSingleItemRecipeBuilder
                     .crush(dust)
                     .addIngredient(HTTagPrefix.PLATE, key)
+                    .createRecipe()
+            }
+            // Raw
+            event.register(
+                RagiumRecipes.CRUSHING,
+                RagiumAPI.id("runtime_${name}_dust_from_raw"),
+            ) { lookup: HolderGetter<Item> ->
+                HTSingleItemRecipeBuilder
+                    .crush(dust, 2)
+                    .addIngredient(HTTagPrefix.RAW_MATERIAL, key)
                     .createRecipe()
             }
         }

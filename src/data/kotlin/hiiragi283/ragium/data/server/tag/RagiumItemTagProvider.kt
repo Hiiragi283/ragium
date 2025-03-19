@@ -177,6 +177,15 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         RagiumBlocks.PLASTIC_SETS.appendItemTags(builder)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendItemTags(builder)
 
+        for (block: DeferredBlock<*> in RagiumBlocks.LED_BLOCKS.values) {
+            builder.addItem(RagiumItemTags.LED_BLOCKS, block)
+        }
+
+        RagiumItems.AZURE_STEEL_ARMORS.appendItemTags(builder)
+
+        RagiumItems.RAGI_ALLOY_TOOLS.appendItemTags(builder)
+        RagiumItems.AZURE_STEEL_TOOLS.appendItemTags(builder)
+
         builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
         builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
         builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
@@ -194,8 +203,6 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addItem(RagiumItemTags.NETHER_SOILS, Items.WARPED_NYLIUM)
         builder.addTag(RagiumItemTags.DIRT_SOILS, ItemTags.DIRT)
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
-
-        RagiumBlocks.LED_BLOCKS.values.forEach { builder.addItem(RagiumItemTags.LED_BLOCKS, it) }
     }
 
     //    Part    //

@@ -48,6 +48,13 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.SILT)
 
             addAll(RagiumBlocks.StorageBlocks.entries)
+            // Material Items
+            addAll(RagiumItems.Dusts.entries)
+            add(RagiumItems.RAGI_ALLOY_COMPOUND)
+            add(RagiumItems.AZURE_STEEL_COMPOUND)
+            addAll(RagiumItems.Ingots.entries)
+            addAll(RagiumItems.RawResources.entries)
+            addAll(RagiumItems.MekResources.entries)
             // Decorations
             addAll(RagiumBlocks.RAGI_BRICK_SETS.getItems())
             addAll(RagiumBlocks.AZURE_TILE_SETS.getItems())
@@ -56,22 +63,22 @@ object RagiumCreativeTabs {
 
             addAll(RagiumBlocks.GLASSES)
             addAll(RagiumBlocks.LED_BLOCKS.values)
+            // Machines
+            addAll(RagiumBlocks.CASINGS)
 
-            // Material Items
-            addAll(RagiumItems.Dusts.entries)
-            add(RagiumItems.RAGI_ALLOY_COMPOUND)
-            add(RagiumItems.AZURE_STEEL_COMPOUND)
-            addAll(RagiumItems.Ingots.entries)
-            addAll(RagiumItems.RawResources.entries)
-            addAll(RagiumItems.MekResources.entries)
+            addAll(RagiumBlocks.MACHINES)
+
+            // Armors
+            addAll(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
+            // Tools
+            addAll(RagiumItems.RAGI_ALLOY_TOOLS.itemHolders)
+            addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
             // Foods
             add(RagiumBlocks.SPONGE_CAKE)
             add(RagiumBlocks.SPONGE_CAKE_SLAB)
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
             addAll(RagiumItems.FOODS)
             // Ingredients
-            addAll(RagiumBlocks.CASINGS)
-
             add(RagiumItems.ENGINE)
             add(RagiumItems.LED)
             add(RagiumItems.SOLAR_PANEL)

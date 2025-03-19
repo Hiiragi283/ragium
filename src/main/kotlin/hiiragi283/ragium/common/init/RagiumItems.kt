@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTMaterialItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
+import hiiragi283.ragium.common.util.HTArmorSets
+import hiiragi283.ragium.common.util.HTToolSets
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
@@ -32,6 +34,11 @@ object RagiumItems {
         MekResources.entries
 
         REGISTER.register(eventBus)
+
+        AZURE_STEEL_ARMORS.init(eventBus)
+
+        RAGI_ALLOY_TOOLS.init(eventBus)
+        AZURE_STEEL_TOOLS.init(eventBus)
     }
 
     @JvmStatic
@@ -227,15 +234,26 @@ object RagiumItems {
         AMBROSIA,
     )
 
-    //    Circuits    //
+    //    Armors    //
+
+    @JvmField
+    val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, RagiumMaterials.AZURE_STEEL)
+
+    //    Tools    //
+
+    @JvmField
+    val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolMaterials.RAGI_ALLOY, RagiumMaterials.RAGI_ALLOY)
+
+    @JvmField
+    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, RagiumMaterials.AZURE_STEEL)
+
+    //    Machine Parts    //
 
     @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
 
     @JvmField
     val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
-
-    //    Machine Parts    //
 
     @JvmField
     val ENGINE: DeferredItem<Item> = register("engine")

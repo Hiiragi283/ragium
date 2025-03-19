@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -36,11 +37,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
-
-        HTShapelessRecipeBuilder(RagiumItems.Dusts.RAGI_ALLOY)
-            .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
-            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.COPPER)
-            .save(output)
         // Advanced Ragi-Alloy
         HTShapelessRecipeBuilder(RagiumItems.Dusts.ADVANCED_RAGI_ALLOY)
             .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
@@ -94,6 +90,38 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             HTShapelessRecipeBuilder(gem, 9)
                 .addIngredient(HTTagPrefix.STORAGE_BLOCK, gem.key)
                 .saveSuffixed(output, "_from_block")
+        }
+
+        // Gem/Ingot/Raw -> Dust
+        // Tier 1 の素材だけハンマーで粉砕可能
+        for (dust: RagiumItems.Dusts in RagiumItems.Dusts.entries) {
+            val inputPrefix: HTTagPrefix = when (dust) {
+                RagiumItems.Dusts.WOOD -> continue
+                RagiumItems.Dusts.COAL -> HTTagPrefix.GEM
+                RagiumItems.Dusts.COPPER -> HTTagPrefix.INGOT
+                RagiumItems.Dusts.IRON -> HTTagPrefix.INGOT
+                RagiumItems.Dusts.LAPIS -> HTTagPrefix.GEM
+                RagiumItems.Dusts.QUARTZ -> continue
+                RagiumItems.Dusts.GOLD -> continue
+                RagiumItems.Dusts.DIAMOND -> continue
+                RagiumItems.Dusts.EMERALD -> continue
+                RagiumItems.Dusts.AMETHYST -> HTTagPrefix.GEM
+                RagiumItems.Dusts.OBSIDIAN -> continue
+                RagiumItems.Dusts.RAGINITE -> HTTagPrefix.RAW_MATERIAL
+                RagiumItems.Dusts.RAGI_ALLOY -> HTTagPrefix.INGOT
+                RagiumItems.Dusts.ADVANCED_RAGI_ALLOY -> continue
+                RagiumItems.Dusts.RAGI_CRYSTAL -> continue
+                RagiumItems.Dusts.AZURE_STEEL -> HTTagPrefix.INGOT
+                RagiumItems.Dusts.DEEP_STEEL -> continue
+                RagiumItems.Dusts.ASH -> continue
+                RagiumItems.Dusts.SALTPETER -> HTTagPrefix.RAW_MATERIAL
+                RagiumItems.Dusts.SULFUR -> HTTagPrefix.RAW_MATERIAL
+            }
+
+            HTShapelessRecipeBuilder(dust)
+                .addIngredient(inputPrefix, dust.key)
+                .addIngredient(RagiumItemTags.TOOLS_FORGE_HAMMER)
+                .saveSuffixed(output, "_with_hammer")
         }
 
         // Dust -> Ingot

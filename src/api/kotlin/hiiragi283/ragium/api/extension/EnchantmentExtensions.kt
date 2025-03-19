@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
@@ -17,12 +16,6 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 
 fun createEnchBook(holder: Holder<Enchantment>, level: Int = holder.value().maxLevel): ItemStack =
     EnchantedBookItem.createForEnchantment(EnchantmentInstance(holder, level))
-
-fun ItemStack.getLevel(provider: HolderLookup.Provider?, key: ResourceKey<Enchantment>): Int = provider
-    ?.enchLookup()
-    ?.get(key)
-    ?.map(this::getEnchantmentLevel)
-    ?.orElse(0) ?: 0
 
 //    ItemEnchantments    //
 

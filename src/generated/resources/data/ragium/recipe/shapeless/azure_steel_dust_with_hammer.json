@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:ingots/azure_steel"
+    },
+    {
+      "tag": "c:tools/forge_hammer"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:azure_steel_dust"
+  }
+}

@@ -70,6 +70,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
 
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
+        addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
     }
 
     private fun enchantment() {
@@ -162,24 +163,22 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
-        /*addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
-        addItem(RagiumItems.JETPACK, "ジェットパック")
-        addItem(RagiumItems.CLIMBING_LEGGINGS, "登山用レギンス")
-        addItem(RagiumItems.SLIME_BOOTS, "スライムブーツ")
+        // addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
+        // addItem(RagiumItems.JETPACK, "ジェットパック")
+        // addItem(RagiumItems.CLIMBING_LEGGINGS, "登山用レギンス")
+        // addItem(RagiumItems.SLIME_BOOTS, "スライムブーツ")
 
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
-        RagiumItems.DURALUMIN_ARMORS.addTranslationJp("ジュラルミン", this)
 
-        addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
-        addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
-        addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
+        // addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
+        // addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
 
         RagiumItems.RAGI_ALLOY_TOOLS.addTranslationJp("ラギ合金", this)
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
-        RagiumItems.DURALUMIN_TOOLS.addTranslationJp("ジュラルミン", this)
 
-        addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
+        /*addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
         addItem(RagiumItems.DURALUMIN_CASE, "ジュラルミンケース")
+        addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
 
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.EXP_MAGNET, "経験値マグネット")
@@ -188,26 +187,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
         addItem(RagiumItems.FLATTEN_DYNAMITE, "整地用ダイナマイト")
         addItem(RagiumItems.NAPALM_DYNAMITE, "ナパームダイナマイト")
-        addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")
-
-        addItem(RagiumItems.BLANK_PRESS_MOLD, "プレス型（なし）")
-        addItem(RagiumItems.BALL_PRESS_MOLD, "プレス型（ボール）")
-        addItem(RagiumItems.BLOCK_PRESS_MOLD, "プレス型（ブロック）")
-        addItem(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
-        addItem(RagiumItems.INGOT_PRESS_MOLD, "プレス型（インゴット）")
-        addItem(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板材）")
-        addItem(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒材）")
-        addItem(RagiumItems.WIRE_PRESS_MOLD, "プレス型（ワイヤー）")
-
-        addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
-        addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
-        addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
-
-        addItem(RagiumItems.REDSTONE_LENS, "レッドストーンレンズ")
-        addItem(RagiumItems.GLOWSTONE_LENS, "グロウストーンレンズ")
-        addItem(RagiumItems.DIAMOND_LENS, "ダイヤモンドレンズ")
-        addItem(RagiumItems.EMERALD_LENS, "エメラルドレンズ")
-        addItem(RagiumItems.AMETHYST_LENS, "アメシストレンズ")*/
+        addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")*/
 
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄混合物")
         // addItem(RagiumItems.BEE_WAX, "蜜蠟")

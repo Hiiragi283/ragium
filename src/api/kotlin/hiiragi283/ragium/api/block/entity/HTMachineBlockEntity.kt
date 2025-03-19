@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.enchantment.HTEnchantmentEntry
 import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
+import hiiragi283.ragium.api.enchantment.HTEnchantmentListener
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
@@ -23,6 +24,18 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTBlockEntity(type, pos, state),
     HTEnchantmentHolder,
     HTHandlerBlockEntity {
+    init {
+        onCreated()
+    }
+
+    protected abstract fun onCreated()
+
+    protected fun addEnchListener(listener: HTEnchantmentListener) {
+        this.listener.add(listener)
+    }
+
+    //    Save & Load    //
+
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
             .encodeStart(registryOps, itemEnchantments)
@@ -32,7 +45,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
             .parse(registryOps, nbt.get(ENCH_KEY))
-            .ifSuccess { itemEnchantments = it }
+            .ifSuccess(::loadEnchantment)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -46,6 +59,16 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     //    HTEnchantmentHolder    //
 
     protected var itemEnchantments: ItemEnchantments = ItemEnchantments.EMPTY
+        private set
+
+    private val listener: MutableList<HTEnchantmentListener> = mutableListOf()
+
+    private fun loadEnchantment(newEnchantments: ItemEnchantments) {
+        this.itemEnchantments = newEnchantments
+        for (listener: HTEnchantmentListener in listener) {
+            listener.onUpdateEnchantment(newEnchantments)
+        }
+    }
 
     override fun getEnchLevel(key: ResourceKey<Enchantment>): Int {
         val lookup: HolderLookup.RegistryLookup<Enchantment> = level?.registryAccess()?.enchLookup() ?: return 0
