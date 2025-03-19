@@ -71,6 +71,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
+
+        addBlock(RagiumBlocks.ENI, "E.N.I.")
     }
 
     private fun enchantment() {

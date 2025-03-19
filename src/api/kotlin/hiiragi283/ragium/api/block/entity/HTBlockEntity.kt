@@ -61,22 +61,26 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun setBlockState(blockState: BlockState) {
-        beforeUpdateState(blockState)
         super.setBlockState(blockState)
         afterUpdateState(blockState)
+    }
+
+    override fun setLevel(level: Level) {
+        super.setLevel(level)
+        afterLevelInit(level)
     }
 
     //    Extension    //
 
     /**
-     * [BlockState]が更新される前に呼び出されます。
-     */
-    protected open fun beforeUpdateState(state: BlockState) {}
-
-    /**
-     * [BlockState]が更新された後に呼び出されます。
+     * [setBlockState]の後で呼び出されます。
      */
     protected open fun afterUpdateState(state: BlockState) {}
+
+    /**
+     * [setLevel]の後で呼び出されます。
+     */
+    protected open fun afterLevelInit(level: Level) {}
 
     /**
      * ブロックが右クリックされたときに呼ばれます。

@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.block.*
+import hiiragi283.ragium.common.block.HTEnergyNetworkInterfaceBlock
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
 import net.minecraft.resources.ResourceLocation
@@ -275,5 +276,16 @@ object RagiumBlocks {
     val MACHINES: List<DeferredBlock<*>> = listOf(
         CRUSHER,
         EXTRACTOR,
+    )
+
+    //    Devices    //
+
+    @JvmField
+    val ENI: DeferredBlock<HTEnergyNetworkInterfaceBlock> =
+        register("energy_network_interface", heavyMetal(), ::HTEnergyNetworkInterfaceBlock)
+
+    @JvmField
+    val DEVICES: List<DeferredBlock<*>> = listOf(
+        ENI,
     )
 }

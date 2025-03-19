@@ -1,11 +1,14 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.enchantment.HTEnchantmentEntry
 import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
 import hiiragi283.ragium.api.enchantment.HTEnchantmentListener
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
@@ -15,7 +18,9 @@ import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.IEnergyStorage
 
 /**
  * エンチャント可能な[HTBlockEntity]
@@ -76,4 +81,14 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     }
 
     override fun getEnchEntries(): Iterable<HTEnchantmentEntry> = itemEnchantments.entrySet().map(::HTEnchantmentEntry)
+
+    //    HTHandlerBlockEntity    //
+
+    private var network: IEnergyStorage? = null
+
+    override fun setLevel(level: Level) {
+        network = RagiumAPI.getInstance().getEnergyNetwork(level)?.let(HTStorageIO.INPUT::wrapEnergyStorage)
+    }
+
+    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = network
 }

@@ -69,6 +69,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
+
+        addBlock(RagiumBlocks.ENI, "E.N.I.")
     }
 
     private fun enchantment() {

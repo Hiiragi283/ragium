@@ -65,9 +65,8 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.LED_BLOCKS.values)
             // Machines
             addAll(RagiumBlocks.CASINGS)
-
             addAll(RagiumBlocks.MACHINES)
-
+            addAll(RagiumBlocks.DEVICES)
             // Armors
             addAll(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
             // Tools

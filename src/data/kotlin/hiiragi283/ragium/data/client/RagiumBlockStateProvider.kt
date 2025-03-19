@@ -25,6 +25,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.SPONGE_CAKE)
 
             addAll(RagiumBlocks.CASINGS)
+            addAll(RagiumBlocks.DEVICES)
             addAll(RagiumBlocks.LED_BLOCKS.values)
             addAll(RagiumBlocks.StorageBlocks.blocks)
 

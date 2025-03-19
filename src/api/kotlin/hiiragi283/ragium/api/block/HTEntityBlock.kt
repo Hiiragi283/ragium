@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -24,7 +23,7 @@ import net.minecraft.world.phys.BlockHitResult
 /**
  * `Ragium`で使用する[BaseEntityBlock]の拡張クラス
  */
-abstract class HTEntityBlock<BE : HTMachineBlockEntity>(val type: HTDeferredBlockEntityType<BE>, properties: Properties) :
+abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntityType<BE>, properties: Properties) :
     BaseEntityBlock(properties) {
     init {
         registerDefaultState(initDefaultState())

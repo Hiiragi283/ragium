@@ -2,10 +2,12 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.HTSingleItemRecipeBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -25,6 +27,8 @@ object RagiumBlockEntityTypes {
     @JvmField
     val REGISTER = HTBlockEntityTypeRegister(RagiumAPI.MOD_ID)
 
+    //    Machine    //
+
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
         REGISTER.registerType(
@@ -43,6 +47,14 @@ object RagiumBlockEntityTypes {
             HTSingleItemRecipeBlockEntity::serverTick,
         )
 
+    //    Device    //
+
+    @JvmField
+    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkInterfaceBlockEntity> =
+        REGISTER.registerType("energy_network_interface", ::HTEnergyNetworkInterfaceBlockEntity)
+
+    //    Event    //
+
     @SubscribeEvent
     fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
         fun add(type: HTDeferredBlockEntityType<*>, block: DeferredBlock<*>) {
@@ -52,32 +64,36 @@ object RagiumBlockEntityTypes {
         add(CRUSHER, RagiumBlocks.CRUSHER)
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
 
+        add(ENI, RagiumBlocks.ENI)
+
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        fun <T : HTMachineBlockEntity> registerHandlers(holder: HTDeferredBlockEntityType<T>) {
+        fun <T> registerHandlers(holder: HTDeferredBlockEntityType<T>) where T : HTBlockEntity, T : HTHandlerBlockEntity {
             val type: BlockEntityType<T> = holder.get()
             event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 type,
-                HTMachineBlockEntity::getItemHandler,
+                HTHandlerBlockEntity::getItemHandler,
             )
             event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 type,
-                HTMachineBlockEntity::getFluidHandler,
+                HTHandlerBlockEntity::getFluidHandler,
             )
             event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 type,
-                HTMachineBlockEntity::getEnergyStorage,
+                HTHandlerBlockEntity::getEnergyStorage,
             )
         }
 
         registerHandlers(CRUSHER)
         registerHandlers(EXTRACTOR)
+
+        registerHandlers(ENI)
 
         LOGGER.info("Registered Block Capabilities!")
     }
