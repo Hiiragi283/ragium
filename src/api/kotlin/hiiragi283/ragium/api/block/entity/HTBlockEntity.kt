@@ -26,7 +26,7 @@ import net.minecraft.world.phys.BlockHitResult
 import java.util.function.Supplier
 
 /**
- * Ragiumで使用する[BlockEntity]の基本クラス
+ * Ragiumで使用する[BlockEntity]の拡張クラス
  */
 abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),
@@ -86,8 +86,14 @@ abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockP
 
     //    Extension    //
 
+    /**
+     * [BlockState]が更新される前に呼び出されます。
+     */
     protected open fun beforeUpdateState(state: BlockState) {}
 
+    /**
+     * [BlockState]が更新された後に呼び出されます。
+     */
     protected open fun afterUpdateState(state: BlockState) {}
 
     /**

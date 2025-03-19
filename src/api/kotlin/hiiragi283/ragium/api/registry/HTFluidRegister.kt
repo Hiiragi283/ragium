@@ -10,6 +10,9 @@ import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Function
 import java.util.function.Supplier
 
+/**
+ * Ragiumで使用する[Fluid]向けの[DeferredRegister]
+ */
 class HTFluidRegister(namespace: String) : DeferredRegister<Fluid>(Registries.FLUID, namespace) {
     //    DeferredRegister    //
 

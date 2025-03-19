@@ -19,6 +19,7 @@ abstract class HTContainerMenu(
     val inventory: Inventory,
     val pos: BlockPos,
 ) : AbstractContainerMenu(menuType.get(), containerId) {
+    @JvmField
     val player: Player = inventory.player
     val level: Level get() = player.level()
 

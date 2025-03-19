@@ -2,11 +2,12 @@ package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
+import hiiragi283.ragium.api.RagiumAPI
 import java.util.stream.Stream
 
 /**
  * [HTMaterialKey]のレジストリ
- * @see hiiragi283.ragium.api.RagiumAPI.getMaterialRegistry
+ * @see RagiumAPI.getMaterialRegistry
  */
 interface HTMaterialRegistry : Keyable {
     //    Type    //

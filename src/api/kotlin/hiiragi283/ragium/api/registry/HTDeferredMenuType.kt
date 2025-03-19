@@ -15,6 +15,9 @@ import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.inventory.MenuType
 import net.neoforged.neoforge.registries.DeferredHolder
 
+/**
+ * Ragiumで使用する[MenuType]向けの[DeferredHolder]
+ */
 class HTDeferredMenuType<T : AbstractContainerMenu> private constructor(key: ResourceKey<MenuType<*>>) :
     DeferredHolder<MenuType<*>, MenuType<T>>(key) {
         companion object {
@@ -30,10 +33,20 @@ class HTDeferredMenuType<T : AbstractContainerMenu> private constructor(key: Res
             fun <T : AbstractContainerMenu> createType(key: ResourceKey<MenuType<*>>): HTDeferredMenuType<T> = HTDeferredMenuType<T>(key)
         }
 
+        /**
+         * [MenuType]を[MenuConstructor]に変換します。
+         */
         fun getConstructor(): MenuConstructor = MenuConstructor { id: Int, inv: Inventory, player: Player -> get().create(id, inv) }
 
+        /**
+         * 指定された[title]から[getConstructor]に基づいて[SimpleMenuProvider]を返します。
+         */
         fun getProvider(title: Component): SimpleMenuProvider = SimpleMenuProvider(getConstructor(), title)
 
+        /**
+         * 指定された[player]と[title]からGUIを開きます。
+         * @return クライアント側の場合は[InteractionResult.SUCCESS]，サーバー側の場合はGUIを開いたうえで[InteractionResult.CONSUME]
+         */
         fun openMenu(player: Player, title: Component): InteractionResult = when {
             player.level().isClientSide -> InteractionResult.SUCCESS
             else -> {
@@ -42,6 +55,11 @@ class HTDeferredMenuType<T : AbstractContainerMenu> private constructor(key: Res
             }
         }
 
+        /**
+         * 指定された[player], [title], [writer]からGUIを開きます。
+         * @param writer [RegistryFriendlyByteBuf]に追加の情報を書き込むブロック
+         * @return クライアント側の場合は[InteractionResult.SUCCESS]，サーバー側の場合はGUIを開いたうえで[InteractionResult.CONSUME]
+         */
         fun openMenu(player: Player, title: Component, writer: (RegistryFriendlyByteBuf) -> Unit): InteractionResult = when {
             player.level().isClientSide -> InteractionResult.SUCCESS
             else -> {
@@ -50,6 +68,11 @@ class HTDeferredMenuType<T : AbstractContainerMenu> private constructor(key: Res
             }
         }
 
+        /**
+         * 指定された[player], [title], [pos]からGUIを開きます。
+         * @param pos GUIを開く座標
+         * @return クライアント側の場合は[InteractionResult.SUCCESS]，サーバー側の場合はGUIを開いたうえで[InteractionResult.CONSUME]
+         */
         fun openMenu(player: Player, title: Component, pos: BlockPos): InteractionResult = when {
             player.level().isClientSide -> InteractionResult.SUCCESS
             else -> {

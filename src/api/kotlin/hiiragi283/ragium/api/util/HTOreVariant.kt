@@ -51,12 +51,14 @@ enum class HTOreVariant(baseStoneName: String) {
     },
     ;
 
+    @JvmField
     val baseStoneName: ResourceLocation = vanillaId(baseStoneName)
 
     abstract fun createId(key: HTMaterialKey): String
 
     abstract fun createProperty(): BlockBehaviour.Properties
 
+    @JvmField
     val translationKey = "ore_variant.ragium.$baseStoneName"
 
     fun createText(material: HTMaterialKey): MutableComponent = Component.translatable(translationKey, material.text)

@@ -9,10 +9,10 @@ import java.util.function.IntUnaryOperator
 import kotlin.math.max
 
 class HTCookingRecipeBuilder private constructor(
-    val factory: AbstractCookingRecipe.Factory<AbstractCookingRecipe>,
-    val timeModifier: IntUnaryOperator,
+    private val factory: AbstractCookingRecipe.Factory<AbstractCookingRecipe>,
+    private val timeModifier: IntUnaryOperator,
     override val prefix: String,
-    val result: ItemStack,
+    private val result: ItemStack,
 ) : HTIngredientRecipeBuilder<HTCookingRecipeBuilder, AbstractCookingRecipe> {
     companion object {
         @JvmStatic

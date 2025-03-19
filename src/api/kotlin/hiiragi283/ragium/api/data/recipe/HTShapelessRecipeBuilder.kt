@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.core.NonNullList
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -32,8 +31,6 @@ class HTShapelessRecipeBuilder(private val output: ItemStack, private val catego
     override fun group(groupName: String?): HTShapelessRecipeBuilder = apply {
         this.groupName = groupName
     }
-
-    override fun getResult(): Item = output.item
 
     override val prefix: String = "shapeless"
 

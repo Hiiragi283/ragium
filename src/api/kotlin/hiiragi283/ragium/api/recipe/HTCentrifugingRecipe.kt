@@ -13,8 +13,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 
-class HTCentrifugingRecipe(private val group: String, val ingredient: Ingredient, private val results: List<ItemStack>) :
-    Recipe<SingleRecipeInput> {
+class HTCentrifugingRecipe(
+    private val group: String,
+    @JvmField val ingredient: Ingredient,
+    private val results: List<ItemStack>,
+) : Recipe<SingleRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTCentrifugingRecipe> = RecordCodecBuilder.mapCodec { instance ->

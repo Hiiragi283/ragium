@@ -23,7 +23,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /**
  * レシピが再読み込みされたときに呼び出されるイベント
- * @see [HTRecipeType.reloadCache]
+ * @see [HTDeferredRecipeType.reloadCache]
  */
 class HTRecipesUpdatedEvent(
     provider: HolderLookup.Provider,

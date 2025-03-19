@@ -6,6 +6,9 @@ import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 
+/**
+ * Ragiumで使用する[FluidType]向けの[DeferredHolder]
+ */
 class HTDeferredFluidType<T : FluidType> private constructor(key: ResourceKey<FluidType>) : DeferredHolder<FluidType, T>(key) {
     companion object {
         @JvmStatic

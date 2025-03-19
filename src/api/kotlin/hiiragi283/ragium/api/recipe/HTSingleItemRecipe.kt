@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level
 abstract class HTSingleItemRecipe(
     private val recipeType: HTDeferredRecipeType<*, *>,
     private val group: String,
-    val ingredient: Ingredient,
+    @JvmField val ingredient: Ingredient,
     private val result: ItemStack,
 ) : Recipe<SingleRecipeInput> {
     companion object {

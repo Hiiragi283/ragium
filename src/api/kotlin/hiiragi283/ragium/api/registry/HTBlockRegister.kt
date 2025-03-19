@@ -5,6 +5,9 @@ import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
+/**
+ * Ragiumで使用する[DeferredRegister.Blocks]
+ */
 class HTBlockRegister(namespace: String) : DeferredRegister.Blocks(namespace) {
     override fun getEntries(): List<DeferredBlock<Block>> =
         super.getEntries().map { holder: DeferredHolder<Block, out Block> -> DeferredBlock.createBlock<Block>(holder.id) }

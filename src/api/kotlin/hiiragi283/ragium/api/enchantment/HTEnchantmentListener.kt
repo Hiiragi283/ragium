@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.enchantment
 
 import net.minecraft.world.item.enchantment.ItemEnchantments
 

@@ -19,7 +19,7 @@ import kotlin.collections.toSet
  * 登録した[TagKey]をソートして生成するビルダー
  */
 @Suppress("UNCHECKED_CAST")
-class HTTagBuilder<T : Any>(val lookup: HolderLookup.RegistryLookup<T>) {
+class HTTagBuilder<T : Any>(private val lookup: HolderLookup.RegistryLookup<T>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
     private val registryKey: ResourceKey<out Registry<T>> = lookup.key() as ResourceKey<out Registry<T>>
 

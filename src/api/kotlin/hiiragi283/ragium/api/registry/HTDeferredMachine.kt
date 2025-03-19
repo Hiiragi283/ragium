@@ -47,13 +47,22 @@ class HTDeferredMachine<B : Block, BE : BlockEntity>(
         }
     }
 
+    @JvmField
     val blockHolder: DeferredBlock<B> = BLOCK_REGISTER.registerBlock(name, blockFactory, property)
+
+    @JvmField
     val itemHolder: DeferredItem<BlockItem> = ITEM_REGISTER.registerSimpleBlockItem(blockHolder)
+
+    @JvmField
     val blockEntityHolder: DeferredHolder<BlockEntityType<*>, BlockEntityType<BE>> =
         BLOCK_ENTITY_REGISTER.registerType(name, blockEntityFactory, blockHolder)
 
+    @JvmField
     val id: ResourceLocation = blockHolder.id
+
+    @JvmField
     val blockId: ResourceLocation = id.withPrefix("block/")
+
     val title: MutableComponent get() = asBlock().name
 
     fun asBlock(): B = blockHolder.get()

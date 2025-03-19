@@ -9,12 +9,27 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 import java.util.function.Function
 import java.util.function.Supplier
 
+/**
+ * Ragiumで使用する[FluidType]向けの[DeferredRegister]
+ */
 class HTFluidTypeRegister(namespace: String) : DeferredRegister<FluidType>(NeoForgeRegistries.Keys.FLUID_TYPES, namespace) {
+    /**
+     * シンプルな[HTDeferredFluidType]を返します。
+     * @param name [FluidType]のID
+     * @param properties [FluidType]のプロパティ
+     */
     fun registerSimpleType(
         name: String,
         properties: FluidType.Properties = FluidType.Properties.create(),
     ): HTDeferredFluidType<FluidType> = registerType(name, properties, ::FluidType)
 
+    /**
+     * [factory]から[HTDeferredFluidType]を返します。
+     * @param I [FluidType]を継承したクラス
+     * @param name [FluidType]のID
+     * @param properties [FluidType]のプロパティ
+     * @param factory [FluidType.Properties]から[I]を返すブロック
+     */
     fun <I : FluidType> registerType(
         name: String,
         properties: FluidType.Properties = FluidType.Properties.create(),

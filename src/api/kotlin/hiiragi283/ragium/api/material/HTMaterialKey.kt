@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.addon.RagiumAddon
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -15,7 +16,7 @@ import net.minecraft.network.codec.StreamCodec
  *
  * すべてのキーは[HTMaterialRegistry]に登録される必要があります。
  *
- * @see [hiiragi283.ragium.api.event.HTRegisterMaterialEvent]
+ * @see [RagiumAddon.onMaterialRegister]
  */
 class HTMaterialKey private constructor(val name: String) : Comparable<HTMaterialKey> {
     companion object {
@@ -47,6 +48,7 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
     /**
      * 素材の名前の翻訳キー
      */
+    @JvmField
     val translationKey: String = "material.${RagiumAPI.MOD_ID}.$name"
 
     /**

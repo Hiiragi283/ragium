@@ -28,5 +28,6 @@ data class HTSavedDataType<T : SavedData>(val id: ResourceLocation, val factory:
         deserializer: BiFunction<CompoundTag, HolderLookup.Provider, T>,
     ) : this(id, SavedData.Factory(factory, deserializer, null))
 
+    @JvmField
     val saveId: String = id.namespace + '_' + id.path
 }

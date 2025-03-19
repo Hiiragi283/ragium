@@ -10,9 +10,9 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 
 class HTSingleItemRecipeBuilder<R : HTSingleItemRecipe>(
-    val factory: HTSingleItemRecipe.Factory<R>,
+    private val factory: HTSingleItemRecipe.Factory<R>,
     override val prefix: String,
-    val result: ItemStack,
+    private val result: ItemStack,
 ) : HTIngredientRecipeBuilder<HTSingleItemRecipeBuilder<R>, R> {
     companion object {
         @JvmStatic

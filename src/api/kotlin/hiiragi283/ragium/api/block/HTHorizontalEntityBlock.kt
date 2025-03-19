@@ -11,6 +11,9 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 
+/**
+ * 水平方向の回転を行える[HTEntityBlock]
+ */
 abstract class HTHorizontalEntityBlock(properties: Properties) : HTEntityBlock(properties) {
     companion object {
         @JvmField

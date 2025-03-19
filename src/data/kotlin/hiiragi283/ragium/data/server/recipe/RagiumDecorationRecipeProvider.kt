@@ -36,7 +36,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Blue Nether Bricks
-        HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICK_SETS.base, category = CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICK_SETS.base, 1, CraftingBookCategory.BUILDING)
             .pattern(
                 "AB",
                 "BA",

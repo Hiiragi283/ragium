@@ -95,6 +95,7 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
 
     //    TagKey    //
 
+    @JvmField
     val commonTagKey: TagKey<Item> = itemTagKey(commonId(commonName))
 
     /**
@@ -108,6 +109,7 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
 
     //    Translation    //
 
+    @JvmField
     val translationKey = "tag_prefix.${RagiumAPI.MOD_ID}.$serializedName"
 
     /**

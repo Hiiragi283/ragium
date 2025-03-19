@@ -8,6 +8,10 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 
+/**
+ * バニラの[Ingredient]を使用するレシピ向けの[HTRecipeBuilder]
+ * @param B [HTRecipeBuilder]を継承したクラス
+ */
 interface HTIngredientRecipeBuilder<B : HTIngredientRecipeBuilder<B, R>, R : Recipe<*>> : HTRecipeBuilder<R> {
     fun addIngredient(prefix: HTTagPrefix, key: HTMaterialKey): B = addIngredient(prefix.createIngredient(key))
 

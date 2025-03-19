@@ -16,11 +16,17 @@ import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
+/**
+ * `Ragium`で使用する[BaseEntityBlock]の拡張クラス
+ */
 abstract class HTEntityBlock(properties: Properties) : BaseEntityBlock(properties) {
     init {
         registerDefaultState(initDefaultState())
     }
 
+    /**
+     * デフォルトの[BlockState]を返します。
+     */
     protected abstract fun initDefaultState(): BlockState
 
     protected fun Level.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
