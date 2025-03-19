@@ -1,0 +1,10 @@
+{
+  "type": "ragium:extracting",
+  "ingredient": {
+    "item": "minecraft:rose_bush"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:red_dye"
+  }
+}

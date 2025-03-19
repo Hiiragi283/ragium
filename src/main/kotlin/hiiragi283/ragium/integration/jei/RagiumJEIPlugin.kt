@@ -2,8 +2,9 @@ package hiiragi283.ragium.integration.jei
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipes
-import hiiragi283.ragium.api.registry.HTDeferredRecipe
-import hiiragi283.ragium.integration.jei.category.HTCrushingRecipeCategory
+import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.integration.jei.category.HTCentrifugingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.HTSingleItemRecipeCategory
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
@@ -28,9 +29,11 @@ class RagiumJEIPlugin : IModPlugin {
         val jeiHelper: IJeiHelpers = registration.jeiHelpers
         val guiHelper: IGuiHelper = jeiHelper.guiHelper
 
-        val categories = buildList {
-            add(HTCrushingRecipeCategory(guiHelper))
-        }
+        val categories = listOf(
+            HTCentrifugingRecipeCategory(guiHelper),
+            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.CRUSHING, Items.CRAFTING_TABLE),
+            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.EXTRACTING, Items.CRAFTING_TABLE),
+        )
         for (category in categories) {
             registration.addRecipeCategories(category)
         }
@@ -39,7 +42,7 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerRecipes(registration: IRecipeRegistration) {
         val recipeManager: RecipeManager = Minecraft.getInstance().level?.recipeManager ?: return
 
-        fun <I : RecipeInput, R : Recipe<I>> register(recipeType: RecipeType<RecipeHolder<R>>, recipe: HTDeferredRecipe<I, R>) {
+        fun <I : RecipeInput, R : Recipe<I>> register(recipeType: RecipeType<RecipeHolder<R>>, recipe: HTDeferredRecipeType<I, R>) {
             recipe.reloadCache(recipeManager)
             registration.addRecipes(
                 recipeType,
@@ -47,10 +50,15 @@ class RagiumJEIPlugin : IModPlugin {
             )
         }
 
+        register(RagiumJEIRecipeTypes.CENTRIFUGING, RagiumRecipes.CENTRIFUGING)
         register(RagiumJEIRecipeTypes.CRUSHING, RagiumRecipes.CRUSHING)
+
+        register(RagiumJEIRecipeTypes.EXTRACTING, RagiumRecipes.EXTRACTING)
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
+        registration.addRecipeCatalyst(Items.CRAFTING_TABLE, RagiumJEIRecipeTypes.CENTRIFUGING)
         registration.addRecipeCatalyst(Items.CRAFTING_TABLE, RagiumJEIRecipeTypes.CRUSHING)
+        registration.addRecipeCatalyst(Items.CRAFTING_TABLE, RagiumJEIRecipeTypes.EXTRACTING)
     }
 }

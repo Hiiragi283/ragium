@@ -6,5 +6,5 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.level.block.Block
 
 class HTMaterialStorageBlock(val key: HTMaterialKey, properties: Properties) : Block(properties) {
-    override fun getName(): MutableComponent = HTTagPrefix.BLOCK.createText(key)
+    override fun getName(): MutableComponent = HTTagPrefix.STORAGE_BLOCK.createText(key)
 }

@@ -203,7 +203,6 @@
   "tag.item.ragium.soils.end": "End Soil",
   "tag.item.ragium.soils.mushroom": "Mushroom Soil",
   "tag.item.ragium.soils.nether": "Nether Soil",
-  "tag_prefix.ragium.block": "Block of %s",
   "tag_prefix.ragium.clump": "%s Clump",
   "tag_prefix.ragium.crystal": "%s Crystal",
   "tag_prefix.ragium.dirty_dust": "Dirty %s Dust",
@@ -219,6 +218,7 @@
   "tag_prefix.ragium.rod": "%s Rod",
   "tag_prefix.ragium.shard": "%s Shard",
   "tag_prefix.ragium.sheetmetal": "%s Sheetmetal",
+  "tag_prefix.ragium.storage_block": "Block of %s",
   "tag_prefix.ragium.tiny_dust": "Tiny %s Dust",
   "tag_prefix.ragium.wire": "%s Wire"
 }

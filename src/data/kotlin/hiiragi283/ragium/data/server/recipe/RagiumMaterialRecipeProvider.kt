@@ -14,7 +14,6 @@ import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider() {
@@ -33,17 +32,42 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_alt")
 
         HTCookingRecipeBuilder
-            .create(
-                Ingredient.of(RagiumItems.RAGI_ALLOY_COMPOUND),
-                RagiumItems.Ingots.RAGI_ALLOY,
-                types = HTCookingRecipeBuilder.BLASTING_TYPES,
-            ).saveSuffixed(output, "_from_compound")
+            .smelting(RagiumItems.Ingots.RAGI_ALLOY)
+            .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
+            .setExp(0.7f)
+            .saveSuffixed(output, "_from_compound")
+
+        HTShapelessRecipeBuilder(RagiumItems.Dusts.RAGI_ALLOY)
+            .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
+            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.COPPER)
+            .save(output)
+        // Advanced Ragi-Alloy
+        HTShapelessRecipeBuilder(RagiumItems.Dusts.ADVANCED_RAGI_ALLOY)
+            .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
+            .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
+            .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
+            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.GOLD)
+            .save(output)
         // Ragi-Crystal
         HTShapedRecipeBuilder(RagiumItems.RawResources.RAGI_CRYSTAL)
             .hollow8()
             .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
             .define('B', HTTagPrefix.GEM, VanillaMaterials.DIAMOND)
             .save(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL)
+            .hollow8()
+            .define('A', HTTagPrefix.RAW_STORAGE, RagiumMaterials.RAGINITE)
+            .define('B', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.DIAMOND)
+
+        // Azure Steel
+        HTShapelessRecipeBuilder(RagiumItems.Dusts.AZURE_STEEL, 2)
+            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.LAPIS)
+            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
+            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.IRON)
+            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.IRON)
+            .save(output)
+        // Deep Steel
 
         registerPatterns(output)
     }
@@ -56,20 +80,20 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
                 .hollow8()
                 .define('A', baseItem.prefix, block.key)
                 .define('B', baseItem)
-                .save(output)
+                .saveSuffixed(output, "_from_base")
         }
         // Block -> Ingot
         for (ingot: RagiumItems.Ingots in RagiumItems.Ingots.entries) {
             HTShapelessRecipeBuilder(ingot, 9)
-                .requires(HTTagPrefix.BLOCK, ingot.key)
-                .save(output)
+                .addIngredient(HTTagPrefix.STORAGE_BLOCK, ingot.key)
+                .saveSuffixed(output, "_from_block")
         }
         // Block -> Gem
         for (gem: RagiumItems.RawResources in RagiumItems.RawResources.entries) {
             if (gem.prefix != HTTagPrefix.GEM) continue
             HTShapelessRecipeBuilder(gem, 9)
-                .requires(HTTagPrefix.BLOCK, gem.key)
-                .save(output)
+                .addIngredient(HTTagPrefix.STORAGE_BLOCK, gem.key)
+                .saveSuffixed(output, "_from_block")
         }
 
         // Dust -> Ingot
@@ -77,12 +101,10 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             val dust: RagiumItems.Dusts =
                 RagiumItems.Dusts.entries.firstOrNull { dustIn: RagiumItems.Dusts -> dustIn.key == key } ?: return
             HTCookingRecipeBuilder
-                .create(
-                    Ingredient.of(dust),
-                    ingot,
-                    exp = 0.7f,
-                    types = HTCookingRecipeBuilder.BLASTING_TYPES,
-                ).save(output)
+                .smelting(ingot)
+                .addIngredient(dust)
+                .setExp(0.7f)
+                .saveSuffixed(output, "_from_dust")
         }
 
         dustToIngot(VanillaMaterials.IRON, Items.IRON_INGOT)

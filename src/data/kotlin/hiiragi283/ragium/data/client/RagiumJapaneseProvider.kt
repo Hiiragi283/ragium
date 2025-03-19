@@ -332,7 +332,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun tagPrefix() {
-        add(HTTagPrefix.BLOCK, "%sブロック")
         add(HTTagPrefix.CLUMP, "%sの凝塊")
         add(HTTagPrefix.CRYSTAL, "%sの結晶")
         add(HTTagPrefix.DIRTY_DUST, "汚れた%sの粉")
@@ -348,6 +347,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTTagPrefix.ROD, "%s棒")
         add(HTTagPrefix.SHARD, "%sの欠片")
         add(HTTagPrefix.SHEETMETAL, "%sの板金")
+        add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
         add(HTTagPrefix.TINY_DUST, "小さな%sの粉")
         add(HTTagPrefix.WIRE, "%sのワイヤー")
     }

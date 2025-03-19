@@ -1,0 +1,10 @@
+{
+  "type": "ragium:extracting",
+  "ingredient": {
+    "item": "minecraft:pitcher_plant"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:cyan_dye"
+  }
+}

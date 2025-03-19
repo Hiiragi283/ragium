@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 
-interface HTRecipeBuilder<T : Recipe<*>> : RecipeBuilder {
+interface HTRecipeBuilder<R : Recipe<*>> : RecipeBuilder {
     @Deprecated("Advancements not supported")
     override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = throw UnsupportedOperationException()
 
@@ -27,13 +27,13 @@ interface HTRecipeBuilder<T : Recipe<*>> : RecipeBuilder {
         save(recipeOutput, getPrimalId())
     }
 
-    fun getIdPrefix(): String
+    val prefix: String
 
-    fun createRecipe(): T
+    fun createRecipe(): R
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
         recipeOutput.accept(
-            id.withPrefix("${getIdPrefix()}/"),
+            id.withPrefix("$prefix/"),
             createRecipe(),
             null,
         )

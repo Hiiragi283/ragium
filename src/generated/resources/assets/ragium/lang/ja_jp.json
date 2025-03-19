@@ -203,7 +203,6 @@
   "tag.item.ragium.soils.end": "エンドの土壌",
   "tag.item.ragium.soils.mushroom": "キノコの土壌",
   "tag.item.ragium.soils.nether": "ネザーの土壌",
-  "tag_prefix.ragium.block": "%sブロック",
   "tag_prefix.ragium.clump": "%sの凝塊",
   "tag_prefix.ragium.crystal": "%sの結晶",
   "tag_prefix.ragium.dirty_dust": "汚れた%sの粉",
@@ -219,6 +218,7 @@
   "tag_prefix.ragium.rod": "%s棒",
   "tag_prefix.ragium.shard": "%sの欠片",
   "tag_prefix.ragium.sheetmetal": "%sの板金",
+  "tag_prefix.ragium.storage_block": "%sブロック",
   "tag_prefix.ragium.tiny_dust": "小さな%sの粉",
   "tag_prefix.ragium.wire": "%sのワイヤー"
 }

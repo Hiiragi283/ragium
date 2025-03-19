@@ -63,7 +63,7 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
 
     override fun getResult(): Item = output.item
 
-    override fun getIdPrefix(): String = "shaped"
+    override val prefix: String = "shaped"
 
     override fun createRecipe(): ShapedRecipe = ShapedRecipe(
         groupName ?: "",

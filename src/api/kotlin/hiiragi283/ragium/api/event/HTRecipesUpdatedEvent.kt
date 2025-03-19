@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.registry.HTDeferredRecipe
+import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -27,7 +27,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class HTRecipesUpdatedEvent(
     provider: HolderLookup.Provider,
-    private val currentType: HTDeferredRecipe<*, *>,
+    private val currentType: HTDeferredRecipeType<*, *>,
     private val consumer: (RecipeHolder<*>) -> Unit,
 ) : Event(),
     HolderLookup.Provider by provider {
@@ -39,7 +39,7 @@ class HTRecipesUpdatedEvent(
      * @param function 登録するレシピのビルダーを返すブロック
      */
     fun <I : RecipeInput, R : Recipe<I>> register(
-        recipeType: HTDeferredRecipe<I, R>,
+        recipeType: HTDeferredRecipeType<I, R>,
         recipeId: ResourceLocation,
         function: Function<HolderGetter<Item>, R?>,
     ) {

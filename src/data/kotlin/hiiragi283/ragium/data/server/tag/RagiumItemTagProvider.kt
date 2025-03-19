@@ -90,8 +90,8 @@ class RagiumItemTagProvider(
             HTTagBuilder.DependType.OPTIONAL,
         )
 
-        builder.addItem(HTTagPrefix.BLOCK, VanillaMaterials.AMETHYST, Items.AMETHYST_BLOCK)
-        builder.addItem(HTTagPrefix.BLOCK, VanillaMaterials.GLOWSTONE, Items.GLOWSTONE)
+        builder.addItem(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.AMETHYST, Items.AMETHYST_BLOCK)
+        builder.addItem(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.GLOWSTONE, Items.GLOWSTONE)
         builder.addItem(HTTagPrefix.GEM, VanillaMaterials.COAL, Items.COAL)
         builder.addItem(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP)
 
@@ -106,7 +106,7 @@ class RagiumItemTagProvider(
         addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem")
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore")
         addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore_deepslate")
-        addMaterialTag(HTTagPrefix.BLOCK, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_block")
+        addMaterialTag(HTTagPrefix.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_block")
         // MI
         addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, IntegrationMods.MI, "coke")
     }

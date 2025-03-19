@@ -311,7 +311,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun tagPrefix() {
-        add(HTTagPrefix.BLOCK, "Block of %s")
         add(HTTagPrefix.CLUMP, "%s Clump")
         add(HTTagPrefix.CRYSTAL, "%s Crystal")
         add(HTTagPrefix.DIRTY_DUST, "Dirty %s Dust")
@@ -327,6 +326,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTTagPrefix.ROD, "%s Rod")
         add(HTTagPrefix.SHARD, "%s Shard")
         add(HTTagPrefix.SHEETMETAL, "%s Sheetmetal")
+        add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
         add(HTTagPrefix.TINY_DUST, "Tiny %s Dust")
         add(HTTagPrefix.WIRE, "%s Wire")
     }

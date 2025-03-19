@@ -99,7 +99,7 @@ object RagiumBlocks {
             DEEP_STEEL -> RagiumItems.Ingots.DEEP_STEEL
         }
 
-        override val prefix: HTTagPrefix = HTTagPrefix.BLOCK
+        override val prefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
         override val id: ResourceLocation = holder.id
 
         override fun asItem(): Item = holder.asItem()

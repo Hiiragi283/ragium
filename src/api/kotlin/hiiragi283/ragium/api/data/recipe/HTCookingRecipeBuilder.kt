@@ -1,91 +1,63 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.ItemLike
 import java.util.function.IntUnaryOperator
+import kotlin.math.max
 
 class HTCookingRecipeBuilder private constructor(
-    private val types: Set<Type>,
-    private val cookingCategory: CookingBookCategory,
-    private val input: Ingredient,
-    private val output: Item,
-    private val time: Int,
-    private val exp: Float,
-) : HTRecipeBuilder<AbstractCookingRecipe> {
+    val factory: AbstractCookingRecipe.Factory<AbstractCookingRecipe>,
+    val timeModifier: IntUnaryOperator,
+    override val prefix: String,
+    val result: ItemStack,
+) : HTIngredientRecipeBuilder<HTCookingRecipeBuilder, AbstractCookingRecipe> {
     companion object {
         @JvmStatic
-        fun create(
-            input: Ingredient,
-            output: ItemLike,
-            category: CookingBookCategory = CookingBookCategory.MISC,
-            time: Int = 200,
-            exp: Float = 0f,
-            types: Collection<Type> = setOf(Type.SMELTING),
-        ): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
-            types.toSet(),
-            category,
-            input,
-            output.asItem(),
-            time,
-            exp,
-        )
+        fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder =
+            HTCookingRecipeBuilder(::SmeltingRecipe, IntUnaryOperator.identity(), "smelting", ItemStack(item, count))
 
-        @JvmField
-        val BLASTING_TYPES: Set<Type> = setOf(Type.SMELTING, Type.BLASTING)
+        @JvmStatic
+        fun blasting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder =
+            HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, "blasting", ItemStack(item, count))
 
-        @JvmField
-        val SMOKING_TYPES: Set<Type> = setOf(Type.SMELTING, Type.SMOKING)
+        @JvmStatic
+        fun smoking(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder =
+            HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, "smoking", ItemStack(item, count))
     }
 
-    //    RecipeBuilder    //
+    private var group: String? = null
+    private lateinit var ingredient: Ingredient
+    private var time: Int = 200
+    private var exp: Float = 0f
 
-    override fun getPrimalId(): ResourceLocation = output.asItemHolder().idOrThrow
+    override fun addIngredient(ingredient: Ingredient): HTCookingRecipeBuilder = apply {
+        check(!::ingredient.isInitialized) { "Ingredient has already been initialized!" }
+        this.ingredient = ingredient
+    }
 
-    private var groupName: String? = null
+    fun setTime(time: Int): HTCookingRecipeBuilder = apply {
+        this.time = max(0, time)
+    }
+
+    fun setExp(exp: Float): HTCookingRecipeBuilder = apply {
+        this.exp = max(0f, exp)
+    }
 
     override fun group(groupName: String?): HTCookingRecipeBuilder = apply {
-        this.groupName = groupName
+        this.group = groupName
     }
 
-    override fun getIdPrefix(): String = throw UnsupportedOperationException()
+    override fun getPrimalId(): ResourceLocation = result.itemHolder.idOrThrow
 
-    override fun createRecipe(): AbstractCookingRecipe = throw UnsupportedOperationException()
-
-    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        for (type: Type in types) {
-            saveInternal(recipeOutput, RagiumAPI.wrapId(id), type)
-        }
-    }
-
-    private fun saveInternal(recipeOutput: RecipeOutput, id: ResourceLocation, type: Type) {
-        val fixedId: ResourceLocation = id.withPrefix(type.name.lowercase() + '/')
-        val recipe: AbstractCookingRecipe = type.factory.create(
-            groupName ?: "",
-            cookingCategory,
-            input,
-            ItemStack(output),
-            exp,
-            type.timeModifier.applyAsInt(time),
-        )
-        recipeOutput.accept(
-            fixedId,
-            recipe,
-            null,
-        )
-    }
-
-    //    Type    //
-
-    enum class Type(val factory: AbstractCookingRecipe.Factory<out AbstractCookingRecipe>, val timeModifier: IntUnaryOperator) {
-        SMELTING(::SmeltingRecipe, IntUnaryOperator.identity()),
-        BLASTING(::BlastingRecipe, { it / 2 }),
-        SMOKING(::SmokingRecipe, { it / 2 }),
-    }
+    override fun createRecipe(): AbstractCookingRecipe = factory.create(
+        group ?: "",
+        CookingBookCategory.MISC,
+        ingredient,
+        result,
+        exp,
+        timeModifier.applyAsInt(time),
+    )
 }
