@@ -32,10 +32,18 @@ object RagiumRecipes {
     )
 
     @JvmField
+    val FERMENTING: HTDeferredRecipeType<SingleRecipeInput, HTFermentingRecipe> = HTDeferredRecipeType(
+        "fermenting",
+        HTSingleItemRecipe.codec(::HTFermentingRecipe),
+        HTSingleItemRecipe.streamCodec(::HTFermentingRecipe),
+    )
+
+    @JvmField
     val ALL_TYPES = listOf(
         CENTRIFUGING,
         CRUSHING,
         EXTRACTING,
+        FERMENTING,
     )
 
     @SubscribeEvent

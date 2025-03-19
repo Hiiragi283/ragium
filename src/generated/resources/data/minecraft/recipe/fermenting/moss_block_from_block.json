@@ -1,0 +1,11 @@
+{
+  "type": "ragium:fermenting",
+  "group": "moss_block",
+  "ingredient": {
+    "item": "minecraft:moss_block"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:moss_block"
+  }
+}

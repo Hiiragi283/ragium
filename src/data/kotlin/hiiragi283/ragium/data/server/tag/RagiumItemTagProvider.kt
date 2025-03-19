@@ -197,11 +197,12 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
 
         builder.add(RagiumItemTags.DIRT_SOILS, IntegrationMods.FD, "rich_soil", HTTagBuilder.DependType.OPTIONAL)
+        builder.addItem(RagiumItemTags.DIRT_SOILS, Items.DIRT)
         builder.addItem(RagiumItemTags.DIRT_SOILS, Items.FARMLAND)
+        builder.addItem(RagiumItemTags.DIRT_SOILS, Items.GRASS_BLOCK)
         builder.addItem(RagiumItemTags.MUSHROOM_SOILS, Items.MYCELIUM)
         builder.addItem(RagiumItemTags.NETHER_SOILS, Items.CRIMSON_NYLIUM)
         builder.addItem(RagiumItemTags.NETHER_SOILS, Items.WARPED_NYLIUM)
-        builder.addTag(RagiumItemTags.DIRT_SOILS, ItemTags.DIRT)
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
     }
 

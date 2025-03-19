@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.HTFermentingRecipe
 import hiiragi283.ragium.api.recipe.HTSingleItemRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
@@ -22,6 +23,10 @@ class HTSingleItemRecipeBuilder<R : HTSingleItemRecipe>(
         @JvmStatic
         fun extract(result: ItemLike, count: Int = 1): HTSingleItemRecipeBuilder<HTExtractingRecipe> =
             HTSingleItemRecipeBuilder(::HTExtractingRecipe, "extracting", ItemStack(result, count))
+
+        @JvmStatic
+        fun ferment(result: ItemLike, count: Int = 1): HTSingleItemRecipeBuilder<HTFermentingRecipe> =
+            HTSingleItemRecipeBuilder(::HTFermentingRecipe, "fermenting", ItemStack(result, count))
     }
 
     private var group: String? = null

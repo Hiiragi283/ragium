@@ -1,15 +1,15 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.ragium.api.recipe.HTCentrifugingRecipe
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.integration.jei.RagiumJEIRecipeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.RecipeType
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTCentrifugingRecipeCategory(guiHelper: IGuiHelper) :
-    HTRecipeHolderCategory<HTCentrifugingRecipe>(guiHelper, Items.FURNACE, 1.5, 1.0) {
+    HTRecipeHolderCategory<HTCentrifugingRecipe>(guiHelper, RagiumBlocks.CRUSHER, 1.5, 1.0) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTCentrifugingRecipe) {
         // Item Input
         builder

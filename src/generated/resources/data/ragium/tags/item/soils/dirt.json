@@ -1,7 +1,8 @@
 {
   "values": [
-    "#minecraft:dirt",
+    "minecraft:dirt",
     "minecraft:farmland",
+    "minecraft:grass_block",
     {
       "id": "farmersdelight:rich_soil",
       "required": false

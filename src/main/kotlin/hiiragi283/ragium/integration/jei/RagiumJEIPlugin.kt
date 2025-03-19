@@ -33,6 +33,7 @@ class RagiumJEIPlugin : IModPlugin {
             HTCentrifugingRecipeCategory(guiHelper),
             HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER),
             HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR),
+            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.FERMENTING, RagiumBlocks.EXTRACTOR),
         )
         for (category in categories) {
             registration.addRecipeCategories(category)
@@ -52,13 +53,14 @@ class RagiumJEIPlugin : IModPlugin {
 
         register(RagiumJEIRecipeTypes.CENTRIFUGING, RagiumRecipes.CENTRIFUGING)
         register(RagiumJEIRecipeTypes.CRUSHING, RagiumRecipes.CRUSHING)
-
         register(RagiumJEIRecipeTypes.EXTRACTING, RagiumRecipes.EXTRACTING)
+        register(RagiumJEIRecipeTypes.FERMENTING, RagiumRecipes.FERMENTING)
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         registration.addRecipeCatalyst(RagiumBlocks.CRUSHER, RagiumJEIRecipeTypes.CENTRIFUGING)
         registration.addRecipeCatalyst(RagiumBlocks.CRUSHER, RagiumJEIRecipeTypes.CRUSHING)
         registration.addRecipeCatalyst(RagiumBlocks.EXTRACTOR, RagiumJEIRecipeTypes.EXTRACTING)
+        registration.addRecipeCatalyst(RagiumBlocks.EXTRACTOR, RagiumJEIRecipeTypes.FERMENTING)
     }
 }

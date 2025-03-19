@@ -1,0 +1,10 @@
+{
+  "type": "ragium:fermenting",
+  "ingredient": {
+    "item": "minecraft:dirt"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:mud"
+  }
+}

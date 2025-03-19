@@ -68,6 +68,18 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .addIngredient(Tags.Items.RODS_BREEZE)
             .group("wind_charge")
             .saveSuffixed(output, "_from_rod")
+
+        HTSingleItemRecipeBuilder
+            .crush(Items.DIRT)
+            .addIngredient(Items.COARSE_DIRT)
+            .group("dirt")
+            .saveSuffixed(output, "_from_coarse")
+        
+        HTSingleItemRecipeBuilder
+            .crush(Items.DIRT)
+            .addIngredient(Items.ROOTED_DIRT)
+            .group("dirt")
+            .saveSuffixed(output, "_from_rooted")
         // Ragium
         HTSingleItemRecipeBuilder
             .crush(RagiumItems.Dusts.GOLD)

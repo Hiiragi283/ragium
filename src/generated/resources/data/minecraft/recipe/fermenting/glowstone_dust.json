@@ -1,0 +1,11 @@
+{
+  "type": "ragium:fermenting",
+  "group": "glowstone_dust",
+  "ingredient": {
+    "item": "minecraft:glow_berries"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:glowstone_dust"
+  }
+}

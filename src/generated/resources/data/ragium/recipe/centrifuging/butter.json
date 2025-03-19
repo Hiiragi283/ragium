@@ -1,0 +1,16 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "tag": "c:buckets/milk"
+  },
+  "results": [
+    {
+      "count": 1,
+      "id": "ragium:butter"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:bucket"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "type": "ragium:fermenting",
+  "ingredient": {
+    "item": "minecraft:grass_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:mycelium"
+  }
+}

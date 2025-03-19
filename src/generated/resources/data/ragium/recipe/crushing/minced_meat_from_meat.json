@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "group": "minced_meat",
+  "ingredient": {
+    "tag": "c:foods/raw_meat"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:minced_meat"
+  }
+}
