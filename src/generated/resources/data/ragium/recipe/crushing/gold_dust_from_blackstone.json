@@ -1,11 +1,14 @@
 {
   "type": "ragium:crushing",
-  "group": "gold_dust",
-  "ingredient": {
-    "item": "minecraft:gilded_blackstone"
-  },
-  "result": {
-    "count": 1,
-    "id": "ragium:gold_dust"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:gilded_blackstone"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:gold_dust"
+    }
+  ]
 }

@@ -1,12 +1,9 @@
 package hiiragi283.ragium.api.registry
 
-import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTRecipesUpdatedEvent
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
@@ -17,7 +14,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 /**
  * [RecipeSerializer]と[RecipeType]を束ねたクラス
  */
-class HTDeferredRecipeType<I : RecipeInput, R : Recipe<I>>(val name: String, val serializer: RecipeSerializer<R>) : RecipeType<R> {
+class HTRecipeType<I : RecipeInput, R : Recipe<I>>(val name: String, val serializer: RecipeSerializer<R>) : RecipeType<R> {
     companion object {
         @JvmStatic
         private val SERIALIZER_REGISTER: DeferredRegister<RecipeSerializer<*>> =
@@ -33,19 +30,6 @@ class HTDeferredRecipeType<I : RecipeInput, R : Recipe<I>>(val name: String, val
             TYPE_REGISTER.register(eventBus)
         }
     }
-
-    constructor(
-        name: String,
-        codec: MapCodec<R>,
-        streamCodec: StreamCodec<RegistryFriendlyByteBuf, R>,
-    ) : this(
-        name,
-        object : RecipeSerializer<R> {
-            override fun codec(): MapCodec<R> = codec
-
-            override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, R> = streamCodec
-        },
-    )
 
     private var recipeCache: Map<ResourceLocation, RecipeHolder<R>> = mapOf()
     private var changed: Boolean = true
@@ -114,12 +98,12 @@ class HTDeferredRecipeType<I : RecipeInput, R : Recipe<I>>(val name: String, val
                 put(holder.id, holder)
             }
             // Reload from RecipeManager
-            manager.getAllRecipesFor(this@HTDeferredRecipeType).forEach(consumer)
+            manager.getAllRecipesFor(this@HTRecipeType).forEach(consumer)
             // Reload from Event
             val access: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return@buildMap
             val event = HTRecipesUpdatedEvent(
                 access,
-                this@HTDeferredRecipeType,
+                this@HTRecipeType,
             ) { holder: RecipeHolder<*> ->
                 val recipe: R = holder.value as? R ?: return@HTRecipesUpdatedEvent
                 consumer(RecipeHolder(holder.id, recipe))

@@ -1,11 +1,15 @@
 {
   "type": "ragium:crushing",
-  "group": "sand",
-  "ingredient": {
-    "tag": "c:sandstone/uncolored_blocks"
-  },
-  "result": {
-    "count": 4,
-    "id": "minecraft:sand"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:sandstone/uncolored_blocks"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:sand"
+    }
+  ]
 }

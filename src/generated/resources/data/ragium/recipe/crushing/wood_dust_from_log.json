@@ -1,11 +1,15 @@
 {
   "type": "ragium:crushing",
-  "group": "wood_dust",
-  "ingredient": {
-    "tag": "minecraft:logs_that_burn"
-  },
-  "result": {
-    "count": 6,
-    "id": "ragium:wood_dust"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "minecraft:logs_that_burn"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 6,
+      "item": "ragium:wood_dust"
+    }
+  ]
 }

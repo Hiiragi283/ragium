@@ -1,11 +1,14 @@
 {
   "type": "ragium:crushing",
-  "group": "gravel",
-  "ingredient": {
-    "tag": "c:cobblestones"
-  },
-  "result": {
-    "count": 1,
-    "id": "minecraft:gravel"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:cobblestones"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ]
 }

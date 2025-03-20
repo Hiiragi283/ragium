@@ -1,11 +1,11 @@
 package hiiragi283.ragium.integration.jei
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.RagiumRecipes
-import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.api.registry.HTRecipeType
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.integration.jei.category.HTCentrifugingRecipeCategory
-import hiiragi283.ragium.integration.jei.category.HTSingleItemRecipeCategory
+import hiiragi283.ragium.integration.jei.category.HTItemProcessRecipeCategory
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
@@ -31,9 +31,9 @@ class RagiumJEIPlugin : IModPlugin {
 
         val categories = listOf(
             HTCentrifugingRecipeCategory(guiHelper),
-            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER),
-            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR),
-            HTSingleItemRecipeCategory(guiHelper, RagiumJEIRecipeTypes.FERMENTING, RagiumBlocks.EXTRACTOR),
+            HTItemProcessRecipeCategory(guiHelper, RagiumJEIRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER),
+            HTItemProcessRecipeCategory(guiHelper, RagiumJEIRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR),
+            HTItemProcessRecipeCategory(guiHelper, RagiumJEIRecipeTypes.FERMENTING, RagiumBlocks.EXTRACTOR),
         )
         for (category in categories) {
             registration.addRecipeCategories(category)
@@ -43,7 +43,7 @@ class RagiumJEIPlugin : IModPlugin {
     override fun registerRecipes(registration: IRecipeRegistration) {
         val recipeManager: RecipeManager = Minecraft.getInstance().level?.recipeManager ?: return
 
-        fun <I : RecipeInput, R : Recipe<I>> register(recipeType: RecipeType<RecipeHolder<R>>, recipe: HTDeferredRecipeType<I, R>) {
+        fun <I : RecipeInput, R : Recipe<I>> register(recipeType: RecipeType<RecipeHolder<R>>, recipe: HTRecipeType<I, R>) {
             recipe.reloadCache(recipeManager)
             registration.addRecipes(
                 recipeType,

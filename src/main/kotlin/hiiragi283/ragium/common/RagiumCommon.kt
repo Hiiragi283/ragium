@@ -3,13 +3,8 @@ package hiiragi283.ragium.common
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.recipe.RagiumRecipes
-import hiiragi283.ragium.api.registry.HTDeferredRecipeType
-import hiiragi283.ragium.common.init.RagiumArmorMaterials
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumCreativeTabs
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.api.registry.HTRecipeType
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -17,6 +12,7 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
+import net.neoforged.neoforge.common.NeoForgeMod
 import org.slf4j.Logger
 
 @Mod(RagiumAPI.MOD_ID)
@@ -27,8 +23,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     init {
+        NeoForgeMod.enableMilkFluid()
+
         eventBus.addListener(::construct)
         eventBus.addListener(::commonSetup)
+
+        RagiumComponentTypes.REGISTER.register(eventBus)
 
         RagiumBlocks.init(eventBus)
         RagiumItems.init(eventBus)
@@ -38,7 +38,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumCreativeTabs.REGISTER.register(eventBus)
 
         RagiumRecipes
-        HTDeferredRecipeType.init(eventBus)
+        HTRecipeType.init(eventBus)
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onModConstruct(eventBus, dist)

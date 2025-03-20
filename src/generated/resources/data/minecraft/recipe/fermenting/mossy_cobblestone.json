@@ -1,10 +1,14 @@
 {
   "type": "ragium:fermenting",
-  "ingredient": {
-    "tag": "c:cobblestones/normal"
-  },
-  "result": {
-    "count": 1,
-    "id": "minecraft:mossy_cobblestone"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:cobblestones/normal"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:mossy_cobblestone"
+    }
+  ]
 }

@@ -1,11 +1,14 @@
 {
   "type": "ragium:crushing",
-  "group": "minced_meat",
-  "ingredient": {
-    "item": "minecraft:rotten_flesh"
-  },
-  "result": {
-    "count": 1,
-    "id": "ragium:minced_meat"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:rotten_flesh"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:minced_meat"
+    }
+  ]
 }

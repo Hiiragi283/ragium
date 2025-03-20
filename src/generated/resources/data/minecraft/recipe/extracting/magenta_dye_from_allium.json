@@ -1,10 +1,15 @@
 {
   "type": "ragium:extracting",
-  "ingredient": {
-    "item": "minecraft:allium"
-  },
-  "result": {
-    "count": 2,
-    "id": "minecraft:magenta_dye"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:allium"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "minecraft:magenta_dye"
+    }
+  ]
 }

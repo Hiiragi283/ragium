@@ -1,10 +1,15 @@
 {
   "type": "ragium:extracting",
-  "ingredient": {
-    "item": "minecraft:torchflower"
-  },
-  "result": {
-    "count": 4,
-    "id": "minecraft:orange_dye"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:torchflower"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:orange_dye"
+    }
+  ]
 }

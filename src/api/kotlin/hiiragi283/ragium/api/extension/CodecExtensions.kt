@@ -22,7 +22,7 @@ fun <T : Any> Codec<T>.wrapEmpty(emptyValue: Supplier<T>): Codec<T> = ExtraCodec
 /**
  * [List]の[StreamCodec]に変換します。
  */
-fun <B : ByteBuf, V : Any> StreamCodec<B, V>.toList(): StreamCodec<B, List<V>> = apply(ByteBufCodecs.list())
+fun <B : ByteBuf, V : Any> StreamCodec<B, V>.listOf(): StreamCodec<B, List<V>> = apply(ByteBufCodecs.list())
 
 /**
  * [Optional]の[StreamCodec]に変換します。

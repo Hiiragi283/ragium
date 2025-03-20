@@ -1,7 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.*
+import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -21,23 +23,9 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun meat(output: RecipeOutput) {
         // Minced Meat
-        HTSingleItemRecipeBuilder
-            .crush(RagiumItems.MINCED_MEAT)
-            .addIngredient(Tags.Items.FOODS_RAW_MEAT)
-            .group("minced_meat")
-            .saveSuffixed(output, "_from_meat")
-
-        HTSingleItemRecipeBuilder
-            .crush(RagiumItems.MINCED_MEAT)
-            .addIngredient(Tags.Items.FOODS_RAW_FISH)
-            .group("minced_meat")
-            .saveSuffixed(output, "_from_fish")
-
-        HTSingleItemRecipeBuilder
-            .crush(RagiumItems.MINCED_MEAT)
-            .addIngredient(Items.ROTTEN_FLESH)
-            .group("minced_meat")
-            .savePrefixed(output, "rotten_")
+        crush().itemOutput(RagiumItems.MINCED_MEAT).itemInput(Tags.Items.FOODS_RAW_MEAT).saveSuffixed(output, "_from_meat")
+        crush().itemOutput(RagiumItems.MINCED_MEAT).itemInput(Tags.Items.FOODS_RAW_FISH).saveSuffixed(output, "_from_fish")
+        crush().itemOutput(RagiumItems.MINCED_MEAT).itemInput(Items.ROTTEN_FLESH).savePrefixed(output, "rotten_")
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.MEAT_INGOT, 3)
             .pattern("AAA")
@@ -68,13 +56,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun milk(output: RecipeOutput) {
         // Butter
-        HTCentrifugingRecipeBuilder(RagiumItems.BUTTER)
-            .addIngredient(Tags.Items.BUCKETS_MILK)
-            .addSubProduct(Items.BUCKET)
-            .save(output)
-        
+
         // Cheese
-        
     }
 
     private fun sponge(output: RecipeOutput) {

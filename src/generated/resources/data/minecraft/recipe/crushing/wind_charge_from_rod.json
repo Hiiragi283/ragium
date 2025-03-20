@@ -1,11 +1,15 @@
 {
   "type": "ragium:crushing",
-  "group": "wind_charge",
-  "ingredient": {
-    "tag": "c:rods/breeze"
-  },
-  "result": {
-    "count": 4,
-    "id": "minecraft:wind_charge"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:rods/breeze"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:wind_charge"
+    }
+  ]
 }

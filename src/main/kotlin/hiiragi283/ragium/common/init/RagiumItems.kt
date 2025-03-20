@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.init
 
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialItemLike
@@ -14,15 +15,36 @@ import hiiragi283.ragium.common.item.HTMaterialItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.common.NeoForgeMod
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.SimpleFluidContent
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStackSimple
 import net.neoforged.neoforge.registries.DeferredItem
+import org.slf4j.Logger
+import thedarkcolour.kotlinforforge.neoforge.kotlin.supply
+import java.util.function.Supplier
 
+@EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 object RagiumItems {
+    @JvmStatic
+    private val LOGGER: Logger = LogUtils.getLogger()
+
     @JvmField
     val REGISTER = HTItemRegister(RagiumAPI.MOD_ID)
 
@@ -145,6 +167,40 @@ object RagiumItems {
     @JvmField
     val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")
 
+    //    Armors    //
+
+    @JvmField
+    val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, RagiumMaterials.AZURE_STEEL)
+
+    //    Tools    //
+
+    @JvmField
+    val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolMaterials.RAGI_ALLOY, RagiumMaterials.RAGI_ALLOY)
+
+    @JvmField
+    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, RagiumMaterials.AZURE_STEEL)
+
+    //    Fluid Cube    //
+
+    @JvmField
+    val WATER_CUBE: DeferredItem<Item> = register("water_cube")
+
+    @JvmField
+    val LAVA_CUBE: DeferredItem<Item> = register("lava_cube")
+
+    @JvmField
+    val MILK_CUBE: DeferredItem<Item> = register("milk_cube")
+
+    @JvmField
+    val FLUID_MAP: Map<DeferredItem<Item>, Supplier<out Fluid>> = mapOf(
+        WATER_CUBE to supply(Fluids.WATER),
+        LAVA_CUBE to supply(Fluids.LAVA),
+        MILK_CUBE to NeoForgeMod.MILK,
+    )
+
+    @JvmField
+    val FLUID_CUBES: Array<DeferredItem<*>> = FLUID_MAP.keys.toTypedArray()
+
     //    Foods    //
 
     @JvmStatic
@@ -162,10 +218,10 @@ object RagiumItems {
     val BUTTER: DeferredItem<Item> = registerFood("butter", Foods.APPLE)
 
     @JvmField
-    val DOUGH: DeferredItem<Item> = register("dough")
+    val FLOUR: DeferredItem<Item> = register("flour")
 
     @JvmField
-    val FLOUR: DeferredItem<Item> = register("flour")
+    val DOUGH: DeferredItem<Item> = register("dough")
 
     @JvmField
     val CHOCOLATE: DeferredItem<Item> = registerFood("chocolate", RagiumFoods.CHOCOLATE)
@@ -215,8 +271,8 @@ object RagiumItems {
         MELON_PIE,
         // ingredient
         BUTTER,
-        DOUGH,
         FLOUR,
+        DOUGH,
         // chocolate
         CHOCOLATE,
         CHOCOLATE_APPLE,
@@ -233,19 +289,6 @@ object RagiumItems {
         // end-contents
         AMBROSIA,
     )
-
-    //    Armors    //
-
-    @JvmField
-    val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, RagiumMaterials.AZURE_STEEL)
-
-    //    Tools    //
-
-    @JvmField
-    val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolMaterials.RAGI_ALLOY, RagiumMaterials.RAGI_ALLOY)
-
-    @JvmField
-    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, RagiumMaterials.AZURE_STEEL)
 
     //    Machine Parts    //
 
@@ -282,4 +325,41 @@ object RagiumItems {
     @JvmField
     val YELLOW_CAKE_PIECE: DeferredItem<Item> =
         registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
+
+    //    Event    //
+
+    @SubscribeEvent
+    fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            { stack: ItemStack, _: Void? ->
+                FluidHandlerItemStackSimple.Consumable(
+                    RagiumComponentTypes.FLUID_CONTENT,
+                    stack,
+                    1000,
+                )
+            },
+            *FLUID_CUBES,
+        )
+
+        LOGGER.info("Registered item capabilities!")
+    }
+
+    @SubscribeEvent
+    fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        fun fluidCube(cube: ItemLike, fluid: Fluid) {
+            event.modify(cube) { builder: DataComponentPatch.Builder ->
+                builder.set(
+                    RagiumComponentTypes.FLUID_CONTENT.get(),
+                    SimpleFluidContent.copyOf(FluidStack(fluid, 1000)),
+                )
+            }
+        }
+
+        for ((cube: DeferredItem<Item>, fluid: Supplier<out Fluid>) in FLUID_MAP) {
+            fluidCube(cube, fluid.get())
+        }
+
+        LOGGER.info("Modified default item components!")
+    }
 }

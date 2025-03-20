@@ -2,13 +2,14 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.api.registry.HTRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.common.recipe.HTItemProcessRecipe
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -16,13 +17,12 @@ import net.minecraft.resources.RegistryOps
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTSingleItemRecipeBlockEntity(
-    val recipeType: HTDeferredRecipeType<SingleRecipeInput, out HTSingleItemRecipe>,
+    val recipeType: HTRecipeType<HTMachineInput, out HTItemProcessRecipe>,
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
@@ -85,8 +85,7 @@ abstract class HTSingleItemRecipeBlockEntity(
         }
     }
 
-    protected val recipeCache: HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe> =
-        HTRecipeCache.reloadable(recipeType)
+    protected val recipeCache: HTRecipeCache<HTMachineInput, out HTItemProcessRecipe> = HTRecipeCache.reloadable(recipeType)
 
     private var checkRecipe: Boolean = false
 
@@ -94,8 +93,8 @@ abstract class HTSingleItemRecipeBlockEntity(
         // 200 tick毎に一度実行する
         if (totalTick % 200 != 0) return
         // インプットに一致するレシピを探索する
-        val input = SingleRecipeInput(inputSlot.stack)
-        val recipe: HTSingleItemRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
+        val input: HTMachineInput = HTMachineInput.builder().addInput(0, inputSlot).build()
+        val recipe: HTItemProcessRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
         // 一括で処理を行う
         val output: ItemStack = recipe.assemble(input, level.registryAccess())
         // アウトプットに搬入できるか判定する

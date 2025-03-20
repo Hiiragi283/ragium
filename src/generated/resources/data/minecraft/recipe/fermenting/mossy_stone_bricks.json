@@ -1,10 +1,14 @@
 {
   "type": "ragium:fermenting",
-  "ingredient": {
-    "item": "minecraft:stone_bricks"
-  },
-  "result": {
-    "count": 1,
-    "id": "minecraft:mossy_stone_bricks"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:stone_bricks"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:mossy_stone_bricks"
+    }
+  ]
 }

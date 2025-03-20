@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.IntegrationMods
+import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
@@ -8,6 +9,10 @@ import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumRecipeFactories
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTFermentingRecipe
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
@@ -35,6 +40,8 @@ abstract class HTRecipeProvider {
     }
 
     protected abstract fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider)
+
+    //    Extensions    //
 
     fun addSlab(output: RecipeOutput, base: ItemLike, slab: ItemLike) {
         // Shaped
@@ -73,6 +80,12 @@ abstract class HTRecipeProvider {
     fun RecipeOutput.save(recipeId: ResourceLocation, recipe: Recipe<*>) {
         accept(recipeId, recipe, null)
     }
+
+    protected fun crush(): HTMachineRecipeBuilder<HTCrushingRecipe> = HTMachineRecipeBuilder(RagiumRecipeFactories::crushing)
+
+    protected fun extract(): HTMachineRecipeBuilder<HTExtractingRecipe> = HTMachineRecipeBuilder(RagiumRecipeFactories::extracting)
+
+    protected fun ferment(): HTMachineRecipeBuilder<HTFermentingRecipe> = HTMachineRecipeBuilder(RagiumRecipeFactories::fermenting)
 
     //    Modded    //
 

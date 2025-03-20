@@ -72,6 +72,8 @@ object RagiumCreativeTabs {
             // Tools
             addAll(RagiumItems.RAGI_ALLOY_TOOLS.itemHolders)
             addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
+
+            addAll(RagiumItems.FLUID_CUBES)
             // Foods
             add(RagiumBlocks.SPONGE_CAKE)
             add(RagiumBlocks.SPONGE_CAKE_SLAB)

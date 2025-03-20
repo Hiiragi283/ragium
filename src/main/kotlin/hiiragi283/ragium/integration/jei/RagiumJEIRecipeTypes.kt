@@ -1,10 +1,10 @@
 package hiiragi283.ragium.integration.jei
 
-import hiiragi283.ragium.api.recipe.HTCentrifugingRecipe
-import hiiragi283.ragium.api.recipe.HTCrushingRecipe
-import hiiragi283.ragium.api.recipe.HTExtractingRecipe
-import hiiragi283.ragium.api.recipe.HTFermentingRecipe
-import hiiragi283.ragium.api.recipe.RagiumRecipes
+import hiiragi283.ragium.common.init.RagiumRecipes
+import hiiragi283.ragium.common.recipe.HTCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTFermentingRecipe
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.world.item.crafting.RecipeHolder
 

@@ -1,11 +1,15 @@
 {
   "type": "ragium:crushing",
-  "group": "packed_ice",
-  "ingredient": {
-    "item": "minecraft:blackstone"
-  },
-  "result": {
-    "count": 9,
-    "id": "minecraft:packed_ice"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:blue_ice"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 9,
+      "item": "minecraft:packed_ice"
+    }
+  ]
 }

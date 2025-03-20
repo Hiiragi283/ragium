@@ -1,11 +1,14 @@
 {
   "type": "ragium:crushing",
-  "group": "wood_dust",
-  "ingredient": {
-    "tag": "minecraft:wooden_stairs"
-  },
-  "result": {
-    "count": 1,
-    "id": "ragium:wood_dust"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "minecraft:wooden_stairs"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:wood_dust"
+    }
+  ]
 }

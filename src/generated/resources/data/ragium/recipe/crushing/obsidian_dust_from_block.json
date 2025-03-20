@@ -1,11 +1,15 @@
 {
   "type": "ragium:crushing",
-  "group": "obsidian_dust",
-  "ingredient": {
-    "tag": "c:obsidians/normal"
-  },
-  "result": {
-    "count": 4,
-    "id": "ragium:obsidian_dust"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:obsidians/normal"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:obsidian_dust"
+    }
+  ]
 }

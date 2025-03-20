@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.registry.HTDeferredRecipeType
+import hiiragi283.ragium.api.registry.HTRecipeType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -15,8 +15,7 @@ sealed class HTRecipeCache<I : RecipeInput, R : Recipe<I>> {
         fun <I : RecipeInput, R : Recipe<I>> simple(recipeType: RecipeType<R>): HTRecipeCache<I, R> = Simple<I, R>(recipeType)
 
         @JvmStatic
-        fun <I : RecipeInput, R : Recipe<I>> reloadable(recipeType: HTDeferredRecipeType<I, R>): HTRecipeCache<I, R> =
-            Reloadable<I, R>(recipeType)
+        fun <I : RecipeInput, R : Recipe<I>> reloadable(recipeType: HTRecipeType<I, R>): HTRecipeCache<I, R> = Reloadable<I, R>(recipeType)
     }
 
     private var lastRecipe: ResourceLocation? = null
@@ -41,7 +40,7 @@ sealed class HTRecipeCache<I : RecipeInput, R : Recipe<I>> {
             level.recipeManager.getRecipeFor(recipeType, input, level, lastRecipe)
     }
 
-    private class Reloadable<I : RecipeInput, R : Recipe<I>>(val recipeType: HTDeferredRecipeType<I, R>) : HTRecipeCache<I, R>() {
+    private class Reloadable<I : RecipeInput, R : Recipe<I>>(val recipeType: HTRecipeType<I, R>) : HTRecipeCache<I, R>() {
         override fun getFirstHolder(input: I, level: Level, lastRecipe: ResourceLocation?): Optional<RecipeHolder<R>> =
             Optional.ofNullable(recipeType.getFirstRecipe(input, level, lastRecipe))
     }

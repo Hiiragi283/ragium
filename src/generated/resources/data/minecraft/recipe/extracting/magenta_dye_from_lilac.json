@@ -1,10 +1,15 @@
 {
   "type": "ragium:extracting",
-  "ingredient": {
-    "item": "minecraft:lilac"
-  },
-  "result": {
-    "count": 4,
-    "id": "minecraft:magenta_dye"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:lilac"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:magenta_dye"
+    }
+  ]
 }

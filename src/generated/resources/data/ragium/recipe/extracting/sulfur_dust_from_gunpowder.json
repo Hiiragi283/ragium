@@ -1,11 +1,14 @@
 {
   "type": "ragium:extracting",
-  "group": "sulfur_dust",
-  "ingredient": {
-    "tag": "c:gunpowders"
-  },
-  "result": {
-    "count": 1,
-    "id": "ragium:sulfur_dust"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:gunpowders"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:sulfur_dust"
+    }
+  ]
 }

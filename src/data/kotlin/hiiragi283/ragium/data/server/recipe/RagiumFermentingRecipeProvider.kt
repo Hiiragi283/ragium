@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTSingleItemRecipeBuilder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
@@ -10,47 +9,18 @@ import net.neoforged.neoforge.common.Tags
 object RagiumFermentingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Vanilla
-        HTSingleItemRecipeBuilder
-            .ferment(Items.MOSSY_COBBLESTONE)
-            .addIngredient(Tags.Items.COBBLESTONES_NORMAL)
-            .save(output)
+        ferment().itemOutput(Items.MOSSY_COBBLESTONE).itemInput(Tags.Items.COBBLESTONES_NORMAL).save(output)
+        ferment().itemOutput(Items.MOSSY_STONE_BRICKS).itemInput(Items.STONE_BRICKS).save(output)
 
-        HTSingleItemRecipeBuilder
-            .ferment(Items.MOSSY_STONE_BRICKS)
-            .addIngredient(Items.STONE_BRICKS)
-            .save(output)
+        ferment().itemOutput(Items.MYCELIUM).itemInput(Items.GRASS_BLOCK).save(output)
 
-        HTSingleItemRecipeBuilder
-            .ferment(Items.MYCELIUM)
-            .addIngredient(Items.GRASS_BLOCK)
-            .save(output)
+        ferment().itemOutput(Items.MUD).itemInput(Items.DIRT).save(output)
 
-        HTSingleItemRecipeBuilder
-            .ferment(Items.MUD)
-            .addIngredient(Items.DIRT)
-            .save(output)
+        ferment().itemOutput(Items.MOSS_BLOCK, 4).itemInput(Items.MOSS_BLOCK).saveSuffixed(output, "_from_block")
+        ferment().itemOutput(Items.MOSS_BLOCK).itemInput(Items.MOSS_CARPET).saveSuffixed(output, "_from_carpet")
 
-        HTSingleItemRecipeBuilder
-            .ferment(Items.MOSS_BLOCK, 4)
-            .addIngredient(Items.MOSS_BLOCK)
-            .group("moss_block")
-            .saveSuffixed(output, "_from_block")
+        ferment().itemOutput(Items.GLOWSTONE_DUST).itemInput(Items.GLOW_BERRIES).save(output)
 
-        HTSingleItemRecipeBuilder
-            .ferment(Items.MOSS_BLOCK)
-            .addIngredient(Items.MOSS_CARPET)
-            .group("moss_block")
-            .saveSuffixed(output, "_from_carpet")
-
-        HTSingleItemRecipeBuilder
-            .ferment(Items.GLOWSTONE_DUST)
-            .addIngredient(Items.GLOW_BERRIES)
-            .group("glowstone_dust")
-            .save(output)
-        
-        HTSingleItemRecipeBuilder
-            .ferment(Items.FERMENTED_SPIDER_EYE)
-            .addIngredient(Items.SPIDER_EYE)
-            .save(output)
+        ferment().itemOutput(Items.FERMENTED_SPIDER_EYE).itemInput(Items.SPIDER_EYE).save(output)
     }
 }

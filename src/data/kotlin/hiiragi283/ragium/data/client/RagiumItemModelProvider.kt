@@ -1,14 +1,17 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.basicItem
+import hiiragi283.ragium.api.extension.getBuilder
+import hiiragi283.ragium.api.extension.modelFile
+import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import kotlin.collections.forEach
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
@@ -42,20 +45,23 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
+            removeAll(RagiumItems.FLUID_CUBES)
         }.forEach(::basicItem)
 
+        val generated: ModelFile = modelFile(ResourceLocation.withDefaultNamespace("item/generated"))
+
         getBuilder(RagiumItems.CHOCOLATE_APPLE)
-            .parent(ModelFile.UncheckedModelFile("item/generated"))
+            .parent(generated)
             .texture("layer0", "minecraft:item/apple")
             .texture("layer1", RagiumItems.CHOCOLATE_APPLE.id.withPrefix("item/"))
 
         getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
-            .parent(ModelFile.UncheckedModelFile("item/generated"))
+            .parent(generated)
             .texture("layer0", "minecraft:item/copper_ingot")
             .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.id.withPrefix("item/"))
 
         getBuilder(RagiumItems.AZURE_STEEL_COMPOUND)
-            .parent(ModelFile.UncheckedModelFile("item/generated"))
+            .parent(generated)
             .texture("layer0", "minecraft:item/iron_ingot")
             .texture("layer1", RagiumItems.AZURE_STEEL_COMPOUND.id.withPrefix("item/"))
 

@@ -1,10 +1,15 @@
 {
   "type": "ragium:extracting",
-  "ingredient": {
-    "item": "minecraft:peony"
-  },
-  "result": {
-    "count": 4,
-    "id": "minecraft:pink_dye"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:peony"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:pink_dye"
+    }
+  ]
 }

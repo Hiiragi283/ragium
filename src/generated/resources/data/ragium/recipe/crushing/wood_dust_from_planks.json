@@ -1,11 +1,14 @@
 {
   "type": "ragium:crushing",
-  "group": "wood_dust",
-  "ingredient": {
-    "tag": "minecraft:planks"
-  },
-  "result": {
-    "count": 1,
-    "id": "ragium:wood_dust"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "minecraft:planks"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:wood_dust"
+    }
+  ]
 }

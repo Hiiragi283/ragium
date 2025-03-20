@@ -1,11 +1,15 @@
 {
   "type": "ragium:crushing",
-  "group": "snowball",
-  "ingredient": {
-    "item": "minecraft:ice"
-  },
-  "result": {
-    "count": 4,
-    "id": "minecraft:snowball"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:ice"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:snowball"
+    }
+  ]
 }

@@ -1,10 +1,14 @@
 {
   "type": "ragium:fermenting",
-  "ingredient": {
-    "item": "minecraft:spider_eye"
-  },
-  "result": {
-    "count": 1,
-    "id": "minecraft:fermented_spider_eye"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:spider_eye"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:fermented_spider_eye"
+    }
+  ]
 }

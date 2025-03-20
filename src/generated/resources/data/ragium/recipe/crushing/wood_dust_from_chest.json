@@ -1,11 +1,15 @@
 {
   "type": "ragium:crushing",
-  "group": "wood_dust",
-  "ingredient": {
-    "tag": "c:chests/wooden"
-  },
-  "result": {
-    "count": 8,
-    "id": "ragium:wood_dust"
-  }
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:chests/wooden"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 8,
+      "item": "ragium:wood_dust"
+    }
+  ]
 }
