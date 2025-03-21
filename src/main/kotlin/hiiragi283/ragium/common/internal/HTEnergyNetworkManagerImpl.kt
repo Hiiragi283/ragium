@@ -13,7 +13,6 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
 
 object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
-
     init {
         NeoForge.EVENT_BUS.addListener(::onServerStarted)
         NeoForge.EVENT_BUS.addListener(::onServerStopped)
@@ -33,7 +32,11 @@ object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
         val cached: IEnergyStorage? = networkMap[key]
         if (cached != null) return cached
         // ない場合はキャッシュを取得する
-        return RagiumAPI.getInstance().getCurrentServer()?.getLevel(key)?.let(::createCache)
+        return RagiumAPI
+            .getInstance()
+            .getCurrentServer()
+            ?.getLevel(key)
+            ?.let(::createCache)
     }
 
     override fun getNetworkFromServer(level: ServerLevel): IEnergyStorage {
@@ -58,7 +61,6 @@ object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
             networkMap.put(level.dimension(), level.getServerSavedData(HTEnergyNetwork.DATA_FACTORY))
         }
     }
-
 
     private fun onServerStopped(event: ServerStoppedEvent) {
         networkMap.clear()

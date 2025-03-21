@@ -7,7 +7,10 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTRecipeType
-import hiiragi283.ragium.common.recipe.*
+import hiiragi283.ragium.common.recipe.HTCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -45,10 +48,6 @@ object RagiumRecipes {
         of("extracting", RagiumRecipeFactories::extracting)
 
     @JvmField
-    val FERMENTING: HTRecipeType<HTMachineInput, HTFermentingRecipe> =
-        of("fermenting", RagiumRecipeFactories::fermenting)
-
-    @JvmField
     val REFINING: HTRecipeType<HTMachineInput, HTRefiningRecipe> =
         of("refining", RagiumRecipeFactories::refining)
 
@@ -57,7 +56,6 @@ object RagiumRecipes {
         CENTRIFUGING,
         CRUSHING,
         EXTRACTING,
-        FERMENTING,
         REFINING,
     )
 

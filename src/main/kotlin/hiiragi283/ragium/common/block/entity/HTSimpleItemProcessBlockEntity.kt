@@ -9,21 +9,20 @@ import hiiragi283.ragium.api.registry.HTRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
-import hiiragi283.ragium.common.recipe.HTItemProcessRecipe
+import hiiragi283.ragium.common.recipe.HTSimpleItemRecipe
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-abstract class HTSingleItemRecipeBlockEntity(
-    val recipeType: HTRecipeType<HTMachineInput, out HTItemProcessRecipe>,
+abstract class HTSimpleItemProcessBlockEntity(
+    val recipeType: HTRecipeType<HTMachineInput, out HTSimpleItemRecipe>,
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
@@ -70,7 +69,7 @@ abstract class HTSingleItemRecipeBlockEntity(
             level: Level,
             pos: BlockPos,
             state: BlockState,
-            blockEntity: HTSingleItemRecipeBlockEntity,
+            blockEntity: HTSimpleItemProcessBlockEntity,
         ) {
             blockEntity.totalTick++
         }
@@ -80,14 +79,15 @@ abstract class HTSingleItemRecipeBlockEntity(
             level: Level,
             pos: BlockPos,
             state: BlockState,
-            blockEntity: HTSingleItemRecipeBlockEntity,
+            blockEntity: HTSimpleItemProcessBlockEntity,
         ) {
             blockEntity.totalTick++
             blockEntity.processRecipe(level, pos, state)
         }
     }
 
-    protected val recipeCache: HTRecipeCache<HTMachineInput, out HTItemProcessRecipe> = HTRecipeCache.reloadable(recipeType)
+    protected val recipeCache: HTRecipeCache<HTMachineInput, out HTSimpleItemRecipe> =
+        HTRecipeCache.reloadable(recipeType)
 
     private var checkRecipe: Boolean = false
 
@@ -95,20 +95,19 @@ abstract class HTSingleItemRecipeBlockEntity(
         // 200 tick毎に一度実行する
         if (totalTick % 200 != 0) return
         // インプットに一致するレシピを探索する
-        val input: HTMachineInput = HTMachineInput.builder().addInput(0, inputSlot).build()
-        val recipe: HTItemProcessRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
-        // 一括で処理を行う
-        val output: ItemStack = recipe.assemble(input, level.registryAccess())
-        // アウトプットに搬入できるか判定する
-        if (!outputSlot.canInsert(output)) return skipTicking()
-        // インプットを消費できるか判定する
-        if (!inputSlot.canExtract(1)) return skipTicking()
+        val input: HTMachineInput = HTMachineInput
+            .builder()
+            .addInput(0, inputSlot)
+            .addOutput(0, outputSlot)
+            .build()
+        val recipe: HTSimpleItemRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
+        // 処理が行えるか判定する
+        if (!recipe.canProcess(input)) return skipTicking()
         // エネルギーを消費できるか判定する
         val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetworkManager().getNetwork(level) ?: return skipTicking()
         if (network.extractEnergy(1600, true) != 1600) return skipTicking()
         // レシピを実行する
-        outputSlot.insert(output, false)
-        inputSlot.extract(1, false)
+        recipe.process(input)
         network.extractEnergy(1600, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS)
@@ -125,17 +124,17 @@ abstract class HTSingleItemRecipeBlockEntity(
 
     //    Item    //
 
-    override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
+    final override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
         0 -> HTStorageIO.INPUT
         1 -> HTStorageIO.OUTPUT
         else -> HTStorageIO.EMPTY
     }
 
-    override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
+    final override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
         0 -> inputSlot
         1 -> outputSlot
         else -> null
     }
 
-    override fun getSlots(): Int = 2
+    final override fun getSlots(): Int = 2
 }

@@ -4,7 +4,6 @@ import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.common.recipe.HTCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTFermentingRecipe
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.world.item.crafting.RecipeHolder
 
@@ -17,7 +16,4 @@ object RagiumJEIRecipeTypes {
 
     @JvmField
     val EXTRACTING: RecipeType<RecipeHolder<HTExtractingRecipe>> = RecipeType.createFromVanilla(RagiumRecipes.EXTRACTING)
-
-    @JvmField
-    val FERMENTING: RecipeType<RecipeHolder<HTFermentingRecipe>> = RecipeType.createFromVanilla(RagiumRecipes.FERMENTING)
 }

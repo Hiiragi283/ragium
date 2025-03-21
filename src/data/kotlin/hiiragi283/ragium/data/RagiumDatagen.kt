@@ -9,6 +9,7 @@ import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.server.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagProvider
+import hiiragi283.ragium.data.server.tag.RagiumFluidTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.DataGenerator
@@ -48,6 +49,7 @@ object RagiumDatagen {
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
 
         generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
+        generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, helper))
 
         LOGGER.info("Gathered server resources!")

@@ -21,26 +21,35 @@ object RagiumRecipeFactories {
         return DataResult.success(HTCentrifugingRecipe(ingredient, definition.itemOutputs, definition.fluidOutputs))
     }
 
+    //    Fluid -> Fluid    //
+
     @JvmStatic
-    fun refining(definition: HTRecipeDefinition): DataResult<HTRefiningRecipe> {
+    fun <R : HTSimpleFluidRecipe> fluidProcess(
+        factory: (SizedFluidIngredient, HTFluidOutput) -> R,
+        definition: HTRecipeDefinition,
+    ): DataResult<R> {
         val ingredient: SizedFluidIngredient =
             definition.getFluidIngredient(0) ?: return DataResult.error { "Required one fluid ingredient!" }
-        return DataResult.success(HTRefiningRecipe(ingredient, definition.getItemOutput(0), definition.fluidOutputs))
+        val output: HTFluidOutput =
+            definition.getFluidOutput(0) ?: return DataResult.error { "Required one fluid output!" }
+        return DataResult.success(factory(ingredient, output))
     }
 
-    //    ItemProcess    //
+    @JvmStatic
+    fun refining(definition: HTRecipeDefinition): DataResult<HTRefiningRecipe> = fluidProcess(::HTRefiningRecipe, definition)
+
+    //    Item -> Item    //
 
     @JvmStatic
-    fun <R : HTItemProcessRecipe> itemProcess(
-        factory: (SizedIngredient, HTItemOutput, HTFluidOutput?) -> R,
+    fun <R : HTSimpleItemRecipe> itemProcess(
+        factory: (SizedIngredient, HTItemOutput) -> R,
         definition: HTRecipeDefinition,
     ): DataResult<R> {
         val ingredient: SizedIngredient =
             definition.getItemIngredient(0) ?: return DataResult.error { "Required one item ingredient!" }
-        val itemOutput: HTItemOutput =
+        val output: HTItemOutput =
             definition.getItemOutput(0) ?: return DataResult.error { "Required one item output!" }
-        val fluidOutput: HTFluidOutput? = definition.getFluidOutput(0)
-        return DataResult.success(factory(ingredient, itemOutput, fluidOutput))
+        return DataResult.success(factory(ingredient, output))
     }
 
     @JvmStatic
@@ -48,7 +57,4 @@ object RagiumRecipeFactories {
 
     @JvmStatic
     fun extracting(definition: HTRecipeDefinition): DataResult<HTExtractingRecipe> = itemProcess(::HTExtractingRecipe, definition)
-
-    @JvmStatic
-    fun fermenting(definition: HTRecipeDefinition): DataResult<HTFermentingRecipe> = itemProcess(::HTFermentingRecipe, definition)
 }

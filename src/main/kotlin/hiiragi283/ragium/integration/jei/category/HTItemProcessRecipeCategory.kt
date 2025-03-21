@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.common.recipe.HTItemProcessRecipe
+import hiiragi283.ragium.common.recipe.HTSimpleItemRecipe
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
 
-class HTItemProcessRecipeCategory<T : HTItemProcessRecipe>(
+class HTItemProcessRecipeCategory<T : HTSimpleItemRecipe>(
     guiHelper: IGuiHelper,
     private val recipeType: RecipeType<RecipeHolder<T>>,
     icon: ItemLike,

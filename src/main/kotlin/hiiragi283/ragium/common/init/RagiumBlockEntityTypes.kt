@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.HTSingleItemRecipeBlockEntity
+import hiiragi283.ragium.common.block.entity.HTSimpleItemProcessBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -33,8 +33,8 @@ object RagiumBlockEntityTypes {
         REGISTER.registerType(
             "crusher",
             ::HTCrusherBlockEntity,
-            HTSingleItemRecipeBlockEntity::clientTick,
-            HTSingleItemRecipeBlockEntity::serverTick,
+            HTSimpleItemProcessBlockEntity::clientTick,
+            HTSimpleItemProcessBlockEntity::serverTick,
         )
 
     @JvmField
@@ -42,8 +42,8 @@ object RagiumBlockEntityTypes {
         REGISTER.registerType(
             "extractor",
             ::HTExtractorBlockEntity,
-            HTSingleItemRecipeBlockEntity::clientTick,
-            HTSingleItemRecipeBlockEntity::serverTick,
+            HTSimpleItemProcessBlockEntity::clientTick,
+            HTSimpleItemProcessBlockEntity::serverTick,
         )
 
     //    Device    //

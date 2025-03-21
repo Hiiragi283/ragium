@@ -6,4 +6,4 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
 class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemRecipeBlockEntity(RagiumRecipes.EXTRACTING, RagiumBlockEntityTypes.EXTRACTOR, pos, state)
+    HTSimpleItemProcessBlockEntity(RagiumRecipes.EXTRACTING, RagiumBlockEntityTypes.EXTRACTOR, pos, state)

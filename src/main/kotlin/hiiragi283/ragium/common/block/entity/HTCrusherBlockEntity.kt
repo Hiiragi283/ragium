@@ -6,4 +6,4 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemRecipeBlockEntity(RagiumRecipes.CRUSHING, RagiumBlockEntityTypes.CRUSHER, pos, state)
+    HTSimpleItemProcessBlockEntity(RagiumRecipes.CRUSHING, RagiumBlockEntityTypes.CRUSHER, pos, state)

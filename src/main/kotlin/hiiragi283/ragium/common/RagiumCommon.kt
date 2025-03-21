@@ -31,6 +31,10 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         RagiumComponentTypes.REGISTER.register(eventBus)
 
+        RagiumFluids.init()
+        RagiumFluids.REGISTER.register(eventBus)
+        RagiumFluidTypes.REGISTER.register(eventBus)
+
         RagiumBlocks.init(eventBus)
         RagiumItems.init(eventBus)
 
@@ -42,7 +46,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         HTRecipeType.init(eventBus)
 
         HTEnergyNetworkManagerImpl
-        
+
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onModConstruct(eventBus, dist)
         }

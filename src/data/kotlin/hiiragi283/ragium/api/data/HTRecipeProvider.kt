@@ -10,7 +10,10 @@ import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumRecipeFactories
-import hiiragi283.ragium.common.recipe.*
+import hiiragi283.ragium.common.recipe.HTCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
@@ -84,8 +87,6 @@ abstract class HTRecipeProvider {
     protected fun crush(): HTMachineRecipeBuilder<HTCrushingRecipe> = HTMachineRecipeBuilder(RagiumRecipeFactories::crushing)
 
     protected fun extract(): HTMachineRecipeBuilder<HTExtractingRecipe> = HTMachineRecipeBuilder(RagiumRecipeFactories::extracting)
-
-    protected fun ferment(): HTMachineRecipeBuilder<HTFermentingRecipe> = HTMachineRecipeBuilder(RagiumRecipeFactories::fermenting)
 
     protected fun refining(): HTMachineRecipeBuilder<HTRefiningRecipe> = HTMachineRecipeBuilder(RagiumRecipeFactories::refining)
 

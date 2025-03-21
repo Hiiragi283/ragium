@@ -19,9 +19,9 @@ class HTMachineInput private constructor(
         fun builder(): Builder = Builder()
     }
 
-    private fun getSlotOrNull(storageIO: HTStorageIO, index: Int): HTItemSlot? = slotTable.get(storageIO, index)
+    fun getSlotOrNull(storageIO: HTStorageIO, index: Int): HTItemSlot? = slotTable.get(storageIO, index)
 
-    private fun getTankOrNull(storageIO: HTStorageIO, index: Int): HTFluidTank? = tankTable.get(storageIO, index)
+    fun getTankOrNull(storageIO: HTStorageIO, index: Int): HTFluidTank? = tankTable.get(storageIO, index)
 
     fun getSlot(storageIO: HTStorageIO, index: Int): HTItemSlot =
         getSlotOrNull(storageIO, index) ?: error("Missing ${storageIO.name} slot for index: $index!")

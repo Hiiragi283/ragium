@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#c:air",
+    "#c:ammonia",
+    "#c:hydrogen",
+    "#c:nitrogen",
+    "#c:oxygen",
+    "#c:rocket_fuel",
+    "#c:sulfur_dioxide",
+    "#c:sulfur_trioxide"
+  ]
+}

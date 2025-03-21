@@ -1,10 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addEnchantment
-import hiiragi283.ragium.api.extension.addMaterialKey
-import hiiragi283.ragium.api.extension.addOreVariant
-import hiiragi283.ragium.api.extension.addTagPrefix
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -13,9 +10,7 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumEnchantments
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.*
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -25,7 +20,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         block()
         enchantment()
         entity()
-        // fluid()
+        fluid()
         item()
         material()
         tagPrefix()
@@ -88,16 +83,16 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
     }
 
-    /*private fun fluid() {
-        addFluid(RagiumFluids.GLASS, "溶融ガラス")
+    private fun fluid() {
         addFluid(RagiumFluids.HONEY, "蜂蜜")
         addFluid(RagiumFluids.SNOW, "粉雪")
+
+        addFluid(RagiumVirtualFluids.EXPERIENCE, "液体経験値")
 
         addFluid(RagiumVirtualFluids.CHOCOLATE, "チョコレート")
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
 
         addFluid(RagiumVirtualFluids.AIR, "空気")
-        addFluid(RagiumVirtualFluids.STEAM, "蒸気")
 
         addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
 
@@ -109,11 +104,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.OXYGEN, "酸素")
         addFluid(RagiumVirtualFluids.ROCKET_FUEL, "ロケット燃料")
 
-        addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
-
         addFluid(RagiumVirtualFluids.ALKALI_SOLUTION, "アルカリ溶液")
-
-        addFluid(RagiumVirtualFluids.ALUMINA_SOLUTION, "アルミナ溶液")
 
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
@@ -137,11 +128,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumVirtualFluids.SAP, "樹液")
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
-        addFluid(RagiumVirtualFluids.LATEX, "ラテックス")
 
-        addFluid(RagiumVirtualFluids.LIQUID_GLOW, "リキッド・グロウ")
         addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "ラギウム溶液")
-    }*/
+    }
 
     private fun item() {
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")

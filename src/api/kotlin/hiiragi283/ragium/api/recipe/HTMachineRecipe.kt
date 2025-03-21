@@ -22,8 +22,10 @@ abstract class HTMachineRecipe(val recipeType: HTRecipeType<HTMachineInput, *>) 
 
     override fun matches(input: HTMachineInput, level: Level): Boolean = matches(input)
 
+    @Deprecated("use process() instead")
     final override fun assemble(input: HTMachineInput, registries: HolderLookup.Provider): ItemStack = throw UnsupportedOperationException()
 
+    @Deprecated("use process() instead")
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = throw UnsupportedOperationException()
 
     final override fun canCraftInDimensions(width: Int, height: Int): Boolean = true

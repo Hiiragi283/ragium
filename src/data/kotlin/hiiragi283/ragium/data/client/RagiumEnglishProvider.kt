@@ -1,10 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addEnchantment
-import hiiragi283.ragium.api.extension.addMaterialKey
-import hiiragi283.ragium.api.extension.addOreVariant
-import hiiragi283.ragium.api.extension.addTagPrefix
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -23,7 +20,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         block()
         enchantment()
         entity()
-        // fluid()
+        fluid()
         item()
         material()
         tagPrefix()
@@ -86,16 +83,16 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // addEntityType(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
     }
 
-    /*private fun fluid() {
-        addFluid(RagiumFluids.GLASS, "Molten Glass")
+    private fun fluid() {
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.SNOW, "Powder Snow")
+
+        addFluid(RagiumVirtualFluids.EXPERIENCE, "Experience Liquid")
 
         addFluid(RagiumVirtualFluids.CHOCOLATE, "Chocolate")
         addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
 
         addFluid(RagiumVirtualFluids.AIR, "Air")
-        addFluid(RagiumVirtualFluids.STEAM, "Steam")
 
         addFluid(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
 
@@ -107,11 +104,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.OXYGEN, "Oxygen")
         addFluid(RagiumVirtualFluids.ROCKET_FUEL, "Rocket Fuel")
 
-        addFluid(RagiumVirtualFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
-
         addFluid(RagiumVirtualFluids.ALKALI_SOLUTION, "Alkali Solution")
-
-        addFluid(RagiumVirtualFluids.ALUMINA_SOLUTION, "Alumina Solution")
 
         addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
@@ -135,11 +128,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumVirtualFluids.SAP, "Sap")
         addFluid(RagiumVirtualFluids.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumVirtualFluids.WARPED_SAP, "Warped Sap")
-        addFluid(RagiumVirtualFluids.LATEX, "Latex")
 
-        addFluid(RagiumVirtualFluids.LIQUID_GLOW, "Liquid Glow")
         addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "Ragium Solution")
-    }*/
+    }
 
     private fun item() {
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
