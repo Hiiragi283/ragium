@@ -1,15 +1,14 @@
 package hiiragi283.ragium.api.block.entity
 
-import hiiragi283.ragium.api.extension.sendUpdatePacket
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
-import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.game.ClientGamePacketListener
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -21,6 +20,9 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandler
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
@@ -33,20 +35,16 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         const val OWNER_KEY = "owner"
     }
 
-    final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag =
-        CompoundTag().apply { saveAdditional(this, registries) }
+    /**
+     * クライアント側へ同期する際に送る[CompoundTag]
+     */
+    final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = saveCustomOnly(registries)
 
-    final override fun getUpdatePacket(): Packet<ClientGamePacketListener>? =
-        if (level != null) ClientboundBlockEntityDataPacket.create(this) else null
-
+    /**
+     * クライアント側でパケットを受け取った時の処理
+     */
     final override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
-        super.handleUpdateTag(tag, lookupProvider)
         loadAdditional(tag, lookupProvider)
-    }
-
-    override fun setChanged() {
-        super.setChanged()
-        sendUpdatePacket()
     }
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -66,7 +64,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         afterUpdateState(blockState)
     }
 
-    override fun setLevel(level: Level) {
+    final override fun setLevel(level: Level) {
         super.setLevel(level)
         afterLevelInit(level)
     }
@@ -169,4 +167,21 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      */
     var totalTick: Int = 0
         protected set
+
+    //    Capability    //
+
+    /**
+     * 指定した[direction]から[IItemHandler]を返します。
+     */
+    open fun getItemHandler(direction: Direction?): IItemHandler? = this as? HTItemSlotHandler
+
+    /**
+     * 指定した[direction]から[IFluidHandler]を返します。
+     */
+    open fun getFluidHandler(direction: Direction?): IFluidHandler? = this as? HTFluidSlotHandler
+
+    /**
+     * 指定した[direction]から[IEnergyStorage]を返します。
+     */
+    open fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 }

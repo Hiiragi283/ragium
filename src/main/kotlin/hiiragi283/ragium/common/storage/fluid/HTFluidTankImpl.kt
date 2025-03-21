@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.fluid
 
+import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
@@ -23,12 +24,15 @@ class HTFluidTankImpl(
     }
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        val nbtIn = CompoundTag()
-        HTFluidVariant.CODEC
-            .encodeStart(registryOps, resource)
-            .ifSuccess { nbtIn.put("fluid", it) }
-        nbtIn.putInt("amount", amount)
-        nbt.put(nbtKey, nbtIn)
+        nbt.put(
+            nbtKey,
+            buildNbt {
+                HTFluidVariant.CODEC
+                    .encodeStart(registryOps, resource)
+                    .ifSuccess { put("fluid", it) }
+                putInt("amount", amount)
+            },
+        )
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {

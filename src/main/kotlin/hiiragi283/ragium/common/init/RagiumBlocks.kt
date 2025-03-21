@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.block.*
-import hiiragi283.ragium.common.block.HTEnergyNetworkInterfaceBlock
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
 import net.minecraft.resources.ResourceLocation

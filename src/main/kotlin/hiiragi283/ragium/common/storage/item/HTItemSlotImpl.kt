@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.item
 
+import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -34,12 +35,15 @@ class HTItemSlotImpl(
     )
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        val nbtIn = CompoundTag()
-        HTItemVariant.CODEC
-            .encodeStart(registryOps, resource)
-            .ifSuccess { nbtIn.put("item", it) }
-        nbtIn.putInt("amount", amount)
-        nbt.put(nbtKey, nbtIn)
+        nbt.put(
+            nbtKey,
+            buildNbt {
+                HTItemVariant.CODEC
+                    .encodeStart(registryOps, resource)
+                    .ifSuccess { put("item", it) }
+                putInt("amount", amount)
+            },
+        )
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {

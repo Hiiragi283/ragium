@@ -2,12 +2,8 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
@@ -15,8 +11,6 @@ import net.minecraft.world.level.CommonLevelAccessor
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.phys.Vec3
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
 
@@ -92,18 +86,4 @@ fun dropStackAt(
     itemEntity.deltaMovement = Vec3.ZERO
     itemEntity.setPickUpDelay(0)
     return level.addFreshEntity(itemEntity)
-}
-
-//    BlockEntity    //
-
-/**
- * [BlockEntity]に[CompoundTag]を使用したタグを同期させます。
- */
-fun BlockEntity.sendUpdatePacket() {
-    val serverLevel: ServerLevel = level as? ServerLevel ?: return
-    val packet: Packet<ClientGamePacketListener> = this.updatePacket ?: return
-    val chunk: ChunkAccess = serverLevel.getChunk(blockPos)
-    serverLevel.chunkSource.chunkMap.getPlayers(chunk.pos, false).forEach { player: ServerPlayer ->
-        player.connection.send(packet)
-    }
 }

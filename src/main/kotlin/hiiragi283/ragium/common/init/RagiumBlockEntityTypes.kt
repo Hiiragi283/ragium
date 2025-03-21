@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.init
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTCrusherBlockEntity
@@ -71,22 +70,22 @@ object RagiumBlockEntityTypes {
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        fun <T> registerHandlers(holder: HTDeferredBlockEntityType<T>) where T : HTBlockEntity, T : HTHandlerBlockEntity {
+        fun <T : HTBlockEntity> registerHandlers(holder: HTDeferredBlockEntityType<T>) {
             val type: BlockEntityType<T> = holder.get()
             event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 type,
-                HTHandlerBlockEntity::getItemHandler,
+                HTBlockEntity::getItemHandler,
             )
             event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 type,
-                HTHandlerBlockEntity::getFluidHandler,
+                HTBlockEntity::getFluidHandler,
             )
             event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 type,
-                HTHandlerBlockEntity::getEnergyStorage,
+                HTBlockEntity::getEnergyStorage,
             )
         }
 

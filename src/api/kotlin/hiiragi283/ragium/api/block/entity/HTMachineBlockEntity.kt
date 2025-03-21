@@ -26,8 +26,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
  */
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),
-    HTEnchantmentHolder,
-    HTHandlerBlockEntity {
+    HTEnchantmentHolder {
     //    Save & Load    //
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
@@ -70,8 +69,12 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     private var network: IEnergyStorage? = null
 
-    override fun setLevel(level: Level) {
-        network = RagiumAPI.getInstance().getEnergyNetwork(level)?.let(HTStorageIO.INPUT::wrapEnergyStorage)
+    override fun afterLevelInit(level: Level) {
+        network = RagiumAPI
+            .getInstance()
+            .getEnergyNetworkManager()
+            .getNetwork(level)
+            ?.let(HTStorageIO.INPUT::wrapEnergyStorage)
     }
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = network

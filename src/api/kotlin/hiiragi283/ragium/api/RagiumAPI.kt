@@ -4,11 +4,11 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.buildMultiMap
-import hiiragi283.ragium.api.extension.convertToServer
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -20,10 +20,8 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -99,12 +97,10 @@ interface RagiumAPI {
      */
     fun getCurrentSide(): LogicalSide
 
-    fun getEnergyNetwork(level: Level?): IEnergyStorage? = level.convertToServer()?.let(::getEnergyNetwork)
-
     /**
-     * 指定した[level]からエネルギーネットワークのインスタンスを返します。
+     * エネルギーネットワークのマネージャを返します。
      */
-    fun getEnergyNetwork(level: ServerLevel): IEnergyStorage
+    fun getEnergyNetworkManager(): HTEnergyNetworkManager
 
     //    Platform    //
 

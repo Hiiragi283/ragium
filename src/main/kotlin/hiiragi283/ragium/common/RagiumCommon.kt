@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.registry.HTRecipeType
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.internal.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -40,6 +41,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumRecipes
         HTRecipeType.init(eventBus)
 
+        HTEnergyNetworkManagerImpl
+        
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onModConstruct(eventBus, dist)
         }

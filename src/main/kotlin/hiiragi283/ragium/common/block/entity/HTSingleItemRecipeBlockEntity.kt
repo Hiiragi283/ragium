@@ -104,7 +104,7 @@ abstract class HTSingleItemRecipeBlockEntity(
         // インプットを消費できるか判定する
         if (!inputSlot.canExtract(1)) return skipTicking()
         // エネルギーを消費できるか判定する
-        val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetwork(level) ?: return skipTicking()
+        val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetworkManager().getNetwork(level) ?: return skipTicking()
         if (network.extractEnergy(1600, true) != 1600) return skipTicking()
         // レシピを実行する
         outputSlot.insert(output, false)

@@ -6,9 +6,9 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddonCollector
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
@@ -17,14 +17,12 @@ import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.server.MinecraftServer
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
@@ -68,7 +66,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getCurrentSide(): LogicalSide = EffectiveSide.get()
 
-    override fun getEnergyNetwork(level: ServerLevel): IEnergyStorage = level.getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
+    override fun getEnergyNetworkManager(): HTEnergyNetworkManager = HTEnergyNetworkManagerImpl
 
     //    Platform    //
 
