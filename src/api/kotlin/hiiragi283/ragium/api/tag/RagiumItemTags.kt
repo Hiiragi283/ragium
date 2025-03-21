@@ -95,6 +95,9 @@ object RagiumItemTags {
     val MOLDS_BALL: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/ball"))
 
     @JvmField
+    val MOLDS_BLANK: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/blank"))
+
+    @JvmField
     val MOLDS_BLOCK: TagKey<Item> = itemTagKey(RagiumAPI.id("molds/block"))
 
     @JvmField

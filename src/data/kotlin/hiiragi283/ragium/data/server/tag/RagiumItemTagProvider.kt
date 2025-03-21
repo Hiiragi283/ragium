@@ -214,6 +214,11 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addItem(RagiumItemTags.NETHER_SOILS, Items.CRIMSON_NYLIUM)
         builder.addItem(RagiumItemTags.NETHER_SOILS, Items.WARPED_NYLIUM)
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
+
+        for (mold: RagiumItems.Molds in RagiumItems.Molds.entries) {
+            builder.addTag(RagiumItemTags.MOLDS, mold.tagKey)
+            builder.add(mold.tagKey, mold.holder)
+        }
     }
 
     //    Part    //

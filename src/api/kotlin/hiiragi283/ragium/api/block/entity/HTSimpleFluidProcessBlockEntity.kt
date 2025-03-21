@@ -1,15 +1,14 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTSimpleFluidRecipe
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
-import hiiragi283.ragium.common.recipe.HTSimpleItemRecipe
+import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -21,44 +20,32 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-abstract class HTSimpleItemProcessBlockEntity(
-    val recipeType: HTRecipeType<HTMachineInput, out HTSimpleItemRecipe>,
+abstract class HTSimpleFluidProcessBlockEntity(
+    val recipeType: HTRecipeType<HTMachineInput, out HTSimpleFluidRecipe>,
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
 ) : HTMachineBlockEntity(type, pos, state),
-    HTItemSlotHandler {
-    protected val inputSlot: HTItemSlot = HTItemSlot.builder(this).build("item_input")
-    protected val outputSlot: HTItemSlot = HTItemSlot.builder(this).build("item_output")
+    HTFluidSlotHandler {
+    protected val inputTank: HTFluidTank = HTFluidTank.builder(this).build("fluid_input")
+    protected val outputTank: HTFluidTank = HTFluidTank.builder(this).build("fluid_output")
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
-        inputSlot.writeNbt(nbt, registryOps)
-        outputSlot.writeNbt(nbt, registryOps)
+        inputTank.writeNbt(nbt, registryOps)
+        outputTank.writeNbt(nbt, registryOps)
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.readNbt(nbt, registryOps)
-        inputSlot.readNbt(nbt, registryOps)
-        outputSlot.readNbt(nbt, registryOps)
+        inputTank.readNbt(nbt, registryOps)
+        outputTank.readNbt(nbt, registryOps)
     }
 
     override fun loadEnchantment(newEnchantments: ItemEnchantments) {
         super.loadEnchantment(newEnchantments)
-        inputSlot.onUpdateEnchantment(newEnchantments)
-        outputSlot.onUpdateEnchantment(newEnchantments)
-    }
-
-    override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        super.onRemove(state, level, pos, newState, movedByPiston)
-        inputSlot.dropStack(level, pos)
-        outputSlot.dropStack(level, pos)
+        inputTank.onUpdateEnchantment(newEnchantments)
+        outputTank.onUpdateEnchantment(newEnchantments)
     }
 
     //    Ticking    //
@@ -69,7 +56,7 @@ abstract class HTSimpleItemProcessBlockEntity(
             level: Level,
             pos: BlockPos,
             state: BlockState,
-            blockEntity: HTSimpleItemProcessBlockEntity,
+            blockEntity: HTSimpleFluidProcessBlockEntity,
         ) {
             blockEntity.totalTick++
         }
@@ -79,14 +66,14 @@ abstract class HTSimpleItemProcessBlockEntity(
             level: Level,
             pos: BlockPos,
             state: BlockState,
-            blockEntity: HTSimpleItemProcessBlockEntity,
+            blockEntity: HTSimpleFluidProcessBlockEntity,
         ) {
             blockEntity.totalTick++
             blockEntity.processRecipe(level, pos, state)
         }
     }
 
-    protected val recipeCache: HTRecipeCache<HTMachineInput, out HTSimpleItemRecipe> =
+    protected val recipeCache: HTRecipeCache<HTMachineInput, out HTSimpleFluidRecipe> =
         HTRecipeCache.reloadable(recipeType)
 
     private var checkRecipe: Boolean = false
@@ -97,10 +84,10 @@ abstract class HTSimpleItemProcessBlockEntity(
         // インプットに一致するレシピを探索する
         val input: HTMachineInput = HTMachineInput
             .builder()
-            .addInput(0, inputSlot)
-            .addOutput(0, outputSlot)
+            .addInput(0, inputTank)
+            .addOutput(0, outputTank)
             .build()
-        val recipe: HTSimpleItemRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
+        val recipe: HTSimpleFluidRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
         // 処理が行えるか判定する
         if (!recipe.canProcess(input)) return skipTicking()
         // エネルギーを消費できるか判定する
@@ -122,19 +109,19 @@ abstract class HTSimpleItemProcessBlockEntity(
         checkRecipe = false
     }
 
-    //    Item    //
+    //    Fluid    //
 
-    final override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
+    final override fun getFluidIoFromSlot(tank: Int): HTStorageIO = when (tank) {
         0 -> HTStorageIO.INPUT
         1 -> HTStorageIO.OUTPUT
         else -> HTStorageIO.EMPTY
     }
 
-    final override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
-        0 -> inputSlot
-        1 -> outputSlot
+    final override fun getFluidTank(tank: Int): HTFluidTank? = when (tank) {
+        0 -> inputTank
+        1 -> outputTank
         else -> null
     }
 
-    final override fun getSlots(): Int = 2
+    final override fun getTanks(): Int = 2
 }

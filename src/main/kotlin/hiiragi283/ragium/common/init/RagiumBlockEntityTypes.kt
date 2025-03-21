@@ -3,12 +3,12 @@ package hiiragi283.ragium.common.init
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.block.entity.HTSimpleItemProcessBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.HTSimpleItemProcessBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber

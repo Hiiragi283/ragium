@@ -45,7 +45,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
-            removeAll(RagiumItems.FLUID_CUBES)
         }.forEach(::basicItem)
 
         val generated: ModelFile = modelFile(ResourceLocation.withDefaultNamespace("item/generated"))

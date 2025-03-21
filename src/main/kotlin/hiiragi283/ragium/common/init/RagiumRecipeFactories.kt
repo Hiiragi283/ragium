@@ -2,10 +2,11 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.recipe.HTFluidOutput
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.common.recipe.*
+import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.common.recipe.HTCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.common.recipe.HTSimpleItemRecipe
+import hiiragi283.ragium.api.recipe.HTSimpleItemRecipe
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder

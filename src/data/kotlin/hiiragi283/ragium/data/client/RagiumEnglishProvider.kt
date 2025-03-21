@@ -183,6 +183,15 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.NAPALM_DYNAMITE, "Napalm Dynamite")
         addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")*/
 
+        addMold(RagiumItems.Molds.BLANK, "Mold (Blank)")
+        addMold(RagiumItems.Molds.BALL, "Mold (Ball)")
+        addMold(RagiumItems.Molds.BLOCK, "Mold (Block)")
+        addMold(RagiumItems.Molds.GEAR, "Mold (Gear)")
+        addMold(RagiumItems.Molds.INGOT, "Mold (Ingot)")
+        addMold(RagiumItems.Molds.PLATE, "Mold (Plate)")
+        addMold(RagiumItems.Molds.ROD, "Mold (Rod)")
+        addMold(RagiumItems.Molds.WIRE, "Mold (Wire)")
+
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
         // addItem(RagiumItems.BEE_WAX, "Bee Wax")
         // addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
@@ -367,6 +376,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumItemTags.MOLDS, "Press Mold")
         add(RagiumItemTags.MOLDS_BALL, "Press Mold (Ball)")
+        add(RagiumItemTags.MOLDS_BLANK, "Press Mold (Blank)")
         add(RagiumItemTags.MOLDS_BLOCK, "Press Mold (Block)")
         add(RagiumItemTags.MOLDS_GEAR, "Press Mold (Gear)")
         add(RagiumItemTags.MOLDS_INGOT, "Press Mold (Ingot)")

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:stonecutting",
+  "group": "mold",
+  "ingredient": {
+    "tag": "ragium:molds/blank"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:ingot_mold"
+  }
+}

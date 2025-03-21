@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.block.entity.HTSimpleItemProcessBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.BlockPos

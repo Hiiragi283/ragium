@@ -1,10 +1,6 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot

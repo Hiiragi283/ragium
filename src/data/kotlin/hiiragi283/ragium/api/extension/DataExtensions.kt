@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.Util
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -41,6 +42,10 @@ fun LanguageProvider.addTagPrefix(prefix: HTTagPrefix, value: String) {
 
 fun LanguageProvider.addOreVariant(variant: HTOreVariant, value: String) {
     add(variant.translationKey, value)
+}
+
+fun LanguageProvider.addMold(mold: RagiumItems.Molds, value: String) {
+    addItem(mold.holder, value)
 }
 
 //    ModelBuilder    //

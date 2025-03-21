@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/azure_steel"
+    },
+    "B": {
+      "tag": "c:tools/forge_hammer"
+    }
+  },
+  "pattern": [
+    "AA",
+    "AA",
+    "B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:blank_mold"
+  }
+}

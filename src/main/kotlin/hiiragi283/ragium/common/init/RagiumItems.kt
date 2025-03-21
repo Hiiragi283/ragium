@@ -10,35 +10,26 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.registry.HTItemRegister
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTMaterialItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.SimpleFluidContent
-import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStackSimple
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
-import thedarkcolour.kotlinforforge.neoforge.kotlin.supply
-import java.util.function.Supplier
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 object RagiumItems {
@@ -54,6 +45,8 @@ object RagiumItems {
         Ingots.entries
         RawResources.entries
         MekResources.entries
+
+        Molds.entries
 
         REGISTER.register(eventBus)
 
@@ -180,27 +173,6 @@ object RagiumItems {
     @JvmField
     val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, RagiumMaterials.AZURE_STEEL)
 
-    //    Fluid Cube    //
-
-    @JvmField
-    val WATER_CUBE: DeferredItem<Item> = register("water_cube")
-
-    @JvmField
-    val LAVA_CUBE: DeferredItem<Item> = register("lava_cube")
-
-    @JvmField
-    val MILK_CUBE: DeferredItem<Item> = register("milk_cube")
-
-    @JvmField
-    val FLUID_MAP: Map<DeferredItem<Item>, Supplier<out Fluid>> = mapOf(
-        WATER_CUBE to supply(Fluids.WATER),
-        LAVA_CUBE to supply(Fluids.LAVA),
-        MILK_CUBE to NeoForgeMod.MILK,
-    )
-
-    @JvmField
-    val FLUID_CUBES: Array<DeferredItem<*>> = FLUID_MAP.keys.toTypedArray()
-
     //    Foods    //
 
     @JvmStatic
@@ -294,6 +266,24 @@ object RagiumItems {
         AMBROSIA,
     )
 
+    //    Molds    //
+
+    enum class Molds(val tagKey: TagKey<Item>) : ItemLike {
+        BLANK(RagiumItemTags.MOLDS_BLANK),
+        BALL(RagiumItemTags.MOLDS_BALL),
+        BLOCK(RagiumItemTags.MOLDS_BLOCK),
+        GEAR(RagiumItemTags.MOLDS_GEAR),
+        INGOT(RagiumItemTags.MOLDS_INGOT),
+        PLATE(RagiumItemTags.MOLDS_PLATE),
+        ROD(RagiumItemTags.MOLDS_BLANK),
+        WIRE(RagiumItemTags.MOLDS_BLANK),
+        ;
+
+        val holder: DeferredItem<Item> = register("${name.lowercase()}_mold")
+
+        override fun asItem(): Item = holder.asItem()
+    }
+
     //    Machine Parts    //
 
     @JvmField
@@ -334,36 +324,11 @@ object RagiumItems {
 
     @SubscribeEvent
     fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            { stack: ItemStack, _: Void? ->
-                FluidHandlerItemStackSimple.Consumable(
-                    RagiumComponentTypes.FLUID_CONTENT,
-                    stack,
-                    1000,
-                )
-            },
-            *FLUID_CUBES,
-        )
-
         LOGGER.info("Registered item capabilities!")
     }
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
-        fun fluidCube(cube: ItemLike, fluid: Fluid) {
-            event.modify(cube) { builder: DataComponentPatch.Builder ->
-                builder.set(
-                    RagiumComponentTypes.FLUID_CONTENT.get(),
-                    SimpleFluidContent.copyOf(FluidStack(fluid, 1000)),
-                )
-            }
-        }
-
-        for ((cube: DeferredItem<Item>, fluid: Supplier<out Fluid>) in FLUID_MAP) {
-            fluidCube(cube, fluid.get())
-        }
-
         LOGGER.info("Modified default item components!")
     }
 }
