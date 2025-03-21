@@ -1,24 +1,18 @@
 package hiiragi283.ragium.common.recipe
 
-import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
+import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.common.init.RagiumRecipes
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
-class HTCentrifugingRecipe(
-    val ingredient: Either<SizedIngredient, SizedFluidIngredient>,
-    val itemOutputs: List<HTItemOutput>,
-    val fluidOutputs: List<HTFluidOutput>,
-) : HTMachineRecipe(RagiumRecipes.CENTRIFUGING) {
-    override fun matches(input: HTMachineInput): Boolean {
-        TODO("Not yet implemented")
-    }
+class HTRefiningRecipe(val ingredient: SizedFluidIngredient, val itemOutput: HTItemOutput?, val fluidOutputs: List<HTFluidOutput>) :
+    HTMachineRecipe(RagiumRecipes.REFINING) {
+    override fun matches(input: HTMachineInput): Boolean = ingredient.test(input.getFluidStack(HTStorageIO.INPUT, 0))
 
     override fun canProcess(input: HTMachineInput): Boolean {
         TODO("Not yet implemented")
@@ -30,9 +24,9 @@ class HTCentrifugingRecipe(
 
     override fun getDefinition(): DataResult<HTRecipeDefinition> = DataResult.success(
         HTRecipeDefinition(
-            ingredient.left().stream().toList(),
-            ingredient.right().stream().toList(),
-            itemOutputs,
+            listOf(),
+            listOf(ingredient),
+            listOfNotNull(itemOutput),
             fluidOutputs,
         ),
     )

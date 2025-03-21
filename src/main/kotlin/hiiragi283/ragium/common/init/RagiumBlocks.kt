@@ -221,6 +221,9 @@ object RagiumBlocks {
     //    Foods    //
 
     @JvmField
+    val CHEESE_BLOCK: DeferredBlock<Block> = register("cheese_block", wooden())
+
+    @JvmField
     val SPONGE_CAKE: DeferredBlock<HTSpongeCakeBlock> = register(
         "sponge_cake",
         soft().mapColor(MapColor.COLOR_YELLOW),

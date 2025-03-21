@@ -22,6 +22,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildList {
+            add(RagiumBlocks.CHEESE_BLOCK)
             add(RagiumBlocks.SPONGE_CAKE)
 
             addAll(RagiumBlocks.CASINGS)

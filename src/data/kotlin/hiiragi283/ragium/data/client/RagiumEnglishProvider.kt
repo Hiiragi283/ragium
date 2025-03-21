@@ -55,6 +55,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
 
+        addBlock(RagiumBlocks.CHEESE_BLOCK, "Block of Cheese")
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -145,6 +146,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.BUTTER, "Butter")
+        addItem(RagiumItems.CHEESE, "Cheese")
+
         addItem(RagiumItems.DOUGH, "Dough")
         addItem(RagiumItems.FLOUR, "Flour")
 
@@ -355,6 +358,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
         add(RagiumItemTags.FLOURS, "Flours")
+        add(RagiumItemTags.FOOD_BUTTER, "Butter")
+        add(RagiumItemTags.FOOD_CHEESE, "Cheese")
         add(RagiumItemTags.FOOD_CHOCOLATE, "Chocolate")
         add(RagiumItemTags.FOOD_DOUGH, "Dough")
 

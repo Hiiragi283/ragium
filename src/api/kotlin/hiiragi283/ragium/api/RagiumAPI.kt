@@ -3,8 +3,8 @@ package hiiragi283.ragium.api
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.extension.asServerLevel
 import hiiragi283.ragium.api.extension.buildMultiMap
+import hiiragi283.ragium.api.extension.convertToServer
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -99,7 +99,7 @@ interface RagiumAPI {
      */
     fun getCurrentSide(): LogicalSide
 
-    fun getEnergyNetwork(level: Level?): IEnergyStorage? = level.asServerLevel()?.let(::getEnergyNetwork)
+    fun getEnergyNetwork(level: Level?): IEnergyStorage? = level.convertToServer()?.let(::getEnergyNetwork)
 
     /**
      * 指定した[level]からエネルギーネットワークのインスタンスを返します。

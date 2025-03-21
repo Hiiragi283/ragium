@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.block.entity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.enchantment.HTEnchantmentEntry
 import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
-import hiiragi283.ragium.api.enchantment.HTEnchantmentListener
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -29,16 +28,6 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTBlockEntity(type, pos, state),
     HTEnchantmentHolder,
     HTHandlerBlockEntity {
-    init {
-        onCreated()
-    }
-
-    protected abstract fun onCreated()
-
-    protected fun addEnchListener(listener: HTEnchantmentListener) {
-        this.listener.add(listener)
-    }
-
     //    Save & Load    //
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
@@ -66,13 +55,8 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected var itemEnchantments: ItemEnchantments = ItemEnchantments.EMPTY
         private set
 
-    private val listener: MutableList<HTEnchantmentListener> = mutableListOf()
-
-    private fun loadEnchantment(newEnchantments: ItemEnchantments) {
+    protected open fun loadEnchantment(newEnchantments: ItemEnchantments) {
         this.itemEnchantments = newEnchantments
-        for (listener: HTEnchantmentListener in listener) {
-            listener.onUpdateEnchantment(newEnchantments)
-        }
     }
 
     override fun getEnchLevel(key: ResourceKey<Enchantment>): Int {

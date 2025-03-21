@@ -218,6 +218,9 @@ object RagiumItems {
     val BUTTER: DeferredItem<Item> = registerFood("butter", Foods.APPLE)
 
     @JvmField
+    val CHEESE: DeferredItem<Item> = registerFood("cheese", Foods.APPLE)
+
+    @JvmField
     val FLOUR: DeferredItem<Item> = register("flour")
 
     @JvmField
@@ -271,6 +274,7 @@ object RagiumItems {
         MELON_PIE,
         // ingredient
         BUTTER,
+        CHEESE,
         FLOUR,
         DOUGH,
         // chocolate

@@ -1,9 +1,11 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
+import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
@@ -22,18 +24,22 @@ fun BlockPos.toCenterVec3(): Vec3 = toVec3().add(0.5, 0.0, 0.5)
 
 //    Level    //
 
+/**
+ * 指定した[Level]に対応する[ServerLevel]を返します。
+ * @return 指定した[Level]が`null`，または対応する[ServerLevel]がない場合は`null`
+ */
+fun Level?.convertToServer(): ServerLevel? {
+    if (this is ServerLevel) return this
+    val dimension: ResourceKey<Level> = this?.dimension() ?: return null
+    return RagiumAPI.getInstance().getCurrentServer()?.getLevel(dimension)
+}
+
 fun CommonLevelAccessor.emptyBlock(pos: BlockPos) {
     removeBlock(pos, false)
     if (!getFluidState(pos).isEmpty) {
         setBlock(pos, Blocks.AIR.defaultBlockState(), 3)
     }
 }
-
-/**
- * [Level]を[ServerLevel]にキャストしようとします。
- * @return [ServerLevel]にキャストできなかった場合は`null`
- */
-fun Level?.asServerLevel(): ServerLevel? = this as? ServerLevel
 
 /**
  * 指定した[item]を[entity]の足元にドロップします。
@@ -94,7 +100,7 @@ fun dropStackAt(
  * [BlockEntity]に[CompoundTag]を使用したタグを同期させます。
  */
 fun BlockEntity.sendUpdatePacket() {
-    val serverLevel: ServerLevel = level.asServerLevel() ?: return
+    val serverLevel: ServerLevel = level as? ServerLevel ?: return
     val packet: Packet<ClientGamePacketListener> = this.updatePacket ?: return
     val chunk: ChunkAccess = serverLevel.getChunk(blockPos)
     serverLevel.chunkSource.chunkMap.getPlayers(chunk.pos, false).forEach { player: ServerPlayer ->

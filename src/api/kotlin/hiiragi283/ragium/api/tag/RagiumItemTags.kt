@@ -44,6 +44,12 @@ object RagiumItemTags {
     val FLOURS: TagKey<Item> = commonTag("flours")
 
     @JvmField
+    val FOOD_BUTTER: TagKey<Item> = commonTag("foods/butter")
+
+    @JvmField
+    val FOOD_CHEESE: TagKey<Item> = commonTag("foods/cheese")
+
+    @JvmField
     val FOOD_CHOCOLATE: TagKey<Item> = commonTag("foods/chocolate")
 
     @JvmField

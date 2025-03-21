@@ -17,6 +17,7 @@ import net.minecraft.resources.RegistryOps
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -31,11 +32,6 @@ abstract class HTSingleItemRecipeBlockEntity(
     protected val inputSlot: HTItemSlot = HTItemSlot.builder(this).build("item_input")
     protected val outputSlot: HTItemSlot = HTItemSlot.builder(this).build("item_output")
 
-    override fun onCreated() {
-        addEnchListener(inputSlot)
-        addEnchListener(outputSlot)
-    }
-
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
         inputSlot.writeNbt(nbt, registryOps)
@@ -46,6 +42,12 @@ abstract class HTSingleItemRecipeBlockEntity(
         super.readNbt(nbt, registryOps)
         inputSlot.readNbt(nbt, registryOps)
         outputSlot.readNbt(nbt, registryOps)
+    }
+
+    override fun loadEnchantment(newEnchantments: ItemEnchantments) {
+        super.loadEnchantment(newEnchantments)
+        inputSlot.onUpdateEnchantment(newEnchantments)
+        outputSlot.onUpdateEnchantment(newEnchantments)
     }
 
     override fun onRemove(

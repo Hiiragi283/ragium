@@ -32,6 +32,7 @@ class RagiumBlockTagProvider(
         // Axe
         builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
         // Hoe
+        builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.CHEESE_BLOCK)
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE)
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE_SLAB)
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)

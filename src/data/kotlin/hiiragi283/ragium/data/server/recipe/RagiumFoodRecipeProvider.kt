@@ -56,8 +56,21 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun milk(output: RecipeOutput) {
         // Butter
-
+        centrifuging()
+            .itemOutput(RagiumItems.BUTTER)
+            .itemOutput(RagiumItems.CHEESE)
+            .milkInput()
+            .save(output)
         // Cheese
+        HTShapedRecipeBuilder(RagiumBlocks.CHEESE_BLOCK)
+            .hollow8()
+            .define('A', RagiumItemTags.FOOD_CHEESE)
+            .define('B', RagiumItems.CHEESE)
+            .saveSuffixed(output, "_from_base")
+
+        HTShapelessRecipeBuilder(RagiumItems.CHEESE, 9)
+            .addIngredient(RagiumBlocks.CHEESE_BLOCK)
+            .saveSuffixed(output, "_from_block")
     }
 
     private fun sponge(output: RecipeOutput) {
@@ -66,7 +79,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .cross8()
             .define('A', RagiumItemTags.FLOURS)
             .define('B', Items.SUGAR)
-            .define('C', RagiumItems.BUTTER)
+            .define('C', RagiumItemTags.FOOD_BUTTER)
             .save(output)
 
         addSlab(output, RagiumBlocks.SPONGE_CAKE, RagiumBlocks.SPONGE_CAKE_SLAB)

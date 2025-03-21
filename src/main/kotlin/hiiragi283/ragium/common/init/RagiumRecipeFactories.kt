@@ -11,7 +11,7 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 object RagiumRecipeFactories {
     @JvmStatic
-    fun centrifuge(definition: HTRecipeDefinition): DataResult<HTCentrifugingRecipe> {
+    fun centrifuging(definition: HTRecipeDefinition): DataResult<HTCentrifugingRecipe> {
         val ingredient: Either<SizedIngredient, SizedFluidIngredient> =
             when {
                 definition.getItemIngredient(0) != null -> Either.left(definition.getItemIngredient(0))
@@ -19,6 +19,13 @@ object RagiumRecipeFactories {
                 else -> return DataResult.error { "Either one item or fluid ingredient required!" }
             }
         return DataResult.success(HTCentrifugingRecipe(ingredient, definition.itemOutputs, definition.fluidOutputs))
+    }
+
+    @JvmStatic
+    fun refining(definition: HTRecipeDefinition): DataResult<HTRefiningRecipe> {
+        val ingredient: SizedFluidIngredient =
+            definition.getFluidIngredient(0) ?: return DataResult.error { "Required one fluid ingredient!" }
+        return DataResult.success(HTRefiningRecipe(ingredient, definition.getItemOutput(0), definition.fluidOutputs))
     }
 
     //    ItemProcess    //

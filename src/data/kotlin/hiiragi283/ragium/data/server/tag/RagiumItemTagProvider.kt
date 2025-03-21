@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -28,7 +27,6 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.DeferredItem
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
@@ -116,14 +114,26 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
         builder.add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
         // Food
+        builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_BUTTER)
+        builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_CHEESE)
         builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_CHOCOLATE)
         builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_DOUGH)
 
-        for (foodItem: DeferredItem<out Item> in RagiumItems.FOODS) {
-            if (foodItem.get().components().has(DataComponents.FOOD)) {
-                builder.add(Tags.Items.FOODS, foodItem)
-            }
-        }
+        builder.add(Tags.Items.FOODS, RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+        builder.add(Tags.Items.FOODS, RagiumItems.MELON_PIE)
+        builder.add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_APPLE)
+        builder.add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_BREAD)
+        builder.add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_COOKIE)
+        builder.add(Tags.Items.FOODS, RagiumItems.MEAT_INGOT)
+        builder.add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
+        builder.add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
+        builder.add(Tags.Items.FOODS, RagiumItems.MEAT_SANDWICH)
+        builder.add(Tags.Items.FOODS, RagiumItems.WARPED_WART)
+        builder.add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
+
+        builder.add(RagiumItemTags.FOOD_BUTTER, RagiumItems.BUTTER)
+
+        builder.add(RagiumItemTags.FOOD_CHEESE, RagiumItems.CHEESE)
 
         builder.add(RagiumItemTags.FOOD_CHOCOLATE, RagiumItems.CHOCOLATE)
         builder.add(
