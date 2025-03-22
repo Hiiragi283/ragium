@@ -6,11 +6,14 @@ import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
+import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
@@ -22,11 +25,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
     private fun registerBlocks() {
         // Blocks
-        buildList {
-            addAll(RagiumBlocks.REGISTER.entries)
-
-            // remove(RagiumBlocks.CRUDE_OIL)
-        }.forEach(::simpleBlockItem)
+        RagiumBlocks.REGISTER.entries.forEach(::simpleBlockItem)
 
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)
@@ -41,18 +40,15 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         buildList {
             addAll(RagiumItems.REGISTER.entries)
 
-            remove(RagiumItems.CHOCOLATE_APPLE)
+            remove(RagiumItems.CRUDE_OIL_BUCKET)
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
+
+            remove(RagiumItems.CHOCOLATE_APPLE)
         }.forEach(::basicItem)
 
         val generated: ModelFile = modelFile(ResourceLocation.withDefaultNamespace("item/generated"))
-
-        getBuilder(RagiumItems.CHOCOLATE_APPLE)
-            .parent(generated)
-            .texture("layer0", "minecraft:item/apple")
-            .texture("layer1", RagiumItems.CHOCOLATE_APPLE.id.withPrefix("item/"))
 
         getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .parent(generated)
@@ -63,6 +59,16 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .parent(generated)
             .texture("layer0", "minecraft:item/iron_ingot")
             .texture("layer1", RagiumItems.AZURE_STEEL_COMPOUND.id.withPrefix("item/"))
+
+        getBuilder(RagiumItems.CHOCOLATE_APPLE)
+            .parent(generated)
+            .texture("layer0", "minecraft:item/apple")
+            .texture("layer1", RagiumItems.CHOCOLATE_APPLE.id.withPrefix("item/"))
+
+        getBuilder(RagiumItems.CRUDE_OIL_BUCKET)
+            .parent(modelFile(ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))
+            .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
+            .fluid(RagiumFluids.CRUDE_OIL.get())
 
         // Tool
         RagiumItems.RAGI_ALLOY_TOOLS.addItemModels(this)

@@ -34,6 +34,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun block() {
         addBlock(RagiumBlocks.SILT, "シルト")
+        addBlock(RagiumBlocks.CRUDE_OIL, "石油")
+        addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
 
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationJp("らぎレンガ", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationJp("紺碧のタイル", this)
@@ -194,8 +196,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄混合物")
         // addItem(RagiumItems.BEE_WAX, "蜜蠟")
-        // addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
-        // addItem(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
+        addItem(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
@@ -346,6 +347,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.PLASTICS, "プラスチック")
         add(RagiumItemTags.SILICON, "シリコン")
         add(RagiumItemTags.SLAG, "スラグ")
+        add(RagiumItemTags.TOOLS_FORGE_HAMMER, "鍛造ハンマー")
+        add(RagiumItemTags.BUCKETS_CRUDE_OIL, "原油入りバケツ")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "歪んだウォート")
         add(RagiumItemTags.FLOURS, "小麦粉")

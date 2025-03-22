@@ -22,6 +22,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildList {
+            add(RagiumBlocks.SILT)
+
             add(RagiumBlocks.CHEESE_BLOCK)
             add(RagiumBlocks.SPONGE_CAKE)
 
@@ -48,7 +50,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.RAGI_CRYSTAL_ORES.addBlockStates(this)
 
         // Log
-        // logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
+        logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
 
         // Food
         simpleAltBlock(RagiumBlocks.SWEET_BERRIES_CAKE)

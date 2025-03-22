@@ -116,6 +116,20 @@ object RagiumBlocks {
         blockProperty(Blocks.SAND),
     ) { prop: BlockBehaviour.Properties -> ColoredFallingBlock(ColorRGBA(0xccccff), prop) }
 
+    @JvmField
+    val CRUDE_OIL: DeferredBlock<LiquidBlock> = REGISTER.registerBlock(
+        "crude_oil",
+        { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluids.CRUDE_OIL.get(), properties) },
+        blockProperty(Blocks.WATER).mapColor(MapColor.COLOR_BLACK),
+    )
+
+    @JvmField
+    val ASH_LOG: DeferredBlock<RotatedPillarBlock> = register(
+        "ash_log",
+        blockProperty().mapColor(MapColor.COLOR_GRAY).strength(1f).sound(SoundType.SAND),
+        ::RotatedPillarBlock,
+    )
+
     //    Materials    //
 
     enum class StorageBlocks(properties: BlockBehaviour.Properties, override val key: HTMaterialKey) : HTMaterialItemLike {

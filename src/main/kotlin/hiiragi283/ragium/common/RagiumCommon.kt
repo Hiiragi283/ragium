@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
+import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -14,6 +15,7 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
+import net.neoforged.neoforge.fluids.DispenseFluidContainer
 import org.slf4j.Logger
 
 @Mod(RagiumAPI.MOD_ID)
@@ -60,8 +62,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork {
-            // DispenserBlock.registerBehavior(RagiumItems.CRUDE_OIL_BUCKET, DispenseFluidContainer.getInstance())
-            // DispenserBlock.registerBehavior(RagiumItems.HONEY_BUCKET, DispenseFluidContainer.getInstance())
+            DispenserBlock.registerBehavior(RagiumItems.CRUDE_OIL_BUCKET, DispenseFluidContainer.getInstance())
         }
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {

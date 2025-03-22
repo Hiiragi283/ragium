@@ -20,14 +20,19 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
+import net.minecraft.world.item.BucketItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 
@@ -159,6 +164,13 @@ object RagiumItems {
 
     @JvmField
     val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")
+
+    @JvmField
+    val CRUDE_OIL_BUCKET: DeferredItem<BucketItem> = register(
+        "crude_oil_bucket",
+        { properties: Item.Properties -> BucketItem(RagiumFluids.CRUDE_OIL.get(), properties) },
+        itemProperty().craftRemainder(Items.BUCKET).stacksTo(1),
+    )
 
     //    Armors    //
 
@@ -324,6 +336,12 @@ object RagiumItems {
 
     @SubscribeEvent
     fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            { stack: ItemStack, _: Void? -> FluidBucketWrapper(stack) },
+            CRUDE_OIL_BUCKET,
+        )
+
         LOGGER.info("Registered item capabilities!")
     }
 

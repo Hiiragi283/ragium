@@ -25,15 +25,15 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun meat(output: RecipeOutput) {
         // Minced Meat
-        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_MEAT)
             .saveSuffixed(output, "_from_meat")
-        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_FISH)
             .saveSuffixed(output, "_from_fish")
-        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Items.ROTTEN_FLESH)
             .savePrefixed(output, "rotten_")
@@ -126,7 +126,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
                 "BCB",
                 " D ",
             ).define('A', RagiumItemTags.FOOD_CHOCOLATE)
-            .define('B', Items.SUGAR)
+            .define('B', Tags.Items.FOODS_BERRY)
             .define('C', Tags.Items.EGGS)
             .define('D', RagiumBlocks.SPONGE_CAKE_SLAB)
             .saveSuffixed(output, "_with_sponge")

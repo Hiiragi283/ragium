@@ -56,9 +56,9 @@ class HTMachineRecipeType(val name: String, private val factory: (HTRecipeDefini
      * @return 見つからなかった場合は[Result.failure]
      */
     fun getFirstRecipe(input: HTMachineInput, level: Level, lastRecipe: ResourceLocation?): RecipeHolder<HTMachineRecipe>? {
-        // Check cache update
+        // キャッシュの更新を促す
         this.reloadCache()
-        // Find from cache
+        // 更新されたキャッシュから取得する
         var firstRecipe: RecipeHolder<HTMachineRecipe>? = null
         if (lastRecipe != null) {
             firstRecipe = recipeCache[lastRecipe]?.takeIf { it.value.matches(input, level) }
@@ -109,9 +109,9 @@ class HTMachineRecipeType(val name: String, private val factory: (HTRecipeDefini
             val consumer: (RecipeHolder<HTMachineRecipe>) -> Unit = { holder: RecipeHolder<HTMachineRecipe> ->
                 put(holder.id, holder)
             }
-            // Reload from RecipeManager
+            // RecipeManagerから再読み込み
             manager.getAllRecipesFor(this@HTMachineRecipeType).forEach(consumer)
-            // Reload from Event
+            // Eventから再読み込み
             val access: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return@buildMap
             val event = HTRecipesUpdatedEvent(
                 access,

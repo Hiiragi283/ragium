@@ -38,9 +38,8 @@ object RagiumFluids {
                 RagiumFluidTypes.CRUDE_OIL,
                 CRUDE_OIL,
                 FLOWING_CRUDE_OIL,
-            )
-        // .block(RagiumBlocks.CRUDE_OIL)
-        // .bucket(RagiumItems.CRUDE_OIL_BUCKET)
+            ).block(RagiumBlocks.CRUDE_OIL)
+            .bucket(RagiumItems.CRUDE_OIL_BUCKET)
         REGISTER.register(CRUDE_OIL.id.path) { _: ResourceLocation -> BaseFlowingFluid.Source(properties) }
         REGISTER.register(FLOWING_CRUDE_OIL.id.path) { _: ResourceLocation -> BaseFlowingFluid.Flowing(properties) }
         // Virtual

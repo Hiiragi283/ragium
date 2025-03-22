@@ -6,7 +6,7 @@
       "tag": "c:foods/chocolate"
     },
     "B": {
-      "item": "minecraft:sugar"
+      "tag": "c:foods/berry"
     },
     "C": {
       "tag": "c:eggs"

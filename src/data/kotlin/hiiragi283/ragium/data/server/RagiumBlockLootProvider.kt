@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.extension.enchLookup
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
@@ -51,11 +52,11 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(RagiumBlocks.BLUE_NETHER_BRICK_SETS)
         }.forEach { it.addBlockLoot() }
 
-        /*fortuneDrop(
+        fortuneDrop(
             RagiumBlocks.ASH_LOG,
             UniformGenerator.between(1f, 3f),
-            RagiumItems.getMaterialItem(HTTagPrefix.DUST, CommonMaterials.ASH),
-        )*/
+            RagiumItems.Dusts.ASH,
+        )
 
         fun registerOres(oreSets: HTOreSets, drop: ItemLike) {
             for (ore: DeferredBlock<*> in oreSets.blockHolders) {
@@ -73,6 +74,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     private val blocks: MutableList<Block> = mutableListOf()
 
     override fun add(block: Block, builder: LootTable.Builder) {
+        if (RagiumBlocks.CRUDE_OIL.isOf(block)) return
         super.add(block, builder)
         blocks.add(block)
     }

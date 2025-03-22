@@ -36,6 +36,9 @@ object RagiumItemTags {
     @JvmField
     val TOOLS_FORGE_HAMMER: TagKey<Item> = commonTag("tools/forge_hammer")
 
+    @JvmField
+    val BUCKETS_CRUDE_OIL: TagKey<Item> = commonTag("buckets/crude_oil")
+
     // Foods
     @JvmField
     val CROPS_WARPED_WART: TagKey<Item> = commonTag("crops/warped_wart")
@@ -69,7 +72,6 @@ object RagiumItemTags {
     val CIRCUITS_ELITE: TagKey<Item> = itemTagKey(commonId("circuits/elite"))
 
     // Glasses
-
     @JvmField
     val GLASS_BLOCKS_OBSIDIAN: TagKey<Item> = commonTag("glass_blocks/obsidian")
 

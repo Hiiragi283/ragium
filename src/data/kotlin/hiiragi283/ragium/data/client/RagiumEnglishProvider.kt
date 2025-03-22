@@ -34,6 +34,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
     private fun block() {
         addBlock(RagiumBlocks.SILT, "Silt")
+        addBlock(RagiumBlocks.CRUDE_OIL, "Crude Oil")
+        addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
 
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationEn("Ragi-Brick", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationEn("Azure Tile", this)
@@ -194,8 +196,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
         // addItem(RagiumItems.BEE_WAX, "Bee Wax")
-        // addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        // addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
+        addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
@@ -355,6 +356,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.PLASTICS, "Plastic")
         add(RagiumItemTags.SILICON, "Silicon")
         add(RagiumItemTags.SLAG, "Slag")
+        add(RagiumItemTags.TOOLS_FORGE_HAMMER, "Forge Hammer")
+        add(RagiumItemTags.BUCKETS_CRUDE_OIL, "Crude Oil Bucket")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
         add(RagiumItemTags.FLOURS, "Flours")

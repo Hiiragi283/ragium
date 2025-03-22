@@ -196,6 +196,9 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         RagiumItems.RAGI_ALLOY_TOOLS.appendItemTags(builder)
         RagiumItems.AZURE_STEEL_TOOLS.appendItemTags(builder)
 
+        builder.add(RagiumItemTags.BUCKETS_CRUDE_OIL, RagiumItems.CRUDE_OIL_BUCKET)
+        builder.addTag(Tags.Items.BUCKETS, RagiumItemTags.BUCKETS_CRUDE_OIL)
+
         builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
         builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
         builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
