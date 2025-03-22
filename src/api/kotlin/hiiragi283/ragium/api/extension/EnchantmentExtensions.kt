@@ -42,7 +42,7 @@ inline fun ItemEnchantments.copyAndEdit(action: ItemEnchantments.Mutable.() -> U
  * この[ItemStack]が保持しているエンチャントを更新します。
  * @param action エンチャントを更新するブロック
  */
-fun ItemStack.modifyEnchantment(action: (ItemEnchantments.Mutable) -> ItemEnchantments?): ItemStack {
+inline fun ItemStack.modifyEnchantment(action: (ItemEnchantments.Mutable) -> ItemEnchantments?): ItemStack {
     val type: DataComponentType<ItemEnchantments> = EnchantmentHelper.getComponentType(this)
     val current: ItemEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(this)
     val newEnch: ItemEnchantments? = action(ItemEnchantments.Mutable(current))

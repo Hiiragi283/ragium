@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.item.HTItemStackBuilder
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -17,6 +16,7 @@ import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.common.MutableDataComponentHolder
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -32,8 +32,6 @@ fun ItemLike.toStack(count: Int = 1): ItemStack = ItemStack(asItem(), count)
 
 fun itemProperty(): Item.Properties = Item.Properties()
 
-fun itemProperty(builderAction: Item.Properties.() -> Unit): Item.Properties = Item.Properties().apply(builderAction)
-
 /**
  * 指定した[text]をアイテムの名前に設定します。
  */
@@ -48,11 +46,14 @@ fun Item.Properties.lore(vararg lines: Component): Item.Properties = component(D
 
 //    ItemStack    //
 
+inline fun createItemStack(item: ItemLike, count: Int = 1, builderAction: MutableDataComponentHolder.() -> Unit): ItemStack =
+    ItemStack(item, count).apply(builderAction)
+
 fun createPotionStack(potion: Holder<Potion>, count: Int = 1): ItemStack = createPotionStack(PotionContents(potion), count)
 
-fun createPotionStack(content: PotionContents, count: Int = 1): ItemStack = HTItemStackBuilder(Items.POTION, count)
-    .put(DataComponents.POTION_CONTENTS, content)
-    .build()
+fun createPotionStack(content: PotionContents, count: Int = 1): ItemStack = createItemStack(Items.POTION, count) {
+    set(DataComponents.POTION_CONTENTS, content)
+}
 
 val ItemStack.isNotEmpty: Boolean get() = !isEmpty
 

@@ -9,14 +9,15 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
-import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
@@ -82,7 +83,7 @@ class InternalRagiumAPI : RagiumAPI {
         override fun getSlots(): Int = 1
     }
 
-    override fun wrapFluidTank(storageIO: HTStorageIO, tankIn: HTFluidTank): IFluidHandler = object : HTFluidSlotHandler {
+    override fun wrapFluidTank(storageIO: HTStorageIO, tankIn: HTFluidTank): IFluidHandler = object : HTFluidTankHandler {
         override fun getFluidIoFromSlot(tank: Int): HTStorageIO = storageIO
 
         override fun getFluidTank(tank: Int): HTFluidTank? = tankIn
@@ -97,7 +98,7 @@ class InternalRagiumAPI : RagiumAPI {
         nbtKey: String,
         capacity: Int,
         validator: (HTItemVariant) -> Boolean,
-        callback: Runnable,
+        callback: () -> Unit,
     ): HTItemSlot = HTItemSlotImpl(
         nbtKey,
         capacity,
@@ -109,7 +110,7 @@ class InternalRagiumAPI : RagiumAPI {
         nbtKey: String,
         capacity: Int,
         validator: (HTFluidVariant) -> Boolean,
-        callback: Runnable,
+        callback: () -> Unit,
     ): HTFluidTank = HTFluidTankImpl(
         nbtKey,
         capacity,

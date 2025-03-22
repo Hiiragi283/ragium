@@ -138,7 +138,7 @@ interface RagiumAPI {
         nbtKey: String,
         capacity: Int,
         validator: (HTItemVariant) -> Boolean,
-        callback: Runnable,
+        callback: () -> Unit,
     ): HTItemSlot
 
     /**
@@ -148,7 +148,7 @@ interface RagiumAPI {
         nbtKey: String,
         capacity: Int,
         validator: (HTFluidVariant) -> Boolean,
-        callback: Runnable,
+        callback: () -> Unit,
     ): HTFluidTank
 
     fun createRangeText(stack: ItemStack): Component = Component

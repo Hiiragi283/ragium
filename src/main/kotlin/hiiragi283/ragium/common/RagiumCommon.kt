@@ -3,10 +3,10 @@ package hiiragi283.ragium.common
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.registry.HTRecipeType
+import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.internal.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
+import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -43,7 +43,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumCreativeTabs.REGISTER.register(eventBus)
 
         RagiumRecipes
-        HTRecipeType.init(eventBus)
+        HTMachineRecipeType.init(eventBus)
 
         HTEnergyNetworkManagerImpl
 

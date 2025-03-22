@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.api.recipe.HTSimpleItemRecipe
 import hiiragi283.ragium.integration.jei.addFluidStack
 import hiiragi283.ragium.integration.jei.addIngredients
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -11,11 +11,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
 
-class HTItemProcessRecipeCategory<T : HTSimpleItemRecipe>(
+class HTItemProcessRecipeCategory(
     guiHelper: IGuiHelper,
-    private val recipeType: RecipeType<RecipeHolder<T>>,
+    private val recipeType: RecipeType<RecipeHolder<HTMachineRecipe>>,
     icon: ItemLike,
-) : HTMachineRecipeCategory<T>(guiHelper, icon, 1.5) {
+) : HTMachineRecipeCategory(guiHelper, icon, 1.5) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, definition: HTRecipeDefinition) {
         // Item Input
         builder
@@ -34,7 +34,7 @@ class HTItemProcessRecipeCategory<T : HTSimpleItemRecipe>(
             .addFluidStack(definition.getFluidOutput(0)?.get())
     }
 
-    override fun getRecipeType(): RecipeType<RecipeHolder<T>> = recipeType
+    override fun getRecipeType(): RecipeType<RecipeHolder<HTMachineRecipe>> = recipeType
 
     override fun getWidth(): Int = 18 * 5 + 8
 

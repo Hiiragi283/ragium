@@ -18,7 +18,7 @@ class HTItemSlotImpl(
     private val nbtKey: String,
     private val baseCapacity: Int,
     validator: (HTItemVariant) -> Boolean,
-    callback: Runnable,
+    callback: () -> Unit,
 ) : HTItemSlot(validator, callback) {
     override var capacity: Int = baseCapacity
 

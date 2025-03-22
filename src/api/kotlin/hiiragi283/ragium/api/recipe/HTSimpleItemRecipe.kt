@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.registry.HTRecipeType
+import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient
  * アイテムを別のアイテムに変換するレシピ
  */
 abstract class HTSimpleItemRecipe(
-    recipeType: HTRecipeType<HTMachineInput, *>,
+    recipeType: HTMachineRecipeType,
     private val ingredient: SizedIngredient,
     private val output: HTItemOutput,
 ) : HTMachineRecipe(recipeType) {

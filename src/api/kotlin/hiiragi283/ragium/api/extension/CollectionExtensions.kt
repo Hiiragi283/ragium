@@ -10,10 +10,10 @@ import hiiragi283.ragium.api.util.HTTable
 
 fun <K : Any, V : Any> multiMapOf(): HTMultiMap.Mutable<K, V> = RagiumAPI.getInstance().createMultiMap<K, V>(HashMultimap.create())
 
-fun <K : Any, V : Any> buildMultiMap(builderAction: HTMultiMap.Mutable<K, V>.() -> Unit): HTMultiMap<K, V> =
+inline fun <K : Any, V : Any> buildMultiMap(builderAction: HTMultiMap.Mutable<K, V>.() -> Unit): HTMultiMap<K, V> =
     multiMapOf<K, V>().apply(builderAction)
 
-fun <K : Any, V : Any> HTMultiMap<K, V>.forEach(action: (K, V) -> Unit) {
+inline fun <K : Any, V : Any> HTMultiMap<K, V>.forEach(action: (K, V) -> Unit) {
     for ((k: K, v: V) in entries) {
         action(k, v)
     }
@@ -24,14 +24,14 @@ fun <K : Any, V : Any> HTMultiMap<K, V>.forEach(action: (K, V) -> Unit) {
 fun <R : Any, C : Any, V : Any> mutableTableOf(): HTTable.Mutable<R, C, V> =
     RagiumAPI.getInstance().createTable<R, C, V>(HashBasedTable.create())
 
-fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, V>.() -> Unit): HTTable<R, C, V> =
+inline fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, V>.() -> Unit): HTTable<R, C, V> =
     mutableTableOf<R, C, V>().apply(builderAction)
 
-fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
+inline fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
     entries.forEach(action)
 }
 
-fun <R : Any, C : Any, V : Any> HTTable.Mutable<R, C, V>.computeIfAbsent(row: R, column: C, mapper: (R, C) -> V): V {
+inline fun <R : Any, C : Any, V : Any> HTTable.Mutable<R, C, V>.computeIfAbsent(row: R, column: C, mapper: (R, C) -> V): V {
     val value: V? = get(row, column)
     if (value == null) {
         val newValue: V = mapper(row, column)

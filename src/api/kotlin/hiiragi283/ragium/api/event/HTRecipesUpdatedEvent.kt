@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.registry.HTRecipeType
+import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -15,19 +15,18 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.bus.api.Event
 import java.util.function.Function
-import kotlin.collections.firstOrNull
 import kotlin.jvm.optionals.getOrNull
 
 /**
  * レシピが再読み込みされたときに呼び出されるイベント
- * @see [HTRecipeType.reloadCache]
+ * @see [HTMachineRecipeType.reloadCache]
  */
 class HTRecipesUpdatedEvent(
     provider: HolderLookup.Provider,
-    private val currentType: HTRecipeType<*, *>,
+    private val currentType: HTMachineRecipeType,
     private val consumer: (RecipeHolder<*>) -> Unit,
 ) : Event(),
     HolderLookup.Provider by provider {
@@ -38,11 +37,7 @@ class HTRecipesUpdatedEvent(
      * @param recipeId 登録するレシピのID
      * @param function 登録するレシピのビルダーを返すブロック
      */
-    fun <I : RecipeInput, R : Recipe<I>> register(
-        recipeType: HTRecipeType<I, R>,
-        recipeId: ResourceLocation,
-        function: Function<HolderGetter<Item>, R?>,
-    ) {
+    fun <R : Recipe<*>> register(recipeType: RecipeType<R>, recipeId: ResourceLocation, function: Function<HolderGetter<Item>, R?>) {
         if (currentType == recipeType) {
             val recipe: R = function.apply(itemLookup()) ?: return
             consumer(RecipeHolder(recipeId, recipe))

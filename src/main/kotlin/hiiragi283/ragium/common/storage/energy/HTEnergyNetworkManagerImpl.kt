@@ -1,9 +1,8 @@
-package hiiragi283.ragium.common.internal
+package hiiragi283.ragium.common.storage.energy
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getServerSavedData
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetwork
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
@@ -12,7 +11,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
 
-object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
+internal object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
     init {
         NeoForge.EVENT_BUS.addListener(::onServerStarted)
         NeoForge.EVENT_BUS.addListener(::onServerStopped)
@@ -32,7 +31,7 @@ object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
         val cached: IEnergyStorage? = networkMap[key]
         if (cached != null) return cached
         // ない場合はキャッシュを取得する
-        return RagiumAPI
+        return RagiumAPI.Companion
             .getInstance()
             .getCurrentServer()
             ?.getLevel(key)

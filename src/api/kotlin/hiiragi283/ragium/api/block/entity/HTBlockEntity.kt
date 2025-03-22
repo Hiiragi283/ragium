@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
@@ -178,7 +178,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     /**
      * 指定した[direction]から[IFluidHandler]を返します。
      */
-    open fun getFluidHandler(direction: Direction?): IFluidHandler? = this as? HTFluidSlotHandler
+    open fun getFluidHandler(direction: Direction?): IFluidHandler? = this as? HTFluidTankHandler
 
     /**
      * 指定した[direction]から[IEnergyStorage]を返します。

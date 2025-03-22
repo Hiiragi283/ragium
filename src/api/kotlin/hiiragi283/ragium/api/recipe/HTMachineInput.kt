@@ -14,11 +14,6 @@ class HTMachineInput private constructor(
     private val slotTable: HTTable<HTStorageIO, Int, HTItemSlot>,
     private val tankTable: HTTable<HTStorageIO, Int, HTFluidTank>,
 ) : RecipeInput {
-    companion object {
-        @JvmStatic
-        fun builder(): Builder = Builder()
-    }
-
     fun getSlotOrNull(storageIO: HTStorageIO, index: Int): HTItemSlot? = slotTable.get(storageIO, index)
 
     fun getTankOrNull(storageIO: HTStorageIO, index: Int): HTFluidTank? = tankTable.get(storageIO, index)
@@ -46,7 +41,12 @@ class HTMachineInput private constructor(
 
     //    Builder    //
 
-    class Builder {
+    companion object {
+        @JvmStatic
+        fun create(builderAction: Builder.() -> Unit): HTMachineInput = Builder().apply(builderAction).build()
+    }
+
+    class Builder internal constructor() {
         private val slotTable: HTTable.Mutable<HTStorageIO, Int, HTItemSlot> = mutableTableOf()
         private val tankTable: HTTable.Mutable<HTStorageIO, Int, HTFluidTank> = mutableTableOf()
 

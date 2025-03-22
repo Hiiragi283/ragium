@@ -1,13 +1,10 @@
 package hiiragi283.ragium.api.storage.fluid
 
-import com.google.common.base.Predicates
-import com.google.common.util.concurrent.Runnables
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.enchantment.HTEnchantmentListener
 import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.util.HTNbtCodec
-import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -15,7 +12,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidUtil
 
-abstract class HTFluidTank(private val validator: (HTFluidVariant) -> Boolean, private val callback: Runnable) :
+abstract class HTFluidTank(private val validator: (HTFluidVariant) -> Boolean, private val callback: () -> Unit) :
     HTSingleVariantStorage<HTFluidVariant>(),
     HTEnchantmentListener,
     HTNbtCodec {
@@ -51,37 +48,27 @@ abstract class HTFluidTank(private val validator: (HTFluidVariant) -> Boolean, p
     override fun isValid(variant: HTFluidVariant): Boolean = validator(variant)
 
     override fun onContentsChanged() {
-        callback.run()
+        callback()
     }
 
     //    Builder    //
 
     companion object {
         @JvmStatic
-        fun builder(): Builder = Builder()
+        fun create(nbtKey: String, builderAction: Builder.() -> Unit = {}): HTFluidTank = Builder().apply(builderAction).build(nbtKey)
 
         @JvmStatic
-        fun builder(blockEntity: BlockEntity): Builder = builder().setCallback(blockEntity::setChanged)
+        fun create(nbtKey: String, blockEntity: BlockEntity, builderAction: Builder.() -> Unit = {}): HTFluidTank = Builder()
+            .apply {
+                callback = blockEntity::setChanged
+                builderAction()
+            }.build(nbtKey)
     }
 
-    class Builder {
-        private var capacity: Int = 8000
-        private var validator: (HTFluidVariant) -> Boolean = Predicates.alwaysTrue<HTFluidVariant>()::test
-        private var callback: Runnable = Runnables.doNothing()
-
-        fun setCapacity(capacity: Int): Builder = apply {
-            this.capacity = capacity
-        }
-
-        fun setValidator(tagKey: TagKey<Fluid>): Builder = setValidator { variant: HTFluidVariant -> variant.isIn(tagKey) }
-
-        fun setValidator(validator: (HTFluidVariant) -> Boolean): Builder = apply {
-            this.validator = validator
-        }
-
-        fun setCallback(callback: Runnable): Builder = apply {
-            this.callback = callback
-        }
+    class Builder internal constructor() {
+        var capacity: Int = 8000
+        var validator: (HTFluidVariant) -> Boolean = { true }
+        var callback: () -> Unit = {}
 
         fun build(nbtKey: String): HTFluidTank = RagiumAPI.getInstance().buildFluidTank(nbtKey, capacity, validator, callback)
     }

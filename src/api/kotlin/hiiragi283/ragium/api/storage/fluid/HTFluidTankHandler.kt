@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-interface HTFluidSlotHandler : IFluidHandler {
+interface HTFluidTankHandler : IFluidHandler {
     fun getFluidIoFromSlot(tank: Int): HTStorageIO
 
     fun getFluidTank(tank: Int): HTFluidTank?

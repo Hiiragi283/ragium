@@ -54,7 +54,7 @@ class HTToolSets(material: Tier, val key: HTMaterialKey) : HTItemSet {
         itemProperty().attributes(DiggerItem.createAttributes(material, 3f, -2.4f)),
     )
 
-    val hammerItem: DeferredItem<*> = itemRegister.registerItem(
+    val hammerItem: DeferredItem<HTForgeHammerItem> = itemRegister.registerItem(
         "${key.name}_hammer",
         { HTForgeHammerItem(material, it) },
         itemProperty().durability(material.uses),

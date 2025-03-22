@@ -2,13 +2,13 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTSimpleFluidRecipe
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.registry.HTRecipeType
+import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.fluid.HTFluidSlotHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -21,14 +21,14 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTSimpleFluidProcessBlockEntity(
-    val recipeType: HTRecipeType<HTMachineInput, out HTSimpleFluidRecipe>,
+    val recipeType: HTMachineRecipeType,
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
 ) : HTMachineBlockEntity(type, pos, state),
-    HTFluidSlotHandler {
-    protected val inputTank: HTFluidTank = HTFluidTank.builder(this).build("fluid_input")
-    protected val outputTank: HTFluidTank = HTFluidTank.builder(this).build("fluid_output")
+    HTFluidTankHandler {
+    protected val inputTank: HTFluidTank = HTFluidTank.create("fluid_input", this)
+    protected val outputTank: HTFluidTank = HTFluidTank.create("fluid_output", this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
@@ -73,8 +73,7 @@ abstract class HTSimpleFluidProcessBlockEntity(
         }
     }
 
-    protected val recipeCache: HTRecipeCache<HTMachineInput, out HTSimpleFluidRecipe> =
-        HTRecipeCache.reloadable(recipeType)
+    protected val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache.reloadable(recipeType)
 
     private var checkRecipe: Boolean = false
 
@@ -82,12 +81,11 @@ abstract class HTSimpleFluidProcessBlockEntity(
         // 200 tick毎に一度実行する
         if (totalTick % 200 != 0) return
         // インプットに一致するレシピを探索する
-        val input: HTMachineInput = HTMachineInput
-            .builder()
-            .addInput(0, inputTank)
-            .addOutput(0, outputTank)
-            .build()
-        val recipe: HTSimpleFluidRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
+        val input: HTMachineInput = HTMachineInput.create {
+            addInput(0, inputTank)
+            addOutput(0, outputTank)
+        }
+        val recipe: HTMachineRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
         // 処理が行えるか判定する
         if (!recipe.canProcess(input)) return skipTicking()
         // エネルギーを消費できるか判定する

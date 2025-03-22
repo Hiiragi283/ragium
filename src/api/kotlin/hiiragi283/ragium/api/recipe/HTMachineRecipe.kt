@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.registry.HTRecipeType
+import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 
-abstract class HTMachineRecipe(val recipeType: HTRecipeType<HTMachineInput, *>) : Recipe<HTMachineInput> {
+abstract class HTMachineRecipe(val recipeType: HTMachineRecipeType) : Recipe<HTMachineInput> {
     protected abstract fun matches(input: HTMachineInput): Boolean
 
     abstract fun canProcess(input: HTMachineInput): Boolean
@@ -32,7 +32,7 @@ abstract class HTMachineRecipe(val recipeType: HTRecipeType<HTMachineInput, *>) 
 
     final override fun getGroup(): String = group
 
-    final override fun getSerializer(): RecipeSerializer<*> = recipeType.serializer
+    final override fun getSerializer(): RecipeSerializer<*> = recipeType
 
     final override fun getType(): RecipeType<*> = recipeType
 }

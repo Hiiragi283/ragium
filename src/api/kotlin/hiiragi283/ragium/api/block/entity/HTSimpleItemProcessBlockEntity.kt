@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTSimpleItemRecipe
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.registry.HTRecipeType
+import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
@@ -21,14 +21,14 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTSimpleItemProcessBlockEntity(
-    val recipeType: HTRecipeType<HTMachineInput, out HTSimpleItemRecipe>,
+    val recipeType: HTMachineRecipeType,
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
 ) : HTMachineBlockEntity(type, pos, state),
     HTItemSlotHandler {
-    protected val inputSlot: HTItemSlot = HTItemSlot.builder(this).build("item_input")
-    protected val outputSlot: HTItemSlot = HTItemSlot.builder(this).build("item_output")
+    protected val inputSlot: HTItemSlot = HTItemSlot.create("item_input", this)
+    protected val outputSlot: HTItemSlot = HTItemSlot.create("item_output", this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
@@ -85,8 +85,7 @@ abstract class HTSimpleItemProcessBlockEntity(
         }
     }
 
-    protected val recipeCache: HTRecipeCache<HTMachineInput, out HTSimpleItemRecipe> =
-        HTRecipeCache.reloadable(recipeType)
+    protected val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache.reloadable(recipeType)
 
     private var checkRecipe: Boolean = false
 
@@ -94,12 +93,11 @@ abstract class HTSimpleItemProcessBlockEntity(
         // 200 tick毎に一度実行する
         if (totalTick % 200 != 0) return
         // インプットに一致するレシピを探索する
-        val input: HTMachineInput = HTMachineInput
-            .builder()
-            .addInput(0, inputSlot)
-            .addOutput(0, outputSlot)
-            .build()
-        val recipe: HTSimpleItemRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
+        val input: HTMachineInput = HTMachineInput.create {
+            addInput(0, inputSlot)
+            addOutput(0, outputSlot)
+        }
+        val recipe: HTMachineRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
         // 処理が行えるか判定する
         if (!recipe.canProcess(input)) return skipTicking()
         // エネルギーを消費できるか判定する

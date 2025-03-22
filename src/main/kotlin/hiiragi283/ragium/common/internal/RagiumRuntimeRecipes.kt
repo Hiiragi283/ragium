@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.RagiumRecipeFactories
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderGetter
 import net.minecraft.world.item.Item
@@ -36,7 +35,7 @@ object RagiumRuntimeRecipes {
                     RagiumAPI.id("runtime_${name}_dust_from_ore"),
                 ) { lookup: HolderGetter<Item> ->
                     val result: Item = event.getFirstItem(resultPrefix, key) ?: return@register null
-                    HTMachineRecipeBuilder(RagiumRecipeFactories::crushing)
+                    HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                         .itemInput(HTTagPrefix.ORE, key)
                         .itemOutput(result, 3)
                         .createRecipe()
@@ -49,7 +48,7 @@ object RagiumRuntimeRecipes {
                     RagiumRecipes.CRUSHING,
                     RagiumAPI.id("runtime_${name}_dust_from_main"),
                 ) { lookup: HolderGetter<Item> ->
-                    HTMachineRecipeBuilder(RagiumRecipeFactories::crushing)
+                    HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                         .itemInput(mainPrefix, key)
                         .itemOutput(dust)
                         .createRecipe()
@@ -60,7 +59,7 @@ object RagiumRuntimeRecipes {
                 RagiumRecipes.CRUSHING,
                 RagiumAPI.id("runtime_${name}_dust_from_gear"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipeFactories::crushing)
+                HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                     .itemInput(HTTagPrefix.GEAR, key)
                     .itemOutput(dust, 4)
                     .createRecipe()
@@ -70,7 +69,7 @@ object RagiumRuntimeRecipes {
                 RagiumRecipes.CRUSHING,
                 RagiumAPI.id("runtime_${name}_dust_from_plate"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipeFactories::crushing)
+                HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                     .itemInput(HTTagPrefix.PLATE, key)
                     .itemOutput(dust)
                     .createRecipe()
@@ -80,7 +79,7 @@ object RagiumRuntimeRecipes {
                 RagiumRecipes.CRUSHING,
                 RagiumAPI.id("runtime_${name}_dust_from_raw"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipeFactories::crushing)
+                HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                     .itemInput(HTTagPrefix.RAW_MATERIAL, key)
                     .itemOutput(dust, 2)
                     .createRecipe()

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.storage.fluid
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.HTRegistryCodecs
 import hiiragi283.ragium.api.extension.asFluidHolder
 import hiiragi283.ragium.api.extension.asReference
 import hiiragi283.ragium.api.extension.isOf
@@ -23,7 +24,7 @@ data class HTFluidVariant private constructor(override val holder: Holder.Refere
             val CODEC: Codec<HTFluidVariant> = RecordCodecBuilder.create { instance ->
                 instance
                     .group(
-                        FluidStack.FLUID_NON_EMPTY_CODEC.fieldOf("id").forGetter(HTFluidVariant::holder),
+                        HTRegistryCodecs.FLUID_HOLDER.fieldOf("id").forGetter(HTFluidVariant::holder),
                         DataComponentPatch.CODEC
                             .optionalFieldOf("components", DataComponentPatch.EMPTY)
                             .forGetter(HTFluidVariant::components),

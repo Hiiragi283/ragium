@@ -6,13 +6,13 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import net.minecraft.world.level.ItemLike
 
-abstract class HTMachineRecipeCategory<R : HTMachineRecipe>(
+abstract class HTMachineRecipeCategory(
     guiHelper: IGuiHelper,
     icon: ItemLike,
     arrowX: Double,
     arrowY: Double = 0.0,
-) : HTRecipeHolderCategory<R>(guiHelper, icon, arrowX, arrowY) {
-    final override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: R) {
+) : HTRecipeHolderCategory<HTMachineRecipe>(guiHelper, icon, arrowX, arrowY) {
+    final override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMachineRecipe) {
         recipe.getDefinition().ifSuccess { setRecipe(builder, it) }
     }
 

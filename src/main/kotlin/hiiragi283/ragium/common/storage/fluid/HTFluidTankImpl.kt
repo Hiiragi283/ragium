@@ -14,7 +14,7 @@ class HTFluidTankImpl(
     private val nbtKey: String,
     private val baseCapacity: Int,
     validator: (HTFluidVariant) -> Boolean,
-    callback: Runnable,
+    callback: () -> Unit,
 ) : HTFluidTank(validator, callback) {
     override var capacity: Int = baseCapacity
 

@@ -1,19 +1,21 @@
 package hiiragi283.ragium.integration.jei
 
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.common.init.RagiumRecipes
-import hiiragi283.ragium.common.recipe.HTCentrifugingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.world.item.crafting.RecipeHolder
 
 object RagiumJEIRecipeTypes {
-    @JvmField
-    val CENTRIFUGING: RecipeType<RecipeHolder<HTCentrifugingRecipe>> = RecipeType.createFromVanilla(RagiumRecipes.CENTRIFUGING)
+    @JvmStatic
+    fun create(recipeType: HTMachineRecipeType): RecipeType<RecipeHolder<HTMachineRecipe>> = RecipeType.createFromVanilla(recipeType)
 
     @JvmField
-    val CRUSHING: RecipeType<RecipeHolder<HTCrushingRecipe>> = RecipeType.createFromVanilla(RagiumRecipes.CRUSHING)
+    val CENTRIFUGING: RecipeType<RecipeHolder<HTMachineRecipe>> = create(RagiumRecipes.CENTRIFUGING)
 
     @JvmField
-    val EXTRACTING: RecipeType<RecipeHolder<HTExtractingRecipe>> = RecipeType.createFromVanilla(RagiumRecipes.EXTRACTING)
+    val CRUSHING: RecipeType<RecipeHolder<HTMachineRecipe>> = create(RagiumRecipes.CRUSHING)
+
+    @JvmField
+    val EXTRACTING: RecipeType<RecipeHolder<HTMachineRecipe>> = create(RagiumRecipes.EXTRACTING)
 }

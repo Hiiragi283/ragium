@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.storage.item
 
-import com.google.common.base.Predicates
-import com.google.common.util.concurrent.Runnables
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.enchantment.HTEnchantmentListener
 import hiiragi283.ragium.api.extension.dropStackAt
@@ -9,7 +7,6 @@ import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
-import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
@@ -67,30 +64,20 @@ abstract class HTItemSlot(private val validator: (HTItemVariant) -> Boolean, pri
 
     companion object {
         @JvmStatic
-        fun builder(): Builder = Builder()
+        fun create(nbtKey: String, builderAction: Builder.() -> Unit = {}): HTItemSlot = Builder().apply(builderAction).build(nbtKey)
 
         @JvmStatic
-        fun builder(blockEntity: BlockEntity): Builder = builder().setCallback(blockEntity::setChanged)
+        fun create(nbtKey: String, blockEntity: BlockEntity, builderAction: Builder.() -> Unit = {}): HTItemSlot = Builder()
+            .apply {
+                callback = blockEntity::setChanged
+                builderAction()
+            }.build(nbtKey)
     }
 
-    class Builder {
-        private var capacity: Int = Item.ABSOLUTE_MAX_STACK_SIZE
-        private var validator: (HTItemVariant) -> Boolean = Predicates.alwaysTrue<HTItemVariant>()::test
-        private var callback: Runnable = Runnables.doNothing()
-
-        fun setCapacity(capacity: Int): Builder = apply {
-            this.capacity = capacity
-        }
-
-        fun setValidator(tagKey: TagKey<Item>): Builder = setValidator { variant: HTItemVariant -> variant.isIn(tagKey) }
-
-        fun setValidator(validator: (HTItemVariant) -> Boolean): Builder = apply {
-            this.validator = validator
-        }
-
-        fun setCallback(callback: Runnable): Builder = apply {
-            this.callback = callback
-        }
+    class Builder internal constructor() {
+        var capacity: Int = Item.ABSOLUTE_MAX_STACK_SIZE
+        var validator: (HTItemVariant) -> Boolean = { true }
+        var callback: () -> Unit = {}
 
         fun build(nbtKey: String): HTItemSlot = RagiumAPI.getInstance().buildItemSlot(
             nbtKey,

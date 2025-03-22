@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.HTRegistryCodecs
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
@@ -23,7 +24,7 @@ data class HTFluidOutput private constructor(private val holder: Holder<Fluid>, 
             val CODEC: Codec<HTFluidOutput> = RecordCodecBuilder.create { instance ->
                 instance
                     .group(
-                        FluidStack.FLUID_NON_EMPTY_CODEC
+                        HTRegistryCodecs.FLUID_HOLDER
                             .fieldOf("fluid")
                             .forGetter(HTFluidOutput::holder),
                         ExtraCodecs.NON_NEGATIVE_INT.fieldOf("amount").forGetter(HTFluidOutput::amount),

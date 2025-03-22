@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.storage.item
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.HTRegistryCodecs
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.asReference
 import hiiragi283.ragium.api.extension.isOf
@@ -23,7 +24,7 @@ data class HTItemVariant private constructor(override val holder: Holder.Referen
             val CODEC: Codec<HTItemVariant> = RecordCodecBuilder.create { instance ->
                 instance
                     .group(
-                        ItemStack.ITEM_NON_AIR_CODEC.fieldOf("id").forGetter(HTItemVariant::holder),
+                        HTRegistryCodecs.ITEM_HOLDER.fieldOf("id").forGetter(HTItemVariant::holder),
                         DataComponentPatch.CODEC
                             .optionalFieldOf("components", DataComponentPatch.EMPTY)
                             .forGetter(HTItemVariant::components),

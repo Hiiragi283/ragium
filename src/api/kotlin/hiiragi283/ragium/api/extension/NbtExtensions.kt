@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation
 
 //    JsonObject    //
 
-fun buildNbt(builderAction: CompoundTag.() -> Unit): CompoundTag = CompoundTag().apply(builderAction)
+inline fun buildNbt(builderAction: CompoundTag.() -> Unit): CompoundTag = CompoundTag().apply(builderAction)
 
 fun CompoundTag.putId(name: String, value: ResourceLocation) {
     putString(name, value.toString())

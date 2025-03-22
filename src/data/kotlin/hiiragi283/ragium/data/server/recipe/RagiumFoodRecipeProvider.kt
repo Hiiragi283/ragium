@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -9,6 +10,7 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
@@ -23,9 +25,18 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun meat(output: RecipeOutput) {
         // Minced Meat
-        crush().itemOutput(RagiumItems.MINCED_MEAT).itemInput(Tags.Items.FOODS_RAW_MEAT).saveSuffixed(output, "_from_meat")
-        crush().itemOutput(RagiumItems.MINCED_MEAT).itemInput(Tags.Items.FOODS_RAW_FISH).saveSuffixed(output, "_from_fish")
-        crush().itemOutput(RagiumItems.MINCED_MEAT).itemInput(Items.ROTTEN_FLESH).savePrefixed(output, "rotten_")
+        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemInput(Tags.Items.FOODS_RAW_MEAT)
+            .saveSuffixed(output, "_from_meat")
+        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemInput(Tags.Items.FOODS_RAW_FISH)
+            .saveSuffixed(output, "_from_fish")
+        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemInput(Items.ROTTEN_FLESH)
+            .savePrefixed(output, "rotten_")
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.MEAT_INGOT, 3)
             .pattern("AAA")
@@ -56,7 +67,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun milk(output: RecipeOutput) {
         // Butter
-        centrifuging()
+        HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
             .itemOutput(RagiumItems.BUTTER)
             .itemOutput(RagiumItems.CHEESE)
             .milkInput()

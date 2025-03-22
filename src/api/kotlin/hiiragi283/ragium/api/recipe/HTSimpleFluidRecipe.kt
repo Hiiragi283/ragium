@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.registry.HTRecipeType
+import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -10,7 +10,7 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
  * 液体を別の液体に変換するレシピ
  */
 abstract class HTSimpleFluidRecipe(
-    recipeType: HTRecipeType<HTMachineInput, *>,
+    recipeType: HTMachineRecipeType,
     private val ingredient: SizedFluidIngredient,
     private val output: HTFluidOutput,
 ) : HTMachineRecipe(recipeType) {
