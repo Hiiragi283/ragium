@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/advanced_ragi_alloy"
+    },
+    "B": {
+      "tag": "c:tools/forge_hammer"
+    },
+    "C": {
+      "item": "minecraft:nether_bricks"
+    }
+  },
+  "pattern": [
+    "A A",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:lava_well"
+  }
+}

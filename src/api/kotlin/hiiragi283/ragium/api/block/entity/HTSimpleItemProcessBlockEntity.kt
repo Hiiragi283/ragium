@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.block.entity
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -18,6 +17,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTSimpleItemProcessBlockEntity(
@@ -62,61 +62,32 @@ abstract class HTSimpleItemProcessBlockEntity(
 
     //    Ticking    //
 
-    companion object {
-        @JvmStatic
-        fun clientTick(
-            level: Level,
-            pos: BlockPos,
-            state: BlockState,
-            blockEntity: HTSimpleItemProcessBlockEntity,
-        ) {
-            blockEntity.totalTick++
-        }
-
-        @JvmStatic
-        fun serverTick(
-            level: Level,
-            pos: BlockPos,
-            state: BlockState,
-            blockEntity: HTSimpleItemProcessBlockEntity,
-        ) {
-            blockEntity.totalTick++
-            blockEntity.processRecipe(level, pos, state)
-        }
-    }
-
     protected val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache.reloadable(recipeType)
 
-    private var checkRecipe: Boolean = false
-
-    private fun processRecipe(level: Level, pos: BlockPos, state: BlockState) {
+    override fun onServerTick(
+        level: Level,
+        pos: BlockPos,
+        state: BlockState,
+        network: IEnergyStorage,
+    ): TriState {
         // 200 tick毎に一度実行する
-        if (totalTick % 200 != 0) return
+        if (totalTick % 200 != 0) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
         val input: HTMachineInput = HTMachineInput.create {
             addInput(0, inputSlot)
             addOutput(0, outputSlot)
         }
-        val recipe: HTMachineRecipe = recipeCache.getFirstRecipe(input, level) ?: return skipTicking()
+        val recipe: HTMachineRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
         // 処理が行えるか判定する
-        if (!recipe.canProcess(input)) return skipTicking()
+        if (!recipe.canProcess(input)) return TriState.FALSE
         // エネルギーを消費できるか判定する
-        val network: IEnergyStorage = RagiumAPI.getInstance().getEnergyNetworkManager().getNetwork(level) ?: return skipTicking()
-        if (network.extractEnergy(1600, true) != 1600) return skipTicking()
+        if (network.extractEnergy(1600, true) != 1600) return TriState.FALSE
         // レシピを実行する
         recipe.process(input)
         network.extractEnergy(1600, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS)
-    }
-
-    override fun setChanged() {
-        super.setChanged()
-        checkRecipe = true
-    }
-
-    protected fun skipTicking() {
-        checkRecipe = false
+        return TriState.TRUE
     }
 
     //    Item    //

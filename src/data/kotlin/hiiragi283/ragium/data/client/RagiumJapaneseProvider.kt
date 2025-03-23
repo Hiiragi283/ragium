@@ -70,6 +70,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
+        addBlock(RagiumBlocks.WATER_WELL, "水源井戸")
+        addBlock(RagiumBlocks.LAVA_WELL, "溶岩井戸")
+        addBlock(RagiumBlocks.MILK_DRAIN, "牛乳シンク")
+
         addBlock(RagiumBlocks.ENI, "E.N.I.")
     }
 

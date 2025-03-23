@@ -297,11 +297,27 @@ object RagiumBlocks {
     //    Devices    //
 
     @JvmField
+    val WATER_WELL: DeferredBlock<HTWaterWellBlock> =
+        register("water_well", stone(), ::HTWaterWellBlock)
+
+    @JvmField
+    val LAVA_WELL: DeferredBlock<HTLavaWellBlock> =
+        register("lava_well", stone(), ::HTLavaWellBlock)
+
+    @JvmField
+    val MILK_DRAIN: DeferredBlock<HTMilkDrainBlock> =
+        register("milk_drain", stone(), ::HTMilkDrainBlock)
+
+    @JvmField
     val ENI: DeferredBlock<HTEnergyNetworkInterfaceBlock> =
         register("energy_network_interface", heavyMetal(), ::HTEnergyNetworkInterfaceBlock)
 
     @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
+        WATER_WELL,
+        LAVA_WELL,
+        MILK_DRAIN,
+        //
         ENI,
     )
 }

@@ -3,12 +3,10 @@ package hiiragi283.ragium.common.init
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.block.entity.HTSimpleItemProcessBlockEntity
+import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.entity.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
-import hiiragi283.ragium.common.block.entity.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.*
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -26,27 +24,31 @@ object RagiumBlockEntityTypes {
     @JvmField
     val REGISTER = HTBlockEntityTypeRegister(RagiumAPI.MOD_ID)
 
+    @JvmStatic
+    fun <T : HTTickAwareBlockEntity> registerTick(
+        name: String,
+        factory: BlockEntityType.BlockEntitySupplier<T>,
+    ): HTDeferredBlockEntityType<T> =
+        REGISTER.registerType(name, factory, HTTickAwareBlockEntity::clientTick, HTTickAwareBlockEntity::serverTick)
+
     //    Machine    //
 
     @JvmField
-    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
-        REGISTER.registerType(
-            "crusher",
-            ::HTCrusherBlockEntity,
-            HTSimpleItemProcessBlockEntity::clientTick,
-            HTSimpleItemProcessBlockEntity::serverTick,
-        )
+    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
 
     @JvmField
-    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> =
-        REGISTER.registerType(
-            "extractor",
-            ::HTExtractorBlockEntity,
-            HTSimpleItemProcessBlockEntity::clientTick,
-            HTSimpleItemProcessBlockEntity::serverTick,
-        )
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
 
     //    Device    //
+
+    @JvmField
+    val WATER_WELL: HTDeferredBlockEntityType<HTWaterWellBlockEntity> = registerTick("water_well", ::HTWaterWellBlockEntity)
+
+    @JvmField
+    val LAVA_WELL: HTDeferredBlockEntityType<HTLavaWellBlockEntity> = registerTick("lava_well", ::HTLavaWellBlockEntity)
+
+    @JvmField
+    val MILK_DRAIN: HTDeferredBlockEntityType<HTMilkDrainBlockEntity> = registerTick("milk_drain", ::HTMilkDrainBlockEntity)
 
     @JvmField
     val ENI: HTDeferredBlockEntityType<HTEnergyNetworkInterfaceBlockEntity> =
@@ -62,6 +64,10 @@ object RagiumBlockEntityTypes {
 
         add(CRUSHER, RagiumBlocks.CRUSHER)
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
+
+        add(WATER_WELL, RagiumBlocks.WATER_WELL)
+        add(LAVA_WELL, RagiumBlocks.LAVA_WELL)
+        add(MILK_DRAIN, RagiumBlocks.MILK_DRAIN)
 
         add(ENI, RagiumBlocks.ENI)
 
@@ -91,6 +97,10 @@ object RagiumBlockEntityTypes {
 
         registerHandlers(CRUSHER)
         registerHandlers(EXTRACTOR)
+
+        registerHandlers(WATER_WELL)
+        registerHandlers(LAVA_WELL)
+        registerHandlers(MILK_DRAIN)
 
         registerHandlers(ENI)
 

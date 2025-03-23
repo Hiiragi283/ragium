@@ -19,41 +19,67 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 /**
- * エンチャント可能な[HTBlockEntity]
+ * エンチャント可能な[HTTickAwareBlockEntity]
  */
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBlockEntity(type, pos, state),
+    HTTickAwareBlockEntity(type, pos, state),
     HTEnchantmentHolder {
     //    Save & Load    //
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        ItemEnchantments.CODEC
-            .encodeStart(registryOps, itemEnchantments)
-            .ifSuccess { nbt.put(ENCH_KEY, it) }
+        if (!itemEnchantments.isEmpty) {
+            ItemEnchantments.CODEC
+                .encodeStart(registryOps, itemEnchantments)
+                .ifSuccess { nbt.put(ENCH_KEY, it) }
+        }
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         ItemEnchantments.CODEC
             .parse(registryOps, nbt.get(ENCH_KEY))
-            .ifSuccess(::loadEnchantment)
+            .result()
+            .orElse(ItemEnchantments.EMPTY)
+            .let(::loadEnchantment)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         itemEnchantments = componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+        loadEnchantment(itemEnchantments)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         components.set(DataComponents.ENCHANTMENTS, itemEnchantments)
     }
 
+    //    Ticking    //
+
+    override fun onServerTick(level: Level, pos: BlockPos, state: BlockState): TriState {
+        val network: IEnergyStorage = this.network ?: return TriState.FALSE
+        return onServerTick(level, pos, state, network)
+    }
+
+    /**
+     * [IEnergyStorage]を引数に加えた[onServerTick]の拡張メソッド
+     */
+    protected abstract fun onServerTick(
+        level: Level,
+        pos: BlockPos,
+        state: BlockState,
+        network: IEnergyStorage,
+    ): TriState
+
     //    HTEnchantmentHolder    //
 
     protected var itemEnchantments: ItemEnchantments = ItemEnchantments.EMPTY
         private set
 
+    /**
+     * エンチャントが更新された時に呼び出されます。
+     */
     protected open fun loadEnchantment(newEnchantments: ItemEnchantments) {
         this.itemEnchantments = newEnchantments
     }
@@ -67,7 +93,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    HTHandlerBlockEntity    //
 
-    private var network: IEnergyStorage? = null
+    protected var network: IEnergyStorage? = null
 
     override fun afterLevelInit(level: Level) {
         network = RagiumAPI

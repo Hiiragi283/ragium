@@ -70,6 +70,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
+        addBlock(RagiumBlocks.WATER_WELL, "Water Well")
+        addBlock(RagiumBlocks.LAVA_WELL, "Lava Well")
+        addBlock(RagiumBlocks.MILK_DRAIN, "Milk Drain")
+
         addBlock(RagiumBlocks.ENI, "E.N.I.")
     }
 

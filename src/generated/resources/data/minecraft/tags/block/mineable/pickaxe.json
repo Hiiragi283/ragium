@@ -22,8 +22,10 @@
     "ragium:energy_network_interface",
     "ragium:extractor",
     "ragium:green_led_block",
+    "ragium:lava_well",
     "ragium:machine_casing",
     "ragium:magenta_led_block",
+    "ragium:milk_drain",
     "ragium:nether_ragi_crystal_ore",
     "ragium:nether_raginite_ore",
     "ragium:obsidian_glass",
@@ -43,6 +45,7 @@
     "ragium:red_led_block",
     "ragium:soul_glass",
     "ragium:stone_casing",
+    "ragium:water_well",
     "ragium:white_led_block",
     "ragium:wooden_casing",
     "ragium:yellow_led_block"
