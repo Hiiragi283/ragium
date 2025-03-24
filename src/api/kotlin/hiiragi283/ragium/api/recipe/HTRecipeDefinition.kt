@@ -59,4 +59,7 @@ class HTRecipeDefinition(
     fun getItemOutput(index: Int): HTItemOutput? = itemOutputs.getOrNull(index)
 
     fun getFluidOutput(index: Int): HTFluidOutput? = fluidOutputs.getOrNull(index)
+
+    val isEmptyIngredient: Boolean get() = itemInputs.isEmpty() && fluidInputs.isEmpty()
+    val isEmptyOutput: Boolean get() = itemOutputs.isEmpty() && fluidOutputs.isEmpty()
 }

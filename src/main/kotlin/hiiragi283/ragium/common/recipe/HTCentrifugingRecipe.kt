@@ -2,11 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.recipe.HTFluidOutput
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
+import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -33,9 +29,18 @@ class HTCentrifugingRecipe(
         TODO("Not yet implemented")
     }
 
-    override fun getDefinition(): DataResult<HTRecipeDefinition> = when {
-        itemOutputs.isEmpty() && fluidOutputs.isEmpty() -> DataResult.error { "Either item or fluid output required!" }
-        else -> DataResult.success(
+    override fun getDefinition(): DataResult<HTRecipeDefinition> {
+        if (itemOutputs.isEmpty() && fluidOutputs.isEmpty()) {
+            return DataResult.error { "Either item or fluid output required!" }
+        }
+        if (itemOutputs.size > 4) {
+            return DataResult.error { "Max item outputs is 4!" }
+        }
+        if (fluidOutputs.size > 2) {
+            return DataResult.error { "Max fluid outputs is 2!" }
+        }
+
+        return DataResult.success(
             HTRecipeDefinition(
                 ingredient.left().stream().toList(),
                 ingredient.right().stream().toList(),

@@ -3,16 +3,9 @@ package hiiragi283.ragium.common.init
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTFluidOutput
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.api.recipe.HTSimpleFluidRecipe
-import hiiragi283.ragium.api.recipe.HTSimpleItemRecipe
+import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
-import hiiragi283.ragium.common.recipe.HTCentrifugingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
+import hiiragi283.ragium.common.recipe.*
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RecipesUpdatedEvent
@@ -32,6 +25,9 @@ object RagiumRecipes {
     val EXTRACTING = HTMachineRecipeType("extracting", Factories::extracting)
 
     @JvmField
+    val INFUSING = HTMachineRecipeType("infusing", Factories::infusing)
+
+    @JvmField
     val REFINING = HTMachineRecipeType("refining", Factories::refining)
 
     //     Event    //
@@ -41,6 +37,7 @@ object RagiumRecipes {
         CENTRIFUGING,
         CRUSHING,
         EXTRACTING,
+        INFUSING,
         REFINING,
     )
 
@@ -65,7 +62,35 @@ object RagiumRecipes {
                     definition.getFluidIngredient(0) != null -> Either.right(definition.getFluidIngredient(0))
                     else -> return DataResult.error { "Either one item or fluid ingredient required!" }
                 }
-            return DataResult.success(HTCentrifugingRecipe(ingredient, definition.itemOutputs, definition.fluidOutputs))
+
+            val itemOutputs: List<HTItemOutput> = definition.itemOutputs
+            if (itemOutputs.size > 4) {
+                return DataResult.error { "Max item outputs is 4!" }
+            }
+
+            val fluidOutputs: List<HTFluidOutput> = definition.fluidOutputs
+            if (fluidOutputs.size > 2) {
+                return DataResult.error { "Max fluid outputs is 2!" }
+            }
+
+            return DataResult.success(HTCentrifugingRecipe(ingredient, itemOutputs, fluidOutputs))
+        }
+
+        @JvmStatic
+        fun infusing(definition: HTRecipeDefinition): DataResult<HTInfusingRecipe> {
+            val itemIng: SizedIngredient =
+                definition.getItemIngredient(0) ?: return DataResult.error { "Required one item ingredient!" }
+            val fluidIng: SizedFluidIngredient =
+                definition.getFluidIngredient(0) ?: return DataResult.error { "Required one fluid ingredient!" }
+            if (definition.isEmptyOutput) return DataResult.error { "Either item or fluid output required!" }
+            return DataResult.success(
+                HTInfusingRecipe(
+                    itemIng,
+                    fluidIng,
+                    definition.getItemOutput(0),
+                    definition.getFluidOutput(0),
+                ),
+            )
         }
 
         //    Fluid -> Fluid    //

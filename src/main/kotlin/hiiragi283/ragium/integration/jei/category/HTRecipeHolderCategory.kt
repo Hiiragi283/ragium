@@ -16,11 +16,11 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
 
 abstract class HTRecipeHolderCategory<R : Recipe<*>>(
-    private val guiHelper: IGuiHelper,
+    guiHelper: IGuiHelper,
     private val icon: ItemLike,
     private val arrowX: Double,
     private val arrowY: Double = 0.0,
-) : HTRecipeCategory<RecipeHolder<R>> {
+) : HTRecipeCategory<RecipeHolder<R>>(guiHelper) {
     final override fun getTitle(): Component = ItemStack(icon).hoverName
 
     final override fun getIcon(): IDrawable? = guiHelper.createDrawableItemLike(icon)

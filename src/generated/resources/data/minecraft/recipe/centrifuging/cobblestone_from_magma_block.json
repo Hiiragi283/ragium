@@ -1,0 +1,20 @@
+{
+  "type": "ragium:centrifuging",
+  "fluid_outputs": [
+    {
+      "amount": 100,
+      "fluid": "minecraft:lava"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:magma_block"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ]
+}

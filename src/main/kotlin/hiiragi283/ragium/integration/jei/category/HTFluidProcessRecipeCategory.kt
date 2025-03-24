@@ -10,22 +10,22 @@ import mezz.jei.api.recipe.RecipeType
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
 
-class HTItemProcessRecipeCategory(
+class HTFluidProcessRecipeCategory(
     guiHelper: IGuiHelper,
     private val recipeType: RecipeType<RecipeHolder<HTMachineRecipe>>,
     icon: ItemLike,
 ) : HTMachineRecipeCategory(guiHelper, icon, 1.5) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, definition: HTRecipeDefinition) {
-        // Item Input
+        // Fluid Input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
             .setStandardSlotBackground()
-            .addIngredients(definition.getItemIngredient(0))
-        // Item Output
+            .addIngredients(definition.getFluidIngredient(0))
+        // Fluid Output
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
             .setStandardSlotBackground()
-            .addOutput(definition.getItemOutput(0))
+            .addOutput(definition.getFluidOutput(0))
     }
 
     override fun getRecipeType(): RecipeType<RecipeHolder<HTMachineRecipe>> = recipeType
