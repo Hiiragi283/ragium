@@ -39,6 +39,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationEn("Ragi-Brick", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationEn("Azure Tile", this)
+        RagiumBlocks.EMBER_STONE_SETS.addTranslationEn("Ember Stone", this)
         RagiumBlocks.PLASTIC_SETS.addTranslationEn("Plastic Block", this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addTranslationEn("Blue Nether Bricks", this)
 

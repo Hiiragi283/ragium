@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/fluid_well",
+  "textures": {
+    "bottom": "minecraft:block/nether_bricks",
+    "top": "ragium:block/ember_stone"
+  }
+}

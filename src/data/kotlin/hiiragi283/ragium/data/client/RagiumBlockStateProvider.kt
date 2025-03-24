@@ -43,6 +43,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         RagiumBlocks.RAGI_BRICK_SETS.addBlockStates(this)
         RagiumBlocks.AZURE_TILE_SETS.addBlockStates(this)
+        RagiumBlocks.EMBER_STONE_SETS.addBlockStates(this)
         RagiumBlocks.PLASTIC_SETS.addBlockStates(this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addBlockStates(this)
 
@@ -64,6 +65,25 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 vanillaId("block/furnace_side"),
                 vanillaId("block/furnace_top"),
             ),
+        )
+
+        // Machine
+
+        // Device
+        simpleBlock(
+            RagiumBlocks.WATER_WELL.get(),
+            models()
+                .withExistingParent("block/water_well", RagiumAPI.id("block/fluid_well"))
+                .texture("top", RagiumAPI.id("block/azure_tiles"))
+                .texture("bottom", vanillaId("block/deepslate_tiles")),
+        )
+
+        simpleBlock(
+            RagiumBlocks.LAVA_WELL.get(),
+            models()
+                .withExistingParent("block/lava_well", RagiumAPI.id("block/fluid_well"))
+                .texture("top", RagiumAPI.id("block/ember_stone"))
+                .texture("bottom", vanillaId("block/nether_bricks")),
         )
 
         // Manual Machine

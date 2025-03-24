@@ -29,6 +29,13 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('B', HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
             .define('C', Items.DEEPSLATE_TILES)
             .save(output)
+        // Ember Stone
+        HTShapedRecipeBuilder(RagiumBlocks.EMBER_STONE_SETS.base, 8, CraftingBookCategory.BUILDING)
+            .cross8()
+            .define('A', Items.BLAZE_POWDER)
+            .define('B', HTTagPrefix.DUST, VanillaMaterials.GOLD)
+            .define('C', Items.STONE_BRICKS)
+            .save(output)
         // Plastic Block
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_SETS.base, 4, CraftingBookCategory.BUILDING)
             .hollow4()
@@ -46,6 +53,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
 
         RagiumBlocks.RAGI_BRICK_SETS.addRecipes(output, holderLookup)
         RagiumBlocks.AZURE_TILE_SETS.addRecipes(output, holderLookup)
+        RagiumBlocks.EMBER_STONE_SETS.addRecipes(output, holderLookup)
         RagiumBlocks.PLASTIC_SETS.addRecipes(output, holderLookup)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addRecipes(output, holderLookup)
     }

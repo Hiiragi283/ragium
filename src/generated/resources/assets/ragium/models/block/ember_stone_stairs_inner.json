@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "ragium:block/ember_stone",
+    "side": "ragium:block/ember_stone",
+    "top": "ragium:block/ember_stone"
+  }
+}

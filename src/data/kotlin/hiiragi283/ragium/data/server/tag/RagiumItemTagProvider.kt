@@ -184,6 +184,7 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
     private fun category(builder: HTTagBuilder<Item>) {
         RagiumBlocks.RAGI_BRICK_SETS.appendItemTags(builder)
         RagiumBlocks.AZURE_TILE_SETS.appendItemTags(builder)
+        RagiumBlocks.EMBER_STONE_SETS.appendItemTags(builder)
         RagiumBlocks.PLASTIC_SETS.appendItemTags(builder)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendItemTags(builder)
 

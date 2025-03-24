@@ -32,6 +32,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         RagiumBlocks.RAGI_BRICK_SETS.addItemModels(this)
         RagiumBlocks.AZURE_TILE_SETS.addItemModels(this)
+        RagiumBlocks.EMBER_STONE_SETS.addItemModels(this)
         RagiumBlocks.PLASTIC_SETS.addItemModels(this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addItemModels(this)
     }

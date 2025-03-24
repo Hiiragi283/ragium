@@ -60,6 +60,7 @@ object RagiumCreativeTabs {
             // Decorations
             addAll(RagiumBlocks.RAGI_BRICK_SETS.getItems())
             addAll(RagiumBlocks.AZURE_TILE_SETS.getItems())
+            addAll(RagiumBlocks.EMBER_STONE_SETS.getItems())
             addAll(RagiumBlocks.PLASTIC_SETS.getItems())
             addAll(RagiumBlocks.BLUE_NETHER_BRICK_SETS.getItems())
 

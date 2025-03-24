@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/fluid_well",
+  "textures": {
+    "bottom": "minecraft:block/deepslate_tiles",
+    "top": "ragium:block/azure_tiles"
+  }
+}

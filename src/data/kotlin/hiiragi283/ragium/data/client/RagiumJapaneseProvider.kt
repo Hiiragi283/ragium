@@ -39,6 +39,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationJp("らぎレンガ", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationJp("紺碧のタイル", this)
+        RagiumBlocks.EMBER_STONE_SETS.addTranslationJp("熾火石", this)
         RagiumBlocks.PLASTIC_SETS.addTranslationJp("プラスチックブロック", this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addTranslationJp("青いネザーレンガ", this)
 

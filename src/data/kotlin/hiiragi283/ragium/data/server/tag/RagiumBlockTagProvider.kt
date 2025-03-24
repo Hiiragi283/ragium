@@ -46,6 +46,7 @@ class RagiumBlockTagProvider(
 
         RagiumBlocks.RAGI_BRICK_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
         RagiumBlocks.AZURE_TILE_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
+        RagiumBlocks.EMBER_STONE_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
         RagiumBlocks.PLASTIC_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
 

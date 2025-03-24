@@ -48,6 +48,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         buildList {
             add(RagiumBlocks.RAGI_BRICK_SETS)
             add(RagiumBlocks.AZURE_TILE_SETS)
+            add(RagiumBlocks.EMBER_STONE_SETS)
             add(RagiumBlocks.PLASTIC_SETS)
             add(RagiumBlocks.BLUE_NETHER_BRICK_SETS)
         }.forEach { it.addBlockLoot() }

@@ -40,6 +40,7 @@ object RagiumBlocks {
 
         RAGI_BRICK_SETS.init(eventBus)
         AZURE_TILE_SETS.init(eventBus)
+        EMBER_STONE_SETS.init(eventBus)
         PLASTIC_SETS.init(eventBus)
         BLUE_NETHER_BRICK_SETS.init(eventBus)
     }
@@ -91,7 +92,7 @@ object RagiumBlocks {
     @JvmStatic
     private fun crystal(): BlockBehaviour.Properties = blockProperty()
         .requiresCorrectToolForDrops()
-        .strength(5f)
+        .strength(2f)
         .sound(SoundType.AMETHYST)
 
     @JvmStatic
@@ -178,6 +179,12 @@ object RagiumBlocks {
         "azure_tiles",
         stone().mapColor(MapColor.TERRACOTTA_BLUE),
         prefix = "azure_tile",
+    )
+
+    @JvmField
+    val EMBER_STONE_SETS = HTBuildingBlockSets(
+        "ember_stone",
+        crystal().mapColor(MapColor.COLOR_ORANGE),
     )
 
     @JvmField

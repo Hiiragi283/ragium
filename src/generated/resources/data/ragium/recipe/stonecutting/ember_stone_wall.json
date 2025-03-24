@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ragium:ember_stone"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:ember_stone_wall"
+  }
+}
