@@ -53,7 +53,6 @@ object RagiumCreativeTabs {
             // Material Items
             addAll(RagiumItems.Dusts.entries)
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
-            add(RagiumItems.AZURE_STEEL_COMPOUND)
             addAll(RagiumItems.Ingots.entries)
             addAll(RagiumItems.RawResources.entries)
             addAll(RagiumItems.MekResources.entries)
@@ -84,6 +83,9 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
             addAll(RagiumItems.FOODS)
             // Ingredients
+            add(RagiumItems.MACHINE_TEMPLATE)
+            add(RagiumItems.ADVANCED_MACHINE_TEMPLATE)
+
             add(RagiumItems.ENGINE)
             add(RagiumItems.LED)
             add(RagiumItems.SOLAR_PANEL)

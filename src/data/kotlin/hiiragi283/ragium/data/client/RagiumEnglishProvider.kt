@@ -201,11 +201,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMold(RagiumItems.Molds.ROD, "Mold (Rod)")
         addMold(RagiumItems.Molds.WIRE, "Mold (Wire)")
 
-        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
+        addItem(RagiumItems.ADVANCED_MACHINE_TEMPLATE, "Advanced Machine Template")
         // addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.LED, "L.E.D.")
+        addItem(RagiumItems.MACHINE_TEMPLATE, "Machine Template")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")

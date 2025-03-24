@@ -163,9 +163,6 @@ object RagiumItems {
     val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")
 
     @JvmField
-    val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")
-
-    @JvmField
     val CRUDE_OIL_BUCKET: DeferredItem<BucketItem> = register(
         "crude_oil_bucket",
         { properties: Item.Properties -> BucketItem(RagiumFluids.CRUDE_OIL.get(), properties) },
@@ -299,10 +296,10 @@ object RagiumItems {
     //    Machine Parts    //
 
     @JvmField
-    val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
+    val MACHINE_TEMPLATE: DeferredItem<Item> = register("machine_template")
 
     @JvmField
-    val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
+    val ADVANCED_MACHINE_TEMPLATE: DeferredItem<Item> = register("advanced_machine_template")
 
     @JvmField
     val ENGINE: DeferredItem<Item> = register("engine")
@@ -315,6 +312,12 @@ object RagiumItems {
 
     @JvmField
     val STONE_BOARD: DeferredItem<Item> = register("stone_board")
+
+    @JvmField
+    val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
+
+    @JvmField
+    val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
 
     //    Misc    //
 

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:hopper"
+  },
+  "base": {
+    "item": "ragium:machine_casing"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:extractor"
+  },
+  "template": {
+    "item": "ragium:machine_template"
+  }
+}
