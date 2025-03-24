@@ -2,37 +2,42 @@ package hiiragi283.ragium.api.storage.item
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.HTRegistryCodecs
 import hiiragi283.ragium.api.extension.asItemHolder
-import hiiragi283.ragium.api.extension.asReference
 import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.storage.HTVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.TagKey
+import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
+import java.util.*
 
 @ConsistentCopyVisibility
-data class HTItemVariant private constructor(override val holder: Holder.Reference<Item>, override val components: DataComponentPatch) :
+data class HTItemVariant private constructor(val item: Item, override val components: DataComponentPatch = DataComponentPatch.EMPTY) :
     HTVariant<Item> {
         companion object {
-            @JvmField
-            val CODEC: Codec<HTItemVariant> = RecordCodecBuilder.create { instance ->
+            @JvmStatic
+            private val RAW_CODEC: Codec<HTItemVariant> = RecordCodecBuilder.create { instance ->
                 instance
                     .group(
-                        HTRegistryCodecs.ITEM_HOLDER.fieldOf("id").forGetter(HTItemVariant::holder),
+                        ItemStack.ITEM_NON_AIR_CODEC.fieldOf("id").forGetter(HTItemVariant::holder),
                         DataComponentPatch.CODEC
                             .optionalFieldOf("components", DataComponentPatch.EMPTY)
                             .forGetter(HTItemVariant::components),
                     ).apply(instance, ::of)
             }
 
+            @JvmField
+            val CODEC: Codec<HTItemVariant> = ExtraCodecs.optionalEmptyMap(RAW_CODEC).xmap(
+                { optional: Optional<HTItemVariant> -> optional.orElse(EMPTY) },
+                { variant: HTItemVariant -> if (variant.isEmpty) Optional.empty() else Optional.of(variant) },
+            )
+
             @JvmStatic
-            private val simpleCache: MutableMap<Holder.Reference<Item>, HTItemVariant> = mutableMapOf()
+            private val simpleCache: MutableMap<Item, HTItemVariant> = mutableMapOf()
 
             @JvmField
             val EMPTY: HTItemVariant = of(Items.AIR)
@@ -41,22 +46,23 @@ data class HTItemVariant private constructor(override val holder: Holder.Referen
             fun of(stack: ItemStack): HTItemVariant = of(stack.item, stack.componentsPatch)
 
             @JvmStatic
-            fun of(item: ItemLike, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant =
-                of(item.asItemHolder(), components)
+            fun of(holder: Holder<Item>, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant =
+                of(holder.value(), components)
 
             @JvmStatic
-            fun of(holder: Holder<Item>, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant {
-                val reference: Holder.Reference<Item> =
-                    holder as? Holder.Reference<Item> ?: holder.asReference(BuiltInRegistries.ITEM)
-                return when {
-                    components.isEmpty -> simpleCache.computeIfAbsent(reference) { holder: Holder.Reference<Item> ->
-                        HTItemVariant(holder, DataComponentPatch.EMPTY)
-                    }
+            fun of(item: ItemLike, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant = of(item.asItem(), components)
 
-                    else -> HTItemVariant(reference, components)
+            @JvmStatic
+            private fun of(item: Item, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant {
+                if (components.isEmpty) {
+                    return simpleCache.computeIfAbsent(item, ::HTItemVariant)
                 }
+                return HTItemVariant(item, components)
             }
         }
+
+        override val holder: Holder.Reference<Item>
+            get() = item.asItemHolder()
 
         override val isEmpty: Boolean
             get() = holder.isOf(Items.AIR)

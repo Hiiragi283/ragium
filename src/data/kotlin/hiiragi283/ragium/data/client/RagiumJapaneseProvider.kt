@@ -75,6 +75,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.MILK_DRAIN, "牛乳シンク")
 
         addBlock(RagiumBlocks.ENI, "E.N.I.")
+        addBlock(RagiumBlocks.SPRINKLER, "スプリンクラー")
     }
 
     private fun enchantment() {

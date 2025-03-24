@@ -75,6 +75,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.MILK_DRAIN, "Milk Drain")
 
         addBlock(RagiumBlocks.ENI, "E.N.I.")
+        addBlock(RagiumBlocks.SPRINKLER, "Sprinkler")
     }
 
     private fun enchantment() {

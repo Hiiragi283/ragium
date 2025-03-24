@@ -15,6 +15,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -57,7 +58,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Ticking    //
 
-    override fun onServerTick(level: Level, pos: BlockPos, state: BlockState): TriState {
+    override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         val network: IEnergyStorage = this.network ?: return TriState.FALSE
         return onServerTick(level, pos, state, network)
     }
@@ -66,7 +67,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
      * [IEnergyStorage]を引数に加えた[onServerTick]の拡張メソッド
      */
     protected abstract fun onServerTick(
-        level: Level,
+        level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         network: IEnergyStorage,

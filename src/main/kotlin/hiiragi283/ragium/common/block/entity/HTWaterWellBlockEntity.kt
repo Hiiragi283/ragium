@@ -5,16 +5,16 @@ import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.FluidTags
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTWaterWellBlockEntity(pos: BlockPos, state: BlockState) : HTFluidWellBlockEntity(RagiumBlockEntityTypes.WATER_WELL, pos, state) {
-    override fun getGeneratedFluid(level: Level, pos: BlockPos): FluidStack {
+    override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
         var amount = 0
         // 海洋バイオームまたは河川系バイオームの場合 -> +50 mB
         val biome: Holder<Biome> = level.getBiome(pos)

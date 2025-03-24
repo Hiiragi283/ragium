@@ -7,6 +7,7 @@ import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.server.RagiumBlockLootProvider
+import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagProvider
@@ -51,6 +52,8 @@ object RagiumDatagen {
         generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, helper))
+
+        generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
 
         LOGGER.info("Gathered server resources!")
         // client

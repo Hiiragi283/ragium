@@ -54,6 +54,9 @@ object RagiumBlockEntityTypes {
     val ENI: HTDeferredBlockEntityType<HTEnergyNetworkInterfaceBlockEntity> =
         REGISTER.registerType("energy_network_interface", ::HTEnergyNetworkInterfaceBlockEntity)
 
+    @JvmField
+    val SPRINKLER: HTDeferredBlockEntityType<HTSprinklerBlockEntity> = registerTick("sprinkler", ::HTSprinklerBlockEntity)
+
     //    Event    //
 
     @SubscribeEvent
@@ -70,14 +73,15 @@ object RagiumBlockEntityTypes {
         add(MILK_DRAIN, RagiumBlocks.MILK_DRAIN)
 
         add(ENI, RagiumBlocks.ENI)
+        add(SPRINKLER, RagiumBlocks.SPRINKLER)
 
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        fun <T : HTBlockEntity> registerHandlers(holder: HTDeferredBlockEntityType<T>) {
-            val type: BlockEntityType<T> = holder.get()
+        fun registerHandlers(holder: HTDeferredBlockEntityType<out HTBlockEntity>) {
+            val type: BlockEntityType<out HTBlockEntity> = holder.get()
             event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 type,
@@ -103,6 +107,7 @@ object RagiumBlockEntityTypes {
         registerHandlers(MILK_DRAIN)
 
         registerHandlers(ENI)
+        registerHandlers(SPRINKLER)
 
         LOGGER.info("Registered Block Capabilities!")
     }

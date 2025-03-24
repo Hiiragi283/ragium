@@ -1,13 +1,11 @@
 package hiiragi283.ragium.api.storage.potion
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.extension.asReference
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.storage.HTVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
@@ -29,7 +27,7 @@ data class HTPotionVariant private constructor(override val holder: Holder.Refer
         @JvmStatic
         fun of(holder: Holder<Potion>): HTPotionVariant {
             val reference: Holder.Reference<Potion> =
-                holder as? Holder.Reference<Potion> ?: holder.asReference(BuiltInRegistries.POTION)
+                holder as? Holder.Reference<Potion> ?: error("Given potion holder is not Holder.Reference!")
             return simpleCache.computeIfAbsent(reference, ::HTPotionVariant)
         }
     }

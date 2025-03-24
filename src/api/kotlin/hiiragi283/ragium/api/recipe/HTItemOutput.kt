@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.HTRegistryCodecs
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
@@ -24,7 +23,7 @@ data class HTItemOutput private constructor(private val holder: Holder<Item>, va
             val CODEC: Codec<HTItemOutput> = RecordCodecBuilder.create { instance ->
                 instance
                     .group(
-                        HTRegistryCodecs.ITEM_HOLDER
+                        ItemStack.ITEM_NON_AIR_CODEC
                             .fieldOf("item")
                             .forGetter(HTItemOutput::holder),
                         Codec.intRange(1, 99).optionalFieldOf("count", 1).forGetter(HTItemOutput::count),

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
@@ -17,10 +18,6 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
      */
     protected var shouldTick: Boolean = true
         private set
-
-    protected open fun updateShouldTick(flag: Boolean) {
-        shouldTick = flag
-    }
 
     override fun setChanged() {
         super.setChanged()
@@ -52,12 +49,12 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
             blockEntity: HTTickAwareBlockEntity,
         ) {
             blockEntity.totalTick++
-            if (blockEntity.shouldTick) {
+            if (blockEntity.shouldTick && level is ServerLevel) {
                 val result: TriState = blockEntity.onServerTick(level, pos, state)
                 when (result) {
-                    TriState.TRUE -> blockEntity.updateShouldTick(true)
+                    TriState.TRUE -> blockEntity.shouldTick = true
                     TriState.DEFAULT -> return
-                    TriState.FALSE -> blockEntity.updateShouldTick(false)
+                    TriState.FALSE -> blockEntity.shouldTick = false
                 }
             }
         }
@@ -67,5 +64,5 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
      * サーバー側でのtick処理を行います。
      * @return 続けてtick処理を行う場合は[TriState.TRUE], 止める場合は[TriState.FALSE], 現在の状態を維持する場合は[TriState.DEFAULT]
      */
-    abstract fun onServerTick(level: Level, pos: BlockPos, state: BlockState): TriState
+    abstract fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState
 }

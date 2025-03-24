@@ -313,11 +313,16 @@ object RagiumBlocks {
         register("energy_network_interface", heavyMetal(), ::HTEnergyNetworkInterfaceBlock)
 
     @JvmField
+    val SPRINKLER: DeferredBlock<HTSprinklerBlock> =
+        register("sprinkler", heavyMetal(), ::HTSprinklerBlock)
+
+    @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
         WATER_WELL,
         LAVA_WELL,
         MILK_DRAIN,
         //
         ENI,
+        SPRINKLER,
     )
 }

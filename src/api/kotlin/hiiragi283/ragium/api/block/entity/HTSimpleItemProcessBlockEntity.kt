@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.enchantment.ItemEnchantments
@@ -65,7 +66,7 @@ abstract class HTSimpleItemProcessBlockEntity(
     protected val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache.reloadable(recipeType)
 
     override fun onServerTick(
-        level: Level,
+        level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         network: IEnergyStorage,
