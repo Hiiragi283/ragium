@@ -60,6 +60,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "スポンジケーキのハーフブロック")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
+        addBlock(RagiumBlocks.ADVANCED_MACHINE_CASING, "発展機械筐体")
         addBlock(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
         addBlock(RagiumBlocks.MACHINE_CASING, "機械筐体")
         addBlock(RagiumBlocks.STONE_CASING, "石材筐体")

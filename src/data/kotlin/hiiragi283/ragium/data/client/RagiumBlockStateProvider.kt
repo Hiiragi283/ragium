@@ -27,13 +27,14 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.CHEESE_BLOCK)
             add(RagiumBlocks.SPONGE_CAKE)
 
+            add(RagiumBlocks.MACHINE_CASING)
+            add(RagiumBlocks.ADVANCED_MACHINE_CASING)
+            add(RagiumBlocks.DEVICE_CASING)
+
             add(RagiumBlocks.ENI)
 
-            addAll(RagiumBlocks.CASINGS)
             addAll(RagiumBlocks.LED_BLOCKS.values)
             addAll(RagiumBlocks.StorageBlocks.blocks)
-
-            remove(RagiumBlocks.STONE_CASING)
         }.map(Supplier<out Block>::get)
             .forEach(::simpleBlock)
 
@@ -58,6 +59,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         simpleAltBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Machine Frame
+        simpleAltBlock(RagiumBlocks.WOODEN_CASING, "block/note_block")
+
         simpleBlock(
             RagiumBlocks.STONE_CASING.get(),
             models().cubeColumn(
@@ -85,6 +88,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 .texture("top", RagiumAPI.id("block/ember_stone"))
                 .texture("bottom", vanillaId("block/nether_bricks")),
         )
+
+        simpleAltBlock(RagiumBlocks.MILK_DRAIN)
 
         // Manual Machine
         /*getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {

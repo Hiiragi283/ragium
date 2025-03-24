@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:copper_grate"
+      "tag": "c:obsidians/normal"
     },
     "B": {
-      "tag": "c:barrels/wooden"
+      "tag": "c:ingots/deep_steel"
     },
     "C": {
-      "item": "ragium:stone_casing"
+      "tag": "c:tools/forge_hammer"
     }
   },
   "pattern": [
-    "A",
-    "B",
-    "C"
+    "ABA",
+    "BCB",
+    "ABA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:milk_drain"
+    "id": "ragium:device_casing"
   }
 }

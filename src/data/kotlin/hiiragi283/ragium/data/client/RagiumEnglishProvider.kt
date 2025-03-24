@@ -60,6 +60,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
+        addBlock(RagiumBlocks.ADVANCED_MACHINE_CASING, "Advanced Machine Casing")
         addBlock(RagiumBlocks.DEVICE_CASING, "Device Casing")
         addBlock(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         addBlock(RagiumBlocks.STONE_CASING, "Stone Casing")

@@ -1,0 +1,116 @@
+{
+	"credit": "Made by Hiiragi Russell Tsubasa",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"particle": "block/furnace_side",
+		"side": "block/furnace_side",
+		"bottom": "block/furnace_top",
+		"top": "basic_grate",
+		"wall": "block/barrel_side",
+		"drain": "ragium:block/copper_drain"
+	},
+	"elements": [
+		{
+			"name": "bottom",
+			"from": [0, 0, 0],
+			"to": [16, 8, 16],
+			"faces": {
+				"north": {"uv": [0, 8, 16, 16], "texture": "#side"},
+				"east": {"uv": [0, 8, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 8, 16, 16], "texture": "#side"},
+				"west": {"uv": [0, 8, 16, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#bottom"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"name": "north",
+			"from": [0, 8, 0],
+			"to": [14, 14, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [2, 0, 16, 6], "texture": "#wall"},
+				"south": {"uv": [0, 0, 14, 6], "texture": "#wall"},
+				"west": {"uv": [0, 0, 2, 6], "texture": "#wall"},
+				"up": {"uv": [0, 0, 14, 2], "texture": "#wall"}
+			}
+		},
+		{
+			"name": "east",
+			"from": [14, 8, 0],
+			"to": [16, 14, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 6], "texture": "#wall"},
+				"east": {"uv": [2, 0, 16, 6], "texture": "#wall"},
+				"west": {"uv": [0, 0, 14, 6], "texture": "#wall"},
+				"up": {"uv": [0, 0, 14, 2], "rotation": 90, "texture": "#wall"}
+			}
+		},
+		{
+			"name": "south",
+			"from": [2, 8, 14],
+			"to": [16, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 14, 6], "texture": "#wall"},
+				"east": {"uv": [0, 0, 2, 6], "texture": "#wall"},
+				"south": {"uv": [2, 0, 16, 6], "texture": "#wall"},
+				"up": {"uv": [0, 0, 14, 2], "rotation": 180, "texture": "#wall"}
+			}
+		},
+		{
+			"name": "west",
+			"from": [0, 8, 2],
+			"to": [2, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 14, 6], "texture": "#wall"},
+				"south": {"uv": [0, 0, 2, 6], "texture": "#wall"},
+				"west": {"uv": [2, 0, 16, 6], "texture": "#wall"},
+				"up": {"uv": [0, 0, 14, 2], "rotation": 270, "texture": "#wall"}
+			}
+		},
+		{
+			"name": "bars",
+			"from": [2, 12, 2],
+			"to": [14, 12, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 12, 2]},
+			"faces": {
+				"up": {"uv": [2, 2, 14, 14], "texture": "#drain"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#top"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

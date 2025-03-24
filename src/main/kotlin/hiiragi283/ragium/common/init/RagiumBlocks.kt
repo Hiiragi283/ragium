@@ -279,13 +279,25 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val ADVANCED_MACHINE_CASING: DeferredBlock<Block> = register(
+        "advanced_machine_casing",
+        heavyMetal(),
+    )
+
+    @JvmField
     val DEVICE_CASING: DeferredBlock<Block> = register(
         "device_casing",
         heavyMetal(),
     )
 
     @JvmField
-    val CASINGS: List<DeferredBlock<*>> = listOf(WOODEN_CASING, STONE_CASING, MACHINE_CASING, DEVICE_CASING)
+    val CASINGS: List<DeferredBlock<*>> = listOf(
+        WOODEN_CASING,
+        STONE_CASING,
+        MACHINE_CASING,
+        ADVANCED_MACHINE_CASING,
+        DEVICE_CASING,
+    )
 
     //    Machines    //
 

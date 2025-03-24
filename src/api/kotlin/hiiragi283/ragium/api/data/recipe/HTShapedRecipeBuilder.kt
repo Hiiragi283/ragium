@@ -53,6 +53,8 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
 
     fun cross8(): HTShapedRecipeBuilder = pattern("ABA", "BCB", "ABA")
 
+    fun casing(): HTShapedRecipeBuilder = pattern("AAA", "ABA", "CCC")
+
     //    RecipeBuilder    //
 
     override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
