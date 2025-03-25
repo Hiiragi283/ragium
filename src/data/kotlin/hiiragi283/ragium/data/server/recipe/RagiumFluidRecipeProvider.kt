@@ -33,13 +33,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
             .itemOutput(Items.MUD)
             .itemInput(Items.DIRT)
-            .waterInput()
+            .waterInput(250)
             .saveSuffixed(output, "_from_dirt")
         // Silt -> Clay
         HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
             .itemOutput(Items.CLAY)
             .itemInput(RagiumBlocks.SILT)
-            .waterInput()
+            .waterInput(250)
             .saveSuffixed(output, "_from_silt")
     }
 }

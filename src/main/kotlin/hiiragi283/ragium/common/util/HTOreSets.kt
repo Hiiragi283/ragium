@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemProperty
-import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.registry.HTBlockRegister
@@ -13,6 +12,7 @@ import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -65,8 +65,11 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
 
     override val blockHolders: List<DeferredBlock<*>> = blockRegister.entries
 
-    override val itemHolders: List<DeferredItem<*>> = HTOreVariant.entries.map { variant ->
-        itemRegister.registerSimpleBlockItem(get(variant), itemProperty().name(variant.createText(key)))
+    override val itemHolders: List<DeferredItem<*>> = HTOreVariant.entries.map { variant: HTOreVariant ->
+        itemRegister.registerSimpleBlockItem(
+            get(variant),
+            itemProperty().component(DataComponents.ITEM_NAME, variant.createText(key)),
+        )
     }
 
     override fun init(eventBus: IEventBus) {

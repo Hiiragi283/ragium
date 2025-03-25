@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
@@ -9,6 +10,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -39,6 +41,13 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      * クライアント側へ同期する際に送る[CompoundTag]
      */
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = saveCustomOnly(registries)
+
+    /**
+     * クライアント側に同期パケットを送る
+     */
+    fun sendUpdatePacket(serverLevel: ServerLevel) {
+        RagiumAPI.getInstance().sendUpdatePayload(this, serverLevel)
+    }
 
     /**
      * クライアント側でパケットを受け取った時の処理

@@ -95,14 +95,17 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     //    HTHandlerBlockEntity    //
 
     protected var network: IEnergyStorage? = null
+        private set
+    private var externalNetwork: IEnergyStorage? = null
 
     override fun afterLevelInit(level: Level) {
-        network = RagiumAPI
+        val network: IEnergyStorage = RagiumAPI
             .getInstance()
             .getEnergyNetworkManager()
-            .getNetwork(level)
-            ?.let(HTStorageIO.INPUT::wrapEnergyStorage)
+            .getNetwork(level) ?: return
+        this.network = network
+        this.externalNetwork = HTStorageIO.INPUT.wrapEnergyStorage(network)
     }
 
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = network
+    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
 }

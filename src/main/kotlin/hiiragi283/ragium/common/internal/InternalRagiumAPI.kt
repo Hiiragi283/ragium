@@ -17,19 +17,25 @@ import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
+import net.minecraft.core.BlockPos
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ChunkPos
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.network.PacketDistributor
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.neoforge.kotlin.supply
@@ -119,4 +125,13 @@ class InternalRagiumAPI : RagiumAPI {
     )
 
     override fun getEffectRange(stack: ItemStack): Int = stack.getOrDefault(supply(TODO()), 5)
+
+    override fun sendUpdatePayload(blockEntity: BlockEntity, serverLevel: ServerLevel) {
+        val pos: BlockPos = blockEntity.blockPos
+        PacketDistributor.sendToPlayersTrackingChunk(
+            serverLevel,
+            ChunkPos(pos),
+            HTBlockEntityUpdatePacket(pos, blockEntity.getUpdateTag(serverLevel.registryAccess())),
+        )
+    }
 }

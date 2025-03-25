@@ -6,7 +6,9 @@ import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -18,9 +20,44 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        chocolate(output)
         meat(output)
         milk(output)
         sponge(output)
+    }
+
+    private fun chocolate(output: RecipeOutput) {
+        // Chocolate
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(RagiumItems.Ingots.CHOCOLATE)
+            .itemInput(Tags.Items.CROPS_COCOA_BEAN)
+            .milkInput(250)
+            .save(output)
+        // Apple
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(RagiumItems.CHOCOLATE_APPLE)
+            .itemInput(Items.APPLE)
+            .fluidInput(RagiumFluidTags.CHOCOLATES, 250)
+            .save(output)
+        // Bread
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(RagiumItems.CHOCOLATE_BREAD)
+            .itemInput(Tags.Items.FOODS_BREAD)
+            .fluidInput(RagiumFluidTags.CHOCOLATES, 250)
+            .save(output)
+        // Cookie
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(RagiumItems.CHOCOLATE_COOKIE, 8)
+            .itemInput(Tags.Items.FOODS_COOKIE, 8)
+            .fluidInput(RagiumFluidTags.CHOCOLATES, 250)
+            .save(output)
+
+        // Ambrosia
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(RagiumItems.AMBROSIA)
+            .itemInput(HTTagPrefix.STORAGE_BLOCK, CommonMaterials.CHOCOLATE, 64)
+            .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
+            .save(output)
     }
 
     private fun meat(output: RecipeOutput) {

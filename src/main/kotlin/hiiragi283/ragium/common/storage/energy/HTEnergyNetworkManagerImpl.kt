@@ -31,7 +31,7 @@ internal object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
         val cached: IEnergyStorage? = networkMap[key]
         if (cached != null) return cached
         // ない場合はキャッシュを取得する
-        return RagiumAPI.Companion
+        return RagiumAPI
             .getInstance()
             .getCurrentServer()
             ?.getLevel(key)
@@ -49,6 +49,7 @@ internal object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
 
     private fun createCache(level: ServerLevel): IEnergyStorage {
         val network: HTEnergyNetwork = level.getServerSavedData(HTEnergyNetwork.DATA_FACTORY)
+        networkMap.compute(level.dimension()) { key: ResourceKey<Level>, old: IEnergyStorage? -> old ?: network }
         networkMap.put(level.dimension(), network)
         return network
     }

@@ -3,9 +3,11 @@ package hiiragi283.ragium.common
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
+import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
@@ -16,6 +18,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.fluids.DispenseFluidContainer
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import org.slf4j.Logger
 
 @Mod(RagiumAPI.MOD_ID)
@@ -30,6 +34,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         eventBus.addListener(::construct)
         eventBus.addListener(::commonSetup)
+        eventBus.addListener(::registerPackets)
 
         RagiumComponentTypes.REGISTER.register(eventBus)
 
@@ -69,5 +74,17 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             addon.onCommonSetup(event)
         }
         LOGGER.info("Loaded common setup!")
+    }
+
+    private fun registerPackets(event: RegisterPayloadHandlersEvent) {
+        val registrar: PayloadRegistrar = event.registrar(RagiumAPI.MOD_ID)
+
+        registrar.playToClient(
+            HTBlockEntityUpdatePacket.TYPE,
+            HTBlockEntityUpdatePacket.STREAM_CODEC,
+            HTCustomPayload::handle,
+        )
+
+        LOGGER.info("Registered packets!")
     }
 }

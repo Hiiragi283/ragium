@@ -66,6 +66,16 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .itemOutput(Items.DIRT)
             .itemInput(Items.ROOTED_DIRT)
             .saveSuffixed(output, "_from_rooted")
+
+        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+            .itemOutput(Items.NETHER_WART, 9)
+            .itemInput(Items.NETHER_WART_BLOCK)
+            .saveSuffixed(output, "_from_block")
+
+        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+            .itemOutput(RagiumItems.WARPED_WART, 9)
+            .itemInput(Items.WARPED_WART_BLOCK)
+            .saveSuffixed(output, "_from_block")
         // Ragium
         HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
             .itemOutput(RagiumItems.Dusts.GOLD)

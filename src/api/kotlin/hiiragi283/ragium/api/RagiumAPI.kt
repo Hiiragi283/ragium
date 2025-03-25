@@ -20,8 +20,10 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -158,4 +160,6 @@ interface RagiumAPI {
         ).withStyle(ChatFormatting.GRAY)
 
     fun getEffectRange(stack: ItemStack): Int
+
+    fun sendUpdatePayload(blockEntity: BlockEntity, serverLevel: ServerLevel)
 }

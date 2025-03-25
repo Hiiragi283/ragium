@@ -22,7 +22,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 abstract class HTFluidWellBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
     HTFluidTankHandler {
-    protected val outputTank: HTFluidTank = HTFluidTank.Companion.create("output_tank", this)
+    protected val outputTank: HTFluidTank = HTFluidTank.create("output_tank", this)
 
     final override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         outputTank.writeNbt(nbt, registryOps)

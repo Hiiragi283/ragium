@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import net.minecraft.network.chat.Component
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
@@ -17,11 +16,6 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
 }
 
 //    Fluid    //
-
-/**
- * [Fluid]の名前を[net.neoforged.neoforge.fluids.FluidType.getDescription]から返します。
- */
-val Fluid.name: Component get() = fluidType.description
 
 /**
  * この[Fluid]が流体の源となっているか判定します。

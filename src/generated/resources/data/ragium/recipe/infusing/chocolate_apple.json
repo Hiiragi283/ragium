@@ -3,18 +3,18 @@
   "fluid_inputs": [
     {
       "amount": 250,
-      "tag": "c:water"
+      "tag": "c:chocolates"
     }
   ],
   "item_inputs": [
     {
       "count": 1,
-      "item": "minecraft:dirt"
+      "item": "minecraft:apple"
     }
   ],
   "item_outputs": [
     {
-      "item": "minecraft:mud"
+      "item": "ragium:chocolate_apple"
     }
   ]
 }
