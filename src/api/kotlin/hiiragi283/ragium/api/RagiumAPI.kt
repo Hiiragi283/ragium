@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.ChatFormatting
 import net.minecraft.core.RegistryAccess
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
@@ -29,6 +30,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import java.util.*
+import net.minecraft.util.Unit as MCUnit
 
 interface RagiumAPI {
     companion object {
@@ -63,6 +65,10 @@ interface RagiumAPI {
     //    Addon    //
 
     fun getAddons(): List<RagiumAddon>
+
+    //    Component    //
+
+    fun getActiveComponent(): DataComponentType<MCUnit>
 
     //    Material    //
 

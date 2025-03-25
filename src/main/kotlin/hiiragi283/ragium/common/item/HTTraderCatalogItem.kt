@@ -12,11 +12,7 @@ import net.minecraft.world.level.Level
 class HTTraderCatalogItem(properties: Properties) : Item(properties) {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack: ItemStack = player.getItemInHand(usedHand)
-        return if (stack.`is`(this)) {
-            WanderingTrader(EntityType.WANDERING_TRADER, level).interact(player, usedHand)
-            InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
-        } else {
-            InteractionResultHolder.pass(stack)
-        }
+        WanderingTrader(EntityType.WANDERING_TRADER, level).interact(player, usedHand)
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
     }
 }

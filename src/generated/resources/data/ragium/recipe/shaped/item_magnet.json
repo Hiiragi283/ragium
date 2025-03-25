@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/azure_steel"
+    },
+    "B": {
+      "tag": "c:ingots/azure_steel"
+    },
+    "C": {
+      "tag": "c:gems/ragi_crystal"
+    }
+  },
+  "pattern": [
+    "A A",
+    "B B",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:item_magnet"
+  }
+}

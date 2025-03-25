@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
@@ -25,6 +26,7 @@ import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.common.util.HTWrappedMultiMap
 import hiiragi283.ragium.common.util.HTWrappedTable
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
@@ -39,6 +41,7 @@ import net.neoforged.neoforge.network.PacketDistributor
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.neoforge.kotlin.supply
+import net.minecraft.util.Unit as MCUnit
 
 class InternalRagiumAPI : RagiumAPI {
     companion object {
@@ -62,6 +65,10 @@ class InternalRagiumAPI : RagiumAPI {
         }
         return addonCache
     }
+
+    //    Component    //
+
+    override fun getActiveComponent(): DataComponentType<MCUnit> = RagiumComponentTypes.IS_ACTIVE.get()
 
     //    Material    //
 

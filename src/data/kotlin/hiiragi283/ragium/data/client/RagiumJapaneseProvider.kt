@@ -147,6 +147,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumItems.RAGI_ALLOY_TOOLS.addTranslationJp("ラギ合金", this)
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
 
+        addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
+        addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         // Food
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")

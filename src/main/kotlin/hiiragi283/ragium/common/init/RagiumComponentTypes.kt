@@ -6,6 +6,7 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.util.Unit
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -25,7 +26,14 @@ object RagiumComponentTypes {
             builder.persistent(codec).networkSynchronized(streamCodec)
         }
 
+    @JvmStatic
+    fun registerFlag(name: String): DeferredHolder<DataComponentType<*>, DataComponentType<Unit>> =
+        register(name, Unit.CODEC, StreamCodec.unit(Unit.INSTANCE))
+
     @JvmField
     val FLUID_CONTENT: DeferredHolder<DataComponentType<*>, DataComponentType<SimpleFluidContent>> =
         register("fluid_content", SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
+
+    @JvmField
+    val IS_ACTIVE: DeferredHolder<DataComponentType<*>, DataComponentType<Unit>> = registerFlag("is_active")
 }

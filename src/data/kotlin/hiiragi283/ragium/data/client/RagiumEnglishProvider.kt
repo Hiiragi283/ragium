@@ -147,6 +147,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         RagiumItems.RAGI_ALLOY_TOOLS.addTranslationEn("Ragi-Alloy", this)
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
 
+        addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
+        addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         // Food
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")

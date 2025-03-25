@@ -75,6 +75,8 @@ object RagiumCreativeTabs {
             addAll(RagiumItems.RAGI_ALLOY_TOOLS.itemHolders)
             addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
 
+            add(RagiumItems.ENDER_BUNDLE)
+            add(RagiumItems.ITEM_MAGNET)
             add(RagiumItems.TRADER_CATALOG)
 
             addAll(RagiumItems.Molds.entries)

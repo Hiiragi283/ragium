@@ -15,6 +15,7 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.StonecutterRecipe
+import net.neoforged.neoforge.common.Tags
 
 object RagiumToolRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -23,6 +24,25 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         // Tool
         RagiumItems.RAGI_ALLOY_TOOLS.addRecipes(output, holderLookup)
         RagiumItems.AZURE_STEEL_TOOLS.addRecipes(output, holderLookup)
+
+        HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
+            .pattern(
+                " A ",
+                "ABA",
+                "AAA",
+            ).define('A', Tags.Items.LEATHERS)
+            .define('B', Tags.Items.CHESTS_ENDER)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.ITEM_MAGNET)
+            .pattern(
+                "A A",
+                "B B",
+                " C ",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
+            .define('C', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .save(output)
 
         HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)

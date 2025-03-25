@@ -11,10 +11,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.item.HTAmbrosiaItem
-import hiiragi283.ragium.common.item.HTMaterialItem
-import hiiragi283.ragium.common.item.HTTraderCatalogItem
-import hiiragi283.ragium.common.item.HTWarpedWartItem
+import hiiragi283.ragium.common.item.*
 import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
 import net.minecraft.core.component.DataComponentPatch
@@ -185,6 +182,14 @@ object RagiumItems {
 
     @JvmField
     val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, RagiumMaterials.AZURE_STEEL)
+
+    @JvmField
+    val ENDER_BUNDLE: DeferredItem<HTEnderBundleItem> =
+        register("ender_bundle", ::HTEnderBundleItem, itemProperty().stacksTo(1))
+
+    @JvmField
+    val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> =
+        register("item_magnet", ::HTSimpleMagnetItem, itemProperty().stacksTo(1))
 
     @JvmField
     val TRADER_CATALOG: DeferredItem<HTTraderCatalogItem> =
