@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.internal
 
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.event.HTRecipesUpdatedEvent
@@ -7,14 +8,52 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderGetter
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.event.LootTableLoadEvent
+import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
-object RagiumRuntimeRecipes {
+object RagiumRuntimeEvents {
+    @JvmStatic
+    private val LOGGER: Logger = LogUtils.getLogger()
+
+    //    Loot Table Load    //
+
+    @SubscribeEvent
+    fun onLoadLootTable(event: LootTableLoadEvent) {
+        val loot: LootTable = event.table
+
+        fun modify(entityType: EntityType<*>, function: LootTable.() -> Unit) {
+            if (loot.lootTableId == entityType.defaultLootTable.location()) {
+                function(loot)
+            }
+        }
+
+        // 行商人がカタログを落とすように
+        modify(EntityType.WANDERING_TRADER) {
+            addPool(
+                LootPool
+                    .lootPool()
+                    .setRolls(ConstantValue.exactly(1f))
+                    .add(LootItem.lootTableItem(RagiumItems.TRADER_CATALOG))
+                    .build(),
+            )
+            LOGGER.info("Modified loot table for Wandering Trader!")
+        }
+    }
+
+    //    Machine Recipe    //
+
     @SubscribeEvent
     fun onMachineRecipesUpdated(event: HTRecipesUpdatedEvent) {
         crushing(event)

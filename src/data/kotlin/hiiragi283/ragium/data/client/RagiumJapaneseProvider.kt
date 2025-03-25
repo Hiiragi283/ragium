@@ -141,6 +141,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun item() {
+        // Armor
+        RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
+        // Tool
+        RagiumItems.RAGI_ALLOY_TOOLS.addTranslationJp("ラギ合金", this)
+        RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
+
+        addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
+        // Food
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
@@ -163,19 +171,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
-        // addItem(RagiumItems.DIVING_GOGGLE, "ダイビングゴーグル")
-        // addItem(RagiumItems.JETPACK, "ジェットパック")
-        // addItem(RagiumItems.CLIMBING_LEGGINGS, "登山用レギンス")
-        // addItem(RagiumItems.SLIME_BOOTS, "スライムブーツ")
-
-        RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
-
-        // addItem(RagiumItems.FEVER_PICKAXE, "フィーバーピッケル")
-        // addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
-
-        RagiumItems.RAGI_ALLOY_TOOLS.addTranslationJp("ラギ合金", this)
-        RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
-
         /*addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
         addItem(RagiumItems.DURALUMIN_CASE, "ジュラルミンケース")
         addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
@@ -188,7 +183,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.FLATTEN_DYNAMITE, "整地用ダイナマイト")
         addItem(RagiumItems.NAPALM_DYNAMITE, "ナパームダイナマイト")
         addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")*/
-
+        // Mold
         addMold(RagiumItems.Molds.BLANK, "成形型（なし）")
         addMold(RagiumItems.Molds.BALL, "成形型（ボール）")
         addMold(RagiumItems.Molds.BLOCK, "成形型（ブロック）")
@@ -197,7 +192,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMold(RagiumItems.Molds.PLATE, "成形型（板材）")
         addMold(RagiumItems.Molds.ROD, "成形型（棒材）")
         addMold(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
-
+        // Parts
         addItem(RagiumItems.ADVANCED_MACHINE_TEMPLATE, "発展機械テンプレート")
         // addItem(RagiumItems.BEE_WAX, "蜜蠟")
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")

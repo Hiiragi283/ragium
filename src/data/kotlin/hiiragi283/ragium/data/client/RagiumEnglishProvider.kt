@@ -141,6 +141,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun item() {
+        // Armor
+        RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
+        // Tool
+        RagiumItems.RAGI_ALLOY_TOOLS.addTranslationEn("Ragi-Alloy", this)
+        RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
+
+        addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
+        // Food
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
@@ -163,19 +171,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
 
-        // addItem(RagiumItems.DIVING_GOGGLE, "Diving Goggles")
-        // addItem(RagiumItems.JETPACK, "Jetpack")
-        // addItem(RagiumItems.CLIMBING_LEGGINGS, "Climbing Leggings")
-        // addItem(RagiumItems.SLIME_BOOTS, "Slime Boots")
-
-        RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
-
-        // addItem(RagiumItems.FEVER_PICKAXE, "Fever Pickaxe")
-        // addItem(RagiumItems.SILKY_PICKAXE, "Silky Pickaxe")
-
-        RagiumItems.RAGI_ALLOY_TOOLS.addTranslationEn("Ragi-Alloy", this)
-        RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
-
         /*addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
         addItem(RagiumItems.DURALUMIN_CASE, "Duralumin Case")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
@@ -188,7 +183,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.FLATTEN_DYNAMITE, "Flatten Dynamite")
         addItem(RagiumItems.NAPALM_DYNAMITE, "Napalm Dynamite")
         addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")*/
-
+        // Mold
         addMold(RagiumItems.Molds.BLANK, "Mold (Blank)")
         addMold(RagiumItems.Molds.BALL, "Mold (Ball)")
         addMold(RagiumItems.Molds.BLOCK, "Mold (Block)")
@@ -197,7 +192,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMold(RagiumItems.Molds.PLATE, "Mold (Plate)")
         addMold(RagiumItems.Molds.ROD, "Mold (Rod)")
         addMold(RagiumItems.Molds.WIRE, "Mold (Wire)")
-
+        // Parts
         addItem(RagiumItems.ADVANCED_MACHINE_TEMPLATE, "Advanced Machine Template")
         // addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
