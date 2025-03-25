@@ -3,16 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/azure_steel"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
       "tag": "c:tools/forge_hammer"
+    },
+    "C": {
+      "item": "minecraft:deepslate_tiles"
     }
   },
   "pattern": [
     "AAA",
     "ABA",
-    "AAA"
+    "CCC"
   ],
   "result": {
     "count": 1,

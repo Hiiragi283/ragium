@@ -9,12 +9,12 @@ import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.function.Supplier
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
@@ -25,9 +25,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.SILT)
 
             add(RagiumBlocks.SPONGE_CAKE)
-
-            add(RagiumBlocks.MACHINE_CASING)
-            add(RagiumBlocks.ADVANCED_MACHINE_CASING)
+            
             add(RagiumBlocks.DEVICE_CASING)
 
             add(RagiumBlocks.ENI)
@@ -69,7 +67,48 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             ),
         )
 
+        simpleBlock(
+            RagiumBlocks.MACHINE_CASING.get(),
+            models()
+                .withExistingParent("block/machine_casing", RagiumAPI.id("block/casing_base"))
+                .texture("top", RagiumAPI.id("block/ragi_alloy_block"))
+                .texture("bottom", vanillaId("block/deepslate_tiles"))
+        )
+
+        simpleBlock(
+            RagiumBlocks.ADVANCED_MACHINE_CASING.get(),
+            models()
+                .withExistingParent("block/advanced_machine_casing", RagiumAPI.id("block/casing_base"))
+                .texture("top", RagiumAPI.id("block/advanced_ragi_alloy_block"))
+                .texture("bottom", RagiumAPI.id("block/azure_tiles"))
+        )
+
         // Machine
+        fun basicMachine(holder: DeferredBlock<*>) {
+            horizontalBlock(
+                holder.get(),
+                models()
+                    .withExistingParent("block/" + holder.id.path, RagiumAPI.id("block/machine_base"))
+                    .texture("top", RagiumAPI.id("block/ragi_alloy_block"))
+                    .texture("bottom", vanillaId("block/deepslate_tiles"))
+                    .texture("front", holder.id.withPath { "block/${it}_front" })
+            )
+        }
+
+        basicMachine(RagiumBlocks.CRUSHER)
+        basicMachine(RagiumBlocks.EXTRACTOR)
+
+        fun advMachine(holder: DeferredBlock<*>) {
+            horizontalBlock(
+                holder.get(),
+                models()
+                    .withExistingParent("block/" + holder.id.path, RagiumAPI.id("block/machine_base"))
+                    .texture("top", RagiumAPI.id("block/advanced_ragi_alloy_block"))
+                    .texture("bottom", RagiumAPI.id("block/azure_tiles"))
+                    .texture("front", holder.id.withPath { "block/${it}_front" })
+            )
+        }
+
 
         // Device
         simpleBlock(
@@ -117,9 +156,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
     }
-
-    val machineCasing: ResourceLocation = RagiumAPI.id("block/machine_casing")
-    val ragiAlloyCasing: ResourceLocation = RagiumAPI.id("block/ragi_alloy_casing")
 
     private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
 

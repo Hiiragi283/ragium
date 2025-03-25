@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMiscRecipeProvider : HTRecipeProvider() {
@@ -40,15 +41,17 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .save(output)
         // Machine
         HTShapedRecipeBuilder(RagiumBlocks.MACHINE_CASING)
-            .hollow8()
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
+            .casing()
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .define('C', Blocks.DEEPSLATE_TILES)
             .save(output)
         // Advanced Machine
         HTShapedRecipeBuilder(RagiumBlocks.ADVANCED_MACHINE_CASING)
-            .hollow8()
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
+            .casing()
+            .define('A', HTTagPrefix.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .define('C', RagiumBlocks.AZURE_TILE_SETS.base)
             .save(output)
         // Device
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)

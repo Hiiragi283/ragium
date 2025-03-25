@@ -25,15 +25,15 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
         // Azure Tiles
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILE_SETS.base, 4, CraftingBookCategory.BUILDING)
             .cross8()
-            .define('A', HTTagPrefix.DUST, VanillaMaterials.LAPIS)
+            .define('A', HTTagPrefix.DUST, RagiumMaterials.AZURE_STEEL)
             .define('B', HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
             .define('C', Items.DEEPSLATE_TILES)
             .save(output)
         // Ember Stone
         HTShapedRecipeBuilder(RagiumBlocks.EMBER_STONE_SETS.base, 8, CraftingBookCategory.BUILDING)
             .cross8()
-            .define('A', Items.BLAZE_POWDER)
-            .define('B', HTTagPrefix.DUST, VanillaMaterials.GOLD)
+            .define('A', HTTagPrefix.DUST, RagiumMaterials.ADVANCED_RAGI_ALLOY)
+            .define('B', Items.BLAZE_POWDER)
             .define('C', Items.STONE_BRICKS)
             .save(output)
         // Plastic Block
