@@ -18,7 +18,7 @@ object RagiumEmiCategories {
 
     // Machines
     @JvmField
-    val CENTRIFUGING = HTEmiRecipeCategory(RagiumRecipes.CENTRIFUGING, RagiumBlocks.CRUSHER)
+    val CENTRIFUGING = HTEmiRecipeCategory(RagiumRecipes.CENTRIFUGING, RagiumBlocks.CENTRIFUGE)
 
     @JvmField
     val CRUSHING = HTEmiRecipeCategory(RagiumRecipes.CRUSHING, RagiumBlocks.CRUSHER)
@@ -27,7 +27,7 @@ object RagiumEmiCategories {
     val EXTRACTING = HTEmiRecipeCategory(RagiumRecipes.EXTRACTING, RagiumBlocks.EXTRACTOR)
 
     @JvmField
-    val INFUSING = HTEmiRecipeCategory(RagiumRecipes.INFUSING, RagiumBlocks.EXTRACTOR)
+    val INFUSING = HTEmiRecipeCategory(RagiumRecipes.INFUSING, RagiumBlocks.INFUSER)
 
     @JvmField
     val REFINING = HTEmiRecipeCategory(RagiumRecipes.REFINING, RagiumBlocks.EXTRACTOR)

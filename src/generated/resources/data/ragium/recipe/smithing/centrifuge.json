@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:copper_grate"
+  },
+  "base": {
+    "item": "ragium:advanced_machine_casing"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:centrifuge"
+  },
+  "template": {
+    "tag": "c:circuits/advanced"
+  }
+}

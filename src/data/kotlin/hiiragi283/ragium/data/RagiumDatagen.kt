@@ -9,16 +9,20 @@ import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.server.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagProvider
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
 import net.minecraft.data.loot.LootTableProvider
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import org.slf4j.Logger
@@ -54,6 +58,17 @@ object RagiumDatagen {
         generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, helper))
 
         generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
+
+        generator.addProvider(
+            event.includeServer(),
+            DatapackBuiltinEntriesProvider(
+                output,
+                provider,
+                RegistrySetBuilder()
+                    .add(Registries.ENCHANTMENT, RagiumEnchantmentProvider),
+                setOf("minecraft", RagiumAPI.MOD_ID),
+            ),
+        )
 
         LOGGER.info("Gathered server resources!")
         // client

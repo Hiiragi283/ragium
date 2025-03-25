@@ -13,6 +13,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 
@@ -74,18 +76,55 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('C', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
             .save(output)
 
-        // Crusher
-        HTSmithingRecipeBuilder(RagiumBlocks.CRUSHER)
-            .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
-            .addIngredient(RagiumBlocks.MACHINE_CASING)
-            .addIngredient(RagiumItemTags.TOOLS_FORGE_HAMMER)
+        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
+            .cross8()
+            .define('A', HTTagPrefix.DUST, RagiumMaterials.DEEP_STEEL)
+            .define('B', HTTagPrefix.DUST, VanillaMaterials.GLOWSTONE)
+            .define('C', RagiumItemTags.CIRCUITS_BASIC)
+            .saveSuffixed(output, "_from_basic")
+
+        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
+            .pattern(
+                "AAA",
+                "BCB",
+                "AAA",
+            ).define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .define('B', HTTagPrefix.DUST, VanillaMaterials.REDSTONE)
+            .define('C', RagiumItemTags.PLASTICS)
             .save(output)
-        // Extractor
-        HTSmithingRecipeBuilder(RagiumBlocks.EXTRACTOR)
-            .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
-            .addIngredient(RagiumBlocks.MACHINE_CASING)
-            .addIngredient(Items.HOPPER)
-            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT, 4)
+            .pattern(
+                "AAA",
+                "BCB",
+                "AAA",
+            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
+            .define('B', HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
+            .define('C', RagiumItemTags.PLASTICS)
+            .saveSuffixed(output, "_with_ragi")
+
+        // Machine
+        fun basicMachine(machine: ItemLike, part: Ingredient) {
+            HTSmithingRecipeBuilder(machine)
+                .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
+                .addIngredient(RagiumBlocks.MACHINE_CASING)
+                .addIngredient(part)
+                .save(output)
+        }
+
+        basicMachine(RagiumBlocks.CRUSHER, Ingredient.of(RagiumItemTags.TOOLS_FORGE_HAMMER))
+        basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.HOPPER))
+
+        fun advMachine(machine: ItemLike, part: Ingredient) {
+            HTSmithingRecipeBuilder(machine)
+                .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)
+                .addIngredient(RagiumBlocks.ADVANCED_MACHINE_CASING)
+                .addIngredient(part)
+                .save(output)
+        }
+
+        advMachine(RagiumBlocks.CENTRIFUGE, Ingredient.of(Items.COPPER_GRATE))
+        advMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.HOPPER))
     }
 
     private fun wells(output: RecipeOutput) {

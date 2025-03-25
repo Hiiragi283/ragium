@@ -1,6 +1,8 @@
 {
   "values": [
+    "ragium:centrifuge",
     "ragium:crusher",
-    "ragium:extractor"
+    "ragium:extractor",
+    "ragium:infuser"
   ]
 }

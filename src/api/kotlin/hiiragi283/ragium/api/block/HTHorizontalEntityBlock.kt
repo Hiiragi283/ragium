@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.block
 
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -16,11 +16,19 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty
 /**
  * 水平方向の回転を行える[HTEntityBlock]
  */
-abstract class HTHorizontalEntityBlock<BE : HTMachineBlockEntity>(type: HTDeferredBlockEntityType<BE>, properties: Properties) :
+abstract class HTHorizontalEntityBlock<BE : HTBlockEntity>(type: HTDeferredBlockEntityType<BE>, properties: Properties) :
     HTEntityBlock<BE>(type, properties) {
     companion object {
         @JvmField
         val HORIZONTAL: DirectionProperty = HTBlockStateProperties.HORIZONTAL
+
+        @JvmStatic
+        fun <BE : HTBlockEntity> create(type: HTDeferredBlockEntityType<BE>): (Properties) -> HTHorizontalEntityBlock<*> =
+            { prop: Properties ->
+                object : HTHorizontalEntityBlock<BE>(type, prop) {
+                    override fun initDefaultState(): BlockState = stateDefinition.any().setValue(HORIZONTAL, Direction.NORTH)
+                }
+            }
     }
 
     fun getFront(state: BlockState): Direction = state.getValue(HORIZONTAL)

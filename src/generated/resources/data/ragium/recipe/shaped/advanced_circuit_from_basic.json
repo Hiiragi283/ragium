@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:gems/lapis"
+    },
+    "B": {
+      "tag": "c:dusts/glowstone"
+    },
+    "C": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_circuit"
+  }
+}

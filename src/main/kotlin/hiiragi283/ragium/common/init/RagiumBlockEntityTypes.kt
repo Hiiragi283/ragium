@@ -39,6 +39,12 @@ object RagiumBlockEntityTypes {
     @JvmField
     val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
 
+    @JvmField
+    val CENTRIFUGE: HTDeferredBlockEntityType<HTCentrifugeBlockEntity> = registerTick("centrifuge", ::HTCentrifugeBlockEntity)
+
+    @JvmField
+    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
+
     //    Device    //
 
     @JvmField
@@ -67,6 +73,9 @@ object RagiumBlockEntityTypes {
 
         add(CRUSHER, RagiumBlocks.CRUSHER)
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
+
+        add(CENTRIFUGE, RagiumBlocks.CENTRIFUGE)
+        add(INFUSER, RagiumBlocks.INFUSER)
 
         add(WATER_WELL, RagiumBlocks.WATER_WELL)
         add(LAVA_WELL, RagiumBlocks.LAVA_WELL)
@@ -101,6 +110,9 @@ object RagiumBlockEntityTypes {
 
         registerHandlers(CRUSHER)
         registerHandlers(EXTRACTOR)
+
+        registerHandlers(CENTRIFUGE)
+        registerHandlers(INFUSER)
 
         registerHandlers(WATER_WELL)
         registerHandlers(LAVA_WELL)

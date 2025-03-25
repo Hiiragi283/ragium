@@ -25,6 +25,15 @@ import net.minecraft.world.phys.BlockHitResult
  */
 abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntityType<BE>, properties: Properties) :
     BaseEntityBlock(properties) {
+    companion object {
+        @JvmStatic
+        fun <BE : HTBlockEntity> create(type: HTDeferredBlockEntityType<BE>): (Properties) -> HTEntityBlock<*> = { prop: Properties ->
+            object : HTEntityBlock<BE>(type, prop) {
+                override fun initDefaultState(): BlockState = stateDefinition.any()
+            }
+        }
+    }
+
     init {
         registerDefaultState(initDefaultState())
     }

@@ -109,6 +109,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             )
         }
 
+        advMachine(RagiumBlocks.CENTRIFUGE)
+        advMachine(RagiumBlocks.INFUSER)
+
         // Device
         simpleBlock(
             RagiumBlocks.WATER_WELL.get(),
