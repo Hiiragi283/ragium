@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "ragium:cheese_block"
+      "tag": "c:storage_blocks/chocolate"
     }
   ],
   "result": {
     "count": 9,
-    "id": "ragium:cheese"
+    "id": "ragium:chocolate_ingot"
   }
 }

@@ -55,7 +55,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
 
-        addBlock(RagiumBlocks.CHEESE_BLOCK, "チーズブロック")
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "スポンジケーキのハーフブロック")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
@@ -146,12 +145,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
         addItem(RagiumItems.BUTTER, "バター")
-        addItem(RagiumItems.CHEESE, "チーズ")
 
         addItem(RagiumItems.DOUGH, "生地")
         addItem(RagiumItems.FLOUR, "小麦粉")
 
-        addItem(RagiumItems.CHOCOLATE, "チョコレート")
         addItem(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
         addItem(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
         addItem(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
@@ -234,6 +231,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMaterialKey(CommonMaterials.BRONZE, "青銅")
         addMaterialKey(CommonMaterials.CADMIUM, "カドミウム")
         addMaterialKey(CommonMaterials.CARBON, "炭素")
+        addMaterialKey(CommonMaterials.CHEESE, "チーズ")
+        addMaterialKey(CommonMaterials.CHOCOLATE, "チョコレート")
         addMaterialKey(CommonMaterials.CHROMIUM, "クロム")
         addMaterialKey(CommonMaterials.COAL_COKE, "石炭コークス")
         addMaterialKey(CommonMaterials.CONSTANTAN, "コンスタンタン")

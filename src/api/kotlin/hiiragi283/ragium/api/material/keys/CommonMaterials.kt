@@ -37,6 +37,14 @@ object CommonMaterials {
     @JvmField
     val RUBY: HTMaterialKey = HTMaterialKey.of("ruby")
 
+    //    Ingot-Like    //
+
+    @JvmField
+    val CHEESE: HTMaterialKey = HTMaterialKey.of("cheese")
+
+    @JvmField
+    val CHOCOLATE: HTMaterialKey = HTMaterialKey.of("chocolate")
+
     //    Metal    //
 
     @JvmField

@@ -26,6 +26,8 @@ object InternalRagiumAddon : RagiumAddon {
         consumer.accept(CommonMaterials.BRONZE, HTMaterialType.ALLOY)
         consumer.accept(CommonMaterials.CADMIUM, HTMaterialType.METAL)
         consumer.accept(CommonMaterials.CARBON, HTMaterialType.DUST)
+        consumer.accept(CommonMaterials.CHEESE, HTMaterialType.INGOT_LIKE)
+        consumer.accept(CommonMaterials.CHOCOLATE, HTMaterialType.INGOT_LIKE)
         consumer.accept(CommonMaterials.CHROMIUM, HTMaterialType.METAL)
         consumer.accept(CommonMaterials.COAL_COKE, HTMaterialType.GEM)
         consumer.accept(CommonMaterials.CONSTANTAN, HTMaterialType.ALLOY)

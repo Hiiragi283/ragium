@@ -24,7 +24,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         buildList {
             add(RagiumBlocks.SILT)
 
-            add(RagiumBlocks.CHEESE_BLOCK)
             add(RagiumBlocks.SPONGE_CAKE)
 
             add(RagiumBlocks.MACHINE_CASING)

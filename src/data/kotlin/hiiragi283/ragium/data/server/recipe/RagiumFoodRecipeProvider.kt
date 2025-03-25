@@ -69,19 +69,9 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         // Butter
         HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
             .itemOutput(RagiumItems.BUTTER)
-            .itemOutput(RagiumItems.CHEESE)
+            .itemOutput(RagiumItems.Ingots.CHEESE)
             .milkInput()
             .save(output)
-        // Cheese
-        HTShapedRecipeBuilder(RagiumBlocks.CHEESE_BLOCK)
-            .hollow8()
-            .define('A', RagiumItemTags.FOOD_CHEESE)
-            .define('B', RagiumItems.CHEESE)
-            .saveSuffixed(output, "_from_base")
-
-        HTShapelessRecipeBuilder(RagiumItems.CHEESE, 9)
-            .addIngredient(RagiumBlocks.CHEESE_BLOCK)
-            .saveSuffixed(output, "_from_block")
     }
 
     private fun sponge(output: RecipeOutput) {

@@ -55,7 +55,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
 
-        addBlock(RagiumBlocks.CHEESE_BLOCK, "Block of Cheese")
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -146,12 +145,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.BUTTER, "Butter")
-        addItem(RagiumItems.CHEESE, "Cheese")
 
         addItem(RagiumItems.DOUGH, "Dough")
         addItem(RagiumItems.FLOUR, "Flour")
 
-        addItem(RagiumItems.CHOCOLATE, "Chocolate")
         addItem(RagiumItems.CHOCOLATE_APPLE, "Chocolate Apple")
         addItem(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
         addItem(RagiumItems.CHOCOLATE_COOKIE, "Chocolate Cookie")
@@ -234,6 +231,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMaterialKey(CommonMaterials.BRONZE, "Bronze")
         addMaterialKey(CommonMaterials.CADMIUM, "Cadmium")
         addMaterialKey(CommonMaterials.CARBON, "Carbon")
+        addMaterialKey(CommonMaterials.CHEESE, "Cheese")
+        addMaterialKey(CommonMaterials.CHOCOLATE, "Chocolate")
         addMaterialKey(CommonMaterials.CHROMIUM, "Chromium")
         addMaterialKey(CommonMaterials.COAL_COKE, "Coal Coke")
         addMaterialKey(CommonMaterials.CONSTANTAN, "Constantan")

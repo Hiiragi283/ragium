@@ -11,9 +11,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
-import kotlin.collections.forEach
-import kotlin.collections.sortedBy
-import kotlin.collections.toSet
 
 /**
  * 登録した[TagKey]をソートして生成するビルダー

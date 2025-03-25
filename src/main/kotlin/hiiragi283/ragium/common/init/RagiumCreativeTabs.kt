@@ -77,7 +77,6 @@ object RagiumCreativeTabs {
 
             addAll(RagiumItems.Molds.entries)
             // Foods
-            add(RagiumBlocks.CHEESE_BLOCK)
             add(RagiumBlocks.SPONGE_CAKE)
             add(RagiumBlocks.SPONGE_CAKE_SLAB)
             add(RagiumBlocks.SWEET_BERRIES_CAKE)

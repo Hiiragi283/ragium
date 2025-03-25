@@ -1,9 +1,5 @@
 {
   "values": [
-    {
-      "id": "create:bar_of_chocolate",
-      "required": false
-    },
-    "ragium:chocolate"
+    "#c:ingots/chocolate"
   ]
 }

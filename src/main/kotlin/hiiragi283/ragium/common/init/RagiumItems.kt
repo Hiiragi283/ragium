@@ -16,6 +16,8 @@ import hiiragi283.ragium.common.item.HTMaterialItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
+import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
@@ -116,10 +118,15 @@ object RagiumItems {
     }
 
     enum class Ingots(override val key: HTMaterialKey) : HTMaterialItemLike {
+        // Ragium
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         ADVANCED_RAGI_ALLOY(RagiumMaterials.ADVANCED_RAGI_ALLOY),
         AZURE_STEEL(RagiumMaterials.AZURE_STEEL),
         DEEP_STEEL(RagiumMaterials.DEEP_STEEL),
+
+        // Food
+        CHEESE(CommonMaterials.CHEESE),
+        CHOCOLATE(CommonMaterials.CHOCOLATE),
         ;
 
         override val prefix: HTTagPrefix = HTTagPrefix.INGOT
@@ -199,16 +206,10 @@ object RagiumItems {
     val BUTTER: DeferredItem<Item> = registerFood("butter", Foods.APPLE)
 
     @JvmField
-    val CHEESE: DeferredItem<Item> = registerFood("cheese", Foods.APPLE)
-
-    @JvmField
     val FLOUR: DeferredItem<Item> = register("flour")
 
     @JvmField
     val DOUGH: DeferredItem<Item> = register("dough")
-
-    @JvmField
-    val CHOCOLATE: DeferredItem<Item> = registerFood("chocolate", RagiumFoods.CHOCOLATE)
 
     @JvmField
     val CHOCOLATE_APPLE: DeferredItem<Item> = registerFood("chocolate_apple", Foods.COOKED_CHICKEN)
@@ -255,11 +256,9 @@ object RagiumItems {
         MELON_PIE,
         // ingredient
         BUTTER,
-        CHEESE,
         FLOUR,
         DOUGH,
         // chocolate
-        CHOCOLATE,
         CHOCOLATE_APPLE,
         CHOCOLATE_BREAD,
         CHOCOLATE_COOKIE,
@@ -350,6 +349,12 @@ object RagiumItems {
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
+            event.modify(block) { builder: DataComponentPatch.Builder ->
+                builder.set(DataComponents.ITEM_NAME, block.prefix.createText(block.key))
+            }
+        }
+
         LOGGER.info("Modified default item components!")
     }
 }

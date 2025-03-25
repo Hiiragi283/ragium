@@ -7,6 +7,7 @@ enum class HTMaterialType {
     ALLOY,
     DUST,
     GEM,
+    INGOT_LIKE,
     METAL,
     MINERAL,
     ;
@@ -19,6 +20,7 @@ enum class HTMaterialType {
         ALLOY -> HTTagPrefix.INGOT
         DUST -> null
         GEM -> HTTagPrefix.GEM
+        INGOT_LIKE -> HTTagPrefix.INGOT
         METAL -> HTTagPrefix.INGOT
         MINERAL -> null
     }
@@ -31,6 +33,7 @@ enum class HTMaterialType {
         ALLOY -> null
         DUST -> null
         GEM -> HTTagPrefix.GEM
+        INGOT_LIKE -> HTTagPrefix.DUST
         METAL -> HTTagPrefix.DUST
         MINERAL -> HTTagPrefix.DUST
     }

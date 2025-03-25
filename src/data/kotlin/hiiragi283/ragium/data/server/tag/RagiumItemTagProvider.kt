@@ -133,11 +133,11 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
 
         builder.add(RagiumItemTags.FOOD_BUTTER, RagiumItems.BUTTER)
 
-        builder.add(RagiumItemTags.FOOD_CHEESE, RagiumItems.CHEESE)
+        builder.addTag(RagiumItemTags.FOOD_CHEESE, HTTagPrefix.INGOT.createTag(CommonMaterials.CHEESE))
 
-        builder.add(RagiumItemTags.FOOD_CHOCOLATE, RagiumItems.CHOCOLATE)
+        builder.addTag(RagiumItemTags.FOOD_CHOCOLATE, HTTagPrefix.INGOT.createTag(CommonMaterials.CHOCOLATE))
         builder.add(
-            RagiumItemTags.FOOD_CHOCOLATE,
+            HTTagPrefix.INGOT.createTag(CommonMaterials.CHOCOLATE),
             ResourceLocation.fromNamespaceAndPath("create", "bar_of_chocolate"),
             HTTagBuilder.DependType.OPTIONAL,
         )

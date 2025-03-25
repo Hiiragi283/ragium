@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
@@ -134,11 +135,16 @@ object RagiumBlocks {
     //    Materials    //
 
     enum class StorageBlocks(properties: BlockBehaviour.Properties, override val key: HTMaterialKey) : HTMaterialItemLike {
+        // Ragium
         RAGI_ALLOY(lightMetal().mapColor(MapColor.COLOR_RED), RagiumMaterials.RAGI_ALLOY),
         ADVANCED_RAGI_ALLOY(heavyMetal().mapColor(MapColor.COLOR_ORANGE), RagiumMaterials.ADVANCED_RAGI_ALLOY),
         RAGI_CRYSTAL(crystal().mapColor(MapColor.COLOR_PINK), RagiumMaterials.RAGI_CRYSTAL),
         AZURE_STEEL(heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE), RagiumMaterials.AZURE_STEEL),
         DEEP_STEEL(heavyMetal().mapColor(MapColor.COLOR_CYAN), RagiumMaterials.DEEP_STEEL),
+
+        // Food
+        CHEESE(wooden().mapColor(MapColor.TERRACOTTA_YELLOW), CommonMaterials.CHEESE),
+        CHOCOLATE(wooden().mapColor(MapColor.TERRACOTTA_BROWN), CommonMaterials.CHOCOLATE),
         ;
 
         val holder: DeferredBlock<HTMaterialStorageBlock> = register(
@@ -152,6 +158,8 @@ object RagiumBlocks {
             RAGI_CRYSTAL -> RagiumItems.RawResources.RAGI_CRYSTAL
             AZURE_STEEL -> RagiumItems.Ingots.AZURE_STEEL
             DEEP_STEEL -> RagiumItems.Ingots.DEEP_STEEL
+            CHEESE -> RagiumItems.Ingots.CHEESE
+            CHOCOLATE -> RagiumItems.Ingots.CHOCOLATE
         }
 
         override val prefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
@@ -239,9 +247,6 @@ object RagiumBlocks {
     fun getLedBlock(color: DyeColor): DeferredBlock<*> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
 
     //    Foods    //
-
-    @JvmField
-    val CHEESE_BLOCK: DeferredBlock<Block> = register("cheese_block", wooden())
 
     @JvmField
     val SPONGE_CAKE: DeferredBlock<HTSpongeCakeBlock> = register(
