@@ -108,9 +108,6 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.AMBROSIA)
             // Ingredients
-            add(RagiumItems.MACHINE_TEMPLATE)
-            add(RagiumItems.ADVANCED_MACHINE_TEMPLATE)
-
             add(RagiumItems.ENGINE)
             add(RagiumItems.LED)
             add(RagiumItems.SOLAR_PANEL)
@@ -118,6 +115,8 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.POLYMER_RESIN)
             add(RagiumItems.PLASTIC_PLATE)
+            add(RagiumItems.BASIC_CIRCUIT)
+            add(RagiumItems.ADVANCED_CIRCUIT)
 
             add(RagiumItems.SOAP)
             add(RagiumItems.TAR)

@@ -3,19 +3,16 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:dusts/lapis"
+      "tag": "c:dusts/azure_steel"
     },
     "B": {
-      "tag": "c:dusts/amethyst"
-    },
-    "C": {
       "item": "minecraft:deepslate_tiles"
     }
   },
   "pattern": [
+    " A ",
     "ABA",
-    "BCB",
-    "ABA"
+    " A "
   ],
   "result": {
     "count": 4,

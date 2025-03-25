@@ -11,6 +11,6 @@
     "id": "ragium:crusher"
   },
   "template": {
-    "item": "ragium:machine_template"
+    "tag": "c:circuits/basic"
   }
 }

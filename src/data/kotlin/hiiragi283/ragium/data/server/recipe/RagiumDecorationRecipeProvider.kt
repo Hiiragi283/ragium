@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.HolderLookup
@@ -17,24 +16,21 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Ragi-Bricks
         HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICK_SETS.base, 4, CraftingBookCategory.BUILDING)
-            .cross8()
+            .hollow4()
             .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
-            .define('B', Tags.Items.BRICKS_NORMAL)
-            .define('C', Items.CLAY)
+            .define('B', Items.BRICKS)
             .save(output)
         // Azure Tiles
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILE_SETS.base, 4, CraftingBookCategory.BUILDING)
-            .cross8()
+            .hollow4()
             .define('A', HTTagPrefix.DUST, RagiumMaterials.AZURE_STEEL)
-            .define('B', HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
-            .define('C', Items.DEEPSLATE_TILES)
+            .define('B', Items.DEEPSLATE_TILES)
             .save(output)
         // Ember Stone
         HTShapedRecipeBuilder(RagiumBlocks.EMBER_STONE_SETS.base, 8, CraftingBookCategory.BUILDING)
-            .cross8()
+            .hollow4()
             .define('A', HTTagPrefix.DUST, RagiumMaterials.ADVANCED_RAGI_ALLOY)
-            .define('B', Items.BLAZE_POWDER)
-            .define('C', Items.STONE_BRICKS)
+            .define('B', Items.STONE_BRICKS)
             .save(output)
         // Plastic Block
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_SETS.base, 4, CraftingBookCategory.BUILDING)

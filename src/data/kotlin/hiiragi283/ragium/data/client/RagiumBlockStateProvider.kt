@@ -25,7 +25,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.SILT)
 
             add(RagiumBlocks.SPONGE_CAKE)
-            
+
             add(RagiumBlocks.DEVICE_CASING)
 
             add(RagiumBlocks.ENI)
@@ -72,7 +72,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             models()
                 .withExistingParent("block/machine_casing", RagiumAPI.id("block/casing_base"))
                 .texture("top", RagiumAPI.id("block/ragi_alloy_block"))
-                .texture("bottom", vanillaId("block/deepslate_tiles"))
+                .texture("bottom", vanillaId("block/deepslate_tiles")),
         )
 
         simpleBlock(
@@ -80,7 +80,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             models()
                 .withExistingParent("block/advanced_machine_casing", RagiumAPI.id("block/casing_base"))
                 .texture("top", RagiumAPI.id("block/advanced_ragi_alloy_block"))
-                .texture("bottom", RagiumAPI.id("block/azure_tiles"))
+                .texture("bottom", RagiumAPI.id("block/azure_tiles")),
         )
 
         // Machine
@@ -91,7 +91,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .withExistingParent("block/" + holder.id.path, RagiumAPI.id("block/machine_base"))
                     .texture("top", RagiumAPI.id("block/ragi_alloy_block"))
                     .texture("bottom", vanillaId("block/deepslate_tiles"))
-                    .texture("front", holder.id.withPath { "block/${it}_front" })
+                    .texture("front", holder.id.withPath { "block/${it}_front" }),
             )
         }
 
@@ -105,10 +105,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .withExistingParent("block/" + holder.id.path, RagiumAPI.id("block/machine_base"))
                     .texture("top", RagiumAPI.id("block/advanced_ragi_alloy_block"))
                     .texture("bottom", RagiumAPI.id("block/azure_tiles"))
-                    .texture("front", holder.id.withPath { "block/${it}_front" })
+                    .texture("front", holder.id.withPath { "block/${it}_front" }),
             )
         }
-
 
         // Device
         simpleBlock(

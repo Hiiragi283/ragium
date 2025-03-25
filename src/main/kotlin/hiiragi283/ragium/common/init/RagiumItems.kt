@@ -286,12 +286,6 @@ object RagiumItems {
     //    Machine Parts    //
 
     @JvmField
-    val MACHINE_TEMPLATE: DeferredItem<Item> = register("machine_template")
-
-    @JvmField
-    val ADVANCED_MACHINE_TEMPLATE: DeferredItem<Item> = register("advanced_machine_template")
-
-    @JvmField
     val ENGINE: DeferredItem<Item> = register("engine")
 
     @JvmField
@@ -308,6 +302,12 @@ object RagiumItems {
 
     @JvmField
     val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
+
+    @JvmField
+    val BASIC_CIRCUIT: DeferredItem<Item> = register("basic_circuit")
+
+    @JvmField
+    val ADVANCED_CIRCUIT: DeferredItem<Item> = register("advanced_circuit")
 
     //    Misc    //
 

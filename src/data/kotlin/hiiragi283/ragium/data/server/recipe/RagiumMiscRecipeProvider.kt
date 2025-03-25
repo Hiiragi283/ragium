@@ -63,27 +63,26 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
     }
 
     private fun machines(output: RecipeOutput) {
-        // Templates
-        HTShapedRecipeBuilder(RagiumItems.MACHINE_TEMPLATE)
-            .hollow4()
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('B', HTTagPrefix.INGOT, VanillaMaterials.IRON)
+        // Circuit
+        HTShapedRecipeBuilder(RagiumItems.BASIC_CIRCUIT)
+            .pattern(
+                "AAA",
+                "BCB",
+                "AAA",
+            ).define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .define('B', HTTagPrefix.DUST, VanillaMaterials.REDSTONE)
+            .define('C', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.ADVANCED_MACHINE_TEMPLATE)
-            .hollow4()
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
-            .define('B', RagiumItems.MACHINE_TEMPLATE)
-            .save(output)
         // Crusher
         HTSmithingRecipeBuilder(RagiumBlocks.CRUSHER)
-            .addIngredient(RagiumItems.MACHINE_TEMPLATE)
+            .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
             .addIngredient(RagiumBlocks.MACHINE_CASING)
             .addIngredient(RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Extractor
         HTSmithingRecipeBuilder(RagiumBlocks.EXTRACTOR)
-            .addIngredient(RagiumItems.MACHINE_TEMPLATE)
+            .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
             .addIngredient(RagiumBlocks.MACHINE_CASING)
             .addIngredient(Items.HOPPER)
             .save(output)

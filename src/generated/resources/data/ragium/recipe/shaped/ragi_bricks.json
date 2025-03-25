@@ -6,16 +6,13 @@
       "tag": "c:dusts/raginite"
     },
     "B": {
-      "tag": "c:bricks/normal"
-    },
-    "C": {
-      "item": "minecraft:clay"
+      "item": "minecraft:bricks"
     }
   },
   "pattern": [
+    " A ",
     "ABA",
-    "BCB",
-    "ABA"
+    " A "
   ],
   "result": {
     "count": 4,

@@ -211,6 +211,11 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
         builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
 
+        builder.add(RagiumItemTags.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
+        builder.add(RagiumItemTags.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
+        builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_BASIC)
+        builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ADVANCED)
+
         // builder.add(RagiumItemTags.DIRT_SOILS, IntegrationMods.FD, "rich_soil", HTTagBuilder.DependType.OPTIONAL)
         builder.addItem(RagiumItemTags.DIRT_SOILS, Items.DIRT)
         builder.addItem(RagiumItemTags.DIRT_SOILS, Items.FARMLAND)
