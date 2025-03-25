@@ -43,6 +43,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addMachineRecipe(RagiumRecipes.CENTRIFUGING, ::HTCentrifugingEmiRecipe)
         addMachineRecipe(RagiumRecipes.CRUSHING, HTItemProcessEmiRecipe.create(RagiumEmiCategories.CRUSHING))
         addMachineRecipe(RagiumRecipes.EXTRACTING, HTItemProcessEmiRecipe.create(RagiumEmiCategories.EXTRACTING))
+        addMachineRecipe(RagiumRecipes.INFUSING, ::HTInfusingEmiRecipe)
         addMachineRecipe(RagiumRecipes.REFINING, HTFluidProcessEmiRecipe.create(RagiumEmiCategories.REFINING))
 
         addDeviceRecipes()

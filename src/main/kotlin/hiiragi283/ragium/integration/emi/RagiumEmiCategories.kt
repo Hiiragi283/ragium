@@ -27,6 +27,9 @@ object RagiumEmiCategories {
     val EXTRACTING = HTEmiRecipeCategory(RagiumRecipes.EXTRACTING, RagiumBlocks.EXTRACTOR)
 
     @JvmField
+    val INFUSING = HTEmiRecipeCategory(RagiumRecipes.INFUSING, RagiumBlocks.EXTRACTOR)
+
+    @JvmField
     val REFINING = HTEmiRecipeCategory(RagiumRecipes.REFINING, RagiumBlocks.EXTRACTOR)
 
     @JvmStatic
@@ -37,6 +40,7 @@ object RagiumEmiCategories {
         registry.addCategory(CENTRIFUGING)
         registry.addCategory(CRUSHING)
         registry.addCategory(EXTRACTING)
+        registry.addCategory(INFUSING)
         registry.addCategory(REFINING)
 
         // Workstation

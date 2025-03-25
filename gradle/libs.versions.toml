@@ -23,7 +23,7 @@ guide = "21.1.1"
 if = "1.21-3.6.24"
 immersive = "1.21.1-12.1.0-185"
 jade = "15.10.0+neoforge"
-jei = "19.21.0.247"
+#jei = "19.21.0.247"
 mek = "1.21.1-10.7.12.77"
 mi = "2.2.34"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
@@ -50,8 +50,8 @@ guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "gui
 if = { group = "maven.modrinth", name = "industrial-foregoing", version.ref = "if" }
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
-jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
-jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
+#jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
+#jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 mi = { group = "aztech", name = "Modern-Industrialization", version.ref = "mi" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
@@ -85,9 +85,7 @@ mods-transitive = [
     "create",
 ]
 
-mods-compile = [
-    "jei-api",
-]
+mods-compile = []
 
 mods-runtime = []
 
