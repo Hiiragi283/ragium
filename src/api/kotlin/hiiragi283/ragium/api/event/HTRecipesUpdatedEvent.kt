@@ -40,7 +40,7 @@ class HTRecipesUpdatedEvent(
     fun <R : Recipe<*>> register(recipeType: RecipeType<R>, recipeId: ResourceLocation, function: Function<HolderGetter<Item>, R?>) {
         if (currentType == recipeType) {
             val recipe: R = function.apply(itemLookup()) ?: return
-            consumer(RecipeHolder(recipeId, recipe))
+            consumer(RecipeHolder(recipeId.withPrefix("/"), recipe))
         }
     }
 

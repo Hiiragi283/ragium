@@ -32,7 +32,7 @@ object RagiumRuntimeRecipes {
             if (resultPrefix != null) {
                 event.register(
                     RagiumRecipes.CRUSHING,
-                    RagiumAPI.id("runtime_${name}_dust_from_ore"),
+                    RagiumAPI.id("${name}_dust_from_ore"),
                 ) { lookup: HolderGetter<Item> ->
                     val result: Item = event.getFirstItem(resultPrefix, key) ?: return@register null
                     HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
@@ -46,7 +46,7 @@ object RagiumRuntimeRecipes {
             if (mainPrefix != null) {
                 event.register(
                     RagiumRecipes.CRUSHING,
-                    RagiumAPI.id("runtime_${name}_dust_from_main"),
+                    RagiumAPI.id("${name}_dust_from_main"),
                 ) { lookup: HolderGetter<Item> ->
                     HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                         .itemInput(mainPrefix, key)
@@ -57,7 +57,7 @@ object RagiumRuntimeRecipes {
             // Gear
             event.register(
                 RagiumRecipes.CRUSHING,
-                RagiumAPI.id("runtime_${name}_dust_from_gear"),
+                RagiumAPI.id("${name}_dust_from_gear"),
             ) { lookup: HolderGetter<Item> ->
                 HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                     .itemInput(HTTagPrefix.GEAR, key)
@@ -67,7 +67,7 @@ object RagiumRuntimeRecipes {
             // Plate
             event.register(
                 RagiumRecipes.CRUSHING,
-                RagiumAPI.id("runtime_${name}_dust_from_plate"),
+                RagiumAPI.id("${name}_dust_from_plate"),
             ) { lookup: HolderGetter<Item> ->
                 HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                     .itemInput(HTTagPrefix.PLATE, key)
@@ -77,7 +77,7 @@ object RagiumRuntimeRecipes {
             // Raw
             event.register(
                 RagiumRecipes.CRUSHING,
-                RagiumAPI.id("runtime_${name}_dust_from_raw"),
+                RagiumAPI.id("${name}_dust_from_raw"),
             ) { lookup: HolderGetter<Item> ->
                 HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
                     .itemInput(HTTagPrefix.RAW_MATERIAL, key)

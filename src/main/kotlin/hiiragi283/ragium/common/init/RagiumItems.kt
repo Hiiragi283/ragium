@@ -283,8 +283,8 @@ object RagiumItems {
         GEAR(RagiumItemTags.MOLDS_GEAR),
         INGOT(RagiumItemTags.MOLDS_INGOT),
         PLATE(RagiumItemTags.MOLDS_PLATE),
-        ROD(RagiumItemTags.MOLDS_BLANK),
-        WIRE(RagiumItemTags.MOLDS_BLANK),
+        ROD(RagiumItemTags.MOLDS_ROD),
+        WIRE(RagiumItemTags.MOLDS_WIRE),
         ;
 
         val holder: DeferredItem<Item> = register("${name.lowercase()}_mold")

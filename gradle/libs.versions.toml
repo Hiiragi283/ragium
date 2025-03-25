@@ -17,6 +17,7 @@ ae2 = "19.2.5-beta"
 create = "6.0.4-52"
 #delight = "1.21.1-1.2.7"
 eio = "7.1.7-alpha"
+emi = "1.1.20+1.21.1"
 flywheel = "1.0.2-17"
 guide = "21.1.1"
 if = "1.21-3.6.24"
@@ -43,6 +44,7 @@ create = { group = "com.simibubi.create", name = "create-1.21.1", version.ref = 
 #delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 eio = { group = "com.enderio", name = "enderio-base", version.ref = "eio" }
 eio-machines = { group = "com.enderio", name = "enderio-machines", version.ref = "eio" }
+emi = { group = "dev.emi", name = "emi-neoforge", version.ref  = "emi" }
 flywheel = { group = "dev.engine-room.flywheel", name = "flywheel-neoforge-1.21.1", version.ref = "flywheel" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 if = { group = "maven.modrinth", name = "industrial-foregoing", version.ref = "if" }
@@ -66,6 +68,7 @@ mods-impl = [
     "ae2",
     "eio",
     "eio-machines",
+    "emi",
     "flywheel",
     "guide",
     "if",
@@ -86,9 +89,7 @@ mods-compile = [
     "jei-api",
 ]
 
-mods-runtime = [
-    "jei",
-]
+mods-runtime = []
 
 [plugins]
 

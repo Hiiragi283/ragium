@@ -5,6 +5,8 @@
     "#ragium:molds/block",
     "#ragium:molds/gear",
     "#ragium:molds/ingot",
-    "#ragium:molds/plate"
+    "#ragium:molds/plate",
+    "#ragium:molds/rod",
+    "#ragium:molds/wire"
   ]
 }

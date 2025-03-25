@@ -63,6 +63,7 @@ repositories {
     maven(url = "https://maven.rover656.dev/releases") // EIO
     maven(url = "https://maven.saps.dev/releases") // AA
     maven(url = "https://maven.tamaized.com/releases") // Twilight
+    maven(url = "https://maven.terraformersmc.com/") // EMI
     maven(url = "https://maven.theillusivec4.top/") // Curios
     maven(url = "https://mvn.devos.one/snapshots") // Registrate
     maven(url = "https://thedarkcolour.github.io/KotlinForForge/") // KFF
