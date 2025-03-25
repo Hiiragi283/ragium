@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
@@ -30,6 +31,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         mekanism()
         jade()
+        emi()
     }
 
     private fun block() {
@@ -155,6 +157,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.BUTTER, "Butter")
+        addItem(RagiumItems.ICE_CREAM, "Ice Cream")
 
         addItem(RagiumItems.DOUGH, "Dough")
         addItem(RagiumItems.FLOUR, "Flour")
@@ -422,5 +425,19 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add("config.jade.plugin_ragium.machine_info", "Show Machine Info")
         add("config.jade.plugin_ragium.rock_generator", "Rock Generator")
         add("config.jade.plugin_ragium.steam_furnace", "Steam Furnace")
+    }
+
+    private fun emi() {
+        add(RagiumTranslationKeys.EMI_ASH_LOG, "Drop Ash Dust when harvested.")
+        add(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS, "This glass block can be harvested without Silk Touch.")
+        add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "As the same blast resistance as Obsidian.")
+        add(RagiumTranslationKeys.EMI_SOUL_GLASS, "Only passable with Players.")
+
+        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items around 5 m.")
+        add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
+
+        add(RagiumTranslationKeys.EMI_AMBROSIA, "Always edible and not consumed!")
+        add(RagiumTranslationKeys.EMI_ICE_CREAM, "Extinguish fire when eaten.")
+        add(RagiumTranslationKeys.EMI_WARPED_WART, "Clear one bad effect randomly when eaten.")
     }
 }

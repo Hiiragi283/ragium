@@ -119,17 +119,18 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_CHOCOLATE)
         builder.addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_DOUGH)
 
-        builder.add(Tags.Items.FOODS, RagiumItems.SWEET_BERRIES_CAKE_PIECE)
-        builder.add(Tags.Items.FOODS, RagiumItems.MELON_PIE)
+        builder.add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
+        builder.add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
         builder.add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_APPLE)
         builder.add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_BREAD)
         builder.add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_COOKIE)
-        builder.add(Tags.Items.FOODS, RagiumItems.MEAT_INGOT)
         builder.add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
-        builder.add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
+        builder.add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
+        builder.add(Tags.Items.FOODS, RagiumItems.MEAT_INGOT)
         builder.add(Tags.Items.FOODS, RagiumItems.MEAT_SANDWICH)
+        builder.add(Tags.Items.FOODS, RagiumItems.MELON_PIE)
+        builder.add(Tags.Items.FOODS, RagiumItems.SWEET_BERRIES_CAKE_PIECE)
         builder.add(Tags.Items.FOODS, RagiumItems.WARPED_WART)
-        builder.add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
 
         builder.add(RagiumItemTags.FOOD_BUTTER, RagiumItems.BUTTER)
 

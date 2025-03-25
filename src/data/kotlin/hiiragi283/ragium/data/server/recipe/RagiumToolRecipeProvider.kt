@@ -40,7 +40,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "B B",
                 " C ",
             ).define('A', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
-            .define('B', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('C', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
 

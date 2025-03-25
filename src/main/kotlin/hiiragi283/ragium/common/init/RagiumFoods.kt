@@ -34,6 +34,13 @@ object RagiumFoods {
     )
 
     @JvmField
+    val ICE_CREAM: FoodProperties = foodComponent(
+        nutrition = 4,
+        saturation = 0.3f,
+        alwaysEat = true,
+    )
+
+    @JvmField
     val MEAT_SANDWICH: FoodProperties = foodComponent(
         nutrition = 14,
         saturation = 0.8f,

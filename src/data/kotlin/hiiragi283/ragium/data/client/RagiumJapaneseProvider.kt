@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
@@ -30,6 +31,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         mekanism()
         jade()
+        emi()
     }
 
     private fun block() {
@@ -155,6 +157,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
         addItem(RagiumItems.BUTTER, "バター")
+        addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
 
         addItem(RagiumItems.DOUGH, "生地")
         addItem(RagiumItems.FLOUR, "小麦粉")
@@ -422,5 +425,19 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add("config.jade.plugin_ragium.machine_info", "機械の情報")
         add("config.jade.plugin_ragium.rock_generator", "岩石生成機")
         add("config.jade.plugin_ragium.steam_furnace", "蒸気かまど")
+    }
+
+    private fun emi() {
+        add(RagiumTranslationKeys.EMI_ASH_LOG, "壊すと灰の粉が手に入ります。")
+        add(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS, "このガラスはシルクタッチなしで回収することが可能です。")
+        add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "黒曜石とおなじ爆破耐性をもちます。")
+        add(RagiumTranslationKeys.EMI_SOUL_GLASS, "プレイヤーのみ通過できます。")
+
+        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "半径5m以内のドロップアイテムを回収します。")
+        add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "行商人を倒すことでも入手できます。")
+
+        add(RagiumTranslationKeys.EMI_AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
+        add(RagiumTranslationKeys.EMI_ICE_CREAM, "食べると鎮火します。")
+        add(RagiumTranslationKeys.EMI_WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
     }
 }

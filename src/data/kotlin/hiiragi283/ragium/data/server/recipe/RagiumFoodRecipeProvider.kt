@@ -109,6 +109,10 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumItems.Ingots.CHEESE)
             .milkInput()
             .save(output)
+
+        // Condensed
+
+        // Ice Cream
     }
 
     private fun sponge(output: RecipeOutput) {

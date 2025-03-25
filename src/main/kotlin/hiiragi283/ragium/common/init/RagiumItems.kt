@@ -201,31 +201,7 @@ object RagiumItems {
     private fun registerFood(name: String, foodProperties: FoodProperties): DeferredItem<Item> =
         register(name, itemProperty().food(foodProperties))
 
-    @JvmField
-    val SWEET_BERRIES_CAKE_PIECE: DeferredItem<Item> =
-        registerFood("sweet_berries_cake_piece", RagiumFoods.SWEET_BERRIES_CAKE)
-
-    @JvmField
-    val MELON_PIE: DeferredItem<Item> = registerFood("melon_pie", RagiumFoods.MELON_PIE)
-
-    @JvmField
-    val BUTTER: DeferredItem<Item> = registerFood("butter", Foods.APPLE)
-
-    @JvmField
-    val FLOUR: DeferredItem<Item> = register("flour")
-
-    @JvmField
-    val DOUGH: DeferredItem<Item> = register("dough")
-
-    @JvmField
-    val CHOCOLATE_APPLE: DeferredItem<Item> = registerFood("chocolate_apple", Foods.COOKED_CHICKEN)
-
-    @JvmField
-    val CHOCOLATE_BREAD: DeferredItem<Item> = registerFood("chocolate_bread", Foods.COOKED_BEEF)
-
-    @JvmField
-    val CHOCOLATE_COOKIE: DeferredItem<Item> = registerFood("chocolate_cookie", Foods.COOKIE)
-
+    // Meat
     @JvmField
     val MINCED_MEAT: DeferredItem<Item> = register("minced_meat")
 
@@ -241,6 +217,40 @@ object RagiumItems {
     @JvmField
     val MEAT_SANDWICH: DeferredItem<Item> = registerFood("meat_sandwich", RagiumFoods.MEAT_SANDWICH)
 
+    // Wheat
+    @JvmField
+    val FLOUR: DeferredItem<Item> = register("flour")
+
+    @JvmField
+    val DOUGH: DeferredItem<Item> = register("dough")
+
+    // Milk
+    @JvmField
+    val BUTTER: DeferredItem<Item> = registerFood("butter", Foods.APPLE)
+
+    @JvmField
+    val ICE_CREAM: DeferredItem<HTIceCreamItem> =
+        register("ice_cream", ::HTIceCreamItem, itemProperty().food(RagiumFoods.ICE_CREAM))
+
+    // Chocolate
+    @JvmField
+    val CHOCOLATE_APPLE: DeferredItem<Item> = registerFood("chocolate_apple", Foods.COOKED_CHICKEN)
+
+    @JvmField
+    val CHOCOLATE_BREAD: DeferredItem<Item> = registerFood("chocolate_bread", Foods.COOKED_BEEF)
+
+    @JvmField
+    val CHOCOLATE_COOKIE: DeferredItem<Item> = registerFood("chocolate_cookie", Foods.COOKIE)
+
+    // Sponge
+    @JvmField
+    val MELON_PIE: DeferredItem<Item> = registerFood("melon_pie", RagiumFoods.MELON_PIE)
+
+    @JvmField
+    val SWEET_BERRIES_CAKE_PIECE: DeferredItem<Item> =
+        registerFood("sweet_berries_cake_piece", RagiumFoods.SWEET_BERRIES_CAKE)
+
+    // Other
     @JvmField
     val WARPED_WART: DeferredItem<HTWarpedWartItem> = register(
         "warped_wart",
@@ -253,31 +263,6 @@ object RagiumItems {
         "ambrosia",
         ::HTAmbrosiaItem,
         itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC),
-    )
-
-    @JvmField
-    val FOODS: List<DeferredItem<*>> = listOf(
-        // cake
-        SWEET_BERRIES_CAKE_PIECE,
-        MELON_PIE,
-        // ingredient
-        BUTTER,
-        FLOUR,
-        DOUGH,
-        // chocolate
-        CHOCOLATE_APPLE,
-        CHOCOLATE_BREAD,
-        CHOCOLATE_COOKIE,
-        // meat
-        MINCED_MEAT,
-        MEAT_INGOT,
-        COOKED_MEAT_INGOT,
-        CANNED_COOKED_MEAT,
-        MEAT_SANDWICH,
-        // wart
-        WARPED_WART,
-        // end-contents
-        AMBROSIA,
     )
 
     //    Molds    //
@@ -355,10 +340,20 @@ object RagiumItems {
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        // Storage Block
         for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
             event.modify(block) { builder: DataComponentPatch.Builder ->
                 builder.set(DataComponents.ITEM_NAME, block.prefix.createText(block.key))
             }
+        }
+
+        // Cheese
+        event.modify(Ingots.CHOCOLATE) { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.FOOD, Foods.APPLE)
+        }
+        // Chocolate
+        event.modify(Ingots.CHOCOLATE) { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.FOOD, RagiumFoods.CHOCOLATE)
         }
 
         LOGGER.info("Modified default item components!")

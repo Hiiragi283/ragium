@@ -17,6 +17,7 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     Supplier<Fluid> {
     EXPERIENCE(Color(0x66ff33)),
 
+    CONDENSED_MILK(Color(0xffcc99)),
     CHOCOLATE(Color(0x663333)),
     MUSHROOM_STEW(Color(0xcc9966)),
 

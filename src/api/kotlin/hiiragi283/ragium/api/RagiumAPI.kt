@@ -161,7 +161,7 @@ interface RagiumAPI {
 
     fun createRangeText(stack: ItemStack): Component = Component
         .translatable(
-            TODO(),
+            "ragium",
             intText(getEffectRange(stack)).withStyle(ChatFormatting.WHITE),
         ).withStyle(ChatFormatting.GRAY)
 

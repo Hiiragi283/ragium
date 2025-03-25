@@ -40,7 +40,6 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.network.PacketDistributor
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
-import thedarkcolour.kotlinforforge.neoforge.kotlin.supply
 import net.minecraft.util.Unit as MCUnit
 
 class InternalRagiumAPI : RagiumAPI {
@@ -131,7 +130,7 @@ class InternalRagiumAPI : RagiumAPI {
         callback,
     )
 
-    override fun getEffectRange(stack: ItemStack): Int = stack.getOrDefault(supply(TODO()), 5)
+    override fun getEffectRange(stack: ItemStack): Int = stack.getOrDefault(RagiumComponentTypes.EFFECT_RANGE, 5)
 
     override fun sendUpdatePayload(blockEntity: BlockEntity, serverLevel: ServerLevel) {
         val pos: BlockPos = blockEntity.blockPos

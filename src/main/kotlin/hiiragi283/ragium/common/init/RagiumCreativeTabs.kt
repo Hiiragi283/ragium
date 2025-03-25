@@ -81,10 +81,32 @@ object RagiumCreativeTabs {
 
             addAll(RagiumItems.Molds.entries)
             // Foods
+            add(RagiumItems.MINCED_MEAT)
+            add(RagiumItems.MEAT_INGOT)
+            add(RagiumItems.COOKED_MEAT_INGOT)
+            add(RagiumItems.CANNED_COOKED_MEAT)
+            add(RagiumItems.MEAT_SANDWICH)
+
+            add(RagiumItems.FLOUR)
+            add(RagiumItems.DOUGH)
+
+            add(RagiumItems.BUTTER)
+            add(RagiumItems.ICE_CREAM)
+
+            add(RagiumItems.CHOCOLATE_APPLE)
+            add(RagiumItems.CHOCOLATE_BREAD)
+            add(RagiumItems.CHOCOLATE_COOKIE)
+
+            add(RagiumItems.MELON_PIE)
+
             add(RagiumBlocks.SPONGE_CAKE)
             add(RagiumBlocks.SPONGE_CAKE_SLAB)
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
-            addAll(RagiumItems.FOODS)
+            add(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+
+            add(RagiumItems.WARPED_WART)
+
+            add(RagiumItems.AMBROSIA)
             // Ingredients
             add(RagiumItems.MACHINE_TEMPLATE)
             add(RagiumItems.ADVANCED_MACHINE_TEMPLATE)

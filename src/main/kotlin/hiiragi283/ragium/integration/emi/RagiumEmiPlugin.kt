@@ -6,19 +6,24 @@ import dev.emi.emi.EmiPort
 import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
+import dev.emi.emi.api.recipe.EmiInfoRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.integration.emi.recipe.*
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import org.slf4j.Logger
@@ -47,6 +52,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addMachineRecipe(RagiumRecipes.REFINING, HTFluidProcessEmiRecipe.create(RagiumEmiCategories.REFINING))
 
         addDeviceRecipes()
+        addInfos()
     }
 
     private fun addMachineRecipe(recipeType: HTMachineRecipeType, factory: (ResourceLocation, HTRecipeDefinition) -> HTMachineEmiRecipe) {
@@ -79,6 +85,42 @@ class RagiumEmiPlugin : EmiPlugin {
         addRecipeSafe(RagiumAPI.id("/device/milk_drain")) { id: ResourceLocation ->
             HTDeviceEmiRecipe(id, RagiumBlocks.MILK_DRAIN, EmiStack.of(NeoForgeMod.MILK.get()))
         }
+    }
+
+    private fun addInfos() {
+        addInfo(RagiumBlocks.ASH_LOG, Component.translatable(RagiumTranslationKeys.EMI_ASH_LOG))
+        addInfo(RagiumBlocks.QUARTZ_GLASS, Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS))
+        addInfo(
+            RagiumBlocks.OBSIDIAN_GLASS,
+            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
+            Component.translatable(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS),
+        )
+        addInfo(
+            RagiumBlocks.SOUL_GLASS,
+            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
+            Component.translatable(RagiumTranslationKeys.EMI_SOUL_GLASS),
+        )
+
+        addInfo(RagiumItems.ITEM_MAGNET, Component.translatable(RagiumTranslationKeys.EMI_ITEM_MAGNET))
+        addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
+
+        addInfo(RagiumItems.AMBROSIA, Component.translatable(RagiumTranslationKeys.EMI_AMBROSIA))
+        addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
+        addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
+    }
+
+    private fun addInfo(icon: ItemLike, vararg texts: Component) {
+        addInfo(EmiStack.of(icon), *texts)
+    }
+
+    private fun addInfo(icon: EmiStack, vararg texts: Component) {
+        registry.addRecipe(
+            EmiInfoRecipe(
+                listOf(icon),
+                listOf(*texts),
+                icon.id.withPrefix("/"),
+            ),
+        )
     }
 
     /**
