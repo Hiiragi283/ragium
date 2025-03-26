@@ -313,5 +313,8 @@
   "tag_prefix.ragium.sheetmetal": "%s Sheetmetal",
   "tag_prefix.ragium.storage_block": "Block of %s",
   "tag_prefix.ragium.tiny_dust": "Tiny %s Dust",
-  "tag_prefix.ragium.wire": "%s Wire"
+  "tag_prefix.ragium.wire": "%s Wire",
+  "text.ragium.effect_range": "Effect Radius: %s blocks",
+  "text.ragium.fluid_capacity": "Capacity: %s mb",
+  "text.ragium.fluid_name": "%s : %s mb"
 }

@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentType
@@ -161,7 +162,7 @@ interface RagiumAPI {
 
     fun createRangeText(stack: ItemStack): Component = Component
         .translatable(
-            "ragium",
+            RagiumTranslationKeys.TEXT_EFFECT_RANGE,
             intText(getEffectRange(stack)).withStyle(ChatFormatting.WHITE),
         ).withStyle(ChatFormatting.GRAY)
 

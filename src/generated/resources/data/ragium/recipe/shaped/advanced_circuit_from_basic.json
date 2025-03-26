@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/lapis"
+      "tag": "c:dusts/deep_steel"
     },
     "B": {
       "tag": "c:dusts/glowstone"
     },
     "C": {
-      "tag": "c:dusts/redstone"
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [

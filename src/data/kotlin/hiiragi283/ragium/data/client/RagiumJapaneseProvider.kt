@@ -26,6 +26,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         material()
         tagPrefix()
         tag()
+        text()
         tooltips()
         misc()
 
@@ -401,6 +402,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumFluidTags.NITRO_FUEL, "ニトロ系燃料")
         add(RagiumFluidTags.NON_NITRO_FUEL, "非ニトロ系燃料")
         add(RagiumFluidTags.THERMAL_FUEL, "発熱燃料")
+    }
+
+    private fun text() {
+        add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s: %s mb")
+        add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "容量: %s mb")
+
+        add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "有効半径: %s ブロック")
     }
 
     private fun tooltips() {}

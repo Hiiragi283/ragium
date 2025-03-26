@@ -313,5 +313,8 @@
   "tag_prefix.ragium.sheetmetal": "%sの板金",
   "tag_prefix.ragium.storage_block": "%sブロック",
   "tag_prefix.ragium.tiny_dust": "小さな%sの粉",
-  "tag_prefix.ragium.wire": "%sのワイヤー"
+  "tag_prefix.ragium.wire": "%sのワイヤー",
+  "text.ragium.effect_range": "有効半径: %s ブロック",
+  "text.ragium.fluid_capacity": "容量: %s mb",
+  "text.ragium.fluid_name": "%s: %s mb"
 }

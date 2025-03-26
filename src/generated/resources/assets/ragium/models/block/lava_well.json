@@ -1,7 +1,8 @@
 {
-  "parent": "ragium:block/fluid_well",
+  "parent": "ragium:block/layered",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "bottom": "minecraft:block/nether_bricks",
-    "top": "ragium:block/ember_stone"
+    "layer0": "minecraft:block/lava_still",
+    "layer1": "ragium:block/device_overlay"
   }
 }

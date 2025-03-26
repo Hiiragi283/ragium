@@ -129,24 +129,16 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
     private fun wells(output: RecipeOutput) {
         // Water Well
-        HTShapedRecipeBuilder(RagiumBlocks.WATER_WELL)
-            .pattern(
-                "A A",
-                "ABA",
-                "CCC",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
-            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
-            .define('C', Items.DEEPSLATE_TILES)
+        HTSmithingRecipeBuilder(RagiumBlocks.WATER_WELL)
+            .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
+            .addIngredient(RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_WATER)
             .save(output)
         // Lava Well
-        HTShapedRecipeBuilder(RagiumBlocks.LAVA_WELL)
-            .pattern(
-                "A A",
-                "ABA",
-                "CCC",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
-            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
-            .define('C', Items.NETHER_BRICKS)
+        HTSmithingRecipeBuilder(RagiumBlocks.LAVA_WELL)
+            .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)
+            .addIngredient(RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_LAVA)
             .save(output)
         // Milk Drain
         HTShapedRecipeBuilder(RagiumBlocks.MILK_DRAIN)

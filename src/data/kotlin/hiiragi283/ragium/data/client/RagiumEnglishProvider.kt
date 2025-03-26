@@ -26,6 +26,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         material()
         tagPrefix()
         tag()
+        text()
         tooltips()
         misc()
 
@@ -401,6 +402,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.END_SOILS, "End Soil")
         add(RagiumItemTags.MUSHROOM_SOILS, "Mushroom Soil")
         add(RagiumItemTags.NETHER_SOILS, "Nether Soil")
+    }
+
+    private fun text() {
+        add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")
+        add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "Capacity: %s mb")
+
+        add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "Effect Radius: %s blocks")
     }
 
     private fun tooltips() {}

@@ -115,18 +115,24 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // Device
         simpleBlock(
             RagiumBlocks.WATER_WELL.get(),
-            models()
-                .withExistingParent("block/water_well", RagiumAPI.id("block/fluid_well"))
-                .texture("top", RagiumAPI.id("block/azure_tiles"))
-                .texture("bottom", vanillaId("block/deepslate_tiles")),
+            ConfiguredModel(
+                models()
+                    .withExistingParent("block/water_well", RagiumAPI.id("block/layered"))
+                    .texture("layer0", "minecraft:block/water_still")
+                    .texture("layer1", RagiumAPI.id("block/device_overlay"))
+                    .renderType("cutout"),
+            ),
         )
 
         simpleBlock(
             RagiumBlocks.LAVA_WELL.get(),
-            models()
-                .withExistingParent("block/lava_well", RagiumAPI.id("block/fluid_well"))
-                .texture("top", RagiumAPI.id("block/ember_stone"))
-                .texture("bottom", vanillaId("block/nether_bricks")),
+            ConfiguredModel(
+                models()
+                    .withExistingParent("block/lava_well", RagiumAPI.id("block/layered"))
+                    .texture("layer0", "minecraft:block/lava_still")
+                    .texture("layer1", RagiumAPI.id("block/device_overlay"))
+                    .renderType("cutout"),
+            ),
         )
 
         simpleAltBlock(RagiumBlocks.MILK_DRAIN)

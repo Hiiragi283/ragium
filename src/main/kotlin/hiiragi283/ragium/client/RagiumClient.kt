@@ -2,13 +2,20 @@ package hiiragi283.ragium.client
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluidTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
+import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.BlockAndTintGetter
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import org.slf4j.Logger
 
@@ -21,6 +28,7 @@ class RagiumClient(eventBus: IEventBus) {
 
     init {
         eventBus.addListener(::registerClientExtensions)
+        eventBus.addListener(::addBlockColor)
         eventBus.addListener(::addItemColor)
     }
 
@@ -52,8 +60,35 @@ class RagiumClient(eventBus: IEventBus) {
         LOGGER.info("Registered client extensions!")
     }
 
+    private val waterExtension: IClientFluidTypeExtensions by lazy { IClientFluidTypeExtensions.of(Fluids.WATER) }
+
+    private fun addBlockColor(event: RegisterColorHandlersEvent.Block) {
+        event.register(
+            { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+                if (getter != null && pos != null && tint == 0) {
+                    waterExtension.getTintColor(
+                        state.fluidState,
+                        getter,
+                        pos,
+                    )
+                } else {
+                    -1
+                }
+            },
+            RagiumBlocks.WATER_WELL.get(),
+        )
+
+        LOGGER.info("Registered BlockColor!")
+    }
+
     private fun addItemColor(event: RegisterColorHandlersEvent.Item) {
         // event.register(DynamicFluidContainerModel.Colors(), *RagiumItems.FLUID_CUBES)
+        event.register(
+            { stack: ItemStack, tint: Int ->
+                if (tint == 0) waterExtension.tintColor else -1
+            },
+            RagiumBlocks.WATER_WELL,
+        )
 
         LOGGER.info("Registered ItemColor!")
     }

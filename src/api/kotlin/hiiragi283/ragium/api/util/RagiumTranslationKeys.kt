@@ -1,6 +1,13 @@
 package hiiragi283.ragium.api.util
 
 object RagiumTranslationKeys {
+    //    Text    //
+
+    const val TEXT_FLUID_NAME = "text.ragium.fluid_name"
+    const val TEXT_FLUID_CAPACITY = "text.ragium.fluid_capacity"
+
+    const val TEXT_EFFECT_RANGE = "text.ragium.effect_range"
+
     //    EMI    //
 
     const val EMI_ASH_LOG = "emi.ragium.ash_log"
