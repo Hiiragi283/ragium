@@ -70,19 +70,22 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         // addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         // addBlock(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
-
+        // Machine
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
         addBlock(RagiumBlocks.CENTRIFUGE, "Centrifuge")
         addBlock(RagiumBlocks.INFUSER, "Infuser")
-
-        addBlock(RagiumBlocks.WATER_WELL, "Water Well")
-        addBlock(RagiumBlocks.LAVA_WELL, "Lava Well")
+        // Device
         addBlock(RagiumBlocks.MILK_DRAIN, "Milk Drain")
 
-        addBlock(RagiumBlocks.ENI, "E.N.I.")
+        addBlock(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
+        addBlock(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
         addBlock(RagiumBlocks.SPRINKLER, "Sprinkler")
+
+        addBlock(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
+        addBlock(RagiumBlocks.SOUL_SPIKE, "Soul Spike")
+        addBlock(RagiumBlocks.ENI, "E.N.I.")
     }
 
     private fun enchantment() {

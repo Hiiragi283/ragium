@@ -28,6 +28,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
             add(RagiumBlocks.DEVICE_CASING)
 
+            add(RagiumBlocks.ITEM_COLLECTOR)
+            add(RagiumBlocks.SPRINKLER)
             add(RagiumBlocks.ENI)
 
             addAll(RagiumBlocks.LED_BLOCKS.values)
@@ -114,10 +116,10 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Device
         simpleBlock(
-            RagiumBlocks.WATER_WELL.get(),
+            RagiumBlocks.WATER_COLLECTOR.get(),
             ConfiguredModel(
                 models()
-                    .withExistingParent("block/water_well", RagiumAPI.id("block/layered"))
+                    .withExistingParent("block/water_collector", RagiumAPI.id("block/layered"))
                     .texture("layer0", "minecraft:block/water_still")
                     .texture("layer1", RagiumAPI.id("block/device_overlay"))
                     .renderType("cutout"),
@@ -125,10 +127,10 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         )
 
         simpleBlock(
-            RagiumBlocks.LAVA_WELL.get(),
+            RagiumBlocks.LAVA_COLLECTOR.get(),
             ConfiguredModel(
                 models()
-                    .withExistingParent("block/lava_well", RagiumAPI.id("block/layered"))
+                    .withExistingParent("block/lava_collector", RagiumAPI.id("block/layered"))
                     .texture("layer0", "minecraft:block/lava_still")
                     .texture("layer1", RagiumAPI.id("block/device_overlay"))
                     .renderType("cutout"),

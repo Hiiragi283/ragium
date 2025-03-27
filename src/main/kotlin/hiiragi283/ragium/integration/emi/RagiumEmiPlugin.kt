@@ -75,11 +75,11 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addDeviceRecipes() {
         // Water Well
         addRecipeSafe(RagiumAPI.id("/device/water_well")) { id: ResourceLocation ->
-            HTDeviceEmiRecipe(id, RagiumBlocks.WATER_WELL, EmiStack.of(Fluids.WATER))
+            HTDeviceEmiRecipe(id, RagiumBlocks.WATER_COLLECTOR, EmiStack.of(Fluids.WATER))
         }
         // Lava Well
         addRecipeSafe(RagiumAPI.id("/device/lava_well")) { id: ResourceLocation ->
-            HTDeviceEmiRecipe(id, RagiumBlocks.LAVA_WELL, EmiStack.of(Fluids.LAVA))
+            HTDeviceEmiRecipe(id, RagiumBlocks.LAVA_COLLECTOR, EmiStack.of(Fluids.LAVA))
         }
         // Milk Drain
         addRecipeSafe(RagiumAPI.id("/device/milk_drain")) { id: ResourceLocation ->

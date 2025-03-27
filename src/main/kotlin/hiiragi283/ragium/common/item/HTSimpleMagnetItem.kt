@@ -9,7 +9,7 @@ class HTSimpleMagnetItem(properties: Properties) : HTMagnetItem<ItemEntity>(prop
     override val entityClass: Class<ItemEntity> = ItemEntity::class.java
 
     override fun forEachEntity(entity: ItemEntity, player: Player) {
-        // Exclude items on IE Conveyor
+        // IEのコンベヤ上にいるアイテムは無視する
         if (entity.persistentData.getBoolean("PreventRemoteMovement")) return
         if (entity.isAlive && !entity.hasPickUpDelay()) {
             entity.playerTouch(player)

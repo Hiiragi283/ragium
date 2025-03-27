@@ -75,7 +75,7 @@ class RagiumClient(eventBus: IEventBus) {
                     -1
                 }
             },
-            RagiumBlocks.WATER_WELL.get(),
+            RagiumBlocks.WATER_COLLECTOR.get(),
         )
 
         LOGGER.info("Registered BlockColor!")
@@ -87,7 +87,7 @@ class RagiumClient(eventBus: IEventBus) {
             { stack: ItemStack, tint: Int ->
                 if (tint == 0) waterExtension.tintColor else -1
             },
-            RagiumBlocks.WATER_WELL,
+            RagiumBlocks.WATER_COLLECTOR,
         )
 
         LOGGER.info("Registered ItemColor!")

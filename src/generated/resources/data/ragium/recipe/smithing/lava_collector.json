@@ -1,16 +1,16 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "tag": "c:buckets/water"
+    "tag": "c:buckets/lava"
   },
   "base": {
     "item": "ragium:device_casing"
   },
   "result": {
     "count": 1,
-    "id": "ragium:water_well"
+    "id": "ragium:lava_collector"
   },
   "template": {
-    "tag": "c:circuits/basic"
+    "tag": "c:circuits/advanced"
   }
 }

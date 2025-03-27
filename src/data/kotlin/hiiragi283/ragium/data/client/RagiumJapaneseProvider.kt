@@ -70,19 +70,22 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         // addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
         // addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
-
+        // Machine
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
         addBlock(RagiumBlocks.CENTRIFUGE, "遠心分離機")
         addBlock(RagiumBlocks.INFUSER, "注入機")
-
-        addBlock(RagiumBlocks.WATER_WELL, "水源井戸")
-        addBlock(RagiumBlocks.LAVA_WELL, "溶岩井戸")
+        // Device
         addBlock(RagiumBlocks.MILK_DRAIN, "牛乳シンク")
 
-        addBlock(RagiumBlocks.ENI, "E.N.I.")
+        addBlock(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
+        addBlock(RagiumBlocks.WATER_COLLECTOR, "水収集機")
         addBlock(RagiumBlocks.SPRINKLER, "スプリンクラー")
+
+        addBlock(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
+        addBlock(RagiumBlocks.SOUL_SPIKE, "魂の尖頭")
+        addBlock(RagiumBlocks.ENI, "E.N.I.")
     }
 
     private fun enchantment() {

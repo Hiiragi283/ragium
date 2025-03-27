@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes

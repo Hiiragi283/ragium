@@ -7,6 +7,14 @@ import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.*
+import hiiragi283.ragium.common.block.entity.collect.HTItemCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.collect.HTLavaCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.collect.HTMilkDrainBlockEntity
+import hiiragi283.ragium.common.block.entity.collect.HTWaterCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCentrifugeBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -37,10 +45,16 @@ object RagiumBlockEntityTypes {
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
 
     @JvmField
-    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick(
+        "extractor",
+        ::HTExtractorBlockEntity,
+    )
 
     @JvmField
-    val CENTRIFUGE: HTDeferredBlockEntityType<HTCentrifugeBlockEntity> = registerTick("centrifuge", ::HTCentrifugeBlockEntity)
+    val CENTRIFUGE: HTDeferredBlockEntityType<HTCentrifugeBlockEntity> = registerTick(
+        "centrifuge",
+        ::HTCentrifugeBlockEntity,
+    )
 
     @JvmField
     val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
@@ -48,20 +62,37 @@ object RagiumBlockEntityTypes {
     //    Device    //
 
     @JvmField
-    val WATER_WELL: HTDeferredBlockEntityType<HTWaterWellBlockEntity> = registerTick("water_well", ::HTWaterWellBlockEntity)
+    val MILK_DRAIN: HTDeferredBlockEntityType<HTMilkDrainBlockEntity> = registerTick(
+        "milk_drain",
+        ::HTMilkDrainBlockEntity,
+    )
 
     @JvmField
-    val LAVA_WELL: HTDeferredBlockEntityType<HTLavaWellBlockEntity> = registerTick("lava_well", ::HTLavaWellBlockEntity)
+    val ITEM_COLLECTOR: HTDeferredBlockEntityType<HTItemCollectorBlockEntity> = registerTick(
+        "item_collector",
+        ::HTItemCollectorBlockEntity,
+    )
 
     @JvmField
-    val MILK_DRAIN: HTDeferredBlockEntityType<HTMilkDrainBlockEntity> = registerTick("milk_drain", ::HTMilkDrainBlockEntity)
-
-    @JvmField
-    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkInterfaceBlockEntity> =
-        REGISTER.registerType("energy_network_interface", ::HTEnergyNetworkInterfaceBlockEntity)
+    val WATER_COLLECTOR: HTDeferredBlockEntityType<HTWaterCollectorBlockEntity> = registerTick(
+        "water_collector",
+        ::HTWaterCollectorBlockEntity,
+    )
 
     @JvmField
     val SPRINKLER: HTDeferredBlockEntityType<HTSprinklerBlockEntity> = registerTick("sprinkler", ::HTSprinklerBlockEntity)
+
+    @JvmField
+    val LAVA_COLLECTOR: HTDeferredBlockEntityType<HTLavaCollectorBlockEntity> = registerTick(
+        "lava_collector",
+        ::HTLavaCollectorBlockEntity,
+    )
+
+    @JvmField
+    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkInterfaceBlockEntity> = REGISTER.registerType(
+        "energy_network_interface",
+        ::HTEnergyNetworkInterfaceBlockEntity,
+    )
 
     //    Event    //
 
@@ -77,12 +108,14 @@ object RagiumBlockEntityTypes {
         add(CENTRIFUGE, RagiumBlocks.CENTRIFUGE)
         add(INFUSER, RagiumBlocks.INFUSER)
 
-        add(WATER_WELL, RagiumBlocks.WATER_WELL)
-        add(LAVA_WELL, RagiumBlocks.LAVA_WELL)
         add(MILK_DRAIN, RagiumBlocks.MILK_DRAIN)
 
-        add(ENI, RagiumBlocks.ENI)
+        add(ITEM_COLLECTOR, RagiumBlocks.ITEM_COLLECTOR)
+        add(WATER_COLLECTOR, RagiumBlocks.WATER_COLLECTOR)
         add(SPRINKLER, RagiumBlocks.SPRINKLER)
+
+        add(LAVA_COLLECTOR, RagiumBlocks.LAVA_COLLECTOR)
+        add(ENI, RagiumBlocks.ENI)
 
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }
@@ -114,12 +147,14 @@ object RagiumBlockEntityTypes {
         registerHandlers(CENTRIFUGE)
         registerHandlers(INFUSER)
 
-        registerHandlers(WATER_WELL)
-        registerHandlers(LAVA_WELL)
         registerHandlers(MILK_DRAIN)
 
-        registerHandlers(ENI)
+        registerHandlers(ITEM_COLLECTOR)
+        registerHandlers(WATER_COLLECTOR)
         registerHandlers(SPRINKLER)
+
+        registerHandlers(LAVA_COLLECTOR)
+        registerHandlers(ENI)
 
         LOGGER.info("Registered Block Capabilities!")
     }

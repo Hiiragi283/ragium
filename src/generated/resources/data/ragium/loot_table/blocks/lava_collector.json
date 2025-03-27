@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:lava_well"
+          "name": "ragium:lava_collector"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/lava_well"
+  "random_sequence": "ragium:blocks/lava_collector"
 }

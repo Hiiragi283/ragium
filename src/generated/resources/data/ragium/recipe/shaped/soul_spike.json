@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:obsidians/normal"
+      "item": "minecraft:pointed_dripstone"
     },
     "B": {
-      "tag": "c:ingots/azure_steel"
+      "tag": "minecraft:soul_fire_base_blocks"
     },
     "C": {
-      "tag": "c:tools/forge_hammer"
+      "tag": "c:nether_stars"
     }
   },
   "pattern": [
+    " A ",
     "ABA",
-    "BCB",
-    "ABA"
+    "BCB"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:device_casing"
+    "id": "ragium:soul_spike"
   }
 }

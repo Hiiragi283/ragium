@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:water_well"
+          "name": "ragium:soul_spike"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/water_well"
+  "random_sequence": "ragium:blocks/soul_spike"
 }

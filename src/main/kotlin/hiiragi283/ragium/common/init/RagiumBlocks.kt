@@ -338,32 +338,44 @@ object RagiumBlocks {
     //    Devices    //
 
     @JvmField
-    val WATER_WELL: DeferredBlock<HTEntityBlock<*>> =
-        register("water_well", stone(), HTEntityBlock.create(RagiumBlockEntityTypes.WATER_WELL))
-
-    @JvmField
-    val LAVA_WELL: DeferredBlock<HTEntityBlock<*>> =
-        register("lava_well", stone(), HTEntityBlock.create(RagiumBlockEntityTypes.LAVA_WELL))
-
-    @JvmField
     val MILK_DRAIN: DeferredBlock<HTMilkDrainBlock> =
         register("milk_drain", stone(), ::HTMilkDrainBlock)
 
+    @JvmField
+    val SOUL_SPIKE: DeferredBlock<HTSoulSpikeBlock> = register("soul_spike", heavyMetal(), ::HTSoulSpikeBlock)
+
+    // Basic
+    @JvmField
+    val ITEM_COLLECTOR: DeferredBlock<HTEntityBlock<*>> =
+        register("item_collector", lightMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.ITEM_COLLECTOR))
+
+    @JvmField
+    val WATER_COLLECTOR: DeferredBlock<HTEntityBlock<*>> =
+        register("water_collector", lightMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.WATER_COLLECTOR))
+
+    @JvmField
+    val SPRINKLER: DeferredBlock<HTEntityBlock<*>> =
+        register("sprinkler", lightMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.SPRINKLER))
+
+    // Advanced
+    @JvmField
+    val LAVA_COLLECTOR: DeferredBlock<HTEntityBlock<*>> =
+        register("lava_collector", heavyMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.LAVA_COLLECTOR))
+    
     @JvmField
     val ENI: DeferredBlock<HTEntityBlock<*>> =
         register("energy_network_interface", heavyMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.ENI))
 
     @JvmField
-    val SPRINKLER: DeferredBlock<HTEntityBlock<*>> =
-        register("sprinkler", heavyMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.SPRINKLER))
-
-    @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
-        WATER_WELL,
-        LAVA_WELL,
         MILK_DRAIN,
-        //
-        ENI,
+        SOUL_SPIKE,
+        // Basic
+        ITEM_COLLECTOR,
+        WATER_COLLECTOR,
         SPRINKLER,
+        // Advanced
+        LAVA_COLLECTOR,
+        ENI,
     )
 }

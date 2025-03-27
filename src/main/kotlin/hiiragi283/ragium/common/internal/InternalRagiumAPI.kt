@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.internal
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
+import com.mojang.authlib.GameProfile
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddonCollector
@@ -40,12 +41,16 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.network.PacketDistributor
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
+import java.util.UUID
 import net.minecraft.util.Unit as MCUnit
 
 class InternalRagiumAPI : RagiumAPI {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
+
+        @JvmStatic
+        private val GAME_PROFILE = GameProfile(UUID.nameUUIDFromBytes(RagiumAPI.MOD_ID.toByteArray()), "[${RagiumAPI.MOD_NAME}]")
     }
 
     //    Addon    //
@@ -69,11 +74,15 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun getActiveComponent(): DataComponentType<MCUnit> = RagiumComponentTypes.IS_ACTIVE.get()
 
+    override fun getEffectRange(stack: ItemStack): Int = stack.getOrDefault(RagiumComponentTypes.EFFECT_RANGE, 5)
+
     //    Material    //
 
     override fun getMaterialRegistry(): HTMaterialRegistry = HTMaterialRegistryImpl
 
     //    Server    //
+
+    override fun getRagiumGameProfile(): GameProfile = GAME_PROFILE
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 
@@ -129,8 +138,6 @@ class InternalRagiumAPI : RagiumAPI {
         validator,
         callback,
     )
-
-    override fun getEffectRange(stack: ItemStack): Int = stack.getOrDefault(RagiumComponentTypes.EFFECT_RANGE, 5)
 
     override fun sendUpdatePayload(blockEntity: BlockEntity, serverLevel: ServerLevel) {
         val pos: BlockPos = blockEntity.blockPos

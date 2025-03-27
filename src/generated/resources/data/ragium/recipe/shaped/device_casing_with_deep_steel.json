@@ -6,7 +6,7 @@
       "tag": "c:obsidians/normal"
     },
     "B": {
-      "tag": "c:ingots/azure_steel"
+      "tag": "c:ingots/deep_steel"
     },
     "C": {
       "tag": "c:tools/forge_hammer"
@@ -18,7 +18,7 @@
     "ABA"
   ],
   "result": {
-    "count": 1,
+    "count": 2,
     "id": "ragium:device_casing"
   }
 }

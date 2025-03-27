@@ -19,7 +19,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 
-abstract class HTFluidWellBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
     HTFluidTankHandler {
     protected val outputTank: HTFluidTank = HTFluidTank.create("output_tank", this)
@@ -45,7 +45,7 @@ abstract class HTFluidWellBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     //    Ticking    //
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 20 tick毎に一度実行する
+        // 20 tickごとに実行する
         if (totalTick % 20 != 0) return TriState.DEFAULT
         // 液体を生成できるかチェック
         val stack: FluidStack = getGeneratedFluid(level, pos)
@@ -53,10 +53,13 @@ abstract class HTFluidWellBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         // 液体を搬入できるかチェック
         if (outputTank.insert(stack, true) == 0) return TriState.DEFAULT
         outputTank.insert(stack, false)
+        playSound(level, pos)
         return TriState.TRUE
     }
 
     protected abstract fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack
+
+    protected abstract fun playSound(level: ServerLevel, pos: BlockPos)
 
     //    Fluid    //
 

@@ -2,7 +2,9 @@ package hiiragi283.ragium.api
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
+import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.mutableTableOf
@@ -27,6 +29,8 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
+import net.neoforged.neoforge.common.util.FakePlayer
+import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
@@ -45,12 +49,6 @@ interface RagiumAPI {
          */
         @JvmStatic
         fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
-
-        /**
-         * 指定した[id]の名前空間を`ragium`に変えます。
-         */
-        @JvmStatic
-        fun wrapId(id: ResourceLocation): ResourceLocation = id(id.path)
 
         private lateinit var instance: RagiumAPI
 
@@ -71,6 +69,14 @@ interface RagiumAPI {
 
     fun getActiveComponent(): DataComponentType<MCUnit>
 
+    fun createRangeText(stack: ItemStack): Component = Component
+        .translatable(
+            RagiumTranslationKeys.TEXT_EFFECT_RANGE,
+            intText(getEffectRange(stack)).withStyle(ChatFormatting.WHITE),
+        ).withStyle(ChatFormatting.GRAY)
+
+    fun getEffectRange(stack: ItemStack): Int
+
     //    Material    //
 
     /**
@@ -79,6 +85,16 @@ interface RagiumAPI {
     fun getMaterialRegistry(): HTMaterialRegistry
 
     //    Server    //
+
+    /**
+     * Ragiumが使用する[FakePlayer]を返します。
+     */
+    fun getFakePlayer(level: ServerLevel): FakePlayer = FakePlayerFactory.get(level, getRagiumGameProfile())
+
+    /**
+     * Ragiumが内部で使用する[GameProfile]のインスタンスを返します。
+     */
+    fun getRagiumGameProfile(): GameProfile
 
     /**
      * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。
@@ -138,8 +154,6 @@ interface RagiumAPI {
      */
     fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
 
-    fun emptyItemSlot(): HTItemSlot = HTItemSlot.Builder().build("")
-
     /**
      * @see [HTItemSlot.Builder.build]
      */
@@ -160,13 +174,8 @@ interface RagiumAPI {
         callback: () -> Unit,
     ): HTFluidTank
 
-    fun createRangeText(stack: ItemStack): Component = Component
-        .translatable(
-            RagiumTranslationKeys.TEXT_EFFECT_RANGE,
-            intText(getEffectRange(stack)).withStyle(ChatFormatting.WHITE),
-        ).withStyle(ChatFormatting.GRAY)
-
-    fun getEffectRange(stack: ItemStack): Int
-
+    /**
+     * @see [HTBlockEntity.sendUpdatePacket]
+     */
     fun sendUpdatePayload(blockEntity: BlockEntity, serverLevel: ServerLevel)
 }

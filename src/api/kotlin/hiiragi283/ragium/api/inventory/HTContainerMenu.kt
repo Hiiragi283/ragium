@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.inventory
 
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
@@ -119,5 +120,8 @@ abstract class HTContainerMenu(
         @JvmStatic
         protected fun decodePos(registryBuf: RegistryFriendlyByteBuf?): BlockPos =
             registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO
+
+        @JvmStatic
+        protected fun emptySlot(): HTItemSlot = HTItemSlot.create("")
     }
 }

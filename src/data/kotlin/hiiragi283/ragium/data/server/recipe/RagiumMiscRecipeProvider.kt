@@ -59,9 +59,16 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
-            .define('B', HTTagPrefixes.INGOT, RagiumMaterials.DEEP_STEEL)
+            .define('B', HTTagPrefixes.INGOT, RagiumMaterials.AZURE_STEEL)
             .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
+
+        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING, 2)
+            .cross8()
+            .define('A', Tags.Items.OBSIDIANS_NORMAL)
+            .define('B', HTTagPrefixes.INGOT, RagiumMaterials.DEEP_STEEL)
+            .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .saveSuffixed(output, "_with_deep_steel")
     }
 
     private fun machines(output: RecipeOutput) {
@@ -128,18 +135,6 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
     }
 
     private fun wells(output: RecipeOutput) {
-        // Water Well
-        HTSmithingRecipeBuilder(RagiumBlocks.WATER_WELL)
-            .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
-            .addIngredient(RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.BUCKETS_WATER)
-            .save(output)
-        // Lava Well
-        HTSmithingRecipeBuilder(RagiumBlocks.LAVA_WELL)
-            .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)
-            .addIngredient(RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.BUCKETS_LAVA)
-            .save(output)
         // Milk Drain
         HTShapedRecipeBuilder(RagiumBlocks.MILK_DRAIN)
             .pattern("A", "B", "C")
@@ -147,5 +142,40 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.BARRELS_WOODEN)
             .define('C', RagiumBlocks.STONE_CASING)
             .save(output)
+        // Soul Spike
+        HTShapedRecipeBuilder(RagiumBlocks.SOUL_SPIKE)
+            .pattern(
+                " A ",
+                "ABA",
+                "BCB",
+            ).define('A', Items.POINTED_DRIPSTONE)
+            .define('B', ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .define('C', Tags.Items.NETHER_STARS)
+            .save(output)
+
+        // Basic
+        fun basicDevice(device: ItemLike, part: Ingredient) {
+            HTSmithingRecipeBuilder(device)
+                .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
+                .addIngredient(RagiumBlocks.DEVICE_CASING)
+                .addIngredient(part)
+                .save(output)
+        }
+
+        basicDevice(RagiumBlocks.ITEM_COLLECTOR, Ingredient.of(Items.HOPPER))
+        basicDevice(RagiumBlocks.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
+        basicDevice(RagiumBlocks.SPRINKLER, Ingredient.of(Tags.Items.STORAGE_BLOCKS_BONE_MEAL))
+
+        // Advanced
+        fun advDevice(device: ItemLike, part: Ingredient) {
+            HTSmithingRecipeBuilder(device)
+                .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)
+                .addIngredient(RagiumBlocks.DEVICE_CASING)
+                .addIngredient(part)
+                .save(output)
+        }
+
+        advDevice(RagiumBlocks.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
+        advDevice(RagiumBlocks.ENI, Ingredient.of(HTTagPrefixes.STORAGE_BLOCK.createItemTag(RagiumMaterials.RAGI_CRYSTAL)))
     }
 }

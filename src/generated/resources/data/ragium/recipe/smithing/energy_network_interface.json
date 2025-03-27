@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:storage_blocks/ragi_crystal"
+  },
+  "base": {
+    "item": "ragium:device_casing"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:energy_network_interface"
+  },
+  "template": {
+    "tag": "c:circuits/advanced"
+  }
+}
