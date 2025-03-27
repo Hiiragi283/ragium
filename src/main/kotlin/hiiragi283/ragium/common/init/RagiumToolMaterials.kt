@@ -1,8 +1,9 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Tier
@@ -33,14 +34,14 @@ enum class RagiumToolMaterials(
         incorrectTag: TagKey<Block>,
         enchantability: Int,
         key: HTMaterialKey,
-        prefix: HTTagPrefix = HTTagPrefix.INGOT,
+        prefix: HTTagPrefix = HTTagPrefixes.INGOT,
     ) : this(
         durability,
         miningSpeed,
         attackDamage,
         incorrectTag,
         enchantability,
-        { prefix.createIngredient(key) },
+        { Ingredient.of(prefix.createItemTag(key)) },
     )
 
     constructor(

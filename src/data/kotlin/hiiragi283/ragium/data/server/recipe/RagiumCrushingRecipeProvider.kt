@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
@@ -31,7 +31,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
             .itemOutput(Items.GLOWSTONE_DUST, 4)
-            .itemInput(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.GLOWSTONE)
+            .itemInput(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.GLOWSTONE)
             .saveSuffixed(output, "_from_glowstone")
 
         HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)

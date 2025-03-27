@@ -307,14 +307,11 @@
   "tag_prefix.ragium.ore": "%s鉱石",
   "tag_prefix.ragium.plate": "%s板",
   "tag_prefix.ragium.raw_material": "%sの原石",
-  "tag_prefix.ragium.raw_storage": "%sの原石ブロック",
   "tag_prefix.ragium.rod": "%s棒",
   "tag_prefix.ragium.shard": "%sの欠片",
-  "tag_prefix.ragium.sheetmetal": "%sの板金",
   "tag_prefix.ragium.storage_block": "%sブロック",
-  "tag_prefix.ragium.tiny_dust": "小さな%sの粉",
-  "tag_prefix.ragium.wire": "%sのワイヤー",
   "text.ragium.effect_range": "有効半径: %s ブロック",
   "text.ragium.fluid_capacity": "容量: %s mb",
-  "text.ragium.fluid_name": "%s: %s mb"
+  "text.ragium.fluid_name": "%s: %s mb",
+  "text.ragium.sawdust": "おがくず"
 }

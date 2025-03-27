@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTItemRegister
@@ -81,7 +81,7 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
         for (ore: DeferredBlock<*> in blockHolders) {
             builder.add(mineableTag, ore)
             // Material Tag
-            val oreTagKey: TagKey<Block> = HTTagPrefix.ORE.createBlockTag(key) ?: continue
+            val oreTagKey: TagKey<Block> = HTTagPrefixes.ORE.createBlockTag(key)
             builder.addTag(Tags.Blocks.ORES, oreTagKey)
             builder.add(oreTagKey, ore)
         }
@@ -95,7 +95,7 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
     override fun appendItemTags(builder: HTTagBuilder<Item>) {
         for (ore: DeferredItem<*> in itemHolders) {
             // Material Tag
-            val oreTagKey: TagKey<Item> = HTTagPrefix.ORE.createTag(key)
+            val oreTagKey: TagKey<Item> = HTTagPrefixes.ORE.createItemTag(key)
             builder.addTag(Tags.Items.ORES, oreTagKey)
             builder.add(oreTagKey, ore)
         }

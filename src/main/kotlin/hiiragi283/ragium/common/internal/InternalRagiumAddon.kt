@@ -4,12 +4,18 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
+import hiiragi283.ragium.api.property.HTMutablePropertyMap
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import net.minecraft.network.chat.Component
 import java.util.function.BiConsumer
+import java.util.function.Function
 
 @HTAddon(RagiumAPI.MOD_ID)
 object InternalRagiumAddon : RagiumAddon {
@@ -18,14 +24,14 @@ object InternalRagiumAddon : RagiumAddon {
     override fun onMaterialRegister(consumer: BiConsumer<HTMaterialKey, HTMaterialType>) {
         consumer.accept(CommonMaterials.ALUMINUM, HTMaterialType.METAL)
         consumer.accept(CommonMaterials.ANTIMONY, HTMaterialType.METAL)
-        consumer.accept(CommonMaterials.ALUMINA, HTMaterialType.DUST)
-        consumer.accept(CommonMaterials.ASH, HTMaterialType.DUST)
+        consumer.accept(CommonMaterials.ALUMINA, HTMaterialType.DEFAULT)
+        consumer.accept(CommonMaterials.ASH, HTMaterialType.DEFAULT)
         consumer.accept(CommonMaterials.BAUXITE, HTMaterialType.MINERAL)
         consumer.accept(CommonMaterials.BERYLLIUM, HTMaterialType.METAL)
         consumer.accept(CommonMaterials.BRASS, HTMaterialType.ALLOY)
         consumer.accept(CommonMaterials.BRONZE, HTMaterialType.ALLOY)
         consumer.accept(CommonMaterials.CADMIUM, HTMaterialType.METAL)
-        consumer.accept(CommonMaterials.CARBON, HTMaterialType.DUST)
+        consumer.accept(CommonMaterials.CARBON, HTMaterialType.DEFAULT)
         consumer.accept(CommonMaterials.CHEESE, HTMaterialType.INGOT_LIKE)
         consumer.accept(CommonMaterials.CHOCOLATE, HTMaterialType.INGOT_LIKE)
         consumer.accept(CommonMaterials.CHROMIUM, HTMaterialType.METAL)
@@ -72,21 +78,21 @@ object InternalRagiumAddon : RagiumAddon {
         consumer.accept(RagiumMaterials.WARPED_CRYSTAL, HTMaterialType.GEM)
 
         consumer.accept(VanillaMaterials.AMETHYST, HTMaterialType.GEM)
-        consumer.accept(VanillaMaterials.CALCITE, HTMaterialType.DUST)
+        consumer.accept(VanillaMaterials.CALCITE, HTMaterialType.DEFAULT)
         consumer.accept(VanillaMaterials.COAL, HTMaterialType.GEM)
         consumer.accept(VanillaMaterials.COPPER, HTMaterialType.METAL)
         consumer.accept(VanillaMaterials.DIAMOND, HTMaterialType.GEM)
         consumer.accept(VanillaMaterials.EMERALD, HTMaterialType.GEM)
-        consumer.accept(VanillaMaterials.GLOWSTONE, HTMaterialType.DUST)
+        consumer.accept(VanillaMaterials.GLOWSTONE, HTMaterialType.DEFAULT)
         consumer.accept(VanillaMaterials.GOLD, HTMaterialType.METAL)
         consumer.accept(VanillaMaterials.IRON, HTMaterialType.METAL)
         consumer.accept(VanillaMaterials.LAPIS, HTMaterialType.GEM)
         consumer.accept(VanillaMaterials.NETHERITE, HTMaterialType.ALLOY)
         consumer.accept(VanillaMaterials.NETHERITE_SCRAP, HTMaterialType.GEM)
-        consumer.accept(VanillaMaterials.OBSIDIAN, HTMaterialType.DUST)
+        consumer.accept(VanillaMaterials.OBSIDIAN, HTMaterialType.DEFAULT)
         consumer.accept(VanillaMaterials.QUARTZ, HTMaterialType.GEM)
         consumer.accept(VanillaMaterials.REDSTONE, HTMaterialType.MINERAL)
-        consumer.accept(VanillaMaterials.WOOD, HTMaterialType.DUST)
+        consumer.accept(VanillaMaterials.WOOD, HTMaterialType.DEFAULT)
 
         consumer.accept(IntegrationMaterials.BLACK_QUARTZ, HTMaterialType.GEM)
 
@@ -125,5 +131,15 @@ object InternalRagiumAddon : RagiumAddon {
         consumer.accept(IntegrationMaterials.IRONWOOD, HTMaterialType.METAL)
         consumer.accept(IntegrationMaterials.KNIGHTMETAL, HTMaterialType.METAL)
         consumer.accept(IntegrationMaterials.STEELEAF, HTMaterialType.METAL)
+    }
+
+    override fun onMaterialSetup(getter: Function<HTMaterialKey, HTMutablePropertyMap>) {
+        getter
+            .apply(VanillaMaterials.WOOD)
+            .computeIfAbsent(HTMaterialPropertyKeys.PART_NAME)
+            .put(HTTagPrefixes.DUST, Component.translatable(RagiumTranslationKeys.TEXT_SAWDUST))
+
+        getter.apply(VanillaMaterials.LAPIS)[HTMaterialPropertyKeys.ORE_CRUSHED_COUNT] = 8
+        getter.apply(VanillaMaterials.REDSTONE)[HTMaterialPropertyKeys.ORE_CRUSHED_COUNT] = 12
     }
 }

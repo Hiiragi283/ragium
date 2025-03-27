@@ -6,6 +6,8 @@ object RagiumTranslationKeys {
     const val TEXT_FLUID_NAME = "text.ragium.fluid_name"
     const val TEXT_FLUID_CAPACITY = "text.ragium.fluid_capacity"
 
+    const val TEXT_SAWDUST = "text.ragium.sawdust"
+
     const val TEXT_EFFECT_RANGE = "text.ragium.effect_range"
 
     //    EMI    //

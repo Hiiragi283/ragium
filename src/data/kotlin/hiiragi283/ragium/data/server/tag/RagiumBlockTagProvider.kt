@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.HTTagProvider
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.HolderLookup
@@ -80,7 +80,7 @@ class RagiumBlockTagProvider(
         // Storage Block
         for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
             val prefix: HTTagPrefix = block.prefix
-            val materialTag: TagKey<Block> = prefix.createBlockTag(block.key) ?: continue
+            val materialTag: TagKey<Block> = prefix.createBlockTag(block.key)
             builder.addTag(Tags.Blocks.STORAGE_BLOCKS, materialTag)
             builder.add(materialTag, block.holder)
         }

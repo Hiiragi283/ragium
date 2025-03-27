@@ -5,10 +5,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.item.*
@@ -104,7 +105,7 @@ object RagiumItems {
         SULFUR(CommonMaterials.SULFUR),
         ;
 
-        override val prefix: HTTagPrefix = HTTagPrefix.DUST
+        override val prefix: HTTagPrefix = HTTagPrefixes.DUST
         private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
         override val id: ResourceLocation = holder.id
 
@@ -123,7 +124,7 @@ object RagiumItems {
         CHOCOLATE(CommonMaterials.CHOCOLATE),
         ;
 
-        override val prefix: HTTagPrefix = HTTagPrefix.INGOT
+        override val prefix: HTTagPrefix = HTTagPrefixes.INGOT
         private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
         override val id: ResourceLocation = holder.id
 
@@ -132,12 +133,12 @@ object RagiumItems {
 
     enum class RawResources(override val prefix: HTTagPrefix, override val key: HTMaterialKey) : HTMaterialItemLike {
         // Raw
-        RAGINITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE),
+        RAGINITE(HTTagPrefixes.RAW_MATERIAL, RagiumMaterials.RAGINITE),
 
         // Gem
-        RAGI_CRYSTAL(HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL),
-        CRIMSON_CRYSTAL(HTTagPrefix.GEM, RagiumMaterials.CRIMSON_CRYSTAL),
-        WARPED_CRYSTAL(HTTagPrefix.GEM, RagiumMaterials.WARPED_CRYSTAL),
+        RAGI_CRYSTAL(HTTagPrefixes.GEM, RagiumMaterials.RAGI_CRYSTAL),
+        CRIMSON_CRYSTAL(HTTagPrefixes.GEM, RagiumMaterials.CRIMSON_CRYSTAL),
+        WARPED_CRYSTAL(HTTagPrefixes.GEM, RagiumMaterials.WARPED_CRYSTAL),
         ;
 
         private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
@@ -147,10 +148,10 @@ object RagiumItems {
     }
 
     enum class MekResources(override val prefix: HTTagPrefix) : HTMaterialItemLike {
-        DIRTY_DUST(HTTagPrefix.DIRTY_DUST),
-        CLUMP(HTTagPrefix.CLUMP),
-        SHARD(HTTagPrefix.SHARD),
-        CRYSTAL(HTTagPrefix.CRYSTAL),
+        DIRTY_DUST(HTTagPrefixes.DIRTY_DUST),
+        CLUMP(HTTagPrefixes.CLUMP),
+        SHARD(HTTagPrefixes.SHARD),
+        CRYSTAL(HTTagPrefixes.CRYSTAL),
         ;
 
         override val key: HTMaterialKey = RagiumMaterials.RAGINITE

@@ -2,11 +2,11 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
@@ -331,24 +331,24 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun tagPrefix() {
-        addTagPrefix(HTTagPrefix.CLUMP, "%s Clump")
-        addTagPrefix(HTTagPrefix.CRYSTAL, "%s Crystal")
-        addTagPrefix(HTTagPrefix.DIRTY_DUST, "Dirty %s Dust")
-        addTagPrefix(HTTagPrefix.DUST, "%s Dust")
-        addTagPrefix(HTTagPrefix.GEAR, "%s Gear")
-        addTagPrefix(HTTagPrefix.GEM, "%s")
-        addTagPrefix(HTTagPrefix.INGOT, "%s Ingot")
-        addTagPrefix(HTTagPrefix.NUGGET, "%s Nugget")
-        addTagPrefix(HTTagPrefix.ORE, "%s Ore")
-        addTagPrefix(HTTagPrefix.PLATE, "%s Plate")
-        addTagPrefix(HTTagPrefix.RAW_MATERIAL, "Raw %s")
-        addTagPrefix(HTTagPrefix.RAW_STORAGE, "Block of Raw %s")
-        addTagPrefix(HTTagPrefix.ROD, "%s Rod")
-        addTagPrefix(HTTagPrefix.SHARD, "%s Shard")
-        addTagPrefix(HTTagPrefix.SHEETMETAL, "%s Sheetmetal")
-        addTagPrefix(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
-        addTagPrefix(HTTagPrefix.TINY_DUST, "Tiny %s Dust")
-        addTagPrefix(HTTagPrefix.WIRE, "%s Wire")
+        addTagPrefix(HTTagPrefixes.CLUMP, "%s Clump")
+        addTagPrefix(HTTagPrefixes.CRYSTAL, "%s Crystal")
+        addTagPrefix(HTTagPrefixes.DIRTY_DUST, "Dirty %s Dust")
+        addTagPrefix(HTTagPrefixes.DUST, "%s Dust")
+        addTagPrefix(HTTagPrefixes.GEAR, "%s Gear")
+        addTagPrefix(HTTagPrefixes.GEM, "%s")
+        addTagPrefix(HTTagPrefixes.INGOT, "%s Ingot")
+        addTagPrefix(HTTagPrefixes.NUGGET, "%s Nugget")
+        addTagPrefix(HTTagPrefixes.ORE, "%s Ore")
+        addTagPrefix(HTTagPrefixes.PLATE, "%s Plate")
+        addTagPrefix(HTTagPrefixes.RAW_MATERIAL, "Raw %s")
+        // addTagPrefix(HTTagPrefixes.RAW_STORAGE, "Block of Raw %s")
+        addTagPrefix(HTTagPrefixes.ROD, "%s Rod")
+        addTagPrefix(HTTagPrefixes.SHARD, "%s Shard")
+        // addTagPrefix(HTTagPrefixes.SHEETMETAL, "%s Sheetmetal")
+        addTagPrefix(HTTagPrefixes.STORAGE_BLOCK, "Block of %s")
+        // addTagPrefix(HTTagPrefixes.TINY_DUST, "Tiny %s Dust")
+        // addTagPrefix(HTTagPrefixes.WIRE, "%s Wire")
     }
 
     private fun tag() {
@@ -407,6 +407,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun text() {
         add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")
         add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "Capacity: %s mb")
+
+        add(RagiumTranslationKeys.TEXT_SAWDUST, "Sawdust")
 
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "Effect Radius: %s blocks")
     }

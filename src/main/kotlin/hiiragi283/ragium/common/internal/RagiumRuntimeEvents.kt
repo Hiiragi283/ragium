@@ -5,9 +5,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.event.HTRecipesUpdatedEvent
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
+import hiiragi283.ragium.api.property.HTPropertyMap
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderGetter
@@ -62,9 +65,9 @@ object RagiumRuntimeEvents {
     @JvmStatic
     private fun crushing(event: HTRecipesUpdatedEvent) {
         val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
-        for (key: HTMaterialKey in registry.keys) {
+        for ((key: HTMaterialKey, properties: HTPropertyMap) in registry) {
             val name: String = key.name
-            val type: HTMaterialType = registry.getType(key)
+            val type: HTMaterialType = properties.getOrDefault(HTMaterialPropertyKeys.MATERIAL_TYPE)
             val mainPrefix: HTTagPrefix? = type.getMainPrefix()
             val resultPrefix: HTTagPrefix? = type.getOreResultPrefix()
             // Ore
@@ -75,12 +78,12 @@ object RagiumRuntimeEvents {
                 ) { lookup: HolderGetter<Item> ->
                     val result: Item = event.getFirstItem(resultPrefix, key) ?: return@register null
                     HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
-                        .itemInput(HTTagPrefix.ORE, key)
-                        .itemOutput(result, 3)
+                        .itemInput(HTTagPrefixes.ORE, key)
+                        .itemOutput(result, properties.getOrDefault(HTMaterialPropertyKeys.ORE_CRUSHED_COUNT))
                         .createRecipe()
                 }
             }
-            val dust: Item = event.getFirstItem(HTTagPrefix.DUST, key) ?: continue
+            val dust: Item = event.getFirstItem(HTTagPrefixes.DUST, key) ?: continue
             // Gem/Ingot
             if (mainPrefix != null) {
                 event.register(
@@ -99,7 +102,7 @@ object RagiumRuntimeEvents {
                 RagiumAPI.id("${name}_dust_from_gear"),
             ) { lookup: HolderGetter<Item> ->
                 HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
-                    .itemInput(HTTagPrefix.GEAR, key)
+                    .itemInput(HTTagPrefixes.GEAR, key)
                     .itemOutput(dust, 4)
                     .createRecipe()
             }
@@ -109,7 +112,7 @@ object RagiumRuntimeEvents {
                 RagiumAPI.id("${name}_dust_from_plate"),
             ) { lookup: HolderGetter<Item> ->
                 HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
-                    .itemInput(HTTagPrefix.PLATE, key)
+                    .itemInput(HTTagPrefixes.PLATE, key)
                     .itemOutput(dust)
                     .createRecipe()
             }
@@ -119,7 +122,7 @@ object RagiumRuntimeEvents {
                 RagiumAPI.id("${name}_dust_from_raw"),
             ) { lookup: HolderGetter<Item> ->
                 HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
-                    .itemInput(HTTagPrefix.RAW_MATERIAL, key)
+                    .itemInput(HTTagPrefixes.RAW_MATERIAL, key)
                     .itemOutput(dust, 2)
                     .createRecipe()
             }

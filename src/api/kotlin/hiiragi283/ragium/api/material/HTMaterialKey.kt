@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.property.HTPropertyMap
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -57,13 +58,13 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
     val text: MutableComponent
         get() = Component.translatable(translationKey)
 
-    private lateinit var typeCache: HTMaterialType
+    private lateinit var propertyCache: HTPropertyMap
 
-    fun getType(): HTMaterialType {
-        if (!::typeCache.isInitialized) {
-            typeCache = RagiumAPI.getInstance().getMaterialRegistry().getType(this)
+    fun getPropertyMap(): HTPropertyMap {
+        if (!::propertyCache.isInitialized) {
+            propertyCache = RagiumAPI.getInstance().getMaterialRegistry().getPropertyMap(this)
         }
-        return typeCache
+        return propertyCache
     }
 
     //    Comparable    //

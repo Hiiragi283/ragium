@@ -307,14 +307,11 @@
   "tag_prefix.ragium.ore": "%s Ore",
   "tag_prefix.ragium.plate": "%s Plate",
   "tag_prefix.ragium.raw_material": "Raw %s",
-  "tag_prefix.ragium.raw_storage": "Block of Raw %s",
   "tag_prefix.ragium.rod": "%s Rod",
   "tag_prefix.ragium.shard": "%s Shard",
-  "tag_prefix.ragium.sheetmetal": "%s Sheetmetal",
   "tag_prefix.ragium.storage_block": "Block of %s",
-  "tag_prefix.ragium.tiny_dust": "Tiny %s Dust",
-  "tag_prefix.ragium.wire": "%s Wire",
   "text.ragium.effect_range": "Effect Radius: %s blocks",
   "text.ragium.fluid_capacity": "Capacity: %s mb",
-  "text.ragium.fluid_name": "%s : %s mb"
+  "text.ragium.fluid_name": "%s : %s mb",
+  "text.ragium.sawdust": "Sawdust"
 }

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -33,7 +33,7 @@ class HTMachineRecipeBuilder(private val recipeType: HTMachineRecipeType) : HTRe
     fun itemInput(item: ItemLike, count: Int = 1): HTMachineRecipeBuilder = itemInput(SizedIngredient.of(item, count))
 
     fun itemInput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): HTMachineRecipeBuilder =
-        itemInput(prefix.createTag(material), count)
+        itemInput(prefix.createItemTag(material), count)
 
     fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeBuilder = itemInput(SizedIngredient.of(tagKey, count))
 

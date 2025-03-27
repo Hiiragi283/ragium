@@ -1,11 +1,14 @@
 package hiiragi283.ragium.api.material
 
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
+
 /**
  * 素材のタイプを管理するクラス
  */
 enum class HTMaterialType {
+    DEFAULT,
     ALLOY,
-    DUST,
     GEM,
     INGOT_LIKE,
     METAL,
@@ -17,11 +20,11 @@ enum class HTMaterialType {
      * @return 対応する値がなければ`null`
      */
     fun getMainPrefix(): HTTagPrefix? = when (this) {
-        ALLOY -> HTTagPrefix.INGOT
-        DUST -> null
-        GEM -> HTTagPrefix.GEM
-        INGOT_LIKE -> HTTagPrefix.INGOT
-        METAL -> HTTagPrefix.INGOT
+        DEFAULT -> null
+        ALLOY -> HTTagPrefixes.INGOT
+        GEM -> HTTagPrefixes.GEM
+        INGOT_LIKE -> HTTagPrefixes.INGOT
+        METAL -> HTTagPrefixes.INGOT
         MINERAL -> null
     }
 
@@ -30,11 +33,11 @@ enum class HTMaterialType {
      * @return 対応する値がなければ`null`
      */
     fun getOreResultPrefix(): HTTagPrefix? = when (this) {
+        DEFAULT -> null
         ALLOY -> null
-        DUST -> null
-        GEM -> HTTagPrefix.GEM
-        INGOT_LIKE -> HTTagPrefix.DUST
-        METAL -> HTTagPrefix.DUST
-        MINERAL -> HTTagPrefix.DUST
+        GEM -> HTTagPrefixes.GEM
+        INGOT_LIKE -> HTTagPrefixes.DUST
+        METAL -> HTTagPrefixes.DUST
+        MINERAL -> HTTagPrefixes.DUST
     }
 }

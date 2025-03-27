@@ -8,10 +8,11 @@ import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -41,7 +42,7 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
     }
 
     fun HTTagBuilder<Item>.addItem(prefix: HTTagPrefix, key: HTMaterialKey, item: ItemLike) {
-        addItem(prefix.createTag(key), item)
+        addItem(prefix.createItemTag(key), item)
     }
 
     fun HTTagBuilder<Item>.addItem(tagKey: TagKey<Item>, item: ItemLike) {
@@ -57,8 +58,8 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         fun register(entries: List<HTMaterialItemLike>) {
             for (item: HTMaterialItemLike in entries) {
                 val prefix: HTTagPrefix = item.prefix
-                val materialTag: TagKey<Item> = prefix.createTag(item.key)
-                builder.addTag(prefix.commonTagKey, materialTag)
+                val materialTag: TagKey<Item> = prefix.createItemTag(item.key)
+                builder.addTag(prefix.itemCommonTag, materialTag)
                 builder.addItem(materialTag, item)
             }
         }
@@ -70,15 +71,15 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         register(RagiumItems.MekResources.entries)
 
         builder.addTag(
-            HTTagPrefix.GEM.createTag(CommonMaterials.COAL_COKE),
+            HTTagPrefixes.GEM.createItemTag(CommonMaterials.COAL_COKE),
             RagiumItemTags.COAL_COKE,
             HTTagBuilder.DependType.OPTIONAL,
         )
 
-        builder.addItem(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.AMETHYST, Items.AMETHYST_BLOCK)
-        builder.addItem(HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.GLOWSTONE, Items.GLOWSTONE)
-        builder.addItem(HTTagPrefix.GEM, VanillaMaterials.COAL, Items.COAL)
-        builder.addItem(HTTagPrefix.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP)
+        builder.addItem(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.AMETHYST, Items.AMETHYST_BLOCK)
+        builder.addItem(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.GLOWSTONE, Items.GLOWSTONE)
+        builder.addItem(HTTagPrefixes.GEM, VanillaMaterials.COAL, Items.COAL)
+        builder.addItem(HTTagPrefixes.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP)
 
         fun addMaterialTag(
             prefix: HTTagPrefix,
@@ -87,24 +88,24 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
             path: String,
             type: HTTagBuilder.DependType = HTTagBuilder.DependType.OPTIONAL,
         ) {
-            builder.addTag(prefix.commonTagKey, prefix.createTag(material))
-            builder.add(prefix.createTag(material), mod.createItemHolder<Item>(path), type)
+            builder.addTag(prefix.itemCommonTag, prefix.createItemTag(material))
+            builder.add(prefix.createItemTag(material), mod.createItemHolder<Item>(path), type)
         }
 
         // EIO
-        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, IntegrationMods.EIO, "energized_gear")
-        addMaterialTag(HTTagPrefix.GEAR, IntegrationMaterials.VIBRANT_ALLOY, IntegrationMods.EIO, "vibrant_gear")
+        addMaterialTag(HTTagPrefixes.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, IntegrationMods.EIO, "energized_gear")
+        addMaterialTag(HTTagPrefixes.GEAR, IntegrationMaterials.VIBRANT_ALLOY, IntegrationMods.EIO, "vibrant_gear")
         // Create
-        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.ROSE_QUARTZ, IntegrationMods.CREATE, "rose_quartz")
-        addMaterialTag(HTTagPrefix.INGOT, IntegrationMaterials.ANDESITE_ALLOY, IntegrationMods.CREATE, "andesite_alloy")
+        addMaterialTag(HTTagPrefixes.GEM, IntegrationMaterials.ROSE_QUARTZ, IntegrationMods.CREATE, "rose_quartz")
+        addMaterialTag(HTTagPrefixes.INGOT, IntegrationMaterials.ANDESITE_ALLOY, IntegrationMods.CREATE, "andesite_alloy")
         // Evil Craft
-        addMaterialTag(HTTagPrefix.DUST, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem_crushed")
-        addMaterialTag(HTTagPrefix.GEM, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem")
-        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore")
-        addMaterialTag(HTTagPrefix.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore_deepslate")
-        addMaterialTag(HTTagPrefix.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_block")
+        addMaterialTag(HTTagPrefixes.DUST, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem_crushed")
+        addMaterialTag(HTTagPrefixes.GEM, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem")
+        addMaterialTag(HTTagPrefixes.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore")
+        addMaterialTag(HTTagPrefixes.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore_deepslate")
+        addMaterialTag(HTTagPrefixes.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_block")
         // MI
-        addMaterialTag(HTTagPrefix.GEM, CommonMaterials.COAL_COKE, IntegrationMods.MI, "coke")
+        addMaterialTag(HTTagPrefixes.GEM, CommonMaterials.COAL_COKE, IntegrationMods.MI, "coke")
     }
 
     //    Food    //
@@ -134,11 +135,11 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
 
         builder.add(RagiumItemTags.FOOD_BUTTER, RagiumItems.BUTTER)
 
-        builder.addTag(RagiumItemTags.FOOD_CHEESE, HTTagPrefix.INGOT.createTag(CommonMaterials.CHEESE))
+        builder.addTag(RagiumItemTags.FOOD_CHEESE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHEESE))
 
-        builder.addTag(RagiumItemTags.FOOD_CHOCOLATE, HTTagPrefix.INGOT.createTag(CommonMaterials.CHOCOLATE))
+        builder.addTag(RagiumItemTags.FOOD_CHOCOLATE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE))
         builder.add(
-            HTTagPrefix.INGOT.createTag(CommonMaterials.CHOCOLATE),
+            HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE),
             ResourceLocation.fromNamespaceAndPath("create", "bar_of_chocolate"),
             HTTagBuilder.DependType.OPTIONAL,
         )

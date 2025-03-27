@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -50,7 +50,7 @@ class HTRecipesUpdatedEvent(
      * 指定した[prefix]と[key]に含まれる[Holder]を返します。
      * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
      */
-    fun getFirstHolder(prefix: HTTagPrefix, key: HTMaterialKey): Holder<Item>? = getFirstHolder(prefix.createTag(key))
+    fun getFirstHolder(prefix: HTTagPrefix, key: HTMaterialKey): Holder<Item>? = getFirstHolder(prefix.createItemTag(key))
 
     /**
      * 指定した[prefix]と[key]に含まれる[Item]を返します。

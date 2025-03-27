@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTItemSet
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -57,7 +57,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterialKey) : HTI
             .pattern(
                 "AAA",
                 "ABA",
-            ).define('A', HTTagPrefix.INGOT, key)
+            ).define('A', HTTagPrefixes.INGOT, key)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Chestplate
@@ -66,7 +66,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterialKey) : HTI
                 "ABA",
                 "AAA",
                 "AAA",
-            ).define('A', HTTagPrefix.INGOT, key)
+            ).define('A', HTTagPrefixes.INGOT, key)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Leggings
@@ -75,7 +75,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterialKey) : HTI
                 "AAA",
                 "ABA",
                 "A A",
-            ).define('A', HTTagPrefix.INGOT, key)
+            ).define('A', HTTagPrefixes.INGOT, key)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Boots
@@ -83,7 +83,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterialKey) : HTI
             .pattern(
                 "A A",
                 "ABA",
-            ).define('A', HTTagPrefix.INGOT, key)
+            ).define('A', HTTagPrefixes.INGOT, key)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
     }

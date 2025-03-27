@@ -2,8 +2,6 @@
 
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -23,7 +21,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
-import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 /**
@@ -78,10 +75,6 @@ fun <T : Any> HolderSet<T>.asHolderText(transform: (Holder<T>) -> Component): Mu
 //    HolderGetter    //
 
 operator fun <T> HolderGetter<T>.contains(tagKey: TagKey<T>): Boolean = get(tagKey).isPresent
-
-fun HolderGetter<Item>.get(prefix: HTTagPrefix, key: HTMaterialKey): Optional<HolderSet.Named<Item>> = get(prefix.createTag(key))
-
-fun HolderGetter<Item>.getOrThrow(prefix: HTTagPrefix, key: HTMaterialKey): HolderSet.Named<Item> = getOrThrow(prefix.createTag(key))
 
 //    HolderLookup    //
 

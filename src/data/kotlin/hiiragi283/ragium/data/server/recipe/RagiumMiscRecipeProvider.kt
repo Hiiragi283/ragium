@@ -3,9 +3,9 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -44,14 +44,14 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         // Machine
         HTShapedRecipeBuilder(RagiumBlocks.MACHINE_CASING)
             .casing()
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('A', HTTagPrefixes.INGOT, RagiumMaterials.RAGI_ALLOY)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .define('C', Blocks.DEEPSLATE_TILES)
             .save(output)
         // Advanced Machine
         HTShapedRecipeBuilder(RagiumBlocks.ADVANCED_MACHINE_CASING)
             .casing()
-            .define('A', HTTagPrefix.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
+            .define('A', HTTagPrefixes.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .define('C', RagiumBlocks.AZURE_TILE_SETS.base)
             .save(output)
@@ -59,7 +59,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
-            .define('B', HTTagPrefix.INGOT, RagiumMaterials.DEEP_STEEL)
+            .define('B', HTTagPrefixes.INGOT, RagiumMaterials.DEEP_STEEL)
             .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
     }
@@ -71,15 +71,15 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "AAA",
                 "BCB",
                 "AAA",
-            ).define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
-            .define('B', HTTagPrefix.DUST, VanillaMaterials.REDSTONE)
-            .define('C', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
+            ).define('A', HTTagPrefixes.INGOT, VanillaMaterials.COPPER)
+            .define('B', HTTagPrefixes.DUST, VanillaMaterials.REDSTONE)
+            .define('C', HTTagPrefixes.INGOT, RagiumMaterials.AZURE_STEEL)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
             .cross8()
-            .define('A', HTTagPrefix.DUST, RagiumMaterials.DEEP_STEEL)
-            .define('B', HTTagPrefix.DUST, VanillaMaterials.GLOWSTONE)
+            .define('A', HTTagPrefixes.DUST, RagiumMaterials.DEEP_STEEL)
+            .define('B', HTTagPrefixes.DUST, VanillaMaterials.GLOWSTONE)
             .define('C', RagiumItemTags.CIRCUITS_BASIC)
             .saveSuffixed(output, "_from_basic")
 
@@ -88,8 +88,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "AAA",
                 "BCB",
                 "AAA",
-            ).define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
-            .define('B', HTTagPrefix.DUST, VanillaMaterials.REDSTONE)
+            ).define('A', HTTagPrefixes.INGOT, VanillaMaterials.COPPER)
+            .define('B', HTTagPrefixes.DUST, VanillaMaterials.REDSTONE)
             .define('C', RagiumItemTags.PLASTICS)
             .save(output)
 
@@ -98,8 +98,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "AAA",
                 "BCB",
                 "AAA",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
-            .define('B', HTTagPrefix.DUST, RagiumMaterials.RAGI_CRYSTAL)
+            ).define('A', HTTagPrefixes.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
+            .define('B', HTTagPrefixes.DUST, RagiumMaterials.RAGI_CRYSTAL)
             .define('C', RagiumItemTags.PLASTICS)
             .saveSuffixed(output, "_with_ragi")
 
@@ -143,7 +143,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         // Milk Drain
         HTShapedRecipeBuilder(RagiumBlocks.MILK_DRAIN)
             .pattern("A", "B", "C")
-            .define('A', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .define('A', HTTagPrefixes.INGOT, VanillaMaterials.COPPER)
             .define('B', Tags.Items.BARRELS_WOODEN)
             .define('C', RagiumBlocks.STONE_CASING)
             .save(output)

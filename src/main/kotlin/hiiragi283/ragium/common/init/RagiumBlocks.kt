@@ -6,9 +6,10 @@ import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.block.*
@@ -164,7 +165,7 @@ object RagiumBlocks {
             CHOCOLATE -> RagiumItems.Ingots.CHOCOLATE
         }
 
-        override val prefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
+        override val prefix: HTTagPrefix = HTTagPrefixes.STORAGE_BLOCK
         override val id: ResourceLocation = holder.id
 
         override fun asItem(): Item = holder.asItem()

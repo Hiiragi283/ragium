@@ -2,11 +2,11 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
@@ -331,24 +331,24 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun tagPrefix() {
-        addTagPrefix(HTTagPrefix.CLUMP, "%sの凝塊")
-        addTagPrefix(HTTagPrefix.CRYSTAL, "%sの結晶")
-        addTagPrefix(HTTagPrefix.DIRTY_DUST, "汚れた%sの粉")
-        addTagPrefix(HTTagPrefix.DUST, "%sの粉")
-        addTagPrefix(HTTagPrefix.GEAR, "%sの歯車")
-        addTagPrefix(HTTagPrefix.GEM, "%s")
-        addTagPrefix(HTTagPrefix.INGOT, "%sインゴット")
-        addTagPrefix(HTTagPrefix.NUGGET, "%sのナゲット")
-        addTagPrefix(HTTagPrefix.ORE, "%s鉱石")
-        addTagPrefix(HTTagPrefix.PLATE, "%s板")
-        addTagPrefix(HTTagPrefix.RAW_MATERIAL, "%sの原石")
-        addTagPrefix(HTTagPrefix.RAW_STORAGE, "%sの原石ブロック")
-        addTagPrefix(HTTagPrefix.ROD, "%s棒")
-        addTagPrefix(HTTagPrefix.SHARD, "%sの欠片")
-        addTagPrefix(HTTagPrefix.SHEETMETAL, "%sの板金")
-        addTagPrefix(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
-        addTagPrefix(HTTagPrefix.TINY_DUST, "小さな%sの粉")
-        addTagPrefix(HTTagPrefix.WIRE, "%sのワイヤー")
+        addTagPrefix(HTTagPrefixes.CLUMP, "%sの凝塊")
+        addTagPrefix(HTTagPrefixes.CRYSTAL, "%sの結晶")
+        addTagPrefix(HTTagPrefixes.DIRTY_DUST, "汚れた%sの粉")
+        addTagPrefix(HTTagPrefixes.DUST, "%sの粉")
+        addTagPrefix(HTTagPrefixes.GEAR, "%sの歯車")
+        addTagPrefix(HTTagPrefixes.GEM, "%s")
+        addTagPrefix(HTTagPrefixes.INGOT, "%sインゴット")
+        addTagPrefix(HTTagPrefixes.NUGGET, "%sのナゲット")
+        addTagPrefix(HTTagPrefixes.ORE, "%s鉱石")
+        addTagPrefix(HTTagPrefixes.PLATE, "%s板")
+        addTagPrefix(HTTagPrefixes.RAW_MATERIAL, "%sの原石")
+        // addTagPrefix(HTTagPrefixes.RAW_STORAGE, "%sの原石ブロック")
+        addTagPrefix(HTTagPrefixes.ROD, "%s棒")
+        addTagPrefix(HTTagPrefixes.SHARD, "%sの欠片")
+        // addTagPrefix(HTTagPrefixes.SHEETMETAL, "%sの板金")
+        addTagPrefix(HTTagPrefixes.STORAGE_BLOCK, "%sブロック")
+        // addTagPrefix(HTTagPrefixes.TINY_DUST, "小さな%sの粉")
+        // addTagPrefix(HTTagPrefixes.WIRE, "%sのワイヤー")
     }
 
     private fun tag() {
@@ -407,6 +407,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun text() {
         add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s: %s mb")
         add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "容量: %s mb")
+
+        add(RagiumTranslationKeys.TEXT_SAWDUST, "おがくず")
 
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "有効半径: %s ブロック")
     }

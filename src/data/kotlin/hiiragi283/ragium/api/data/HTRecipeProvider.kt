@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
@@ -58,7 +58,7 @@ abstract class HTRecipeProvider {
     fun has(item: ItemLike): Criterion<InventoryChangeTrigger.TriggerInstance> = inventoryTrigger(ItemPredicate.Builder.item().of(item))
 
     fun has(prefix: HTTagPrefix, material: HTMaterialKey): Criterion<InventoryChangeTrigger.TriggerInstance> =
-        has(prefix.createTag(material))
+        has(prefix.createItemTag(material))
 
     fun has(tagKey: TagKey<Item>): Criterion<InventoryChangeTrigger.TriggerInstance> =
         inventoryTrigger(ItemPredicate.Builder.item().of(tagKey))

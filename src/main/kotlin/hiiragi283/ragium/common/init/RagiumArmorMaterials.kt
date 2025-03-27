@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvents
@@ -41,7 +41,7 @@ object RagiumArmorMaterials {
             ),
             10,
             SoundEvents.ARMOR_EQUIP_IRON,
-            { HTTagPrefix.INGOT.createIngredient(RagiumMaterials.AZURE_STEEL) },
+            { Ingredient.of(HTTagPrefixes.INGOT.createItemTag(RagiumMaterials.AZURE_STEEL)) },
             listOf(ArmorMaterial.Layer(id)),
             1.2f,
             0f,

@@ -6,9 +6,10 @@ import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -22,14 +23,14 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Ragi-Alloy
         HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow8()
-            .define('A', HTTagPrefix.RAW_MATERIAL, RagiumMaterials.RAGINITE)
-            .define('B', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .define('A', HTTagPrefixes.RAW_MATERIAL, RagiumMaterials.RAGINITE)
+            .define('B', HTTagPrefixes.INGOT, VanillaMaterials.COPPER)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow4()
-            .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
-            .define('B', HTTagPrefix.INGOT, VanillaMaterials.COPPER)
+            .define('A', HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
+            .define('B', HTTagPrefixes.INGOT, VanillaMaterials.COPPER)
             .saveSuffixed(output, "_alt")
 
         HTCookingRecipeBuilder
@@ -39,29 +40,29 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_compound")
         // Advanced Ragi-Alloy
         HTShapelessRecipeBuilder(RagiumItems.Dusts.ADVANCED_RAGI_ALLOY)
-            .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
-            .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
-            .addIngredient(HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
-            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.GOLD)
+            .addIngredient(HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
+            .addIngredient(HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
+            .addIngredient(HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
+            .addIngredient(HTTagPrefixes.DUST, VanillaMaterials.GOLD)
             .save(output)
         // Ragi-Crystal
         HTShapedRecipeBuilder(RagiumItems.RawResources.RAGI_CRYSTAL)
             .hollow8()
-            .define('A', HTTagPrefix.DUST, RagiumMaterials.RAGINITE)
-            .define('B', HTTagPrefix.GEM, VanillaMaterials.DIAMOND)
+            .define('A', HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
+            .define('B', HTTagPrefixes.GEM, VanillaMaterials.DIAMOND)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL)
             .hollow8()
-            .define('A', HTTagPrefix.RAW_STORAGE, RagiumMaterials.RAGINITE)
-            .define('B', HTTagPrefix.STORAGE_BLOCK, VanillaMaterials.DIAMOND)
+            // .define('A', HTTagPrefixes.RAW_STORAGE, RagiumMaterials.RAGINITE)
+            .define('B', HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.DIAMOND)
 
         // Azure Steel
         HTShapelessRecipeBuilder(RagiumItems.Dusts.AZURE_STEEL, 2)
-            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.LAPIS)
-            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.AMETHYST)
-            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.IRON)
-            .addIngredient(HTTagPrefix.DUST, VanillaMaterials.IRON)
+            .addIngredient(HTTagPrefixes.DUST, VanillaMaterials.LAPIS)
+            .addIngredient(HTTagPrefixes.DUST, VanillaMaterials.AMETHYST)
+            .addIngredient(HTTagPrefixes.DUST, VanillaMaterials.IRON)
+            .addIngredient(HTTagPrefixes.DUST, VanillaMaterials.IRON)
             .save(output)
         // Deep Steel
 
@@ -81,14 +82,14 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Block -> Ingot
         for (ingot: RagiumItems.Ingots in RagiumItems.Ingots.entries) {
             HTShapelessRecipeBuilder(ingot, 9)
-                .addIngredient(HTTagPrefix.STORAGE_BLOCK, ingot.key)
+                .addIngredient(HTTagPrefixes.STORAGE_BLOCK, ingot.key)
                 .saveSuffixed(output, "_from_block")
         }
         // Block -> Gem
         for (gem: RagiumItems.RawResources in RagiumItems.RawResources.entries) {
-            if (gem.prefix != HTTagPrefix.GEM) continue
+            if (gem.prefix != HTTagPrefixes.GEM) continue
             HTShapelessRecipeBuilder(gem, 9)
-                .addIngredient(HTTagPrefix.STORAGE_BLOCK, gem.key)
+                .addIngredient(HTTagPrefixes.STORAGE_BLOCK, gem.key)
                 .saveSuffixed(output, "_from_block")
         }
 
@@ -97,25 +98,25 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         for (dust: RagiumItems.Dusts in RagiumItems.Dusts.entries) {
             val inputPrefix: HTTagPrefix = when (dust) {
                 RagiumItems.Dusts.WOOD -> continue
-                RagiumItems.Dusts.COAL -> HTTagPrefix.GEM
-                RagiumItems.Dusts.COPPER -> HTTagPrefix.INGOT
-                RagiumItems.Dusts.IRON -> HTTagPrefix.INGOT
-                RagiumItems.Dusts.LAPIS -> HTTagPrefix.GEM
+                RagiumItems.Dusts.COAL -> HTTagPrefixes.GEM
+                RagiumItems.Dusts.COPPER -> HTTagPrefixes.INGOT
+                RagiumItems.Dusts.IRON -> HTTagPrefixes.INGOT
+                RagiumItems.Dusts.LAPIS -> HTTagPrefixes.GEM
                 RagiumItems.Dusts.QUARTZ -> continue
                 RagiumItems.Dusts.GOLD -> continue
                 RagiumItems.Dusts.DIAMOND -> continue
                 RagiumItems.Dusts.EMERALD -> continue
-                RagiumItems.Dusts.AMETHYST -> HTTagPrefix.GEM
+                RagiumItems.Dusts.AMETHYST -> HTTagPrefixes.GEM
                 RagiumItems.Dusts.OBSIDIAN -> continue
-                RagiumItems.Dusts.RAGINITE -> HTTagPrefix.RAW_MATERIAL
-                RagiumItems.Dusts.RAGI_ALLOY -> HTTagPrefix.INGOT
+                RagiumItems.Dusts.RAGINITE -> HTTagPrefixes.RAW_MATERIAL
+                RagiumItems.Dusts.RAGI_ALLOY -> HTTagPrefixes.INGOT
                 RagiumItems.Dusts.ADVANCED_RAGI_ALLOY -> continue
                 RagiumItems.Dusts.RAGI_CRYSTAL -> continue
-                RagiumItems.Dusts.AZURE_STEEL -> HTTagPrefix.INGOT
+                RagiumItems.Dusts.AZURE_STEEL -> HTTagPrefixes.INGOT
                 RagiumItems.Dusts.DEEP_STEEL -> continue
                 RagiumItems.Dusts.ASH -> continue
-                RagiumItems.Dusts.SALTPETER -> HTTagPrefix.RAW_MATERIAL
-                RagiumItems.Dusts.SULFUR -> HTTagPrefix.RAW_MATERIAL
+                RagiumItems.Dusts.SALTPETER -> HTTagPrefixes.RAW_MATERIAL
+                RagiumItems.Dusts.SULFUR -> HTTagPrefixes.RAW_MATERIAL
             }
 
             HTShapelessRecipeBuilder(dust)

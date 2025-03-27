@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -39,14 +39,14 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "A A",
                 "B B",
                 " C ",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
-            .define('B', HTTagPrefix.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('C', HTTagPrefix.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            ).define('A', HTTagPrefixes.INGOT, RagiumMaterials.AZURE_STEEL)
+            .define('B', HTTagPrefixes.INGOT, RagiumMaterials.RAGI_ALLOY)
+            .define('C', HTTagPrefixes.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
 
         HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)
-            .addIngredient(HTTagPrefix.GEM, VanillaMaterials.EMERALD)
+            .addIngredient(HTTagPrefixes.GEM, VanillaMaterials.EMERALD)
             .save(output)
         // Mold
         HTShapedRecipeBuilder(RagiumItems.Molds.BLANK)
@@ -54,7 +54,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "AA",
                 "AA",
                 "B ",
-            ).define('A', HTTagPrefix.INGOT, RagiumMaterials.AZURE_STEEL)
+            ).define('A', HTTagPrefixes.INGOT, RagiumMaterials.AZURE_STEEL)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
 

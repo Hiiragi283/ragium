@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -55,7 +55,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         // Ambrosia
         HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
             .itemOutput(RagiumItems.AMBROSIA)
-            .itemInput(HTTagPrefix.STORAGE_BLOCK, CommonMaterials.CHOCOLATE, 64)
+            .itemInput(HTTagPrefixes.STORAGE_BLOCK, CommonMaterials.CHOCOLATE, 64)
             .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
             .save(output)
     }
@@ -89,7 +89,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
             .define('A', RagiumItems.COOKED_MEAT_INGOT)
-            .define('B', HTTagPrefix.INGOT, VanillaMaterials.IRON)
+            .define('B', HTTagPrefixes.INGOT, VanillaMaterials.IRON)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.MEAT_SANDWICH)
