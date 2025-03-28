@@ -22,6 +22,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
+import net.minecraft.world.level.material.PushReaction
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredBlock
 
@@ -133,6 +134,25 @@ object RagiumBlocks {
         "ash_log",
         blockProperty().mapColor(MapColor.COLOR_GRAY).strength(1f).sound(SoundType.SAND),
         ::RotatedPillarBlock,
+    )
+
+    @JvmField
+    val EXP_BERRY_BUSH: DeferredBlock<HTExpBerriesBushBlock> = register(
+        "exp_berry_bush",
+        blockProperty(Blocks.SWEET_BERRY_BUSH),
+        ::HTExpBerriesBushBlock,
+    )
+
+    @JvmField
+    val LILY_OF_THE_ENDER: DeferredBlock<HTEnderLilyBlock> = register(
+        "lily_of_the_ender",
+        blockProperty()
+            .mapColor(MapColor.PLANT)
+            .noCollission()
+            .instabreak()
+            .sound(SoundType.GRASS)
+            .pushReaction(PushReaction.DESTROY),
+        ::HTEnderLilyBlock,
     )
 
     //    Materials    //
@@ -250,13 +270,6 @@ object RagiumBlocks {
     fun getLedBlock(color: DyeColor): DeferredBlock<*> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
 
     //    Foods    //
-
-    @JvmField
-    val EXP_BERRY_BUSH: DeferredBlock<HTExpBerriesBushBlock> = register(
-        "exp_berry_bush",
-        blockProperty(Blocks.SWEET_BERRY_BUSH),
-        ::HTExpBerriesBushBlock,
-    )
 
     @JvmField
     val SPONGE_CAKE: DeferredBlock<HTSpongeCakeBlock> = register(

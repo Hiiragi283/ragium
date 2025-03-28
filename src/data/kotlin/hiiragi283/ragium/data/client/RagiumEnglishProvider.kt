@@ -39,6 +39,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SILT, "Silt")
         addBlock(RagiumBlocks.CRUDE_OIL, "Crude Oil")
         addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
+        addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "Lily of the Ender")
 
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationEn("Ragi-Brick", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationEn("Azure Tile", this)
@@ -322,6 +323,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMaterialKey(VanillaMaterials.COPPER, "Copper")
         addMaterialKey(VanillaMaterials.DIAMOND, "Diamond")
         addMaterialKey(VanillaMaterials.EMERALD, "Emerald")
+        addMaterialKey(VanillaMaterials.ENDER_PEARL, "Ender Pearl")
         addMaterialKey(VanillaMaterials.GLOWSTONE, "Glowstone")
         addMaterialKey(VanillaMaterials.GOLD, "Gold")
         addMaterialKey(VanillaMaterials.IRON, "Iron")

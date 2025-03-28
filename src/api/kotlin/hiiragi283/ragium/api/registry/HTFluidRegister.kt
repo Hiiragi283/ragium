@@ -16,7 +16,7 @@ import java.util.function.Supplier
 class HTFluidRegister(namespace: String) : DeferredRegister<Fluid>(Registries.FLUID, namespace) {
     //    DeferredRegister    //
 
-    override fun getEntries(): List<HTDeferredFluid<Fluid>> = super.getEntries().map { holder: DeferredHolder<Fluid, out Fluid> ->
+    override fun getEntries(): List<HTDeferredFluid<*>> = super.getEntries().map { holder: DeferredHolder<Fluid, *> ->
         HTDeferredFluid.createFluid<Fluid>(holder.id)
     }
 

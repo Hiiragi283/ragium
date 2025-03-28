@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:gems/ender_pearl"
+    },
+    {
+      "tag": "c:tools/forge_hammer"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ender_pearl_dust"
+  }
+}

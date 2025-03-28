@@ -83,6 +83,7 @@ object InternalRagiumAddon : RagiumAddon {
         consumer.accept(VanillaMaterials.COPPER, HTMaterialType.METAL)
         consumer.accept(VanillaMaterials.DIAMOND, HTMaterialType.GEM)
         consumer.accept(VanillaMaterials.EMERALD, HTMaterialType.GEM)
+        consumer.accept(VanillaMaterials.ENDER_PEARL, HTMaterialType.GEM)
         consumer.accept(VanillaMaterials.GLOWSTONE, HTMaterialType.DEFAULT)
         consumer.accept(VanillaMaterials.GOLD, HTMaterialType.METAL)
         consumer.accept(VanillaMaterials.IRON, HTMaterialType.METAL)

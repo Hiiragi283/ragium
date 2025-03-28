@@ -9,6 +9,6 @@ import net.neoforged.neoforge.registries.DeferredRegister
  * Ragiumで使用する[DeferredRegister.Items]
  */
 class HTItemRegister(namespace: String) : DeferredRegister.Items(namespace) {
-    override fun getEntries(): List<DeferredItem<out Item>> =
-        super.getEntries().map { holder: DeferredHolder<Item, out Item> -> DeferredItem.createItem<Item>(holder.id) }
+    override fun getEntries(): List<DeferredItem<*>> =
+        super.getEntries().map { holder: DeferredHolder<Item, *> -> DeferredItem.createItem<Item>(holder.id) }
 }

@@ -89,6 +89,7 @@ object RagiumItems {
         DIAMOND(VanillaMaterials.DIAMOND),
         EMERALD(VanillaMaterials.EMERALD),
         AMETHYST(VanillaMaterials.AMETHYST),
+        ENDER_PEARL(VanillaMaterials.ENDER_PEARL),
         OBSIDIAN(VanillaMaterials.OBSIDIAN),
 
         // Ragium

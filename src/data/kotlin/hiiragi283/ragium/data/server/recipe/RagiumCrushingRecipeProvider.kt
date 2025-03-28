@@ -105,6 +105,16 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .itemInput(Items.CAULDRON)
             .saveSuffixed(output, "_from_cauldron")
 
+        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+            .itemOutput(RagiumItems.Dusts.ASH, 4)
+            .itemInput(RagiumBlocks.ASH_LOG)
+            .saveSuffixed(output, "_from_log")
+
+        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+            .itemOutput(RagiumItems.Dusts.ENDER_PEARL)
+            .itemInput(RagiumBlocks.LILY_OF_THE_ENDER)
+            .saveSuffixed(output, "_from_lily")
+
         woodDust(output)
         sand(output)
         prismarine(output)

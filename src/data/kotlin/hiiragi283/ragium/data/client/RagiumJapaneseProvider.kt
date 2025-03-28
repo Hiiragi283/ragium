@@ -39,6 +39,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SILT, "シルト")
         addBlock(RagiumBlocks.CRUDE_OIL, "石油")
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
+        addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "エンダースズラン")
 
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationJp("らぎレンガ", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationJp("紺碧のタイル", this)
@@ -322,6 +323,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMaterialKey(VanillaMaterials.COPPER, "銅")
         addMaterialKey(VanillaMaterials.DIAMOND, "ダイアモンド")
         addMaterialKey(VanillaMaterials.EMERALD, "エメラルド")
+        addMaterialKey(VanillaMaterials.ENDER_PEARL, "エンダーパール")
         addMaterialKey(VanillaMaterials.GLOWSTONE, "グロウストーン")
         addMaterialKey(VanillaMaterials.GOLD, "金")
         addMaterialKey(VanillaMaterials.IRON, "鉄")

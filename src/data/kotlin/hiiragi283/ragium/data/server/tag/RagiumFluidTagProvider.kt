@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture
 class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
     HTTagProvider<Fluid>(Registries.FLUID, output, provider, helper) {
     override fun addTagsInternal(builder: HTTagBuilder<Fluid>, provider: HolderLookup.Provider) {
-        RagiumFluids.REGISTER.entries.forEach { holder: HTDeferredFluid<Fluid> ->
+        RagiumFluids.REGISTER.entries.forEach { holder: HTDeferredFluid<*> ->
             if (!holder.get().isSource) return@forEach
             // Common Tag
             builder.add(holder.commonTag, holder)

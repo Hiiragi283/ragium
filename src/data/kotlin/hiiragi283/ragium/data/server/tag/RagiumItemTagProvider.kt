@@ -75,6 +75,10 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
             RagiumItemTags.COAL_COKE,
             HTTagBuilder.DependType.OPTIONAL,
         )
+        builder.addTag(
+            HTTagPrefixes.GEM.createItemTag(VanillaMaterials.ENDER_PEARL),
+            Tags.Items.ENDER_PEARLS,
+        )
 
         builder.addItem(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.AMETHYST, Items.AMETHYST_BLOCK)
         builder.addItem(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.GLOWSTONE, Items.GLOWSTONE)
@@ -199,9 +203,14 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         RagiumItems.RAGI_ALLOY_TOOLS.appendItemTags(builder)
         RagiumItems.AZURE_STEEL_TOOLS.appendItemTags(builder)
 
+        // Flower
+        builder.addItem(ItemTags.SMALL_FLOWERS, RagiumBlocks.LILY_OF_THE_ENDER)
+
+        // Bucket
         builder.add(RagiumItemTags.BUCKETS_CRUDE_OIL, RagiumItems.CRUDE_OIL_BUCKET)
         builder.addTag(Tags.Items.BUCKETS, RagiumItemTags.BUCKETS_CRUDE_OIL)
 
+        // Parts
         builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
         builder.add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
         builder.add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
@@ -212,12 +221,13 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
         builder.addTag(Tags.Items.GLASS_BLOCKS, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
 
+        // Circuit
         builder.add(RagiumItemTags.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
         builder.add(RagiumItemTags.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
         builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_BASIC)
         builder.addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ADVANCED)
 
-        // builder.add(RagiumItemTags.DIRT_SOILS, IntegrationMods.FD, "rich_soil", HTTagBuilder.DependType.OPTIONAL)
+        // Soil
         builder.addItem(RagiumItemTags.DIRT_SOILS, Items.DIRT)
         builder.addItem(RagiumItemTags.DIRT_SOILS, Items.FARMLAND)
         builder.addItem(RagiumItemTags.DIRT_SOILS, Items.GRASS_BLOCK)
@@ -226,6 +236,7 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addItem(RagiumItemTags.NETHER_SOILS, Items.WARPED_NYLIUM)
         builder.addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
 
+        // Mold
         for (mold: RagiumItems.Molds in RagiumItems.Molds.entries) {
             builder.addTag(RagiumItemTags.MOLDS, mold.tagKey)
             builder.add(mold.tagKey, mold.holder)

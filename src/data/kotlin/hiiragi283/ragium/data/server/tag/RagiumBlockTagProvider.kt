@@ -93,6 +93,9 @@ class RagiumBlockTagProvider(
         // Stone
         builder.addTag(RagiumBlockTags.STONES_ROCK_GENERATIONS, Tags.Blocks.STONES)
 
+        // Flower
+        builder.add(BlockTags.SMALL_FLOWERS, RagiumBlocks.LILY_OF_THE_ENDER)
+
         // Crop
         builder.add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRY_BUSH)
         builder.add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRY_BUSH)

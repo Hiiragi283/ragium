@@ -107,6 +107,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
                 RagiumItems.Dusts.DIAMOND -> continue
                 RagiumItems.Dusts.EMERALD -> continue
                 RagiumItems.Dusts.AMETHYST -> HTTagPrefixes.GEM
+                RagiumItems.Dusts.ENDER_PEARL -> HTTagPrefixes.GEM
                 RagiumItems.Dusts.OBSIDIAN -> continue
                 RagiumItems.Dusts.RAGINITE -> HTTagPrefixes.RAW_MATERIAL
                 RagiumItems.Dusts.RAGI_ALLOY -> HTTagPrefixes.INGOT

@@ -23,9 +23,15 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         registerItems()
     }
 
+    private val generated: ModelFile = modelFile(ResourceLocation.withDefaultNamespace("item/generated"))
+
     private fun registerBlocks() {
         // Blocks
-        RagiumBlocks.REGISTER.entries.forEach(::simpleBlockItem)
+        buildList {
+            addAll(RagiumBlocks.REGISTER.entries)
+
+            remove(RagiumBlocks.LILY_OF_THE_ENDER)
+        }.forEach(::simpleBlockItem)
 
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)
@@ -35,6 +41,10 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         RagiumBlocks.EMBER_STONE_SETS.addItemModels(this)
         RagiumBlocks.PLASTIC_SETS.addItemModels(this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addItemModels(this)
+
+        getBuilder(RagiumBlocks.LILY_OF_THE_ENDER)
+            .parent(generated)
+            .texture("layer0", RagiumBlocks.LILY_OF_THE_ENDER.id.withPrefix("block/"))
     }
 
     private fun registerItems() {
@@ -47,8 +57,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
             remove(RagiumItems.CHOCOLATE_APPLE)
         }.forEach(::basicItem)
-
-        val generated: ModelFile = modelFile(ResourceLocation.withDefaultNamespace("item/generated"))
 
         getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .parent(generated)

@@ -35,6 +35,9 @@ object VanillaMaterials {
     val EMERALD: HTMaterialKey = HTMaterialKey.of("emerald")
 
     @JvmField
+    val ENDER_PEARL: HTMaterialKey = HTMaterialKey.of("ender_pearl")
+
+    @JvmField
     val LAPIS: HTMaterialKey = HTMaterialKey.of("lapis")
 
     @JvmField
