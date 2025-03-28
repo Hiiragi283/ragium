@@ -58,6 +58,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
 
+        addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "スポンジケーキのハーフブロック")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
@@ -179,8 +180,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
         addItem(RagiumItems.MEAT_SANDWICH, "ミートサンドイッチ")
 
+        addItem(RagiumItems.EXP_BERRIES, "経験値ベリー")
         addItem(RagiumItems.WARPED_WART, "歪んだウォート")
-
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
         /*addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")

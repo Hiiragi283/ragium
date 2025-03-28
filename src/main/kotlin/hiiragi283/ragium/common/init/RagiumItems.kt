@@ -253,6 +253,9 @@ object RagiumItems {
 
     // Other
     @JvmField
+    val EXP_BERRIES: DeferredItem<HTExpBerriesItem> = register("exp_berries", ::HTExpBerriesItem)
+
+    @JvmField
     val WARPED_WART: DeferredItem<HTWarpedWartItem> = register(
         "warped_wart",
         ::HTWarpedWartItem,

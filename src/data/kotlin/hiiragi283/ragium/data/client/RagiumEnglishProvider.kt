@@ -58,6 +58,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
 
+        addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -179,8 +180,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
         addItem(RagiumItems.MEAT_SANDWICH, "Meat Sandwich")
 
+        addItem(RagiumItems.EXP_BERRIES, "Exp Berries")
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
-
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
 
         /*addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")

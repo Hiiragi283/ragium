@@ -5,10 +5,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluidTypes
 import hiiragi283.ragium.common.init.RagiumVirtualFluids
+import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
+import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.api.distmarker.Dist
@@ -63,16 +65,28 @@ class RagiumClient(eventBus: IEventBus) {
     private val waterExtension: IClientFluidTypeExtensions by lazy { IClientFluidTypeExtensions.of(Fluids.WATER) }
 
     private fun addBlockColor(event: RegisterColorHandlersEvent.Block) {
+        // Exp Berry Bush
         event.register(
             { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
-                if (getter != null && pos != null && tint == 0) {
-                    waterExtension.getTintColor(
+                if (tint != 0) return@register -1
+                when {
+                    getter != null && pos != null -> BiomeColors.getAverageFoliageColor(getter, pos)
+                    else -> FoliageColor.getDefaultColor()
+                }
+            },
+            RagiumBlocks.EXP_BERRY_BUSH.get(),
+        )
+        // Water Collector
+        event.register(
+            { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+                if (tint != 0) return@register -1
+                when {
+                    getter != null && pos != null -> waterExtension.getTintColor(
                         state.fluidState,
                         getter,
                         pos,
                     )
-                } else {
-                    -1
+                    else -> -1
                 }
             },
             RagiumBlocks.WATER_COLLECTOR.get(),
@@ -83,6 +97,14 @@ class RagiumClient(eventBus: IEventBus) {
 
     private fun addItemColor(event: RegisterColorHandlersEvent.Item) {
         // event.register(DynamicFluidContainerModel.Colors(), *RagiumItems.FLUID_CUBES)
+        // Exp Berry Bush
+        event.register(
+            { stack: ItemStack, tint: Int ->
+                if (tint == 0) FoliageColor.getDefaultColor() else -1
+            },
+            RagiumBlocks.EXP_BERRY_BUSH,
+        )
+        // Water Collector
         event.register(
             { stack: ItemStack, tint: Int ->
                 if (tint == 0) waterExtension.tintColor else -1

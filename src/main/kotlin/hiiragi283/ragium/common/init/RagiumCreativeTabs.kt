@@ -104,8 +104,9 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
             add(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
 
+            add(RagiumBlocks.EXP_BERRY_BUSH)
+            add(RagiumItems.EXP_BERRIES)
             add(RagiumItems.WARPED_WART)
-
             add(RagiumItems.AMBROSIA)
             // Ingredients
             add(RagiumItems.ENGINE)

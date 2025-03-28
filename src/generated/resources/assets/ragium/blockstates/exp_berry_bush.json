@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "ragium:block/exp_berry_bush"
+    },
+    "age=1": {
+      "model": "ragium:block/exp_berry_bush"
+    },
+    "age=2": {
+      "model": "ragium:block/exp_berry_bush"
+    },
+    "age=3": {
+      "model": "ragium:block/exp_berry_bush_mature"
+    }
+  }
+}

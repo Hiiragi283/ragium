@@ -252,6 +252,13 @@ object RagiumBlocks {
     //    Foods    //
 
     @JvmField
+    val EXP_BERRY_BUSH: DeferredBlock<HTExpBerriesBushBlock> = register(
+        "exp_berry_bush",
+        blockProperty(Blocks.SWEET_BERRY_BUSH),
+        ::HTExpBerriesBushBlock,
+    )
+
+    @JvmField
     val SPONGE_CAKE: DeferredBlock<HTSpongeCakeBlock> = register(
         "sponge_cake",
         soft().mapColor(MapColor.COLOR_YELLOW),
@@ -361,7 +368,7 @@ object RagiumBlocks {
     @JvmField
     val LAVA_COLLECTOR: DeferredBlock<HTEntityBlock<*>> =
         register("lava_collector", heavyMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.LAVA_COLLECTOR))
-    
+
     @JvmField
     val ENI: DeferredBlock<HTEntityBlock<*>> =
         register("energy_network_interface", heavyMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.ENI))

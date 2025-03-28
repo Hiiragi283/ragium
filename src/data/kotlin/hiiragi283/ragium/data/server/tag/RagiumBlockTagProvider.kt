@@ -30,6 +30,7 @@ class RagiumBlockTagProvider(
 
     private fun mineable(builder: HTTagBuilder<Block>) {
         // Axe
+        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.EXP_BERRY_BUSH)
         builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
         // Hoe
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.StorageBlocks.CHEESE.holder)
@@ -91,5 +92,10 @@ class RagiumBlockTagProvider(
 
         // Stone
         builder.addTag(RagiumBlockTags.STONES_ROCK_GENERATIONS, Tags.Blocks.STONES)
+
+        // Crop
+        builder.add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRY_BUSH)
+        builder.add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRY_BUSH)
+        builder.add(BlockTags.SWORD_EFFICIENT, RagiumBlocks.EXP_BERRY_BUSH)
     }
 }
