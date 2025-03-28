@@ -80,7 +80,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         // Ore
         fun registerOres(oreSets: HTOreSets, drop: ItemLike) {
             for (ore: DeferredBlock<*> in oreSets.blockHolders) {
-                fortuneDrop(ore, UniformGenerator.between(1f, 3f), drop)
+                add(ore.get()) { block: Block -> createOreDrop(block, drop.asItem()) }
             }
         }
         registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RawResources.RAGINITE)

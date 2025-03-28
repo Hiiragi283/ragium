@@ -9,7 +9,10 @@ import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.server.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumBiomeModifierProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumConfiguredProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumPlacedProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagProvider
@@ -25,6 +28,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
+import net.neoforged.neoforge.registries.NeoForgeRegistries
 import org.slf4j.Logger
 import java.util.concurrent.CompletableFuture
 
@@ -65,7 +69,10 @@ object RagiumDatagen {
                 output,
                 provider,
                 RegistrySetBuilder()
-                    .add(Registries.ENCHANTMENT, RagiumEnchantmentProvider),
+                    .add(Registries.ENCHANTMENT, RagiumEnchantmentProvider)
+                    .add(Registries.CONFIGURED_FEATURE, RagiumConfiguredProvider)
+                    .add(Registries.PLACED_FEATURE, RagiumPlacedProvider)
+                    .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifierProvider),
                 setOf("minecraft", RagiumAPI.MOD_ID),
             ),
         )
