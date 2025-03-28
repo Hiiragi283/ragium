@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
@@ -11,7 +10,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.block.SlabBlock
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.client.model.generators.*
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -48,51 +46,44 @@ fun LanguageProvider.addMold(mold: RagiumItems.Molds, value: String) {
     addItem(mold.holder, value)
 }
 
-//    ModelBuilder    //
+//    ModelFile    //
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
 
-fun activeModel(state: BlockState, active: ModelFile, inactive: ModelFile): ModelFile =
-    when (state.getValue(HTBlockStateProperties.IS_ACTIVE)) {
-        true -> active
-        false -> inactive
-    }
-
-fun activeModel(state: BlockState, active: ResourceLocation, inactive: ResourceLocation): ModelFile =
-    activeModel(state, modelFile(active), modelFile(inactive))
-
-fun BlockModelProvider.machine(
-    name: String,
-    top: ResourceLocation,
-    bottom: ResourceLocation,
-    front: ResourceLocation,
-): BlockModelBuilder = withExistingParent(name, RagiumAPI.id("block/machine_base"))
-    .texture("top", top)
-    .texture("bottom", bottom)
-    .texture("front", front)
+fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(
+    path: String,
+    layer0: ResourceLocation,
+    layer1: ResourceLocation,
+): T = withExistingParent(path, RagiumAPI.id("block/layered"))
+    .texture("layer0", layer0)
+    .texture("layer1", layer1)
     .renderType("cutout")
 
+fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(
+    holder: DeferredHolder<*, *>,
+    layer0: ResourceLocation,
+    layer1: ResourceLocation,
+): T = layeredModel(holder.id.path, layer0, layer1)
+
+//    BlockModelProvider    //
+
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, *>): T = getBuilder(holder.id.toString())
+
+fun BlockStateProvider.simpleBlock(holder: DeferredBlock<*>) {
+    simpleBlock(holder.get())
+}
 
 fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation) {
     simpleBlock(
         holder.get(),
         ConfiguredModel(
-            models()
-                .withExistingParent(holder.id.path, RagiumAPI.id("block/layered"))
-                .texture("layer0", layer0)
-                .texture("layer1", layer1)
-                .renderType("cutout"),
+            models().layeredModel(holder, layer0, layer1),
         ),
     )
 }
 
 fun BlockStateProvider.simpleAltBlock(holder: DeferredBlock<*>) {
     simpleBlock(holder.get(), modelFile(holder.blockId))
-}
-
-fun BlockStateProvider.simpleAltBlock(holder: DeferredBlock<*>, all: String) {
-    simpleAltBlock(holder, ResourceLocation.parse(all))
 }
 
 fun BlockStateProvider.simpleAltBlock(holder: DeferredBlock<*>, all: ResourceLocation) {
@@ -105,16 +96,15 @@ fun BlockStateProvider.simpleAltBlock(holder: DeferredBlock<*>, all: ResourceLoc
 fun BlockStateProvider.cutoutSimpleBlock(holder: DeferredBlock<*>) {
     simpleBlock(
         holder.get(),
-        models()
-            .withExistingParent(holder.blockId.path, "block/cube_all")
-            .texture("all", holder.blockId)
-            .renderType("cutout"),
+        ConfiguredModel(models().cubeAll(holder.id.path, holder.blockId).renderType("cutout")),
     )
 }
 
 fun BlockStateProvider.slabBlock(holder: DeferredBlock<out SlabBlock>, base: DeferredBlock<*>) {
     slabBlock(holder.get(), base.blockId, base.blockId)
 }
+
+//    ItemModelProvider    //
 
 fun ItemModelProvider.basicItem(holder: DeferredItem<*>): ItemModelBuilder = basicItem(holder.id)
 

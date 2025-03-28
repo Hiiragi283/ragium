@@ -1,10 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.basicItem
-import hiiragi283.ragium.api.extension.getBuilder
-import hiiragi283.ragium.api.extension.modelFile
-import hiiragi283.ragium.api.extension.simpleBlockItem
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
@@ -44,7 +41,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         getBuilder(RagiumBlocks.LILY_OF_THE_ENDER)
             .parent(generated)
-            .texture("layer0", RagiumBlocks.LILY_OF_THE_ENDER.id.withPrefix("block/"))
+            .texture("layer0", RagiumBlocks.LILY_OF_THE_ENDER.blockId)
     }
 
     private fun registerItems() {
@@ -61,12 +58,12 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .parent(generated)
             .texture("layer0", "minecraft:item/copper_ingot")
-            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.id.withPrefix("item/"))
+            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
 
         getBuilder(RagiumItems.CHOCOLATE_APPLE)
             .parent(generated)
             .texture("layer0", "minecraft:item/apple")
-            .texture("layer1", RagiumItems.CHOCOLATE_APPLE.id.withPrefix("item/"))
+            .texture("layer1", RagiumItems.CHOCOLATE_APPLE.itemId)
 
         getBuilder(RagiumItems.CRUDE_OIL_BUCKET)
             .parent(modelFile(ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))

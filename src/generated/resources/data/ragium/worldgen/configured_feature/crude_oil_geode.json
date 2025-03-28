@@ -5,7 +5,7 @@
       "alternate_inner_layer_provider": {
         "type": "minecraft:simple_state_provider",
         "state": {
-          "Name": "minecraft:soul_soil"
+          "Name": "ragium:sticky_soul_soil"
         }
       },
       "cannot_replace": "#minecraft:features_cannot_replace",
@@ -21,7 +21,7 @@
       "inner_layer_provider": {
         "type": "minecraft:simple_state_provider",
         "state": {
-          "Name": "minecraft:coal_block"
+          "Name": "minecraft:soul_soil"
         }
       },
       "inner_placements": [

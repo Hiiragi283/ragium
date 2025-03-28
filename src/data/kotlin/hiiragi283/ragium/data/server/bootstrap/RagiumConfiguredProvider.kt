@@ -48,7 +48,7 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
                     GeodeBlockSettings(
                         BlockStateProvider.simple(RagiumBlocks.CRUDE_OIL.get()),
                         BlockStateProvider.simple(Blocks.SOUL_SOIL),
-                        BlockStateProvider.simple(Blocks.COAL_BLOCK),
+                        BlockStateProvider.simple(RagiumBlocks.STICKY_SOUL_SOIL.get()),
                         BlockStateProvider.simple(Blocks.BLACKSTONE),
                         BlockStateProvider.simple(Blocks.SMOOTH_BASALT),
                         listOf(

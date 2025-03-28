@@ -6,7 +6,8 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.entity.*
+import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
+import hiiragi283.ragium.common.block.entity.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.collect.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.collect.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.collect.HTMilkDrainBlockEntity

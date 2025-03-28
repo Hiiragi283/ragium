@@ -130,6 +130,12 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val STICKY_SOUL_SOIL: DeferredBlock<Block> = register(
+        "sticky_soul_soil",
+        blockProperty(Blocks.SOUL_SOIL),
+    )
+
+    @JvmField
     val ASH_LOG: DeferredBlock<RotatedPillarBlock> = register(
         "ash_log",
         blockProperty().mapColor(MapColor.COLOR_GRAY).strength(1f).sound(SoundType.SAND),

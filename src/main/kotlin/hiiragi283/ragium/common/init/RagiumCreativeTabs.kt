@@ -47,6 +47,7 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.RAGINITE_ORES.getItems())
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
             add(RagiumBlocks.SILT)
+            add(RagiumBlocks.STICKY_SOUL_SOIL)
             add(RagiumBlocks.ASH_LOG)
 
             addAll(RagiumBlocks.StorageBlocks.entries)

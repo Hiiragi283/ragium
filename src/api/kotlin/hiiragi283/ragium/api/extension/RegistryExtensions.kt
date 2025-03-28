@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredItem
 import kotlin.jvm.optionals.getOrNull
 
 /**
@@ -60,6 +61,11 @@ fun ItemLike.asItemHolder(): Holder.Reference<Item> = asItem().builtInRegistryHo
  * `block/`で前置された[DeferredBlock.getId]
  */
 val DeferredBlock<*>.blockId: ResourceLocation get() = id.withPrefix("block/")
+
+/**
+ * `item/`で前置された[DeferredItem.getId]
+ */
+val DeferredItem<*>.itemId: ResourceLocation get() = id.withPrefix("item/")
 
 //    HolderSet    //
 

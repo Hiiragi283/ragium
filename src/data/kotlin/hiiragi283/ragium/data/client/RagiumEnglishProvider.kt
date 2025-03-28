@@ -38,6 +38,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun block() {
         addBlock(RagiumBlocks.SILT, "Silt")
         addBlock(RagiumBlocks.CRUDE_OIL, "Crude Oil")
+        addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "Sticky Soul Soil")
         addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "Lily of the Ender")
 

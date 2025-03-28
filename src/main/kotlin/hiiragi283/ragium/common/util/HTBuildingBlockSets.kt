@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
+import hiiragi283.ragium.api.extension.blockId
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockRegister
@@ -146,7 +147,7 @@ class HTBuildingBlockSets(
     }
 
     override fun addBlockStates(provider: BlockStateProvider) {
-        val texId: ResourceLocation = base.id.withPrefix("block/")
+        val texId: ResourceLocation = base.blockId
         provider.simpleBlock(base.get())
         provider.stairsBlock(stairs.get(), texId)
         provider.slabBlock(slab.get(), texId, texId)
@@ -154,8 +155,7 @@ class HTBuildingBlockSets(
     }
 
     override fun addItemModels(provider: ItemModelProvider) {
-        val texId: ResourceLocation = base.id.withPrefix("block/")
-
+        val texId: ResourceLocation = base.blockId
         provider.simpleBlockItem(base.id)
         provider.simpleBlockItem(stairs.id)
         provider.simpleBlockItem(slab.id)

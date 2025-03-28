@@ -38,6 +38,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun block() {
         addBlock(RagiumBlocks.SILT, "シルト")
         addBlock(RagiumBlocks.CRUDE_OIL, "石油")
+        addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "粘着質のソウルソイル")
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "エンダースズラン")
 

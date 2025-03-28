@@ -2,14 +2,10 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockStateProperties
-import hiiragi283.ragium.api.extension.cutoutSimpleBlock
-import hiiragi283.ragium.api.extension.simpleAltBlock
-import hiiragi283.ragium.api.extension.slabBlock
-import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
@@ -17,7 +13,6 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
-import java.util.function.Supplier
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
@@ -36,8 +31,13 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
             addAll(RagiumBlocks.LED_BLOCKS.values)
             addAll(RagiumBlocks.StorageBlocks.blocks)
-        }.map(Supplier<out Block>::get)
-            .forEach(::simpleBlock)
+        }.forEach(::simpleBlock)
+
+        layeredBlock(
+            RagiumBlocks.STICKY_SOUL_SOIL,
+            vanillaId("block/soul_soil"),
+            RagiumAPI.id("block/sticky_soul_soil"),
+        )
 
         slabBlock(RagiumBlocks.SPONGE_CAKE_SLAB, RagiumBlocks.SPONGE_CAKE)
 
@@ -71,15 +71,12 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         getVariantBuilder(RagiumBlocks.EXP_BERRY_BUSH.get())
             .forAllStates { state: BlockState ->
-
                 val modelId: BlockModelBuilder = when (state.getValue(BlockStateProperties.AGE_3)) {
-                    3 -> models()
-                        .withExistingParent(
-                            RagiumAPI.id("block/exp_berry_bush_mature").toString(),
-                            RagiumAPI.id("block/layered"),
-                        ).texture("layer0", vanillaId("block/oak_leaves"))
-                        .texture("layer1", RagiumAPI.id("item/exp_berries"))
-                        .renderType("cutout")
+                    3 -> models().layeredModel(
+                        "block/exp_berry_bush_mature",
+                        vanillaId("block/oak_leaves"),
+                        RagiumAPI.id("item/exp_berries"),
+                    )
 
                     else -> expBerryModel
                 }
@@ -90,7 +87,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         simpleAltBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Machine Frame
-        simpleAltBlock(RagiumBlocks.WOODEN_CASING, "block/note_block")
+        simpleAltBlock(RagiumBlocks.WOODEN_CASING, vanillaId("block/note_block"))
 
         simpleBlock(
             RagiumBlocks.STONE_CASING.get(),
@@ -147,26 +144,16 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         advMachine(RagiumBlocks.INFUSER)
 
         // Device
-        simpleBlock(
-            RagiumBlocks.WATER_COLLECTOR.get(),
-            ConfiguredModel(
-                models()
-                    .withExistingParent("block/water_collector", RagiumAPI.id("block/layered"))
-                    .texture("layer0", "minecraft:block/water_still")
-                    .texture("layer1", RagiumAPI.id("block/device_overlay"))
-                    .renderType("cutout"),
-            ),
+        layeredBlock(
+            RagiumBlocks.WATER_COLLECTOR,
+            vanillaId("block/water_still"),
+            RagiumAPI.id("block/device_overlay"),
         )
 
-        simpleBlock(
-            RagiumBlocks.LAVA_COLLECTOR.get(),
-            ConfiguredModel(
-                models()
-                    .withExistingParent("block/lava_collector", RagiumAPI.id("block/layered"))
-                    .texture("layer0", "minecraft:block/lava_still")
-                    .texture("layer1", RagiumAPI.id("block/device_overlay"))
-                    .renderType("cutout"),
-            ),
+        layeredBlock(
+            RagiumBlocks.LAVA_COLLECTOR,
+            vanillaId("block/lava_still"),
+            RagiumAPI.id("block/device_overlay"),
         )
 
         simpleAltBlock(RagiumBlocks.MILK_DRAIN)

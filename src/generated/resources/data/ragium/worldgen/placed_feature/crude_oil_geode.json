@@ -2,10 +2,10 @@
   "feature": "ragium:crude_oil_geode",
   "placement": [
     {
-      "type": "minecraft:in_square"
+      "type": "minecraft:biome"
     },
     {
-      "type": "minecraft:biome"
+      "type": "minecraft:in_square"
     },
     {
       "type": "minecraft:rarity_filter",

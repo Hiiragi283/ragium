@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "item": "ragium:ash_log"
+      "item": "ragium:sticky_soul_soil"
     }
   ],
   "item_outputs": [
     {
       "count": 3,
-      "item": "ragium:ash_dust"
+      "item": "ragium:tar"
     }
   ]
 }
