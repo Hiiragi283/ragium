@@ -25,6 +25,13 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
             BiomeTags.IS_OVERWORLD,
             GenerationStep.Decoration.UNDERGROUND_ORES,
         )
+        // Geode
+        register(
+            context,
+            RagiumWorldGenData.CRUDE_OIL_GEODE,
+            BiomeTags.IS_NETHER,
+            GenerationStep.Decoration.LOCAL_MODIFICATIONS,
+        )
     }
 
     private fun register(

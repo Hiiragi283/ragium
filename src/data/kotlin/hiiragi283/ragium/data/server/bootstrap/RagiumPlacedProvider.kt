@@ -3,45 +3,42 @@ package hiiragi283.ragium.data.server.bootstrap
 import hiiragi283.ragium.api.data.HTWorldGenData
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.placement.*
 
 object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature> {
     override fun run(context: BootstrapContext<PlacedFeature>) {
-        registerOres(context)
+        // Ore
+        register(
+            context,
+            RagiumWorldGenData.RAGINITE_ORE,
+            CountPlacement.of(8),
+            HeightRangePlacement.uniform(
+                VerticalAnchor.aboveBottom(32),
+                VerticalAnchor.belowTop(64),
+            ),
+        )
+        // Geode
+        register(
+            context,
+            RagiumWorldGenData.CRUDE_OIL_GEODE,
+            RarityFilter.onAverageOnceEvery(24),
+            PlacementUtils.RANGE_10_10,
+        )
     }
 
-    private fun register(context: BootstrapContext<PlacedFeature>, data: HTWorldGenData, placed: PlacedFeature) {
-        data.placedHolder = context.register(data.placedKey, placed)
-    }
-
-    //    Ore    //
-
-    private fun registerOres(context: BootstrapContext<PlacedFeature>) {
-        fun register(
-            data: HTWorldGenData,
-            count: Int,
-            min: Int,
-            max: Int,
-        ) {
-            register(
-                context,
-                data,
-                PlacedFeature(
-                    data.configuredHolder,
-                    listOf(
-                        CountPlacement.of(count),
-                        InSquarePlacement.spread(),
-                        HeightRangePlacement.uniform(
-                            VerticalAnchor.absolute(min),
-                            VerticalAnchor.absolute(max),
-                        ),
-                        BiomeFilter.biome(),
-                    ),
+    private fun register(context: BootstrapContext<PlacedFeature>, data: HTWorldGenData, vararg modifiers: PlacementModifier) {
+        data.placedHolder = context.register(
+            data.placedKey,
+            PlacedFeature(
+                data.configuredHolder,
+                listOf(
+                    BiomeFilter.biome(),
+                    InSquarePlacement.spread(),
+                    *modifiers,
                 ),
-            )
-        }
-
-        register(RagiumWorldGenData.RAGINITE_ORE, 8, -32, 192)
+            ),
+        )
     }
 }

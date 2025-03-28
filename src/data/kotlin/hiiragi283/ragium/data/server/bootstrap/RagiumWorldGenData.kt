@@ -5,4 +5,7 @@ import hiiragi283.ragium.api.data.HTWorldGenData
 object RagiumWorldGenData {
     @JvmField
     val RAGINITE_ORE = HTWorldGenData("raginite_ore")
+
+    @JvmField
+    val CRUDE_OIL_GEODE = HTWorldGenData("crude_oil_geode")
 }
