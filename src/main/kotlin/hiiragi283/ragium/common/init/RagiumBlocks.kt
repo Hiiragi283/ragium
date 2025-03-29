@@ -176,7 +176,7 @@ object RagiumBlocks {
         // Gem
         CRIMSON_CRYSTAL(crystal(), RagiumMaterials.CRIMSON_CRYSTAL),
         WARPED_CRYSTAL(crystal(), RagiumMaterials.WARPED_CRYSTAL),
-        
+
         // Food
         CHEESE(wooden().mapColor(MapColor.TERRACOTTA_YELLOW), CommonMaterials.CHEESE),
         CHOCOLATE(wooden().mapColor(MapColor.TERRACOTTA_BROWN), CommonMaterials.CHOCOLATE),

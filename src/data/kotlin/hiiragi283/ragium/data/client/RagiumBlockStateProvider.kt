@@ -188,6 +188,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
     }
 
+    //    Extensions    //
+    
     private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
 
     private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
