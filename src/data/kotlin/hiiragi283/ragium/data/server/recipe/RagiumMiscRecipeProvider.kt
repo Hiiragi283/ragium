@@ -184,6 +184,6 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         advDevice(RagiumBlocks.ENI, HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.RAGI_CRYSTAL)
         advDevice(RagiumBlocks.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
         advDevice(RagiumBlocks.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
-        advDevice(RagiumBlocks.TELEPORT_ANCHOR, HTTagPrefixes.GEM, RagiumMaterials.WARPED_CRYSTAL)
+        advDevice(RagiumBlocks.TELEPORT_ANCHOR, HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.WARPED_CRYSTAL)
     }
 }

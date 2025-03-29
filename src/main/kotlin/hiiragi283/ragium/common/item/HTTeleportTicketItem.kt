@@ -90,7 +90,6 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
                     serverPlayer.resetFallDistance()
                     serverPlayer.resetCurrentImpulseContext()
                     CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack)
-                    stack.consume(1, serverPlayer)
                     return@map true
                 }
                 return@map false

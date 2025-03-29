@@ -60,6 +60,7 @@ object RagiumFoods {
 
     @JvmField
     val YELLOW_CAKE_PIECE: FoodProperties = foodComponent(
+        alwaysEat = true,
         effects = mapOf(supply(MobEffectInstance(MobEffects.WITHER, -1, 1)) to 1f),
     )
 

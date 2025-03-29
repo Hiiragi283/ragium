@@ -18,10 +18,10 @@ class HTLavaCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
         // ネザー系バイオームにない場合は生産しない
         if (!level.getBiome(pos).`is`(BiomeTags.IS_NETHER)) return FluidStack.EMPTY
-        // 周囲に4ブロック以上の溶岩がある -> 10 mB
+        // 周囲に4ブロック以上の溶岩がある -> 100 mB
         val lavaSources: Int = Direction.Plane.HORIZONTAL
             .count { direction: Direction -> level.getFluidState(pos.relative(direction)).`is`(FluidTags.LAVA) }
-        return if (lavaSources >= 4) FluidStack(Fluids.LAVA, 10) else FluidStack.EMPTY
+        return if (lavaSources >= 4) FluidStack(Fluids.LAVA, 100) else FluidStack.EMPTY
     }
 
     override fun playSound(level: ServerLevel, pos: BlockPos) {

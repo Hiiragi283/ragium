@@ -166,13 +166,17 @@ object RagiumBlocks {
     //    Materials    //
 
     enum class StorageBlocks(properties: BlockBehaviour.Properties, override val key: HTMaterialKey) : HTMaterialItemLike {
-        // Ragium
+        // Ingot
         RAGI_ALLOY(lightMetal().mapColor(MapColor.COLOR_RED), RagiumMaterials.RAGI_ALLOY),
         ADVANCED_RAGI_ALLOY(heavyMetal().mapColor(MapColor.COLOR_ORANGE), RagiumMaterials.ADVANCED_RAGI_ALLOY),
         RAGI_CRYSTAL(crystal().mapColor(MapColor.COLOR_PINK), RagiumMaterials.RAGI_CRYSTAL),
         AZURE_STEEL(heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE), RagiumMaterials.AZURE_STEEL),
         DEEP_STEEL(heavyMetal().mapColor(MapColor.COLOR_CYAN), RagiumMaterials.DEEP_STEEL),
 
+        // Gem
+        CRIMSON_CRYSTAL(crystal(), RagiumMaterials.CRIMSON_CRYSTAL),
+        WARPED_CRYSTAL(crystal(), RagiumMaterials.WARPED_CRYSTAL),
+        
         // Food
         CHEESE(wooden().mapColor(MapColor.TERRACOTTA_YELLOW), CommonMaterials.CHEESE),
         CHOCOLATE(wooden().mapColor(MapColor.TERRACOTTA_BROWN), CommonMaterials.CHOCOLATE),
@@ -189,6 +193,8 @@ object RagiumBlocks {
             RAGI_CRYSTAL -> RagiumItems.RawResources.RAGI_CRYSTAL
             AZURE_STEEL -> RagiumItems.Ingots.AZURE_STEEL
             DEEP_STEEL -> RagiumItems.Ingots.DEEP_STEEL
+            CRIMSON_CRYSTAL -> RagiumItems.RawResources.CRIMSON_CRYSTAL
+            WARPED_CRYSTAL -> RagiumItems.RawResources.WARPED_CRYSTAL
             CHEESE -> RagiumItems.Ingots.CHEESE
             CHOCOLATE -> RagiumItems.Ingots.CHOCOLATE
         }

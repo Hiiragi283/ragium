@@ -4,8 +4,10 @@
     "#c:storage_blocks/azure_steel",
     "#c:storage_blocks/cheese",
     "#c:storage_blocks/chocolate",
+    "#c:storage_blocks/crimson_crystal",
     "#c:storage_blocks/deep_steel",
     "#c:storage_blocks/ragi_alloy",
-    "#c:storage_blocks/ragi_crystal"
+    "#c:storage_blocks/ragi_crystal",
+    "#c:storage_blocks/warped_crystal"
   ]
 }
