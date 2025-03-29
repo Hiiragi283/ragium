@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import net.minecraft.core.GlobalPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -42,4 +43,8 @@ object RagiumComponentTypes {
     @JvmField
     val EFFECT_RANGE: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
         register("effect_range", ExtraCodecs.POSITIVE_INT, ByteBufCodecs.VAR_INT.cast<RegistryFriendlyByteBuf>())
+
+    @JvmField
+    val TELEPORT_POS1: DeferredHolder<DataComponentType<*>, DataComponentType<GlobalPos>> =
+        register("teleport_pos", GlobalPos.CODEC, GlobalPos.STREAM_CODEC.cast<RegistryFriendlyByteBuf>())
 }

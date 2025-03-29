@@ -197,6 +197,10 @@ object RagiumItems {
     val TRADER_CATALOG: DeferredItem<HTTraderCatalogItem> =
         register("trader_catalog", ::HTTraderCatalogItem, itemProperty().stacksTo(1))
 
+    @JvmField
+    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> =
+        register("teleport_ticket", ::HTTeleportTicketItem, itemProperty().rarity(Rarity.RARE))
+
     //    Foods    //
 
     @JvmStatic

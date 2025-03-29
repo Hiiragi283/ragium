@@ -9,6 +9,9 @@ object RagiumTranslationKeys {
     const val TEXT_SAWDUST = "text.ragium.sawdust"
 
     const val TEXT_EFFECT_RANGE = "text.ragium.effect_range"
+    
+    const val TEXT_MISSING_ANCHOR = "text.ragium.missing_anchor"
+    const val TEXT_MISSING_POS = "text.ragium.missing_pos"
 
     //    EMI    //
 

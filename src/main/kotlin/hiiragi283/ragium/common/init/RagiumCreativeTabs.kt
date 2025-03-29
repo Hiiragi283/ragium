@@ -79,6 +79,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.ENDER_BUNDLE)
             add(RagiumItems.ITEM_MAGNET)
             add(RagiumItems.TRADER_CATALOG)
+            add(RagiumItems.TELEPORT_TICKET)
 
             addAll(RagiumItems.Molds.entries)
             // Foods

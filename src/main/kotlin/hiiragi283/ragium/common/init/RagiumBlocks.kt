@@ -393,6 +393,10 @@ object RagiumBlocks {
         register("energy_network_interface", heavyMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.ENI))
 
     @JvmField
+    val TELEPORT_ANCHOR: DeferredBlock<Block> =
+        register("teleport_anchor", heavyMetal())
+
+    @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
         MILK_DRAIN,
         SOUL_SPIKE,
@@ -403,5 +407,6 @@ object RagiumBlocks {
         // Advanced
         LAVA_COLLECTOR,
         ENI,
+        TELEPORT_ANCHOR,
     )
 }

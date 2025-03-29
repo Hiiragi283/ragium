@@ -2,15 +2,12 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
-import net.minecraft.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
@@ -42,7 +39,12 @@ fun doubleText(value: Double): MutableComponent = Component.literal(NumberFormat
 /**
  * フォーマットされた[Boolean]の[Component]を返します。
  */
-fun boolText(value: Boolean): MutableComponent = Component.literal(value.toString())
+fun boolText(value: Boolean): MutableComponent = stringText(value)
+
+/**
+ * 指定された[value]を[Any.toString]に基づいて[Component]に変換します。
+ */
+fun stringText(value: Any?): MutableComponent = Component.literal(value.toString())
 
 fun blockPosText(value: BlockPos): MutableComponent = Component.literal("[${value.x}, ${value.y}, ${value.z}]")
 
@@ -51,7 +53,7 @@ fun globalPosText(value: GlobalPos): MutableComponent = Component
     .append(
         ComponentUtils.formatList(
             listOf(
-                worldText(value.dimension),
+                stringText(value.dimension.location()),
                 intText(value.pos.x),
                 intText(value.pos.y),
                 intText(value.pos.z),
@@ -59,8 +61,6 @@ fun globalPosText(value: GlobalPos): MutableComponent = Component
             Component.literal(", "),
         ),
     ).append("]")
-
-fun worldText(value: ResourceKey<Level>): MutableComponent = Component.translatable(Util.makeDescriptionId("world", value.location()))
 
 /**
  * 指定した[stack]からツールチップを生成します

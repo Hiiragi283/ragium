@@ -177,5 +177,6 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
         advDevice(RagiumBlocks.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
         advDevice(RagiumBlocks.ENI, Ingredient.of(HTTagPrefixes.STORAGE_BLOCK.createItemTag(RagiumMaterials.RAGI_CRYSTAL)))
+        advDevice(RagiumBlocks.TELEPORT_ANCHOR, Ingredient.of(HTTagPrefixes.GEM.createItemTag(RagiumMaterials.WARPED_CRYSTAL)))
     }
 }

@@ -28,6 +28,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.ITEM_COLLECTOR)
             add(RagiumBlocks.SPRINKLER)
             add(RagiumBlocks.ENI)
+            add(RagiumBlocks.TELEPORT_ANCHOR)
 
             addAll(RagiumBlocks.LED_BLOCKS.values)
             addAll(RagiumBlocks.StorageBlocks.blocks)

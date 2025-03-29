@@ -13,32 +13,38 @@ kff-version-range = "[5.7,)"
 ktlint = "12.1.2"
 
 aa = "1.3.17+mc1.21.1"
+ae2 = "19.2.5-beta"
 emi = "1.1.20+1.21.1"
 guide = "21.1.6"
 jade = "15.10.0+neoforge"
 mek = "1.21.1-10.7.13.78"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
+rs2 = "2.0.0-beta.1"
 
 [libraries]
 
 kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
+ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref  = "emi" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
+rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforge", version.ref = "rs2" }
 
 [bundles]
 
 mods-impl = [
     "aa",
+    "ae2",
     "emi",
     "guide",
     "jade",
     "mek",
     "patchouli-gen",
+    "rs2",
 ]
 
 mods-transitive = []

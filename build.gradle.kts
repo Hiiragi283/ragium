@@ -74,6 +74,13 @@ repositories {
     maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") {
         content { includeGroup("com.klikli_dev") } // Theurgy
     }
+    maven(url = "https://maven.pkg.github.com/refinedmods/refinedstorage2") {
+        credentials {
+            username = "anything"
+            password = "\u0067hp_oGjcDFCn8jeTzIj4Ke9pLoEVtpnZMP4VQgaX"
+        }
+    } // RS2
+
     mavenCentral()
 }
 

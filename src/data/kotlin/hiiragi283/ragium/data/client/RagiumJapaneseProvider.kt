@@ -89,6 +89,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
         addBlock(RagiumBlocks.SOUL_SPIKE, "魂の尖頭")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
+        addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
     }
 
     private fun enchantment() {
@@ -162,6 +163,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
+        addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         // Food
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
