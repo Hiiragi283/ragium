@@ -10,10 +10,10 @@ import net.minecraft.network.chat.Component
 
 object RagiumEmiCategories {
     @JvmField
-    val DEVICE = HTEmiRecipeCategory(
-        RagiumAPI.id("device"),
+    val BLOCK_INFO = HTEmiRecipeCategory(
+        RagiumAPI.id("block_info"),
         EmiStack.of(RagiumItems.RAGI_ALLOY_TOOLS.hammerItem),
-        Component.literal("Device"),
+        Component.literal("Block Information"),
     )
 
     // Machines
@@ -35,7 +35,7 @@ object RagiumEmiCategories {
     @JvmStatic
     fun register(registry: EmiRegistry) {
         // Category
-        registry.addCategory(DEVICE)
+        registry.addCategory(BLOCK_INFO)
 
         registry.addCategory(CENTRIFUGING)
         registry.addCategory(CRUSHING)

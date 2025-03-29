@@ -453,7 +453,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "黒曜石とおなじ爆破耐性をもちます。")
         add(RagiumTranslationKeys.EMI_SOUL_GLASS, "プレイヤーのみ通過できます。")
 
-        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "半径5m以内のドロップアイテムを回収します。")
+        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "範囲内のドロップアイテムを回収します。")
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "行商人を倒すことでも入手できます。")
 
         add(RagiumTranslationKeys.EMI_AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")

@@ -12,7 +12,7 @@ object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature
         // Ore
         register(
             context,
-            RagiumWorldGenData.RAGINITE_ORE,
+            RagiumWorldGenData.ORE_RAGINITE,
             CountPlacement.of(8),
             HeightRangePlacement.uniform(
                 VerticalAnchor.aboveBottom(32),
@@ -22,7 +22,7 @@ object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature
         // Geode
         register(
             context,
-            RagiumWorldGenData.CRUDE_OIL_GEODE,
+            RagiumWorldGenData.GEODE_CRUDE_OIL,
             RarityFilter.onAverageOnceEvery(24),
             PlacementUtils.RANGE_10_10,
         )

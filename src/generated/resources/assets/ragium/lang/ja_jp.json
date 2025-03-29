@@ -67,7 +67,7 @@
   "emi.ragium.ash_log": "壊すと灰の粉が手に入ります。",
   "emi.ragium.harvestable_glass": "このガラスはシルクタッチなしで回収することが可能です。",
   "emi.ragium.ice_cream": "食べると鎮火します。",
-  "emi.ragium.item_magnet": "半径5m以内のドロップアイテムを回収します。",
+  "emi.ragium.item_magnet": "範囲内のドロップアイテムを回収します。",
   "emi.ragium.obsidian_glass": "黒曜石とおなじ爆破耐性をもちます。",
   "emi.ragium.soul_glass": "プレイヤーのみ通過できます。",
   "emi.ragium.trader_catalog": "行商人を倒すことでも入手できます。",

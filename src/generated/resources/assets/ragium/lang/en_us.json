@@ -67,7 +67,7 @@
   "emi.ragium.ash_log": "Drop Ash Dust when harvested.",
   "emi.ragium.harvestable_glass": "This glass block can be harvested without Silk Touch.",
   "emi.ragium.ice_cream": "Extinguish fire when eaten.",
-  "emi.ragium.item_magnet": "Collect dropped items around 5 m.",
+  "emi.ragium.item_magnet": "Collect dropped items in the effective range",
   "emi.ragium.obsidian_glass": "As the same blast resistance as Obsidian.",
   "emi.ragium.soul_glass": "Only passable with Players.",
   "emi.ragium.trader_catalog": "Also obtained by killing Wandering Trader.",

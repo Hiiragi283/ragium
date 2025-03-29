@@ -1,5 +1,5 @@
 {
-  "feature": "ragium:crude_oil_geode",
+  "feature": "ragium:geode_crude_oil",
   "placement": [
     {
       "type": "minecraft:biome"

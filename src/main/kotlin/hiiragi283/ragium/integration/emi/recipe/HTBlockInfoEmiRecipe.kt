@@ -7,8 +7,8 @@ import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike
 
-class HTDeviceEmiRecipe(id: ResourceLocation, device: ItemLike, output: EmiStack) :
-    BasicEmiRecipe(RagiumEmiCategories.DEVICE, id, 0, 0),
+class HTBlockInfoEmiRecipe(id: ResourceLocation, device: ItemLike, output: EmiStack) :
+    BasicEmiRecipe(RagiumEmiCategories.BLOCK_INFO, id, 0, 0),
     HTSimpleEmiRecipe {
     override fun getDisplayWidth(): Int = super<HTSimpleEmiRecipe>.displayWidth
 

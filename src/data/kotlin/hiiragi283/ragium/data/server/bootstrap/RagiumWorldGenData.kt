@@ -4,8 +4,11 @@ import hiiragi283.ragium.api.data.HTWorldGenData
 
 object RagiumWorldGenData {
     @JvmField
-    val RAGINITE_ORE = HTWorldGenData("raginite_ore")
+    val ORE_RAGINITE = HTWorldGenData("ore_raginite")
 
     @JvmField
-    val CRUDE_OIL_GEODE = HTWorldGenData("crude_oil_geode")
+    val GEODE_CRUDE_OIL = HTWorldGenData("geode_crude_oil")
+
+    @JvmField
+    val REMOVE_SPRING_NETHER = HTWorldGenData("remove/spring_nether")
 }

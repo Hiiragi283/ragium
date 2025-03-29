@@ -6,6 +6,7 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.placement.NetherPlacements
 import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.biome.Biome
@@ -19,22 +20,36 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
     override fun run(context: BootstrapContext<BiomeModifier>) {
         biomeGetter = context.lookup(Registries.BIOME)
         // Ore
-        register(
+        registerFeature(
             context,
-            RagiumWorldGenData.RAGINITE_ORE,
+            RagiumWorldGenData.ORE_RAGINITE,
             BiomeTags.IS_OVERWORLD,
             GenerationStep.Decoration.UNDERGROUND_ORES,
         )
         // Geode
-        register(
+        registerFeature(
             context,
-            RagiumWorldGenData.CRUDE_OIL_GEODE,
+            RagiumWorldGenData.GEODE_CRUDE_OIL,
             BiomeTags.IS_NETHER,
             GenerationStep.Decoration.LOCAL_MODIFICATIONS,
         )
+
+        // Remove Lava Springs
+        context.register(
+            RagiumWorldGenData.REMOVE_SPRING_NETHER.modifierKey,
+            BiomeModifiers.RemoveFeaturesBiomeModifier.allSteps(
+                biomeGetter.getOrThrow(BiomeTags.IS_NETHER),
+                HolderSet.direct(
+                    context.lookup(Registries.PLACED_FEATURE)::getOrThrow,
+                    NetherPlacements.SPRING_OPEN,
+                    NetherPlacements.SPRING_CLOSED,
+                    NetherPlacements.SPRING_CLOSED_DOUBLE,
+                ),
+            ),
+        )
     }
 
-    private fun register(
+    private fun registerFeature(
         context: BootstrapContext<BiomeModifier>,
         data: HTWorldGenData,
         biomeTag: TagKey<Biome>,

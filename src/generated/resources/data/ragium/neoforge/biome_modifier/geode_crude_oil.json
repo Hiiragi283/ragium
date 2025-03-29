@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
   "biomes": "#minecraft:is_nether",
-  "features": "ragium:crude_oil_geode",
+  "features": "ragium:geode_crude_oil",
   "step": "local_modifications"
 }

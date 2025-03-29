@@ -453,7 +453,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "As the same blast resistance as Obsidian.")
         add(RagiumTranslationKeys.EMI_SOUL_GLASS, "Only passable with Players.")
 
-        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items around 5 m.")
+        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items in the effective range")
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
 
         add(RagiumTranslationKeys.EMI_AMBROSIA, "Always edible and not consumed!")

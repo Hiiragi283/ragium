@@ -49,7 +49,7 @@ class HTExpBerriesBushBlock(properties: Properties) :
 
     override fun mayPlaceOn(state: BlockState, level: BlockGetter, pos: BlockPos): Boolean =
         super.mayPlaceOn(state, level, pos) || state.`is`(this)
-    
+
     override fun codec(): MapCodec<out BushBlock> = throw UnsupportedOperationException()
 
     override fun isRandomlyTicking(state: BlockState): Boolean = !isMaxAge(state)
