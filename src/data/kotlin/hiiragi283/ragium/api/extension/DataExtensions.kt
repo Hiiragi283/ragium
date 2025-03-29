@@ -50,14 +50,11 @@ fun LanguageProvider.addMold(mold: RagiumItems.Molds, value: String) {
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(
-    path: String,
-    layer0: ResourceLocation,
-    layer1: ResourceLocation,
-): T = withExistingParent(path, RagiumAPI.id("block/layered"))
-    .texture("layer0", layer0)
-    .texture("layer1", layer1)
-    .renderType("cutout")
+fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(path: String, layer0: ResourceLocation, layer1: ResourceLocation): T =
+    withExistingParent(path, RagiumAPI.id("block/layered"))
+        .texture("layer0", layer0)
+        .texture("layer1", layer1)
+        .renderType("cutout")
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(
     holder: DeferredHolder<*, *>,
