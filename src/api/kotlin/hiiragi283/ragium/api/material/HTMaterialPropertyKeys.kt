@@ -11,9 +11,14 @@ object HTMaterialPropertyKeys {
     val MATERIAL_TYPE: HTPropertyKey.Defaulted<HTMaterialType> =
         HTPropertyKey.Defaulted(commonId("main_prefix")) { HTMaterialType.DEFAULT }
 
-    @JvmField
-    val PART_NAME: HTPropertyKey.Defaulted<MutableMap<HTTagPrefix, MutableComponent>> =
-        HTPropertyKey.Defaulted(commonId("part_name"), ::mutableMapOf)
+    @JvmStatic
+    private val nameKeys: MutableMap<HTTagPrefix, HTPropertyKey.Simple<MutableComponent>> = mutableMapOf()
+
+    @JvmStatic
+    fun getNameKey(prefix: HTTagPrefix): HTPropertyKey.Simple<MutableComponent> =
+        nameKeys.computeIfAbsent(prefix) { prefixIn: HTTagPrefix ->
+            HTPropertyKey.Simple(commonId("part_name/${prefix.name}"))
+        }
 
     //    Recipe    //
 

@@ -1,0 +1,14 @@
+{
+  "type": "ragium:centrifuging",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:sap"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:slime_ball"
+    }
+  ]
+}

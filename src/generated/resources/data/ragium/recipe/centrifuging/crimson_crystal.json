@@ -1,0 +1,20 @@
+{
+  "type": "ragium:centrifuging",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:crimson_sap"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 100,
+      "fluid": "ragium:sap"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:crimson_crystal"
+    }
+  ]
+}

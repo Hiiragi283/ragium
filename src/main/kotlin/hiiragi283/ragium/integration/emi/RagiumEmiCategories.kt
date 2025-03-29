@@ -32,25 +32,28 @@ object RagiumEmiCategories {
     @JvmField
     val REFINING = HTEmiRecipeCategory(RagiumRecipes.REFINING, RagiumBlocks.EXTRACTOR)
 
+    @JvmField
+    val MACHINES: List<HTEmiRecipeCategory> = listOf(
+        CENTRIFUGING,
+        CRUSHING,
+        EXTRACTING,
+        INFUSING,
+        REFINING,
+    )
+
     @JvmStatic
     fun register(registry: EmiRegistry) {
         // Category
         registry.addCategory(BLOCK_INFO)
 
-        registry.addCategory(CENTRIFUGING)
-        registry.addCategory(CRUSHING)
-        registry.addCategory(EXTRACTING)
-        registry.addCategory(INFUSING)
-        registry.addCategory(REFINING)
+        MACHINES.forEach(registry::addCategory)
 
         // Workstation
         fun addWorkstation(category: HTEmiRecipeCategory) {
             registry.addWorkstation(category, category.icon)
         }
 
-        addWorkstation(CENTRIFUGING)
-        addWorkstation(CRUSHING)
-        addWorkstation(EXTRACTING)
-        addWorkstation(REFINING)
+        // Machines
+        MACHINES.forEach(::addWorkstation)
     }
 }

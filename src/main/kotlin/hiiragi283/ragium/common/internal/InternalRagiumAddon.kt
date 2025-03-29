@@ -135,10 +135,8 @@ object InternalRagiumAddon : RagiumAddon {
     }
 
     override fun onMaterialSetup(getter: Function<HTMaterialKey, HTMutablePropertyMap>) {
-        getter
-            .apply(VanillaMaterials.WOOD)
-            .computeIfAbsent(HTMaterialPropertyKeys.PART_NAME)
-            .put(HTTagPrefixes.DUST, Component.translatable(RagiumTranslationKeys.TEXT_SAWDUST))
+        getter.apply(VanillaMaterials.WOOD)[HTMaterialPropertyKeys.getNameKey(HTTagPrefixes.DUST)] =
+            Component.translatable(RagiumTranslationKeys.TEXT_SAWDUST)
 
         getter.apply(VanillaMaterials.LAPIS)[HTMaterialPropertyKeys.ORE_CRUSHED_COUNT] = 8
         getter.apply(VanillaMaterials.REDSTONE)[HTMaterialPropertyKeys.ORE_CRUSHED_COUNT] = 12

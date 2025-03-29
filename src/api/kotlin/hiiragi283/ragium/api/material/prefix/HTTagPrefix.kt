@@ -43,5 +43,5 @@ interface HTTagPrefix {
         get() = "tag_prefix.${RagiumAPI.MOD_ID}.$name"
 
     fun createText(key: HTMaterialKey): MutableComponent =
-        key.getPropertyMap().getOrDefault(HTMaterialPropertyKeys.PART_NAME)[this] ?: Component.translatable(translationKey, key.text)
+        key.getPropertyMap()[HTMaterialPropertyKeys.getNameKey(this)] ?: Component.translatable(translationKey, key)
 }
