@@ -201,6 +201,10 @@ object RagiumItems {
     val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> =
         register("teleport_ticket", ::HTTeleportTicketItem, itemProperty().rarity(Rarity.RARE))
 
+    @JvmField
+    val RAGI_TICKET: DeferredItem<HTRagiTicketItem> =
+        register("ragi_ticket", ::HTRagiTicketItem, itemProperty().rarity(Rarity.EPIC))
+
     //    Foods    //
 
     @JvmStatic

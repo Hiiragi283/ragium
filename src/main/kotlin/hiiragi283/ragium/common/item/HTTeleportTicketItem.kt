@@ -36,7 +36,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         // 右クリックしたブロックがテレポートアンカーの場合，その座標を保持する
         if (level.getBlockState(pos).`is`(RagiumBlocks.TELEPORT_ANCHOR)) {
             context.itemInHand.set(
-                RagiumComponentTypes.TELEPORT_POS1,
+                RagiumComponentTypes.TELEPORT_POS,
                 GlobalPos(level.dimension(), pos.above()),
             )
             return InteractionResult.sidedSuccess(level.isClientSide)
@@ -72,7 +72,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
     }
 
     private fun tryToTeleport(player: Player, stack: ItemStack): Boolean {
-        val globalPos: GlobalPos = stack.get(RagiumComponentTypes.TELEPORT_POS1) ?: return false
+        val globalPos: GlobalPos = stack.get(RagiumComponentTypes.TELEPORT_POS) ?: return false
         val targetLevel: ServerLevel =
             RagiumAPI.getInstance().getCurrentServer()?.getLevel(globalPos.dimension) ?: return false
         // テレポート可能か判定する
@@ -82,8 +82,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
                     Component.translatable(it.message()).withStyle(ChatFormatting.RED),
                     true,
                 )
-            }
-            .map {
+            }.map {
                 // 実際にテレポートを行う
                 val serverPlayer: ServerPlayer = player.asServerPlayer() ?: return@map false
                 if (serverPlayer.connection.isAcceptingMessages) {
@@ -95,7 +94,8 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
                     return@map true
                 }
                 return@map false
-            }.result().orElse(false)
+            }.result()
+            .orElse(false)
     }
 
     private fun canTeleportTo(serverLevel: ServerLevel, globalPos: GlobalPos): DataResult<Unit> {
@@ -130,8 +130,8 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        stack.get(RagiumComponentTypes.TELEPORT_POS1)?.let(::globalPosText)?.let(tooltips::add)
+        stack.get(RagiumComponentTypes.TELEPORT_POS)?.let(::globalPosText)?.let(tooltips::add)
     }
 
-    override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(RagiumComponentTypes.TELEPORT_POS1)
+    override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(RagiumComponentTypes.TELEPORT_POS)
 }

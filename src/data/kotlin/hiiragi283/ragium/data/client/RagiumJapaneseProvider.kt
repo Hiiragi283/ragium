@@ -80,16 +80,15 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.CENTRIFUGE, "遠心分離機")
         addBlock(RagiumBlocks.INFUSER, "注入機")
         // Device
-        addBlock(RagiumBlocks.MILK_DRAIN, "牛乳シンク")
-
-        addBlock(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
-        addBlock(RagiumBlocks.WATER_COLLECTOR, "水収集機")
-        addBlock(RagiumBlocks.SPRINKLER, "スプリンクラー")
-
-        addBlock(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
-        addBlock(RagiumBlocks.SOUL_SPIKE, "魂の尖頭")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
+        addBlock(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
+        addBlock(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
+        addBlock(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
+        addBlock(RagiumBlocks.MILK_DRAIN, "牛乳シンク")
+        addBlock(RagiumBlocks.SOUL_SPIKE, "魂の尖頭")
+        addBlock(RagiumBlocks.SPRINKLER, "スプリンクラー")
         addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
+        addBlock(RagiumBlocks.WATER_COLLECTOR, "水収集機")
     }
 
     private fun enchantment() {
@@ -164,6 +163,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
+        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Food
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
         addItem(RagiumItems.MELON_PIE, "メロンパイ")

@@ -8,6 +8,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.util.Unit
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -45,6 +46,10 @@ object RagiumComponentTypes {
         register("effect_range", ExtraCodecs.POSITIVE_INT, ByteBufCodecs.VAR_INT.cast<RegistryFriendlyByteBuf>())
 
     @JvmField
-    val TELEPORT_POS1: DeferredHolder<DataComponentType<*>, DataComponentType<GlobalPos>> =
+    val TELEPORT_POS: DeferredHolder<DataComponentType<*>, DataComponentType<GlobalPos>> =
         register("teleport_pos", GlobalPos.CODEC, GlobalPos.STREAM_CODEC.cast<RegistryFriendlyByteBuf>())
+
+    @JvmField
+    val LOOT_TABLE_ID: DeferredHolder<DataComponentType<*>, DataComponentType<ResourceLocation>> =
+        register("loot_table_id", ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC.cast<RegistryFriendlyByteBuf>())
 }

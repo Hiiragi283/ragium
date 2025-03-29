@@ -1,0 +1,74 @@
+package hiiragi283.ragium.common.block.entity.collect
+
+import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumVirtualFluids
+import net.minecraft.core.BlockPos
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.ExperienceOrb
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.levelgen.structure.BoundingBox
+import net.minecraft.world.phys.AABB
+import net.neoforged.neoforge.common.util.TriState
+
+class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
+    HTTickAwareBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
+    HTFluidTankHandler {
+    private val outputTank: HTFluidTank = HTFluidTank.create("output_tank", this) {
+        capacity = Int.MAX_VALUE
+    }
+
+    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        outputTank.writeNbt(nbt, registryOps)
+    }
+
+    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+        outputTank.readNbt(nbt, registryOps)
+    }
+
+    //    Ticking    //
+
+    override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
+        // 20 tickごとに実行する
+        if (totalTick % 20 != 0) return TriState.DEFAULT
+        // 範囲内のExp Orbを取得する
+        val range = 5
+        val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
+            ExperienceOrb::class.java,
+            AABB.of(
+                BoundingBox(
+                    blockPos.x - range,
+                    blockPos.y - range,
+                    blockPos.z - range,
+                    blockPos.x + range,
+                    blockPos.y + range,
+                    blockPos.z + range,
+                ),
+            ),
+        )
+        if (expOrbs.isEmpty()) return TriState.DEFAULT
+        // それぞれのExp Orbに対して回収を行う
+        for (entity: ExperienceOrb in expOrbs) {
+            val fluidAmount: Int = entity.value * 20
+            if (outputTank.canInsert(RagiumVirtualFluids.EXPERIENCE.get(), fluidAmount)) {
+                outputTank.insert(RagiumVirtualFluids.EXPERIENCE.get(), fluidAmount, false)
+                entity.discard()
+            }
+        }
+        return TriState.TRUE
+    }
+
+    //    Fluid    //
+
+    override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.OUTPUT
+
+    override fun getFluidTank(tank: Int): HTFluidTank? = outputTank
+
+    override fun getTanks(): Int = 1
+}

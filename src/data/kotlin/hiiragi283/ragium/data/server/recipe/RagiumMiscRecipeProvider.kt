@@ -3,8 +3,10 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -163,8 +165,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         }
 
         basicDevice(RagiumBlocks.ITEM_COLLECTOR, Ingredient.of(Items.HOPPER))
-        basicDevice(RagiumBlocks.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
         basicDevice(RagiumBlocks.SPRINKLER, Ingredient.of(Tags.Items.STORAGE_BLOCKS_BONE_MEAL))
+        basicDevice(RagiumBlocks.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
 
         // Advanced
         fun advDevice(device: ItemLike, part: Ingredient) {
@@ -175,8 +177,13 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
+        fun advDevice(device: ItemLike, prefix: HTTagPrefix, key: HTMaterialKey) {
+            advDevice(device, Ingredient.of(prefix.createItemTag(key)))
+        }
+
+        advDevice(RagiumBlocks.ENI, HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.RAGI_CRYSTAL)
+        advDevice(RagiumBlocks.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
         advDevice(RagiumBlocks.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
-        advDevice(RagiumBlocks.ENI, Ingredient.of(HTTagPrefixes.STORAGE_BLOCK.createItemTag(RagiumMaterials.RAGI_CRYSTAL)))
-        advDevice(RagiumBlocks.TELEPORT_ANCHOR, Ingredient.of(HTTagPrefixes.GEM.createItemTag(RagiumMaterials.WARPED_CRYSTAL)))
+        advDevice(RagiumBlocks.TELEPORT_ANCHOR, HTTagPrefixes.GEM, RagiumMaterials.WARPED_CRYSTAL)
     }
 }

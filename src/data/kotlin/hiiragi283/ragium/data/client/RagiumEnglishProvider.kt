@@ -80,16 +80,15 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.CENTRIFUGE, "Centrifuge")
         addBlock(RagiumBlocks.INFUSER, "Infuser")
         // Device
-        addBlock(RagiumBlocks.MILK_DRAIN, "Milk Drain")
-
-        addBlock(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
-        addBlock(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
-        addBlock(RagiumBlocks.SPRINKLER, "Sprinkler")
-
-        addBlock(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
-        addBlock(RagiumBlocks.SOUL_SPIKE, "Soul Spike")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
+        addBlock(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
+        addBlock(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
+        addBlock(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
+        addBlock(RagiumBlocks.MILK_DRAIN, "Milk Drain")
+        addBlock(RagiumBlocks.SOUL_SPIKE, "Soul Spike")
+        addBlock(RagiumBlocks.SPRINKLER, "Sprinkler")
         addBlock(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
+        addBlock(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
     }
 
     private fun enchantment() {
@@ -164,6 +163,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
+        addItem(RagiumItems.RAGI_TICKET, "Ragi Ticket")
         // Food
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
         addItem(RagiumItems.MELON_PIE, "Melon Pie")

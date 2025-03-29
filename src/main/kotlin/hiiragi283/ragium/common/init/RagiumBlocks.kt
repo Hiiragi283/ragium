@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
+import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -11,6 +12,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTBlockRegister
+import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
@@ -335,21 +337,23 @@ object RagiumBlocks {
 
     //    Machines    //
 
-    @JvmField
-    val CRUSHER: DeferredBlock<HTHorizontalEntityBlock<*>> =
-        register("crusher", heavyMetal(), HTHorizontalEntityBlock.create(RagiumBlockEntityTypes.CRUSHER))
+    @JvmStatic
+    private fun registerMachine(
+        properties: BlockBehaviour.Properties,
+        type: HTDeferredBlockEntityType<out HTBlockEntity>,
+    ): DeferredBlock<*> = register(type.id.path, properties, HTHorizontalEntityBlock.create(type))
 
     @JvmField
-    val EXTRACTOR: DeferredBlock<HTHorizontalEntityBlock<*>> =
-        register("extractor", heavyMetal(), HTHorizontalEntityBlock.create(RagiumBlockEntityTypes.EXTRACTOR))
+    val CRUSHER: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.CRUSHER)
 
     @JvmField
-    val CENTRIFUGE: DeferredBlock<HTHorizontalEntityBlock<*>> =
-        register("centrifuge", heavyMetal(), HTHorizontalEntityBlock.create(RagiumBlockEntityTypes.CENTRIFUGE))
+    val EXTRACTOR: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.EXTRACTOR)
 
     @JvmField
-    val INFUSER: DeferredBlock<HTHorizontalEntityBlock<*>> =
-        register("infuser", heavyMetal(), HTHorizontalEntityBlock.create(RagiumBlockEntityTypes.INFUSER))
+    val CENTRIFUGE: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.CENTRIFUGE)
+
+    @JvmField
+    val INFUSER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.INFUSER)
 
     @JvmField
     val MACHINES: List<DeferredBlock<*>> = listOf(
@@ -363,6 +367,12 @@ object RagiumBlocks {
 
     //    Devices    //
 
+    @JvmStatic
+    private fun registerDevice(
+        properties: BlockBehaviour.Properties,
+        type: HTDeferredBlockEntityType<out HTBlockEntity>,
+    ): DeferredBlock<*> = register(type.id.path, properties, HTEntityBlock.create(type))
+
     @JvmField
     val MILK_DRAIN: DeferredBlock<HTMilkDrainBlock> =
         register("milk_drain", stone(), ::HTMilkDrainBlock)
@@ -372,41 +382,39 @@ object RagiumBlocks {
 
     // Basic
     @JvmField
-    val ITEM_COLLECTOR: DeferredBlock<HTEntityBlock<*>> =
-        register("item_collector", lightMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.ITEM_COLLECTOR))
+    val ITEM_COLLECTOR: DeferredBlock<*> = registerDevice(lightMetal(), RagiumBlockEntityTypes.ITEM_COLLECTOR)
 
     @JvmField
-    val WATER_COLLECTOR: DeferredBlock<HTEntityBlock<*>> =
-        register("water_collector", lightMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.WATER_COLLECTOR))
+    val SPRINKLER: DeferredBlock<*> = registerDevice(lightMetal(), RagiumBlockEntityTypes.SPRINKLER)
 
     @JvmField
-    val SPRINKLER: DeferredBlock<HTEntityBlock<*>> =
-        register("sprinkler", lightMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.SPRINKLER))
+    val WATER_COLLECTOR: DeferredBlock<*> = registerDevice(lightMetal(), RagiumBlockEntityTypes.WATER_COLLECTOR)
 
     // Advanced
     @JvmField
-    val LAVA_COLLECTOR: DeferredBlock<HTEntityBlock<*>> =
-        register("lava_collector", heavyMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.LAVA_COLLECTOR))
+    val ENI: DeferredBlock<*> = registerDevice(heavyMetal(), RagiumBlockEntityTypes.ENI)
 
     @JvmField
-    val ENI: DeferredBlock<HTEntityBlock<*>> =
-        register("energy_network_interface", heavyMetal(), HTEntityBlock.create(RagiumBlockEntityTypes.ENI))
+    val EXP_COLLECTOR: DeferredBlock<*> = registerDevice(heavyMetal(), RagiumBlockEntityTypes.EXP_COLLECTOR)
 
     @JvmField
-    val TELEPORT_ANCHOR: DeferredBlock<Block> =
-        register("teleport_anchor", heavyMetal())
+    val LAVA_COLLECTOR: DeferredBlock<*> = registerDevice(heavyMetal(), RagiumBlockEntityTypes.LAVA_COLLECTOR)
+
+    @JvmField
+    val TELEPORT_ANCHOR: DeferredBlock<Block> = register("teleport_anchor", heavyMetal())
 
     @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
         MILK_DRAIN,
         SOUL_SPIKE,
-        // Basic
+        // 色でソート
         ITEM_COLLECTOR,
-        WATER_COLLECTOR,
-        SPRINKLER,
-        // Advanced
         LAVA_COLLECTOR,
-        ENI,
+        EXP_COLLECTOR,
         TELEPORT_ANCHOR,
+        SPRINKLER,
+        WATER_COLLECTOR,
+        // 無彩色
+        ENI,
     )
 }
