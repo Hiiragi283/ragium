@@ -12,7 +12,7 @@ import net.neoforged.neoforge.fluids.FluidType
 import java.awt.Color
 import java.util.function.Supplier
 
-enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = TextureType.LIQUID) :
+enum class RagiumVirtualFluids(val color: Color, val isGaseous: Boolean = false) :
     StringRepresentable,
     Supplier<Fluid> {
     EXPERIENCE(Color(0x66ff33)),
@@ -21,39 +21,39 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     CHOCOLATE(Color(0x663333)),
     MUSHROOM_STEW(Color(0xcc9966)),
 
-    AIR(Color.WHITE, TextureType.GASEOUS),
+    AIR(Color.WHITE, true),
 
     // Hydrogen
-    HYDROGEN(Color(0x3333ff), TextureType.GASEOUS),
+    HYDROGEN(Color(0x3333ff), true),
 
     // Nitrogen
-    NITROGEN(Color(0x33ccff), TextureType.GASEOUS),
-    AMMONIA(Color(0x9999ff), TextureType.GASEOUS),
+    NITROGEN(Color(0x33ccff), true),
+    AMMONIA(Color(0x9999ff), true),
     NITRIC_ACID(Color(0xcc99ff)),
     MIXTURE_ACID(Color(0xff9900)),
 
     // Oxygen
-    OXYGEN(Color(0x66ccff), TextureType.GASEOUS),
-    ROCKET_FUEL(Color(0x0066ff), TextureType.GASEOUS),
+    OXYGEN(Color(0x66ccff), true),
+    ROCKET_FUEL(Color(0x0066ff), true),
 
     // Alkali
     ALKALI_SOLUTION(Color(0x0000cc)),
 
     // Sulfur
-    SULFUR_DIOXIDE(Color(0xff6600), TextureType.GASEOUS),
-    SULFUR_TRIOXIDE(Color(0xff6600), TextureType.GASEOUS),
-    SULFURIC_ACID(Color(0xff3300), TextureType.STICKY),
+    SULFUR_DIOXIDE(Color(0xff6600), true),
+    SULFUR_TRIOXIDE(Color(0xff6600), true),
+    SULFURIC_ACID(Color(0xff3300)),
 
     // Oil
     NAPHTHA(Color(0xff9900)),
     FUEL(Color(0xcc6633)),
     NITRO_FUEL(Color(0xff33333)),
 
-    AROMATIC_COMPOUND(Color(0xcc6633), TextureType.STICKY),
+    AROMATIC_COMPOUND(Color(0xcc6633)),
 
     // Bio
     PLANT_OIL(Color(0x99cc33)),
-    BIOMASS(Color(0x006600), TextureType.STICKY),
+    BIOMASS(Color(0x006600)),
     ETHANOL(Color(0x99ffff)),
 
     CRUDE_BIODIESEL(Color(0x66cc00)),
@@ -62,9 +62,9 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     NITROGLYCERIN(Color(0xff33333)),
 
     // Saps
-    SAP(Color(0x996633), TextureType.STICKY),
-    CRIMSON_SAP(Color(0x660000), TextureType.STICKY),
-    WARPED_SAP(Color(0x006666), TextureType.STICKY),
+    SAP(Color(0x996633)),
+    CRIMSON_SAP(Color(0x660000)),
+    WARPED_SAP(Color(0x006666)),
 
     // Other
     RAGIUM_SOLUTION(Color(0xff003f)),
@@ -76,15 +76,6 @@ enum class RagiumVirtualFluids(val color: Color, val textureType: TextureType = 
     val typeHolder: HTDeferredFluidType<FluidType> = HTDeferredFluidType.createType<FluidType>(id)
 
     val commonTag: TagKey<Fluid> get() = fluidHolder.commonTag
-
-    //    TextureType    //
-
-    enum class TextureType {
-        GASEOUS,
-        LIQUID,
-        MOLTEN,
-        STICKY,
-    }
 
     //    StringRepresentable    //
 

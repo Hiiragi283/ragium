@@ -27,7 +27,7 @@ class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<Hol
 
         for (fluid: RagiumVirtualFluids in RagiumVirtualFluids.entries) {
             // Gaseous Tag
-            if (fluid.textureType == RagiumVirtualFluids.TextureType.GASEOUS) {
+            if (fluid.isGaseous) {
                 builder.addTag(Tags.Fluids.GASEOUS, fluid.commonTag)
             }
         }

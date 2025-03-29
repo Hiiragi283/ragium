@@ -207,8 +207,10 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addItem(ItemTags.SMALL_FLOWERS, RagiumBlocks.LILY_OF_THE_ENDER)
 
         // Bucket
-        builder.add(RagiumItemTags.BUCKETS_CRUDE_OIL, RagiumItems.CRUDE_OIL_BUCKET)
-        builder.addTag(Tags.Items.BUCKETS, RagiumItemTags.BUCKETS_CRUDE_OIL)
+        for (bucket: RagiumItems.Buckets in RagiumItems.Buckets.entries) {
+            builder.add(bucket.bucketTag, bucket.holder)
+            builder.addTag(Tags.Items.BUCKETS, bucket.bucketTag)
+        }
 
         // Parts
         builder.add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)

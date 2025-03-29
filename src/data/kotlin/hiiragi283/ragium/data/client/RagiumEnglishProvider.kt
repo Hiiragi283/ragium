@@ -209,11 +209,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMold(RagiumItems.Molds.PLATE, "Mold (Plate)")
         addMold(RagiumItems.Molds.ROD, "Mold (Rod)")
         addMold(RagiumItems.Molds.WIRE, "Mold (Wire)")
+        // bucket
+        addBucket(RagiumItems.Buckets.CRUDE_OIL, "Crude Oil Bucket")
+        addBucket(RagiumItems.Buckets.CHOCOLATE, "Chocolate Bucket")
         // Parts
         // addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
-        addItem(RagiumItems.CRUDE_OIL_BUCKET, "Crude Oil Bucket")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
@@ -377,7 +379,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.SILICON, "Silicon")
         add(RagiumItemTags.SLAG, "Slag")
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, "Forge Hammer")
-        add(RagiumItemTags.BUCKETS_CRUDE_OIL, "Crude Oil Bucket")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
         add(RagiumItemTags.FLOURS, "Flours")

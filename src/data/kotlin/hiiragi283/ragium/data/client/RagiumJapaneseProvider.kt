@@ -37,7 +37,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun block() {
         addBlock(RagiumBlocks.SILT, "シルト")
-        addBlock(RagiumBlocks.CRUDE_OIL, "石油")
+        addBlock(RagiumBlocks.CRUDE_OIL, "原油")
         addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "粘着質のソウルソイル")
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "エンダースズラン")
@@ -209,11 +209,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMold(RagiumItems.Molds.PLATE, "成形型（板材）")
         addMold(RagiumItems.Molds.ROD, "成形型（棒材）")
         addMold(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
+        // Buckets
+        addBucket(RagiumItems.Buckets.CRUDE_OIL, "原油入りバケツ")
+        addBucket(RagiumItems.Buckets.CHOCOLATE, "チョコレート入りバケツ")
         // Parts
         // addItem(RagiumItems.BEE_WAX, "蜜蠟")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
-        addItem(RagiumItems.CRUDE_OIL_BUCKET, "原油入りバケツ")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
@@ -368,7 +370,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.SILICON, "シリコン")
         add(RagiumItemTags.SLAG, "スラグ")
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, "鍛造ハンマー")
-        add(RagiumItemTags.BUCKETS_CRUDE_OIL, "原油入りバケツ")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "歪んだウォート")
         add(RagiumItemTags.FLOURS, "小麦粉")

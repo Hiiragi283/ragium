@@ -46,6 +46,10 @@ fun LanguageProvider.addMold(mold: RagiumItems.Molds, value: String) {
     addItem(mold.holder, value)
 }
 
+fun LanguageProvider.addBucket(bucket: RagiumItems.Buckets, value: String) {
+    add(bucket.asItem(), value)
+}
+
 //    ModelFile    //
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)

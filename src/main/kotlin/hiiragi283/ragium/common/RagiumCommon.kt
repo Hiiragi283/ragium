@@ -67,7 +67,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork {
-            DispenserBlock.registerBehavior(RagiumItems.CRUDE_OIL_BUCKET, DispenseFluidContainer.getInstance())
+            for (bucket: RagiumItems.Buckets in RagiumItems.Buckets.entries) {
+                DispenserBlock.registerBehavior(bucket, DispenseFluidContainer.getInstance())
+            }
         }
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {

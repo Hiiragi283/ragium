@@ -62,6 +62,7 @@ object RagiumFluidTypes {
             .canSwim(false)
             .pathType(PathType.LAVA)
             .density(3000)
-            .viscosity(6000),
+            .viscosity(6000)
+            .motionScale(0.0001),
     )
 }

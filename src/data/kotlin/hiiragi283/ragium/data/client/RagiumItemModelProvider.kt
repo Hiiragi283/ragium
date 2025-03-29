@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -20,7 +19,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         registerItems()
     }
 
-    private val generated: ModelFile = modelFile(ResourceLocation.withDefaultNamespace("item/generated"))
+    private val generated: ModelFile = modelFile(vanillaId("item/generated"))
 
     private fun registerBlocks() {
         // Blocks
@@ -48,7 +47,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         buildList {
             addAll(RagiumItems.REGISTER.entries)
 
-            remove(RagiumItems.CRUDE_OIL_BUCKET)
+            removeAll(RagiumItems.Buckets.items)
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
@@ -65,10 +64,12 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .texture("layer0", "minecraft:item/apple")
             .texture("layer1", RagiumItems.CHOCOLATE_APPLE.itemId)
 
-        getBuilder(RagiumItems.CRUDE_OIL_BUCKET)
-            .parent(modelFile(ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))
-            .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
-            .fluid(RagiumFluids.CRUDE_OIL.get())
+        for (bucket in RagiumItems.Buckets.entries) {
+            getBuilder(bucket.holder)
+                .parent(modelFile(ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))
+                .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
+                .fluid(bucket.fluid.get())
+        }
 
         // Tool
         RagiumItems.RAGI_ALLOY_TOOLS.addItemModels(this)

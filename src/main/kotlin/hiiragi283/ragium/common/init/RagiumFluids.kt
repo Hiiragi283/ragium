@@ -39,7 +39,8 @@ object RagiumFluids {
                 CRUDE_OIL,
                 FLOWING_CRUDE_OIL,
             ).block(RagiumBlocks.CRUDE_OIL)
-            .bucket(RagiumItems.CRUDE_OIL_BUCKET)
+            .bucket(RagiumItems.Buckets.CRUDE_OIL.holder)
+            .tickRate(20)
         REGISTER.register(CRUDE_OIL.id.path) { _: ResourceLocation -> BaseFlowingFluid.Source(properties) }
         REGISTER.register(FLOWING_CRUDE_OIL.id.path) { _: ResourceLocation -> BaseFlowingFluid.Flowing(properties) }
         // Virtual
@@ -47,7 +48,11 @@ object RagiumFluids {
             // Fluid Type
             RagiumFluidTypes.register(fluid.serializedName, FluidType.Properties.create())
             // Fluid
-            virtual(fluid.serializedName, fluid.typeHolder)
+            virtual(fluid.serializedName, fluid.typeHolder) {
+                if (fluid == RagiumVirtualFluids.CHOCOLATE) {
+                    bucket(RagiumItems.Buckets.CHOCOLATE.holder)
+                }
+            }
         }
     }
 
