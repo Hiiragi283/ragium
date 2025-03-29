@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import com.enderio.base.common.util.ExperienceUtil
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
@@ -16,7 +15,7 @@ fun Player?.asServerPlayer(): ServerPlayer? = this as? ServerPlayer
 //    Experience    //
 
 /**
- * @see [ExperienceUtil.getXpNeededForNextLevel]
+ * @see [com.enderio.base.common.util.ExperienceUtil.getXpNeededForNextLevel]
  */
 fun getExpAmountFromLevel(level: Int): Int = when {
     level >= 30 -> 112 + (level - 30) * 9
@@ -38,7 +37,7 @@ fun getExpLevelFromAmount(amount: Int): Int {
 fun getTotalExpAmountFromLevel(level: Int): Int = getTotalExpAmountFromLevel(level.toDouble()).roundToInt()
 
 /**
- * @see [ExperienceUtil.getTotalXpFromLevel]
+ * @see [com.enderio.base.common.util.ExperienceUtil.getTotalXpFromLevel]
  */
 private fun getTotalExpAmountFromLevel(level: Double): Double = when {
     level >= 32 -> 4.5 * level.pow(2) - 162.5 * level + 2220

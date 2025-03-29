@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.multiMapOf
 import hiiragi283.ragium.api.util.HTMultiMap
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -16,9 +15,8 @@ import net.minecraft.tags.TagKey
  * 登録した[TagKey]をソートして生成するビルダー
  */
 @Suppress("UNCHECKED_CAST")
-class HTTagBuilder<T : Any>(private val lookup: HolderLookup.RegistryLookup<T>) {
+class HTTagBuilder<T : Any>(val registryKey: ResourceKey<out Registry<T>>) {
     private val entryCache: HTMultiMap.Mutable<TagKey<T>, Entry> = multiMapOf()
-    private val registryKey: ResourceKey<out Registry<T>> = lookup.key() as ResourceKey<out Registry<T>>
 
     fun add(
         tagKey: TagKey<T>,
@@ -30,7 +28,7 @@ class HTTagBuilder<T : Any>(private val lookup: HolderLookup.RegistryLookup<T>) 
     }
 
     fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED) {
-        add(tagKey, lookup.getOrThrow(ResourceKey.create(registryKey, id)), type)
+        entryCache.put(tagKey, Entry(id, false, type))
     }
 
     fun add(tagKey: TagKey<T>, holder: Holder<T>, type: DependType = DependType.REQUIRED) {

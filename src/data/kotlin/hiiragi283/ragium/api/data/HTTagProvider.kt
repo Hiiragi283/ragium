@@ -18,7 +18,7 @@ abstract class HTTagProvider<T : Any>(
     helper: ExistingFileHelper,
 ) : TagsProvider<T>(output, registry, provider, RagiumAPI.MOD_ID, helper) {
     final override fun addTags(provider: HolderLookup.Provider) {
-        val builder: HTTagBuilder<T> = HTTagBuilder(provider.lookupOrThrow(registry))
+        val builder: HTTagBuilder<T> = HTTagBuilder(registry)
 
         addTagsInternal(builder, provider)
 

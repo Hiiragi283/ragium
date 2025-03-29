@@ -12,78 +12,36 @@ kff-version = "5.7.0"
 kff-version-range = "[5.7,)"
 ktlint = "12.1.2"
 
-aa = "1.3.15+mc1.21.1"
-ae2 = "19.2.5-beta"
-create = "6.0.4-52"
-#delight = "1.21.1-1.2.7"
-eio = "7.1.7-alpha"
+aa = "1.3.17+mc1.21.1"
 emi = "1.1.20+1.21.1"
-flywheel = "1.0.2-17"
-guide = "21.1.1"
-if = "1.21-3.6.24"
-immersive = "1.21.1-12.1.0-185"
+guide = "21.1.6"
 jade = "15.10.0+neoforge"
-#jei = "19.21.0.247"
-mek = "1.21.1-10.7.12.77"
-mi = "2.2.34"
+mek = "1.21.1-10.7.13.78"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
-#ponder = "1.0.44"
-rc = "1.2.5"
-registrate = "MC1.21-1.3.0+62"
-tf = "4.6.3003"
-#top = "1.21_neo-12.0.4-6"
-#wthit = "neo-12.5.1"
 
 [libraries]
 
 kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
-ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
-create = { group = "com.simibubi.create", name = "create-1.21.1", version.ref = "create" }
-#delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
-eio = { group = "com.enderio", name = "enderio-base", version.ref = "eio" }
-eio-machines = { group = "com.enderio", name = "enderio-machines", version.ref = "eio" }
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref  = "emi" }
-flywheel = { group = "dev.engine-room.flywheel", name = "flywheel-neoforge-1.21.1", version.ref = "flywheel" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
-if = { group = "maven.modrinth", name = "industrial-foregoing", version.ref = "if" }
-immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
-#jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
-#jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
-mi = { group = "aztech", name = "Modern-Industrialization", version.ref = "mi" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
-#ponder = { group = "net.createmod.ponder", name = "Ponder-NeoForge-1.21.1", version.ref = "ponder" }
-rc = { group = "maven.modrinth", name = "railcraft-reborn", version.ref = "rc" }
-registrate = { group = "com.tterrag.registrate", name = "Registrate", version.ref = "registrate" }
-#top = { group = "mcjty.theoneprobe", name = "theoneprobe", version.ref = "top" }
-#wthit = { group = "mcp.mobius.waila", name = "wthit", version.ref = "wthit" }
 
 [bundles]
 
 mods-impl = [
     "aa",
-    "ae2",
-    "eio",
-    "eio-machines",
     "emi",
-    "flywheel",
     "guide",
-    "if",
-    "immersive",
     "jade",
     "mek",
-    "mi",
     "patchouli-gen",
-    "rc",
-    "registrate",
 ]
 
-mods-transitive = [
-    "create",
-]
+mods-transitive = []
 
 mods-compile = []
 

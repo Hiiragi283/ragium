@@ -193,11 +193,6 @@ dependencies {
 
     implementation(libs.kff)
 
-    implementation("mekanism:Mekanism:${libs.versions.mek.get()}:additions")
-    implementation("mekanism:Mekanism:${libs.versions.mek.get()}:generators")
-    implementation("mekanism:Mekanism:${libs.versions.mek.get()}:tools")
-    implementation("team-twilight:twilightforest:${libs.versions.tf.get()}:universal")
-
     implementation(libs.bundles.mods.impl)
     implementation(libs.bundles.mods.transitive) { isTransitive = false }
     compileOnly(libs.bundles.mods.compile)
@@ -281,9 +276,9 @@ tasks {
         exclude("**/unused/**")
     }
 
-    wrapper {
+    /*wrapper {
         distributionType = Wrapper.DistributionType.BIN
-    }
+    }*/
 }
 
 java {
