@@ -13,6 +13,7 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
@@ -46,6 +47,9 @@ class HTExpBerriesBushBlock(properties: Properties) :
 
     fun isMaxAge(state: BlockState): Boolean = getAge(state) >= MAX_AGE
 
+    override fun mayPlaceOn(state: BlockState, level: BlockGetter, pos: BlockPos): Boolean =
+        super.mayPlaceOn(state, level, pos) || state.`is`(this)
+    
     override fun codec(): MapCodec<out BushBlock> = throw UnsupportedOperationException()
 
     override fun isRandomlyTicking(state: BlockState): Boolean = !isMaxAge(state)
