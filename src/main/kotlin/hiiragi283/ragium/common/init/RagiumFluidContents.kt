@@ -18,7 +18,7 @@ object RagiumFluidContents {
         name: String,
         properties: FluidType.Properties,
     ): HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        REGISTER.register(name, properties.descriptionId("block.ragium.${name}"))
+        REGISTER.register(name, properties.descriptionId("block.ragium.$name"))
 
     @JvmStatic
     private fun defaultProperties(): FluidType.Properties = FluidType.Properties

@@ -259,7 +259,7 @@ object RagiumItems {
     @JvmField
     val EXP_BERRIES: DeferredItem<HTExpBerriesItem> = register(
         "exp_berries",
-        { prop: Item.Properties -> HTExpBerriesItem(RagiumBlocks.EXP_BERRY_BUSH.get(), prop) }
+        { prop: Item.Properties -> HTExpBerriesItem(RagiumBlocks.EXP_BERRY_BUSH.get(), prop) },
     )
 
     @JvmField

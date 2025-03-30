@@ -108,7 +108,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
 
             add(RagiumBlocks.LILY_OF_THE_ENDER)
-            add(RagiumBlocks.EXP_BERRY_BUSH)
             add(RagiumItems.EXP_BERRIES)
             add(RagiumItems.WARPED_WART)
             add(RagiumItems.AMBROSIA)

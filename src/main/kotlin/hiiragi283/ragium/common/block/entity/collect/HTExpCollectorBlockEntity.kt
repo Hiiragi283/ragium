@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluidContents
 import net.minecraft.core.BlockPos
@@ -21,6 +22,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
     HTFluidTankHandler {
     private val outputTank: HTFluidTank = HTFluidTank.create("output_tank", this) {
+        validator = { variant: HTFluidVariant -> variant.isOf(RagiumFluidContents.EXPERIENCE) }
         capacity = Int.MAX_VALUE
     }
 

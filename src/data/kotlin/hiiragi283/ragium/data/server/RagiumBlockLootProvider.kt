@@ -64,15 +64,9 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
         // Bush
         add(RagiumBlocks.EXP_BERRY_BUSH.get()) { block: Block ->
-            createSilkTouchDispatchTable(
+            createSingleItemTableWithSilkTouch(
                 block,
-                applyExplosionDecay(
-                    block,
-                    LootItem
-                        .lootTableItem(RagiumItems.EXP_BERRIES)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f)))
-                        .apply(ApplyBonusCount.addUniformBonusCount(getFortune())),
-                ),
+                RagiumItems.EXP_BERRIES,
             )
         }
 

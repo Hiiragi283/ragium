@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.storage.HTVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
@@ -35,9 +34,7 @@ data class HTPotionVariant private constructor(override val holder: Holder.Refer
     override val components: DataComponentPatch = DataComponentPatch.EMPTY
 
     override val isEmpty: Boolean
-        get() = holder.isOf(Potions.WATER.value())
-
-    fun isIn(tagKey: TagKey<Potion>): Boolean = holder.`is`(tagKey)
+        get() = isOf(Potions.WATER)
 
     fun toStack(count: Int): ItemStack = createPotionStack(holder, count)
 }

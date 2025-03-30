@@ -37,7 +37,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.EXPERIENCE, 50)
             .itemInput(RagiumItems.EXP_BERRIES)
             .saveSuffixed(output, "_from_berries")
-        
+
         sap(output)
     }
 
@@ -106,18 +106,23 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumBlocks.SILT)
             .waterInput(250)
             .saveSuffixed(output, "_from_silt")
-        
+
         exp(output)
     }
-    
+
     private fun exp(output: RecipeOutput) {
+        // Exp Bottle
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(Items.EXPERIENCE_BOTTLE)
+            .itemInput(Items.GLASS_BOTTLE)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
+            .save(output)
         // Golden Apple
         HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
             .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
             .itemInput(Items.GOLDEN_APPLE)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 8000)
             .save(output)
-        
         // Exp Berries
         HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
             .itemOutput(RagiumItems.EXP_BERRIES)

@@ -33,7 +33,7 @@ class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<Hol
 
         builder.add(RagiumFluidTags.CHOCOLATES, RagiumFluidContents.CHOCOLATE.stillHolder)
         builder.add(RagiumFluidTags.CHOCOLATES, RagiumFluidContents.CHOCOLATE.flowHolder)
-        
+
         builder.addTag(RagiumFluidTags.NITRO_FUEL, commonId("boosted_diesel"), HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(RagiumFluidTags.NITRO_FUEL, commonId("high_power_biodiesel"), HTTagBuilder.DependType.OPTIONAL)
         builder.addTag(RagiumFluidTags.NITRO_FUEL, RagiumFluidContents.NITRO_FUEL.commonTag)

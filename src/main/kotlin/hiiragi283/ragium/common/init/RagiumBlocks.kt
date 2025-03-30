@@ -138,10 +138,10 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val EXP_BERRY_BUSH: DeferredBlock<HTExpBerriesBushBlock> = register(
+    val EXP_BERRY_BUSH: DeferredBlock<HTExpBerriesBushBlock> = REGISTER.registerBlock(
         "exp_berry_bush",
-        blockProperty(Blocks.SWEET_BERRY_BUSH),
         ::HTExpBerriesBushBlock,
+        blockProperty(Blocks.SWEET_BERRY_BUSH),
     )
 
     @JvmField

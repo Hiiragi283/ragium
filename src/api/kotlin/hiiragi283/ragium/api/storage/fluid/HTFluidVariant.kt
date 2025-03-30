@@ -3,11 +3,9 @@ package hiiragi283.ragium.api.storage.fluid
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.asFluidHolder
-import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.storage.HTVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
@@ -62,9 +60,7 @@ data class HTFluidVariant private constructor(val fluid: Fluid, override val com
             get() = fluid.asFluidHolder()
 
         override val isEmpty: Boolean
-            get() = holder.isOf(Fluids.EMPTY)
-
-        fun isIn(tagKey: TagKey<Fluid>): Boolean = holder.`is`(tagKey)
+            get() = isOf(Fluids.EMPTY)
 
         fun toStack(count: Int): FluidStack = FluidStack(holder, count, components)
     }

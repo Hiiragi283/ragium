@@ -3,11 +3,9 @@ package hiiragi283.ragium.api.storage.item
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
-import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.storage.HTVariant
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -65,14 +63,12 @@ data class HTItemVariant private constructor(val item: Item, override val compon
             get() = item.asItemHolder()
 
         override val isEmpty: Boolean
-            get() = holder.isOf(Items.AIR)
+            get() = isOf(Items.AIR)
 
         fun isOf(stack: ItemStack): Boolean {
             if (stack.isEmpty) return this.isEmpty
-            return holder.isOf(stack.item) && stack.componentsPatch == this.components
+            return isOf(stack.item) && stack.componentsPatch == this.components
         }
-
-        fun isIn(tagKey: TagKey<Item>): Boolean = holder.`is`(tagKey)
 
         fun toStack(count: Int = 1): ItemStack = when {
             isEmpty -> ItemStack.EMPTY

@@ -78,10 +78,6 @@ class RagiumEmiPlugin : EmiPlugin {
         addRecipeSafe(RagiumAPI.id("/block_info/ash_log")) { id: ResourceLocation ->
             HTBlockInfoEmiRecipe(id, RagiumBlocks.ASH_LOG, EmiStack.of(RagiumItems.Dusts.ASH))
         }
-        // Exp Berries Bush
-        addRecipeSafe(RagiumAPI.id("/block_info/exp_berries_bush")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.EXP_BERRY_BUSH, EmiStack.of(RagiumItems.EXP_BERRIES))
-        }
 
         // Water Well
         addRecipeSafe(RagiumAPI.id("/block_info/water_well")) { id: ResourceLocation ->

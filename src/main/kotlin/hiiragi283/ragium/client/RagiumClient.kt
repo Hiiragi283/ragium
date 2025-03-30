@@ -121,13 +121,6 @@ class RagiumClient(eventBus: IEventBus) {
     }
 
     private fun addItemColor(event: RegisterColorHandlersEvent.Item) {
-        // Exp Berry Bush
-        event.register(
-            { stack: ItemStack, tint: Int ->
-                if (tint == 0) FoliageColor.getDefaultColor() else -1
-            },
-            RagiumBlocks.EXP_BERRY_BUSH,
-        )
         // Water Collector
         event.register(
             { stack: ItemStack, tint: Int ->
