@@ -44,7 +44,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterialKey) : HTI
         itemRegister.register(eventBus)
     }
 
-    override fun appendItemTags(builder: HTTagBuilder<Item>) {
+    override fun appendItemTags(builder: HTTagBuilder.ItemTag) {
         builder.add(ItemTags.HEAD_ARMOR_ENCHANTABLE, helmetItem)
         builder.add(ItemTags.CHEST_ARMOR_ENCHANTABLE, chestPlateItem)
         builder.add(ItemTags.LEG_ARMOR_ENCHANTABLE, leggingsItem)

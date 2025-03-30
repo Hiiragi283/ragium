@@ -15,7 +15,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -92,13 +91,9 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
         builder.add(blockTagKey(commonId("ores_in_ground/end_stone")), endOre)
     }
 
-    override fun appendItemTags(builder: HTTagBuilder<Item>) {
-        for (ore: DeferredItem<*> in itemHolders) {
-            // Material Tag
-            val oreTagKey: TagKey<Item> = HTTagPrefixes.ORE.createItemTag(key)
-            builder.addTag(Tags.Items.ORES, oreTagKey)
-            builder.add(oreTagKey, ore)
-        }
+    override fun appendItemTags(builder: HTTagBuilder.ItemTag) {
+        builder.copyFromBlock(Tags.Blocks.ORES, Tags.Items.ORES)
+        builder.copyFromBlock(HTTagPrefixes.ORE, key)
     }
 
     override fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {}

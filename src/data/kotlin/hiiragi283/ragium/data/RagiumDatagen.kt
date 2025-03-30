@@ -57,9 +57,11 @@ object RagiumDatagen {
 
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
 
-        generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
-        generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, helper))
+
+        val blockTags: RagiumBlockTagProvider =
+            generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
+        generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, blockTags, helper))
 
         generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
 

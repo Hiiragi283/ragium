@@ -1,7 +1,7 @@
 {
   "values": [
-    "ragium:obsidian_glass",
-    "ragium:quartz_glass",
-    "ragium:soul_glass"
+    "#c:glass_blocks/obsidian",
+    "#c:glass_blocks/quartz",
+    "#c:glass_blocks/soul"
   ]
 }

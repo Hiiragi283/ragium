@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumBlockTags
@@ -21,85 +20,93 @@ class RagiumBlockTagProvider(
     provider: CompletableFuture<HolderLookup.Provider>,
     existingFileHelper: ExistingFileHelper,
 ) : HTTagProvider<Block>(Registries.BLOCK, output, provider, existingFileHelper) {
-    override fun addTagsInternal(builder: HTTagBuilder<Block>, provider: HolderLookup.Provider) {
-        mineable(builder)
-        category(builder)
+    override fun addTagsInternal(provider: HolderLookup.Provider) {
+        mineable()
+        category()
     }
 
     //    Mineable    //
 
-    private fun mineable(builder: HTTagBuilder<Block>) {
+    private fun mineable() {
         // Axe
-        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.EXP_BERRY_BUSH)
-        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
+        add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.EXP_BERRY_BUSH)
+        add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
         // Hoe
-        builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.StorageBlocks.CHEESE.holder)
-        builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE)
-        builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE_SLAB)
-        builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
+        add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.StorageBlocks.CHEESE.holder)
+        add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE)
+        add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE_SLAB)
+        add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
-        RagiumBlocks.RAGINITE_ORES.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.RAGI_CRYSTAL_ORES.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
+        add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+
+        RagiumBlocks.RAGINITE_ORES.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
+        RagiumBlocks.RAGI_CRYSTAL_ORES.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
 
         for (block: DeferredBlock<*> in RagiumBlocks.StorageBlocks.blocks) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, block)
+            add(BlockTags.MINEABLE_WITH_PICKAXE, block)
         }
 
-        RagiumBlocks.RAGI_BRICK_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.AZURE_TILE_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.EMBER_STONE_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.PLASTIC_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendBlockTags(builder, BlockTags.MINEABLE_WITH_PICKAXE)
+        RagiumBlocks.RAGI_BRICK_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
+        RagiumBlocks.AZURE_TILE_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
+        RagiumBlocks.EMBER_STONE_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
+        RagiumBlocks.PLASTIC_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
+        RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
 
         for (glass: DeferredBlock<*> in RagiumBlocks.GLASSES) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, glass)
+            add(BlockTags.MINEABLE_WITH_PICKAXE, glass)
         }
 
         for (led: DeferredBlock<*> in RagiumBlocks.LED_BLOCKS.values) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, led)
+            add(BlockTags.MINEABLE_WITH_PICKAXE, led)
         }
 
         for (casing: DeferredBlock<*> in RagiumBlocks.CASINGS) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, casing)
+            add(BlockTags.MINEABLE_WITH_PICKAXE, casing)
         }
 
         for (machine: DeferredBlock<*> in RagiumBlocks.MACHINES) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, machine)
+            add(BlockTags.MINEABLE_WITH_PICKAXE, machine)
         }
 
         for (device: DeferredBlock<*> in RagiumBlocks.DEVICES) {
-            builder.add(BlockTags.MINEABLE_WITH_PICKAXE, device)
+            add(BlockTags.MINEABLE_WITH_PICKAXE, device)
         }
 
         // Shovel
-        builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
-        builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.STICKY_SOUL_SOIL)
-        builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.ASH_LOG)
+        add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
+        add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.STICKY_SOUL_SOIL)
+        add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.ASH_LOG)
         // Other
     }
 
-    private fun category(builder: HTTagBuilder<Block>) {
+    private fun category() {
         // Storage Block
         for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
             val prefix: HTTagPrefix = block.prefix
             val materialTag: TagKey<Block> = prefix.createBlockTag(block.key)
-            builder.addTag(Tags.Blocks.STORAGE_BLOCKS, materialTag)
-            builder.add(materialTag, block.holder)
+            addTag(Tags.Blocks.STORAGE_BLOCKS, materialTag)
+            add(materialTag, block.holder)
         }
         // Glass
-        for (glass: DeferredBlock<*> in RagiumBlocks.GLASSES) {
-            builder.add(Tags.Blocks.GLASS_BLOCKS, glass)
-        }
+        addTag(Tags.Blocks.GLASS_BLOCKS, RagiumBlockTags.GLASS_BLOCKS_OBSIDIAN)
+        addTag(Tags.Blocks.GLASS_BLOCKS, RagiumBlockTags.GLASS_BLOCKS_QUARTZ)
+        addTag(Tags.Blocks.GLASS_BLOCKS, RagiumBlockTags.GLASS_BLOCKS_SOUL)
 
+        add(RagiumBlockTags.GLASS_BLOCKS_OBSIDIAN, RagiumBlocks.OBSIDIAN_GLASS)
+        add(RagiumBlockTags.GLASS_BLOCKS_QUARTZ, RagiumBlocks.QUARTZ_GLASS)
+        add(RagiumBlockTags.GLASS_BLOCKS_SOUL, RagiumBlocks.SOUL_GLASS)
         // Stone
-        builder.addTag(RagiumBlockTags.STONES_ROCK_GENERATIONS, Tags.Blocks.STONES)
+        addTag(Tags.Blocks.OBSIDIANS, RagiumBlockTags.OBSIDIANS_MYSTERIOUS)
+        add(RagiumBlockTags.OBSIDIANS_MYSTERIOUS, RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+
+        addTag(RagiumBlockTags.STONES_ROCK_GENERATIONS, Tags.Blocks.STONES)
 
         // Flower
-        builder.add(BlockTags.SMALL_FLOWERS, RagiumBlocks.LILY_OF_THE_ENDER)
+        add(BlockTags.SMALL_FLOWERS, RagiumBlocks.LILY_OF_THE_ENDER)
 
         // Crop
-        builder.add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRY_BUSH)
-        builder.add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRY_BUSH)
-        builder.add(BlockTags.SWORD_EFFICIENT, RagiumBlocks.EXP_BERRY_BUSH)
+        add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRY_BUSH)
+        add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRY_BUSH)
+        add(BlockTags.SWORD_EFFICIENT, RagiumBlocks.EXP_BERRY_BUSH)
     }
 }

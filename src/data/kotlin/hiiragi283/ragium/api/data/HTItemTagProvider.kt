@@ -5,24 +5,27 @@ import hiiragi283.ragium.api.extension.multiMapOf
 import hiiragi283.ragium.api.util.HTMultiMap
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.minecraft.data.tags.TagsProvider
+import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
-abstract class HTTagProvider<T : Any>(
-    override val registryKey: ResourceKey<out Registry<T>>,
+abstract class HTItemTagProvider(
     output: PackOutput,
     provider: CompletableFuture<HolderLookup.Provider>,
+    blockTags: HTTagProvider<Block>,
     helper: ExistingFileHelper,
-) : TagsProvider<T>(output, registryKey, provider, RagiumAPI.MOD_ID, helper),
-    HTTagBuilder<T> {
+) : ItemTagsProvider(output, provider, blockTags.contentsGetter(), RagiumAPI.MOD_ID, helper),
+    HTTagBuilder.ItemTag {
     final override fun addTags(provider: HolderLookup.Provider) {
         addTagsInternal(provider)
 
-        entryCache.map.forEach { (tagKey: TagKey<T>, entries: Collection<HTTagBuilder.Entry>) ->
+        entryCache.map.forEach { (tagKey: TagKey<Item>, entries: Collection<HTTagBuilder.Entry>) ->
             entries.sortedBy(HTTagBuilder.Entry::id).toSet().forEach { entry: HTTagBuilder.Entry ->
                 tag(tagKey).add(entry.toTagEntry())
             }
@@ -33,9 +36,15 @@ abstract class HTTagProvider<T : Any>(
 
     //    HTTagBuilder    //
 
-    private val entryCache: HTMultiMap.Mutable<TagKey<T>, HTTagBuilder.Entry> = multiMapOf()
+    private val entryCache: HTMultiMap.Mutable<TagKey<Item>, HTTagBuilder.Entry> = multiMapOf()
 
-    override fun add(tagKey: TagKey<T>, entry: HTTagBuilder.Entry) {
+    final override val registryKey: ResourceKey<out Registry<Item>> = Registries.ITEM
+
+    final override fun add(tagKey: TagKey<Item>, entry: HTTagBuilder.Entry) {
         entryCache.put(tagKey, entry)
+    }
+
+    override fun copyFromBlock(blockTag: TagKey<Block>, itemTag: TagKey<Item>) {
+        copy(blockTag, itemTag)
     }
 }

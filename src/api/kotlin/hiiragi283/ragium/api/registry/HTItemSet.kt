@@ -17,7 +17,7 @@ interface HTItemSet {
 
     fun init(eventBus: IEventBus)
 
-    fun appendItemTags(builder: HTTagBuilder<Item>)
+    fun appendItemTags(builder: HTTagBuilder.ItemTag)
 
     fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
 

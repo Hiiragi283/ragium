@@ -61,7 +61,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "Magenta LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
-        
+
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")

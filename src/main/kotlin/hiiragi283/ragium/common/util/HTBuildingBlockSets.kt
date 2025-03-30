@@ -16,7 +16,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -89,10 +88,10 @@ class HTBuildingBlockSets(
         builder.add(BlockTags.WALLS, wall)
     }
 
-    override fun appendItemTags(builder: HTTagBuilder<Item>) {
-        builder.add(ItemTags.STAIRS, itemHolders[1])
-        builder.add(ItemTags.SLABS, itemHolders[2])
-        builder.add(ItemTags.WALLS, itemHolders[3])
+    override fun appendItemTags(builder: HTTagBuilder.ItemTag) {
+        builder.copyFromBlock(BlockTags.STAIRS, ItemTags.STAIRS)
+        builder.copyFromBlock(BlockTags.SLABS, ItemTags.SLABS)
+        builder.copyFromBlock(BlockTags.WALLS, ItemTags.WALLS)
     }
 
     override fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {

@@ -75,6 +75,13 @@ object RagiumItemTags {
     @JvmField
     val GLASS_BLOCKS_QUARTZ: TagKey<Item> = commonTag("glass_blocks/quartz")
 
+    @JvmField
+    val GLASS_BLOCKS_SOUL: TagKey<Item> = commonTag("glass_blocks/soul")
+
+    // Stones
+    @JvmField
+    val OBSIDIANS_MYSTERIOUS: TagKey<Item> = commonTag("obsidians/mysterious")
+
     //    Ragium    //
 
     @JvmField

@@ -68,7 +68,7 @@ class HTToolSets(material: Tier, val key: HTMaterialKey) : HTItemSet {
         itemRegister.register(eventBus)
     }
 
-    override fun appendItemTags(builder: HTTagBuilder<Item>) {
+    override fun appendItemTags(builder: HTTagBuilder.ItemTag) {
         builder.add(ItemTags.AXES, axeItem)
         builder.add(ItemTags.HOES, hoeItem)
         builder.add(ItemTags.PICKAXES, pickaxeItem)
