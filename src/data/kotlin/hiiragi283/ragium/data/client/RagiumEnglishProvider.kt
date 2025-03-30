@@ -37,7 +37,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
     private fun block() {
         addBlock(RagiumBlocks.SILT, "Silt")
-        addBlock(RagiumBlocks.CRUDE_OIL, "Crude Oil")
         addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "Sticky Soul Soil")
         addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "Lily of the Ender")
@@ -104,52 +103,42 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun fluid() {
-        addFluid(RagiumFluids.HONEY, "Honey")
-        addFluid(RagiumFluids.SNOW, "Powder Snow")
+        addFluid(RagiumFluidContents.HONEY, "Honey")
+        addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
+        addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
+        addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
-        addFluid(RagiumVirtualFluids.EXPERIENCE, "Experience Liquid")
+        addFluid(RagiumFluidContents.HYDROGEN, "Hydrogen")
 
-        addFluid(RagiumVirtualFluids.CHOCOLATE, "Chocolate")
-        addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "Mushroom Stew")
+        addFluid(RagiumFluidContents.NITROGEN, "Nitrogen")
+        addFluid(RagiumFluidContents.AMMONIA, "Ammonia")
+        addFluid(RagiumFluidContents.NITRIC_ACID, "Nitric Acid")
+        addFluid(RagiumFluidContents.MIXTURE_ACID, "Mixture Acid")
 
-        addFluid(RagiumVirtualFluids.AIR, "Air")
+        addFluid(RagiumFluidContents.OXYGEN, "Oxygen")
+        addFluid(RagiumFluidContents.ROCKET_FUEL, "Rocket Fuel")
 
-        addFluid(RagiumVirtualFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluidContents.ALKALI_SOLUTION, "Alkali Solution")
 
-        addFluid(RagiumVirtualFluids.NITROGEN, "Nitrogen")
-        addFluid(RagiumVirtualFluids.AMMONIA, "Ammonia")
-        addFluid(RagiumVirtualFluids.NITRIC_ACID, "Nitric Acid")
-        addFluid(RagiumVirtualFluids.MIXTURE_ACID, "Mixture Acid")
+        addFluid(RagiumFluidContents.SULFUR_DIOXIDE, "Sulfur Dioxide")
+        addFluid(RagiumFluidContents.SULFUR_TRIOXIDE, "Sulfur Trioxide")
+        addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
 
-        addFluid(RagiumVirtualFluids.OXYGEN, "Oxygen")
-        addFluid(RagiumVirtualFluids.ROCKET_FUEL, "Rocket Fuel")
+        addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
+        addFluid(RagiumFluidContents.FUEL, "Fuel")
+        addFluid(RagiumFluidContents.NITRO_FUEL, "Nitro Fuel")
+        addFluid(RagiumFluidContents.AROMATIC_COMPOUND, "Aromatic Compound")
 
-        addFluid(RagiumVirtualFluids.ALKALI_SOLUTION, "Alkali Solution")
+        addFluid(RagiumFluidContents.PLANT_OIL, "Plant Oil")
+        addFluid(RagiumFluidContents.BIOMASS, "Biomass")
+        addFluid(RagiumFluidContents.ETHANOL, "Ethanol")
+        addFluid(RagiumFluidContents.BIODIESEL, "Biodiesel")
+        addFluid(RagiumFluidContents.GLYCEROL, "Glycerol")
+        addFluid(RagiumFluidContents.NITROGLYCERIN, "Nitroglycerin")
 
-        addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
-        addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
-        addFluid(RagiumVirtualFluids.SULFURIC_ACID, "Sulfuric Acid")
-
-        addFluid(RagiumVirtualFluids.NAPHTHA, "Naphtha")
-        addFluid(RagiumVirtualFluids.FUEL, "Fuel")
-        addFluid(RagiumVirtualFluids.NITRO_FUEL, "Nitro Fuel")
-
-        addFluid(RagiumVirtualFluids.AROMATIC_COMPOUND, "Aromatic Compound")
-
-        addFluid(RagiumVirtualFluids.PLANT_OIL, "Plant Oil")
-        addFluid(RagiumVirtualFluids.BIOMASS, "Biomass")
-        addFluid(RagiumVirtualFluids.ETHANOL, "Ethanol")
-
-        addFluid(RagiumVirtualFluids.CRUDE_BIODIESEL, "Crude Biodiesel")
-        addFluid(RagiumVirtualFluids.BIODIESEL, "Biodiesel")
-        addFluid(RagiumVirtualFluids.GLYCEROL, "Glycerol")
-        addFluid(RagiumVirtualFluids.NITROGLYCERIN, "Nitroglycerin")
-
-        addFluid(RagiumVirtualFluids.SAP, "Sap")
-        addFluid(RagiumVirtualFluids.CRIMSON_SAP, "Crimson Sap")
-        addFluid(RagiumVirtualFluids.WARPED_SAP, "Warped Sap")
-
-        addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "Ragium Solution")
+        addFluid(RagiumFluidContents.SAP, "Sap")
+        addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
+        addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
     }
 
     private fun item() {
@@ -209,9 +198,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMold(RagiumItems.Molds.PLATE, "Mold (Plate)")
         addMold(RagiumItems.Molds.ROD, "Mold (Rod)")
         addMold(RagiumItems.Molds.WIRE, "Mold (Wire)")
-        // bucket
-        addBucket(RagiumItems.Buckets.CRUDE_OIL, "Crude Oil Bucket")
-        addBucket(RagiumItems.Buckets.CHOCOLATE, "Chocolate Bucket")
         // Parts
         // addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")

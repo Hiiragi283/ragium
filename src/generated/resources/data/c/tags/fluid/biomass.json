@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:biomass"
+    "ragium:biomass",
+    "ragium:flowing_biomass"
   ]
 }

@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.integration.emi.recipe.*
@@ -93,6 +94,10 @@ class RagiumEmiPlugin : EmiPlugin {
         // Milk Drain
         addRecipeSafe(RagiumAPI.id("/block_info/milk_drain")) { id: ResourceLocation ->
             HTBlockInfoEmiRecipe(id, RagiumBlocks.MILK_DRAIN, EmiStack.of(NeoForgeMod.MILK.get()))
+        }
+        // Exp Collector
+        addRecipeSafe(RagiumAPI.id("/block_info/exp_collector")) { id: ResourceLocation ->
+            HTBlockInfoEmiRecipe(id, RagiumBlocks.EXP_COLLECTOR, EmiStack.of(RagiumFluidContents.EXPERIENCE.get()))
         }
     }
 

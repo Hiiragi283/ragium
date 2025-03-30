@@ -43,7 +43,7 @@ object RagiumCreativeTabs {
             RagiumItems.Ingots.RAGI_ALLOY,
         ) { provider: HolderLookup.Provider ->
             // Material Blocks
-            addAll(RagiumItems.Buckets.entries)
+            addAll(RagiumFluidContents.REGISTER.itemEntries)
             addAll(RagiumBlocks.RAGINITE_ORES.getItems())
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
             add(RagiumBlocks.SILT)

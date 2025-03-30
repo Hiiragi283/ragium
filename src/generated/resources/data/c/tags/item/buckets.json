@@ -1,6 +1,33 @@
 {
   "values": [
+    "#c:buckets/alkali_solution",
+    "#c:buckets/ammonia",
+    "#c:buckets/aromatic_compound",
+    "#c:buckets/biodiesel",
+    "#c:buckets/biomass",
     "#c:buckets/chocolate",
-    "#c:buckets/crude_oil"
+    "#c:buckets/crimson_sap",
+    "#c:buckets/crude_oil",
+    "#c:buckets/ethanol",
+    "#c:buckets/experience",
+    "#c:buckets/fuel",
+    "#c:buckets/glycerol",
+    "#c:buckets/honey",
+    "#c:buckets/hydrogen",
+    "#c:buckets/mixture_acid",
+    "#c:buckets/mushroom_stew",
+    "#c:buckets/naphtha",
+    "#c:buckets/nitric_acid",
+    "#c:buckets/nitro_fuel",
+    "#c:buckets/nitrogen",
+    "#c:buckets/nitroglycerin",
+    "#c:buckets/oxygen",
+    "#c:buckets/plant_oil",
+    "#c:buckets/rocket_fuel",
+    "#c:buckets/sap",
+    "#c:buckets/sulfur_dioxide",
+    "#c:buckets/sulfur_trioxide",
+    "#c:buckets/sulfuric_acid",
+    "#c:buckets/warped_sap"
   ]
 }

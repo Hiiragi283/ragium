@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.api.registry.HTDeferredFluid
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.resources.ResourceLocation
@@ -46,7 +46,7 @@ class HTMachineRecipeBuilder(private val recipeType: HTMachineRecipeType) : HTRe
 
     //    Fluid Input    //
 
-    fun fluidInput(fluid: HTDeferredFluid<*>, amount: Int = 1000): HTMachineRecipeBuilder = fluidInput(fluid.commonTag, amount)
+    fun fluidInput(fluid: HTFluidContent<*, *, *>, amount: Int = 1000): HTMachineRecipeBuilder = fluidInput(fluid.commonTag, amount)
 
     fun fluidInput(fluid: Fluid, amount: Int = 1000): HTMachineRecipeBuilder = fluidInput(FluidIngredient.of(fluid), amount)
 

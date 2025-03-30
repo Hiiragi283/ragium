@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.Util
@@ -10,18 +11,21 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.block.SlabBlock
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.client.model.generators.*
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
-import java.util.function.Supplier
 
 //    LanguageProvider    //
 
-fun LanguageProvider.addFluid(fluid: Supplier<out Fluid>, value: String) {
-    add(fluid.get().fluidType.descriptionId, value)
+fun LanguageProvider.addFluid(content: HTFluidContent<*, *, *>, value: String) {
+    add(content.getType().descriptionId, value)
+    if ("en_us" in this.name) {
+        add(content.getBucket(), "$value Bucket")
+    } else if ("ja_jp" in this.name) {
+        add(content.getBucket(), "${value}入りバケツ")
+    }
 }
 
 fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String, desc: String) {
@@ -44,10 +48,6 @@ fun LanguageProvider.addOreVariant(variant: HTOreVariant, value: String) {
 
 fun LanguageProvider.addMold(mold: RagiumItems.Molds, value: String) {
     addItem(mold.holder, value)
-}
-
-fun LanguageProvider.addBucket(bucket: RagiumItems.Buckets, value: String) {
-    add(bucket.asItem(), value)
 }
 
 //    ModelFile    //

@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumVirtualFluids
+import hiiragi283.ragium.common.init.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -56,8 +56,8 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // それぞれのExp Orbに対して回収を行う
         for (entity: ExperienceOrb in expOrbs) {
             val fluidAmount: Int = entity.value * 20
-            if (outputTank.canInsert(RagiumVirtualFluids.EXPERIENCE.get(), fluidAmount)) {
-                outputTank.insert(RagiumVirtualFluids.EXPERIENCE.get(), fluidAmount, false)
+            if (outputTank.canInsert(RagiumFluidContents.EXPERIENCE.get(), fluidAmount)) {
+                outputTank.insert(RagiumFluidContents.EXPERIENCE.get(), fluidAmount, false)
                 entity.discard()
             }
         }

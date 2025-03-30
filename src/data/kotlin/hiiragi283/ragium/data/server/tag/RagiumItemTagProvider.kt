@@ -13,8 +13,10 @@ import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
+import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -130,12 +132,15 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_BREAD)
         builder.add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_COOKIE)
         builder.add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
+        builder.add(Tags.Items.FOODS, RagiumItems.EXP_BERRIES)
         builder.add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
         builder.add(Tags.Items.FOODS, RagiumItems.MEAT_INGOT)
         builder.add(Tags.Items.FOODS, RagiumItems.MEAT_SANDWICH)
         builder.add(Tags.Items.FOODS, RagiumItems.MELON_PIE)
         builder.add(Tags.Items.FOODS, RagiumItems.SWEET_BERRIES_CAKE_PIECE)
         builder.add(Tags.Items.FOODS, RagiumItems.WARPED_WART)
+
+        builder.add(Tags.Items.FOODS_BERRY, RagiumItems.EXP_BERRIES)
 
         builder.add(RagiumItemTags.FOOD_BUTTER, RagiumItems.BUTTER)
 
@@ -207,9 +212,9 @@ class RagiumItemTagProvider(output: PackOutput, provider: CompletableFuture<Hold
         builder.addItem(ItemTags.SMALL_FLOWERS, RagiumBlocks.LILY_OF_THE_ENDER)
 
         // Bucket
-        for (bucket: RagiumItems.Buckets in RagiumItems.Buckets.entries) {
-            builder.add(bucket.bucketTag, bucket.holder)
-            builder.addTag(Tags.Items.BUCKETS, bucket.bucketTag)
+        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
+            builder.add(content.bucketTag, content.bucketHolder)
+            builder.addTag(Tags.Items.BUCKETS, content.bucketTag)
         }
 
         // Parts

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:centrifuging",
+  "fluid_outputs": [
+    {
+      "amount": 50,
+      "fluid": "ragium:experience"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:exp_berries"
+    }
+  ]
+}

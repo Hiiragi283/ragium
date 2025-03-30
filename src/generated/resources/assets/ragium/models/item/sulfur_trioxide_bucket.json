@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "ragium:sulfur_trioxide",
+  "loader": "neoforge:fluid_container"
+}

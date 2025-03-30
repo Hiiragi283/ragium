@@ -37,7 +37,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun block() {
         addBlock(RagiumBlocks.SILT, "シルト")
-        addBlock(RagiumBlocks.CRUDE_OIL, "原油")
         addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "粘着質のソウルソイル")
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "エンダースズラン")
@@ -104,52 +103,42 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun fluid() {
-        addFluid(RagiumFluids.HONEY, "蜂蜜")
-        addFluid(RagiumFluids.SNOW, "粉雪")
+        addFluid(RagiumFluidContents.HONEY, "蜂蜜")
+        addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
+        addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
+        addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
-        addFluid(RagiumVirtualFluids.EXPERIENCE, "液体経験値")
+        addFluid(RagiumFluidContents.HYDROGEN, "水素")
 
-        addFluid(RagiumVirtualFluids.CHOCOLATE, "チョコレート")
-        addFluid(RagiumVirtualFluids.MUSHROOM_STEW, "キノコシチュー")
+        addFluid(RagiumFluidContents.NITROGEN, "窒素")
+        addFluid(RagiumFluidContents.AMMONIA, "アンモニア")
+        addFluid(RagiumFluidContents.NITRIC_ACID, "硝酸")
+        addFluid(RagiumFluidContents.MIXTURE_ACID, "混酸")
 
-        addFluid(RagiumVirtualFluids.AIR, "空気")
+        addFluid(RagiumFluidContents.OXYGEN, "酸素")
+        addFluid(RagiumFluidContents.ROCKET_FUEL, "ロケット燃料")
 
-        addFluid(RagiumVirtualFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluidContents.ALKALI_SOLUTION, "アルカリ溶液")
 
-        addFluid(RagiumVirtualFluids.NITROGEN, "窒素")
-        addFluid(RagiumVirtualFluids.AMMONIA, "アンモニア")
-        addFluid(RagiumVirtualFluids.NITRIC_ACID, "硝酸")
-        addFluid(RagiumVirtualFluids.MIXTURE_ACID, "混酸")
+        addFluid(RagiumFluidContents.SULFUR_DIOXIDE, "二酸化硫黄")
+        addFluid(RagiumFluidContents.SULFUR_TRIOXIDE, "三酸化硫黄")
+        addFluid(RagiumFluidContents.SULFURIC_ACID, "硫酸")
 
-        addFluid(RagiumVirtualFluids.OXYGEN, "酸素")
-        addFluid(RagiumVirtualFluids.ROCKET_FUEL, "ロケット燃料")
+        addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
+        addFluid(RagiumFluidContents.FUEL, "燃料")
+        addFluid(RagiumFluidContents.NITRO_FUEL, "ニトロ燃料")
+        addFluid(RagiumFluidContents.AROMATIC_COMPOUND, "芳香族化合物")
 
-        addFluid(RagiumVirtualFluids.ALKALI_SOLUTION, "アルカリ溶液")
+        addFluid(RagiumFluidContents.PLANT_OIL, "植物油")
+        addFluid(RagiumFluidContents.BIOMASS, "バイオマス")
+        addFluid(RagiumFluidContents.ETHANOL, "エタノール")
+        addFluid(RagiumFluidContents.BIODIESEL, "バイオディーゼル")
+        addFluid(RagiumFluidContents.GLYCEROL, "グリセロール")
+        addFluid(RagiumFluidContents.NITROGLYCERIN, "ニトログリセリン")
 
-        addFluid(RagiumVirtualFluids.SULFUR_DIOXIDE, "二酸化硫黄")
-        addFluid(RagiumVirtualFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
-        addFluid(RagiumVirtualFluids.SULFURIC_ACID, "硫酸")
-
-        addFluid(RagiumVirtualFluids.NAPHTHA, "ナフサ")
-        addFluid(RagiumVirtualFluids.FUEL, "燃料")
-        addFluid(RagiumVirtualFluids.NITRO_FUEL, "ニトロ燃料")
-
-        addFluid(RagiumVirtualFluids.AROMATIC_COMPOUND, "芳香族化合物")
-
-        addFluid(RagiumVirtualFluids.PLANT_OIL, "植物油")
-        addFluid(RagiumVirtualFluids.BIOMASS, "バイオマス")
-        addFluid(RagiumVirtualFluids.ETHANOL, "エタノール")
-
-        addFluid(RagiumVirtualFluids.CRUDE_BIODIESEL, "未精製のバイオディーゼル")
-        addFluid(RagiumVirtualFluids.BIODIESEL, "バイオディーゼル")
-        addFluid(RagiumVirtualFluids.GLYCEROL, "グリセロール")
-        addFluid(RagiumVirtualFluids.NITROGLYCERIN, "ニトログリセリン")
-
-        addFluid(RagiumVirtualFluids.SAP, "樹液")
-        addFluid(RagiumVirtualFluids.CRIMSON_SAP, "深紅の樹液")
-        addFluid(RagiumVirtualFluids.WARPED_SAP, "歪んだ樹液")
-
-        addFluid(RagiumVirtualFluids.RAGIUM_SOLUTION, "ラギウム溶液")
+        addFluid(RagiumFluidContents.SAP, "樹液")
+        addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
+        addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
     }
 
     private fun item() {
@@ -209,9 +198,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMold(RagiumItems.Molds.PLATE, "成形型（板材）")
         addMold(RagiumItems.Molds.ROD, "成形型（棒材）")
         addMold(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
-        // Buckets
-        addBucket(RagiumItems.Buckets.CRUDE_OIL, "原油入りバケツ")
-        addBucket(RagiumItems.Buckets.CHOCOLATE, "チョコレート入りバケツ")
         // Parts
         // addItem(RagiumItems.BEE_WAX, "蜜蠟")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")

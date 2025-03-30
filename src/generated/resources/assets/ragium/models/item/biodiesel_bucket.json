@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "ragium:biodiesel",
+  "loader": "neoforge:fluid_container"
+}

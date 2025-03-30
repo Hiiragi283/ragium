@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:experience"
+    "ragium:experience",
+    "ragium:flowing_experience"
   ]
 }

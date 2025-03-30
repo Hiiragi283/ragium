@@ -6,14 +6,15 @@ import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
-import hiiragi283.ragium.common.init.RagiumVirtualFluids
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluids
+import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -31,6 +32,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(Items.MAGMA_BLOCK)
             .saveSuffixed(output, "_from_magma_block")
 
+        // Exp Berries -> Liquid Exp
+        HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
+            .fluidOutput(RagiumFluidContents.EXPERIENCE, 50)
+            .itemInput(RagiumItems.EXP_BERRIES)
+            .saveSuffixed(output, "_from_berries")
+        
         sap(output)
     }
 
@@ -38,26 +45,26 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // XX Log -> Wood Dust + Sap
         HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
-            .fluidOutput(RagiumVirtualFluids.SAP, 100)
+            .fluidOutput(RagiumFluidContents.SAP, 100)
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .saveSuffixed(output, "_from_log")
         // Sap -> Slime Ball
         HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
             .itemOutput(Items.SLIME_BALL)
-            .fluidInput(RagiumVirtualFluids.SAP.commonTag, 1000)
+            .fluidInput(RagiumFluidContents.SAP.commonTag, 1000)
             .saveSuffixed(output, "_from_sap")
 
         // Crimson Stem -> Wood Dust + Crimson Sap
         HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
-            .fluidOutput(RagiumVirtualFluids.CRIMSON_SAP, 100)
+            .fluidOutput(RagiumFluidContents.CRIMSON_SAP, 100)
             .itemInput(ItemTags.CRIMSON_STEMS)
             .saveSuffixed(output, "_from_crimson")
         // Crimson Sap -> Sap + Crimson Crystal
         HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
             .itemOutput(RagiumItems.RawResources.CRIMSON_CRYSTAL)
-            .fluidOutput(RagiumVirtualFluids.SAP, 100)
-            .fluidInput(RagiumVirtualFluids.CRIMSON_SAP.commonTag, 1000)
+            .fluidOutput(RagiumFluidContents.SAP, 100)
+            .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
@@ -68,14 +75,14 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Warped Stem -> Wood Dust + Warped Sap
         HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
-            .fluidOutput(RagiumVirtualFluids.WARPED_SAP, 100)
+            .fluidOutput(RagiumFluidContents.WARPED_SAP, 100)
             .itemInput(ItemTags.WARPED_STEMS)
             .saveSuffixed(output, "_from_warped")
         // Warped Sap -> Sap + Warped Crystal
         HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
             .itemOutput(RagiumItems.RawResources.WARPED_CRYSTAL)
-            .fluidOutput(RagiumVirtualFluids.SAP, 100)
-            .fluidInput(RagiumVirtualFluids.WARPED_SAP.commonTag, 1000)
+            .fluidOutput(RagiumFluidContents.SAP, 100)
+            .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
@@ -99,5 +106,23 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumBlocks.SILT)
             .waterInput(250)
             .saveSuffixed(output, "_from_silt")
+        
+        exp(output)
+    }
+    
+    private fun exp(output: RecipeOutput) {
+        // Golden Apple
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
+            .itemInput(Items.GOLDEN_APPLE)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 8000)
+            .save(output)
+        
+        // Exp Berries
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(RagiumItems.EXP_BERRIES)
+            .itemInput(Tags.Items.FOODS_BERRY)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 1000)
+            .save(output)
     }
 }

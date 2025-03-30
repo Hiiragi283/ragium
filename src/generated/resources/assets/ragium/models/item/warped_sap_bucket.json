@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "ragium:warped_sap",
+  "loader": "neoforge:fluid_container"
+}

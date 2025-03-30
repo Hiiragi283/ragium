@@ -2,9 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemProperty
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -12,7 +10,6 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
-import hiiragi283.ragium.api.registry.HTDeferredFluid
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.item.*
@@ -22,10 +19,11 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
-import net.minecraft.util.StringRepresentable
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
-import net.minecraft.world.item.*
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
@@ -47,8 +45,6 @@ object RagiumItems {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
-        Buckets.entries
-
         Dusts.entries
         Ingots.entries
         RawResources.entries
@@ -82,33 +78,6 @@ object RagiumItems {
         }
 
     //    Materials    //
-
-    enum class Buckets(val fluid: HTDeferredFluid<*>) :
-        ItemLike,
-        StringRepresentable {
-        CRUDE_OIL(RagiumFluids.CRUDE_OIL),
-        CHOCOLATE(RagiumVirtualFluids.CHOCOLATE),
-        ;
-
-        constructor(virtual: RagiumVirtualFluids) : this(virtual.fluidHolder)
-
-        val holder: DeferredItem<BucketItem> = register(
-            "${serializedName}_bucket",
-            { properties: Item.Properties -> BucketItem(fluid.get(), properties) },
-            itemProperty().craftRemainder(Items.BUCKET).stacksTo(1),
-        )
-
-        val bucketTag: TagKey<Item> = itemTagKey(commonId("buckets/$serializedName"))
-
-        override fun asItem(): Item = holder.asItem()
-
-        override fun getSerializedName(): String = name.lowercase()
-
-        companion object {
-            @JvmStatic
-            val items: List<DeferredItem<BucketItem>> get() = entries.map(Buckets::holder)
-        }
-    }
 
     enum class Dusts(override val key: HTMaterialKey) : HTMaterialItemLike {
         // Vanilla
@@ -288,7 +257,10 @@ object RagiumItems {
 
     // Other
     @JvmField
-    val EXP_BERRIES: DeferredItem<HTExpBerriesItem> = register("exp_berries", ::HTExpBerriesItem)
+    val EXP_BERRIES: DeferredItem<HTExpBerriesItem> = register(
+        "exp_berries",
+        { prop: Item.Properties -> HTExpBerriesItem(RagiumBlocks.EXP_BERRY_BUSH.get(), prop) }
+    )
 
     @JvmField
     val WARPED_WART: DeferredItem<HTWarpedWartItem> = register(
@@ -371,7 +343,7 @@ object RagiumItems {
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
             { stack: ItemStack, _: Void? -> FluidBucketWrapper(stack) },
-            *Buckets.entries.toTypedArray(),
+            *RagiumFluidContents.REGISTER.itemEntries.toTypedArray(),
         )
 
         LOGGER.info("Registered item capabilities!")

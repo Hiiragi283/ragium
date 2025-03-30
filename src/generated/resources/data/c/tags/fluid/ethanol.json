@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:ethanol"
+    "ragium:ethanol",
+    "ragium:flowing_ethanol"
   ]
 }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.extension.enchLookup
-import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
@@ -99,7 +98,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     private val blocks: MutableList<Block> = mutableListOf()
 
     override fun add(block: Block, builder: LootTable.Builder) {
-        if (RagiumBlocks.CRUDE_OIL.isOf(block)) return
         super.add(block, builder)
         blocks.add(block)
     }

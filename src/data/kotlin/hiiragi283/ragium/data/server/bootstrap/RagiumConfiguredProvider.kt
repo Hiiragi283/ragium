@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.bootstrap
 import hiiragi283.ragium.api.data.HTWorldGenData
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluidContents
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.BlockTags
@@ -44,13 +45,13 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
             Feature.GEODE,
             GeodeConfiguration(
                 GeodeBlockSettings(
-                    BlockStateProvider.simple(RagiumBlocks.CRUDE_OIL.get()),
+                    BlockStateProvider.simple(RagiumFluidContents.CRUDE_OIL.getBlock()),
                     BlockStateProvider.simple(Blocks.SOUL_SOIL),
                     BlockStateProvider.simple(RagiumBlocks.STICKY_SOUL_SOIL.get()),
                     BlockStateProvider.simple(Blocks.BLACKSTONE),
                     BlockStateProvider.simple(Blocks.SMOOTH_BASALT),
                     listOf(
-                        RagiumBlocks.CRUDE_OIL.get().defaultBlockState(),
+                        RagiumFluidContents.CRUDE_OIL.getBlock().defaultBlockState(),
                     ),
                     BlockTags.FEATURES_CANNOT_REPLACE,
                     BlockTags.GEODE_INVALID_BLOCKS,

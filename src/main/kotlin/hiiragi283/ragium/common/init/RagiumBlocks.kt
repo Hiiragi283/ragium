@@ -125,13 +125,6 @@ object RagiumBlocks {
     ) { prop: BlockBehaviour.Properties -> ColoredFallingBlock(ColorRGBA(0xccccff), prop) }
 
     @JvmField
-    val CRUDE_OIL: DeferredBlock<LiquidBlock> = REGISTER.registerBlock(
-        "crude_oil",
-        { properties: BlockBehaviour.Properties -> LiquidBlock(RagiumFluids.CRUDE_OIL.get(), properties) },
-        blockProperty(Blocks.WATER).mapColor(MapColor.COLOR_BLACK),
-    )
-
-    @JvmField
     val STICKY_SOUL_SOIL: DeferredBlock<Block> = register(
         "sticky_soul_soil",
         blockProperty(Blocks.SOUL_SOIL),
