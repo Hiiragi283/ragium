@@ -131,6 +131,9 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val MYSTERIOUS_OBSIDIAN: DeferredBlock<Block> = register("mysterious_obsidian", blockProperty(Blocks.OBSIDIAN))
+
+    @JvmField
     val ASH_LOG: DeferredBlock<RotatedPillarBlock> = register(
         "ash_log",
         blockProperty().mapColor(MapColor.COLOR_GRAY).strength(1f).sound(SoundType.SAND),

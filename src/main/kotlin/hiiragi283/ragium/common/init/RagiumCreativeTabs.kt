@@ -48,7 +48,7 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
             add(RagiumBlocks.SILT)
             add(RagiumBlocks.STICKY_SOUL_SOIL)
-            add(RagiumBlocks.ASH_LOG)
+            add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 
             addAll(RagiumBlocks.StorageBlocks.entries)
             // Material Items
@@ -107,6 +107,7 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
             add(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
 
+            add(RagiumBlocks.ASH_LOG)
             add(RagiumBlocks.LILY_OF_THE_ENDER)
             add(RagiumItems.EXP_BERRIES)
             add(RagiumItems.WARPED_WART)

@@ -38,7 +38,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun block() {
         addBlock(RagiumBlocks.SILT, "Silt")
         addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "Sticky Soul Soil")
+        addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
+
         addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
+        addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "Lily of the Ender")
 
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationEn("Ragi-Brick", this)
@@ -58,8 +61,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "Magenta LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
-
-        addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
+        
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")

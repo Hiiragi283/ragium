@@ -41,6 +41,12 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             RagiumAPI.id("block/sticky_soul_soil"),
         )
 
+        layeredBlock(
+            RagiumBlocks.MYSTERIOUS_OBSIDIAN,
+            vanillaId("block/obsidian"),
+            RagiumAPI.id("block/mysterious_obsidian"),
+        )
+
         slabBlock(RagiumBlocks.SPONGE_CAKE_SLAB, RagiumBlocks.SPONGE_CAKE)
 
         RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)

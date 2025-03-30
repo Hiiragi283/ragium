@@ -38,7 +38,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun block() {
         addBlock(RagiumBlocks.SILT, "シルト")
         addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "粘着質のソウルソイル")
+        addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
+
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
+        addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "エンダースズラン")
 
         RagiumBlocks.RAGI_BRICK_SETS.addTranslationJp("らぎレンガ", this)
@@ -58,8 +61,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.MAGENTA), "LEDブロック（マゼンタ）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
-
-        addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
+        
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "スポンジケーキのハーフブロック")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
