@@ -18,6 +18,10 @@
     },
     "minecraft:bricks": {
       "Name": "ragium:ragi_bricks"
+    },
+    "minecraft:dragon_egg": {
+      "count": 2,
+      "item": "minecraft:dragon_egg"
     }
   }
 }

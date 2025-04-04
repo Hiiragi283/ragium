@@ -132,6 +132,12 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             HTCatalystConversion.drop(RagiumItems.RawResources.RAGI_CRYSTAL, 3),
             false,
         )
+        // Copy Dragon Egg
+        builder.add(
+            Blocks.DRAGON_EGG.builtInRegistryHolder(),
+            HTCatalystConversion.drop(Blocks.DRAGON_EGG, 2),
+            false,
+        )
 
         // Bricks -> Ragi-Bricks
         builder.add(

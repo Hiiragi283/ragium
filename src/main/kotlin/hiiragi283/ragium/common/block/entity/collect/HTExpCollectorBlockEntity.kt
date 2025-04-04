@@ -22,7 +22,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
     HTFluidTankHandler {
     private val outputTank: HTFluidTank = HTFluidTank.create("output_tank", this) {
-        validator = { variant: HTFluidVariant -> variant.isOf(RagiumFluidContents.EXPERIENCE) }
+        validator = { variant: HTFluidVariant -> variant.isOf(RagiumFluidContents.EXPERIENCE.get()) }
         capacity = Int.MAX_VALUE
     }
 

@@ -54,6 +54,7 @@ object RagiumCreativeTabs {
             // Material Items
             addAll(RagiumItems.Dusts.entries)
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
+            add(RagiumItems.AZURE_MIXTURE)
             addAll(RagiumItems.Ingots.entries)
             addAll(RagiumItems.RawResources.entries)
             addAll(RagiumItems.MekResources.entries)
@@ -95,6 +96,8 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.BUTTER)
             add(RagiumItems.ICE_CREAM)
+
+            add(RagiumItems.BOTTLED_BEE)
 
             add(RagiumItems.CHOCOLATE_APPLE)
             add(RagiumItems.CHOCOLATE_BREAD)

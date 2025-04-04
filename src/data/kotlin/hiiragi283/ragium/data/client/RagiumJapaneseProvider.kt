@@ -159,24 +159,26 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Food
-        addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
-        addItem(RagiumItems.MELON_PIE, "メロンパイ")
-
-        addItem(RagiumItems.BUTTER, "バター")
-        addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
-
-        addItem(RagiumItems.DOUGH, "生地")
-        addItem(RagiumItems.FLOUR, "小麦粉")
-
-        addItem(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
-        addItem(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
-        addItem(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
-
         addItem(RagiumItems.MINCED_MEAT, "ひき肉")
         addItem(RagiumItems.MEAT_INGOT, "生肉インゴット")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
         addItem(RagiumItems.MEAT_SANDWICH, "ミートサンドイッチ")
+
+        addItem(RagiumItems.DOUGH, "生地")
+        addItem(RagiumItems.FLOUR, "小麦粉")
+
+        addItem(RagiumItems.BUTTER, "バター")
+        addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
+
+        addItem(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
+
+        addItem(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
+        addItem(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
+        addItem(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
+
+        addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
+        addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
         addItem(RagiumItems.EXP_BERRIES, "経験値ベリー")
         addItem(RagiumItems.WARPED_WART, "歪んだウォート")
@@ -206,6 +208,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Parts
         // addItem(RagiumItems.BEE_WAX, "蜜蠟")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
+        addItem(RagiumItems.AZURE_MIXTURE, "紺碧の混合物")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.LED, "発光ダイオード")

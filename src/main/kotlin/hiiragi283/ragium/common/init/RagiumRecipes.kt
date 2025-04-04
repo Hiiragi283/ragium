@@ -16,6 +16,9 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRecipes {
     @JvmField
+    val ALLOYING = HTMachineRecipeType("alloying", Factories::alloying)
+
+    @JvmField
     val CENTRIFUGING = HTMachineRecipeType("centrifuging", Factories::centrifuging)
 
     @JvmField
@@ -34,6 +37,7 @@ object RagiumRecipes {
 
     @JvmField
     val ALL_TYPES: List<HTMachineRecipeType> = listOf(
+        ALLOYING,
         CENTRIFUGING,
         CRUSHING,
         EXTRACTING,
@@ -54,6 +58,17 @@ object RagiumRecipes {
     //    Factories    //
 
     private object Factories {
+        @JvmStatic
+        fun alloying(definition: HTRecipeDefinition): DataResult<HTAlloyingRecipe> {
+            val firstInput: SizedIngredient =
+                definition.getItemIngredient(0) ?: return DataResult.error { "Required item ingredients!" }
+            val secondInput: SizedIngredient =
+                definition.getItemIngredient(1) ?: return DataResult.error { "Required two item ingredients!" }
+            val output: HTItemOutput =
+                definition.getItemOutput(0) ?: return DataResult.error { "Required one item output!" }
+            return DataResult.success(HTAlloyingRecipe(firstInput, secondInput, output))
+        }
+
         @JvmStatic
         fun centrifuging(definition: HTRecipeDefinition): DataResult<HTCentrifugingRecipe> {
             val ingredient: Either<SizedIngredient, SizedFluidIngredient> =

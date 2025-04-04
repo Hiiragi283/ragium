@@ -70,6 +70,8 @@ data class HTItemVariant private constructor(val item: Item, override val compon
             return isOf(stack.item) && stack.componentsPatch == this.components
         }
 
+        fun isOf(item: ItemLike): Boolean = isOf(item.asItem())
+
         fun toStack(count: Int = 1): ItemStack = when {
             isEmpty -> ItemStack.EMPTY
             else -> ItemStack(holder, count, components)

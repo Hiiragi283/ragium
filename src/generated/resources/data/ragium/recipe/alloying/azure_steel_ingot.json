@@ -1,0 +1,18 @@
+{
+  "type": "ragium:alloying",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:ingots/iron"
+    },
+    {
+      "count": 2,
+      "item": "ragium:azure_mixture"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:azure_steel_ingot"
+    }
+  ]
+}

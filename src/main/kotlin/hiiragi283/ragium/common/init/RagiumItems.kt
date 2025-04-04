@@ -167,6 +167,9 @@ object RagiumItems {
     @JvmField
     val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")
 
+    @JvmField
+    val AZURE_MIXTURE: DeferredItem<Item> = register("azure_mixture")
+
     //    Armors    //
 
     @JvmField
@@ -236,6 +239,10 @@ object RagiumItems {
     @JvmField
     val ICE_CREAM: DeferredItem<HTIceCreamItem> =
         register("ice_cream", ::HTIceCreamItem, itemProperty().food(RagiumFoods.ICE_CREAM))
+
+    // Honey
+    @JvmField
+    val BOTTLED_BEE: DeferredItem<HTBottledBeeItem> = register("bottled_bee", ::HTBottledBeeItem)
 
     // Chocolate
     @JvmField

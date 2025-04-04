@@ -159,24 +159,26 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         addItem(RagiumItems.RAGI_TICKET, "Ragi Ticket")
         // Food
-        addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
-        addItem(RagiumItems.MELON_PIE, "Melon Pie")
-
-        addItem(RagiumItems.BUTTER, "Butter")
-        addItem(RagiumItems.ICE_CREAM, "Ice Cream")
-
-        addItem(RagiumItems.DOUGH, "Dough")
-        addItem(RagiumItems.FLOUR, "Flour")
-
-        addItem(RagiumItems.CHOCOLATE_APPLE, "Chocolate Apple")
-        addItem(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
-        addItem(RagiumItems.CHOCOLATE_COOKIE, "Chocolate Cookie")
-
         addItem(RagiumItems.MINCED_MEAT, "Minced Meat")
         addItem(RagiumItems.MEAT_INGOT, "Meat Ingot")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
         addItem(RagiumItems.MEAT_SANDWICH, "Meat Sandwich")
+
+        addItem(RagiumItems.DOUGH, "Dough")
+        addItem(RagiumItems.FLOUR, "Flour")
+
+        addItem(RagiumItems.BUTTER, "Butter")
+        addItem(RagiumItems.ICE_CREAM, "Ice Cream")
+
+        addItem(RagiumItems.BOTTLED_BEE, "Bottled Bee")
+
+        addItem(RagiumItems.CHOCOLATE_APPLE, "Chocolate Apple")
+        addItem(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
+        addItem(RagiumItems.CHOCOLATE_COOKIE, "Chocolate Cookie")
+
+        addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
+        addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.EXP_BERRIES, "Exp Berries")
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
@@ -206,6 +208,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Parts
         // addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
+        addItem(RagiumItems.AZURE_MIXTURE, "Azure Mixture")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.LED, "L.E.D.")

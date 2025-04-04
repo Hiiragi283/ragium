@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.event.HTRecipesUpdatedEvent
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -14,8 +15,15 @@ import hiiragi283.ragium.api.property.HTPropertyMap
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderGetter
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.animal.Bee
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
@@ -23,12 +31,37 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.LootTableLoadEvent
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeEvents {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
+
+    //    Item Interaction    //
+
+    @SubscribeEvent
+    fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
+        // イベントがキャンセルされている場合はパス
+        if (event.isCanceled) return
+        // アイテムがガラス瓶でにあ場合はパス
+        val stack: ItemStack = event.itemStack
+        if (!stack.`is`(Items.GLASS_BOTTLE)) return
+        // 対象がハチでない場合はパス
+        val target: Bee = event.target as? Bee ?: return
+        if (target.isAlive) {
+            val player: Player = event.entity
+            target.level().playSound(player, target, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1f, 1f)
+            // ハチを瓶に詰める
+            if (!player.level().isClientSide) {
+                target.discard()
+                stack.shrink(1)
+                dropStackAt(player, RagiumItems.BOTTLED_BEE)
+            }
+            event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
+        }
+    }
 
     //    Loot Table Load    //
 
