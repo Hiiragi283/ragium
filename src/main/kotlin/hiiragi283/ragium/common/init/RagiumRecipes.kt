@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
+import hiiragi283.ragium.api.registry.HTRecipeTypeRegister
 import hiiragi283.ragium.common.recipe.*
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -16,22 +17,29 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRecipes {
     @JvmField
-    val ALLOYING = HTMachineRecipeType("alloying", Factories::alloying)
+    val REGISTER = HTRecipeTypeRegister(RagiumAPI.MOD_ID)
+
+    @JvmStatic
+    private fun register(name: String, factory: (HTRecipeDefinition) -> DataResult<out HTMachineRecipe>): HTMachineRecipeType =
+        REGISTER.register(name, HTMachineRecipeType(name, factory))
 
     @JvmField
-    val CENTRIFUGING = HTMachineRecipeType("centrifuging", Factories::centrifuging)
+    val ALLOYING: HTMachineRecipeType = register("alloying", Factories::alloying)
 
     @JvmField
-    val CRUSHING = HTMachineRecipeType("crushing", Factories::crushing)
+    val CENTRIFUGING: HTMachineRecipeType = register("centrifuging", Factories::centrifuging)
 
     @JvmField
-    val EXTRACTING = HTMachineRecipeType("extracting", Factories::extracting)
+    val CRUSHING: HTMachineRecipeType = register("crushing", Factories::crushing)
 
     @JvmField
-    val INFUSING = HTMachineRecipeType("infusing", Factories::infusing)
+    val EXTRACTING: HTMachineRecipeType = register("extracting", Factories::extracting)
 
     @JvmField
-    val REFINING = HTMachineRecipeType("refining", Factories::refining)
+    val INFUSING: HTMachineRecipeType = register("infusing", Factories::infusing)
+
+    @JvmField
+    val REFINING: HTMachineRecipeType = register("refining", Factories::refining)
 
     //     Event    //
 

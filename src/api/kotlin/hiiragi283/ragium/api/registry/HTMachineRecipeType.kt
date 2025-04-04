@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
@@ -18,34 +17,11 @@ import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.registries.DeferredRegister
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 
 class HTMachineRecipeType(val name: String, private val factory: (HTRecipeDefinition) -> DataResult<out HTMachineRecipe>) :
     RecipeType<HTMachineRecipe>,
     RecipeSerializer<HTMachineRecipe> {
-    companion object {
-        @JvmStatic
-        private val SERIALIZER_REGISTER: DeferredRegister<RecipeSerializer<*>> =
-            DeferredRegister.create(Registries.RECIPE_SERIALIZER, RagiumAPI.MOD_ID)
-
-        @JvmStatic
-        private val TYPE_REGISTER: DeferredRegister<RecipeType<*>> =
-            DeferredRegister.create(Registries.RECIPE_TYPE, RagiumAPI.MOD_ID)
-
-        @JvmStatic
-        fun init(eventBus: IEventBus) {
-            SERIALIZER_REGISTER.register(eventBus)
-            TYPE_REGISTER.register(eventBus)
-        }
-    }
-
-    init {
-        SERIALIZER_REGISTER.register(name) { _: ResourceLocation -> this }
-        TYPE_REGISTER.register(name) { _: ResourceLocation -> this }
-    }
-
     private var recipeCache: Map<ResourceLocation, RecipeHolder<HTMachineRecipe>> = mapOf()
     private var changed: Boolean = true
 

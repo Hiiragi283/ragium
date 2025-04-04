@@ -33,8 +33,6 @@ fun createPotionStack(content: PotionContents, count: Int = 1): ItemStack = crea
     set(DataComponents.POTION_CONTENTS, content)
 }
 
-val ItemStack.isNotEmpty: Boolean get() = !isEmpty
-
 /**
  * 残りの耐久値を返します。
  */

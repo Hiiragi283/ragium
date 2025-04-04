@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.HTCatalystConversion
 import hiiragi283.ragium.api.network.HTCustomPayload
-import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
@@ -49,8 +48,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
 
-        RagiumRecipes
-        HTMachineRecipeType.init(eventBus)
+        RagiumRecipes.REGISTER.init(eventBus)
 
         HTEnergyNetworkManagerImpl
 
