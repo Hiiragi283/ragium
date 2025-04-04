@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "ragium:block/deep_catalyst"
+    },
+    "active=true": {
+      "model": "ragium:block/deep_catalyst_active"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "values": {
+    "#c:storage_blocks/copper": {
+      "count": 3,
+      "item": "ragium:ragi_alloy_ingot"
+    },
+    "#c:storage_blocks/diamond": {
+      "count": 3,
+      "item": "ragium:ragi_crystal"
+    },
+    "#c:storage_blocks/gold": {
+      "count": 3,
+      "item": "ragium:advanced_ragi_alloy_ingot"
+    },
+    "#c:storage_blocks/redstone": {
+      "count": 3,
+      "item": "ragium:raginite_dust"
+    },
+    "minecraft:bricks": {
+      "Name": "ragium:ragi_bricks"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "ragium:block/ragium_catalyst"
+    },
+    "active=true": {
+      "model": "ragium:block/ragium_catalyst_active"
+    }
+  }
+}

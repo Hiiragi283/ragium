@@ -10,6 +10,8 @@ import dev.emi.emi.api.recipe.EmiInfoRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTCatalystConversion
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
@@ -19,12 +21,15 @@ import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.integration.emi.recipe.*
+import net.minecraft.core.Holder
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import org.slf4j.Logger
@@ -53,6 +58,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addMachineRecipe(RagiumRecipes.REFINING, HTFluidProcessEmiRecipe.create(RagiumEmiCategories.REFINING))
 
         addDeviceRecipes()
+        addCatalystRecipes()
         addInfos()
     }
 
@@ -97,6 +103,44 @@ class RagiumEmiPlugin : EmiPlugin {
         }
     }
 
+    private fun addCatalystRecipes() {
+        for (holder: Holder.Reference<Block> in BuiltInRegistries.BLOCK.holders()) {
+            // Azure
+            holder.getData(HTCatalystConversion.AZURE_TYPE)?.let { conversion: HTCatalystConversion ->
+                addRecipeSafe {
+                    HTCatalystEmiRecipe(
+                        RagiumEmiCategories.CATALYST_AZURE,
+                        holder.idOrThrow.withPrefix("/catalyst/azure/"),
+                        holder.value(),
+                        conversion.getPreview(),
+                    )
+                }
+            }
+            // Deep
+            holder.getData(HTCatalystConversion.DEEP_TYPE)?.let { conversion: HTCatalystConversion ->
+                addRecipeSafe {
+                    HTCatalystEmiRecipe(
+                        RagiumEmiCategories.CATALYST_DEEP,
+                        holder.idOrThrow.withPrefix("/catalyst/deep/"),
+                        holder.value(),
+                        conversion.getPreview(),
+                    )
+                }
+            }
+            // Ragium
+            holder.getData(HTCatalystConversion.RAGIUM_TYPE)?.let { conversion: HTCatalystConversion ->
+                addRecipeSafe {
+                    HTCatalystEmiRecipe(
+                        RagiumEmiCategories.CATALYST_RAGIUM,
+                        holder.idOrThrow.withPrefix("/catalyst/ragium/"),
+                        holder.value(),
+                        conversion.getPreview(),
+                    )
+                }
+            }
+        }
+    }
+
     private fun addInfos() {
         addInfo(RagiumBlocks.ASH_LOG, Component.translatable(RagiumTranslationKeys.EMI_ASH_LOG))
         addInfo(RagiumBlocks.QUARTZ_GLASS, Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS))
@@ -124,13 +168,13 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addInfo(icon: EmiStack, vararg texts: Component) {
-        registry.addRecipe(
+        addRecipeSafe {
             EmiInfoRecipe(
                 listOf(icon),
                 listOf(*texts),
                 icon.id.withPrefix("/"),
-            ),
-        )
+            )
+        }
     }
 
     /**

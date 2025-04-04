@@ -1,9 +1,11 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTCatalystBlock
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.data.HTCatalystConversion
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -405,6 +407,19 @@ object RagiumBlocks {
     @JvmField
     val TELEPORT_ANCHOR: DeferredBlock<Block> = register("teleport_anchor", heavyMetal())
 
+    // Elite
+    @JvmField
+    val AZURE_CATALYST: DeferredBlock<HTCatalystBlock> =
+        register("azure_catalyst", heavyMetal(), HTCatalystBlock.create(HTCatalystConversion.AZURE_TYPE))
+
+    @JvmField
+    val DEEP_CATALYST: DeferredBlock<HTCatalystBlock> =
+        register("deep_catalyst", heavyMetal(), HTCatalystBlock.create(HTCatalystConversion.DEEP_TYPE))
+
+    @JvmField
+    val RAGIUM_CATALYST: DeferredBlock<HTCatalystBlock> =
+        register("ragium_catalyst", heavyMetal(), HTCatalystBlock.create(HTCatalystConversion.RAGIUM_TYPE))
+
     @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
         MILK_DRAIN,
@@ -418,5 +433,9 @@ object RagiumBlocks {
         WATER_COLLECTOR,
         // 無彩色
         ENI,
+        // 触媒
+        AZURE_CATALYST,
+        DEEP_CATALYST,
+        RAGIUM_CATALYST,
     )
 }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "ragium:block/azure_catalyst"
+    },
+    "active=true": {
+      "model": "ragium:block/azure_catalyst_active"
+    }
+  }
+}

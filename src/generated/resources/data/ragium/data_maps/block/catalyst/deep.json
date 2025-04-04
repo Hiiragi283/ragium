@@ -1,0 +1,48 @@
+{
+  "values": {
+    "#c:storage_blocks/azure_steel": {
+      "count": 3,
+      "item": "ragium:deep_steel_ingot"
+    },
+    "#c:storage_blocks/bone_meal": {
+      "Name": "minecraft:sculk_catalyst",
+      "Properties": {
+        "bloom": "false"
+      }
+    },
+    "minecraft:deepslate": {
+      "Name": "minecraft:reinforced_deepslate"
+    },
+    "minecraft:jukebox": {
+      "Name": "minecraft:sculk_shrieker",
+      "Properties": {
+        "can_summon": "true",
+        "shrieking": "false",
+        "waterlogged": "false"
+      }
+    },
+    "minecraft:moss_block": {
+      "Name": "minecraft:sculk"
+    },
+    "minecraft:note_block": {
+      "Name": "minecraft:sculk_sensor",
+      "Properties": {
+        "power": "0",
+        "sculk_sensor_phase": "inactive",
+        "waterlogged": "false"
+      }
+    },
+    "minecraft:vine": {
+      "Name": "minecraft:sculk_vein",
+      "Properties": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "waterlogged": "false",
+        "west": "false"
+      }
+    }
+  }
+}

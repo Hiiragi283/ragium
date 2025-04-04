@@ -2,6 +2,7 @@
   "values": [
     "ragium:advanced_machine_casing",
     "ragium:advanced_ragi_alloy_block",
+    "ragium:azure_catalyst",
     "ragium:azure_steel_block",
     "ragium:azure_tile_slab",
     "ragium:azure_tile_stairs",
@@ -18,6 +19,7 @@
     "ragium:crimson_crystal_block",
     "ragium:crusher",
     "ragium:cyan_led_block",
+    "ragium:deep_catalyst",
     "ragium:deep_steel_block",
     "ragium:deepslate_ragi_crystal_ore",
     "ragium:deepslate_raginite_ore",
@@ -55,6 +57,7 @@
     "ragium:ragi_crystal_block",
     "ragium:ragi_crystal_ore",
     "ragium:raginite_ore",
+    "ragium:ragium_catalyst",
     "ragium:red_led_block",
     "ragium:soul_glass",
     "ragium:soul_spike",

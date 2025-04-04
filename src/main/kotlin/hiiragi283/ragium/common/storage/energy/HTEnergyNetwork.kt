@@ -5,11 +5,12 @@ import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.util.HTSavedDataType
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.Mth
 import net.minecraft.world.level.saveddata.SavedData
-import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
+import kotlin.math.min
 
-internal class HTEnergyNetwork(amount: Int) :
+internal class HTEnergyNetwork(private var amount: Int = 0) :
     SavedData(),
     IEnergyStorage {
     companion object {
@@ -25,22 +26,30 @@ internal class HTEnergyNetwork(amount: Int) :
     constructor(tag: CompoundTag) : this(tag.getInt(KEY))
 
     override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag = buildNbt {
-        putInt(KEY, delegated.energyStored)
+        putInt(KEY, amount)
     }
 
     //    IEnergyStorage    //
 
-    private val delegated = EnergyStorage(Int.MAX_VALUE, Int.MAX_VALUE, Int.MAX_VALUE, amount)
+    override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int {
+        if (!canReceive() || toReceive <= 0) return 0
+        val received: Int = Mth.clamp(maxEnergyStored - energyStored, 0, toReceive)
+        if (!simulate) this.amount += received
+        return received
+    }
 
-    override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = delegated.receiveEnergy(toReceive, simulate)
+    override fun extractEnergy(toExtract: Int, simulate: Boolean): Int {
+        if (!canExtract() || toExtract <= 0) return 0
+        val extracted: Int = min(energyStored, toExtract)
+        if (!simulate) this.amount -= extracted
+        return extracted
+    }
 
-    override fun extractEnergy(toExtract: Int, simulate: Boolean): Int = delegated.extractEnergy(toExtract, simulate)
+    override fun getEnergyStored(): Int = amount
 
-    override fun getEnergyStored(): Int = delegated.energyStored
+    override fun getMaxEnergyStored(): Int = Int.MAX_VALUE
 
-    override fun getMaxEnergyStored(): Int = delegated.maxEnergyStored
+    override fun canExtract(): Boolean = true
 
-    override fun canExtract(): Boolean = delegated.canExtract()
-
-    override fun canReceive(): Boolean = delegated.canReceive()
+    override fun canReceive(): Boolean = true
 }

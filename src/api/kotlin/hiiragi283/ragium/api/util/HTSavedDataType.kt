@@ -8,7 +8,8 @@ import java.util.function.BiFunction
 import java.util.function.Function
 import java.util.function.Supplier
 
-data class HTSavedDataType<T : SavedData>(val id: ResourceLocation, val factory: SavedData.Factory<T>) {
+@ConsistentCopyVisibility
+data class HTSavedDataType<T : SavedData> private constructor(val id: ResourceLocation, val factory: SavedData.Factory<T>) {
     constructor(
         id: ResourceLocation,
         factory: Supplier<T>,

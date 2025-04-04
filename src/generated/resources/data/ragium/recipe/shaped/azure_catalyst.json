@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:obsidians/normal"
+      "item": "ragium:device_casing"
     },
     "B": {
-      "tag": "c:ingots/deep_steel"
+      "tag": "c:storage_blocks/azure_steel"
     },
     "C": {
-      "tag": "c:tools/forge_hammer"
+      "item": "minecraft:heart_of_the_sea"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "ABA"
   ],
   "result": {
-    "count": 4,
-    "id": "ragium:device_casing"
+    "count": 1,
+    "id": "ragium:azure_catalyst"
   }
 }

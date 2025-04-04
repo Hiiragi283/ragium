@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
@@ -165,6 +166,31 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         )
 
         simpleAltBlock(RagiumBlocks.MILK_DRAIN)
+
+        // Catalyst
+        fun catalyst(holder: DeferredBlock<*>) {
+            val blockId: ResourceLocation = holder.blockId
+            val inactive: BlockModelBuilder = models().cubeAll(blockId.toString(), blockId)
+
+            val activeId: ResourceLocation = blockId.withSuffix("_active")
+            val active: BlockModelBuilder = models().cubeAll(activeId.toString(), activeId)
+
+            getVariantBuilder(holder.get())
+                .forAllStates { state: BlockState ->
+                    ConfiguredModel
+                        .builder()
+                        .modelFile(
+                            when (state.getValue(HTBlockStateProperties.IS_ACTIVE)) {
+                                true -> active
+                                false -> inactive
+                            },
+                        ).build()
+                }
+        }
+
+        catalyst(RagiumBlocks.RAGIUM_CATALYST)
+        catalyst(RagiumBlocks.AZURE_CATALYST)
+        catalyst(RagiumBlocks.DEEP_CATALYST)
 
         // Manual Machine
         /*getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {

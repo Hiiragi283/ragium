@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.storage
 
 import kotlin.math.min
 
-abstract class HTSingleVariantStorage<T : HTVariant<*>> : HTStorageListener {
+abstract class HTSingleVariantStorage<T : HTVariant<*>> {
     var resource: T = getEmptyVariant()
         protected set
     var amount: Int = 0
@@ -13,6 +13,8 @@ abstract class HTSingleVariantStorage<T : HTVariant<*>> : HTStorageListener {
     protected abstract fun getEmptyVariant(): T
 
     abstract fun isValid(variant: T): Boolean
+
+    abstract fun onContentsChanged()
 
     fun insert(resource: T, maxAmount: Int, simulate: Boolean): Int {
         if (resource.isEmpty) return 0

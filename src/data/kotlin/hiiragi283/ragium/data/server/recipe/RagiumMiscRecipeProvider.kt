@@ -65,7 +65,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING, 2)
+        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING, 4)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
             .define('B', HTTagPrefixes.INGOT, RagiumMaterials.DEEP_STEEL)
@@ -82,12 +82,12 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "AAA",
             ).define('A', HTTagPrefixes.INGOT, VanillaMaterials.COPPER)
             .define('B', HTTagPrefixes.DUST, VanillaMaterials.REDSTONE)
-            .define('C', HTTagPrefixes.INGOT, RagiumMaterials.AZURE_STEEL)
+            .define('C', HTTagPrefixes.INGOT, VanillaMaterials.IRON)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
             .cross8()
-            .define('A', HTTagPrefixes.DUST, RagiumMaterials.DEEP_STEEL)
+            .define('A', HTTagPrefixes.DUST, RagiumMaterials.AZURE_STEEL)
             .define('B', HTTagPrefixes.DUST, VanillaMaterials.GLOWSTONE)
             .define('C', RagiumItemTags.CIRCUITS_BASIC)
             .saveSuffixed(output, "_from_basic")
@@ -185,5 +185,19 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         advDevice(RagiumBlocks.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
         advDevice(RagiumBlocks.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
         advDevice(RagiumBlocks.TELEPORT_ANCHOR, HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.WARPED_CRYSTAL)
+
+        // Elite
+        fun catalyst(catalyst: ItemLike, key: HTMaterialKey, core: Ingredient) {
+            HTShapedRecipeBuilder(catalyst)
+                .cross8()
+                .define('A', RagiumBlocks.DEVICE_CASING)
+                .define('B', HTTagPrefixes.STORAGE_BLOCK, key)
+                .define('C', core)
+                .save(output)
+        }
+
+        catalyst(RagiumBlocks.RAGIUM_CATALYST, RagiumMaterials.RAGI_CRYSTAL, Ingredient.of(Tags.Items.NETHER_STARS))
+        catalyst(RagiumBlocks.AZURE_CATALYST, RagiumMaterials.AZURE_STEEL, Ingredient.of(Items.HEART_OF_THE_SEA))
+        catalyst(RagiumBlocks.DEEP_CATALYST, VanillaMaterials.DIAMOND, Ingredient.of(Tags.Items.NETHER_STARS))
     }
 }

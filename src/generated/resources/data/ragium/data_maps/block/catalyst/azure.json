@@ -1,0 +1,14 @@
+{
+  "values": {
+    "#c:storage_blocks/iron": {
+      "count": 3,
+      "item": "ragium:azure_steel_ingot"
+    },
+    "minecraft:amethyst_block": {
+      "Name": "minecraft:budding_amethyst"
+    },
+    "minecraft:deepslate_tiles": {
+      "Name": "ragium:azure_tiles"
+    }
+  }
+}
