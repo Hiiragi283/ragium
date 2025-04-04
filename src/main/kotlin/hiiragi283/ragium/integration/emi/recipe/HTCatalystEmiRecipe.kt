@@ -8,20 +8,15 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 
 class HTCatalystEmiRecipe(
-    private val category: EmiRecipeCategory,
-    private val id: ResourceLocation,
-    private val input: Block,
-    private val output: ItemStack,
-) : HTSimpleEmiRecipe {
-    override fun getFirstInput(): EmiIngredient = EmiStack.of(input)
-
-    override fun getFirstOutput(): EmiStack = EmiStack.of(output)
-
-    override fun getCategory(): EmiRecipeCategory = category
-
-    override fun getId(): ResourceLocation = id
-
-    override fun getInputs(): List<EmiIngredient> = listOf(getFirstInput())
-
-    override fun getOutputs(): List<EmiStack> = listOf(getFirstOutput())
+    category: EmiRecipeCategory,
+    id: ResourceLocation,
+    firstInput: EmiIngredient,
+    firstOutput: EmiStack,
+) : HTSimpleEmiRecipe.Base(category, id, firstInput, firstOutput) {
+    constructor(
+        category: EmiRecipeCategory,
+        id: ResourceLocation,
+        block: Block,
+        stack: ItemStack,
+    ) : this(category, id, EmiStack.of(block), EmiStack.of(stack))
 }

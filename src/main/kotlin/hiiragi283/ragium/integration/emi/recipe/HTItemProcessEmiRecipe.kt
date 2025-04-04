@@ -15,7 +15,8 @@ class HTItemProcessEmiRecipe private constructor(category: EmiRecipeCategory, id
                 { id: ResourceLocation, definition: HTRecipeDefinition -> HTItemProcessEmiRecipe(category, id, definition) }
         }
 
-        override fun getFirstInput(): EmiIngredient = itemInputs[0]
-
-        override fun getFirstOutput(): EmiStack = itemOutputs[0]
+        override val firstInput: EmiIngredient
+            get() = itemInputs[0]
+        override val firstOutput: EmiStack
+            get() = itemOutputs[0]
     }

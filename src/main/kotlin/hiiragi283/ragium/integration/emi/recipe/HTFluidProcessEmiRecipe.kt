@@ -15,7 +15,9 @@ class HTFluidProcessEmiRecipe private constructor(category: EmiRecipeCategory, i
                 { id: ResourceLocation, definition: HTRecipeDefinition -> HTFluidProcessEmiRecipe(category, id, definition) }
         }
 
-        override fun getFirstInput(): EmiIngredient = fluidInputs[0]
+        override val firstInput: EmiIngredient
+            get() = fluidInputs[0]
 
-        override fun getFirstOutput(): EmiStack = fluidOutput[0]
+        override val firstOutput: EmiStack
+            get() = fluidOutput[0]
     }

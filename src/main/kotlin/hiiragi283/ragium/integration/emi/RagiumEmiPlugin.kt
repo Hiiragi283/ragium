@@ -82,24 +82,24 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addDeviceRecipes() {
         // Ash Log
         addRecipeSafe(RagiumAPI.id("/block_info/ash_log")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.ASH_LOG, EmiStack.of(RagiumItems.Dusts.ASH))
+            HTBlockInfoEmiRecipe(id, RagiumBlocks.ASH_LOG, RagiumItems.Dusts.ASH)
         }
 
         // Water Well
         addRecipeSafe(RagiumAPI.id("/block_info/water_well")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.WATER_COLLECTOR, EmiStack.of(Fluids.WATER))
+            HTBlockInfoEmiRecipe(id, RagiumBlocks.WATER_COLLECTOR, Fluids.WATER)
         }
         // Lava Well
         addRecipeSafe(RagiumAPI.id("/block_info/lava_well")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.LAVA_COLLECTOR, EmiStack.of(Fluids.LAVA))
+            HTBlockInfoEmiRecipe(id, RagiumBlocks.LAVA_COLLECTOR, Fluids.LAVA)
         }
         // Milk Drain
         addRecipeSafe(RagiumAPI.id("/block_info/milk_drain")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.MILK_DRAIN, EmiStack.of(NeoForgeMod.MILK.get()))
+            HTBlockInfoEmiRecipe(id, RagiumBlocks.MILK_DRAIN, NeoForgeMod.MILK.get())
         }
         // Exp Collector
         addRecipeSafe(RagiumAPI.id("/block_info/exp_collector")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.EXP_COLLECTOR, EmiStack.of(RagiumFluidContents.EXPERIENCE.get()))
+            HTBlockInfoEmiRecipe(id, RagiumBlocks.EXP_COLLECTOR, RagiumFluidContents.EXPERIENCE.get())
         }
     }
 
