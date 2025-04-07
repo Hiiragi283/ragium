@@ -14,16 +14,29 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.property.HTPropertyMap
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
+import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.stats.Stats
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.SimpleMenuProvider
+import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.effect.MobEffectCategory
+import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.animal.Bee
+import net.minecraft.world.entity.npc.WanderingTrader
+import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
@@ -31,6 +44,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.LootTableLoadEvent
+import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import org.slf4j.Logger
 
@@ -60,6 +74,70 @@ object RagiumRuntimeEvents {
                 dropStackAt(player, RagiumItems.BOTTLED_BEE)
             }
             event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
+        }
+    }
+
+    @SubscribeEvent
+    fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
+        if (event.isCanceled) return
+        val stack: ItemStack = event.itemStack
+        if (stack.isEmpty) return
+        val player: Player = event.entity
+        val level: Level = player.level()
+        // エンダーバンドルの場合はGUIを開く
+        if (stack.`is`(RagiumItems.ENDER_BUNDLE)) {
+            // SEを再生する
+            level.playSound(null, player.blockPosition(), SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS)
+            // GUiを開く
+            player.openMenu(
+                SimpleMenuProvider(
+                    { containerId: Int, inventory: Inventory, playerIn: Player ->
+                        ChestMenu.threeRows(containerId, inventory, playerIn.enderChestInventory)
+                    },
+                    Component.translatable("container.enderchest"),
+                ),
+            )
+            player.awardStat(Stats.OPEN_ENDERCHEST)
+            return
+        }
+        // 行商人のカタログの場合もGUIを開く
+        if (stack.`is`(RagiumItems.TRADER_CATALOG)) {
+            WanderingTrader(EntityType.WANDERING_TRADER, level).interact(player, InteractionHand.MAIN_HAND)
+            return
+        }
+    }
+
+    @SubscribeEvent
+    fun onFinishUsingItem(event: LivingEntityUseItemEvent.Finish) {
+        val stack: ItemStack = event.item
+        if (stack.isEmpty) return
+        val result: ItemStack = event.resultStack
+        val user: LivingEntity = event.entity
+        val player: Player? = user as? Player
+        val level: Level = user.level()
+        // アンブロシアの場合は個数を減らさない
+        if (stack.`is`(RagiumItems.AMBROSIA)) {
+            if (result.isEmpty) {
+                event.resultStack = stack.copy()
+            } else {
+                result.grow(1)
+            }
+            return
+        }
+        // アイスクリームの場合は火を消す
+        if (stack.`is`(RagiumItems.ICE_CREAM)) {
+            if (!level.isClientSide) {
+                user.extinguishFire()
+            }
+        }
+        // ゆがんだウォートの場合はデバフをランダムに一つだけ消す
+        if (stack.`is`(RagiumItems.WARPED_WART)) {
+            val badEffect: Holder<MobEffect> = user.activeEffects
+                .map(MobEffectInstance::getEffect)
+                .filter { it.value().category == MobEffectCategory.HARMFUL }
+                .randomOrNull()
+                ?: return
+            user.removeEffect(badEffect)
         }
     }
 

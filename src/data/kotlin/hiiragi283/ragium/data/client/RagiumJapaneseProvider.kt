@@ -129,6 +129,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluidContents.SULFUR_TRIOXIDE, "三酸化硫黄")
         addFluid(RagiumFluidContents.SULFURIC_ACID, "硫酸")
 
+        addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
         addFluid(RagiumFluidContents.FUEL, "燃料")
         addFluid(RagiumFluidContents.NITRO_FUEL, "ニトロ燃料")
@@ -206,9 +207,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMold(RagiumItems.Molds.ROD, "成形型（棒材）")
         addMold(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
-        // addItem(RagiumItems.BEE_WAX, "蜜蠟")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
-        addItem(RagiumItems.AZURE_MIXTURE, "紺碧の混合物")
+        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "発展ラギ合金混合物")
+        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄混合物")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.LED, "発光ダイオード")

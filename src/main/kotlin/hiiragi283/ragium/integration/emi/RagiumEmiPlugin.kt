@@ -51,7 +51,6 @@ class RagiumEmiPlugin : EmiPlugin {
         this.registry = registry
         recipeManager = registry.recipeManager
 
-        addMachineRecipe(RagiumRecipes.ALLOYING, ::HTAlloyingEmiRecipe)
         addMachineRecipe(RagiumRecipes.CENTRIFUGING, ::HTCentrifugingEmiRecipe)
         addMachineRecipe(RagiumRecipes.CRUSHING, HTItemProcessEmiRecipe.create(RagiumEmiCategories.CRUSHING))
         addMachineRecipe(RagiumRecipes.EXTRACTING, HTItemProcessEmiRecipe.create(RagiumEmiCategories.EXTRACTING))

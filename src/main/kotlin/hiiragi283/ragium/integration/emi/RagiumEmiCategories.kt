@@ -35,9 +35,6 @@ object RagiumEmiCategories {
 
     // Machines
     @JvmField
-    val ALLOYING = HTEmiRecipeCategory(RagiumRecipes.ALLOYING, RagiumBlocks.CENTRIFUGE)
-
-    @JvmField
     val CENTRIFUGING = HTEmiRecipeCategory(RagiumRecipes.CENTRIFUGING, RagiumBlocks.CENTRIFUGE)
 
     @JvmField
@@ -54,7 +51,6 @@ object RagiumEmiCategories {
 
     @JvmField
     val MACHINES: List<HTEmiRecipeCategory> = listOf(
-        ALLOYING,
         CENTRIFUGING,
         CRUSHING,
         EXTRACTING,

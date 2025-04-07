@@ -38,6 +38,31 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
+
+        HTCookingRecipeBuilder
+            .blasting(RagiumItems.Ingots.RAGI_ALLOY)
+            .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
+            .setExp(0.7f)
+            .saveSuffixed(output, "_from_compound")
+        // Advanced Ragi-Alloy
+        HTShapedRecipeBuilder(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+            .cross8()
+            .define('A', HTTagPrefixes.DUST, VanillaMaterials.GLOWSTONE)
+            .define('B', HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
+            .define('C', HTTagPrefixes.INGOT, VanillaMaterials.GOLD)
+            .save(output)
+
+        HTCookingRecipeBuilder
+            .smelting(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY)
+            .addIngredient(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+            .setExp(0.7f)
+            .saveSuffixed(output, "_from_compound")
+
+        HTCookingRecipeBuilder
+            .blasting(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY)
+            .addIngredient(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+            .setExp(0.7f)
+            .saveSuffixed(output, "_from_compound")
         // Ragi-Crystal
         HTShapedRecipeBuilder(RagiumItems.RawResources.RAGI_CRYSTAL)
             .hollow8()
@@ -46,10 +71,24 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         // Azure Mixture
-        HTShapelessRecipeBuilder(RagiumItems.AZURE_MIXTURE, 2)
-            .addIngredient(HTTagPrefixes.DUST, VanillaMaterials.LAPIS)
-            .addIngredient(HTTagPrefixes.DUST, VanillaMaterials.AMETHYST)
+        HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_COMPOUND)
+            .cross4()
+            .define('A', HTTagPrefixes.DUST, VanillaMaterials.LAPIS)
+            .define('B', HTTagPrefixes.DUST, VanillaMaterials.AMETHYST)
+            .define('C', HTTagPrefixes.INGOT, VanillaMaterials.IRON)
             .save(output)
+
+        HTCookingRecipeBuilder
+            .smelting(RagiumItems.Ingots.AZURE_STEEL)
+            .addIngredient(RagiumItems.AZURE_STEEL_COMPOUND)
+            .setExp(0.7f)
+            .saveSuffixed(output, "_from_compound")
+
+        HTCookingRecipeBuilder
+            .blasting(RagiumItems.Ingots.AZURE_STEEL)
+            .addIngredient(RagiumItems.AZURE_STEEL_COMPOUND)
+            .setExp(0.7f)
+            .saveSuffixed(output, "_from_compound")
 
         registerPatterns(output)
     }

@@ -10,7 +10,6 @@ import java.util.concurrent.CompletableFuture
 class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     RecipeProvider(output, registries) {
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        RagiumAlloyingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumExtractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)

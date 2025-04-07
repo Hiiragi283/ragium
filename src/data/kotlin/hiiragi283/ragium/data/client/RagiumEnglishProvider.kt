@@ -129,6 +129,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluidContents.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
 
+        addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
         addFluid(RagiumFluidContents.FUEL, "Fuel")
         addFluid(RagiumFluidContents.NITRO_FUEL, "Nitro Fuel")
@@ -206,9 +207,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMold(RagiumItems.Molds.ROD, "Mold (Rod)")
         addMold(RagiumItems.Molds.WIRE, "Mold (Wire)")
         // Parts
-        // addItem(RagiumItems.BEE_WAX, "Bee Wax")
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
-        addItem(RagiumItems.AZURE_MIXTURE, "Azure Mixture")
+        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "Advanced Ragi-Alloy Compound")
+        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.LED, "L.E.D.")

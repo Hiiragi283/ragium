@@ -54,7 +54,8 @@ object RagiumCreativeTabs {
             // Material Items
             addAll(RagiumItems.Dusts.entries)
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
-            add(RagiumItems.AZURE_MIXTURE)
+            add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+            add(RagiumItems.AZURE_STEEL_COMPOUND)
             addAll(RagiumItems.Ingots.entries)
             addAll(RagiumItems.RawResources.entries)
             addAll(RagiumItems.MekResources.entries)

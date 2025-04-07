@@ -14,6 +14,7 @@ ktlint = "12.1.2"
 
 aa = "1.3.17+mc1.21.1"
 ae2 = "19.2.7"
+dire = "6369120"
 emi = "1.1.20+1.21.1"
 guide = "21.1.6"
 jade = "15.10.0+neoforge"
@@ -27,6 +28,7 @@ kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref =
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
 ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
+dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref  = "emi" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
@@ -39,6 +41,7 @@ rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforg
 mods-impl = [
     "aa",
     "ae2",
+    "dire",
     "emi",
     "guide",
     "jade",

@@ -50,6 +50,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             addAll(RagiumItems.REGISTER.entries)
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.AZURE_STEEL_COMPOUND)
 
             remove(RagiumItems.CHOCOLATE_APPLE)
         }.forEach(::basicItem)
@@ -58,6 +60,16 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .parent(generated)
             .texture("layer0", "minecraft:item/copper_ingot")
             .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
+
+        getBuilder(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+            .parent(generated)
+            .texture("layer0", "minecraft:item/gold_ingot")
+            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
+
+        getBuilder(RagiumItems.AZURE_STEEL_COMPOUND)
+            .parent(generated)
+            .texture("layer0", "minecraft:item/iron_ingot")
+            .texture("layer1", RagiumItems.AZURE_STEEL_COMPOUND.itemId)
 
         getBuilder(RagiumItems.CHOCOLATE_APPLE)
             .parent(generated)
