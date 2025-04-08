@@ -9,10 +9,11 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.collect.*
-import hiiragi283.ragium.common.block.entity.machine.HTCentrifugeBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTAdvancedExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -40,6 +41,12 @@ object RagiumBlockEntityTypes {
     //    Machine    //
 
     @JvmField
+    val ADVANCED_EXTRACTOR: HTDeferredBlockEntityType<HTAdvancedExtractorBlockEntity> = registerTick(
+        "advanced_extractor",
+        ::HTAdvancedExtractorBlockEntity,
+    )
+
+    @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
 
     @JvmField
@@ -49,13 +56,10 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
-    val CENTRIFUGE: HTDeferredBlockEntityType<HTCentrifugeBlockEntity> = registerTick(
-        "centrifuge",
-        ::HTCentrifugeBlockEntity,
-    )
+    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
 
     @JvmField
-    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
 
     //    Device    //
 
@@ -110,8 +114,9 @@ object RagiumBlockEntityTypes {
         add(CRUSHER, RagiumBlocks.CRUSHER)
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
 
-        add(CENTRIFUGE, RagiumBlocks.CENTRIFUGE)
+        add(ADVANCED_EXTRACTOR, RagiumBlocks.ADVANCED_EXTRACTOR)
         add(INFUSER, RagiumBlocks.INFUSER)
+        add(REFINERY, RagiumBlocks.REFINERY)
 
         add(ENI, RagiumBlocks.ENI)
         add(EXP_COLLECTOR, RagiumBlocks.EXP_COLLECTOR)
@@ -148,8 +153,9 @@ object RagiumBlockEntityTypes {
         registerHandlers(CRUSHER)
         registerHandlers(EXTRACTOR)
 
-        registerHandlers(CENTRIFUGE)
+        registerHandlers(ADVANCED_EXTRACTOR)
         registerHandlers(INFUSER)
+        registerHandlers(REFINERY)
 
         registerHandlers(ENI)
         registerHandlers(EXP_COLLECTOR)

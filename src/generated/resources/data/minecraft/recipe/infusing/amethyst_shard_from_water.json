@@ -1,0 +1,21 @@
+{
+  "type": "ragium:infusing",
+  "fluid_inputs": [
+    {
+      "amount": 250,
+      "tag": "c:water"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/amethyst"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "minecraft:amethyst_shard"
+    }
+  ]
+}

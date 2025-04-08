@@ -1,15 +1,15 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "fluid_outputs": [
     {
       "amount": 100,
-      "fluid": "ragium:crimson_sap"
+      "fluid": "ragium:sap"
     }
   ],
   "item_inputs": [
     {
       "count": 1,
-      "tag": "minecraft:crimson_stems"
+      "tag": "minecraft:logs_that_burn"
     }
   ],
   "item_outputs": [

@@ -2,7 +2,7 @@
   "parent": "ragium:block/machine_base",
   "textures": {
     "bottom": "ragium:block/azure_tiles",
-    "front": "ragium:block/centrifuge_front",
+    "front": "ragium:block/advanced_extractor_front",
     "top": "ragium:block/advanced_ragi_alloy_block"
   }
 }

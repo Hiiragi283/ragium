@@ -1,4 +1,5 @@
 {
+  "block.ragium.advanced_extractor": "Advanced Extractor",
   "block.ragium.advanced_machine_casing": "Advanced Machine Casing",
   "block.ragium.alkali_solution": "Alkali Solution",
   "block.ragium.ammonia": "Ammonia",
@@ -16,7 +17,6 @@
   "block.ragium.blue_nether_brick_stairs": "Blue Nether Bricks Stairs",
   "block.ragium.blue_nether_brick_wall": "Blue Nether Bricks Wall",
   "block.ragium.blue_nether_bricks": "Blue Nether Bricks",
-  "block.ragium.centrifuge": "Centrifuge",
   "block.ragium.chocolate": "Chocolate",
   "block.ragium.crimson_sap": "Crimson Sap",
   "block.ragium.crude_oil": "Crude Oil",
@@ -68,6 +68,7 @@
   "block.ragium.ragi_bricks": "Ragi-Brick",
   "block.ragium.ragium_catalyst": "Ragium Catalyst",
   "block.ragium.red_led_block": "Red LED Block",
+  "block.ragium.refinery": "Refinery",
   "block.ragium.rocket_fuel": "Rocket Fuel",
   "block.ragium.sap": "Sap",
   "block.ragium.silt": "Silt",

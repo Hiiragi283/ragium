@@ -104,13 +104,10 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun milk(output: RecipeOutput) {
         // Butter
-        HTMachineRecipeBuilder(RagiumRecipes.CENTRIFUGING)
+        /*HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
             .itemOutput(RagiumItems.BUTTER)
-            .itemOutput(RagiumItems.Ingots.CHEESE)
             .milkInput()
-            .save(output)
-
-        // Condensed
+            .save(output)*/
 
         // Ice Cream
     }

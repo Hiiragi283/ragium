@@ -51,11 +51,10 @@ class RagiumEmiPlugin : EmiPlugin {
         this.registry = registry
         recipeManager = registry.recipeManager
 
-        addMachineRecipe(RagiumRecipes.CENTRIFUGING, ::HTCentrifugingEmiRecipe)
         addMachineRecipe(RagiumRecipes.CRUSHING, HTItemProcessEmiRecipe.create(RagiumEmiCategories.CRUSHING))
-        addMachineRecipe(RagiumRecipes.EXTRACTING, HTItemProcessEmiRecipe.create(RagiumEmiCategories.EXTRACTING))
+        addMachineRecipe(RagiumRecipes.EXTRACTING, ::HTExtractingEmiRecipe)
         addMachineRecipe(RagiumRecipes.INFUSING, ::HTInfusingEmiRecipe)
-        addMachineRecipe(RagiumRecipes.REFINING, HTFluidProcessEmiRecipe.create(RagiumEmiCategories.REFINING))
+        addMachineRecipe(RagiumRecipes.REFINING, ::HTRefiningEmiRecipe)
 
         addDeviceRecipes()
         addCatalystRecipes()

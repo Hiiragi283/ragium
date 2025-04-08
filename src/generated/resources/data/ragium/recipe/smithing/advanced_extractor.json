@@ -1,14 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "minecraft:dispenser"
+    "item": "minecraft:hopper"
   },
   "base": {
     "item": "ragium:advanced_machine_casing"
   },
   "result": {
     "count": 1,
-    "id": "ragium:infuser"
+    "id": "ragium:advanced_extractor"
   },
   "template": {
     "tag": "c:circuits/advanced"

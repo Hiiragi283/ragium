@@ -1,12 +1,14 @@
 package hiiragi283.ragium.common.init
 
-import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.api.registry.HTRecipeTypeRegister
-import hiiragi283.ragium.common.recipe.*
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RecipesUpdatedEvent
@@ -24,9 +26,6 @@ object RagiumRecipes {
         REGISTER.register(name, HTMachineRecipeType(name, factory))
 
     @JvmField
-    val CENTRIFUGING: HTMachineRecipeType = register("centrifuging", Factories::centrifuging)
-
-    @JvmField
     val CRUSHING: HTMachineRecipeType = register("crushing", Factories::crushing)
 
     @JvmField
@@ -42,7 +41,6 @@ object RagiumRecipes {
 
     @JvmField
     val ALL_TYPES: List<HTMachineRecipeType> = listOf(
-        CENTRIFUGING,
         CRUSHING,
         EXTRACTING,
         INFUSING,
@@ -63,64 +61,6 @@ object RagiumRecipes {
 
     private object Factories {
         @JvmStatic
-        fun centrifuging(definition: HTRecipeDefinition): DataResult<HTCentrifugingRecipe> {
-            val ingredient: Either<SizedIngredient, SizedFluidIngredient> =
-                when {
-                    definition.getItemIngredient(0) != null -> Either.left(definition.getItemIngredient(0))
-                    definition.getFluidIngredient(0) != null -> Either.right(definition.getFluidIngredient(0))
-                    else -> return DataResult.error { "Either one item or fluid ingredient required!" }
-                }
-
-            val itemOutputs: List<HTItemOutput> = definition.itemOutputs
-            if (itemOutputs.size > 4) {
-                return DataResult.error { "Max item outputs is 4!" }
-            }
-
-            val fluidOutputs: List<HTFluidOutput> = definition.fluidOutputs
-            if (fluidOutputs.size > 2) {
-                return DataResult.error { "Max fluid outputs is 2!" }
-            }
-
-            return DataResult.success(HTCentrifugingRecipe(ingredient, itemOutputs, fluidOutputs))
-        }
-
-        @JvmStatic
-        fun infusing(definition: HTRecipeDefinition): DataResult<HTInfusingRecipe> {
-            val itemIng: SizedIngredient =
-                definition.getItemIngredient(0) ?: return DataResult.error { "Required one item ingredient!" }
-            val fluidIng: SizedFluidIngredient =
-                definition.getFluidIngredient(0) ?: return DataResult.error { "Required one fluid ingredient!" }
-            if (definition.isEmptyOutput) return DataResult.error { "Either item or fluid output required!" }
-            return DataResult.success(
-                HTInfusingRecipe(
-                    itemIng,
-                    fluidIng,
-                    definition.getItemOutput(0),
-                    definition.getFluidOutput(0),
-                ),
-            )
-        }
-
-        //    Fluid -> Fluid    //
-
-        @JvmStatic
-        fun <R : HTSimpleFluidRecipe> fluidProcess(
-            factory: (SizedFluidIngredient, HTFluidOutput) -> R,
-            definition: HTRecipeDefinition,
-        ): DataResult<R> {
-            val ingredient: SizedFluidIngredient =
-                definition.getFluidIngredient(0) ?: return DataResult.error { "Required one fluid ingredient!" }
-            val output: HTFluidOutput =
-                definition.getFluidOutput(0) ?: return DataResult.error { "Required one fluid output!" }
-            return DataResult.success(factory(ingredient, output))
-        }
-
-        @JvmStatic
-        fun refining(definition: HTRecipeDefinition): DataResult<HTRefiningRecipe> = fluidProcess(::HTRefiningRecipe, definition)
-
-        //    Item -> Item    //
-
-        @JvmStatic
         fun <R : HTSimpleItemRecipe> itemProcess(
             factory: (SizedIngredient, HTItemOutput) -> R,
             definition: HTRecipeDefinition,
@@ -136,6 +76,42 @@ object RagiumRecipes {
         fun crushing(definition: HTRecipeDefinition): DataResult<HTCrushingRecipe> = itemProcess(::HTCrushingRecipe, definition)
 
         @JvmStatic
-        fun extracting(definition: HTRecipeDefinition): DataResult<HTExtractingRecipe> = itemProcess(::HTExtractingRecipe, definition)
+        fun extracting(definition: HTRecipeDefinition): DataResult<HTExtractingRecipe> {
+            val ingredient: SizedIngredient =
+                definition.getItemIngredient(0) ?: return DataResult.error { "Required one item ingredient!" }
+            val itemOutput: HTItemOutput? = definition.getItemOutput(0)
+            val fluidOutput: HTFluidOutput? = definition.getFluidOutput(0)
+            if (itemOutput == null && fluidOutput == null) {
+                return DataResult.error { "Either one fluid or item output required!" }
+            }
+            return DataResult.success(HTExtractingRecipe(ingredient, itemOutput, fluidOutput))
+        }
+
+        @JvmStatic
+        fun infusing(definition: HTRecipeDefinition): DataResult<HTInfusingRecipe> {
+            val itemIng: SizedIngredient =
+                definition.getItemIngredient(0) ?: return DataResult.error { "Required one item ingredient!" }
+            val fluidIng: SizedFluidIngredient =
+                definition.getFluidIngredient(0) ?: return DataResult.error { "Required one fluid ingredient!" }
+            val output: HTItemOutput =
+                definition.getItemOutput(0) ?: return DataResult.error { "Required one item output!" }
+            return DataResult.success(
+                HTInfusingRecipe(
+                    itemIng,
+                    fluidIng,
+                    output,
+                ),
+            )
+        }
+
+        @JvmStatic
+        fun refining(definition: HTRecipeDefinition): DataResult<HTRefiningRecipe> {
+            val ingredient: SizedFluidIngredient =
+                definition.getFluidIngredient(0) ?: return DataResult.error { "Required one fluid ingredient!" }
+            val itemOutput: HTItemOutput? = definition.getItemOutput(0)
+            val fluidOutput: HTFluidOutput =
+                definition.getFluidOutput(0) ?: return DataResult.error { "Required one fluid output!" }
+            return DataResult.success(HTRefiningRecipe(ingredient, fluidOutput, itemOutput))
+        }
     }
 }

@@ -1,5 +1,6 @@
 {
   "values": [
+    "ragium:advanced_extractor",
     "ragium:advanced_machine_casing",
     "ragium:advanced_ragi_alloy_block",
     "ragium:azure_catalyst",
@@ -13,7 +14,6 @@
     "ragium:blue_nether_brick_stairs",
     "ragium:blue_nether_brick_wall",
     "ragium:blue_nether_bricks",
-    "ragium:centrifuge",
     "ragium:cheese_block",
     "ragium:chocolate_block",
     "ragium:crimson_crystal_block",
@@ -59,6 +59,7 @@
     "ragium:raginite_ore",
     "ragium:ragium_catalyst",
     "ragium:red_led_block",
+    "ragium:refinery",
     "ragium:soul_glass",
     "ragium:soul_spike",
     "ragium:sprinkler",

@@ -78,8 +78,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
-        addBlock(RagiumBlocks.CENTRIFUGE, "Centrifuge")
+        addBlock(RagiumBlocks.ADVANCED_EXTRACTOR, "Advanced Extractor")
         addBlock(RagiumBlocks.INFUSER, "Infuser")
+        addBlock(RagiumBlocks.REFINERY, "Refinery")
         // Device
         addBlock(RagiumBlocks.AZURE_CATALYST, "Azure Catalyst")
         addBlock(RagiumBlocks.DEEP_CATALYST, "Deep Catalyst")

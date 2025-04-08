@@ -1,17 +1,22 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.HTItemOutput
+import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
+/**
+ * アイテムと液体を別のアイテムに変換するレシピ
+ */
 class HTInfusingRecipe(
     private val itemIngredient: SizedIngredient,
     private val fluidIngredient: SizedFluidIngredient,
-    private val itemOutput: HTItemOutput?,
-    private val fluidOutput: HTFluidOutput?,
+    private val output: HTItemOutput,
 ) : HTMachineRecipe(RagiumRecipes.INFUSING) {
     override fun matches(input: HTMachineInput): Boolean {
         val bool1: Boolean = itemIngredient.test(input.getItemStack(HTStorageIO.INPUT, 0))
@@ -27,15 +32,12 @@ class HTInfusingRecipe(
         TODO("Not yet implemented")
     }
 
-    override fun getDefinition(): DataResult<HTRecipeDefinition> = when {
-        itemOutput == null && fluidOutput == null -> DataResult.error { "Either item or fluid output required!" }
-        else -> DataResult.success(
-            HTRecipeDefinition(
-                listOf(itemIngredient),
-                listOf(fluidIngredient),
-                listOfNotNull(itemOutput),
-                listOfNotNull(fluidOutput),
-            ),
-        )
-    }
+    override fun getDefinition(): DataResult<HTRecipeDefinition> = DataResult.success(
+        HTRecipeDefinition(
+            listOf(itemIngredient),
+            listOf(fluidIngredient),
+            listOf(output),
+            listOf(),
+        ),
+    )
 }

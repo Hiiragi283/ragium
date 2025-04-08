@@ -132,8 +132,9 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
-        advMachine(RagiumBlocks.CENTRIFUGE, Ingredient.of(Items.COPPER_GRATE))
-        advMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.HOPPER))
+        advMachine(RagiumBlocks.ADVANCED_EXTRACTOR, Ingredient.of(Items.HOPPER))
+        advMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.DISPENSER))
+        advMachine(RagiumBlocks.REFINERY, Ingredient.of(Tags.Items.GLASS_BLOCKS))
     }
 
     private fun wells(output: RecipeOutput) {

@@ -1,4 +1,5 @@
 {
+  "block.ragium.advanced_extractor": "発展型抽出機",
   "block.ragium.advanced_machine_casing": "発展機械筐体",
   "block.ragium.alkali_solution": "アルカリ溶液",
   "block.ragium.ammonia": "アンモニア",
@@ -16,7 +17,6 @@
   "block.ragium.blue_nether_brick_stairs": "青いネザーレンガの階段",
   "block.ragium.blue_nether_brick_wall": "青いネザーレンガの壁",
   "block.ragium.blue_nether_bricks": "青いネザーレンガ",
-  "block.ragium.centrifuge": "遠心分離機",
   "block.ragium.chocolate": "チョコレート",
   "block.ragium.crimson_sap": "深紅の樹液",
   "block.ragium.crude_oil": "原油",
@@ -68,6 +68,7 @@
   "block.ragium.ragi_bricks": "らぎレンガ",
   "block.ragium.ragium_catalyst": "ラギウム触媒",
   "block.ragium.red_led_block": "LEDブロック（赤）",
+  "block.ragium.refinery": "精製機",
   "block.ragium.rocket_fuel": "ロケット燃料",
   "block.ragium.sap": "樹液",
   "block.ragium.silt": "シルト",

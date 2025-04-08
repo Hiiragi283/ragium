@@ -149,8 +149,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             )
         }
 
-        advMachine(RagiumBlocks.CENTRIFUGE)
+        advMachine(RagiumBlocks.ADVANCED_EXTRACTOR)
         advMachine(RagiumBlocks.INFUSER)
+        advMachine(RagiumBlocks.REFINERY)
 
         // Device
         layeredBlock(

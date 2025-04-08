@@ -1,14 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "minecraft:copper_grate"
+    "tag": "c:glass_blocks"
   },
   "base": {
     "item": "ragium:advanced_machine_casing"
   },
   "result": {
     "count": 1,
-    "id": "ragium:centrifuge"
+    "id": "ragium:refinery"
   },
   "template": {
     "tag": "c:circuits/advanced"

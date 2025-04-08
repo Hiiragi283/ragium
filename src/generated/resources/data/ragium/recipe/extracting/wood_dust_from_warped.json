@@ -1,5 +1,5 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "fluid_outputs": [
     {
       "amount": 100,

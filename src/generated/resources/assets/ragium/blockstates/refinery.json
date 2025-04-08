@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "ragium:block/centrifuge",
+      "model": "ragium:block/refinery",
       "y": 90
     },
     "facing=north": {
-      "model": "ragium:block/centrifuge"
+      "model": "ragium:block/refinery"
     },
     "facing=south": {
-      "model": "ragium:block/centrifuge",
+      "model": "ragium:block/refinery",
       "y": 180
     },
     "facing=west": {
-      "model": "ragium:block/centrifuge",
+      "model": "ragium:block/refinery",
       "y": 270
     }
   }

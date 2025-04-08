@@ -354,10 +354,13 @@ object RagiumBlocks {
     val EXTRACTOR: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.EXTRACTOR)
 
     @JvmField
-    val CENTRIFUGE: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.CENTRIFUGE)
+    val ADVANCED_EXTRACTOR: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.ADVANCED_EXTRACTOR)
 
     @JvmField
     val INFUSER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.INFUSER)
+
+    @JvmField
+    val REFINERY: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.REFINERY)
 
     @JvmField
     val MACHINES: List<DeferredBlock<*>> = listOf(
@@ -365,8 +368,9 @@ object RagiumBlocks {
         CRUSHER,
         EXTRACTOR,
         // Advanced
-        CENTRIFUGE,
+        ADVANCED_EXTRACTOR,
         INFUSER,
+        REFINERY,
     )
 
     //    Devices    //

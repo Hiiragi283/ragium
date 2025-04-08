@@ -8,7 +8,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.CENTRIFUGE, pos, state) {
+class HTAdvancedExtractorBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(RagiumBlockEntityTypes.ADVANCED_EXTRACTOR, pos, state) {
     override fun onServerTick(
         level: ServerLevel,
         pos: BlockPos,

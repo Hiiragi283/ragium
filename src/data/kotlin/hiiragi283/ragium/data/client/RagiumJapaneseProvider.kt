@@ -78,8 +78,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
-        addBlock(RagiumBlocks.CENTRIFUGE, "遠心分離機")
+        addBlock(RagiumBlocks.ADVANCED_EXTRACTOR, "発展型抽出機")
         addBlock(RagiumBlocks.INFUSER, "注入機")
+        addBlock(RagiumBlocks.REFINERY, "精製機")
         // Device
         addBlock(RagiumBlocks.AZURE_CATALYST, "紺碧の触媒")
         addBlock(RagiumBlocks.DEEP_CATALYST, "深層触媒")

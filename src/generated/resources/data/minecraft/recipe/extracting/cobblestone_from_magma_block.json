@@ -1,21 +1,20 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "fluid_outputs": [
     {
       "amount": 100,
-      "fluid": "ragium:sap"
+      "fluid": "minecraft:lava"
     }
   ],
   "item_inputs": [
     {
       "count": 1,
-      "tag": "minecraft:logs_that_burn"
+      "item": "minecraft:magma_block"
     }
   ],
   "item_outputs": [
     {
-      "count": 4,
-      "item": "ragium:wood_dust"
+      "item": "minecraft:cobblestone"
     }
   ]
 }
