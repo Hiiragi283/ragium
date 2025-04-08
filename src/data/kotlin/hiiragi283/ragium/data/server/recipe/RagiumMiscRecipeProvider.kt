@@ -135,6 +135,11 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         advMachine(RagiumBlocks.ADVANCED_EXTRACTOR, Ingredient.of(Items.HOPPER))
         advMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.DISPENSER))
         advMachine(RagiumBlocks.REFINERY, Ingredient.of(Tags.Items.GLASS_BLOCKS))
+
+        HTSmithingRecipeBuilder(RagiumBlocks.ADVANCED_EXTRACTOR)
+            .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)
+            .addIngredient(RagiumBlocks.EXTRACTOR)
+            .saveSuffixed(output, "_from_basic")
     }
 
     private fun wells(output: RecipeOutput) {

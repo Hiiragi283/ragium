@@ -97,7 +97,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun enchantment() {
-        addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します")
+        addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します。")
     }
 
     private fun entity() {

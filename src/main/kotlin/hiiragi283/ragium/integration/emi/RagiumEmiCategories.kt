@@ -69,5 +69,6 @@ object RagiumEmiCategories {
 
         CATALYSTS.forEach(::addWorkstation)
         MACHINES.forEach(::addWorkstation)
+        registry.addWorkstation(EXTRACTING, EmiStack.of(RagiumBlocks.ADVANCED_EXTRACTOR))
     }
 }

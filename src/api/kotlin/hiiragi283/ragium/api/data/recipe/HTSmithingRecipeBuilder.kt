@@ -25,7 +25,7 @@ class HTSmithingRecipeBuilder(private val output: ItemStack) :
     override fun createRecipe(): SmithingTransformRecipe = SmithingTransformRecipe(
         ingredients[0],
         ingredients[1],
-        ingredients[2],
+        ingredients.getOrNull(2) ?: Ingredient.of(),
         output,
     )
 
