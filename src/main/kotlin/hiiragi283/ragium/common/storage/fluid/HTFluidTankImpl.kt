@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.api.extension.buildNbt
-import hiiragi283.ragium.api.extension.getLevel
+import hiiragi283.ragium.api.extension.getHighestLevel
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
-import hiiragi283.ragium.common.init.RagiumEnchantments
+import hiiragi283.ragium.api.tag.RagiumEnchantmentTags
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
@@ -19,7 +19,7 @@ class HTFluidTankImpl(
     override var capacity: Int = baseCapacity
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
-        val level: Int = newEnchantments.getLevel(RagiumEnchantments.CAPACITY) + 1
+        val level: Int = newEnchantments.getHighestLevel(RagiumEnchantmentTags.CAPACITY) + 1
         capacity = level * baseCapacity
     }
 

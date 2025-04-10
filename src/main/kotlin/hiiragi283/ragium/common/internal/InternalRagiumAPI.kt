@@ -30,7 +30,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
@@ -73,8 +72,6 @@ class InternalRagiumAPI : RagiumAPI {
     //    Component    //
 
     override fun getActiveComponent(): DataComponentType<MCUnit> = RagiumComponentTypes.IS_ACTIVE.get()
-
-    override fun getEffectRange(stack: ItemStack): Int = stack.getOrDefault(RagiumComponentTypes.EFFECT_RANGE, 5)
 
     //    Material    //
 

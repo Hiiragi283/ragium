@@ -25,8 +25,8 @@ abstract class HTItemTagProvider(
     final override fun addTags(provider: HolderLookup.Provider) {
         addTagsInternal(provider)
 
-        entryCache.map.forEach { (tagKey: TagKey<Item>, entries: Collection<HTTagBuilder.Entry>) ->
-            entries.sortedBy(HTTagBuilder.Entry::id).toSet().forEach { entry: HTTagBuilder.Entry ->
+        for ((tagKey: TagKey<Item>, entries: Collection<HTTagBuilder.Entry>) in entryCache.map) {
+            for (entry: HTTagBuilder.Entry in entries.sortedBy(HTTagBuilder.Entry::id)) {
                 tag(tagKey).add(entry.toTagEntry())
             }
         }

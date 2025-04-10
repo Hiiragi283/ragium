@@ -2,18 +2,21 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.HTFluidOutput
+import hiiragi283.ragium.api.recipe.HTItemOutput
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.api.registry.HTRecipeTypeRegister
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
+import net.minecraft.world.item.crafting.RecipeManager
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.client.event.RecipesUpdatedEvent
 import net.neoforged.neoforge.common.crafting.SizedIngredient
-import net.neoforged.neoforge.event.AddReloadListenerEvent
+import net.neoforged.neoforge.event.OnDatapackSyncEvent
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -48,32 +51,24 @@ object RagiumRecipes {
     )
 
     @SubscribeEvent
-    fun onResourceReloaded(event: AddReloadListenerEvent) {
-        ALL_TYPES.forEach(HTMachineRecipeType::setChanged)
-    }
-
-    @SubscribeEvent
-    fun onRecipesUpdated(event: RecipesUpdatedEvent) {
-        ALL_TYPES.forEach { it.reloadCache(event.recipeManager) }
+    fun onDatapackSync(event: OnDatapackSyncEvent) {
+        val recipeManager: RecipeManager = event.playerList.server.recipeManager
+        for (type: HTMachineRecipeType in ALL_TYPES) {
+            type.reloadCache(recipeManager)
+        }
     }
 
     //    Factories    //
 
     private object Factories {
         @JvmStatic
-        fun <R : HTSimpleItemRecipe> itemProcess(
-            factory: (SizedIngredient, HTItemOutput) -> R,
-            definition: HTRecipeDefinition,
-        ): DataResult<R> {
+        fun crushing(definition: HTRecipeDefinition): DataResult<HTCrushingRecipe> {
             val ingredient: SizedIngredient =
                 definition.getItemIngredient(0) ?: return DataResult.error { "Required one item ingredient!" }
             val output: HTItemOutput =
                 definition.getItemOutput(0) ?: return DataResult.error { "Required one item output!" }
-            return DataResult.success(factory(ingredient, output))
+            return DataResult.success(HTCrushingRecipe(ingredient, output))
         }
-
-        @JvmStatic
-        fun crushing(definition: HTRecipeDefinition): DataResult<HTCrushingRecipe> = itemProcess(::HTCrushingRecipe, definition)
 
         @JvmStatic
         fun extracting(definition: HTRecipeDefinition): DataResult<HTExtractingRecipe> {

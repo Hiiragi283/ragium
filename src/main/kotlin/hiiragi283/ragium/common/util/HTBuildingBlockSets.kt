@@ -82,7 +82,9 @@ class HTBuildingBlockSets(
     }
 
     override fun appendBlockTags(builder: HTTagBuilder<Block>, mineableTag: TagKey<Block>) {
-        blockHolders.forEach { builder.add(mineableTag, it) }
+        for (block: DeferredBlock<*> in blockHolders) {
+            builder.add(mineableTag, block)
+        }
         builder.add(BlockTags.STAIRS, stairs)
         builder.add(BlockTags.SLABS, slab)
         builder.add(BlockTags.WALLS, wall)

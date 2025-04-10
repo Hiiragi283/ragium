@@ -2,15 +2,18 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.EnchantedBookItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
+import kotlin.jvm.optionals.getOrNull
 
 //    ItemStack    //
 
@@ -26,6 +29,12 @@ fun ItemEnchantments.getLevel(key: ResourceKey<Enchantment>): Int {
         .get(key)
         .map(this::getLevel)
         .orElse(0)
+}
+
+fun ItemEnchantments.getHighestLevel(tagKey: TagKey<Enchantment>): Int {
+    val access: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return 0
+    val holderSet: HolderSet<Enchantment> = access.enchLookup().get(tagKey).getOrNull() ?: return 0
+    return holderSet.maxOfOrNull(this::getLevel) ?: 0
 }
 
 fun <T : Any> ItemEnchantments.map(transform: (Holder<Enchantment>, Int) -> T): List<T> =

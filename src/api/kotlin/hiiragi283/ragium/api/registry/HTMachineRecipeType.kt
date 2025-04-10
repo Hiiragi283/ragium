@@ -23,7 +23,6 @@ class HTMachineRecipeType(val name: String, private val factory: (HTRecipeDefini
     RecipeType<HTMachineRecipe>,
     RecipeSerializer<HTMachineRecipe> {
     private var recipeCache: Map<ResourceLocation, RecipeHolder<HTMachineRecipe>> = mapOf()
-    private var changed: Boolean = true
 
     fun createRecipe(definition: HTRecipeDefinition): DataResult<out HTMachineRecipe> = factory(definition)
 
@@ -33,7 +32,7 @@ class HTMachineRecipeType(val name: String, private val factory: (HTRecipeDefini
      */
     fun getFirstRecipe(input: HTMachineInput, level: Level, lastRecipe: ResourceLocation?): RecipeHolder<HTMachineRecipe>? {
         // キャッシュの更新を促す
-        this.reloadCache()
+        // this.reloadCache(level.recipeManager)
         // 更新されたキャッシュから取得する
         var firstRecipe: RecipeHolder<HTMachineRecipe>? = null
         if (lastRecipe != null) {
@@ -49,32 +48,6 @@ class HTMachineRecipeType(val name: String, private val factory: (HTRecipeDefini
     fun getAllRecipes(): List<RecipeHolder<HTMachineRecipe>> = recipeCache.values.toList()
 
     //    Reloading    //
-
-    /**
-     * レシピを更新するフラグを立てます。
-     */
-    fun setChanged() {
-        changed = true
-    }
-
-    /**
-     * レシピを現在のサーバに基づいて更新します。
-     */
-    fun reloadCache() {
-        if (changed &&
-            RagiumAPI
-                .getInstance()
-                .getCurrentSide()
-                .isServer
-        ) {
-            RagiumAPI
-                .getInstance()
-                .getCurrentServer()
-                ?.recipeManager
-                ?.let(::reloadCache)
-            changed = false
-        }
-    }
 
     /**
      * 指定した[manager]からレシピを更新します。

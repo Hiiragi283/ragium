@@ -24,11 +24,15 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     private val itemSlots: List<HTItemSlot> = (0..8).map { HTItemSlot.create("slot_$it", this) }
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        itemSlots.forEach { slot: HTItemSlot -> slot.writeNbt(nbt, registryOps) }
+        for (slot: HTItemSlot in itemSlots) {
+            slot.writeNbt(nbt, registryOps)
+        }
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        itemSlots.forEach { slot: HTItemSlot -> slot.readNbt(nbt, registryOps) }
+        for (slot: HTItemSlot in itemSlots) {
+            slot.readNbt(nbt, registryOps)
+        }
     }
 
     override fun onRemove(

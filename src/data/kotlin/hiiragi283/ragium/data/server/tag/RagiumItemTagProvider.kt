@@ -46,7 +46,6 @@ class RagiumItemTagProvider(
         // armorTags()
         // toolTags()
         category()
-        enchantment()
     }
 
     private fun copy() {
@@ -275,15 +274,4 @@ class RagiumItemTagProvider(
         addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_ROD)
         addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_WIRE)
     }*/
-
-    //    Enchantment    //
-
-    private fun enchantment() {
-        for (block: DeferredBlock<*> in RagiumBlocks.MACHINES) {
-            addItem(ItemTags.DURABILITY_ENCHANTABLE, block)
-            addItem(ItemTags.MINING_ENCHANTABLE, block)
-            addItem(ItemTags.MINING_LOOT_ENCHANTABLE, block)
-            addItem(RagiumItemTags.CAPACITY_ENCHANTABLE, block)
-        }
-    }
 }

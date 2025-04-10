@@ -22,6 +22,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
@@ -264,9 +265,9 @@ object RagiumItems {
 
     // Other
     @JvmField
-    val EXP_BERRIES: DeferredItem<HTExpBerriesItem> = register(
+    val EXP_BERRIES: DeferredItem<ItemNameBlockItem> = register(
         "exp_berries",
-        { prop: Item.Properties -> HTExpBerriesItem(RagiumBlocks.EXP_BERRY_BUSH.get(), prop) },
+        { prop: Item.Properties -> ItemNameBlockItem(RagiumBlocks.EXP_BERRY_BUSH.get(), prop) },
     )
 
     @JvmField

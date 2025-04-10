@@ -6,7 +6,6 @@ import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.buildMultiMap
-import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -17,16 +16,12 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import net.minecraft.ChatFormatting
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.common.util.FakePlayer
@@ -68,14 +63,6 @@ interface RagiumAPI {
     //    Component    //
 
     fun getActiveComponent(): DataComponentType<MCUnit>
-
-    fun createRangeText(stack: ItemStack): Component = Component
-        .translatable(
-            RagiumTranslationKeys.TEXT_EFFECT_RANGE,
-            intText(getEffectRange(stack)).withStyle(ChatFormatting.WHITE),
-        ).withStyle(ChatFormatting.GRAY)
-
-    fun getEffectRange(stack: ItemStack): Int
 
     //    Material    //
 

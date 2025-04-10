@@ -98,11 +98,21 @@ object RagiumRuntimeEvents {
                 ),
             )
             player.awardStat(Stats.OPEN_ENDERCHEST)
+            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
             return
         }
         // 行商人のカタログの場合もGUIを開く
         if (stack.`is`(RagiumItems.TRADER_CATALOG)) {
-            WanderingTrader(EntityType.WANDERING_TRADER, level).interact(player, InteractionHand.MAIN_HAND)
+            event.cancellationResult =
+                WanderingTrader(EntityType.WANDERING_TRADER, level).interact(player, InteractionHand.MAIN_HAND)
+            return
+        }
+        // 経験値ベリーの場合は経験値を与える
+        if (stack.`is`(RagiumItems.EXP_BERRIES)) {
+            player.giveExperiencePoints(8)
+            stack.consume(1, player)
+            level.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS)
+            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
             return
         }
     }
