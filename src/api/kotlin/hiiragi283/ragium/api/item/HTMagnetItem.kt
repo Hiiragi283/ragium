@@ -89,7 +89,7 @@ abstract class HTMagnetItem<T : Entity>(properties: Properties) : Item(propertie
 
     override fun supportsEnchantment(stack: ItemStack, enchantment: Holder<Enchantment>): Boolean =
         super.supportsEnchantment(stack, enchantment) || enchantment.`is`(RagiumEnchantmentTags.RANGE)
-    
+
     protected abstract val entityClass: Class<T>
 
     protected abstract fun forEachEntity(entity: T, player: Player)

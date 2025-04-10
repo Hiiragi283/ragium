@@ -1,0 +1,15 @@
+{
+  "type": "ragium:extracting",
+  "fluid_outputs": [
+    {
+      "amount": 125,
+      "fluid": "ragium:crude_oil"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:gems/coal"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
@@ -39,7 +40,40 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumItems.EXP_BERRIES)
             .saveSuffixed(output, "_from_berries")
 
+        crudeOil(output)
         sap(output)
+    }
+
+    private fun crudeOil(output: RecipeOutput) {
+        // Coal -> Crude Oil
+        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.CRUDE_OIL, 125)
+            .itemInput(HTTagPrefixes.GEM, VanillaMaterials.COAL)
+            .saveSuffixed(output, "_from_coal")
+        // Soul XX -> Crude Oil
+        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.CRUDE_OIL, 500)
+            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .saveSuffixed(output, "_from_soul")
+
+        // Crude Oil -> Naphtha + Tar
+        HTMachineRecipeBuilder(RagiumRecipes.REFINING)
+            .itemOutput(RagiumItems.TAR)
+            .fluidOutput(RagiumFluidContents.NAPHTHA, 750)
+            .fluidInput(RagiumFluidContents.CRUDE_OIL)
+            .save(output, RagiumAPI.id("naphtha_from_crude_oil"))
+        // Naphtha -> Fuel + Sulfur
+        HTMachineRecipeBuilder(RagiumRecipes.REFINING)
+            .itemOutput(RagiumItems.Dusts.SULFUR)
+            .fluidOutput(RagiumFluidContents.FUEL, 750)
+            .fluidInput(RagiumFluidContents.NAPHTHA)
+            .save(output, RagiumAPI.id("fuel_from_naphtha"))
+
+        // Tar -> Aromatic Compound
+        HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.AROMATIC_COMPOUND, 200)
+            .itemInput(RagiumItems.TAR)
+            .saveSuffixed(output, "_from_tar")
     }
 
     private fun sap(output: RecipeOutput) {
