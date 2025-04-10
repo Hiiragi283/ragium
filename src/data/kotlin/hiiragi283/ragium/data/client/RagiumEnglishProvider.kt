@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.integration.RagiumMekanismAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -430,8 +431,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun mekanism() {
-        // add(RagiumMekAddon.RAGINITE_SLURRY.cleanSlurry.translationKey, "Clean Raginite Slurry")
-        // add(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.translationKey, "Dirty Raginite Slurry")
+        add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "Raginite")
+        add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "Azure Essence")
+        
+        add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry.get().translationKey, "Clean Raginite Slurry")
+        add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "Dirty Raginite Slurry")
+        
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
     }
 
     private fun jade() {

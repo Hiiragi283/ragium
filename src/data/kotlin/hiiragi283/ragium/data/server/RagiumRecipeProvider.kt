@@ -18,5 +18,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumMaterialRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMiscRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+
+        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup)
     }
 }

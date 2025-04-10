@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.integration.RagiumMekanismAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -54,6 +55,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
 
             remove(RagiumItems.CHOCOLATE_APPLE)
+            
+            addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.forEach(::basicItem)
 
         getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)

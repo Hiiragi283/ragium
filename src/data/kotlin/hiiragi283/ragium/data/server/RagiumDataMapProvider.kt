@@ -6,6 +6,10 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.integration.RagiumMekanismAddon
+import mekanism.api.chemical.Chemical
+import mekanism.api.datamaps.chemical.ChemicalSolidTag
+import mekanism.common.registries.MekanismDataMapTypes
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -27,6 +31,8 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         azureCatalyst()
         deepCatalyst()
         ragiumCatalyst()
+        
+        mekanism()
     }
 
     private fun azureCatalyst() {
@@ -144,6 +150,16 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             Blocks.BRICKS.builtInRegistryHolder(),
             HTCatalystConversion.replace(RagiumBlocks.RAGI_BRICK_SETS.base),
             false,
+        )
+    }
+    
+    private fun mekanism() {
+        val builder: Builder<ChemicalSolidTag, Chemical> = builder(MekanismDataMapTypes.INSTANCE.chemicalSolidTag())
+        
+        builder.add(
+            RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry,
+            ChemicalSolidTag(HTTagPrefixes.ORE.createItemTag(RagiumMaterials.RAGINITE)),
+            false
         )
     }
 }

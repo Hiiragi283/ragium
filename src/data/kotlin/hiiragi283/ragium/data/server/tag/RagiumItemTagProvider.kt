@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.integration.RagiumMekanismAddon
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -78,7 +79,7 @@ class RagiumItemTagProvider(
         register(RagiumItems.Dusts.entries)
         register(RagiumItems.Ingots.entries)
         register(RagiumItems.RawResources.entries)
-        register(RagiumItems.MekResources.entries)
+        register(RagiumMekanismAddon.OreResources.entries)
 
         addTag(
             HTTagPrefixes.GEM.createItemTag(CommonMaterials.COAL_COKE),

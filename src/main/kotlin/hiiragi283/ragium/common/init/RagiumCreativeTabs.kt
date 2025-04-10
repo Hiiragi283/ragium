@@ -11,7 +11,6 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
-@Suppress("unused")
 object RagiumCreativeTabs {
     @JvmField
     val REGISTER: DeferredRegister<CreativeModeTab> =
@@ -58,7 +57,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.AZURE_STEEL_COMPOUND)
             addAll(RagiumItems.Ingots.entries)
             addAll(RagiumItems.RawResources.entries)
-            addAll(RagiumItems.MekResources.entries)
             // Decorations
             addAll(RagiumBlocks.RAGI_BRICK_SETS.getItems())
             addAll(RagiumBlocks.AZURE_TILE_SETS.getItems())

@@ -49,7 +49,6 @@ object RagiumItems {
         Dusts.entries
         Ingots.entries
         RawResources.entries
-        MekResources.entries
 
         Molds.entries
 
@@ -145,20 +144,6 @@ object RagiumItems {
         WARPED_CRYSTAL(HTTagPrefixes.GEM, RagiumMaterials.WARPED_CRYSTAL),
         ;
 
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
-        override val id: ResourceLocation = holder.id
-
-        override fun asItem(): Item = holder.asItem()
-    }
-
-    enum class MekResources(override val prefix: HTTagPrefix) : HTMaterialItemLike {
-        DIRTY_DUST(HTTagPrefixes.DIRTY_DUST),
-        CLUMP(HTTagPrefixes.CLUMP),
-        SHARD(HTTagPrefixes.SHARD),
-        CRYSTAL(HTTagPrefixes.CRYSTAL),
-        ;
-
-        override val key: HTMaterialKey = RagiumMaterials.RAGINITE
         private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
         override val id: ResourceLocation = holder.id
 

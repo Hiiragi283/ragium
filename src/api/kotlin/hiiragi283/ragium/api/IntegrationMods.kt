@@ -18,6 +18,7 @@ import java.util.*
 
 enum class IntegrationMods(val modId: String) : StringRepresentable {
     AA("actuallyadditions"),
+    AE2("ae2"),
     CREATE("create"),
     EIO("enderio"),
     EIO_BASE("enderio_base"),
@@ -25,6 +26,7 @@ enum class IntegrationMods(val modId: String) : StringRepresentable {
     FD("farmersdelight"),
     IE("immersiveengineering"),
     IF("industrialforegoing"),
+    JUST_DIRE("justdirethings"),
     MEK("mekanism"),
     MI("modern_industrialization"),
     RC("railcraft"),

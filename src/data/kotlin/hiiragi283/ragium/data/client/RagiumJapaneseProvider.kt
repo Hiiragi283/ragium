@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.integration.RagiumMekanismAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -430,8 +431,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun mekanism() {
-        // add(RagiumMekAddon.RAGINITE_SLURRY.cleanSlurry.translationKey, "純粋なラギナイトの懸濁液")
-        // add(RagiumMekAddon.RAGINITE_SLURRY.dirtySlurry.translationKey, "汚れたラギナイトの懸濁液")
+        add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "ラギナイト")
+        add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "紺碧エッセンス")
+        add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry.get().translationKey, "純粋なラギナイトの懸濁液")
+        add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "汚れたラギナイトの懸濁液")
+
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
     }
 
     private fun jade() {

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
@@ -179,6 +180,18 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumItems.EXP_BERRIES)
             .itemInput(Tags.Items.FOODS_BERRY)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 1000)
+            .save(output)
+        // Blaze Powder
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(Items.BLAZE_POWDER)
+            .itemInput(HTTagPrefixes.DUST, CommonMaterials.SULFUR)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
+            .save(output)
+        // Wind Charge
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(Items.WIND_CHARGE)
+            .itemInput(Items.SNOWBALL)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
             .save(output)
     }
 }
