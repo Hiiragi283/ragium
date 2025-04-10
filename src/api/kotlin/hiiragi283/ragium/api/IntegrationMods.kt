@@ -26,7 +26,6 @@ enum class IntegrationMods(val modId: String) : StringRepresentable {
     FD("farmersdelight"),
     IE("immersiveengineering"),
     IF("industrialforegoing"),
-    JUST_DIRE("justdirethings"),
     MEK("mekanism"),
     MI("modern_industrialization"),
     RC("railcraft"),

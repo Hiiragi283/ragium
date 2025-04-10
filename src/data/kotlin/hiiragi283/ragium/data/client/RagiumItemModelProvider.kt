@@ -55,7 +55,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
 
             remove(RagiumItems.CHOCOLATE_APPLE)
-            
+
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.forEach(::basicItem)
 

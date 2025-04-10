@@ -50,10 +50,11 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.ME
     }
 
     private fun enriching(output: RecipeOutput) {
-        ItemStackToItemStackRecipeBuilder.enriching(
-            itemHelper.from(HTTagPrefixes.DUST.createItemTag(RagiumMaterials.RAGINITE)),
-            RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE.toStack()
-        ).build(output, RagiumAPI.id("enriching/enrich/raginite"))
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(HTTagPrefixes.DUST.createItemTag(RagiumMaterials.RAGINITE)),
+                RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE.toStack(),
+            ).build(output, RagiumAPI.id("enriching/enrich/raginite"))
     }
 
     private fun infusing(output: RecipeOutput) {
@@ -81,7 +82,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.ME
                 RagiumItems.RawResources.RAGI_CRYSTAL.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/ragi_crystal"))
-        
+
         // Azure + Iron -> Azure Steel
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
@@ -94,94 +95,108 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.ME
 
     private fun oreProcess(output: RecipeOutput) {
         // Enriching
-        ItemStackToItemStackRecipeBuilder.enriching(
-            itemHelper.from(HTTagPrefixes.ORE.createItemTag(RagiumMaterials.RAGINITE)),
-            RagiumItems.Dusts.RAGINITE.toStack(2)
-        ).build(output, RagiumAPI.id("processing/raginite/dust/from_ore"))
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(HTTagPrefixes.ORE.createItemTag(RagiumMaterials.RAGINITE)),
+                RagiumItems.Dusts.RAGINITE.toStack(2),
+            ).build(output, RagiumAPI.id("processing/raginite/dust/from_ore"))
 
         val rawMaterial: ItemStackIngredient = itemHelper.from(HTTagPrefixes.RAW_MATERIAL.createItemTag(RagiumMaterials.RAGINITE), 3)
         val ore: ItemStackIngredient = itemHelper.from(HTTagPrefixes.ORE.createItemTag(RagiumMaterials.RAGINITE))
-        
-        ItemStackToItemStackRecipeBuilder.enriching(
-            rawMaterial,
-            RagiumItems.Dusts.RAGINITE.toStack(4)
-        ).build(output, RagiumAPI.id("processing/raginite/dust/from_raw_ore"))
 
-        ItemStackToItemStackRecipeBuilder.enriching(
-            itemHelper.from(HTTagPrefixes.DIRTY_DUST.createItemTag(RagiumMaterials.RAGINITE)),
-            RagiumItems.Dusts.RAGINITE.toStack()
-        ).build(output, RagiumAPI.id("processing/raginite/dust/from_dirty_dust"))
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                rawMaterial,
+                RagiumItems.Dusts.RAGINITE.toStack(4),
+            ).build(output, RagiumAPI.id("processing/raginite/dust/from_raw_ore"))
+
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(HTTagPrefixes.DIRTY_DUST.createItemTag(RagiumMaterials.RAGINITE)),
+                RagiumItems.Dusts.RAGINITE.toStack(),
+            ).build(output, RagiumAPI.id("processing/raginite/dust/from_dirty_dust"))
         // Crushing
-        ItemStackToItemStackRecipeBuilder.enriching(
-            itemHelper.from(HTTagPrefixes.CLUMP.createItemTag(RagiumMaterials.RAGINITE)),
-            RagiumMekanismAddon.OreResources.DIRTY_DUST.toStack()
-        ).build(output, RagiumAPI.id("processing/raginite/dirty_dust/from_clump"))
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(HTTagPrefixes.CLUMP.createItemTag(RagiumMaterials.RAGINITE)),
+                RagiumMekanismAddon.OreResources.DIRTY_DUST.toStack(),
+            ).build(output, RagiumAPI.id("processing/raginite/dirty_dust/from_clump"))
         // Purifying
-        ItemStackChemicalToItemStackRecipeBuilder.purifying(
-            itemHelper.from(HTTagPrefixes.SHARD.createItemTag(RagiumMaterials.RAGINITE)),
-            chemicalHelper.fromHolder(MekanismChemicals.OXYGEN, 200),
-            RagiumMekanismAddon.OreResources.CLUMP.toStack(),
-            false
-        ).build(output, RagiumAPI.id("processing/raginite/clump/from_shard"))
+        ItemStackChemicalToItemStackRecipeBuilder
+            .purifying(
+                itemHelper.from(HTTagPrefixes.SHARD.createItemTag(RagiumMaterials.RAGINITE)),
+                chemicalHelper.fromHolder(MekanismChemicals.OXYGEN, 200),
+                RagiumMekanismAddon.OreResources.CLUMP.toStack(),
+                false,
+            ).build(output, RagiumAPI.id("processing/raginite/clump/from_shard"))
 
-        ItemStackChemicalToItemStackRecipeBuilder.purifying(
-            itemHelper.from(HTTagPrefixes.RAW_MATERIAL.createItemTag(RagiumMaterials.RAGINITE)),
-            chemicalHelper.fromHolder(MekanismChemicals.OXYGEN, 200),
-            RagiumMekanismAddon.OreResources.CLUMP.toStack(2),
-            false
-        ).build(output, RagiumAPI.id("processing/raginite/clump/from_raw_ore"))
+        ItemStackChemicalToItemStackRecipeBuilder
+            .purifying(
+                itemHelper.from(HTTagPrefixes.RAW_MATERIAL.createItemTag(RagiumMaterials.RAGINITE)),
+                chemicalHelper.fromHolder(MekanismChemicals.OXYGEN, 200),
+                RagiumMekanismAddon.OreResources.CLUMP.toStack(2),
+                false,
+            ).build(output, RagiumAPI.id("processing/raginite/clump/from_raw_ore"))
 
-        ItemStackChemicalToItemStackRecipeBuilder.purifying(
-            ore,
-            chemicalHelper.fromHolder(MekanismChemicals.OXYGEN, 200),
-            RagiumMekanismAddon.OreResources.CLUMP.toStack(3),
-            false
-        ).build(output, RagiumAPI.id("processing/raginite/clump/from_ore"))
+        ItemStackChemicalToItemStackRecipeBuilder
+            .purifying(
+                ore,
+                chemicalHelper.fromHolder(MekanismChemicals.OXYGEN, 200),
+                RagiumMekanismAddon.OreResources.CLUMP.toStack(3),
+                false,
+            ).build(output, RagiumAPI.id("processing/raginite/clump/from_ore"))
         // Injecting
-        ItemStackChemicalToItemStackRecipeBuilder.injecting(
-            rawMaterial,
-            chemicalHelper.fromHolder(MekanismChemicals.HYDROGEN_CHLORIDE, 200),
-            RagiumMekanismAddon.OreResources.SHARD.toStack(8),
-            false
-        ).build(output, RagiumAPI.id("processing/raginite/shard/from_raw_ore"))
+        ItemStackChemicalToItemStackRecipeBuilder
+            .injecting(
+                rawMaterial,
+                chemicalHelper.fromHolder(MekanismChemicals.HYDROGEN_CHLORIDE, 200),
+                RagiumMekanismAddon.OreResources.SHARD.toStack(8),
+                false,
+            ).build(output, RagiumAPI.id("processing/raginite/shard/from_raw_ore"))
 
-        ItemStackChemicalToItemStackRecipeBuilder.injecting(
-            ore,
-            chemicalHelper.fromHolder(MekanismChemicals.HYDROGEN_CHLORIDE, 200),
-            RagiumMekanismAddon.OreResources.SHARD.toStack(4),
-            false
-        ).build(output, RagiumAPI.id("processing/raginite/shard/from_ore"))
+        ItemStackChemicalToItemStackRecipeBuilder
+            .injecting(
+                ore,
+                chemicalHelper.fromHolder(MekanismChemicals.HYDROGEN_CHLORIDE, 200),
+                RagiumMekanismAddon.OreResources.SHARD.toStack(4),
+                false,
+            ).build(output, RagiumAPI.id("processing/raginite/shard/from_ore"))
 
-        ItemStackChemicalToItemStackRecipeBuilder.injecting(
-            itemHelper.from(HTTagPrefixes.CRYSTAL.createItemTag(RagiumMaterials.RAGINITE)),
-            chemicalHelper.fromHolder(MekanismChemicals.HYDROGEN_CHLORIDE, 200),
-            RagiumMekanismAddon.OreResources.SHARD.toStack(),
-            false
-        ).build(output, RagiumAPI.id("processing/raginite/shard/from_crystal"))
+        ItemStackChemicalToItemStackRecipeBuilder
+            .injecting(
+                itemHelper.from(HTTagPrefixes.CRYSTAL.createItemTag(RagiumMaterials.RAGINITE)),
+                chemicalHelper.fromHolder(MekanismChemicals.HYDROGEN_CHLORIDE, 200),
+                RagiumMekanismAddon.OreResources.SHARD.toStack(),
+                false,
+            ).build(output, RagiumAPI.id("processing/raginite/shard/from_crystal"))
         // Slurry
-        ChemicalDissolutionRecipeBuilder.dissolution(
-            rawMaterial,
-            chemicalHelper.fromHolder(MekanismChemicals.SULFURIC_ACID, 100),
-            ChemicalStack(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY, 2000),
-            false
-        ).build(output, RagiumAPI.id("processing/raginite/slurry/dirty/from_raw_ore"))
+        ChemicalDissolutionRecipeBuilder
+            .dissolution(
+                rawMaterial,
+                chemicalHelper.fromHolder(MekanismChemicals.SULFURIC_ACID, 100),
+                ChemicalStack(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY, 2000),
+                false,
+            ).build(output, RagiumAPI.id("processing/raginite/slurry/dirty/from_raw_ore"))
 
-        ChemicalDissolutionRecipeBuilder.dissolution(
-            ore,
-            chemicalHelper.fromHolder(MekanismChemicals.SULFURIC_ACID, 100),
-            ChemicalStack(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY, 1000),
-            false
-        ).build(output, RagiumAPI.id("processing/raginite/slurry/dirty/from_ore"))
-        
-        FluidChemicalToChemicalRecipeBuilder.washing(
-            fluidHelper.from(Tags.Fluids.WATER, 5),
-            chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY, 1),
-            ChemicalStack(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry, 1)
-        ).build(output, RagiumAPI.id("processing/raginite/slurry/clean"))
+        ChemicalDissolutionRecipeBuilder
+            .dissolution(
+                ore,
+                chemicalHelper.fromHolder(MekanismChemicals.SULFURIC_ACID, 100),
+                ChemicalStack(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY, 1000),
+                false,
+            ).build(output, RagiumAPI.id("processing/raginite/slurry/dirty/from_ore"))
 
-        ChemicalCrystallizerRecipeBuilder.crystallizing(
-            chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry, 200),
-            RagiumMekanismAddon.OreResources.CRYSTAL.toStack()
-        ).build(output, RagiumAPI.id("processing/raginite/crystal/from_slurry"))
+        FluidChemicalToChemicalRecipeBuilder
+            .washing(
+                fluidHelper.from(Tags.Fluids.WATER, 5),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY, 1),
+                ChemicalStack(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry, 1),
+            ).build(output, RagiumAPI.id("processing/raginite/slurry/clean"))
+
+        ChemicalCrystallizerRecipeBuilder
+            .crystallizing(
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry, 200),
+                RagiumMekanismAddon.OreResources.CRYSTAL.toStack(),
+            ).build(output, RagiumAPI.id("processing/raginite/crystal/from_slurry"))
     }
 }

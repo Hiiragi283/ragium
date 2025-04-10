@@ -31,7 +31,7 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         azureCatalyst()
         deepCatalyst()
         ragiumCatalyst()
-        
+
         mekanism()
     }
 
@@ -152,14 +152,14 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             false,
         )
     }
-    
+
     private fun mekanism() {
         val builder: Builder<ChemicalSolidTag, Chemical> = builder(MekanismDataMapTypes.INSTANCE.chemicalSolidTag())
-        
+
         builder.add(
             RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry,
             ChemicalSolidTag(HTTagPrefixes.ORE.createItemTag(RagiumMaterials.RAGINITE)),
-            false
+            false,
         )
     }
 }

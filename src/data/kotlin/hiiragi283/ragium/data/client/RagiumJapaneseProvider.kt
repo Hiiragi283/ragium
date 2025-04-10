@@ -433,7 +433,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun mekanism() {
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "ラギナイト")
         add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "紺碧エッセンス")
-        add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry.get().translationKey, "純粋なラギナイトの懸濁液")
+        add(
+            RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry
+                .get()
+                .translationKey,
+            "純粋なラギナイトの懸濁液",
+        )
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "汚れたラギナイトの懸濁液")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
