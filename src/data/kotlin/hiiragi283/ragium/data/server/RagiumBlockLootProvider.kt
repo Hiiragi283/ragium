@@ -82,10 +82,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RawResources.RAGINITE)
         registerOres(RagiumBlocks.RAGI_CRYSTAL_ORES, RagiumItems.RawResources.RAGI_CRYSTAL)
 
-        add(RagiumBlocks.STICKY_SOUL_SOIL.get()) { block: Block ->
-            createOreDrop(block, RagiumItems.TAR.get())
-        }
-
         // Machines
         for (holder: DeferredBlock<*> in RagiumBlocks.MACHINES) {
             add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }

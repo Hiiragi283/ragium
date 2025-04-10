@@ -115,11 +115,6 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumBlocks.LILY_OF_THE_ENDER)
             .saveSuffixed(output, "_from_lily")
 
-        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
-            .itemOutput(RagiumItems.TAR, 3)
-            .itemInput(RagiumBlocks.STICKY_SOUL_SOIL)
-            .saveSuffixed(output, "_from_soil")
-
         woodDust(output)
         sand(output)
         prismarine(output)

@@ -127,12 +127,6 @@ object RagiumBlocks {
     ) { prop: BlockBehaviour.Properties -> ColoredFallingBlock(ColorRGBA(0xccccff), prop) }
 
     @JvmField
-    val STICKY_SOUL_SOIL: DeferredBlock<Block> = register(
-        "sticky_soul_soil",
-        blockProperty(Blocks.SOUL_SOIL),
-    )
-
-    @JvmField
     val MYSTERIOUS_OBSIDIAN: DeferredBlock<Block> = register("mysterious_obsidian", blockProperty(Blocks.OBSIDIAN))
 
     @JvmField

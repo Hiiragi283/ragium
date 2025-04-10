@@ -3,12 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "minecraft:planks"
+      "tag": "minecraft:boats"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:wood_dust"
+      "count": 5,
+      "item": "ragium:sawdust"
     }
   ]
 }

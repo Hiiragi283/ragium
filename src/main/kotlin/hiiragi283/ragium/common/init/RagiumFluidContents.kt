@@ -141,22 +141,6 @@ object RagiumFluidContents {
     val BIOMASS: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register("biomass", defaultProperties())
 
-    @JvmField
-    val ETHANOL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("ethanol", defaultProperties())
-
-    @JvmField
-    val BIODIESEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("biodiesel", defaultProperties())
-
-    @JvmField
-    val GLYCEROL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("glycerol", defaultProperties())
-
-    @JvmField
-    val NITROGLYCERIN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("nitroglycerin", defaultProperties())
-
     //    Sap    //
 
     @JvmField

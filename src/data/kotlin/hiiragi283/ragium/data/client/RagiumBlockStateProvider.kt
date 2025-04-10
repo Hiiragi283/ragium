@@ -37,12 +37,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }.forEach(::simpleBlock)
 
         layeredBlock(
-            RagiumBlocks.STICKY_SOUL_SOIL,
-            vanillaId("block/soul_soil"),
-            RagiumAPI.id("block/sticky_soul_soil"),
-        )
-
-        layeredBlock(
             RagiumBlocks.MYSTERIOUS_OBSIDIAN,
             vanillaId("block/obsidian"),
             RagiumAPI.id("block/mysterious_obsidian"),

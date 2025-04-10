@@ -46,7 +46,6 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.RAGINITE_ORES.getItems())
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
             add(RagiumBlocks.SILT)
-            add(RagiumBlocks.STICKY_SOUL_SOIL)
             add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 
             addAll(RagiumBlocks.StorageBlocks.entries)
@@ -57,6 +56,8 @@ object RagiumCreativeTabs {
             add(RagiumItems.AZURE_STEEL_COMPOUND)
             addAll(RagiumItems.Ingots.entries)
             addAll(RagiumItems.RawResources.entries)
+            add(RagiumItems.SAWDUST_PELLET)
+            add(RagiumItems.TAR)
             // Decorations
             addAll(RagiumBlocks.RAGI_BRICK_SETS.getItems())
             addAll(RagiumBlocks.AZURE_TILE_SETS.getItems())
@@ -126,7 +127,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.ADVANCED_CIRCUIT)
 
             add(RagiumItems.SOAP)
-            add(RagiumItems.TAR)
             add(RagiumItems.YELLOW_CAKE)
             add(RagiumItems.YELLOW_CAKE_PIECE)
 

@@ -42,6 +42,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_berries")
 
         crudeOil(output)
+        biomass(output)
         sap(output)
     }
 
@@ -75,6 +76,15 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.AROMATIC_COMPOUND, 200)
             .itemInput(RagiumItems.TAR)
             .saveSuffixed(output, "_from_tar")
+    }
+
+    private fun biomass(output: RecipeOutput) {
+        // Biomass -> Ethanol
+        HTMachineRecipeBuilder(RagiumRecipes.REFINING)
+            .fluidOutput(RagiumFluidContents.FUEL, 500)
+            .fluidInput(RagiumFluidContents.BIOMASS)
+            .saveSuffixed(output, "_from_biomass")
+        // Ethanol + Plant Oil -> Fuel + Glycerol
     }
 
     private fun sap(output: RecipeOutput) {

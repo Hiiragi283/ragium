@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "minecraft:boats"
+      "tag": "minecraft:wooden_trapdoors"
     }
   ],
   "item_outputs": [
     {
-      "count": 5,
-      "item": "ragium:wood_dust"
+      "count": 3,
+      "item": "ragium:sawdust"
     }
   ]
 }

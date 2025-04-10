@@ -1,6 +1,5 @@
 {
   "values": [
-    "#c:biodiesel",
     {
       "id": "#c:biofuel",
       "required": false

@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server.bootstrap
 import hiiragi283.ragium.api.data.HTWorldGenData
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.placement.*
 
@@ -18,13 +17,6 @@ object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature
                 VerticalAnchor.aboveBottom(32),
                 VerticalAnchor.belowTop(64),
             ),
-        )
-        // Geode
-        register(
-            context,
-            RagiumWorldGenData.GEODE_CRUDE_OIL,
-            RarityFilter.onAverageOnceEvery(24),
-            PlacementUtils.RANGE_10_10,
         )
     }
 

@@ -72,16 +72,19 @@ object RagiumItems {
     ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
 
     @JvmStatic
-    private fun registerMaterial(prefix: HTTagPrefix, key: HTMaterialKey): DeferredItem<HTMaterialItem> =
-        REGISTER.registerItem(prefix.createPath(key)) { prop: Item.Properties ->
-            HTMaterialItem(prefix, key, prop)
-        }
+    private fun registerMaterial(
+        prefix: HTTagPrefix,
+        key: HTMaterialKey,
+        path: String = prefix.createPath(key),
+    ): DeferredItem<HTMaterialItem> = REGISTER.registerItem(path) { prop: Item.Properties ->
+        HTMaterialItem(prefix, key, prop)
+    }
 
     //    Materials    //
 
-    enum class Dusts(override val key: HTMaterialKey) : HTMaterialItemLike {
+    enum class Dusts(override val key: HTMaterialKey, path: String) : HTMaterialItemLike {
         // Vanilla
-        WOOD(VanillaMaterials.WOOD),
+        WOOD(VanillaMaterials.WOOD, "sawdust"),
         COAL(VanillaMaterials.COAL),
         COPPER(VanillaMaterials.COPPER),
         IRON(VanillaMaterials.IRON),
@@ -108,8 +111,10 @@ object RagiumItems {
         SULFUR(CommonMaterials.SULFUR),
         ;
 
+        constructor(key: HTMaterialKey) : this(key, HTTagPrefixes.DUST.createPath(key))
+
         override val prefix: HTTagPrefix = HTTagPrefixes.DUST
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key)
+        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, key, path)
         override val id: ResourceLocation = holder.id
 
         override fun asItem(): Item = holder.asItem()
@@ -158,6 +163,12 @@ object RagiumItems {
 
     @JvmField
     val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")
+
+    @JvmField
+    val SAWDUST_PELLET: DeferredItem<Item> = register("sawdust_pellet")
+
+    @JvmField
+    val TAR: DeferredItem<Item> = register("tar")
 
     //    Armors    //
 
@@ -310,9 +321,6 @@ object RagiumItems {
 
     @JvmField
     val SOAP: DeferredItem<Item> = register("soap")
-
-    @JvmField
-    val TAR: DeferredItem<Item> = register("tar")
 
     @JvmField
     val YELLOW_CAKE: DeferredItem<Item> =

@@ -38,7 +38,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
     private fun block() {
         addBlock(RagiumBlocks.SILT, "Silt")
-        addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "Sticky Soul Soil")
         addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
 
         addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
@@ -139,10 +138,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addFluid(RagiumFluidContents.PLANT_OIL, "Plant Oil")
         addFluid(RagiumFluidContents.BIOMASS, "Biomass")
-        addFluid(RagiumFluidContents.ETHANOL, "Ethanol")
-        addFluid(RagiumFluidContents.BIODIESEL, "Biodiesel")
-        addFluid(RagiumFluidContents.GLYCEROL, "Glycerol")
-        addFluid(RagiumFluidContents.NITROGLYCERIN, "Nitroglycerin")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
@@ -218,6 +213,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+        addItem(RagiumItems.SAWDUST_PELLET, "Sawdust Pellet")
         addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")

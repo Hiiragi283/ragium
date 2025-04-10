@@ -26,13 +26,6 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
             BiomeTags.IS_OVERWORLD,
             GenerationStep.Decoration.UNDERGROUND_ORES,
         )
-        // Geode
-        registerFeature(
-            context,
-            RagiumWorldGenData.GEODE_CRUDE_OIL,
-            BiomeTags.IS_NETHER,
-            GenerationStep.Decoration.LOCAL_MODIFICATIONS,
-        )
 
         // Remove Lava Springs
         context.register(

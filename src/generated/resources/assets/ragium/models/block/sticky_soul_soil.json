@@ -1,8 +1,0 @@
-{
-  "parent": "ragium:block/layered",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "layer0": "minecraft:block/soul_soil",
-    "layer1": "ragium:block/sticky_soul_soil"
-  }
-}

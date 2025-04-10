@@ -75,10 +75,6 @@ class RagiumClient(eventBus: IEventBus) {
 
         register(RagiumFluidContents.PLANT_OIL, Color(0x999933))
         register(RagiumFluidContents.BIOMASS, Color(0x006600))
-        register(RagiumFluidContents.ETHANOL, Color(0x99ffff))
-        register(RagiumFluidContents.BIODIESEL, Color(0x99ff00))
-        register(RagiumFluidContents.GLYCEROL, Color(0xccff66))
-        register(RagiumFluidContents.NITROGLYCERIN, Color(0xff33333))
 
         register(RagiumFluidContents.SAP, Color(0x996633))
         register(RagiumFluidContents.CRIMSON_SAP, Color(0x660000))

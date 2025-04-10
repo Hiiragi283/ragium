@@ -3,21 +3,13 @@ package hiiragi283.ragium.data.server.bootstrap
 import hiiragi283.ragium.api.data.HTWorldGenData
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluidContents
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.BlockTags
-import net.minecraft.util.valueproviders.UniformInt
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.levelgen.GeodeBlockSettings
-import net.minecraft.world.level.levelgen.GeodeCrackSettings
-import net.minecraft.world.level.levelgen.GeodeLayerSettings
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
-import net.minecraft.world.level.levelgen.feature.configurations.GeodeConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 
@@ -39,7 +31,7 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
             ),
         )
         // Geode
-        register(
+        /*register(
             context,
             RagiumWorldGenData.GEODE_CRUDE_OIL,
             Feature.GEODE,
@@ -69,7 +61,7 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
                 0.05,
                 1,
             ),
-        )
+        )*/
     }
 
     private fun <FC : FeatureConfiguration> register(

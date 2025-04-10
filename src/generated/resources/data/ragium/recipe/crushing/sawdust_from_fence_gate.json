@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:chests/wooden"
+      "tag": "c:fence_gates/wooden"
     }
   ],
   "item_outputs": [
     {
-      "count": 8,
-      "item": "ragium:wood_dust"
+      "count": 2,
+      "item": "ragium:sawdust"
     }
   ]
 }

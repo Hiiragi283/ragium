@@ -3,12 +3,12 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "minecraft:wooden_stairs"
+      "tag": "minecraft:planks"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:wood_dust"
+      "item": "ragium:sawdust"
     }
   ]
 }

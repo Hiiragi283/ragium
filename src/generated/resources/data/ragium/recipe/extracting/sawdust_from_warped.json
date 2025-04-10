@@ -3,19 +3,19 @@
   "fluid_outputs": [
     {
       "amount": 100,
-      "fluid": "ragium:sap"
+      "fluid": "ragium:warped_sap"
     }
   ],
   "item_inputs": [
     {
       "count": 1,
-      "tag": "minecraft:logs_that_burn"
+      "tag": "minecraft:warped_stems"
     }
   ],
   "item_outputs": [
     {
       "count": 4,
-      "item": "ragium:wood_dust"
+      "item": "ragium:sawdust"
     }
   ]
 }

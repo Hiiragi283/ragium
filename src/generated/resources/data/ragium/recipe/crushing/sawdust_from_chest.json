@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "item": "ragium:sticky_soul_soil"
+      "tag": "c:chests/wooden"
     }
   ],
   "item_outputs": [
     {
-      "count": 3,
-      "item": "ragium:tar"
+      "count": 8,
+      "item": "ragium:sawdust"
     }
   ]
 }

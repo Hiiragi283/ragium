@@ -70,7 +70,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .define('B', HTTagPrefixes.GEM, VanillaMaterials.DIAMOND)
             .save(output)
 
-        // Azure Mixture
+        // Azure Steel
         HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_COMPOUND)
             .cross4()
             .define('A', HTTagPrefixes.DUST, VanillaMaterials.LAPIS)
@@ -89,6 +89,19 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItems.AZURE_STEEL_COMPOUND)
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
+
+        // Sawdust
+        HTShapedRecipeBuilder(RagiumItems.SAWDUST_PELLET)
+            .hollow8()
+            .define('A', HTTagPrefixes.DUST, VanillaMaterials.WOOD)
+            .define('B', RagiumItems.Dusts.WOOD)
+            .save(output)
+
+        HTCookingRecipeBuilder
+            .smelting(Items.CHARCOAL)
+            .addIngredient(RagiumItems.SAWDUST_PELLET)
+            .setExp(0.15f)
+            .saveSuffixed(output, "_from_pellet")
 
         registerPatterns(output)
     }

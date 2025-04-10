@@ -38,7 +38,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun block() {
         addBlock(RagiumBlocks.SILT, "シルト")
-        addBlock(RagiumBlocks.STICKY_SOUL_SOIL, "粘着質のソウルソイル")
         addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
 
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
@@ -139,10 +138,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addFluid(RagiumFluidContents.PLANT_OIL, "植物油")
         addFluid(RagiumFluidContents.BIOMASS, "バイオマス")
-        addFluid(RagiumFluidContents.ETHANOL, "エタノール")
-        addFluid(RagiumFluidContents.BIODIESEL, "バイオディーゼル")
-        addFluid(RagiumFluidContents.GLYCEROL, "グリセロール")
-        addFluid(RagiumFluidContents.NITROGLYCERIN, "ニトログリセリン")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
@@ -218,6 +213,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        addItem(RagiumItems.SAWDUST_PELLET, "おがくずペレット")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")
