@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.15,
   "ingredient": {
-    "item": "ragium:sawdust_pellet"
+    "item": "ragium:compressed_sawdust"
   },
   "result": {
     "count": 1,

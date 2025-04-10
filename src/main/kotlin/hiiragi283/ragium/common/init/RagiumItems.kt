@@ -165,7 +165,7 @@ object RagiumItems {
     val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")
 
     @JvmField
-    val SAWDUST_PELLET: DeferredItem<Item> = register("sawdust_pellet")
+    val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
 
     @JvmField
     val TAR: DeferredItem<Item> = register("tar")

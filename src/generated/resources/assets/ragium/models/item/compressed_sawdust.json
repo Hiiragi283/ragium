@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/sawdust_pellet"
+    "layer0": "ragium:item/compressed_sawdust"
   }
 }

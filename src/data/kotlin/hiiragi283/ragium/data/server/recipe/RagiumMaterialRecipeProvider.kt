@@ -91,7 +91,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_compound")
 
         // Sawdust
-        HTShapedRecipeBuilder(RagiumItems.SAWDUST_PELLET)
+        HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
             .define('A', HTTagPrefixes.DUST, VanillaMaterials.WOOD)
             .define('B', RagiumItems.Dusts.WOOD)
@@ -99,7 +99,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
 
         HTCookingRecipeBuilder
             .smelting(Items.CHARCOAL)
-            .addIngredient(RagiumItems.SAWDUST_PELLET)
+            .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")
 
