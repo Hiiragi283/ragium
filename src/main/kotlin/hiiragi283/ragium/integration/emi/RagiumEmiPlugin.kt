@@ -51,7 +51,7 @@ class RagiumEmiPlugin : EmiPlugin {
         this.registry = registry
         recipeManager = registry.recipeManager
 
-        addMachineRecipe(RagiumRecipes.CRUSHING, HTItemProcessEmiRecipe.create(RagiumEmiCategories.CRUSHING))
+        addMachineRecipe(RagiumRecipes.CRUSHING, ::HTCrushingEmiRecipe)
         addMachineRecipe(RagiumRecipes.EXTRACTING, ::HTExtractingEmiRecipe)
         addMachineRecipe(RagiumRecipes.INFUSING, ::HTInfusingEmiRecipe)
         addMachineRecipe(RagiumRecipes.REFINING, ::HTRefiningEmiRecipe)

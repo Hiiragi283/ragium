@@ -1,25 +1,47 @@
+<h1 align="center">Ragium</h1>
+<h1 align="center">
+  <img alt="Modrinth Game Versions" src="https://img.shields.io/modrinth/game-versions/__?style=for-the-badge">
+  <br>
+  <a href="https://www.curseforge.com/minecraft/mc-mods/ragium"><img alt="CurseForge" src="https://cf.way2muchnoise.eu/__.svg?badge_style=for_the_badge"></a>
+  <a href="https://modrinth.com/mod/ragium"><img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/__?style=for-the-badge&logo=modrinth&logoColor=1c1c1c&label=%20&labelColor=5ca424&color=2d2d2d"></a>
+</h1>
 
-Installation information
-=======
+## Supported Versions
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+| MC Version | Supported | Support Plan |
+|:----------:|:---------:|:------------:|
+|   1.21.x   |     ❌     |      ⭕       |
+|   1.21.1   |     ⭕     |      ⭕       |
+|  < 1.21.1  |     ❌     |      ❌       |
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+## Dependencies Mods
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+### Required
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+- [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge)
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+### Optional
+
+- [CTM](https://www.curseforge.com/minecraft/mc-mods/ctm)
+  - Supports connected textures for some blocks
+- [EMI](https://modrinth.com/mod/emi)
+  - Adds new categories and information
+- [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions)
+  - Adds descriptions for new enchantments
+- [Jade 🔍](https://modrinth.com/mod/jade)
+  - Adds new information providers
+- [Mekanism](https://modrinth.com/mod/mekanism)
+  - Adds new chemicals
+  - Adds new recipes
+
+## Features
+
+
+
+## License
+
+- The code is licensed under the [MPL-2.0](https://github.com/Hiiragi283/ragium/blob/main/LICENSE).
+
+## Credit
+
+- Thanks for debuggers in my discord server

@@ -1,0 +1,21 @@
+{
+  "type": "ragium:infusing",
+  "fluid_inputs": [
+    {
+      "amount": 200,
+      "tag": "c:aromatic_compound"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:sands"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 8,
+      "item": "minecraft:tnt"
+    }
+  ]
+}

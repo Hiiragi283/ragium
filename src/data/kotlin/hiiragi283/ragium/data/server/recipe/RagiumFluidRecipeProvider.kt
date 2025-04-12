@@ -76,6 +76,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.AROMATIC_COMPOUND, 200)
             .itemInput(RagiumItems.TAR)
             .saveSuffixed(output, "_from_tar")
+        // Aromatic Compound + Sand -> TNT
+        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+            .itemOutput(Items.TNT, 8)
+            .itemInput(Tags.Items.SANDS)
+            .fluidInput(RagiumFluidContents.AROMATIC_COMPOUND, 200)
+            .save(output)
     }
 
     private fun biomass(output: RecipeOutput) {
