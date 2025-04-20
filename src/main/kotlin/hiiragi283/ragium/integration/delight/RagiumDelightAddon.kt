@@ -12,12 +12,14 @@ import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.registries.DeferredItem
 import vectorwing.farmersdelight.common.item.ConsumableItem
+import vectorwing.farmersdelight.common.item.PopsicleItem
 
 @HTAddon("farmersdelight")
 object RagiumDelightAddon : RagiumAddon {
@@ -29,6 +31,14 @@ object RagiumDelightAddon : RagiumAddon {
     @JvmField
     val RAGI_CHERRY_PULP: DeferredItem<ConsumableItem> =
         registerConsumable("ragi_cherry_pulp", RagiumFoods.RAGI_CHERRY_PULP)
+
+    @JvmField
+    val RAGI_CHERRY_POPSICLE: DeferredItem<PopsicleItem> =
+        ITEM_REGISTER.registerItem(
+            "ragi_cherry_popsicle",
+            ::PopsicleItem,
+            itemProperty().food(RagiumFoods.RAGI_CHERRY_POPSICLE),
+        )
 
     @JvmField
     val RAGI_CHERRY_JAM: DeferredItem<ConsumableItem> =
@@ -56,17 +66,23 @@ object RagiumDelightAddon : RagiumAddon {
         ITEM_REGISTER.register(eventBus)
     }
 
+    private var lastStack: ItemStack = RagiumItems.RAGI_CHERRY.toStack()
+
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         fun acceptCherry(item: ItemLike) {
+            val stack: ItemStack = item.toStack()
             event.insertAfter(
                 RagiumItems.RAGI_CHERRY.toStack(),
-                item.toStack(),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS
+                stack,
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )
+            lastStack = stack
         }
 
         if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {
             acceptCherry(RAGI_CHERRY_PULP)
+
+            acceptCherry(RAGI_CHERRY_POPSICLE)
             acceptCherry(RAGI_CHERRY_JAM)
         }
     }

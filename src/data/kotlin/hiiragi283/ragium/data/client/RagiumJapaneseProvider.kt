@@ -421,6 +421,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun delight() {
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+
+        addItem(RagiumDelightAddon.RAGI_CHERRY_POPSICLE, "らぎチェリーバー")
         addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
     }
 

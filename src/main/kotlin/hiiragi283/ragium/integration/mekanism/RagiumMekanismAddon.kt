@@ -25,6 +25,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -94,13 +95,17 @@ object RagiumMekanismAddon : RagiumAddon {
         }
     }
 
+    private var lastStack: ItemStack = RagiumItems.RawResources.RAGINITE.toStack()
+
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         fun acceptRaginite(item: ItemLike) {
+            val stack: ItemStack = item.toStack()
             event.insertAfter(
-                RagiumItems.RawResources.RAGINITE.toStack(),
-                item.toStack(),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS
+                lastStack,
+                stack,
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )
+            lastStack = stack
         }
 
         if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {

@@ -130,6 +130,7 @@ class RagiumItemTagProvider(
         addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
         add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
         // Food
+        add(Tags.Items.FOODS, RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
         add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
         add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)

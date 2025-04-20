@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:foods/ragi_cherry"
+    },
+    "B": {
+      "item": "minecraft:ice"
+    },
+    "C": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    " AA",
+    "BAA",
+    "CB "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_cherry_popsicle"
+  }
+}

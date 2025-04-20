@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
@@ -9,14 +10,29 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
 import vectorwing.farmersdelight.data.builder.CookingPotRecipeBuilder
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
 object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD) {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        crafting(output)
         cookingPot(output)
         cutting(output)
+    }
+
+    private fun crafting(output: RecipeOutput) {
+        // Ragi-Cherry Popsicle
+        HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
+            .pattern(
+                " AA",
+                "BAA",
+                "CB ",
+            ).define('A', RagiumItemTags.FOODS_RAGI_CHERRY)
+            .define('B', Items.ICE)
+            .define('C', Tags.Items.RODS_WOODEN)
+            .save(output)
     }
 
     private fun cookingPot(output: RecipeOutput) {

@@ -85,6 +85,14 @@ object RagiumFoods {
     )
 
     @JvmStatic
+    val RAGI_CHERRY_POPSICLE: FoodProperties = foodComponent(
+        nutrition = 3,
+        saturation = 0.2f,
+        effects = mapOf(supply(MobEffectInstance(MobEffects.HEALTH_BOOST, 60 * 20, 0)) to 1f),
+        alwaysEat = true,
+    )
+
+    @JvmStatic
     val RAGI_CHERRY_PULP: FoodProperties = foodComponent(
         nutrition = 1,
         saturation = 0.1f,

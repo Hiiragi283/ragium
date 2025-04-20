@@ -421,6 +421,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
     private fun delight() {
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+
+        addItem(RagiumDelightAddon.RAGI_CHERRY_POPSICLE, "Ragi-Cherry Popsicle")
         addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
     }
 
