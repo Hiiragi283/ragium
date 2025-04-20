@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
-import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
@@ -32,24 +31,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumItems.Ingots.CHOCOLATE)
             .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
-            .save(output)
-        // Apple
-        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
-            .itemOutput(RagiumItems.CHOCOLATE_APPLE)
-            .itemInput(Items.APPLE)
-            .fluidInput(RagiumFluidTags.CHOCOLATES, 250)
-            .save(output)
-        // Bread
-        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
-            .itemOutput(RagiumItems.CHOCOLATE_BREAD)
-            .itemInput(Tags.Items.FOODS_BREAD)
-            .fluidInput(RagiumFluidTags.CHOCOLATES, 250)
-            .save(output)
-        // Cookie
-        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
-            .itemOutput(RagiumItems.CHOCOLATE_COOKIE, 8)
-            .itemInput(Tags.Items.FOODS_COOKIE, 8)
-            .fluidInput(RagiumFluidTags.CHOCOLATES, 250)
             .save(output)
 
         // Ambrosia
@@ -91,15 +72,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .define('A', RagiumItems.COOKED_MEAT_INGOT)
             .define('B', HTTagPrefixes.INGOT, VanillaMaterials.IRON)
             .save(output)
-
-        HTShapedRecipeBuilder(RagiumItems.MEAT_SANDWICH)
-            .pattern(
-                "A",
-                "B",
-                "A",
-            ).define('A', Tags.Items.FOODS_BREAD)
-            .define('B', RagiumItems.COOKED_MEAT_INGOT)
-            .save(output)
     }
 
     private fun milk(output: RecipeOutput) {
@@ -118,7 +90,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .cross8()
             .define('A', RagiumItemTags.FLOURS)
             .define('B', Items.SUGAR)
-            .define('C', RagiumItemTags.FOOD_BUTTER)
+            .define('C', RagiumItemTags.FOODS_BUTTER)
             .save(output)
 
         addSlab(output, RagiumBlocks.SPONGE_CAKE, RagiumBlocks.SPONGE_CAKE_SLAB)
@@ -153,7 +125,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
                 " A ",
                 "BCB",
                 " D ",
-            ).define('A', RagiumItemTags.FOOD_CHOCOLATE)
+            ).define('A', RagiumItemTags.FOODS_CHOCOLATE)
             .define('B', Tags.Items.FOODS_BERRY)
             .define('C', Tags.Items.EGGS)
             .define('D', RagiumBlocks.SPONGE_CAKE_SLAB)

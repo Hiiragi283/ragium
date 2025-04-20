@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
@@ -31,6 +32,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         tooltips()
         misc()
 
+        delight()
         mekanism()
         jade()
         emi()
@@ -161,23 +163,16 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MEAT_INGOT, "Meat Ingot")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
-        addItem(RagiumItems.MEAT_SANDWICH, "Meat Sandwich")
-
-        addItem(RagiumItems.DOUGH, "Dough")
-        addItem(RagiumItems.FLOUR, "Flour")
 
         addItem(RagiumItems.BUTTER, "Butter")
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
 
         addItem(RagiumItems.BOTTLED_BEE, "Bottled Bee")
 
-        addItem(RagiumItems.CHOCOLATE_APPLE, "Chocolate Apple")
-        addItem(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
-        addItem(RagiumItems.CHOCOLATE_COOKIE, "Chocolate Cookie")
-
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
+        addItem(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
         addItem(RagiumItems.EXP_BERRIES, "Exp Berries")
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
@@ -218,8 +213,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")
         addItem(RagiumItems.TAR, "Tar")
-        addItem(RagiumItems.YELLOW_CAKE, "Yellow Cake")
-        addItem(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
 
         // addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
         // addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
@@ -375,10 +368,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
         add(RagiumItemTags.FLOURS, "Flours")
-        add(RagiumItemTags.FOOD_BUTTER, "Butter")
-        add(RagiumItemTags.FOOD_CHEESE, "Cheese")
-        add(RagiumItemTags.FOOD_CHOCOLATE, "Chocolate")
-        add(RagiumItemTags.FOOD_DOUGH, "Dough")
+        add(RagiumItemTags.FOODS_BUTTER, "Butter")
+        add(RagiumItemTags.FOODS_CHEESE, "Cheese")
+        add(RagiumItemTags.FOODS_CHOCOLATE, "Chocolate")
+        add(RagiumItemTags.FOODS_DOUGH, "Dough")
 
         add(RagiumItemTags.CIRCUITS, "Circuit")
         add(RagiumItemTags.CIRCUITS_BASIC, "Basic Circuit")
@@ -424,6 +417,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addOreVariant(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
         addOreVariant(HTOreVariant.NETHER, "Nether %s Ore")
         addOreVariant(HTOreVariant.END, "End %s Ore")
+    }
+
+    private fun delight() {
+        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+        addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
     }
 
     private fun mekanism() {

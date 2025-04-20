@@ -44,16 +44,30 @@ object RagiumItemTags {
     val FLOURS: TagKey<Item> = commonTag("flours")
 
     @JvmField
-    val FOOD_BUTTER: TagKey<Item> = commonTag("foods/butter")
+    val FOODS_BUTTER: TagKey<Item> = commonTag("foods/butter")
 
     @JvmField
-    val FOOD_CHEESE: TagKey<Item> = commonTag("foods/cheese")
+    val FOODS_CHEESE: TagKey<Item> = commonTag("foods/cheese")
 
     @JvmField
-    val FOOD_CHOCOLATE: TagKey<Item> = commonTag("foods/chocolate")
+    val FOODS_CHOCOLATE: TagKey<Item> = commonTag("foods/chocolate")
 
     @JvmField
-    val FOOD_DOUGH: TagKey<Item> = commonTag("foods/dough")
+    val FOODS_DOUGH: TagKey<Item> = commonTag("foods/dough")
+
+    // Cherry
+    @JvmField
+    val FOODS_CHERRY: TagKey<Item> = commonTag("foods/cherry")
+
+    @JvmField
+    val FOODS_RAGI_CHERRY: TagKey<Item> = commonTag("foods/ragi_cherry")
+
+    // Jam
+    @JvmField
+    val FOODS_JAMS: TagKey<Item> = commonTag("foods/jams")
+
+    @JvmField
+    val JAMS_RAGI_CHERRY: TagKey<Item> = commonTag("jams/ragi_cherry")
 
     // Circuits
     @JvmField

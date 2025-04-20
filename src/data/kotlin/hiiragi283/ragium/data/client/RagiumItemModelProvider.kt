@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -54,8 +55,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
 
-            remove(RagiumItems.CHOCOLATE_APPLE)
-
+            addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.forEach(::basicItem)
 
@@ -73,11 +73,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .parent(generated)
             .texture("layer0", "minecraft:item/iron_ingot")
             .texture("layer1", RagiumItems.AZURE_STEEL_COMPOUND.itemId)
-
-        getBuilder(RagiumItems.CHOCOLATE_APPLE)
-            .parent(generated)
-            .texture("layer0", "minecraft:item/apple")
-            .texture("layer1", RagiumItems.CHOCOLATE_APPLE.itemId)
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.bucketHolder)

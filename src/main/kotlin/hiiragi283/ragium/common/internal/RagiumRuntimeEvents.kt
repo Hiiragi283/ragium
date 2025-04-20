@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.property.HTPropertyMap
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.Holder
@@ -37,12 +38,14 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -151,7 +154,7 @@ object RagiumRuntimeEvents {
         }
     }
 
-    //    Loot Table Load    //
+    //    Loot Table    //
 
     @SubscribeEvent
     fun onLoadLootTable(event: LootTableLoadEvent) {
@@ -159,6 +162,12 @@ object RagiumRuntimeEvents {
 
         fun modify(entityType: EntityType<*>, function: LootTable.() -> Unit) {
             if (loot.lootTableId == entityType.defaultLootTable.location()) {
+                function(loot)
+            }
+        }
+
+        fun modify(block: Block, function: LootTable.() -> Unit) {
+            if (loot.lootTableId == block.lootTable.location()) {
                 function(loot)
             }
         }
@@ -185,6 +194,18 @@ object RagiumRuntimeEvents {
 
     @JvmStatic
     private fun crushing(event: HTRecipesUpdatedEvent) {
+        event.register(
+            RagiumRecipes.CRUSHING,
+            RagiumAPI.id("flour_from_wheat"),
+        ) { lookup: HolderGetter<Item> ->
+            val result: Item = event.getFirstItem(RagiumItemTags.FLOURS) ?: return@register null
+            HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+                .itemInput(Tags.Items.CROPS_WHEAT)
+                .itemOutput(result)
+                .createRecipe()
+        }
+
+        // Material
         val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
         for ((key: HTMaterialKey, properties: HTPropertyMap) in registry) {
             val name: String = key.name

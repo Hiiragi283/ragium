@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
@@ -31,6 +32,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         tooltips()
         misc()
 
+        delight()
         mekanism()
         jade()
         emi()
@@ -161,23 +163,16 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MEAT_INGOT, "生肉インゴット")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
-        addItem(RagiumItems.MEAT_SANDWICH, "ミートサンドイッチ")
-
-        addItem(RagiumItems.DOUGH, "生地")
-        addItem(RagiumItems.FLOUR, "小麦粉")
 
         addItem(RagiumItems.BUTTER, "バター")
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
 
         addItem(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
 
-        addItem(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
-        addItem(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
-        addItem(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
-
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
+        addItem(RagiumItems.RAGI_CHERRY, "らぎチェリー")
         addItem(RagiumItems.EXP_BERRIES, "経験値ベリー")
         addItem(RagiumItems.WARPED_WART, "歪んだウォート")
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
@@ -218,8 +213,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")
         addItem(RagiumItems.TAR, "タール")
-        addItem(RagiumItems.YELLOW_CAKE, "イエローケーキ")
-        addItem(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 
         // addItem(RagiumItems.BLANK_TICKET, "空のチケット")
         // addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
@@ -366,10 +359,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumItemTags.CROPS_WARPED_WART, "歪んだウォート")
         add(RagiumItemTags.FLOURS, "小麦粉")
-        add(RagiumItemTags.FOOD_BUTTER, "バター")
-        add(RagiumItemTags.FOOD_CHEESE, "チーズ")
-        add(RagiumItemTags.FOOD_CHOCOLATE, "チョコレート")
-        add(RagiumItemTags.FOOD_DOUGH, "生地")
+        add(RagiumItemTags.FOODS_BUTTER, "バター")
+        add(RagiumItemTags.FOODS_CHEESE, "チーズ")
+        add(RagiumItemTags.FOODS_CHOCOLATE, "チョコレート")
+        add(RagiumItemTags.FOODS_DOUGH, "生地")
 
         add(RagiumItemTags.CIRCUITS, "回路")
         add(RagiumItemTags.CIRCUITS_ADVANCED, "発展回路")
@@ -424,6 +417,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addOreVariant(HTOreVariant.DEEPSLATE, "深層%s鉱石")
         addOreVariant(HTOreVariant.NETHER, "ネザー%s鉱石")
         addOreVariant(HTOreVariant.END, "エンド%s鉱石")
+    }
+
+    private fun delight() {
+        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+        addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
     }
 
     private fun mekanism() {

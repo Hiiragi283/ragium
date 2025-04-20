@@ -220,16 +220,6 @@ object RagiumItems {
     @JvmField
     val CANNED_COOKED_MEAT: DeferredItem<Item> = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
 
-    @JvmField
-    val MEAT_SANDWICH: DeferredItem<Item> = registerFood("meat_sandwich", RagiumFoods.MEAT_SANDWICH)
-
-    // Wheat
-    @JvmField
-    val FLOUR: DeferredItem<Item> = register("flour")
-
-    @JvmField
-    val DOUGH: DeferredItem<Item> = register("dough")
-
     // Milk
     @JvmField
     val BUTTER: DeferredItem<Item> = registerFood("butter", Foods.APPLE)
@@ -241,16 +231,6 @@ object RagiumItems {
     @JvmField
     val BOTTLED_BEE: DeferredItem<HTBottledBeeItem> = register("bottled_bee", ::HTBottledBeeItem)
 
-    // Chocolate
-    @JvmField
-    val CHOCOLATE_APPLE: DeferredItem<Item> = registerFood("chocolate_apple", Foods.COOKED_CHICKEN)
-
-    @JvmField
-    val CHOCOLATE_BREAD: DeferredItem<Item> = registerFood("chocolate_bread", Foods.COOKED_BEEF)
-
-    @JvmField
-    val CHOCOLATE_COOKIE: DeferredItem<Item> = registerFood("chocolate_cookie", Foods.COOKIE)
-
     // Sponge
     @JvmField
     val MELON_PIE: DeferredItem<Item> = registerFood("melon_pie", RagiumFoods.MELON_PIE)
@@ -259,7 +239,10 @@ object RagiumItems {
     val SWEET_BERRIES_CAKE_PIECE: DeferredItem<Item> =
         registerFood("sweet_berries_cake_piece", RagiumFoods.SWEET_BERRIES_CAKE)
 
-    // Other
+    // Cherry
+    @JvmField
+    val RAGI_CHERRY: DeferredItem<Item> = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
+
     @JvmField
     val EXP_BERRIES: DeferredItem<ItemNameBlockItem> = register(
         "exp_berries",
@@ -321,14 +304,6 @@ object RagiumItems {
 
     @JvmField
     val SOAP: DeferredItem<Item> = register("soap")
-
-    @JvmField
-    val YELLOW_CAKE: DeferredItem<Item> =
-        register("yellow_cake")
-
-    @JvmField
-    val YELLOW_CAKE_PIECE: DeferredItem<Item> =
-        registerFood("yellow_cake_piece", RagiumFoods.YELLOW_CAKE_PIECE)
 
     //    Event    //
 

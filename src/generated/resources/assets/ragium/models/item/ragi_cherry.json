@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/yellow_cake"
+    "layer0": "ragium:item/ragi_cherry"
   }
 }

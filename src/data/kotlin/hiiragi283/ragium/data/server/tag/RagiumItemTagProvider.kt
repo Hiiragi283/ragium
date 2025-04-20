@@ -19,10 +19,10 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -130,40 +130,30 @@ class RagiumItemTagProvider(
         addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
         add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
         // Food
-        addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_BUTTER)
-        addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_CHEESE)
-        addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_CHOCOLATE)
-        addTag(Tags.Items.FOODS, RagiumItemTags.FOOD_DOUGH)
-
         add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
-        add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_APPLE)
-        add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_BREAD)
-        add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_COOKIE)
         add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
         add(Tags.Items.FOODS, RagiumItems.EXP_BERRIES)
         add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
         add(Tags.Items.FOODS, RagiumItems.MEAT_INGOT)
-        add(Tags.Items.FOODS, RagiumItems.MEAT_SANDWICH)
         add(Tags.Items.FOODS, RagiumItems.MELON_PIE)
         add(Tags.Items.FOODS, RagiumItems.SWEET_BERRIES_CAKE_PIECE)
         add(Tags.Items.FOODS, RagiumItems.WARPED_WART)
-
         add(Tags.Items.FOODS_BERRY, RagiumItems.EXP_BERRIES)
+        addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_BUTTER)
+        addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_CHEESE)
+        addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_CHOCOLATE)
+        addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_JAMS)
+        addTag(Tags.Items.FOODS_FRUIT, RagiumItemTags.FOODS_CHERRY)
 
-        add(RagiumItemTags.FOOD_BUTTER, RagiumItems.BUTTER)
-
-        addTag(RagiumItemTags.FOOD_CHEESE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHEESE))
-
-        addTag(RagiumItemTags.FOOD_CHOCOLATE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE))
-        add(
-            HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE),
-            ResourceLocation.fromNamespaceAndPath("create", "bar_of_chocolate"),
-            HTTagBuilder.DependType.OPTIONAL,
-        )
-
-        add(RagiumItemTags.FLOURS, RagiumItems.FLOUR)
-        add(RagiumItemTags.FOOD_DOUGH, RagiumItems.DOUGH)
+        add(RagiumItemTags.FOODS_BUTTER, RagiumItems.BUTTER)
+        add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumItems.RAGI_CHERRY)
+        add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
+        add(RagiumItemTags.JAMS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_JAM)
+        addTag(RagiumItemTags.FOODS_CHEESE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHEESE))
+        addTag(RagiumItemTags.FOODS_CHERRY, RagiumItemTags.FOODS_RAGI_CHERRY)
+        addTag(RagiumItemTags.FOODS_CHOCOLATE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE))
+        addTag(RagiumItemTags.FOODS_JAMS, RagiumItemTags.JAMS_RAGI_CHERRY)
     }
 
     //    Armor    //

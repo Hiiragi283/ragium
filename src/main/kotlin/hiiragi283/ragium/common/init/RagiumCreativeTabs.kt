@@ -89,19 +89,11 @@ object RagiumCreativeTabs {
             add(RagiumItems.MEAT_INGOT)
             add(RagiumItems.COOKED_MEAT_INGOT)
             add(RagiumItems.CANNED_COOKED_MEAT)
-            add(RagiumItems.MEAT_SANDWICH)
-
-            add(RagiumItems.FLOUR)
-            add(RagiumItems.DOUGH)
 
             add(RagiumItems.BUTTER)
             add(RagiumItems.ICE_CREAM)
 
             add(RagiumItems.BOTTLED_BEE)
-
-            add(RagiumItems.CHOCOLATE_APPLE)
-            add(RagiumItems.CHOCOLATE_BREAD)
-            add(RagiumItems.CHOCOLATE_COOKIE)
 
             add(RagiumItems.MELON_PIE)
 
@@ -112,6 +104,9 @@ object RagiumCreativeTabs {
 
             add(RagiumBlocks.ASH_LOG)
             add(RagiumBlocks.LILY_OF_THE_ENDER)
+
+            add(RagiumItems.RAGI_CHERRY)
+
             add(RagiumItems.EXP_BERRIES)
             add(RagiumItems.WARPED_WART)
             add(RagiumItems.AMBROSIA)
@@ -127,8 +122,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.ADVANCED_CIRCUIT)
 
             add(RagiumItems.SOAP)
-            add(RagiumItems.YELLOW_CAKE)
-            add(RagiumItems.YELLOW_CAKE_PIECE)
 
             // addAll(RagiumItems.TICKETS)
         }

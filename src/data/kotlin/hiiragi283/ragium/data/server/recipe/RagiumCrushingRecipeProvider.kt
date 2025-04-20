@@ -88,15 +88,6 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_block")
 
         HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
-            .itemOutput(RagiumItems.FLOUR, 9)
-            .itemInput(Tags.Items.STORAGE_BLOCKS_WHEAT)
-            .saveSuffixed(output, "_from_block")
-        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
-            .itemOutput(RagiumItems.FLOUR)
-            .itemInput(Tags.Items.CROPS_WHEAT)
-            .saveSuffixed(output, "_from_crop")
-
-        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
             .itemOutput(RagiumItems.Dusts.IRON, 31)
             .itemInput(ItemTags.ANVIL)
             .saveSuffixed(output, "_from_anvil")
