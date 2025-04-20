@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration
+package hiiragi283.ragium.integration.mekanism
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon

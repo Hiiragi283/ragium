@@ -5,22 +5,23 @@ ragium = "0.4.0"
 parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
-neo-moddev = "2.0.78"
-neo-version = "21.1.143"
+neo-moddev = "2.0.80"
+neo-version = "21.1.156"
 
 kff-version = "5.7.0"
 kff-version-range = "[5.7,)"
-ktlint = "12.1.2"
+ktlint = "12.2.0"
 
-aa = "1.3.17+mc1.21.1"
-ae2 = "19.2.7"
+aa = "1.3.18+mc1.21.1"
+ae2 = "19.2.8"
+delight = "1.21.1-1.2.7"
 dire = "6369120"
-emi = "1.1.20+1.21.1"
-guide = "21.1.6"
+emi = "1.1.22+1.21.1"
+guide = "21.1.8"
 jade = "15.10.0+neoforge"
 mek = "1.21.1-10.7.13.78"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
-rs2 = "2.0.0-beta.1"
+rs2 = "2.0.0-beta.2"
 
 [libraries]
 
@@ -28,6 +29,7 @@ kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref =
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
 ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
+delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref  = "emi" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
@@ -41,6 +43,7 @@ rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforg
 mods-impl = [
     "aa",
     "ae2",
+    "delight",
     "dire",
     "emi",
     "guide",

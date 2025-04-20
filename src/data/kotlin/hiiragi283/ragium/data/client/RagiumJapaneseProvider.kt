@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.integration.RagiumMekanismAddon
+import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
 import net.neoforged.neoforge.common.data.LanguageProvider

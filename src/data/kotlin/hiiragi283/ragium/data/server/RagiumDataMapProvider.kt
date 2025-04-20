@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.integration.RagiumMekanismAddon
+import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import mekanism.api.chemical.Chemical
 import mekanism.api.datamaps.chemical.ChemicalSolidTag
 import mekanism.common.registries.MekanismDataMapTypes

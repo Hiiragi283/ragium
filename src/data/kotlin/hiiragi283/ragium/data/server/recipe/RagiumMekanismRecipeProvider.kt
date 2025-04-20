@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.integration.RagiumMekanismAddon
+import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import mekanism.api.IMekanismAccess
 import mekanism.api.chemical.ChemicalStack
 import mekanism.api.datagen.recipe.builder.*

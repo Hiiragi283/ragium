@@ -19,7 +19,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluidContents
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.integration.RagiumMekanismAddon
+import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
