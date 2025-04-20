@@ -35,18 +35,21 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.ME
     }
 
     private fun chemicalConversion(output: RecipeOutput) {
-        // Dust -> Chemical
-        ItemStackToChemicalRecipeBuilder
-            .chemicalConversion(
+        fun toChemical(factory: (ItemStackIngredient, ChemicalStack) -> ItemStackToChemicalRecipeBuilder, prefix: String) {
+            // Dust -> Chemical
+            factory(
                 itemHelper.from(HTTagPrefixes.DUST.createItemTag(RagiumMaterials.RAGINITE)),
                 RagiumMekanismAddon.CHEMICAL_RAGINITE.asStack(10),
-            ).build(output, RagiumAPI.id("chemical_conversion/raginite/from_dust"))
-        // Enriched -> Chemical
-        ItemStackToChemicalRecipeBuilder
-            .chemicalConversion(
+            ).build(output, RagiumAPI.id("$prefix/raginite/from_dust"))
+            // Enriched -> Chemical
+            factory(
                 itemHelper.from(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE),
                 RagiumMekanismAddon.CHEMICAL_RAGINITE.asStack(80),
-            ).build(output, RagiumAPI.id("chemical_conversion/raginite/from_enriched"))
+            ).build(output, RagiumAPI.id("$prefix/raginite/from_enriched"))
+        }
+
+        toChemical(ItemStackToChemicalRecipeBuilder::chemicalConversion, "chemical_conversion")
+        toChemical(ItemStackToChemicalRecipeBuilder::oxidizing, "oxidizing")
     }
 
     private fun enriching(output: RecipeOutput) {

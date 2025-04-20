@@ -66,7 +66,7 @@ object RagiumDelightAddon : RagiumAddon {
         ITEM_REGISTER.register(eventBus)
     }
 
-    private var lastStack: ItemStack = RagiumItems.RAGI_CHERRY.toStack()
+    private lateinit var lastStack: ItemStack
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         fun acceptCherry(item: ItemLike) {
@@ -80,6 +80,8 @@ object RagiumDelightAddon : RagiumAddon {
         }
 
         if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {
+            lastStack = RagiumItems.RAGI_CHERRY.toStack()
+
             acceptCherry(RAGI_CHERRY_PULP)
 
             acceptCherry(RAGI_CHERRY_POPSICLE)

@@ -173,6 +173,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
+        addItem(RagiumItems.FEVER_CHERRY, "Fever Cherry")
+
         addItem(RagiumItems.EXP_BERRIES, "Exp Berries")
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
         addItem(RagiumItems.AMBROSIA, "Ambrosia")

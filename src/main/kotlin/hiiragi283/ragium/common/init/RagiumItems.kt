@@ -204,8 +204,11 @@ object RagiumItems {
     //    Foods    //
 
     @JvmStatic
-    private fun registerFood(name: String, foodProperties: FoodProperties): DeferredItem<Item> =
-        register(name, itemProperty().food(foodProperties))
+    private fun registerFood(
+        name: String,
+        foodProperties: FoodProperties,
+        properties: Item.Properties = itemProperty(),
+    ): DeferredItem<Item> = register(name, properties.food(foodProperties))
 
     // Meat
     @JvmField
@@ -244,6 +247,11 @@ object RagiumItems {
     val RAGI_CHERRY: DeferredItem<Item> = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
 
     @JvmField
+    val FEVER_CHERRY: DeferredItem<Item> =
+        registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY, itemProperty().rarity(Rarity.EPIC))
+
+    // Other
+    @JvmField
     val EXP_BERRIES: DeferredItem<ItemNameBlockItem> = register(
         "exp_berries",
         { prop: Item.Properties -> ItemNameBlockItem(RagiumBlocks.EXP_BERRY_BUSH.get(), prop) },
@@ -254,7 +262,7 @@ object RagiumItems {
 
     @JvmField
     val AMBROSIA: DeferredItem<Item> =
-        register("ambrosia", itemProperty().food(RagiumFoods.AMBROSIA).rarity(Rarity.EPIC))
+        registerFood("ambrosia", RagiumFoods.AMBROSIA, itemProperty().rarity(Rarity.EPIC))
 
     //    Molds    //
 

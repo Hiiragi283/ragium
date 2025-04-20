@@ -106,6 +106,7 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.LILY_OF_THE_ENDER)
 
             add(RagiumItems.RAGI_CHERRY)
+            add(RagiumItems.FEVER_CHERRY)
 
             add(RagiumItems.EXP_BERRIES)
             add(RagiumItems.WARPED_WART)

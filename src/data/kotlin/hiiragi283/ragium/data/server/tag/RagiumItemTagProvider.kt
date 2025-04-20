@@ -135,6 +135,7 @@ class RagiumItemTagProvider(
         add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
         add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
         add(Tags.Items.FOODS, RagiumItems.EXP_BERRIES)
+        add(Tags.Items.FOODS, RagiumItems.FEVER_CHERRY)
         add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
         add(Tags.Items.FOODS, RagiumItems.MEAT_INGOT)
         add(Tags.Items.FOODS, RagiumItems.MELON_PIE)

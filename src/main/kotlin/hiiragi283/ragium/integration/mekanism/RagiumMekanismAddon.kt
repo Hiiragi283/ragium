@@ -95,7 +95,7 @@ object RagiumMekanismAddon : RagiumAddon {
         }
     }
 
-    private var lastStack: ItemStack = RagiumItems.RawResources.RAGINITE.toStack()
+    private lateinit var lastStack: ItemStack
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         fun acceptRaginite(item: ItemLike) {
@@ -109,6 +109,8 @@ object RagiumMekanismAddon : RagiumAddon {
         }
 
         if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {
+            lastStack = RagiumItems.RawResources.RAGINITE.toStack()
+
             acceptRaginite(ITEM_ENRICHED_RAGINITE)
             OreResources.entries.forEach(::acceptRaginite)
         }

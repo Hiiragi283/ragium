@@ -173,6 +173,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
         addItem(RagiumItems.RAGI_CHERRY, "らぎチェリー")
+        addItem(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
+
         addItem(RagiumItems.EXP_BERRIES, "経験値ベリー")
         addItem(RagiumItems.WARPED_WART, "歪んだウォート")
         addItem(RagiumItems.AMBROSIA, "アンブロシア")

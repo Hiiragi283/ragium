@@ -19,13 +19,6 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        chocolate(output)
-        meat(output)
-        milk(output)
-        sponge(output)
-    }
-
-    private fun chocolate(output: RecipeOutput) {
         // Chocolate
         HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
             .itemOutput(RagiumItems.Ingots.CHOCOLATE)
@@ -39,6 +32,17 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .itemInput(HTTagPrefixes.STORAGE_BLOCK, CommonMaterials.CHOCOLATE, 64)
             .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
             .save(output)
+
+        // Fever Cherry
+        HTShapedRecipeBuilder(RagiumItems.FEVER_CHERRY)
+            .hollow8()
+            .define('A', Tags.Items.STORAGE_BLOCKS_GOLD)
+            .define('B', RagiumItems.RAGI_CHERRY)
+            .save(output)
+
+        meat(output)
+        milk(output)
+        sponge(output)
     }
 
     private fun meat(output: RecipeOutput) {

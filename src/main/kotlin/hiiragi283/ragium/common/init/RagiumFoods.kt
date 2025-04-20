@@ -35,6 +35,16 @@ object RagiumFoods {
         ),
     )
 
+    @JvmStatic
+    val FEVER_CHERRY: FoodProperties = foodComponent(
+        nutrition = 20,
+        effects = mapOf(
+            supply(MobEffectInstance(MobEffects.HEALTH_BOOST, 10 * 20, 6)) to 1f,
+            supply(MobEffectInstance(MobEffects.REGENERATION, 10 * 20, 6)) to 1f,
+        ),
+        alwaysEat = true,
+    )
+
     @JvmField
     val ICE_CREAM: FoodProperties = foodComponent(
         nutrition = 4,
