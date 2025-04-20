@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.IntegerProperty
 
 object HTBlockStateProperties {
     @JvmField
@@ -13,4 +14,9 @@ object HTBlockStateProperties {
 
     @JvmField
     val IS_ACTIVE: BooleanProperty = BooleanProperty.create("active")
+
+    //    Delight    //
+
+    @JvmField
+    val MEAT_SERVINGS: IntegerProperty = IntegerProperty.create("servings", 0, 8)
 }

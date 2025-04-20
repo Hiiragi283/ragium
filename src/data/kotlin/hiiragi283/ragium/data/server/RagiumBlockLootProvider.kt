@@ -5,6 +5,8 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
+import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
@@ -22,10 +24,12 @@ import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import net.neoforged.neoforge.registries.DeferredBlock
+import vectorwing.farmersdelight.common.block.FeastBlock
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
@@ -85,6 +89,37 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         // Machines
         for (holder: DeferredBlock<*> in RagiumBlocks.MACHINES) {
             add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }
+        }
+
+        // Delight Addon
+        add(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
+            val propertyCondition: LootItemBlockStatePropertyCondition.Builder =
+                LootItemBlockStatePropertyCondition
+                    .hasBlockStateProperties(block)
+                    .setProperties(
+                        StatePropertiesPredicate.Builder
+                            .properties()
+                            .hasProperty(FeastBlock.SERVINGS, 8),
+                    )
+
+            LootTable
+                .lootTable()
+                // 一度もかけていない場合はそのままドロップ
+                .withPool(
+                    LootPool
+                        .lootPool()
+                        .setRolls(ConstantValue.exactly(1f))
+                        .`when`(propertyCondition)
+                        .add(LootItem.lootTableItem(block)),
+                )
+                // 一度でもかけていたら骨をドロップ
+                .withPool(
+                    LootPool
+                        .lootPool()
+                        .setRolls(ConstantValue.exactly(1f))
+                        .`when`(propertyCondition.invert())
+                        .add(LootItem.lootTableItem(Items.BONE)),
+                )
         }
     }
 

@@ -23,6 +23,12 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD)
     }
 
     private fun crafting(output: RecipeOutput) {
+        // Cooked Meat on the Bone
+        HTShapedRecipeBuilder(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE)
+            .hollow8()
+            .define('A', RagiumItems.COOKED_MEAT_INGOT)
+            .define('B', Tags.Items.BONES)
+            .save(output)
         // Ragi-Cherry Popsicle
         HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
             .pattern(

@@ -4,16 +4,19 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
+import vectorwing.farmersdelight.common.block.FeastBlock
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
@@ -213,6 +216,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }*/
 
         // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
+
+        // Delight Addon
+        feastBlock(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE)
     }
 
     //    Extensions    //
@@ -221,4 +227,27 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
     private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
         rotationY(state.getValue(HTBlockStateProperties.HORIZONTAL).getRotationY())
+
+    private fun feastBlock(holder: DeferredBlock<FeastBlock>) {
+        getVariantBuilder(holder.get()).forAllStates { state: BlockState ->
+            val block: FeastBlock = holder.get()
+            val property: IntegerProperty = block.servingsProperty
+            val servings: Int = state.getValue(property)
+            val suffix: String =
+                if (servings == 0) {
+                    if (block.hasLeftovers) {
+                        "_leftover"
+                    } else {
+                        "_state${property.possibleValues.size - 2}"
+                    }
+                } else {
+                    "_stage${block.maxServings - servings}"
+                }
+            ConfiguredModel
+                .builder()
+                .modelFile(modelFile(holder.id.withSuffix(suffix)))
+                .rotationY(state)
+                .build()
+        }
+    }
 }

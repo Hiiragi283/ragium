@@ -422,6 +422,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun delight() {
+        addBlock(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE, "骨付き焼肉ブロック")
+
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
 
         addItem(RagiumDelightAddon.RAGI_CHERRY_POPSICLE, "らぎチェリーバー")
