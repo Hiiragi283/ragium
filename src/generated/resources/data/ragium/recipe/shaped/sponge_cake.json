@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:flours"
+      "tag": "c:crops/wheat"
     },
     "B": {
       "item": "minecraft:sugar"
     },
     "C": {
-      "tag": "c:foods/butter"
+      "tag": "c:eggs"
     }
   },
   "pattern": [

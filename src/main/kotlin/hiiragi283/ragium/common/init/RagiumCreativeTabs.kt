@@ -59,7 +59,8 @@ object RagiumCreativeTabs {
             add(RagiumItems.COMPRESSED_SAWDUST)
             add(RagiumItems.TAR)
             // Decorations
-            addAll(RagiumBlocks.RAGI_BRICK_SETS.getItems())
+            addAll(RagiumBlocks.RAGI_STONE_SETS.getItems())
+            addAll(RagiumBlocks.RAGI_STONE_SQUARE_SETS.getItems())
             addAll(RagiumBlocks.AZURE_TILE_SETS.getItems())
             addAll(RagiumBlocks.EMBER_STONE_SETS.getItems())
             addAll(RagiumBlocks.PLASTIC_SETS.getItems())
@@ -90,7 +91,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.COOKED_MEAT_INGOT)
             add(RagiumItems.CANNED_COOKED_MEAT)
 
-            add(RagiumItems.BUTTER)
             add(RagiumItems.ICE_CREAM)
 
             add(RagiumItems.BOTTLED_BEE)

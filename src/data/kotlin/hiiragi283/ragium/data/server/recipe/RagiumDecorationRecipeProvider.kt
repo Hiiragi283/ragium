@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -8,18 +9,31 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.neoforged.neoforge.common.Tags
 
 object RagiumDecorationRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        // Ragi-Bricks
-        HTShapedRecipeBuilder(RagiumBlocks.RAGI_BRICK_SETS.base, 4, CraftingBookCategory.BUILDING)
-            .hollow4()
-            .define('A', HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
-            .define('B', Items.BRICKS)
+        // Ragi-Stone
+        HTShapedRecipeBuilder(RagiumBlocks.RAGI_STONE_SETS.base, 8, CraftingBookCategory.BUILDING)
+            .hollow8()
+            .define('A', Tags.Items.STONES)
+            .define('B', HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
             .save(output)
+        // Ragi-Stone Square
+        output.accept(
+            RagiumAPI.id("stonecutting/ragi_stone_square"),
+            StonecutterRecipe(
+                "",
+                Ingredient.of(RagiumBlocks.RAGI_STONE_SETS.base),
+                ItemStack(RagiumBlocks.RAGI_STONE_SQUARE_SETS.base),
+            ),
+            null,
+        )
         // Azure Tiles
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILE_SETS.base, 4, CraftingBookCategory.BUILDING)
             .hollow4()
@@ -47,7 +61,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
 
-        RagiumBlocks.RAGI_BRICK_SETS.addRecipes(output, holderLookup)
+        RagiumBlocks.RAGI_STONE_SETS.addRecipes(output, holderLookup)
+        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addRecipes(output, holderLookup)
         RagiumBlocks.AZURE_TILE_SETS.addRecipes(output, holderLookup)
         RagiumBlocks.EMBER_STONE_SETS.addRecipes(output, holderLookup)
         RagiumBlocks.PLASTIC_SETS.addRecipes(output, holderLookup)

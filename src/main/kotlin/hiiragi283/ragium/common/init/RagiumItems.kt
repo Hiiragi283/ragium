@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.itemProperty
+import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -208,47 +209,46 @@ object RagiumItems {
         name: String,
         foodProperties: FoodProperties,
         properties: Item.Properties = itemProperty(),
-    ): DeferredItem<Item> = register(name, properties.food(foodProperties))
+    ): DeferredItem<HTConsumableItem> = register(name, ::HTConsumableItem, properties.food(foodProperties))
 
     // Meat
     @JvmField
     val MINCED_MEAT: DeferredItem<Item> = register("minced_meat")
 
     @JvmField
-    val MEAT_INGOT: DeferredItem<Item> = registerFood("meat_ingot", Foods.BEEF)
+    val MEAT_INGOT: DeferredItem<HTConsumableItem> = registerFood("meat_ingot", Foods.BEEF)
 
     @JvmField
-    val COOKED_MEAT_INGOT: DeferredItem<Item> = registerFood("cooked_meat_ingot", Foods.COOKED_BEEF)
+    val COOKED_MEAT_INGOT: DeferredItem<HTConsumableItem> = registerFood("cooked_meat_ingot", Foods.COOKED_BEEF)
 
     @JvmField
-    val CANNED_COOKED_MEAT: DeferredItem<Item> = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
+    val CANNED_COOKED_MEAT: DeferredItem<HTConsumableItem> = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
 
     // Milk
-    @JvmField
-    val BUTTER: DeferredItem<Item> = registerFood("butter", Foods.APPLE)
-
     @JvmField
     val ICE_CREAM: DeferredItem<Item> = register("ice_cream", itemProperty().food(RagiumFoods.ICE_CREAM))
 
     // Honey
     @JvmField
-    val BOTTLED_BEE: DeferredItem<HTBottledBeeItem> = register("bottled_bee", ::HTBottledBeeItem)
+    val BOTTLED_BEE: DeferredItem<Item> = register("bottled_bee")
 
     // Sponge
     @JvmField
-    val MELON_PIE: DeferredItem<Item> = registerFood("melon_pie", RagiumFoods.MELON_PIE)
+    val MELON_PIE: DeferredItem<HTConsumableItem> = registerFood("melon_pie", RagiumFoods.MELON_PIE)
 
     @JvmField
-    val SWEET_BERRIES_CAKE_PIECE: DeferredItem<Item> =
-        registerFood("sweet_berries_cake_piece", RagiumFoods.SWEET_BERRIES_CAKE)
+    val SWEET_BERRIES_CAKE_PIECE: DeferredItem<HTConsumableItem> = registerFood("sweet_berries_cake_piece", RagiumFoods.SWEET_BERRIES_CAKE)
 
     // Cherry
     @JvmField
-    val RAGI_CHERRY: DeferredItem<Item> = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
+    val RAGI_CHERRY: DeferredItem<HTConsumableItem> = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
 
     @JvmField
-    val FEVER_CHERRY: DeferredItem<Item> =
-        registerFood("fever_cherry", RagiumFoods.FEVER_CHERRY, itemProperty().rarity(Rarity.EPIC))
+    val FEVER_CHERRY: DeferredItem<HTConsumableItem> = registerFood(
+        "fever_cherry",
+        RagiumFoods.FEVER_CHERRY,
+        itemProperty().rarity(Rarity.EPIC),
+    )
 
     // Other
     @JvmField
@@ -258,11 +258,10 @@ object RagiumItems {
     )
 
     @JvmField
-    val WARPED_WART: DeferredItem<Item> = registerFood("warped_wart", RagiumFoods.WARPED_WART)
+    val WARPED_WART: DeferredItem<HTConsumableItem> = registerFood("warped_wart", RagiumFoods.WARPED_WART)
 
     @JvmField
-    val AMBROSIA: DeferredItem<Item> =
-        registerFood("ambrosia", RagiumFoods.AMBROSIA, itemProperty().rarity(Rarity.EPIC))
+    val AMBROSIA: DeferredItem<HTConsumableItem> = registerFood("ambrosia", RagiumFoods.AMBROSIA, itemProperty().rarity(Rarity.EPIC))
 
     //    Molds    //
 
@@ -336,7 +335,7 @@ object RagiumItems {
         }
 
         // Cheese
-        event.modify(Ingots.CHOCOLATE) { builder: DataComponentPatch.Builder ->
+        event.modify(Ingots.CHEESE) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.APPLE)
         }
         // Chocolate

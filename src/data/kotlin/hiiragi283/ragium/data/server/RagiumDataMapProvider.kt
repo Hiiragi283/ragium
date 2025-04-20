@@ -144,13 +144,6 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             HTCatalystConversion.drop(Blocks.DRAGON_EGG, 2),
             false,
         )
-
-        // Bricks -> Ragi-Bricks
-        builder.add(
-            Blocks.BRICKS.builtInRegistryHolder(),
-            HTCatalystConversion.replace(RagiumBlocks.RAGI_BRICK_SETS.base),
-            false,
-        )
     }
 
     private fun mekanism() {

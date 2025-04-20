@@ -49,7 +49,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)
 
-        RagiumBlocks.RAGI_BRICK_SETS.addBlockStates(this)
+        RagiumBlocks.RAGI_STONE_SETS.addBlockStates(this)
+        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addBlockStates(this)
         RagiumBlocks.AZURE_TILE_SETS.addBlockStates(this)
         RagiumBlocks.EMBER_STONE_SETS.addBlockStates(this)
         RagiumBlocks.PLASTIC_SETS.addBlockStates(this)

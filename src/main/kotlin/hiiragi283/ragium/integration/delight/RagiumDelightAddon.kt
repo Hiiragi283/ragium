@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.extension.toStack
+import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.init.RagiumCreativeTabs
@@ -26,7 +27,6 @@ import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.RegisterEvent
 import vectorwing.farmersdelight.common.block.FeastBlock
-import vectorwing.farmersdelight.common.item.ConsumableItem
 import vectorwing.farmersdelight.common.item.PopsicleItem
 
 @HTAddon("farmersdelight")
@@ -46,7 +46,7 @@ object RagiumDelightAddon : RagiumAddon {
     val ITEM_REGISTER = HTItemRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val RAGI_CHERRY_PULP: DeferredItem<ConsumableItem> =
+    val RAGI_CHERRY_PULP: DeferredItem<HTConsumableItem> =
         registerConsumable("ragi_cherry_pulp", RagiumFoods.RAGI_CHERRY_PULP)
 
     @JvmField
@@ -58,20 +58,12 @@ object RagiumDelightAddon : RagiumAddon {
         )
 
     @JvmField
-    val RAGI_CHERRY_JAM: DeferredItem<ConsumableItem> =
+    val RAGI_CHERRY_JAM: DeferredItem<HTConsumableItem> =
         registerConsumable("ragi_cherry_jam", RagiumFoods.RAGI_CHERRY_JAM)
 
     @JvmStatic
-    private fun registerConsumable(
-        name: String,
-        food: FoodProperties,
-        effectTooltip: Boolean = true,
-        customTooltip: Boolean = false,
-    ): DeferredItem<ConsumableItem> = ITEM_REGISTER.registerItem(
-        name,
-        { prop: Item.Properties -> ConsumableItem(prop, effectTooltip, customTooltip) },
-        itemProperty().food(food),
-    )
+    private fun registerConsumable(name: String, food: FoodProperties): DeferredItem<HTConsumableItem> =
+        ITEM_REGISTER.registerItem(name, ::HTConsumableItem, itemProperty().food(food))
 
     //    RagiumAddon    //
 

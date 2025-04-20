@@ -46,7 +46,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "Lily of the Ender")
 
-        RagiumBlocks.RAGI_BRICK_SETS.addTranslationEn("Ragi-Brick", this)
+        RagiumBlocks.RAGI_STONE_SETS.addTranslationEn("Ragi-Stone", this)
+        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addTranslationEn("Ragi-Stone (Square)", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationEn("Azure Tile", this)
         RagiumBlocks.EMBER_STONE_SETS.addTranslationEn("Ember Stone", this)
         RagiumBlocks.PLASTIC_SETS.addTranslationEn("Plastic Block", this)
@@ -164,7 +165,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
 
-        addItem(RagiumItems.BUTTER, "Butter")
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
 
         addItem(RagiumItems.BOTTLED_BEE, "Bottled Bee")
@@ -369,11 +369,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, "Forge Hammer")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
-        add(RagiumItemTags.FLOURS, "Flours")
-        add(RagiumItemTags.FOODS_BUTTER, "Butter")
         add(RagiumItemTags.FOODS_CHEESE, "Cheese")
         add(RagiumItemTags.FOODS_CHOCOLATE, "Chocolate")
-        add(RagiumItemTags.FOODS_DOUGH, "Dough")
 
         add(RagiumItemTags.CIRCUITS, "Circuit")
         add(RagiumItemTags.CIRCUITS_BASIC, "Basic Circuit")

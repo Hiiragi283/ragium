@@ -47,7 +47,8 @@ object RagiumBlocks {
         RAGINITE_ORES.init(eventBus)
         RAGI_CRYSTAL_ORES.init(eventBus)
 
-        RAGI_BRICK_SETS.init(eventBus)
+        RAGI_STONE_SETS.init(eventBus)
+        RAGI_STONE_SQUARE_SETS.init(eventBus)
         AZURE_TILE_SETS.init(eventBus)
         EMBER_STONE_SETS.init(eventBus)
         PLASTIC_SETS.init(eventBus)
@@ -205,11 +206,10 @@ object RagiumBlocks {
     //    Buildings    //
 
     @JvmField
-    val RAGI_BRICK_SETS = HTBuildingBlockSets(
-        "ragi_bricks",
-        stone().mapColor(MapColor.COLOR_RED),
-        prefix = "ragi_brick",
-    )
+    val RAGI_STONE_SETS = HTBuildingBlockSets("ragi_stone", stone().mapColor(MapColor.COLOR_RED))
+
+    @JvmField
+    val RAGI_STONE_SQUARE_SETS = HTBuildingBlockSets("ragi_stone_square", stone().mapColor(MapColor.COLOR_RED))
 
     @JvmField
     val AZURE_TILE_SETS = HTBuildingBlockSets(

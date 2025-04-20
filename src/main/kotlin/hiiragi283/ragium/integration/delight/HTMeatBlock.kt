@@ -13,7 +13,7 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import vectorwing.farmersdelight.common.block.FeastBlock
 
-class HTMeatBlock(properties: Properties) : FeastBlock(properties, RagiumItems.COOKED_MEAT_INGOT, false) {
+class HTMeatBlock(properties: Properties) : FeastBlock(properties, RagiumItems.COOKED_MEAT_INGOT::get, false) {
     override fun getServingsProperty(): IntegerProperty = HTBlockStateProperties.MEAT_SERVINGS
 
     override fun getMaxServings(): Int = 8

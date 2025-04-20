@@ -130,6 +130,7 @@ class RagiumItemTagProvider(
         addTag(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART)
         add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
         // Food
+        add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
         add(Tags.Items.FOODS, RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
         add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
@@ -142,13 +143,13 @@ class RagiumItemTagProvider(
         add(Tags.Items.FOODS, RagiumItems.SWEET_BERRIES_CAKE_PIECE)
         add(Tags.Items.FOODS, RagiumItems.WARPED_WART)
         add(Tags.Items.FOODS_BERRY, RagiumItems.EXP_BERRIES)
-        addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_BUTTER)
+        add(Tags.Items.FOODS_FRUIT, RagiumItems.FEVER_CHERRY)
+        add(Tags.Items.FOODS_GOLDEN, RagiumItems.FEVER_CHERRY)
         addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_CHEESE)
         addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_CHOCOLATE)
         addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_JAMS)
         addTag(Tags.Items.FOODS_FRUIT, RagiumItemTags.FOODS_CHERRY)
 
-        add(RagiumItemTags.FOODS_BUTTER, RagiumItems.BUTTER)
         add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumItems.RAGI_CHERRY)
         add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
         add(RagiumItemTags.JAMS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_JAM)
@@ -194,7 +195,8 @@ class RagiumItemTagProvider(
 
     @Suppress("DEPRECATION")
     private fun category() {
-        RagiumBlocks.RAGI_BRICK_SETS.appendItemTags(this)
+        RagiumBlocks.RAGI_STONE_SETS.appendItemTags(this)
+        RagiumBlocks.RAGI_STONE_SQUARE_SETS.appendItemTags(this)
         RagiumBlocks.AZURE_TILE_SETS.appendItemTags(this)
         RagiumBlocks.EMBER_STONE_SETS.appendItemTags(this)
         RagiumBlocks.PLASTIC_SETS.appendItemTags(this)
@@ -243,28 +245,4 @@ class RagiumItemTagProvider(
             add(mold.tagKey, mold.holder)
         }
     }
-
-    //    Part    //
-
-    /*private fun partTags() {
-        add(RagiumItemTags.MOLDS_BALL, RagiumItems.BALL_PRESS_MOLD)
-        add(RagiumItemTags.MOLDS_BLOCK, RagiumItems.BLOCK_PRESS_MOLD)
-        add(RagiumItemTags.MOLDS_GEAR, IntegrationMods.IE, "mold_gear", HTTagBuilderNew.DependType.OPTIONAL)
-        add(RagiumItemTags.MOLDS_GEAR, RagiumItems.GEAR_PRESS_MOLD)
-        add(RagiumItemTags.MOLDS_INGOT, RagiumItems.INGOT_PRESS_MOLD)
-        add(RagiumItemTags.MOLDS_PLATE, IntegrationMods.IE, "mold_plate", HTTagBuilderNew.DependType.OPTIONAL)
-        add(RagiumItemTags.MOLDS_PLATE, RagiumItems.PLATE_PRESS_MOLD)
-        add(RagiumItemTags.MOLDS_ROD, IntegrationMods.IE, "mold_rod", HTTagBuilderNew.DependType.OPTIONAL)
-        add(RagiumItemTags.MOLDS_ROD, RagiumItems.ROD_PRESS_MOLD)
-        add(RagiumItemTags.MOLDS_WIRE, IntegrationMods.IE, "mold_wire", HTTagBuilderNew.DependType.OPTIONAL)
-        add(RagiumItemTags.MOLDS_WIRE, RagiumItems.WIRE_PRESS_MOLD)
-
-        addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_BALL)
-        addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_BLOCK)
-        addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_GEAR)
-        addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_INGOT)
-        addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_PLATE)
-        addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_ROD)
-        addTag(RagiumItemTags.MOLDS, RagiumItemTags.MOLDS_WIRE)
-    }*/
 }

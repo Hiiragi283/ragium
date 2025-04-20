@@ -25,6 +25,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
             .save(output)
+        // Melon Pie
+        HTShapelessRecipeBuilder(RagiumItems.MELON_PIE)
+            .addIngredient(Tags.Items.CROPS_MELON)
+            .addIngredient(Items.SUGAR)
+            .addIngredient(Tags.Items.EGGS)
+            .save(output)
 
         // Ambrosia
         HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
@@ -41,7 +47,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         meat(output)
-        milk(output)
         sponge(output)
     }
 
@@ -78,40 +83,16 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
-    private fun milk(output: RecipeOutput) {
-        // Butter
-        /*HTMachineRecipeBuilder(RagiumRecipes.EXTRACTING)
-            .itemOutput(RagiumItems.BUTTER)
-            .milkInput()
-            .save(output)*/
-
-        // Ice Cream
-    }
-
     private fun sponge(output: RecipeOutput) {
         // Sponge
         HTShapedRecipeBuilder(RagiumBlocks.SPONGE_CAKE, 4)
             .cross8()
-            .define('A', RagiumItemTags.FLOURS)
+            .define('A', Tags.Items.CROPS_WHEAT)
             .define('B', Items.SUGAR)
-            .define('C', RagiumItemTags.FOODS_BUTTER)
+            .define('C', Tags.Items.EGGS)
             .save(output)
 
         addSlab(output, RagiumBlocks.SPONGE_CAKE, RagiumBlocks.SPONGE_CAKE_SLAB)
-        // Pies
-        HTShapelessRecipeBuilder(Items.PUMPKIN_PIE, 2)
-            .addIngredient(Tags.Items.CROPS_PUMPKIN)
-            .addIngredient(Items.SUGAR)
-            .addIngredient(RagiumBlocks.SPONGE_CAKE_SLAB)
-            .addIngredient(RagiumBlocks.SPONGE_CAKE_SLAB)
-            .saveSuffixed(output, "_with_sponge")
-
-        HTShapelessRecipeBuilder(RagiumItems.MELON_PIE, 2)
-            .addIngredient(Tags.Items.CROPS_MELON)
-            .addIngredient(Items.SUGAR)
-            .addIngredient(RagiumBlocks.SPONGE_CAKE_SLAB)
-            .addIngredient(RagiumBlocks.SPONGE_CAKE_SLAB)
-            .saveSuffixed(output, "_with_sponge")
         // Cakes
         HTShapedRecipeBuilder(Items.CAKE)
             .pattern(

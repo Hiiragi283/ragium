@@ -46,7 +46,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "エンダースズラン")
 
-        RagiumBlocks.RAGI_BRICK_SETS.addTranslationJp("らぎレンガ", this)
+        RagiumBlocks.RAGI_STONE_SETS.addTranslationJp("らぎストーン", this)
+        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addTranslationJp("らぎストーン（正方）", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationJp("紺碧のタイル", this)
         RagiumBlocks.EMBER_STONE_SETS.addTranslationJp("熾火石", this)
         RagiumBlocks.PLASTIC_SETS.addTranslationJp("プラスチックブロック", this)
@@ -164,7 +165,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
 
-        addItem(RagiumItems.BUTTER, "バター")
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
 
         addItem(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
@@ -360,11 +360,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, "鍛造ハンマー")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "歪んだウォート")
-        add(RagiumItemTags.FLOURS, "小麦粉")
-        add(RagiumItemTags.FOODS_BUTTER, "バター")
         add(RagiumItemTags.FOODS_CHEESE, "チーズ")
         add(RagiumItemTags.FOODS_CHOCOLATE, "チョコレート")
-        add(RagiumItemTags.FOODS_DOUGH, "生地")
 
         add(RagiumItemTags.CIRCUITS, "回路")
         add(RagiumItemTags.CIRCUITS_ADVANCED, "発展回路")

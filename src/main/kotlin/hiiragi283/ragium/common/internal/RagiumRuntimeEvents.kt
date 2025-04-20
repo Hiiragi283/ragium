@@ -62,21 +62,22 @@ object RagiumRuntimeEvents {
     fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
         // イベントがキャンセルされている場合はパス
         if (event.isCanceled) return
-        // アイテムがガラス瓶でにあ場合はパス
         val stack: ItemStack = event.itemStack
-        if (!stack.`is`(Items.GLASS_BOTTLE)) return
-        // 対象がハチでない場合はパス
-        val target: Bee = event.target as? Bee ?: return
-        if (target.isAlive) {
-            val player: Player = event.entity
-            target.level().playSound(player, target, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1f, 1f)
-            // ハチを瓶に詰める
-            if (!player.level().isClientSide) {
-                target.discard()
-                stack.shrink(1)
-                dropStackAt(player, RagiumItems.BOTTLED_BEE)
+        // アイテムがガラス瓶の場合はハチを捕まえる
+        if (stack.`is`(Items.GLASS_BOTTLE)) {
+            val target: Bee = event.target as? Bee ?: return
+            if (target.isAlive) {
+                val player: Player = event.entity
+                target.level().playSound(player, target, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1f, 1f)
+                // ハチを瓶に詰める
+                if (!player.level().isClientSide) {
+                    target.discard()
+                    stack.shrink(1)
+                    dropStackAt(player, RagiumItems.BOTTLED_BEE)
+                }
+                event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
+                return
             }
-            event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
         }
     }
 
@@ -118,6 +119,15 @@ object RagiumRuntimeEvents {
             event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
             return
         }
+        // アイテムがハチ入りの瓶の場合はハチを開放する
+        if (stack.`is`(RagiumItems.BOTTLED_BEE)) {
+            val result: InteractionResult = Items.BEE_SPAWN_EGG.use(event.level, player, event.hand).result
+            if (result.indicateItemUse()) {
+                dropStackAt(player, Items.GLASS_BOTTLE)
+            }
+            event.cancellationResult = result
+            return
+        }
     }
 
     @SubscribeEvent
@@ -126,7 +136,6 @@ object RagiumRuntimeEvents {
         if (stack.isEmpty) return
         val result: ItemStack = event.resultStack
         val user: LivingEntity = event.entity
-        val player: Player? = user as? Player
         val level: Level = user.level()
         // アンブロシアの場合は個数を減らさない
         if (stack.`is`(RagiumItems.AMBROSIA)) {

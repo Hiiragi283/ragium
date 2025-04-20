@@ -36,7 +36,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)
 
-        RagiumBlocks.RAGI_BRICK_SETS.addItemModels(this)
+        RagiumBlocks.RAGI_STONE_SETS.addItemModels(this)
+        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addItemModels(this)
         RagiumBlocks.AZURE_TILE_SETS.addItemModels(this)
         RagiumBlocks.EMBER_STONE_SETS.addItemModels(this)
         RagiumBlocks.PLASTIC_SETS.addItemModels(this)
