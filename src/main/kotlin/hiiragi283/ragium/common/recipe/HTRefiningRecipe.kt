@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.common.init.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumRecipes
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 /**

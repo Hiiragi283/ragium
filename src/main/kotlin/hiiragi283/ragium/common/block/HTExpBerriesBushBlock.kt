@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents

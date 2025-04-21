@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTCatalystBlock
@@ -17,8 +17,8 @@ import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.block.*
-import hiiragi283.ragium.common.util.HTBuildingBlockSets
-import hiiragi283.ragium.common.util.HTOreSets
+import hiiragi283.ragium.util.HTBuildingBlockSets
+import hiiragi283.ragium.util.HTOreSets
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.DyeColor

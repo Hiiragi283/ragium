@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.extension.enchLookup
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.util.HTBuildingBlockSets
-import hiiragi283.ragium.common.util.HTOreSets
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTBuildingBlockSets
+import hiiragi283.ragium.util.HTOreSets
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup

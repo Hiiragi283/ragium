@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.tag.RagiumEnchantmentTags
-import hiiragi283.ragium.common.init.RagiumEnchantments
+import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput

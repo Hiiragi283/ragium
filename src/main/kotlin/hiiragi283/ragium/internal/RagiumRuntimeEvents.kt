@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.internal
+package hiiragi283.ragium.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
@@ -13,8 +13,8 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.property.HTPropertyMap
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.network.chat.Component

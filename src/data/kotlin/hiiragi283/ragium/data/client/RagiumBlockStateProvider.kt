@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation

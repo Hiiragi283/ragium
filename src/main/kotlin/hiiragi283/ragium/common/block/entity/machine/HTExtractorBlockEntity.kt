@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTSimpleItemProcessBlockEntity
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumRecipes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.bootstrap
 
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumEnchantments
+import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext

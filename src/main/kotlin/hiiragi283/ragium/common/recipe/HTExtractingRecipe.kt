@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.common.init.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumRecipes
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 /**

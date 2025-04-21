@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.delight
 
 import hiiragi283.ragium.api.block.HTBlockStateProperties
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block

@@ -9,9 +9,9 @@ import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
-import hiiragi283.ragium.common.init.RagiumCreativeTabs
-import hiiragi283.ragium.common.init.RagiumFoods
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.setup.RagiumCreativeTabs
+import hiiragi283.ragium.setup.RagiumFoods
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.BlockItem

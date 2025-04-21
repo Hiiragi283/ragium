@@ -3,9 +3,9 @@ package hiiragi283.ragium.integration.emi
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipes
 import net.minecraft.network.chat.Component
 
 object RagiumEmiCategories {

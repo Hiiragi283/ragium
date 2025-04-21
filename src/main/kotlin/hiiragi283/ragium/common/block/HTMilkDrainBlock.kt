@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.common.block.entity.collect.HTMilkDrainBlockEntity
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.state.BlockState

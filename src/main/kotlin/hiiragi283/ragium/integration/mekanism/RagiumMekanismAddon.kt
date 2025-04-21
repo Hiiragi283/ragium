@@ -10,10 +10,10 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
-import hiiragi283.ragium.common.init.RagiumCreativeTabs
-import hiiragi283.ragium.common.init.RagiumFoods
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.item.HTMaterialItem
+import hiiragi283.ragium.setup.RagiumCreativeTabs
+import hiiragi283.ragium.setup.RagiumFoods
+import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.chemical.Chemical
 import mekanism.api.chemical.ChemicalBuilder
 import mekanism.common.registration.impl.ChemicalDeferredRegister

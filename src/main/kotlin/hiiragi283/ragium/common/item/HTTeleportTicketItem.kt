@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.api.extension.globalPosText
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumComponentTypes
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.setup
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI

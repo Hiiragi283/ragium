@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.internal
+package hiiragi283.ragium.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI

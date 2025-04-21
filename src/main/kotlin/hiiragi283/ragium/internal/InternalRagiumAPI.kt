@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.internal
+package hiiragi283.ragium.internal
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
@@ -18,14 +18,14 @@ import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
-import hiiragi283.ragium.common.util.HTWrappedMultiMap
-import hiiragi283.ragium.common.util.HTWrappedTable
+import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.util.HTWrappedMultiMap
+import hiiragi283.ragium.util.HTWrappedTable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.MinecraftServer

@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumFluidTags
-import hiiragi283.ragium.common.init.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput

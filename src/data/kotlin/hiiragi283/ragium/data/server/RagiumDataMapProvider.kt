@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.data.HTCatalystConversion
 import hiiragi283.ragium.api.extension.blockLookup
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
+import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.chemical.Chemical
 import mekanism.api.datamaps.chemical.ChemicalSolidTag
 import mekanism.common.registries.MekanismDataMapTypes

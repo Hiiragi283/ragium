@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumComponentTypes
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation

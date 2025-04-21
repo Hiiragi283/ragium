@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
@@ -14,8 +14,8 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.item.*
-import hiiragi283.ragium.common.util.HTArmorSets
-import hiiragi283.ragium.common.util.HTToolSets
+import hiiragi283.ragium.util.HTArmorSets
+import hiiragi283.ragium.util.HTToolSets
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation

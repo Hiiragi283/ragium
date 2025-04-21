@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumBlockTags
-import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
