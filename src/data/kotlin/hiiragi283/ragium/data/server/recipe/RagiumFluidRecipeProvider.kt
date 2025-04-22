@@ -48,6 +48,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         crudeOil(output)
         biomass(output)
         sap(output)
+        ragium(output)
 
         output.accept(
             RagiumAPI.id("extracting/buckets"),
@@ -155,6 +156,36 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL)
             .addIngredient(HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.WARPED_CRYSTAL)
+            .save(output)
+    }
+
+    private fun ragium(output: RecipeOutput) {
+        // Raginite -> 20 mb
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 20)
+            .itemInput(HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
+            .saveSuffixed(output, "_from_raginite")
+        // Advanced Ragi-Alloy -> 100 mb
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 100)
+            .itemInput(HTTagPrefixes.DUST, RagiumMaterials.RAGI_ALLOY)
+            .saveSuffixed(output, "_from_alloy")
+        // Advanced Ragi-Alloy -> 125 mb
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 125)
+            .itemInput(HTTagPrefixes.DUST, RagiumMaterials.ADVANCED_RAGI_ALLOY)
+            .saveSuffixed(output, "_from_advanced_alloy")
+        // Ragi-Crystal -> 250 mb
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 250)
+            .itemInput(HTTagPrefixes.DUST, RagiumMaterials.RAGI_CRYSTAL)
+            .saveSuffixed(output, "_from_crystal")
+
+        // Ragium Essence
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(RagiumItems.RAGIUM_ESSENCE)
+            .itemInput(HTTagPrefixes.DUST, VanillaMaterials.QUARTZ)
+            .fluidInput(RagiumFluidContents.MOLTEN_RAGIUM)
             .save(output)
     }
 

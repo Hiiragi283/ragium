@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.HTCatalystBlock
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.data.HTCatalystConversion
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -428,15 +427,15 @@ object RagiumBlocks {
     // Elite
     @JvmField
     val AZURE_CATALYST: DeferredBlock<HTCatalystBlock> =
-        register("azure_catalyst", heavyMetal(), HTCatalystBlock.create(HTCatalystConversion.AZURE_TYPE))
+        register("azure_catalyst", heavyMetal(), ::HTCatalystBlock)
 
     @JvmField
     val DEEP_CATALYST: DeferredBlock<HTCatalystBlock> =
-        register("deep_catalyst", heavyMetal(), HTCatalystBlock.create(HTCatalystConversion.DEEP_TYPE))
+        register("deep_catalyst", heavyMetal(), ::HTCatalystBlock)
 
     @JvmField
     val RAGIUM_CATALYST: DeferredBlock<HTCatalystBlock> =
-        register("ragium_catalyst", heavyMetal(), HTCatalystBlock.create(HTCatalystConversion.RAGIUM_TYPE))
+        register("ragium_catalyst", heavyMetal(), ::HTCatalystBlock)
 
     @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(

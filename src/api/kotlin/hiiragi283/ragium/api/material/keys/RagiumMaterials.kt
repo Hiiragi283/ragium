@@ -31,9 +31,6 @@ object RagiumMaterials {
     @JvmField
     val DEEP_STEEL: HTMaterialKey = HTMaterialKey.of("deep_steel")
 
-    @JvmField
-    val RAGIUM: HTMaterialKey = HTMaterialKey.of("ragium")
-
     //    Mineral    //
 
     @JvmField

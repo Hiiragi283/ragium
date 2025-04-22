@@ -12,7 +12,6 @@ import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTCatalystConversion
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.itemLookup
@@ -31,15 +30,16 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.*
+import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.DyeItem
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -68,7 +68,6 @@ class RagiumEmiPlugin : EmiPlugin {
 
         addMachineRecipes()
         addDeviceRecipes()
-        addCatalystRecipes()
         addInfos()
 
         addCustomRecipe()
@@ -205,44 +204,6 @@ class RagiumEmiPlugin : EmiPlugin {
         // Exp Collector
         addRecipeSafe(RagiumAPI.id("/block_info/exp_collector")) { id: ResourceLocation ->
             HTBlockInfoEmiRecipe(id, RagiumBlocks.EXP_COLLECTOR, RagiumFluidContents.EXPERIENCE.get())
-        }
-    }
-
-    private fun addCatalystRecipes() {
-        for (holder: Holder.Reference<Block> in BuiltInRegistries.BLOCK.holders()) {
-            // Azure
-            holder.getData(HTCatalystConversion.AZURE_TYPE)?.let { conversion: HTCatalystConversion ->
-                addRecipeSafe(holder.idOrThrow.withPrefix("/catalyst/azure/")) { id: ResourceLocation ->
-                    HTCatalystEmiRecipe(
-                        RagiumEmiCategories.CATALYST_AZURE,
-                        id,
-                        holder.value(),
-                        conversion.getPreview(),
-                    )
-                }
-            }
-            // Deep
-            holder.getData(HTCatalystConversion.DEEP_TYPE)?.let { conversion: HTCatalystConversion ->
-                addRecipeSafe(holder.idOrThrow.withPrefix("/catalyst/deep/")) { id: ResourceLocation ->
-                    HTCatalystEmiRecipe(
-                        RagiumEmiCategories.CATALYST_DEEP,
-                        id,
-                        holder.value(),
-                        conversion.getPreview(),
-                    )
-                }
-            }
-            // Ragium
-            holder.getData(HTCatalystConversion.RAGIUM_TYPE)?.let { conversion: HTCatalystConversion ->
-                addRecipeSafe(holder.idOrThrow.withPrefix("/catalyst/ragium/")) { id: ResourceLocation ->
-                    HTCatalystEmiRecipe(
-                        RagiumEmiCategories.CATALYST_RAGIUM,
-                        id,
-                        holder.value(),
-                        conversion.getPreview(),
-                    )
-                }
-            }
         }
     }
 

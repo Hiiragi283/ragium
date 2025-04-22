@@ -3,7 +3,6 @@ package hiiragi283.ragium
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.data.HTCatalystConversion
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
@@ -86,10 +85,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(HTCatalystConversion.Companion.RAGIUM_TYPE)
-        event.register(HTCatalystConversion.Companion.AZURE_TYPE)
-        event.register(HTCatalystConversion.Companion.DEEP_TYPE)
-
         LOGGER.info("Registered data map types!")
     }
 }

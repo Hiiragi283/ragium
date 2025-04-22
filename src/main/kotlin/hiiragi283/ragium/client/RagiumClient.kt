@@ -80,6 +80,8 @@ class RagiumClient(eventBus: IEventBus) {
         register(RagiumFluidContents.CRIMSON_SAP, Color(0x660000))
         register(RagiumFluidContents.WARPED_SAP, Color(0x006666))
 
+        register(RagiumFluidContents.MOLTEN_RAGIUM, Color(0xff0033))
+
         LOGGER.info("Registered client extensions!")
     }
 

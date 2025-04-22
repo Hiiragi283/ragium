@@ -1,0 +1,15 @@
+{
+  "type": "ragium:extracting",
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "fluid": "ragium:molten_ragium"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/ragi_crystal"
+    }
+  ]
+}

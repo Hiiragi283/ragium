@@ -12,7 +12,10 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.item.*
+import hiiragi283.ragium.common.item.HTMaterialItem
+import hiiragi283.ragium.common.item.HTRagiTicketItem
+import hiiragi283.ragium.common.item.HTSimpleMagnetItem
+import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.util.HTArmorSets
 import hiiragi283.ragium.util.HTToolSets
 import net.minecraft.core.component.DataComponentPatch
@@ -21,11 +24,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemNameBlockItem
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.PotionItem
-import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.*
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
@@ -164,6 +163,9 @@ object RagiumItems {
 
     @JvmField
     val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")
+
+    @JvmField
+    val RAGIUM_ESSENCE: DeferredItem<Item> = register("ragium_essence")
 
     @JvmField
     val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
@@ -335,20 +337,43 @@ object RagiumItems {
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        fun setRarity(rarity: Rarity): (DataComponentPatch.Builder) -> Unit = { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.RARITY, rarity)
+        }
+
         // Storage Block
         for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
             event.modify(block) { builder: DataComponentPatch.Builder ->
                 builder.set(DataComponents.ITEM_NAME, block.prefix.createText(block.key))
             }
         }
+        event.modify(RagiumBlocks.StorageBlocks.ADVANCED_RAGI_ALLOY, setRarity(Rarity.UNCOMMON))
+        event.modify(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL, setRarity(Rarity.RARE))
+        event.modify(RagiumBlocks.StorageBlocks.DEEP_STEEL, setRarity(Rarity.RARE))
+        event.modify(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL, setRarity(Rarity.RARE))
+        event.modify(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL, setRarity(Rarity.RARE))
 
-        // Cheese
+        // Dust
+        event.modify(Dusts.ADVANCED_RAGI_ALLOY, setRarity(Rarity.UNCOMMON))
+        event.modify(Dusts.RAGI_CRYSTAL, setRarity(Rarity.RARE))
+        // Ingot
+        event.modify(Ingots.ADVANCED_RAGI_ALLOY, setRarity(Rarity.UNCOMMON))
+        event.modify(Ingots.DEEP_STEEL, setRarity(Rarity.RARE))
         event.modify(Ingots.CHEESE) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.APPLE)
         }
-        // Chocolate
         event.modify(Ingots.CHOCOLATE) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, RagiumFoods.CHOCOLATE)
+        }
+        // Gem
+        event.modify(RawResources.RAGI_CRYSTAL, setRarity(Rarity.RARE))
+        event.modify(RawResources.CRIMSON_CRYSTAL, setRarity(Rarity.RARE))
+        event.modify(RawResources.WARPED_CRYSTAL, setRarity(Rarity.RARE))
+
+        // Ragium Essence
+        event.modify(RAGIUM_ESSENCE) { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
 
         LOGGER.info("Modified default item components!")

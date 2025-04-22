@@ -17,6 +17,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -68,6 +69,12 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .hollow8()
             .define('A', HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
             .define('B', HTTagPrefixes.GEM, VanillaMaterials.DIAMOND)
+            .save(output)
+        // Ragium
+        HTShapedRecipeBuilder(RagiumItems.RAGI_CHERRY)
+            .hollow4()
+            .define('A', RagiumItems.RAGIUM_ESSENCE)
+            .define('B', Tags.Items.FOODS_FRUIT)
             .save(output)
 
         // Azure Steel

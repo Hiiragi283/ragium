@@ -59,6 +59,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.AZURE_STEEL_COMPOUND)
             addAll(RagiumItems.Ingots.entries)
             addAll(RagiumItems.RawResources.entries)
+            add(RagiumItems.RAGIUM_ESSENCE)
             add(RagiumItems.COMPRESSED_SAWDUST)
             add(RagiumItems.TAR)
             // Decorations

@@ -149,6 +149,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
+
+        addFluid(RagiumFluidContents.MOLTEN_RAGIUM, "Molten Ragium")
     }
 
     private fun item() {
@@ -217,6 +219,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+        addItem(RagiumItems.RAGIUM_ESSENCE, "Ragium Essence")
         addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")
@@ -313,7 +316,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMaterialKey(RagiumMaterials.RAGI_ALLOY, "Ragi-Alloy")
         addMaterialKey(RagiumMaterials.RAGI_CRYSTAL, "Ragi-Crystal")
         addMaterialKey(RagiumMaterials.RAGINITE, "Raginite")
-        addMaterialKey(RagiumMaterials.RAGIUM, "Ragium")
         addMaterialKey(RagiumMaterials.WARPED_CRYSTAL, "Warped Crystal")
         // Vanilla
         addMaterialKey(VanillaMaterials.AMETHYST, "Amethyst")

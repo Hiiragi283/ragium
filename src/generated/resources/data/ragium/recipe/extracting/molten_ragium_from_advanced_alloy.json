@@ -1,0 +1,15 @@
+{
+  "type": "ragium:extracting",
+  "fluid_outputs": [
+    {
+      "amount": 125,
+      "fluid": "ragium:molten_ragium"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/advanced_ragi_alloy"
+    }
+  ]
+}

@@ -15,23 +15,6 @@ object RagiumEmiCategories {
         Component.literal("Block Information"),
     )
 
-    // Catalysts
-    @JvmField
-    val CATALYST_AZURE = HTEmiRecipeCategory(RagiumAPI.id("catalyst/azure"), RagiumBlocks.AZURE_CATALYST)
-
-    @JvmField
-    val CATALYST_DEEP = HTEmiRecipeCategory(RagiumAPI.id("catalyst/deep"), RagiumBlocks.DEEP_CATALYST)
-
-    @JvmField
-    val CATALYST_RAGIUM = HTEmiRecipeCategory(RagiumAPI.id("catalyst/ragium"), RagiumBlocks.RAGIUM_CATALYST)
-
-    @JvmField
-    val CATALYSTS: List<HTEmiRecipeCategory> = listOf(
-        CATALYST_AZURE,
-        CATALYST_DEEP,
-        CATALYST_RAGIUM,
-    )
-
     // Machines
     @JvmField
     val CRUSHING = HTEmiRecipeCategory(RagiumAPI.id("crushing"), RagiumBlocks.CRUSHER)
@@ -58,7 +41,6 @@ object RagiumEmiCategories {
         // Category
         registry.addCategory(BLOCK_INFO)
 
-        CATALYSTS.forEach(registry::addCategory)
         MACHINES.forEach(registry::addCategory)
 
         // Workstation
@@ -66,7 +48,6 @@ object RagiumEmiCategories {
             registry.addWorkstation(category, category.iconStack)
         }
 
-        CATALYSTS.forEach(::addWorkstation)
         MACHINES.forEach(::addWorkstation)
         registry.addWorkstation(EXTRACTING, EmiStack.of(RagiumBlocks.ADVANCED_EXTRACTOR))
     }

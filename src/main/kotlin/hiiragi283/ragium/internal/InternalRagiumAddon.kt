@@ -94,7 +94,6 @@ object InternalRagiumAddon : RagiumAddon {
         consumer.accept(RagiumMaterials.RAGI_ALLOY, HTMaterialType.ALLOY)
         consumer.accept(RagiumMaterials.RAGI_CRYSTAL, HTMaterialType.GEM)
         consumer.accept(RagiumMaterials.RAGINITE, HTMaterialType.MINERAL)
-        consumer.accept(RagiumMaterials.RAGIUM, HTMaterialType.METAL)
         consumer.accept(RagiumMaterials.WARPED_CRYSTAL, HTMaterialType.GEM)
 
         consumer.accept(VanillaMaterials.AMETHYST, HTMaterialType.GEM)

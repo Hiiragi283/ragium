@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
@@ -26,10 +27,13 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
+import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.LootTableLoadEvent
@@ -62,6 +66,31 @@ object RagiumRuntimeEvents {
                     dropStackAt(player, RagiumItems.BOTTLED_BEE)
                 }
                 event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
+                return
+            }
+        }
+    }
+
+    @SubscribeEvent
+    fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
+        // イベントがキャンセルされている場合はパス
+        if (event.isCanceled) return
+        val stack: ItemStack = event.itemStack
+
+        val hitResult: BlockHitResult = event.hitVec
+        val level: Level = event.level
+        val pos: BlockPos = hitResult.blockPos
+        val state: BlockState = level.getBlockState(pos)
+        
+        val player: Player = event.entity
+        // アイテムがラギウムエッセンスの場合
+        if (stack.`is`(RagiumItems.RAGIUM_ESSENCE)) {
+            // ブロックがアメシストブロックの場合，芽生えさせる
+            if (state.`is`(Blocks.AMETHYST_BLOCK)) {
+                level.destroyBlock(pos, false)
+                level.setBlockAndUpdate(pos, Blocks.BUDDING_AMETHYST.defaultBlockState())
+                stack.consume(1, player)
+                event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
                 return
             }
         }

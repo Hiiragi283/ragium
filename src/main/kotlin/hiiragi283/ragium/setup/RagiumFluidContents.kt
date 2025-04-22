@@ -156,4 +156,8 @@ object RagiumFluidContents {
         register("warped_sap", defaultProperties())
 
     //    Other    //
+
+    @JvmField
+    val MOLTEN_RAGIUM: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
+        register("molten_ragium", defaultProperties())
 }

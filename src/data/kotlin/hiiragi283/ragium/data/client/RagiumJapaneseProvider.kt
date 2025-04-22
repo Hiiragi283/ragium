@@ -149,6 +149,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
+
+        addFluid(RagiumFluidContents.MOLTEN_RAGIUM, "溶融ラギウム")
     }
 
     private fun item() {
@@ -217,6 +219,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        addItem(RagiumItems.RAGIUM_ESSENCE, "ラギウムエッセンス")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")
@@ -313,7 +316,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMaterialKey(RagiumMaterials.RAGI_ALLOY, "ラギ合金")
         addMaterialKey(RagiumMaterials.RAGI_CRYSTAL, "ラギクリスタリル")
         addMaterialKey(RagiumMaterials.RAGINITE, "ラギナイト")
-        addMaterialKey(RagiumMaterials.RAGIUM, "ラギウム")
         addMaterialKey(RagiumMaterials.WARPED_CRYSTAL, "歪んだ結晶")
         // Vanilla
         addMaterialKey(VanillaMaterials.AMETHYST, "アメシスト")
