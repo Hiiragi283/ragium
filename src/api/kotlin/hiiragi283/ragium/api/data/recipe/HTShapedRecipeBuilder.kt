@@ -14,7 +14,8 @@ import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 
-class HTShapedRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) : HTRecipeBuilder<ShapedRecipe> {
+class HTShapedRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) :
+    HTRecipeBuilder<ShapedRecipe>() {
     constructor(item: ItemLike, count: Int = 1, category: CraftingBookCategory = CraftingBookCategory.MISC) : this(
         ItemStack(item, count),
         category,
@@ -67,7 +68,7 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
         this.groupName = groupName
     }
 
-    override val prefix: String = "shaped"
+    override fun getPrefix(recipe: ShapedRecipe): String = "shaped"
 
     override fun createRecipe(): ShapedRecipe = ShapedRecipe(
         groupName ?: "",

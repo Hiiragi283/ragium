@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.registry.HTMachineRecipeType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
@@ -15,6 +14,7 @@ import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 abstract class HTSimpleItemProcessBlockEntity(
-    val recipeType: HTMachineRecipeType,
+    recipeType: RecipeType<out HTMachineRecipe>,
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
@@ -63,7 +63,7 @@ abstract class HTSimpleItemProcessBlockEntity(
 
     //    Ticking    //
 
-    protected val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache.reloadable(recipeType)
+    protected val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipe> = HTRecipeCache.simple(recipeType)
 
     override fun onServerTick(
         level: ServerLevel,
@@ -79,8 +79,6 @@ abstract class HTSimpleItemProcessBlockEntity(
             addOutput(0, outputSlot)
         }
         val recipe: HTMachineRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
-        // 処理が行えるか判定する
-        if (!recipe.canProcess(input)) return TriState.FALSE
         // エネルギーを消費できるか判定する
         if (network.extractEnergy(1600, true) != 1600) return TriState.FALSE
         // レシピを実行する

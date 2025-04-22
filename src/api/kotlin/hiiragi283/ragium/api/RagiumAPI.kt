@@ -3,11 +3,13 @@ package hiiragi283.ragium.api
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -70,6 +72,8 @@ interface RagiumAPI {
      * 素材レジストリのインスタンスを返します。
      */
     fun getMaterialRegistry(): HTMaterialRegistry
+
+    fun getPrefixFromName(name: String): DataResult<HTTagPrefix>
 
     //    Server    //
 

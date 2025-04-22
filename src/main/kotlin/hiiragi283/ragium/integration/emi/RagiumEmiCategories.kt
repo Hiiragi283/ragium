@@ -5,7 +5,6 @@ import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipes
 import net.minecraft.network.chat.Component
 
 object RagiumEmiCategories {
@@ -35,16 +34,16 @@ object RagiumEmiCategories {
 
     // Machines
     @JvmField
-    val CRUSHING = HTEmiRecipeCategory(RagiumRecipes.CRUSHING, RagiumBlocks.CRUSHER)
+    val CRUSHING = HTEmiRecipeCategory(RagiumAPI.id("crushing"), RagiumBlocks.CRUSHER)
 
     @JvmField
-    val EXTRACTING = HTEmiRecipeCategory(RagiumRecipes.EXTRACTING, RagiumBlocks.EXTRACTOR)
+    val EXTRACTING = HTEmiRecipeCategory(RagiumAPI.id("extracting"), RagiumBlocks.EXTRACTOR)
 
     @JvmField
-    val INFUSING = HTEmiRecipeCategory(RagiumRecipes.INFUSING, RagiumBlocks.INFUSER)
+    val INFUSING = HTEmiRecipeCategory(RagiumAPI.id("infusing"), RagiumBlocks.INFUSER)
 
     @JvmField
-    val REFINING = HTEmiRecipeCategory(RagiumRecipes.REFINING, RagiumBlocks.REFINERY)
+    val REFINING = HTEmiRecipeCategory(RagiumAPI.id("refining"), RagiumBlocks.REFINERY)
 
     @JvmField
     val MACHINES: List<HTEmiRecipeCategory> = listOf(
@@ -64,7 +63,7 @@ object RagiumEmiCategories {
 
         // Workstation
         fun addWorkstation(category: HTEmiRecipeCategory) {
-            registry.addWorkstation(category, category.icon)
+            registry.addWorkstation(category, category.iconStack)
         }
 
         CATALYSTS.forEach(::addWorkstation)

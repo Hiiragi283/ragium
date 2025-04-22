@@ -3,7 +3,10 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.setup.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 /**
@@ -13,7 +16,8 @@ class HTRefiningRecipe(
     val ingredient: SizedFluidIngredient,
     private val fluidOutput: HTFluidOutput,
     private val itemOutput: HTItemOutput?,
-) : HTMachineRecipe(RagiumRecipes.REFINING) {
+) : HTMachineRecipe(),
+    HTDefinitionRecipe<HTMachineInput> {
     override fun matches(input: HTMachineInput): Boolean = ingredient.test(input.getFluidStack(HTStorageIO.INPUT, 0))
 
     override fun canProcess(input: HTMachineInput): Boolean {
@@ -32,4 +36,8 @@ class HTRefiningRecipe(
             listOf(fluidOutput),
         ),
     )
+
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINING.get()
+
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.REFINING.get()
 }

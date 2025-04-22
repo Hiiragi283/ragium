@@ -4,10 +4,12 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import com.mojang.logging.LogUtils
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddonCollector
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -38,7 +40,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.network.PacketDistributor
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
-import java.util.UUID
+import java.util.*
 import net.minecraft.util.Unit as MCUnit
 
 class InternalRagiumAPI : RagiumAPI {
@@ -74,6 +76,25 @@ class InternalRagiumAPI : RagiumAPI {
     //    Material    //
 
     override fun getMaterialRegistry(): HTMaterialRegistry = HTMaterialRegistryImpl
+
+    private lateinit var prefixMap: Map<String, HTTagPrefix>
+
+    override fun getPrefixFromName(name: String): DataResult<HTTagPrefix> {
+        if (!::prefixMap.isInitialized) {
+            prefixMap = buildMap {
+                for (addon: RagiumAddon in getAddons()) {
+                    addon.onPrefixRegister { prefix: HTTagPrefix ->
+                        val name: String = prefix.name
+                        if (put(name, prefix) != null) {
+                            error("Duplicated prefix with name: $name!")
+                        }
+                    }
+                }
+            }
+        }
+        val prefix: HTTagPrefix? = prefixMap[name]
+        return if (prefix == null) DataResult.error { "Unknown prefix: $name!" } else DataResult.success(prefix)
+    }
 
     //    Server    //
 

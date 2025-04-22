@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
 
 class HTSmithingRecipeBuilder(private val output: ItemStack) :
-    HTIngredientRecipeBuilder<HTSmithingRecipeBuilder, SmithingTransformRecipe> {
+    HTIngredientRecipeBuilder<HTSmithingRecipeBuilder, SmithingTransformRecipe>() {
     constructor(item: ItemLike, count: Int = 1) : this(ItemStack(item, count))
 
     private val ingredients: MutableList<Ingredient> = mutableListOf()
@@ -20,7 +20,7 @@ class HTSmithingRecipeBuilder(private val output: ItemStack) :
 
     override fun getPrimalId(): ResourceLocation = output.itemHolder.idOrThrow
 
-    override val prefix: String = "smithing"
+    override fun getPrefix(recipe: SmithingTransformRecipe): String = "smithing"
 
     override fun createRecipe(): SmithingTransformRecipe = SmithingTransformRecipe(
         ingredients[0],

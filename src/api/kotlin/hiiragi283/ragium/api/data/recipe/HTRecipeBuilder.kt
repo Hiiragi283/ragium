@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.Recipe
  * Ragiumで使用する[RecipeBuilder]の拡張インターフェース
  * @param R レシピのクラス
  */
-interface HTRecipeBuilder<R : Recipe<*>> : RecipeBuilder {
+abstract class HTRecipeBuilder<R : Recipe<*>> : RecipeBuilder {
     /**
      * 進捗はサポートしていません。
      */
@@ -27,7 +27,7 @@ interface HTRecipeBuilder<R : Recipe<*>> : RecipeBuilder {
     /**
      * 自動生成したレシピIDを返します。
      */
-    fun getPrimalId(): ResourceLocation
+    protected abstract fun getPrimalId(): ResourceLocation
 
     /**
      * [getPrimalId]を[prefix]で前置したIDで登録します。
@@ -56,17 +56,18 @@ interface HTRecipeBuilder<R : Recipe<*>> : RecipeBuilder {
     /**
      * レシピIDの重複を回避するために使われる接頭辞
      */
-    val prefix: String
+    protected abstract fun getPrefix(recipe: R): String
 
     /**
      * 生成したレシピのインスタンスを返します。
      */
-    fun createRecipe(): R
+    abstract fun createRecipe(): R
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+        val recipe: R = createRecipe()
         recipeOutput.accept(
-            id.withPrefix("$prefix/"),
-            createRecipe(),
+            id.withPrefix("${getPrefix(recipe)}/"),
+            recipe,
             null,
         )
     }

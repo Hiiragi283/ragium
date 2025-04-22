@@ -2,14 +2,17 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
+import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.data.builder.CookingPotRecipeBuilder
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
@@ -18,6 +21,13 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD)
         crafting(output)
         cookingPot(output)
         cutting(output)
+
+        // Milk Bottle
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(ModItems.MILK_BOTTLE.get())
+            .itemInput(Items.GLASS_BOTTLE)
+            .milkInput(250)
+            .save(output)
     }
 
     private fun crafting(output: RecipeOutput) {

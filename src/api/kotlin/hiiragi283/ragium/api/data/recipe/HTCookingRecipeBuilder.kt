@@ -11,21 +11,20 @@ import kotlin.math.max
 class HTCookingRecipeBuilder private constructor(
     private val factory: AbstractCookingRecipe.Factory<AbstractCookingRecipe>,
     private val timeModifier: IntUnaryOperator,
-    override val prefix: String,
     private val result: ItemStack,
-) : HTIngredientRecipeBuilder<HTCookingRecipeBuilder, AbstractCookingRecipe> {
+) : HTIngredientRecipeBuilder<HTCookingRecipeBuilder, AbstractCookingRecipe>() {
     companion object {
         @JvmStatic
         fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder =
-            HTCookingRecipeBuilder(::SmeltingRecipe, IntUnaryOperator.identity(), "smelting", ItemStack(item, count))
+            HTCookingRecipeBuilder(::SmeltingRecipe, IntUnaryOperator.identity(), ItemStack(item, count))
 
         @JvmStatic
         fun blasting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder =
-            HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, "blasting", ItemStack(item, count))
+            HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, ItemStack(item, count))
 
         @JvmStatic
         fun smoking(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder =
-            HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, "smoking", ItemStack(item, count))
+            HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, ItemStack(item, count))
     }
 
     private var group: String? = null
@@ -51,6 +50,13 @@ class HTCookingRecipeBuilder private constructor(
     }
 
     override fun getPrimalId(): ResourceLocation = result.itemHolder.idOrThrow
+
+    override fun getPrefix(recipe: AbstractCookingRecipe): String = when (recipe) {
+        is SmeltingRecipe -> "smelting/"
+        is BlastingRecipe -> "blasting/"
+        is SmokingRecipe -> "smoking/"
+        else -> throw IllegalStateException("Unsupported recipe class: ${recipe.javaClass.canonicalName}")
+    }
 
     override fun createRecipe(): AbstractCookingRecipe = factory.create(
         group ?: "",

@@ -2,21 +2,9 @@ package hiiragi283.ragium.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
-import hiiragi283.ragium.api.event.HTRecipesUpdatedEvent
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
-import hiiragi283.ragium.api.property.HTPropertyMap
-import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -34,7 +22,6 @@ import net.minecraft.world.entity.npc.WanderingTrader
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ChestMenu
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
@@ -45,7 +32,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -196,19 +182,17 @@ object RagiumRuntimeEvents {
 
     //    Machine Recipe    //
 
-    @SubscribeEvent
-    fun onMachineRecipesUpdated(event: HTRecipesUpdatedEvent) {
+    /*fun onMachineRecipesUpdated(event: HTRecipesUpdatedEvent) {
         crushing(event)
     }
 
-    @JvmStatic
     private fun crushing(event: HTRecipesUpdatedEvent) {
         event.register(
             RagiumRecipeTypes.CRUSHING,
             RagiumAPI.id("flour_from_wheat"),
         ) { lookup: HolderGetter<Item> ->
             val result: Item = event.getFirstItem(RagiumItemTags.FLOURS) ?: return@register null
-            HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
+            HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                 .itemInput(Tags.Items.CROPS_WHEAT)
                 .itemOutput(result)
                 .createRecipe()
@@ -228,7 +212,7 @@ object RagiumRuntimeEvents {
                     RagiumAPI.id("${name}_dust_from_ore"),
                 ) { lookup: HolderGetter<Item> ->
                     val result: Item = event.getFirstItem(resultPrefix, key) ?: return@register null
-                    HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
+                    HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                         .itemInput(HTTagPrefixes.ORE, key)
                         .itemOutput(result, properties.getOrDefault(HTMaterialPropertyKeys.ORE_CRUSHED_COUNT))
                         .createRecipe()
@@ -241,7 +225,7 @@ object RagiumRuntimeEvents {
                     RagiumRecipeTypes.CRUSHING,
                     RagiumAPI.id("${name}_dust_from_main"),
                 ) { lookup: HolderGetter<Item> ->
-                    HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
+                    HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                         .itemInput(mainPrefix, key)
                         .itemOutput(dust)
                         .createRecipe()
@@ -252,7 +236,7 @@ object RagiumRuntimeEvents {
                 RagiumRecipeTypes.CRUSHING,
                 RagiumAPI.id("${name}_dust_from_gear"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
+                HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                     .itemInput(HTTagPrefixes.GEAR, key)
                     .itemOutput(dust, 4)
                     .createRecipe()
@@ -262,7 +246,7 @@ object RagiumRuntimeEvents {
                 RagiumRecipeTypes.CRUSHING,
                 RagiumAPI.id("${name}_dust_from_plate"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
+                HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                     .itemInput(HTTagPrefixes.PLATE, key)
                     .itemOutput(dust)
                     .createRecipe()
@@ -272,11 +256,11 @@ object RagiumRuntimeEvents {
                 RagiumRecipeTypes.CRUSHING,
                 RagiumAPI.id("${name}_dust_from_raw"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
+                HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                     .itemInput(HTTagPrefixes.RAW_MATERIAL, key)
                     .itemOutput(dust, 2)
                     .createRecipe()
             }
         }
-    }
+    }*/
 }

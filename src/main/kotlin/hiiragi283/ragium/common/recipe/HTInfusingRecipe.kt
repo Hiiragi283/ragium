@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
+import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.setup.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
@@ -17,7 +17,8 @@ class HTInfusingRecipe(
     private val itemIngredient: SizedIngredient,
     private val fluidIngredient: SizedFluidIngredient,
     private val output: HTItemOutput,
-) : HTMachineRecipe(RagiumRecipes.INFUSING) {
+) : HTMachineRecipe(),
+    HTDefinitionRecipe<HTMachineInput> {
     override fun matches(input: HTMachineInput): Boolean {
         val bool1: Boolean = itemIngredient.test(input.getItemStack(HTStorageIO.INPUT, 0))
         val bool2: Boolean = fluidIngredient.test(input.getFluidStack(HTStorageIO.INPUT, 0))
@@ -40,4 +41,8 @@ class HTInfusingRecipe(
             listOf(),
         ),
     )
+
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INFUSING.get()
+
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.INFUSING.get()
 }

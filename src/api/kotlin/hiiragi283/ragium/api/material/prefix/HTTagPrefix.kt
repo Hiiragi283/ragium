@@ -1,21 +1,35 @@
 package hiiragi283.ragium.api.material.prefix
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
+import io.netty.buffer.ByteBuf
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
+import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
 /**
- * @see aztech.modern_industrialization.materials.part.PartKeyProvider
+ * 素材の形状を表すクラス
+ * @see [RagiumAddon.onPrefixRegister]
  */
 interface HTTagPrefix {
+    companion object {
+        @JvmField
+        val CODEC: Codec<HTTagPrefix> = Codec.STRING.comapFlatMap(RagiumAPI.getInstance()::getPrefixFromName, HTTagPrefix::name)
+
+        @JvmField
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTTagPrefix> = ByteBufCodecs.fromCodec(CODEC)
+    }
+
     val name: String
 
     //    ResourceLocation    //

@@ -10,16 +10,36 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
+import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.property.HTMutablePropertyMap
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.network.chat.Component
 import java.util.function.BiConsumer
+import java.util.function.Consumer
 import java.util.function.Function
 
 @HTAddon(RagiumAPI.MOD_ID)
 object InternalRagiumAddon : RagiumAddon {
     override val priority: Int = 1000
+
+    override fun onPrefixRegister(consumer: Consumer<HTTagPrefix>) {
+        consumer.accept(HTTagPrefixes.DUST)
+        consumer.accept(HTTagPrefixes.GEAR)
+        consumer.accept(HTTagPrefixes.GEM)
+        consumer.accept(HTTagPrefixes.INGOT)
+        consumer.accept(HTTagPrefixes.NUGGET)
+        consumer.accept(HTTagPrefixes.ORE)
+        consumer.accept(HTTagPrefixes.PLATE)
+        consumer.accept(HTTagPrefixes.RAW_MATERIAL)
+        consumer.accept(HTTagPrefixes.ROD)
+        consumer.accept(HTTagPrefixes.STORAGE_BLOCK)
+
+        consumer.accept(HTTagPrefixes.DIRTY_DUST)
+        consumer.accept(HTTagPrefixes.CLUMP)
+        consumer.accept(HTTagPrefixes.SHARD)
+        consumer.accept(HTTagPrefixes.CRYSTAL)
+    }
 
     override fun onMaterialRegister(consumer: BiConsumer<HTMaterialKey, HTMaterialType>) {
         consumer.accept(CommonMaterials.ALUMINUM, HTMaterialType.METAL)

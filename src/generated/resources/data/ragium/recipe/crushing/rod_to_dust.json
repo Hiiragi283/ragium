@@ -1,0 +1,5 @@
+{
+  "type": "ragium:material_crushing",
+  "input_count": 2,
+  "input_prefix": "rod"
+}

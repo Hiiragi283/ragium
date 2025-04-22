@@ -1,26 +1,30 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.IntegrationMods
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Chocolate
-        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
             .itemOutput(RagiumItems.Ingots.CHOCOLATE)
             .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
@@ -32,35 +36,58 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .addIngredient(Tags.Items.EGGS)
             .save(output)
 
+        // Sparkling Water Bottle
+        HTShapedRecipeBuilder(RagiumItems.SPARKLING_WATER_BOTTLE, 8)
+            .hollow8()
+            .define('A', Items.POTION)
+            .define('B', Items.WIND_CHARGE)
+            .save(output)
+        // Ice Cream Soda
+        output.accept(
+            RagiumAPI.id("shapeless/ice_cream_soda"),
+            HTIceCreamSodaRecipe(CraftingBookCategory.MISC),
+            null,
+        )
+
         // Ambrosia
-        HTMachineRecipeBuilder(RagiumRecipes.INFUSING)
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
             .itemOutput(RagiumItems.AMBROSIA)
             .itemInput(HTTagPrefixes.STORAGE_BLOCK, CommonMaterials.CHOCOLATE, 64)
             .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
             .save(output)
 
+        cherry(output)
+        meat(output)
+        sponge(output)
+    }
+
+    private fun cherry(output: RecipeOutput) {
+        // Cherry Jam
+        HTShapelessRecipeBuilder(RagiumItems.RAGI_CHERRY_JAM)
+            .addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
+            .addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
+            .addIngredient(Items.SUGAR)
+            .addIngredient(Items.GLASS_BOTTLE)
+            .save(output.withConditions(IntegrationMods.FD.notCondition))
         // Fever Cherry
         HTShapedRecipeBuilder(RagiumItems.FEVER_CHERRY)
             .hollow8()
             .define('A', Tags.Items.STORAGE_BLOCKS_GOLD)
             .define('B', RagiumItems.RAGI_CHERRY)
             .save(output)
-
-        meat(output)
-        sponge(output)
     }
 
     private fun meat(output: RecipeOutput) {
         // Minced Meat
-        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_MEAT)
             .saveSuffixed(output, "_from_meat")
-        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_FISH)
             .saveSuffixed(output, "_from_fish")
-        HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Items.ROTTEN_FLESH)
             .savePrefixed(output, "rotten_")
@@ -75,11 +102,17 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItems.MEAT_INGOT)
             .setExp(0.35f)
             .save(output)
-
+        // Canned Cooked Meat
         HTShapedRecipeBuilder(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
             .define('A', RagiumItems.COOKED_MEAT_INGOT)
             .define('B', HTTagPrefixes.INGOT, VanillaMaterials.IRON)
+            .save(output)
+        // Cooked Meat on the Bone
+        HTShapedRecipeBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
+            .hollow8()
+            .define('A', RagiumItems.COOKED_MEAT_INGOT)
+            .define('B', Tags.Items.BONES)
             .save(output)
     }
 
