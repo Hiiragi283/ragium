@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.item
 
 import hiiragi283.ragium.api.extension.asPlayer
 import hiiragi283.ragium.api.extension.dropStackAt
-import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
@@ -55,9 +54,7 @@ open class HTConsumableItem(properties: Properties) : Item(properties) {
     ) {
         val food: FoodProperties = stack.getFoodProperties(null) ?: return
         val effects: List<FoodProperties.PossibleEffect> = food.effects
-        if (effects.isEmpty()) {
-            tooltips.add(Component.translatable("effect.none").withStyle(ChatFormatting.GRAY))
-        } else {
+        if (effects.isNotEmpty()) {
             PotionContents.addPotionTooltip(
                 effects.map(FoodProperties.PossibleEffect::effect),
                 tooltips::add,

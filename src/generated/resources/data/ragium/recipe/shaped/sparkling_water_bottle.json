@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:cooked_meat_ingot"
+      "item": "minecraft:potion"
     },
     "B": {
-      "tag": "c:bones"
+      "item": "minecraft:wind_charge"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "AAA"
   ],
   "result": {
-    "count": 1,
-    "id": "ragium:cooked_meat_on_the_bone"
+    "count": 8,
+    "id": "ragium:sparkling_water_bottle"
   }
 }

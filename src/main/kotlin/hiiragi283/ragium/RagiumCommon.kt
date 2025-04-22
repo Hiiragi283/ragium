@@ -48,7 +48,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
 
-        RagiumRecipes.REGISTER.init(eventBus)
+        RagiumRecipeSerializers.REGISTER.register(eventBus)
+        RagiumRecipeTypes.REGISTER.register(eventBus)
 
         HTEnergyNetworkManagerImpl
 

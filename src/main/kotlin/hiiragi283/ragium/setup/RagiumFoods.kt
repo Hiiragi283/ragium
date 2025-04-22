@@ -1,112 +1,99 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.extension.foodComponent
-import net.minecraft.world.effect.MobEffectInstance
+import hiiragi283.ragium.api.item.HTFoodBuilder
 import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.food.FoodConstants
 import net.minecraft.world.food.FoodProperties
+import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Items
-import thedarkcolour.kotlinforforge.neoforge.kotlin.supply
 
 object RagiumFoods {
     //    Ragium    //
 
     @JvmStatic
-    val AMBROSIA: FoodProperties = foodComponent(
-        nutrition = 20,
-        alwaysEat = true,
-    )
+    val AMBROSIA: FoodProperties = HTFoodBuilder.create {
+        nutrition = FoodConstants.MAX_FOOD
+        alwaysEat = true
+    }
 
     @JvmField
-    val CANNED_COOKED_MEAT: FoodProperties = foodComponent(
-        nutrition = 8,
-        saturation = 0.8f,
-        eatSeconds = 0.8f,
-        convertTo = Items.IRON_NUGGET.defaultInstance,
-    )
+    val CANNED_COOKED_MEAT: FoodProperties = HTFoodBuilder.copyOf(Foods.BEEF) {
+        fastFood()
+        convertTo(Items.IRON_NUGGET)
+    }
 
     @JvmField
-    val CHOCOLATE: FoodProperties = foodComponent(
-        nutrition = 3,
-        saturation = 0.3f,
-        alwaysEat = true,
-        eatSeconds = 0.8f,
-        effects = mapOf(
-            supply(MobEffectInstance(MobEffects.DAMAGE_BOOST, 10 * 20, 0)) to 1f,
-        ),
-    )
+    val CHOCOLATE: FoodProperties = HTFoodBuilder.copyOf(Foods.APPLE) {
+        alwaysEat = true
+        fastFood()
+        addEffect(MobEffects.DAMAGE_BOOST, 10 * 20, 0, 1f)
+    }
 
     @JvmStatic
-    val FEVER_CHERRY: FoodProperties = foodComponent(
-        nutrition = 20,
-        effects = mapOf(
-            supply(MobEffectInstance(MobEffects.HEALTH_BOOST, 10 * 20, 6)) to 1f,
-            supply(MobEffectInstance(MobEffects.REGENERATION, 10 * 20, 6)) to 1f,
-        ),
-        alwaysEat = true,
-    )
+    val FEVER_CHERRY: FoodProperties = HTFoodBuilder.create {
+        nutrition = FoodConstants.MAX_FOOD
+        alwaysEat = true
+        eatSeconds = 3f
+        addEffect(MobEffects.HEALTH_BOOST, 10 * 20, 4, 1f)
+        addEffect(MobEffects.REGENERATION, 10 * 20, 4, 1f)
+    }
 
     @JvmField
-    val ICE_CREAM: FoodProperties = foodComponent(
-        nutrition = 4,
-        saturation = 0.3f,
-        alwaysEat = true,
-    )
+    val ICE_CREAM: FoodProperties = HTFoodBuilder.copyOf(Foods.APPLE) {
+        alwaysEat = true
+    }
 
     @JvmField
-    val MELON_PIE: FoodProperties = foodComponent(
-        nutrition = 8,
-        saturation = 0.3f,
-        convertTo = Items.MELON_SEEDS.defaultInstance,
-    )
+    val MELON_PIE: FoodProperties = HTFoodBuilder.copyOf(Foods.PUMPKIN_PIE) {
+        convertTo(Items.MELON_SEEDS)
+    }
 
     @JvmStatic
-    val RAGI_CHERRY: FoodProperties = foodComponent(
-        nutrition = 2,
-        saturation = 0.1f,
-        effects = mapOf(supply(MobEffectInstance(MobEffects.HEALTH_BOOST, 60 * 20, 0)) to 1f),
-        alwaysEat = true,
-    )
+    val RAGI_CHERRY: FoodProperties = HTFoodBuilder.copyOf(Foods.SWEET_BERRIES) {
+        alwaysEat = true
+        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 0, 1f)
+    }
 
     @JvmField
-    val SWEET_BERRIES_CAKE: FoodProperties = foodComponent(
-        nutrition = 2,
-        saturation = 0.1f,
-    )
+    val SWEET_BERRIES_CAKE: FoodProperties = HTFoodBuilder.create {
+        nutrition = 2
+        saturation = FoodConstants.FOOD_SATURATION_POOR
+    }
 
     @JvmStatic
-    val WARPED_WART: FoodProperties = foodComponent(alwaysEat = true)
+    val WARPED_WART: FoodProperties = HTFoodBuilder.create {
+        alwaysEat = true
+    }
 
     //    Mekanism    //
 
     @JvmField
-    val YELLOW_CAKE: FoodProperties = foodComponent(
-        alwaysEat = true,
-        effects = mapOf(supply(MobEffectInstance(MobEffects.WITHER, -1, 1)) to 1f),
-    )
+    val YELLOW_CAKE: FoodProperties = HTFoodBuilder.create {
+        alwaysEat = true
+        addInfinityEffect(MobEffects.WITHER, 1, 1f)
+    }
 
     //    Delight    //
 
     @JvmStatic
-    val RAGI_CHERRY_JAM: FoodProperties = foodComponent(
-        nutrition = 3,
-        saturation = 0.6f,
-        effects = mapOf(supply(MobEffectInstance(MobEffects.HEALTH_BOOST, 60 * 20, 1)) to 1f),
-        alwaysEat = true,
-    )
+    val RAGI_CHERRY_JAM: FoodProperties = HTFoodBuilder.create {
+        nutrition = 3
+        saturation = FoodConstants.FOOD_SATURATION_NORMAL
+        alwaysEat = true
+        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 1, 1f)
+    }
 
     @JvmStatic
-    val RAGI_CHERRY_POPSICLE: FoodProperties = foodComponent(
-        nutrition = 3,
-        saturation = 0.2f,
-        effects = mapOf(supply(MobEffectInstance(MobEffects.HEALTH_BOOST, 60 * 20, 0)) to 1f),
-        alwaysEat = true,
-    )
+    val RAGI_CHERRY_POPSICLE: FoodProperties = HTFoodBuilder.copyOf(Foods.APPLE) {
+        alwaysEat = true
+        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 0, 1f)
+    }
 
     @JvmStatic
-    val RAGI_CHERRY_PULP: FoodProperties = foodComponent(
-        nutrition = 1,
-        saturation = 0.1f,
-        effects = mapOf(supply(MobEffectInstance(MobEffects.HEALTH_BOOST, 30 * 20, 0)) to 1f),
-        alwaysEat = true,
-    )
+    val RAGI_CHERRY_PULP: FoodProperties = HTFoodBuilder.create {
+        nutrition = 1
+        saturation = FoodConstants.FOOD_SATURATION_POOR
+        alwaysEat = true
+        addEffect(MobEffects.HEALTH_BOOST, 30 * 20, 0, 1f)
+    }
 }

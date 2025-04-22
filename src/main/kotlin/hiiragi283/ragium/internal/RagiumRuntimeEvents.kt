@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.property.HTPropertyMap
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipes
+import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.network.chat.Component
@@ -204,11 +204,11 @@ object RagiumRuntimeEvents {
     @JvmStatic
     private fun crushing(event: HTRecipesUpdatedEvent) {
         event.register(
-            RagiumRecipes.CRUSHING,
+            RagiumRecipeTypes.CRUSHING,
             RagiumAPI.id("flour_from_wheat"),
         ) { lookup: HolderGetter<Item> ->
             val result: Item = event.getFirstItem(RagiumItemTags.FLOURS) ?: return@register null
-            HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+            HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                 .itemInput(Tags.Items.CROPS_WHEAT)
                 .itemOutput(result)
                 .createRecipe()
@@ -224,11 +224,11 @@ object RagiumRuntimeEvents {
             // Ore
             if (resultPrefix != null) {
                 event.register(
-                    RagiumRecipes.CRUSHING,
+                    RagiumRecipeTypes.CRUSHING,
                     RagiumAPI.id("${name}_dust_from_ore"),
                 ) { lookup: HolderGetter<Item> ->
                     val result: Item = event.getFirstItem(resultPrefix, key) ?: return@register null
-                    HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+                    HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                         .itemInput(HTTagPrefixes.ORE, key)
                         .itemOutput(result, properties.getOrDefault(HTMaterialPropertyKeys.ORE_CRUSHED_COUNT))
                         .createRecipe()
@@ -238,10 +238,10 @@ object RagiumRuntimeEvents {
             // Gem/Ingot
             if (mainPrefix != null) {
                 event.register(
-                    RagiumRecipes.CRUSHING,
+                    RagiumRecipeTypes.CRUSHING,
                     RagiumAPI.id("${name}_dust_from_main"),
                 ) { lookup: HolderGetter<Item> ->
-                    HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+                    HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                         .itemInput(mainPrefix, key)
                         .itemOutput(dust)
                         .createRecipe()
@@ -249,30 +249,30 @@ object RagiumRuntimeEvents {
             }
             // Gear
             event.register(
-                RagiumRecipes.CRUSHING,
+                RagiumRecipeTypes.CRUSHING,
                 RagiumAPI.id("${name}_dust_from_gear"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+                HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                     .itemInput(HTTagPrefixes.GEAR, key)
                     .itemOutput(dust, 4)
                     .createRecipe()
             }
             // Plate
             event.register(
-                RagiumRecipes.CRUSHING,
+                RagiumRecipeTypes.CRUSHING,
                 RagiumAPI.id("${name}_dust_from_plate"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+                HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                     .itemInput(HTTagPrefixes.PLATE, key)
                     .itemOutput(dust)
                     .createRecipe()
             }
             // Raw
             event.register(
-                RagiumRecipes.CRUSHING,
+                RagiumRecipeTypes.CRUSHING,
                 RagiumAPI.id("${name}_dust_from_raw"),
             ) { lookup: HolderGetter<Item> ->
-                HTMachineRecipeBuilder(RagiumRecipes.CRUSHING)
+                HTMachineRecipeBuilder(RagiumRecipeTypes.CRUSHING)
                     .itemInput(HTTagPrefixes.RAW_MATERIAL, key)
                     .itemOutput(dust, 2)
                     .createRecipe()

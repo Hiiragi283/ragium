@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.data.HTCatalystConversion
-import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -74,7 +73,8 @@ object RagiumBlocks {
     }
 
     @JvmStatic
-    private fun wooden(): BlockBehaviour.Properties = blockProperty()
+    private fun wooden(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
         .mapColor(MapColor.WOOD)
         .requiresCorrectToolForDrops()
         .strength(0.8f)
@@ -82,34 +82,42 @@ object RagiumBlocks {
         .ignitedByLava()
 
     @JvmStatic
-    private fun stone(): BlockBehaviour.Properties = blockProperty()
+    private fun stone(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
         .requiresCorrectToolForDrops()
         .strength(2f)
         .sound(SoundType.DEEPSLATE_BRICKS)
 
     @JvmStatic
-    private fun lightMetal(): BlockBehaviour.Properties = blockProperty()
+    private fun lightMetal(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
         .requiresCorrectToolForDrops()
         .strength(3f)
         .sound(SoundType.COPPER)
 
     @JvmStatic
-    private fun heavyMetal(): BlockBehaviour.Properties = blockProperty()
+    private fun heavyMetal(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
         .requiresCorrectToolForDrops()
         .strength(6f)
         .sound(SoundType.METAL)
 
     @JvmStatic
-    private fun crystal(): BlockBehaviour.Properties = blockProperty()
+    private fun crystal(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
         .requiresCorrectToolForDrops()
         .strength(2f)
         .sound(SoundType.AMETHYST)
 
     @JvmStatic
-    private fun glass(): BlockBehaviour.Properties = blockProperty(Blocks.GLASS)
+    private fun copyOf(block: Block): BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(block)
 
     @JvmStatic
-    private fun soft(): BlockBehaviour.Properties = blockProperty()
+    private fun glass(): BlockBehaviour.Properties = copyOf(Blocks.GLASS)
+
+    @JvmStatic
+    private fun soft(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
         .strength(0.5f)
         .sound(SoundType.WOOL)
 
@@ -124,16 +132,20 @@ object RagiumBlocks {
     @JvmField
     val SILT: DeferredBlock<ColoredFallingBlock> = register(
         "silt",
-        blockProperty(Blocks.SAND),
+        copyOf(Blocks.SAND),
     ) { prop: BlockBehaviour.Properties -> ColoredFallingBlock(ColorRGBA(0xccccff), prop) }
 
     @JvmField
-    val MYSTERIOUS_OBSIDIAN: DeferredBlock<Block> = register("mysterious_obsidian", blockProperty(Blocks.OBSIDIAN))
+    val MYSTERIOUS_OBSIDIAN: DeferredBlock<Block> = register("mysterious_obsidian", copyOf(Blocks.OBSIDIAN))
 
     @JvmField
     val ASH_LOG: DeferredBlock<RotatedPillarBlock> = register(
         "ash_log",
-        blockProperty().mapColor(MapColor.COLOR_GRAY).strength(1f).sound(SoundType.SAND),
+        BlockBehaviour.Properties
+            .of()
+            .mapColor(MapColor.COLOR_GRAY)
+            .strength(1f)
+            .sound(SoundType.SAND),
         ::RotatedPillarBlock,
     )
 
@@ -141,13 +153,14 @@ object RagiumBlocks {
     val EXP_BERRY_BUSH: DeferredBlock<HTExpBerriesBushBlock> = REGISTER.registerBlock(
         "exp_berry_bush",
         ::HTExpBerriesBushBlock,
-        blockProperty(Blocks.SWEET_BERRY_BUSH),
+        copyOf(Blocks.SWEET_BERRY_BUSH),
     )
 
     @JvmField
     val LILY_OF_THE_ENDER: DeferredBlock<HTEnderLilyBlock> = register(
         "lily_of_the_ender",
-        blockProperty()
+        BlockBehaviour.Properties
+            .of()
             .mapColor(MapColor.PLANT)
             .noCollission()
             .instabreak()
@@ -276,6 +289,13 @@ object RagiumBlocks {
     fun getLedBlock(color: DyeColor): DeferredBlock<*> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
 
     //    Foods    //
+
+    @JvmField
+    val COOKED_MEAT_ON_THE_BONE: DeferredBlock<HTMeatBlock> = register(
+        "cooked_meat_on_the_bone",
+        copyOf(Blocks.MUD),
+        ::HTMeatBlock,
+    )
 
     @JvmField
     val SPONGE_CAKE: DeferredBlock<HTSpongeCakeBlock> = register(

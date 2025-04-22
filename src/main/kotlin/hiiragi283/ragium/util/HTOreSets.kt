@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTBlockRegister
@@ -14,8 +13,11 @@ import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.network.chat.Component
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
@@ -29,36 +31,15 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
     private val blockRegister = HTBlockRegister(RagiumAPI.MOD_ID)
     private val itemRegister = HTItemRegister(RagiumAPI.MOD_ID)
 
-    @JvmField
-    val stoneOre: DeferredBlock<Block> = blockRegister.registerSimpleBlock(
-        HTOreVariant.OVERWORLD.createId(key),
-        HTOreVariant.OVERWORLD.createProperty(),
-    )
-
-    @JvmField
-    val deepOre: DeferredBlock<Block> = blockRegister.registerSimpleBlock(
-        HTOreVariant.DEEPSLATE.createId(key),
-        HTOreVariant.DEEPSLATE.createProperty(),
-    )
-
-    @JvmField
-    val netherOre: DeferredBlock<Block> = blockRegister.registerSimpleBlock(
-        HTOreVariant.NETHER.createId(key),
-        HTOreVariant.NETHER.createProperty(),
-    )
-
-    @JvmField
-    val endOre: DeferredBlock<Block> = blockRegister.registerSimpleBlock(
-        HTOreVariant.END.createId(key),
-        HTOreVariant.END.createProperty(),
-    )
-
-    operator fun get(variant: HTOreVariant): DeferredBlock<Block> = when (variant) {
-        HTOreVariant.OVERWORLD -> stoneOre
-        HTOreVariant.DEEPSLATE -> deepOre
-        HTOreVariant.NETHER -> netherOre
-        HTOreVariant.END -> endOre
+    private val oreMap: Map<HTOreVariant, DeferredBlock<Block>> = HTOreVariant.entries.associateWith { variant: HTOreVariant ->
+        blockRegister
+            .registerSimpleBlock(
+                variant.path.replace("%s", key.name),
+                BlockBehaviour.Properties.of().apply(variant::setupProperty),
+            )
     }
+
+    operator fun get(variant: HTOreVariant): DeferredBlock<Block> = oreMap[variant] ?: error("Unknown ore variant: $variant!")
 
     //    HTBlockSet    //
 
@@ -67,7 +48,7 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
     override val itemHolders: List<DeferredItem<*>> = HTOreVariant.entries.map { variant: HTOreVariant ->
         itemRegister.registerSimpleBlockItem(
             get(variant),
-            itemProperty().component(DataComponents.ITEM_NAME, variant.createText(key)),
+            Item.Properties().component(DataComponents.ITEM_NAME, Component.translatable(variant.translationKey, key.text)),
         )
     }
 
@@ -85,10 +66,10 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
             builder.add(oreTagKey, ore)
         }
         // Ores in ground
-        builder.add(Tags.Blocks.ORES_IN_GROUND_STONE, stoneOre)
-        builder.add(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, deepOre)
-        builder.add(Tags.Blocks.ORES_IN_GROUND_NETHERRACK, netherOre)
-        builder.add(blockTagKey(commonId("ores_in_ground/end_stone")), endOre)
+        builder.add(Tags.Blocks.ORES_IN_GROUND_STONE, get(HTOreVariant.OVERWORLD))
+        builder.add(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, get(HTOreVariant.DEEPSLATE))
+        builder.add(Tags.Blocks.ORES_IN_GROUND_NETHERRACK, get(HTOreVariant.NETHER))
+        builder.add(blockTagKey(commonId("ores_in_ground/end_stone")), get(HTOreVariant.END))
     }
 
     override fun appendItemTags(builder: HTTagBuilder.ItemTag) {

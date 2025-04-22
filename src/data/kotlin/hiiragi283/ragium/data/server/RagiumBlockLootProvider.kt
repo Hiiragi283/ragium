@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server
 
+import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.extension.enchLookup
-import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTBuildingBlockSets
@@ -29,7 +29,6 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import net.neoforged.neoforge.registries.DeferredBlock
-import vectorwing.farmersdelight.common.block.FeastBlock
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
@@ -92,15 +91,15 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }
         }
 
-        // Delight Addon
-        add(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
+        // Food
+        add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
             val propertyCondition: LootItemBlockStatePropertyCondition.Builder =
                 LootItemBlockStatePropertyCondition
                     .hasBlockStateProperties(block)
                     .setProperties(
                         StatePropertiesPredicate.Builder
                             .properties()
-                            .hasProperty(FeastBlock.SERVINGS, 8),
+                            .hasProperty(HTBlockStateProperties.MEAT_SERVINGS, 8),
                     )
 
             LootTable

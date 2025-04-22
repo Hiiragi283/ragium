@@ -23,7 +23,7 @@ internal class HTEnergyNetwork(private var amount: Int = 0) :
 
     constructor() : this(0)
 
-    constructor(tag: CompoundTag) : this(tag.getInt(KEY))
+    constructor(tag: CompoundTag, provider: HolderLookup.Provider) : this(tag.getInt(KEY))
 
     override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag = buildNbt {
         putInt(KEY, amount)

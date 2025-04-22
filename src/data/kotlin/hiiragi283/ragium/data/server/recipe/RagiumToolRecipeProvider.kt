@@ -60,7 +60,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
 
         for (mold: RagiumItems.Molds in RagiumItems.Molds.entries) {
             output.accept(
-                RagiumAPI.id("stonecutting/${mold.holder.id.path}"),
+                RagiumAPI.id("stonecutting/${mold.path}"),
                 StonecutterRecipe(
                     "mold",
                     Ingredient.of(RagiumItemTags.MOLDS_BLANK),

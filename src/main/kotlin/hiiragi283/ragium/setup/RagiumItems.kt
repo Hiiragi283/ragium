@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -25,6 +24,7 @@ import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.PotionItem
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
@@ -62,14 +62,14 @@ object RagiumItems {
     }
 
     @JvmStatic
-    private fun register(name: String, properties: Item.Properties = itemProperty()): DeferredItem<Item> =
+    private fun register(name: String, properties: Item.Properties = Item.Properties()): DeferredItem<Item> =
         REGISTER.registerSimpleItem(name, properties)
 
     @JvmStatic
     private fun <T : Item> register(
         name: String,
         factory: (Item.Properties) -> T,
-        properties: Item.Properties = itemProperty(),
+        properties: Item.Properties = Item.Properties(),
     ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
 
     @JvmStatic
@@ -185,22 +185,22 @@ object RagiumItems {
     val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, RagiumMaterials.AZURE_STEEL)
 
     @JvmField
-    val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", itemProperty().stacksTo(1))
+    val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))
 
     @JvmField
     val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> =
-        register("item_magnet", ::HTSimpleMagnetItem, itemProperty().stacksTo(1))
+        register("item_magnet", ::HTSimpleMagnetItem, Item.Properties().stacksTo(1))
 
     @JvmField
-    val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", itemProperty().stacksTo(1))
+    val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
 
     @JvmField
     val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> =
-        register("teleport_ticket", ::HTTeleportTicketItem, itemProperty().rarity(Rarity.RARE))
+        register("teleport_ticket", ::HTTeleportTicketItem, Item.Properties().rarity(Rarity.RARE))
 
     @JvmField
     val RAGI_TICKET: DeferredItem<HTRagiTicketItem> =
-        register("ragi_ticket", ::HTRagiTicketItem, itemProperty().rarity(Rarity.EPIC))
+        register("ragi_ticket", ::HTRagiTicketItem, Item.Properties().rarity(Rarity.EPIC))
 
     //    Foods    //
 
@@ -208,8 +208,17 @@ object RagiumItems {
     private fun registerFood(
         name: String,
         foodProperties: FoodProperties,
-        properties: Item.Properties = itemProperty(),
+        properties: Item.Properties = Item.Properties(),
     ): DeferredItem<HTConsumableItem> = register(name, ::HTConsumableItem, properties.food(foodProperties))
+
+    @JvmField
+    val SPARKLING_WATER_BOTTLE: DeferredItem<Item> = register("sparkling_water_bottle")
+
+    @JvmField
+    val ICE_CREAM: DeferredItem<HTConsumableItem> = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
+
+    @JvmField
+    val ICE_CREAM_SODA: DeferredItem<PotionItem> = register("ice_cream_soda", factory = ::PotionItem)
 
     // Meat
     @JvmField
@@ -224,14 +233,6 @@ object RagiumItems {
     @JvmField
     val CANNED_COOKED_MEAT: DeferredItem<HTConsumableItem> = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
 
-    // Milk
-    @JvmField
-    val ICE_CREAM: DeferredItem<Item> = register("ice_cream", itemProperty().food(RagiumFoods.ICE_CREAM))
-
-    // Honey
-    @JvmField
-    val BOTTLED_BEE: DeferredItem<Item> = register("bottled_bee")
-
     // Sponge
     @JvmField
     val MELON_PIE: DeferredItem<HTConsumableItem> = registerFood("melon_pie", RagiumFoods.MELON_PIE)
@@ -244,13 +245,19 @@ object RagiumItems {
     val RAGI_CHERRY: DeferredItem<HTConsumableItem> = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
 
     @JvmField
+    val RAGI_CHERRY_JAM: DeferredItem<HTConsumableItem> = registerFood("ragi_cherry_jam", RagiumFoods.RAGI_CHERRY_JAM)
+
+    @JvmField
     val FEVER_CHERRY: DeferredItem<HTConsumableItem> = registerFood(
         "fever_cherry",
         RagiumFoods.FEVER_CHERRY,
-        itemProperty().rarity(Rarity.EPIC),
+        Item.Properties().rarity(Rarity.EPIC),
     )
 
     // Other
+    @JvmField
+    val BOTTLED_BEE: DeferredItem<Item> = register("bottled_bee")
+
     @JvmField
     val EXP_BERRIES: DeferredItem<ItemNameBlockItem> = register(
         "exp_berries",
@@ -261,7 +268,7 @@ object RagiumItems {
     val WARPED_WART: DeferredItem<HTConsumableItem> = registerFood("warped_wart", RagiumFoods.WARPED_WART)
 
     @JvmField
-    val AMBROSIA: DeferredItem<HTConsumableItem> = registerFood("ambrosia", RagiumFoods.AMBROSIA, itemProperty().rarity(Rarity.EPIC))
+    val AMBROSIA: DeferredItem<HTConsumableItem> = registerFood("ambrosia", RagiumFoods.AMBROSIA, Item.Properties().rarity(Rarity.EPIC))
 
     //    Molds    //
 
@@ -276,7 +283,8 @@ object RagiumItems {
         WIRE(RagiumItemTags.MOLDS_WIRE),
         ;
 
-        val holder: DeferredItem<Item> = register("${name.lowercase()}_mold")
+        val path = "${name.lowercase()}_mold"
+        private val holder: DeferredItem<Item> = register(path)
 
         override fun asItem(): Item = holder.asItem()
     }

@@ -47,7 +47,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .parent(generated)
             .texture("layer0", RagiumBlocks.LILY_OF_THE_ENDER.blockId)
 
-        getBuilder(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE)
+        getBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
             .parent(modelFile(RagiumAPI.id("block/cooked_meat_on_the_bone_stage0")))
     }
 

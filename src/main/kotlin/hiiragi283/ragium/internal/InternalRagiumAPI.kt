@@ -24,8 +24,6 @@ import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.setup.RagiumComponentTypes
-import hiiragi283.ragium.util.HTWrappedMultiMap
-import hiiragi283.ragium.util.HTWrappedTable
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.MinecraftServer

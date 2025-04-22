@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.blockProperty
-import hiiragi283.ragium.api.extension.itemProperty
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BucketItem
@@ -78,7 +76,8 @@ class HTFluidContentRegister(modId: String) {
         val liquidBlock: DeferredBlock<LiquidBlock> = blockRegister.registerBlock(
             name,
             { prop: BlockBehaviour.Properties -> LiquidBlock(stillFluid.get(), prop) },
-            blockProperty()
+            BlockBehaviour.Properties
+                .of()
                 .noCollission()
                 .strength(100f)
                 .noLootTable()
@@ -89,7 +88,7 @@ class HTFluidContentRegister(modId: String) {
         val bucket: DeferredItem<BucketItem> = itemRegister.registerItem(
             bucketId.path,
             { prop: Item.Properties -> BucketItem(stillFluid.get(), prop) },
-            itemProperty().stacksTo(1).craftRemainder(Items.BUCKET),
+            Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET),
         )
 
         val content: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = HTFluidContent(

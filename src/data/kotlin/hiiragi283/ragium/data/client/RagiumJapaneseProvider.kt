@@ -68,6 +68,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
 
+        addBlock(RagiumBlocks.COOKED_MEAT_ON_THE_BONE, "骨付き焼肉ブロック")
         addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "スポンジケーキのハーフブロック")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
@@ -163,21 +164,23 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Food
+        addItem(RagiumItems.SPARKLING_WATER_BOTTLE, "炭酸水入り瓶")
+        addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
+        addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
+
         addItem(RagiumItems.MINCED_MEAT, "ひき肉")
         addItem(RagiumItems.MEAT_INGOT, "生肉インゴット")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
 
-        addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
-
-        addItem(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
-
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
         addItem(RagiumItems.RAGI_CHERRY, "らぎチェリー")
+        addItem(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
         addItem(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
 
+        addItem(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
         addItem(RagiumItems.EXP_BERRIES, "経験値ベリー")
         addItem(RagiumItems.WARPED_WART, "歪んだウォート")
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
@@ -195,14 +198,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.NAPALM_DYNAMITE, "ナパームダイナマイト")
         addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")*/
         // Mold
-        addMold(RagiumItems.Molds.BLANK, "成形型（なし）")
-        addMold(RagiumItems.Molds.BALL, "成形型（ボール）")
-        addMold(RagiumItems.Molds.BLOCK, "成形型（ブロック）")
-        addMold(RagiumItems.Molds.GEAR, "成形型（歯車）")
-        addMold(RagiumItems.Molds.INGOT, "成形型（インゴット）")
-        addMold(RagiumItems.Molds.PLATE, "成形型（板材）")
-        addMold(RagiumItems.Molds.ROD, "成形型（棒材）")
-        addMold(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
+        addItem(RagiumItems.Molds.BLANK, "成形型（なし）")
+        addItem(RagiumItems.Molds.BALL, "成形型（ボール）")
+        addItem(RagiumItems.Molds.BLOCK, "成形型（ブロック）")
+        addItem(RagiumItems.Molds.GEAR, "成形型（歯車）")
+        addItem(RagiumItems.Molds.INGOT, "成形型（インゴット）")
+        addItem(RagiumItems.Molds.PLATE, "成形型（板材）")
+        addItem(RagiumItems.Molds.ROD, "成形型（棒材）")
+        addItem(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "発展ラギ合金混合物")
@@ -422,12 +425,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun delight() {
-        addBlock(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE, "骨付き焼肉ブロック")
-
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
-
-        addItem(RagiumDelightAddon.RAGI_CHERRY_POPSICLE, "らぎチェリーバー")
-        addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "らぎチェリージャム")
     }
 
     private fun mekanism() {

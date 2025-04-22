@@ -11,6 +11,8 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition
+import net.neoforged.neoforge.common.conditions.NotCondition
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
@@ -33,6 +35,8 @@ enum class IntegrationMods(val modId: String) : StringRepresentable {
     ;
 
     val isLoaded: Boolean get() = ModList.get().isLoaded(modId)
+    val condition = ModLoadedCondition(modId)
+    val notCondition = NotCondition(condition)
 
     fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
 

@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.extension
 
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
@@ -17,10 +16,6 @@ import net.neoforged.neoforge.common.MutableDataComponentHolder
  * @param count [ItemStack]の個数
  */
 fun ItemLike.toStack(count: Int = 1): ItemStack = ItemStack(asItem(), count)
-
-//    Item    //
-
-fun itemProperty(): Item.Properties = Item.Properties()
 
 //    ItemStack    //
 

@@ -68,6 +68,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "Yellow LED Block")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
 
+        addBlock(RagiumBlocks.COOKED_MEAT_ON_THE_BONE, "Cooked Meat on the Bone")
         addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -163,21 +164,23 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         addItem(RagiumItems.RAGI_TICKET, "Ragi Ticket")
         // Food
+        addItem(RagiumItems.SPARKLING_WATER_BOTTLE, "Sparkling Water Bottle")
+        addItem(RagiumItems.ICE_CREAM, "Ice Cream")
+        addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
+
         addItem(RagiumItems.MINCED_MEAT, "Minced Meat")
         addItem(RagiumItems.MEAT_INGOT, "Meat Ingot")
         addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
 
-        addItem(RagiumItems.ICE_CREAM, "Ice Cream")
-
-        addItem(RagiumItems.BOTTLED_BEE, "Bottled Bee")
-
         addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
+        addItem(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         addItem(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
+        addItem(RagiumItems.BOTTLED_BEE, "Bottled Bee")
         addItem(RagiumItems.EXP_BERRIES, "Exp Berries")
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
@@ -195,14 +198,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.NAPALM_DYNAMITE, "Napalm Dynamite")
         addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")*/
         // Mold
-        addMold(RagiumItems.Molds.BLANK, "Mold (Blank)")
-        addMold(RagiumItems.Molds.BALL, "Mold (Ball)")
-        addMold(RagiumItems.Molds.BLOCK, "Mold (Block)")
-        addMold(RagiumItems.Molds.GEAR, "Mold (Gear)")
-        addMold(RagiumItems.Molds.INGOT, "Mold (Ingot)")
-        addMold(RagiumItems.Molds.PLATE, "Mold (Plate)")
-        addMold(RagiumItems.Molds.ROD, "Mold (Rod)")
-        addMold(RagiumItems.Molds.WIRE, "Mold (Wire)")
+        addItem(RagiumItems.Molds.BLANK, "Mold (Blank)")
+        addItem(RagiumItems.Molds.BALL, "Mold (Ball)")
+        addItem(RagiumItems.Molds.BLOCK, "Mold (Block)")
+        addItem(RagiumItems.Molds.GEAR, "Mold (Gear)")
+        addItem(RagiumItems.Molds.INGOT, "Mold (Ingot)")
+        addItem(RagiumItems.Molds.PLATE, "Mold (Plate)")
+        addItem(RagiumItems.Molds.ROD, "Mold (Rod)")
+        addItem(RagiumItems.Molds.WIRE, "Mold (Wire)")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "Advanced Ragi-Alloy Compound")
@@ -422,12 +425,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun delight() {
-        addBlock(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE, "Cooked Meat on the Bone")
-
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
-
-        addItem(RagiumDelightAddon.RAGI_CHERRY_POPSICLE, "Ragi-Cherry Popsicle")
-        addItem(RagiumDelightAddon.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
     }
 
     private fun mekanism() {

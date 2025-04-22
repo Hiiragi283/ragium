@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
@@ -10,7 +9,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
 import vectorwing.farmersdelight.data.builder.CookingPotRecipeBuilder
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
@@ -23,14 +21,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD)
     }
 
     private fun crafting(output: RecipeOutput) {
-        // Cooked Meat on the Bone
-        HTShapedRecipeBuilder(RagiumDelightAddon.COOKED_MEAT_ON_THE_BONE)
-            .hollow8()
-            .define('A', RagiumItems.COOKED_MEAT_INGOT)
-            .define('B', Tags.Items.BONES)
-            .save(output)
         // Ragi-Cherry Popsicle
-        HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
+        /*HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
             .pattern(
                 " AA",
                 "BAA",
@@ -38,14 +30,14 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD)
             ).define('A', RagiumItemTags.FOODS_RAGI_CHERRY)
             .define('B', Items.ICE)
             .define('C', Tags.Items.RODS_WOODEN)
-            .save(output)
+            .save(output)*/
     }
 
     private fun cookingPot(output: RecipeOutput) {
         // Ragi-Cherry Jam
         CookingPotRecipeBuilder
             .cookingPotRecipe(
-                RagiumDelightAddon.RAGI_CHERRY_JAM,
+                RagiumItems.RAGI_CHERRY_JAM,
                 1,
                 200,
                 0.35f,

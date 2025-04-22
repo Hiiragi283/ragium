@@ -5,7 +5,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.saveddata.SavedData
 import java.util.function.BiFunction
-import java.util.function.Function
 import java.util.function.Supplier
 
 @ConsistentCopyVisibility
@@ -13,22 +12,9 @@ data class HTSavedDataType<T : SavedData> private constructor(val id: ResourceLo
     constructor(
         id: ResourceLocation,
         factory: Supplier<T>,
-        deserializer: Function<CompoundTag, T>,
-    ) : this(
-        id,
-        SavedData.Factory(
-            factory,
-            BiFunction { tag: CompoundTag, _: HolderLookup.Provider -> deserializer.apply(tag) },
-            null,
-        ),
-    )
-
-    constructor(
-        id: ResourceLocation,
-        factory: Supplier<T>,
         deserializer: BiFunction<CompoundTag, HolderLookup.Provider, T>,
     ) : this(id, SavedData.Factory(factory, deserializer, null))
 
     @JvmField
-    val saveId: String = id.namespace + '_' + id.path
+    val saveId: String = id.toDebugFileName()
 }

@@ -22,7 +22,6 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.*
 
 abstract class HTRecipeProvider {
@@ -82,7 +81,7 @@ abstract class HTRecipeProvider {
         fun id(path: String): ResourceLocation = mod.id(path)
 
         final override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-            buildModRecipes(output.withConditions(ModLoadedCondition(mod.modId)), holderLookup)
+            buildModRecipes(output.withConditions(mod.condition), holderLookup)
         }
 
         protected abstract fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)

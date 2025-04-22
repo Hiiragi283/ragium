@@ -131,13 +131,13 @@ class RagiumItemTagProvider(
         add(RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
         // Food
         add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
-        add(Tags.Items.FOODS, RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
         add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
         add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
         add(Tags.Items.FOODS, RagiumItems.EXP_BERRIES)
         add(Tags.Items.FOODS, RagiumItems.FEVER_CHERRY)
         add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
+        add(Tags.Items.FOODS, RagiumItems.ICE_CREAM_SODA)
         add(Tags.Items.FOODS, RagiumItems.MEAT_INGOT)
         add(Tags.Items.FOODS, RagiumItems.MELON_PIE)
         add(Tags.Items.FOODS, RagiumItems.SWEET_BERRIES_CAKE_PIECE)
@@ -150,9 +150,9 @@ class RagiumItemTagProvider(
         addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_JAMS)
         addTag(Tags.Items.FOODS_FRUIT, RagiumItemTags.FOODS_CHERRY)
 
-        add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumItems.RAGI_CHERRY)
         add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
-        add(RagiumItemTags.JAMS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_JAM)
+        add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumItems.RAGI_CHERRY)
+        add(RagiumItemTags.JAMS_RAGI_CHERRY, RagiumItems.RAGI_CHERRY_JAM)
         addTag(RagiumItemTags.FOODS_CHEESE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHEESE))
         addTag(RagiumItemTags.FOODS_CHERRY, RagiumItemTags.FOODS_RAGI_CHERRY)
         addTag(RagiumItemTags.FOODS_CHOCOLATE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE))
@@ -242,7 +242,7 @@ class RagiumItemTagProvider(
         // Mold
         for (mold: RagiumItems.Molds in RagiumItems.Molds.entries) {
             addTag(RagiumItemTags.MOLDS, mold.tagKey)
-            add(mold.tagKey, mold.holder)
+            addItem(mold.tagKey, mold)
         }
     }
 }

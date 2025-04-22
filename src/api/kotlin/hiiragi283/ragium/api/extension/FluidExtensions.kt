@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 //    Color    //
@@ -14,13 +13,6 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
     val blue: Float = (color and 255) / 255.0f
     return Triple(red, green, blue)
 }
-
-//    Fluid    //
-
-/**
- * この[Fluid]が流体の源となっているか判定します。
- */
-val Fluid.isSource: Boolean get() = isSource(defaultFluidState())
 
 //    IFluidHandler    //
 

@@ -5,11 +5,11 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.Util
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.SlabBlock
 import net.neoforged.neoforge.client.model.generators.*
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -46,8 +46,8 @@ fun LanguageProvider.addOreVariant(variant: HTOreVariant, value: String) {
     add(variant.translationKey, value)
 }
 
-fun LanguageProvider.addMold(mold: RagiumItems.Molds, value: String) {
-    addItem(mold.holder, value)
+fun LanguageProvider.addItem(item: ItemLike, value: String) {
+    addItem(item::asItem, value)
 }
 
 //    ModelFile    //

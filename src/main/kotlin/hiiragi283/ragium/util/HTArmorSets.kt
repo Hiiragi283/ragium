@@ -3,7 +3,6 @@ package hiiragi283.ragium.util
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
@@ -28,7 +27,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterialKey) : HTI
     private fun register(material: Holder<ArmorMaterial>, type: ArmorItem.Type): DeferredItem<ArmorItem> = itemRegister.registerItem(
         "${key.name}_${type.serializedName}",
         { properties: Item.Properties -> ArmorItem(material, type, properties) },
-        itemProperty().durability(type.getDurability(20)),
+        Item.Properties().durability(type.getDurability(20)),
     )
 
     val helmetItem: DeferredItem<ArmorItem> = register(material, ArmorItem.Type.HELMET)

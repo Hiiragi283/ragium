@@ -1,9 +1,9 @@
-package hiiragi283.ragium.util
+package hiiragi283.ragium.internal
 
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.util.HTMultiMap
 
-open class HTWrappedMultiMap<K : Any, V : Any>(protected val delegated: Multimap<K, V>) : HTMultiMap<K, V> {
+internal open class HTWrappedMultiMap<K : Any, V : Any>(protected val delegated: Multimap<K, V>) : HTMultiMap<K, V> {
     override val size: Int get() = delegated.size()
     override val isEmpty: Boolean get() = delegated.isEmpty
 
