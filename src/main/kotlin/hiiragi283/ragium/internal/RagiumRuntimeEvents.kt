@@ -81,7 +81,7 @@ object RagiumRuntimeEvents {
         val level: Level = event.level
         val pos: BlockPos = hitResult.blockPos
         val state: BlockState = level.getBlockState(pos)
-        
+
         val player: Player = event.entity
         // アイテムがラギウムエッセンスの場合
         if (stack.`is`(RagiumItems.RAGIUM_ESSENCE)) {

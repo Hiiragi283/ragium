@@ -57,7 +57,7 @@ repositories {
 
     maven(url = "https://maven4.bai.lol/") // WTHIT
     maven(url = "https://maven.architectury.dev/") // Arch
-    maven(url = "https://maven.blamejared.com/") // Patchouli
+    maven(url = "https://maven.blamejared.com/") // Patchouli, Ars
     maven(url = "https://maven.createmod.net") // Create, Flywheel
     maven(url = "https://maven.k-4u.nl/") // TOP
     maven(url = "https://maven.rover656.dev/releases") // EIO

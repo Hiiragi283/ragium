@@ -73,7 +73,12 @@ interface RagiumAPI {
      */
     fun getMaterialRegistry(): HTMaterialRegistry
 
-    fun getPrefixFromName(name: String): DataResult<HTTagPrefix>
+    fun getRegisteredPrefixes(): Map<String, HTTagPrefix>
+
+    fun getPrefixFromName(name: String): DataResult<HTTagPrefix> {
+        val prefix: HTTagPrefix? = getRegisteredPrefixes()[name]
+        return if (prefix == null) DataResult.error { "Unknown prefix: $name!" } else DataResult.success(prefix)
+    }
 
     //    Server    //
 

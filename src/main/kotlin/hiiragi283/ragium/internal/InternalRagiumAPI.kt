@@ -4,7 +4,6 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import com.mojang.logging.LogUtils
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddonCollector
 import hiiragi283.ragium.api.addon.RagiumAddon
@@ -79,7 +78,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     private lateinit var prefixMap: Map<String, HTTagPrefix>
 
-    override fun getPrefixFromName(name: String): DataResult<HTTagPrefix> {
+    override fun getRegisteredPrefixes(): Map<String, HTTagPrefix> {
         if (!::prefixMap.isInitialized) {
             prefixMap = buildMap {
                 for (addon: RagiumAddon in getAddons()) {
@@ -92,8 +91,7 @@ class InternalRagiumAPI : RagiumAPI {
                 }
             }
         }
-        val prefix: HTTagPrefix? = prefixMap[name]
-        return if (prefix == null) DataResult.error { "Unknown prefix: $name!" } else DataResult.success(prefix)
+        return prefixMap
     }
 
     //    Server    //

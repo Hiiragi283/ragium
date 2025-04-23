@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
+import top.theillusivec4.curios.api.CuriosTags
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagProvider(
@@ -47,6 +48,8 @@ class RagiumItemTagProvider(
         // armorTags()
         // toolTags()
         category()
+
+        curios()
     }
 
     private fun copy() {
@@ -244,5 +247,11 @@ class RagiumItemTagProvider(
             addTag(RagiumItemTags.MOLDS, mold.tagKey)
             addItem(mold.tagKey, mold)
         }
+    }
+
+    //    Curios Addon    //
+
+    private fun curios() {
+        add(CuriosTags.CHARM, RagiumItems.ITEM_MAGNET)
     }
 }
