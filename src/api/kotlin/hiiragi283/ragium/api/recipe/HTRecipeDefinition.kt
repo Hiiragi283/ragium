@@ -8,6 +8,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import java.util.Optional
 
 class HTRecipeDefinition(
     val itemInputs: List<SizedIngredient>,
@@ -66,13 +67,13 @@ class HTRecipeDefinition(
         fluidOutputs: List<HTFluidOutput>,
     ) : this(itemInputs, fluidInputs, Ingredient.EMPTY, itemOutputs, fluidOutputs)
 
-    fun getItemIngredient(index: Int): SizedIngredient? = itemInputs.getOrNull(index)
+    fun getItemIngredient(index: Int): Optional<SizedIngredient> = Optional.ofNullable(itemInputs.getOrNull(index))
 
-    fun getFluidIngredient(index: Int): SizedFluidIngredient? = fluidInputs.getOrNull(index)
+    fun getFluidIngredient(index: Int): Optional<SizedFluidIngredient> = Optional.ofNullable(fluidInputs.getOrNull(index))
 
-    fun getItemOutput(index: Int): HTItemOutput? = itemOutputs.getOrNull(index)
+    fun getItemOutput(index: Int): Optional<HTItemOutput> = Optional.ofNullable(itemOutputs.getOrNull(index))
 
-    fun getFluidOutput(index: Int): HTFluidOutput? = fluidOutputs.getOrNull(index)
+    fun getFluidOutput(index: Int): Optional<HTFluidOutput> = Optional.ofNullable(fluidOutputs.getOrNull(index))
 
     val isEmptyIngredient: Boolean get() = itemInputs.isEmpty() && fluidInputs.isEmpty()
     val isEmptyOutput: Boolean get() = itemOutputs.isEmpty() && fluidOutputs.isEmpty()

@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:storage_blocks/glowstone"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "item": "minecraft:glowstone_dust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "c:storage_blocks/glowstone"
+  },
+  "output": {
+    "count": 4,
+    "item": "minecraft:glowstone_dust"
+  }
 }

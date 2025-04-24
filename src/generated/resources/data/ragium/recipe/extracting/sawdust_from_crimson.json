@@ -1,21 +1,15 @@
 {
   "type": "ragium:extracting",
-  "fluid_outputs": [
-    {
-      "amount": 100,
-      "fluid": "ragium:crimson_sap"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "minecraft:crimson_stems"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "item": "ragium:sawdust"
-    }
-  ]
+  "fluid_output": {
+    "amount": 100,
+    "fluid": "ragium:crimson_sap"
+  },
+  "input": {
+    "count": 1,
+    "tag": "minecraft:crimson_stems"
+  },
+  "item_output": {
+    "count": 4,
+    "item": "ragium:sawdust"
+  }
 }

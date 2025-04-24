@@ -1,15 +1,11 @@
 {
   "type": "ragium:extracting",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:torchflower"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "item": "minecraft:orange_dye"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:torchflower"
+  },
+  "item_output": {
+    "count": 4,
+    "item": "minecraft:orange_dye"
+  }
 }

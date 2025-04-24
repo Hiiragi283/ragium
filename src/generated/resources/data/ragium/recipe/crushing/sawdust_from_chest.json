@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:chests/wooden"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "ragium:sawdust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "c:chests/wooden"
+  },
+  "output": {
+    "count": 8,
+    "item": "ragium:sawdust"
+  }
 }

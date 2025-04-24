@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.common.recipe.*
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
@@ -41,36 +40,30 @@ object RagiumRecipeSerializers {
     }
 
     @JvmStatic
-    private fun <T : HTDefinitionRecipe<*>> register(
-        name: String,
-        factory: HTDefinitionRecipe.Factory<T>,
-    ): DeferredHolder<RecipeSerializer<*>, HTDefinitionRecipe.Serializer<T>> = register(name, HTDefinitionRecipe.Serializer(name, factory))
-
-    @JvmStatic
     private fun <T : Recipe<*>> registerUnit(name: String, recipe: T): DeferredHolder<RecipeSerializer<*>, RecipeSerializer<T>> =
         register(name, MapCodec.unit(recipe), StreamCodec.unit(recipe))
 
     //    Machine    //
 
     @JvmField
-    val CRUSHING: DeferredHolder<RecipeSerializer<*>, HTDefinitionRecipe.Serializer<HTCrushingRecipe>> =
-        register("crushing", RagiumRecipeFactories::crushing)
+    val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =
+        register("crushing", HTCrushingRecipe.CODEC, HTCrushingRecipe.STREAM_CODEC)
 
     @JvmField
-    val EXTRACTING: DeferredHolder<RecipeSerializer<*>, HTDefinitionRecipe.Serializer<HTExtractingRecipe>> =
-        register("extracting", RagiumRecipeFactories::extracting)
+    val EXTRACTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractingRecipe>> =
+        register("extracting", HTExtractingRecipe.CODEC, HTExtractingRecipe.STREAM_CODEC)
 
     @JvmField
-    val INFUSING: DeferredHolder<RecipeSerializer<*>, HTDefinitionRecipe.Serializer<HTInfusingRecipe>> =
-        register("infusing", RagiumRecipeFactories::infusing)
+    val INFUSING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTInfusingRecipe>> =
+        register("infusing", HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
 
     @JvmField
-    val REFINING: DeferredHolder<RecipeSerializer<*>, HTDefinitionRecipe.Serializer<HTRefiningRecipe>> =
-        register("refining", RagiumRecipeFactories::refining)
+    val REFINING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTRefiningRecipe>> =
+        register("refining", HTRefiningRecipe.CODEC, HTRefiningRecipe.STREAM_CODEC)
 
     @JvmField
-    val SOLIDIFYING: DeferredHolder<RecipeSerializer<*>, HTDefinitionRecipe.Serializer<HTSolidifyingRecipe>> =
-        register("solidifying", RagiumRecipeFactories::solidifying)
+    val SOLIDIFYING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTSolidifyingRecipe>> =
+        register("solidifying", HTSolidifyingRecipe.CODEC, HTSolidifyingRecipe.STREAM_CODEC)
 
     //    Custom    //
 

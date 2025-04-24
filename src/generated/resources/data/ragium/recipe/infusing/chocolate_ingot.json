@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 250,
-      "tag": "c:milk"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:crops/cocoa_bean"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:chocolate_ingot"
-    }
-  ]
+  "fluid_input": {
+    "amount": 250,
+    "tag": "c:milk"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "c:crops/cocoa_bean"
+  },
+  "output": {
+    "item": "ragium:chocolate_ingot"
+  }
 }

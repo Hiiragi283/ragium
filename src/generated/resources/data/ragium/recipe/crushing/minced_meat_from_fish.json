@@ -1,14 +1,10 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:foods/raw_fish"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:minced_meat"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "c:foods/raw_fish"
+  },
+  "output": {
+    "item": "ragium:minced_meat"
+  }
 }

@@ -1,15 +1,11 @@
 {
   "type": "ragium:extracting",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:cornflower"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 2,
-      "item": "minecraft:blue_dye"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:cornflower"
+  },
+  "item_output": {
+    "count": 2,
+    "item": "minecraft:blue_dye"
+  }
 }

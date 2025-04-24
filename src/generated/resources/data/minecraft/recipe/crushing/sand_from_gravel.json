@@ -1,14 +1,10 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:gravels"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:sand"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "c:gravels"
+  },
+  "output": {
+    "item": "minecraft:sand"
+  }
 }

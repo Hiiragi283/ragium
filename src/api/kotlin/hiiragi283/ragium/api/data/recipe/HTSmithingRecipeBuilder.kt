@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
 
 class HTSmithingRecipeBuilder(private val output: ItemStack) :
-    HTIngredientRecipeBuilder<HTSmithingRecipeBuilder, SmithingTransformRecipe>() {
+    HTIngredientRecipeBuilder<HTSmithingRecipeBuilder, SmithingTransformRecipe> {
     constructor(item: ItemLike, count: Int = 1) : this(ItemStack(item, count))
 
     private val ingredients: MutableList<Ingredient> = mutableListOf()

@@ -1,15 +1,11 @@
 {
   "type": "ragium:extracting",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:pitcher_plant"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "item": "minecraft:cyan_dye"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:pitcher_plant"
+  },
+  "item_output": {
+    "count": 4,
+    "item": "minecraft:cyan_dye"
+  }
 }

@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.keys.CommonMaterials
@@ -14,7 +13,6 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
@@ -22,7 +20,7 @@ import net.neoforged.neoforge.common.Tags
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Chocolate
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+        createInfusing()
             .itemOutput(RagiumItems.Ingots.CHOCOLATE)
             .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
@@ -47,7 +45,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         )
 
         // Ambrosia
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+        createInfusing()
             .itemOutput(RagiumItems.AMBROSIA)
             .itemInput(HTTagPrefixes.STORAGE_BLOCK, CommonMaterials.CHOCOLATE, 64)
             .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
@@ -76,15 +74,15 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun meat() {
         // Minced Meat
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
+        createCrushing()
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_MEAT)
             .saveSuffixed(output, "_from_meat")
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
+        createCrushing()
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_FISH)
             .saveSuffixed(output, "_from_fish")
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
+        createCrushing()
             .itemOutput(RagiumItems.MINCED_MEAT)
             .itemInput(Items.ROTTEN_FLESH)
             .savePrefixed(output, "rotten_")

@@ -1,11 +1,15 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.DataResult
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -16,6 +20,26 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient
 class HTCrushingRecipe(private val ingredient: SizedIngredient, private val output: HTItemOutput) :
     HTMachineRecipe(),
     HTDefinitionRecipe<HTMachineInput> {
+    companion object {
+        @JvmField
+        val CODEC: MapCodec<HTCrushingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTCrushingRecipe::ingredient),
+                    HTItemOutput.CODEC.fieldOf("output").forGetter(HTCrushingRecipe::output),
+                ).apply(instance, ::HTCrushingRecipe)
+        }
+
+        @JvmField
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTCrushingRecipe> = StreamCodec.composite(
+            SizedIngredient.STREAM_CODEC,
+            HTCrushingRecipe::ingredient,
+            HTItemOutput.STREAM_CODEC,
+            HTCrushingRecipe::output,
+            ::HTCrushingRecipe,
+        )
+    }
+
     override fun matches(input: HTMachineInput): Boolean = ingredient.test(input.getItemStack(HTStorageIO.INPUT, 0))
 
     override fun canProcess(input: HTMachineInput): Boolean {

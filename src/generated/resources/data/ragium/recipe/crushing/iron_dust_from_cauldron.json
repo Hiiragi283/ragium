@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:cauldron"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 7,
-      "item": "ragium:iron_dust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:cauldron"
+  },
+  "output": {
+    "count": 7,
+    "item": "ragium:iron_dust"
+  }
 }

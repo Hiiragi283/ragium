@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 250,
-      "tag": "c:honey"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:glass_bottle"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:honey_bottle"
-    }
-  ]
+  "fluid_input": {
+    "amount": 250,
+    "tag": "c:honey"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:glass_bottle"
+  },
+  "output": {
+    "item": "minecraft:honey_bottle"
+  }
 }

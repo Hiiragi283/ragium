@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:warped_wart_block"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 9,
-      "item": "ragium:warped_wart"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:warped_wart_block"
+  },
+  "output": {
+    "count": 9,
+    "item": "ragium:warped_wart"
+  }
 }

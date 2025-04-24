@@ -12,7 +12,7 @@ class HTCookingRecipeBuilder private constructor(
     private val factory: AbstractCookingRecipe.Factory<AbstractCookingRecipe>,
     private val timeModifier: IntUnaryOperator,
     private val result: ItemStack,
-) : HTIngredientRecipeBuilder<HTCookingRecipeBuilder, AbstractCookingRecipe>() {
+) : HTIngredientRecipeBuilder<HTCookingRecipeBuilder, AbstractCookingRecipe> {
     companion object {
         @JvmStatic
         fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder =

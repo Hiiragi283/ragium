@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 250,
-      "tag": "c:water"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:dirt"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:mud"
-    }
-  ]
+  "fluid_input": {
+    "amount": 250,
+    "tag": "c:water"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:dirt"
+  },
+  "output": {
+    "item": "minecraft:mud"
+  }
 }

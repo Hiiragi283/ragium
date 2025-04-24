@@ -1,26 +1,20 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:water"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 3,
-      "item": "minecraft:glass_bottle"
-    }
-  ],
-  "item_outputs": [
-    {
-      "components": {
-        "minecraft:potion_contents": {
-          "potion": "minecraft:water"
-        }
-      },
-      "count": 3,
-      "item": "minecraft:potion"
-    }
-  ]
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:water"
+  },
+  "item_input": {
+    "count": 3,
+    "item": "minecraft:glass_bottle"
+  },
+  "output": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:water"
+      }
+    },
+    "count": 3,
+    "item": "minecraft:potion"
+  }
 }

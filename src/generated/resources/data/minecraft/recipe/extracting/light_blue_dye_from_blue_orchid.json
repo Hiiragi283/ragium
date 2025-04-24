@@ -1,15 +1,11 @@
 {
   "type": "ragium:extracting",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:blue_orchid"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 2,
-      "item": "minecraft:light_blue_dye"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:blue_orchid"
+  },
+  "item_output": {
+    "count": 2,
+    "item": "minecraft:light_blue_dye"
+  }
 }

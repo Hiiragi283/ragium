@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 250,
-      "tag": "c:milk"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:snowball"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:ice_cream"
-    }
-  ]
+  "fluid_input": {
+    "amount": 250,
+    "tag": "c:milk"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:snowball"
+  },
+  "output": {
+    "item": "ragium:ice_cream"
+  }
 }

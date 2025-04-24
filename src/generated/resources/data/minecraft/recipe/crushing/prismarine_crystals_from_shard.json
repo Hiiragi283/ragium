@@ -1,14 +1,10 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:prismarine_shard"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:prismarine_crystals"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:prismarine_shard"
+  },
+  "output": {
+    "item": "minecraft:prismarine_crystals"
+  }
 }

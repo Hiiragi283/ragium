@@ -1,11 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -21,13 +19,13 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
         cutting()
 
         // Milk Bottle
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+        createInfusing()
             .itemOutput(ModItems.MILK_BOTTLE.get())
             .itemInput(Items.GLASS_BOTTLE)
             .milkInput(250)
             .save(output)
 
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+        createExtracting()
             .itemOutput(Items.GLASS_BOTTLE)
             .fluidOutput(NeoForgeMod.MILK, 250)
             .itemInput(ModItems.MILK_BOTTLE.get())

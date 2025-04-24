@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:barrels/wooden"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 7,
-      "item": "ragium:sawdust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "c:barrels/wooden"
+  },
+  "output": {
+    "count": 7,
+    "item": "ragium:sawdust"
+  }
 }

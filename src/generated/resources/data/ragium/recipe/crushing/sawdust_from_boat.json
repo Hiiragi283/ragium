@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "minecraft:boats"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 5,
-      "item": "ragium:sawdust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "minecraft:boats"
+  },
+  "output": {
+    "count": 5,
+    "item": "ragium:sawdust"
+  }
 }

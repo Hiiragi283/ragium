@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 250,
-      "tag": "c:experience"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:snowball"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:wind_charge"
-    }
-  ]
+  "fluid_input": {
+    "amount": 250,
+    "tag": "c:experience"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:snowball"
+  },
+  "output": {
+    "item": "minecraft:wind_charge"
+  }
 }

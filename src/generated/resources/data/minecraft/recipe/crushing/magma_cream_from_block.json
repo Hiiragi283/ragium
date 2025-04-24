@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:magma_block"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "item": "minecraft:magma_cream"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:magma_block"
+  },
+  "output": {
+    "count": 4,
+    "item": "minecraft:magma_cream"
+  }
 }

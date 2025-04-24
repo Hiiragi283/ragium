@@ -1,14 +1,10 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:coarse_dirt"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:dirt"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:coarse_dirt"
+  },
+  "output": {
+    "item": "minecraft:dirt"
+  }
 }

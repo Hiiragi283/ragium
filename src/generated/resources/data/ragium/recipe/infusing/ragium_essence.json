@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:molten_ragium"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:dusts/quartz"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:ragium_essence"
-    }
-  ]
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:molten_ragium"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "c:dusts/quartz"
+  },
+  "output": {
+    "item": "ragium:ragium_essence"
+  }
 }

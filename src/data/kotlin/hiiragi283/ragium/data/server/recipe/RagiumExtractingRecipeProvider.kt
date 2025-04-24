@@ -1,11 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -14,32 +12,32 @@ import net.neoforged.neoforge.common.Tags
 object RagiumExtractingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Vanilla
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+        createExtracting()
             .itemOutput(Items.FLINT)
             .itemInput(Tags.Items.GRAVELS)
             .saveSuffixed(output, "_from_gravel")
 
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+        createExtracting()
             .itemOutput(Items.REDSTONE)
             .itemInput(Tags.Items.SANDSTONE_RED_BLOCKS)
             .saveSuffixed(output, "_from_red_sandstone")
 
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+        createExtracting()
             .itemOutput(Items.BROWN_MUSHROOM, 3)
             .itemInput(Items.BROWN_MUSHROOM_BLOCK)
             .saveSuffixed(output, "_from_block")
 
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+        createExtracting()
             .itemOutput(Items.RED_MUSHROOM, 3)
             .itemInput(Items.RED_MUSHROOM_BLOCK)
             .saveSuffixed(output, "_from_block")
         // Ragium
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+        createExtracting()
             .itemOutput(RagiumItems.Dusts.SALTPETER)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             .saveSuffixed(output, "_from_sandstone")
 
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+        createExtracting()
             .itemOutput(RagiumItems.Dusts.SULFUR)
             .itemInput(Tags.Items.GUNPOWDERS)
             .saveSuffixed(output, "_from_gunpowder")
@@ -68,7 +66,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider() {
         for ((flower: Item, dye: Item) in small) {
             val holder: Holder.Reference<Item> = flower.asItemHolder()
             val flowerName: String = holder.idOrNull?.path ?: continue
-            HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            createExtracting()
                 .itemOutput(dye, 2)
                 .itemInput(flower)
                 .saveSuffixed(output, "_from_$flowerName")
@@ -85,7 +83,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider() {
         for ((flower: Item, dye: Item) in large) {
             val holder: Holder.Reference<Item> = flower.asItemHolder()
             val flowerName: String = holder.idOrNull?.path ?: continue
-            HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            createExtracting()
                 .itemOutput(dye, 4)
                 .itemInput(flower)
                 .saveSuffixed(output, "_from_$flowerName")

@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:fence_gates/wooden"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 2,
-      "item": "ragium:sawdust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "c:fence_gates/wooden"
+  },
+  "output": {
+    "count": 2,
+    "item": "ragium:sawdust"
+  }
 }

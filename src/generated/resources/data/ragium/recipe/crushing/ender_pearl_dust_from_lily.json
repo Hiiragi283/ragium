@@ -1,14 +1,10 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "ragium:lily_of_the_ender"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:ender_pearl_dust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "ragium:lily_of_the_ender"
+  },
+  "output": {
+    "item": "ragium:ender_pearl_dust"
+  }
 }

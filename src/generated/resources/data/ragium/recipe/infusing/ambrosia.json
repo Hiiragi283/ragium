@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 64000,
-      "tag": "c:honey"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 64,
-      "tag": "c:storage_blocks/chocolate"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:ambrosia"
-    }
-  ]
+  "fluid_input": {
+    "amount": 64000,
+    "tag": "c:honey"
+  },
+  "item_input": {
+    "count": 64,
+    "tag": "c:storage_blocks/chocolate"
+  },
+  "output": {
+    "item": "ragium:ambrosia"
+  }
 }

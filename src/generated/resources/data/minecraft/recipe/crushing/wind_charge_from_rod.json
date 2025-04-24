@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:rods/breeze"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "item": "minecraft:wind_charge"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "c:rods/breeze"
+  },
+  "output": {
+    "count": 4,
+    "item": "minecraft:wind_charge"
+  }
 }

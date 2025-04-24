@@ -1,14 +1,10 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "minecraft:planks"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:sawdust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "minecraft:planks"
+  },
+  "output": {
+    "item": "ragium:sawdust"
+  }
 }

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
@@ -22,15 +23,15 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
 
-class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(private val serializer: HTDefinitionRecipe.Serializer<R>) :
-    HTRecipeBuilder<R>() {
+class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(
+    private val prefix: String,
+    private val factory: (HTRecipeDefinition) -> DataResult<R>,
+) : HTRecipeBuilder<R> {
     private val itemInputs: MutableList<SizedIngredient> = mutableListOf()
     private val fluidInputs: MutableList<SizedFluidIngredient> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
     private val itemOutputs: MutableList<HTItemOutput> = mutableListOf()
     private val fluidOutputs: MutableList<HTFluidOutput> = mutableListOf()
-
-    constructor(serializer: Supplier<out HTDefinitionRecipe.Serializer<R>>) : this(serializer.get())
 
     //    Item Input    //
 
@@ -111,18 +112,17 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(private val serialize
         ?: fluidOutputs.firstOrNull()?.id
         ?: error("Either one item or fluid output required at least!")
 
-    override fun getPrefix(recipe: R): String = serializer.name
+    override fun getPrefix(recipe: R): String = prefix
 
-    override fun createRecipe(): R = serializer
-        .createRecipe(
-            HTRecipeDefinition(
-                itemInputs,
-                fluidInputs,
-                catalyst,
-                itemOutputs,
-                fluidOutputs,
-            ),
-        ).orThrow
+    override fun createRecipe(): R = factory(
+        HTRecipeDefinition(
+            itemInputs,
+            fluidInputs,
+            catalyst,
+            itemOutputs,
+            fluidOutputs,
+        ),
+    ).orThrow
 
     override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
 }

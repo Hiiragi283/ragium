@@ -3,15 +3,11 @@
   "catalyst": {
     "tag": "ragium:molds/block"
   },
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:water"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:ice"
-    }
-  ]
+  "input": {
+    "amount": 1000,
+    "tag": "c:water"
+  },
+  "output": {
+    "item": "minecraft:ice"
+  }
 }

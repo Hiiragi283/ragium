@@ -1,15 +1,11 @@
 {
   "type": "ragium:extracting",
-  "fluid_outputs": [
-    {
-      "amount": 50,
-      "fluid": "ragium:experience"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "ragium:exp_berries"
-    }
-  ]
+  "fluid_output": {
+    "amount": 50,
+    "fluid": "ragium:experience"
+  },
+  "input": {
+    "count": 1,
+    "item": "ragium:exp_berries"
+  }
 }

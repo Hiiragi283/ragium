@@ -1,20 +1,14 @@
 {
   "type": "ragium:refining",
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:crude_oil"
-    }
-  ],
-  "fluid_outputs": [
-    {
-      "amount": 750,
-      "fluid": "ragium:naphtha"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:tar"
-    }
-  ]
+  "fluid_output": {
+    "amount": 750,
+    "fluid": "ragium:naphtha"
+  },
+  "input": {
+    "amount": 1000,
+    "tag": "c:crude_oil"
+  },
+  "item_output": {
+    "item": "ragium:tar"
+  }
 }

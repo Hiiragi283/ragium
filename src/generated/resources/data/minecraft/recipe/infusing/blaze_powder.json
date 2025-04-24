@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 250,
-      "tag": "c:experience"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:dusts/sulfur"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:blaze_powder"
-    }
-  ]
+  "fluid_input": {
+    "amount": 250,
+    "tag": "c:experience"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "c:dusts/sulfur"
+  },
+  "output": {
+    "item": "minecraft:blaze_powder"
+  }
 }

@@ -1,15 +1,11 @@
 {
   "type": "ragium:extracting",
-  "fluid_outputs": [
-    {
-      "amount": 200,
-      "fluid": "ragium:aromatic_compound"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "ragium:tar"
-    }
-  ]
+  "fluid_output": {
+    "amount": 200,
+    "fluid": "ragium:aromatic_compound"
+  },
+  "input": {
+    "count": 1,
+    "item": "ragium:tar"
+  }
 }

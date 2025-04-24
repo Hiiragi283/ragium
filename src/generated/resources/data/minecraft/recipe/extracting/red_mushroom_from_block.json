@@ -1,15 +1,11 @@
 {
   "type": "ragium:extracting",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:red_mushroom_block"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 3,
-      "item": "minecraft:red_mushroom"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:red_mushroom_block"
+  },
+  "item_output": {
+    "count": 3,
+    "item": "minecraft:red_mushroom"
+  }
 }

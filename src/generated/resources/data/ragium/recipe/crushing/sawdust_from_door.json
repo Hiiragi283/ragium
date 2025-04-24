@@ -1,15 +1,11 @@
 {
   "type": "ragium:crushing",
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "minecraft:wooden_doors"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 2,
-      "item": "ragium:sawdust"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "tag": "minecraft:wooden_doors"
+  },
+  "output": {
+    "count": 2,
+    "item": "ragium:sawdust"
+  }
 }

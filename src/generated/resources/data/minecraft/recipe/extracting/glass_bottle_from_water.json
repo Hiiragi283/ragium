@@ -1,26 +1,20 @@
 {
   "type": "ragium:extracting",
-  "fluid_outputs": [
-    {
-      "amount": 333,
-      "fluid": "minecraft:water"
-    }
-  ],
-  "item_inputs": [
-    {
-      "type": "neoforge:components",
-      "components": {
-        "minecraft:potion_contents": {
-          "potion": "minecraft:water"
-        }
-      },
-      "count": 1,
-      "items": "minecraft:potion"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "minecraft:glass_bottle"
-    }
-  ]
+  "fluid_output": {
+    "amount": 333,
+    "fluid": "minecraft:water"
+  },
+  "input": {
+    "type": "neoforge:components",
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:water"
+      }
+    },
+    "count": 1,
+    "items": "minecraft:potion"
+  },
+  "item_output": {
+    "item": "minecraft:glass_bottle"
+  }
 }

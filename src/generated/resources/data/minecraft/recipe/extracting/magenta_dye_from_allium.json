@@ -1,15 +1,11 @@
 {
   "type": "ragium:extracting",
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "minecraft:allium"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 2,
-      "item": "minecraft:magenta_dye"
-    }
-  ]
+  "input": {
+    "count": 1,
+    "item": "minecraft:allium"
+  },
+  "item_output": {
+    "count": 2,
+    "item": "minecraft:magenta_dye"
+  }
 }

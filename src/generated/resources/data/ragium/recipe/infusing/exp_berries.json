@@ -1,20 +1,14 @@
 {
   "type": "ragium:infusing",
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:experience"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "tag": "c:foods/berry"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:exp_berries"
-    }
-  ]
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:experience"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "c:foods/berry"
+  },
+  "output": {
+    "item": "ragium:exp_berries"
+  }
 }
