@@ -1,0 +1,17 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "tag": "ragium:molds/ball"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:sap"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:slime_ball"
+    }
+  ]
+}

@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -25,6 +26,7 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(private val serialize
     HTRecipeBuilder<R>() {
     private val itemInputs: MutableList<SizedIngredient> = mutableListOf()
     private val fluidInputs: MutableList<SizedFluidIngredient> = mutableListOf()
+    private var catalyst: Ingredient = Ingredient.EMPTY
     private val itemOutputs: MutableList<HTItemOutput> = mutableListOf()
     private val fluidOutputs: MutableList<HTFluidOutput> = mutableListOf()
 
@@ -41,6 +43,8 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(private val serialize
 
     fun itemInput(ingredient: ICustomIngredient, count: Int = 1): HTDefinitionRecipeBuilder<R> =
         itemInput(SizedIngredient(ingredient.toVanilla(), count))
+
+    fun itemInput(ingredient: Ingredient, count: Int = 1): HTDefinitionRecipeBuilder<R> = itemInput(SizedIngredient(ingredient, count))
 
     private fun itemInput(ingredient: SizedIngredient): HTDefinitionRecipeBuilder<R> = apply {
         itemInputs.add(ingredient)
@@ -65,6 +69,21 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(private val serialize
     fun waterInput(amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidInput(Tags.Fluids.WATER, amount)
 
     fun milkInput(amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidInput(Tags.Fluids.MILK, amount)
+
+    //    Catalyst    //
+
+    fun catalyst(item: ItemLike): HTDefinitionRecipeBuilder<R> = catalyst(Ingredient.of(item))
+
+    fun catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTDefinitionRecipeBuilder<R> = catalyst(prefix.createItemTag(material))
+
+    fun catalyst(tagKey: TagKey<Item>): HTDefinitionRecipeBuilder<R> = catalyst(Ingredient.of(tagKey))
+
+    fun catalyst(ingredient: ICustomIngredient): HTDefinitionRecipeBuilder<R> = catalyst(ingredient.toVanilla())
+
+    fun catalyst(catalyst: Ingredient): HTDefinitionRecipeBuilder<R> = apply {
+        check(!catalyst.isEmpty) { "Setting empty ingredient is not allowed!" }
+        this.catalyst = catalyst
+    }
 
     //    Item Output    //
 
@@ -99,6 +118,7 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(private val serialize
             HTRecipeDefinition(
                 itemInputs,
                 fluidInputs,
+                catalyst,
                 itemOutputs,
                 fluidOutputs,
             ),

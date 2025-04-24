@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.extension.toStack
@@ -16,25 +15,23 @@ import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import mekanism.common.registries.MekanismChemicals
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.neoforged.neoforge.common.Tags
 
-object RagiumMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.MEK) {
+object RagiumMekanismRecipeProvider : HTRecipeProvider() {
     private val itemHelper: IItemStackIngredientCreator = IMekanismAccess.INSTANCE.itemStackIngredientCreator()
     private val fluidHelper: IFluidStackIngredientCreator = IMekanismAccess.INSTANCE.fluidStackIngredientCreator()
     private val chemicalHelper: IChemicalStackIngredientCreator =
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
 
-    override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        chemicalConversion(output)
-        enriching(output)
-        infusing(output)
+    override fun buildRecipeInternal() {
+        chemicalConversion()
+        enriching()
+        infusing()
 
-        oreProcess(output)
+        oreProcess()
     }
 
-    private fun chemicalConversion(output: RecipeOutput) {
+    private fun chemicalConversion() {
         fun toChemical(factory: (ItemStackIngredient, ChemicalStack) -> ItemStackToChemicalRecipeBuilder, prefix: String) {
             // Dust -> Chemical
             factory(
@@ -52,7 +49,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.ME
         toChemical(ItemStackToChemicalRecipeBuilder::oxidizing, "oxidizing")
     }
 
-    private fun enriching(output: RecipeOutput) {
+    private fun enriching() {
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(HTTagPrefixes.DUST.createItemTag(RagiumMaterials.RAGINITE)),
@@ -60,7 +57,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.ME
             ).build(output, RagiumAPI.id("enriching/enrich/raginite"))
     }
 
-    private fun infusing(output: RecipeOutput) {
+    private fun infusing() {
         // Raginite + Copper -> Ragi-Alloy
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
@@ -96,7 +93,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.ME
             ).build(output, RagiumAPI.id("metallurgic_infusing/azure_steel"))
     }
 
-    private fun oreProcess(output: RecipeOutput) {
+    private fun oreProcess() {
         // Enriching
         ItemStackToItemStackRecipeBuilder
             .enriching(

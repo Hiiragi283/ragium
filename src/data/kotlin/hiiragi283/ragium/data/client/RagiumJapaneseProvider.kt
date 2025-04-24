@@ -215,6 +215,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         addItem(RagiumItems.ENGINE, "V8エンジン")
+        addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "不活性ラギウムエッセンス")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")

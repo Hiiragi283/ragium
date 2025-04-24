@@ -5,12 +5,14 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.listOf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 class HTRecipeDefinition(
     val itemInputs: List<SizedIngredient>,
     val fluidInputs: List<SizedFluidIngredient>,
+    val catalyst: Ingredient,
     val itemOutputs: List<HTItemOutput>,
     val fluidOutputs: List<HTFluidOutput>,
 ) {
@@ -27,6 +29,9 @@ class HTRecipeDefinition(
                         .listOf()
                         .optionalFieldOf("fluid_inputs", listOf())
                         .forGetter(HTRecipeDefinition::fluidInputs),
+                    Ingredient.CODEC
+                        .optionalFieldOf("catalyst", Ingredient.EMPTY)
+                        .forGetter(HTRecipeDefinition::catalyst),
                     HTItemOutput.CODEC
                         .listOf()
                         .optionalFieldOf("item_outputs", listOf())
@@ -44,6 +49,8 @@ class HTRecipeDefinition(
             HTRecipeDefinition::itemInputs,
             SizedFluidIngredient.STREAM_CODEC.listOf(),
             HTRecipeDefinition::fluidInputs,
+            Ingredient.CONTENTS_STREAM_CODEC,
+            HTRecipeDefinition::catalyst,
             HTItemOutput.STREAM_CODEC.listOf(),
             HTRecipeDefinition::itemOutputs,
             HTFluidOutput.STREAM_CODEC.listOf(),
@@ -51,6 +58,13 @@ class HTRecipeDefinition(
             ::HTRecipeDefinition,
         )
     }
+
+    constructor(
+        itemInputs: List<SizedIngredient>,
+        fluidInputs: List<SizedFluidIngredient>,
+        itemOutputs: List<HTItemOutput>,
+        fluidOutputs: List<HTFluidOutput>,
+    ) : this(itemInputs, fluidInputs, Ingredient.EMPTY, itemOutputs, fluidOutputs)
 
     fun getItemIngredient(index: Int): SizedIngredient? = itemInputs.getOrNull(index)
 

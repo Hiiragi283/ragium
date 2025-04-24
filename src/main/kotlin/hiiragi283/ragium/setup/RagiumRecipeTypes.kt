@@ -27,4 +27,7 @@ object RagiumRecipeTypes {
 
     @JvmField
     val REFINING: Supplier<RecipeType<HTMachineRecipe>> = register("refining")
+
+    @JvmField
+    val SOLIDIFYING: Supplier<RecipeType<HTMachineRecipe>> = register("solidifying")
 }

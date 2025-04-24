@@ -4,6 +4,10 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.common.recipe.*
+import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.custom.HTMaterialCrushingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -63,6 +67,10 @@ object RagiumRecipeSerializers {
     @JvmField
     val REFINING: DeferredHolder<RecipeSerializer<*>, HTDefinitionRecipe.Serializer<HTRefiningRecipe>> =
         register("refining", RagiumRecipeFactories::refining)
+
+    @JvmField
+    val SOLIDIFYING: DeferredHolder<RecipeSerializer<*>, HTDefinitionRecipe.Serializer<HTSolidifyingRecipe>> =
+        register("solidifying", RagiumRecipeFactories::solidifying)
 
     //    Custom    //
 

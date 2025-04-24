@@ -23,6 +23,10 @@ import hiiragi283.ragium.api.tag.HTTagUtil
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.*
+import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.custom.HTMaterialCrushingRecipe
 import hiiragi283.ragium.integration.emi.recipe.*
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -125,6 +129,12 @@ class RagiumEmiPlugin : EmiPlugin {
         forEachRecipes(RagiumRecipeTypes.REFINING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             if (recipe is HTRefiningRecipe) {
                 addRecipeSafe(id, recipe, ::HTRefiningEmiRecipe)
+            }
+        }
+
+        forEachRecipes(RagiumRecipeTypes.SOLIDIFYING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
+            if (recipe is HTSolidifyingRecipe) {
+                addRecipeSafe(id, recipe, ::HTSolidifyingEmiRecipe)
             }
         }
     }

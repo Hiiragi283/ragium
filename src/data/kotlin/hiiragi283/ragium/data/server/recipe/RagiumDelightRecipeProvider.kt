@@ -1,26 +1,24 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.NeoForgeMod
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
 import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.data.builder.CookingPotRecipeBuilder
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
-object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD) {
-    override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        crafting(output)
-        cookingPot(output)
-        cutting(output)
+object RagiumDelightRecipeProvider : HTRecipeProvider() {
+    override fun buildRecipeInternal() {
+        crafting()
+        cookingPot()
+        cutting()
 
         // Milk Bottle
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
@@ -28,9 +26,15 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD)
             .itemInput(Items.GLASS_BOTTLE)
             .milkInput(250)
             .save(output)
+
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .itemOutput(Items.GLASS_BOTTLE)
+            .fluidOutput(NeoForgeMod.MILK, 250)
+            .itemInput(ModItems.MILK_BOTTLE.get())
+            .saveSuffixed(output, "_from_milk")
     }
 
-    private fun crafting(output: RecipeOutput) {
+    private fun crafting() {
         // Ragi-Cherry Popsicle
         /*HTShapedRecipeBuilder(RagiumDelightAddon.RAGI_CHERRY_POPSICLE)
             .pattern(
@@ -43,7 +47,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD)
             .save(output)*/
     }
 
-    private fun cookingPot(output: RecipeOutput) {
+    private fun cookingPot() {
         // Ragi-Cherry Jam
         CookingPotRecipeBuilder
             .cookingPotRecipe(
@@ -59,7 +63,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Modded(IntegrationMods.FD)
             .save(output)
     }
 
-    private fun cutting(output: RecipeOutput) {
+    private fun cutting() {
         // Ragi-Cherry Pulp
         CuttingBoardRecipeBuilder
             .cuttingRecipe(

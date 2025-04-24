@@ -215,6 +215,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         addItem(RagiumItems.ENGINE, "V8 Engine")
+        addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "Inactive Ragium Essence")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")

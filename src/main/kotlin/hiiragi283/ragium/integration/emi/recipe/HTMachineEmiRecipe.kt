@@ -18,7 +18,7 @@ abstract class HTMachineEmiRecipe(
 ) : HTEmiRecipe {
     protected val itemInputs: List<EmiIngredient> = definition.itemInputs.map(NeoForgeEmiIngredient::of)
     protected val fluidInputs: List<EmiIngredient> = definition.fluidInputs.map(NeoForgeEmiIngredient::of)
-
+    protected val catalyst: EmiIngredient = EmiIngredient.of(definition.catalyst)
     protected val itemOutputs: List<EmiStack> = definition.itemOutputs.map(HTItemOutput::get).map(EmiStack::of)
     protected val fluidOutput: List<EmiStack> =
         definition.fluidOutputs.map(HTFluidOutput::get).map(NeoForgeEmiStack::of)
@@ -29,6 +29,10 @@ abstract class HTMachineEmiRecipe(
 
     fun WidgetHolder.addFluidInput(index: Int, x: Double, y: Double) {
         addInput(fluidInputs.getOrNull(index) ?: EmiStack.EMPTY, x, y)
+    }
+
+    fun WidgetHolder.addCatalyst(x: Double, y: Double) {
+        addInput(catalyst, x, y)
     }
 
     fun WidgetHolder.addItemOutput(index: Int, x: Double, y: Double) {

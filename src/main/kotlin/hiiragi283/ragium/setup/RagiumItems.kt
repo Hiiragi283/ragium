@@ -165,6 +165,9 @@ object RagiumItems {
     val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")
 
     @JvmField
+    val INACTIVE_RAGIUM_ESSENCE: DeferredItem<Item> = register("inactive_ragium_essence")
+
+    @JvmField
     val RAGIUM_ESSENCE: DeferredItem<Item> = register("ragium_essence")
 
     @JvmField

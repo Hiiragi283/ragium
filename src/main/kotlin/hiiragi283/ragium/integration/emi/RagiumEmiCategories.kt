@@ -29,11 +29,15 @@ object RagiumEmiCategories {
     val REFINING = HTEmiRecipeCategory(RagiumAPI.id("refining"), RagiumBlocks.REFINERY)
 
     @JvmField
+    val SOLIDIFYING = HTEmiRecipeCategory(RagiumAPI.id("solidifying"), RagiumBlocks.REFINERY)
+
+    @JvmField
     val MACHINES: List<HTEmiRecipeCategory> = listOf(
         CRUSHING,
         EXTRACTING,
         INFUSING,
         REFINING,
+        SOLIDIFYING,
     )
 
     @JvmStatic

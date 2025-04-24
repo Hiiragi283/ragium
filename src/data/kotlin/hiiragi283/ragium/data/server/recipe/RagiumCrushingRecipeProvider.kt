@@ -5,18 +5,16 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
-import hiiragi283.ragium.common.recipe.HTMaterialCrushingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTMaterialCrushingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
 object RagiumCrushingRecipeProvider : HTRecipeProvider() {
-    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+    override fun buildRecipeInternal() {
         // Vanilla
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(Items.STRING, 4)
@@ -108,50 +106,44 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumBlocks.LILY_OF_THE_ENDER)
             .saveSuffixed(output, "_from_lily")
 
-        woodDust(output)
-        sand(output)
-        prismarine(output)
-        snow(output)
+        woodDust()
+        sand()
+        prismarine()
+        snow()
 
         // Gear -> Dust
-        output.accept(
+        save(
             RagiumAPI.id("crushing/gear_to_dust"),
             HTMaterialCrushingRecipe(HTTagPrefixes.GEAR, 1, 4),
-            null,
         )
         // Gem -> Dust
-        output.accept(
+        save(
             RagiumAPI.id("crushing/gem_to_dust"),
             HTMaterialCrushingRecipe(HTTagPrefixes.GEM, 1, 1),
-            null,
         )
         // Ingot -> Dust
-        output.accept(
+        save(
             RagiumAPI.id("crushing/ingot_to_dust"),
             HTMaterialCrushingRecipe(HTTagPrefixes.INGOT, 1, 1),
-            null,
         )
         // Plate -> Dust
-        output.accept(
+        save(
             RagiumAPI.id("crushing/plate_to_dust"),
             HTMaterialCrushingRecipe(HTTagPrefixes.PLATE, 1, 1),
-            null,
         )
         // Raw -> Dust
-        output.accept(
+        save(
             RagiumAPI.id("crushing/raw_to_dust"),
             HTMaterialCrushingRecipe(HTTagPrefixes.RAW_MATERIAL, 1, 2),
-            null,
         )
         // Rod -> Dust
-        output.accept(
+        save(
             RagiumAPI.id("crushing/rod_to_dust"),
             HTMaterialCrushingRecipe(HTTagPrefixes.ROD, 2, 1),
-            null,
         )
     }
 
-    private fun woodDust(output: RecipeOutput) {
+    private fun woodDust() {
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(RagiumItems.Dusts.WOOD, 6)
             .itemInput(ItemTags.LOGS_THAT_BURN)
@@ -203,7 +195,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_boat")
     }
 
-    private fun sand(output: RecipeOutput) {
+    private fun sand() {
         // Colorless
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(Items.GRAVEL)
@@ -231,7 +223,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_sandstone")
     }
 
-    private fun prismarine(output: RecipeOutput) {
+    private fun prismarine() {
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(Items.PRISMARINE_CRYSTALS, 9)
             .itemInput(Items.SEA_LANTERN)
@@ -255,7 +247,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_dark")
     }
 
-    private fun snow(output: RecipeOutput) {
+    private fun snow() {
         // Snow
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(Items.SNOWBALL, 4)

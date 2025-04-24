@@ -13,14 +13,12 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider() {
-    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+    override fun buildRecipeInternal() {
         // Ragi-Alloy
         HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow8()
@@ -110,10 +108,10 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")
 
-        registerPatterns(output)
+        registerPatterns()
     }
 
-    private fun registerPatterns(output: RecipeOutput) {
+    private fun registerPatterns() {
         // Ingot/Gem -> Block
         for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
             val baseItem: HTMaterialItemLike = block.baseItem

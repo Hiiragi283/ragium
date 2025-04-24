@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.common.recipe.custom
 
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumItems

@@ -55,18 +55,14 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         buildList {
             addAll(RagiumItems.REGISTER.entries)
 
-            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
+            remove(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
+            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.forEach(::basicItem)
-
-        getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
-            .parent(generated)
-            .texture("layer0", "minecraft:item/copper_ingot")
-            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
 
         getBuilder(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             .parent(generated)
@@ -77,6 +73,15 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             .parent(generated)
             .texture("layer0", "minecraft:item/iron_ingot")
             .texture("layer1", RagiumItems.AZURE_STEEL_COMPOUND.itemId)
+
+        getBuilder(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
+            .parent(generated)
+            .texture("layer0", RagiumItems.RAGIUM_ESSENCE.itemId)
+
+        getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
+            .parent(generated)
+            .texture("layer0", "minecraft:item/copper_ingot")
+            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.bucketHolder)

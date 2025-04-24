@@ -11,18 +11,16 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
-    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+    override fun buildRecipeInternal() {
         // Chocolate
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
             .itemOutput(RagiumItems.Ingots.CHOCOLATE)
@@ -43,10 +41,9 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .define('B', Items.WIND_CHARGE)
             .save(output)
         // Ice Cream Soda
-        output.accept(
+        save(
             RagiumAPI.id("shapeless/ice_cream_soda"),
             HTIceCreamSodaRecipe(CraftingBookCategory.MISC),
-            null,
         )
 
         // Ambrosia
@@ -56,12 +53,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
             .save(output)
 
-        cherry(output)
-        meat(output)
-        sponge(output)
+        cherry()
+        meat()
+        sponge()
     }
 
-    private fun cherry(output: RecipeOutput) {
+    private fun cherry() {
         // Cherry Jam
         HTShapelessRecipeBuilder(RagiumItems.RAGI_CHERRY_JAM)
             .addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
@@ -77,7 +74,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
-    private fun meat(output: RecipeOutput) {
+    private fun meat() {
         // Minced Meat
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.CRUSHING)
             .itemOutput(RagiumItems.MINCED_MEAT)
@@ -116,7 +113,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
-    private fun sponge(output: RecipeOutput) {
+    private fun sponge() {
         // Sponge
         HTShapedRecipeBuilder(RagiumBlocks.SPONGE_CAKE, 4)
             .cross8()
@@ -125,7 +122,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .define('C', Tags.Items.EGGS)
             .save(output)
 
-        addSlab(output, RagiumBlocks.SPONGE_CAKE, RagiumBlocks.SPONGE_CAKE_SLAB)
+        // addSlab(output, RagiumBlocks.SPONGE_CAKE, RagiumBlocks.SPONGE_CAKE_SLAB)
         // Cakes
         HTShapedRecipeBuilder(Items.CAKE)
             .pattern(

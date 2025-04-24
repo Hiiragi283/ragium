@@ -7,14 +7,12 @@ import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
 object RagiumExtractingRecipeProvider : HTRecipeProvider() {
-    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+    override fun buildRecipeInternal() {
         // Vanilla
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
             .itemOutput(Items.FLINT)
@@ -46,10 +44,10 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider() {
             .itemInput(Tags.Items.GUNPOWDERS)
             .saveSuffixed(output, "_from_gunpowder")
 
-        flower(output)
+        flower()
     }
 
-    private fun flower(output: RecipeOutput) {
+    private fun flower() {
         val small: Map<Item, Item> = mapOf(
             Items.DANDELION to Items.YELLOW_DYE,
             Items.POPPY to Items.RED_DYE,

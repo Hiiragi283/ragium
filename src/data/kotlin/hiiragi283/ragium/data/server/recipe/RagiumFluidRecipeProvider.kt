@@ -9,60 +9,97 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
-import hiiragi283.ragium.common.recipe.HTBucketExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTBucketFillingRecipe
+import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.core.component.DataComponents
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 
 object RagiumFluidRecipeProvider : HTRecipeProvider() {
-    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        extracting(output, holderLookup)
-        infusing(output, holderLookup)
+    override fun buildRecipeInternal() {
+        extracting()
+        infusing()
+        solidifying()
+
+        biomass()
+        bottle()
+        crudeOil()
+        crystal()
+        exp()
+        ragium()
+        sap()
     }
 
-    //    Extracting    //
-
-    private fun extracting(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        // Magma Block -> Cobblestone + Lava
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
-            .itemOutput(Items.COBBLESTONE)
-            .fluidOutput(Fluids.LAVA, 100)
-            .itemInput(Items.MAGMA_BLOCK)
-            .saveSuffixed(output, "_from_magma_block")
-
-        // Exp Berries -> Liquid Exp
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
-            .fluidOutput(RagiumFluidContents.EXPERIENCE, 50)
-            .itemInput(RagiumItems.EXP_BERRIES)
-            .saveSuffixed(output, "_from_berries")
-
-        crudeOil(output)
-        biomass(output)
-        sap(output)
-        ragium(output)
-
-        output.accept(
-            RagiumAPI.id("extracting/buckets"),
-            HTBucketExtractingRecipe,
-            null,
-        )
-        output.accept(
-            RagiumAPI.id("infusing/buckets"),
-            HTBucketFillingRecipe,
-            null,
-        )
+    private fun biomass() {
+        // Biomass -> Ethanol
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.REFINING)
+            .fluidOutput(RagiumFluidContents.FUEL, 500)
+            .fluidInput(RagiumFluidContents.BIOMASS)
+            .saveSuffixed(output, "_from_biomass")
+        // Ethanol + Plant Oil -> Fuel + Glycerol
     }
 
-    private fun crudeOil(output: RecipeOutput) {
+    private fun bottle() {
+        // Exp Bottle
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(Items.EXPERIENCE_BOTTLE)
+            .itemInput(Items.GLASS_BOTTLE)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
+            .save(output)
+
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .itemOutput(Items.GLASS_BOTTLE)
+            .fluidOutput(RagiumFluidContents.EXPERIENCE, 250)
+            .itemInput(Items.EXPERIENCE_BOTTLE)
+            .saveSuffixed(output, "_from_exp")
+        // Honey Bottle
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(Items.HONEY_BOTTLE)
+            .itemInput(Items.GLASS_BOTTLE)
+            .fluidInput(RagiumFluidContents.HONEY, 250)
+            .save(output)
+
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .itemOutput(Items.GLASS_BOTTLE)
+            .fluidOutput(RagiumFluidContents.HONEY, 250)
+            .itemInput(Items.HONEY_BOTTLE)
+            .saveSuffixed(output, "_from_honey")
+
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.HONEY)
+            .itemInput(Items.HONEY_BLOCK)
+            .saveSuffixed(output, "_from_block")
+        // Water Bottle
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(createPotionStack(Potions.WATER, 3))
+            .itemInput(Items.GLASS_BOTTLE, 3)
+            .waterInput()
+            .save(output, RagiumAPI.id("water_bottle"))
+
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .itemOutput(Items.GLASS_BOTTLE)
+            .fluidOutput(Fluids.WATER, 333)
+            .itemInput(
+                DataComponentIngredient.of(
+                    false,
+                    DataComponents.POTION_CONTENTS,
+                    PotionContents(Potions.WATER),
+                    Items.POTION,
+                ),
+            ).saveSuffixed(output, "_from_water")
+    }
+
+    private fun crudeOil() {
         // Coal -> Crude Oil
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
             .fluidOutput(RagiumFluidContents.CRUDE_OIL, 125)
@@ -100,16 +137,49 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
-    private fun biomass(output: RecipeOutput) {
-        // Biomass -> Ethanol
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.REFINING)
-            .fluidOutput(RagiumFluidContents.FUEL, 500)
-            .fluidInput(RagiumFluidContents.BIOMASS)
-            .saveSuffixed(output, "_from_biomass")
-        // Ethanol + Plant Oil -> Fuel + Glycerol
+    private fun crystal() {
+        // Quartz
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(Items.QUARTZ, 2)
+            .itemInput(HTTagPrefixes.DUST, VanillaMaterials.QUARTZ)
+            .waterInput(250)
+            .saveSuffixed(output, "_from_water")
+        // Amethyst
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(Items.AMETHYST_SHARD, 2)
+            .itemInput(HTTagPrefixes.DUST, VanillaMaterials.AMETHYST)
+            .waterInput(250)
+            .saveSuffixed(output, "_from_water")
     }
 
-    private fun sap(output: RecipeOutput) {
+    private fun exp() {
+        // Golden Apple
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
+            .itemInput(Items.GOLDEN_APPLE)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 8000)
+            .save(output)
+        // Exp Berries
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(RagiumItems.EXP_BERRIES)
+            .itemInput(Tags.Items.FOODS_BERRY)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 1000)
+            .save(output)
+        // Blaze Powder
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(Items.BLAZE_POWDER)
+            .itemInput(HTTagPrefixes.DUST, CommonMaterials.SULFUR)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
+            .save(output)
+        // Wind Charge
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
+            .itemOutput(Items.WIND_CHARGE)
+            .itemInput(Items.SNOWBALL)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
+            .save(output)
+    }
+
+    private fun sap() {
         // XX Log -> Wood Dust + Sap
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
             .itemOutput(RagiumItems.Dusts.WOOD, 4)
@@ -159,7 +229,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
-    private fun ragium(output: RecipeOutput) {
+    private fun ragium() {
         // Raginite -> 20 mb
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
             .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 20)
@@ -189,16 +259,35 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
+    //    Extracting    //
+
+    private fun extracting() {
+        // Magma Block -> Cobblestone + Lava
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .itemOutput(Items.COBBLESTONE)
+            .fluidOutput(Fluids.LAVA, 100)
+            .itemInput(Items.MAGMA_BLOCK)
+            .saveSuffixed(output, "_from_magma_block")
+
+        // Exp Berries -> Liquid Exp
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
+            .fluidOutput(RagiumFluidContents.EXPERIENCE, 50)
+            .itemInput(RagiumItems.EXP_BERRIES)
+            .saveSuffixed(output, "_from_berries")
+
+        save(
+            RagiumAPI.id("extracting/buckets"),
+            HTBucketExtractingRecipe,
+        )
+        save(
+            RagiumAPI.id("infusing/buckets"),
+            HTBucketFillingRecipe,
+        )
+    }
+
     //    Infusing    //
 
-    private fun infusing(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        // Water Bottle
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
-            .itemOutput(createPotionStack(Potions.WATER, 3))
-            .itemInput(Items.GLASS_BOTTLE, 3)
-            .waterInput()
-            .save(output, RagiumAPI.id("water_bottle"))
-
+    private fun infusing() {
         // Dirt -> Mud
         HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
             .itemOutput(Items.MUD)
@@ -218,56 +307,36 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(Items.SNOWBALL)
             .milkInput(250)
             .save(output)
-
-        crystal(output)
-        exp(output)
     }
 
-    private fun crystal(output: RecipeOutput) {
-        // Quartz
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
-            .itemOutput(Items.QUARTZ, 2)
-            .itemInput(HTTagPrefixes.DUST, VanillaMaterials.QUARTZ)
-            .waterInput(250)
-            .saveSuffixed(output, "_from_water")
-        // Amethyst
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
-            .itemOutput(Items.AMETHYST_SHARD, 2)
-            .itemInput(HTTagPrefixes.DUST, VanillaMaterials.AMETHYST)
-            .waterInput(250)
-            .saveSuffixed(output, "_from_water")
-    }
+    //    Solidifying    //
 
-    private fun exp(output: RecipeOutput) {
-        // Exp Bottle
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
-            .itemOutput(Items.EXPERIENCE_BOTTLE)
-            .itemInput(Items.GLASS_BOTTLE)
-            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
+    private fun solidifying() {
+        // Water -> Ice
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.SOLIDIFYING)
+            .itemOutput(Items.ICE)
+            .waterInput()
+            .catalyst(RagiumItemTags.MOLDS_BLOCK)
             .save(output)
-        // Golden Apple
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
-            .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
-            .itemInput(Items.GOLDEN_APPLE)
-            .fluidInput(RagiumFluidContents.EXPERIENCE, 8000)
+        // Water -> Snowball
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.SOLIDIFYING)
+            .itemOutput(Items.SNOWBALL)
+            .waterInput(250)
+            .catalyst(RagiumItemTags.MOLDS_BALL)
             .save(output)
-        // Exp Berries
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
-            .itemOutput(RagiumItems.EXP_BERRIES)
-            .itemInput(Tags.Items.FOODS_BERRY)
-            .fluidInput(RagiumFluidContents.EXPERIENCE, 1000)
+
+        // Honey -> Honey Block
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.SOLIDIFYING)
+            .itemOutput(Items.HONEY_BLOCK)
+            .fluidInput(RagiumFluidContents.HONEY)
+            .catalyst(RagiumItemTags.MOLDS_BLOCK)
             .save(output)
-        // Blaze Powder
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
-            .itemOutput(Items.BLAZE_POWDER)
-            .itemInput(HTTagPrefixes.DUST, CommonMaterials.SULFUR)
-            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
-            .save(output)
-        // Wind Charge
-        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.INFUSING)
-            .itemOutput(Items.WIND_CHARGE)
-            .itemInput(Items.SNOWBALL)
-            .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
+
+        // Sap -> Slimeball
+        HTDefinitionRecipeBuilder(RagiumRecipeSerializers.SOLIDIFYING)
+            .itemOutput(Items.SLIME_BALL)
+            .fluidInput(RagiumFluidContents.SAP)
+            .catalyst(RagiumItemTags.MOLDS_BALL)
             .save(output)
     }
 }

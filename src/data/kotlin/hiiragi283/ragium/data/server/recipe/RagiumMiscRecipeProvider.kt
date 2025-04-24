@@ -11,8 +11,6 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -21,14 +19,14 @@ import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMiscRecipeProvider : HTRecipeProvider() {
-    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        casings(output)
-        machines(output)
+    override fun buildRecipeInternal() {
+        casings()
+        machines()
 
-        wells(output)
+        devices()
     }
 
-    private fun casings(output: RecipeOutput) {
+    private fun casings() {
         // Wooden
         HTShapedRecipeBuilder(RagiumBlocks.WOODEN_CASING, 4)
             .cross8()
@@ -73,7 +71,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_with_deep_steel")
     }
 
-    private fun machines(output: RecipeOutput) {
+    private fun machines() {
         // Circuit
         HTShapedRecipeBuilder(RagiumItems.BASIC_CIRCUIT)
             .pattern(
@@ -142,7 +140,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_basic")
     }
 
-    private fun wells(output: RecipeOutput) {
+    private fun devices() {
         // Milk Drain
         HTShapedRecipeBuilder(RagiumBlocks.MILK_DRAIN)
             .pattern("A", "B", "C")

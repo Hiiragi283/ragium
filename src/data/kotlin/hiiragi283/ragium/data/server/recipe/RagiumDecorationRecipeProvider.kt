@@ -7,8 +7,6 @@ import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -17,7 +15,7 @@ import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.neoforged.neoforge.common.Tags
 
 object RagiumDecorationRecipeProvider : HTRecipeProvider() {
-    override fun buildRecipeInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+    override fun buildRecipeInternal() {
         // Ragi-Stone
         HTShapedRecipeBuilder(RagiumBlocks.RAGI_STONE_SETS.base, 8, CraftingBookCategory.BUILDING)
             .hollow8()
@@ -25,14 +23,13 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('B', HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
             .save(output)
         // Ragi-Stone Square
-        output.accept(
+        save(
             RagiumAPI.id("stonecutting/ragi_stone_square"),
             StonecutterRecipe(
                 "",
                 Ingredient.of(RagiumBlocks.RAGI_STONE_SETS.base),
                 ItemStack(RagiumBlocks.RAGI_STONE_SQUARE_SETS.base),
             ),
-            null,
         )
         // Azure Tiles
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILE_SETS.base, 4, CraftingBookCategory.BUILDING)
@@ -61,11 +58,15 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
 
-        RagiumBlocks.RAGI_STONE_SETS.addRecipes(output, holderLookup)
-        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addRecipes(output, holderLookup)
-        RagiumBlocks.AZURE_TILE_SETS.addRecipes(output, holderLookup)
-        RagiumBlocks.EMBER_STONE_SETS.addRecipes(output, holderLookup)
-        RagiumBlocks.PLASTIC_SETS.addRecipes(output, holderLookup)
-        RagiumBlocks.BLUE_NETHER_BRICK_SETS.addRecipes(output, holderLookup)
+        RagiumBlocks.RAGI_STONE_SETS.addRecipes(output, provider)
+        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addRecipes(output, provider)
+        RagiumBlocks.AZURE_TILE_SETS.addRecipes(output, provider)
+        RagiumBlocks.EMBER_STONE_SETS.addRecipes(output, provider)
+        RagiumBlocks.PLASTIC_SETS.addRecipes(output, provider)
+        RagiumBlocks.BLUE_NETHER_BRICK_SETS.addRecipes(output, provider)
+    }
+
+    private fun glass() {
+        // Soul Glass
     }
 }

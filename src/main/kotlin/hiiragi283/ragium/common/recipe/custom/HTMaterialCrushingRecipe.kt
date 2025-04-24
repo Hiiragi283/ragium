@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.common.recipe.custom
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder

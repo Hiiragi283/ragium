@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.data.server.recipe.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -19,7 +20,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumMiscRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
-        RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, IntegrationMods.ARS)
+        RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup, IntegrationMods.FD)
+        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup, IntegrationMods.MEK)
     }
 }

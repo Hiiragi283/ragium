@@ -4,10 +4,7 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
+import hiiragi283.ragium.common.recipe.*
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
@@ -58,5 +55,14 @@ internal object RagiumRecipeFactories {
         val fluidOutput: HTFluidOutput =
             definition.getFluidOutput(0) ?: return DataResult.error { "Required one fluid output!" }
         return DataResult.success(HTRefiningRecipe(ingredient, fluidOutput, itemOutput))
+    }
+
+    @JvmStatic
+    fun solidifying(definition: HTRecipeDefinition): DataResult<HTSolidifyingRecipe> {
+        val ingredient: SizedFluidIngredient =
+            definition.getFluidIngredient(0) ?: return DataResult.error { "Required one fluid ingredient!" }
+        val output: HTItemOutput =
+            definition.getItemOutput(0) ?: return DataResult.error { "Required one item output!" }
+        return DataResult.success(HTSolidifyingRecipe(ingredient, definition.catalyst, output))
     }
 }
