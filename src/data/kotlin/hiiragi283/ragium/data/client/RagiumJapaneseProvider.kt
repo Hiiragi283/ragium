@@ -161,9 +161,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
 
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
+        addItem(RagiumItems.EXP_MAGNET, "EXPマグネット")
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
+        addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Food
         addItem(RagiumItems.SPARKLING_WATER_BOTTLE, "炭酸水入り瓶")
@@ -213,6 +215,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "発展ラギ合金混合物")
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄混合物")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
+        addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "ラギウムエッセンスの欠片")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "不活性ラギウムエッセンス")
@@ -220,6 +223,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.RAGIUM_ESSENCE, "ラギウムエッセンス")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")

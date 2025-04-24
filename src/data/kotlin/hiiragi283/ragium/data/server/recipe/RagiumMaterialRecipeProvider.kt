@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
@@ -69,10 +70,20 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .define('B', HTTagPrefixes.GEM, VanillaMaterials.DIAMOND)
             .save(output)
         // Ragium
+        HTShapelessRecipeBuilder(RagiumItems.CHIPPED_RAGIUM_ESSENCE, 16)
+            .addIngredient(RagiumItems.RAGIUM_ESSENCE)
+            .save(output)
+
         HTShapedRecipeBuilder(RagiumItems.RAGI_CHERRY)
-            .hollow4()
-            .define('A', RagiumItems.RAGIUM_ESSENCE)
+            .hollow8()
+            .define('A', RagiumItems.CHIPPED_RAGIUM_ESSENCE)
             .define('B', Tags.Items.FOODS_FRUIT)
+            .save(output)
+
+        HTShapelessRecipeBuilder(RagiumItems.RAGI_COKE)
+            .addIngredient(ItemTags.COALS)
+            .addIngredient(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
+            .addIngredient(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
             .save(output)
 
         // Azure Steel

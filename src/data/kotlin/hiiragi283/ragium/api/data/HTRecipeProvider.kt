@@ -49,7 +49,7 @@ abstract class HTRecipeProvider {
     fun createExtracting(): HTDefinitionRecipeBuilder<HTExtractingRecipe> =
         HTDefinitionRecipeBuilder("extracting", RagiumRecipeFactories::extracting)
 
-    fun createInfusing(): HTDefinitionRecipeBuilder<HTInfusingRecipe> = 
+    fun createInfusing(): HTDefinitionRecipeBuilder<HTInfusingRecipe> =
         HTDefinitionRecipeBuilder("infusing", RagiumRecipeFactories::infusing)
 
     fun createRefining(): HTDefinitionRecipeBuilder<HTRefiningRecipe> =

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": {
+    "tag": "minecraft:soul_fire_base_blocks"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:soul_glass"
+  }
+}

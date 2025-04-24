@@ -1,0 +1,64 @@
+package hiiragi283.ragium.api.item
+
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.enchLookup
+import hiiragi283.ragium.api.extension.getHighestLevel
+import hiiragi283.ragium.api.extension.intText
+import hiiragi283.ragium.api.tag.RagiumEnchantmentTags
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import net.minecraft.ChatFormatting
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.network.chat.Component
+import net.minecraft.util.Unit
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.level.Level
+
+abstract class HTRangedItem(properties: Properties) : Item(properties.stacksTo(1)) {
+    protected val activeComponent: DataComponentType<Unit> get() = RagiumAPI.getInstance().getActiveComponent()
+
+    protected fun getRange(stack: ItemStack, level: Level?): Int {
+        val enchLookup: HolderLookup.RegistryLookup<Enchantment> = level?.registryAccess()?.enchLookup() ?: return 0
+        val enchLevel: Int = stack.getAllEnchantments(enchLookup).getHighestLevel(RagiumEnchantmentTags.RANGE)
+        return (enchLevel + 1) * 5
+    }
+
+    override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+        if (!level.isClientSide && player.isShiftKeyDown) {
+            val stack: ItemStack = player.getItemInHand(usedHand)
+            when (stack.has(activeComponent)) {
+                true -> stack.remove(activeComponent)
+                false -> stack.set(activeComponent, Unit.INSTANCE)
+            }
+            return InteractionResultHolder.consume(stack)
+        }
+        return super.use(level, player, usedHand)
+    }
+
+    override fun appendHoverText(
+        stack: ItemStack,
+        context: TooltipContext,
+        tooltips: MutableList<Component>,
+        flag: TooltipFlag,
+    ) {
+        tooltips.add(
+            Component
+                .translatable(
+                    RagiumTranslationKeys.TEXT_EFFECT_RANGE,
+                    intText(getRange(stack, context.level())).withStyle(ChatFormatting.WHITE),
+                ).withStyle(ChatFormatting.GRAY),
+        )
+    }
+
+    override fun isFoil(stack: ItemStack): Boolean = stack.has(activeComponent)
+
+    override fun supportsEnchantment(stack: ItemStack, enchantment: Holder<Enchantment>): Boolean =
+        super.supportsEnchantment(stack, enchantment) || enchantment.`is`(RagiumEnchantmentTags.RANGE)
+}

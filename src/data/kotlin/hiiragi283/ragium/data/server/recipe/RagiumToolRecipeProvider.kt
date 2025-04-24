@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
@@ -42,9 +43,20 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('C', HTTagPrefixes.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .save(output)
 
+        HTSmithingRecipeBuilder(RagiumItems.EXP_MAGNET)
+            .addIngredient(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.EMERALD)
+            .addIngredient(RagiumItems.ITEM_MAGNET)
+            .save(output)
+
         HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)
             .addIngredient(HTTagPrefixes.GEM, VanillaMaterials.EMERALD)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
+            .hollow4()
+            .define('A', RagiumItems.RAGIUM_ESSENCE)
+            .define('B', Items.LANTERN)
             .save(output)
         // Mold
         HTShapedRecipeBuilder(RagiumItems.Molds.BLANK)

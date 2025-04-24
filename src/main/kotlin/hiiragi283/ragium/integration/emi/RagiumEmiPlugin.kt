@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.tag.HTTagUtil
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.common.item.HTIceCreamSodaItem
 import hiiragi283.ragium.common.recipe.*
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
@@ -37,8 +38,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.DyeItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
@@ -47,6 +46,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidUtil
@@ -269,9 +269,9 @@ class RagiumEmiPlugin : EmiPlugin {
                                 EmiStack.of(RagiumItems.ICE_CREAM),
                                 EmiIngredient.of(RagiumItemTags.FOODS_CHERRY),
                                 EmiStack.of(createPotionStack(holder)),
-                                EmiIngredient.of(DyeColor.entries.map(DyeItem::byColor).map(EmiStack::of)),
+                                EmiIngredient.of(Tags.Items.DYES_GREEN),
                             ),
-                            EmiStack.of(EmiPort.setPotion(RagiumItems.ICE_CREAM_SODA.toStack(), holder.value())),
+                            EmiStack.of(HTIceCreamSodaItem.createSoda(holder)),
                             id,
                             true,
                         )

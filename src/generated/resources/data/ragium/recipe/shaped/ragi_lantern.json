@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:chipped_ragium_essence"
+      "item": "ragium:ragium_essence"
     },
     "B": {
-      "tag": "c:foods/fruit"
+      "item": "minecraft:lantern"
     }
   },
   "pattern": [
-    "AAA",
+    " A ",
     "ABA",
-    "AAA"
+    " A "
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ragi_cherry"
+    "id": "ragium:ragi_lantern"
   }
 }

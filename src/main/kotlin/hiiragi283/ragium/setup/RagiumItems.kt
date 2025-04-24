@@ -12,6 +12,9 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.item.HTDynamicLanternItem
+import hiiragi283.ragium.common.item.HTExpMagnetItem
+import hiiragi283.ragium.common.item.HTIceCreamSodaItem
 import hiiragi283.ragium.common.item.HTMaterialItem
 import hiiragi283.ragium.common.item.HTRagiTicketItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
@@ -171,6 +174,12 @@ object RagiumItems {
     val RAGIUM_ESSENCE: DeferredItem<Item> = register("ragium_essence")
 
     @JvmField
+    val CHIPPED_RAGIUM_ESSENCE: DeferredItem<Item> = register("chipped_ragium_essence")
+
+    @JvmField
+    val RAGI_COKE: DeferredItem<Item> = register("ragi_coke")
+
+    @JvmField
     val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
 
     @JvmField
@@ -193,8 +202,10 @@ object RagiumItems {
     val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))
 
     @JvmField
-    val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> =
-        register("item_magnet", ::HTSimpleMagnetItem, Item.Properties().stacksTo(1))
+    val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> = register("item_magnet", ::HTSimpleMagnetItem)
+
+    @JvmField
+    val EXP_MAGNET: DeferredItem<HTExpMagnetItem> = register("exp_magnet", ::HTExpMagnetItem)
 
     @JvmField
     val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
@@ -202,6 +213,10 @@ object RagiumItems {
     @JvmField
     val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> =
         register("teleport_ticket", ::HTTeleportTicketItem, Item.Properties().rarity(Rarity.RARE))
+
+    @JvmField
+    val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> =
+        register("ragi_lantern", ::HTDynamicLanternItem)
 
     @JvmField
     val RAGI_TICKET: DeferredItem<HTRagiTicketItem> =
@@ -223,7 +238,7 @@ object RagiumItems {
     val ICE_CREAM: DeferredItem<HTConsumableItem> = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
 
     @JvmField
-    val ICE_CREAM_SODA: DeferredItem<PotionItem> = register("ice_cream_soda", factory = ::PotionItem)
+    val ICE_CREAM_SODA: DeferredItem<HTIceCreamSodaItem> = register("ice_cream_soda", factory = ::HTIceCreamSodaItem)
 
     // Meat
     @JvmField
@@ -375,6 +390,10 @@ object RagiumItems {
 
         // Ragium Essence
         event.modify(RAGIUM_ESSENCE) { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
+        }
+        event.modify(CHIPPED_RAGIUM_ESSENCE) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }

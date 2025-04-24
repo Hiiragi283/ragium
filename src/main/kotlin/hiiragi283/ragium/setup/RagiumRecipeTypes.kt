@@ -12,8 +12,7 @@ object RagiumRecipeTypes {
     val REGISTER: DeferredRegister<RecipeType<*>> = DeferredRegister.create(Registries.RECIPE_TYPE, RagiumAPI.MOD_ID)
 
     @JvmStatic
-    private fun register(name: String): Supplier<RecipeType<HTMachineRecipe>> =
-        REGISTER.register(name, RecipeType<*>::simple)
+    private fun register(name: String): Supplier<RecipeType<HTMachineRecipe>> = REGISTER.register(name, RecipeType<*>::simple)
 
     @JvmField
     val CRUSHING: Supplier<RecipeType<HTMachineRecipe>> = register("crushing")

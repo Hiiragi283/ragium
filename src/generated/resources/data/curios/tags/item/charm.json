@@ -1,5 +1,7 @@
 {
   "values": [
-    "ragium:item_magnet"
+    "ragium:exp_magnet",
+    "ragium:item_magnet",
+    "ragium:ragi_lantern"
   ]
 }

@@ -252,6 +252,8 @@ class RagiumItemTagProvider(
     //    Curios Addon    //
 
     private fun curios() {
+        add(CuriosTags.CHARM, RagiumItems.EXP_MAGNET)
         add(CuriosTags.CHARM, RagiumItems.ITEM_MAGNET)
+        add(CuriosTags.CHARM, RagiumItems.RAGI_LANTERN)
     }
 }

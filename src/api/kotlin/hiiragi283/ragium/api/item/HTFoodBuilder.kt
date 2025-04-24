@@ -53,11 +53,11 @@ class HTFoodBuilder private constructor() {
         convertTo = ItemStack(item, count)
     }
 
-    fun addEffect(effect: Supplier<MobEffectInstance>, chance: Float) {
+    fun addEffect(effect: Supplier<MobEffectInstance>, chance: Float = 1f) {
         effects.add(FoodProperties.PossibleEffect(effect, chance))
     }
 
-    fun addEffect(effect: MobEffectInstance, chance: Float) {
+    fun addEffect(effect: MobEffectInstance, chance: Float = 1f) {
         addEffect(supply(effect), chance)
     }
 
@@ -65,12 +65,12 @@ class HTFoodBuilder private constructor() {
         effect: Holder<MobEffect>,
         ticks: Int,
         amplifier: Int,
-        chance: Float,
+        chance: Float = 1f,
     ) {
         addEffect(MobEffectInstance(effect, ticks, amplifier), chance)
     }
 
-    fun addInfinityEffect(effect: Holder<MobEffect>, amplifier: Int, chance: Float) {
+    fun addInfinityEffect(effect: Holder<MobEffect>, amplifier: Int, chance: Float = 1f) {
         addEffect(effect, -1, amplifier, chance)
     }
 

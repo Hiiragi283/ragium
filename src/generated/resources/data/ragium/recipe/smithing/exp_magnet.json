@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "ragium:item_magnet"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:exp_magnet"
+  },
+  "template": {
+    "tag": "c:storage_blocks/emerald"
+  }
+}

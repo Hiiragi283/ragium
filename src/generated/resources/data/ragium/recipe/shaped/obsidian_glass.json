@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:chipped_ragium_essence"
+      "tag": "c:dusts/obsidian"
     },
     "B": {
-      "tag": "c:foods/fruit"
+      "tag": "c:glass_blocks/colorless"
     }
   },
   "pattern": [
-    "AAA",
+    " A ",
     "ABA",
-    "AAA"
+    " A "
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ragi_cherry"
+    "id": "ragium:obsidian_glass"
   }
 }

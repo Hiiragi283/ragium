@@ -4,14 +4,18 @@ import hiiragi283.ragium.api.extension.blockLookup
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
+import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.chemical.Chemical
 import mekanism.api.datamaps.chemical.ChemicalSolidTag
 import mekanism.common.registries.MekanismDataMapTypes
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.DataMapProvider
+import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import java.util.concurrent.CompletableFuture
 
 @Suppress("DEPRECATION")
@@ -22,7 +26,14 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
     override fun gather(provider: HolderLookup.Provider) {
         blockLookup = provider.blockLookup()
 
+        fuels()
         mekanism()
+    }
+
+    private fun fuels() {
+        val builder: Builder<FurnaceFuel, Item> = builder(NeoForgeDataMaps.FURNACE_FUELS)
+
+        builder.add(RagiumItems.RAGI_COKE, FurnaceFuel(200 * 16), false)
     }
 
     private fun mekanism() {

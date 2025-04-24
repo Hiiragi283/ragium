@@ -2,11 +2,14 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
+import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -64,9 +67,26 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
         RagiumBlocks.EMBER_STONE_SETS.addRecipes(output, provider)
         RagiumBlocks.PLASTIC_SETS.addRecipes(output, provider)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addRecipes(output, provider)
+
+        glass()
     }
 
     private fun glass() {
+        // Quartz Glass
+        HTCookingRecipeBuilder
+            .blasting(RagiumBlocks.QUARTZ_GLASS)
+            .addIngredient(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.QUARTZ)
+            .save(output)
         // Soul Glass
+        HTCookingRecipeBuilder
+            .blasting(RagiumBlocks.SOUL_GLASS)
+            .addIngredient(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .save(output)
+        // Obsidian Glass
+        HTShapedRecipeBuilder(RagiumBlocks.OBSIDIAN_GLASS)
+            .hollow4()
+            .define('A', HTTagPrefixes.DUST, VanillaMaterials.OBSIDIAN)
+            .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
+            .save(output)
     }
 }

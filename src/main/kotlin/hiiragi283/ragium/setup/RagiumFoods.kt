@@ -26,7 +26,7 @@ object RagiumFoods {
     val CHOCOLATE: FoodProperties = HTFoodBuilder.copyOf(Foods.APPLE) {
         alwaysEat = true
         fastFood()
-        addEffect(MobEffects.DAMAGE_BOOST, 10 * 20, 0, 1f)
+        addEffect(MobEffects.DAMAGE_BOOST, 10 * 20, 0)
     }
 
     @JvmStatic
@@ -34,8 +34,8 @@ object RagiumFoods {
         nutrition = FoodConstants.MAX_FOOD
         alwaysEat = true
         eatSeconds = 3f
-        addEffect(MobEffects.HEALTH_BOOST, 10 * 20, 4, 1f)
-        addEffect(MobEffects.REGENERATION, 10 * 20, 4, 1f)
+        addEffect(MobEffects.HEALTH_BOOST, 10 * 20, 4)
+        addEffect(MobEffects.REGENERATION, 10 * 20, 4)
     }
 
     @JvmField
@@ -51,7 +51,7 @@ object RagiumFoods {
     @JvmStatic
     val RAGI_CHERRY: FoodProperties = HTFoodBuilder.copyOf(Foods.SWEET_BERRIES) {
         alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 0, 1f)
+        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 0)
     }
 
     @JvmField
@@ -70,7 +70,7 @@ object RagiumFoods {
     @JvmField
     val YELLOW_CAKE: FoodProperties = HTFoodBuilder.create {
         alwaysEat = true
-        addInfinityEffect(MobEffects.WITHER, 1, 1f)
+        addInfinityEffect(MobEffects.WITHER, 1)
     }
 
     //    Delight    //
@@ -80,13 +80,13 @@ object RagiumFoods {
         nutrition = 3
         saturation = FoodConstants.FOOD_SATURATION_NORMAL
         alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 1, 1f)
+        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 1)
     }
 
     @JvmStatic
     val RAGI_CHERRY_POPSICLE: FoodProperties = HTFoodBuilder.copyOf(Foods.APPLE) {
         alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 0, 1f)
+        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 0)
     }
 
     @JvmStatic
@@ -94,6 +94,6 @@ object RagiumFoods {
         nutrition = 1
         saturation = FoodConstants.FOOD_SATURATION_POOR
         alwaysEat = true
-        addEffect(MobEffects.HEALTH_BOOST, 30 * 20, 0, 1f)
+        addEffect(MobEffects.HEALTH_BOOST, 30 * 20, 0)
     }
 }

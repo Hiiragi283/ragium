@@ -61,6 +61,8 @@ object RagiumCreativeTabs {
             addAll(RagiumItems.RawResources.entries)
             add(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
             add(RagiumItems.RAGIUM_ESSENCE)
+            add(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
+            add(RagiumItems.RAGI_COKE)
             add(RagiumItems.COMPRESSED_SAWDUST)
             add(RagiumItems.TAR)
             // Decorations
@@ -85,8 +87,10 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.ENDER_BUNDLE)
             add(RagiumItems.ITEM_MAGNET)
+            add(RagiumItems.EXP_MAGNET)
             add(RagiumItems.TRADER_CATALOG)
             add(RagiumItems.TELEPORT_TICKET)
+            add(RagiumItems.RAGI_LANTERN)
             add(RagiumItems.RAGI_TICKET)
 
             addAll(RagiumItems.Molds.entries)
