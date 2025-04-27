@@ -14,12 +14,7 @@ import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.extension.itemLookup
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.recipe.*
-import hiiragi283.ragium.api.tag.HTTagUtil
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.item.HTIceCreamSodaItem
@@ -27,18 +22,14 @@ import hiiragi283.ragium.common.recipe.*
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
-import hiiragi283.ragium.common.recipe.custom.HTMaterialCrushingRecipe
 import hiiragi283.ragium.integration.emi.recipe.*
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.*
@@ -83,7 +74,8 @@ class RagiumEmiPlugin : EmiPlugin {
         forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             if (recipe is HTCrushingRecipe) {
                 addRecipeSafe(id, recipe, ::HTCrushingEmiRecipe)
-            } else if (recipe is HTMaterialCrushingRecipe) {
+            }
+            /*else if (recipe is HTMaterialCrushingRecipe) {
                 val lookup: HolderLookup.RegistryLookup<Item> =
                     RagiumAPI.getInstance().getRegistryAccess()?.itemLookup() ?: return@forEachRecipes
                 for (key: HTMaterialKey in RagiumAPI.getInstance().getMaterialRegistry().keys) {
@@ -107,7 +99,7 @@ class RagiumEmiPlugin : EmiPlugin {
                         )
                     }
                 }
-            }
+            }*/
         }
 
         forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->

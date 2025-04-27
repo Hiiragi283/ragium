@@ -1,10 +1,8 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
-import hiiragi283.ragium.common.recipe.custom.HTMaterialCrushingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -110,7 +108,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
         snow()
 
         // Gear -> Dust
-        save(
+        /*save(
             RagiumAPI.id("crushing/gear_to_dust"),
             HTMaterialCrushingRecipe(HTTagPrefixes.GEAR, 1, 4),
         )
@@ -138,57 +136,57 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
         save(
             RagiumAPI.id("crushing/rod_to_dust"),
             HTMaterialCrushingRecipe(HTTagPrefixes.ROD, 2, 1),
-        )
+        )*/
     }
 
     private fun woodDust() {
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD, 6)
+            .itemOutput(RagiumItems.SAWDUST, 6)
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .saveSuffixed(output, "_from_log")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD)
+            .itemOutput(RagiumItems.SAWDUST)
             .itemInput(ItemTags.PLANKS)
             .saveSuffixed(output, "_from_planks")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD)
+            .itemOutput(RagiumItems.SAWDUST)
             .itemInput(ItemTags.WOODEN_STAIRS)
             .saveSuffixed(output, "_from_stair")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD)
+            .itemOutput(RagiumItems.SAWDUST)
             .itemInput(Tags.Items.FENCES_WOODEN)
             .saveSuffixed(output, "_from_fence")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD, 2)
+            .itemOutput(RagiumItems.SAWDUST, 2)
             .itemInput(Tags.Items.FENCE_GATES_WOODEN)
             .saveSuffixed(output, "_from_fence_gate")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD, 2)
+            .itemOutput(RagiumItems.SAWDUST, 2)
             .itemInput(ItemTags.WOODEN_DOORS)
             .saveSuffixed(output, "_from_door")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD, 3)
+            .itemOutput(RagiumItems.SAWDUST, 3)
             .itemInput(ItemTags.WOODEN_TRAPDOORS)
             .saveSuffixed(output, "_from_trapdoor")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD, 8)
+            .itemOutput(RagiumItems.SAWDUST, 8)
             .itemInput(Tags.Items.CHESTS_WOODEN)
             .saveSuffixed(output, "_from_chest")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD, 7)
+            .itemOutput(RagiumItems.SAWDUST, 7)
             .itemInput(Tags.Items.BARRELS_WOODEN)
             .saveSuffixed(output, "_from_wooden")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.WOOD, 5)
+            .itemOutput(RagiumItems.SAWDUST, 5)
             .itemInput(ItemTags.BOATS)
             .saveSuffixed(output, "_from_boat")
     }

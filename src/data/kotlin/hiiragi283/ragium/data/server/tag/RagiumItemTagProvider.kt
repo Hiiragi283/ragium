@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
@@ -25,9 +25,9 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -69,12 +69,19 @@ class RagiumItemTagProvider(
         RagiumBlocks.RAGINITE_ORES.appendItemTags(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendItemTags(this)
 
+        fun addMaterialTag(
+            prefix: HTTagPrefix,
+            material: HTMaterial,
+            item: ItemLike,
+            type: HTTagBuilder.DependType = HTTagBuilder.DependType.REQUIRED,
+        ) {
+            addTag(prefix.itemCommonTag, prefix.createItemTag(material))
+            addItem(prefix, material, item, type)
+        }
+
         fun register(entries: List<HTMaterialItemLike>) {
             for (item: HTMaterialItemLike in entries) {
-                val prefix: HTTagPrefix = item.prefix
-                val materialTag: TagKey<Item> = prefix.createItemTag(item.key)
-                addTag(prefix.itemCommonTag, materialTag)
-                addItem(materialTag, item)
+                addMaterialTag(item.prefix, item, item)
             }
         }
 
@@ -83,6 +90,8 @@ class RagiumItemTagProvider(
         register(RagiumItems.Ingots.entries)
         register(RagiumItems.RawResources.entries)
         register(RagiumMekanismAddon.OreResources.entries)
+
+        addMaterialTag(HTTagPrefixes.DUST, VanillaMaterials.WOOD, RagiumItems.SAWDUST)
 
         addTag(
             HTTagPrefixes.GEM.createItemTag(CommonMaterials.COAL_COKE),
@@ -101,7 +110,7 @@ class RagiumItemTagProvider(
 
         fun addMaterialTag(
             prefix: HTTagPrefix,
-            material: HTMaterialKey,
+            material: HTMaterial,
             mod: IntegrationMods,
             path: String,
             type: HTTagBuilder.DependType = HTTagBuilder.DependType.OPTIONAL,

@@ -6,8 +6,6 @@ import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
@@ -170,27 +168,25 @@ object RagiumBlocks {
 
     //    Materials    //
 
-    enum class StorageBlocks(properties: BlockBehaviour.Properties, override val key: HTMaterialKey) : HTMaterialItemLike {
+    enum class StorageBlocks(properties: BlockBehaviour.Properties) : HTMaterialItemLike {
         // Ingot
-        RAGI_ALLOY(lightMetal().mapColor(MapColor.COLOR_RED), RagiumMaterials.RAGI_ALLOY),
-        ADVANCED_RAGI_ALLOY(heavyMetal().mapColor(MapColor.COLOR_ORANGE), RagiumMaterials.ADVANCED_RAGI_ALLOY),
-        RAGI_CRYSTAL(crystal().mapColor(MapColor.COLOR_PINK), RagiumMaterials.RAGI_CRYSTAL),
-        AZURE_STEEL(heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE), RagiumMaterials.AZURE_STEEL),
-        DEEP_STEEL(heavyMetal().mapColor(MapColor.COLOR_CYAN), RagiumMaterials.DEEP_STEEL),
+        RAGI_ALLOY(lightMetal().mapColor(MapColor.COLOR_RED)),
+        ADVANCED_RAGI_ALLOY(heavyMetal().mapColor(MapColor.COLOR_ORANGE)),
+        RAGI_CRYSTAL(crystal().mapColor(MapColor.COLOR_PINK)),
+        AZURE_STEEL(heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE)),
+        DEEP_STEEL(heavyMetal().mapColor(MapColor.COLOR_CYAN)),
 
         // Gem
-        CRIMSON_CRYSTAL(crystal(), RagiumMaterials.CRIMSON_CRYSTAL),
-        WARPED_CRYSTAL(crystal(), RagiumMaterials.WARPED_CRYSTAL),
+        CRIMSON_CRYSTAL(crystal()),
+        WARPED_CRYSTAL(crystal()),
 
         // Food
-        CHEESE(wooden().mapColor(MapColor.TERRACOTTA_YELLOW), CommonMaterials.CHEESE),
-        CHOCOLATE(wooden().mapColor(MapColor.TERRACOTTA_BROWN), CommonMaterials.CHOCOLATE),
+        CHEESE(wooden().mapColor(MapColor.TERRACOTTA_YELLOW)),
+        CHOCOLATE(wooden().mapColor(MapColor.TERRACOTTA_BROWN)),
         ;
 
-        val holder: DeferredBlock<HTMaterialStorageBlock> = register(
-            "${key.name}_block",
-            properties,
-        ) { prop: BlockBehaviour.Properties -> HTMaterialStorageBlock(key, prop) }
+        override val materialName: String = name.lowercase()
+        val holder: DeferredBlock<Block> = register("${materialName}_block", properties)
 
         val baseItem: HTMaterialItemLike get() = when (this) {
             RAGI_ALLOY -> RagiumItems.Ingots.RAGI_ALLOY

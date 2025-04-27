@@ -6,7 +6,6 @@ import hiiragi283.ragium.common.recipe.*
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
-import hiiragi283.ragium.common.recipe.custom.HTMaterialCrushingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -78,8 +77,4 @@ object RagiumRecipeSerializers {
     @JvmField
     val ICE_CREAM_SODA: DeferredHolder<RecipeSerializer<*>, SimpleCraftingRecipeSerializer<HTIceCreamSodaRecipe>> =
         register("ice_cream_soda", SimpleCraftingRecipeSerializer(::HTIceCreamSodaRecipe))
-
-    @JvmField
-    val MATERIAL_CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTMaterialCrushingRecipe>> =
-        register("material_crushing", HTMaterialCrushingRecipe.CODEC, HTMaterialCrushingRecipe.STREAM_CODEC)
 }

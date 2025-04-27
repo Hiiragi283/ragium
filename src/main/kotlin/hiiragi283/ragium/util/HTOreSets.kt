@@ -4,18 +4,15 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.network.chat.Component
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.bus.api.IEventBus
@@ -27,14 +24,14 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
-class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
+class HTOreSets(val key: HTMaterial) : HTBlockSet {
     private val blockRegister = HTBlockRegister(RagiumAPI.MOD_ID)
     private val itemRegister = HTItemRegister(RagiumAPI.MOD_ID)
 
     private val oreMap: Map<HTOreVariant, DeferredBlock<Block>> = HTOreVariant.entries.associateWith { variant: HTOreVariant ->
         blockRegister
             .registerSimpleBlock(
-                variant.path.replace("%s", key.name),
+                variant.path.replace("%s", key.materialName),
                 BlockBehaviour.Properties.of().apply(variant::setupProperty),
             )
     }
@@ -46,10 +43,7 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
     override val blockHolders: List<DeferredBlock<*>> = blockRegister.entries
 
     override val itemHolders: List<DeferredItem<*>> = HTOreVariant.entries.map { variant: HTOreVariant ->
-        itemRegister.registerSimpleBlockItem(
-            get(variant),
-            Item.Properties().component(DataComponents.ITEM_NAME, Component.translatable(variant.translationKey, key.text)),
-        )
+        itemRegister.registerSimpleBlockItem(get(variant))
     }
 
     override fun init(eventBus: IEventBus) {
@@ -89,7 +83,7 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
                         .models()
                         .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
                         .texture("layer0", variant.baseStoneName.withPrefix("block/"))
-                        .texture("layer1", RagiumAPI.id(key.name).withPrefix("block/"))
+                        .texture("layer1", RagiumAPI.id(key.materialName).withPrefix("block/"))
                         .renderType("cutout"),
                 ),
             )
@@ -100,7 +94,17 @@ class HTOreSets(val key: HTMaterialKey) : HTBlockSet {
         blockHolders.map(DeferredBlock<*>::getId).forEach(provider::simpleBlockItem)
     }
 
-    override fun addTranslationEn(name: String, provider: LanguageProvider) {}
+    override fun addTranslationEn(name: String, provider: LanguageProvider) {
+        provider.addBlock(get(HTOreVariant.OVERWORLD), "$name Ore")
+        provider.addBlock(get(HTOreVariant.DEEPSLATE), "Deepslate $name Ore")
+        provider.addBlock(get(HTOreVariant.NETHER), "Nether $name Ore")
+        provider.addBlock(get(HTOreVariant.END), "End $name Ore")
+    }
 
-    override fun addTranslationJp(name: String, provider: LanguageProvider) {}
+    override fun addTranslationJp(name: String, provider: LanguageProvider) {
+        provider.addBlock(get(HTOreVariant.OVERWORLD), "${name}鉱石")
+        provider.addBlock(get(HTOreVariant.DEEPSLATE), "深層${name}鉱石")
+        provider.addBlock(get(HTOreVariant.NETHER), "ネザー${name}鉱石")
+        provider.addBlock(get(HTOreVariant.END), "エンド${name}鉱石")
+    }
 }

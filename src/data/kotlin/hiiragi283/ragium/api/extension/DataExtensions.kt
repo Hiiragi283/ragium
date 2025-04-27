@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.Util
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -40,10 +39,6 @@ fun LanguageProvider.addMaterialKey(material: HTMaterialKey, value: String) {
 
 fun LanguageProvider.addTagPrefix(prefix: HTTagPrefix, value: String) {
     add(prefix.translationKey, value)
-}
-
-fun LanguageProvider.addOreVariant(variant: HTOreVariant, value: String) {
-    add(variant.translationKey, value)
 }
 
 fun LanguageProvider.addItem(item: ItemLike, value: String) {

@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -13,20 +13,20 @@ import kotlin.jvm.optionals.getOrNull
 
 object HTTagUtil {
     /**
-     * 指定した[prefix]と[key]に含まれる[Holder]を返します。
+     * 指定した[prefix]と[material]に含まれる[Holder]を返します。
      * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
      */
     @JvmStatic
-    fun getFirstHolder(lookup: HolderGetter<Item>, prefix: HTTagPrefix, key: HTMaterialKey): Holder<Item>? =
-        getFirstHolder(lookup, prefix.createItemTag(key))
+    fun getFirstHolder(lookup: HolderGetter<Item>, prefix: HTTagPrefix, material: HTMaterial): Holder<Item>? =
+        getFirstHolder(lookup, prefix.createItemTag(material))
 
     /**
-     * 指定した[prefix]と[key]に含まれる[Item]を返します。
+     * 指定した[prefix]と[material]に含まれる[Item]を返します。
      * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
      */
     @JvmStatic
-    fun getFirstItem(lookup: HolderGetter<Item>, prefix: HTTagPrefix, key: HTMaterialKey): Item? =
-        getFirstHolder(lookup, prefix, key)?.value()
+    fun getFirstItem(lookup: HolderGetter<Item>, prefix: HTTagPrefix, material: HTMaterial): Item? =
+        getFirstHolder(lookup, prefix, material)?.value()
 
     /**
      * 指定した[tagKey]に含まれる[Holder]を返します。

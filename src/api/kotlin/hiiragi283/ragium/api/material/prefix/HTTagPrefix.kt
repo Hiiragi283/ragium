@@ -1,17 +1,12 @@
 package hiiragi283.ragium.api.material.prefix
 
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
-import io.netty.buffer.ByteBuf
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -19,22 +14,13 @@ import net.minecraft.world.level.block.Block
 
 /**
  * 素材の形状を表すクラス
- * @see [RagiumAddon.onPrefixRegister]
  */
 interface HTTagPrefix {
-    companion object {
-        @JvmField
-        val CODEC: Codec<HTTagPrefix> = Codec.STRING.comapFlatMap(RagiumAPI.getInstance()::getPrefixFromName, HTTagPrefix::name)
-
-        @JvmField
-        val STREAM_CODEC: StreamCodec<ByteBuf, HTTagPrefix> = ByteBufCodecs.fromCodec(CODEC)
-    }
-
     val name: String
 
     //    ResourceLocation    //
 
-    fun createPath(key: HTMaterialKey): String
+    fun createPath(material: HTMaterial): String
 
     //    TagKey    //
 
@@ -45,17 +31,16 @@ interface HTTagPrefix {
     val itemCommonTag: TagKey<Item>
         get() = createCommonTag(Registries.ITEM)
 
-    fun <T : Any> createTag(registryKey: ResourceKey<out Registry<T>>, key: HTMaterialKey): TagKey<T>
+    fun <T : Any> createTag(registryKey: ResourceKey<out Registry<T>>, material: HTMaterial): TagKey<T>
 
-    fun createBlockTag(key: HTMaterialKey): TagKey<Block> = createTag(Registries.BLOCK, key)
+    fun createBlockTag(material: HTMaterial): TagKey<Block> = createTag(Registries.BLOCK, material)
 
-    fun createItemTag(key: HTMaterialKey): TagKey<Item> = createTag(Registries.ITEM, key)
+    fun createItemTag(material: HTMaterial): TagKey<Item> = createTag(Registries.ITEM, material)
 
     //    Text    //
 
     val translationKey: String
         get() = "tag_prefix.${RagiumAPI.MOD_ID}.$name"
 
-    fun createText(key: HTMaterialKey): MutableComponent =
-        key.getPropertyMap()[HTMaterialPropertyKeys.getNameKey(this)] ?: Component.translatable(translationKey, key.text)
+    fun createText(material: HTMaterialKey): MutableComponent = Component.translatable(translationKey, material.text)
 }

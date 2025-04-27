@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
@@ -110,7 +110,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
             .define('A', HTTagPrefixes.DUST, VanillaMaterials.WOOD)
-            .define('B', RagiumItems.Dusts.WOOD)
+            .define('B', RagiumItems.SAWDUST)
             .save(output)
 
         HTCookingRecipeBuilder
@@ -128,21 +128,21 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             val baseItem: HTMaterialItemLike = block.baseItem
             HTShapedRecipeBuilder(block)
                 .hollow8()
-                .define('A', baseItem.prefix, block.key)
+                .define('A', baseItem.prefix, block)
                 .define('B', baseItem)
                 .saveSuffixed(output, "_from_base")
         }
         // Block -> Ingot
         for (ingot: RagiumItems.Ingots in RagiumItems.Ingots.entries) {
             HTShapelessRecipeBuilder(ingot, 9)
-                .addIngredient(HTTagPrefixes.STORAGE_BLOCK, ingot.key)
+                .addIngredient(HTTagPrefixes.STORAGE_BLOCK, ingot)
                 .saveSuffixed(output, "_from_block")
         }
         // Block -> Gem
         for (gem: RagiumItems.RawResources in RagiumItems.RawResources.entries) {
             if (gem.prefix != HTTagPrefixes.GEM) continue
             HTShapelessRecipeBuilder(gem, 9)
-                .addIngredient(HTTagPrefixes.STORAGE_BLOCK, gem.key)
+                .addIngredient(HTTagPrefixes.STORAGE_BLOCK, gem)
                 .saveSuffixed(output, "_from_block")
         }
 
@@ -150,7 +150,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Tier 1 の素材だけハンマーで粉砕可能
         for (dust: RagiumItems.Dusts in RagiumItems.Dusts.entries) {
             val inputPrefix: HTTagPrefix = when (dust) {
-                RagiumItems.Dusts.WOOD -> continue
                 RagiumItems.Dusts.COAL -> HTTagPrefixes.GEM
                 RagiumItems.Dusts.COPPER -> HTTagPrefixes.INGOT
                 RagiumItems.Dusts.IRON -> HTTagPrefixes.INGOT
@@ -174,15 +173,15 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             }
 
             HTShapelessRecipeBuilder(dust)
-                .addIngredient(inputPrefix, dust.key)
+                .addIngredient(inputPrefix, dust)
                 .addIngredient(RagiumItemTags.TOOLS_FORGE_HAMMER)
                 .saveSuffixed(output, "_with_hammer")
         }
 
         // Dust -> Ingot
-        fun dustToIngot(key: HTMaterialKey, ingot: ItemLike) {
+        fun dustToIngot(material: HTMaterial, ingot: ItemLike) {
             val dust: RagiumItems.Dusts =
-                RagiumItems.Dusts.entries.firstOrNull { dustIn: RagiumItems.Dusts -> dustIn.key == key } ?: return
+                RagiumItems.Dusts.entries.firstOrNull { dustIn: RagiumItems.Dusts -> dustIn == material } ?: return
             HTCookingRecipeBuilder
                 .smelting(ingot)
                 .addIngredient(dust)
@@ -196,7 +195,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         dustToIngot(VanillaMaterials.NETHERITE, Items.NETHERITE_INGOT)
 
         for (ingot: RagiumItems.Ingots in RagiumItems.Ingots.entries) {
-            dustToIngot(ingot.key, ingot)
+            dustToIngot(ingot, ingot)
         }
     }
 }

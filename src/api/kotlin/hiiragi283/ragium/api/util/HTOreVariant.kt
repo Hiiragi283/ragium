@@ -51,7 +51,4 @@ enum class HTOreVariant(baseStoneName: String, val path: String) {
     val baseStoneName: ResourceLocation = vanillaId(baseStoneName)
 
     abstract fun setupProperty(properties: BlockBehaviour.Properties)
-
-    @JvmField
-    val translationKey = "ore_variant.ragium.$baseStoneName"
 }

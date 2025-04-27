@@ -180,7 +180,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     private fun sap() {
         // XX Log -> Wood Dust + Sap
         createExtracting()
-            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .itemOutput(RagiumItems.SAWDUST, 4)
             .fluidOutput(RagiumFluidContents.SAP, 100)
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .saveSuffixed(output, "_from_log")
@@ -192,7 +192,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
         // Crimson Stem -> Wood Dust + Crimson Sap
         createExtracting()
-            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .itemOutput(RagiumItems.SAWDUST, 4)
             .fluidOutput(RagiumFluidContents.CRIMSON_SAP, 100)
             .itemInput(ItemTags.CRIMSON_STEMS)
             .saveSuffixed(output, "_from_crimson")
@@ -210,7 +210,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
         // Warped Stem -> Wood Dust + Warped Sap
         createExtracting()
-            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .itemOutput(RagiumItems.SAWDUST, 4)
             .fluidOutput(RagiumFluidContents.WARPED_SAP, 100)
             .itemInput(ItemTags.WARPED_STEMS)
             .saveSuffixed(output, "_from_warped")

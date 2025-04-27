@@ -3,7 +3,7 @@ package hiiragi283.ragium.util
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTItemSet
@@ -21,11 +21,11 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredItem
 
-class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterialKey) : HTItemSet {
+class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterial) : HTItemSet {
     private val itemRegister = HTItemRegister(RagiumAPI.MOD_ID)
 
     private fun register(material: Holder<ArmorMaterial>, type: ArmorItem.Type): DeferredItem<ArmorItem> = itemRegister.registerItem(
-        "${key.name}_${type.serializedName}",
+        "${key.materialName}_${type.serializedName}",
         { properties: Item.Properties -> ArmorItem(material, type, properties) },
         Item.Properties().durability(type.getDurability(20)),
     )

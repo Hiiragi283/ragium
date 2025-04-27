@@ -1,6 +1,6 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
@@ -33,7 +33,7 @@ enum class RagiumToolMaterials(
         attackDamage: Float,
         incorrectTag: TagKey<Block>,
         enchantability: Int,
-        key: HTMaterialKey,
+        material: HTMaterial,
         prefix: HTTagPrefix = HTTagPrefixes.INGOT,
     ) : this(
         durability,
@@ -41,7 +41,7 @@ enum class RagiumToolMaterials(
         attackDamage,
         incorrectTag,
         enchantability,
-        { Ingredient.of(prefix.createItemTag(key)) },
+        { Ingredient.of(prefix.createItemTag(material)) },
     )
 
     constructor(

@@ -53,18 +53,25 @@ object RagiumCreativeTabs {
 
             addAll(RagiumBlocks.StorageBlocks.entries)
             // Material Items
+            add(RagiumItems.SAWDUST)
             addAll(RagiumItems.Dusts.entries)
+            
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             add(RagiumItems.AZURE_STEEL_COMPOUND)
             addAll(RagiumItems.Ingots.entries)
+
             addAll(RagiumItems.RawResources.entries)
-            add(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
-            add(RagiumItems.RAGIUM_ESSENCE)
-            add(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
+            
             add(RagiumItems.RAGI_COKE)
             add(RagiumItems.COMPRESSED_SAWDUST)
             add(RagiumItems.TAR)
+            
+            add(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
+            add(RagiumItems.RAGIUM_ESSENCE)
+            add(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
+
+            add(RagiumItems.AQUATIC_RAGIUM_ESSENCE)
             // Decorations
             addAll(RagiumBlocks.RAGI_STONE_SETS.getItems())
             addAll(RagiumBlocks.RAGI_STONE_SQUARE_SETS.getItems())
@@ -95,7 +102,6 @@ object RagiumCreativeTabs {
 
             addAll(RagiumItems.Molds.entries)
             // Foods
-            add(RagiumItems.SPARKLING_WATER_BOTTLE)
             add(RagiumItems.ICE_CREAM)
             add(RagiumItems.ICE_CREAM_SODA)
 

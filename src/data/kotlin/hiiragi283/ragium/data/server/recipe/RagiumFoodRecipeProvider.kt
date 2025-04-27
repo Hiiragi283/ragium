@@ -32,12 +32,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .addIngredient(Tags.Items.EGGS)
             .save(output)
 
-        // Sparkling Water Bottle
-        HTShapedRecipeBuilder(RagiumItems.SPARKLING_WATER_BOTTLE, 8)
-            .hollow8()
-            .define('A', Items.POTION)
-            .define('B', Items.WIND_CHARGE)
-            .save(output)
         // Ice Cream Soda
         save(
             RagiumAPI.id("shapeless/ice_cream_soda"),

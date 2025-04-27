@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
@@ -181,8 +181,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
-        fun advDevice(device: ItemLike, prefix: HTTagPrefix, key: HTMaterialKey) {
-            advDevice(device, Ingredient.of(prefix.createItemTag(key)))
+        fun advDevice(device: ItemLike, prefix: HTTagPrefix, material: HTMaterial) {
+            advDevice(device, Ingredient.of(prefix.createItemTag(material)))
         }
 
         advDevice(RagiumBlocks.ENI, HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.RAGI_CRYSTAL)
@@ -191,11 +191,11 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         advDevice(RagiumBlocks.TELEPORT_ANCHOR, HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.WARPED_CRYSTAL)
 
         // Elite
-        fun catalyst(catalyst: ItemLike, key: HTMaterialKey, core: Ingredient) {
+        fun catalyst(catalyst: ItemLike, material: HTMaterial, core: Ingredient) {
             HTShapedRecipeBuilder(catalyst)
                 .cross8()
                 .define('A', RagiumBlocks.DEVICE_CASING)
-                .define('B', HTTagPrefixes.STORAGE_BLOCK, key)
+                .define('B', HTTagPrefixes.STORAGE_BLOCK, material)
                 .define('C', core)
                 .save(output)
         }

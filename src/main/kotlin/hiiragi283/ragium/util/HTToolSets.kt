@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.item.HTForgeHammerItem
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTItemSet
@@ -20,41 +20,41 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredItem
 
-class HTToolSets(material: Tier, val key: HTMaterialKey) : HTItemSet {
+class HTToolSets(material: Tier, val key: HTMaterial) : HTItemSet {
     private val itemRegister = HTItemRegister(RagiumAPI.MOD_ID)
 
     val axeItem: DeferredItem<AxeItem> = itemRegister.registerItem(
-        "${key.name}_axe",
+        "${key.materialName}_axe",
         { AxeItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 6f, -3.1f)),
     )
 
     val hoeItem: DeferredItem<HoeItem> = itemRegister.registerItem(
-        "${key.name}_hoe",
+        "${key.materialName}_hoe",
         { HoeItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, -2f, -1f)),
     )
 
     val pickaxeItem: DeferredItem<PickaxeItem> = itemRegister.registerItem(
-        "${key.name}_pickaxe",
+        "${key.materialName}_pickaxe",
         { PickaxeItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 1f, -2.8f)),
     )
 
     val shovelItem: DeferredItem<ShovelItem> = itemRegister.registerItem(
-        "${key.name}_shovel",
+        "${key.materialName}_shovel",
         { ShovelItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 1.5f, -3f)),
     )
 
     val swordItem: DeferredItem<SwordItem> = itemRegister.registerItem(
-        "${key.name}_sword",
+        "${key.materialName}_sword",
         { SwordItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 3f, -2.4f)),
     )
 
     val hammerItem: DeferredItem<HTForgeHammerItem> = itemRegister.registerItem(
-        "${key.name}_hammer",
+        "${key.materialName}_hammer",
         { HTForgeHammerItem(material, it) },
         Item.Properties().durability(material.uses),
     )

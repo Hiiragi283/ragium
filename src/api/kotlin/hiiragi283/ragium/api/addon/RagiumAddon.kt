@@ -1,18 +1,10 @@
 package hiiragi283.ragium.api.addon
 
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.property.HTMutablePropertyMap
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent
-import java.util.function.BiConsumer
-import java.util.function.Consumer
-import java.util.function.Function
 
 /**
  * Ragiumのアドオン向けのインターフェース
@@ -31,21 +23,6 @@ interface RagiumAddon {
      * modのコンストラクタで呼び出されます。
      */
     fun onModConstruct(eventBus: IEventBus, dist: Dist) {}
-
-    /**
-     * [FMLConstructModEvent]中に呼び出されます。
-     */
-    fun onPrefixRegister(consumer: Consumer<HTTagPrefix>) {}
-
-    /**
-     * [onPrefixRegister]の後で呼び出されます。
-     */
-    fun onMaterialRegister(consumer: BiConsumer<HTMaterialKey, HTMaterialType>) {}
-
-    /**
-     * [onMaterialRegister]の後で呼び出されます。
-     */
-    fun onMaterialSetup(getter: Function<HTMaterialKey, HTMutablePropertyMap>) {}
 
     /**
      * [FMLCommonSetupEvent]中に呼び出されます。

@@ -196,6 +196,17 @@ object RagiumRuntimeEvents {
             }
         }
 
+        // エルダーガーディアンがエルダーの心臓を落とすように
+        modify(EntityType.ELDER_GUARDIAN) {
+            addPool(
+                LootPool
+                    .lootPool()
+                    .setRolls(ConstantValue.exactly(1f))
+                    .add(LootItem.lootTableItem(RagiumItems.ELDER_HEART))
+                    .build(),
+            )
+            LOGGER.info("Modified loot table for Elder Guardian!")
+        }
         // 行商人がカタログを落とすように
         modify(EntityType.WANDERING_TRADER) {
             addPool(

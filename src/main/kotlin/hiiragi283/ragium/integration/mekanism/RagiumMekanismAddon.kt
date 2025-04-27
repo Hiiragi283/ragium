@@ -5,12 +5,9 @@ import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
-import hiiragi283.ragium.common.item.HTMaterialItem
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
@@ -60,17 +57,15 @@ object RagiumMekanismAddon : RagiumAddon {
     @JvmField
     val ITEM_ENRICHED_RAGINITE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_raginite")
 
-    enum class OreResources(override val prefix: HTTagPrefix) : HTMaterialItemLike {
-        DIRTY_DUST(HTTagPrefixes.DIRTY_DUST),
-        CLUMP(HTTagPrefixes.CLUMP),
-        SHARD(HTTagPrefixes.SHARD),
-        CRYSTAL(HTTagPrefixes.CRYSTAL),
+    enum class OreResources(override val prefix: HTTagPrefix, path: String) : HTMaterialItemLike {
+        DIRTY_DUST(HTTagPrefixes.DIRTY_DUST, "dirty_raginite_dust"),
+        CLUMP(HTTagPrefixes.CLUMP, "raginite_clump"),
+        SHARD(HTTagPrefixes.SHARD, "raginite_shard"),
+        CRYSTAL(HTTagPrefixes.CRYSTAL, "raginite_crystal"),
         ;
 
-        override val key: HTMaterialKey = RagiumMaterials.RAGINITE
-        private val holder: DeferredItem<HTMaterialItem> = ITEM_REGISTER.registerItem(prefix.createPath(key)) { prop ->
-            HTMaterialItem(prefix, key, prop)
-        }
+        override val materialName: String = "raginite"
+        private val holder: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem(path)
         override val id: ResourceLocation = holder.id
 
         override fun asItem(): Item = holder.asItem()

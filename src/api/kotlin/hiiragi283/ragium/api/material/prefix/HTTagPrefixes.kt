@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.material.prefix
 
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterial
 
 object HTTagPrefixes {
     //    Common    //
@@ -13,7 +13,7 @@ object HTTagPrefixes {
 
     @JvmField
     val GEM: HTTagPrefix = object : HTSimpleTagPrefix("gem") {
-        override fun createPath(key: HTMaterialKey): String = key.name
+        override fun createPath(material: HTMaterial): String = material.materialName
     }
 
     @JvmField
@@ -30,7 +30,7 @@ object HTTagPrefixes {
 
     @JvmField
     val RAW_MATERIAL: HTTagPrefix = object : HTSimpleTagPrefix("raw_material") {
-        override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"
+        override fun createPath(material: HTMaterial): String = "raw_${material.materialName}"
     }
 
     @JvmField
@@ -38,14 +38,14 @@ object HTTagPrefixes {
 
     @JvmField
     val STORAGE_BLOCK: HTTagPrefix = object : HTSimpleTagPrefix("storage_block") {
-        override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
+        override fun createPath(material: HTMaterial): String = "${material.materialName}_block"
     }
 
     //    Mekanism    //
 
     @JvmField
     val DIRTY_DUST: HTTagPrefix = object : HTSimpleTagPrefix("dirty_dust") {
-        override fun createPath(key: HTMaterialKey): String = "dirty_${key.name}_dust"
+        override fun createPath(material: HTMaterial): String = "dirty_${material.materialName}_dust"
     }
 
     @JvmField

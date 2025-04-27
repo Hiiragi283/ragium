@@ -5,10 +5,11 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike
 
 /**
- * [HTTagPrefix]と[HTMaterialKey]を保持する[ItemLike]
+ * [HTTagPrefix]と[HTMaterial]を保持する[ItemLike]
  */
-interface HTMaterialItemLike : ItemLike {
+interface HTMaterialItemLike :
+    ItemLike,
+    HTMaterial {
     val prefix: HTTagPrefix
-    val key: HTMaterialKey
     val id: ResourceLocation
 }

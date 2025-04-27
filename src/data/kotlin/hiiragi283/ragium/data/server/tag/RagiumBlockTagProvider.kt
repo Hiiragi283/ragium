@@ -83,7 +83,7 @@ class RagiumBlockTagProvider(
         // Storage Block
         for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
             val prefix: HTTagPrefix = block.prefix
-            val materialTag: TagKey<Block> = prefix.createBlockTag(block.key)
+            val materialTag: TagKey<Block> = prefix.createBlockTag(block)
             addTag(Tags.Blocks.STORAGE_BLOCKS, materialTag)
             add(materialTag, block.holder)
         }

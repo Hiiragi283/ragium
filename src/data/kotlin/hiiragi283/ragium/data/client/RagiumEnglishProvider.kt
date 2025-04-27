@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -49,6 +48,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "Lily of the Ender")
 
+        RagiumBlocks.RAGINITE_ORES.addTranslationEn("Raginite", this)
+        RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationEn("Ragi-Crystal", this)
+
         RagiumBlocks.RAGI_STONE_SETS.addTranslationEn("Ragi-Stone", this)
         RagiumBlocks.RAGI_STONE_SQUARE_SETS.addTranslationEn("Ragi-Stone (Square)", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationEn("Azure Tile", this)
@@ -78,9 +80,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         addBlock(RagiumBlocks.STONE_CASING, "Stone Casing")
         addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
-
-        // addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
-        // addBlock(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
         // Machine
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
@@ -168,7 +167,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Food
-        addItem(RagiumItems.SPARKLING_WATER_BOTTLE, "Sparkling Water Bottle")
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
         addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
 
@@ -213,10 +211,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "Advanced Ragi-Alloy Compound")
+        addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "Aquatic Ragium Essence")
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "Chipped Ragium Essence")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
+        addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "Inactive Ragium Essence")
         addItem(RagiumItems.LED, "L.E.D.")
@@ -424,11 +424,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun tooltips() {}
 
     private fun misc() {
-        // Ore Variant
-        addOreVariant(HTOreVariant.OVERWORLD, "%s Ore")
-        addOreVariant(HTOreVariant.DEEPSLATE, "Deepslate %s Ore")
-        addOreVariant(HTOreVariant.NETHER, "Nether %s Ore")
-        addOreVariant(HTOreVariant.END, "End %s Ore")
     }
 
     private fun delight() {
@@ -447,6 +442,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "Dirty Raginite Slurry")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
+        addItem(RagiumMekanismAddon.OreResources.DIRTY_DUST, "Dirty Raginite Dust")
+        addItem(RagiumMekanismAddon.OreResources.CLUMP, "Raginite Clump")
+        addItem(RagiumMekanismAddon.OreResources.SHARD, "Raginite Shard")
+        addItem(RagiumMekanismAddon.OreResources.CRYSTAL, "Raginite Crystal")
     }
 
     private fun jade() {

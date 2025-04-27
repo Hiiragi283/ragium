@@ -1,29 +1,12 @@
 package hiiragi283.ragium.internal
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.IntegrationMaterials
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
-import hiiragi283.ragium.api.property.HTMutablePropertyMap
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import net.minecraft.network.chat.Component
-import java.util.function.BiConsumer
-import java.util.function.Consumer
-import java.util.function.Function
 
-@HTAddon(RagiumAPI.MOD_ID)
+// @HTAddon(RagiumAPI.MOD_ID)
 object InternalRagiumAddon : RagiumAddon {
     override val priority: Int = 1000
 
-    override fun onPrefixRegister(consumer: Consumer<HTTagPrefix>) {
+    /*override fun onPrefixRegister(consumer: Consumer<HTTagPrefix>) {
         consumer.accept(HTTagPrefixes.DUST)
         consumer.accept(HTTagPrefixes.GEAR)
         consumer.accept(HTTagPrefixes.GEM)
@@ -159,5 +142,5 @@ object InternalRagiumAddon : RagiumAddon {
 
         getter.apply(VanillaMaterials.LAPIS)[HTMaterialPropertyKeys.ORE_CRUSHED_COUNT] = 8
         getter.apply(VanillaMaterials.REDSTONE)[HTMaterialPropertyKeys.ORE_CRUSHED_COUNT] = 12
-    }
+    }*/
 }

@@ -7,8 +7,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddonCollector
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -71,28 +69,6 @@ class InternalRagiumAPI : RagiumAPI {
     //    Component    //
 
     override fun getActiveComponent(): DataComponentType<MCUnit> = RagiumComponentTypes.IS_ACTIVE.get()
-
-    //    Material    //
-
-    override fun getMaterialRegistry(): HTMaterialRegistry = HTMaterialRegistryImpl
-
-    private lateinit var prefixMap: Map<String, HTTagPrefix>
-
-    override fun getRegisteredPrefixes(): Map<String, HTTagPrefix> {
-        if (!::prefixMap.isInitialized) {
-            prefixMap = buildMap {
-                for (addon: RagiumAddon in getAddons()) {
-                    addon.onPrefixRegister { prefix: HTTagPrefix ->
-                        val name: String = prefix.name
-                        if (put(name, prefix) != null) {
-                            error("Duplicated prefix with name: $name!")
-                        }
-                    }
-                }
-            }
-        }
-        return prefixMap
-    }
 
     //    Server    //
 

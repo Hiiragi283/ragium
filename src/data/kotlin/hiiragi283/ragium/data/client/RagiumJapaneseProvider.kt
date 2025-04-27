@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -48,6 +47,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
         addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "エンダースズラン")
+
+        RagiumBlocks.RAGINITE_ORES.addTranslationJp("ラギナイト", this)
+        RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationJp("ラギクリスタリル", this)
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationJp("らぎストーン", this)
         RagiumBlocks.RAGI_STONE_SQUARE_SETS.addTranslationJp("らぎストーン（正方）", this)
@@ -168,7 +170,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Food
-        addItem(RagiumItems.SPARKLING_WATER_BOTTLE, "炭酸水入り瓶")
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
         addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
 
@@ -213,10 +214,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "発展ラギ合金混合物")
+        addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "海洋ラギウムエッセンス")
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄混合物")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "ラギウムエッセンスの欠片")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
+        addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "不活性ラギウムエッセンス")
         addItem(RagiumItems.LED, "発光ダイオード")
@@ -424,11 +427,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun tooltips() {}
 
     private fun misc() {
-        // Ore Variant
-        addOreVariant(HTOreVariant.OVERWORLD, "%s鉱石")
-        addOreVariant(HTOreVariant.DEEPSLATE, "深層%s鉱石")
-        addOreVariant(HTOreVariant.NETHER, "ネザー%s鉱石")
-        addOreVariant(HTOreVariant.END, "エンド%s鉱石")
     }
 
     private fun delight() {
@@ -447,6 +445,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "汚れたラギナイトの懸濁液")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
+        addItem(RagiumMekanismAddon.OreResources.DIRTY_DUST, "汚れたラギナイトの粉")
+        addItem(RagiumMekanismAddon.OreResources.CLUMP, "ラギナイトの凝塊")
+        addItem(RagiumMekanismAddon.OreResources.SHARD, "ラギナイトの欠片")
+        addItem(RagiumMekanismAddon.OreResources.CRYSTAL, "ラギナイトの結晶")
     }
 
     private fun jade() {
