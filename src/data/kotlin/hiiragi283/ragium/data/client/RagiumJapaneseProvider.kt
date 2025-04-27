@@ -87,6 +87,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
+        addBlock(RagiumBlocks.ADVANCED_CRUSHER, "発展型粉砕機")
         addBlock(RagiumBlocks.ADVANCED_EXTRACTOR, "発展型抽出機")
         addBlock(RagiumBlocks.INFUSER, "注入機")
         addBlock(RagiumBlocks.REFINERY, "精製機")
@@ -219,6 +220,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "ラギウムエッセンスの欠片")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
+        addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "不活性ラギウムエッセンス")

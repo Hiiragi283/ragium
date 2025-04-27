@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "minecraft:hopper"
+    "item": "minecraft:dispenser"
   },
   "base": {
     "item": "ragium:machine_casing"

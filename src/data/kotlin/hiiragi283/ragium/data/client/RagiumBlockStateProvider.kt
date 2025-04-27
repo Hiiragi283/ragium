@@ -146,6 +146,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             )
         }
 
+        advMachine(RagiumBlocks.ADVANCED_CRUSHER)
         advMachine(RagiumBlocks.ADVANCED_EXTRACTOR)
         advMachine(RagiumBlocks.INFUSER)
         advMachine(RagiumBlocks.REFINERY)

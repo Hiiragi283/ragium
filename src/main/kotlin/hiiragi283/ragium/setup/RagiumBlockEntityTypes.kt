@@ -41,6 +41,12 @@ object RagiumBlockEntityTypes {
     //    Machine    //
 
     @JvmField
+    val ADVANCED_CRUSHER: HTDeferredBlockEntityType<HTAdvancedExtractorBlockEntity> = registerTick(
+        "advanced_crusher",
+        ::HTAdvancedExtractorBlockEntity,
+    )
+
+    @JvmField
     val ADVANCED_EXTRACTOR: HTDeferredBlockEntityType<HTAdvancedExtractorBlockEntity> = registerTick(
         "advanced_extractor",
         ::HTAdvancedExtractorBlockEntity,
@@ -114,6 +120,7 @@ object RagiumBlockEntityTypes {
         add(CRUSHER, RagiumBlocks.CRUSHER)
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
 
+        add(ADVANCED_CRUSHER, RagiumBlocks.ADVANCED_CRUSHER)
         add(ADVANCED_EXTRACTOR, RagiumBlocks.ADVANCED_EXTRACTOR)
         add(INFUSER, RagiumBlocks.INFUSER)
         add(REFINERY, RagiumBlocks.REFINERY)
@@ -153,6 +160,7 @@ object RagiumBlockEntityTypes {
         registerHandlers(CRUSHER)
         registerHandlers(EXTRACTOR)
 
+        registerHandlers(ADVANCED_CRUSHER)
         registerHandlers(ADVANCED_EXTRACTOR)
         registerHandlers(INFUSER)
         registerHandlers(REFINERY)

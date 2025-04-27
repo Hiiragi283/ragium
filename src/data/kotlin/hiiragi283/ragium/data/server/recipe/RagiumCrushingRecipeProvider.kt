@@ -106,37 +106,6 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
         sand()
         prismarine()
         snow()
-
-        // Gear -> Dust
-        /*save(
-            RagiumAPI.id("crushing/gear_to_dust"),
-            HTMaterialCrushingRecipe(HTTagPrefixes.GEAR, 1, 4),
-        )
-        // Gem -> Dust
-        save(
-            RagiumAPI.id("crushing/gem_to_dust"),
-            HTMaterialCrushingRecipe(HTTagPrefixes.GEM, 1, 1),
-        )
-        // Ingot -> Dust
-        save(
-            RagiumAPI.id("crushing/ingot_to_dust"),
-            HTMaterialCrushingRecipe(HTTagPrefixes.INGOT, 1, 1),
-        )
-        // Plate -> Dust
-        save(
-            RagiumAPI.id("crushing/plate_to_dust"),
-            HTMaterialCrushingRecipe(HTTagPrefixes.PLATE, 1, 1),
-        )
-        // Raw -> Dust
-        save(
-            RagiumAPI.id("crushing/raw_to_dust"),
-            HTMaterialCrushingRecipe(HTTagPrefixes.RAW_MATERIAL, 1, 2),
-        )
-        // Rod -> Dust
-        save(
-            RagiumAPI.id("crushing/rod_to_dust"),
-            HTMaterialCrushingRecipe(HTTagPrefixes.ROD, 2, 1),
-        )*/
     }
 
     private fun woodDust() {
@@ -205,6 +174,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         createCrushing()
             .itemOutput(Items.SAND, 4)
+            .itemOutput(RagiumItems.Dusts.SALTPETER)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             .saveSuffixed(output, "_from_sandstone")
 
@@ -215,6 +185,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
         // Red
         createCrushing()
             .itemOutput(Items.RED_SAND, 4)
+            .itemOutput(Items.REDSTONE)
             .itemInput(Tags.Items.SANDSTONE_RED_BLOCKS)
             .saveSuffixed(output, "_from_sandstone")
     }

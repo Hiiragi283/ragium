@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "input": {
+    "count": 1,
+    "tag": "c:ores/emerald"
+  },
+  "output": {
+    "count": 2,
+    "item": "minecraft:emerald"
+  }
+}

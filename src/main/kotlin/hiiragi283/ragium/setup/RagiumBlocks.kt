@@ -356,11 +356,16 @@ object RagiumBlocks {
         type: HTDeferredBlockEntityType<out HTBlockEntity>,
     ): DeferredBlock<*> = register(type.id.path, properties, HTHorizontalEntityBlock.create(type))
 
+    // Basic
     @JvmField
     val CRUSHER: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.CRUSHER)
 
     @JvmField
     val EXTRACTOR: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.EXTRACTOR)
+
+    // Advanced
+    @JvmField
+    val ADVANCED_CRUSHER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.ADVANCED_CRUSHER)
 
     @JvmField
     val ADVANCED_EXTRACTOR: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.ADVANCED_EXTRACTOR)
@@ -377,6 +382,7 @@ object RagiumBlocks {
         CRUSHER,
         EXTRACTOR,
         // Advanced
+        ADVANCED_CRUSHER,
         ADVANCED_EXTRACTOR,
         INFUSER,
         REFINERY,

@@ -1,14 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "tag": "c:glass_blocks/quartz"
+    "tag": "c:tools/forge_hammer"
   },
   "base": {
     "item": "ragium:advanced_machine_casing"
   },
   "result": {
     "count": 1,
-    "id": "ragium:refinery"
+    "id": "ragium:advanced_crusher"
   },
   "template": {
     "tag": "c:circuits/advanced"

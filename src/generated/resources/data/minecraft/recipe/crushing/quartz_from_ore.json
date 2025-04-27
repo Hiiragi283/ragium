@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "input": {
+    "count": 1,
+    "tag": "c:ores/quartz"
+  },
+  "output": {
+    "count": 4,
+    "item": "minecraft:quartz"
+  }
+}

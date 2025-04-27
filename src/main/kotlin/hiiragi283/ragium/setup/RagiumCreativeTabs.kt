@@ -55,18 +55,18 @@ object RagiumCreativeTabs {
             // Material Items
             add(RagiumItems.SAWDUST)
             addAll(RagiumItems.Dusts.entries)
-            
+
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             add(RagiumItems.AZURE_STEEL_COMPOUND)
             addAll(RagiumItems.Ingots.entries)
 
             addAll(RagiumItems.RawResources.entries)
-            
+
             add(RagiumItems.RAGI_COKE)
             add(RagiumItems.COMPRESSED_SAWDUST)
             add(RagiumItems.TAR)
-            
+
             add(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
             add(RagiumItems.RAGIUM_ESSENCE)
             add(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
@@ -136,6 +136,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.PLASTIC_PLATE)
             add(RagiumItems.BASIC_CIRCUIT)
             add(RagiumItems.ADVANCED_CIRCUIT)
+            add(RagiumItems.CRYSTAL_PROCESSOR)
 
             add(RagiumItems.SOAP)
 

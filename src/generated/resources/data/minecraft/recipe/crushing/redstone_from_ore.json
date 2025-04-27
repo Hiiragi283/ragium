@@ -2,13 +2,10 @@
   "type": "ragium:crushing",
   "input": {
     "count": 1,
-    "tag": "c:sandstone/red_blocks"
+    "tag": "c:ores/redstone"
   },
   "output": {
-    "count": 4,
-    "item": "minecraft:red_sand"
-  },
-  "second_output": {
+    "count": 12,
     "item": "minecraft:redstone"
   }
 }

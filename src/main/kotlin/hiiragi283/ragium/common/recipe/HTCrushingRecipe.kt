@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -13,12 +14,17 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * アイテムを別のアイテムに変換するレシピ
  */
-class HTCrushingRecipe(private val ingredient: SizedIngredient, private val output: HTItemOutput) :
-    HTMachineRecipe(),
+class HTCrushingRecipe(
+    private val ingredient: SizedIngredient,
+    private val output: HTItemOutput,
+    private val secondOutput: Optional<HTItemOutput>,
+) : HTMachineRecipe(),
     HTDefinitionRecipe<HTMachineInput> {
     companion object {
         @JvmField
@@ -27,6 +33,7 @@ class HTCrushingRecipe(private val ingredient: SizedIngredient, private val outp
                 .group(
                     SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTCrushingRecipe::ingredient),
                     HTItemOutput.CODEC.fieldOf("output").forGetter(HTCrushingRecipe::output),
+                    HTItemOutput.CODEC.optionalFieldOf("second_output").forGetter(HTCrushingRecipe::secondOutput),
                 ).apply(instance, ::HTCrushingRecipe)
         }
 
@@ -36,6 +43,8 @@ class HTCrushingRecipe(private val ingredient: SizedIngredient, private val outp
             HTCrushingRecipe::ingredient,
             HTItemOutput.STREAM_CODEC,
             HTCrushingRecipe::output,
+            HTItemOutput.STREAM_CODEC.toOptional(),
+            HTCrushingRecipe::secondOutput,
             ::HTCrushingRecipe,
         )
     }
@@ -62,7 +71,7 @@ class HTCrushingRecipe(private val ingredient: SizedIngredient, private val outp
         HTRecipeDefinition(
             listOf(ingredient),
             listOf(),
-            listOf(output),
+            listOfNotNull(output, secondOutput.getOrNull()),
             listOf(),
         ),
     )

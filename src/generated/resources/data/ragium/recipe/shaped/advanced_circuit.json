@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/copper"
+      "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "tag": "c:dusts/redstone"
+      "tag": "c:dusts/glowstone"
     },
     "C": {
       "tag": "c:plastics"
@@ -18,7 +18,7 @@
     "AAA"
   ],
   "result": {
-    "count": 1,
+    "count": 2,
     "id": "ragium:advanced_circuit"
   }
 }

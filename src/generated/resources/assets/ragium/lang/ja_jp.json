@@ -1,4 +1,5 @@
 {
+  "block.ragium.advanced_crusher": "発展型粉砕機",
   "block.ragium.advanced_extractor": "発展型抽出機",
   "block.ragium.advanced_machine_casing": "発展機械筐体",
   "block.ragium.alkali_solution": "アルカリ溶液",
@@ -153,6 +154,7 @@
   "item.ragium.cooked_meat_ingot": "焼肉インゴット",
   "item.ragium.crimson_sap_bucket": "深紅の樹液入りバケツ",
   "item.ragium.crude_oil_bucket": "原油入りバケツ",
+  "item.ragium.crystal_processor": "クリスタルプロセッサ",
   "item.ragium.dirty_raginite_dust": "汚れたラギナイトの粉",
   "item.ragium.elder_heart": "エルダーの心臓",
   "item.ragium.ender_bundle": "エンダーバンドル",

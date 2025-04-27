@@ -1,0 +1,14 @@
+{
+  "type": "ragium:crushing",
+  "input": {
+    "count": 1,
+    "tag": "c:ores/iron"
+  },
+  "output": {
+    "count": 2,
+    "item": "minecraft:raw_iron"
+  },
+  "second_output": {
+    "item": "minecraft:flint"
+  }
+}

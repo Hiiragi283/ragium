@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "input": {
+    "count": 1,
+    "tag": "c:ores/gold"
+  },
+  "output": {
+    "count": 2,
+    "item": "minecraft:raw_gold"
+  }
+}

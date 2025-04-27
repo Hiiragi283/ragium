@@ -336,6 +336,9 @@ object RagiumItems {
     @JvmField
     val ADVANCED_CIRCUIT: DeferredItem<Item> = register("advanced_circuit")
 
+    @JvmField
+    val CRYSTAL_PROCESSOR: DeferredItem<Item> = register("crystal_processor")
+
     //    Misc    //
 
     @JvmField

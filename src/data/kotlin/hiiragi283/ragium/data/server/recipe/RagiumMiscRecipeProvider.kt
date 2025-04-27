@@ -72,7 +72,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
     }
 
     private fun machines() {
-        // Circuit
+        // Basic Circuit
         HTShapedRecipeBuilder(RagiumItems.BASIC_CIRCUIT)
             .pattern(
                 "AAA",
@@ -83,14 +83,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('C', HTTagPrefixes.INGOT, VanillaMaterials.IRON)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
-            .cross8()
-            .define('A', HTTagPrefixes.DUST, RagiumMaterials.AZURE_STEEL)
-            .define('B', HTTagPrefixes.DUST, VanillaMaterials.GLOWSTONE)
-            .define('C', RagiumItemTags.CIRCUITS_BASIC)
-            .saveSuffixed(output, "_from_basic")
-
-        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
+        HTShapedRecipeBuilder(RagiumItems.BASIC_CIRCUIT, 2)
             .pattern(
                 "AAA",
                 "BCB",
@@ -98,17 +91,24 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             ).define('A', HTTagPrefixes.INGOT, VanillaMaterials.COPPER)
             .define('B', HTTagPrefixes.DUST, VanillaMaterials.REDSTONE)
             .define('C', RagiumItemTags.PLASTICS)
-            .save(output)
+            .savePrefixed(output, "2x_")
+        // Advanced Circuit
+        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
+            .cross8()
+            .define('A', HTTagPrefixes.GEM, VanillaMaterials.LAPIS)
+            .define('B', HTTagPrefixes.DUST, VanillaMaterials.GLOWSTONE)
+            .define('C', RagiumItemTags.CIRCUITS_BASIC)
+            .saveSuffixed(output, "_from_basic")
 
-        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT, 4)
+        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT, 2)
             .pattern(
                 "AAA",
                 "BCB",
                 "AAA",
             ).define('A', HTTagPrefixes.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
-            .define('B', HTTagPrefixes.DUST, RagiumMaterials.RAGI_CRYSTAL)
+            .define('B', HTTagPrefixes.DUST, VanillaMaterials.GLOWSTONE)
             .define('C', RagiumItemTags.PLASTICS)
-            .saveSuffixed(output, "_with_ragi")
+            .save(output)
 
         // Machine
         fun basicMachine(machine: ItemLike, part: Ingredient) {
@@ -120,7 +120,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         }
 
         basicMachine(RagiumBlocks.CRUSHER, Ingredient.of(RagiumItemTags.TOOLS_FORGE_HAMMER))
-        basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.HOPPER))
+        basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.DISPENSER))
 
         fun advMachine(machine: ItemLike, part: Ingredient) {
             HTSmithingRecipeBuilder(machine)
@@ -130,9 +130,15 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
-        advMachine(RagiumBlocks.ADVANCED_EXTRACTOR, Ingredient.of(Items.HOPPER))
-        advMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.DISPENSER))
-        advMachine(RagiumBlocks.REFINERY, Ingredient.of(Tags.Items.GLASS_BLOCKS))
+        advMachine(RagiumBlocks.ADVANCED_CRUSHER, Ingredient.of(RagiumItemTags.TOOLS_FORGE_HAMMER))
+        advMachine(RagiumBlocks.ADVANCED_EXTRACTOR, Ingredient.of(Items.DISPENSER))
+        advMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.HOPPER))
+        advMachine(RagiumBlocks.REFINERY, Ingredient.of(RagiumItemTags.GLASS_BLOCKS_QUARTZ))
+
+        HTSmithingRecipeBuilder(RagiumBlocks.ADVANCED_CRUSHER)
+            .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)
+            .addIngredient(RagiumBlocks.CRUSHER)
+            .saveSuffixed(output, "_from_basic")
 
         HTSmithingRecipeBuilder(RagiumBlocks.ADVANCED_EXTRACTOR)
             .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)

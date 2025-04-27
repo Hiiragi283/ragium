@@ -1,4 +1,5 @@
 {
+  "block.ragium.advanced_crusher": "Advanced Crusher",
   "block.ragium.advanced_extractor": "Advanced Extractor",
   "block.ragium.advanced_machine_casing": "Advanced Machine Casing",
   "block.ragium.alkali_solution": "Alkali Solution",
@@ -153,6 +154,7 @@
   "item.ragium.cooked_meat_ingot": "Cooked Meat Ingot",
   "item.ragium.crimson_sap_bucket": "Crimson Sap Bucket",
   "item.ragium.crude_oil_bucket": "Crude Oil Bucket",
+  "item.ragium.crystal_processor": "Crystal Processor",
   "item.ragium.dirty_raginite_dust": "Dirty Raginite Dust",
   "item.ragium.elder_heart": "Heart fo the Elder",
   "item.ragium.ender_bundle": "Ender Bundle",

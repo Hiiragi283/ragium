@@ -21,7 +21,7 @@ internal object RagiumRecipeFactories {
             definition.getItemIngredient(0).getOrNull() ?: return DataResult.error { "Required one item ingredient!" }
         val output: HTItemOutput =
             definition.getItemOutput(0).getOrNull() ?: return DataResult.error { "Required one item output!" }
-        return DataResult.success(HTCrushingRecipe(ingredient, output))
+        return DataResult.success(HTCrushingRecipe(ingredient, output, definition.getItemOutput(1)))
     }
 
     @JvmStatic

@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation
 
 class HTCrushingEmiRecipe(id: ResourceLocation, definition: HTRecipeDefinition) :
     HTMachineEmiRecipe(RagiumEmiCategories.CRUSHING, id, definition) {
-    override fun getDisplayWidth(): Int = getPosition(3.5)
+    override fun getDisplayWidth(): Int = getPosition(4.5)
 
     override fun getDisplayHeight(): Int = getPosition(1)
 
@@ -17,5 +17,6 @@ class HTCrushingEmiRecipe(id: ResourceLocation, definition: HTRecipeDefinition) 
         widgets.addItemInput(0, 0.0, 0.0)
         // Output
         widgets.addItemOutput(0, 2.5, 0.0)
+        widgets.addItemOutput(1, 3.5, 0.0)
     }
 }

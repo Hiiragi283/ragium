@@ -84,6 +84,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
+        addBlock(RagiumBlocks.ADVANCED_CRUSHER, "Advanced Crusher")
         addBlock(RagiumBlocks.ADVANCED_EXTRACTOR, "Advanced Extractor")
         addBlock(RagiumBlocks.INFUSER, "Infuser")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
@@ -216,6 +217,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "Chipped Ragium Essence")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
+        addItem(RagiumItems.CRYSTAL_PROCESSOR, "Crystal Processor")
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
         addItem(RagiumItems.ENGINE, "V8 Engine")
         addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "Inactive Ragium Essence")

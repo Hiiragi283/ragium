@@ -239,8 +239,10 @@ class RagiumItemTagProvider(
         // Circuit
         add(RagiumItemTags.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
         add(RagiumItemTags.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
+        add(RagiumItemTags.CIRCUITS_ELITE, RagiumItems.CRYSTAL_PROCESSOR)
         addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_BASIC)
         addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ADVANCED)
+        addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ELITE)
 
         // Soil
         addItem(RagiumItemTags.DIRT_SOILS, Items.DIRT)

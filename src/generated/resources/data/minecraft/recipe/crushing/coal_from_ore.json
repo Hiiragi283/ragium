@@ -1,0 +1,14 @@
+{
+  "type": "ragium:crushing",
+  "input": {
+    "count": 1,
+    "tag": "c:ores/coal"
+  },
+  "output": {
+    "count": 2,
+    "item": "minecraft:coal"
+  },
+  "second_output": {
+    "item": "ragium:sulfur_dust"
+  }
+}

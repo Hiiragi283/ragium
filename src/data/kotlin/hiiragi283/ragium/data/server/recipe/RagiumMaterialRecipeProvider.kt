@@ -197,5 +197,64 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         for (ingot: RagiumItems.Ingots in RagiumItems.Ingots.entries) {
             dustToIngot(ingot, ingot)
         }
+
+        oreToRaw()
+    }
+
+    // Ore -> Raw/Gem
+    private fun oreToRaw() {
+        // Coal
+        createCrushing()
+            .itemOutput(Items.COAL, 2)
+            .itemOutput(RagiumItems.Dusts.SULFUR)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.COAL)
+            .saveSuffixed(output, "_from_ore")
+        // Copper
+        createCrushing()
+            .itemOutput(Items.RAW_COPPER, 4)
+            .itemOutput(Items.GOLD_NUGGET, 3)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.COPPER)
+            .saveSuffixed(output, "_from_ore")
+        // Iron
+        createCrushing()
+            .itemOutput(Items.RAW_IRON, 2)
+            .itemOutput(Items.FLINT)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.IRON)
+            .saveSuffixed(output, "_from_ore")
+        // Gold
+        createCrushing()
+            .itemOutput(Items.RAW_GOLD, 2)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.GOLD)
+            .saveSuffixed(output, "_from_ore")
+        // Redstone
+        createCrushing()
+            .itemOutput(Items.REDSTONE, 12)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.REDSTONE)
+            .saveSuffixed(output, "_from_ore")
+        // Lapis
+        createCrushing()
+            .itemOutput(Items.LAPIS_LAZULI, 8)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.LAPIS)
+            .saveSuffixed(output, "_from_ore")
+        // Quartz
+        createCrushing()
+            .itemOutput(Items.QUARTZ, 4)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.QUARTZ)
+            .saveSuffixed(output, "_from_ore")
+        // Diamond
+        createCrushing()
+            .itemOutput(Items.DIAMOND, 2)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.DIAMOND)
+            .saveSuffixed(output, "_from_ore")
+        // Emerald
+        createCrushing()
+            .itemOutput(Items.EMERALD, 2)
+            .itemInput(HTTagPrefixes.ORE, VanillaMaterials.EMERALD)
+            .saveSuffixed(output, "_from_ore")
+        // Netherite
+        createCrushing()
+            .itemOutput(Items.NETHERITE_SCRAP, 2)
+            .itemInput(Tags.Items.ORES_NETHERITE_SCRAP)
+            .saveSuffixed(output, "_from_ore")
     }
 }
