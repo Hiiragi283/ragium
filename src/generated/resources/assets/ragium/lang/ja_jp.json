@@ -1,9 +1,9 @@
 {
-  "advancements.ragium.azure_shard": "アメジストの塊にラピスを使って紺碧の欠片を手に入れる",
-  "advancements.ragium.azure_steel_ingot": "紺鉄インゴットを手に入れる",
+  "advancements.ragium.azure_shard.desc": "アメジストの塊にラピスを使って紺碧の欠片を手に入れる",
+  "advancements.ragium.azure_steel_ingot.desc": "紺鉄インゴットを手に入れる",
   "advancements.ragium.forge_hammer.desc": "鍛造ハンマーを手に入れる",
   "advancements.ragium.forge_hammer.title": "RagiForge",
-  "advancements.ragium.ragi_alloy_ingot": "ラギ合金インゴットを手に入れる",
+  "advancements.ragium.ragi_alloy_ingot.desc": "ラギ合金インゴットを手に入れる",
   "advancements.ragium.root.desc": "ラギナイト鉱石からラギナイトの原石を手に入れてRagiumを始めよう",
   "block.ragium.advanced_crusher": "発展型粉砕機",
   "block.ragium.advanced_extractor": "発展型抽出機",

@@ -178,6 +178,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Redstone
         createCrushing()
             .itemOutput(Items.REDSTONE, 12)
+            .itemOutput(RagiumItems.Dusts.RAGINITE, 2)
             .itemInput(HTTagPrefixes.ORE, VanillaMaterials.REDSTONE)
             .saveSuffixed(output, "_from_ore")
         // Lapis
@@ -188,6 +189,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Quartz
         createCrushing()
             .itemOutput(Items.QUARTZ, 4)
+            .itemOutput(Items.AMETHYST_SHARD)
             .itemInput(HTTagPrefixes.ORE, VanillaMaterials.QUARTZ)
             .saveSuffixed(output, "_from_ore")
         // Diamond

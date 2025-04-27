@@ -46,11 +46,15 @@ fun LanguageProvider.addItem(item: ItemLike, value: String) {
 }
 
 fun LanguageProvider.addItemAdvDesc(item: ItemLike, value: String) {
-    add(Util.makeDescriptionId("advancements", item.asItemHolder().idOrThrow), value)
+    addAdvDesc(item.asItemHolder().idOrThrow, value)
 }
 
 fun LanguageProvider.addAdvDesc(holder: DeferredHolder<*, *>, value: String) {
-    add(Util.makeDescriptionId("advancements", holder.id), value)
+    addAdvDesc(holder.id, value)
+}
+
+private fun LanguageProvider.addAdvDesc(id: ResourceLocation, value: String) {
+    add(Util.makeDescriptionId("advancements", id.withSuffix(".desc")), value)
 }
 
 //    ModelFile    //

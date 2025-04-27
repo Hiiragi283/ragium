@@ -7,5 +7,8 @@
   "output": {
     "count": 4,
     "item": "minecraft:quartz"
+  },
+  "second_output": {
+    "item": "minecraft:amethyst_shard"
   }
 }

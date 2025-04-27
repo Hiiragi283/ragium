@@ -1,9 +1,9 @@
 {
-  "advancements.ragium.azure_shard": "Get Azure Shard by right-clicking Amethyst Cluster with Lapis",
-  "advancements.ragium.azure_steel_ingot": "Get Azure Steel Ingot",
+  "advancements.ragium.azure_shard.desc": "Get Azure Shard by right-clicking Amethyst Cluster with Lapis",
+  "advancements.ragium.azure_steel_ingot.desc": "Get Azure Steel Ingot",
   "advancements.ragium.forge_hammer.desc": "Get Forge Hammer",
   "advancements.ragium.forge_hammer.title": "RagiForge",
-  "advancements.ragium.ragi_alloy_ingot": "Get Ragi-Alloy Ingot",
+  "advancements.ragium.ragi_alloy_ingot.desc": "Get Ragi-Alloy Ingot",
   "advancements.ragium.root.desc": "Start Ragium by getting Raw Raginite from Raginite Ore",
   "block.ragium.advanced_crusher": "Advanced Crusher",
   "block.ragium.advanced_extractor": "Advanced Extractor",
