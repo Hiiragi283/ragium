@@ -1,0 +1,38 @@
+{
+  "parent": "ragium:azure_shard",
+  "criteria": {
+    "has_azure_steel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:azure_steel_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.azure_steel_ingot.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:azure_steel_ingot"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.ingot",
+      "with": [
+        {
+          "translate": "material.ragium.azure_steel"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_azure_steel_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

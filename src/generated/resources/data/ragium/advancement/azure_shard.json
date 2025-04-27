@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_azure_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:azure_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.azure_shard.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:azure_shard"
+    },
+    "title": {
+      "translate": "item.ragium.azure_shard"
+    }
+  },
+  "requirements": [
+    [
+      "has_azure_shard"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

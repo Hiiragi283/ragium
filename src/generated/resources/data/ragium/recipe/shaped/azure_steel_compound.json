@@ -3,18 +3,15 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:dusts/lapis"
+      "item": "ragium:azure_shard"
     },
     "B": {
-      "tag": "c:dusts/amethyst"
-    },
-    "C": {
       "tag": "c:ingots/iron"
     }
   },
   "pattern": [
     " A ",
-    "BCB",
+    "ABA",
     " A "
   ],
   "result": {

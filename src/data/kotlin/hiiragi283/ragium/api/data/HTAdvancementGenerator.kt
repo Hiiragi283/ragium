@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.asItemHolder
+import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
@@ -57,17 +59,21 @@ abstract class HTAdvancementGenerator(protected val prefix: String) : Advancemen
             .apply(builderAction)
             .save(path)
 
-    protected fun <T> createSimple(
+    protected fun createSimple(
         parent: AdvancementHolder,
-        holder: T,
+        item: ItemLike,
         builderAction: HTDisplayInfoBuilder.() -> Unit = {},
-    ): AdvancementHolder where T : DeferredHolder<*, *>, T : ItemLike = create(holder.id.path, parent) {
-        display {
-            setIcon(holder)
-            setTitleFromItem(holder)
-            builderAction()
+    ): AdvancementHolder {
+        val id: ResourceLocation = item.asItemHolder().idOrThrow
+        return create(id.path, parent) {
+            display {
+                setIcon(item)
+                setTitleFromItem(item)
+                setDescFromItem(item)
+                builderAction()
+            }
+            hasItem("has_${id.path}", item)
         }
-        hasItem("has_${holder.id.path}", holder)
     }
 
     protected fun <T> createSimpleConsume(

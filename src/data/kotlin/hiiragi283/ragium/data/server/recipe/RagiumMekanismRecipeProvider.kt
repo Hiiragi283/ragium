@@ -43,6 +43,17 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
                 itemHelper.from(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE),
                 RagiumMekanismAddon.CHEMICAL_RAGINITE.asStack(80),
             ).build(output, RagiumAPI.id("$prefix/raginite/from_enriched"))
+
+            // Azure Shard -> Chemical
+            factory(
+                itemHelper.from(RagiumItems.AZURE_SHARD),
+                RagiumMekanismAddon.CHEMICAL_AZURE.asStack(10),
+            ).build(output, RagiumAPI.id("$prefix/azure/from_shard"))
+            // Enriched -> Chemical
+            factory(
+                itemHelper.from(RagiumMekanismAddon.ITEM_ENRICHED_AZURE),
+                RagiumMekanismAddon.CHEMICAL_AZURE.asStack(80),
+            ).build(output, RagiumAPI.id("$prefix/azure/from_enriched"))
         }
 
         toChemical(ItemStackToChemicalRecipeBuilder::chemicalConversion, "chemical_conversion")
@@ -55,6 +66,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
                 itemHelper.from(HTTagPrefixes.DUST.createItemTag(RagiumMaterials.RAGINITE)),
                 RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE.toStack(),
             ).build(output, RagiumAPI.id("enriching/enrich/raginite"))
+
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(RagiumItems.AZURE_SHARD),
+                RagiumMekanismAddon.ITEM_ENRICHED_AZURE.toStack(),
+            ).build(output, RagiumAPI.id("enriching/enrich/azure"))
     }
 
     private fun infusing() {
@@ -87,7 +104,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
                 itemHelper.from(Tags.Items.INGOTS_IRON),
-                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 20),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 40),
                 RagiumItems.Ingots.AZURE_STEEL.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/azure_steel"))

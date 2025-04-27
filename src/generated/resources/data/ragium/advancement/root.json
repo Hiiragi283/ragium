@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "has_raginite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:raw_materials/raginite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "ragium:textures/block/ragi_stone.png",
+    "description": {
+      "translate": "advancements.ragium.root.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:inactive_ragium_essence"
+    },
+    "show_toast": false,
+    "title": "Ragium"
+  },
+  "requirements": [
+    [
+      "has_raginite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

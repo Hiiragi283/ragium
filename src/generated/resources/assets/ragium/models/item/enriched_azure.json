@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/ragi_crystal_dust"
+    "layer0": "ragium:item/enriched_azure"
   }
 }

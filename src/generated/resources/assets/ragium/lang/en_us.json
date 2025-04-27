@@ -1,4 +1,10 @@
 {
+  "advancements.ragium.azure_shard": "Get Azure Shard by right-clicking Amethyst Cluster with Lapis",
+  "advancements.ragium.azure_steel_ingot": "Get Azure Steel Ingot",
+  "advancements.ragium.forge_hammer.desc": "Get Forge Hammer",
+  "advancements.ragium.forge_hammer.title": "RagiForge",
+  "advancements.ragium.ragi_alloy_ingot": "Get Ragi-Alloy Ingot",
+  "advancements.ragium.root.desc": "Start Ragium by getting Raw Raginite from Raginite Ore",
   "block.ragium.advanced_crusher": "Advanced Crusher",
   "block.ragium.advanced_extractor": "Advanced Extractor",
   "block.ragium.advanced_machine_casing": "Advanced Machine Casing",
@@ -130,6 +136,7 @@
   "item.ragium.ammonia_bucket": "Ammonia Bucket",
   "item.ragium.aquatic_ragium_essence": "Aquatic Ragium Essence",
   "item.ragium.aromatic_compound_bucket": "Aromatic Compound Bucket",
+  "item.ragium.azure_shard": "Azure Shard",
   "item.ragium.azure_steel_axe": "Azure Steel Axe",
   "item.ragium.azure_steel_boots": "Azure Steel Boots",
   "item.ragium.azure_steel_chestplate": "Azure Steel Chestplate",
@@ -159,6 +166,7 @@
   "item.ragium.elder_heart": "Heart fo the Elder",
   "item.ragium.ender_bundle": "Ender Bundle",
   "item.ragium.engine": "V8 Engine",
+  "item.ragium.enriched_azure": "Enriched Azure Essence",
   "item.ragium.enriched_raginite": "Enriched Raginite",
   "item.ragium.exp_berries": "Exp Berries",
   "item.ragium.exp_magnet": "Exp Magnet",
@@ -209,6 +217,7 @@
   "item.ragium.rocket_fuel_bucket": "Rocket Fuel Bucket",
   "item.ragium.rod_mold": "Mold (Rod)",
   "item.ragium.sap_bucket": "Sap Bucket",
+  "item.ragium.sawdust": "Sawdust",
   "item.ragium.soap": "Soap",
   "item.ragium.solar_panel": "Solar Panel",
   "item.ragium.stone_board": "Stone Board",
@@ -368,6 +377,5 @@
   "tag_prefix.ragium.storage_block": "Block of %s",
   "text.ragium.effect_range": "Effect Radius: %s blocks",
   "text.ragium.fluid_capacity": "Capacity: %s mb",
-  "text.ragium.fluid_name": "%s : %s mb",
-  "text.ragium.sawdust": "Sawdust"
+  "text.ragium.fluid_name": "%s : %s mb"
 }

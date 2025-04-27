@@ -1,4 +1,10 @@
 {
+  "advancements.ragium.azure_shard": "アメジストの塊にラピスを使って紺碧の欠片を手に入れる",
+  "advancements.ragium.azure_steel_ingot": "紺鉄インゴットを手に入れる",
+  "advancements.ragium.forge_hammer.desc": "鍛造ハンマーを手に入れる",
+  "advancements.ragium.forge_hammer.title": "RagiForge",
+  "advancements.ragium.ragi_alloy_ingot": "ラギ合金インゴットを手に入れる",
+  "advancements.ragium.root.desc": "ラギナイト鉱石からラギナイトの原石を手に入れてRagiumを始めよう",
   "block.ragium.advanced_crusher": "発展型粉砕機",
   "block.ragium.advanced_extractor": "発展型抽出機",
   "block.ragium.advanced_machine_casing": "発展機械筐体",
@@ -130,6 +136,7 @@
   "item.ragium.ammonia_bucket": "アンモニア入りバケツ",
   "item.ragium.aquatic_ragium_essence": "海洋ラギウムエッセンス",
   "item.ragium.aromatic_compound_bucket": "芳香族化合物入りバケツ",
+  "item.ragium.azure_shard": "紺碧の欠片",
   "item.ragium.azure_steel_axe": "紺鉄の斧",
   "item.ragium.azure_steel_boots": "紺鉄のブーツ",
   "item.ragium.azure_steel_chestplate": "紺鉄のチェストプレート",
@@ -159,6 +166,7 @@
   "item.ragium.elder_heart": "エルダーの心臓",
   "item.ragium.ender_bundle": "エンダーバンドル",
   "item.ragium.engine": "V8エンジン",
+  "item.ragium.enriched_azure": "濃縮紺碧エッセンス",
   "item.ragium.enriched_raginite": "濃縮ラギナイト",
   "item.ragium.exp_berries": "経験値ベリー",
   "item.ragium.exp_magnet": "EXPマグネット",
@@ -209,6 +217,7 @@
   "item.ragium.rocket_fuel_bucket": "ロケット燃料入りバケツ",
   "item.ragium.rod_mold": "成形型（棒材）",
   "item.ragium.sap_bucket": "樹液入りバケツ",
+  "item.ragium.sawdust": "おがくず",
   "item.ragium.soap": "石鹸",
   "item.ragium.solar_panel": "太陽光パネル",
   "item.ragium.stone_board": "石版",
@@ -368,6 +377,5 @@
   "tag_prefix.ragium.storage_block": "%sブロック",
   "text.ragium.effect_range": "有効半径: %s ブロック",
   "text.ragium.fluid_capacity": "容量: %s mb",
-  "text.ragium.fluid_name": "%s: %s mb",
-  "text.ragium.sawdust": "おがくず"
+  "text.ragium.fluid_name": "%s: %s mb"
 }

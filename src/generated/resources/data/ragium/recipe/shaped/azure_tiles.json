@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:dusts/azure_steel"
+      "item": "ragium:azure_shard"
     },
     "B": {
       "item": "minecraft:deepslate_tiles"
@@ -15,7 +15,7 @@
     " A "
   ],
   "result": {
-    "count": 4,
+    "count": 8,
     "id": "ragium:azure_tiles"
   }
 }

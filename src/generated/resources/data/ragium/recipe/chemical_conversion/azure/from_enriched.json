@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:chemical_conversion",
+  "input": {
+    "count": 1,
+    "item": "ragium:enriched_azure"
+  },
+  "output": {
+    "amount": 80,
+    "id": "ragium:azure"
+  }
+}

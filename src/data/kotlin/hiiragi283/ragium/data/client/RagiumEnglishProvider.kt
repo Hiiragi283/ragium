@@ -22,6 +22,7 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 
 class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "en_us") {
     override fun addTranslations() {
+        advancement()
         block()
         enchantment()
         entity()
@@ -31,13 +32,21 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         tagPrefix()
         tag()
         text()
-        tooltips()
-        misc()
 
         delight()
         mekanism()
         jade()
         emi()
+    }
+
+    private fun advancement() {
+        add(RagiumTranslationKeys.ADV_ROOT_DESC, "Start Ragium by getting Raw Raginite from Raginite Ore")
+        addItemAdvDesc(RagiumItems.Ingots.RAGI_ALLOY, "Get Ragi-Alloy Ingot")
+        add(RagiumTranslationKeys.ADV_FORGE_HAMMER_TITLE, "RagiForge")
+        add(RagiumTranslationKeys.ADV_FORGE_HAMMER_DESC, "Get Forge Hammer")
+
+        addAdvDesc(RagiumItems.AZURE_SHARD, "Get Azure Shard by right-clicking Amethyst Cluster with Lapis")
+        addItemAdvDesc(RagiumItems.Ingots.AZURE_STEEL, "Get Azure Steel Ingot")
     }
 
     private fun block() {
@@ -213,6 +222,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "Advanced Ragi-Alloy Compound")
         addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "Aquatic Ragium Essence")
+        addItem(RagiumItems.AZURE_SHARD, "Azure Shard")
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "Chipped Ragium Essence")
@@ -227,6 +237,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.RAGIUM_ESSENCE, "Ragium Essence")
+        addItem(RagiumItems.SAWDUST, "Sawdust")
         addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")
@@ -418,14 +429,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")
         add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "Capacity: %s mb")
 
-        add(RagiumTranslationKeys.TEXT_SAWDUST, "Sawdust")
-
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "Effect Radius: %s blocks")
-    }
-
-    private fun tooltips() {}
-
-    private fun misc() {
     }
 
     private fun delight() {
@@ -444,6 +448,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "Dirty Raginite Slurry")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")
+
         addItem(RagiumMekanismAddon.OreResources.DIRTY_DUST, "Dirty Raginite Dust")
         addItem(RagiumMekanismAddon.OreResources.CLUMP, "Raginite Clump")
         addItem(RagiumMekanismAddon.OreResources.SHARD, "Raginite Shard")

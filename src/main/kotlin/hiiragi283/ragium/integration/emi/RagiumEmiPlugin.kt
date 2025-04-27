@@ -9,6 +9,7 @@ import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiInfoRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
+import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
@@ -31,6 +32,7 @@ import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.ItemLike
@@ -231,6 +233,16 @@ class RagiumEmiPlugin : EmiPlugin {
         addInfo(RagiumItems.AMBROSIA, Component.translatable(RagiumTranslationKeys.EMI_AMBROSIA))
         addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
         addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
+
+        addRecipeSafe(RagiumAPI.id("/world/azure/ragium/azure_shard")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .leftInput(EmiStack.of(Items.AMETHYST_CLUSTER))
+                .rightInput(EmiIngredient.of(Tags.Items.GEMS_LAPIS), false)
+                .output(EmiStack.of(RagiumItems.AZURE_SHARD))
+                .build()
+        }
     }
 
     private fun addInfo(icon: ItemLike, vararg texts: Component) {

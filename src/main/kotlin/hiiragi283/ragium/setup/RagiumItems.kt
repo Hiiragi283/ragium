@@ -85,22 +85,15 @@ object RagiumItems {
         COAL,
         COPPER,
         IRON,
-        LAPIS,
         QUARTZ,
         GOLD,
         DIAMOND,
         EMERALD,
-        AMETHYST,
         ENDER_PEARL,
         OBSIDIAN,
 
         // Ragium
         RAGINITE,
-        RAGI_ALLOY,
-        ADVANCED_RAGI_ALLOY,
-        RAGI_CRYSTAL,
-        AZURE_STEEL,
-        DEEP_STEEL,
 
         // Common
         ASH,
@@ -161,6 +154,9 @@ object RagiumItems {
 
     @JvmField
     val ADVANCED_RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("advanced_ragi_alloy_compound")
+
+    @JvmField
+    val AZURE_SHARD: DeferredItem<Item> = register("azure_shard")
 
     @JvmField
     val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")

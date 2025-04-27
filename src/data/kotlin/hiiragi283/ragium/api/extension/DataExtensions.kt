@@ -45,6 +45,14 @@ fun LanguageProvider.addItem(item: ItemLike, value: String) {
     addItem(item::asItem, value)
 }
 
+fun LanguageProvider.addItemAdvDesc(item: ItemLike, value: String) {
+    add(Util.makeDescriptionId("advancements", item.asItemHolder().idOrThrow), value)
+}
+
+fun LanguageProvider.addAdvDesc(holder: DeferredHolder<*, *>, value: String) {
+    add(Util.makeDescriptionId("advancements", holder.id), value)
+}
+
 //    ModelFile    //
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)

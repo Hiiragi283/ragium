@@ -58,6 +58,8 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+
+            add(RagiumItems.AZURE_SHARD)
             add(RagiumItems.AZURE_STEEL_COMPOUND)
             addAll(RagiumItems.Ingots.entries)
 

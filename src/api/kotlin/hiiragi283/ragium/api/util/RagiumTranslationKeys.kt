@@ -1,12 +1,16 @@
 package hiiragi283.ragium.api.util
 
 object RagiumTranslationKeys {
+    //    Advancement    //
+    const val ADV_ROOT_DESC = "advancements.ragium.root.desc"
+
+    const val ADV_FORGE_HAMMER_TITLE = "advancements.ragium.forge_hammer.title"
+    const val ADV_FORGE_HAMMER_DESC = "advancements.ragium.forge_hammer.desc"
+
     //    Text    //
 
     const val TEXT_FLUID_NAME = "text.ragium.fluid_name"
     const val TEXT_FLUID_CAPACITY = "text.ragium.fluid_capacity"
-
-    const val TEXT_SAWDUST = "text.ragium.sawdust"
 
     const val TEXT_EFFECT_RANGE = "text.ragium.effect_range"
 

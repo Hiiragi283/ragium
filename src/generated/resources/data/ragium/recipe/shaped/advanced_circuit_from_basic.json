@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/lapis"
+      "item": "ragium:azure_shard"
     },
     "B": {
       "tag": "c:dusts/glowstone"

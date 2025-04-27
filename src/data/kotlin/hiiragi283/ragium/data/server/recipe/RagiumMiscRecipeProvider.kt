@@ -95,7 +95,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         // Advanced Circuit
         HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
             .cross8()
-            .define('A', HTTagPrefixes.GEM, VanillaMaterials.LAPIS)
+            .define('A', RagiumItems.AZURE_SHARD)
             .define('B', HTTagPrefixes.DUST, VanillaMaterials.GLOWSTONE)
             .define('C', RagiumItemTags.CIRCUITS_BASIC)
             .saveSuffixed(output, "_from_basic")
@@ -197,17 +197,5 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         advDevice(RagiumBlocks.TELEPORT_ANCHOR, HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.WARPED_CRYSTAL)
 
         // Elite
-        fun catalyst(catalyst: ItemLike, material: HTMaterial, core: Ingredient) {
-            HTShapedRecipeBuilder(catalyst)
-                .cross8()
-                .define('A', RagiumBlocks.DEVICE_CASING)
-                .define('B', HTTagPrefixes.STORAGE_BLOCK, material)
-                .define('C', core)
-                .save(output)
-        }
-
-        catalyst(RagiumBlocks.RAGIUM_CATALYST, RagiumMaterials.RAGI_CRYSTAL, Ingredient.of(Tags.Items.NETHER_STARS))
-        catalyst(RagiumBlocks.AZURE_CATALYST, RagiumMaterials.AZURE_STEEL, Ingredient.of(Items.HEART_OF_THE_SEA))
-        catalyst(RagiumBlocks.DEEP_CATALYST, VanillaMaterials.DIAMOND, Ingredient.of(Tags.Items.NETHER_STARS))
     }
 }

@@ -6,6 +6,7 @@ import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
+import hiiragi283.ragium.data.server.RagiumAdvancementGenerator
 import hiiragi283.ragium.data.server.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -26,6 +27,7 @@ import net.minecraft.data.loot.LootTableProvider
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.data.AdvancementProvider
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
@@ -66,6 +68,16 @@ object RagiumDatagen {
                 setOf(),
                 listOf(LootTableProvider.SubProviderEntry(::RagiumBlockLootProvider, LootContextParamSets.BLOCK)),
                 provider,
+            ),
+        )
+
+        generator.addProvider(
+            event.includeServer(),
+            AdvancementProvider(
+                output,
+                provider,
+                helper,
+                listOf(RagiumAdvancementGenerator),
             ),
         )
 

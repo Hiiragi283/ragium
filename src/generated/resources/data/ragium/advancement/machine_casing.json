@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:forge_hammer",
+  "criteria": {
+    "has_machine_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:machine_casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.machine_casing.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:machine_casing"
+    },
+    "title": {
+      "translate": "block.ragium.machine_casing"
+    }
+  },
+  "requirements": [
+    [
+      "has_machine_casing"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

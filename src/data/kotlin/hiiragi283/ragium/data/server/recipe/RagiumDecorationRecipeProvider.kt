@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -35,9 +36,9 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             ),
         )
         // Azure Tiles
-        HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILE_SETS.base, 4, CraftingBookCategory.BUILDING)
+        HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILE_SETS.base, 8, CraftingBookCategory.BUILDING)
             .hollow4()
-            .define('A', HTTagPrefixes.DUST, RagiumMaterials.AZURE_STEEL)
+            .define('A', RagiumItems.AZURE_SHARD)
             .define('B', Items.DEEPSLATE_TILES)
             .save(output)
         // Ember Stone

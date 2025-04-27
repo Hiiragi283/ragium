@@ -145,7 +145,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Amethyst
         createInfusing()
             .itemOutput(Items.AMETHYST_SHARD, 2)
-            .itemInput(HTTagPrefixes.DUST, VanillaMaterials.AMETHYST)
+            .itemInput(HTTagPrefixes.GEM, VanillaMaterials.AMETHYST)
             .waterInput(250)
             .saveSuffixed(output, "_from_water")
     }
@@ -236,17 +236,17 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Advanced Ragi-Alloy -> 100 mb
         createExtracting()
             .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 100)
-            .itemInput(HTTagPrefixes.DUST, RagiumMaterials.RAGI_ALLOY)
+            .itemInput(HTTagPrefixes.INGOT, RagiumMaterials.RAGI_ALLOY)
             .saveSuffixed(output, "_from_alloy")
         // Advanced Ragi-Alloy -> 125 mb
         createExtracting()
             .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 125)
-            .itemInput(HTTagPrefixes.DUST, RagiumMaterials.ADVANCED_RAGI_ALLOY)
+            .itemInput(HTTagPrefixes.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
             .saveSuffixed(output, "_from_advanced_alloy")
         // Ragi-Crystal -> 250 mb
         createExtracting()
             .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 250)
-            .itemInput(HTTagPrefixes.DUST, RagiumMaterials.RAGI_CRYSTAL)
+            .itemInput(HTTagPrefixes.GEM, RagiumMaterials.RAGI_CRYSTAL)
             .saveSuffixed(output, "_from_crystal")
 
         // Ragium Essence

@@ -22,6 +22,7 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 
 class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
     override fun addTranslations() {
+        advancement()
         block()
         enchantment()
         entity()
@@ -31,13 +32,21 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         tagPrefix()
         tag()
         text()
-        tooltips()
-        misc()
 
         delight()
         mekanism()
         jade()
         emi()
+    }
+
+    private fun advancement() {
+        add(RagiumTranslationKeys.ADV_ROOT_DESC, "ラギナイト鉱石からラギナイトの原石を手に入れてRagiumを始めよう")
+        addItemAdvDesc(RagiumItems.Ingots.RAGI_ALLOY, "ラギ合金インゴットを手に入れる")
+        add(RagiumTranslationKeys.ADV_FORGE_HAMMER_TITLE, "RagiForge")
+        add(RagiumTranslationKeys.ADV_FORGE_HAMMER_DESC, "鍛造ハンマーを手に入れる")
+
+        addAdvDesc(RagiumItems.AZURE_SHARD, "アメジストの塊にラピスを使って紺碧の欠片を手に入れる")
+        addItemAdvDesc(RagiumItems.Ingots.AZURE_STEEL, "紺鉄インゴットを手に入れる")
     }
 
     private fun block() {
@@ -216,6 +225,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "発展ラギ合金混合物")
         addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "海洋ラギウムエッセンス")
+        addItem(RagiumItems.AZURE_SHARD, "紺碧の欠片")
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄混合物")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "ラギウムエッセンスの欠片")
@@ -230,6 +240,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.RAGIUM_ESSENCE, "ラギウムエッセンス")
+        addItem(RagiumItems.SAWDUST, "おがくず")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")
@@ -421,14 +432,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s: %s mb")
         add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "容量: %s mb")
 
-        add(RagiumTranslationKeys.TEXT_SAWDUST, "おがくず")
-
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "有効半径: %s ブロック")
-    }
-
-    private fun tooltips() {}
-
-    private fun misc() {
     }
 
     private fun delight() {
@@ -447,6 +451,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "汚れたラギナイトの懸濁液")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "濃縮紺碧エッセンス")
+
         addItem(RagiumMekanismAddon.OreResources.DIRTY_DUST, "汚れたラギナイトの粉")
         addItem(RagiumMekanismAddon.OreResources.CLUMP, "ラギナイトの凝塊")
         addItem(RagiumMekanismAddon.OreResources.SHARD, "ラギナイトの欠片")

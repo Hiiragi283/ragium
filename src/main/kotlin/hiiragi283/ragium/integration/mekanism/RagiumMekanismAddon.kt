@@ -57,6 +57,9 @@ object RagiumMekanismAddon : RagiumAddon {
     @JvmField
     val ITEM_ENRICHED_RAGINITE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_raginite")
 
+    @JvmField
+    val ITEM_ENRICHED_AZURE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_azure")
+
     enum class OreResources(override val prefix: HTTagPrefix, path: String) : HTMaterialItemLike {
         DIRTY_DUST(HTTagPrefixes.DIRTY_DUST, "dirty_raginite_dust"),
         CLUMP(HTTagPrefixes.CLUMP, "raginite_clump"),
@@ -107,6 +110,7 @@ object RagiumMekanismAddon : RagiumAddon {
             lastStack = RagiumItems.RawResources.RAGINITE.toStack()
 
             acceptRaginite(ITEM_ENRICHED_RAGINITE)
+            acceptRaginite(ITEM_ENRICHED_AZURE)
             OreResources.entries.forEach(::acceptRaginite)
         }
     }
