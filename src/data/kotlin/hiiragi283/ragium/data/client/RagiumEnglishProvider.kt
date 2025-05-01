@@ -59,6 +59,18 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         RagiumBlocks.RAGINITE_ORES.addTranslationEn("Raginite", this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationEn("Ragi-Crystal", this)
 
+        addBlock(RagiumBlocks.StorageBlocks.RAGI_ALLOY.holder, "Block of Ragi-Alloy")
+        addBlock(RagiumBlocks.StorageBlocks.ADVANCED_RAGI_ALLOY.holder, "Block of Advanced Ragi-Alloy")
+        addBlock(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL.holder, "Block of Ragi-Crystal")
+        addBlock(RagiumBlocks.StorageBlocks.AZURE_STEEL.holder, "Block of Azure Steel")
+        addBlock(RagiumBlocks.StorageBlocks.DEEP_STEEL.holder, "Block of Deep Steel")
+
+        addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL.holder, "Block of Crimson Crystal")
+        addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL.holder, "Block of Warped Crystal")
+
+        addBlock(RagiumBlocks.StorageBlocks.CHEESE.holder, "Block of Cheese")
+        addBlock(RagiumBlocks.StorageBlocks.CHOCOLATE.holder, "Block of Chocolate")
+
         RagiumBlocks.RAGI_STONE_SETS.addTranslationEn("Ragi-Stone", this)
         RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationEn("Ragi-Stone Brick", this)
         RagiumBlocks.RAGI_STONE_SQUARE_SETS.addTranslationEn("Ragi-Stone (Square)", this)
@@ -98,14 +110,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.INFUSER, "Infuser")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         // Device
-        addBlock(RagiumBlocks.AZURE_CATALYST, "Azure Catalyst")
-        addBlock(RagiumBlocks.DEEP_CATALYST, "Deep Catalyst")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
         addBlock(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
         addBlock(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
         addBlock(RagiumBlocks.MILK_DRAIN, "Milk Drain")
-        addBlock(RagiumBlocks.RAGIUM_CATALYST, "Ragium Catalyst")
         addBlock(RagiumBlocks.SOUL_SPIKE, "Soul Spike")
         addBlock(RagiumBlocks.SPRINKLER, "Sprinkler")
         addBlock(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")

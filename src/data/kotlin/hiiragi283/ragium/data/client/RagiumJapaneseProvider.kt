@@ -59,6 +59,18 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumBlocks.RAGINITE_ORES.addTranslationJp("ラギナイト", this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationJp("ラギクリスタリル", this)
 
+        addBlock(RagiumBlocks.StorageBlocks.RAGI_ALLOY.holder, "ラギ合金ブロック")
+        addBlock(RagiumBlocks.StorageBlocks.ADVANCED_RAGI_ALLOY.holder, "発展ラギ合金ブロック")
+        addBlock(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL.holder, "ラギクリスタリルブロック")
+        addBlock(RagiumBlocks.StorageBlocks.AZURE_STEEL.holder, "紺鉄ブロック")
+        addBlock(RagiumBlocks.StorageBlocks.DEEP_STEEL.holder, "深層鋼ブロック")
+
+        addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL.holder, "深紅の結晶ブロック")
+        addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL.holder, "歪んだ結晶ブロック")
+
+        addBlock(RagiumBlocks.StorageBlocks.CHEESE.holder, "チーズブロック")
+        addBlock(RagiumBlocks.StorageBlocks.CHOCOLATE.holder, "チョコレートブロック")
+
         RagiumBlocks.RAGI_STONE_SETS.addTranslationJp("らぎストーン", this)
         RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationJp("らぎストーンレンガ", this)
         RagiumBlocks.RAGI_STONE_SQUARE_SETS.addTranslationJp("らぎストーン（正方）", this)
@@ -101,14 +113,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.INFUSER, "注入機")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         // Device
-        addBlock(RagiumBlocks.AZURE_CATALYST, "紺碧の触媒")
-        addBlock(RagiumBlocks.DEEP_CATALYST, "深層触媒")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
         addBlock(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
         addBlock(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
         addBlock(RagiumBlocks.MILK_DRAIN, "牛乳シンク")
-        addBlock(RagiumBlocks.RAGIUM_CATALYST, "ラギウム触媒")
         addBlock(RagiumBlocks.SOUL_SPIKE, "魂の尖頭")
         addBlock(RagiumBlocks.SPRINKLER, "スプリンクラー")
         addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")

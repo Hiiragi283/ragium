@@ -58,6 +58,7 @@ class RagiumItemTagProvider(
         copyFromBlock(RagiumBlockTags.GLASS_BLOCKS_QUARTZ, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
         copyFromBlock(RagiumBlockTags.GLASS_BLOCKS_SOUL, RagiumItemTags.GLASS_BLOCKS_SOUL)
 
+        copyFromBlock(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
         copyFromBlock(RagiumBlockTags.OBSIDIANS_MYSTERIOUS, RagiumItemTags.OBSIDIANS_MYSTERIOUS)
     }
 
