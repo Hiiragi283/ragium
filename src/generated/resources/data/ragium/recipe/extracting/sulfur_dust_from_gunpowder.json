@@ -5,6 +5,7 @@
     "tag": "c:gunpowders"
   },
   "item_output": {
-    "item": "ragium:sulfur_dust"
+    "count": 1,
+    "id": "ragium:sulfur_dust"
   }
 }

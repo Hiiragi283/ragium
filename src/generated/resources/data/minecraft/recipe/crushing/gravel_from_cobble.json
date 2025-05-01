@@ -5,6 +5,7 @@
     "tag": "c:cobblestones"
   },
   "output": {
-    "item": "minecraft:gravel"
+    "count": 1,
+    "id": "minecraft:gravel"
   }
 }

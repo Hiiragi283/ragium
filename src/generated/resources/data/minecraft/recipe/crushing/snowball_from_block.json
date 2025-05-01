@@ -6,6 +6,6 @@
   },
   "output": {
     "count": 4,
-    "item": "minecraft:snowball"
+    "id": "minecraft:snowball"
   }
 }

@@ -5,6 +5,7 @@
     "tag": "c:sands"
   },
   "output": {
-    "item": "ragium:silt"
+    "count": 1,
+    "id": "ragium:silt"
   }
 }

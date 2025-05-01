@@ -15,6 +15,7 @@
     "item": "minecraft:glass_bottle"
   },
   "output": {
-    "item": "farmersdelight:milk_bottle"
+    "count": 1,
+    "id": "farmersdelight:milk_bottle"
   }
 }

@@ -5,6 +5,7 @@
     "item": "minecraft:muddy_mangrove_roots"
   },
   "output": {
-    "item": "minecraft:mud"
+    "count": 1,
+    "id": "minecraft:mud"
   }
 }

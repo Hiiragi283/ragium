@@ -9,6 +9,7 @@
     "item": "minecraft:glass_bottle"
   },
   "output": {
-    "item": "minecraft:experience_bottle"
+    "count": 1,
+    "id": "minecraft:experience_bottle"
   }
 }

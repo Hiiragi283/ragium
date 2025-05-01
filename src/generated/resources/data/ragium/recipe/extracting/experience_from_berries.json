@@ -2,7 +2,7 @@
   "type": "ragium:extracting",
   "fluid_output": {
     "amount": 50,
-    "fluid": "ragium:experience"
+    "id": "ragium:experience"
   },
   "input": {
     "count": 1,

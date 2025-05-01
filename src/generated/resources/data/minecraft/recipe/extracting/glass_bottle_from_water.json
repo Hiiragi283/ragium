@@ -2,7 +2,7 @@
   "type": "ragium:extracting",
   "fluid_output": {
     "amount": 333,
-    "fluid": "minecraft:water"
+    "id": "minecraft:water"
   },
   "input": {
     "type": "neoforge:components",
@@ -15,6 +15,7 @@
     "items": "minecraft:potion"
   },
   "item_output": {
-    "item": "minecraft:glass_bottle"
+    "count": 1,
+    "id": "minecraft:glass_bottle"
   }
 }

@@ -29,8 +29,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         // Blocks
         buildList {
             addAll(RagiumBlocks.REGISTER.entries)
-
-            remove(RagiumBlocks.LILY_OF_THE_ENDER)
         }.forEach(::simpleBlockItem)
 
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
@@ -42,10 +40,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         RagiumBlocks.EMBER_STONE_SETS.addItemModels(this)
         RagiumBlocks.PLASTIC_SETS.addItemModels(this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addItemModels(this)
-
-        getBuilder(RagiumBlocks.LILY_OF_THE_ENDER)
-            .parent(generated)
-            .texture("layer0", RagiumBlocks.LILY_OF_THE_ENDER.blockId)
 
         getBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
             .parent(modelFile(RagiumAPI.id("block/cooked_meat_on_the_bone_stage0")))

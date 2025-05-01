@@ -5,6 +5,7 @@
     "tag": "minecraft:planks"
   },
   "output": {
-    "item": "ragium:sawdust"
+    "count": 1,
+    "id": "ragium:sawdust"
   }
 }

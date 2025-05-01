@@ -2,13 +2,14 @@
   "type": "ragium:refining",
   "fluid_output": {
     "amount": 100,
-    "fluid": "ragium:sap"
+    "id": "ragium:sap"
   },
   "input": {
     "amount": 1000,
     "tag": "c:warped_sap"
   },
   "item_output": {
-    "item": "ragium:warped_crystal"
+    "count": 1,
+    "id": "ragium:warped_crystal"
   }
 }

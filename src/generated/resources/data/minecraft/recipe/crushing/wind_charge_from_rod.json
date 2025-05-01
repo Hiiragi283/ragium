@@ -6,6 +6,6 @@
   },
   "output": {
     "count": 4,
-    "item": "minecraft:wind_charge"
+    "id": "minecraft:wind_charge"
   }
 }

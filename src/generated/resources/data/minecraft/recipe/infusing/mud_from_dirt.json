@@ -9,6 +9,7 @@
     "item": "minecraft:dirt"
   },
   "output": {
-    "item": "minecraft:mud"
+    "count": 1,
+    "id": "minecraft:mud"
   }
 }

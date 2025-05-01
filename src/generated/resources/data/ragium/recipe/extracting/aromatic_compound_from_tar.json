@@ -2,7 +2,7 @@
   "type": "ragium:extracting",
   "fluid_output": {
     "amount": 200,
-    "fluid": "ragium:aromatic_compound"
+    "id": "ragium:aromatic_compound"
   },
   "input": {
     "count": 1,

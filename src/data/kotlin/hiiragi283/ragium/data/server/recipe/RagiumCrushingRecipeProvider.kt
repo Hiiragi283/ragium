@@ -97,11 +97,6 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumBlocks.ASH_LOG)
             .saveSuffixed(output, "_from_log")
 
-        createCrushing()
-            .itemOutput(RagiumItems.Dusts.ENDER_PEARL)
-            .itemInput(RagiumBlocks.LILY_OF_THE_ENDER)
-            .saveSuffixed(output, "_from_lily")
-
         woodDust()
         sand()
         prismarine()

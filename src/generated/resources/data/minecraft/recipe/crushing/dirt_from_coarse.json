@@ -5,6 +5,7 @@
     "item": "minecraft:coarse_dirt"
   },
   "output": {
-    "item": "minecraft:dirt"
+    "count": 1,
+    "id": "minecraft:dirt"
   }
 }

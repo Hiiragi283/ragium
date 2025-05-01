@@ -9,6 +9,7 @@
     "tag": "c:crops/cocoa_bean"
   },
   "output": {
-    "item": "ragium:chocolate_ingot"
+    "count": 1,
+    "id": "ragium:chocolate_ingot"
   }
 }

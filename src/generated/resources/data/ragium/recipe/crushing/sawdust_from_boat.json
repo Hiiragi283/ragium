@@ -6,6 +6,6 @@
   },
   "output": {
     "count": 5,
-    "item": "ragium:sawdust"
+    "id": "ragium:sawdust"
   }
 }

@@ -5,6 +5,7 @@
     "tag": "c:gravels"
   },
   "item_output": {
-    "item": "minecraft:flint"
+    "count": 1,
+    "id": "minecraft:flint"
   }
 }

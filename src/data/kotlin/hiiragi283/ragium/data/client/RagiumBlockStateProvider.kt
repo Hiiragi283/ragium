@@ -62,12 +62,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // Log
         logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
 
-        // Flower
-        simpleBlock(
-            RagiumBlocks.LILY_OF_THE_ENDER.get(),
-            models().cross("block/lily_of_the_ender", RagiumAPI.id("block/lily_of_the_ender")).renderType("cutout"),
-        )
-
         // Bush
         val expBerryModel: BlockModelBuilder = models()
             .leaves(

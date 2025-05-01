@@ -8,6 +8,7 @@
     "tag": "c:honey"
   },
   "output": {
-    "item": "minecraft:honey_block"
+    "count": 1,
+    "id": "minecraft:honey_block"
   }
 }

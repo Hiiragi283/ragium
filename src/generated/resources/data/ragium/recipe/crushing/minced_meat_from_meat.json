@@ -5,6 +5,7 @@
     "tag": "c:foods/raw_meat"
   },
   "output": {
-    "item": "ragium:minced_meat"
+    "count": 1,
+    "id": "ragium:minced_meat"
   }
 }

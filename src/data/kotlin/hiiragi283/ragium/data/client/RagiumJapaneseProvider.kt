@@ -55,7 +55,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
-        addBlock(RagiumBlocks.LILY_OF_THE_ENDER, "エンダースズラン")
 
         RagiumBlocks.RAGINITE_ORES.addTranslationJp("ラギナイト", this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationJp("ラギクリスタリル", this)

@@ -6,6 +6,6 @@
   },
   "output": {
     "count": 5,
-    "item": "minecraft:string"
+    "id": "minecraft:string"
   }
 }

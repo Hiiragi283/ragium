@@ -5,6 +5,7 @@
     "tag": "minecraft:wooden_stairs"
   },
   "output": {
-    "item": "ragium:sawdust"
+    "count": 1,
+    "id": "ragium:sawdust"
   }
 }

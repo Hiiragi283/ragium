@@ -53,8 +53,6 @@ class RagiumItemTagProvider(
     }
 
     private fun copy() {
-        copyFromBlock(BlockTags.SMALL_FLOWERS, ItemTags.SMALL_FLOWERS)
-
         copyFromBlock(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
         copyFromBlock(RagiumBlockTags.GLASS_BLOCKS_OBSIDIAN, RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
         copyFromBlock(RagiumBlockTags.GLASS_BLOCKS_QUARTZ, RagiumItemTags.GLASS_BLOCKS_QUARTZ)

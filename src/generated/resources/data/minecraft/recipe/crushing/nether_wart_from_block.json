@@ -6,6 +6,6 @@
   },
   "output": {
     "count": 9,
-    "item": "minecraft:nether_wart"
+    "id": "minecraft:nether_wart"
   }
 }

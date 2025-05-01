@@ -9,6 +9,7 @@
     "tag": "c:dusts/quartz"
   },
   "output": {
-    "item": "ragium:ragium_essence"
+    "count": 1,
+    "id": "ragium:ragium_essence"
   }
 }

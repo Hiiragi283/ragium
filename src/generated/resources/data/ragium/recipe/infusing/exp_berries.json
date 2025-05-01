@@ -9,6 +9,7 @@
     "tag": "c:foods/berry"
   },
   "output": {
-    "item": "ragium:exp_berries"
+    "count": 1,
+    "id": "ragium:exp_berries"
   }
 }

@@ -5,6 +5,7 @@
     "item": "minecraft:prismarine_shard"
   },
   "output": {
-    "item": "minecraft:prismarine_crystals"
+    "count": 1,
+    "id": "minecraft:prismarine_crystals"
   }
 }

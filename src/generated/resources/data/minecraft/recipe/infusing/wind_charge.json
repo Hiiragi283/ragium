@@ -9,6 +9,7 @@
     "item": "minecraft:snowball"
   },
   "output": {
-    "item": "minecraft:wind_charge"
+    "count": 1,
+    "id": "minecraft:wind_charge"
   }
 }

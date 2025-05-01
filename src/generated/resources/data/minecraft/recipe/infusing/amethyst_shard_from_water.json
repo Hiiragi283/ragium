@@ -10,6 +10,6 @@
   },
   "output": {
     "count": 2,
-    "item": "minecraft:amethyst_shard"
+    "id": "minecraft:amethyst_shard"
   }
 }

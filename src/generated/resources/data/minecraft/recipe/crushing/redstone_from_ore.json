@@ -6,10 +6,10 @@
   },
   "output": {
     "count": 12,
-    "item": "minecraft:redstone"
+    "id": "minecraft:redstone"
   },
   "second_output": {
     "count": 2,
-    "item": "ragium:raginite_dust"
+    "id": "ragium:raginite_dust"
   }
 }

@@ -9,6 +9,7 @@
     "tag": "c:storage_blocks/chocolate"
   },
   "output": {
-    "item": "ragium:ambrosia"
+    "count": 1,
+    "id": "ragium:ambrosia"
   }
 }

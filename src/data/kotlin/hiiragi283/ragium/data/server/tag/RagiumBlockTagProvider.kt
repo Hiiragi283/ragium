@@ -101,9 +101,6 @@ class RagiumBlockTagProvider(
 
         addTag(RagiumBlockTags.STONES_ROCK_GENERATIONS, Tags.Blocks.STONES)
 
-        // Flower
-        add(BlockTags.SMALL_FLOWERS, RagiumBlocks.LILY_OF_THE_ENDER)
-
         // Crop
         add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRY_BUSH)
         add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRY_BUSH)

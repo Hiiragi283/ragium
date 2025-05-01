@@ -2,13 +2,14 @@
   "type": "ragium:extracting",
   "fluid_output": {
     "amount": 100,
-    "fluid": "minecraft:lava"
+    "id": "minecraft:lava"
   },
   "input": {
     "count": 1,
     "item": "minecraft:magma_block"
   },
   "item_output": {
-    "item": "minecraft:cobblestone"
+    "count": 1,
+    "id": "minecraft:cobblestone"
   }
 }

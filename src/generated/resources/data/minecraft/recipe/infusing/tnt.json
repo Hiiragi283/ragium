@@ -10,6 +10,6 @@
   },
   "output": {
     "count": 8,
-    "item": "minecraft:tnt"
+    "id": "minecraft:tnt"
   }
 }

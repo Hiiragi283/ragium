@@ -6,9 +6,10 @@
   },
   "output": {
     "count": 4,
-    "item": "minecraft:quartz"
+    "id": "minecraft:quartz"
   },
   "second_output": {
-    "item": "minecraft:amethyst_shard"
+    "count": 1,
+    "id": "minecraft:amethyst_shard"
   }
 }

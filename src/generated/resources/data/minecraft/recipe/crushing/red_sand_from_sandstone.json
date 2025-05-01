@@ -6,9 +6,10 @@
   },
   "output": {
     "count": 4,
-    "item": "minecraft:red_sand"
+    "id": "minecraft:red_sand"
   },
   "second_output": {
-    "item": "minecraft:redstone"
+    "count": 1,
+    "id": "minecraft:redstone"
   }
 }

@@ -6,9 +6,10 @@
   },
   "output": {
     "count": 4,
-    "item": "minecraft:sand"
+    "id": "minecraft:sand"
   },
   "second_output": {
-    "item": "ragium:saltpeter_dust"
+    "count": 1,
+    "id": "ragium:saltpeter_dust"
   }
 }

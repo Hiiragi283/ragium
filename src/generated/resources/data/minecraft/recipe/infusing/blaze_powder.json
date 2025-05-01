@@ -9,6 +9,7 @@
     "tag": "c:dusts/sulfur"
   },
   "output": {
-    "item": "minecraft:blaze_powder"
+    "count": 1,
+    "id": "minecraft:blaze_powder"
   }
 }

@@ -22,7 +22,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
-import net.minecraft.world.level.material.PushReaction
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredBlock
 
@@ -151,19 +150,6 @@ object RagiumBlocks {
         "exp_berry_bush",
         ::HTExpBerriesBushBlock,
         copyOf(Blocks.SWEET_BERRY_BUSH),
-    )
-
-    @JvmField
-    val LILY_OF_THE_ENDER: DeferredBlock<HTEnderLilyBlock> = register(
-        "lily_of_the_ender",
-        BlockBehaviour.Properties
-            .of()
-            .mapColor(MapColor.PLANT)
-            .noCollission()
-            .instabreak()
-            .sound(SoundType.GRASS)
-            .pushReaction(PushReaction.DESTROY),
-        ::HTEnderLilyBlock,
     )
 
     //    Materials    //

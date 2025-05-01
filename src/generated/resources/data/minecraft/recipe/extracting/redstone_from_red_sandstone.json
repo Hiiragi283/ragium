@@ -5,6 +5,7 @@
     "tag": "c:sandstone/red_blocks"
   },
   "item_output": {
-    "item": "minecraft:redstone"
+    "count": 1,
+    "id": "minecraft:redstone"
   }
 }

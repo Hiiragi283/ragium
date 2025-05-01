@@ -47,7 +47,6 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
 
             add(RagiumBlocks.ASH_LOG)
-            add(RagiumBlocks.LILY_OF_THE_ENDER)
             add(RagiumBlocks.SILT)
             add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 

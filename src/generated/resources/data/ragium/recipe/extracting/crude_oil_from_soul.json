@@ -2,7 +2,7 @@
   "type": "ragium:extracting",
   "fluid_output": {
     "amount": 500,
-    "fluid": "ragium:crude_oil"
+    "id": "ragium:crude_oil"
   },
   "input": {
     "count": 1,

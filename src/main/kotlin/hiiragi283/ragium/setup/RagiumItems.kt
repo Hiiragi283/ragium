@@ -90,7 +90,7 @@ object RagiumItems {
         // GOLD,
         // DIAMOND,
         // EMERALD,
-        ENDER_PEARL,
+        // ENDER_PEARL,
         OBSIDIAN,
 
         // Ragium

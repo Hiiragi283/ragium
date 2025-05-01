@@ -2,13 +2,14 @@
   "type": "ragium:extracting",
   "fluid_output": {
     "amount": 250,
-    "fluid": "ragium:experience"
+    "id": "ragium:experience"
   },
   "input": {
     "count": 1,
     "item": "minecraft:experience_bottle"
   },
   "item_output": {
-    "item": "minecraft:glass_bottle"
+    "count": 1,
+    "id": "minecraft:glass_bottle"
   }
 }
