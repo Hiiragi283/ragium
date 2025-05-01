@@ -9,11 +9,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.collect.*
-import hiiragi283.ragium.common.block.entity.machine.HTAdvancedExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.*
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -41,9 +37,9 @@ object RagiumBlockEntityTypes {
     //    Machine    //
 
     @JvmField
-    val ADVANCED_CRUSHER: HTDeferredBlockEntityType<HTAdvancedExtractorBlockEntity> = registerTick(
+    val ADVANCED_CRUSHER: HTDeferredBlockEntityType<HTAdvancedCrusherBlockEntity> = registerTick(
         "advanced_crusher",
-        ::HTAdvancedExtractorBlockEntity,
+        ::HTAdvancedCrusherBlockEntity,
     )
 
     @JvmField

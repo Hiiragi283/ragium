@@ -16,7 +16,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import java.util.*
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * アイテムを別のアイテムか液体に変換するレシピ
@@ -60,16 +59,14 @@ class HTExtractingRecipe(
 
     override fun canProcess(input: HTMachineInput): Boolean {
         // Item output
-        val itemOutput: HTItemOutput? = this.itemOutput.getOrNull()
-        if (itemOutput != null) {
+        if (itemOutput.isPresent) {
             val outputSlot: HTItemSlot = input.getSlotOrNull(HTStorageIO.OUTPUT, 0) ?: return false
-            if (!outputSlot.canInsert(itemOutput.get())) return false
+            if (!outputSlot.canInsert(itemOutput.get().get())) return false
         }
         // Fluid output
-        val fluidOutput: HTFluidOutput? = this.fluidOutput.getOrNull()
-        if (fluidOutput != null) {
+        if (fluidOutput.isPresent) {
             val outputTank: HTFluidTank = input.getTankOrNull(HTStorageIO.OUTPUT, 0) ?: return false
-            if (!outputTank.canInsert(fluidOutput.get())) return false
+            if (!outputTank.canInsert(fluidOutput.get().get())) return false
         }
         // Item input
         val inputSlot: HTItemSlot = input.getSlotOrNull(HTStorageIO.INPUT, 0) ?: return false

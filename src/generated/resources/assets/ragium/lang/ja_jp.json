@@ -118,6 +118,8 @@
   "chemical.ragium.clean_raginite": "純粋なラギナイトの懸濁液",
   "chemical.ragium.dirty_raginite": "汚れたラギナイトの懸濁液",
   "chemical.ragium.raginite": "ラギナイト",
+  "config.jade.plugin_ragium.advanced_crusher": "発展型粉砕機",
+  "config.jade.plugin_ragium.advanced_extractor": "発展型抽出機",
   "config.jade.plugin_ragium.crusher": "粉砕機",
   "config.jade.plugin_ragium.enchantable_block": "エンチャント可能なブロック",
   "config.jade.plugin_ragium.extractor": "抽出機",

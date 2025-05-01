@@ -118,6 +118,8 @@
   "chemical.ragium.clean_raginite": "Clean Raginite Slurry",
   "chemical.ragium.dirty_raginite": "Dirty Raginite Slurry",
   "chemical.ragium.raginite": "Raginite",
+  "config.jade.plugin_ragium.advanced_crusher": "Advanced Crusher",
+  "config.jade.plugin_ragium.advanced_extractor": "Advanced Extractor",
   "config.jade.plugin_ragium.crusher": "Crusher",
   "config.jade.plugin_ragium.enchantable_block": "Enchantable Block",
   "config.jade.plugin_ragium.extractor": "Extractor",
