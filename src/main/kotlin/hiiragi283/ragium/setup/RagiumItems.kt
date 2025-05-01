@@ -82,13 +82,13 @@ object RagiumItems {
 
     enum class Dusts : HTMaterialItemLike {
         // Vanilla
-        COAL,
-        COPPER,
+        // COAL,
+        // COPPER,
         IRON,
-        QUARTZ,
-        GOLD,
-        DIAMOND,
-        EMERALD,
+        // QUARTZ,
+        // GOLD,
+        // DIAMOND,
+        // EMERALD,
         ENDER_PEARL,
         OBSIDIAN,
 

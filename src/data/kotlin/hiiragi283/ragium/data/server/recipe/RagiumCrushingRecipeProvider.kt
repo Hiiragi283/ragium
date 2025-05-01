@@ -74,7 +74,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_block")
         // Ragium
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.GOLD)
+            .itemOutput(Items.GOLD_NUGGET, 6)
             .itemInput(Items.GILDED_BLACKSTONE)
             .saveSuffixed(output, "_from_blackstone")
 

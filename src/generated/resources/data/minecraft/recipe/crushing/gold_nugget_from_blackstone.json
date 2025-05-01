@@ -5,6 +5,7 @@
     "item": "minecraft:gilded_blackstone"
   },
   "output": {
-    "item": "ragium:gold_dust"
+    "count": 6,
+    "item": "minecraft:gold_nugget"
   }
 }
