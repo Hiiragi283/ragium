@@ -36,6 +36,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -83,13 +84,28 @@ object RagiumRuntimeEvents {
         val state: BlockState = level.getBlockState(pos)
 
         val player: Player = event.entity
-        // アイテムがラギウムエッセンスの場合
-        if (stack.`is`(RagiumItems.RAGIUM_ESSENCE)) {
-            // ブロックがアメシストブロックの場合，芽生えさせる
-            if (state.`is`(Blocks.AMETHYST_BLOCK)) {
+        // アイテムがラギウムエッセンス，ブロックがアメシストブロックの場合，芽生えさせる
+        if (stack.`is`(RagiumItems.RAGIUM_ESSENCE) && state.`is`(Blocks.AMETHYST_BLOCK)) {
+            level.destroyBlock(pos, false)
+            level.setBlockAndUpdate(pos, Blocks.BUDDING_AMETHYST.defaultBlockState())
+            stack.consume(1, player)
+            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
+            return
+        }
+        // アイテムがラピスラズリの場合
+        if (stack.`is`(Tags.Items.GEMS_LAPIS)) {
+            // アメシストの塊から紺碧の欠片をドロップさせる
+            val dropCount: Int = when (state.block) {
+                Blocks.AMETHYST_CLUSTER -> 4
+                Blocks.LARGE_AMETHYST_BUD -> 3
+                Blocks.MEDIUM_AMETHYST_BUD -> 2
+                Blocks.SMALL_DRIPLEAF -> 1
+                else -> 0
+            }
+            if (dropCount > 0) {
                 level.destroyBlock(pos, false)
-                level.setBlockAndUpdate(pos, Blocks.BUDDING_AMETHYST.defaultBlockState())
                 stack.consume(1, player)
+                dropStackAt(player, RagiumItems.AZURE_SHARD, dropCount)
                 event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
                 return
             }

@@ -31,6 +31,7 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
@@ -234,14 +235,21 @@ class RagiumEmiPlugin : EmiPlugin {
         addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
         addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
 
-        addRecipeSafe(RagiumAPI.id("/world/azure/ragium/azure_shard")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(Items.AMETHYST_CLUSTER))
-                .rightInput(EmiIngredient.of(Tags.Items.GEMS_LAPIS), false)
-                .output(EmiStack.of(RagiumItems.AZURE_SHARD))
-                .build()
+        mapOf(
+            Items.AMETHYST_CLUSTER to 4,
+            Items.LARGE_AMETHYST_BUD to 3,
+            Items.MEDIUM_AMETHYST_BUD to 2,
+            Items.SMALL_AMETHYST_BUD to 1,
+        ).forEach { (cluster: Item, count: Int) ->
+            addRecipeSafe(RagiumAPI.id("/world/azure/ragium/${count}x_azure_shard")) { id: ResourceLocation ->
+                EmiWorldInteractionRecipe
+                    .builder()
+                    .id(id)
+                    .leftInput(EmiStack.of(cluster))
+                    .rightInput(EmiIngredient.of(Tags.Items.GEMS_LAPIS), false)
+                    .output(EmiStack.of(RagiumItems.AZURE_SHARD, count.toLong()))
+                    .build()
+            }
         }
     }
 

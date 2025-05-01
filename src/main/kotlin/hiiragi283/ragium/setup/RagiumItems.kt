@@ -85,6 +85,7 @@ object RagiumItems {
         // COAL,
         // COPPER,
         IRON,
+
         // QUARTZ,
         // GOLD,
         // DIAMOND,

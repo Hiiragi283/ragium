@@ -460,15 +460,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun jade() {
-        add("config.jade.plugin_ragium.boiler", "ボイラー")
+        add("config.jade.plugin_ragium.crusher", "粉砕機")
         add("config.jade.plugin_ragium.enchantable_block", "エンチャント可能なブロック")
-        add("config.jade.plugin_ragium.energy_network", "エネルギーネットワーク")
-        add("config.jade.plugin_ragium.error_message", "エラーメッセージ")
-        add("config.jade.plugin_ragium.firebox", "火室")
-        add("config.jade.plugin_ragium.heat_source", "熱源")
-        add("config.jade.plugin_ragium.machine_info", "機械の情報")
-        add("config.jade.plugin_ragium.rock_generator", "岩石生成機")
-        add("config.jade.plugin_ragium.steam_furnace", "蒸気かまど")
+        add("config.jade.plugin_ragium.extractor", "抽出機")
     }
 
     private fun emi() {

@@ -9,7 +9,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTProgressData(
+class HTProgressData private constructor(
     val progress: Int,
     val total: Int,
     val items: List<ItemStack>,

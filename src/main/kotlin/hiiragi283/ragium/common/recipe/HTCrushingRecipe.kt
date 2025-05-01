@@ -63,6 +63,10 @@ class HTCrushingRecipe(
     override fun process(input: HTMachineInput) {
         // Item output
         input.getSlot(HTStorageIO.OUTPUT, 0).insert(output.get(), false)
+        // Second Item output
+        secondOutput.ifPresent { output: HTItemOutput ->
+            input.getSlotOrNull(HTStorageIO.OUTPUT, 1)?.insert(output.get(), false)
+        }
         // Item input
         input.getSlot(HTStorageIO.INPUT, 0).extract(ingredient.count(), false)
     }

@@ -457,15 +457,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun jade() {
-        add("config.jade.plugin_ragium.boiler", "Boiler")
+        add("config.jade.plugin_ragium.crusher", "Crusher")
         add("config.jade.plugin_ragium.enchantable_block", "Enchantable Block")
-        add("config.jade.plugin_ragium.energy_network", "Show Energy Network")
-        add("config.jade.plugin_ragium.error_message", "Show Error Message")
-        add("config.jade.plugin_ragium.firebox", "Firebox")
-        add("config.jade.plugin_ragium.heat_source", "Heat Source")
-        add("config.jade.plugin_ragium.machine_info", "Show Machine Info")
-        add("config.jade.plugin_ragium.rock_generator", "Rock Generator")
-        add("config.jade.plugin_ragium.steam_furnace", "Steam Furnace")
+        add("config.jade.plugin_ragium.extractor", "Extractor")
     }
 
     private fun emi() {
