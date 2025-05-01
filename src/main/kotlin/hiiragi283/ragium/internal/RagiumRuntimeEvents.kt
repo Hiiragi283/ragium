@@ -99,7 +99,7 @@ object RagiumRuntimeEvents {
                 Blocks.AMETHYST_CLUSTER -> 4
                 Blocks.LARGE_AMETHYST_BUD -> 3
                 Blocks.MEDIUM_AMETHYST_BUD -> 2
-                Blocks.SMALL_DRIPLEAF -> 1
+                Blocks.SMALL_AMETHYST_BUD -> 1
                 else -> 0
             }
             if (dropCount > 0) {
