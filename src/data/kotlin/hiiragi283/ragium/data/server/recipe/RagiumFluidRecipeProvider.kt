@@ -228,22 +228,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     }
 
     private fun ragium() {
-        // Raginite -> 20 mb
-        createExtracting()
-            .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 20)
-            .itemInput(HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
-            .saveSuffixed(output, "_from_raginite")
-        // Advanced Ragi-Alloy -> 100 mb
-        createExtracting()
-            .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 100)
-            .itemInput(HTTagPrefixes.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .saveSuffixed(output, "_from_alloy")
-        // Advanced Ragi-Alloy -> 125 mb
-        createExtracting()
-            .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 125)
-            .itemInput(HTTagPrefixes.INGOT, RagiumMaterials.ADVANCED_RAGI_ALLOY)
-            .saveSuffixed(output, "_from_advanced_alloy")
-        // Ragi-Crystal -> 250 mb
+        // Ragi-Crystal -> Molten Ragium
         createExtracting()
             .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 250)
             .itemInput(HTTagPrefixes.GEM, RagiumMaterials.RAGI_CRYSTAL)

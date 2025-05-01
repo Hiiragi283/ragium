@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/ragi_stone_brick_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/ragi_stone_bricks"
+    },
+    "type=top": {
+      "model": "ragium:block/ragi_stone_brick_slab_top"
+    }
+  }
+}

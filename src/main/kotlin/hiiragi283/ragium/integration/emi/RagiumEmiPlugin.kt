@@ -78,31 +78,6 @@ class RagiumEmiPlugin : EmiPlugin {
             if (recipe is HTCrushingRecipe) {
                 addRecipeSafe(id, recipe, ::HTCrushingEmiRecipe)
             }
-            /*else if (recipe is HTMaterialCrushingRecipe) {
-                val lookup: HolderLookup.RegistryLookup<Item> =
-                    RagiumAPI.getInstance().getRegistryAccess()?.itemLookup() ?: return@forEachRecipes
-                for (key: HTMaterialKey in RagiumAPI.getInstance().getMaterialRegistry().keys) {
-                    val outputItem: Item = HTTagUtil.getFirstItem(lookup, HTTagPrefixes.DUST, key) ?: continue
-                    val inputPrefix: HTTagPrefix = recipe.inputPrefix
-                    val inputTag: TagKey<Item> = inputPrefix.createItemTag(key)
-                    if (lookup.get(inputTag).isEmpty) continue
-                    addRecipeSafe(RagiumAPI.id("/crushing/${inputPrefix.name}/${key.name}")) { id: ResourceLocation ->
-                        HTCrushingEmiRecipe(
-                            id,
-                            HTRecipeDefinition(
-                                listOf(
-                                    SizedIngredient.of(inputTag, recipe.inputCount),
-                                ),
-                                listOf(),
-                                listOf(
-                                    HTItemOutput.of(outputItem, recipe.outputCount),
-                                ),
-                                listOf(),
-                            ),
-                        )
-                    }
-                }
-            }*/
         }
 
         forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
@@ -241,7 +216,7 @@ class RagiumEmiPlugin : EmiPlugin {
             Items.MEDIUM_AMETHYST_BUD to 2,
             Items.SMALL_AMETHYST_BUD to 1,
         ).forEach { (cluster: Item, count: Int) ->
-            addRecipeSafe(RagiumAPI.id("/world/azure/ragium/${count}x_azure_shard")) { id: ResourceLocation ->
+            addRecipeSafe(RagiumAPI.id("/world/ragium/${count}x_azure_shard")) { id: ResourceLocation ->
                 EmiWorldInteractionRecipe
                     .builder()
                     .id(id)
@@ -250,6 +225,16 @@ class RagiumEmiPlugin : EmiPlugin {
                     .output(EmiStack.of(RagiumItems.AZURE_SHARD, count.toLong()))
                     .build()
             }
+        }
+
+        addRecipeSafe(RagiumAPI.id("/world/ragium/budding_amethyst")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .leftInput(EmiStack.of(Items.AMETHYST_BLOCK))
+                .rightInput(EmiStack.of(RagiumItems.RAGIUM_ESSENCE), false)
+                .output(EmiStack.of(Items.BUDDING_AMETHYST))
+                .build()
         }
     }
 

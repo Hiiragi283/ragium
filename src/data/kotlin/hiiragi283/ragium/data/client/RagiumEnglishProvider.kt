@@ -60,6 +60,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationEn("Ragi-Crystal", this)
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationEn("Ragi-Stone", this)
+        RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationEn("Ragi-Stone Brick", this)
         RagiumBlocks.RAGI_STONE_SQUARE_SETS.addTranslationEn("Ragi-Stone (Square)", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationEn("Azure Tile", this)
         RagiumBlocks.EMBER_STONE_SETS.addTranslationEn("Ember Stone", this)

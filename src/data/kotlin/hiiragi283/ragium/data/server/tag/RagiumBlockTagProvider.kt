@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -46,12 +47,9 @@ class RagiumBlockTagProvider(
             add(BlockTags.MINEABLE_WITH_PICKAXE, block)
         }
 
-        RagiumBlocks.RAGI_STONE_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.RAGI_STONE_SQUARE_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.AZURE_TILE_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.EMBER_STONE_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.PLASTIC_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
-        RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
+        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+            sets.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
+        }
 
         for (glass: DeferredBlock<*> in RagiumBlocks.GLASSES) {
             add(BlockTags.MINEABLE_WITH_PICKAXE, glass)

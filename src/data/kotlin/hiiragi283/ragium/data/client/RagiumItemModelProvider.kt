@@ -8,6 +8,7 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -34,12 +35,9 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)
 
-        RagiumBlocks.RAGI_STONE_SETS.addItemModels(this)
-        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addItemModels(this)
-        RagiumBlocks.AZURE_TILE_SETS.addItemModels(this)
-        RagiumBlocks.EMBER_STONE_SETS.addItemModels(this)
-        RagiumBlocks.PLASTIC_SETS.addItemModels(this)
-        RagiumBlocks.BLUE_NETHER_BRICK_SETS.addItemModels(this)
+        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+            sets.addItemModels(this)
+        }
 
         getBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
             .parent(modelFile(RagiumAPI.id("block/cooked_meat_on_the_bone_stage0")))

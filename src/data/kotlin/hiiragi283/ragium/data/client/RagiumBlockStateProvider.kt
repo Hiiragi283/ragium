@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.block.HTFeastBlock
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -48,12 +49,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)
 
-        RagiumBlocks.RAGI_STONE_SETS.addBlockStates(this)
-        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addBlockStates(this)
-        RagiumBlocks.AZURE_TILE_SETS.addBlockStates(this)
-        RagiumBlocks.EMBER_STONE_SETS.addBlockStates(this)
-        RagiumBlocks.PLASTIC_SETS.addBlockStates(this)
-        RagiumBlocks.BLUE_NETHER_BRICK_SETS.addBlockStates(this)
+        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+            sets.addBlockStates(this)
+        }
 
         // Ore
         RagiumBlocks.RAGINITE_ORES.addBlockStates(this)

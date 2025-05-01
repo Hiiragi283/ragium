@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toStack
+import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -74,12 +75,7 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.AQUATIC_RAGIUM_ESSENCE)
             // Decorations
-            addAll(RagiumBlocks.RAGI_STONE_SETS.getItems())
-            addAll(RagiumBlocks.RAGI_STONE_SQUARE_SETS.getItems())
-            addAll(RagiumBlocks.AZURE_TILE_SETS.getItems())
-            addAll(RagiumBlocks.EMBER_STONE_SETS.getItems())
-            addAll(RagiumBlocks.PLASTIC_SETS.getItems())
-            addAll(RagiumBlocks.BLUE_NETHER_BRICK_SETS.getItems())
+            RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems).forEach(::addAll)
 
             addAll(RagiumBlocks.GLASSES)
             addAll(RagiumBlocks.LED_BLOCKS.values)

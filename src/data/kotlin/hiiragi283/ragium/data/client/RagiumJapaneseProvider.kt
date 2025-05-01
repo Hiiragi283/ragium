@@ -60,6 +60,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationJp("ラギクリスタリル", this)
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationJp("らぎストーン", this)
+        RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationJp("らぎストーンレンガ", this)
         RagiumBlocks.RAGI_STONE_SQUARE_SETS.addTranslationJp("らぎストーン（正方）", this)
         RagiumBlocks.AZURE_TILE_SETS.addTranslationJp("紺碧のタイル", this)
         RagiumBlocks.EMBER_STONE_SETS.addTranslationJp("熾火石", this)

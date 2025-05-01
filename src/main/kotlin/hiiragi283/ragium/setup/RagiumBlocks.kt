@@ -42,12 +42,9 @@ object RagiumBlocks {
         RAGINITE_ORES.init(eventBus)
         RAGI_CRYSTAL_ORES.init(eventBus)
 
-        RAGI_STONE_SETS.init(eventBus)
-        RAGI_STONE_SQUARE_SETS.init(eventBus)
-        AZURE_TILE_SETS.init(eventBus)
-        EMBER_STONE_SETS.init(eventBus)
-        PLASTIC_SETS.init(eventBus)
-        BLUE_NETHER_BRICK_SETS.init(eventBus)
+        for (sets: HTBuildingBlockSets in DECORATIONS) {
+            sets.init(eventBus)
+        }
     }
 
     @JvmStatic
@@ -203,6 +200,13 @@ object RagiumBlocks {
     val RAGI_STONE_SETS = HTBuildingBlockSets("ragi_stone", stone().mapColor(MapColor.COLOR_RED))
 
     @JvmField
+    val RAGI_STONE_BRICKS_SETS = HTBuildingBlockSets(
+        "ragi_stone_bricks",
+        stone().mapColor(MapColor.COLOR_RED),
+        prefix = "ragi_stone_brick",
+    )
+
+    @JvmField
     val RAGI_STONE_SQUARE_SETS = HTBuildingBlockSets("ragi_stone_square", stone().mapColor(MapColor.COLOR_RED))
 
     @JvmField
@@ -229,6 +233,17 @@ object RagiumBlocks {
         "blue_nether_bricks",
         stone().mapColor(MapColor.COLOR_BLUE).sound(SoundType.NETHER_BRICKS),
         prefix = "blue_nether_brick",
+    )
+
+    @JvmField
+    val DECORATIONS: List<HTBuildingBlockSets> = listOf(
+        RAGI_STONE_SETS,
+        RAGI_STONE_BRICKS_SETS,
+        RAGI_STONE_SQUARE_SETS,
+        AZURE_TILE_SETS,
+        EMBER_STONE_SETS,
+        PLASTIC_SETS,
+        BLUE_NETHER_BRICK_SETS,
     )
 
     @JvmField

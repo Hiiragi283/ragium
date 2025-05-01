@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -26,6 +27,15 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('A', Tags.Items.STONES)
             .define('B', HTTagPrefixes.DUST, RagiumMaterials.RAGINITE)
             .save(output)
+        // Ragi-Stone Bricks
+        save(
+            RagiumAPI.id("stonecutting/ragi_stone_bricks"),
+            StonecutterRecipe(
+                "",
+                Ingredient.of(RagiumBlocks.RAGI_STONE_SETS.base),
+                ItemStack(RagiumBlocks.RAGI_STONE_BRICKS_SETS.base),
+            ),
+        )
         // Ragi-Stone Square
         save(
             RagiumAPI.id("stonecutting/ragi_stone_square"),
@@ -62,12 +72,9 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
 
-        RagiumBlocks.RAGI_STONE_SETS.addRecipes(output, provider)
-        RagiumBlocks.RAGI_STONE_SQUARE_SETS.addRecipes(output, provider)
-        RagiumBlocks.AZURE_TILE_SETS.addRecipes(output, provider)
-        RagiumBlocks.EMBER_STONE_SETS.addRecipes(output, provider)
-        RagiumBlocks.PLASTIC_SETS.addRecipes(output, provider)
-        RagiumBlocks.BLUE_NETHER_BRICK_SETS.addRecipes(output, provider)
+        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+            sets.addRecipes(output, provider)
+        }
 
         glass()
     }

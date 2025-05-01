@@ -21,9 +21,9 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -205,12 +205,9 @@ class RagiumItemTagProvider(
 
     @Suppress("DEPRECATION")
     private fun category() {
-        RagiumBlocks.RAGI_STONE_SETS.appendItemTags(this)
-        RagiumBlocks.RAGI_STONE_SQUARE_SETS.appendItemTags(this)
-        RagiumBlocks.AZURE_TILE_SETS.appendItemTags(this)
-        RagiumBlocks.EMBER_STONE_SETS.appendItemTags(this)
-        RagiumBlocks.PLASTIC_SETS.appendItemTags(this)
-        RagiumBlocks.BLUE_NETHER_BRICK_SETS.appendItemTags(this)
+        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+            sets.appendItemTags(this)
+        }
 
         for (block: DeferredBlock<*> in RagiumBlocks.LED_BLOCKS.values) {
             addItem(RagiumItemTags.LED_BLOCKS, block)
