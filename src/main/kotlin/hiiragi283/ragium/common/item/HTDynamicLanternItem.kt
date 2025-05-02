@@ -17,7 +17,7 @@ class HTDynamicLanternItem(properties: Properties) : HTRangedItem(properties) {
         slotId: Int,
         isSelected: Boolean,
     ) {
-        if (!stack.has(activeComponent)) return
+        if (!isActive(stack)) return
         val range: Int = getRange(stack, level)
         for (pos: BlockPos in BlockPos.betweenClosed(-range, -range, -range, range, range, range)) {
             val posIn: BlockPos = entity.blockPosition().offset(pos)

@@ -105,7 +105,7 @@ object RagiumRuntimeEvents {
             if (dropCount > 0) {
                 level.destroyBlock(pos, false)
                 stack.consume(1, player)
-                dropStackAt(player, RagiumItems.AZURE_SHARD, dropCount)
+                dropStackAt(level, pos, RagiumItems.AZURE_SHARD, dropCount)
                 event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
                 return
             }

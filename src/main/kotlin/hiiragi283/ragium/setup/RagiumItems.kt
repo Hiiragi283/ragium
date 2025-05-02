@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.component.HTConsumableData
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.HTMaterialItemLike
@@ -17,6 +18,7 @@ import hiiragi283.ragium.util.HTToolSets
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
@@ -236,7 +238,7 @@ object RagiumItems {
     val ICE_CREAM: DeferredItem<HTConsumableItem> = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
 
     @JvmField
-    val ICE_CREAM_SODA: DeferredItem<HTIceCreamSodaItem> = register("ice_cream_soda", factory = ::HTIceCreamSodaItem)
+    val ICE_CREAM_SODA: DeferredItem<HTConsumableItem> = register("ice_cream_soda", factory = ::HTConsumableItem)
 
     // Meat
     @JvmField
@@ -356,6 +358,12 @@ object RagiumItems {
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumComponentTypes.CONSUMABLE.get(), HTConsumableData(sound = SoundEvents.GENERIC_DRINK))
+        }
+        event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumComponentTypes.CONSUMABLE.get(), HTConsumableData(sound = SoundEvents.HONEY_DRINK))
+        }
         // Ingot
         event.modify(Ingots.CHEESE) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.APPLE)

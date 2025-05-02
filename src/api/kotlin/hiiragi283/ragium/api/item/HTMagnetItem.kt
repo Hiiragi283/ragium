@@ -15,7 +15,7 @@ abstract class HTMagnetItem<T : Entity>(properties: Properties) : HTRangedItem(p
         isSelected: Boolean,
     ) {
         val player: Player = entity as? Player ?: return
-        if (!stack.has(activeComponent)) return
+        if (!isActive(stack)) return
         val range: Int = getRange(stack, level)
         val entitiesInRange: List<T> = level.getEntitiesOfClass(
             entityClass,

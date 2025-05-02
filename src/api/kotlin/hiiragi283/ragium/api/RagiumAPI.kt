@@ -5,6 +5,7 @@ import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.component.HTConsumableData
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -15,12 +16,17 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.common.util.FakePlayer
@@ -29,7 +35,6 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import java.util.*
-import net.minecraft.util.Unit as MCUnit
 
 interface RagiumAPI {
     companion object {
@@ -61,7 +66,17 @@ interface RagiumAPI {
 
     //    Component    //
 
-    fun getActiveComponent(): DataComponentType<MCUnit>
+    fun getActiveComponent(): DataComponentType<Boolean>
+
+    fun getConsumeComponent(): DataComponentType<HTConsumableData>
+
+    //    Item    //
+
+    fun createSoda(potion: Holder<Potion>, count: Int = 1): ItemStack = createSoda(potion.value().effects, count)
+
+    fun createSoda(potion: PotionContents, count: Int = 1): ItemStack = createSoda(potion.allEffects.toList(), count)
+
+    fun createSoda(instances: List<MobEffectInstance>, count: Int = 1): ItemStack
 
     //    Server    //
 

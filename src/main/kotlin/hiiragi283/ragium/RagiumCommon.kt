@@ -2,6 +2,7 @@ package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
@@ -16,6 +17,7 @@ import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
+import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
 
@@ -29,6 +31,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     init {
         NeoForgeMod.enableMilkFluid()
 
+        eventBus.addListener(::registerRegistries)
         eventBus.addListener(::construct)
         eventBus.addListener(::commonSetup)
         eventBus.addListener(::registerPackets)
@@ -56,6 +59,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         }
 
         LOGGER.info("Ragium loaded!")
+    }
+
+    private fun registerRegistries(event: NewRegistryEvent) {
+        event.register(RagiumRegistries.CONSUME_EFFECT_TYPE)
+
+        LOGGER.info("Registered new registries!")
     }
 
     private fun construct(event: FMLConstructModEvent) {}

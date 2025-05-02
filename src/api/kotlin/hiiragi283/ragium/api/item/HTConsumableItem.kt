@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api.item
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.component.HTConsumableData
+import hiiragi283.ragium.api.component.HTConsumeEffect
 import hiiragi283.ragium.api.extension.asPlayer
 import hiiragi283.ragium.api.extension.dropStackAt
 import net.minecraft.advancements.CriteriaTriggers
@@ -16,10 +19,14 @@ import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 
 open class HTConsumableItem(properties: Properties) : Item(properties) {
+    protected fun getConsumeData(stack: ItemStack): HTConsumableData? = stack.get(RagiumAPI.getInstance().getConsumeComponent())
+
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
         // サーバー側で固有の挙動を起こす
         if (!level.isClientSide) {
-            affectConsumer(stack, level, livingEntity)
+            getConsumeData(stack)
+                ?.consumeEffects
+                ?.forEach { effect: HTConsumeEffect -> effect.apply(level, stack, livingEntity) }
         }
         val remainder: ItemStack = stack.craftingRemainingItem
         // 食べ物のをプロパティを持っている場合はデフォルトの処理を行う
@@ -44,7 +51,8 @@ open class HTConsumableItem(properties: Properties) : Item(properties) {
         }
     }
 
-    open fun affectConsumer(stack: ItemStack, level: Level, consumer: LivingEntity) {}
+    override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int =
+        getConsumeData(stack)?.consumeSeconds ?: super.getUseDuration(stack, entity)
 
     override fun appendHoverText(
         stack: ItemStack,

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.recipe.custom
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.item.HTIceCreamSodaItem
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
@@ -46,7 +46,7 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
                 potion = stackIn.get(DataComponents.POTION_CONTENTS)!!
             }
         }
-        return HTIceCreamSodaItem.createSoda(potion)
+        return RagiumAPI.getInstance().createSoda(potion)
     }
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width >= 2 && height >= 2

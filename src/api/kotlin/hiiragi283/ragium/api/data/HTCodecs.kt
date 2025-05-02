@@ -1,47 +1,18 @@
 package hiiragi283.ragium.api.data
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.core.Holder
-import net.minecraft.core.Registry
-import net.minecraft.resources.RegistryFixedCodec
-import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
-import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
+import com.mojang.serialization.DataResult
+import net.minecraft.world.item.UseAnim
 
 object HTCodecs {
     @JvmField
-    val BLOCK_HOLDER: Codec<DeferredBlock<*>> = ResourceLocation.CODEC.xmap(
-        { id: ResourceLocation -> DeferredBlock.createBlock<Block>(id) },
-        DeferredBlock<*>::getId,
+    val USE_ANIM: Codec<UseAnim> = Codec.STRING.comapFlatMap(
+        { name: String ->
+            for (anim: UseAnim in UseAnim.entries) {
+                if (anim.name.lowercase() == name) return@comapFlatMap DataResult.success(anim)
+            }
+            DataResult.error { "Unknown UseAnim: $name!" }
+        },
+        { anim: UseAnim -> anim.name.lowercase() },
     )
-
-    @JvmField
-    val ITEM_HOLDER: Codec<DeferredItem<*>> = ResourceLocation.CODEC.xmap(
-        { id: ResourceLocation -> DeferredItem.createItem<Item>(id) },
-        DeferredItem<*>::getId,
-    )
-
-    @JvmField
-    val INT_RANGE: Codec<IntRange> = RecordCodecBuilder.create { instance ->
-        instance
-            .group(
-                Codec.INT.fieldOf("min").forGetter(IntRange::first),
-                Codec.INT.fieldOf("max").forGetter(IntRange::last),
-            ).apply(instance) { min: Int, max: Int -> (min..max) }
-    }
-
-    @JvmStatic
-    fun <T : Any> deferredHolder(registry: ResourceKey<out Registry<T>>): Codec<DeferredHolder<T, T>> = ResourceLocation.CODEC.xmap(
-        { id: ResourceLocation -> DeferredHolder.create(registry, id) },
-        DeferredHolder<T, T>::getId,
-    )
-
-    @JvmStatic
-    fun <T : Any> holder(registry: ResourceKey<out Registry<T>>): Codec<Holder<T>> =
-        Codec.withAlternative(RegistryFixedCodec.create(registry), deferredHolder(registry))
 }

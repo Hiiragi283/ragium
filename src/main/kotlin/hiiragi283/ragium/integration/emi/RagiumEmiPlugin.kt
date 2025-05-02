@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import hiiragi283.ragium.common.item.HTIceCreamSodaItem
 import hiiragi283.ragium.common.recipe.*
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
@@ -268,7 +267,7 @@ class RagiumEmiPlugin : EmiPlugin {
                                 EmiStack.of(createPotionStack(holder)),
                                 EmiIngredient.of(Tags.Items.DYES_GREEN),
                             ),
-                            EmiStack.of(HTIceCreamSodaItem.createSoda(holder)),
+                            EmiStack.of(RagiumAPI.getInstance().createSoda(holder)),
                             id,
                             true,
                         )

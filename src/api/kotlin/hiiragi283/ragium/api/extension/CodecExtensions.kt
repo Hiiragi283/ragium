@@ -6,16 +6,7 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.util.ExtraCodecs
 import java.util.*
-import java.util.function.Supplier
-
-//    Codec    //
-
-fun <T : Any> Codec<T>.wrapEmpty(emptyValue: Supplier<T>): Codec<T> = ExtraCodecs.optionalEmptyMap(this).xmap(
-    { optional: Optional<T> -> optional.orElseGet(emptyValue) },
-    { value: T -> if (value == emptyValue.get()) Optional.empty() else Optional.of(value) },
-)
 
 //    StreamCodec    //
 
