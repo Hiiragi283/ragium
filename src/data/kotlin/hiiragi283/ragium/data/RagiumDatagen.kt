@@ -7,13 +7,15 @@ import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.server.RagiumAdvancementGenerator
-import hiiragi283.ragium.data.server.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumBiomeModifierProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumConfiguredProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumPlacedProvider
+import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
+import hiiragi283.ragium.data.server.loot.RagiumCustomLootProvider
+import hiiragi283.ragium.data.server.loot.RagiumGlobalLootProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumEnchantmentTagProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagProvider
@@ -66,10 +68,14 @@ object RagiumDatagen {
             LootTableProvider(
                 output,
                 setOf(),
-                listOf(LootTableProvider.SubProviderEntry(::RagiumBlockLootProvider, LootContextParamSets.BLOCK)),
+                listOf(
+                    LootTableProvider.SubProviderEntry(::RagiumBlockLootProvider, LootContextParamSets.BLOCK),
+                    LootTableProvider.SubProviderEntry(::RagiumCustomLootProvider, LootContextParamSets.BLOCK),
+                ),
                 provider,
             ),
         )
+        generator.addProvider(event.includeServer(), RagiumGlobalLootProvider(output, provider))
 
         generator.addProvider(
             event.includeServer(),

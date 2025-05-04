@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.server
+package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.extension.enchLookup

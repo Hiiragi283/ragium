@@ -474,16 +474,15 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun emi() {
+        add(RagiumTranslationKeys.EMI_AMBROSIA, "Always edible and not consumed!")
         add(RagiumTranslationKeys.EMI_ASH_LOG, "Drop Ash Dust when harvested.")
         add(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS, "This glass block can be harvested without Silk Touch.")
-        add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "As the same blast resistance as Obsidian.")
-        add(RagiumTranslationKeys.EMI_SOUL_GLASS, "Only passable with Players.")
-
-        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items in the effective range")
-        add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
-
-        add(RagiumTranslationKeys.EMI_AMBROSIA, "Always edible and not consumed!")
         add(RagiumTranslationKeys.EMI_ICE_CREAM, "Extinguish fire when eaten.")
+        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items in the effective range")
+        add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "As the same blast resistance as Obsidian.")
+        add(RagiumTranslationKeys.EMI_RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
+        add(RagiumTranslationKeys.EMI_SOUL_GLASS, "Only passable with Players.")
+        add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
         add(RagiumTranslationKeys.EMI_WARPED_WART, "Clear one bad effect randomly when eaten.")
     }
 }

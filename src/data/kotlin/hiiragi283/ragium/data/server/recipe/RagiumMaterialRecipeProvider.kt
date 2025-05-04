@@ -76,12 +76,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItems.RAGIUM_ESSENCE)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.RAGI_CHERRY)
-            .hollow8()
-            .define('A', RagiumItems.CHIPPED_RAGIUM_ESSENCE)
-            .define('B', Tags.Items.FOODS_FRUIT)
-            .save(output)
-
         HTShapelessRecipeBuilder(RagiumItems.RAGI_COKE)
             .addIngredient(ItemTags.COALS)
             .addIngredient(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
