@@ -175,7 +175,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun item() {
         // Material
-        addItem(RagiumItems.RAW_RAGINITE, "ラギナイトの原石")
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.AZURE_SHARD, "紺碧の欠片")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
@@ -208,13 +207,16 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumItems.RAGI_ALLOY_TOOLS.addTranslationJp("ラギ合金", this)
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
 
+        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
+        addItem(RagiumItems.AZURE_TICKET, "紺碧チケット")
+        addItem(RagiumItems.DEEP_TICKET, "深層チケット")
+
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
         addItem(RagiumItems.EXP_MAGNET, "EXPマグネット")
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
-        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Food
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
         addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
@@ -261,7 +263,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "海洋ラギウムエッセンス")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
-        addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "ラギウムエッセンスの欠片")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.ENGINE, "V8エンジン")
@@ -479,11 +480,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "汚れたラギナイトの懸濁液")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
-        addItem(RagiumMekanismAddon.ITEM_DIRTY_RAGINITE_DUST, "汚れたラギナイトの粉")
-        addItem(RagiumMekanismAddon.ITEM_RAGINITE_CLUMP, "ラギナイトの凝塊")
-        addItem(RagiumMekanismAddon.ITEM_RAGINITE_SHARD, "ラギナイトの欠片")
-        addItem(RagiumMekanismAddon.ITEM_RAGINITE_CRYSTAL, "ラギナイトの結晶")
-
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "濃縮紺碧エッセンス")
     }
 

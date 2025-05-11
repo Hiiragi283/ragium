@@ -8,10 +8,10 @@
   "type": "mekanism:enriching",
   "input": {
     "count": 1,
-    "tag": "c:dirty_dusts/raginite"
+    "tag": "c:ores/raginite"
   },
   "output": {
-    "count": 1,
+    "count": 12,
     "id": "ragium:raginite_dust"
   }
 }

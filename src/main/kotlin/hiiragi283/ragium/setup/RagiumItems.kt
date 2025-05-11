@@ -63,11 +63,6 @@ object RagiumItems {
 
     //    Materials    //
 
-    // Raw Materials
-
-    @JvmField
-    val RAW_RAGINITE: DeferredItem<Item> = register("raw_raginite")
-
     @JvmField
     val RAGI_COKE: DeferredItem<Item> = register("ragi_coke")
 
@@ -139,9 +134,6 @@ object RagiumItems {
     val RAGIUM_ESSENCE: DeferredItem<Item> = register("ragium_essence")
 
     @JvmField
-    val CHIPPED_RAGIUM_ESSENCE: DeferredItem<Item> = register("chipped_ragium_essence")
-
-    @JvmField
     val AQUATIC_RAGIUM_ESSENCE: DeferredItem<Item> = register("aquatic_ragium_essence")
 
     @JvmField
@@ -153,6 +145,16 @@ object RagiumItems {
     val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, "azure_steel", RagiumItemTags.INGOTS_AZURE_STEEL)
 
     //    Tools    //
+
+    // Tickets
+    @JvmField
+    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket")
+
+    @JvmField
+    val AZURE_TICKET: DeferredItem<Item> = register("azure_ticket")
+
+    @JvmField
+    val DEEP_TICKET: DeferredItem<Item> = register("deep_ticket")
 
     @JvmField
     val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolMaterials.RAGI_ALLOY, "ragi_alloy", RagiumItemTags.INGOTS_RAGI_ALLOY)
@@ -179,10 +181,6 @@ object RagiumItems {
     @JvmField
     val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> =
         register("ragi_lantern", ::HTDynamicLanternItem)
-
-    @JvmField
-    val RAGI_TICKET: DeferredItem<HTRagiTicketItem> =
-        register("ragi_ticket", ::HTRagiTicketItem, Item.Properties().rarity(Rarity.EPIC))
 
     //    Foods    //
 
@@ -339,10 +337,6 @@ object RagiumItems {
 
         // Ragium Essence
         event.modify(RAGIUM_ESSENCE) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-            builder.set(DataComponents.RARITY, Rarity.EPIC)
-        }
-        event.modify(CHIPPED_RAGIUM_ESSENCE) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }

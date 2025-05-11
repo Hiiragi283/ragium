@@ -1,10 +1,10 @@
 {
   "criteria": {
-    "has_raginite": {
+    "has_ragi_ticket": {
       "conditions": {
         "items": [
           {
-            "items": "#c:raw_materials/raginite"
+            "items": "ragium:ragi_ticket"
           }
         ]
       },
@@ -19,14 +19,14 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:inactive_ragium_essence"
+      "id": "ragium:ragi_ticket"
     },
     "show_toast": false,
     "title": "Ragium"
   },
   "requirements": [
     [
-      "has_raginite"
+      "has_ragi_ticket"
     ]
   ],
   "sends_telemetry_event": true

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.bootstrap
 
-import hiiragi283.ragium.api.util.HTWorldGenData
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistrySetBuilder
@@ -8,9 +7,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.placement.NetherPlacements
 import net.minecraft.tags.BiomeTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.level.biome.Biome
-import net.minecraft.world.level.levelgen.GenerationStep
 import net.neoforged.neoforge.common.world.BiomeModifier
 import net.neoforged.neoforge.common.world.BiomeModifiers
 
@@ -20,12 +17,12 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
     override fun run(context: BootstrapContext<BiomeModifier>) {
         biomeGetter = context.lookup(Registries.BIOME)
         // Ore
-        registerFeature(
+        /*registerFeature(
             context,
             RagiumWorldGenData.ORE_RAGINITE,
             BiomeTags.IS_OVERWORLD,
             GenerationStep.Decoration.UNDERGROUND_ORES,
-        )
+        )*/
 
         // Remove Lava Springs
         context.register(
@@ -42,7 +39,7 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
         )
     }
 
-    private fun registerFeature(
+    /*private fun registerFeature(
         context: BootstrapContext<BiomeModifier>,
         data: HTWorldGenData,
         biomeTag: TagKey<Biome>,
@@ -56,5 +53,5 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
                 step,
             ),
         )
-    }
+    }*/
 }

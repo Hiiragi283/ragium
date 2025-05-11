@@ -8,7 +8,7 @@
   "type": "mekanism:chemical_conversion",
   "input": {
     "count": 1,
-    "item": "ragium:enriched_raginite"
+    "tag": "c:enriched/raginite"
   },
   "output": {
     "amount": 80,

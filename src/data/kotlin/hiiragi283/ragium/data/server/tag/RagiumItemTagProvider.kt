@@ -100,8 +100,8 @@ class RagiumItemTagProvider(
         addTag(Tags.Items.GEMS, RagiumItemTags.GEMS_COAL)
         addItem(RagiumItemTags.GEMS_COAL, Items.COAL)
         // Raw Materials
-        add(RagiumItemTags.RAW_MATERIALS_RAGINITE, RagiumItems.RAW_RAGINITE)
-        addTag(Tags.Items.RAW_MATERIALS, RagiumItemTags.RAW_MATERIALS_RAGINITE)
+        // add(RagiumItemTags.RAW_MATERIALS_RAGINITE, RagiumItems.RAW_RAGINITE)
+        // addTag(Tags.Items.RAW_MATERIALS, RagiumItemTags.RAW_MATERIALS_RAGINITE)
         // Storage Blocks
         addItem(RagiumItemTags.STORAGE_BLOCKS_RAGI_CRYSTAL, RagiumBlocks.RAGI_CRYSTAL_BLOCK)
         addItem(RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL, RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
@@ -124,18 +124,10 @@ class RagiumItemTagProvider(
         addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_CHEESE)
         addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE)
         // Mekanism Addon
-        add(RagiumItemTags.CLUMPS_RAGINITE, RagiumMekanismAddon.ITEM_RAGINITE_CLUMP)
-        add(RagiumItemTags.CRYSTALS_RAGINITE, RagiumMekanismAddon.ITEM_RAGINITE_CRYSTAL)
-        add(RagiumItemTags.DIRTY_DUSTS_RAGINITE, RagiumMekanismAddon.ITEM_DIRTY_RAGINITE_DUST)
         add(RagiumItemTags.ENRICHED_AZURE, RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
         add(RagiumItemTags.ENRICHED_RAGINITE, RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
-        add(RagiumItemTags.SHARDS_RAGINITE, RagiumMekanismAddon.ITEM_RAGINITE_SHARD)
-        addTag(MekanismTags.Items.CLUMPS, RagiumItemTags.CLUMPS_RAGINITE)
-        addTag(MekanismTags.Items.CRYSTALS, RagiumItemTags.CRYSTALS_RAGINITE)
-        addTag(MekanismTags.Items.DIRTY_DUSTS, RagiumItemTags.DIRTY_DUSTS_RAGINITE)
         addTag(MekanismTags.Items.ENRICHED, RagiumItemTags.ENRICHED_AZURE)
         addTag(MekanismTags.Items.ENRICHED, RagiumItemTags.ENRICHED_RAGINITE)
-        addTag(MekanismTags.Items.SHARDS, RagiumItemTags.SHARDS_RAGINITE)
 
         /*fun addMaterialTag(
             prefix: HTTagPrefix,

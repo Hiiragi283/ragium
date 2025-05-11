@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:raginite_dust",
+  "parent": "ragium:root",
   "criteria": {
-    "has_ragi_alloy_ingot": {
+    "has_raginite_dust": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_ingot"
+            "items": "ragium:raginite_dust"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.ragi_alloy_ingot.desc"
+      "translate": "advancements.ragium.raginite_dust.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_alloy_ingot"
+      "id": "ragium:raginite_dust"
     },
     "title": {
-      "translate": "item.ragium.ragi_alloy_ingot"
+      "translate": "item.ragium.raginite_dust"
     }
   },
   "requirements": [
     [
-      "has_ragi_alloy_ingot"
+      "has_raginite_dust"
     ]
   ],
   "sends_telemetry_event": true

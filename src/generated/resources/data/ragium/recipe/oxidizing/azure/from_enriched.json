@@ -8,7 +8,7 @@
   "type": "mekanism:oxidizing",
   "input": {
     "count": 1,
-    "item": "ragium:enriched_azure"
+    "tag": "c:enriched/azure"
   },
   "output": {
     "amount": 80,

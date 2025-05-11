@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:raw_materials/raginite"
+      "tag": "c:dusts/raginite"
     },
     "B": {
       "tag": "c:ingots/copper"
     }
   },
   "pattern": [
-    "AAA",
+    " A ",
     "ABA",
-    "AAA"
+    " A "
   ],
   "result": {
     "count": 1,

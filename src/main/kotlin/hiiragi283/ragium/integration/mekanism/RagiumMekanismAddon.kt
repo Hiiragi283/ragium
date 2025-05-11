@@ -3,7 +3,6 @@ package hiiragi283.ragium.integration.mekanism
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
@@ -18,8 +17,6 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.ItemLike
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
@@ -54,18 +51,6 @@ object RagiumMekanismAddon : RagiumAddon {
     val ITEM_ENRICHED_RAGINITE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_raginite")
 
     @JvmField
-    val ITEM_DIRTY_RAGINITE_DUST: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("dirty_raginite_dust")
-
-    @JvmField
-    val ITEM_RAGINITE_CLUMP: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("raginite_clump")
-
-    @JvmField
-    val ITEM_RAGINITE_SHARD: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("raginite_shard")
-
-    @JvmField
-    val ITEM_RAGINITE_CRYSTAL: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("raginite_crystal")
-
-    @JvmField
     val ITEM_ENRICHED_AZURE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_azure")
 
     //    RagiumAddon    //
@@ -86,27 +71,15 @@ object RagiumMekanismAddon : RagiumAddon {
         }
     }
 
-    private lateinit var lastStack: ItemStack
-
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        fun acceptRaginite(item: ItemLike) {
-            val stack: ItemStack = item.toStack()
+        if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {
+            // Raginite
             event.insertAfter(
-                lastStack,
-                stack,
+                RagiumItems.RAGI_COKE.toStack(),
+                ITEM_ENRICHED_RAGINITE.toStack(),
                 CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )
-            lastStack = stack
-        }
 
-        if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {
-            lastStack = RagiumItems.RAW_RAGINITE.toStack()
-            // Raginite
-            acceptRaginite(ITEM_ENRICHED_RAGINITE)
-            acceptRaginite(ITEM_DIRTY_RAGINITE_DUST)
-            acceptRaginite(ITEM_RAGINITE_CLUMP)
-            acceptRaginite(ITEM_RAGINITE_SHARD)
-            acceptRaginite(ITEM_RAGINITE_CRYSTAL)
             // Azure
             event.insertAfter(
                 RagiumItems.AZURE_SHARD.toStack(),

@@ -53,8 +53,6 @@ object RagiumCreativeTabs {
 
             addAll(RagiumBlocks.STORAGE_BLOCKS)
             // Material Items
-            // Raw Materials
-            add(RagiumItems.RAW_RAGINITE)
             add(RagiumItems.RAGI_COKE)
             add(RagiumItems.AZURE_SHARD)
 
@@ -85,7 +83,6 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
             add(RagiumItems.RAGIUM_ESSENCE)
-            add(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
 
             add(RagiumItems.AQUATIC_RAGIUM_ESSENCE)
             // Decorations
@@ -103,13 +100,16 @@ object RagiumCreativeTabs {
             addAll(RagiumItems.RAGI_ALLOY_TOOLS.itemHolders)
             addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
 
+            add(RagiumItems.RAGI_TICKET)
+            add(RagiumItems.AZURE_TICKET)
+            add(RagiumItems.DEEP_TICKET)
+
             add(RagiumItems.ENDER_BUNDLE)
             add(RagiumItems.ITEM_MAGNET)
             add(RagiumItems.EXP_MAGNET)
             add(RagiumItems.TRADER_CATALOG)
             add(RagiumItems.TELEPORT_TICKET)
             add(RagiumItems.RAGI_LANTERN)
-            add(RagiumItems.RAGI_TICKET)
 
             addAll(RagiumItems.Molds.entries)
             // Foods

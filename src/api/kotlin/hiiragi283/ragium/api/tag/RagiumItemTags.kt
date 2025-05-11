@@ -69,11 +69,6 @@ object RagiumItemTags {
     @JvmField
     val ORES_RAGINITE: TagKey<Item> = commonTag("ores/raginite")
 
-    //    Raw Materials    //
-
-    @JvmField
-    val RAW_MATERIALS_RAGINITE: TagKey<Item> = commonTag("raw_materials/raginite")
-
     //    Storage Blocks    //
 
     @JvmField
@@ -107,18 +102,6 @@ object RagiumItemTags {
 
     @JvmField
     val ENRICHED_RAGINITE: TagKey<Item> = commonTag("enriched/raginite")
-
-    @JvmField
-    val DIRTY_DUSTS_RAGINITE: TagKey<Item> = commonTag("dirty_dusts/raginite")
-
-    @JvmField
-    val CLUMPS_RAGINITE: TagKey<Item> = commonTag("clumps/raginite")
-
-    @JvmField
-    val SHARDS_RAGINITE: TagKey<Item> = commonTag("shards/raginite")
-
-    @JvmField
-    val CRYSTALS_RAGINITE: TagKey<Item> = commonTag("crystals/raginite")
 
     @JvmField
     val ENRICHED_AZURE: TagKey<Item> = commonTag("enriched/azure")

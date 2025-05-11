@@ -15,7 +15,20 @@
         }
       ],
       "ingredient": {
-        "tag": "c:gems/lapis"
+        "item": "ragium:azure_ticket"
+      }
+    },
+    "minecraft:deepslate_redstone_ore": {
+      "actions": [
+        {
+          "type": "c:replace",
+          "state": {
+            "Name": "ragium:deepslate_raginite_ore"
+          }
+        }
+      ],
+      "ingredient": {
+        "item": "ragium:ragi_ticket"
       }
     },
     "minecraft:large_amethyst_bud": {
@@ -33,7 +46,7 @@
         }
       ],
       "ingredient": {
-        "tag": "c:gems/lapis"
+        "item": "ragium:azure_ticket"
       }
     },
     "minecraft:medium_amethyst_bud": {
@@ -51,7 +64,20 @@
         }
       ],
       "ingredient": {
-        "tag": "c:gems/lapis"
+        "item": "ragium:azure_ticket"
+      }
+    },
+    "minecraft:redstone_ore": {
+      "actions": [
+        {
+          "type": "c:replace",
+          "state": {
+            "Name": "ragium:raginite_ore"
+          }
+        }
+      ],
+      "ingredient": {
+        "item": "ragium:ragi_ticket"
       }
     },
     "minecraft:small_amethyst_bud": {
@@ -69,7 +95,7 @@
         }
       ],
       "ingredient": {
-        "tag": "c:gems/lapis"
+        "item": "ragium:azure_ticket"
       }
     }
   }

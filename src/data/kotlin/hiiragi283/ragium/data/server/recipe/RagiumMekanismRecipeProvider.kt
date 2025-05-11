@@ -7,17 +7,18 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.IMekanismAccess
 import mekanism.api.chemical.ChemicalStack
-import mekanism.api.datagen.recipe.builder.*
+import mekanism.api.datagen.recipe.builder.ItemStackChemicalToItemStackRecipeBuilder
+import mekanism.api.datagen.recipe.builder.ItemStackToChemicalRecipeBuilder
+import mekanism.api.datagen.recipe.builder.ItemStackToItemStackRecipeBuilder
 import mekanism.api.recipes.ingredients.ItemStackIngredient
 import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
-import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
-import mekanism.common.registries.MekanismChemicals
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider() {
     private val itemHelper: IItemStackIngredientCreator = IMekanismAccess.INSTANCE.itemStackIngredientCreator()
-    private val fluidHelper: IFluidStackIngredientCreator = IMekanismAccess.INSTANCE.fluidStackIngredientCreator()
+
+    // private val fluidHelper: IFluidStackIngredientCreator = IMekanismAccess.INSTANCE.fluidStackIngredientCreator()
     private val chemicalHelper: IChemicalStackIngredientCreator =
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
 
@@ -26,7 +27,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         enriching()
         infusing()
 
-        oreProcess()
+        // oreProcess()
     }
 
     private fun chemicalConversion() {
@@ -38,7 +39,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             ).build(output, RagiumAPI.id("$prefix/raginite/from_dust"))
             // Enriched -> Chemical
             factory(
-                itemHelper.from(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE),
+                itemHelper.from(RagiumItemTags.ENRICHED_RAGINITE),
                 RagiumMekanismAddon.CHEMICAL_RAGINITE.asStack(80),
             ).build(output, RagiumAPI.id("$prefix/raginite/from_enriched"))
 
@@ -49,7 +50,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             ).build(output, RagiumAPI.id("$prefix/azure/from_shard"))
             // Enriched -> Chemical
             factory(
-                itemHelper.from(RagiumMekanismAddon.ITEM_ENRICHED_AZURE),
+                itemHelper.from(RagiumItemTags.ENRICHED_AZURE),
                 RagiumMekanismAddon.CHEMICAL_AZURE.asStack(80),
             ).build(output, RagiumAPI.id("$prefix/azure/from_enriched"))
         }
@@ -70,6 +71,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
                 itemHelper.from(RagiumItems.AZURE_SHARD),
                 RagiumMekanismAddon.ITEM_ENRICHED_AZURE.toStack(),
             ).build(output, RagiumAPI.id("enriching/enrich/azure"))
+
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(RagiumItemTags.ORES_RAGINITE),
+                RagiumItems.RAGINITE_DUST.toStack(12),
+            ).build(output, RagiumAPI.id("processing/raginite/from_ore"))
     }
 
     private fun infusing() {
@@ -108,12 +115,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             ).build(output, RagiumAPI.id("metallurgic_infusing/azure_steel"))
     }
 
-    private fun oreProcess() {
+    /*private fun oreProcess() {
         // Enriching
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(RagiumItemTags.ORES_RAGINITE),
-                RagiumItems.RAGINITE_DUST.toStack(2),
+                RagiumItems.RAGINITE_DUST.toStack(12),
             ).build(output, RagiumAPI.id("processing/raginite/dust/from_ore"))
 
         val rawMaterial: ItemStackIngredient = itemHelper.from(RagiumItemTags.RAW_MATERIALS_RAGINITE, 3)
@@ -213,5 +220,5 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry, 200),
                 RagiumMekanismAddon.ITEM_RAGINITE_CRYSTAL.toStack(),
             ).build(output, RagiumAPI.id("processing/raginite/crystal/from_slurry"))
-    }
+    }*/
 }

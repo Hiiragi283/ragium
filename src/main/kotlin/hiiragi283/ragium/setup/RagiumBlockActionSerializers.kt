@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.common.data.HTBreakBlockAction
 import hiiragi283.ragium.common.data.HTDropItemBlockAction
+import hiiragi283.ragium.common.data.HTReplaceBlockAction
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
@@ -23,4 +24,7 @@ object RagiumBlockActionSerializers {
 
     @JvmField
     val DROP_ITEM: Supplier<MapCodec<HTDropItemBlockAction>> = register("drop_item", HTDropItemBlockAction.CODEC)
+
+    @JvmField
+    val REPLACE: Supplier<MapCodec<HTReplaceBlockAction>> = register("replace", HTReplaceBlockAction.CODEC)
 }

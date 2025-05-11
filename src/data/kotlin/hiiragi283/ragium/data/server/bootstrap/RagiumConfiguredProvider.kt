@@ -1,22 +1,13 @@
 package hiiragi283.ragium.data.server.bootstrap
 
-import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.api.util.HTWorldGenData
-import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
-import net.minecraft.world.level.levelgen.feature.Feature
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration
-import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest
-import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 
 object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>> {
     override fun run(context: BootstrapContext<ConfiguredFeature<*, *>>) {
         // Ore
-        register(
+        /*register(
             context,
             RagiumWorldGenData.ORE_RAGINITE,
             Feature.ORE,
@@ -29,7 +20,7 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
                 },
                 16,
             ),
-        )
+        )*/
         // Geode
         /*register(
             context,
@@ -64,12 +55,12 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
         )*/
     }
 
-    private fun <FC : FeatureConfiguration> register(
+    /*private fun <FC : FeatureConfiguration> register(
         context: BootstrapContext<ConfiguredFeature<*, *>>,
         data: HTWorldGenData,
         feature: Feature<FC>,
         config: FC,
     ) {
         data.configuredHolder = context.register(data.configuredKey, ConfiguredFeature(feature, config))
-    }
+    }*/
 }

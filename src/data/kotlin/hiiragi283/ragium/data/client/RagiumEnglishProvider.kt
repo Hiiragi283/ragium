@@ -172,7 +172,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
     private fun item() {
         // Material
-        addItem(RagiumItems.RAW_RAGINITE, "Raw Raginite")
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.AZURE_SHARD, "Azure Shard")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
@@ -205,13 +204,16 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         RagiumItems.RAGI_ALLOY_TOOLS.addTranslationEn("Ragi-Alloy", this)
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
 
+        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
+        addItem(RagiumItems.AZURE_TICKET, "Azure Ticket")
+        addItem(RagiumItems.DEEP_TICKET, "Deep Ticket")
+
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
         addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
         addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
-        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Food
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
         addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
@@ -258,7 +260,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "Aquatic Ragium Essence")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
-        addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "Chipped Ragium Essence")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "Crystal Processor")
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
         addItem(RagiumItems.ENGINE, "V8 Engine")
@@ -476,11 +477,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "Dirty Raginite Slurry")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
-        addItem(RagiumMekanismAddon.ITEM_DIRTY_RAGINITE_DUST, "Dirty Raginite Dust")
-        addItem(RagiumMekanismAddon.ITEM_RAGINITE_CLUMP, "Raginite Clump")
-        addItem(RagiumMekanismAddon.ITEM_RAGINITE_SHARD, "Raginite Shard")
-        addItem(RagiumMekanismAddon.ITEM_RAGINITE_CRYSTAL, "Raginite Crystal")
-
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")
     }
 

@@ -15,17 +15,17 @@ import net.neoforged.neoforge.common.Tags
 object RagiumMaterialRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Ragi-Alloy
-        HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
+        /*HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow8()
             .define('A', RagiumItemTags.RAW_MATERIALS_RAGINITE)
             .define('B', Tags.Items.INGOTS_COPPER)
-            .save(output)
+            .save(output)*/
 
         HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow4()
             .define('A', RagiumItemTags.DUSTS_RAGINITE)
             .define('B', Tags.Items.INGOTS_COPPER)
-            .saveSuffixed(output, "_alt")
+            .save(output)
 
         HTCookingRecipeBuilder
             .smelting(RagiumItems.RAGI_ALLOY_INGOT)
@@ -39,10 +39,11 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
 
-        HTShapelessRecipeBuilder(RagiumItems.RAGINITE_DUST)
-            .addIngredient(RagiumItemTags.RAW_MATERIALS_RAGINITE)
-            .addIngredient(RagiumItemTags.TOOLS_FORGE_HAMMER)
-            .saveSuffixed(output, "_with_hammer")
+        HTShapedRecipeBuilder(RagiumItems.RAGI_COKE)
+            .hollow4()
+            .define('A', RagiumItemTags.DUSTS_RAGINITE)
+            .define('B', ItemTags.COALS)
+            .save(output)
         // Advanced Ragi-Alloy
         HTShapedRecipeBuilder(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             .cross8()
@@ -68,17 +69,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .define('A', RagiumItemTags.DUSTS_RAGINITE)
             .define('B', Tags.Items.GEMS_DIAMOND)
             .save(output)
-        // Ragium
-        HTShapelessRecipeBuilder(RagiumItems.CHIPPED_RAGIUM_ESSENCE, 16)
-            .addIngredient(RagiumItems.RAGIUM_ESSENCE)
-            .save(output)
-
-        HTShapelessRecipeBuilder(RagiumItems.RAGI_COKE)
-            .addIngredient(ItemTags.COALS)
-            .addIngredient(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
-            .addIngredient(RagiumItems.CHIPPED_RAGIUM_ESSENCE)
-            .save(output)
-
         // Azure Steel
         HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_COMPOUND)
             .hollow4()

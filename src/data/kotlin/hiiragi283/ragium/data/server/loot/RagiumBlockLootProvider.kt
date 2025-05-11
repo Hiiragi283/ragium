@@ -72,11 +72,26 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         // Ore
         fun registerOres(oreSets: HTOreSets, drop: ItemLike) {
             for (ore: DeferredBlock<*> in oreSets.blockHolders) {
-                add(ore.get()) { block: Block -> createOreDrop(block, drop.asItem()) }
+                add(ore.get()) { block: Block ->
+                    createSilkTouchDispatchTable(
+                        block,
+                        applyExplosionDecay(
+                            block,
+                            LootItem
+                                .lootTableItem(drop.asItem())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4f, 5f)))
+                                .apply(
+                                    ApplyBonusCount.addUniformBonusCount(
+                                        registries.enchLookup().getOrThrow(Enchantments.FORTUNE),
+                                    ),
+                                ),
+                        ),
+                    )
+                    // createOreDrop(block, drop.asItem())
+                }
             }
         }
-        registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RAW_RAGINITE)
-        registerOres(RagiumBlocks.RAGI_CRYSTAL_ORES, RagiumItems.RAGI_CRYSTAL)
+        registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RAGINITE_DUST)
 
         // Machines
         for (holder: DeferredBlock<*> in RagiumBlocks.MACHINES) {
