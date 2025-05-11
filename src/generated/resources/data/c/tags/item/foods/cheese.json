@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "#c:ingots/cheese",
-      "required": false
-    }
+    "#c:ingots/cheese"
   ]
 }

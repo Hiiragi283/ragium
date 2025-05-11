@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.data.HTTagProvider
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.HTBuildingBlockSets
@@ -9,7 +8,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -33,7 +31,7 @@ class RagiumBlockTagProvider(
         add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.EXP_BERRY_BUSH)
         add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
         // Hoe
-        add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.StorageBlocks.CHEESE.holder)
+        add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.CHEESE_BLOCK)
         add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE)
         add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SPONGE_CAKE_SLAB)
         add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -43,7 +41,7 @@ class RagiumBlockTagProvider(
         RagiumBlocks.RAGINITE_ORES.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
 
-        for (block: DeferredBlock<*> in RagiumBlocks.StorageBlocks.blocks) {
+        for (block: DeferredBlock<*> in RagiumBlocks.STORAGE_BLOCKS) {
             add(BlockTags.MINEABLE_WITH_PICKAXE, block)
         }
 
@@ -79,12 +77,12 @@ class RagiumBlockTagProvider(
 
     private fun category() {
         // Storage Block
-        for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
+        /*for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
             val prefix: HTTagPrefix = block.prefix
             val materialTag: TagKey<Block> = prefix.createBlockTag(block)
             addTag(Tags.Blocks.STORAGE_BLOCKS, materialTag)
             add(materialTag, block.holder)
-        }
+        }*/
         // Glass
         addTag(Tags.Blocks.GLASS_BLOCKS, RagiumBlockTags.GLASS_BLOCKS_OBSIDIAN)
         addTag(Tags.Blocks.GLASS_BLOCKS, RagiumBlockTags.GLASS_BLOCKS_QUARTZ)

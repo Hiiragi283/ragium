@@ -1,8 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.material.HTMaterial
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
@@ -36,9 +34,6 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(
     //    Item Input    //
 
     fun itemInput(item: ItemLike, count: Int = 1): HTDefinitionRecipeBuilder<R> = itemInput(SizedIngredient.of(item, count))
-
-    fun itemInput(prefix: HTTagPrefix, material: HTMaterial, count: Int = 1): HTDefinitionRecipeBuilder<R> =
-        itemInput(prefix.createItemTag(material), count)
 
     fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTDefinitionRecipeBuilder<R> = itemInput(SizedIngredient.of(tagKey, count))
 
@@ -74,8 +69,6 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(
     //    Catalyst    //
 
     fun catalyst(item: ItemLike): HTDefinitionRecipeBuilder<R> = catalyst(Ingredient.of(item))
-
-    fun catalyst(prefix: HTTagPrefix, material: HTMaterial): HTDefinitionRecipeBuilder<R> = catalyst(prefix.createItemTag(material))
 
     fun catalyst(tagKey: TagKey<Item>): HTDefinitionRecipeBuilder<R> = catalyst(Ingredient.of(tagKey))
 

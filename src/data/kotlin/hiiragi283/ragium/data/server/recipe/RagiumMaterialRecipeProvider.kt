@@ -113,13 +113,17 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
 
         oreToRaw()
 
-        register(RagiumMaterialFamilies.RAGI_ALLOY)
-        register(RagiumMaterialFamilies.ADVANCED_RAGI_ALLOY)
         register(RagiumMaterialFamilies.RAGI_CRYSTAL)
         register(RagiumMaterialFamilies.CRIMSON_CRYSTAL)
         register(RagiumMaterialFamilies.WARPED_CRYSTAL)
+
+        register(RagiumMaterialFamilies.RAGI_ALLOY)
+        register(RagiumMaterialFamilies.ADVANCED_RAGI_ALLOY)
         register(RagiumMaterialFamilies.AZURE_STEEL)
         register(RagiumMaterialFamilies.DEEP_STEEL)
+
+        register(RagiumMaterialFamilies.CHEESE)
+        register(RagiumMaterialFamilies.CHOCOLATE)
     }
 
     // Ore -> Raw/Gem

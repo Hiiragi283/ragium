@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "#c:ingots/chocolate",
-      "required": false
-    }
+    "#c:ingots/chocolate"
   ]
 }

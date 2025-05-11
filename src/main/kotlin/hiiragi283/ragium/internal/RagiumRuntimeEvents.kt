@@ -2,6 +2,8 @@ package hiiragi283.ragium.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumDataMaps
+import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
@@ -25,9 +27,9 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -36,7 +38,6 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -76,6 +77,7 @@ object RagiumRuntimeEvents {
     fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
         // イベントがキャンセルされている場合はパス
         if (event.isCanceled) return
+        val hand: InteractionHand = event.hand
         val stack: ItemStack = event.itemStack
 
         val hitResult: BlockHitResult = event.hitVec
@@ -83,32 +85,11 @@ object RagiumRuntimeEvents {
         val pos: BlockPos = hitResult.blockPos
         val state: BlockState = level.getBlockState(pos)
 
-        val player: Player = event.entity
-        // アイテムがラギウムエッセンス，ブロックがアメシストブロックの場合，芽生えさせる
-        if (stack.`is`(RagiumItems.RAGIUM_ESSENCE) && state.`is`(Blocks.AMETHYST_BLOCK)) {
-            level.destroyBlock(pos, false)
-            level.setBlockAndUpdate(pos, Blocks.BUDDING_AMETHYST.defaultBlockState())
-            stack.consume(1, player)
-            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
-            return
-        }
-        // アイテムがラピスラズリの場合
-        if (stack.`is`(Tags.Items.GEMS_LAPIS)) {
-            // アメシストの塊から紺碧の欠片をドロップさせる
-            val dropCount: Int = when (state.block) {
-                Blocks.AMETHYST_CLUSTER -> 4
-                Blocks.LARGE_AMETHYST_BUD -> 3
-                Blocks.MEDIUM_AMETHYST_BUD -> 2
-                Blocks.SMALL_AMETHYST_BUD -> 1
-                else -> 0
-            }
-            if (dropCount > 0) {
-                level.destroyBlock(pos, false)
-                stack.consume(1, player)
-                dropStackAt(level, pos, RagiumItems.AZURE_SHARD, dropCount)
-                event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
-                return
-            }
+        val context = UseOnContext(level, null, hand, stack, hitResult)
+
+        val interaction: HTBlockInteraction = state.blockHolder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: return
+        if (interaction.canPerformActions(stack, state)) {
+            interaction.applyActions(context, event.entity)
         }
     }
 

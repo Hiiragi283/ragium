@@ -3,8 +3,6 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.material.HTMaterial
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
@@ -67,26 +65,10 @@ interface HTTagBuilder<T : Any> {
     //    ItemTag    //
 
     interface ItemTag : HTTagBuilder<Item> {
-        fun addItem(
-            prefix: HTTagPrefix,
-            material: HTMaterial,
-            itemLike: ItemLike,
-            type: DependType = DependType.REQUIRED,
-        ) {
-            addItem(prefix.createItemTag(material), itemLike, type)
-        }
-
         fun addItem(tagKey: TagKey<Item>, itemLike: ItemLike, type: DependType = DependType.REQUIRED) {
             add(tagKey, itemLike.asItemHolder(), type)
         }
 
         fun copyFromBlock(blockTag: TagKey<Block>, itemTag: TagKey<Item>)
-
-        fun copyFromBlock(prefix: HTTagPrefix, material: HTMaterial) {
-            copyFromBlock(
-                prefix.createBlockTag(material),
-                prefix.createItemTag(material),
-            )
-        }
     }
 }

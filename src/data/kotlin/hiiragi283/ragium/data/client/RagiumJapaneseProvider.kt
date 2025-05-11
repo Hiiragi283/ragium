@@ -58,17 +58,17 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumBlocks.RAGINITE_ORES.addTranslationJp("ラギナイト", this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationJp("ラギクリスタリル", this)
 
-        addBlock(RagiumBlocks.StorageBlocks.RAGI_ALLOY.holder, "ラギ合金ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.ADVANCED_RAGI_ALLOY.holder, "発展ラギ合金ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL.holder, "ラギクリスタリルブロック")
-        addBlock(RagiumBlocks.StorageBlocks.AZURE_STEEL.holder, "紺鉄ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.DEEP_STEEL.holder, "深層鋼ブロック")
+        addBlock(RagiumBlocks.RAGI_CRYSTAL_BLOCK, "ラギクリスタリルブロック")
+        addBlock(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK, "深紅の結晶ブロック")
+        addBlock(RagiumBlocks.WARPED_CRYSTAL_BLOCK, "歪んだ結晶ブロック")
 
-        addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL.holder, "深紅の結晶ブロック")
-        addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL.holder, "歪んだ結晶ブロック")
+        addBlock(RagiumBlocks.RAGI_ALLOY_BLOCK, "ラギ合金ブロック")
+        addBlock(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK, "発展ラギ合金ブロック")
+        addBlock(RagiumBlocks.AZURE_STEEL_BLOCK, "紺鉄ブロック")
+        addBlock(RagiumBlocks.DEEP_STEEL_BLOCK, "深層鋼ブロック")
 
-        addBlock(RagiumBlocks.StorageBlocks.CHEESE.holder, "チーズブロック")
-        addBlock(RagiumBlocks.StorageBlocks.CHOCOLATE.holder, "チョコレートブロック")
+        addBlock(RagiumBlocks.CHEESE_BLOCK, "チーズブロック")
+        addBlock(RagiumBlocks.CHOCOLATE_BLOCK, "チョコレートブロック")
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationJp("らぎストーン", this)
         RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationJp("らぎストーンレンガ", this)
@@ -192,6 +192,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄インゴット")
         addItem(RagiumItems.AZURE_STEEL_INGOT, "紺鉄混合物")
         addItem(RagiumItems.DEEP_STEEL_INGOT, "深層鋼インゴット")
+        addItem(RagiumItems.CHEESE_INGOT, "チーズインゴット")
+        addItem(RagiumItems.CHOCOLATE_INGOT, "チョコレートインゴット")
 
         addItem(RagiumItems.ASH_DUST, "灰")
         addItem(RagiumItems.OBSIDIAN_DUST, "黒曜石の粉")

@@ -6,8 +6,6 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -40,7 +38,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         // Ambrosia
         createInfusing()
             .itemOutput(RagiumItems.AMBROSIA)
-            .itemInput(HTTagPrefixes.STORAGE_BLOCK, CommonMaterials.CHOCOLATE, 64)
+            .itemInput(RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE, 64)
             .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
             .save(output)
 

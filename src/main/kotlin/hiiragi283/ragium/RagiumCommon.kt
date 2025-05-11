@@ -2,6 +2,7 @@ package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTCustomPayload
@@ -51,6 +52,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumRecipeTypes.REGISTER.register(eventBus)
+        RagiumBlockActionSerializers.REGISTER.register(eventBus)
 
         HTEnergyNetworkManagerImpl
 
@@ -63,6 +65,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         event.register(RagiumRegistries.CONSUME_EFFECT_TYPE)
+        event.register(RagiumRegistries.BLOCK_ACTION_SERIALIZERS)
 
         LOGGER.info("Registered new registries!")
     }
@@ -91,6 +94,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
+        event.register(RagiumDataMaps.BLOCK_INTERACTION)
+
         LOGGER.info("Registered data map types!")
     }
 }

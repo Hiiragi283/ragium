@@ -1,16 +1,9 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.HTItemTagProvider
-import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.material.HTMaterial
-import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -70,16 +63,6 @@ class RagiumItemTagProvider(
         RagiumBlocks.RAGINITE_ORES.appendItemTags(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendItemTags(this)
 
-        fun register(entries: List<HTMaterialItemLike>) {
-            for (item: HTMaterialItemLike in entries) {
-                val prefix: HTTagPrefix = item.prefix
-                addTag(prefix.itemCommonTag, prefix.createItemTag(item))
-                addItem(prefix, item, item)
-            }
-        }
-
-        register(RagiumBlocks.StorageBlocks.entries)
-
         fun register(family: HTMaterialFamily) {
             if (family.isVanilla) return
             for ((variant: HTMaterialFamily.Variant, entry: HTMaterialFamily.Entry) in family.variantMap) {
@@ -89,14 +72,17 @@ class RagiumItemTagProvider(
             }
         }
 
-        register(RagiumMaterialFamilies.RAGI_ALLOY)
-        register(RagiumMaterialFamilies.ADVANCED_RAGI_ALLOY)
         register(RagiumMaterialFamilies.RAGI_CRYSTAL)
         register(RagiumMaterialFamilies.CRIMSON_CRYSTAL)
         register(RagiumMaterialFamilies.WARPED_CRYSTAL)
+
+        register(RagiumMaterialFamilies.RAGI_ALLOY)
+        register(RagiumMaterialFamilies.ADVANCED_RAGI_ALLOY)
         register(RagiumMaterialFamilies.AZURE_STEEL)
         register(RagiumMaterialFamilies.DEEP_STEEL)
 
+        register(RagiumMaterialFamilies.CHEESE)
+        register(RagiumMaterialFamilies.CHOCOLATE)
         // Dusts
         add(RagiumItemTags.DUSTS_ASH, RagiumItems.ASH_DUST)
         add(RagiumItemTags.DUSTS_OBSIDIAN, RagiumItems.OBSIDIAN_DUST)
@@ -116,7 +102,27 @@ class RagiumItemTagProvider(
         // Raw Materials
         add(RagiumItemTags.RAW_MATERIALS_RAGINITE, RagiumItems.RAW_RAGINITE)
         addTag(Tags.Items.RAW_MATERIALS, RagiumItemTags.RAW_MATERIALS_RAGINITE)
+        // Storage Blocks
+        addItem(RagiumItemTags.STORAGE_BLOCKS_RAGI_CRYSTAL, RagiumBlocks.RAGI_CRYSTAL_BLOCK)
+        addItem(RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL, RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
+        addItem(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL, RagiumBlocks.WARPED_CRYSTAL_BLOCK)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_RAGI_CRYSTAL)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
 
+        addItem(RagiumItemTags.STORAGE_BLOCKS_RAGI_ALLOY, RagiumBlocks.RAGI_ALLOY_BLOCK)
+        addItem(RagiumItemTags.STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY, RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
+        addItem(RagiumItemTags.STORAGE_BLOCKS_AZURE_STEEL, RagiumBlocks.AZURE_STEEL_BLOCK)
+        addItem(RagiumItemTags.STORAGE_BLOCKS_DEEP_STEEL, RagiumBlocks.DEEP_STEEL_BLOCK)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_RAGI_ALLOY)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_AZURE_STEEL)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_DEEP_STEEL)
+
+        addItem(RagiumItemTags.STORAGE_BLOCKS_CHEESE, RagiumBlocks.CHEESE_BLOCK)
+        addItem(RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE, RagiumBlocks.CHOCOLATE_BLOCK)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_CHEESE)
+        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE)
         // Mekanism Addon
         add(RagiumItemTags.CLUMPS_RAGINITE, RagiumMekanismAddon.ITEM_RAGINITE_CLUMP)
         add(RagiumItemTags.CRYSTALS_RAGINITE, RagiumMekanismAddon.ITEM_RAGINITE_CRYSTAL)
@@ -131,7 +137,7 @@ class RagiumItemTagProvider(
         addTag(MekanismTags.Items.ENRICHED, RagiumItemTags.ENRICHED_RAGINITE)
         addTag(MekanismTags.Items.SHARDS, RagiumItemTags.SHARDS_RAGINITE)
 
-        fun addMaterialTag(
+        /*fun addMaterialTag(
             prefix: HTTagPrefix,
             material: HTMaterial,
             mod: IntegrationMods,
@@ -140,7 +146,7 @@ class RagiumItemTagProvider(
         ) {
             addTag(prefix.itemCommonTag, prefix.createItemTag(material))
             add(prefix.createItemTag(material), mod.createItemHolder<Item>(path), type)
-        }
+        }*/
 
         // EIO
         // addMaterialTag(HTTagPrefixes.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, IntegrationMods.EIO, "energized_gear")
@@ -168,7 +174,6 @@ class RagiumItemTagProvider(
         add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
         add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
-        add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_INGOT)
         add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
         add(Tags.Items.FOODS, RagiumItems.EXP_BERRIES)
         add(Tags.Items.FOODS, RagiumItems.FEVER_CHERRY)
@@ -192,16 +197,8 @@ class RagiumItemTagProvider(
         addTag(RagiumItemTags.FOODS_CHERRY, RagiumItemTags.FOODS_RAGI_CHERRY)
         addTag(RagiumItemTags.FOODS_JAMS, RagiumItemTags.JAMS_RAGI_CHERRY)
 
-        addTag(
-            RagiumItemTags.FOODS_CHEESE,
-            HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHEESE),
-            HTTagBuilder.DependType.OPTIONAL,
-        )
-        addTag(
-            RagiumItemTags.FOODS_CHOCOLATE,
-            HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE),
-            HTTagBuilder.DependType.OPTIONAL,
-        )
+        addTag(RagiumItemTags.FOODS_CHEESE, RagiumItemTags.INGOTS_CHEESE)
+        addTag(RagiumItemTags.FOODS_CHOCOLATE, RagiumItemTags.INGOTS_CHOCOLATE)
     }
 
     //    Armor    //

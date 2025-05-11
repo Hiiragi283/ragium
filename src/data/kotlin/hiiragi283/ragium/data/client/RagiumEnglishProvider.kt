@@ -58,17 +58,17 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         RagiumBlocks.RAGINITE_ORES.addTranslationEn("Raginite", this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationEn("Ragi-Crystal", this)
 
-        addBlock(RagiumBlocks.StorageBlocks.RAGI_ALLOY.holder, "Block of Ragi-Alloy")
-        addBlock(RagiumBlocks.StorageBlocks.ADVANCED_RAGI_ALLOY.holder, "Block of Advanced Ragi-Alloy")
-        addBlock(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL.holder, "Block of Ragi-Crystal")
-        addBlock(RagiumBlocks.StorageBlocks.AZURE_STEEL.holder, "Block of Azure Steel")
-        addBlock(RagiumBlocks.StorageBlocks.DEEP_STEEL.holder, "Block of Deep Steel")
+        addBlock(RagiumBlocks.RAGI_CRYSTAL_BLOCK, "Block of Ragi-Crystal")
+        addBlock(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK, "Block of Crimson Crystal")
+        addBlock(RagiumBlocks.WARPED_CRYSTAL_BLOCK, "Block of Warped Crystal")
 
-        addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL.holder, "Block of Crimson Crystal")
-        addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL.holder, "Block of Warped Crystal")
+        addBlock(RagiumBlocks.RAGI_ALLOY_BLOCK, "Block of Ragi-Alloy")
+        addBlock(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK, "Block of Advanced Ragi-Alloy")
+        addBlock(RagiumBlocks.AZURE_STEEL_BLOCK, "Block of Azure Steel")
+        addBlock(RagiumBlocks.DEEP_STEEL_BLOCK, "Block of Deep Steel")
 
-        addBlock(RagiumBlocks.StorageBlocks.CHEESE.holder, "Block of Cheese")
-        addBlock(RagiumBlocks.StorageBlocks.CHOCOLATE.holder, "Block of Chocolate")
+        addBlock(RagiumBlocks.CHEESE_BLOCK, "Block of Cheese")
+        addBlock(RagiumBlocks.CHOCOLATE_BLOCK, "Block of Chocolate")
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationEn("Ragi-Stone", this)
         RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationEn("Ragi-Stone Brick", this)
@@ -189,6 +189,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
         addItem(RagiumItems.AZURE_STEEL_INGOT, "Azure Steel Ingot")
         addItem(RagiumItems.DEEP_STEEL_INGOT, "Deep Steel Ingot")
+        addItem(RagiumItems.CHEESE_INGOT, "Cheese Ingot")
+        addItem(RagiumItems.CHOCOLATE_INGOT, "Chocolate Ingot")
 
         addItem(RagiumItems.ASH_DUST, "Ash")
         addItem(RagiumItems.OBSIDIAN_DUST, "Obsidian Dust")

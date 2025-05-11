@@ -200,6 +200,9 @@ object RagiumItems {
     val ICE_CREAM_SODA: DeferredItem<HTConsumableItem> = register("ice_cream_soda", factory = ::HTConsumableItem)
 
     @JvmField
+    val CHEESE_INGOT: DeferredItem<HTConsumableItem> = registerFood("cheese_ingot", Foods.APPLE)
+
+    @JvmField
     val CHOCOLATE_INGOT: DeferredItem<HTConsumableItem> = registerFood("chocolate_ingot", RagiumFoods.CHOCOLATE)
 
     // Meat

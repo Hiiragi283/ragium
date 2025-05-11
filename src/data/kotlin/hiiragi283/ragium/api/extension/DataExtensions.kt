@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.registry.HTFluidContent
 import net.minecraft.Util
 import net.minecraft.resources.ResourceKey
@@ -35,10 +34,6 @@ fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String
 
 fun LanguageProvider.addMaterialKey(material: HTMaterialKey, value: String) {
     add(material.translationKey, value)
-}
-
-fun LanguageProvider.addTagPrefix(prefix: HTTagPrefix, value: String) {
-    add(prefix.translationKey, value)
 }
 
 fun LanguageProvider.addItem(item: ItemLike, value: String) {

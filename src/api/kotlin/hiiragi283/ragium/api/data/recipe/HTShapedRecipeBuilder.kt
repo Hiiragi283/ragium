@@ -1,8 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.material.HTMaterial
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -21,9 +19,6 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
     )
 
     private val symbols: MutableMap<Char, Ingredient> = mutableMapOf()
-
-    fun define(symbol: Char, prefix: HTTagPrefix, material: HTMaterial): HTShapedRecipeBuilder =
-        define(symbol, prefix.createItemTag(material))
 
     fun define(symbol: Char, tagKey: TagKey<Item>): HTShapedRecipeBuilder = define(symbol, Ingredient.of(tagKey))
 

@@ -58,6 +58,12 @@ object RagiumItemTags {
     @JvmField
     val INGOTS_DEEP_STEEL: TagKey<Item> = commonTag("ingots/deep_steel")
 
+    @JvmField
+    val INGOTS_CHEESE: TagKey<Item> = commonTag("ingots/cheese")
+
+    @JvmField
+    val INGOTS_CHOCOLATE: TagKey<Item> = commonTag("ingots/chocolate")
+
     //    Ores    //
 
     @JvmField
@@ -71,12 +77,6 @@ object RagiumItemTags {
     //    Storage Blocks    //
 
     @JvmField
-    val STORAGE_BLOCKS_RAGI_ALLOY: TagKey<Item> = commonTag("storage_blocks/ragi_alloy")
-
-    @JvmField
-    val STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY: TagKey<Item> = commonTag("storage_blocks/advanced_ragi_alloy")
-
-    @JvmField
     val STORAGE_BLOCKS_RAGI_CRYSTAL: TagKey<Item> = commonTag("storage_blocks/ragi_crystal")
 
     @JvmField
@@ -86,10 +86,22 @@ object RagiumItemTags {
     val STORAGE_BLOCKS_WARPED_CRYSTAL: TagKey<Item> = commonTag("storage_blocks/warped_crystal")
 
     @JvmField
+    val STORAGE_BLOCKS_RAGI_ALLOY: TagKey<Item> = commonTag("storage_blocks/ragi_alloy")
+
+    @JvmField
+    val STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY: TagKey<Item> = commonTag("storage_blocks/advanced_ragi_alloy")
+
+    @JvmField
     val STORAGE_BLOCKS_AZURE_STEEL: TagKey<Item> = commonTag("storage_blocks/azure_steel")
 
     @JvmField
     val STORAGE_BLOCKS_DEEP_STEEL: TagKey<Item> = commonTag("storage_blocks/deep_steel")
+
+    @JvmField
+    val STORAGE_BLOCKS_CHEESE: TagKey<Item> = commonTag("storage_blocks/cheese")
+
+    @JvmField
+    val STORAGE_BLOCKS_CHOCOLATE: TagKey<Item> = commonTag("storage_blocks/chocolate")
 
     //    Mekanism Integration    //
 

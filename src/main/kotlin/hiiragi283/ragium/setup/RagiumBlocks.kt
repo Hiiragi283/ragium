@@ -4,19 +4,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.util.HTBuildingBlockSets
 import hiiragi283.ragium.util.HTOreSets
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -32,8 +27,6 @@ object RagiumBlocks {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
-        StorageBlocks.entries
-
         REGISTER.register(eventBus)
         ITEM_REGISTER.register(eventBus)
 
@@ -149,36 +142,60 @@ object RagiumBlocks {
 
     //    Materials    //
 
-    enum class StorageBlocks(properties: BlockBehaviour.Properties) : HTMaterialItemLike {
-        // Ingot
-        RAGI_ALLOY(lightMetal().mapColor(MapColor.COLOR_RED)),
-        ADVANCED_RAGI_ALLOY(heavyMetal().mapColor(MapColor.COLOR_ORANGE)),
-        RAGI_CRYSTAL(crystal().mapColor(MapColor.COLOR_PINK)),
-        AZURE_STEEL(heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE)),
-        DEEP_STEEL(heavyMetal().mapColor(MapColor.COLOR_CYAN)),
+    // Gems
+    @JvmField
+    val RAGI_CRYSTAL_BLOCK: DeferredBlock<Block> =
+        register("ragi_crystal_block", crystal().mapColor(MapColor.COLOR_PINK))
 
-        // Gem
-        CRIMSON_CRYSTAL(crystal()),
-        WARPED_CRYSTAL(crystal()),
+    @JvmField
+    val CRIMSON_CRYSTAL_BLOCK: DeferredBlock<Block> =
+        register("crimson_crystal_block", crystal().mapColor(MapColor.CRIMSON_STEM))
 
-        // Food
-        CHEESE(wooden().mapColor(MapColor.TERRACOTTA_YELLOW)),
-        CHOCOLATE(wooden().mapColor(MapColor.TERRACOTTA_BROWN)),
-        ;
+    @JvmField
+    val WARPED_CRYSTAL_BLOCK: DeferredBlock<Block> =
+        register("warped_crystal_block", crystal().mapColor(MapColor.WARPED_STEM))
 
-        override val materialName: String = name.lowercase()
-        val holder: DeferredBlock<Block> = register("${materialName}_block", properties)
+    // Ingots
+    @JvmField
+    val RAGI_ALLOY_BLOCK: DeferredBlock<Block> =
+        register("ragi_alloy_block", lightMetal().mapColor(MapColor.COLOR_RED))
 
-        override val prefix: HTTagPrefix = HTTagPrefixes.STORAGE_BLOCK
-        override val id: ResourceLocation = holder.id
+    @JvmField
+    val ADVANCED_RAGI_ALLOY_BLOCK: DeferredBlock<Block> =
+        register("advanced_ragi_alloy_block", heavyMetal().mapColor(MapColor.COLOR_ORANGE))
 
-        override fun asItem(): Item = holder.asItem()
+    @JvmField
+    val AZURE_STEEL_BLOCK: DeferredBlock<Block> =
+        register("azure_steel_block", heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE))
 
-        companion object {
-            @JvmStatic
-            val blocks: List<DeferredBlock<*>> get() = entries.map(StorageBlocks::holder)
-        }
-    }
+    @JvmField
+    val DEEP_STEEL_BLOCK: DeferredBlock<Block> =
+        register("deep_steel_block", heavyMetal().mapColor(MapColor.COLOR_CYAN))
+
+    // Others
+    @JvmField
+    val CHEESE_BLOCK: DeferredBlock<Block> =
+        register("cheese_block", wooden().mapColor(MapColor.TERRACOTTA_YELLOW))
+
+    @JvmField
+    val CHOCOLATE_BLOCK: DeferredBlock<Block> =
+        register("chocolate_block", wooden().mapColor(MapColor.TERRACOTTA_BROWN))
+
+    @JvmField
+    val STORAGE_BLOCKS: List<DeferredBlock<Block>> = listOf(
+        // Gems
+        RAGI_CRYSTAL_BLOCK,
+        CRIMSON_CRYSTAL_BLOCK,
+        WARPED_CRYSTAL_BLOCK,
+        // Ingots
+        RAGI_ALLOY_BLOCK,
+        ADVANCED_RAGI_ALLOY_BLOCK,
+        AZURE_STEEL_BLOCK,
+        DEEP_STEEL_BLOCK,
+        // Others
+        CHEESE_BLOCK,
+        CHOCOLATE_BLOCK,
+    )
 
     //    Buildings    //
 

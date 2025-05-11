@@ -51,7 +51,7 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.SILT)
             add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 
-            addAll(RagiumBlocks.StorageBlocks.entries)
+            addAll(RagiumBlocks.STORAGE_BLOCKS)
             // Material Items
             // Raw Materials
             add(RagiumItems.RAW_RAGINITE)

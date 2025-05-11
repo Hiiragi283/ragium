@@ -13,7 +13,11 @@ import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumDataMaps
+import hiiragi283.ragium.api.data.interaction.HTBlockAction
+import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.createPotionStack
+import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -28,14 +32,14 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -209,31 +213,22 @@ class RagiumEmiPlugin : EmiPlugin {
         addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
         addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
 
-        mapOf(
-            Items.AMETHYST_CLUSTER to 4,
-            Items.LARGE_AMETHYST_BUD to 3,
-            Items.MEDIUM_AMETHYST_BUD to 2,
-            Items.SMALL_AMETHYST_BUD to 1,
-        ).forEach { (cluster: Item, count: Int) ->
-            addRecipeSafe(RagiumAPI.id("/world/ragium/${count}x_azure_shard")) { id: ResourceLocation ->
+        for (holder: Holder.Reference<Block> in BuiltInRegistries.BLOCK.holders()) {
+            val id: ResourceLocation = holder.idOrNull ?: continue
+            val interaction: HTBlockInteraction = holder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: continue
+            val firstStack: ItemStack = interaction.actions
+                .filterIsInstance<HTBlockAction.ItemPreview>()
+                .firstOrNull()
+                ?.getPreviewStack() ?: continue
+            addRecipeSafe(id.withPrefix("/world/interaction/")) { id1: ResourceLocation ->
                 EmiWorldInteractionRecipe
                     .builder()
-                    .id(id)
-                    .leftInput(EmiStack.of(cluster))
-                    .rightInput(EmiIngredient.of(Tags.Items.GEMS_LAPIS), false)
-                    .output(EmiStack.of(RagiumItems.AZURE_SHARD, count.toLong()))
+                    .id(id1)
+                    .leftInput(EmiStack.of(holder.value()))
+                    .rightInput(EmiIngredient.of(interaction.ingredient), false)
+                    .output(EmiStack.of(firstStack))
                     .build()
             }
-        }
-
-        addRecipeSafe(RagiumAPI.id("/world/ragium/budding_amethyst")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(Items.AMETHYST_BLOCK))
-                .rightInput(EmiStack.of(RagiumItems.RAGIUM_ESSENCE), false)
-                .output(EmiStack.of(Items.BUDDING_AMETHYST))
-                .build()
         }
     }
 
