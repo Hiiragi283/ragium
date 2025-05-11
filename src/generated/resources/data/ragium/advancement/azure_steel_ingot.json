@@ -21,12 +21,7 @@
       "id": "ragium:azure_steel_ingot"
     },
     "title": {
-      "translate": "tag_prefix.ragium.ingot",
-      "with": [
-        {
-          "translate": "material.ragium.azure_steel"
-        }
-      ]
+      "translate": "item.ragium.azure_steel_ingot"
     }
   },
   "requirements": [

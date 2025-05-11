@@ -165,7 +165,7 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addDeviceRecipes() {
         // Ash Log
         addRecipeSafe(RagiumAPI.id("/block_info/ash_log")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.ASH_LOG, RagiumItems.Dusts.ASH)
+            HTBlockInfoEmiRecipe(id, RagiumBlocks.ASH_LOG, RagiumItems.ASH_DUST)
         }
 
         // Water Well

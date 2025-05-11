@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTBlockRegister
@@ -116,10 +115,10 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val RAGINITE_ORES = HTOreSets(RagiumMaterials.RAGINITE)
+    val RAGINITE_ORES = HTOreSets("raginite")
 
     @JvmField
-    val RAGI_CRYSTAL_ORES = HTOreSets(RagiumMaterials.RAGI_CRYSTAL)
+    val RAGI_CRYSTAL_ORES = HTOreSets("ragi_crystal")
 
     @JvmField
     val SILT: DeferredBlock<ColoredFallingBlock> = register(
@@ -169,18 +168,6 @@ object RagiumBlocks {
 
         override val materialName: String = name.lowercase()
         val holder: DeferredBlock<Block> = register("${materialName}_block", properties)
-
-        val baseItem: HTMaterialItemLike get() = when (this) {
-            RAGI_ALLOY -> RagiumItems.Ingots.RAGI_ALLOY
-            ADVANCED_RAGI_ALLOY -> RagiumItems.Ingots.ADVANCED_RAGI_ALLOY
-            RAGI_CRYSTAL -> RagiumItems.RawResources.RAGI_CRYSTAL
-            AZURE_STEEL -> RagiumItems.Ingots.AZURE_STEEL
-            DEEP_STEEL -> RagiumItems.Ingots.DEEP_STEEL
-            CRIMSON_CRYSTAL -> RagiumItems.RawResources.CRIMSON_CRYSTAL
-            WARPED_CRYSTAL -> RagiumItems.RawResources.WARPED_CRYSTAL
-            CHEESE -> RagiumItems.Ingots.CHEESE
-            CHOCOLATE -> RagiumItems.Ingots.CHOCOLATE
-        }
 
         override val prefix: HTTagPrefix = HTTagPrefixes.STORAGE_BLOCK
         override val id: ResourceLocation = holder.id

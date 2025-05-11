@@ -4,12 +4,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTConsumableData
 import hiiragi283.ragium.api.item.HTConsumableItem
-import hiiragi283.ragium.api.material.HTMaterial
-import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.item.*
@@ -17,7 +11,6 @@ import hiiragi283.ragium.util.HTArmorSets
 import hiiragi283.ragium.util.HTToolSets
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
@@ -47,10 +40,6 @@ object RagiumItems {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
-        Dusts.entries
-        Ingots.entries
-        RawResources.entries
-
         Molds.entries
 
         REGISTER.register(eventBus)
@@ -72,98 +61,77 @@ object RagiumItems {
         properties: Item.Properties = Item.Properties(),
     ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
 
-    @JvmStatic
-    private fun registerMaterial(prefix: HTTagPrefix, material: HTMaterial): DeferredItem<HTMaterialItem> {
-        val key: HTMaterialKey = HTMaterialKey.of(material.materialName)
-        return REGISTER.registerItem(prefix.createPath(key)) { prop: Item.Properties ->
-            HTMaterialItem(prefix, key, prop)
-        }
-    }
-
     //    Materials    //
 
-    enum class Dusts : HTMaterialItemLike {
-        // Vanilla
-        // COAL,
-        // COPPER,
-        IRON,
-
-        // QUARTZ,
-        // GOLD,
-        // DIAMOND,
-        // EMERALD,
-        // ENDER_PEARL,
-        OBSIDIAN,
-
-        // Ragium
-        RAGINITE,
-
-        // Common
-        ASH,
-        SALTPETER,
-        SULFUR,
-        ;
-
-        override val materialName: String = name.lowercase()
-        override val prefix: HTTagPrefix = HTTagPrefixes.DUST
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, this)
-        override val id: ResourceLocation = holder.id
-
-        override fun asItem(): Item = holder.asItem()
-    }
-
-    enum class Ingots : HTMaterialItemLike {
-        // Ragium
-        RAGI_ALLOY,
-        ADVANCED_RAGI_ALLOY,
-        AZURE_STEEL,
-        DEEP_STEEL,
-
-        // Food
-        CHEESE,
-        CHOCOLATE,
-        ;
-
-        override val materialName: String = name.lowercase()
-        override val prefix: HTTagPrefix = HTTagPrefixes.INGOT
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, this)
-        override val id: ResourceLocation = holder.id
-
-        override fun asItem(): Item = holder.asItem()
-    }
-
-    enum class RawResources(override val prefix: HTTagPrefix) : HTMaterialItemLike {
-        // Raw
-        RAGINITE(HTTagPrefixes.RAW_MATERIAL),
-
-        // Gem
-        RAGI_CRYSTAL(HTTagPrefixes.GEM),
-        CRIMSON_CRYSTAL(HTTagPrefixes.GEM),
-        WARPED_CRYSTAL(HTTagPrefixes.GEM),
-        ;
-
-        override val materialName: String = name.lowercase()
-        private val holder: DeferredItem<HTMaterialItem> = registerMaterial(prefix, this)
-        override val id: ResourceLocation = holder.id
-
-        override fun asItem(): Item = holder.asItem()
-    }
+    // Raw Materials
 
     @JvmField
-    val SAWDUST: DeferredItem<Item> = register("sawdust")
+    val RAW_RAGINITE: DeferredItem<Item> = register("raw_raginite")
 
     @JvmField
-    val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")
-
-    @JvmField
-    val ADVANCED_RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("advanced_ragi_alloy_compound")
+    val RAGI_COKE: DeferredItem<Item> = register("ragi_coke")
 
     @JvmField
     val AZURE_SHARD: DeferredItem<Item> = register("azure_shard")
 
     @JvmField
+    val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
+
+    @JvmField
+    val TAR: DeferredItem<Item> = register("tar")
+
+    // Gems
+    @JvmField
+    val RAGI_CRYSTAL: DeferredItem<Item> = register("ragi_crystal")
+
+    @JvmField
+    val CRIMSON_CRYSTAL: DeferredItem<Item> = register("crimson_crystal")
+
+    @JvmField
+    val WARPED_CRYSTAL: DeferredItem<Item> = register("warped_crystal")
+
+    // Ingots
+    @JvmField
+    val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("ragi_alloy_compound")
+
+    @JvmField
+    val RAGI_ALLOY_INGOT: DeferredItem<Item> = register("ragi_alloy_ingot")
+
+    @JvmField
+    val ADVANCED_RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("advanced_ragi_alloy_compound")
+
+    @JvmField
+    val ADVANCED_RAGI_ALLOY_INGOT: DeferredItem<Item> = register("advanced_ragi_alloy_ingot")
+
+    @JvmField
     val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("azure_steel_compound")
 
+    @JvmField
+    val AZURE_STEEL_INGOT: DeferredItem<Item> = register("azure_steel_ingot")
+
+    @JvmField
+    val DEEP_STEEL_INGOT: DeferredItem<Item> = register("deep_steel_ingot")
+
+    // Dusts
+    @JvmField
+    val SAWDUST: DeferredItem<Item> = register("sawdust")
+
+    @JvmField
+    val ASH_DUST: DeferredItem<Item> = register("ash_dust")
+
+    @JvmField
+    val RAGINITE_DUST: DeferredItem<Item> = register("raginite_dust")
+
+    @JvmField
+    val OBSIDIAN_DUST: DeferredItem<Item> = register("obsidian_dust")
+
+    @JvmField
+    val SALTPETER_DUST: DeferredItem<Item> = register("saltpeter_dust")
+
+    @JvmField
+    val SULFUR_DUST: DeferredItem<Item> = register("sulfur_dust")
+
+    // Other
     @JvmField
     val INACTIVE_RAGIUM_ESSENCE: DeferredItem<Item> = register("inactive_ragium_essence")
 
@@ -177,29 +145,20 @@ object RagiumItems {
     val AQUATIC_RAGIUM_ESSENCE: DeferredItem<Item> = register("aquatic_ragium_essence")
 
     @JvmField
-    val RAGI_COKE: DeferredItem<Item> = register("ragi_coke")
-
-    @JvmField
-    val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
-
-    @JvmField
     val ELDER_HEART: DeferredItem<Item> = register("elder_heart")
-
-    @JvmField
-    val TAR: DeferredItem<Item> = register("tar")
 
     //    Armors    //
 
     @JvmField
-    val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, RagiumMaterials.AZURE_STEEL)
+    val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, "azure_steel", RagiumItemTags.INGOTS_AZURE_STEEL)
 
     //    Tools    //
 
     @JvmField
-    val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolMaterials.RAGI_ALLOY, RagiumMaterials.RAGI_ALLOY)
+    val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolMaterials.RAGI_ALLOY, "ragi_alloy", RagiumItemTags.INGOTS_RAGI_ALLOY)
 
     @JvmField
-    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, RagiumMaterials.AZURE_STEEL)
+    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, "azure_steel", RagiumItemTags.INGOTS_AZURE_STEEL)
 
     @JvmField
     val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))
@@ -239,6 +198,9 @@ object RagiumItems {
 
     @JvmField
     val ICE_CREAM_SODA: DeferredItem<HTConsumableItem> = register("ice_cream_soda", factory = ::HTConsumableItem)
+
+    @JvmField
+    val CHOCOLATE_INGOT: DeferredItem<HTConsumableItem> = registerFood("chocolate_ingot", RagiumFoods.CHOCOLATE)
 
     // Meat
     @JvmField
@@ -365,12 +327,12 @@ object RagiumItems {
             builder.set(RagiumComponentTypes.CONSUMABLE.get(), HTConsumableData(sound = SoundEvents.HONEY_DRINK))
         }
         // Ingot
-        event.modify(Ingots.CHEESE) { builder: DataComponentPatch.Builder ->
+        /*event.modify(Ingots.CHEESE) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, Foods.APPLE)
         }
         event.modify(Ingots.CHOCOLATE) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.FOOD, RagiumFoods.CHOCOLATE)
-        }
+        }*/
 
         // Ragium Essence
         event.modify(RAGIUM_ESSENCE) { builder: DataComponentPatch.Builder ->

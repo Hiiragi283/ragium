@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -29,7 +28,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         fluid()
         item()
         material()
-        tagPrefix()
+        // tagPrefix()
         tag()
         text()
 
@@ -41,12 +40,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun advancement() {
         add(RagiumTranslationKeys.ADV_ROOT_DESC, "ラギナイト鉱石からラギナイトの原石を手に入れてRagiumを始めよう")
-        addItemAdvDesc(RagiumItems.Ingots.RAGI_ALLOY, "ラギ合金インゴットを手に入れる")
+        addItemAdvDesc(RagiumItems.RAGI_ALLOY_INGOT, "ラギ合金インゴットを手に入れる")
         add(RagiumTranslationKeys.ADV_FORGE_HAMMER_TITLE, "RagiForge")
         add(RagiumTranslationKeys.ADV_FORGE_HAMMER_DESC, "鍛造ハンマーを手に入れる")
 
         addAdvDesc(RagiumItems.AZURE_SHARD, "アメジストの塊にラピスを使って紺碧の欠片を手に入れる")
-        addItemAdvDesc(RagiumItems.Ingots.AZURE_STEEL, "紺鉄インゴットを手に入れる")
+        addItemAdvDesc(RagiumItems.AZURE_STEEL_INGOT, "紺鉄インゴットを手に入れる")
     }
 
     private fun block() {
@@ -175,6 +174,32 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun item() {
+        // Material
+        addItem(RagiumItems.RAW_RAGINITE, "ラギナイトの原石")
+        addItem(RagiumItems.RAGI_COKE, "らぎコークス")
+        addItem(RagiumItems.AZURE_SHARD, "紺碧の欠片")
+        addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
+        addItem(RagiumItems.TAR, "タール")
+
+        addItem(RagiumItems.RAGI_CRYSTAL, "ラギクリスタリル")
+        addItem(RagiumItems.CRIMSON_CRYSTAL, "深紅のクリスタル")
+        addItem(RagiumItems.WARPED_CRYSTAL, "歪んだクリスタル")
+
+        addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        addItem(RagiumItems.RAGI_ALLOY_INGOT, "ラギ合金インゴット")
+        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "発展ラギ合金混合物")
+        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT, "発展ラギ合金インゴット")
+        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄インゴット")
+        addItem(RagiumItems.AZURE_STEEL_INGOT, "紺鉄混合物")
+        addItem(RagiumItems.DEEP_STEEL_INGOT, "深層鋼インゴット")
+
+        addItem(RagiumItems.ASH_DUST, "灰")
+        addItem(RagiumItems.OBSIDIAN_DUST, "黒曜石の粉")
+        addItem(RagiumItems.RAGINITE_DUST, "ラギナイトの粉")
+        addItem(RagiumItems.SALTPETER_DUST, "硝石の粉")
+        addItem(RagiumItems.SAWDUST, "おがくず")
+        addItem(RagiumItems.SULFUR_DUST, "硫黄の粉")
+
         // Armor
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
         // Tool
@@ -232,13 +257,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
-        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "発展ラギ合金混合物")
         addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "海洋ラギウムエッセンス")
-        addItem(RagiumItems.AZURE_SHARD, "紺碧の欠片")
-        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄混合物")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "ラギウムエッセンスの欠片")
-        addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.ENGINE, "V8エンジン")
@@ -246,14 +267,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
-        addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.RAGIUM_ESSENCE, "ラギウムエッセンス")
-        addItem(RagiumItems.SAWDUST, "おがくず")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")
-        addItem(RagiumItems.TAR, "タール")
 
         // addItem(RagiumItems.BLANK_TICKET, "空のチケット")
         // addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
@@ -367,7 +384,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMaterialKey(VanillaMaterials.WOOD, "木材")
     }
 
-    private fun tagPrefix() {
+    /*private fun tagPrefix() {
         addTagPrefix(HTTagPrefixes.CLUMP, "%sの凝塊")
         addTagPrefix(HTTagPrefixes.CRYSTAL, "%sの結晶")
         addTagPrefix(HTTagPrefixes.DIRTY_DUST, "汚れた%sの粉")
@@ -379,14 +396,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addTagPrefix(HTTagPrefixes.ORE, "%s鉱石")
         addTagPrefix(HTTagPrefixes.PLATE, "%s板")
         addTagPrefix(HTTagPrefixes.RAW_MATERIAL, "%sの原石")
-        // addTagPrefix(HTTagPrefixes.RAW_STORAGE, "%sの原石ブロック")
+        addTagPrefix(HTTagPrefixes.RAW_STORAGE, "%sの原石ブロック")
         addTagPrefix(HTTagPrefixes.ROD, "%s棒")
         addTagPrefix(HTTagPrefixes.SHARD, "%sの欠片")
-        // addTagPrefix(HTTagPrefixes.SHEETMETAL, "%sの板金")
+        addTagPrefix(HTTagPrefixes.SHEETMETAL, "%sの板金")
         addTagPrefix(HTTagPrefixes.STORAGE_BLOCK, "%sブロック")
-        // addTagPrefix(HTTagPrefixes.TINY_DUST, "小さな%sの粉")
-        // addTagPrefix(HTTagPrefixes.WIRE, "%sのワイヤー")
-    }
+        addTagPrefix(HTTagPrefixes.TINY_DUST, "小さな%sの粉")
+        addTagPrefix(HTTagPrefixes.WIRE, "%sのワイヤー")
+    }*/
 
     private fun tag() {
         // Item
@@ -460,12 +477,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "汚れたラギナイトの懸濁液")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "濃縮紺碧エッセンス")
+        addItem(RagiumMekanismAddon.ITEM_DIRTY_RAGINITE_DUST, "汚れたラギナイトの粉")
+        addItem(RagiumMekanismAddon.ITEM_RAGINITE_CLUMP, "ラギナイトの凝塊")
+        addItem(RagiumMekanismAddon.ITEM_RAGINITE_SHARD, "ラギナイトの欠片")
+        addItem(RagiumMekanismAddon.ITEM_RAGINITE_CRYSTAL, "ラギナイトの結晶")
 
-        addItem(RagiumMekanismAddon.OreResources.DIRTY_DUST, "汚れたラギナイトの粉")
-        addItem(RagiumMekanismAddon.OreResources.CLUMP, "ラギナイトの凝塊")
-        addItem(RagiumMekanismAddon.OreResources.SHARD, "ラギナイトの欠片")
-        addItem(RagiumMekanismAddon.OreResources.CRYSTAL, "ラギナイトの結晶")
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "濃縮紺碧エッセンス")
     }
 
     private fun jade() {

@@ -1,8 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -27,7 +25,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         createCrushing()
             .itemOutput(Items.GLOWSTONE_DUST, 4)
-            .itemInput(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.GLOWSTONE)
+            .itemInput(Items.GLOWSTONE)
             .saveSuffixed(output, "_from_glowstone")
 
         createCrushing()
@@ -79,21 +77,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_blackstone")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.OBSIDIAN, 4)
+            .itemOutput(RagiumItems.OBSIDIAN_DUST, 4)
             .itemInput(Tags.Items.OBSIDIANS_NORMAL)
             .saveSuffixed(output, "_from_block")
 
         createCrushing()
-            .itemOutput(RagiumItems.Dusts.IRON, 31)
-            .itemInput(ItemTags.ANVIL)
-            .saveSuffixed(output, "_from_anvil")
-        createCrushing()
-            .itemOutput(RagiumItems.Dusts.IRON, 7)
-            .itemInput(Items.CAULDRON)
-            .saveSuffixed(output, "_from_cauldron")
-
-        createCrushing()
-            .itemOutput(RagiumItems.Dusts.ASH, 3)
+            .itemOutput(RagiumItems.ASH_DUST, 3)
             .itemInput(RagiumBlocks.ASH_LOG)
             .saveSuffixed(output, "_from_log")
 
@@ -169,7 +158,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         createCrushing()
             .itemOutput(Items.SAND, 4)
-            .itemOutput(RagiumItems.Dusts.SALTPETER)
+            .itemOutput(RagiumItems.SALTPETER_DUST)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             .saveSuffixed(output, "_from_sandstone")
 

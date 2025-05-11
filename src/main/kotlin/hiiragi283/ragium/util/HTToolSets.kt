@@ -4,14 +4,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.item.HTForgeHammerItem
-import hiiragi283.ragium.api.material.HTMaterial
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTItemSet
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.*
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.bus.api.IEventBus
@@ -20,41 +19,41 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredItem
 
-class HTToolSets(material: Tier, val key: HTMaterial) : HTItemSet {
+class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>) : HTItemSet {
     private val itemRegister = HTItemRegister(RagiumAPI.MOD_ID)
 
     val axeItem: DeferredItem<AxeItem> = itemRegister.registerItem(
-        "${key.materialName}_axe",
+        "${name}_axe",
         { AxeItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 6f, -3.1f)),
     )
 
     val hoeItem: DeferredItem<HoeItem> = itemRegister.registerItem(
-        "${key.materialName}_hoe",
+        "${name}_hoe",
         { HoeItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, -2f, -1f)),
     )
 
     val pickaxeItem: DeferredItem<PickaxeItem> = itemRegister.registerItem(
-        "${key.materialName}_pickaxe",
+        "${name}_pickaxe",
         { PickaxeItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 1f, -2.8f)),
     )
 
     val shovelItem: DeferredItem<ShovelItem> = itemRegister.registerItem(
-        "${key.materialName}_shovel",
+        "${name}_shovel",
         { ShovelItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 1.5f, -3f)),
     )
 
     val swordItem: DeferredItem<SwordItem> = itemRegister.registerItem(
-        "${key.materialName}_sword",
+        "${name}_sword",
         { SwordItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 3f, -2.4f)),
     )
 
     val hammerItem: DeferredItem<HTForgeHammerItem> = itemRegister.registerItem(
-        "${key.materialName}_hammer",
+        "${name}_hammer",
         { HTForgeHammerItem(material, it) },
         Item.Properties().durability(material.uses),
     )
@@ -84,7 +83,7 @@ class HTToolSets(material: Tier, val key: HTMaterial) : HTItemSet {
                 "AB",
                 "BB",
             ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', HTTagPrefixes.INGOT, key)
+            .define('B', tagKey)
             .save(output)
         // Hoe
         HTShapedRecipeBuilder(hoeItem, category = CraftingBookCategory.EQUIPMENT)
@@ -93,7 +92,7 @@ class HTToolSets(material: Tier, val key: HTMaterial) : HTItemSet {
                 "A ",
                 "BB",
             ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', HTTagPrefixes.INGOT, key)
+            .define('B', tagKey)
             .save(output)
         // Pickaxe
         HTShapedRecipeBuilder(pickaxeItem, category = CraftingBookCategory.EQUIPMENT)
@@ -102,7 +101,7 @@ class HTToolSets(material: Tier, val key: HTMaterial) : HTItemSet {
                 " A ",
                 "BBB",
             ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', HTTagPrefixes.INGOT, key)
+            .define('B', tagKey)
             .save(output)
         // Shovel
         HTShapedRecipeBuilder(shovelItem, category = CraftingBookCategory.EQUIPMENT)
@@ -111,7 +110,7 @@ class HTToolSets(material: Tier, val key: HTMaterial) : HTItemSet {
                 "A",
                 "B",
             ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', HTTagPrefixes.INGOT, key)
+            .define('B', tagKey)
             .save(output)
         // Sword
         HTShapedRecipeBuilder(swordItem, category = CraftingBookCategory.EQUIPMENT)
@@ -120,14 +119,14 @@ class HTToolSets(material: Tier, val key: HTMaterial) : HTItemSet {
                 "B",
                 "B",
             ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', HTTagPrefixes.INGOT, key)
+            .define('B', tagKey)
             .save(output)
         // Forge Hammer
         HTShapedRecipeBuilder(hammerItem, category = CraftingBookCategory.EQUIPMENT)
             .pattern(" AA")
             .pattern("BBA")
             .pattern(" AA")
-            .define('A', HTTagPrefixes.INGOT, key)
+            .define('A', tagKey)
             .define('B', Tags.Items.RODS_WOODEN)
             .save(output)
     }

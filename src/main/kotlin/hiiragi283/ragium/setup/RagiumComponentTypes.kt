@@ -9,7 +9,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
@@ -42,8 +41,4 @@ object RagiumComponentTypes {
     @JvmField
     val TELEPORT_POS: Supplier<DataComponentType<GlobalPos>> =
         register("teleport_pos", GlobalPos.CODEC, GlobalPos.STREAM_CODEC.cast())
-
-    @JvmField
-    val LOOT_TABLE_ID: Supplier<DataComponentType<ResourceLocation>> =
-        register("loot_table_id", ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC.cast())
 }

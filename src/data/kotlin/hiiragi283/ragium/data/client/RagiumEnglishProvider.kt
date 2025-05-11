@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
 import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -29,7 +28,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         fluid()
         item()
         material()
-        tagPrefix()
+        // tagPrefix()
         tag()
         text()
 
@@ -41,12 +40,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
     private fun advancement() {
         add(RagiumTranslationKeys.ADV_ROOT_DESC, "Start Ragium by getting Raw Raginite from Raginite Ore")
-        addItemAdvDesc(RagiumItems.Ingots.RAGI_ALLOY, "Get Ragi-Alloy Ingot")
+        addItemAdvDesc(RagiumItems.RAGI_ALLOY_INGOT, "Get Ragi-Alloy Ingot")
         add(RagiumTranslationKeys.ADV_FORGE_HAMMER_TITLE, "RagiForge")
         add(RagiumTranslationKeys.ADV_FORGE_HAMMER_DESC, "Get Forge Hammer")
 
         addAdvDesc(RagiumItems.AZURE_SHARD, "Get Azure Shard by right-clicking Amethyst Cluster with Lapis")
-        addItemAdvDesc(RagiumItems.Ingots.AZURE_STEEL, "Get Azure Steel Ingot")
+        addItemAdvDesc(RagiumItems.AZURE_STEEL_INGOT, "Get Azure Steel Ingot")
     }
 
     private fun block() {
@@ -172,6 +171,32 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun item() {
+        // Material
+        addItem(RagiumItems.RAW_RAGINITE, "Raw Raginite")
+        addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
+        addItem(RagiumItems.AZURE_SHARD, "Azure Shard")
+        addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
+        addItem(RagiumItems.TAR, "Tar")
+
+        addItem(RagiumItems.RAGI_CRYSTAL, "Ragi-Crystal")
+        addItem(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
+        addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
+
+        addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+        addItem(RagiumItems.RAGI_ALLOY_INGOT, "Ragi-Alloy Ingot")
+        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "Advanced Ragi-Alloy Compound")
+        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT, "Advanced Ragi-Alloy Ingot")
+        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
+        addItem(RagiumItems.AZURE_STEEL_INGOT, "Azure Steel Ingot")
+        addItem(RagiumItems.DEEP_STEEL_INGOT, "Deep Steel Ingot")
+
+        addItem(RagiumItems.ASH_DUST, "Ash")
+        addItem(RagiumItems.OBSIDIAN_DUST, "Obsidian Dust")
+        addItem(RagiumItems.RAGINITE_DUST, "Raginite Dust")
+        addItem(RagiumItems.SALTPETER_DUST, "Saltpeter Dust")
+        addItem(RagiumItems.SAWDUST, "Sawdust")
+        addItem(RagiumItems.SULFUR_DUST, "Sulfur Dust")
+
         // Armor
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
         // Tool
@@ -229,13 +254,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.Molds.WIRE, "Mold (Wire)")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
-        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "Advanced Ragi-Alloy Compound")
         addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "Aquatic Ragium Essence")
-        addItem(RagiumItems.AZURE_SHARD, "Azure Shard")
-        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.CHIPPED_RAGIUM_ESSENCE, "Chipped Ragium Essence")
-        addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "Crystal Processor")
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
         addItem(RagiumItems.ENGINE, "V8 Engine")
@@ -243,14 +264,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
-        addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-        addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.RAGIUM_ESSENCE, "Ragium Essence")
-        addItem(RagiumItems.SAWDUST, "Sawdust")
         addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")
-        addItem(RagiumItems.TAR, "Tar")
 
         // addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
         // addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
@@ -364,7 +381,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMaterialKey(VanillaMaterials.WOOD, "Wood")
     }
 
-    private fun tagPrefix() {
+    /*private fun tagPrefix() {
         addTagPrefix(HTTagPrefixes.CLUMP, "%s Clump")
         addTagPrefix(HTTagPrefixes.CRYSTAL, "%s Crystal")
         addTagPrefix(HTTagPrefixes.DIRTY_DUST, "Dirty %s Dust")
@@ -376,14 +393,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addTagPrefix(HTTagPrefixes.ORE, "%s Ore")
         addTagPrefix(HTTagPrefixes.PLATE, "%s Plate")
         addTagPrefix(HTTagPrefixes.RAW_MATERIAL, "Raw %s")
-        // addTagPrefix(HTTagPrefixes.RAW_STORAGE, "Block of Raw %s")
+        addTagPrefix(HTTagPrefixes.RAW_STORAGE, "Block of Raw %s")
         addTagPrefix(HTTagPrefixes.ROD, "%s Rod")
         addTagPrefix(HTTagPrefixes.SHARD, "%s Shard")
-        // addTagPrefix(HTTagPrefixes.SHEETMETAL, "%s Sheetmetal")
+        addTagPrefix(HTTagPrefixes.SHEETMETAL, "%s Sheetmetal")
         addTagPrefix(HTTagPrefixes.STORAGE_BLOCK, "Block of %s")
-        // addTagPrefix(HTTagPrefixes.TINY_DUST, "Tiny %s Dust")
-        // addTagPrefix(HTTagPrefixes.WIRE, "%s Wire")
-    }
+        addTagPrefix(HTTagPrefixes.TINY_DUST, "Tiny %s Dust")
+        addTagPrefix(HTTagPrefixes.WIRE, "%s Wire")
+    }*/
 
     private fun tag() {
         // Fluid
@@ -457,12 +474,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "Dirty Raginite Slurry")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")
+        addItem(RagiumMekanismAddon.ITEM_DIRTY_RAGINITE_DUST, "Dirty Raginite Dust")
+        addItem(RagiumMekanismAddon.ITEM_RAGINITE_CLUMP, "Raginite Clump")
+        addItem(RagiumMekanismAddon.ITEM_RAGINITE_SHARD, "Raginite Shard")
+        addItem(RagiumMekanismAddon.ITEM_RAGINITE_CRYSTAL, "Raginite Crystal")
 
-        addItem(RagiumMekanismAddon.OreResources.DIRTY_DUST, "Dirty Raginite Dust")
-        addItem(RagiumMekanismAddon.OreResources.CLUMP, "Raginite Clump")
-        addItem(RagiumMekanismAddon.OreResources.SHARD, "Raginite Shard")
-        addItem(RagiumMekanismAddon.OreResources.CRYSTAL, "Raginite Crystal")
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")
     }
 
     private fun jade() {

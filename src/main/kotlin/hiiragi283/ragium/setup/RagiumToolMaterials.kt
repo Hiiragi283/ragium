@@ -1,11 +1,9 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.material.HTMaterial
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
@@ -21,9 +19,9 @@ enum class RagiumToolMaterials(
     private val enchantability: Int,
     private val repair: () -> Ingredient,
 ) : Tier {
-    RAGI_ALLOY(512, 4f, 1f, BlockTags.INCORRECT_FOR_STONE_TOOL, 5, RagiumMaterials.RAGI_ALLOY),
-    ADVANCED_RAGI_ALLOY(256, 5f, 2f, BlockTags.INCORRECT_FOR_IRON_TOOL, 15, RagiumMaterials.ADVANCED_RAGI_ALLOY),
-    STEEL(512, 7f, 2.5f, BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 12, RagiumMaterials.AZURE_STEEL),
+    RAGI_ALLOY(512, 4f, 1f, BlockTags.INCORRECT_FOR_STONE_TOOL, 5, RagiumItemTags.INGOTS_RAGI_ALLOY),
+    ADVANCED_RAGI_ALLOY(256, 5f, 2f, BlockTags.INCORRECT_FOR_IRON_TOOL, 15, RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY),
+    STEEL(512, 7f, 2.5f, BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 12, RagiumItemTags.INGOTS_AZURE_STEEL),
     CUSTOM(32, 12f, 0f, BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 0),
     ;
 
@@ -33,15 +31,14 @@ enum class RagiumToolMaterials(
         attackDamage: Float,
         incorrectTag: TagKey<Block>,
         enchantability: Int,
-        material: HTMaterial,
-        prefix: HTTagPrefix = HTTagPrefixes.INGOT,
+        tagKey: TagKey<Item>,
     ) : this(
         durability,
         miningSpeed,
         attackDamage,
         incorrectTag,
         enchantability,
-        { Ingredient.of(prefix.createItemTag(material)) },
+        { Ingredient.of(tagKey) },
     )
 
     constructor(

@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
@@ -21,7 +20,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Chocolate
         createInfusing()
-            .itemOutput(RagiumItems.Ingots.CHOCOLATE)
+            .itemOutput(RagiumItems.CHOCOLATE_INGOT)
             .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
             .save(output)
@@ -95,7 +94,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
             .define('A', RagiumItems.COOKED_MEAT_INGOT)
-            .define('B', HTTagPrefixes.INGOT, VanillaMaterials.IRON)
+            .define('B', Tags.Items.INGOTS_IRON)
             .save(output)
         // Cooked Meat on the Bone
         HTShapedRecipeBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)

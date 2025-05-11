@@ -9,25 +9,27 @@ import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTMaterial
 import hiiragi283.ragium.api.material.HTMaterialItemLike
 import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.IntegrationMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.material.prefix.HTTagPrefix
 import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.util.HTMaterialFamily
+import hiiragi283.ragium.data.server.RagiumMaterialFamilies
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTBuildingBlockSets
+import mekanism.common.tags.MekanismTags
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -68,44 +70,66 @@ class RagiumItemTagProvider(
         RagiumBlocks.RAGINITE_ORES.appendItemTags(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendItemTags(this)
 
-        fun addMaterialTag(
-            prefix: HTTagPrefix,
-            material: HTMaterial,
-            item: ItemLike,
-            type: HTTagBuilder.DependType = HTTagBuilder.DependType.REQUIRED,
-        ) {
-            addTag(prefix.itemCommonTag, prefix.createItemTag(material))
-            addItem(prefix, material, item, type)
-        }
-
         fun register(entries: List<HTMaterialItemLike>) {
             for (item: HTMaterialItemLike in entries) {
-                addMaterialTag(item.prefix, item, item)
+                val prefix: HTTagPrefix = item.prefix
+                addTag(prefix.itemCommonTag, prefix.createItemTag(item))
+                addItem(prefix, item, item)
             }
         }
 
         register(RagiumBlocks.StorageBlocks.entries)
-        register(RagiumItems.Dusts.entries)
-        register(RagiumItems.Ingots.entries)
-        register(RagiumItems.RawResources.entries)
-        register(RagiumMekanismAddon.OreResources.entries)
 
-        addMaterialTag(HTTagPrefixes.DUST, VanillaMaterials.WOOD, RagiumItems.SAWDUST)
+        fun register(family: HTMaterialFamily) {
+            if (family.isVanilla) return
+            for ((variant: HTMaterialFamily.Variant, entry: HTMaterialFamily.Entry) in family.variantMap) {
+                val (tagKey: TagKey<Item>, holder: Holder<Item>) = entry
+                addTag(variant.commonTag, tagKey)
+                add(tagKey, holder)
+            }
+        }
 
-        addTag(
-            HTTagPrefixes.GEM.createItemTag(CommonMaterials.COAL_COKE),
-            RagiumItemTags.COAL_COKE,
-            HTTagBuilder.DependType.OPTIONAL,
-        )
-        addTag(
-            HTTagPrefixes.GEM.createItemTag(VanillaMaterials.ENDER_PEARL),
-            Tags.Items.ENDER_PEARLS,
-        )
+        register(RagiumMaterialFamilies.RAGI_ALLOY)
+        register(RagiumMaterialFamilies.ADVANCED_RAGI_ALLOY)
+        register(RagiumMaterialFamilies.RAGI_CRYSTAL)
+        register(RagiumMaterialFamilies.CRIMSON_CRYSTAL)
+        register(RagiumMaterialFamilies.WARPED_CRYSTAL)
+        register(RagiumMaterialFamilies.AZURE_STEEL)
+        register(RagiumMaterialFamilies.DEEP_STEEL)
 
-        addItem(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.AMETHYST, Items.AMETHYST_BLOCK)
-        addItem(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.GLOWSTONE, Items.GLOWSTONE)
-        addItem(HTTagPrefixes.GEM, VanillaMaterials.COAL, Items.COAL)
-        addItem(HTTagPrefixes.GEM, VanillaMaterials.NETHERITE_SCRAP, Items.NETHERITE_SCRAP)
+        // Dusts
+        add(RagiumItemTags.DUSTS_ASH, RagiumItems.ASH_DUST)
+        add(RagiumItemTags.DUSTS_OBSIDIAN, RagiumItems.OBSIDIAN_DUST)
+        add(RagiumItemTags.DUSTS_RAGINITE, RagiumItems.RAGINITE_DUST)
+        add(RagiumItemTags.DUSTS_SALTPETER, RagiumItems.SALTPETER_DUST)
+        add(RagiumItemTags.DUSTS_SULFUR, RagiumItems.SULFUR_DUST)
+        add(RagiumItemTags.DUSTS_WOOD, RagiumItems.SAWDUST)
+        addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_ASH)
+        addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_OBSIDIAN)
+        addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_RAGINITE)
+        addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SALTPETER)
+        addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SULFUR)
+        addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_WOOD)
+        // Gems
+        addTag(Tags.Items.GEMS, RagiumItemTags.GEMS_COAL)
+        addItem(RagiumItemTags.GEMS_COAL, Items.COAL)
+        // Raw Materials
+        add(RagiumItemTags.RAW_MATERIALS_RAGINITE, RagiumItems.RAW_RAGINITE)
+        addTag(Tags.Items.RAW_MATERIALS, RagiumItemTags.RAW_MATERIALS_RAGINITE)
+
+        // Mekanism Addon
+        add(RagiumItemTags.CLUMPS_RAGINITE, RagiumMekanismAddon.ITEM_RAGINITE_CLUMP)
+        add(RagiumItemTags.CRYSTALS_RAGINITE, RagiumMekanismAddon.ITEM_RAGINITE_CRYSTAL)
+        add(RagiumItemTags.DIRTY_DUSTS_RAGINITE, RagiumMekanismAddon.ITEM_DIRTY_RAGINITE_DUST)
+        add(RagiumItemTags.ENRICHED_AZURE, RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
+        add(RagiumItemTags.ENRICHED_RAGINITE, RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
+        add(RagiumItemTags.SHARDS_RAGINITE, RagiumMekanismAddon.ITEM_RAGINITE_SHARD)
+        addTag(MekanismTags.Items.CLUMPS, RagiumItemTags.CLUMPS_RAGINITE)
+        addTag(MekanismTags.Items.CRYSTALS, RagiumItemTags.CRYSTALS_RAGINITE)
+        addTag(MekanismTags.Items.DIRTY_DUSTS, RagiumItemTags.DIRTY_DUSTS_RAGINITE)
+        addTag(MekanismTags.Items.ENRICHED, RagiumItemTags.ENRICHED_AZURE)
+        addTag(MekanismTags.Items.ENRICHED, RagiumItemTags.ENRICHED_RAGINITE)
+        addTag(MekanismTags.Items.SHARDS, RagiumItemTags.SHARDS_RAGINITE)
 
         fun addMaterialTag(
             prefix: HTTagPrefix,
@@ -119,19 +143,19 @@ class RagiumItemTagProvider(
         }
 
         // EIO
-        addMaterialTag(HTTagPrefixes.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, IntegrationMods.EIO, "energized_gear")
-        addMaterialTag(HTTagPrefixes.GEAR, IntegrationMaterials.VIBRANT_ALLOY, IntegrationMods.EIO, "vibrant_gear")
+        // addMaterialTag(HTTagPrefixes.GEAR, IntegrationMaterials.ENERGETIC_ALLOY, IntegrationMods.EIO, "energized_gear")
+        // addMaterialTag(HTTagPrefixes.GEAR, IntegrationMaterials.VIBRANT_ALLOY, IntegrationMods.EIO, "vibrant_gear")
         // Create
-        addMaterialTag(HTTagPrefixes.GEM, IntegrationMaterials.ROSE_QUARTZ, IntegrationMods.CREATE, "rose_quartz")
-        addMaterialTag(HTTagPrefixes.INGOT, IntegrationMaterials.ANDESITE_ALLOY, IntegrationMods.CREATE, "andesite_alloy")
+        // addMaterialTag(HTTagPrefixes.GEM, IntegrationMaterials.ROSE_QUARTZ, IntegrationMods.CREATE, "rose_quartz")
+        // addMaterialTag(HTTagPrefixes.INGOT, IntegrationMaterials.ANDESITE_ALLOY, IntegrationMods.CREATE, "andesite_alloy")
         // Evil Craft
-        addMaterialTag(HTTagPrefixes.DUST, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem_crushed")
-        addMaterialTag(HTTagPrefixes.GEM, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem")
-        addMaterialTag(HTTagPrefixes.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore")
-        addMaterialTag(HTTagPrefixes.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore_deepslate")
-        addMaterialTag(HTTagPrefixes.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_block")
+        // addMaterialTag(HTTagPrefixes.DUST, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem_crushed")
+        // addMaterialTag(HTTagPrefixes.GEM, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_gem")
+        // addMaterialTag(HTTagPrefixes.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore")
+        // addMaterialTag(HTTagPrefixes.ORE, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_ore_deepslate")
+        // addMaterialTag(HTTagPrefixes.STORAGE_BLOCK, IntegrationMaterials.DARK_GEM, IntegrationMods.EVC, "dark_block")
         // MI
-        addMaterialTag(HTTagPrefixes.GEM, CommonMaterials.COAL_COKE, IntegrationMods.MI, "coke")
+        // addMaterialTag(HTTagPrefixes.GEM, CommonMaterials.COAL_COKE, IntegrationMods.MI, "coke")
     }
 
     //    Food    //
@@ -144,6 +168,7 @@ class RagiumItemTagProvider(
         add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
         add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
+        add(Tags.Items.FOODS, RagiumItems.CHOCOLATE_INGOT)
         add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
         add(Tags.Items.FOODS, RagiumItems.EXP_BERRIES)
         add(Tags.Items.FOODS, RagiumItems.FEVER_CHERRY)
@@ -164,10 +189,19 @@ class RagiumItemTagProvider(
         add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
         add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumItems.RAGI_CHERRY)
         add(RagiumItemTags.JAMS_RAGI_CHERRY, RagiumItems.RAGI_CHERRY_JAM)
-        addTag(RagiumItemTags.FOODS_CHEESE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHEESE))
         addTag(RagiumItemTags.FOODS_CHERRY, RagiumItemTags.FOODS_RAGI_CHERRY)
-        addTag(RagiumItemTags.FOODS_CHOCOLATE, HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE))
         addTag(RagiumItemTags.FOODS_JAMS, RagiumItemTags.JAMS_RAGI_CHERRY)
+
+        addTag(
+            RagiumItemTags.FOODS_CHEESE,
+            HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHEESE),
+            HTTagBuilder.DependType.OPTIONAL,
+        )
+        addTag(
+            RagiumItemTags.FOODS_CHOCOLATE,
+            HTTagPrefixes.INGOT.createItemTag(CommonMaterials.CHOCOLATE),
+            HTTagBuilder.DependType.OPTIONAL,
+        )
     }
 
     //    Armor    //

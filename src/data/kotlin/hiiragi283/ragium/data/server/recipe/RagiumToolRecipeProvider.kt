@@ -6,9 +6,6 @@ import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -38,19 +35,19 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "A A",
                 "B B",
                 " C ",
-            ).define('A', HTTagPrefixes.INGOT, RagiumMaterials.AZURE_STEEL)
-            .define('B', HTTagPrefixes.INGOT, RagiumMaterials.RAGI_ALLOY)
-            .define('C', HTTagPrefixes.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
+            .define('B', RagiumItemTags.INGOTS_RAGI_ALLOY)
+            .define('C', RagiumItemTags.GEMS_RAGI_CRYSTAL)
             .save(output)
 
         HTSmithingRecipeBuilder(RagiumItems.EXP_MAGNET)
-            .addIngredient(HTTagPrefixes.STORAGE_BLOCK, VanillaMaterials.EMERALD)
+            .addIngredient(Tags.Items.STORAGE_BLOCKS_EMERALD)
             .addIngredient(RagiumItems.ITEM_MAGNET)
             .save(output)
 
         HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)
-            .addIngredient(HTTagPrefixes.GEM, VanillaMaterials.EMERALD)
+            .addIngredient(Tags.Items.GEMS_EMERALD)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
@@ -64,7 +61,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "AA",
                 "AA",
                 "B ",
-            ).define('A', HTTagPrefixes.INGOT, RagiumMaterials.AZURE_STEEL)
+            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
 

@@ -10,6 +10,107 @@ import net.minecraft.world.item.Item
  * Ragiumが使用するアイテムの[TagKey]の一覧
  */
 object RagiumItemTags {
+    //    Dust    //
+
+    @JvmField
+    val DUSTS_ASH: TagKey<Item> = commonTag("dusts/ash")
+
+    @JvmField
+    val DUSTS_OBSIDIAN: TagKey<Item> = commonTag("dusts/obsidian")
+
+    @JvmField
+    val DUSTS_RAGINITE: TagKey<Item> = commonTag("dusts/raginite")
+
+    @JvmField
+    val DUSTS_SALTPETER: TagKey<Item> = commonTag("dusts/saltpeter")
+
+    @JvmField
+    val DUSTS_SULFUR: TagKey<Item> = commonTag("dusts/sulfur")
+
+    @JvmField
+    val DUSTS_WOOD: TagKey<Item> = commonTag("dusts/wood")
+
+    //    Gems    //
+
+    @JvmField
+    val GEMS_COAL: TagKey<Item> = commonTag("gems/coal")
+
+    @JvmField
+    val GEMS_RAGI_CRYSTAL: TagKey<Item> = commonTag("gems/ragi_crystal")
+
+    @JvmField
+    val GEMS_CRIMSON_CRYSTAL: TagKey<Item> = commonTag("gems/crimson_crystal")
+
+    @JvmField
+    val GEMS_WARPED_CRYSTAL: TagKey<Item> = commonTag("gems/warped_crystal")
+
+    //    Ingots    //
+
+    @JvmField
+    val INGOTS_RAGI_ALLOY: TagKey<Item> = commonTag("ingots/ragi_alloy")
+
+    @JvmField
+    val INGOTS_ADVANCED_RAGI_ALLOY: TagKey<Item> = commonTag("ingots/advanced_ragi_alloy")
+
+    @JvmField
+    val INGOTS_AZURE_STEEL: TagKey<Item> = commonTag("ingots/azure_steel")
+
+    @JvmField
+    val INGOTS_DEEP_STEEL: TagKey<Item> = commonTag("ingots/deep_steel")
+
+    //    Ores    //
+
+    @JvmField
+    val ORES_RAGINITE: TagKey<Item> = commonTag("ores/raginite")
+
+    //    Raw Materials    //
+
+    @JvmField
+    val RAW_MATERIALS_RAGINITE: TagKey<Item> = commonTag("raw_materials/raginite")
+
+    //    Storage Blocks    //
+
+    @JvmField
+    val STORAGE_BLOCKS_RAGI_ALLOY: TagKey<Item> = commonTag("storage_blocks/ragi_alloy")
+
+    @JvmField
+    val STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY: TagKey<Item> = commonTag("storage_blocks/advanced_ragi_alloy")
+
+    @JvmField
+    val STORAGE_BLOCKS_RAGI_CRYSTAL: TagKey<Item> = commonTag("storage_blocks/ragi_crystal")
+
+    @JvmField
+    val STORAGE_BLOCKS_CRIMSON_CRYSTAL: TagKey<Item> = commonTag("storage_blocks/crimson_crystal")
+
+    @JvmField
+    val STORAGE_BLOCKS_WARPED_CRYSTAL: TagKey<Item> = commonTag("storage_blocks/warped_crystal")
+
+    @JvmField
+    val STORAGE_BLOCKS_AZURE_STEEL: TagKey<Item> = commonTag("storage_blocks/azure_steel")
+
+    @JvmField
+    val STORAGE_BLOCKS_DEEP_STEEL: TagKey<Item> = commonTag("storage_blocks/deep_steel")
+
+    //    Mekanism Integration    //
+
+    @JvmField
+    val ENRICHED_RAGINITE: TagKey<Item> = commonTag("enriched/raginite")
+
+    @JvmField
+    val DIRTY_DUSTS_RAGINITE: TagKey<Item> = commonTag("dirty_dusts/raginite")
+
+    @JvmField
+    val CLUMPS_RAGINITE: TagKey<Item> = commonTag("clumps/raginite")
+
+    @JvmField
+    val SHARDS_RAGINITE: TagKey<Item> = commonTag("shards/raginite")
+
+    @JvmField
+    val CRYSTALS_RAGINITE: TagKey<Item> = commonTag("crystals/raginite")
+
+    @JvmField
+    val ENRICHED_AZURE: TagKey<Item> = commonTag("enriched/azure")
+
     //    Common    //
 
     @JvmStatic

@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:dusts/advanced_ragi_alloy"
+      "item": "minecraft:blaze_powder"
     },
     "B": {
       "item": "minecraft:stone_bricks"

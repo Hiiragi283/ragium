@@ -1,8 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.extension.blockLookup
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.chemical.Chemical
@@ -41,7 +40,7 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
 
         builder.add(
             RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry,
-            ChemicalSolidTag(HTTagPrefixes.ORE.createItemTag(RagiumMaterials.RAGINITE)),
+            ChemicalSolidTag(RagiumItemTags.ORES_RAGINITE),
             false,
         )
     }

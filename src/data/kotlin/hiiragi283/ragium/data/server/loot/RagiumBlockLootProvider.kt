@@ -58,7 +58,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         fortuneDrop(
             RagiumBlocks.ASH_LOG,
             UniformGenerator.between(1f, 3f),
-            RagiumItems.Dusts.ASH,
+            RagiumItems.ASH_DUST,
         )
 
         // Bush
@@ -75,8 +75,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                 add(ore.get()) { block: Block -> createOreDrop(block, drop.asItem()) }
             }
         }
-        registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RawResources.RAGINITE)
-        registerOres(RagiumBlocks.RAGI_CRYSTAL_ORES, RagiumItems.RawResources.RAGI_CRYSTAL)
+        registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RAW_RAGINITE)
+        registerOres(RagiumBlocks.RAGI_CRYSTAL_ORES, RagiumItems.RAGI_CRYSTAL)
 
         // Machines
         for (holder: DeferredBlock<*> in RagiumBlocks.MACHINES) {

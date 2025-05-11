@@ -3,25 +3,19 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTIngredients
 import hiiragi283.ragium.api.extension.createPotionStack
-import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.component.DataComponents
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 
 object RagiumFluidRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
@@ -87,21 +81,15 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         createExtracting()
             .itemOutput(Items.GLASS_BOTTLE)
             .fluidOutput(Fluids.WATER, 333)
-            .itemInput(
-                DataComponentIngredient.of(
-                    false,
-                    DataComponents.POTION_CONTENTS,
-                    PotionContents(Potions.WATER),
-                    Items.POTION,
-                ),
-            ).saveSuffixed(output, "_from_water")
+            .itemInput(HTIngredients.potion(Potions.WATER))
+            .saveSuffixed(output, "_from_water")
     }
 
     private fun crudeOil() {
         // Coal -> Crude Oil
         createExtracting()
             .fluidOutput(RagiumFluidContents.CRUDE_OIL, 125)
-            .itemInput(HTTagPrefixes.GEM, VanillaMaterials.COAL)
+            .itemInput(RagiumItemTags.GEMS_COAL)
             .saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
         createExtracting()
@@ -117,7 +105,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output, RagiumAPI.id("naphtha_from_crude_oil"))
         // Naphtha -> Fuel + Sulfur
         createRefining()
-            .itemOutput(RagiumItems.Dusts.SULFUR)
+            .itemOutput(RagiumItems.SULFUR_DUST)
             .fluidOutput(RagiumFluidContents.FUEL, 750)
             .fluidInput(RagiumFluidContents.NAPHTHA)
             .save(output, RagiumAPI.id("fuel_from_naphtha"))
@@ -139,13 +127,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Quartz
         createInfusing()
             .itemOutput(Items.QUARTZ, 2)
-            .itemInput(HTTagPrefixes.DUST, VanillaMaterials.QUARTZ)
+            .itemInput(Tags.Items.GEMS_QUARTZ)
             .waterInput(250)
             .saveSuffixed(output, "_from_water")
         // Amethyst
         createInfusing()
             .itemOutput(Items.AMETHYST_SHARD, 2)
-            .itemInput(HTTagPrefixes.GEM, VanillaMaterials.AMETHYST)
+            .itemInput(Tags.Items.GEMS_AMETHYST)
             .waterInput(250)
             .saveSuffixed(output, "_from_water")
     }
@@ -166,7 +154,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Blaze Powder
         createInfusing()
             .itemOutput(Items.BLAZE_POWDER)
-            .itemInput(HTTagPrefixes.DUST, CommonMaterials.SULFUR)
+            .itemInput(RagiumItemTags.DUSTS_SULFUR)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
             .save(output)
         // Wind Charge
@@ -198,14 +186,14 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_crimson")
         // Crimson Sap -> Sap + Crimson Crystal
         createRefining()
-            .itemOutput(RagiumItems.RawResources.CRIMSON_CRYSTAL)
+            .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumFluidContents.SAP, 100)
             .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER)
-            .addIngredient(HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.CRIMSON_CRYSTAL)
+            .addIngredient(RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
             .save(output)
 
         // Warped Stem -> Wood Dust + Warped Sap
@@ -216,14 +204,14 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_warped")
         // Warped Sap -> Sap + Warped Crystal
         createRefining()
-            .itemOutput(RagiumItems.RawResources.WARPED_CRYSTAL)
+            .itemOutput(RagiumItems.WARPED_CRYSTAL)
             .fluidOutput(RagiumFluidContents.SAP, 100)
             .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL)
-            .addIngredient(HTTagPrefixes.STORAGE_BLOCK, RagiumMaterials.WARPED_CRYSTAL)
+            .addIngredient(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)
     }
 
@@ -231,13 +219,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Ragi-Crystal -> Molten Ragium
         createExtracting()
             .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 250)
-            .itemInput(HTTagPrefixes.GEM, RagiumMaterials.RAGI_CRYSTAL)
+            .itemInput(RagiumItemTags.GEMS_RAGI_CRYSTAL)
             .saveSuffixed(output, "_from_crystal")
 
         // Ragium Essence
         createInfusing()
             .itemOutput(RagiumItems.RAGIUM_ESSENCE)
-            .itemInput(HTTagPrefixes.DUST, VanillaMaterials.QUARTZ)
+            .itemInput(Tags.Items.GEMS_QUARTZ)
             .fluidInput(RagiumFluidContents.MOLTEN_RAGIUM)
             .save(output)
     }

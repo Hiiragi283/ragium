@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.bootstrap
 
-import hiiragi283.ragium.api.data.HTWorldGenData
+import hiiragi283.ragium.api.util.HTWorldGenData
 
 object RagiumWorldGenData {
     @JvmField

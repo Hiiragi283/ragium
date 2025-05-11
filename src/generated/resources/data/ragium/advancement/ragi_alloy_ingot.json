@@ -21,12 +21,7 @@
       "id": "ragium:ragi_alloy_ingot"
     },
     "title": {
-      "translate": "tag_prefix.ragium.ingot",
-      "with": [
-        {
-          "translate": "material.ragium.ragi_alloy"
-        }
-      ]
+      "translate": "item.ragium.ragi_alloy_ingot"
     }
   },
   "requirements": [

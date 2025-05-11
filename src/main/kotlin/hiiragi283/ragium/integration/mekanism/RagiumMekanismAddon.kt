@@ -4,9 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.api.material.HTMaterialItemLike
-import hiiragi283.ragium.api.material.prefix.HTTagPrefix
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
@@ -19,7 +16,6 @@ import mekanism.common.registration.impl.SlurryRegistryObject
 import mekanism.common.registries.MekanismItems
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -58,21 +54,19 @@ object RagiumMekanismAddon : RagiumAddon {
     val ITEM_ENRICHED_RAGINITE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_raginite")
 
     @JvmField
+    val ITEM_DIRTY_RAGINITE_DUST: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("dirty_raginite_dust")
+
+    @JvmField
+    val ITEM_RAGINITE_CLUMP: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("raginite_clump")
+
+    @JvmField
+    val ITEM_RAGINITE_SHARD: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("raginite_shard")
+
+    @JvmField
+    val ITEM_RAGINITE_CRYSTAL: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("raginite_crystal")
+
+    @JvmField
     val ITEM_ENRICHED_AZURE: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem("enriched_azure")
-
-    enum class OreResources(override val prefix: HTTagPrefix, path: String) : HTMaterialItemLike {
-        DIRTY_DUST(HTTagPrefixes.DIRTY_DUST, "dirty_raginite_dust"),
-        CLUMP(HTTagPrefixes.CLUMP, "raginite_clump"),
-        SHARD(HTTagPrefixes.SHARD, "raginite_shard"),
-        CRYSTAL(HTTagPrefixes.CRYSTAL, "raginite_crystal"),
-        ;
-
-        override val materialName: String = "raginite"
-        private val holder: DeferredItem<Item> = ITEM_REGISTER.registerSimpleItem(path)
-        override val id: ResourceLocation = holder.id
-
-        override fun asItem(): Item = holder.asItem()
-    }
 
     //    RagiumAddon    //
 
@@ -83,7 +77,6 @@ object RagiumMekanismAddon : RagiumAddon {
         eventBus.addListener(::modifyComponent)
 
         CHEMICAL_REGISTER.register(eventBus)
-        OreResources.entries
         ITEM_REGISTER.register(eventBus)
     }
 
@@ -107,11 +100,19 @@ object RagiumMekanismAddon : RagiumAddon {
         }
 
         if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {
-            lastStack = RagiumItems.RawResources.RAGINITE.toStack()
-
+            lastStack = RagiumItems.RAW_RAGINITE.toStack()
+            // Raginite
             acceptRaginite(ITEM_ENRICHED_RAGINITE)
-            acceptRaginite(ITEM_ENRICHED_AZURE)
-            OreResources.entries.forEach(::acceptRaginite)
+            acceptRaginite(ITEM_DIRTY_RAGINITE_DUST)
+            acceptRaginite(ITEM_RAGINITE_CLUMP)
+            acceptRaginite(ITEM_RAGINITE_SHARD)
+            acceptRaginite(ITEM_RAGINITE_CRYSTAL)
+            // Azure
+            event.insertAfter(
+                RagiumItems.AZURE_SHARD.toStack(),
+                ITEM_ENRICHED_AZURE.toStack(),
+                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+            )
         }
     }
 }

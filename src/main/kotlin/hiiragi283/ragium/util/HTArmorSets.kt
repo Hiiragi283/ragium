@@ -3,8 +3,6 @@ package hiiragi283.ragium.util
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.material.HTMaterial
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTItemSet
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -12,6 +10,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.Item
@@ -21,11 +20,11 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredItem
 
-class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterial) : HTItemSet {
+class HTArmorSets(material: Holder<ArmorMaterial>, private val name: String, private val tagKey: TagKey<Item>) : HTItemSet {
     private val itemRegister = HTItemRegister(RagiumAPI.MOD_ID)
 
     private fun register(material: Holder<ArmorMaterial>, type: ArmorItem.Type): DeferredItem<ArmorItem> = itemRegister.registerItem(
-        "${key.materialName}_${type.serializedName}",
+        "${name}_${type.serializedName}",
         { properties: Item.Properties -> ArmorItem(material, type, properties) },
         Item.Properties().durability(type.getDurability(20)),
     )
@@ -56,7 +55,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterial) : HTItem
             .pattern(
                 "AAA",
                 "ABA",
-            ).define('A', HTTagPrefixes.INGOT, key)
+            ).define('A', tagKey)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Chestplate
@@ -65,7 +64,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterial) : HTItem
                 "ABA",
                 "AAA",
                 "AAA",
-            ).define('A', HTTagPrefixes.INGOT, key)
+            ).define('A', tagKey)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Leggings
@@ -74,7 +73,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterial) : HTItem
                 "AAA",
                 "ABA",
                 "A A",
-            ).define('A', HTTagPrefixes.INGOT, key)
+            ).define('A', tagKey)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
         // Boots
@@ -82,7 +81,7 @@ class HTArmorSets(material: Holder<ArmorMaterial>, val key: HTMaterial) : HTItem
             .pattern(
                 "A A",
                 "ABA",
-            ).define('A', HTTagPrefixes.INGOT, key)
+            ).define('A', tagKey)
             .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
     }

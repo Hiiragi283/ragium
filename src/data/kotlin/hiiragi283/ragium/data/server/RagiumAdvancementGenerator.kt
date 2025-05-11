@@ -2,8 +2,6 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementGenerator
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -22,12 +20,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator("") {
             showToast = false
             showChat = false
         }
-        hasItemTag("has_raginite", HTTagPrefixes.RAW_MATERIAL.createItemTag(RagiumMaterials.RAGINITE))
+        hasItemTag("has_raginite", RagiumItemTags.RAW_MATERIALS_RAGINITE)
     }
 
     override fun generate(registries: HolderLookup.Provider) {
         // Ragi-Alloy
-        val ragiAlloy: AdvancementHolder = createSimple(root, RagiumItems.Ingots.RAGI_ALLOY)
+        val ragiAlloy: AdvancementHolder = createSimple(root, RagiumItems.RAGI_ALLOY_INGOT)
         val forgeHammer: AdvancementHolder = create("forge_hammer", ragiAlloy) {
             display {
                 setIcon(RagiumItems.RAGI_ALLOY_TOOLS.hammerItem)
@@ -41,6 +39,6 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator("") {
 
         // Azure
         val azureShard: AdvancementHolder = createSimple(root, RagiumItems.AZURE_SHARD)
-        val azureSteel: AdvancementHolder = createSimple(azureShard, RagiumItems.Ingots.AZURE_STEEL)
+        val azureSteel: AdvancementHolder = createSimple(azureShard, RagiumItems.AZURE_STEEL_INGOT)
     }
 }

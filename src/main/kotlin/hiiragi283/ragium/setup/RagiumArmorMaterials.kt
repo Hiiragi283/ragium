@@ -1,8 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.prefix.HTTagPrefixes
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -54,7 +53,7 @@ object RagiumArmorMaterials {
         "steel",
         10,
         SoundEvents.ARMOR_EQUIP_IRON,
-        { Ingredient.of(HTTagPrefixes.INGOT.createItemTag(RagiumMaterials.AZURE_STEEL)) },
+        { Ingredient.of(RagiumItemTags.INGOTS_AZURE_STEEL) },
         1.2f,
         0f,
         ArmorItem.Type.BOOTS to 3,

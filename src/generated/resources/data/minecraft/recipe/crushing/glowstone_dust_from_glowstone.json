@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "input": {
     "count": 1,
-    "tag": "c:storage_blocks/glowstone"
+    "item": "minecraft:glowstone"
   },
   "output": {
     "count": 4,

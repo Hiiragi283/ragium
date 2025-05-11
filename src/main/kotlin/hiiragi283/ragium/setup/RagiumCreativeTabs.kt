@@ -40,7 +40,7 @@ object RagiumCreativeTabs {
         register(
             "common",
             "Ragium",
-            RagiumItems.Ingots.RAGI_ALLOY,
+            RagiumItems.RAGI_ALLOY_INGOT,
         ) { provider: HolderLookup.Provider ->
             // Material Blocks
             addAll(RagiumFluidContents.REGISTER.itemEntries)
@@ -53,21 +53,35 @@ object RagiumCreativeTabs {
 
             addAll(RagiumBlocks.StorageBlocks.entries)
             // Material Items
-            add(RagiumItems.SAWDUST)
-            addAll(RagiumItems.Dusts.entries)
-
-            add(RagiumItems.RAGI_ALLOY_COMPOUND)
-            add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
-
-            add(RagiumItems.AZURE_SHARD)
-            add(RagiumItems.AZURE_STEEL_COMPOUND)
-            addAll(RagiumItems.Ingots.entries)
-
-            addAll(RagiumItems.RawResources.entries)
-
+            // Raw Materials
+            add(RagiumItems.RAW_RAGINITE)
             add(RagiumItems.RAGI_COKE)
+            add(RagiumItems.AZURE_SHARD)
+
             add(RagiumItems.COMPRESSED_SAWDUST)
             add(RagiumItems.TAR)
+            // Gems
+            add(RagiumItems.RAGI_CRYSTAL)
+            add(RagiumItems.CRIMSON_CRYSTAL)
+            add(RagiumItems.WARPED_CRYSTAL)
+            // Ingots
+            add(RagiumItems.RAGI_ALLOY_COMPOUND)
+            add(RagiumItems.RAGI_ALLOY_INGOT)
+
+            add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+            add(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
+
+            add(RagiumItems.AZURE_STEEL_COMPOUND)
+            add(RagiumItems.AZURE_STEEL_INGOT)
+
+            add(RagiumItems.DEEP_STEEL_INGOT)
+            // Dusts
+            add(RagiumItems.SAWDUST)
+            add(RagiumItems.ASH_DUST)
+            add(RagiumItems.RAGINITE_DUST)
+            add(RagiumItems.OBSIDIAN_DUST)
+            add(RagiumItems.SALTPETER_DUST)
+            add(RagiumItems.SULFUR_DUST)
 
             add(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
             add(RagiumItems.RAGIUM_ESSENCE)
