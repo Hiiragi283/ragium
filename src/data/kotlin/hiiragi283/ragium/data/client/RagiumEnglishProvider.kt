@@ -1,7 +1,12 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.addAdvDesc
+import hiiragi283.ragium.api.extension.addEnchantment
+import hiiragi283.ragium.api.extension.addFluid
+import hiiragi283.ragium.api.extension.addItem
+import hiiragi283.ragium.api.extension.addItemAdvDesc
+import hiiragi283.ragium.api.extension.addMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -269,11 +274,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "Crystal Processor")
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
-        addItem(RagiumItems.ENGINE, "V8 Engine")
-        addItem(RagiumItems.LED, "L.E.D.")
+        addItem(RagiumItems.LED, "Light Emitting Diode")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
-        addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")
 

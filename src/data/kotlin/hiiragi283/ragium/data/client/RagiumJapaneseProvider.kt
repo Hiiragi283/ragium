@@ -1,7 +1,12 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.addAdvDesc
+import hiiragi283.ragium.api.extension.addEnchantment
+import hiiragi283.ragium.api.extension.addFluid
+import hiiragi283.ragium.api.extension.addItem
+import hiiragi283.ragium.api.extension.addItemAdvDesc
+import hiiragi283.ragium.api.extension.addMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
 import hiiragi283.ragium.api.material.keys.RagiumMaterials
@@ -272,11 +277,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
-        addItem(RagiumItems.ENGINE, "V8エンジン")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
-        addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")
 

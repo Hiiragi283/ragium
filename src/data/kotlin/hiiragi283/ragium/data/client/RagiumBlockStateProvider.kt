@@ -3,7 +3,14 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.block.HTFeastBlock
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.cutoutSimpleBlock
+import hiiragi283.ragium.api.extension.layeredBlock
+import hiiragi283.ragium.api.extension.layeredModel
+import hiiragi283.ragium.api.extension.modelFile
+import hiiragi283.ragium.api.extension.simpleAltBlock
+import hiiragi283.ragium.api.extension.simpleBlock
+import hiiragi283.ragium.api.extension.slabBlock
+import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.Direction

@@ -33,7 +33,7 @@ class RagiumEnchantmentTagProvider(output: PackOutput, provider: CompletableFutu
         add(EnchantmentTags.TREASURE, noiseCanceling)
         add(EnchantmentTags.ON_RANDOM_LOOT, noiseCanceling)
         add(EnchantmentTags.TRADEABLE, noiseCanceling)
-        
+
         // Capacity
         add(RagiumEnchantmentTags.CAPACITY, capacity)
         // Charging

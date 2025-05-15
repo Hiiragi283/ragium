@@ -13,7 +13,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 
-class HTHoneyCollector(pos: BlockPos, state: BlockState) : HTTickAwareBlockEntity(TODO(), pos, state) {
+class HTAutoBeehiveBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBlockEntity(TODO(), pos, state) {
     private val inputSlot: HTItemSlot = HTItemSlot.create("input_slot", this) {
         validator = { variant: HTItemVariant -> variant.isOf(RagiumItems.BOTTLED_BEE) }
     }

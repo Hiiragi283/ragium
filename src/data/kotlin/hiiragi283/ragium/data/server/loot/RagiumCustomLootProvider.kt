@@ -3,7 +3,11 @@ package hiiragi283.ragium.data.server.loot
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.critereon.*
+import net.minecraft.advancements.critereon.EnchantmentPredicate
+import net.minecraft.advancements.critereon.ItemEnchantmentsPredicate
+import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.advancements.critereon.ItemSubPredicates
+import net.minecraft.advancements.critereon.MinMaxBounds
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.LootTableSubProvider

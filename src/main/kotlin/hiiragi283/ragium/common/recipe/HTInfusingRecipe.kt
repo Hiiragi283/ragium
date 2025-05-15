@@ -3,7 +3,11 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
+import hiiragi283.ragium.api.recipe.HTItemOutput
+import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes

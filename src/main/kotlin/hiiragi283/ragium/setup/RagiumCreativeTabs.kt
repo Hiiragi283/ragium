@@ -50,6 +50,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.RAGI_TICKET)
             add(RagiumItems.AZURE_TICKET)
             add(RagiumItems.DEEP_TICKET)
+            add(RagiumItems.TELEPORT_TICKET)
             add(RagiumItems.ETERNAL_TICKET)
             // Material Blocks
             addAll(RagiumBlocks.RAGINITE_ORES.getItems())
@@ -107,7 +108,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.ITEM_MAGNET)
             add(RagiumItems.EXP_MAGNET)
             add(RagiumItems.TRADER_CATALOG)
-            add(RagiumItems.TELEPORT_TICKET)
             add(RagiumItems.RAGI_LANTERN)
 
             addAll(RagiumItems.Molds.entries)
@@ -137,7 +137,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.WARPED_WART)
             add(RagiumItems.AMBROSIA)
             // Ingredients
-            add(RagiumItems.ENGINE)
             add(RagiumItems.LED)
             add(RagiumItems.SOLAR_PANEL)
             add(RagiumItems.STONE_BOARD)
@@ -147,9 +146,5 @@ object RagiumCreativeTabs {
             add(RagiumItems.BASIC_CIRCUIT)
             add(RagiumItems.ADVANCED_CIRCUIT)
             add(RagiumItems.CRYSTAL_PROCESSOR)
-
-            add(RagiumItems.SOAP)
-
-            // addAll(RagiumItems.TICKETS)
         }
 }

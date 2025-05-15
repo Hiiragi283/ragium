@@ -11,7 +11,14 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.*
+import net.minecraft.world.item.AxeItem
+import net.minecraft.world.item.DiggerItem
+import net.minecraft.world.item.HoeItem
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.PickaxeItem
+import net.minecraft.world.item.ShovelItem
+import net.minecraft.world.item.SwordItem
+import net.minecraft.world.item.Tier
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider

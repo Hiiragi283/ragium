@@ -2,7 +2,12 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.recipe.*
+import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
+import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
@@ -44,6 +49,10 @@ object RagiumRecipeSerializers {
         register(name, MapCodec.unit(recipe), StreamCodec.unit(recipe))
 
     //    Machine    //
+
+    @JvmField
+    val BEE_HIVE: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBeehiveRecipe>> =
+        register("bee_hive", HTBeehiveRecipe.CODEC, HTBeehiveRecipe.STREAM_CODEC)
 
     @JvmField
     val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =

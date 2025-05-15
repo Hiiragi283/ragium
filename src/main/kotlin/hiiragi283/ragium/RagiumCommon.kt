@@ -8,7 +8,16 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
-import hiiragi283.ragium.setup.*
+import hiiragi283.ragium.setup.RagiumArmorMaterials
+import hiiragi283.ragium.setup.RagiumBlockActionSerializers
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumCreativeTabs
+import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer

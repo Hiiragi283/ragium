@@ -43,6 +43,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         cherry()
+        honey()
         meat()
         sponge()
     }
@@ -60,6 +61,19 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .hollow8()
             .define('A', Tags.Items.STORAGE_BLOCKS_GOLD)
             .define('B', RagiumItems.RAGI_CHERRY)
+            .save(output)
+    }
+
+    private fun honey() {
+        // Beehive
+        createBeehive()
+            .itemOutput(Items.HONEYCOMB)
+            .catalyst(Tags.Items.TOOLS_SHEAR)
+        // .save(output)
+
+        createBeehive()
+            .itemOutput(Items.HONEY_BOTTLE)
+            .itemInput(Items.GLASS_BOTTLE)
             .save(output)
     }
 

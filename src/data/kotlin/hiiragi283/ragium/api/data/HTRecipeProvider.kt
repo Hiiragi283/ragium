@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.extension.itemLookup
+import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
@@ -42,6 +43,8 @@ abstract class HTRecipeProvider {
     fun save(recipeId: ResourceLocation, recipe: Recipe<*>, vararg conditions: ICondition) {
         output.accept(recipeId, recipe, null, *conditions)
     }
+
+    fun createBeehive(): HTDefinitionRecipeBuilder<HTBeehiveRecipe> = HTDefinitionRecipeBuilder("bee_hive", RagiumRecipeFactories::beehive)
 
     fun createCrushing(): HTDefinitionRecipeBuilder<HTCrushingRecipe> =
         HTDefinitionRecipeBuilder("crushing", RagiumRecipeFactories::crushing)

@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.item.HTMagnetItem
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
-import kotlin.jvm.java
 
 class HTSimpleMagnetItem(properties: Properties) : HTMagnetItem<ItemEntity>(properties) {
     override val entityClass: Class<ItemEntity> = ItemEntity::class.java

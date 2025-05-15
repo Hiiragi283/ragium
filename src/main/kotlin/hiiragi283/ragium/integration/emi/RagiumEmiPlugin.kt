@@ -20,15 +20,29 @@ import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
+import hiiragi283.ragium.api.recipe.HTFluidOutput
+import hiiragi283.ragium.api.recipe.HTItemOutput
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import hiiragi283.ragium.common.recipe.*
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
+import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
-import hiiragi283.ragium.integration.emi.recipe.*
+import hiiragi283.ragium.integration.emi.recipe.HTBlockInfoEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTMachineEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -40,7 +54,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.crafting.*
+import net.minecraft.world.item.crafting.CraftingRecipe
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
@@ -320,7 +339,7 @@ class RagiumEmiPlugin : EmiPlugin {
     /**
      * @see dev.emi.emi.VanillaPlugin.addRecipeSafe
      */
-    private inline fun <T: Recipe<*>> addRecipeSafe(recipe: T, factory: (T) -> EmiRecipe) {
+    private inline fun <T : Recipe<*>> addRecipeSafe(recipe: T, factory: (T) -> EmiRecipe) {
         addRecipeSafe(EmiPort.getId(recipe)) { factory(recipe) }
     }
 

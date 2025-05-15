@@ -31,7 +31,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
 
         val enchLookup: HolderGetter<Enchantment> = context.lookup(Registries.ENCHANTMENT)
         val itemLookup: HolderGetter<Item> = context.lookup(Registries.ITEM)
-        
+
         register(
             RagiumEnchantments.CAPACITY,
             Enchantment.enchantment(
@@ -48,28 +48,29 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
         )
         register(
             RagiumEnchantments.NOISE_CANCELING,
-            Enchantment.enchantment(
-                Enchantment.definition(
-                    itemLookup.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                    itemLookup.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
-                    5,
-                    5,
-                    Enchantment.dynamicCost(5, 8),
-                    Enchantment.dynamicCost(25, 8),
-                    2,
-                    EquipmentSlotGroup.MAINHAND
-                )
-            )
-                .exclusiveWith(enchLookup.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
+            Enchantment
+                .enchantment(
+                    Enchantment.definition(
+                        itemLookup.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        itemLookup.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                        5,
+                        5,
+                        Enchantment.dynamicCost(5, 8),
+                        Enchantment.dynamicCost(25, 8),
+                        2,
+                        EquipmentSlotGroup.MAINHAND,
+                    ),
+                ).exclusiveWith(enchLookup.getOrThrow(EnchantmentTags.DAMAGE_EXCLUSIVE))
                 .withEffect(
                     EnchantmentEffectComponents.DAMAGE,
                     AddValue(LevelBasedValue.perLevel(20f)),
                     LootItemEntityPropertyCondition.hasProperties(
                         LootContext.EntityTarget.THIS,
-                        EntityPredicate.Builder.entity()
-                            .of(EntityType.WARDEN)
-                    )
-                )
+                        EntityPredicate.Builder
+                            .entity()
+                            .of(EntityType.WARDEN),
+                    ),
+                ),
         )
     }
 }

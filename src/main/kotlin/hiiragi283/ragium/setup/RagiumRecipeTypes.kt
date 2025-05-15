@@ -15,6 +15,9 @@ object RagiumRecipeTypes {
     private fun register(name: String): Supplier<RecipeType<HTMachineRecipe>> = REGISTER.register(name, RecipeType<*>::simple)
 
     @JvmField
+    val BEE_HIVE: Supplier<RecipeType<HTMachineRecipe>> = register("bee_hive")
+
+    @JvmField
     val CRUSHING: Supplier<RecipeType<HTMachineRecipe>> = register("crushing")
 
     @JvmField

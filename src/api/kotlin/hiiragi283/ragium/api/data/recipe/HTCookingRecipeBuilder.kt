@@ -3,7 +3,12 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.*
+import net.minecraft.world.item.crafting.AbstractCookingRecipe
+import net.minecraft.world.item.crafting.BlastingRecipe
+import net.minecraft.world.item.crafting.CookingBookCategory
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.SmeltingRecipe
+import net.minecraft.world.item.crafting.SmokingRecipe
 import net.minecraft.world.level.ItemLike
 import java.util.function.IntUnaryOperator
 import kotlin.math.max

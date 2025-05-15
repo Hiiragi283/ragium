@@ -17,39 +17,36 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 
-class HTSolidifyingRecipe(
-    private val ingredient: SizedFluidIngredient,
-    private val catalyst: Ingredient,
-    private val output: HTItemOutput,
-) : HTMachineRecipe(),
+class HTBeehiveRecipe(private val ingredient: SizedIngredient, private val catalyst: Ingredient, private val output: HTItemOutput) :
+    HTMachineRecipe(),
     HTDefinitionRecipe<HTMachineInput> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTSolidifyingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTBeehiveRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    SizedFluidIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTSolidifyingRecipe::ingredient),
-                    Ingredient.CODEC.optionalFieldOf("catalyst", Ingredient.EMPTY).forGetter(HTSolidifyingRecipe::catalyst),
-                    HTItemOutput.CODEC.fieldOf("output").forGetter(HTSolidifyingRecipe::output),
-                ).apply(instance, ::HTSolidifyingRecipe)
+                    SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTBeehiveRecipe::ingredient),
+                    Ingredient.CODEC.optionalFieldOf("catalyst", Ingredient.EMPTY).forGetter(HTBeehiveRecipe::catalyst),
+                    HTItemOutput.CODEC.fieldOf("output").forGetter(HTBeehiveRecipe::output),
+                ).apply(instance, ::HTBeehiveRecipe)
         }
 
         @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTSolidifyingRecipe> = StreamCodec.composite(
-            SizedFluidIngredient.STREAM_CODEC,
-            HTSolidifyingRecipe::ingredient,
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTBeehiveRecipe> = StreamCodec.composite(
+            SizedIngredient.STREAM_CODEC,
+            HTBeehiveRecipe::ingredient,
             Ingredient.CONTENTS_STREAM_CODEC,
-            HTSolidifyingRecipe::catalyst,
+            HTBeehiveRecipe::catalyst,
             HTItemOutput.STREAM_CODEC,
-            HTSolidifyingRecipe::output,
-            ::HTSolidifyingRecipe,
+            HTBeehiveRecipe::output,
+            ::HTBeehiveRecipe,
         )
     }
 
     override fun matches(input: HTMachineInput): Boolean {
-        val bool1: Boolean = ingredient.test(input.getFluidStack(HTStorageIO.INPUT, 0))
+        val bool1: Boolean = ingredient.test(input.getItemStack(HTStorageIO.INPUT, 0))
         val catalystStack: ItemStack = input.getItemStack(HTStorageIO.INPUT, 0)
         val bool2: Boolean = when {
             catalyst.isEmpty -> catalystStack.isEmpty
@@ -66,14 +63,14 @@ class HTSolidifyingRecipe(
         TODO("Not yet implemented")
     }
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SOLIDIFYING.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BEE_HIVE.get()
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.SOLIDIFYING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.BEE_HIVE.get()
 
     override fun getDefinition(): DataResult<HTRecipeDefinition> = DataResult.success(
         HTRecipeDefinition(
-            listOf(),
             listOf(ingredient),
+            listOf(),
             catalyst,
             listOf(output),
             listOf(),

@@ -78,6 +78,10 @@ object RagiumItems {
     val DEEP_TICKET: DeferredItem<Item> = register("deep_ticket")
 
     @JvmField
+    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> =
+        register("teleport_ticket", ::HTTeleportTicketItem, Item.Properties().rarity(Rarity.RARE))
+
+    @JvmField
     val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket", Item.Properties().rarity(Rarity.UNCOMMON))
 
     //    Materials    //
@@ -173,10 +177,6 @@ object RagiumItems {
 
     @JvmField
     val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
-
-    @JvmField
-    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> =
-        register("teleport_ticket", ::HTTeleportTicketItem, Item.Properties().rarity(Rarity.RARE))
 
     @JvmField
     val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> =
@@ -275,9 +275,6 @@ object RagiumItems {
     //    Machine Parts    //
 
     @JvmField
-    val ENGINE: DeferredItem<Item> = register("engine")
-
-    @JvmField
     val LED: DeferredItem<Item> = register("led")
 
     @JvmField
@@ -300,11 +297,6 @@ object RagiumItems {
 
     @JvmField
     val CRYSTAL_PROCESSOR: DeferredItem<Item> = register("crystal_processor")
-
-    //    Misc    //
-
-    @JvmField
-    val SOAP: DeferredItem<Item> = register("soap")
 
     //    Event    //
 

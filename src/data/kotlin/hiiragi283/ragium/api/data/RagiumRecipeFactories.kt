@@ -4,6 +4,7 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
+import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
@@ -11,10 +12,19 @@ import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
-import java.util.Optional
+import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 internal object RagiumRecipeFactories {
+    @JvmStatic
+    fun beehive(definition: HTRecipeDefinition): DataResult<HTBeehiveRecipe> {
+        val ingredient: SizedIngredient =
+            definition.getItemIngredient(0).getOrNull() ?: return DataResult.error { "Required one item ingredient!" }
+        val output: HTItemOutput =
+            definition.getItemOutput(0).getOrNull() ?: return DataResult.error { "Required one item output!" }
+        return DataResult.success(HTBeehiveRecipe(ingredient, definition.catalyst, output))
+    }
+
     @JvmStatic
     fun crushing(definition: HTRecipeDefinition): DataResult<HTCrushingRecipe> {
         val ingredient: SizedIngredient =
