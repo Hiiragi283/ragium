@@ -39,12 +39,16 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun advancement() {
-        add(RagiumTranslationKeys.ADV_ROOT_DESC, "Start Ragium by getting Raw Raginite from Raginite Ore")
-        addItemAdvDesc(RagiumItems.RAGI_ALLOY_INGOT, "Get Ragi-Alloy Ingot")
+        add(RagiumTranslationKeys.ADV_ROOT_DESC, "Start Ragium by getting Blank Ticket")
+        addItemAdvDesc(RagiumItems.ETERNAL_TICKET, "Get Eternal Ticket for making tools unbreakable")
+
+        addItemAdvDesc(RagiumItems.RAGI_TICKET, "Get Ragi-Ticket")
+        addItemAdvDesc(RagiumItems.RAGINITE_DUST, "Get Raginite Dust by right-clicking Redstone Ore with Ragi-Ticket")
         add(RagiumTranslationKeys.ADV_FORGE_HAMMER_TITLE, "RagiForge")
         add(RagiumTranslationKeys.ADV_FORGE_HAMMER_DESC, "Get Forge Hammer")
 
-        addAdvDesc(RagiumItems.AZURE_SHARD, "Get Azure Shard by right-clicking Amethyst Cluster with Lapis")
+        addItemAdvDesc(RagiumItems.AZURE_TICKET, "Get Azure Ticket")
+        addAdvDesc(RagiumItems.AZURE_SHARD, "Get Azure Shard by right-clicking Amethyst Cluster with Azure Ticket")
         addItemAdvDesc(RagiumItems.AZURE_STEEL_INGOT, "Get Azure Steel Ingot")
     }
 
@@ -171,6 +175,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun item() {
+        // Tickets
+        addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
+        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
+        addItem(RagiumItems.AZURE_TICKET, "Azure Ticket")
+        addItem(RagiumItems.DEEP_TICKET, "Deep Ticket")
+        addItem(RagiumItems.ETERNAL_TICKET, "Eternal Ticket")
         // Material
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
         addItem(RagiumItems.AZURE_SHARD, "Azure Shard")
@@ -203,10 +213,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Tool
         RagiumItems.RAGI_ALLOY_TOOLS.addTranslationEn("Ragi-Alloy", this)
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
-
-        addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
-        addItem(RagiumItems.AZURE_TICKET, "Azure Ticket")
-        addItem(RagiumItems.DEEP_TICKET, "Deep Ticket")
 
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
         addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
@@ -258,16 +264,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.Molds.WIRE, "Mold (Wire)")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
-        addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "Aquatic Ragium Essence")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "Crystal Processor")
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
         addItem(RagiumItems.ENGINE, "V8 Engine")
-        addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "Inactive Ragium Essence")
         addItem(RagiumItems.LED, "L.E.D.")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
-        addItem(RagiumItems.RAGIUM_ESSENCE, "Ragium Essence")
         addItem(RagiumItems.SOAP, "Soap")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")

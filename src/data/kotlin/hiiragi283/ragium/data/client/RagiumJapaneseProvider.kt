@@ -39,11 +39,15 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun advancement() {
-        add(RagiumTranslationKeys.ADV_ROOT_DESC, "ラギナイト鉱石からラギナイトの原石を手に入れてRagiumを始めよう")
-        addItemAdvDesc(RagiumItems.RAGI_ALLOY_INGOT, "ラギ合金インゴットを手に入れる")
+        add(RagiumTranslationKeys.ADV_ROOT_DESC, "ブランクチケットを手に入れてRagiumを始めよう")
+        addItemAdvDesc(RagiumItems.ETERNAL_TICKET, "ツールを不可壊にするために永遠のチケットを手に入れる")
+
+        addItemAdvDesc(RagiumItems.RAGI_TICKET, "らぎチケットを手に入れる")
+        addItemAdvDesc(RagiumItems.RAGINITE_DUST, "レッドストーン功績にらぎチケットを使ってラギナイトの粉を手に入れる")
         add(RagiumTranslationKeys.ADV_FORGE_HAMMER_TITLE, "RagiForge")
         add(RagiumTranslationKeys.ADV_FORGE_HAMMER_DESC, "鍛造ハンマーを手に入れる")
 
+        addItemAdvDesc(RagiumItems.AZURE_TICKET, "紺碧のチケットを手に入れる")
         addAdvDesc(RagiumItems.AZURE_SHARD, "アメジストの塊にラピスを使って紺碧の欠片を手に入れる")
         addItemAdvDesc(RagiumItems.AZURE_STEEL_INGOT, "紺鉄インゴットを手に入れる")
     }
@@ -174,6 +178,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun item() {
+        // Tickets
+        addItem(RagiumItems.BLANK_TICKET, "ブランクチケット")
+        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
+        addItem(RagiumItems.AZURE_TICKET, "紺碧のチケット")
+        addItem(RagiumItems.DEEP_TICKET, "深層のチケット")
+        addItem(RagiumItems.ETERNAL_TICKET, "永遠のチケット")
         // Material
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
         addItem(RagiumItems.AZURE_SHARD, "紺碧の欠片")
@@ -206,10 +216,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Tool
         RagiumItems.RAGI_ALLOY_TOOLS.addTranslationJp("ラギ合金", this)
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
-
-        addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
-        addItem(RagiumItems.AZURE_TICKET, "紺碧チケット")
-        addItem(RagiumItems.DEEP_TICKET, "深層チケット")
 
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
         addItem(RagiumItems.EXP_MAGNET, "EXPマグネット")
@@ -261,16 +267,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
-        addItem(RagiumItems.AQUATIC_RAGIUM_ESSENCE, "海洋ラギウムエッセンス")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.ENGINE, "V8エンジン")
-        addItem(RagiumItems.INACTIVE_RAGIUM_ESSENCE, "不活性ラギウムエッセンス")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
-        addItem(RagiumItems.RAGIUM_ESSENCE, "ラギウムエッセンス")
         addItem(RagiumItems.SOAP, "石鹸")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")

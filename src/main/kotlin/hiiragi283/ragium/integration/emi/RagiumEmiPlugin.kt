@@ -12,6 +12,7 @@ import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
+import dev.emi.emi.recipe.special.EmiSmithingTrimRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
@@ -25,6 +26,7 @@ import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.*
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.*
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -35,6 +37,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.*
@@ -249,6 +252,7 @@ class RagiumEmiPlugin : EmiPlugin {
     //    Custom    //
 
     private fun addCustomRecipe() {
+        // Crafting
         forEachRecipes(RecipeType.CRAFTING) { _: ResourceLocation, recipe: CraftingRecipe? ->
             if (recipe is HTIceCreamSodaRecipe) {
                 EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
@@ -269,6 +273,23 @@ class RagiumEmiPlugin : EmiPlugin {
                     }
                 }
             }
+        }
+        // Smithing
+        addRecipeSafe(HTEternalTicketRecipe) { recipe: HTEternalTicketRecipe ->
+            EmiSmithingTrimRecipe(
+                EmiStack.of(RagiumItems.ETERNAL_TICKET),
+                EmiIngredient.of(
+                    EmiPort
+                        .getItemRegistry()
+                        .holders()
+                        .filter { holder: Holder.Reference<Item> -> holder.value().defaultInstance.isDamageableItem }
+                        .map { holder: Holder.Reference<Item> -> EmiStack.of(holder.value()) }
+                        .toList(),
+                ),
+                EmiStack.EMPTY,
+                EmiStack.EMPTY,
+                recipe,
+            )
         }
     }
 
@@ -299,8 +320,8 @@ class RagiumEmiPlugin : EmiPlugin {
     /**
      * @see dev.emi.emi.VanillaPlugin.addRecipeSafe
      */
-    private inline fun addRecipeSafe(recipe: Recipe<*>, factory: () -> EmiRecipe) {
-        addRecipeSafe(EmiPort.getId(recipe)) { factory() }
+    private inline fun <T: Recipe<*>> addRecipeSafe(recipe: T, factory: (T) -> EmiRecipe) {
+        addRecipeSafe(EmiPort.getId(recipe)) { factory(recipe) }
     }
 
     private inline fun addRecipeSafe(id: ResourceLocation, factory: (ResourceLocation) -> EmiRecipe) {

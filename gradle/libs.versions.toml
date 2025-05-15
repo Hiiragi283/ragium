@@ -12,17 +12,18 @@ kff-version = "5.7.0"
 kff-version-range = "[5.7,)"
 ktlint = "12.2.0"
 
-aa = "1.3.18+mc1.21.1"
-ae2 = "19.2.8"
-ars = "5.8.1.1081"
-curious = "9.4.2+1.21.1"
+aa = "1.3.19+mc1.21.1"
+ae2 = "19.2.10"
+ars = "5.8.2.1100"
+curious = "9.5.1+1.21.1"
 delight = "1.21.1-1.2.7"
 dire = "6369120"
 emi = "1.1.22+1.21.1"
-guide = "21.1.8"
+guide = "21.1.9"
 jade = "15.10.0+neoforge"
-mek = "1.21.1-10.7.13.78"
+mek = "1.21.1-10.7.14.79"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
+pneuma = "8.2.12+mc1.21.1"
 rs2 = "2.0.0-beta.2"
 
 [libraries]
@@ -40,6 +41,7 @@ guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "gui
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
+pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforge", version.ref = "rs2" }
 
 [bundles]
@@ -49,13 +51,12 @@ mods-impl = [
     "ae2",
     "curious",
     "delight",
-    "dire",
     "emi",
     "guide",
     "jade",
     "mek",
     "patchouli-gen",
-    "rs2",
+    "pneuma",
 ]
 
 mods-transitive = [
@@ -64,7 +65,10 @@ mods-transitive = [
 
 mods-compile = []
 
-mods-runtime = []
+mods-runtime = [
+    "dire",
+    "rs2",
+]
 
 [plugins]
 

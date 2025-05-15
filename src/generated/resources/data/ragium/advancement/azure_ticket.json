@@ -1,10 +1,11 @@
 {
+  "parent": "ragium:root",
   "criteria": {
-    "has_blank_ticket": {
+    "has_azure_ticket": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:blank_ticket"
+            "items": "ragium:azure_ticket"
           }
         ]
       },
@@ -12,21 +13,20 @@
     }
   },
   "display": {
-    "announce_to_chat": false,
-    "background": "ragium:textures/block/ragi_stone.png",
     "description": {
-      "translate": "advancements.ragium.root.desc"
+      "translate": "advancements.ragium.azure_ticket.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_ticket"
+      "id": "ragium:azure_ticket"
     },
-    "show_toast": false,
-    "title": "Ragium"
+    "title": {
+      "translate": "item.ragium.azure_ticket"
+    }
   },
   "requirements": [
     [
-      "has_blank_ticket"
+      "has_azure_ticket"
     ]
   ],
   "sends_telemetry_event": true

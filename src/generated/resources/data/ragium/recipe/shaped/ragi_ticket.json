@@ -3,19 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragium_essence"
+      "tag": "c:dusts/redstone"
     },
     "B": {
-      "item": "minecraft:lantern"
+      "tag": "c:dyes/red"
+    },
+    "C": {
+      "item": "ragium:blank_ticket"
     }
   },
   "pattern": [
-    " A ",
     "ABA",
-    " A "
+    "BCB",
+    "ABA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ragi_lantern"
+    "id": "ragium:ragi_ticket"
   }
 }

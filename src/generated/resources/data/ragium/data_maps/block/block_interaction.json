@@ -31,6 +31,20 @@
         "item": "ragium:ragi_ticket"
       }
     },
+    "minecraft:lantern": {
+      "actions": [
+        {
+          "type": "c:drop_item",
+          "stack": {
+            "count": 1,
+            "id": "ragium:ragi_lantern"
+          }
+        }
+      ],
+      "ingredient": {
+        "item": "ragium:ragi_ticket"
+      }
+    },
     "minecraft:large_amethyst_bud": {
       "actions": [
         {

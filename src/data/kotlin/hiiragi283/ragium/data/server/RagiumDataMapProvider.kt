@@ -94,6 +94,12 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             null,
             HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES[HTOreVariant.DEEPSLATE].get()),
         )
+        register(
+            Blocks.LANTERN,
+            Ingredient.of(RagiumItems.RAGI_TICKET),
+            null,
+            HTDropItemBlockAction(RagiumItems.RAGI_LANTERN),
+        )
 
         // Azure
         val amethysts: Map<Block, Int> = mapOf(

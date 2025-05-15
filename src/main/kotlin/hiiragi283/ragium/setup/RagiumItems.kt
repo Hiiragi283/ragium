@@ -6,11 +6,13 @@ import hiiragi283.ragium.api.component.HTConsumableData
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.item.*
+import hiiragi283.ragium.common.item.HTDynamicLanternItem
+import hiiragi283.ragium.common.item.HTExpMagnetItem
+import hiiragi283.ragium.common.item.HTSimpleMagnetItem
+import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.util.HTArmorSets
 import hiiragi283.ragium.util.HTToolSets
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.core.component.DataComponents
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
@@ -60,6 +62,23 @@ object RagiumItems {
         factory: (Item.Properties) -> T,
         properties: Item.Properties = Item.Properties(),
     ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
+
+    //    Tickets    //
+
+    @JvmField
+    val BLANK_TICKET: DeferredItem<Item> = register("blank_ticket")
+
+    @JvmField
+    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket")
+
+    @JvmField
+    val AZURE_TICKET: DeferredItem<Item> = register("azure_ticket")
+
+    @JvmField
+    val DEEP_TICKET: DeferredItem<Item> = register("deep_ticket")
+
+    @JvmField
+    val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket", Item.Properties().rarity(Rarity.UNCOMMON))
 
     //    Materials    //
 
@@ -128,15 +147,6 @@ object RagiumItems {
 
     // Other
     @JvmField
-    val INACTIVE_RAGIUM_ESSENCE: DeferredItem<Item> = register("inactive_ragium_essence")
-
-    @JvmField
-    val RAGIUM_ESSENCE: DeferredItem<Item> = register("ragium_essence")
-
-    @JvmField
-    val AQUATIC_RAGIUM_ESSENCE: DeferredItem<Item> = register("aquatic_ragium_essence")
-
-    @JvmField
     val ELDER_HEART: DeferredItem<Item> = register("elder_heart")
 
     //    Armors    //
@@ -145,16 +155,6 @@ object RagiumItems {
     val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, "azure_steel", RagiumItemTags.INGOTS_AZURE_STEEL)
 
     //    Tools    //
-
-    // Tickets
-    @JvmField
-    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket")
-
-    @JvmField
-    val AZURE_TICKET: DeferredItem<Item> = register("azure_ticket")
-
-    @JvmField
-    val DEEP_TICKET: DeferredItem<Item> = register("deep_ticket")
 
     @JvmField
     val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolMaterials.RAGI_ALLOY, "ragi_alloy", RagiumItemTags.INGOTS_RAGI_ALLOY)
@@ -326,19 +326,6 @@ object RagiumItems {
         }
         event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumComponentTypes.CONSUMABLE.get(), HTConsumableData(sound = SoundEvents.HONEY_DRINK))
-        }
-        // Ingot
-        /*event.modify(Ingots.CHEESE) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.FOOD, Foods.APPLE)
-        }
-        event.modify(Ingots.CHOCOLATE) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.FOOD, RagiumFoods.CHOCOLATE)
-        }*/
-
-        // Ragium Essence
-        event.modify(RAGIUM_ESSENCE) { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-            builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
 
         LOGGER.info("Modified default item components!")

@@ -12,12 +12,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
 import net.neoforged.neoforge.registries.DeferredItem
@@ -85,8 +83,6 @@ class RagiumClient(eventBus: IEventBus) {
         LOGGER.info("Registered client extensions!")
     }
 
-    private val waterExtension: IClientFluidTypeExtensions by lazy { IClientFluidTypeExtensions.of(Fluids.WATER) }
-
     private fun addBlockColor(event: RegisterColorHandlersEvent.Block) {
         // Exp Berry Bush
         event.register(
@@ -103,14 +99,10 @@ class RagiumClient(eventBus: IEventBus) {
         event.register(
             { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
                 if (tint != 0) return@register -1
-                when {
-                    getter != null && pos != null -> waterExtension.getTintColor(
-                        state.fluidState,
-                        getter,
-                        pos,
-                    )
-                    else -> -1
+                if (getter != null && pos != null) {
+                    return@register BiomeColors.getAverageWaterColor(getter, pos)
                 }
+                -1
             },
             RagiumBlocks.WATER_COLLECTOR.get(),
         )
@@ -122,7 +114,7 @@ class RagiumClient(eventBus: IEventBus) {
         // Water Collector
         event.register(
             { stack: ItemStack, tint: Int ->
-                if (tint == 0) waterExtension.tintColor else -1
+                if (tint == 0) 0x3f76e4 else -1
             },
             RagiumBlocks.WATER_COLLECTOR,
         )

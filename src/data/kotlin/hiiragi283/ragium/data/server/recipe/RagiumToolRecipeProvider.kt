@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -50,12 +51,11 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .addIngredient(Tags.Items.GEMS_EMERALD)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
-            .hollow4()
-            .define('A', RagiumItems.RAGIUM_ESSENCE)
-            .define('B', Items.LANTERN)
-            .save(output)
-        // Mold
+        molds()
+        tickets()
+    }
+
+    private fun molds() {
         HTShapedRecipeBuilder(RagiumItems.Molds.BLANK)
             .pattern(
                 "AA",
@@ -75,5 +75,51 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 ),
             )
         }
+    }
+
+    private fun tickets() {
+        // Blank
+        HTShapedRecipeBuilder(RagiumItems.BLANK_TICKET, 6)
+            .pattern(
+                "AAA",
+                "BCB",
+                "AAA",
+            ).define('A', RagiumItemTags.PAPER)
+            .define('B', Tags.Items.DYES_BLACK)
+            .define('C', Tags.Items.GEMS_DIAMOND)
+            .save(output)
+        // Ragi
+        HTShapedRecipeBuilder(RagiumItems.RAGI_TICKET)
+            .cross8()
+            .define('A', Tags.Items.DUSTS_REDSTONE)
+            .define('B', Tags.Items.DYES_RED)
+            .define('C', RagiumItems.BLANK_TICKET)
+            .save(output)
+        // Azure
+        HTShapedRecipeBuilder(RagiumItems.AZURE_TICKET)
+            .cross8()
+            .define('A', Tags.Items.GLASS_BLOCKS)
+            .define('B', Tags.Items.DYES_BLUE)
+            .define('C', RagiumItems.BLANK_TICKET)
+            .save(output)
+        // Deep
+        HTShapedRecipeBuilder(RagiumItems.DEEP_TICKET)
+            .cross8()
+            .define('A', Items.SCULK)
+            .define('B', Tags.Items.DYES_GREEN)
+            .define('C', RagiumItems.BLANK_TICKET)
+            .save(output)
+
+        // Eternal
+        HTShapelessRecipeBuilder(RagiumItems.ETERNAL_TICKET)
+            .addIngredient(RagiumItems.BLANK_TICKET)
+            .addIngredient(Tags.Items.NETHER_STARS)
+            .addIngredient(Tags.Items.DYES_YELLOW)
+            .save(output)
+
+        save(
+            RagiumAPI.id("smithing/eternal_ticket"),
+            HTEternalTicketRecipe,
+        )
     }
 }

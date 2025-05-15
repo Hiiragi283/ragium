@@ -18,9 +18,11 @@ import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.animal.Bee
+import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.npc.WanderingTrader
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -38,8 +40,10 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.event.LootTableLoadEvent
+import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import org.slf4j.Logger
@@ -176,6 +180,32 @@ object RagiumRuntimeEvents {
                 .randomOrNull()
                 ?: return
             user.removeEffect(badEffect)
+        }
+    }
+
+    //    Entity Conversion    //
+
+    @SubscribeEvent
+    fun onEntityStruck(event: EntityStruckByLightningEvent) {
+        if (event.isCanceled) return
+        // プレイヤーによって召喚された落雷は無視される
+        if (event.lightning.cause != null) return
+
+        val target: Entity = event.entity
+        LOGGER.info("Entity: ${target.type} is struck!")
+        // すでに落雷を受けたエンティティは除外される
+        if (target.persistentData.getBoolean("AlreadyStruck")) {
+            LOGGER.info("Already struck entity found!")
+            event.isCanceled = true
+            return
+        }
+        // アイテムの場合だけ変換を行う
+        val itemEntity: ItemEntity = target as? ItemEntity ?: return
+        val stackIn: ItemStack = itemEntity.item
+        if (stackIn.`is`(Tags.Items.INGOTS)) {
+            itemEntity.item = RagiumItems.RAGI_ALLOY_INGOT.toStack(stackIn.count)
+            itemEntity.persistentData.putBoolean("AlreadyStruck", true)
+            event.isCanceled = true
         }
     }
 

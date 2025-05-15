@@ -42,8 +42,16 @@ object RagiumCreativeTabs {
             "Ragium",
             RagiumItems.RAGI_ALLOY_INGOT,
         ) { provider: HolderLookup.Provider ->
-            // Material Blocks
+            // Fluid Buckets
             addAll(RagiumFluidContents.REGISTER.itemEntries)
+            // Tickets
+            add(RagiumItems.BLANK_TICKET)
+
+            add(RagiumItems.RAGI_TICKET)
+            add(RagiumItems.AZURE_TICKET)
+            add(RagiumItems.DEEP_TICKET)
+            add(RagiumItems.ETERNAL_TICKET)
+            // Material Blocks
             addAll(RagiumBlocks.RAGINITE_ORES.getItems())
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
 
@@ -80,11 +88,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.OBSIDIAN_DUST)
             add(RagiumItems.SALTPETER_DUST)
             add(RagiumItems.SULFUR_DUST)
-
-            add(RagiumItems.INACTIVE_RAGIUM_ESSENCE)
-            add(RagiumItems.RAGIUM_ESSENCE)
-
-            add(RagiumItems.AQUATIC_RAGIUM_ESSENCE)
             // Decorations
             RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems).forEach(::addAll)
 
@@ -99,10 +102,6 @@ object RagiumCreativeTabs {
             // Tools
             addAll(RagiumItems.RAGI_ALLOY_TOOLS.itemHolders)
             addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
-
-            add(RagiumItems.RAGI_TICKET)
-            add(RagiumItems.AZURE_TICKET)
-            add(RagiumItems.DEEP_TICKET)
 
             add(RagiumItems.ENDER_BUNDLE)
             add(RagiumItems.ITEM_MAGNET)

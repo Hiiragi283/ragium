@@ -28,7 +28,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         crudeOil()
         crystal()
         exp()
-        ragium()
         sap()
     }
 
@@ -109,6 +108,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.FUEL, 750)
             .fluidInput(RagiumFluidContents.NAPHTHA)
             .save(output, RagiumAPI.id("fuel_from_naphtha"))
+        // Naphtha + Coal -> Polymer Resin
+        createInfusing()
+            .itemOutput(RagiumItems.POLYMER_RESIN)
+            .itemInput(Items.COAL)
+            .fluidInput(RagiumFluidContents.NAPHTHA, 500)
+            .save(output, RagiumAPI.id("polymer_resin_from_naphtha"))
 
         // Tar -> Aromatic Compound
         createExtracting()
@@ -212,21 +217,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL)
             .addIngredient(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
-            .save(output)
-    }
-
-    private fun ragium() {
-        // Ragi-Crystal -> Molten Ragium
-        createExtracting()
-            .fluidOutput(RagiumFluidContents.MOLTEN_RAGIUM, 250)
-            .itemInput(RagiumItemTags.GEMS_RAGI_CRYSTAL)
-            .saveSuffixed(output, "_from_crystal")
-
-        // Ragium Essence
-        createInfusing()
-            .itemOutput(RagiumItems.RAGIUM_ESSENCE)
-            .itemInput(Tags.Items.GEMS_QUARTZ)
-            .fluidInput(RagiumFluidContents.MOLTEN_RAGIUM)
             .save(output)
     }
 

@@ -20,13 +20,23 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator("") {
             showToast = false
             showChat = false
         }
-        hasItem("has_ragi_ticket", RagiumItems.RAGI_TICKET)
+        hasItem("has_blank_ticket", RagiumItems.BLANK_TICKET)
     }
 
     override fun generate(registries: HolderLookup.Provider) {
-        // Raginite
-        val raginite: AdvancementHolder = createSimple(root, RagiumItems.RAGINITE_DUST)
-        // Ragi-Alloy
+        raginite()
+        azure()
+        blatinum()
+        deep()
+
+        val eternalTicket: AdvancementHolder = createSimple(root, RagiumItems.ETERNAL_TICKET) {
+            setChallenge()
+        }
+    }
+
+    private fun raginite() {
+        val ragiTicket: AdvancementHolder = createSimple(root, RagiumItems.RAGI_TICKET)
+        val raginite: AdvancementHolder = createSimple(ragiTicket, RagiumItems.RAGINITE_DUST)
         val ragiAlloy: AdvancementHolder = createSimple(raginite, RagiumItems.RAGI_ALLOY_INGOT)
         val forgeHammer: AdvancementHolder = create("forge_hammer", ragiAlloy) {
             display {
@@ -38,9 +48,17 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator("") {
         }
 
         val basicMachine: AdvancementHolder = createSimple(forgeHammer, RagiumBlocks.MACHINE_CASING)
+    }
 
-        // Azure
-        val azureShard: AdvancementHolder = createSimple(root, RagiumItems.AZURE_SHARD)
+    private fun azure() {
+        val azureTicket: AdvancementHolder = createSimple(root, RagiumItems.AZURE_TICKET)
+        val azureShard: AdvancementHolder = createSimple(azureTicket, RagiumItems.AZURE_SHARD)
         val azureSteel: AdvancementHolder = createSimple(azureShard, RagiumItems.AZURE_STEEL_INGOT)
+    }
+
+    private fun blatinum() {
+    }
+
+    private fun deep() {
     }
 }

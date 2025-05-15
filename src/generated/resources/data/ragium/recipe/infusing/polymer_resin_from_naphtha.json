@@ -1,15 +1,15 @@
 {
   "type": "ragium:infusing",
   "fluid_input": {
-    "amount": 1000,
-    "tag": "c:molten_ragium"
+    "amount": 500,
+    "tag": "c:naphtha"
   },
   "item_input": {
     "count": 1,
-    "tag": "c:gems/quartz"
+    "item": "minecraft:coal"
   },
   "output": {
     "count": 1,
-    "id": "ragium:ragium_essence"
+    "id": "ragium:polymer_resin"
   }
 }

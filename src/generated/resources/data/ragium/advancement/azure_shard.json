@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:root",
+  "parent": "ragium:azure_ticket",
   "criteria": {
     "has_azure_shard": {
       "conditions": {

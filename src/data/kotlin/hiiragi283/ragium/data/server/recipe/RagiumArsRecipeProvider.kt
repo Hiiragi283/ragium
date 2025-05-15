@@ -1,10 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
-import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.world.item.crafting.Ingredient
 
 @Suppress("MISSING_DEPENDENCY_SUPERCLASS_IN_TYPE_ARGUMENT")
 object RagiumArsRecipeProvider : HTRecipeProvider() {
@@ -14,7 +10,7 @@ object RagiumArsRecipeProvider : HTRecipeProvider() {
 
     private fun imbuement() {
         // Ragium Essence
-        save(
+        /*save(
             RagiumAPI.id("imbuement/ragium_essence"),
             ImbuementRecipe(
                 Ingredient.of(RagiumItems.INACTIVE_RAGIUM_ESSENCE),
@@ -22,6 +18,6 @@ object RagiumArsRecipeProvider : HTRecipeProvider() {
                 10000,
                 listOf(),
             ),
-        )
+        )*/
     }
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:blank_ticket"
+    },
+    {
+      "tag": "c:nether_stars"
+    },
+    {
+      "tag": "c:dyes/yellow"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:eternal_ticket"
+  }
+}

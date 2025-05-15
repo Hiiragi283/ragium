@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:paper"
+    },
+    "B": {
+      "tag": "c:dyes/black"
+    },
+    "C": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "AAA"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ragium:blank_ticket"
+  }
+}

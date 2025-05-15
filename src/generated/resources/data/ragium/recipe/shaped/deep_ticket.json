@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:sculk"
+    },
+    "B": {
+      "tag": "c:dyes/green"
+    },
+    "C": {
+      "item": "ragium:blank_ticket"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:deep_ticket"
+  }
+}

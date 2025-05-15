@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:ragi_ticket",
+  "parent": "ragium:root",
   "criteria": {
-    "has_raginite_dust": {
+    "has_eternal_ticket": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:raginite_dust"
+            "items": "ragium:eternal_ticket"
           }
         ]
       },
@@ -14,19 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.raginite_dust.desc"
+      "translate": "advancements.ragium.eternal_ticket.desc"
     },
+    "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "ragium:raginite_dust"
+      "id": "ragium:eternal_ticket"
     },
     "title": {
-      "translate": "item.ragium.raginite_dust"
+      "translate": "item.ragium.eternal_ticket"
     }
   },
   "requirements": [
     [
-      "has_raginite_dust"
+      "has_eternal_ticket"
     ]
   ],
   "sends_telemetry_event": true

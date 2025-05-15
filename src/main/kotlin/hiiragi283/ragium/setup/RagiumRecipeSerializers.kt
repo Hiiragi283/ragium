@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.recipe.*
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -73,6 +74,10 @@ object RagiumRecipeSerializers {
     @JvmField
     val BUCKET_FILLING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBucketFillingRecipe>> =
         registerUnit("bucket_filling", HTBucketFillingRecipe)
+
+    @JvmField
+    val ETERNAL_TICKET: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTEternalTicketRecipe>> =
+        registerUnit("eternal_ticket", HTEternalTicketRecipe)
 
     @JvmField
     val ICE_CREAM_SODA: DeferredHolder<RecipeSerializer<*>, SimpleCraftingRecipeSerializer<HTIceCreamSodaRecipe>> =
