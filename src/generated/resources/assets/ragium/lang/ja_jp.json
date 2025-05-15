@@ -138,6 +138,8 @@
   "emi.ragium.warped_wart": "食べるとランダムにデバフを一つだけ消します。",
   "enchantment.ragium.capacity": "容量増加",
   "enchantment.ragium.capacity.desc": "アイテムや液体ストレージの容量を拡張します。",
+  "enchantment.ragium.noise_canceling": "ノイズキャンセリング",
+  "enchantment.ragium.noise_canceling.desc": "ウォーデンなどのスカルク系モンスターに対してのダメージを増加させます。",
   "item.ragium.advanced_circuit": "発展回路",
   "item.ragium.advanced_ragi_alloy_compound": "発展ラギ合金混合物",
   "item.ragium.advanced_ragi_alloy_ingot": "発展ラギ合金インゴット",

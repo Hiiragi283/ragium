@@ -4,9 +4,11 @@ import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.tag.RagiumEnchantmentTags
 import hiiragi283.ragium.setup.RagiumEnchantments
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.EnchantmentTags
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.common.Tags
@@ -22,8 +24,18 @@ class RagiumEnchantmentTagProvider(output: PackOutput, provider: CompletableFutu
     ) {
     override fun addTagsInternal(provider: HolderLookup.Provider) {
         val enchLookup: HolderLookup.RegistryLookup<Enchantment> = provider.enchLookup()
+        // Vanilla
+        val capacity: Holder.Reference<Enchantment> = enchLookup.getOrThrow(RagiumEnchantments.CAPACITY)
+        add(EnchantmentTags.NON_TREASURE, capacity)
+
+        val noiseCanceling: Holder.Reference<Enchantment> = enchLookup.getOrThrow(RagiumEnchantments.NOISE_CANCELING)
+        add(EnchantmentTags.DAMAGE_EXCLUSIVE, noiseCanceling)
+        add(EnchantmentTags.TREASURE, noiseCanceling)
+        add(EnchantmentTags.ON_RANDOM_LOOT, noiseCanceling)
+        add(EnchantmentTags.TRADEABLE, noiseCanceling)
+        
         // Capacity
-        add(RagiumEnchantmentTags.CAPACITY, enchLookup.getOrThrow(RagiumEnchantments.CAPACITY))
+        add(RagiumEnchantmentTags.CAPACITY, capacity)
         // Charging
         add(RagiumEnchantmentTags.CHARGING, enchLookup.getOrThrow(Enchantments.CHANNELING))
         add(RagiumEnchantmentTags.CHARGING, enchLookup.getOrThrow(Enchantments.WIND_BURST))

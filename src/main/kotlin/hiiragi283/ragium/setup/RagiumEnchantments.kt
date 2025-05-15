@@ -8,6 +8,9 @@ import net.minecraft.world.item.enchantment.Enchantment
 object RagiumEnchantments {
     @JvmField
     val CAPACITY: ResourceKey<Enchantment> = create("capacity")
+    
+    @JvmField
+    val NOISE_CANCELING: ResourceKey<Enchantment> = create("noise_canceling")
 
     @JvmStatic
     private fun create(path: String): ResourceKey<Enchantment> = ResourceKey.create(Registries.ENCHANTMENT, RagiumAPI.id(path))
