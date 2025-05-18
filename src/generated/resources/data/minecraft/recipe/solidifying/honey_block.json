@@ -1,7 +1,7 @@
 {
   "type": "ragium:solidifying",
   "catalyst": {
-    "tag": "ragium:molds/block"
+    "tag": "c:molds/block"
   },
   "input": {
     "amount": 1000,

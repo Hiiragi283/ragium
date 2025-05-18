@@ -45,16 +45,17 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
     private fun advancement() {
         add(RagiumTranslationKeys.ADV_ROOT_DESC, "Start Ragium by getting Blank Ticket")
-        addItemAdvDesc(RagiumItems.ETERNAL_TICKET, "Get Eternal Ticket for making tools unbreakable")
+        add(RagiumTranslationKeys.ADV_ETERNAL_TICKET_TITLE, "Eternal Requiem")
+        add(RagiumTranslationKeys.ADV_ETERNAL_TICKET_DESC, "Get Eternal Ticket for making tools unbreakable")
 
         addItemAdvDesc(RagiumItems.RAGI_TICKET, "Get Ragi-Ticket")
         addItemAdvDesc(RagiumItems.RAGINITE_DUST, "Get Raginite Dust by right-clicking Redstone Ore with Ragi-Ticket")
-        add(RagiumTranslationKeys.ADV_FORGE_HAMMER_TITLE, "RagiForge")
-        add(RagiumTranslationKeys.ADV_FORGE_HAMMER_DESC, "Get Forge Hammer")
 
         addItemAdvDesc(RagiumItems.AZURE_TICKET, "Get Azure Ticket")
         addAdvDesc(RagiumItems.AZURE_SHARD, "Get Azure Shard by right-clicking Amethyst Cluster with Azure Ticket")
         addItemAdvDesc(RagiumItems.AZURE_STEEL_INGOT, "Get Azure Steel Ingot")
+        add(RagiumTranslationKeys.ADV_AZURE_TOOL_TITLE, "Wake up! Azure Dragon!")
+        add(RagiumTranslationKeys.ADV_AZURE_TOOL_DESC, "Get any Azure Steel Tool")
     }
 
     private fun block() {
@@ -218,7 +219,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Armor
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
         // Tool
-        RagiumItems.RAGI_ALLOY_TOOLS.addTranslationEn("Ragi-Alloy", this)
+        addItem(RagiumItems.RAGI_ALLOY_HAMMER, "Ragi-Alloy Forge Hammer")
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
 
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
@@ -424,11 +425,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumFluidTags.NON_NITRO_FUEL, "Non-Nitro Fuel")
         add(RagiumFluidTags.THERMAL_FUEL, "Thermal Fuel")
         // Item
-        add(RagiumItemTags.COAL_COKE, "Coal Coke")
         add(RagiumItemTags.PAPER, "Paper")
         add(RagiumItemTags.PLASTICS, "Plastic")
         add(RagiumItemTags.SILICON, "Silicon")
-        add(RagiumItemTags.SLAG, "Slag")
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, "Forge Hammer")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")

@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "group": "mold",
   "ingredient": {
-    "tag": "ragium:molds/blank"
+    "tag": "c:molds/blank"
   },
   "result": {
     "count": 1,

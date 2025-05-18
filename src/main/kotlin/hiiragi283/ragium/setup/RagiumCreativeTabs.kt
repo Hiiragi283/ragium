@@ -40,7 +40,7 @@ object RagiumCreativeTabs {
         register(
             "common",
             "Ragium",
-            RagiumItems.RAGI_ALLOY_INGOT,
+            RagiumItems.RAGI_ALLOY_HAMMER,
         ) { provider: HolderLookup.Provider ->
             // Fluid Buckets
             addAll(RagiumFluidContents.REGISTER.itemEntries)
@@ -101,7 +101,7 @@ object RagiumCreativeTabs {
             // Armors
             addAll(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
             // Tools
-            addAll(RagiumItems.RAGI_ALLOY_TOOLS.itemHolders)
+            add(RagiumItems.RAGI_ALLOY_HAMMER)
             addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
 
             add(RagiumItems.ENDER_BUNDLE)

@@ -77,6 +77,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
                 itemHelper.from(RagiumItemTags.ORES_RAGINITE),
                 RagiumItems.RAGINITE_DUST.toStack(12),
             ).build(output, RagiumAPI.id("processing/raginite/from_ore"))
+
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(RagiumItemTags.ORES_RAGI_CRYSTAL),
+                RagiumItems.RAGI_CRYSTAL.toStack(2),
+            ).build(output, RagiumAPI.id("processing/ragi_crystal/from_ore"))
     }
 
     private fun infusing() {

@@ -1,7 +1,7 @@
 {
   "parent": "ragium:root",
   "criteria": {
-    "has_eternal_ticket": {
+    "has_ticket": {
       "conditions": {
         "items": [
           {
@@ -22,12 +22,12 @@
       "id": "ragium:eternal_ticket"
     },
     "title": {
-      "translate": "item.ragium.eternal_ticket"
+      "translate": "advancements.ragium.eternal_ticket.title"
     }
   },
   "requirements": [
     [
-      "has_eternal_ticket"
+      "has_ticket"
     ]
   ],
   "sends_telemetry_event": true

@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
@@ -52,27 +53,27 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val BEE_HIVE: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBeehiveRecipe>> =
-        register("bee_hive", HTBeehiveRecipe.CODEC, HTBeehiveRecipe.STREAM_CODEC)
+        register(RagiumConstantValues.BEE_HIVE, HTBeehiveRecipe.CODEC, HTBeehiveRecipe.STREAM_CODEC)
 
     @JvmField
     val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =
-        register("crushing", HTCrushingRecipe.CODEC, HTCrushingRecipe.STREAM_CODEC)
+        register(RagiumConstantValues.CRUSHING, HTCrushingRecipe.CODEC, HTCrushingRecipe.STREAM_CODEC)
 
     @JvmField
     val EXTRACTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractingRecipe>> =
-        register("extracting", HTExtractingRecipe.CODEC, HTExtractingRecipe.STREAM_CODEC)
+        register(RagiumConstantValues.EXTRACTING, HTExtractingRecipe.CODEC, HTExtractingRecipe.STREAM_CODEC)
 
     @JvmField
     val INFUSING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTInfusingRecipe>> =
-        register("infusing", HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
+        register(RagiumConstantValues.INFUSING, HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
 
     @JvmField
     val REFINING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTRefiningRecipe>> =
-        register("refining", HTRefiningRecipe.CODEC, HTRefiningRecipe.STREAM_CODEC)
+        register(RagiumConstantValues.REFINING, HTRefiningRecipe.CODEC, HTRefiningRecipe.STREAM_CODEC)
 
     @JvmField
     val SOLIDIFYING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTSolidifyingRecipe>> =
-        register("solidifying", HTSolidifyingRecipe.CODEC, HTSolidifyingRecipe.STREAM_CODEC)
+        register(RagiumConstantValues.SOLIDIFYING, HTSolidifyingRecipe.CODEC, HTSolidifyingRecipe.STREAM_CODEC)
 
     //    Custom    //
 

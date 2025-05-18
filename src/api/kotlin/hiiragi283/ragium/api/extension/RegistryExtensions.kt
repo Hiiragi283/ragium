@@ -35,6 +35,8 @@ fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultName
  */
 fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath("c", path)
 
+fun commonId(prefix: String, value: String): ResourceLocation = commonId("$prefix/$value")
+
 //    Holder    //
 
 /**

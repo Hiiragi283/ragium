@@ -36,7 +36,6 @@ import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTBlockInfoEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
@@ -53,6 +52,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.Recipe
@@ -90,7 +90,6 @@ class RagiumEmiPlugin : EmiPlugin {
         recipeManager = registry.recipeManager
 
         addMachineRecipes()
-        addDeviceRecipes()
         addInfos()
 
         addCustomRecipe()
@@ -186,32 +185,6 @@ class RagiumEmiPlugin : EmiPlugin {
         }
     }
 
-    //    Device    //
-
-    private fun addDeviceRecipes() {
-        // Ash Log
-        addRecipeSafe(RagiumAPI.id("/block_info/ash_log")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.ASH_LOG, RagiumItems.ASH_DUST)
-        }
-
-        // Water Well
-        addRecipeSafe(RagiumAPI.id("/block_info/water_well")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.WATER_COLLECTOR, Fluids.WATER)
-        }
-        // Lava Well
-        addRecipeSafe(RagiumAPI.id("/block_info/lava_well")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.LAVA_COLLECTOR, Fluids.LAVA)
-        }
-        // Milk Drain
-        addRecipeSafe(RagiumAPI.id("/block_info/milk_drain")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.MILK_DRAIN, NeoForgeMod.MILK.get())
-        }
-        // Exp Collector
-        addRecipeSafe(RagiumAPI.id("/block_info/exp_collector")) { id: ResourceLocation ->
-            HTBlockInfoEmiRecipe(id, RagiumBlocks.EXP_COLLECTOR, RagiumFluidContents.EXPERIENCE.get())
-        }
-    }
-
     //    Info    //
 
     private fun addInfos() {
@@ -234,6 +207,57 @@ class RagiumEmiPlugin : EmiPlugin {
         )
         addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
         addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
+
+        // World Interaction
+        addRecipeSafe(RagiumAPI.id("/world/block_info/ash_log")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .rightInput(EmiStack.of(RagiumBlocks.ASH_LOG), false)
+                .leftInput(EmiStack.EMPTY)
+                .output(EmiStack.of(RagiumItems.ASH_DUST))
+                .build()
+        }
+
+        addRecipeSafe(RagiumAPI.id("/world/block_info/water_well")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .rightInput(EmiStack.of(RagiumBlocks.WATER_COLLECTOR), false)
+                .leftInput(EmiStack.EMPTY)
+                .output(EmiStack.of(Fluids.WATER))
+                .build()
+        }
+        // Lava Well
+        addRecipeSafe(RagiumAPI.id("/world/block_info/lava_well")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .rightInput(EmiStack.of(RagiumBlocks.LAVA_COLLECTOR), false)
+                .leftInput(EmiStack.EMPTY)
+                .output(EmiStack.of(Fluids.LAVA))
+                .build()
+        }
+        // Milk Drain
+        addRecipeSafe(RagiumAPI.id("/world/block_info/milk_drain")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .rightInput(EmiStack.of(RagiumBlocks.MILK_DRAIN), false)
+                .leftInput(EmiStack.of(Items.COW_SPAWN_EGG))
+                .output(EmiStack.of(NeoForgeMod.MILK.get()))
+                .build()
+        }
+        // Exp Collector
+        addRecipeSafe(RagiumAPI.id("/world/block_info/exp_collector")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .rightInput(EmiStack.of(RagiumBlocks.EXP_COLLECTOR), false)
+                .leftInput(EmiStack.of(Items.COW_SPAWN_EGG))
+                .output(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()))
+                .build()
+        }
 
         for (holder: Holder.Reference<Block> in BuiltInRegistries.BLOCK.holders()) {
             val id: ResourceLocation = holder.idOrNull ?: continue

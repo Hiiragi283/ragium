@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.neoforged.neoforge.common.Tags
@@ -19,8 +20,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         // Armor
         RagiumItems.AZURE_STEEL_ARMORS.addRecipes(output, provider)
         // Tool
-        RagiumItems.RAGI_ALLOY_TOOLS.addRecipes(output, provider)
         RagiumItems.AZURE_STEEL_TOOLS.addRecipes(output, provider)
+
+        HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_HAMMER, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(" AA")
+            .pattern("BBA")
+            .pattern(" AA")
+            .define('A', RagiumItemTags.INGOTS_RAGI_ALLOY)
+            .define('B', Tags.Items.RODS_WOODEN)
+            .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
             .pattern(
@@ -114,7 +122,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         HTShapelessRecipeBuilder(RagiumItems.ETERNAL_TICKET)
             .addIngredient(RagiumItems.BLANK_TICKET)
             .addIngredient(Tags.Items.NETHER_STARS)
-            .addIngredient(Tags.Items.DYES_WHITE)
+            .addIngredient(Tags.Items.DYES_YELLOW)
+            .addIngredient(Tags.Items.DYES_BLUE)
             .save(output)
 
         save(

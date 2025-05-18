@@ -62,7 +62,6 @@ class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>)
     val hammerItem: DeferredItem<HTForgeHammerItem> = itemRegister.registerItem(
         "${name}_hammer",
         { HTForgeHammerItem(material, it) },
-        Item.Properties().durability(material.uses),
     )
 
     //    HTItemSet    //

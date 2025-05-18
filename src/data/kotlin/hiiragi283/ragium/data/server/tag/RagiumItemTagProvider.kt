@@ -15,6 +15,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTBuildingBlockSets
+import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -45,6 +46,7 @@ class RagiumItemTagProvider(
         category()
 
         curios()
+        pneumatic()
     }
 
     private fun copy() {
@@ -96,9 +98,6 @@ class RagiumItemTagProvider(
         addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SALTPETER)
         addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SULFUR)
         addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_WOOD)
-        // Gems
-        addTag(Tags.Items.GEMS, RagiumItemTags.GEMS_COAL)
-        addItem(RagiumItemTags.GEMS_COAL, Items.COAL)
         // Raw Materials
         // add(RagiumItemTags.RAW_MATERIALS_RAGINITE, RagiumItems.RAW_RAGINITE)
         // addTag(Tags.Items.RAW_MATERIALS, RagiumItemTags.RAW_MATERIALS_RAGINITE)
@@ -238,11 +237,13 @@ class RagiumItemTagProvider(
         }
 
         RagiumItems.AZURE_STEEL_ARMORS.appendItemTags(this)
+        // Tools
+        add(RagiumItemTags.TOOLS_FORGE_HAMMER, RagiumItems.RAGI_ALLOY_HAMMER)
+        addTag(Tags.Items.TOOLS, RagiumItemTags.TOOLS_FORGE_HAMMER)
 
-        RagiumItems.RAGI_ALLOY_TOOLS.appendItemTags(this)
         RagiumItems.AZURE_STEEL_TOOLS.appendItemTags(this)
 
-        // Bucket
+        // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             add(content.bucketTag, content.bucketHolder)
             addTag(Tags.Items.BUCKETS, content.bucketTag)
@@ -279,11 +280,15 @@ class RagiumItemTagProvider(
         }
     }
 
-    //    Curios Addon    //
+    //    Integrations    //
 
     private fun curios() {
         add(CuriosTags.CHARM, RagiumItems.EXP_MAGNET)
         add(CuriosTags.CHARM, RagiumItems.ITEM_MAGNET)
         add(CuriosTags.CHARM, RagiumItems.RAGI_LANTERN)
+    }
+
+    private fun pneumatic() {
+        add(PneumaticCraftTags.Items.PLASTIC_SHEETS, RagiumItems.PLASTIC_PLATE)
     }
 }

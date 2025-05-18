@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:forge_hammer",
+  "parent": "ragium:ragi_alloy_ingot",
   "criteria": {
     "has_machine_casing": {
       "conditions": {

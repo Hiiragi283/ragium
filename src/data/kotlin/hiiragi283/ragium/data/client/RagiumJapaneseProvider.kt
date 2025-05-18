@@ -45,16 +45,17 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun advancement() {
         add(RagiumTranslationKeys.ADV_ROOT_DESC, "ブランクチケットを手に入れてRagiumを始めよう")
-        addItemAdvDesc(RagiumItems.ETERNAL_TICKET, "ツールを不可壊にするために永遠のチケットを手に入れる")
+        add(RagiumTranslationKeys.ADV_ETERNAL_TICKET_TITLE, "さあ，地獄を楽しみな！")
+        add(RagiumTranslationKeys.ADV_ETERNAL_TICKET_DESC, "ツールを不可壊にするために永遠のチケットを手に入れる")
 
         addItemAdvDesc(RagiumItems.RAGI_TICKET, "らぎチケットを手に入れる")
         addItemAdvDesc(RagiumItems.RAGINITE_DUST, "レッドストーン功績にらぎチケットを使ってラギナイトの粉を手に入れる")
-        add(RagiumTranslationKeys.ADV_FORGE_HAMMER_TITLE, "RagiForge")
-        add(RagiumTranslationKeys.ADV_FORGE_HAMMER_DESC, "鍛造ハンマーを手に入れる")
 
         addItemAdvDesc(RagiumItems.AZURE_TICKET, "紺碧のチケットを手に入れる")
         addAdvDesc(RagiumItems.AZURE_SHARD, "アメジストの塊にラピスを使って紺碧の欠片を手に入れる")
         addItemAdvDesc(RagiumItems.AZURE_STEEL_INGOT, "紺鉄インゴットを手に入れる")
+        add(RagiumTranslationKeys.ADV_AZURE_TOOL_TITLE, "Wake up! Azure Dragon!")
+        add(RagiumTranslationKeys.ADV_AZURE_TOOL_DESC, "紺鉄インゴットで作られたツールを手に入れる")
     }
 
     private fun block() {
@@ -221,7 +222,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Armor
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
         // Tool
-        RagiumItems.RAGI_ALLOY_TOOLS.addTranslationJp("ラギ合金", this)
+        addItem(RagiumItems.RAGI_ALLOY_HAMMER, "ラギ合金の鍛造ハンマー")
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
 
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
@@ -418,11 +419,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun tag() {
         // Item
-        add(RagiumItemTags.COAL_COKE, "石炭コークス")
         add(RagiumItemTags.PAPER, "紙")
         add(RagiumItemTags.PLASTICS, "プラスチック")
         add(RagiumItemTags.SILICON, "シリコン")
-        add(RagiumItemTags.SLAG, "スラグ")
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, "鍛造ハンマー")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "歪んだウォート")

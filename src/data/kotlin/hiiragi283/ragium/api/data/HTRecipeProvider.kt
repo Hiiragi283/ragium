@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.extension.itemLookup
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
@@ -47,17 +48,17 @@ abstract class HTRecipeProvider {
     fun createBeehive(): HTDefinitionRecipeBuilder<HTBeehiveRecipe> = HTDefinitionRecipeBuilder("bee_hive", RagiumRecipeFactories::beehive)
 
     fun createCrushing(): HTDefinitionRecipeBuilder<HTCrushingRecipe> =
-        HTDefinitionRecipeBuilder("crushing", RagiumRecipeFactories::crushing)
+        HTDefinitionRecipeBuilder(RagiumConstantValues.CRUSHING, RagiumRecipeFactories::crushing)
 
     fun createExtracting(): HTDefinitionRecipeBuilder<HTExtractingRecipe> =
-        HTDefinitionRecipeBuilder("extracting", RagiumRecipeFactories::extracting)
+        HTDefinitionRecipeBuilder(RagiumConstantValues.EXTRACTING, RagiumRecipeFactories::extracting)
 
     fun createInfusing(): HTDefinitionRecipeBuilder<HTInfusingRecipe> =
-        HTDefinitionRecipeBuilder("infusing", RagiumRecipeFactories::infusing)
+        HTDefinitionRecipeBuilder(RagiumConstantValues.INFUSING, RagiumRecipeFactories::infusing)
 
     fun createRefining(): HTDefinitionRecipeBuilder<HTRefiningRecipe> =
-        HTDefinitionRecipeBuilder("refining", RagiumRecipeFactories::refining)
+        HTDefinitionRecipeBuilder(RagiumConstantValues.REFINING, RagiumRecipeFactories::refining)
 
     fun createSolidifying(): HTDefinitionRecipeBuilder<HTSolidifyingRecipe> =
-        HTDefinitionRecipeBuilder("solidifying", RagiumRecipeFactories::solidifying)
+        HTDefinitionRecipeBuilder(RagiumConstantValues.SOLIDIFYING, RagiumRecipeFactories::solidifying)
 }

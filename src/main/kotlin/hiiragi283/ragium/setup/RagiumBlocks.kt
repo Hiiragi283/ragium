@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
@@ -120,10 +121,10 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val RAGINITE_ORES = HTOreSets("raginite")
+    val RAGINITE_ORES = HTOreSets(RagiumConstantValues.RAGINITE)
 
     @JvmField
-    val RAGI_CRYSTAL_ORES = HTOreSets("ragi_crystal")
+    val RAGI_CRYSTAL_ORES = HTOreSets(RagiumConstantValues.RAGI_CRYSTAL)
 
     @JvmField
     val SILT: DeferredBlock<ColoredFallingBlock> = register(
@@ -157,41 +158,41 @@ object RagiumBlocks {
     // Gems
     @JvmField
     val RAGI_CRYSTAL_BLOCK: DeferredBlock<Block> =
-        register("ragi_crystal_block", crystal().mapColor(MapColor.COLOR_PINK))
+        register("${RagiumConstantValues.RAGI_CRYSTAL}_block", crystal().mapColor(MapColor.COLOR_PINK))
 
     @JvmField
     val CRIMSON_CRYSTAL_BLOCK: DeferredBlock<Block> =
-        register("crimson_crystal_block", crystal().mapColor(MapColor.CRIMSON_STEM))
+        register("${RagiumConstantValues.CRIMSON_CRYSTAL}_block", crystal().mapColor(MapColor.CRIMSON_STEM))
 
     @JvmField
     val WARPED_CRYSTAL_BLOCK: DeferredBlock<Block> =
-        register("warped_crystal_block", crystal().mapColor(MapColor.WARPED_STEM))
+        register("${RagiumConstantValues.WARPED_CRYSTAL}_block", crystal().mapColor(MapColor.WARPED_STEM))
 
     // Ingots
     @JvmField
     val RAGI_ALLOY_BLOCK: DeferredBlock<Block> =
-        register("ragi_alloy_block", lightMetal().mapColor(MapColor.COLOR_RED))
+        register("${RagiumConstantValues.RAGI_ALLOY}_block", lightMetal().mapColor(MapColor.COLOR_RED))
 
     @JvmField
     val ADVANCED_RAGI_ALLOY_BLOCK: DeferredBlock<Block> =
-        register("advanced_ragi_alloy_block", heavyMetal().mapColor(MapColor.COLOR_ORANGE))
+        register("${RagiumConstantValues.ADVANCED_RAGI_ALLOY}_block", heavyMetal().mapColor(MapColor.COLOR_ORANGE))
 
     @JvmField
     val AZURE_STEEL_BLOCK: DeferredBlock<Block> =
-        register("azure_steel_block", heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE))
+        register("${RagiumConstantValues.AZURE_STEEL}_block", heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE))
 
     @JvmField
     val DEEP_STEEL_BLOCK: DeferredBlock<Block> =
-        register("deep_steel_block", heavyMetal().mapColor(MapColor.COLOR_CYAN))
+        register("${RagiumConstantValues.DEEP_STEEL}_block", heavyMetal().mapColor(MapColor.COLOR_CYAN))
 
     // Others
     @JvmField
     val CHEESE_BLOCK: DeferredBlock<Block> =
-        register("cheese_block", wooden().mapColor(MapColor.TERRACOTTA_YELLOW))
+        register("${RagiumConstantValues.CHEESE}_block", wooden().mapColor(MapColor.TERRACOTTA_YELLOW))
 
     @JvmField
     val CHOCOLATE_BLOCK: DeferredBlock<Block> =
-        register("chocolate_block", wooden().mapColor(MapColor.TERRACOTTA_BROWN))
+        register("${RagiumConstantValues.CHOCOLATE}_block", wooden().mapColor(MapColor.TERRACOTTA_BROWN))
 
     @JvmField
     val STORAGE_BLOCKS: List<DeferredBlock<Block>> = listOf(

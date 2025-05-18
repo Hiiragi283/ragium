@@ -9,7 +9,10 @@
       "tag": "c:nether_stars"
     },
     {
-      "tag": "c:dyes/white"
+      "tag": "c:dyes/yellow"
+    },
+    {
+      "tag": "c:dyes/blue"
     }
   ],
   "result": {

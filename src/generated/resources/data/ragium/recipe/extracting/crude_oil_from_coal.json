@@ -6,6 +6,6 @@
   },
   "input": {
     "count": 1,
-    "tag": "c:gems/coal"
+    "item": "minecraft:coal"
   }
 }

@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -50,7 +51,7 @@ object RagiumArmorMaterials {
 
     @JvmField
     val AZURE_STEEL: Holder<ArmorMaterial> = register(
-        "steel",
+        RagiumConstantValues.AZURE_STEEL,
         10,
         SoundEvents.ARMOR_EQUIP_IRON,
         { Ingredient.of(RagiumItemTags.INGOTS_AZURE_STEEL) },

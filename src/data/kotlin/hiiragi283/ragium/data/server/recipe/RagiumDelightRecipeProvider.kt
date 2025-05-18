@@ -9,6 +9,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
 import vectorwing.farmersdelight.common.registry.ModItems
+import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.data.builder.CookingPotRecipeBuilder
 import vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
 
@@ -66,7 +67,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
         CuttingBoardRecipeBuilder
             .cuttingRecipe(
                 Ingredient.of(RagiumItems.RAGI_CHERRY),
-                Ingredient.of(RagiumItemTags.TOOLS_KNIFE),
+                Ingredient.of(CommonTags.TOOLS_KNIFE),
                 RagiumDelightAddon.RAGI_CHERRY_PULP,
                 2,
             ).save(output)

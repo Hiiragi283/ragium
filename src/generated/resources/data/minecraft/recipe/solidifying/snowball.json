@@ -1,7 +1,7 @@
 {
   "type": "ragium:solidifying",
   "catalyst": {
-    "tag": "ragium:molds/ball"
+    "tag": "c:molds/ball"
   },
   "input": {
     "amount": 250,

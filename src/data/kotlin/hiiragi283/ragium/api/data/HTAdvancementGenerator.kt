@@ -72,7 +72,7 @@ abstract class HTAdvancementGenerator(protected val prefix: String) : Advancemen
                 setDescFromItem(item)
                 builderAction()
             }
-            hasItem("has_${id.path}", item)
+            hasAllItem("has_${id.path}", item)
         }
     }
 
@@ -92,13 +92,20 @@ abstract class HTAdvancementGenerator(protected val prefix: String) : Advancemen
     protected inline fun Advancement.Builder.display(builderAction: HTDisplayInfoBuilder.() -> Unit): Advancement.Builder =
         display(HTDisplayInfoBuilder.create(builderAction))
 
-    protected fun Advancement.Builder.hasItem(key: String, vararg item: ItemLike): Advancement.Builder =
-        addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(*item))
+    protected fun Advancement.Builder.hasItem(key: String, predicate: ItemPredicate.Builder): Advancement.Builder =
+        addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(predicate))
 
-    protected fun Advancement.Builder.hasItemTag(key: String, tagKey: TagKey<Item>): Advancement.Builder = addCriterion(
-        key,
-        InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(tagKey)),
-    )
+    protected fun Advancement.Builder.hasAnyItem(key: String, items: List<ItemLike>): Advancement.Builder =
+        hasAnyItem(key, *items.toTypedArray())
+
+    protected fun Advancement.Builder.hasAnyItem(key: String, vararg items: ItemLike): Advancement.Builder =
+        hasItem(key, ItemPredicate.Builder.item().of(*items))
+
+    protected fun Advancement.Builder.hasAllItem(key: String, vararg items: ItemLike): Advancement.Builder =
+        addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(*items))
+
+    protected fun Advancement.Builder.hasItemsIn(key: String, tagKey: TagKey<Item>): Advancement.Builder =
+        hasItem(key, ItemPredicate.Builder.item().of(tagKey))
 
     protected fun Advancement.Builder.useItem(key: String, item: ItemLike): Advancement.Builder =
         addCriterion(key, ConsumeItemTrigger.TriggerInstance.usedItem(item))

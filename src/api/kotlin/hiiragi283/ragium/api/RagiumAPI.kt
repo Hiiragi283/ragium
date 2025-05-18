@@ -41,8 +41,6 @@ interface RagiumAPI {
         const val MOD_ID = "ragium"
         const val MOD_NAME = "Ragium"
 
-        const val INGOT_AMOUNT = 90
-
         /**
          * 名前空間が`ragium`となる[ResourceLocation]を返します。
          */

@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#c:molds/ball",
+    "#c:molds/blank",
+    "#c:molds/block",
+    "#c:molds/gear",
+    "#c:molds/ingot",
+    "#c:molds/plate",
+    "#c:molds/rod",
+    "#c:molds/wire"
+  ]
+}

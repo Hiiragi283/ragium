@@ -1,0 +1,41 @@
+{
+  "parent": "ragium:azure_steel_ingot",
+  "criteria": {
+    "has_azure_tool": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ragium:azure_steel_axe",
+              "ragium:azure_steel_hoe",
+              "ragium:azure_steel_pickaxe",
+              "ragium:azure_steel_shovel",
+              "ragium:azure_steel_sword",
+              "ragium:azure_steel_hammer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.azure_tool.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:azure_steel_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.ragium.azure_tool.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_azure_tool"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

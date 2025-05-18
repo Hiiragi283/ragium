@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.setup.RagiumFluidContents
+import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -23,6 +24,20 @@ class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<Hol
     }
 
     override fun addTagsInternal(provider: HolderLookup.Provider) {
+        contents()
+        category()
+
+        pneumatic()
+    }
+
+    private fun contents() {
+        // Common Tag
+        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
+            addFluid(content.commonTag, content)
+        }
+    }
+
+    private fun category() {
         addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.HYDROGEN)
         addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.NITROGEN)
         addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.AMMONIA)
@@ -46,14 +61,12 @@ class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<Hol
         addTag(RagiumFluidTags.THERMAL_FUEL, commonId("steam"), HTTagBuilder.DependType.OPTIONAL)
         addTag(RagiumFluidTags.THERMAL_FUEL, commonId("superheated_sodium"), HTTagBuilder.DependType.OPTIONAL)
         addTag(RagiumFluidTags.THERMAL_FUEL, Tags.Fluids.LAVA)
-
-        contents()
     }
 
-    private fun contents() {
-        // Common Tag
-        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            addFluid(content.commonTag, content)
-        }
+    //    Integrations    //
+
+    private fun pneumatic() {
+        addFluid(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
+        addFluid(PneumaticCraftTags.Fluids.PLANT_OIL, RagiumFluidContents.PLANT_OIL)
     }
 }

@@ -88,7 +88,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Coal -> Crude Oil
         createExtracting()
             .fluidOutput(RagiumFluidContents.CRUDE_OIL, 125)
-            .itemInput(RagiumItemTags.GEMS_COAL)
+            .itemInput(Items.COAL)
             .saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
         createExtracting()
