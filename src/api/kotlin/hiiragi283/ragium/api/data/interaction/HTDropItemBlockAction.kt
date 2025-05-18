@@ -1,7 +1,6 @@
-package hiiragi283.ragium.common.data
+package hiiragi283.ragium.api.data.interaction
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.extension.dropStackAt
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext

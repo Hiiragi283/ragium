@@ -1,9 +1,8 @@
-package hiiragi283.ragium.common.data
+package hiiragi283.ragium.api.data.interaction
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.block.Block

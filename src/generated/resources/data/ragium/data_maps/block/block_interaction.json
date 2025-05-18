@@ -34,6 +34,10 @@
     "minecraft:lantern": {
       "actions": [
         {
+          "type": "c:break",
+          "drop_block": false
+        },
+        {
           "type": "c:drop_item",
           "stack": {
             "count": 1,
@@ -92,6 +96,47 @@
       ],
       "ingredient": {
         "item": "ragium:ragi_ticket"
+      }
+    },
+    "minecraft:reinforced_deepslate": {
+      "actions": [
+        {
+          "type": "c:drop_item",
+          "stack": {
+            "count": 3,
+            "id": "ragium:deep_steel_ingot"
+          }
+        },
+        {
+          "type": "c:replace",
+          "state": {
+            "Name": "minecraft:deepslate",
+            "Properties": {
+              "axis": "y"
+            }
+          }
+        }
+      ],
+      "ingredient": {
+        "item": "ragium:deep_ticket"
+      }
+    },
+    "minecraft:sculk_shrieker": {
+      "actions": [
+        {
+          "type": "c:replace",
+          "state": {
+            "Name": "minecraft:sculk_shrieker",
+            "Properties": {
+              "can_summon": "true",
+              "shrieking": "false",
+              "waterlogged": "false"
+            }
+          }
+        }
+      ],
+      "ingredient": {
+        "item": "ragium:deep_ticket"
       }
     },
     "minecraft:small_amethyst_bud": {

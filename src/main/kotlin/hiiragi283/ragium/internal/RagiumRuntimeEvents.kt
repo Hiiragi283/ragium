@@ -41,7 +41,6 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
@@ -95,9 +94,7 @@ object RagiumRuntimeEvents {
         val interaction: HTBlockInteraction = state.blockHolder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: return
         if (interaction.canPerformActions(stack, state)) {
             interaction.applyActions(context, event.entity)
-            event.useBlock = TriState.FALSE
-            event.useItem = TriState.FALSE
-            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
+            event.isCanceled = true
         }
     }
 

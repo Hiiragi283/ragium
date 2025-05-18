@@ -3,11 +3,11 @@ package hiiragi283.ragium.data.server
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
+import hiiragi283.ragium.api.data.interaction.HTBreakBlockAction
+import hiiragi283.ragium.api.data.interaction.HTDropItemBlockAction
+import hiiragi283.ragium.api.data.interaction.HTReplaceBlockAction
 import hiiragi283.ragium.api.extension.blockLookup
 import hiiragi283.ragium.api.util.HTOreVariant
-import hiiragi283.ragium.common.data.HTBreakBlockAction
-import hiiragi283.ragium.common.data.HTDropItemBlockAction
-import hiiragi283.ragium.common.data.HTReplaceBlockAction
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
@@ -98,6 +99,7 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             Blocks.LANTERN,
             Ingredient.of(RagiumItems.RAGI_TICKET),
             null,
+            HTBreakBlockAction(false),
             HTDropItemBlockAction(RagiumItems.RAGI_LANTERN),
         )
 
@@ -117,6 +119,25 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
                 HTDropItemBlockAction(RagiumItems.AZURE_SHARD, count),
             )
         }
+
+        // Deep
+        register(
+            Blocks.REINFORCED_DEEPSLATE,
+            Ingredient.of(RagiumItems.DEEP_TICKET),
+            null,
+            HTDropItemBlockAction(RagiumItems.DEEP_STEEL_INGOT, 3),
+            HTReplaceBlockAction.update(Blocks.DEEPSLATE),
+        )
+        register(
+            Blocks.SCULK_SHRIEKER,
+            Ingredient.of(RagiumItems.DEEP_TICKET),
+            null,
+            HTReplaceBlockAction.update(
+                Blocks.SCULK_SHRIEKER
+                    .defaultBlockState()
+                    .setValue(BlockStateProperties.CAN_SUMMON, true),
+            ),
+        )
     }
 
     /*private fun mekanism() {

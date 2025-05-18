@@ -161,10 +161,10 @@ object RagiumItems {
     //    Tools    //
 
     @JvmField
-    val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolMaterials.RAGI_ALLOY, "ragi_alloy", RagiumItemTags.INGOTS_RAGI_ALLOY)
+    val RAGI_ALLOY_TOOLS = HTToolSets(RagiumToolTiers.RAGI_ALLOY, "ragi_alloy", RagiumItemTags.INGOTS_RAGI_ALLOY)
 
     @JvmField
-    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolMaterials.STEEL, "azure_steel", RagiumItemTags.INGOTS_AZURE_STEEL)
+    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolTiers.AZURE_STEEL, "azure_steel", RagiumItemTags.INGOTS_AZURE_STEEL)
 
     @JvmField
     val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))

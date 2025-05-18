@@ -114,7 +114,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         HTShapelessRecipeBuilder(RagiumItems.ETERNAL_TICKET)
             .addIngredient(RagiumItems.BLANK_TICKET)
             .addIngredient(Tags.Items.NETHER_STARS)
-            .addIngredient(Tags.Items.DYES_YELLOW)
+            .addIngredient(Tags.Items.DYES_WHITE)
             .save(output)
 
         save(
