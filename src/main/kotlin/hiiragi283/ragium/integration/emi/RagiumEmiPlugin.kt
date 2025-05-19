@@ -213,8 +213,8 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .rightInput(EmiStack.of(RagiumBlocks.ASH_LOG), false)
-                .leftInput(EmiStack.EMPTY)
+                .leftInput(EmiStack.of(RagiumBlocks.ASH_LOG))
+                .rightInput(EmiStack.EMPTY, false)
                 .output(EmiStack.of(RagiumItems.ASH_DUST))
                 .build()
         }
@@ -223,8 +223,8 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .rightInput(EmiStack.of(RagiumBlocks.WATER_COLLECTOR), false)
-                .leftInput(EmiStack.EMPTY)
+                .leftInput(EmiStack.of(RagiumBlocks.WATER_COLLECTOR))
+                .rightInput(EmiStack.EMPTY, false)
                 .output(EmiStack.of(Fluids.WATER))
                 .build()
         }
@@ -233,8 +233,8 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .rightInput(EmiStack.of(RagiumBlocks.LAVA_COLLECTOR), false)
-                .leftInput(EmiStack.EMPTY)
+                .leftInput(EmiStack.of(RagiumBlocks.LAVA_COLLECTOR))
+                .rightInput(EmiStack.EMPTY, false)
                 .output(EmiStack.of(Fluids.LAVA))
                 .build()
         }
@@ -243,8 +243,8 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .rightInput(EmiStack.of(RagiumBlocks.MILK_DRAIN), false)
-                .leftInput(EmiStack.of(Items.COW_SPAWN_EGG))
+                .leftInput(EmiStack.of(RagiumBlocks.MILK_DRAIN))
+                .rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
                 .output(EmiStack.of(NeoForgeMod.MILK.get()))
                 .build()
         }
@@ -253,8 +253,8 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .rightInput(EmiStack.of(RagiumBlocks.EXP_COLLECTOR), false)
-                .leftInput(EmiStack.of(Items.COW_SPAWN_EGG))
+                .leftInput(EmiStack.of(RagiumBlocks.EXP_COLLECTOR))
+                .rightInput(EmiStack.EMPTY, false)
                 .output(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()))
                 .build()
         }
