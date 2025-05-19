@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.common.block.entity.HTChargerBlockEntity
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.collect.HTExpCollectorBlockEntity
@@ -75,6 +76,9 @@ object RagiumBlockEntityTypes {
     //    Device    //
 
     @JvmField
+    val CHARGER: HTDeferredBlockEntityType<HTChargerBlockEntity> = registerTick("charger", ::HTChargerBlockEntity)
+
+    @JvmField
     val ENI: HTDeferredBlockEntityType<HTEnergyNetworkInterfaceBlockEntity> = REGISTER.registerType(
         "energy_network_interface",
         ::HTEnergyNetworkInterfaceBlockEntity,
@@ -130,6 +134,7 @@ object RagiumBlockEntityTypes {
         add(INFUSER, RagiumBlocks.INFUSER)
         add(REFINERY, RagiumBlocks.REFINERY)
 
+        add(CHARGER, RagiumBlocks.CHARGER)
         add(ENI, RagiumBlocks.ENI)
         add(EXP_COLLECTOR, RagiumBlocks.EXP_COLLECTOR)
         add(ITEM_COLLECTOR, RagiumBlocks.ITEM_COLLECTOR)
@@ -170,6 +175,7 @@ object RagiumBlockEntityTypes {
         registerHandlers(INFUSER)
         registerHandlers(REFINERY)
 
+        registerHandlers(CHARGER)
         registerHandlers(ENI)
         registerHandlers(EXP_COLLECTOR)
         registerHandlers(ITEM_COLLECTOR)

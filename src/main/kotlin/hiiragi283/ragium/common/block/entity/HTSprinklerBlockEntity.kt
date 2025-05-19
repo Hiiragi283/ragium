@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
@@ -25,7 +26,7 @@ import net.neoforged.neoforge.common.util.TriState
 class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state),
     HTFluidTankHandler {
-    private val inputTank: HTFluidTank = HTFluidTank.create("input_tank", this) {
+    private val inputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.INPUT_TANK, this) {
         validator = { variant: HTFluidVariant -> variant.isIn(Tags.Fluids.WATER) }
     }
 
@@ -50,8 +51,8 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 20 tick毎に一度実行する
-        if (totalTick % 20 != 0) return TriState.DEFAULT
+        // 20 tickごとに実行する
+        if (!canProcess(20)) return TriState.DEFAULT
         // 高さを0~2の範囲でチェックする
         for (height: Int in (0..2)) {
             if (glowCrop(level, pos, height).isTrue) {

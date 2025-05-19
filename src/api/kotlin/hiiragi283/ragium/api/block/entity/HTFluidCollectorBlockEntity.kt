@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -22,7 +23,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
     HTFluidTankHandler {
-    protected val outputTank: HTFluidTank = HTFluidTank.create("output_tank", this)
+    protected val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
 
     final override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         outputTank.writeNbt(nbt, registryOps)
@@ -46,7 +47,7 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (totalTick % 20 != 0) return TriState.DEFAULT
+        if (!canProcess(20)) return TriState.DEFAULT
         // 液体を生成できるかチェック
         val stack: FluidStack = getGeneratedFluid(level, pos)
         if (stack.isEmpty) return TriState.DEFAULT

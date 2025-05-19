@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
@@ -14,12 +15,12 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 
 class HTAutoBeehiveBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBlockEntity(TODO(), pos, state) {
-    private val inputSlot: HTItemSlot = HTItemSlot.create("input_slot", this) {
+    private val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this) {
         validator = { variant: HTItemVariant -> variant.isOf(RagiumItems.BOTTLED_BEE) }
     }
-    private val outputSlot: HTItemSlot = HTItemSlot.create("output_slot", this)
+    private val outputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT, this)
 
-    private val outputTank: HTFluidTank = HTFluidTank.create("output_tank", this)
+    private val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         inputSlot.writeNbt(nbt, registryOps)

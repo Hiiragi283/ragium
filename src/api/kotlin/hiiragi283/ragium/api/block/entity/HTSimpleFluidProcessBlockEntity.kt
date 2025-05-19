@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -27,8 +28,8 @@ abstract class HTSimpleFluidProcessBlockEntity(
     state: BlockState,
 ) : HTMachineBlockEntity(type, pos, state),
     HTFluidTankHandler {
-    protected val inputTank: HTFluidTank = HTFluidTank.create("fluid_input", this)
-    protected val outputTank: HTFluidTank = HTFluidTank.create("fluid_output", this)
+    protected val inputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.INPUT_TANK, this)
+    protected val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
@@ -58,8 +59,8 @@ abstract class HTSimpleFluidProcessBlockEntity(
         state: BlockState,
         network: IEnergyStorage,
     ): TriState {
-        // 200 tick毎に一度実行する
-        if (totalTick % 200 != 0) return TriState.DEFAULT
+        // 200 tickごとに実行する
+        if (!canProcess(200)) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
         val input: HTMachineInput = HTMachineInput.create {
             addInput(0, inputTank)

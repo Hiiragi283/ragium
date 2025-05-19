@@ -4,8 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.enchantment.HTEnchantmentEntry
 import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
 import hiiragi283.ragium.api.extension.enchLookup
+import hiiragi283.ragium.api.extension.getData
+import hiiragi283.ragium.api.extension.putData
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -33,15 +36,13 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         if (!itemEnchantments.isEmpty) {
-            ItemEnchantments.CODEC
-                .encodeStart(registryOps, itemEnchantments)
-                .ifSuccess { nbt.put(ENCH_KEY, it) }
+            nbt.putData(RagiumConstantValues.ENCHANTMENT, itemEnchantments, ItemEnchantments.CODEC, registryOps)
         }
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        ItemEnchantments.CODEC
-            .parse(registryOps, nbt.get(ENCH_KEY))
+        nbt
+            .getData(RagiumConstantValues.ENCHANTMENT, ItemEnchantments.CODEC, registryOps)
             .result()
             .orElse(ItemEnchantments.EMPTY)
             .let(::loadEnchantment)

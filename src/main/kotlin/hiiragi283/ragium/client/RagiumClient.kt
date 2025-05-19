@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.client.renderer.HTChargerRenderer
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.client.renderer.BiomeColors
@@ -15,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
+import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
@@ -30,9 +33,54 @@ class RagiumClient(eventBus: IEventBus) {
     }
 
     init {
+        eventBus.addListener(::registerBlockColor)
+        eventBus.addListener(::registerItemColor)
         eventBus.addListener(::registerClientExtensions)
-        eventBus.addListener(::addBlockColor)
-        eventBus.addListener(::addItemColor)
+        eventBus.addListener(::registerEntityRenderer)
+    }
+
+    private fun registerBlockColor(event: RegisterColorHandlersEvent.Block) {
+        // Exp Berry Bush
+        event.register(
+            { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+                if (tint != 0) return@register -1
+                when {
+                    getter != null && pos != null -> BiomeColors.getAverageFoliageColor(getter, pos)
+                    else -> FoliageColor.getDefaultColor()
+                }
+            },
+            RagiumBlocks.EXP_BERRY_BUSH.get(),
+        )
+        // Water Collector
+        event.register(
+            { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+                if (tint != 0) return@register -1
+                if (getter != null && pos != null) {
+                    return@register BiomeColors.getAverageWaterColor(getter, pos)
+                }
+                -1
+            },
+            RagiumBlocks.WATER_COLLECTOR.get(),
+        )
+
+        LOGGER.info("Registered BlockColor!")
+    }
+
+    private fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
+        // Water Collector
+        event.register(
+            { stack: ItemStack, tint: Int ->
+                if (tint == 0) 0x3f76e4 else -1
+            },
+            RagiumBlocks.WATER_COLLECTOR,
+        )
+
+        // Crude Oil Bucket
+        for (bucket: DeferredItem<*> in RagiumFluidContents.REGISTER.itemEntries) {
+            event.register(DynamicFluidContainerModel.Colors(), bucket)
+        }
+
+        LOGGER.info("Registered ItemColor!")
     }
 
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
@@ -83,47 +131,9 @@ class RagiumClient(eventBus: IEventBus) {
         LOGGER.info("Registered client extensions!")
     }
 
-    private fun addBlockColor(event: RegisterColorHandlersEvent.Block) {
-        // Exp Berry Bush
-        event.register(
-            { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
-                if (tint != 0) return@register -1
-                when {
-                    getter != null && pos != null -> BiomeColors.getAverageFoliageColor(getter, pos)
-                    else -> FoliageColor.getDefaultColor()
-                }
-            },
-            RagiumBlocks.EXP_BERRY_BUSH.get(),
-        )
-        // Water Collector
-        event.register(
-            { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
-                if (tint != 0) return@register -1
-                if (getter != null && pos != null) {
-                    return@register BiomeColors.getAverageWaterColor(getter, pos)
-                }
-                -1
-            },
-            RagiumBlocks.WATER_COLLECTOR.get(),
-        )
+    private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CHARGER.get(), ::HTChargerRenderer)
 
-        LOGGER.info("Registered BlockColor!")
-    }
-
-    private fun addItemColor(event: RegisterColorHandlersEvent.Item) {
-        // Water Collector
-        event.register(
-            { stack: ItemStack, tint: Int ->
-                if (tint == 0) 0x3f76e4 else -1
-            },
-            RagiumBlocks.WATER_COLLECTOR,
-        )
-
-        // Crude Oil Bucket
-        for (bucket: DeferredItem<*> in RagiumFluidContents.REGISTER.itemEntries) {
-            event.register(DynamicFluidContainerModel.Colors(), bucket)
-        }
-
-        LOGGER.info("Registered ItemColor!")
+        LOGGER.info("Registered BlockEntityRenderers!")
     }
 }

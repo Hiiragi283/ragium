@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
-import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -32,11 +32,6 @@ import net.neoforged.neoforge.items.IItemHandler
 abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),
     HTNbtCodec {
-    companion object {
-        const val ENCH_KEY = "enchantment"
-        const val OWNER_KEY = "owner"
-    }
-
     /**
      * クライアント側へ同期する際に送る[CompoundTag]
      */

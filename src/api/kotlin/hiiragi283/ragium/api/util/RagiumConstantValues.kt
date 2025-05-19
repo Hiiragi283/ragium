@@ -18,6 +18,15 @@ object RagiumConstantValues {
     const val SOUL = "soul"
     const val WARPED_CRYSTAL = "warped_crystal"
 
+    //    Nbt    //
+
+    const val ENCHANTMENT = "enchantment"
+
+    const val INPUT_SLOT = "input_slot"
+    const val OUTPUT_SLOT = "output_slot"
+    const val INPUT_TANK = "input_tank"
+    const val OUTPUT_TANK = "output_tank"
+
     //    Recipes    //
 
     const val BEE_HIVE = "bee_hive"

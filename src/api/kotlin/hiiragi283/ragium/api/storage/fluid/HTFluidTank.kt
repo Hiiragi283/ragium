@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.storage.fluid
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.enchantment.HTEnchantmentListener
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.entity.BlockEntity

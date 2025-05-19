@@ -30,8 +30,7 @@ class HTContainerItemSlot(
     override fun hasItem(): Boolean = !slot.isEmpty
 
     override fun set(stack: ItemStack) {
-        slot.clear()
-        slot.insert(stack, false)
+        slot.replace(stack, false)
         setChanged()
     }
 

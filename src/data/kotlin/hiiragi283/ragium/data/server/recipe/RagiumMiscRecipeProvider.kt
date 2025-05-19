@@ -192,6 +192,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
+        advDevice(RagiumBlocks.CHARGER, RagiumItemTags.GEMS_RAGI_CRYSTAL)
         advDevice(RagiumBlocks.ENI, RagiumItemTags.STORAGE_BLOCKS_RAGI_CRYSTAL)
         advDevice(RagiumBlocks.EXP_COLLECTOR, Items.HOPPER)
         advDevice(RagiumBlocks.LAVA_COLLECTOR, Tags.Items.BUCKETS_LAVA)

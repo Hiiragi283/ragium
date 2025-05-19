@@ -21,7 +21,7 @@ import net.neoforged.neoforge.common.util.TriState
 class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.ITEM_COLLECTOR, pos, state),
     HTItemSlotHandler {
-    private val itemSlots: List<HTItemSlot> = (0..8).map { HTItemSlot.create("slot_$it", this) }
+    private val itemSlots: List<HTItemSlot> = (0..8).map { HTItemSlot.create("output_slot_$it", this) }
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         for (slot: HTItemSlot in itemSlots) {
@@ -52,7 +52,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (totalTick % 20 != 0) return TriState.DEFAULT
+        if (!canProcess(20)) return TriState.DEFAULT
         // 範囲内のItem Entityを取得する
         val range = 5
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(

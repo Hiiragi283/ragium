@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
@@ -25,9 +26,9 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 class HTAdvancedCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.ADVANCED_CRUSHER, pos, state),
     HTItemSlotHandler {
-    private val inputSlot: HTItemSlot = HTItemSlot.create("item_input", this)
-    private val outputSlot: HTItemSlot = HTItemSlot.create("item_output", this)
-    private val outputSlot1: HTItemSlot = HTItemSlot.create("item_output1", this)
+    private val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this)
+    private val outputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT, this)
+    private val outputSlot1: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT + 1, this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
@@ -74,8 +75,8 @@ class HTAdvancedCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         state: BlockState,
         network: IEnergyStorage,
     ): TriState {
-        // 200 tick毎に一度実行する
-        if (totalTick % 200 != 0) return TriState.DEFAULT
+        // 200 tickごとに実行する
+        if (!canProcess(200)) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
         val input: HTMachineInput = HTMachineInput.create {
             addInput(0, inputSlot)

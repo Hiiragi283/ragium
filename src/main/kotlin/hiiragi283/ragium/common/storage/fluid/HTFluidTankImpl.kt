@@ -41,5 +41,6 @@ class HTFluidTankImpl(
             .parse(registryOps, nbtIn.get("fluid"))
             .ifSuccess { resource = it }
         amount = nbtIn.getInt("amount")
+        onContentsChanged()
     }
 }

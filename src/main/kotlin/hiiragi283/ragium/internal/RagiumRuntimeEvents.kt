@@ -168,6 +168,7 @@ object RagiumRuntimeEvents {
             if (!level.isClientSide) {
                 user.extinguishFire()
             }
+            return
         }
         // ゆがんだウォートの場合はデバフをランダムに一つだけ消す
         if (stack.`is`(RagiumItems.WARPED_WART)) {
@@ -177,6 +178,7 @@ object RagiumRuntimeEvents {
                 .randomOrNull()
                 ?: return
             user.removeEffect(badEffect)
+            return
         }
     }
 

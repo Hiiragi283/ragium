@@ -122,6 +122,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.INFUSER, "注入機")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         // Device
+        addBlock(RagiumBlocks.CHARGER, "チャージャー")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
         addBlock(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
@@ -206,8 +207,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_ALLOY_INGOT, "ラギ合金インゴット")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "発展ラギ合金混合物")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT, "発展ラギ合金インゴット")
-        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄インゴット")
-        addItem(RagiumItems.AZURE_STEEL_INGOT, "紺鉄混合物")
+        addItem(RagiumItems.AZURE_STEEL_COMPOUND, "紺鉄混合物")
+        addItem(RagiumItems.AZURE_STEEL_INGOT, "紺鉄インゴット")
         addItem(RagiumItems.DEEP_STEEL_INGOT, "深層鋼インゴット")
         addItem(RagiumItems.CHEESE_INGOT, "チーズインゴット")
         addItem(RagiumItems.CHOCOLATE_INGOT, "チョコレートインゴット")

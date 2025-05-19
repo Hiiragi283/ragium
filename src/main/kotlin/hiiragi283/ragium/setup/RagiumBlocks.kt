@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.block.HTChargerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
@@ -414,8 +415,7 @@ object RagiumBlocks {
     ): DeferredBlock<*> = register(type.id.path, properties, HTEntityBlock.create(type))
 
     @JvmField
-    val MILK_DRAIN: DeferredBlock<HTMilkDrainBlock> =
-        register("milk_drain", stone(), ::HTMilkDrainBlock)
+    val MILK_DRAIN: DeferredBlock<*> = register("milk_drain", stone(), ::HTMilkDrainBlock)
 
     @JvmField
     val SOUL_SPIKE: DeferredBlock<HTSoulSpikeBlock> = register("soul_spike", heavyMetal(), ::HTSoulSpikeBlock)
@@ -432,6 +432,9 @@ object RagiumBlocks {
 
     // Advanced
     @JvmField
+    val CHARGER: DeferredBlock<*> = register("charger", heavyMetal(), ::HTChargerBlock)
+
+    @JvmField
     val ENI: DeferredBlock<*> = registerDevice(heavyMetal(), RagiumBlockEntityTypes.ENI)
 
     @JvmField
@@ -447,6 +450,7 @@ object RagiumBlocks {
     val DEVICES: List<DeferredBlock<*>> = listOf(
         MILK_DRAIN,
         SOUL_SPIKE,
+        CHARGER,
         // 色でソート
         ITEM_COLLECTOR,
         LAVA_COLLECTOR,

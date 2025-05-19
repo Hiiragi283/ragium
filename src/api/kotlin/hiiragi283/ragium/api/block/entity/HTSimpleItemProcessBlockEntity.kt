@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -29,8 +30,8 @@ abstract class HTSimpleItemProcessBlockEntity(
     state: BlockState,
 ) : HTMachineBlockEntity(type, pos, state),
     HTItemSlotHandler {
-    protected val inputSlot: HTItemSlot = HTItemSlot.create("item_input", this)
-    protected val outputSlot: HTItemSlot = HTItemSlot.create("item_output", this)
+    protected val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this)
+    protected val outputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT, this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         super.writeNbt(nbt, registryOps)
@@ -72,8 +73,8 @@ abstract class HTSimpleItemProcessBlockEntity(
         state: BlockState,
         network: IEnergyStorage,
     ): TriState {
-        // 200 tick毎に一度実行する
-        if (totalTick % 200 != 0) return TriState.DEFAULT
+        // 200 tickごとに実行する
+        if (!canProcess(200)) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
         val input: HTMachineInput = HTMachineInput.create {
             addInput(0, inputSlot)

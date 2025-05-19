@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
@@ -21,7 +22,7 @@ import net.neoforged.neoforge.common.util.TriState
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
     HTFluidTankHandler {
-    private val outputTank: HTFluidTank = HTFluidTank.create("output_tank", this) {
+    private val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this) {
         validator = { variant: HTFluidVariant -> variant.isOf(RagiumFluidContents.EXPERIENCE.get()) }
         capacity = Int.MAX_VALUE
     }
@@ -38,7 +39,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (totalTick % 20 != 0) return TriState.DEFAULT
+        if (!canProcess(20)) return TriState.DEFAULT
         // 範囲内のExp Orbを取得する
         val range = 5
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(

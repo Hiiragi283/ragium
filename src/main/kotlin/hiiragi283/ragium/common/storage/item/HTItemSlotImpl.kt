@@ -52,5 +52,6 @@ class HTItemSlotImpl(
             .parse(registryOps, nbtIn.get("item"))
             .ifSuccess { resource = it }
         amount = nbtIn.getInt("amount")
+        onContentsChanged()
     }
 }

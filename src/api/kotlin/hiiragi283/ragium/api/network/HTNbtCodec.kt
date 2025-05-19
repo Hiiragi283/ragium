@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.network
 
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag

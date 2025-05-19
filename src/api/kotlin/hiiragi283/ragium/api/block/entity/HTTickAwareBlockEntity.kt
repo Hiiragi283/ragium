@@ -69,4 +69,6 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
      * @return 続けてtick処理を行う場合は[TriState.TRUE], 止める場合は[TriState.FALSE], 現在の状態を維持する場合は[TriState.DEFAULT]
      */
     abstract fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState
+
+    protected fun canProcess(maxTick: Int): Boolean = totalTick > 0 && totalTick % maxTick == 0
 }

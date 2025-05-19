@@ -3,9 +3,9 @@ package hiiragi283.ragium.api.storage.item
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.enchantment.HTEnchantmentListener
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.util.HTNbtCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.inventory.Slot
@@ -19,6 +19,10 @@ abstract class HTItemSlot(private val validator: (HTItemVariant) -> Boolean, pri
     HTEnchantmentListener,
     HTNbtCodec {
     val stack: ItemStack get() = resource.toStack(amount)
+
+    inline fun useStack(action: (ItemStack) -> ItemStack) {
+        replace(action(stack), true)
+    }
 
     fun canInsert(stack: ItemStack): Boolean = insert(stack, true) == stack.count
 
@@ -40,14 +44,30 @@ abstract class HTItemSlot(private val validator: (HTItemVariant) -> Boolean, pri
 
     abstract fun createContainerSlot(x: Int, y: Int, storageIO: HTStorageIO): Slot
 
+    fun replace(stack: ItemStack, shouldUpdate: Boolean) {
+        if (stack.isEmpty) {
+            clear()
+            return
+        }
+        resource = HTItemVariant.of(stack)
+        amount = stack.count
+        if (shouldUpdate) {
+            onContentsChanged()
+        }
+    }
+
     fun dropStack(entity: Entity) {
-        dropStackAt(entity, stack)
-        clear()
+        useStack { stack: ItemStack ->
+            dropStackAt(entity, stack)
+            ItemStack.EMPTY
+        }
     }
 
     fun dropStack(level: Level, pos: BlockPos) {
-        dropStackAt(level, pos, stack)
-        clear()
+        useStack { stack: ItemStack ->
+            dropStackAt(level, pos, stack)
+            ItemStack.EMPTY
+        }
     }
 
     //    HTSingleVariantStorage    //

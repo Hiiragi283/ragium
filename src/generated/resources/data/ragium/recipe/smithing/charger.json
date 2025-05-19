@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:gems/ragi_crystal"
+  },
+  "base": {
+    "item": "ragium:device_casing"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:charger"
+  },
+  "template": {
+    "tag": "c:circuits/advanced"
+  }
+}
