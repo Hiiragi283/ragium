@@ -11,7 +11,21 @@ import net.minecraft.world.item.Item
  * Ragiumが使用するアイテムの[TagKey]の一覧
  */
 object RagiumItemTags {
-    //    Dust    //
+    //    Circuits    //
+
+    @JvmField
+    val CIRCUITS: TagKey<Item> = commonTag("circuits")
+
+    @JvmField
+    val CIRCUITS_BASIC: TagKey<Item> = commonTag("circuits/basic")
+
+    @JvmField
+    val CIRCUITS_ADVANCED: TagKey<Item> = commonTag("circuits/advanced")
+
+    @JvmField
+    val CIRCUITS_ELITE: TagKey<Item> = commonTag("circuits/elite")
+    
+    //    Dusts    //
 
     @JvmField
     val DUSTS_ASH: TagKey<Item> = commonTag(RagiumConstantValues.DUSTS, "ash")
@@ -62,44 +76,6 @@ object RagiumItemTags {
     @JvmField
     val INGOTS_CHOCOLATE: TagKey<Item> = commonTag(RagiumConstantValues.INGOTS, RagiumConstantValues.CHOCOLATE)
 
-    //    Ores    //
-
-    @JvmField
-    val ORES_RAGINITE: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGINITE)
-
-    @JvmField
-    val ORES_RAGI_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL)
-
-    //    Storage Blocks    //
-
-    @JvmField
-    val STORAGE_BLOCKS_RAGI_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.RAGI_CRYSTAL)
-
-    @JvmField
-    val STORAGE_BLOCKS_CRIMSON_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CRIMSON_CRYSTAL)
-
-    @JvmField
-    val STORAGE_BLOCKS_WARPED_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.WARPED_CRYSTAL)
-
-    @JvmField
-    val STORAGE_BLOCKS_RAGI_ALLOY: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.RAGI_ALLOY)
-
-    @JvmField
-    val STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY: TagKey<Item> =
-        commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.ADVANCED_RAGI_ALLOY)
-
-    @JvmField
-    val STORAGE_BLOCKS_AZURE_STEEL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.AZURE_STEEL)
-
-    @JvmField
-    val STORAGE_BLOCKS_DEEP_STEEL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.DEEP_STEEL)
-
-    @JvmField
-    val STORAGE_BLOCKS_CHEESE: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CHEESE)
-
-    @JvmField
-    val STORAGE_BLOCKS_CHOCOLATE: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CHOCOLATE)
-
     //    Molds    //
 
     @JvmField
@@ -129,6 +105,44 @@ object RagiumItemTags {
     @JvmField
     val MOLDS_WIRE: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "wire")
 
+    //    Ores    //
+
+    @JvmField
+    val ORES_RAGINITE: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGINITE)
+
+    @JvmField
+    val ORES_RAGI_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL)
+    
+    //    Storage Blocks    //
+
+    @JvmField
+    val STORAGE_BLOCKS_RAGI_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.RAGI_CRYSTAL)
+
+    @JvmField
+    val STORAGE_BLOCKS_CRIMSON_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CRIMSON_CRYSTAL)
+
+    @JvmField
+    val STORAGE_BLOCKS_WARPED_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.WARPED_CRYSTAL)
+
+    @JvmField
+    val STORAGE_BLOCKS_RAGI_ALLOY: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.RAGI_ALLOY)
+
+    @JvmField
+    val STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY: TagKey<Item> =
+        commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.ADVANCED_RAGI_ALLOY)
+
+    @JvmField
+    val STORAGE_BLOCKS_AZURE_STEEL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.AZURE_STEEL)
+
+    @JvmField
+    val STORAGE_BLOCKS_DEEP_STEEL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.DEEP_STEEL)
+
+    @JvmField
+    val STORAGE_BLOCKS_CHEESE: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CHEESE)
+
+    @JvmField
+    val STORAGE_BLOCKS_CHOCOLATE: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CHOCOLATE)
+    
     //    Mekanism Integration    //
 
     @JvmField
@@ -183,19 +197,6 @@ object RagiumItemTags {
 
     @JvmField
     val JAMS_RAGI_CHERRY: TagKey<Item> = commonTag("jams/ragi_cherry")
-
-    // Circuits
-    @JvmField
-    val CIRCUITS: TagKey<Item> = commonTag("circuits")
-
-    @JvmField
-    val CIRCUITS_BASIC: TagKey<Item> = commonTag("circuits/basic")
-
-    @JvmField
-    val CIRCUITS_ADVANCED: TagKey<Item> = commonTag("circuits/advanced")
-
-    @JvmField
-    val CIRCUITS_ELITE: TagKey<Item> = commonTag("circuits/elite")
 
     // Glasses
     @JvmField

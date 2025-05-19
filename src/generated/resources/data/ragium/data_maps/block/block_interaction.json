@@ -21,6 +21,10 @@
     "minecraft:deepslate_redstone_ore": {
       "actions": [
         {
+          "type": "c:break",
+          "drop_block": false
+        },
+        {
           "type": "c:replace",
           "state": {
             "Name": "ragium:deepslate_raginite_ore"
@@ -87,6 +91,10 @@
     },
     "minecraft:redstone_ore": {
       "actions": [
+        {
+          "type": "c:break",
+          "drop_block": false
+        },
         {
           "type": "c:replace",
           "state": {

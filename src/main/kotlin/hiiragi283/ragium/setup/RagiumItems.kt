@@ -8,10 +8,12 @@ import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
+import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.util.HTArmorSets
 import hiiragi283.ragium.util.HTToolSets
 import net.minecraft.core.component.DataComponentPatch
@@ -186,8 +188,10 @@ object RagiumItems {
     val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
 
     @JvmField
-    val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> =
-        register("ragi_lantern", ::HTDynamicLanternItem)
+    val RAGI_EGG: DeferredItem<HTCaptureEggItem> = register("ragi_egg", ::HTCaptureEggItem)
+
+    @JvmField
+    val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> = register("ragi_lantern", ::HTDynamicLanternItem)
 
     //    Foods    //
 
@@ -255,7 +259,11 @@ object RagiumItems {
     )
 
     @JvmField
-    val WARPED_WART: DeferredItem<HTConsumableItem> = registerFood("warped_wart", RagiumFoods.WARPED_WART)
+    val WARPED_WART: DeferredItem<HTWarpedWartItem> = register(
+        "warped_wart",
+        ::HTWarpedWartItem,
+        Item.Properties().food(RagiumFoods.WARPED_WART),
+    )
 
     @JvmField
     val AMBROSIA: DeferredItem<HTConsumableItem> = registerFood("ambrosia", RagiumFoods.AMBROSIA, Item.Properties().rarity(Rarity.EPIC))

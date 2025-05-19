@@ -90,7 +90,9 @@ class RagiumEmiPlugin : EmiPlugin {
         recipeManager = registry.recipeManager
 
         addMachineRecipes()
+
         addInfos()
+        addInteractions()
 
         addCustomRecipe()
     }
@@ -193,13 +195,14 @@ class RagiumEmiPlugin : EmiPlugin {
         addInfo(RagiumItems.AMBROSIA, Component.translatable(RagiumTranslationKeys.EMI_AMBROSIA))
         addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
         addInfo(RagiumItems.ITEM_MAGNET, Component.translatable(RagiumTranslationKeys.EMI_ITEM_MAGNET))
-
         addInfo(
             RagiumBlocks.OBSIDIAN_GLASS,
             Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
             Component.translatable(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS),
         )
         addInfo(RagiumItems.RAGI_CHERRY, Component.translatable(RagiumTranslationKeys.EMI_RAGI_CHERRY))
+        addInfo(RagiumItems.RAGI_EGG, Component.translatable(RagiumTranslationKeys.EMI_RAGI_EGG))
+        addInfo(RagiumItems.RAGI_LANTERN, Component.translatable(RagiumTranslationKeys.EMI_RAGI_LANTERN))
         addInfo(
             RagiumBlocks.SOUL_GLASS,
             Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
@@ -207,75 +210,6 @@ class RagiumEmiPlugin : EmiPlugin {
         )
         addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
         addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
-
-        // World Interaction
-        addRecipeSafe(RagiumAPI.id("/world/block_info/ash_log")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.ASH_LOG))
-                .rightInput(EmiStack.EMPTY, false)
-                .output(EmiStack.of(RagiumItems.ASH_DUST))
-                .build()
-        }
-
-        addRecipeSafe(RagiumAPI.id("/world/block_info/water_well")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.WATER_COLLECTOR))
-                .rightInput(EmiStack.EMPTY, false)
-                .output(EmiStack.of(Fluids.WATER))
-                .build()
-        }
-        // Lava Well
-        addRecipeSafe(RagiumAPI.id("/world/block_info/lava_well")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.LAVA_COLLECTOR))
-                .rightInput(EmiStack.EMPTY, false)
-                .output(EmiStack.of(Fluids.LAVA))
-                .build()
-        }
-        // Milk Drain
-        addRecipeSafe(RagiumAPI.id("/world/block_info/milk_drain")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.MILK_DRAIN))
-                .rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
-                .output(EmiStack.of(NeoForgeMod.MILK.get()))
-                .build()
-        }
-        // Exp Collector
-        addRecipeSafe(RagiumAPI.id("/world/block_info/exp_collector")) { id: ResourceLocation ->
-            EmiWorldInteractionRecipe
-                .builder()
-                .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.EXP_COLLECTOR))
-                .rightInput(EmiStack.EMPTY, false)
-                .output(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()))
-                .build()
-        }
-
-        for (holder: Holder.Reference<Block> in BuiltInRegistries.BLOCK.holders()) {
-            val id: ResourceLocation = holder.idOrNull ?: continue
-            val interaction: HTBlockInteraction = holder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: continue
-            val firstStack: ItemStack = interaction.actions
-                .filterIsInstance<HTBlockAction.ItemPreview>()
-                .firstOrNull()
-                ?.getPreviewStack() ?: continue
-            addRecipeSafe(id.withPrefix("/world/interaction/")) { id1: ResourceLocation ->
-                EmiWorldInteractionRecipe
-                    .builder()
-                    .id(id1)
-                    .leftInput(EmiStack.of(holder.value()))
-                    .rightInput(EmiIngredient.of(interaction.ingredient), false)
-                    .output(EmiStack.of(firstStack))
-                    .build()
-            }
-        }
     }
 
     private fun addInfo(icon: ItemLike, vararg texts: Component) {
@@ -289,6 +223,86 @@ class RagiumEmiPlugin : EmiPlugin {
                 listOf(*texts),
                 id,
             )
+        }
+    }
+
+    //    Interaction    //
+
+    private fun addInteractions() {
+        // Water Well
+        addRecipeSafe(RagiumAPI.id("/world/fluid_generator/water_well")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .leftInput(EmiStack.of(RagiumBlocks.WATER_COLLECTOR))
+                .rightInput(EmiStack.EMPTY, false)
+                .output(EmiStack.of(Fluids.WATER))
+                .build()
+        }
+        // Lava Well
+        addRecipeSafe(RagiumAPI.id("/world/fluid_generator/lava_well")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .leftInput(EmiStack.of(RagiumBlocks.LAVA_COLLECTOR))
+                .rightInput(EmiStack.EMPTY, false)
+                .output(EmiStack.of(Fluids.LAVA))
+                .build()
+        }
+        // Milk Drain
+        addRecipeSafe(RagiumAPI.id("/world/fluid_generator/milk_drain")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .leftInput(EmiStack.of(RagiumBlocks.MILK_DRAIN))
+                .rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
+                .output(EmiStack.of(NeoForgeMod.MILK.get()))
+                .build()
+        }
+        // Exp Collector
+        addRecipeSafe(RagiumAPI.id("/world/fluid_generator/exp_collector")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .leftInput(EmiStack.of(RagiumBlocks.EXP_COLLECTOR))
+                .rightInput(EmiStack.EMPTY, false)
+                .output(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()))
+                .build()
+        }
+
+        // Bottled Bee
+        addInteraction(EmiStack.of(RagiumItems.BOTTLED_BEE)) {
+            leftInput(EmiStack.of(Items.GLASS_BOTTLE))
+            rightInput(EmiStack.of(Items.BEE_SPAWN_EGG), false)
+        }
+
+        // Block Action
+        for (holder: Holder.Reference<Block> in BuiltInRegistries.BLOCK.holders()) {
+            val id: ResourceLocation = holder.idOrNull ?: continue
+            val interaction: HTBlockInteraction = holder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: continue
+            val firstStack: ItemStack = interaction.actions
+                .filterIsInstance<HTBlockAction.ItemPreview>()
+                .firstOrNull()
+                ?.getPreviewStack() ?: continue
+            addInteraction(EmiStack.of(firstStack), id) {
+                leftInput(EmiStack.of(holder.value()))
+                rightInput(EmiIngredient.of(interaction.ingredient), false)
+            }
+        }
+    }
+
+    private fun addInteraction(
+        output: EmiStack,
+        id: ResourceLocation = output.id,
+        builderAction: EmiWorldInteractionRecipe.Builder.() -> Unit,
+    ) {
+        addRecipeSafe(id.withPrefix("/world/interaction/")) { id1: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .apply(builderAction)
+                .id(id1)
+                .output(output)
+                .build()
         }
     }
 

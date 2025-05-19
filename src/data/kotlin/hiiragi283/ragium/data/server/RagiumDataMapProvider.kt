@@ -87,12 +87,14 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             Blocks.REDSTONE_ORE,
             Ingredient.of(RagiumItems.RAGI_TICKET),
             null,
+            HTBreakBlockAction(false),
             HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES[HTOreVariant.OVERWORLD].get()),
         )
         register(
             Blocks.DEEPSLATE_REDSTONE_ORE,
             Ingredient.of(RagiumItems.RAGI_TICKET),
             null,
+            HTBreakBlockAction(false),
             HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES[HTOreVariant.DEEPSLATE].get()),
         )
         register(

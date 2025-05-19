@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -15,9 +14,6 @@ import net.minecraft.stats.Stats
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
-import net.minecraft.world.effect.MobEffect
-import net.minecraft.world.effect.MobEffectCategory
-import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -168,16 +164,6 @@ object RagiumRuntimeEvents {
             if (!level.isClientSide) {
                 user.extinguishFire()
             }
-            return
-        }
-        // ゆがんだウォートの場合はデバフをランダムに一つだけ消す
-        if (stack.`is`(RagiumItems.WARPED_WART)) {
-            val badEffect: Holder<MobEffect> = user.activeEffects
-                .map(MobEffectInstance::getEffect)
-                .filter { it.value().category == MobEffectCategory.HARMFUL }
-                .randomOrNull()
-                ?: return
-            user.removeEffect(badEffect)
             return
         }
     }

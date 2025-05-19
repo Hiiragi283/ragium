@@ -59,6 +59,18 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .addIngredient(Tags.Items.GEMS_EMERALD)
             .save(output)
 
+        HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
+            .hollow4()
+            .define('A', RagiumItemTags.GEMS_RAGI_CRYSTAL)
+            .define('B', Items.LANTERN)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.RAGI_EGG)
+            .hollow4()
+            .define('A', RagiumItemTags.GEMS_RAGI_CRYSTAL)
+            .define('B', Tags.Items.EGGS)
+            .save(output)
+
         molds()
         tickets()
     }

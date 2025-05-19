@@ -232,6 +232,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
+        addItem(RagiumItems.RAGI_EGG, "らぎエッグ")
         // Food
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
         addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
@@ -419,41 +420,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }*/
 
     private fun tag() {
-        // Item
-        add(RagiumItemTags.PAPER, "紙")
-        add(RagiumItemTags.PLASTICS, "プラスチック")
-        add(RagiumItemTags.SILICON, "シリコン")
-        add(RagiumItemTags.TOOLS_FORGE_HAMMER, "鍛造ハンマー")
-
-        add(RagiumItemTags.CROPS_WARPED_WART, "歪んだウォート")
-        add(RagiumItemTags.FOODS_CHEESE, "チーズ")
-        add(RagiumItemTags.FOODS_CHOCOLATE, "チョコレート")
-
-        add(RagiumItemTags.CIRCUITS, "回路")
-        add(RagiumItemTags.CIRCUITS_ADVANCED, "発展回路")
-        add(RagiumItemTags.CIRCUITS_BASIC, "基本回路")
-        add(RagiumItemTags.CIRCUITS_ELITE, "精鋭回路")
-
-        add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "黒曜石ガラス")
-        add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "クォーツガラス")
-
-        add(RagiumItemTags.DYNAMITES, "ダイナマイト")
-        add(RagiumItemTags.LED_BLOCKS, "LEDブロック")
-
-        add(RagiumItemTags.MOLDS, "成形型")
-        add(RagiumItemTags.MOLDS_BALL, "成形型（ボール）")
-        add(RagiumItemTags.MOLDS_BLANK, "成形型（なし）")
-        add(RagiumItemTags.MOLDS_BLOCK, "成形型（ブロック）")
-        add(RagiumItemTags.MOLDS_GEAR, "成形型（歯車）")
-        add(RagiumItemTags.MOLDS_INGOT, "成形型（インゴット）")
-        add(RagiumItemTags.MOLDS_PLATE, "成形型（板材）")
-        add(RagiumItemTags.MOLDS_ROD, "成形型（棒材）")
-        add(RagiumItemTags.MOLDS_WIRE, "成形型（ワイヤー）")
-
-        add(RagiumItemTags.DIRT_SOILS, "土壌")
-        add(RagiumItemTags.END_SOILS, "エンドの土壌")
-        add(RagiumItemTags.MUSHROOM_SOILS, "キノコの土壌")
-        add(RagiumItemTags.NETHER_SOILS, "ネザーの土壌")
         // Fluid
         add(RagiumFluidTags.CHOCOLATES, "チョコレート")
         add(RagiumFluidTags.CREOSOTE, "クレオソート")
@@ -463,6 +429,41 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumFluidTags.NITRO_FUEL, "ニトロ系燃料")
         add(RagiumFluidTags.NON_NITRO_FUEL, "非ニトロ系燃料")
         add(RagiumFluidTags.THERMAL_FUEL, "発熱燃料")
+        // Item
+        add(RagiumItemTags.CIRCUITS, "回路")
+        add(RagiumItemTags.CIRCUITS_ADVANCED, "発展回路")
+        add(RagiumItemTags.CIRCUITS_BASIC, "基本回路")
+        add(RagiumItemTags.CIRCUITS_ELITE, "精鋭回路")
+        
+        add(RagiumItemTags.MOLDS, "成形型")
+        add(RagiumItemTags.MOLDS_BALL, "成形型（ボール）")
+        add(RagiumItemTags.MOLDS_BLANK, "成形型（なし）")
+        add(RagiumItemTags.MOLDS_BLOCK, "成形型（ブロック）")
+        add(RagiumItemTags.MOLDS_GEAR, "成形型（歯車）")
+        add(RagiumItemTags.MOLDS_INGOT, "成形型（インゴット）")
+        add(RagiumItemTags.MOLDS_PLATE, "成形型（板材）")
+        add(RagiumItemTags.MOLDS_ROD, "成形型（棒材）")
+        add(RagiumItemTags.MOLDS_WIRE, "成形型（ワイヤー）")
+        
+        add(RagiumItemTags.PAPER, "紙")
+        add(RagiumItemTags.PLASTICS, "プラスチック")
+        add(RagiumItemTags.SILICON, "シリコン")
+        add(RagiumItemTags.TOOLS_FORGE_HAMMER, "鍛造ハンマー")
+
+        add(RagiumItemTags.CROPS_WARPED_WART, "歪んだウォート")
+        add(RagiumItemTags.FOODS_CHEESE, "チーズ")
+        add(RagiumItemTags.FOODS_CHOCOLATE, "チョコレート")
+
+        add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "黒曜石ガラス")
+        add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "クォーツガラス")
+
+        add(RagiumItemTags.DYNAMITES, "ダイナマイト")
+        add(RagiumItemTags.LED_BLOCKS, "LEDブロック")
+
+        add(RagiumItemTags.DIRT_SOILS, "土壌")
+        add(RagiumItemTags.END_SOILS, "エンドの土壌")
+        add(RagiumItemTags.MUSHROOM_SOILS, "キノコの土壌")
+        add(RagiumItemTags.NETHER_SOILS, "ネザーの土壌")
     }
 
     private fun text() {
@@ -507,6 +508,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "範囲内のドロップアイテムを回収します。")
         add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "黒曜石とおなじ爆破耐性をもちます。")
         add(RagiumTranslationKeys.EMI_RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
+        add(RagiumTranslationKeys.EMI_RAGI_EGG, "モブに右クリックするとスポーンエッグになります。")
+        add(RagiumTranslationKeys.EMI_RAGI_LANTERN, "範囲内の暗所に光源を設置します。")
         add(RagiumTranslationKeys.EMI_SOUL_GLASS, "プレイヤーのみ通過できます。")
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "行商人を倒すことでも入手できます。")
         add(RagiumTranslationKeys.EMI_WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")

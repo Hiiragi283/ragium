@@ -29,6 +29,8 @@ object RagiumTranslationKeys {
     const val EMI_ITEM_MAGNET = "emi.ragium.item_magnet"
     const val EMI_OBSIDIAN_GLASS = "emi.ragium.obsidian_glass"
     const val EMI_RAGI_CHERRY = "emi.ragium.ragi_cherry"
+    const val EMI_RAGI_EGG = "emi.ragium.ragi_egg"
+    const val EMI_RAGI_LANTERN = "emi.ragium.ragi_lantern"
     const val EMI_SOUL_GLASS = "emi.ragium.soul_glass"
     const val EMI_TRADER_CATALOG = "emi.ragium.trader_catalog"
     const val EMI_WARPED_WART = "emi.ragium.warped_wart"

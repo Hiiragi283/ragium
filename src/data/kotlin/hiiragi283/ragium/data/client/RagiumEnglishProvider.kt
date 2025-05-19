@@ -229,6 +229,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
+        addItem(RagiumItems.RAGI_EGG, "Ragi-Egg")
         // Food
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
         addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
@@ -426,26 +427,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumFluidTags.NON_NITRO_FUEL, "Non-Nitro Fuel")
         add(RagiumFluidTags.THERMAL_FUEL, "Thermal Fuel")
         // Item
-        add(RagiumItemTags.PAPER, "Paper")
-        add(RagiumItemTags.PLASTICS, "Plastic")
-        add(RagiumItemTags.SILICON, "Silicon")
-        add(RagiumItemTags.TOOLS_FORGE_HAMMER, "Forge Hammer")
-
-        add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
-        add(RagiumItemTags.FOODS_CHEESE, "Cheese")
-        add(RagiumItemTags.FOODS_CHOCOLATE, "Chocolate")
-
         add(RagiumItemTags.CIRCUITS, "Circuit")
         add(RagiumItemTags.CIRCUITS_BASIC, "Basic Circuit")
         add(RagiumItemTags.CIRCUITS_ADVANCED, "Advanced Circuit")
         add(RagiumItemTags.CIRCUITS_ELITE, "Elite Circuit")
-
-        add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "Obsidian Glass")
-        add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "Quartz Glass")
-
-        add(RagiumItemTags.DYNAMITES, "Dynamite")
-        add(RagiumItemTags.LED_BLOCKS, "LED Block")
-
+        
         add(RagiumItemTags.MOLDS, "Press Mold")
         add(RagiumItemTags.MOLDS_BALL, "Press Mold (Ball)")
         add(RagiumItemTags.MOLDS_BLANK, "Press Mold (Blank)")
@@ -455,6 +441,21 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.MOLDS_PLATE, "Press Mold (Plate)")
         add(RagiumItemTags.MOLDS_ROD, "Press Mold (Rod)")
         add(RagiumItemTags.MOLDS_WIRE, "Press Mold (Wire)")
+        
+        add(RagiumItemTags.PAPER, "Paper")
+        add(RagiumItemTags.PLASTICS, "Plastic")
+        add(RagiumItemTags.SILICON, "Silicon")
+        add(RagiumItemTags.TOOLS_FORGE_HAMMER, "Forge Hammer")
+
+        add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
+        add(RagiumItemTags.FOODS_CHEESE, "Cheese")
+        add(RagiumItemTags.FOODS_CHOCOLATE, "Chocolate")
+
+        add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "Obsidian Glass")
+        add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "Quartz Glass")
+
+        add(RagiumItemTags.DYNAMITES, "Dynamite")
+        add(RagiumItemTags.LED_BLOCKS, "LED Block")
 
         add(RagiumItemTags.DIRT_SOILS, "Dirt Soil")
         add(RagiumItemTags.END_SOILS, "End Soil")
@@ -504,6 +505,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items in the effective range")
         add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "As the same blast resistance as Obsidian.")
         add(RagiumTranslationKeys.EMI_RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
+        add(RagiumTranslationKeys.EMI_RAGI_EGG, "Right-click a mob then converts it into Spawn Egg.")
+        add(RagiumTranslationKeys.EMI_RAGI_LANTERN, "Light up darkness in range.")
         add(RagiumTranslationKeys.EMI_SOUL_GLASS, "Only passable with Players.")
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
         add(RagiumTranslationKeys.EMI_WARPED_WART, "Clear one bad effect randomly when eaten.")

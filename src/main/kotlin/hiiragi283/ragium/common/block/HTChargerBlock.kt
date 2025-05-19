@@ -19,7 +19,7 @@ class HTChargerBlock(properties: Properties) :
     ) {
     companion object {
         @JvmField
-        val SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)
+        val SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 6.0, 16.0)
     }
 
     override fun getShape(
