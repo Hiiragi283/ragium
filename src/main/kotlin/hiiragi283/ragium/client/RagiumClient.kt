@@ -4,7 +4,9 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.client.gui.HTClientFluidTooltipComponent
 import hiiragi283.ragium.client.renderer.HTChargerRenderer
+import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -18,6 +20,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
@@ -37,6 +40,7 @@ class RagiumClient(eventBus: IEventBus) {
         eventBus.addListener(::registerItemColor)
         eventBus.addListener(::registerClientExtensions)
         eventBus.addListener(::registerEntityRenderer)
+        eventBus.addListener(::registerTooltipRenderer)
     }
 
     private fun registerBlockColor(event: RegisterColorHandlersEvent.Block) {
@@ -133,5 +137,11 @@ class RagiumClient(eventBus: IEventBus) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CHARGER.get(), ::HTChargerRenderer)
 
         LOGGER.info("Registered BlockEntityRenderers!")
+    }
+
+    private fun registerTooltipRenderer(event: RegisterClientTooltipComponentFactoriesEvent) {
+        event.register(HTFluidTooltipComponent::class.java, ::HTClientFluidTooltipComponent)
+
+        LOGGER.info("Registered ClientTooltipComponents!")
     }
 }

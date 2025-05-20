@@ -129,6 +129,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SPRINKLER, "Sprinkler")
         addBlock(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
         addBlock(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
+        // Storage
+        addBlock(RagiumBlocks.SMALL_DRUM, "Small Drum")
+        addBlock(RagiumBlocks.MEDIUM_DRUM, "Medium Drum")
+        addBlock(RagiumBlocks.LARGE_DRUM, "Large Drum")
+        addBlock(RagiumBlocks.HUGE_DRUM, "Huge Drum")
     }
 
     private fun enchantment() {

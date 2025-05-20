@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.renderer
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import hiiragi283.ragium.common.block.entity.HTChargerBlockEntity
+import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -27,7 +28,7 @@ class HTChargerRenderer(context: BlockEntityRendererProvider.Context) : BlockEnt
         itemRenderer.renderStatic(
             blockEntity.getStackInSlot(0),
             ItemDisplayContext.FIXED,
-            15728880,
+            LightTexture.FULL_BRIGHT,
             packedOverlay,
             poseStack,
             bufferSource,

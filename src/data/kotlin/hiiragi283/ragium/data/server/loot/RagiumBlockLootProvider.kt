@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.loot
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTBuildingBlockSets
 import hiiragi283.ragium.util.HTOreSets
@@ -127,6 +128,17 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                         .`when`(propertyCondition.invert())
                         .add(LootItem.lootTableItem(Items.BONE)),
                 )
+        }
+
+        // Storages
+        for (holder: DeferredBlock<*> in RagiumBlocks.DRUMS) {
+            add(holder.get()) {
+                copyComponent(
+                    it,
+                    DataComponents.ENCHANTMENTS,
+                    RagiumComponentTypes.FLUID_CONTENT.get(),
+                )
+            }
         }
     }
 

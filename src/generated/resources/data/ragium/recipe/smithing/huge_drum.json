@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:ingots/netherite"
+  },
+  "base": {
+    "item": "ragium:small_drum"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:huge_drum"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

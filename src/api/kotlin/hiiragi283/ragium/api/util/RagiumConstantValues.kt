@@ -36,6 +36,13 @@ object RagiumConstantValues {
     const val REFINING = "refining"
     const val SOLIDIFYING = "solidifying"
 
+    //    Storages    //
+
+    const val SMALL_DRUM = 32000
+    const val MEDIUM_DRUM = 64000
+    const val LARGE_DRUM = 128000
+    const val HUGE_DRUM = 256000
+
     //    Tag Prefixes    //
 
     const val DUSTS = "dusts"

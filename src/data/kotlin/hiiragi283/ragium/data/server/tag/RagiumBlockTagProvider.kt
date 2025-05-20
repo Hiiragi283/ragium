@@ -69,6 +69,10 @@ class RagiumBlockTagProvider(
             add(BlockTags.MINEABLE_WITH_PICKAXE, device)
         }
 
+        for (device: DeferredBlock<*> in RagiumBlocks.DRUMS) {
+            add(BlockTags.MINEABLE_WITH_PICKAXE, device)
+        }
+
         // Shovel
         add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
         add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.ASH_LOG)

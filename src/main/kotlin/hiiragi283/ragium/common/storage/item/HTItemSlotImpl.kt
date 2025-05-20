@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.storage.item
 
 import hiiragi283.ragium.api.extension.buildNbt
-import hiiragi283.ragium.api.extension.getHighestLevel
+import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.inventory.HTSlotPos
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
-import hiiragi283.ragium.api.tag.RagiumEnchantmentTags
 import hiiragi283.ragium.common.inventory.HTContainerItemSlot
+import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
@@ -36,7 +36,7 @@ open class HTItemSlotImpl(
     )
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
-        val level: Int = newEnchantments.getHighestLevel(RagiumEnchantmentTags.CAPACITY) + 1
+        val level: Int = newEnchantments.getLevel(RagiumEnchantments.CAPACITY) + 1
         capacity = level * baseCapacity
     }
 

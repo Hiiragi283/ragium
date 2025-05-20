@@ -19,8 +19,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         casings()
         machines()
-
         devices()
+        drums()
     }
 
     private fun casings() {
@@ -199,5 +199,36 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         advDevice(RagiumBlocks.TELEPORT_ANCHOR, RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
 
         // Elite
+    }
+
+    private fun drums() {
+        // Small
+        HTShapedRecipeBuilder(RagiumBlocks.SMALL_DRUM)
+            .pattern(
+                "ABA",
+                "ACA",
+                "ABA",
+            ).define('A', Tags.Items.INGOTS_COPPER)
+            .define('B', Items.SMOOTH_STONE_SLAB)
+            .define('C', Tags.Items.BUCKETS_EMPTY)
+            .save(output)
+        // Medium
+        HTSmithingRecipeBuilder(RagiumBlocks.MEDIUM_DRUM)
+            .addIngredient(RagiumItemTags.GLASS_BLOCKS_QUARTZ)
+            .addIngredient(RagiumBlocks.SMALL_DRUM)
+            .addIngredient(Tags.Items.STORAGE_BLOCKS_GOLD)
+            .save(output)
+        // Large
+        HTSmithingRecipeBuilder(RagiumBlocks.LARGE_DRUM)
+            .addIngredient(RagiumItemTags.PLASTICS)
+            .addIngredient(RagiumBlocks.MEDIUM_DRUM)
+            .addIngredient(Tags.Items.GEMS_DIAMOND)
+            .save(output)
+        // Huge
+        HTSmithingRecipeBuilder(RagiumBlocks.HUGE_DRUM)
+            .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
+            .addIngredient(RagiumBlocks.LARGE_DRUM)
+            .addIngredient(Tags.Items.INGOTS_NETHERITE)
+            .save(output)
     }
 }

@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
@@ -30,6 +31,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
@@ -337,6 +339,32 @@ object RagiumItems {
             Capabilities.FluidHandler.ITEM,
             { stack: ItemStack, _: Void? -> FluidBucketWrapper(stack) },
             *RagiumFluidContents.REGISTER.itemEntries.toTypedArray(),
+        )
+
+        fun createDrumHandler(capacity: Int): (ItemStack, Void?) -> FluidHandlerItemStack? = { stack: ItemStack, _: Void? ->
+            val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
+            FluidHandlerItemStack(RagiumComponentTypes.FLUID_CONTENT, stack, capacity * modifier)
+        }
+
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            createDrumHandler(RagiumConstantValues.SMALL_DRUM),
+            RagiumBlocks.SMALL_DRUM,
+        )
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            createDrumHandler(RagiumConstantValues.MEDIUM_DRUM),
+            RagiumBlocks.MEDIUM_DRUM,
+        )
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            createDrumHandler(RagiumConstantValues.LARGE_DRUM),
+            RagiumBlocks.LARGE_DRUM,
+        )
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            createDrumHandler(RagiumConstantValues.HUGE_DRUM),
+            RagiumBlocks.HUGE_DRUM,
         )
 
         LOGGER.info("Registered item capabilities!")

@@ -101,6 +101,7 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.CASINGS)
             addAll(RagiumBlocks.MACHINES)
             addAll(RagiumBlocks.DEVICES)
+            addAll(RagiumBlocks.DRUMS)
             // Armors
             addAll(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
             // Tools

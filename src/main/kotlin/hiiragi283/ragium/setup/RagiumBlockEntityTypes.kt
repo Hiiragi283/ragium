@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTChargerBlockEntity
+import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.collect.HTExpCollectorBlockEntity
@@ -118,6 +119,24 @@ object RagiumBlockEntityTypes {
         ::HTWaterCollectorBlockEntity,
     )
 
+    //    Storage    //
+
+    @JvmField
+    val SMALL_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
+        REGISTER.registerType("small_drum", HTDrumBlockEntity::Small)
+
+    @JvmField
+    val MEDIUM_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
+        REGISTER.registerType("medium_drum", HTDrumBlockEntity::Medium)
+
+    @JvmField
+    val LARGE_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
+        REGISTER.registerType("large_drum", HTDrumBlockEntity::Large)
+
+    @JvmField
+    val HUGE_DRUM: HTDeferredBlockEntityType<HTDrumBlockEntity> =
+        REGISTER.registerType("huge_drum", HTDrumBlockEntity::Huge)
+
     //    Event    //
 
     @SubscribeEvent
@@ -142,6 +161,11 @@ object RagiumBlockEntityTypes {
         add(MILK_DRAIN, RagiumBlocks.MILK_DRAIN)
         add(SPRINKLER, RagiumBlocks.SPRINKLER)
         add(WATER_COLLECTOR, RagiumBlocks.WATER_COLLECTOR)
+
+        add(SMALL_DRUM, RagiumBlocks.SMALL_DRUM)
+        add(MEDIUM_DRUM, RagiumBlocks.MEDIUM_DRUM)
+        add(LARGE_DRUM, RagiumBlocks.LARGE_DRUM)
+        add(HUGE_DRUM, RagiumBlocks.HUGE_DRUM)
 
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }
@@ -183,6 +207,11 @@ object RagiumBlockEntityTypes {
         registerHandlers(MILK_DRAIN)
         registerHandlers(SPRINKLER)
         registerHandlers(WATER_COLLECTOR)
+
+        registerHandlers(SMALL_DRUM)
+        registerHandlers(MEDIUM_DRUM)
+        registerHandlers(LARGE_DRUM)
+        registerHandlers(HUGE_DRUM)
 
         LOGGER.info("Registered Block Capabilities!")
     }

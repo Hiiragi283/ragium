@@ -1,10 +1,13 @@
 package hiiragi283.ragium.internal
 
+import com.mojang.datafixers.util.Either
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
+import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -36,11 +39,13 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
+import net.neoforged.neoforge.fluids.SimpleFluidContent
 import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -319,4 +324,14 @@ object RagiumRuntimeEvents {
             }
         }
     }*/
+
+    //    Tooltip Component    //
+
+    @SubscribeEvent
+    fun gatherComponents(event: RenderTooltipEvent.GatherComponents) {
+        val stack: ItemStack = event.itemStack
+        val content: SimpleFluidContent = stack.get(RagiumComponentTypes.FLUID_CONTENT) ?: return
+        if (content.isEmpty) return
+        event.tooltipElements.add(1, Either.right(HTFluidTooltipComponent(content)))
+    }
 }

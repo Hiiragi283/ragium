@@ -1,13 +1,17 @@
 package hiiragi283.ragium.api.extension
 
 import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.Font
+import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.block.model.BakedQuad
 import net.minecraft.client.renderer.entity.ItemRenderer
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.client.resources.model.BakedModel
 import net.minecraft.core.Vec3i
+import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
 import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.item.ItemDisplayContext
@@ -17,6 +21,7 @@ import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.model.data.ModelData
 import net.neoforged.neoforge.fluids.FluidStack
+import org.joml.Matrix4f
 import org.joml.Quaternionf
 
 //    PoseStack    //
@@ -121,3 +126,29 @@ fun renderItem(
         poseStack.popPose()
     }
 }*/
+
+//    Font    //
+
+fun Font.renderText(
+    text: Component,
+    x: Number,
+    y: Number,
+    matrix: Matrix4f,
+    bufferSource: MultiBufferSource.BufferSource,
+    color: Int = ChatFormatting.GRAY.color!!,
+    shadow: Boolean = false,
+    mode: Font.DisplayMode = Font.DisplayMode.NORMAL,
+) {
+    drawInBatch(
+        text,
+        x.toFloat(),
+        y.toFloat(),
+        color,
+        shadow,
+        matrix,
+        bufferSource,
+        mode,
+        0,
+        LightTexture.FULL_BRIGHT,
+    )
+}

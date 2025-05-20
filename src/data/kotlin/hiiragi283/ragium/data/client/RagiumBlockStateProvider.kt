@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.block.HTFeastBlock
+import hiiragi283.ragium.api.extension.blockId
 import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.layeredModel
@@ -15,6 +16,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
@@ -100,6 +102,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Food
         simpleAltBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
+        feastBlock(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
 
         // Machine Frame
         simpleAltBlock(RagiumBlocks.WOODEN_CASING, vanillaId("block/note_block"))
@@ -203,8 +206,18 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
 
-        // Delight Addon
-        feastBlock(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
+        // Storages
+        for (drum: DeferredBlock<*> in RagiumBlocks.DRUMS) {
+            val id: ResourceLocation = drum.blockId
+            simpleBlock(
+                drum.get(),
+                models().cubeColumn(
+                    id.path,
+                    id.withSuffix("_side"),
+                    id.withSuffix("_top"),
+                ),
+            )
+        }
     }
 
     //    Extensions    //

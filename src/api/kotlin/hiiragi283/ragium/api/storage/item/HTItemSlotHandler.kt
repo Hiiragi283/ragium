@@ -21,7 +21,7 @@ interface HTItemSlotHandler : IItemHandlerModifiable {
 
     override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
         if (!getItemIoFromSlot(slot).canInsert) return stack
-        val itemSlot: HTItemSlot = getItemSlot(slot)  ?: return stack
+        val itemSlot: HTItemSlot = getItemSlot(slot) ?: return stack
         val inserted: Int = itemSlot.insert(stack, simulate)
         if (inserted == 0) return stack
         itemSlot.onContentsChanged()

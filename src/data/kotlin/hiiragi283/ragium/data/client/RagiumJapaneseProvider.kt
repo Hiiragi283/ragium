@@ -132,6 +132,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SPRINKLER, "スプリンクラー")
         addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
         addBlock(RagiumBlocks.WATER_COLLECTOR, "水収集機")
+        // Storage
+        addBlock(RagiumBlocks.SMALL_DRUM, "ドラム（小）")
+        addBlock(RagiumBlocks.MEDIUM_DRUM, "ドラム（中）")
+        addBlock(RagiumBlocks.LARGE_DRUM, "ドラム（大）")
+        addBlock(RagiumBlocks.HUGE_DRUM, "ドラム（特大）")
     }
 
     private fun enchantment() {

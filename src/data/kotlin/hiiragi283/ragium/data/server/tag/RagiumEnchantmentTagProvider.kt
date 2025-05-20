@@ -34,8 +34,6 @@ class RagiumEnchantmentTagProvider(output: PackOutput, provider: CompletableFutu
         add(EnchantmentTags.ON_RANDOM_LOOT, noiseCanceling)
         add(EnchantmentTags.TRADEABLE, noiseCanceling)
 
-        // Capacity
-        add(RagiumEnchantmentTags.CAPACITY, capacity)
         // Charging
         add(RagiumEnchantmentTags.CHARGING, enchLookup.getOrThrow(Enchantments.CHANNELING))
         add(RagiumEnchantmentTags.CHARGING, enchLookup.getOrThrow(Enchantments.WIND_BURST))

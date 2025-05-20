@@ -20,6 +20,15 @@ import kotlin.jvm.optionals.getOrNull
 fun createEnchBook(holder: Holder<Enchantment>, level: Int = holder.value().maxLevel): ItemStack =
     EnchantedBookItem.createForEnchantment(EnchantmentInstance(holder, level))
 
+fun ItemStack.getEnchantmentLevel(key: ResourceKey<Enchantment>): Int {
+    val access: RegistryAccess = RagiumAPI.getInstance().getRegistryAccess() ?: return 0
+    return access
+        .enchLookup()
+        .get(key)
+        .map(this::getEnchantmentLevel)
+        .orElse(0)
+}
+
 //    ItemEnchantments    //
 
 fun ItemEnchantments.getLevel(key: ResourceKey<Enchantment>): Int {

@@ -24,6 +24,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -239,6 +240,8 @@ class RagiumItemTagProvider(
         RagiumItems.AZURE_STEEL_ARMORS.appendItemTags(this)
         // Tools
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, RagiumItems.RAGI_ALLOY_HAMMER)
+        addTag(ItemTags.DURABILITY_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)
+        addTag(ItemTags.VANISHING_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)
         addTag(Tags.Items.TOOLS, RagiumItemTags.TOOLS_FORGE_HAMMER)
 
         RagiumItems.AZURE_STEEL_TOOLS.appendItemTags(this)
@@ -277,6 +280,20 @@ class RagiumItemTagProvider(
         for (mold: RagiumItems.Molds in RagiumItems.Molds.entries) {
             addTag(RagiumItemTags.MOLDS, mold.tagKey)
             addItem(mold.tagKey, mold)
+        }
+
+        // Enchantable
+        buildList<ItemLike> {
+            // Blocks
+            addAll(RagiumBlocks.MACHINES)
+            addAll(RagiumBlocks.DEVICES)
+            addAll(RagiumBlocks.DRUMS)
+            // Items
+            add(RagiumItems.ITEM_MAGNET)
+            add(RagiumItems.EXP_MAGNET)
+            add(RagiumItems.RAGI_LANTERN)
+        }.forEach { item: ItemLike ->
+            addItem(Tags.Items.ENCHANTABLES, item)
         }
     }
 

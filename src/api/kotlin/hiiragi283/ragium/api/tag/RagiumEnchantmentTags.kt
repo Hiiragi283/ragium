@@ -10,9 +10,6 @@ object RagiumEnchantmentTags {
     private fun create(path: String): TagKey<Enchantment> = TagKey.create(Registries.ENCHANTMENT, RagiumAPI.id(path))
 
     @JvmField
-    val CAPACITY: TagKey<Enchantment> = create("capacity")
-
-    @JvmField
     val CHARGING: TagKey<Enchantment> = create("charging")
 
     @JvmField

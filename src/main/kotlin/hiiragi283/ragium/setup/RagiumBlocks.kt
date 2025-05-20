@@ -409,7 +409,7 @@ object RagiumBlocks {
     //    Devices    //
 
     @JvmStatic
-    private fun registerDevice(
+    private fun registerEntityBlock(
         properties: BlockBehaviour.Properties,
         type: HTDeferredBlockEntityType<out HTBlockEntity>,
     ): DeferredBlock<*> = register(type.id.path, properties, HTEntityBlock.create(type))
@@ -422,26 +422,26 @@ object RagiumBlocks {
 
     // Basic
     @JvmField
-    val ITEM_COLLECTOR: DeferredBlock<*> = registerDevice(lightMetal(), RagiumBlockEntityTypes.ITEM_COLLECTOR)
+    val ITEM_COLLECTOR: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.ITEM_COLLECTOR)
 
     @JvmField
-    val SPRINKLER: DeferredBlock<*> = registerDevice(lightMetal(), RagiumBlockEntityTypes.SPRINKLER)
+    val SPRINKLER: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.SPRINKLER)
 
     @JvmField
-    val WATER_COLLECTOR: DeferredBlock<*> = registerDevice(lightMetal(), RagiumBlockEntityTypes.WATER_COLLECTOR)
+    val WATER_COLLECTOR: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.WATER_COLLECTOR)
 
     // Advanced
     @JvmField
     val CHARGER: DeferredBlock<*> = register("charger", heavyMetal(), ::HTChargerBlock)
 
     @JvmField
-    val ENI: DeferredBlock<*> = registerDevice(heavyMetal(), RagiumBlockEntityTypes.ENI)
+    val ENI: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.ENI)
 
     @JvmField
-    val EXP_COLLECTOR: DeferredBlock<*> = registerDevice(heavyMetal(), RagiumBlockEntityTypes.EXP_COLLECTOR)
+    val EXP_COLLECTOR: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.EXP_COLLECTOR)
 
     @JvmField
-    val LAVA_COLLECTOR: DeferredBlock<*> = registerDevice(heavyMetal(), RagiumBlockEntityTypes.LAVA_COLLECTOR)
+    val LAVA_COLLECTOR: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.LAVA_COLLECTOR)
 
     @JvmField
     val TELEPORT_ANCHOR: DeferredBlock<Block> = register("teleport_anchor", heavyMetal())
@@ -461,4 +461,21 @@ object RagiumBlocks {
         // 無彩色
         ENI,
     )
+
+    //    Storages    //
+
+    @JvmField
+    val SMALL_DRUM: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.SMALL_DRUM)
+
+    @JvmField
+    val MEDIUM_DRUM: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.MEDIUM_DRUM)
+
+    @JvmField
+    val LARGE_DRUM: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.LARGE_DRUM)
+
+    @JvmField
+    val HUGE_DRUM: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.HUGE_DRUM)
+
+    @JvmField
+    val DRUMS: List<DeferredBlock<*>> = listOf(SMALL_DRUM, MEDIUM_DRUM, LARGE_DRUM, HUGE_DRUM)
 }
