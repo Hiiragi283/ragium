@@ -31,14 +31,12 @@ class HTAdvancedCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     private val outputSlot1: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT + 1, this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, registryOps)
         inputSlot.writeNbt(nbt, registryOps)
         outputSlot.writeNbt(nbt, registryOps)
         outputSlot1.writeNbt(nbt, registryOps)
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, registryOps)
         inputSlot.readNbt(nbt, registryOps)
         outputSlot.readNbt(nbt, registryOps)
         outputSlot1.readNbt(nbt, registryOps)

@@ -1,10 +1,10 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "ragium:small_drum"
+    "tag": "c:storage_blocks/gold"
   },
   "base": {
-    "tag": "c:storage_blocks/gold"
+    "item": "ragium:small_drum"
   },
   "result": {
     "count": 1,

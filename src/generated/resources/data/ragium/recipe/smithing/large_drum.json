@@ -4,7 +4,7 @@
     "tag": "c:gems/diamond"
   },
   "base": {
-    "item": "ragium:small_drum"
+    "item": "ragium:medium_drum"
   },
   "result": {
     "count": 1,

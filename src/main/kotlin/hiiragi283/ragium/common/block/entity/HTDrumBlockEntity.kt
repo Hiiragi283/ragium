@@ -1,11 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.enchantment.HTEnchantmentEntry
-import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
-import hiiragi283.ragium.api.extension.enchLookup
-import hiiragi283.ragium.api.extension.getData
-import hiiragi283.ragium.api.extension.putData
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -14,18 +9,14 @@ import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
-import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -38,7 +29,6 @@ abstract class HTDrumBlockEntity(
     pos: BlockPos,
     state: BlockState,
 ) : HTBlockEntity(type, pos, state),
-    HTEnchantmentHolder,
     HTFluidTankHandler {
     private val tank: HTFluidTank = HTFluidTank.create("tank", this) {
         this.capacity = capacity
@@ -57,23 +47,15 @@ abstract class HTDrumBlockEntity(
     //    Save & Load    //
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        if (!itemEnchantments.isEmpty) {
-            nbt.putData(RagiumConstantValues.ENCHANTMENT, itemEnchantments, ItemEnchantments.CODEC, registryOps)
-        }
         tank.writeNbt(nbt, registryOps)
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        nbt
-            .getData(RagiumConstantValues.ENCHANTMENT, ItemEnchantments.CODEC, registryOps)
-            .result()
-            .orElse(ItemEnchantments.EMPTY)
-            .let(::loadEnchantment)
         tank.readNbt(nbt, registryOps)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
-        loadEnchantment(componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY))
+        super.applyImplicitComponents(componentInput)
         tank.replace(
             componentInput.getOrDefault(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.EMPTY).copy(),
             true,
@@ -81,25 +63,14 @@ abstract class HTDrumBlockEntity(
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        components.set(DataComponents.ENCHANTMENTS, itemEnchantments)
+        super.collectImplicitComponents(components)
         components.set(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.stack))
     }
 
-    //    HTEnchantmentHolder    //
-
-    private var itemEnchantments: ItemEnchantments = ItemEnchantments.EMPTY
-
-    private fun loadEnchantment(newEnchantments: ItemEnchantments) {
-        this.itemEnchantments = newEnchantments
+    override fun loadEnchantment(newEnchantments: ItemEnchantments) {
+        super.loadEnchantment(newEnchantments)
         tank.onUpdateEnchantment(newEnchantments)
     }
-
-    override fun getEnchLevel(key: ResourceKey<Enchantment>): Int {
-        val lookup: HolderLookup.RegistryLookup<Enchantment> = level?.registryAccess()?.enchLookup() ?: return 0
-        return lookup.get(key).map(itemEnchantments::getLevel).orElse(0)
-    }
-
-    override fun getEnchEntries(): Iterable<HTEnchantmentEntry> = itemEnchantments.entrySet().map(::HTEnchantmentEntry)
 
     //    Fluid    //
 

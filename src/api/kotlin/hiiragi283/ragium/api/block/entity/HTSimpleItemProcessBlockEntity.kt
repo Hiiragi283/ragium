@@ -34,13 +34,11 @@ abstract class HTSimpleItemProcessBlockEntity(
     protected val outputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT, this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, registryOps)
         inputSlot.writeNbt(nbt, registryOps)
         outputSlot.writeNbt(nbt, registryOps)
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, registryOps)
         inputSlot.readNbt(nbt, registryOps)
         outputSlot.readNbt(nbt, registryOps)
     }

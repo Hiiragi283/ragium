@@ -35,7 +35,6 @@ class HTAdvancedExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     private val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, registryOps)
         inputSlot.writeNbt(nbt, registryOps)
         outputSlot.writeNbt(nbt, registryOps)
 
@@ -43,7 +42,6 @@ class HTAdvancedExtractorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, registryOps)
         inputSlot.readNbt(nbt, registryOps)
         outputSlot.readNbt(nbt, registryOps)
 

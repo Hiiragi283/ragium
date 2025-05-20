@@ -32,13 +32,11 @@ abstract class HTSimpleFluidProcessBlockEntity(
     protected val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        super.writeNbt(nbt, registryOps)
         inputTank.writeNbt(nbt, registryOps)
         outputTank.writeNbt(nbt, registryOps)
     }
 
     override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        super.readNbt(nbt, registryOps)
         inputTank.readNbt(nbt, registryOps)
         outputTank.readNbt(nbt, registryOps)
     }

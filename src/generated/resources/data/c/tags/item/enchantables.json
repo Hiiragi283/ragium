@@ -1,0 +1,27 @@
+{
+  "values": [
+    "ragium:advanced_crusher",
+    "ragium:advanced_extractor",
+    "ragium:charger",
+    "ragium:crusher",
+    "ragium:energy_network_interface",
+    "ragium:exp_collector",
+    "ragium:exp_magnet",
+    "ragium:extractor",
+    "ragium:huge_drum",
+    "ragium:infuser",
+    "ragium:item_collector",
+    "ragium:item_magnet",
+    "ragium:large_drum",
+    "ragium:lava_collector",
+    "ragium:medium_drum",
+    "ragium:milk_drain",
+    "ragium:ragi_lantern",
+    "ragium:refinery",
+    "ragium:small_drum",
+    "ragium:soul_spike",
+    "ragium:sprinkler",
+    "ragium:teleport_anchor",
+    "ragium:water_collector"
+  ]
+}

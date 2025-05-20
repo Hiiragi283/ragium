@@ -10,7 +10,9 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
@@ -19,6 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.HitResult
 
 /**
  * `Ragium`で使用する[BaseEntityBlock]の拡張クラス
@@ -43,7 +46,7 @@ abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntity
      */
     protected abstract fun initDefaultState(): BlockState
 
-    protected fun Level.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
+    protected fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
 
     //    Block    //
 
@@ -125,6 +128,16 @@ abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntity
     ) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
         level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+    }
+
+    override fun getCloneItemStack(
+        state: BlockState,
+        target: HitResult,
+        level: LevelReader,
+        pos: BlockPos,
+        player: Player,
+    ): ItemStack = super.getCloneItemStack(state, target, level, pos, player).apply {
+        level.getHTBlockEntity(pos)?.collectComponents()?.let(this::applyComponents)
     }
 
     final override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.create(pos, state)

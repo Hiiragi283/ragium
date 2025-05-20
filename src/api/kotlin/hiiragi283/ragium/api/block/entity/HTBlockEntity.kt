@@ -1,15 +1,26 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.enchantment.HTEnchantmentEntry
+import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
+import hiiragi283.ragium.api.extension.enchLookup
+import hiiragi283.ragium.api.extension.getData
+import hiiragi283.ragium.api.extension.putData
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
+import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -17,6 +28,8 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -31,7 +44,10 @@ import net.neoforged.neoforge.items.IItemHandler
  */
 abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),
+    HTEnchantmentHolder,
     HTNbtCodec {
+    //    Save & Load    //
+
     /**
      * クライアント側へ同期する際に送る[CompoundTag]
      */
@@ -53,12 +69,34 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        writeNbt(tag, registries.createSerializationContext(NbtOps.INSTANCE))
+        val registryOps: RegistryOps<Tag> = registries.createSerializationContext(NbtOps.INSTANCE)
+        // Enchantment
+        if (!itemEnchantments.isEmpty) {
+            tag.putData(RagiumConstantValues.ENCHANTMENT, itemEnchantments, ItemEnchantments.CODEC, registryOps)
+        }
+        // Custom
+        writeNbt(tag, registryOps)
     }
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        readNbt(tag, registries.createSerializationContext(NbtOps.INSTANCE))
+        val registryOps: RegistryOps<Tag> = registries.createSerializationContext(NbtOps.INSTANCE)
+        // Enchantment
+        tag
+            .getData(RagiumConstantValues.ENCHANTMENT, ItemEnchantments.CODEC, registryOps)
+            .result()
+            .orElse(ItemEnchantments.EMPTY)
+            .let(::loadEnchantment)
+        // Custom
+        readNbt(tag, registryOps)
+    }
+
+    override fun applyImplicitComponents(componentInput: DataComponentInput) {
+        loadEnchantment(componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY))
+    }
+
+    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
+        components.set(DataComponents.ENCHANTMENTS, itemEnchantments)
     }
 
     @Deprecated("Deprecated in Java")
@@ -172,6 +210,13 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     var totalTick: Int = 0
         protected set
 
+    /**
+     * エンチャントが更新されたときに呼び出されます。
+     */
+    protected open fun loadEnchantment(newEnchantments: ItemEnchantments) {
+        this.itemEnchantments = newEnchantments
+    }
+
     //    Capability    //
 
     /**
@@ -188,4 +233,16 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      * 指定した[direction]から[IEnergyStorage]を返します。
      */
     open fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
+
+    //    HTEnchantmentHolder    //
+
+    protected var itemEnchantments: ItemEnchantments = ItemEnchantments.EMPTY
+        private set
+
+    final override fun getEnchLevel(key: ResourceKey<Enchantment>): Int {
+        val lookup: HolderLookup.RegistryLookup<Enchantment> = level?.registryAccess()?.enchLookup() ?: return 0
+        return lookup.get(key).map(itemEnchantments::getLevel).orElse(0)
+    }
+
+    final override fun getEnchEntries(): Iterable<HTEnchantmentEntry> = itemEnchantments.entrySet().map(::HTEnchantmentEntry)
 }
