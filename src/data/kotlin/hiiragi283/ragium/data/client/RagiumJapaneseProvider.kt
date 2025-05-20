@@ -182,8 +182,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
-
-        addFluid(RagiumFluidContents.MOLTEN_RAGIUM, "溶融ラギウム")
     }
 
     private fun item() {
