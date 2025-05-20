@@ -61,6 +61,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun block() {
         addBlock(RagiumBlocks.SILT, "Silt")
         addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "Mysterious Obsidian")
+        addBlock(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
 
         addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
@@ -126,7 +127,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
         addBlock(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
         addBlock(RagiumBlocks.MILK_DRAIN, "Milk Drain")
-        addBlock(RagiumBlocks.SOUL_SPIKE, "Soul Spike")
         addBlock(RagiumBlocks.SPRINKLER, "Sprinkler")
         addBlock(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
         addBlock(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
@@ -507,6 +507,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun emi() {
         add(RagiumTranslationKeys.EMI_AMBROSIA, "Always edible and not consumed!")
         add(RagiumTranslationKeys.EMI_ASH_LOG, "Drop Ash Dust when harvested.")
+        add(RagiumTranslationKeys.EMI_CRIMSON_SOIL, "Apply damages from fake player for above mobs.")
         add(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS, "This glass block can be harvested without Silk Touch.")
         add(RagiumTranslationKeys.EMI_ICE_CREAM, "Extinguish fire when eaten.")
         add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items in the effective range")

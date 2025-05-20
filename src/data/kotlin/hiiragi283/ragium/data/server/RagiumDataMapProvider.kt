@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.interaction.HTBreakBlockAction
 import hiiragi283.ragium.api.data.interaction.HTDropItemBlockAction
 import hiiragi283.ragium.api.data.interaction.HTReplaceBlockAction
 import hiiragi283.ragium.api.extension.blockLookup
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
@@ -103,7 +104,6 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             HTBreakBlockAction(false),
             HTDropItemBlockAction(RagiumItems.RAGI_LANTERN),
         )
-
         // Azure
         val amethysts: Map<Block, Int> = mapOf(
             Blocks.AMETHYST_CLUSTER to 4,
@@ -120,7 +120,6 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
                 HTDropItemBlockAction(RagiumItems.AZURE_SHARD, count),
             )
         }
-
         // Deep
         register(
             Blocks.REINFORCED_DEEPSLATE,
@@ -138,6 +137,14 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
                     .defaultBlockState()
                     .setValue(BlockStateProperties.CAN_SUMMON, true),
             ),
+        )
+        // Crimson
+        register(
+            Blocks.SOUL_SOIL,
+            Ingredient.of(RagiumItemTags.GEMS_CRIMSON_CRYSTAL),
+            null,
+            HTBreakBlockAction(false),
+            HTReplaceBlockAction.update(RagiumBlocks.CRIMSON_SOIL.get()),
         )
     }
 

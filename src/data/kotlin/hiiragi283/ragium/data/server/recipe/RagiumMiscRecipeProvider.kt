@@ -151,16 +151,6 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.BARRELS_WOODEN)
             .define('C', RagiumBlocks.STONE_CASING)
             .save(output)
-        // Soul Spike
-        HTShapedRecipeBuilder(RagiumBlocks.SOUL_SPIKE)
-            .pattern(
-                " A ",
-                "ABA",
-                "BCB",
-            ).define('A', Items.POINTED_DRIPSTONE)
-            .define('B', ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            .define('C', Tags.Items.NETHER_STARS)
-            .save(output)
 
         // Basic
         fun basicDevice(device: ItemLike, part: Ingredient) {

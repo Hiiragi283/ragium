@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "tag": "c:storage_blocks/ragi_crystal"
+    "tag": "c:gems/diamond"
   },
   "base": {
     "item": "ragium:device_casing"

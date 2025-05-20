@@ -31,18 +31,17 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildList {
-            add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
-            add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
-            add(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
-
-            add(RagiumBlocks.RAGI_ALLOY_BLOCK)
             add(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
             add(RagiumBlocks.AZURE_STEEL_BLOCK)
-            add(RagiumBlocks.DEEP_STEEL_BLOCK)
-
             add(RagiumBlocks.CHEESE_BLOCK)
             add(RagiumBlocks.CHOCOLATE_BLOCK)
+            add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
+            add(RagiumBlocks.DEEP_STEEL_BLOCK)
+            add(RagiumBlocks.RAGI_ALLOY_BLOCK)
+            add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
+            add(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
 
+            add(RagiumBlocks.CRIMSON_SOIL)
             add(RagiumBlocks.SILT)
 
             add(RagiumBlocks.SPONGE_CAKE)

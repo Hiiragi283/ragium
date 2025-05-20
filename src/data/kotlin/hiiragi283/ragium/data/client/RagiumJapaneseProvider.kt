@@ -61,6 +61,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun block() {
         addBlock(RagiumBlocks.SILT, "シルト")
         addBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, "神秘的な黒曜石")
+        addBlock(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
 
         addBlock(RagiumBlocks.ASH_LOG, "灰化した原木")
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
@@ -129,7 +130,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
         addBlock(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
         addBlock(RagiumBlocks.MILK_DRAIN, "牛乳シンク")
-        addBlock(RagiumBlocks.SOUL_SPIKE, "魂の尖頭")
         addBlock(RagiumBlocks.SPRINKLER, "スプリンクラー")
         addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
         addBlock(RagiumBlocks.WATER_COLLECTOR, "水収集機")
@@ -510,6 +510,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun emi() {
         add(RagiumTranslationKeys.EMI_AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         add(RagiumTranslationKeys.EMI_ASH_LOG, "壊すと灰の粉が手に入ります。")
+        add(RagiumTranslationKeys.EMI_CRIMSON_SOIL, "上にいるモブにフェイクプレイヤー由来のダメージを与えます。")
         add(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS, "このガラスはシルクタッチなしで回収することが可能です。")
         add(RagiumTranslationKeys.EMI_ICE_CREAM, "食べると鎮火します。")
         add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "範囲内のドロップアイテムを回収します。")

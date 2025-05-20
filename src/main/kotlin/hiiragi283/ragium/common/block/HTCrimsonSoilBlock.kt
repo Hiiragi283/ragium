@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-class HTSoulSpikeBlock(properties: Properties) : Block(properties) {
+class HTCrimsonSoilBlock(properties: Properties) : Block(properties) {
     override fun stepOn(
         level: Level,
         pos: BlockPos,

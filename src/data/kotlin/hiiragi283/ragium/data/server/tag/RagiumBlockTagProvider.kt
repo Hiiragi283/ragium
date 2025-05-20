@@ -74,8 +74,9 @@ class RagiumBlockTagProvider(
         }
 
         // Shovel
-        add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
         add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.ASH_LOG)
+        add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.CRIMSON_SOIL)
+        add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
         // Other
     }
 

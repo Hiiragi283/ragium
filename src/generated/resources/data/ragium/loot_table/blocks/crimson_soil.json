@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:soul_spike"
+          "name": "ragium:crimson_soil"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/soul_spike"
+  "random_sequence": "ragium:blocks/crimson_soil"
 }

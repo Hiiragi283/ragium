@@ -55,6 +55,7 @@ object RagiumCreativeTabs {
 
             add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
             add(RagiumItems.CRIMSON_CRYSTAL)
+            add(RagiumBlocks.CRIMSON_SOIL)
 
             add(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
             add(RagiumItems.WARPED_CRYSTAL)

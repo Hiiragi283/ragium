@@ -164,6 +164,23 @@
       "ingredient": {
         "item": "ragium:azure_ticket"
       }
+    },
+    "minecraft:soul_soil": {
+      "actions": [
+        {
+          "type": "c:break",
+          "drop_block": false
+        },
+        {
+          "type": "c:replace",
+          "state": {
+            "Name": "ragium:crimson_soil"
+          }
+        }
+      ],
+      "ingredient": {
+        "tag": "c:gems/crimson_crystal"
+      }
     }
   }
 }

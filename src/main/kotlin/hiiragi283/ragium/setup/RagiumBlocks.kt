@@ -9,11 +9,11 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.block.HTChargerBlock
+import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSoulGlassBlock
-import hiiragi283.ragium.common.block.HTSoulSpikeBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeSlabBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
@@ -135,6 +135,10 @@ object RagiumBlocks {
 
     @JvmField
     val MYSTERIOUS_OBSIDIAN: DeferredBlock<Block> = register("mysterious_obsidian", copyOf(Blocks.OBSIDIAN))
+
+    @JvmField
+    val CRIMSON_SOIL: DeferredBlock<HTCrimsonSoilBlock> =
+        register("crimson_soil", copyOf(Blocks.SOUL_SOIL), ::HTCrimsonSoilBlock)
 
     @JvmField
     val ASH_LOG: DeferredBlock<RotatedPillarBlock> = register(
@@ -417,9 +421,6 @@ object RagiumBlocks {
     @JvmField
     val MILK_DRAIN: DeferredBlock<*> = register("milk_drain", stone(), ::HTMilkDrainBlock)
 
-    @JvmField
-    val SOUL_SPIKE: DeferredBlock<HTSoulSpikeBlock> = register("soul_spike", heavyMetal(), ::HTSoulSpikeBlock)
-
     // Basic
     @JvmField
     val ITEM_COLLECTOR: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.ITEM_COLLECTOR)
@@ -453,7 +454,6 @@ object RagiumBlocks {
     @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
         MILK_DRAIN,
-        SOUL_SPIKE,
         CHARGER,
         // 色でソート
         ITEM_COLLECTOR,

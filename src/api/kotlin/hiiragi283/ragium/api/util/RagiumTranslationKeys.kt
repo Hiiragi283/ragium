@@ -24,6 +24,7 @@ object RagiumTranslationKeys {
 
     const val EMI_AMBROSIA = "emi.ragium.ambrosia"
     const val EMI_ASH_LOG = "emi.ragium.ash_log"
+    const val EMI_CRIMSON_SOIL = "emi.ragium.crimson_soil"
     const val EMI_HARVESTABLE_GLASS = "emi.ragium.harvestable_glass"
     const val EMI_ICE_CREAM = "emi.ragium.ice_cream"
     const val EMI_ITEM_MAGNET = "emi.ragium.item_magnet"
