@@ -431,7 +431,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.CIRCUITS_BASIC, "Basic Circuit")
         add(RagiumItemTags.CIRCUITS_ADVANCED, "Advanced Circuit")
         add(RagiumItemTags.CIRCUITS_ELITE, "Elite Circuit")
-        
+
         add(RagiumItemTags.MOLDS, "Press Mold")
         add(RagiumItemTags.MOLDS_BALL, "Press Mold (Ball)")
         add(RagiumItemTags.MOLDS_BLANK, "Press Mold (Blank)")
@@ -441,7 +441,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.MOLDS_PLATE, "Press Mold (Plate)")
         add(RagiumItemTags.MOLDS_ROD, "Press Mold (Rod)")
         add(RagiumItemTags.MOLDS_WIRE, "Press Mold (Wire)")
-        
+
         add(RagiumItemTags.PAPER, "Paper")
         add(RagiumItemTags.PLASTICS, "Plastic")
         add(RagiumItemTags.SILICON, "Silicon")

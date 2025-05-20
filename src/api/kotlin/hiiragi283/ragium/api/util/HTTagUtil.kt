@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.tag
+package hiiragi283.ragium.api.util
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.idOrThrow
@@ -11,7 +11,7 @@ import kotlin.jvm.optionals.getOrNull
 
 object HTTagUtil {
     /**
-     * 指定した[tagKey]に含まれる[Holder]を返します。
+     * 指定した[tagKey]に含まれる[net.minecraft.core.Holder]を返します。
      * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
      */
     @JvmStatic
@@ -19,7 +19,7 @@ object HTTagUtil {
         val holderSet: HolderSet.Named<Item> = lookup.get(tagKey).getOrNull() ?: return null
         // Find item from Ragium
         var firstHolder: Holder<Item>? =
-            holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == RagiumAPI.MOD_ID }
+            holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == RagiumAPI.Companion.MOD_ID }
         // Find item from Vanilla
         if (firstHolder == null) {
             firstHolder = holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == "minecraft" }

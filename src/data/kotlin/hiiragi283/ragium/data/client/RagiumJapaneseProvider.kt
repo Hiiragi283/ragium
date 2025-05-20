@@ -434,7 +434,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.CIRCUITS_ADVANCED, "発展回路")
         add(RagiumItemTags.CIRCUITS_BASIC, "基本回路")
         add(RagiumItemTags.CIRCUITS_ELITE, "精鋭回路")
-        
+
         add(RagiumItemTags.MOLDS, "成形型")
         add(RagiumItemTags.MOLDS_BALL, "成形型（ボール）")
         add(RagiumItemTags.MOLDS_BLANK, "成形型（なし）")
@@ -444,7 +444,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.MOLDS_PLATE, "成形型（板材）")
         add(RagiumItemTags.MOLDS_ROD, "成形型（棒材）")
         add(RagiumItemTags.MOLDS_WIRE, "成形型（ワイヤー）")
-        
+
         add(RagiumItemTags.PAPER, "紙")
         add(RagiumItemTags.PLASTICS, "プラスチック")
         add(RagiumItemTags.SILICON, "シリコン")

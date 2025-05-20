@@ -24,7 +24,7 @@ object RagiumItemTags {
 
     @JvmField
     val CIRCUITS_ELITE: TagKey<Item> = commonTag("circuits/elite")
-    
+
     //    Dusts    //
 
     @JvmField
@@ -112,7 +112,7 @@ object RagiumItemTags {
 
     @JvmField
     val ORES_RAGI_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL)
-    
+
     //    Storage Blocks    //
 
     @JvmField
@@ -142,7 +142,7 @@ object RagiumItemTags {
 
     @JvmField
     val STORAGE_BLOCKS_CHOCOLATE: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CHOCOLATE)
-    
+
     //    Mekanism Integration    //
 
     @JvmField

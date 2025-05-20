@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.data.interaction.HTBreakBlockAction
 import hiiragi283.ragium.api.data.interaction.HTDropItemBlockAction
 import hiiragi283.ragium.api.data.interaction.HTReplaceBlockAction
 import hiiragi283.ragium.api.extension.blockLookup
-import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTOreVariant
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup

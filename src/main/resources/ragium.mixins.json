@@ -3,8 +3,6 @@
   "package": "hiiragi283.ragium.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [],
-  "mixins": [
-    "ItemStackMixin"
-  ],
+  "mixins": [],
   "minVersion": "0.8"
 }

@@ -49,7 +49,7 @@ class HTChargerBlockEntity(pos: BlockPos, state: BlockState) :
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
         itemSlot.dropStack(player)
-        itemSlot.replace(stack, true)
+        itemSlot.replace(stack.copyWithCount(1), true)
         stack.shrink(1)
         return ItemInteractionResult.sidedSuccess(level.isClientSide)
     }

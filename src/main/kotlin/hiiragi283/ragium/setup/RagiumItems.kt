@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.component.HTConsumableData
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
@@ -16,7 +15,6 @@ import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.util.HTArmorSets
 import hiiragi283.ragium.util.HTToolSets
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
@@ -200,13 +198,16 @@ object RagiumItems {
         name: String,
         foodProperties: FoodProperties,
         properties: Item.Properties = Item.Properties(),
-    ): DeferredItem<HTConsumableItem> = register(name, ::HTConsumableItem, properties.food(foodProperties))
+    ): DeferredItem<HTConsumableItem> = register(name, HTConsumableItem.create(), properties.food(foodProperties))
 
     @JvmField
     val ICE_CREAM: DeferredItem<HTConsumableItem> = registerFood("ice_cream", RagiumFoods.ICE_CREAM)
 
     @JvmField
-    val ICE_CREAM_SODA: DeferredItem<HTConsumableItem> = register("ice_cream_soda", factory = ::HTConsumableItem)
+    val ICE_CREAM_SODA: DeferredItem<HTConsumableItem> = register(
+        "ice_cream_soda",
+        HTConsumableItem.create(sound = SoundEvents.GENERIC_DRINK),
+    )
 
     @JvmField
     val CHEESE_INGOT: DeferredItem<HTConsumableItem> = registerFood("${RagiumConstantValues.CHEESE}_ingot", Foods.APPLE)
@@ -239,7 +240,11 @@ object RagiumItems {
     val RAGI_CHERRY: DeferredItem<HTConsumableItem> = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
 
     @JvmField
-    val RAGI_CHERRY_JAM: DeferredItem<HTConsumableItem> = registerFood("ragi_cherry_jam", RagiumFoods.RAGI_CHERRY_JAM)
+    val RAGI_CHERRY_JAM: DeferredItem<HTConsumableItem> = register(
+        "ragi_cherry_jam",
+        HTConsumableItem.create(sound = SoundEvents.HONEY_DRINK),
+        Item.Properties().food(RagiumFoods.RAGI_CHERRY_JAM),
+    )
 
     @JvmField
     val FEVER_CHERRY: DeferredItem<HTConsumableItem> = registerFood(
@@ -266,7 +271,8 @@ object RagiumItems {
     )
 
     @JvmField
-    val AMBROSIA: DeferredItem<HTConsumableItem> = registerFood("ambrosia", RagiumFoods.AMBROSIA, Item.Properties().rarity(Rarity.EPIC))
+    val AMBROSIA: DeferredItem<HTConsumableItem> =
+        registerFood("ambrosia", RagiumFoods.AMBROSIA, Item.Properties().rarity(Rarity.EPIC))
 
     //    Molds    //
 
@@ -328,13 +334,6 @@ object RagiumItems {
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
-        event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumComponentTypes.CONSUMABLE.get(), HTConsumableData(sound = SoundEvents.GENERIC_DRINK))
-        }
-        event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumComponentTypes.CONSUMABLE.get(), HTConsumableData(sound = SoundEvents.HONEY_DRINK))
-        }
-
         LOGGER.info("Modified default item components!")
     }
 }

@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTItemRegister
-import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.TagKey

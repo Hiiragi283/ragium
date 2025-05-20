@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.util
 
 import hiiragi283.ragium.api.extension.vanillaId
 import net.minecraft.resources.ResourceLocation

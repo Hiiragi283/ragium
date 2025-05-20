@@ -5,7 +5,6 @@ import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.component.HTConsumableData
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -65,8 +64,6 @@ interface RagiumAPI {
     //    Component    //
 
     fun getActiveComponent(): DataComponentType<Boolean>
-
-    fun getConsumeComponent(): DataComponentType<HTConsumableData>
 
     //    Item    //
 

@@ -7,7 +7,6 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddonCollector
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.component.HTConsumableData
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -75,8 +74,6 @@ class InternalRagiumAPI : RagiumAPI {
     //    Component    //
 
     override fun getActiveComponent(): DataComponentType<Boolean> = RagiumComponentTypes.IS_ACTIVE.get()
-
-    override fun getConsumeComponent(): DataComponentType<HTConsumableData> = RagiumComponentTypes.CONSUMABLE.get()
 
     //    Item    //
 

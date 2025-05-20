@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.component.HTConsumableData
 import net.minecraft.core.GlobalPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
@@ -26,10 +25,6 @@ object RagiumComponentTypes {
     ): Supplier<DataComponentType<T>> = REGISTER.registerComponentType<T>(name) { builder: DataComponentType.Builder<T> ->
         builder.persistent(codec).networkSynchronized(streamCodec)
     }
-
-    @JvmField
-    val CONSUMABLE: Supplier<DataComponentType<HTConsumableData>> =
-        register("consumable", HTConsumableData.CODEC, HTConsumableData.STREAM_CODEC)
 
     @JvmField
     val FLUID_CONTENT: Supplier<DataComponentType<SimpleFluidContent>> =

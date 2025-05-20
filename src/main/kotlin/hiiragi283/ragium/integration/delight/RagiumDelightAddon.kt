@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.neoforged.api.distmarker.Dist
@@ -31,11 +30,11 @@ object RagiumDelightAddon : RagiumAddon {
 
     @JvmField
     val RAGI_CHERRY_PULP: DeferredItem<HTConsumableItem> =
-        registerConsumable("ragi_cherry_pulp", RagiumFoods.RAGI_CHERRY_PULP)
-
-    @JvmStatic
-    private fun registerConsumable(name: String, food: FoodProperties): DeferredItem<HTConsumableItem> =
-        ITEM_REGISTER.registerItem(name, ::HTConsumableItem, Item.Properties().food(food))
+        ITEM_REGISTER.registerItem(
+            "ragi_cherry_pulp",
+            HTConsumableItem.create(),
+            Item.Properties().food(RagiumFoods.RAGI_CHERRY_PULP),
+        )
 
     //    RagiumAddon    //
 

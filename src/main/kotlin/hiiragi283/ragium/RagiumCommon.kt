@@ -73,7 +73,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerRegistries(event: NewRegistryEvent) {
-        event.register(RagiumRegistries.CONSUME_EFFECT_TYPE)
         event.register(RagiumRegistries.BLOCK_ACTION_SERIALIZERS)
 
         LOGGER.info("Registered new registries!")

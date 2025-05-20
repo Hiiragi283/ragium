@@ -1,13 +1,12 @@
 package hiiragi283.ragium.api.item
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.component.HTConsumableData
-import hiiragi283.ragium.api.component.HTConsumeEffect
 import hiiragi283.ragium.api.extension.asPlayer
 import hiiragi283.ragium.api.extension.dropStackAt
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.stats.Stats
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
@@ -15,18 +14,29 @@ import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 
-open class HTConsumableItem(properties: Properties) : Item(properties) {
-    protected fun getConsumeData(stack: ItemStack): HTConsumableData? = stack.get(RagiumAPI.getInstance().getConsumeComponent())
+open class HTConsumableItem(
+    val consumeSeconds: Int,
+    val animation: UseAnim,
+    val sound: SoundEvent,
+    properties: Properties,
+) : Item(properties) {
+    companion object {
+        @JvmStatic
+        fun create(
+            consumeSeconds: Int = 32,
+            animation: UseAnim = UseAnim.EAT,
+            sound: SoundEvent = SoundEvents.GENERIC_EAT,
+        ): (Properties) -> HTConsumableItem = { prop: Properties -> HTConsumableItem(consumeSeconds, animation, sound, prop) }
+    }
 
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
         // サーバー側で固有の挙動を起こす
         if (!level.isClientSide) {
-            getConsumeData(stack)
-                ?.consumeEffects
-                ?.forEach { effect: HTConsumeEffect -> effect.apply(level, stack, livingEntity) }
+            onConsume(stack, level, livingEntity)
         }
         val remainder: ItemStack = stack.craftingRemainingItem
         // 食べ物のをプロパティを持っている場合はデフォルトの処理を行う
@@ -51,8 +61,15 @@ open class HTConsumableItem(properties: Properties) : Item(properties) {
         }
     }
 
-    override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int =
-        getConsumeData(stack)?.consumeSeconds ?: super.getUseDuration(stack, entity)
+    open fun onConsume(stack: ItemStack, level: Level, livingEntity: LivingEntity) {}
+
+    override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int = consumeSeconds
+
+    override fun getUseAnimation(stack: ItemStack): UseAnim = animation
+
+    override fun getDrinkingSound(): SoundEvent = sound
+
+    override fun getEatingSound(): SoundEvent = sound
 
     override fun appendHoverText(
         stack: ItemStack,
