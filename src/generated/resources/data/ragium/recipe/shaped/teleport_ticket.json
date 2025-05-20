@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:gems/warped_crystal"
+    },
+    "B": {
+      "tag": "c:dyes/light_blue"
+    },
+    "C": {
+      "item": "ragium:blank_ticket"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:teleport_ticket"
+  }
+}

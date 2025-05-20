@@ -126,6 +126,10 @@ object RagiumMaterialFamilies {
         HTMaterialFamily.Builder
             .ingot(RagiumItemTags.INGOTS_RAGI_ALLOY, RagiumItems.RAGI_ALLOY_INGOT)
             .setEntry(
+                HTMaterialFamily.Variant.NUGGETS,
+                RagiumItemTags.NUGGETS_RAGI_ALLOY,
+                RagiumItems.RAGI_ALLOY_NUGGET,
+            ).setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
                 RagiumItemTags.STORAGE_BLOCKS_RAGI_ALLOY,
                 RagiumBlocks.RAGI_ALLOY_BLOCK,
@@ -136,6 +140,10 @@ object RagiumMaterialFamilies {
         HTMaterialFamily.Builder
             .ingot(RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY, RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
             .setEntry(
+                HTMaterialFamily.Variant.NUGGETS,
+                RagiumItemTags.NUGGETS_ADVANCED_RAGI_ALLOY,
+                RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET,
+            ).setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
                 RagiumItemTags.STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY,
                 RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK,
@@ -146,6 +154,10 @@ object RagiumMaterialFamilies {
         HTMaterialFamily.Builder
             .ingot(RagiumItemTags.INGOTS_AZURE_STEEL, RagiumItems.AZURE_STEEL_INGOT)
             .setEntry(
+                HTMaterialFamily.Variant.NUGGETS,
+                RagiumItemTags.NUGGETS_AZURE_STEEL,
+                RagiumItems.AZURE_STEEL_NUGGET,
+            ).setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
                 RagiumItemTags.STORAGE_BLOCKS_AZURE_STEEL,
                 RagiumBlocks.AZURE_STEEL_BLOCK,

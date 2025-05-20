@@ -130,6 +130,16 @@ object RagiumItems {
     @JvmField
     val DEEP_STEEL_INGOT: DeferredItem<Item> = register("${RagiumConstantValues.DEEP_STEEL}_ingot")
 
+    // Nuggets
+    @JvmField
+    val RAGI_ALLOY_NUGGET: DeferredItem<Item> = register("${RagiumConstantValues.RAGI_ALLOY}_nugget")
+
+    @JvmField
+    val ADVANCED_RAGI_ALLOY_NUGGET: DeferredItem<Item> = register("${RagiumConstantValues.ADVANCED_RAGI_ALLOY}_nugget")
+
+    @JvmField
+    val AZURE_STEEL_NUGGET: DeferredItem<Item> = register("${RagiumConstantValues.AZURE_STEEL}_nugget")
+
     // Dusts
     @JvmField
     val SAWDUST: DeferredItem<Item> = register("sawdust")

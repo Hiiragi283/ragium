@@ -105,6 +105,17 @@ object RagiumItemTags {
     @JvmField
     val MOLDS_WIRE: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "wire")
 
+    //    Nuggets    //
+
+    @JvmField
+    val NUGGETS_RAGI_ALLOY: TagKey<Item> = commonTag(RagiumConstantValues.NUGGETS, RagiumConstantValues.RAGI_ALLOY)
+
+    @JvmField
+    val NUGGETS_ADVANCED_RAGI_ALLOY: TagKey<Item> = commonTag(RagiumConstantValues.NUGGETS, RagiumConstantValues.ADVANCED_RAGI_ALLOY)
+
+    @JvmField
+    val NUGGETS_AZURE_STEEL: TagKey<Item> = commonTag(RagiumConstantValues.NUGGETS, RagiumConstantValues.AZURE_STEEL)
+
     //    Ores    //
 
     @JvmField

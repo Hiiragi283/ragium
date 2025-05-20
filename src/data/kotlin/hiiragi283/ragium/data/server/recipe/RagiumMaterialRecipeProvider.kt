@@ -192,5 +192,19 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
                 .addIngredient(block.tagKey)
                 .saveSuffixed(output, "_from_block")
         }
+
+        val nugget: HTMaterialFamily.Entry? = family[HTMaterialFamily.Variant.NUGGETS]
+        if (nugget != null) {
+            // Nugget -> Base
+            HTShapedRecipeBuilder(baseEntry)
+                .hollow8()
+                .define('A', nugget.tagKey)
+                .define('B', nugget)
+                .saveSuffixed(output, "_from_nugget")
+            // Base -> Nugget
+            HTShapelessRecipeBuilder(nugget, 9)
+                .addIngredient(baseEntry.tagKey)
+                .saveSuffixed(output, "_from_base")
+        }
     }
 }

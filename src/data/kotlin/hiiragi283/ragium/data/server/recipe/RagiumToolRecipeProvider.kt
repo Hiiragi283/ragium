@@ -129,7 +129,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.DYES_GREEN)
             .define('C', RagiumItems.BLANK_TICKET)
             .save(output)
-
+        // Teleport
+        HTShapedRecipeBuilder(RagiumItems.TELEPORT_TICKET)
+            .cross8()
+            .define('A', RagiumItemTags.GEMS_WARPED_CRYSTAL)
+            .define('B', Tags.Items.DYES_LIGHT_BLUE)
+            .define('C', RagiumItems.BLANK_TICKET)
+            .save(output)
         // Eternal
         HTShapelessRecipeBuilder(RagiumItems.ETERNAL_TICKET)
             .addIngredient(RagiumItems.BLANK_TICKET)

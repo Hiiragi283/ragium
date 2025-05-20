@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:nuggets/advanced_ragi_alloy"
+    },
+    "B": {
+      "item": "ragium:advanced_ragi_alloy_nugget"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_ragi_alloy_ingot"
+  }
+}

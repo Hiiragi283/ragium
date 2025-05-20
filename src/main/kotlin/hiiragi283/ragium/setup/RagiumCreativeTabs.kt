@@ -74,12 +74,15 @@ object RagiumCreativeTabs {
             // Ingots
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
             add(RagiumItems.RAGI_ALLOY_INGOT)
+            add(RagiumItems.RAGI_ALLOY_NUGGET)
 
             add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
+            add(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
 
             add(RagiumItems.AZURE_STEEL_COMPOUND)
             add(RagiumItems.AZURE_STEEL_INGOT)
+            add(RagiumItems.AZURE_STEEL_NUGGET)
 
             add(RagiumItems.DEEP_STEEL_INGOT)
             // Dusts

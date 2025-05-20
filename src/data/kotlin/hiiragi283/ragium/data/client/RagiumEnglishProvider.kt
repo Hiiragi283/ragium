@@ -202,10 +202,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         addItem(RagiumItems.RAGI_ALLOY_INGOT, "Ragi-Alloy Ingot")
+        addItem(RagiumItems.RAGI_ALLOY_NUGGET, "Ragi-Alloy Nugget")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND, "Advanced Ragi-Alloy Compound")
         addItem(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT, "Advanced Ragi-Alloy Ingot")
+        addItem(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET, "Advanced Ragi-Alloy Nugget")
         addItem(RagiumItems.AZURE_STEEL_COMPOUND, "Azure Steel Compound")
         addItem(RagiumItems.AZURE_STEEL_INGOT, "Azure Steel Ingot")
+        addItem(RagiumItems.AZURE_STEEL_NUGGET, "Azure Steel Nugget")
         addItem(RagiumItems.DEEP_STEEL_INGOT, "Deep Steel Ingot")
         addItem(RagiumItems.CHEESE_INGOT, "Cheese Ingot")
         addItem(RagiumItems.CHOCOLATE_INGOT, "Chocolate Ingot")

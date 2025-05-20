@@ -44,6 +44,7 @@ object RagiumConstantValues {
     const val GLASS_BLOCKS = "glass_blocks"
     const val INGOTS = "ingots"
     const val MOLDS = "molds"
+    const val NUGGETS = "nuggets"
     const val ORES = "ores"
     const val STORAGE_BLOCKS = "storage_blocks"
 }
