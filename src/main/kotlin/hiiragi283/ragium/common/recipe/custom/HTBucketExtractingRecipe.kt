@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.material.Fluids
+import net.neoforged.neoforge.fluids.FluidStack
 
 object HTBucketExtractingRecipe : HTMachineRecipe() {
     override fun matches(input: HTMachineInput): Boolean = input.getItemStack(HTStorageIO.INPUT, 0).item is BucketItem
@@ -28,7 +29,7 @@ object HTBucketExtractingRecipe : HTMachineRecipe() {
         // Fluid Output
         if (bucketItem.content == Fluids.EMPTY) return false
         val outputTank: HTFluidTank = input.getTankOrNull(HTStorageIO.OUTPUT, 0) ?: return false
-        if (!outputTank.canInsert(bucketItem.content, 1000)) return false
+        if (!outputTank.canInsert(FluidStack(bucketItem.content, 1000))) return false
         // Item input
         return inputSlot.canExtract(1)
     }

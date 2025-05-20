@@ -13,10 +13,20 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 class HTFluidTankImpl(
     private val nbtKey: String,
     private val baseCapacity: Int,
-    validator: (HTFluidVariant) -> Boolean,
-    callback: () -> Unit,
-) : HTFluidTank(validator, callback) {
+    private val validator: (HTFluidVariant) -> Boolean,
+    private val callback: () -> Unit,
+) : HTFluidTank() {
     override var capacity: Int = baseCapacity
+
+    override fun canInsert(variant: HTFluidVariant): Boolean = true
+
+    override fun canExtract(variant: HTFluidVariant): Boolean = true
+
+    override fun isValid(variant: HTFluidVariant): Boolean = validator(variant)
+
+    override fun onContentsChanged() {
+        callback()
+    }
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         val level: Int = newEnchantments.getHighestLevel(RagiumEnchantmentTags.CAPACITY) + 1

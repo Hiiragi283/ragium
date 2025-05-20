@@ -8,6 +8,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -32,4 +33,6 @@ class HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid>(
     fun getBlock(): Block = blockHolder.get()
 
     fun getBucket(): Item = bucketHolder.get()
+
+    fun toStack(amount: Int): FluidStack = FluidStack(stillHolder, amount)
 }

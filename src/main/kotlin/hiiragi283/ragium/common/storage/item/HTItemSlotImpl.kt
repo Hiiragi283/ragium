@@ -17,14 +17,19 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 class HTItemSlotImpl(
     private val nbtKey: String,
     private val baseCapacity: Int,
-    validator: (HTItemVariant) -> Boolean,
-    callback: () -> Unit,
-) : HTItemSlot(validator, callback) {
+    private val validator: (HTItemVariant) -> Boolean,
+    private val callback: () -> Unit,
+) : HTItemSlot() {
     override var capacity: Int = baseCapacity
 
-    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
-        val level: Int = newEnchantments.getHighestLevel(RagiumEnchantmentTags.CAPACITY) + 1
-        capacity = level * baseCapacity
+    override fun canInsert(variant: HTItemVariant): Boolean = true
+
+    override fun canExtract(variant: HTItemVariant): Boolean = true
+
+    override fun isValid(variant: HTItemVariant): Boolean = validator(variant)
+
+    override fun onContentsChanged() {
+        callback()
     }
 
     override fun createContainerSlot(x: Int, y: Int, storageIO: HTStorageIO): Slot = HTContainerItemSlot(
@@ -33,6 +38,11 @@ class HTItemSlotImpl(
         HTSlotPos.getSlotPosX(x),
         HTSlotPos.getSlotPosY(y),
     )
+
+    override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
+        val level: Int = newEnchantments.getHighestLevel(RagiumEnchantmentTags.CAPACITY) + 1
+        capacity = level * baseCapacity
+    }
 
     override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         nbt.put(

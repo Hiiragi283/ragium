@@ -59,8 +59,8 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // それぞれのExp Orbに対して回収を行う
         for (entity: ExperienceOrb in expOrbs) {
             val fluidAmount: Int = entity.value * 20
-            if (outputTank.canInsert(RagiumFluidContents.EXPERIENCE.get(), fluidAmount)) {
-                outputTank.insert(RagiumFluidContents.EXPERIENCE.get(), fluidAmount, false)
+            if (outputTank.canInsert(RagiumFluidContents.EXPERIENCE.toStack(fluidAmount))) {
+                outputTank.insert(RagiumFluidContents.EXPERIENCE.toStack(fluidAmount), false)
                 entity.discard()
             }
         }
