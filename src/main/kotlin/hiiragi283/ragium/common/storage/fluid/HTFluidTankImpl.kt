@@ -10,7 +10,7 @@ import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.world.item.enchantment.ItemEnchantments
 
-class HTFluidTankImpl(
+open class HTFluidTankImpl(
     private val nbtKey: String,
     private val baseCapacity: Int,
     private val validator: (HTFluidVariant) -> Boolean,
@@ -18,13 +18,9 @@ class HTFluidTankImpl(
 ) : HTFluidTank() {
     override var capacity: Int = baseCapacity
 
-    override fun canInsert(variant: HTFluidVariant): Boolean = true
+    final override fun isValid(variant: HTFluidVariant): Boolean = validator(variant)
 
-    override fun canExtract(variant: HTFluidVariant): Boolean = true
-
-    override fun isValid(variant: HTFluidVariant): Boolean = validator(variant)
-
-    override fun onContentsChanged() {
+    final override fun onContentsChanged() {
         callback()
     }
 
@@ -33,7 +29,7 @@ class HTFluidTankImpl(
         capacity = level * baseCapacity
     }
 
-    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+    final override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         nbt.put(
             nbtKey,
             buildNbt {
@@ -45,7 +41,7 @@ class HTFluidTankImpl(
         )
     }
 
-    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+    final override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         val nbtIn: CompoundTag = nbt.getCompound(nbtKey)
         HTFluidVariant.CODEC
             .parse(registryOps, nbtIn.get("fluid"))

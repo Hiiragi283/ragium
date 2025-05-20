@@ -12,10 +12,6 @@ abstract class HTSingleVariantStorage<T : HTVariant<*>> {
 
     protected abstract fun getEmptyVariant(): T
 
-    abstract fun canInsert(variant: T): Boolean
-
-    abstract fun canExtract(variant: T): Boolean
-
     abstract fun isValid(variant: T): Boolean
 
     abstract fun onContentsChanged()
@@ -23,7 +19,6 @@ abstract class HTSingleVariantStorage<T : HTVariant<*>> {
     fun insert(resource: T, maxAmount: Int, simulate: Boolean): Int {
         if (resource.isEmpty) return 0
         if (maxAmount <= 0) return 0
-        if (!canInsert(resource)) return 0
 
         if (resource == this.resource || this.resource.isEmpty) {
             if (isValid(resource)) {
@@ -48,7 +43,6 @@ abstract class HTSingleVariantStorage<T : HTVariant<*>> {
     fun extract(resource: T, maxAmount: Int, simulate: Boolean): Int {
         if (resource.isEmpty) return 0
         if (maxAmount <= 0) return 0
-        if (!canExtract(resource)) return 0
 
         if (resource == this.resource && isValid(resource)) {
             val extracted: Int = min(maxAmount, amount)

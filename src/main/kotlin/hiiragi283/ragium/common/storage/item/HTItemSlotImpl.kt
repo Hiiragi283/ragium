@@ -14,7 +14,7 @@ import net.minecraft.resources.RegistryOps
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.enchantment.ItemEnchantments
 
-class HTItemSlotImpl(
+open class HTItemSlotImpl(
     private val nbtKey: String,
     private val baseCapacity: Int,
     private val validator: (HTItemVariant) -> Boolean,
@@ -22,13 +22,9 @@ class HTItemSlotImpl(
 ) : HTItemSlot() {
     override var capacity: Int = baseCapacity
 
-    override fun canInsert(variant: HTItemVariant): Boolean = true
+    final override fun isValid(variant: HTItemVariant): Boolean = validator(variant)
 
-    override fun canExtract(variant: HTItemVariant): Boolean = true
-
-    override fun isValid(variant: HTItemVariant): Boolean = validator(variant)
-
-    override fun onContentsChanged() {
+    final override fun onContentsChanged() {
         callback()
     }
 
@@ -44,7 +40,7 @@ class HTItemSlotImpl(
         capacity = level * baseCapacity
     }
 
-    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+    final override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         nbt.put(
             nbtKey,
             buildNbt {
@@ -56,7 +52,7 @@ class HTItemSlotImpl(
         )
     }
 
-    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+    final override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
         val nbtIn: CompoundTag = nbt.getCompound(nbtKey)
         HTItemVariant.CODEC
             .parse(registryOps, nbtIn.get("item"))

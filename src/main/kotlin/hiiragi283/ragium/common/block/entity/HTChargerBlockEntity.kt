@@ -110,7 +110,19 @@ class HTChargerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Item    //
 
-    override fun getItemIoFromSlot(slot: Int): HTStorageIO = HTStorageIO.EMPTY
+    override fun getItemIoFromSlot(slot: Int): HTStorageIO {
+        if (itemSlot.resource.isEmpty) {
+            return HTStorageIO.INPUT
+        } else {
+            val stack: ItemStack = itemSlot.stack
+            val energyStorage: IEnergyStorage =
+                stack.getCapability(Capabilities.EnergyStorage.ITEM) ?: return HTStorageIO.EMPTY
+            return when (energyStorage.energyStored) {
+                energyStorage.maxEnergyStored -> HTStorageIO.OUTPUT
+                else -> HTStorageIO.EMPTY
+            }
+        }
+    }
 
     override fun getItemSlot(slot: Int): HTItemSlot = itemSlot
 
