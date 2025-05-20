@@ -17,8 +17,8 @@ import hiiragi283.ragium.common.block.HTSoulSpikeBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeSlabBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
-import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.HTOreSets
+import hiiragi283.ragium.common.util.HTBuildingBlockSets
+import hiiragi283.ragium.common.util.HTOreSets
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block

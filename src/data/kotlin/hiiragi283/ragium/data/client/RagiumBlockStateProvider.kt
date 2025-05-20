@@ -12,8 +12,8 @@ import hiiragi283.ragium.api.extension.simpleAltBlock
 import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.slabBlock
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -68,7 +68,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)
 
-        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+        for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
             sets.addBlockStates(this)
         }
 

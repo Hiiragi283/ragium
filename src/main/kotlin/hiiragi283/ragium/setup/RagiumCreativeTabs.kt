@@ -2,7 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.util.HTBuildingBlockSets
+import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component

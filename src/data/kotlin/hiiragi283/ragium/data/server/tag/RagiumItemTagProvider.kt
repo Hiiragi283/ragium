@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.data.HTItemTagProvider
 import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -14,7 +15,6 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.HTBuildingBlockSets
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.Holder
@@ -229,7 +229,7 @@ class RagiumItemTagProvider(
 
     @Suppress("DEPRECATION")
     private fun category() {
-        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+        for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
             sets.appendItemTags(this)
         }
 

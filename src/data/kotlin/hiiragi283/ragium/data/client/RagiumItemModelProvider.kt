@@ -7,13 +7,13 @@ import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -40,7 +40,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)
 
-        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+        for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
             sets.addItemModels(this)
         }
 

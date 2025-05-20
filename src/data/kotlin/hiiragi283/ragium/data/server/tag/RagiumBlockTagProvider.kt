@@ -1,9 +1,9 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.data.HTTagProvider
+import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.HTBuildingBlockSets
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -45,7 +45,7 @@ class RagiumBlockTagProvider(
             add(BlockTags.MINEABLE_WITH_PICKAXE, block)
         }
 
-        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
+        for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
             sets.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
         }
 

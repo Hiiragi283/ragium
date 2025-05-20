@@ -14,8 +14,8 @@ import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
-import hiiragi283.ragium.util.HTArmorSets
-import hiiragi283.ragium.util.HTToolSets
+import hiiragi283.ragium.common.util.HTArmorSets
+import hiiragi283.ragium.common.util.HTToolSets
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties

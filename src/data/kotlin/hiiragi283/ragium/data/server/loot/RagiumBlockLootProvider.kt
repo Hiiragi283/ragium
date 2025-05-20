@@ -2,11 +2,11 @@ package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.extension.enchLookup
+import hiiragi283.ragium.api.registry.HTBlockSet
+import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.HTOreSets
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -71,7 +71,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         // Ore
-        fun registerOres(oreSets: HTOreSets, drop: ItemLike) {
+        fun registerOres(oreSets: HTBlockSet, drop: ItemLike) {
             for (ore: DeferredBlock<*> in oreSets.blockHolders) {
                 add(ore.get()) { block: Block ->
                     createSilkTouchDispatchTable(
