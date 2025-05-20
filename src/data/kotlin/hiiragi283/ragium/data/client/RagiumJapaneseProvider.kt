@@ -122,6 +122,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.INFUSER, "注入機")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         // Device
+        addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.CHARGER, "チャージャー")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")

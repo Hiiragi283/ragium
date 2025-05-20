@@ -44,54 +44,62 @@ object RagiumCreativeTabs {
         ) { provider: HolderLookup.Provider ->
             // Fluid Buckets
             addAll(RagiumFluidContents.REGISTER.itemEntries)
-            // Tickets
-            add(RagiumItems.BLANK_TICKET)
-
-            add(RagiumItems.RAGI_TICKET)
-            add(RagiumItems.AZURE_TICKET)
-            add(RagiumItems.DEEP_TICKET)
-            add(RagiumItems.TELEPORT_TICKET)
-            add(RagiumItems.ETERNAL_TICKET)
-            // Material Blocks
-            addAll(RagiumBlocks.RAGINITE_ORES.getItems())
-            addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
-
+            // Natural Resources
             add(RagiumBlocks.ASH_LOG)
             add(RagiumBlocks.SILT)
             add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
-
-            addAll(RagiumBlocks.STORAGE_BLOCKS)
-            // Material Items
-            add(RagiumItems.RAGI_COKE)
-            add(RagiumItems.AZURE_SHARD)
-
-            add(RagiumItems.COMPRESSED_SAWDUST)
-            add(RagiumItems.TAR)
             // Gems
+            addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
+            add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
             add(RagiumItems.RAGI_CRYSTAL)
+
+            add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
             add(RagiumItems.CRIMSON_CRYSTAL)
+
+            add(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
             add(RagiumItems.WARPED_CRYSTAL)
             // Ingots
+            add(RagiumBlocks.RAGI_ALLOY_BLOCK)
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
             add(RagiumItems.RAGI_ALLOY_INGOT)
             add(RagiumItems.RAGI_ALLOY_NUGGET)
-
+            add(RagiumItems.RAGI_ALLOY_HAMMER)
+            
+            add(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
 
+            add(RagiumBlocks.AZURE_STEEL_BLOCK)
             add(RagiumItems.AZURE_STEEL_COMPOUND)
             add(RagiumItems.AZURE_STEEL_INGOT)
             add(RagiumItems.AZURE_STEEL_NUGGET)
+            add(RagiumItems.AZURE_SHARD)
+            addAll(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
+            addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
 
+            add(RagiumBlocks.DEEP_STEEL_BLOCK)
             add(RagiumItems.DEEP_STEEL_INGOT)
+
+            add(RagiumBlocks.CHEESE_BLOCK)
+            add(RagiumItems.CHEESE_INGOT)
+
+            add(RagiumBlocks.CHOCOLATE_BLOCK)
+            add(RagiumItems.CHOCOLATE_INGOT)
             // Dusts
-            add(RagiumItems.SAWDUST)
-            add(RagiumItems.ASH_DUST)
+            addAll(RagiumBlocks.RAGINITE_ORES.getItems())
             add(RagiumItems.RAGINITE_DUST)
+            add(RagiumItems.RAGI_COKE)
+
+            add(RagiumItems.SAWDUST)
+            add(RagiumItems.COMPRESSED_SAWDUST)
+
+            add(RagiumItems.ASH_DUST)
             add(RagiumItems.OBSIDIAN_DUST)
             add(RagiumItems.SALTPETER_DUST)
             add(RagiumItems.SULFUR_DUST)
+
+            add(RagiumItems.TAR)
             // Decorations
             RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems).forEach(::addAll)
 
@@ -102,12 +110,7 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.MACHINES)
             addAll(RagiumBlocks.DEVICES)
             addAll(RagiumBlocks.DRUMS)
-            // Armors
-            addAll(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
             // Tools
-            add(RagiumItems.RAGI_ALLOY_HAMMER)
-            addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
-
             add(RagiumItems.ENDER_BUNDLE)
             add(RagiumItems.ITEM_MAGNET)
             add(RagiumItems.EXP_MAGNET)
@@ -116,6 +119,14 @@ object RagiumCreativeTabs {
             add(RagiumItems.RAGI_LANTERN)
 
             addAll(RagiumItems.Molds.entries)
+            // Tickets
+            add(RagiumItems.BLANK_TICKET)
+
+            add(RagiumItems.RAGI_TICKET)
+            add(RagiumItems.AZURE_TICKET)
+            add(RagiumItems.DEEP_TICKET)
+            add(RagiumItems.TELEPORT_TICKET)
+            add(RagiumItems.ETERNAL_TICKET)
             // Foods
             add(RagiumItems.ICE_CREAM)
             add(RagiumItems.ICE_CREAM_SODA)

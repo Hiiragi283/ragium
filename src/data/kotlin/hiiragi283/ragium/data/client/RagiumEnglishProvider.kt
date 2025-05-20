@@ -119,6 +119,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.INFUSER, "Infuser")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         // Device
+        addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.CHARGER, "Charger")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")

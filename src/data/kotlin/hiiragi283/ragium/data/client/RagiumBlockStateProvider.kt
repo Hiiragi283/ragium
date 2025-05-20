@@ -49,6 +49,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
             add(RagiumBlocks.DEVICE_CASING)
 
+            add(RagiumBlocks.CEU)
             add(RagiumBlocks.ENI)
             add(RagiumBlocks.EXP_COLLECTOR)
             add(RagiumBlocks.ITEM_COLLECTOR)

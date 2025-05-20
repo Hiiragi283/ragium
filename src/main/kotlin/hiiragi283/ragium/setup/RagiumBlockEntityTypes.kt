@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTChargerBlockEntity
+import hiiragi283.ragium.common.block.entity.HTCreativeEnergyUnitBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTSprinklerBlockEntity
@@ -75,6 +76,12 @@ object RagiumBlockEntityTypes {
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
 
     //    Device    //
+
+    @JvmField
+    val CEU: HTDeferredBlockEntityType<HTCreativeEnergyUnitBlockEntity> = REGISTER.registerType(
+        "creative_energy_unit",
+        ::HTCreativeEnergyUnitBlockEntity,
+    )
 
     @JvmField
     val CHARGER: HTDeferredBlockEntityType<HTChargerBlockEntity> = registerTick("charger", ::HTChargerBlockEntity)
@@ -162,6 +169,8 @@ object RagiumBlockEntityTypes {
         add(SPRINKLER, RagiumBlocks.SPRINKLER)
         add(WATER_COLLECTOR, RagiumBlocks.WATER_COLLECTOR)
 
+        add(CEU, RagiumBlocks.CEU)
+
         add(SMALL_DRUM, RagiumBlocks.SMALL_DRUM)
         add(MEDIUM_DRUM, RagiumBlocks.MEDIUM_DRUM)
         add(LARGE_DRUM, RagiumBlocks.LARGE_DRUM)
@@ -207,6 +216,8 @@ object RagiumBlockEntityTypes {
         registerHandlers(MILK_DRAIN)
         registerHandlers(SPRINKLER)
         registerHandlers(WATER_COLLECTOR)
+
+        registerHandlers(CEU)
 
         registerHandlers(SMALL_DRUM)
         registerHandlers(MEDIUM_DRUM)

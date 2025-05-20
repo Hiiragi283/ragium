@@ -16,6 +16,8 @@ import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
+import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponents
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
@@ -372,6 +374,11 @@ object RagiumItems {
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        // Creative Item
+        event.modify(RagiumBlocks.CEU) { builder: DataComponentPatch.Builder ->
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
+        }
+
         LOGGER.info("Modified default item components!")
     }
 }

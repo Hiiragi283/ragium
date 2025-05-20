@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.item.HTMagnetItem
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 
@@ -9,7 +10,7 @@ class HTSimpleMagnetItem(properties: Properties) : HTMagnetItem<ItemEntity>(prop
 
     override fun forEachEntity(entity: ItemEntity, player: Player) {
         // IEのコンベヤ上にいるアイテムは無視する
-        if (entity.persistentData.getBoolean("PreventRemoteMovement")) return
+        if (entity.persistentData.getBoolean(RagiumConstantValues.PREVENT_ITEM_MAGNET)) return
         if (entity.isAlive && !entity.hasPickUpDelay()) {
             entity.playerTouch(player)
         }

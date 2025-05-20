@@ -446,6 +446,10 @@ object RagiumBlocks {
     @JvmField
     val TELEPORT_ANCHOR: DeferredBlock<Block> = register("teleport_anchor", heavyMetal())
 
+    // Creative
+    @JvmField
+    val CEU: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.CEU)
+
     @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
         MILK_DRAIN,
@@ -458,6 +462,7 @@ object RagiumBlocks {
         TELEPORT_ANCHOR,
         SPRINKLER,
         WATER_COLLECTOR,
+        CEU,
         // 無彩色
         ENI,
     )

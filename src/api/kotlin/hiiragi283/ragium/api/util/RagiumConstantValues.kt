@@ -27,6 +27,8 @@ object RagiumConstantValues {
     const val INPUT_TANK = "input_tank"
     const val OUTPUT_TANK = "output_tank"
 
+    const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
+
     //    Recipes    //
 
     const val BEE_HIVE = "bee_hive"
