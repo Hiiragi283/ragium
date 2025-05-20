@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.data.interaction.HTReplaceBlockAction
 import hiiragi283.ragium.api.extension.blockLookup
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.util.HTOreVariant
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -88,14 +87,14 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             Ingredient.of(RagiumItems.RAGI_TICKET),
             null,
             HTBreakBlockAction(false),
-            HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES[HTOreVariant.OVERWORLD].get()),
+            HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES.stoneOre.get()),
         )
         register(
             Blocks.DEEPSLATE_REDSTONE_ORE,
             Ingredient.of(RagiumItems.RAGI_TICKET),
             null,
             HTBreakBlockAction(false),
-            HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES[HTOreVariant.DEEPSLATE].get()),
+            HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES.deepOre.get()),
         )
         register(
             Blocks.LANTERN,
