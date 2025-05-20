@@ -24,19 +24,28 @@
 
 - [CTM](https://www.curseforge.com/minecraft/mc-mods/ctm)
   - Supports connected textures for some blocks
+- [Curios](https://modrinth.com/mod/curios)
+  - Supports curio for some utility items
 - [EMI](https://modrinth.com/mod/emi)
   - Adds new categories and information
 - [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions)
   - Adds descriptions for new enchantments
+- [Farmer's Delight](https://modrinth.com/mod/farmers-delight)
+  - Adds new foods and ingredients
 - [Jade 🔍](https://modrinth.com/mod/jade)
   - Adds new information providers
 - [Mekanism](https://modrinth.com/mod/mekanism)
-  - Adds new chemicals
-  - Adds new recipes
+  - Add new chemicals, ingredients, and recipes
+- [PneumaticCraft: Repressurized](https://modrinth.com/mod/pneumaticcraft-repressurized)
+  - Adds compat tags for some items
 
 ## Features
 
+- No world generation for new resources
+- Basic tech machines (Crusher, Extractor, Refinery, ...) but work with wireless energy network!
+- Some utility Items
 
+## Images
 
 ## License
 
