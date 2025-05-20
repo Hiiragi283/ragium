@@ -72,6 +72,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.RAGI_CRYSTAL_BLOCK, "Block of Ragi-Crystal")
         addBlock(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK, "Block of Crimson Crystal")
         addBlock(RagiumBlocks.WARPED_CRYSTAL_BLOCK, "Block of Warped Crystal")
+        addBlock(RagiumBlocks.ELDRITCH_PEARL_BLOCK, "Block of Eldritch Pearl")
 
         addBlock(RagiumBlocks.RAGI_ALLOY_BLOCK, "Block of Ragi-Alloy")
         addBlock(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK, "Block of Advanced Ragi-Alloy")
@@ -203,6 +204,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_CRYSTAL, "Ragi-Crystal")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
+        addItem(RagiumItems.ELDRITCH_PEARL, "Eldritch Pearl")
 
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         addItem(RagiumItems.RAGI_ALLOY_INGOT, "Ragi-Alloy Ingot")
@@ -462,6 +464,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "Quartz Glass")
 
         add(RagiumItemTags.DYNAMITES, "Dynamite")
+        add(RagiumItemTags.ELDRITCH_PEARL_BINDER, "Eldritch Pearl Binder")
         add(RagiumItemTags.LED_BLOCKS, "LED Block")
 
         add(RagiumItemTags.DIRT_SOILS, "Dirt Soil")

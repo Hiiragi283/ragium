@@ -15,12 +15,6 @@ import net.neoforged.neoforge.common.Tags
 object RagiumMaterialRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Ragi-Alloy
-        /*HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
-            .hollow8()
-            .define('A', RagiumItemTags.RAW_MATERIALS_RAGINITE)
-            .define('B', Tags.Items.INGOTS_COPPER)
-            .save(output)*/
-
         HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow4()
             .define('A', RagiumItemTags.DUSTS_RAGINITE)
@@ -87,7 +81,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItems.AZURE_STEEL_COMPOUND)
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
-
         // Sawdust
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
@@ -100,12 +93,20 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")
+        // Eldritch Pearl
+        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_PEARL)
+            .cross4()
+            .define('A', RagiumItemTags.GEMS_CRIMSON_CRYSTAL)
+            .define('B', RagiumItemTags.GEMS_WARPED_CRYSTAL)
+            .define('C', RagiumItemTags.ELDRITCH_PEARL_BINDER)
+            .save(output)
 
         oreToRaw()
 
         register(RagiumMaterialFamilies.RAGI_CRYSTAL)
         register(RagiumMaterialFamilies.CRIMSON_CRYSTAL)
         register(RagiumMaterialFamilies.WARPED_CRYSTAL)
+        register(RagiumMaterialFamilies.ELDRITCH_PEARL)
 
         register(RagiumMaterialFamilies.RAGI_ALLOY)
         register(RagiumMaterialFamilies.ADVANCED_RAGI_ALLOY)

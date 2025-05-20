@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.bootstrap
 
-import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.advancements.critereon.EntityPredicate
 import net.minecraft.core.HolderGetter
@@ -19,6 +18,7 @@ import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.level.storage.loot.LootContext
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition
+import net.neoforged.neoforge.common.Tags
 
 /**
  * @see [net.minecraft.world.item.enchantment.Enchantments]
@@ -36,7 +36,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
             RagiumEnchantments.CAPACITY,
             Enchantment.enchantment(
                 Enchantment.definition(
-                    itemLookup.getOrThrow(RagiumItemTags.CAPACITY_ENCHANTABLE),
+                    itemLookup.getOrThrow(Tags.Items.ENCHANTABLES),
                     1,
                     5,
                     Enchantment.constantCost(1),

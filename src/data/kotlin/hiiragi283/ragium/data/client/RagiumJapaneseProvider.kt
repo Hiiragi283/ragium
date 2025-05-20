@@ -72,6 +72,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.RAGI_CRYSTAL_BLOCK, "ラギクリスタリルブロック")
         addBlock(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK, "深紅の結晶ブロック")
         addBlock(RagiumBlocks.WARPED_CRYSTAL_BLOCK, "歪んだ結晶ブロック")
+        addBlock(RagiumBlocks.ELDRITCH_PEARL_BLOCK, "異質な真珠ブロック")
 
         addBlock(RagiumBlocks.RAGI_ALLOY_BLOCK, "ラギ合金ブロック")
         addBlock(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK, "発展ラギ合金ブロック")
@@ -206,6 +207,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_CRYSTAL, "ラギクリスタリル")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "深紅のクリスタル")
         addItem(RagiumItems.WARPED_CRYSTAL, "歪んだクリスタル")
+        addItem(RagiumItems.ELDRITCH_PEARL, "異質な真珠")
 
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         addItem(RagiumItems.RAGI_ALLOY_INGOT, "ラギ合金インゴット")
@@ -465,6 +467,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "クォーツガラス")
 
         add(RagiumItemTags.DYNAMITES, "ダイナマイト")
+        add(RagiumItemTags.ELDRITCH_PEARL_BINDER, "異質な真珠の結合剤")
         add(RagiumItemTags.LED_BLOCKS, "LEDブロック")
 
         add(RagiumItemTags.DIRT_SOILS, "土壌")

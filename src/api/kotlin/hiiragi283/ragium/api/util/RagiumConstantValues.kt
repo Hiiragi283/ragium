@@ -17,6 +17,7 @@ object RagiumConstantValues {
     const val RAGINITE = "raginite"
     const val SOUL = "soul"
     const val WARPED_CRYSTAL = "warped_crystal"
+    const val ELDRITCH_PEARL = "eldritch_pearl"
 
     //    Nbt    //
 

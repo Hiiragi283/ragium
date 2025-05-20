@@ -37,6 +37,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.CHOCOLATE_BLOCK)
             add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
             add(RagiumBlocks.DEEP_STEEL_BLOCK)
+            add(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
             add(RagiumBlocks.RAGI_ALLOY_BLOCK)
             add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
             add(RagiumBlocks.WARPED_CRYSTAL_BLOCK)

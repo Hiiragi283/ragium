@@ -120,6 +120,16 @@ object RagiumMaterialFamilies {
                 RagiumBlocks.WARPED_CRYSTAL_BLOCK,
             ).build()
 
+    @JvmField
+    val ELDRITCH_PEARL: HTMaterialFamily =
+        HTMaterialFamily.Builder
+            .gem(RagiumItemTags.GEMS_ELDRITCH_PEARL, RagiumItems.ELDRITCH_PEARL)
+            .setEntry(
+                HTMaterialFamily.Variant.STORAGE_BLOCK,
+                RagiumItemTags.STORAGE_BLOCKS_ELDRITCH_PEARL,
+                RagiumBlocks.ELDRITCH_PEARL_BLOCK,
+            ).build()
+
     // Ingots
     @JvmField
     val RAGI_ALLOY: HTMaterialFamily =

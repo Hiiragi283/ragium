@@ -56,6 +56,9 @@ object RagiumItemTags {
     @JvmField
     val GEMS_WARPED_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.GEMS, RagiumConstantValues.WARPED_CRYSTAL)
 
+    @JvmField
+    val GEMS_ELDRITCH_PEARL: TagKey<Item> = commonTag(RagiumConstantValues.GEMS, RagiumConstantValues.ELDRITCH_PEARL)
+
     //    Ingots    //
 
     @JvmField
@@ -134,6 +137,9 @@ object RagiumItemTags {
 
     @JvmField
     val STORAGE_BLOCKS_WARPED_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.WARPED_CRYSTAL)
+
+    @JvmField
+    val STORAGE_BLOCKS_ELDRITCH_PEARL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.ELDRITCH_PEARL)
 
     @JvmField
     val STORAGE_BLOCKS_RAGI_ALLOY: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.RAGI_ALLOY)
@@ -226,10 +232,10 @@ object RagiumItemTags {
     //    Ragium    //
 
     @JvmField
-    val CAPACITY_ENCHANTABLE: TagKey<Item> = itemTagKey(RagiumAPI.id("enchantable/capacity"))
+    val DYNAMITES: TagKey<Item> = itemTagKey(RagiumAPI.id("dynamites"))
 
     @JvmField
-    val DYNAMITES: TagKey<Item> = itemTagKey(RagiumAPI.id("dynamites"))
+    val ELDRITCH_PEARL_BINDER: TagKey<Item> = itemTagKey(RagiumAPI.id("eldritch_pearl_binder"))
 
     @JvmField
     val LED_BLOCKS: TagKey<Item> = itemTagKey(RagiumAPI.id("led_blocks"))

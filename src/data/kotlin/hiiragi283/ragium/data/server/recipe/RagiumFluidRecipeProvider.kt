@@ -168,6 +168,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(Items.SNOWBALL)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
             .save(output)
+        // Ghast Tear
+        createInfusing()
+            .itemOutput(Items.GHAST_TEAR)
+            .itemInput(Items.CHISELED_QUARTZ_BLOCK)
+            .fluidInput(RagiumFluidContents.EXPERIENCE, 1000)
+            .save(output)
     }
 
     private fun sap() {

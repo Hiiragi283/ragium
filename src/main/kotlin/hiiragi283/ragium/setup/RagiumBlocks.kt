@@ -173,6 +173,12 @@ object RagiumBlocks {
     val WARPED_CRYSTAL_BLOCK: DeferredBlock<Block> =
         register("${RagiumConstantValues.WARPED_CRYSTAL}_block", crystal().mapColor(MapColor.WARPED_STEM))
 
+    @JvmField
+    val ELDRITCH_PEARL_BLOCK: DeferredBlock<Block> = register(
+        "${RagiumConstantValues.ELDRITCH_PEARL}_block",
+        wooden().sound(SoundType.SHROOMLIGHT).mapColor(MapColor.COLOR_PURPLE),
+    )
+
     // Ingots
     @JvmField
     val RAGI_ALLOY_BLOCK: DeferredBlock<Block> =
@@ -205,6 +211,7 @@ object RagiumBlocks {
         RAGI_CRYSTAL_BLOCK,
         CRIMSON_CRYSTAL_BLOCK,
         WARPED_CRYSTAL_BLOCK,
+        ELDRITCH_PEARL_BLOCK,
         // Ingots
         RAGI_ALLOY_BLOCK,
         ADVANCED_RAGI_ALLOY_BLOCK,

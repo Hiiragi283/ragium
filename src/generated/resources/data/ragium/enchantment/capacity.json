@@ -15,6 +15,6 @@
   "slots": [
     "any"
   ],
-  "supported_items": "#ragium:enchantable/capacity",
+  "supported_items": "#c:enchantables",
   "weight": 1
 }

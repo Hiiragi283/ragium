@@ -78,6 +78,7 @@ class RagiumItemTagProvider(
         register(RagiumMaterialFamilies.RAGI_CRYSTAL)
         register(RagiumMaterialFamilies.CRIMSON_CRYSTAL)
         register(RagiumMaterialFamilies.WARPED_CRYSTAL)
+        register(RagiumMaterialFamilies.ELDRITCH_PEARL)
 
         register(RagiumMaterialFamilies.RAGI_ALLOY)
         register(RagiumMaterialFamilies.ADVANCED_RAGI_ALLOY)
@@ -99,30 +100,6 @@ class RagiumItemTagProvider(
         addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SALTPETER)
         addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SULFUR)
         addTag(Tags.Items.DUSTS, RagiumItemTags.DUSTS_WOOD)
-        // Raw Materials
-        // add(RagiumItemTags.RAW_MATERIALS_RAGINITE, RagiumItems.RAW_RAGINITE)
-        // addTag(Tags.Items.RAW_MATERIALS, RagiumItemTags.RAW_MATERIALS_RAGINITE)
-        // Storage Blocks
-        addItem(RagiumItemTags.STORAGE_BLOCKS_RAGI_CRYSTAL, RagiumBlocks.RAGI_CRYSTAL_BLOCK)
-        addItem(RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL, RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
-        addItem(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL, RagiumBlocks.WARPED_CRYSTAL_BLOCK)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_RAGI_CRYSTAL)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
-
-        addItem(RagiumItemTags.STORAGE_BLOCKS_RAGI_ALLOY, RagiumBlocks.RAGI_ALLOY_BLOCK)
-        addItem(RagiumItemTags.STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY, RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
-        addItem(RagiumItemTags.STORAGE_BLOCKS_AZURE_STEEL, RagiumBlocks.AZURE_STEEL_BLOCK)
-        addItem(RagiumItemTags.STORAGE_BLOCKS_DEEP_STEEL, RagiumBlocks.DEEP_STEEL_BLOCK)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_RAGI_ALLOY)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_AZURE_STEEL)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_DEEP_STEEL)
-
-        addItem(RagiumItemTags.STORAGE_BLOCKS_CHEESE, RagiumBlocks.CHEESE_BLOCK)
-        addItem(RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE, RagiumBlocks.CHOCOLATE_BLOCK)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_CHEESE)
-        addTag(Tags.Items.STORAGE_BLOCKS, RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE)
         // Mekanism Addon
         add(RagiumItemTags.ENRICHED_AZURE, RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
         add(RagiumItemTags.ENRICHED_RAGINITE, RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
@@ -236,6 +213,10 @@ class RagiumItemTagProvider(
         for (block: DeferredBlock<*> in RagiumBlocks.LED_BLOCKS.values) {
             addItem(RagiumItemTags.LED_BLOCKS, block)
         }
+
+        addItem(RagiumItemTags.ELDRITCH_PEARL_BINDER, Items.GHAST_TEAR)
+        addItem(RagiumItemTags.ELDRITCH_PEARL_BINDER, Items.PHANTOM_MEMBRANE)
+        addItem(RagiumItemTags.ELDRITCH_PEARL_BINDER, Items.WIND_CHARGE)
 
         RagiumItems.AZURE_STEEL_ARMORS.appendItemTags(this)
         // Tools
