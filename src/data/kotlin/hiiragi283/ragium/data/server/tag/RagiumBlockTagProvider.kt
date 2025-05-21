@@ -81,13 +81,6 @@ class RagiumBlockTagProvider(
     }
 
     private fun category() {
-        // Storage Block
-        /*for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
-            val prefix: HTTagPrefix = block.prefix
-            val materialTag: TagKey<Block> = prefix.createBlockTag(block)
-            addTag(Tags.Blocks.STORAGE_BLOCKS, materialTag)
-            add(materialTag, block.holder)
-        }*/
         // Glass
         addTag(Tags.Blocks.GLASS_BLOCKS, RagiumBlockTags.GLASS_BLOCKS_OBSIDIAN)
         addTag(Tags.Blocks.GLASS_BLOCKS, RagiumBlockTags.GLASS_BLOCKS_QUARTZ)
@@ -106,5 +99,14 @@ class RagiumBlockTagProvider(
         add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRY_BUSH)
         add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRY_BUSH)
         add(BlockTags.SWORD_EFFICIENT, RagiumBlocks.EXP_BERRY_BUSH)
+        // Others
+        for (block: DeferredBlock<*> in RagiumBlocks.STORAGE_BLOCKS) {
+            add(BlockTags.BEACON_BASE_BLOCKS, block)
+        }
+
+        add(BlockTags.HOGLIN_REPELLENTS, RagiumBlocks.WARPED_CRYSTAL_BLOCK)
+        add(BlockTags.INFINIBURN_OVERWORLD, RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
+        add(BlockTags.SOUL_FIRE_BASE_BLOCKS, RagiumBlocks.WARPED_CRYSTAL_BLOCK)
+        add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
     }
 }

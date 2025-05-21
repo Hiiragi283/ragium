@@ -46,7 +46,7 @@ object RagiumAdvancements {
 
     @JvmField
     val TELEPORT_TICKET: ResourceKey<Advancement> = create("teleport_ticket")
-    
+
     //    Eldritch    //
 
     @JvmField

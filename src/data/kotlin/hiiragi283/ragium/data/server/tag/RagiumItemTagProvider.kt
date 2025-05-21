@@ -276,6 +276,19 @@ class RagiumItemTagProvider(
         }.forEach { item: ItemLike ->
             addItem(Tags.Items.ENCHANTABLES, item)
         }
+
+        // Other
+        add(ItemTags.MEAT, RagiumItems.COOKED_MEAT_INGOT)
+        add(ItemTags.MEAT, RagiumItems.MEAT_INGOT)
+        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.GEMS_CRIMSON_CRYSTAL)
+        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.GEMS_ELDRITCH_PEARL)
+        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.GEMS_RAGI_CRYSTAL)
+        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.GEMS_WARPED_CRYSTAL)
+        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY)
+        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.INGOTS_AZURE_STEEL)
+        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.INGOTS_DEEP_STEEL)
+        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.INGOTS_RAGI_ALLOY)
+        addTag(ItemTags.PIGLIN_LOVED, RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY)
     }
 
     //    Integrations    //

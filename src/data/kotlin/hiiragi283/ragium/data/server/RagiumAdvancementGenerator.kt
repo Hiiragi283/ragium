@@ -112,7 +112,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             requirements(AdvancementRequirements.Strategy.OR)
         }
     }
-    
+
     private fun eldritch() {
         val eldritchPearl: AdvancementHolder = createSimple(
             RagiumAdvancements.ELDRITCH_PEARL,

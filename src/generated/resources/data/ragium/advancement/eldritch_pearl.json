@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_c_gems_eldritch_pearl": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/eldritch_pearl"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.eldritch_pearl.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:eldritch_pearl"
+    },
+    "title": {
+      "translate": "advancements.ragium.eldritch_pearl.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_c_gems_eldritch_pearl"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -34,7 +34,8 @@ object HTBlockInteractionTrigger : SimpleCriterionTrigger<TriggerInstance>() {
                 instance
                     .group(
                         EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
-                        RegistryCodecs.homogeneousList(Registries.BLOCK)
+                        RegistryCodecs
+                            .homogeneousList(Registries.BLOCK)
                             .fieldOf("blocks")
                             .forGetter(TriggerInstance::blocks),
                     ).apply(instance, ::TriggerInstance)
@@ -42,9 +43,8 @@ object HTBlockInteractionTrigger : SimpleCriterionTrigger<TriggerInstance>() {
 
             @Suppress("DEPRECATION")
             @JvmStatic
-            fun interactBlock(block: Block): Criterion<TriggerInstance> =
-                interactBlock(HolderSet.direct(block.builtInRegistryHolder()))
-            
+            fun interactBlock(block: Block): Criterion<TriggerInstance> = interactBlock(HolderSet.direct(block.builtInRegistryHolder()))
+
             @JvmStatic
             fun interactBlock(tagKey: TagKey<Block>): Criterion<TriggerInstance> =
                 interactBlock(BuiltInRegistries.BLOCK.getOrCreateTag(tagKey))
