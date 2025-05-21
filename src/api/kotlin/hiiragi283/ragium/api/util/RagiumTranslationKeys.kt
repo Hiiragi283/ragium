@@ -1,15 +1,6 @@
 package hiiragi283.ragium.api.util
 
 object RagiumTranslationKeys {
-    //    Advancement    //
-    const val ADV_ROOT_DESC = "advancements.ragium.root.desc"
-
-    const val ADV_ETERNAL_TICKET_TITLE = "advancements.ragium.eternal_ticket.title"
-    const val ADV_ETERNAL_TICKET_DESC = "advancements.ragium.eternal_ticket.desc"
-
-    const val ADV_AZURE_TOOL_TITLE = "advancements.ragium.azure_tool.title"
-    const val ADV_AZURE_TOOL_DESC = "advancements.ragium.azure_tool.desc"
-
     //    Text    //
 
     const val TEXT_FLUID_NAME = "text.ragium.fluid_name"

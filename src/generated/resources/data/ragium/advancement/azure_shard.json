@@ -21,7 +21,7 @@
       "id": "ragium:azure_shard"
     },
     "title": {
-      "translate": "item.ragium.azure_shard"
+      "translate": "advancements.ragium.azure_shard.title"
     }
   },
   "requirements": [

@@ -1,11 +1,11 @@
 {
   "parent": "ragium:ragi_ticket",
   "criteria": {
-    "has_raginite_dust": {
+    "has_c_dusts_raginite": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:raginite_dust"
+            "items": "#c:dusts/raginite"
           }
         ]
       },
@@ -21,12 +21,12 @@
       "id": "ragium:raginite_dust"
     },
     "title": {
-      "translate": "item.ragium.raginite_dust"
+      "translate": "advancements.ragium.raginite_dust.title"
     }
   },
   "requirements": [
     [
-      "has_raginite_dust"
+      "has_c_dusts_raginite"
     ]
   ],
   "sends_telemetry_event": true

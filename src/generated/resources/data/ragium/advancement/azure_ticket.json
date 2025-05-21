@@ -21,8 +21,7 @@
       "id": "ragium:azure_ticket"
     },
     "title": {
-      "color": "blue",
-      "translate": "item.ragium.azure_ticket"
+      "translate": "advancements.ragium.azure_ticket.title"
     }
   },
   "requirements": [

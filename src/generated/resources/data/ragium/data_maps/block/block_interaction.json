@@ -13,6 +13,19 @@
         "item": "ragium:eldritch_ticket"
       }
     },
+    "#c:obsidians/crying": {
+      "actions": [
+        {
+          "type": "c:replace",
+          "state": {
+            "Name": "ragium:mysterious_obsidian"
+          }
+        }
+      ],
+      "ingredient": {
+        "item": "ragium:eldritch_ticket"
+      }
+    },
     "#c:ores/redstone": {
       "actions": [
         {
@@ -133,6 +146,10 @@
     "minecraft:melon": {
       "actions": [
         {
+          "type": "c:break",
+          "drop_block": false
+        },
+        {
           "type": "c:drop_item",
           "stack": {
             "count": 3,
@@ -213,18 +230,14 @@
     "minecraft:vine": {
       "actions": [
         {
-          "type": "c:replace",
-          "state": {
-            "Name": "minecraft:sculk_vein",
-            "Properties": {
-              "down": "false",
-              "east": "false",
-              "north": "false",
-              "south": "false",
-              "up": "false",
-              "waterlogged": "false",
-              "west": "false"
-            }
+          "type": "c:break",
+          "drop_block": false
+        },
+        {
+          "type": "c:drop_item",
+          "stack": {
+            "count": 1,
+            "id": "minecraft:sculk_vein"
           }
         }
       ],

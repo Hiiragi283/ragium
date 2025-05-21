@@ -57,6 +57,9 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
             val sound: SoundEvent = when {
                 tryToTeleport(livingEntity, stack) -> {
                     stack.consume(1, livingEntity)
+                    if (livingEntity is ServerPlayer) {
+                        CriteriaTriggers.CONSUME_ITEM.trigger(livingEntity, stack)
+                    }
                     SoundEvents.PLAYER_TELEPORT
                 }
 

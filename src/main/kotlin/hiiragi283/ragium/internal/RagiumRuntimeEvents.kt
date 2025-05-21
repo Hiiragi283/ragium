@@ -4,12 +4,14 @@ import com.mojang.datafixers.util.Either
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
+import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
@@ -90,7 +92,11 @@ object RagiumRuntimeEvents {
 
         val interaction: HTBlockInteraction = state.blockHolder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: return
         if (interaction.canPerformActions(stack, state)) {
-            interaction.applyActions(UseOnContext(level, event.entity, hand, stack, hitResult))
+            val player: Player = event.entity
+            if (player is ServerPlayer) {
+                HTBlockInteractionTrigger.trigger(player, state)
+            }
+            interaction.applyActions(UseOnContext(level, player, hand, stack, hitResult))
             event.isCanceled = true
             event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
         }

@@ -1,12 +1,13 @@
 package hiiragi283.ragium.api.data
 
-import hiiragi283.ragium.api.extension.asItemHolder
-import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.extension.descKey
+import hiiragi283.ragium.api.extension.titleKey
 import hiiragi283.ragium.api.extension.toStack
-import net.minecraft.Util
+import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -31,25 +32,12 @@ class HTDisplayInfoBuilder {
         icon = item.toStack()
     }
 
-    fun setTitleFromKey(key: String): HTDisplayInfoBuilder = apply {
-        title = Component.translatable(key)
+    fun setTitleFromKey(key: ResourceKey<Advancement>): HTDisplayInfoBuilder = apply {
+        title = Component.translatable(key.titleKey())
     }
 
-    fun setTitleFromItem(item: ItemLike): HTDisplayInfoBuilder = apply {
-        title = item.toStack().hoverName
-    }
-
-    fun setDescFromItem(item: ItemLike): HTDisplayInfoBuilder = apply {
-        description = Component.translatable(
-            Util.makeDescriptionId(
-                "advancements",
-                item.asItemHolder().idOrThrow.withSuffix(".desc"),
-            ),
-        )
-    }
-
-    fun setDescFromKey(key: String): HTDisplayInfoBuilder = apply {
-        description = Component.translatable(key)
+    fun setDescFromKey(key: ResourceKey<Advancement>): HTDisplayInfoBuilder = apply {
+        description = Component.translatable(key.descKey())
     }
 
     fun setGoal(): HTDisplayInfoBuilder = apply {

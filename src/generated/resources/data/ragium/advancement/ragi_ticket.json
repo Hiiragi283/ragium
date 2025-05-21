@@ -21,8 +21,7 @@
       "id": "ragium:ragi_ticket"
     },
     "title": {
-      "color": "red",
-      "translate": "item.ragium.ragi_ticket"
+      "translate": "advancements.ragium.ragi_ticket.title"
     }
   },
   "requirements": [

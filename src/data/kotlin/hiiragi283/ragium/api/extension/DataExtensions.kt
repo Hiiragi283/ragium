@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.HTFluidContent
 import net.minecraft.Util
+import net.minecraft.advancements.Advancement
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
@@ -20,6 +21,14 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
+
+//    Advancement    //
+
+private fun translationKey(key: ResourceKey<Advancement>): String = Util.makeDescriptionId("advancements", key.location())
+
+fun ResourceKey<Advancement>.titleKey(): String = "${translationKey(this)}.title"
+
+fun ResourceKey<Advancement>.descKey(): String = "${translationKey(this)}.desc"
 
 //    LanguageProvider    //
 
@@ -46,16 +55,9 @@ fun LanguageProvider.addItem(item: ItemLike, value: String) {
     addItem(item::asItem, value)
 }
 
-fun LanguageProvider.addItemAdvDesc(item: ItemLike, value: String) {
-    addAdvDesc(item.asItemHolder().idOrThrow, value)
-}
-
-fun LanguageProvider.addAdvDesc(holder: DeferredHolder<*, *>, value: String) {
-    addAdvDesc(holder.id, value)
-}
-
-private fun LanguageProvider.addAdvDesc(id: ResourceLocation, value: String) {
-    add(Util.makeDescriptionId("advancements", id.withSuffix(".desc")), value)
+fun LanguageProvider.addAdvancement(key: ResourceKey<Advancement>, title: String, desc: String) {
+    add(key.titleKey(), title)
+    add(key.descKey(), desc)
 }
 
 //    ModelFile    //

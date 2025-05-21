@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
+import hiiragi283.ragium.setup.RagiumAdvancementTriggers
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumBlockActionSerializers
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -59,6 +60,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
 
+        RagiumAdvancementTriggers.REGISTER.register(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumRecipeTypes.REGISTER.register(eventBus)
         RagiumBlockActionSerializers.REGISTER.register(eventBus)

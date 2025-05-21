@@ -9,10 +9,13 @@ import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.StonecutterRecipe
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumToolRecipeProvider : HTRecipeProvider() {
@@ -108,48 +111,31 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.DYES_BLACK)
             .define('C', Tags.Items.GEMS_DIAMOND)
             .save(output)
-        // Ragi
+        // Ragi from Redstone
         HTShapedRecipeBuilder(RagiumItems.RAGI_TICKET)
             .cross8()
-            .define('A', Tags.Items.DUSTS_REDSTONE)
+            .define('A', Tags.Items.STORAGE_BLOCKS_REDSTONE)
             .define('B', Tags.Items.DYES_RED)
             .define('C', RagiumItems.BLANK_TICKET)
-            .save(output)
-        // Azure
-        HTShapedRecipeBuilder(RagiumItems.AZURE_TICKET)
-            .cross8()
-            .define('A', Tags.Items.GLASS_BLOCKS)
-            .define('B', Tags.Items.DYES_BLUE)
-            .define('C', RagiumItems.BLANK_TICKET)
-            .save(output)
-        // Bloody
-        HTShapedRecipeBuilder(RagiumItems.BLOODY_TICKET)
-            .cross8()
-            .define('A', RagiumItemTags.GEMS_CRIMSON_CRYSTAL)
-            .define('B', Tags.Items.DYES_BROWN)
-            .define('C', RagiumItems.BLANK_TICKET)
-            .save(output)
-        // Teleport
-        HTShapedRecipeBuilder(RagiumItems.TELEPORT_TICKET)
-            .cross8()
-            .define('A', RagiumItemTags.GEMS_WARPED_CRYSTAL)
-            .define('B', Tags.Items.DYES_LIGHT_BLUE)
-            .define('C', RagiumItems.BLANK_TICKET)
-            .save(output)
-        // Eldritch
-        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_TICKET)
-            .cross8()
-            .define('A', RagiumItemTags.GEMS_ELDRITCH_PEARL)
-            .define('B', Tags.Items.DYES_PURPLE)
-            .define('C', RagiumItems.BLANK_TICKET)
-            .save(output)
-        // Eternal
-        HTShapelessRecipeBuilder(RagiumItems.ETERNAL_TICKET)
-            .addIngredient(RagiumItems.BLANK_TICKET)
-            .addIngredient(Tags.Items.NETHER_STARS)
-            .addIngredient(Tags.Items.DYES_YELLOW)
-            .addIngredient(Tags.Items.DYES_BLUE)
-            .save(output)
+            .saveSuffixed(output, "_from_redstone")
+
+        fun register(ticket: ItemLike, corner: TagKey<Item>, dye: TagKey<Item>) {
+            HTShapedRecipeBuilder(ticket)
+                .cross8()
+                .define('A', corner)
+                .define('B', dye)
+                .define('C', RagiumItems.BLANK_TICKET)
+                .save(output)
+        }
+
+        register(RagiumItems.RAGI_TICKET, RagiumItemTags.DUSTS_RAGINITE, Tags.Items.DYES_RED)
+        register(RagiumItems.AZURE_TICKET, Tags.Items.GLASS_BLOCKS, Tags.Items.DYES_BLUE)
+        register(RagiumItems.BLOODY_TICKET, RagiumItemTags.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
+        register(RagiumItems.TELEPORT_TICKET, RagiumItemTags.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
+        register(RagiumItems.ELDRITCH_TICKET, RagiumItemTags.GEMS_ELDRITCH_PEARL, Tags.Items.DYES_PURPLE)
+
+        register(RagiumItems.DAYBREAK_TICKET, RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY, Tags.Items.DYES_ORANGE)
+        register(RagiumItems.ETERNAL_TICKET, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
 
         save(
             RagiumAPI.id("smithing/eternal_ticket"),

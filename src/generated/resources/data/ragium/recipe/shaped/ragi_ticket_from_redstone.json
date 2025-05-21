@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/warped_crystal"
+      "tag": "c:storage_blocks/redstone"
     },
     "B": {
-      "tag": "c:dyes/cyan"
+      "tag": "c:dyes/red"
     },
     "C": {
       "item": "ragium:blank_ticket"
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:teleport_ticket"
+    "id": "ragium:ragi_ticket"
   }
 }

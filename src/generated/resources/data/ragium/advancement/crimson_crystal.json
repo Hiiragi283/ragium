@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:ragi_alloy_ingot",
+  "parent": "ragium:root",
   "criteria": {
-    "has_machine_casing": {
+    "has_c_gems_crimson_crystal": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:machine_casing"
+            "items": "#c:gems/crimson_crystal"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.machine_casing.desc"
+      "translate": "advancements.ragium.crimson_crystal.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:machine_casing"
+      "id": "ragium:crimson_crystal"
     },
     "title": {
-      "translate": "block.ragium.machine_casing"
+      "translate": "advancements.ragium.crimson_crystal.title"
     }
   },
   "requirements": [
     [
-      "has_machine_casing"
+      "has_c_gems_crimson_crystal"
     ]
   ],
   "sends_telemetry_event": true

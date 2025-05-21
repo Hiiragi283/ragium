@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:warped_crystal",
+  "criteria": {
+    "use_teleport_ticket": {
+      "conditions": {
+        "item": {
+          "items": "ragium:teleport_ticket"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.teleport_ticket.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:teleport_ticket"
+    },
+    "title": {
+      "translate": "advancements.ragium.teleport_ticket.title"
+    }
+  },
+  "requirements": [
+    [
+      "use_teleport_ticket"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

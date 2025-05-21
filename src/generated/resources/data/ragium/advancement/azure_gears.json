@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:azure_steel_ingot",
+  "parent": "ragium:azure_shard",
   "criteria": {
     "has_azure_tool": {
       "conditions": {
@@ -21,7 +21,7 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.azure_tool.desc"
+      "translate": "advancements.ragium.azure_gears.desc"
     },
     "frame": "goal",
     "icon": {
@@ -29,7 +29,7 @@
       "id": "ragium:azure_steel_pickaxe"
     },
     "title": {
-      "translate": "advancements.ragium.azure_tool.title"
+      "translate": "advancements.ragium.azure_gears.title"
     }
   },
   "requirements": [

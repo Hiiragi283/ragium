@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/warped_crystal"
+      "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "tag": "c:dyes/cyan"
+      "tag": "c:dyes/orange"
     },
     "C": {
       "item": "ragium:blank_ticket"
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:teleport_ticket"
+    "id": "ragium:daybreak_ticket"
   }
 }

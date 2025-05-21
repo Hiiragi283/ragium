@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addAdvDesc
+import hiiragi283.ragium.api.data.RagiumAdvancements
+import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.extension.addItem
-import hiiragi283.ragium.api.extension.addItemAdvDesc
 import hiiragi283.ragium.api.extension.addMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -44,18 +44,31 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun advancement() {
-        add(RagiumTranslationKeys.ADV_ROOT_DESC, "Start Ragium by getting Blank Ticket")
-        add(RagiumTranslationKeys.ADV_ETERNAL_TICKET_TITLE, "Eternal Requiem")
-        add(RagiumTranslationKeys.ADV_ETERNAL_TICKET_DESC, "Get Eternal Ticket for making tools unbreakable")
-
-        addItemAdvDesc(RagiumItems.RAGI_TICKET, "Get Ragi-Ticket")
-        addItemAdvDesc(RagiumItems.RAGINITE_DUST, "Get Raginite Dust by right-clicking Redstone Ore with Ragi-Ticket")
-
-        addItemAdvDesc(RagiumItems.AZURE_TICKET, "Get Azure Ticket")
-        addAdvDesc(RagiumItems.AZURE_SHARD, "Get Azure Shard by right-clicking Amethyst Cluster with Azure Ticket")
-        addItemAdvDesc(RagiumItems.AZURE_STEEL_INGOT, "Get Azure Steel Ingot")
-        add(RagiumTranslationKeys.ADV_AZURE_TOOL_TITLE, "Wake up! Azure Dragon!")
-        add(RagiumTranslationKeys.ADV_AZURE_TOOL_DESC, "Get any Azure Steel Tool")
+        addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Start Ragium by getting Blank Ticket")
+        addAdvancement(RagiumAdvancements.ETERNAL_TICKET, "Eternal Requiem", "Get Eternal Ticket for making tools unbreakable")
+        // Raginite
+        addAdvancement(RagiumAdvancements.RAGI_TICKET, "The Red Comet", "Get Ragi-Ticket")
+        addAdvancement(RagiumAdvancements.RAGINITE_DUST, "0xFF003F", "Get Raginite Dust by right-clicking Redstone Ore with Ragi-Ticket")
+        // Azure
+        addAdvancement(RagiumAdvancements.AZURE_TICKET, "The ticket is bluish.", "Get Azure Ticket")
+        addAdvancement(
+            RagiumAdvancements.AZURE_SHARD,
+            "Not a azurite",
+            "Get Azure Shard by right-clicking Amethyst Cluster with Azure Ticket",
+        )
+        addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "Get any Azure Steel Tool or Armor")
+        // Crimson
+        addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "Blood Sweat and Saps", "Get Crimson Crystal")
+        addAdvancement(
+            RagiumAdvancements.CRIMSON_SOIL,
+            "The reason why rose is red",
+            "Get Crimson Soil by right-clicking Soul Soil with Bloody Ticket",
+        )
+        // Warped
+        addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "Wrapped Warp", "Get Warped Crystal")
+        addAdvancement(RagiumAdvancements.TELEPORT_TICKET, "One-way Ticket", "Use teleport ticket bound with Teleport Anchor")
+        // Eldritch
+        addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Tell Your World", "Get Eldritch Pearl")
     }
 
     private fun block() {
@@ -191,11 +204,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun item() {
         // Tickets
         addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
+
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.AZURE_TICKET, "Azure Ticket")
         addItem(RagiumItems.BLOODY_TICKET, "Bloody Ticket")
         addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         addItem(RagiumItems.ELDRITCH_TICKET, "Eldritch Ticket")
+
+        addItem(RagiumItems.DAYBREAK_TICKET, "Daybreak Ticket")
         addItem(RagiumItems.ETERNAL_TICKET, "Eternal Ticket")
         // Material
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")

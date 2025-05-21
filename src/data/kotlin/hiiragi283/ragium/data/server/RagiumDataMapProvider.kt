@@ -151,7 +151,8 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             Blocks.VINE,
             Ingredient.of(RagiumItems.ELDRITCH_TICKET),
             null,
-            HTReplaceBlockAction.update(Blocks.SCULK_VEIN),
+            HTBreakBlockAction(false),
+            HTDropItemBlockAction(Blocks.SCULK_VEIN),
         )
         register(
             Tags.Blocks.STORAGE_BLOCKS_BONE_MEAL,
@@ -187,7 +188,15 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             Blocks.MELON,
             Ingredient.of(RagiumItems.ELDRITCH_TICKET),
             null,
+            HTBreakBlockAction(false),
             HTDropItemBlockAction(Items.CHORUS_FRUIT, 3),
+        )
+
+        register(
+            Tags.Blocks.OBSIDIANS_CRYING,
+            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            null,
+            HTReplaceBlockAction.update(RagiumBlocks.MYSTERIOUS_OBSIDIAN.get()),
         )
     }
 

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:raginite_dust",
+  "parent": "ragium:root",
   "criteria": {
-    "has_ragi_alloy_ingot": {
+    "has_c_gems_warped_crystal": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_ingot"
+            "items": "#c:gems/warped_crystal"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.ragi_alloy_ingot.desc"
+      "translate": "advancements.ragium.warped_crystal.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_alloy_ingot"
+      "id": "ragium:warped_crystal"
     },
     "title": {
-      "translate": "item.ragium.ragi_alloy_ingot"
+      "translate": "advancements.ragium.warped_crystal.title"
     }
   },
   "requirements": [
     [
-      "has_ragi_alloy_ingot"
+      "has_c_gems_warped_crystal"
     ]
   ],
   "sends_telemetry_event": true

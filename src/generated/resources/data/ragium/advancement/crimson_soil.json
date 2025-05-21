@@ -1,0 +1,41 @@
+{
+  "parent": "ragium:crimson_crystal",
+  "criteria": {
+    "has_crimson_soil": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:crimson_soil"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "interact_soul_soil": {
+      "conditions": {
+        "blocks": "minecraft:soul_soil"
+      },
+      "trigger": "ragium:block_interaction"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.crimson_soil.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:crimson_soil"
+    },
+    "title": {
+      "translate": "advancements.ragium.crimson_soil.title"
+    }
+  },
+  "requirements": [
+    [
+      "interact_soul_soil",
+      "has_crimson_soil"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

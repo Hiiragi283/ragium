@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addAdvDesc
+import hiiragi283.ragium.api.data.RagiumAdvancements
+import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.extension.addItem
-import hiiragi283.ragium.api.extension.addItemAdvDesc
 import hiiragi283.ragium.api.extension.addMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -44,18 +44,23 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun advancement() {
-        add(RagiumTranslationKeys.ADV_ROOT_DESC, "ブランクチケットを手に入れてRagiumを始めよう")
-        add(RagiumTranslationKeys.ADV_ETERNAL_TICKET_TITLE, "さあ，地獄を楽しみな！")
-        add(RagiumTranslationKeys.ADV_ETERNAL_TICKET_DESC, "ツールを不可壊にするために永遠のチケットを手に入れる")
-
-        addItemAdvDesc(RagiumItems.RAGI_TICKET, "らぎチケットを手に入れる")
-        addItemAdvDesc(RagiumItems.RAGINITE_DUST, "レッドストーン功績にらぎチケットを使ってラギナイトの粉を手に入れる")
-
-        addItemAdvDesc(RagiumItems.AZURE_TICKET, "紺碧のチケットを手に入れる")
-        addAdvDesc(RagiumItems.AZURE_SHARD, "アメジストの塊にラピスを使って紺碧の欠片を手に入れる")
-        addItemAdvDesc(RagiumItems.AZURE_STEEL_INGOT, "紺鉄インゴットを手に入れる")
-        add(RagiumTranslationKeys.ADV_AZURE_TOOL_TITLE, "Wake up! Azure Dragon!")
-        add(RagiumTranslationKeys.ADV_AZURE_TOOL_DESC, "紺鉄インゴットで作られたツールを手に入れる")
+        addAdvancement(RagiumAdvancements.ROOT, "Ragium", "ブランクチケットを手に入れてRagiumを始めよう")
+        addAdvancement(RagiumAdvancements.ETERNAL_TICKET, "さあ，地獄を楽しみな！", "ツールを不可壊にするために永遠のチケットを手に入れる")
+        // Raginite
+        addAdvancement(RagiumAdvancements.RAGI_TICKET, "赤い彗星", "らぎチケットを手に入れる")
+        addAdvancement(RagiumAdvancements.RAGINITE_DUST, "0xFF003F", "レッドストーン鉱石にらぎチケットを使ってラギナイトの粉を手に入れる")
+        // Azure
+        addAdvancement(RagiumAdvancements.AZURE_TICKET, "チケットは青かった", "紺碧のチケットを手に入れる")
+        addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "アメジストの塊にラピスを使って紺碧の欠片を手に入れる")
+        addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "紺鉄インゴットで作られたツールか装備を手に入れる")
+        // Crimson
+        addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "血と汗と樹液の結晶", "深紅の結晶を手に入れる")
+        addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")
+        // Warped
+        addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "不正な歪み", "歪んだ結晶を手に入れる")
+        addAdvancement(RagiumAdvancements.TELEPORT_TICKET, "片道切符", "テレポートアンカーに紐づいたテレポートチケットを使う")
+        // Eldritch
+        addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Tell Your World", "異質な真珠を手に入れる")
     }
 
     private fun block() {
@@ -194,11 +199,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun item() {
         // Tickets
         addItem(RagiumItems.BLANK_TICKET, "ブランクチケット")
+
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.AZURE_TICKET, "紺碧のチケット")
         addItem(RagiumItems.BLOODY_TICKET, "血塗られたチケット")
         addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         addItem(RagiumItems.ELDRITCH_TICKET, "異質なチケット")
+
+        addItem(RagiumItems.DAYBREAK_TICKET, "暁のチケット")
         addItem(RagiumItems.ETERNAL_TICKET, "永遠のチケット")
         // Material
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
@@ -207,8 +215,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.TAR, "タール")
 
         addItem(RagiumItems.RAGI_CRYSTAL, "ラギクリスタリル")
-        addItem(RagiumItems.CRIMSON_CRYSTAL, "深紅のクリスタル")
-        addItem(RagiumItems.WARPED_CRYSTAL, "歪んだクリスタル")
+        addItem(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
+        addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
         addItem(RagiumItems.ELDRITCH_PEARL, "異質な真珠")
 
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")

@@ -89,6 +89,9 @@ object RagiumItems {
     val ELDRITCH_TICKET: DeferredItem<Item> = register("eldritch_ticket")
 
     @JvmField
+    val DAYBREAK_TICKET: DeferredItem<Item> = register("daybreak_ticket")
+
+    @JvmField
     val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket")
 
     //    Materials    //
@@ -395,11 +398,14 @@ object RagiumItems {
         }
 
         setColor(BLANK_TICKET, ChatFormatting.DARK_GRAY)
+
         setColor(RAGI_TICKET, ChatFormatting.RED)
         setColor(AZURE_TICKET, ChatFormatting.BLUE)
         setColor(BLOODY_TICKET, ChatFormatting.DARK_RED)
-        setColor(TELEPORT_TICKET, ChatFormatting.AQUA)
+        setColor(TELEPORT_TICKET, ChatFormatting.DARK_AQUA)
         setColor(ELDRITCH_TICKET, ChatFormatting.LIGHT_PURPLE)
+
+        setColor(DAYBREAK_TICKET, ChatFormatting.GOLD)
         setColor(ETERNAL_TICKET, ChatFormatting.YELLOW)
         // Creative Item
         event.modify(RagiumBlocks.CEU) { builder: DataComponentPatch.Builder ->
