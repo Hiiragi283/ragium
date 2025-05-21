@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:sculk"
+      "tag": "c:gems/crimson_crystal"
     },
     "B": {
-      "tag": "c:dyes/green"
+      "tag": "c:dyes/brown"
     },
     "C": {
       "item": "ragium:blank_ticket"
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:deep_ticket"
+    "id": "ragium:bloody_ticket"
   }
 }

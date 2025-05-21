@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -87,15 +86,13 @@ object RagiumRuntimeEvents {
 
         val hitResult: BlockHitResult = event.hitVec
         val level: Level = event.level
-        val pos: BlockPos = hitResult.blockPos
-        val state: BlockState = level.getBlockState(pos)
-
-        val context = UseOnContext(level, null, hand, stack, hitResult)
+        val state: BlockState = level.getBlockState(hitResult.blockPos)
 
         val interaction: HTBlockInteraction = state.blockHolder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: return
         if (interaction.canPerformActions(stack, state)) {
-            interaction.applyActions(context, event.entity)
+            interaction.applyActions(UseOnContext(level, event.entity, hand, stack, hitResult))
             event.isCanceled = true
+            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
         }
     }
 

@@ -21,6 +21,7 @@
       "id": "ragium:ragi_ticket"
     },
     "title": {
+      "color": "red",
       "translate": "item.ragium.ragi_ticket"
     }
   },

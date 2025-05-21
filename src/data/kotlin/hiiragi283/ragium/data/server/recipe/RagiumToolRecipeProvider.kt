@@ -122,11 +122,11 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.DYES_BLUE)
             .define('C', RagiumItems.BLANK_TICKET)
             .save(output)
-        // Deep
-        HTShapedRecipeBuilder(RagiumItems.DEEP_TICKET)
+        // Bloody
+        HTShapedRecipeBuilder(RagiumItems.BLOODY_TICKET)
             .cross8()
-            .define('A', Items.SCULK)
-            .define('B', Tags.Items.DYES_GREEN)
+            .define('A', RagiumItemTags.GEMS_CRIMSON_CRYSTAL)
+            .define('B', Tags.Items.DYES_BROWN)
             .define('C', RagiumItems.BLANK_TICKET)
             .save(output)
         // Teleport
@@ -134,6 +134,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .cross8()
             .define('A', RagiumItemTags.GEMS_WARPED_CRYSTAL)
             .define('B', Tags.Items.DYES_LIGHT_BLUE)
+            .define('C', RagiumItems.BLANK_TICKET)
+            .save(output)
+        // Eldritch
+        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_TICKET)
+            .cross8()
+            .define('A', RagiumItemTags.GEMS_ELDRITCH_PEARL)
+            .define('B', Tags.Items.DYES_PURPLE)
             .define('C', RagiumItems.BLANK_TICKET)
             .save(output)
         // Eternal

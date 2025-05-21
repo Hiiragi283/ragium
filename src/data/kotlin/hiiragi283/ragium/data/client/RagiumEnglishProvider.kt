@@ -193,7 +193,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.AZURE_TICKET, "Azure Ticket")
-        addItem(RagiumItems.DEEP_TICKET, "Deep Ticket")
+        addItem(RagiumItems.BLOODY_TICKET, "Bloody Ticket")
+        addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
+        addItem(RagiumItems.ELDRITCH_TICKET, "Eldritch Ticket")
         addItem(RagiumItems.ETERNAL_TICKET, "Eternal Ticket")
         // Material
         addItem(RagiumItems.RAGI_COKE, "Ragi-Coke")
@@ -236,7 +238,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
         addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
-        addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.RAGI_EGG, "Ragi-Egg")
         // Food

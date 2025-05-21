@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
 import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
+import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.sounds.SoundEvents
@@ -79,14 +80,16 @@ object RagiumItems {
     val AZURE_TICKET: DeferredItem<Item> = register("azure_ticket")
 
     @JvmField
-    val DEEP_TICKET: DeferredItem<Item> = register("deep_ticket")
+    val BLOODY_TICKET: DeferredItem<Item> = register("bloody_ticket")
 
     @JvmField
-    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> =
-        register("teleport_ticket", ::HTTeleportTicketItem, Item.Properties().rarity(Rarity.RARE))
+    val TELEPORT_TICKET: DeferredItem<HTTeleportTicketItem> = register("teleport_ticket", ::HTTeleportTicketItem)
 
     @JvmField
-    val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket", Item.Properties().rarity(Rarity.UNCOMMON))
+    val ELDRITCH_TICKET: DeferredItem<Item> = register("eldritch_ticket")
+
+    @JvmField
+    val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket")
 
     //    Materials    //
 
@@ -377,6 +380,27 @@ object RagiumItems {
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        // Tickets
+        fun setColor(item: DeferredItem<*>, color: ChatFormatting) {
+            event.modify(item) { builder: DataComponentPatch.Builder ->
+                builder.set(
+                    DataComponents.ITEM_NAME,
+                    item
+                        .get()
+                        .description
+                        .copy()
+                        .withStyle(color),
+                )
+            }
+        }
+
+        setColor(BLANK_TICKET, ChatFormatting.DARK_GRAY)
+        setColor(RAGI_TICKET, ChatFormatting.RED)
+        setColor(AZURE_TICKET, ChatFormatting.BLUE)
+        setColor(BLOODY_TICKET, ChatFormatting.DARK_RED)
+        setColor(TELEPORT_TICKET, ChatFormatting.AQUA)
+        setColor(ELDRITCH_TICKET, ChatFormatting.LIGHT_PURPLE)
+        setColor(ETERNAL_TICKET, ChatFormatting.YELLOW)
         // Creative Item
         event.modify(RagiumBlocks.CEU) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)

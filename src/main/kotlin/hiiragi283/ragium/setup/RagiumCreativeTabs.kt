@@ -128,8 +128,9 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.RAGI_TICKET)
             add(RagiumItems.AZURE_TICKET)
-            add(RagiumItems.DEEP_TICKET)
+            add(RagiumItems.BLOODY_TICKET)
             add(RagiumItems.TELEPORT_TICKET)
+            add(RagiumItems.ELDRITCH_TICKET)
             add(RagiumItems.ETERNAL_TICKET)
             // Foods
             add(RagiumItems.ICE_CREAM)

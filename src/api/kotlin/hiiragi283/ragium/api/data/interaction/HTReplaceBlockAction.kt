@@ -3,8 +3,11 @@ package hiiragi283.ragium.api.data.interaction
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
@@ -29,7 +32,14 @@ class HTReplaceBlockAction(private val state: BlockState, private val flag: Int)
     override val codec: MapCodec<out HTBlockAction> = CODEC
 
     override fun applyAction(context: UseOnContext) {
-        context.level.setBlock(context.clickedPos, state, flag)
+        val level: Level = context.level
+        val pos: BlockPos = context.clickedPos
+        val player: Player? = context.player
+        if (player != null) {
+            val oldState: BlockState = level.getBlockState(pos)
+            oldState.block.playerWillDestroy(level, pos, oldState, player)
+        }
+        level.setBlock(pos, state, flag)
     }
 
     override fun getPreviewStack(): ItemStack = ItemStack(state.block)

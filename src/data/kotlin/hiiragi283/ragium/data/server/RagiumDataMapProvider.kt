@@ -5,20 +5,24 @@ import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.data.interaction.HTBreakBlockAction
 import hiiragi283.ragium.api.data.interaction.HTDropItemBlockAction
+import hiiragi283.ragium.api.data.interaction.HTPlaySoundBlockAction
 import hiiragi283.ragium.api.data.interaction.HTReplaceBlockAction
 import hiiragi283.ragium.api.extension.blockLookup
-import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
@@ -82,20 +86,29 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             )
         }
 
+        fun register(
+            tagKey: TagKey<Block>,
+            ingredient: Ingredient,
+            predicate: StatePropertiesPredicate?,
+            vararg actions: HTBlockAction,
+        ) {
+            builder.add(
+                tagKey,
+                HTBlockInteraction(
+                    ingredient,
+                    Optional.ofNullable(predicate),
+                    listOf(*actions),
+                ),
+                false,
+            )
+        }
+
         // Raginite
         register(
-            Blocks.REDSTONE_ORE,
+            Tags.Blocks.ORES_REDSTONE,
             Ingredient.of(RagiumItems.RAGI_TICKET),
             null,
-            HTBreakBlockAction(false),
             HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES.stoneOre.get()),
-        )
-        register(
-            Blocks.DEEPSLATE_REDSTONE_ORE,
-            Ingredient.of(RagiumItems.RAGI_TICKET),
-            null,
-            HTBreakBlockAction(false),
-            HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES.deepOre.get()),
         )
         register(
             Blocks.LANTERN,
@@ -120,31 +133,61 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
                 HTDropItemBlockAction(RagiumItems.AZURE_SHARD, count),
             )
         }
-        // Deep
+        // Bloody
         register(
-            Blocks.REINFORCED_DEEPSLATE,
-            Ingredient.of(RagiumItems.DEEP_TICKET),
+            Blocks.SOUL_SOIL,
+            Ingredient.of(RagiumItems.BLOODY_TICKET),
             null,
-            HTDropItemBlockAction(RagiumItems.DEEP_STEEL_INGOT, 3),
-            HTReplaceBlockAction.update(Blocks.DEEPSLATE),
+            HTReplaceBlockAction.update(RagiumBlocks.CRIMSON_SOIL.get()),
+        )
+        // Eldritch
+        register(
+            Blocks.MOSS_BLOCK,
+            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            null,
+            HTReplaceBlockAction.update(Blocks.SCULK),
+        )
+        register(
+            Blocks.VINE,
+            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            null,
+            HTReplaceBlockAction.update(Blocks.SCULK_VEIN),
+        )
+        register(
+            Tags.Blocks.STORAGE_BLOCKS_BONE_MEAL,
+            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            null,
+            HTReplaceBlockAction.update(Blocks.SCULK_CATALYST),
         )
         register(
             Blocks.SCULK_SHRIEKER,
-            Ingredient.of(RagiumItems.DEEP_TICKET),
+            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
             null,
+            HTPlaySoundBlockAction(SoundEvents.SCULK_SHRIEKER_SHRIEK),
             HTReplaceBlockAction.update(
                 Blocks.SCULK_SHRIEKER
                     .defaultBlockState()
                     .setValue(BlockStateProperties.CAN_SUMMON, true),
             ),
         )
-        // Crimson
+
         register(
-            Blocks.SOUL_SOIL,
-            Ingredient.of(RagiumItemTags.GEMS_CRIMSON_CRYSTAL),
+            Tags.Blocks.COBBLESTONES,
+            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
             null,
-            HTBreakBlockAction(false),
-            HTReplaceBlockAction.update(RagiumBlocks.CRIMSON_SOIL.get()),
+            HTReplaceBlockAction.update(Blocks.END_STONE),
+        )
+        register(
+            Blocks.LIGHTNING_ROD,
+            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            null,
+            HTReplaceBlockAction.update(Blocks.END_ROD),
+        )
+        register(
+            Blocks.MELON,
+            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            null,
+            HTDropItemBlockAction(Items.CHORUS_FRUIT, 3),
         )
     }
 

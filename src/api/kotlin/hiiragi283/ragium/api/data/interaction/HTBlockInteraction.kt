@@ -35,20 +35,25 @@ data class HTBlockInteraction(
     fun canPerformActions(stack: ItemStack, state: BlockState): Boolean =
         ingredient.test(stack) && (predicate.isEmpty || predicate.get().matches(state))
 
-    fun applyActions(context: UseOnContext, player: Player) {
+    fun applyActions(context: UseOnContext) {
         for (action: HTBlockAction in actions) {
             action.applyAction(context)
         }
 
         val stack: ItemStack = context.itemInHand
         val hand: InteractionHand = context.hand
-        if (stack.hasCraftingRemainingItem()) {
-            val newStack: ItemStack = stack.craftingRemainingItem
-            player.setItemInHand(hand, newStack)
-        } else if (stack.isDamageableItem) {
-            stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand))
+        val player: Player? = context.player
+        if (player != null) {
+            if (stack.hasCraftingRemainingItem()) {
+                val newStack: ItemStack = stack.craftingRemainingItem
+                player.setItemInHand(hand, newStack)
+            } else if (stack.isDamageableItem) {
+                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand))
+            } else {
+                stack.consume(1, player)
+            }
         } else {
-            stack.consume(1, player)
+            stack.shrink(1)
         }
     }
 }

@@ -196,7 +196,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BLANK_TICKET, "ブランクチケット")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.AZURE_TICKET, "紺碧のチケット")
-        addItem(RagiumItems.DEEP_TICKET, "深層のチケット")
+        addItem(RagiumItems.BLOODY_TICKET, "血塗られたチケット")
+        addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
+        addItem(RagiumItems.ELDRITCH_TICKET, "異質なチケット")
         addItem(RagiumItems.ETERNAL_TICKET, "永遠のチケット")
         // Material
         addItem(RagiumItems.RAGI_COKE, "らぎコークス")
@@ -239,7 +241,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.EXP_MAGNET, "EXPマグネット")
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
-        addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
         addItem(RagiumItems.RAGI_EGG, "らぎエッグ")
         // Food
