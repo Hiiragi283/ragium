@@ -99,6 +99,11 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }
         }
 
+        // Cauldrons
+        for (holder: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
+            dropOther(holder.get(), Items.CAULDRON)
+        }
+
         // Food
         add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
             val propertyCondition: LootItemBlockStatePropertyCondition.Builder =

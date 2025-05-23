@@ -128,6 +128,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.ADVANCED_EXTRACTOR, "発展型抽出機")
         addBlock(RagiumBlocks.INFUSER, "注入機")
         addBlock(RagiumBlocks.REFINERY, "精製機")
+        // Cauldron
+        addBlock(RagiumBlocks.CRIMSON_SAP_CAULDRON, "深紅の樹液入りの大釜")
+        addBlock(RagiumBlocks.WARPED_SAP_CAULDRON, "歪んだ樹液入りの大釜")
         // Device
         addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.CHARGER, "チャージャー")

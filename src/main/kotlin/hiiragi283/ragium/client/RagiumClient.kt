@@ -22,8 +22,11 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
+import net.neoforged.neoforge.fluids.CauldronFluidContent
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 import java.awt.Color
@@ -66,6 +69,24 @@ class RagiumClient(eventBus: IEventBus) {
             },
             RagiumBlocks.WATER_COLLECTOR.get(),
         )
+        // Cauldrons
+        for (cauldron: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
+            event.register(
+                { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+                    val content: CauldronFluidContent =
+                        CauldronFluidContent.getForBlock(state.block) ?: return@register -1
+                    when {
+                        getter != null && pos != null ->
+                            IClientFluidTypeExtensions
+                                .of(
+                                    content.fluid,
+                                ).getTintColor(state.fluidState, getter, pos)
+                        else -> -1
+                    }
+                },
+                cauldron.get(),
+            )
+        }
 
         LOGGER.info("Registered BlockColor!")
     }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.enchantment.HTEnchantmentEntry
 import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.getData
@@ -13,6 +12,7 @@ import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
@@ -29,6 +29,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -244,5 +245,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         return lookup.get(key).map(itemEnchantments::getLevel).orElse(0)
     }
 
-    final override fun getEnchEntries(): Iterable<HTEnchantmentEntry> = itemEnchantments.entrySet().map(::HTEnchantmentEntry)
+    final override fun getEnchEntries(): Iterable<EnchantmentInstance> =
+        itemEnchantments.entrySet().map { (key: Holder<Enchantment>, value: Int) -> EnchantmentInstance(key, value) }
 }

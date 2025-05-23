@@ -65,6 +65,10 @@ class RagiumBlockTagProvider(
             add(BlockTags.MINEABLE_WITH_PICKAXE, machine)
         }
 
+        for (device: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
+            add(BlockTags.CAULDRONS, device)
+        }
+
         for (device: DeferredBlock<*> in RagiumBlocks.DEVICES) {
             add(BlockTags.MINEABLE_WITH_PICKAXE, device)
         }

@@ -19,11 +19,14 @@ import hiiragi283.ragium.common.block.HTSpongeCakeSlabBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
+import net.minecraft.core.cauldron.CauldronInteraction
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.ColoredFallingBlock
+import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TransparentBlock
@@ -419,16 +422,32 @@ object RagiumBlocks {
 
     //    Devices    //
 
+    @JvmField
+    val MILK_DRAIN: DeferredBlock<*> = register("milk_drain", stone(), ::HTMilkDrainBlock)
+
+    @JvmStatic
+    private fun registerCauldron(name: String, interactions: CauldronInteraction.InteractionMap): DeferredBlock<*> = REGISTER.registerBlock(
+        "${name}_cauldron",
+        { prop: BlockBehaviour.Properties -> LayeredCauldronBlock(Biome.Precipitation.NONE, interactions, prop) },
+        copyOf(Blocks.CAULDRON),
+    )
+
+    @JvmField
+    val CRIMSON_SAP_CAULDRON: DeferredBlock<*> = registerCauldron("crimson_sap", RagiumCauldronInteractions.CRIMSON_SAP)
+
+    @JvmField
+    val WARPED_SAP_CAULDRON: DeferredBlock<*> = registerCauldron("warped_sap", RagiumCauldronInteractions.WARPED_SAP)
+
+    @JvmField
+    val CAULDRONS: List<DeferredBlock<*>> = listOf(CRIMSON_SAP_CAULDRON, WARPED_SAP_CAULDRON)
+
+    // Basic
     @JvmStatic
     private fun registerEntityBlock(
         properties: BlockBehaviour.Properties,
         type: HTDeferredBlockEntityType<out HTBlockEntity>,
     ): DeferredBlock<*> = register(type.id.path, properties, HTEntityBlock.create(type))
 
-    @JvmField
-    val MILK_DRAIN: DeferredBlock<*> = register("milk_drain", stone(), ::HTMilkDrainBlock)
-
-    // Basic
     @JvmField
     val ITEM_COLLECTOR: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.ITEM_COLLECTOR)
 
