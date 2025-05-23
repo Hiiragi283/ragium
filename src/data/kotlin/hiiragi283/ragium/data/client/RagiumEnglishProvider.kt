@@ -509,13 +509,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun mekanism() {
         add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "Raginite")
         add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "Azure Essence")
-        add(
-            RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.cleanSlurry
-                .get()
-                .translationKey,
-            "Clean Raginite Slurry",
-        )
-        add(RagiumMekanismAddon.CHEMICAL_RAGINITE_SLURRY.get().translationKey, "Dirty Raginite Slurry")
+        add(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP.translationKey, "Crimson Sap")
+        add(RagiumMekanismAddon.CHEMICAL_WARPED_SAP.translationKey, "Warped Sap")
 
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
         addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")

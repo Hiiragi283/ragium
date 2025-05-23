@@ -1,9 +1,9 @@
 {
   "values": {
-    "ragium:crimson_sap": {
+    "#c:crimson_sap": {
       "blocks": "#minecraft:crimson_stems"
     },
-    "ragium:warped_sap": {
+    "#c:warped_sap": {
       "blocks": "#minecraft:warped_stems"
     }
   }

@@ -8,10 +8,8 @@ import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.chemical.Chemical
-import mekanism.api.chemical.ChemicalBuilder
 import mekanism.common.registration.impl.ChemicalDeferredRegister
 import mekanism.common.registration.impl.DeferredChemical
-import mekanism.common.registration.impl.SlurryRegistryObject
 import mekanism.common.registries.MekanismItems
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
@@ -37,10 +35,12 @@ object RagiumMekanismAddon : RagiumAddon {
     val CHEMICAL_AZURE: DeferredChemical<Chemical> = CHEMICAL_REGISTER.registerInfuse("azure", 0x9999cc)
 
     @JvmField
-    val CHEMICAL_RAGINITE_SLURRY: SlurryRegistryObject<Chemical, Chemical> =
-        CHEMICAL_REGISTER.registerSlurry("raginite") { builder: ChemicalBuilder ->
-            builder.tint(0xFF0033)
-        }
+    val CHEMICAL_CRIMSON_SAP: DeferredChemical<Chemical> =
+        CHEMICAL_REGISTER.register(RagiumChemicalConstants.CRIMSON_SAP)
+
+    @JvmField
+    val CHEMICAL_WARPED_SAP: DeferredChemical<Chemical> =
+        CHEMICAL_REGISTER.register(RagiumChemicalConstants.WARPED_SAP)
 
     //    Item    //
 

@@ -4,21 +4,23 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.IMekanismAccess
 import mekanism.api.chemical.ChemicalStack
 import mekanism.api.datagen.recipe.builder.ItemStackChemicalToItemStackRecipeBuilder
 import mekanism.api.datagen.recipe.builder.ItemStackToChemicalRecipeBuilder
 import mekanism.api.datagen.recipe.builder.ItemStackToItemStackRecipeBuilder
+import mekanism.api.datagen.recipe.builder.RotaryRecipeBuilder
 import mekanism.api.recipes.ingredients.ItemStackIngredient
 import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
+import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider() {
     private val itemHelper: IItemStackIngredientCreator = IMekanismAccess.INSTANCE.itemStackIngredientCreator()
-
-    // private val fluidHelper: IFluidStackIngredientCreator = IMekanismAccess.INSTANCE.fluidStackIngredientCreator()
+    private val fluidHelper: IFluidStackIngredientCreator = IMekanismAccess.INSTANCE.fluidStackIngredientCreator()
     private val chemicalHelper: IChemicalStackIngredientCreator =
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
 
@@ -26,6 +28,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         chemicalConversion()
         enriching()
         infusing()
+        rotary()
 
         // oreProcess()
     }
@@ -119,6 +122,24 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
                 RagiumItems.AZURE_STEEL_INGOT.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/azure_steel"))
+    }
+
+    private fun rotary() {
+        RotaryRecipeBuilder
+            .rotary(
+                fluidHelper.from(RagiumFluidContents.CRIMSON_SAP.commonTag, 1),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, 1),
+                RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP.asStack(1),
+                RagiumFluidContents.CRIMSON_SAP.toStack(1),
+            ).build(output, RagiumAPI.id("rotary/crimson_sap"))
+
+        RotaryRecipeBuilder
+            .rotary(
+                fluidHelper.from(RagiumFluidContents.WARPED_SAP.commonTag, 1),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, 1),
+                RagiumMekanismAddon.CHEMICAL_WARPED_SAP.asStack(1),
+                RagiumFluidContents.WARPED_SAP.toStack(1),
+            ).build(output, RagiumAPI.id("rotary/warped_sap"))
     }
 
     /*private fun oreProcess() {
