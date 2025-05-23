@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.block.HTSoulGlassBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeSlabBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
+import hiiragi283.ragium.common.block.HTTreeTapBlock
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
 import net.minecraft.core.cauldron.CauldronInteraction
@@ -424,6 +425,13 @@ object RagiumBlocks {
 
     @JvmField
     val MILK_DRAIN: DeferredBlock<*> = register("milk_drain", stone(), ::HTMilkDrainBlock)
+
+    @JvmField
+    val TREE_TAP: DeferredBlock<HTTreeTapBlock> = register(
+        "tree_tap",
+        lightMetal().randomTicks().noOcclusion(),
+        ::HTTreeTapBlock,
+    )
 
     @JvmStatic
     private fun registerCauldron(name: String, interactions: CauldronInteraction.InteractionMap): DeferredBlock<*> = REGISTER.registerBlock(

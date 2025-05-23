@@ -37,6 +37,7 @@ class RagiumBlockTagProvider(
         add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
         add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+        add(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.TREE_TAP)
 
         RagiumBlocks.RAGINITE_ORES.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)
         RagiumBlocks.RAGI_CRYSTAL_ORES.appendBlockTags(this, BlockTags.MINEABLE_WITH_PICKAXE)

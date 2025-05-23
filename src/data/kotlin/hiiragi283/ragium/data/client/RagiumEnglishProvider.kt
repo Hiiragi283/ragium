@@ -134,6 +134,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.INFUSER, "Infuser")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         // Cauldron
+        addBlock(RagiumBlocks.TREE_TAP, "Tree Tap")
+
         addBlock(RagiumBlocks.CRIMSON_SAP_CAULDRON, "Crimson Sap Cauldron")
         addBlock(RagiumBlocks.WARPED_SAP_CAULDRON, "Warped Sap Cauldron")
         // Device

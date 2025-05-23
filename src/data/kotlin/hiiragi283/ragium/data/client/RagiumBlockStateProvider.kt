@@ -166,6 +166,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         advMachine(RagiumBlocks.REFINERY)
 
         // Cauldron
+        horizontalBlock(RagiumBlocks.TREE_TAP.get(), modelFile(RagiumBlocks.TREE_TAP.blockId))
+
         RagiumBlocks.CAULDRONS.forEach(::cauldronBlock)
 
         // Device

@@ -112,6 +112,7 @@ object RagiumCreativeTabs {
             // Machines
             addAll(RagiumBlocks.CASINGS)
             addAll(RagiumBlocks.MACHINES)
+            add(RagiumBlocks.TREE_TAP)
             addAll(RagiumBlocks.DEVICES)
             addAll(RagiumBlocks.DRUMS)
             // Tools

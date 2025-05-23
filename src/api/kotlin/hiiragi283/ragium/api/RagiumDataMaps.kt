@@ -1,8 +1,10 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.ragium.api.data.HTTreeTap
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 /**
@@ -14,5 +16,12 @@ object RagiumDataMaps {
         DataMapType
             .builder(RagiumAPI.id("block_interaction"), Registries.BLOCK, HTBlockInteraction.CODEC)
             .synced(HTBlockInteraction.CODEC, false)
+            .build()
+
+    @JvmField
+    val TREE_TAP: DataMapType<Fluid, HTTreeTap> =
+        DataMapType
+            .builder(RagiumAPI.id("tree_tap"), Registries.FLUID, HTTreeTap.CODEC)
+            .synced(HTTreeTap.CODEC, false)
             .build()
 }

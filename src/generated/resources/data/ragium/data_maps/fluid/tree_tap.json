@@ -1,0 +1,10 @@
+{
+  "values": {
+    "ragium:crimson_sap": {
+      "blocks": "#minecraft:crimson_stems"
+    },
+    "ragium:warped_sap": {
+      "blocks": "#minecraft:warped_stems"
+    }
+  }
+}

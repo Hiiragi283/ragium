@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumDataMaps
+import hiiragi283.ragium.api.data.HTTreeTap
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.data.interaction.HTBreakBlockAction
@@ -9,12 +10,14 @@ import hiiragi283.ragium.api.data.interaction.HTPlaySoundBlockAction
 import hiiragi283.ragium.api.data.interaction.HTReplaceBlockAction
 import hiiragi283.ragium.api.extension.blockLookup
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -22,6 +25,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -40,6 +44,7 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
 
         fuels()
         blockInteractions()
+        treeTaps()
         // mekanism()
     }
 
@@ -197,6 +202,21 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
             Ingredient.of(RagiumItems.ELDRITCH_TICKET),
             null,
             HTReplaceBlockAction.update(RagiumBlocks.MYSTERIOUS_OBSIDIAN.get()),
+        )
+    }
+
+    private fun treeTaps() {
+        val builder: Builder<HTTreeTap, Fluid> = builder(RagiumDataMaps.TREE_TAP)
+
+        builder.add(
+            RagiumFluidContents.CRIMSON_SAP.commonTag,
+            HTTreeTap(BlockTags.CRIMSON_STEMS),
+            false,
+        )
+        builder.add(
+            RagiumFluidContents.WARPED_SAP.commonTag,
+            HTTreeTap(BlockTags.WARPED_STEMS),
+            false,
         )
     }
 
