@@ -10,24 +10,34 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.HorizontalDirectionalBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.pathfinder.PathComputationType
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.VoxelShape
 import net.neoforged.neoforge.fluids.CauldronFluidContent
 
 class HTTreeTapBlock(properties: Properties) : HorizontalDirectionalBlock(properties) {
+    companion object {
+        @JvmField
+        val SHAPE: VoxelShape = box(6.0, 6.0, 4.0, 10.0, 10.0, 16.0)
+    }
+    
     override fun codec(): MapCodec<out HorizontalDirectionalBlock> = throw UnsupportedOperationException()
 
     init {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH))
     }
 
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape =
+        SHAPE
+    
     override fun randomTick(
         state: BlockState,
         level: ServerLevel,
@@ -37,15 +47,15 @@ class HTTreeTapBlock(properties: Properties) : HorizontalDirectionalBlock(proper
         // 背面に原木があるかをチェック
         val front: Direction = state.getValue(FACING)
         val back: Direction = front.opposite
-        val backStates: List<BlockInWorld> = listOf(
+        val backStates: List<BlockState> = listOf(
             pos.relative(back).above(),
             pos.relative(back),
             pos.relative(back).below(),
-        ).map { posIn: BlockPos -> BlockInWorld(level, posIn, false) }
+        ).map (level::getBlockState)
         // 液体を取得する
         var cauldron: CauldronFluidContent? = null
         for ((key: ResourceKey<Fluid>, treeTap: HTTreeTap) in BuiltInRegistries.FLUID.getDataMap(RagiumDataMaps.TREE_TAP)) {
-            if (backStates.all(treeTap.predicate::matches)) {
+            if (backStates.all{ stateIn: BlockState -> stateIn.`is`(treeTap.holderSet) }) {
                 val fluid: Fluid = BuiltInRegistries.FLUID.get(key) ?: continue
                 cauldron = CauldronFluidContent.getForFluid(fluid)
                 if (cauldron != null) break

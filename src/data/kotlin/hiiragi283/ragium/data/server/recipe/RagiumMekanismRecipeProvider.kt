@@ -8,6 +8,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.IMekanismAccess
 import mekanism.api.chemical.ChemicalStack
+import mekanism.api.datagen.recipe.builder.ChemicalCrystallizerRecipeBuilder
 import mekanism.api.datagen.recipe.builder.ItemStackChemicalToItemStackRecipeBuilder
 import mekanism.api.datagen.recipe.builder.ItemStackToChemicalRecipeBuilder
 import mekanism.api.datagen.recipe.builder.ItemStackToItemStackRecipeBuilder
@@ -26,6 +27,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
 
     override fun buildRecipeInternal() {
         chemicalConversion()
+        crystallizing()
         enriching()
         infusing()
         rotary()
@@ -60,6 +62,20 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
 
         toChemical(ItemStackToChemicalRecipeBuilder::chemicalConversion, "chemical_conversion")
         toChemical(ItemStackToChemicalRecipeBuilder::oxidizing, "oxidizing")
+    }
+
+    private fun crystallizing() {
+        ChemicalCrystallizerRecipeBuilder
+            .crystallizing(
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, 1000),
+                RagiumItems.CRIMSON_CRYSTAL.toStack(),
+            ).build(output, RagiumAPI.id("crystallizing/crimson_crystal"))
+
+        ChemicalCrystallizerRecipeBuilder
+            .crystallizing(
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, 1000),
+                RagiumItems.WARPED_CRYSTAL.toStack(),
+            ).build(output, RagiumAPI.id("crystallizing/warped_crystal"))
     }
 
     private fun enriching() {

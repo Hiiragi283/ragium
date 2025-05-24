@@ -7,6 +7,9 @@ import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlocks
 
 object RagiumEmiCategories {
+    @JvmField
+    val TREE_TAPPING = HTEmiRecipeCategory(RagiumAPI.id("tree_tapping"), RagiumBlocks.TREE_TAP)
+    
     // Machines
     @JvmField
     val CRUSHING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.CRUSHING), RagiumBlocks.CRUSHER)
@@ -24,7 +27,9 @@ object RagiumEmiCategories {
     val SOLIDIFYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.SOLIDIFYING), RagiumBlocks.REFINERY)
 
     @JvmField
-    val MACHINES: List<HTEmiRecipeCategory> = listOf(
+    val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
+        TREE_TAPPING,
+        // Machines
         CRUSHING,
         EXTRACTING,
         INFUSING,
@@ -35,14 +40,14 @@ object RagiumEmiCategories {
     @JvmStatic
     fun register(registry: EmiRegistry) {
         // Category
-        MACHINES.forEach(registry::addCategory)
+        CATEGORIES.forEach(registry::addCategory)
 
         // Workstation
         fun addWorkstation(category: HTEmiRecipeCategory) {
             registry.addWorkstation(category, category.iconStack)
         }
 
-        MACHINES.forEach(::addWorkstation)
+        CATEGORIES.forEach(::addWorkstation)
         registry.addWorkstation(CRUSHING, EmiStack.of(RagiumBlocks.ADVANCED_CRUSHER))
         registry.addWorkstation(EXTRACTING, EmiStack.of(RagiumBlocks.ADVANCED_EXTRACTOR))
     }

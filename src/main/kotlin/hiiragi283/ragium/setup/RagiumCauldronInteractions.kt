@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.HTFluidContent
 import net.minecraft.core.BlockPos
 import net.minecraft.core.cauldron.CauldronInteraction
@@ -31,6 +32,36 @@ object RagiumCauldronInteractions {
     fun initDefaultInteractions() {
         initDefaultInteraction(CRIMSON_SAP, RagiumFluidContents.CRIMSON_SAP, RagiumBlocks.CRIMSON_SAP_CAULDRON)
         initDefaultInteraction(WARPED_SAP, RagiumFluidContents.WARPED_SAP, RagiumBlocks.WARPED_SAP_CAULDRON)
+
+        CRIMSON_SAP.map.put(
+            RagiumItems.RAGI_ALLOY_NUGGET.get(),
+        ) { state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, stack: ItemStack ->
+            if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
+                return@put ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+            } else {
+                if (!level.isClientSide) {
+                    stack.consume(1, player)
+                    dropStackAt(player, RagiumItems.CRIMSON_CRYSTAL.toStack())
+                    emptyCauldron(RagiumFluidContents.CRIMSON_SAP, level, pos, player, stack)
+                }
+                ItemInteractionResult.sidedSuccess(level.isClientSide)
+            }
+        }
+
+        WARPED_SAP.map.put(
+            RagiumItems.AZURE_STEEL_NUGGET.get(),
+        ) { state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, stack: ItemStack ->
+            if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
+                return@put ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+            } else {
+                if (!level.isClientSide) {
+                    stack.consume(1, player)
+                    dropStackAt(player, RagiumItems.WARPED_CRYSTAL.toStack())
+                    emptyCauldron(RagiumFluidContents.WARPED_SAP, level, pos, player, stack)
+                }
+                ItemInteractionResult.sidedSuccess(level.isClientSide)
+            }
+        }
     }
 
     @JvmStatic
@@ -51,16 +82,7 @@ object RagiumCauldronInteractions {
                         hand,
                         ItemUtils.createFilledResult(stack, player, content.bucketHolder.toStack()),
                     )
-                    player.awardStat(Stats.FILL_CAULDRON)
-                    player.awardStat(Stats.ITEM_USED.get(stack.item))
-                    level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
-                    level.playSound(
-                        null,
-                        pos,
-                        content.getType().getSound(SoundActions.BUCKET_FILL) ?: SoundEvents.BUCKET_FILL,
-                        SoundSource.BLOCKS,
-                    )
-                    level.gameEvent(null, GameEvent.FLUID_PICKUP, pos)
+                    emptyCauldron(content, level, pos, player, stack)
                 }
             }
             ItemInteractionResult.sidedSuccess(level.isClientSide)
@@ -84,5 +106,25 @@ object RagiumCauldronInteractions {
             }
             ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
+    }
+
+    @JvmStatic
+    private fun emptyCauldron(
+        content: HTFluidContent<*, *, *>,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        stack: ItemStack,
+    ) {
+        player.awardStat(Stats.USE_CAULDRON)
+        player.awardStat(Stats.ITEM_USED.get(stack.item))
+        level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
+        level.playSound(
+            null,
+            pos,
+            content.getType().getSound(SoundActions.BUCKET_FILL) ?: SoundEvents.BUCKET_FILL,
+            SoundSource.BLOCKS,
+        )
+        level.gameEvent(null, GameEvent.FLUID_PICKUP, pos)
     }
 }

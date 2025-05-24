@@ -1,21 +1,15 @@
 package hiiragi283.ragium.api.data
 
 import com.mojang.serialization.Codec
-import net.minecraft.advancements.critereon.BlockPredicate
-import net.minecraft.tags.TagKey
+import net.minecraft.core.HolderSet
+import net.minecraft.core.RegistryCodecs
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.block.Block
 
-data class HTTreeTap(val predicate: BlockPredicate) {
+data class HTTreeTap(val holderSet: HolderSet<Block>) {
     companion object {
         @JvmField
         val CODEC: Codec<HTTreeTap> =
-            BlockPredicate.CODEC.xmap(::HTTreeTap, HTTreeTap::predicate)
+            RegistryCodecs.homogeneousList(Registries.BLOCK).xmap(::HTTreeTap, HTTreeTap::holderSet)
     }
-
-    constructor(tagKey: TagKey<Block>) : this(
-        BlockPredicate.Builder
-            .block()
-            .of(tagKey)
-            .build(),
-    )
 }

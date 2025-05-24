@@ -1,10 +1,6 @@
 {
   "values": {
-    "#c:crimson_sap": {
-      "blocks": "#minecraft:crimson_stems"
-    },
-    "#c:warped_sap": {
-      "blocks": "#minecraft:warped_stems"
-    }
+    "#c:crimson_sap": "#minecraft:crimson_stems",
+    "#c:warped_sap": "#minecraft:warped_stems"
   }
 }

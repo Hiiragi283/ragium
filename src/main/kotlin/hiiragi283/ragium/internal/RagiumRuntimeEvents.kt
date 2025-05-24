@@ -7,9 +7,12 @@ import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
@@ -32,6 +35,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -46,6 +50,7 @@ import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
+import net.neoforged.neoforge.event.tick.EntityTickEvent
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import org.slf4j.Logger
 
@@ -176,7 +181,7 @@ object RagiumRuntimeEvents {
         }
     }
 
-    //    Entity Conversion    //
+    //    Entity    //
 
     @SubscribeEvent
     fun onEntityStruck(event: EntityStruckByLightningEvent) {
@@ -199,6 +204,38 @@ object RagiumRuntimeEvents {
             itemEntity.item = RagiumItems.RAGI_ALLOY_INGOT.toStack(stackIn.count)
             itemEntity.persistentData.putBoolean("AlreadyStruck", true)
             event.isCanceled = true
+        }
+    }
+
+    @SubscribeEvent
+    fun onEntityTick(event: EntityTickEvent.Post) {
+        val itemEntity: ItemEntity = event.entity as? ItemEntity ?: return
+        val level: Level = itemEntity.level()
+        val pos: BlockPos = itemEntity.blockPosition()
+        val stateIn: BlockState = itemEntity.inBlockState
+        val stack: ItemStack = itemEntity.item
+        val remainCount: Int = stack.count - 1
+
+        if (stateIn.`is`(RagiumBlocks.CRIMSON_SAP_CAULDRON)) {
+            if (stack.`is`(RagiumItemTags.NUGGETS_RAGI_ALLOY)) {
+                itemEntity.item = RagiumItems.CRIMSON_CRYSTAL.toStack()
+                level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
+                if (remainCount > 0) {
+                    dropStackAt(itemEntity, stack.copyWithCount(remainCount))
+                }
+                return
+            }
+        }
+
+        if (stateIn.`is`(RagiumBlocks.WARPED_SAP_CAULDRON)) {
+            if (stack.`is`(RagiumItemTags.NUGGETS_AZURE_STEEL)) {
+                itemEntity.item = RagiumItems.WARPED_CRYSTAL.toStack()
+                level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
+                if (remainCount > 0) {
+                    dropStackAt(itemEntity, stack.copyWithCount(remainCount))
+                }
+                return
+            }
         }
     }
 

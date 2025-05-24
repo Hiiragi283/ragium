@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:crystallizing",
+  "input": {
+    "amount": 1000,
+    "chemical": "ragium:crimson_sap"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:crimson_crystal"
+  }
+}

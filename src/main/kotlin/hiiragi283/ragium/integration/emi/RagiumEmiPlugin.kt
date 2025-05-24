@@ -15,11 +15,14 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.recipe.special.EmiSmithingTrimRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
+import hiiragi283.ragium.api.data.HTTreeTap
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
+import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
@@ -42,13 +45,16 @@ import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMachineEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSolidifyingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTTreeTappingEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -89,16 +95,73 @@ class RagiumEmiPlugin : EmiPlugin {
         this.registry = registry
         recipeManager = registry.recipeManager
 
-        addMachineRecipes()
-
+        addRecipes()
         addInfos()
-        addInteractions()
-
-        addCustomRecipe()
+        
     }
 
-    //    Machine    //
+    //    Recipes    //
 
+    private fun addRecipes() {
+        addCustomRecipe()
+        addMachineRecipes()
+        addInteractions()
+    }
+    
+    private fun addCustomRecipe() {
+        // Crafting
+        forEachRecipes(RecipeType.CRAFTING) { _: ResourceLocation, recipe: CraftingRecipe? ->
+            if (recipe is HTIceCreamSodaRecipe) {
+                EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
+                    addRecipeSafe(
+                        holder.key().location().withPrefix("/shapeless/ice_cream_soda/"),
+                    ) { id: ResourceLocation ->
+                        EmiCraftingRecipe(
+                            listOf(
+                                EmiStack.of(RagiumItems.ICE_CREAM),
+                                EmiIngredient.of(RagiumItemTags.FOODS_CHERRY),
+                                EmiStack.of(createPotionStack(holder)),
+                                EmiIngredient.of(Tags.Items.DYES_GREEN),
+                            ),
+                            EmiStack.of(RagiumAPI.getInstance().createSoda(holder)),
+                            id,
+                            true,
+                        )
+                    }
+                }
+            }
+        }
+        // Smithing
+        addRecipeSafe(HTEternalTicketRecipe) { recipe: HTEternalTicketRecipe ->
+            EmiSmithingTrimRecipe(
+                EmiStack.of(RagiumItems.ETERNAL_TICKET),
+                EmiIngredient.of(
+                    EmiPort
+                        .getItemRegistry()
+                        .holders()
+                        .filter { holder: Holder.Reference<Item> -> holder.value().defaultInstance.isDamageableItem }
+                        .map { holder: Holder.Reference<Item> -> EmiStack.of(holder.value()) }
+                        .toList(),
+                ),
+                EmiStack.EMPTY,
+                EmiStack.EMPTY,
+                recipe,
+            )
+        }
+        // Tree Tapping
+        val treeTapMap: Map<ResourceKey<Fluid>, HTTreeTap> = EmiPort.getFluidRegistry().getDataMap(RagiumDataMaps.TREE_TAP)
+        for ((key: ResourceKey<Fluid>, treeTap: HTTreeTap) in treeTapMap) {
+            val output: EmiStack = EmiPort.getFluidRegistry().get(key)?.let(EmiStack::of) ?: continue
+            addRecipeSafe(key.location()) { id: ResourceLocation ->
+                HTTreeTappingEmiRecipe(
+                    id,
+                    EmiIngredient.of(treeTap.holderSet.map { holder: Holder<Block> -> holder.value().toStack() }.map(EmiStack::of)),
+                    output
+                )
+            }
+        }
+    }
+    
     private fun addMachineRecipes() {
         forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             if (recipe is HTCrushingRecipe) {
@@ -187,49 +250,6 @@ class RagiumEmiPlugin : EmiPlugin {
         }
     }
 
-    //    Info    //
-
-    private fun addInfos() {
-        addInfo(RagiumBlocks.ASH_LOG, Component.translatable(RagiumTranslationKeys.EMI_ASH_LOG))
-        addInfo(RagiumBlocks.CRIMSON_SOIL, Component.translatable(RagiumTranslationKeys.EMI_CRIMSON_SOIL))
-        addInfo(
-            RagiumBlocks.OBSIDIAN_GLASS,
-            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
-            Component.translatable(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS),
-        )
-        addInfo(RagiumBlocks.QUARTZ_GLASS, Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS))
-        addInfo(
-            RagiumBlocks.SOUL_GLASS,
-            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
-            Component.translatable(RagiumTranslationKeys.EMI_SOUL_GLASS),
-        )
-
-        addInfo(RagiumItems.AMBROSIA, Component.translatable(RagiumTranslationKeys.EMI_AMBROSIA))
-        addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
-        addInfo(RagiumItems.ITEM_MAGNET, Component.translatable(RagiumTranslationKeys.EMI_ITEM_MAGNET))
-        addInfo(RagiumItems.RAGI_CHERRY, Component.translatable(RagiumTranslationKeys.EMI_RAGI_CHERRY))
-        addInfo(RagiumItems.RAGI_EGG, Component.translatable(RagiumTranslationKeys.EMI_RAGI_EGG))
-        addInfo(RagiumItems.RAGI_LANTERN, Component.translatable(RagiumTranslationKeys.EMI_RAGI_LANTERN))
-        addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
-        addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
-    }
-
-    private fun addInfo(icon: ItemLike, vararg texts: Component) {
-        addInfo(EmiStack.of(icon), *texts)
-    }
-
-    private fun addInfo(icon: EmiStack, vararg texts: Component) {
-        addRecipeSafe(icon.id.withPrefix("/")) { id: ResourceLocation ->
-            EmiInfoRecipe(
-                listOf(icon),
-                listOf(*texts),
-                id,
-            )
-        }
-    }
-
-    //    Interaction    //
-
     private fun addInteractions() {
         // Water Well
         addRecipeSafe(RagiumAPI.id("/world/fluid_generator/water_well")) { id: ResourceLocation ->
@@ -308,50 +328,47 @@ class RagiumEmiPlugin : EmiPlugin {
         }
     }
 
-    //    Custom    //
+    //    Info    //
 
-    private fun addCustomRecipe() {
-        // Crafting
-        forEachRecipes(RecipeType.CRAFTING) { _: ResourceLocation, recipe: CraftingRecipe? ->
-            if (recipe is HTIceCreamSodaRecipe) {
-                EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
-                    addRecipeSafe(
-                        holder.key().location().withPrefix("/shapeless/ice_cream_soda/"),
-                    ) { id: ResourceLocation ->
-                        EmiCraftingRecipe(
-                            listOf(
-                                EmiStack.of(RagiumItems.ICE_CREAM),
-                                EmiIngredient.of(RagiumItemTags.FOODS_CHERRY),
-                                EmiStack.of(createPotionStack(holder)),
-                                EmiIngredient.of(Tags.Items.DYES_GREEN),
-                            ),
-                            EmiStack.of(RagiumAPI.getInstance().createSoda(holder)),
-                            id,
-                            true,
-                        )
-                    }
-                }
-            }
-        }
-        // Smithing
-        addRecipeSafe(HTEternalTicketRecipe) { recipe: HTEternalTicketRecipe ->
-            EmiSmithingTrimRecipe(
-                EmiStack.of(RagiumItems.ETERNAL_TICKET),
-                EmiIngredient.of(
-                    EmiPort
-                        .getItemRegistry()
-                        .holders()
-                        .filter { holder: Holder.Reference<Item> -> holder.value().defaultInstance.isDamageableItem }
-                        .map { holder: Holder.Reference<Item> -> EmiStack.of(holder.value()) }
-                        .toList(),
-                ),
-                EmiStack.EMPTY,
-                EmiStack.EMPTY,
-                recipe,
+    private fun addInfos() {
+        addInfo(RagiumBlocks.ASH_LOG, Component.translatable(RagiumTranslationKeys.EMI_ASH_LOG))
+        addInfo(RagiumBlocks.CRIMSON_SOIL, Component.translatable(RagiumTranslationKeys.EMI_CRIMSON_SOIL))
+        addInfo(
+            RagiumBlocks.OBSIDIAN_GLASS,
+            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
+            Component.translatable(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS),
+        )
+        addInfo(RagiumBlocks.QUARTZ_GLASS, Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS))
+        addInfo(
+            RagiumBlocks.SOUL_GLASS,
+            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
+            Component.translatable(RagiumTranslationKeys.EMI_SOUL_GLASS),
+        )
+
+        addInfo(RagiumItems.AMBROSIA, Component.translatable(RagiumTranslationKeys.EMI_AMBROSIA))
+        addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
+        addInfo(RagiumItems.ITEM_MAGNET, Component.translatable(RagiumTranslationKeys.EMI_ITEM_MAGNET))
+        addInfo(RagiumItems.RAGI_CHERRY, Component.translatable(RagiumTranslationKeys.EMI_RAGI_CHERRY))
+        addInfo(RagiumItems.RAGI_EGG, Component.translatable(RagiumTranslationKeys.EMI_RAGI_EGG))
+        addInfo(RagiumItems.RAGI_LANTERN, Component.translatable(RagiumTranslationKeys.EMI_RAGI_LANTERN))
+        addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
+        addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
+    }
+
+    private fun addInfo(icon: ItemLike, vararg texts: Component) {
+        addInfo(EmiStack.of(icon), *texts)
+    }
+
+    private fun addInfo(icon: EmiStack, vararg texts: Component) {
+        addRecipeSafe(icon.id.withPrefix("/")) { id: ResourceLocation ->
+            EmiInfoRecipe(
+                listOf(icon),
+                listOf(*texts),
+                id,
             )
         }
     }
-
+    
     //    Extension    //
 
     private inline fun <I : RecipeInput, R : Recipe<I>> forEachRecipes(recipeType: RecipeType<R>, action: (ResourceLocation, R) -> Unit) {

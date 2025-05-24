@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.enchantment.HTEnchantmentListener
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTSingleVariantStorage
 import hiiragi283.ragium.api.storage.HTStackStorage
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidType
 
 abstract class HTFluidTank :
     HTSingleVariantStorage<HTFluidVariant>(),
@@ -63,7 +63,7 @@ abstract class HTFluidTank :
     }
 
     class Builder internal constructor() {
-        var capacity: Int = Item.ABSOLUTE_MAX_STACK_SIZE
+        var capacity: Int = FluidType.BUCKET_VOLUME * 8
         var validator: (HTFluidVariant) -> Boolean = { true }
         var callback: () -> Unit = {}
 

@@ -210,12 +210,12 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
 
         builder.add(
             RagiumFluidContents.CRIMSON_SAP.commonTag,
-            HTTreeTap(BlockTags.CRIMSON_STEMS),
+            HTTreeTap(blockLookup.getOrThrow(BlockTags.CRIMSON_STEMS)),
             false,
         )
         builder.add(
             RagiumFluidContents.WARPED_SAP.commonTag,
-            HTTreeTap(BlockTags.WARPED_STEMS),
+            HTTreeTap(blockLookup.getOrThrow(BlockTags.WARPED_STEMS)),
             false,
         )
     }
