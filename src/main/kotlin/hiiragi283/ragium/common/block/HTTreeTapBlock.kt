@@ -59,7 +59,7 @@ class HTTreeTapBlock(properties: Properties) : HorizontalDirectionalBlock(proper
         // 液体を取得する
         var cauldron: CauldronFluidContent? = null
         for ((key: ResourceKey<Fluid>, treeTap: HTTreeTap) in BuiltInRegistries.FLUID.getDataMap(RagiumDataMaps.TREE_TAP)) {
-            if (backStates.all { stateIn: BlockState -> stateIn.`is`(treeTap.holderSet) }) {
+            if (backStates.all(treeTap::matches)) {
                 val fluid: Fluid = BuiltInRegistries.FLUID.get(key) ?: continue
                 cauldron = CauldronFluidContent.getForFluid(fluid)
                 if (cauldron != null) break

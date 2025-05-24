@@ -21,7 +21,6 @@ import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
@@ -50,6 +49,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
+import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -146,13 +146,13 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         // Tree Tapping
-        val treeTapMap: Map<ResourceKey<Fluid>, HTTreeTap> = EmiPort.getFluidRegistry().getDataMap(RagiumDataMaps.TREE_TAP)
-        for ((key: ResourceKey<Fluid>, treeTap: HTTreeTap) in treeTapMap) {
-            val output: EmiStack = EmiPort.getFluidRegistry().get(key)?.let(EmiStack::of) ?: continue
-            addRecipeSafe(key.location()) { id: ResourceLocation ->
+        val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
+        for ((key: ResourceKey<Fluid>, treeTap: HTTreeTap) in fluidRegistry.getDataMap(RagiumDataMaps.TREE_TAP)) {
+            val output: EmiStack = fluidRegistry.get(key)?.let(EmiStack::of) ?: continue
+            addRecipeSafe(key.location().withPrefix("/")) { id: ResourceLocation ->
                 HTTreeTappingEmiRecipe(
                     id,
-                    EmiIngredient.of(treeTap.holderSet.map { holder: Holder<Block> -> holder.value().toStack() }.map(EmiStack::of)),
+                    EmiIngredient.of(treeTap.getBlocks().map(EmiStack::of)),
                     output,
                 )
             }

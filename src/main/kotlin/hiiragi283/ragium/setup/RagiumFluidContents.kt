@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
@@ -49,97 +48,61 @@ object RagiumFluidContents {
 
     //    Hydrogen    //
 
-    @JvmField
-    val HYDROGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("hydrogen", gaseous())
+    // val HYDROGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("hydrogen", gaseous())
 
     //    Nitrogen    //
 
-    @JvmField
-    val NITROGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("nitrogen", gaseous())
+    // val NITROGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("nitrogen", gaseous())
 
-    @JvmField
-    val AMMONIA: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("ammonia", gaseous())
+    // val AMMONIA: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("ammonia", gaseous())
 
-    @JvmField
-    val NITRIC_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("nitric_acid", defaultProperties())
+    // val NITRIC_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("nitric_acid", defaultProperties())
 
-    @JvmField
-    val MIXTURE_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("mixture_acid", defaultProperties())
+    // val MIXTURE_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("mixture_acid", defaultProperties())
 
     //    Oxygen    //
 
-    @JvmField
-    val OXYGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("oxygen", gaseous())
+    // val OXYGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("oxygen", gaseous())
 
-    @JvmField
-    val ROCKET_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("rocket_fuel", gaseous())
+    // val ROCKET_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("rocket_fuel", gaseous())
 
     //    Alkali    //
 
-    @JvmField
-    val ALKALI_SOLUTION: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("alkali_solution", defaultProperties())
+    // val ALKALI_SOLUTION: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("alkali_solution", defaultProperties())
 
     //    Sulfur    //
 
-    @JvmField
-    val SULFUR_DIOXIDE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sulfur_dioxide", gaseous())
+    // val SULFUR_DIOXIDE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sulfur_dioxide", gaseous())
 
-    @JvmField
-    val SULFUR_TRIOXIDE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sulfur_trioxide", gaseous())
+    // val SULFUR_TRIOXIDE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sulfur_trioxide", gaseous())
 
-    @JvmField
-    val SULFURIC_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sulfuric_acid", defaultProperties())
+    // val SULFURIC_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sulfuric_acid", defaultProperties())
 
     //    Oil    //
 
-    @JvmField
-    val CRUDE_OIL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register(
-            "crude_oil",
-            defaultProperties()
-                .canSwim(false)
-                .pathType(PathType.LAVA)
-                .density(3000)
-                .viscosity(6000)
-                .motionScale(0.0001),
-        )
+    /*val CRUDE_OIL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+        "crude_oil",
+        defaultProperties()
+            .canSwim(false)
+            .pathType(PathType.LAVA)
+            .density(3000)
+            .viscosity(6000)
+            .motionScale(0.0001),
+    )*/
 
-    @JvmField
-    val NAPHTHA: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("naphtha", defaultProperties())
+    // val NAPHTHA: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("naphtha", defaultProperties())
 
-    @JvmField
-    val FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("fuel", defaultProperties())
+    // val FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("fuel", defaultProperties())
 
-    @JvmField
-    val NITRO_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("nitro_fuel", defaultProperties())
+    // val NITRO_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("nitro_fuel", defaultProperties())
 
-    @JvmField
-    val AROMATIC_COMPOUND: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("aromatic_compound", defaultProperties())
+    // val AROMATIC_COMPOUND: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("aromatic_compound", defaultProperties())
 
     //    Bio    //
 
-    @JvmField
-    val PLANT_OIL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("plant_oil", defaultProperties())
+    // val PLANT_OIL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("plant_oil", defaultProperties())
 
-    @JvmField
-    val BIOMASS: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("biomass", defaultProperties())
+    // val BIOMASS: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("biomass", defaultProperties())
 
     //    Sap    //
 

@@ -176,31 +176,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
-        addFluid(RagiumFluidContents.HYDROGEN, "Hydrogen")
-
-        addFluid(RagiumFluidContents.NITROGEN, "Nitrogen")
-        addFluid(RagiumFluidContents.AMMONIA, "Ammonia")
-        addFluid(RagiumFluidContents.NITRIC_ACID, "Nitric Acid")
-        addFluid(RagiumFluidContents.MIXTURE_ACID, "Mixture Acid")
-
-        addFluid(RagiumFluidContents.OXYGEN, "Oxygen")
-        addFluid(RagiumFluidContents.ROCKET_FUEL, "Rocket Fuel")
-
-        addFluid(RagiumFluidContents.ALKALI_SOLUTION, "Alkali Solution")
-
-        addFluid(RagiumFluidContents.SULFUR_DIOXIDE, "Sulfur Dioxide")
-        addFluid(RagiumFluidContents.SULFUR_TRIOXIDE, "Sulfur Trioxide")
-        addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
-
-        addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
-        addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
-        addFluid(RagiumFluidContents.FUEL, "Fuel")
-        addFluid(RagiumFluidContents.NITRO_FUEL, "Nitro Fuel")
-        addFluid(RagiumFluidContents.AROMATIC_COMPOUND, "Aromatic Compound")
-
-        addFluid(RagiumFluidContents.PLANT_OIL, "Plant Oil")
-        addFluid(RagiumFluidContents.BIOMASS, "Biomass")
-
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")

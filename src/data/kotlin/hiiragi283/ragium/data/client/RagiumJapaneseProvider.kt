@@ -171,31 +171,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
-        addFluid(RagiumFluidContents.HYDROGEN, "水素")
-
-        addFluid(RagiumFluidContents.NITROGEN, "窒素")
-        addFluid(RagiumFluidContents.AMMONIA, "アンモニア")
-        addFluid(RagiumFluidContents.NITRIC_ACID, "硝酸")
-        addFluid(RagiumFluidContents.MIXTURE_ACID, "混酸")
-
-        addFluid(RagiumFluidContents.OXYGEN, "酸素")
-        addFluid(RagiumFluidContents.ROCKET_FUEL, "ロケット燃料")
-
-        addFluid(RagiumFluidContents.ALKALI_SOLUTION, "アルカリ溶液")
-
-        addFluid(RagiumFluidContents.SULFUR_DIOXIDE, "二酸化硫黄")
-        addFluid(RagiumFluidContents.SULFUR_TRIOXIDE, "三酸化硫黄")
-        addFluid(RagiumFluidContents.SULFURIC_ACID, "硫酸")
-
-        addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
-        addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
-        addFluid(RagiumFluidContents.FUEL, "燃料")
-        addFluid(RagiumFluidContents.NITRO_FUEL, "ニトロ燃料")
-        addFluid(RagiumFluidContents.AROMATIC_COMPOUND, "芳香族化合物")
-
-        addFluid(RagiumFluidContents.PLANT_OIL, "植物油")
-        addFluid(RagiumFluidContents.BIOMASS, "バイオマス")
-
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")

@@ -29,9 +29,9 @@ class HTTreeTappingEmiRecipe(private val id: ResourceLocation, private val ingre
         widgets.addInput(ingredient, 0.0, 1.0)
         widgets.addInput(ingredient, 0.0, 2.0)
         // Tree Tap
-        widgets.addInput(EmiStack.of(RagiumBlocks.TREE_TAP), 1.0, 1.0)
+        widgets.addInput(EmiStack.of(RagiumBlocks.TREE_TAP), 1.0, 1.0).drawBack(false)
         // Cauldron
-        widgets.addInput(EmiStack.of(Items.CAULDRON), 1.0, 2.0)
+        widgets.addInput(EmiStack.of(Items.CAULDRON), 1.0, 2.0).drawBack(false)
         // Output
         widgets.addArrow(2.0, 2.0)
         widgets.addOutput(output, 3.5, 2.0)

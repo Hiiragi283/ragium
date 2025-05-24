@@ -209,13 +209,13 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         val builder: Builder<HTTreeTap, Fluid> = builder(RagiumDataMaps.TREE_TAP)
 
         builder.add(
-            RagiumFluidContents.CRIMSON_SAP.commonTag,
-            HTTreeTap(blockLookup.getOrThrow(BlockTags.CRIMSON_STEMS)),
+            RagiumFluidContents.CRIMSON_SAP.stillHolder,
+            HTTreeTap(BlockTags.CRIMSON_STEMS),
             false,
         )
         builder.add(
-            RagiumFluidContents.WARPED_SAP.commonTag,
-            HTTreeTap(blockLookup.getOrThrow(BlockTags.WARPED_STEMS)),
+            RagiumFluidContents.WARPED_SAP.stillHolder,
+            HTTreeTap(BlockTags.WARPED_STEMS),
             false,
         )
     }

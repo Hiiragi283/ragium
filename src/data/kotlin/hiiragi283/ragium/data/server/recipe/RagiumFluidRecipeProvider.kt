@@ -23,22 +23,22 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         infusing()
         solidifying()
 
-        biomass()
+        // biomass()
         bottle()
-        crudeOil()
-        crystal()
+        // crudeOil()
+        // crystal()
         exp()
-        sap()
+        // sap()
     }
 
-    private fun biomass() {
+    /*private fun biomass() {
         // Biomass -> Ethanol
         createRefining()
             .fluidOutput(RagiumFluidContents.FUEL, 500)
             .fluidInput(RagiumFluidContents.BIOMASS)
             .saveSuffixed(output, "_from_biomass")
         // Ethanol + Plant Oil -> Fuel + Glycerol
-    }
+    }*/
 
     private fun bottle() {
         // Exp Bottle
@@ -84,7 +84,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_water")
     }
 
-    private fun crudeOil() {
+    /*private fun crudeOil() {
         // Coal -> Crude Oil
         createExtracting()
             .fluidOutput(RagiumFluidContents.CRUDE_OIL, 125)
@@ -126,9 +126,9 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(Tags.Items.SANDS)
             .fluidInput(RagiumFluidContents.AROMATIC_COMPOUND, 200)
             .save(output)
-    }
+    }*/
 
-    private fun crystal() {
+    /*private fun crystal() {
         // Quartz
         createInfusing()
             .itemOutput(Items.QUARTZ, 2)
@@ -141,7 +141,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(Tags.Items.GEMS_AMETHYST)
             .waterInput(250)
             .saveSuffixed(output, "_from_water")
-    }
+    }*/
 
     private fun exp() {
         // Golden Apple
@@ -176,7 +176,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
-    private fun sap() {
+    /*private fun sap() {
         // XX Log -> Wood Dust + Sap
         createExtracting()
             .itemOutput(RagiumItems.SAWDUST, 4)
@@ -224,7 +224,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .blasting(Items.ENDER_PEARL)
             .addIngredient(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)
-    }
+    }*/
 
     //    Extracting    //
 

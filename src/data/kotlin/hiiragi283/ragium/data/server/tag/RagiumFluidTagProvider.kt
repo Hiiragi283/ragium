@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.setup.RagiumFluidContents
-import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -38,25 +37,25 @@ class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<Hol
     }
 
     private fun category() {
-        addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.HYDROGEN)
-        addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.NITROGEN)
-        addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.AMMONIA)
-        addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.OXYGEN)
-        addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.ROCKET_FUEL)
-        addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_DIOXIDE)
-        addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_TRIOXIDE)
+        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.HYDROGEN)
+        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.NITROGEN)
+        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.AMMONIA)
+        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.OXYGEN)
+        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.ROCKET_FUEL)
+        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_DIOXIDE)
+        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_TRIOXIDE)
 
         add(RagiumFluidTags.CHOCOLATES, RagiumFluidContents.CHOCOLATE.stillHolder)
         add(RagiumFluidTags.CHOCOLATES, RagiumFluidContents.CHOCOLATE.flowHolder)
 
         addTag(RagiumFluidTags.NITRO_FUEL, commonId("boosted_diesel"), HTTagBuilder.DependType.OPTIONAL)
         addTag(RagiumFluidTags.NITRO_FUEL, commonId("high_power_biodiesel"), HTTagBuilder.DependType.OPTIONAL)
-        addTag(RagiumFluidTags.NITRO_FUEL, RagiumFluidContents.NITRO_FUEL.commonTag)
+        // addTag(RagiumFluidTags.NITRO_FUEL, RagiumFluidContents.NITRO_FUEL.commonTag)
 
         addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("biofuel"), HTTagBuilder.DependType.OPTIONAL)
         addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("heavy_fuel"), HTTagBuilder.DependType.OPTIONAL)
         addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("light_fuel"), HTTagBuilder.DependType.OPTIONAL)
-        addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluidContents.FUEL.commonTag)
+        // addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluidContents.FUEL.commonTag)
 
         addTag(RagiumFluidTags.THERMAL_FUEL, commonId("steam"), HTTagBuilder.DependType.OPTIONAL)
         addTag(RagiumFluidTags.THERMAL_FUEL, commonId("superheated_sodium"), HTTagBuilder.DependType.OPTIONAL)
@@ -66,7 +65,7 @@ class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<Hol
     //    Integrations    //
 
     private fun pneumatic() {
-        addFluid(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
-        addFluid(PneumaticCraftTags.Fluids.PLANT_OIL, RagiumFluidContents.PLANT_OIL)
+        // addFluid(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
+        // addFluid(PneumaticCraftTags.Fluids.PLANT_OIL, RagiumFluidContents.PLANT_OIL)
     }
 }

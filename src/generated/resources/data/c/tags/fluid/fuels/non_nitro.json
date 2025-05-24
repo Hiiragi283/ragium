@@ -4,7 +4,6 @@
       "id": "#c:biofuel",
       "required": false
     },
-    "#c:fuel",
     {
       "id": "#c:heavy_fuel",
       "required": false
