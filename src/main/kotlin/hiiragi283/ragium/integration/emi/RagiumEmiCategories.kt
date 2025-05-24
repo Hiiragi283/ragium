@@ -9,7 +9,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 object RagiumEmiCategories {
     @JvmField
     val TREE_TAPPING = HTEmiRecipeCategory(RagiumAPI.id("tree_tapping"), RagiumBlocks.TREE_TAP)
-    
+
     // Machines
     @JvmField
     val CRUSHING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.CRUSHING), RagiumBlocks.CRUSHER)

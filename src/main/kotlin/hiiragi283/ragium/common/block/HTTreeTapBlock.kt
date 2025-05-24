@@ -28,16 +28,20 @@ class HTTreeTapBlock(properties: Properties) : HorizontalDirectionalBlock(proper
         @JvmField
         val SHAPE: VoxelShape = box(6.0, 6.0, 4.0, 10.0, 10.0, 16.0)
     }
-    
+
     override fun codec(): MapCodec<out HorizontalDirectionalBlock> = throw UnsupportedOperationException()
 
     init {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH))
     }
 
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape =
-        SHAPE
-    
+    override fun getShape(
+        state: BlockState,
+        level: BlockGetter,
+        pos: BlockPos,
+        context: CollisionContext,
+    ): VoxelShape = SHAPE
+
     override fun randomTick(
         state: BlockState,
         level: ServerLevel,
@@ -51,11 +55,11 @@ class HTTreeTapBlock(properties: Properties) : HorizontalDirectionalBlock(proper
             pos.relative(back).above(),
             pos.relative(back),
             pos.relative(back).below(),
-        ).map (level::getBlockState)
+        ).map(level::getBlockState)
         // 液体を取得する
         var cauldron: CauldronFluidContent? = null
         for ((key: ResourceKey<Fluid>, treeTap: HTTreeTap) in BuiltInRegistries.FLUID.getDataMap(RagiumDataMaps.TREE_TAP)) {
-            if (backStates.all{ stateIn: BlockState -> stateIn.`is`(treeTap.holderSet) }) {
+            if (backStates.all { stateIn: BlockState -> stateIn.`is`(treeTap.holderSet) }) {
                 val fluid: Fluid = BuiltInRegistries.FLUID.get(key) ?: continue
                 cauldron = CauldronFluidContent.getForFluid(fluid)
                 if (cauldron != null) break

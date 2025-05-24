@@ -9,11 +9,8 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 
-class HTTreeTappingEmiRecipe(
-    private val id: ResourceLocation,
-    private val ingredient: EmiIngredient,
-    private val output: EmiStack,
-) : HTEmiRecipe {
+class HTTreeTappingEmiRecipe(private val id: ResourceLocation, private val ingredient: EmiIngredient, private val output: EmiStack) :
+    HTEmiRecipe {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.TREE_TAPPING
 
     override fun getId(): ResourceLocation = id

@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTTreeTap
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
-import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.extension.idOrThrow
@@ -51,7 +50,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -97,7 +95,6 @@ class RagiumEmiPlugin : EmiPlugin {
 
         addRecipes()
         addInfos()
-        
     }
 
     //    Recipes    //
@@ -107,7 +104,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addMachineRecipes()
         addInteractions()
     }
-    
+
     private fun addCustomRecipe() {
         // Crafting
         forEachRecipes(RecipeType.CRAFTING) { _: ResourceLocation, recipe: CraftingRecipe? ->
@@ -156,12 +153,12 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTTreeTappingEmiRecipe(
                     id,
                     EmiIngredient.of(treeTap.holderSet.map { holder: Holder<Block> -> holder.value().toStack() }.map(EmiStack::of)),
-                    output
+                    output,
                 )
             }
         }
     }
-    
+
     private fun addMachineRecipes() {
         forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             if (recipe is HTCrushingRecipe) {
@@ -368,7 +365,7 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
     }
-    
+
     //    Extension    //
 
     private inline fun <I : RecipeInput, R : Recipe<I>> forEachRecipes(recipeType: RecipeType<R>, action: (ResourceLocation, R) -> Unit) {
