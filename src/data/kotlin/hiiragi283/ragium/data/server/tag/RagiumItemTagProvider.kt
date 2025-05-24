@@ -2,8 +2,6 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.data.HTItemTagProvider
 import hiiragi283.ragium.api.data.HTTagProvider
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumBlockTags
@@ -15,7 +13,6 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -234,8 +231,8 @@ class RagiumItemTagProvider(
         }
 
         // Parts
-        add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
-        add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
+        // add(itemTagKey(commonId("plates/plastic")), RagiumItems.PLASTIC_PLATE)
+        // add(RagiumItemTags.PLASTICS, RagiumItems.PLASTIC_PLATE)
         add(Tags.Items.SLIME_BALLS, RagiumItems.TAR)
         add(Tags.Items.SLIMEBALLS, RagiumItems.TAR)
         addItem(RagiumItemTags.PAPER, Items.PAPER)
@@ -258,10 +255,10 @@ class RagiumItemTagProvider(
         addTag(RagiumItemTags.END_SOILS, Tags.Items.END_STONES)
 
         // Mold
-        for (mold: RagiumItems.Molds in RagiumItems.Molds.entries) {
+        /*for (mold: RagiumItems.Molds in RagiumItems.Molds.entries) {
             addTag(RagiumItemTags.MOLDS, mold.tagKey)
             addItem(mold.tagKey, mold)
-        }
+        }*/
 
         // Enchantable
         buildList<ItemLike> {
@@ -300,6 +297,6 @@ class RagiumItemTagProvider(
     }
 
     private fun pneumatic() {
-        add(PneumaticCraftTags.Items.PLASTIC_SHEETS, RagiumItems.PLASTIC_PLATE)
+        // add(PneumaticCraftTags.Items.PLASTIC_SHEETS, RagiumItems.PLASTIC_PLATE)
     }
 }

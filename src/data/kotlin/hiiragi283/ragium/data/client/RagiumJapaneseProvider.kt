@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
-import hiiragi283.ragium.api.extension.addItem
 import hiiragi283.ragium.api.extension.addMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -265,28 +264,24 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.NAPALM_DYNAMITE, "ナパームダイナマイト")
         addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")*/
         // Mold
-        addItem(RagiumItems.Molds.BLANK, "成形型（なし）")
-        addItem(RagiumItems.Molds.BALL, "成形型（ボール）")
-        addItem(RagiumItems.Molds.BLOCK, "成形型（ブロック）")
-        addItem(RagiumItems.Molds.GEAR, "成形型（歯車）")
-        addItem(RagiumItems.Molds.INGOT, "成形型（インゴット）")
-        addItem(RagiumItems.Molds.PLATE, "成形型（板材）")
-        addItem(RagiumItems.Molds.ROD, "成形型（棒材）")
-        addItem(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
+        // addItem(RagiumItems.Molds.BLANK, "成形型（なし）")
+        // addItem(RagiumItems.Molds.BALL, "成形型（ボール）")
+        // addItem(RagiumItems.Molds.BLOCK, "成形型（ブロック）")
+        // addItem(RagiumItems.Molds.GEAR, "成形型（歯車）")
+        // addItem(RagiumItems.Molds.INGOT, "成形型（インゴット）")
+        // addItem(RagiumItems.Molds.PLATE, "成形型（板材）")
+        // addItem(RagiumItems.Molds.ROD, "成形型（棒材）")
+        // addItem(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.LED, "発光ダイオード")
-        addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
+        // addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")
-
-        // addItem(RagiumItems.BLANK_TICKET, "空のチケット")
-        // addItem(RagiumItems.TELEPORT_TICKET, "テレポートチケット")
-        // addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
     }
 
     private fun material() {
@@ -433,15 +428,15 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.CIRCUITS_BASIC, "基本回路")
         add(RagiumItemTags.CIRCUITS_ELITE, "精鋭回路")
 
-        add(RagiumItemTags.MOLDS, "成形型")
-        add(RagiumItemTags.MOLDS_BALL, "成形型（ボール）")
-        add(RagiumItemTags.MOLDS_BLANK, "成形型（なし）")
-        add(RagiumItemTags.MOLDS_BLOCK, "成形型（ブロック）")
-        add(RagiumItemTags.MOLDS_GEAR, "成形型（歯車）")
-        add(RagiumItemTags.MOLDS_INGOT, "成形型（インゴット）")
-        add(RagiumItemTags.MOLDS_PLATE, "成形型（板材）")
-        add(RagiumItemTags.MOLDS_ROD, "成形型（棒材）")
-        add(RagiumItemTags.MOLDS_WIRE, "成形型（ワイヤー）")
+        // add(RagiumItemTags.MOLDS, "成形型")
+        // add(RagiumItemTags.MOLDS_BALL, "成形型（ボール）")
+        // add(RagiumItemTags.MOLDS_BLANK, "成形型（なし）")
+        // add(RagiumItemTags.MOLDS_BLOCK, "成形型（ブロック）")
+        // add(RagiumItemTags.MOLDS_GEAR, "成形型（歯車）")
+        // add(RagiumItemTags.MOLDS_INGOT, "成形型（インゴット）")
+        // add(RagiumItemTags.MOLDS_PLATE, "成形型（板材）")
+        // add(RagiumItemTags.MOLDS_ROD, "成形型（棒材）")
+        // add(RagiumItemTags.MOLDS_WIRE, "成形型（ワイヤー）")
 
         add(RagiumItemTags.PAPER, "紙")
         add(RagiumItemTags.PLASTICS, "プラスチック")

@@ -20,14 +20,12 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
-import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -49,8 +47,6 @@ object RagiumItems {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
-        Molds.entries
-
         REGISTER.register(eventBus)
 
         AZURE_STEEL_ARMORS.init(eventBus)
@@ -299,7 +295,7 @@ object RagiumItems {
 
     //    Molds    //
 
-    enum class Molds(val tagKey: TagKey<Item>) : ItemLike {
+    /*enum class Molds(val tagKey: TagKey<Item>) : ItemLike {
         BLANK(RagiumItemTags.MOLDS_BLANK),
         BALL(RagiumItemTags.MOLDS_BALL),
         BLOCK(RagiumItemTags.MOLDS_BLOCK),
@@ -314,7 +310,7 @@ object RagiumItems {
         private val holder: DeferredItem<Item> = register(path)
 
         override fun asItem(): Item = holder.asItem()
-    }
+    }*/
 
     //    Machine Parts    //
 
@@ -330,8 +326,7 @@ object RagiumItems {
     @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
 
-    @JvmField
-    val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
+    // val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
 
     @JvmField
     val BASIC_CIRCUIT: DeferredItem<Item> = register("basic_circuit")

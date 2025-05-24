@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredients
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -11,7 +10,6 @@ import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.material.Fluids
@@ -21,7 +19,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         extracting()
         infusing()
-        solidifying()
+        // solidifying()
 
         // biomass()
         bottle()
@@ -278,7 +276,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
     //    Solidifying    //
 
-    private fun solidifying() {
+    /*private fun solidifying() {
         // Water -> Ice
         createSolidifying()
             .itemOutput(Items.ICE)
@@ -305,5 +303,5 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidInput(RagiumFluidContents.SAP)
             .catalyst(RagiumItemTags.MOLDS_BALL)
             .save(output)
-    }
+    }*/
 }

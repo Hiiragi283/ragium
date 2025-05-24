@@ -123,7 +123,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.RAGI_EGG)
             add(RagiumItems.RAGI_LANTERN)
 
-            addAll(RagiumItems.Molds.entries)
+            // addAll(RagiumItems.Molds.entries)
             // Tickets
             add(RagiumItems.BLANK_TICKET)
 
@@ -166,7 +166,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.STONE_BOARD)
 
             add(RagiumItems.POLYMER_RESIN)
-            add(RagiumItems.PLASTIC_PLATE)
+            // add(RagiumItems.PLASTIC_PLATE)
             add(RagiumItems.BASIC_CIRCUIT)
             add(RagiumItems.ADVANCED_CIRCUIT)
             add(RagiumItems.CRYSTAL_PROCESSOR)

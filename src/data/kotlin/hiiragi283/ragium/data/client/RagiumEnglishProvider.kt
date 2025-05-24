@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
-import hiiragi283.ragium.api.extension.addItem
 import hiiragi283.ragium.api.extension.addMaterialKey
 import hiiragi283.ragium.api.material.keys.CommonMaterials
 import hiiragi283.ragium.api.material.keys.IntegrationMaterials
@@ -270,28 +269,24 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.NAPALM_DYNAMITE, "Napalm Dynamite")
         addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")*/
         // Mold
-        addItem(RagiumItems.Molds.BLANK, "Mold (Blank)")
-        addItem(RagiumItems.Molds.BALL, "Mold (Ball)")
-        addItem(RagiumItems.Molds.BLOCK, "Mold (Block)")
-        addItem(RagiumItems.Molds.GEAR, "Mold (Gear)")
-        addItem(RagiumItems.Molds.INGOT, "Mold (Ingot)")
-        addItem(RagiumItems.Molds.PLATE, "Mold (Plate)")
-        addItem(RagiumItems.Molds.ROD, "Mold (Rod)")
-        addItem(RagiumItems.Molds.WIRE, "Mold (Wire)")
+        // addItem(RagiumItems.Molds.BLANK, "Mold (Blank)")
+        // addItem(RagiumItems.Molds.BALL, "Mold (Ball)")
+        // addItem(RagiumItems.Molds.BLOCK, "Mold (Block)")
+        // addItem(RagiumItems.Molds.GEAR, "Mold (Gear)")
+        // addItem(RagiumItems.Molds.INGOT, "Mold (Ingot)")
+        // addItem(RagiumItems.Molds.PLATE, "Mold (Plate)")
+        // addItem(RagiumItems.Molds.ROD, "Mold (Rod)")
+        // addItem(RagiumItems.Molds.WIRE, "Mold (Wire)")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "Crystal Processor")
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
         addItem(RagiumItems.LED, "Light Emitting Diode")
-        addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
+        // addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")
-
-        // addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
-        // addItem(RagiumItems.TELEPORT_TICKET, "Teleport Ticket")
-        // addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
     }
 
     private fun material() {
@@ -438,15 +433,15 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.CIRCUITS_ADVANCED, "Advanced Circuit")
         add(RagiumItemTags.CIRCUITS_ELITE, "Elite Circuit")
 
-        add(RagiumItemTags.MOLDS, "Press Mold")
-        add(RagiumItemTags.MOLDS_BALL, "Press Mold (Ball)")
-        add(RagiumItemTags.MOLDS_BLANK, "Press Mold (Blank)")
-        add(RagiumItemTags.MOLDS_BLOCK, "Press Mold (Block)")
-        add(RagiumItemTags.MOLDS_GEAR, "Press Mold (Gear)")
-        add(RagiumItemTags.MOLDS_INGOT, "Press Mold (Ingot)")
-        add(RagiumItemTags.MOLDS_PLATE, "Press Mold (Plate)")
-        add(RagiumItemTags.MOLDS_ROD, "Press Mold (Rod)")
-        add(RagiumItemTags.MOLDS_WIRE, "Press Mold (Wire)")
+        // add(RagiumItemTags.MOLDS, "Press Mold")
+        // add(RagiumItemTags.MOLDS_BALL, "Press Mold (Ball)")
+        // add(RagiumItemTags.MOLDS_BLANK, "Press Mold (Blank)")
+        // add(RagiumItemTags.MOLDS_BLOCK, "Press Mold (Block)")
+        // add(RagiumItemTags.MOLDS_GEAR, "Press Mold (Gear)")
+        // add(RagiumItemTags.MOLDS_INGOT, "Press Mold (Ingot)")
+        // add(RagiumItemTags.MOLDS_PLATE, "Press Mold (Plate)")
+        // add(RagiumItemTags.MOLDS_ROD, "Press Mold (Rod)")
+        // add(RagiumItemTags.MOLDS_WIRE, "Press Mold (Wire)")
 
         add(RagiumItemTags.PAPER, "Paper")
         add(RagiumItemTags.PLASTICS, "Plastic")

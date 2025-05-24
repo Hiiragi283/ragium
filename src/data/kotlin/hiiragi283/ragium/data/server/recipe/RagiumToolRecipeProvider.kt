@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
@@ -13,8 +12,6 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -74,11 +71,11 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.EGGS)
             .save(output)
 
-        molds()
+        // molds()
         tickets()
     }
 
-    private fun molds() {
+    /*private fun molds() {
         HTShapedRecipeBuilder(RagiumItems.Molds.BLANK)
             .pattern(
                 "AA",
@@ -98,7 +95,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 ),
             )
         }
-    }
+    }*/
 
     private fun tickets() {
         // Blank

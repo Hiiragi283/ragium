@@ -81,32 +81,23 @@ object RagiumItemTags {
 
     //    Molds    //
 
-    @JvmField
-    val MOLDS: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS)
+    // val MOLDS: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS)
 
-    @JvmField
-    val MOLDS_BALL: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "ball")
+    // val MOLDS_BALL: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "ball")
 
-    @JvmField
-    val MOLDS_BLANK: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "blank")
+    // val MOLDS_BLANK: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "blank")
 
-    @JvmField
-    val MOLDS_BLOCK: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "block")
+    // val MOLDS_BLOCK: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "block")
 
-    @JvmField
-    val MOLDS_GEAR: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "gear")
+    // val MOLDS_GEAR: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "gear")
 
-    @JvmField
-    val MOLDS_INGOT: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "ingot")
+    // val MOLDS_INGOT: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "ingot")
 
-    @JvmField
-    val MOLDS_PLATE: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "plate")
+    // val MOLDS_PLATE: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "plate")
 
-    @JvmField
-    val MOLDS_ROD: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "rod")
+    // val MOLDS_ROD: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "rod")
 
-    @JvmField
-    val MOLDS_WIRE: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "wire")
+    // val MOLDS_WIRE: TagKey<Item> = commonTag(RagiumConstantValues.MOLDS, "wire")
 
     //    Nuggets    //
 
