@@ -4,7 +4,7 @@
   "cookingtime": 100,
   "experience": 0.35,
   "ingredient": {
-    "item": "ragium:meat_ingot"
+    "tag": "c:ingots/meat"
   },
   "result": {
     "count": 1,

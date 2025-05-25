@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:storage_blocks/cheese"
+      "tag": "c:storage_blocks/cooked_meat"
     }
   ],
   "result": {
     "count": 9,
-    "id": "ragium:cheese_ingot"
+    "id": "ragium:cooked_meat_ingot"
   }
 }

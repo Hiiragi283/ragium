@@ -229,9 +229,6 @@ object RagiumItems {
     )
 
     @JvmField
-    val CHEESE_INGOT: DeferredItem<HTConsumableItem> = registerFood("${RagiumConstantValues.CHEESE}_ingot", Foods.APPLE)
-
-    @JvmField
     val CHOCOLATE_INGOT: DeferredItem<HTConsumableItem> = registerFood("${RagiumConstantValues.CHOCOLATE}_ingot", RagiumFoods.CHOCOLATE)
 
     // Meat
@@ -239,13 +236,16 @@ object RagiumItems {
     val MINCED_MEAT: DeferredItem<Item> = register("minced_meat")
 
     @JvmField
-    val MEAT_INGOT: DeferredItem<HTConsumableItem> = registerFood("meat_ingot", Foods.BEEF)
+    val MEAT_INGOT: DeferredItem<HTConsumableItem> = registerFood("${RagiumConstantValues.MEAT}_ingot", Foods.BEEF)
 
     @JvmField
-    val COOKED_MEAT_INGOT: DeferredItem<HTConsumableItem> = registerFood("cooked_meat_ingot", Foods.COOKED_BEEF)
+    val COOKED_MEAT_INGOT: DeferredItem<HTConsumableItem> = registerFood("${RagiumConstantValues.COOKED_MEAT}_ingot", Foods.COOKED_BEEF)
 
     @JvmField
-    val CANNED_COOKED_MEAT: DeferredItem<HTConsumableItem> = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
+    val CANNED_COOKED_MEAT: DeferredItem<HTConsumableItem> = registerFood(
+        "canned_${RagiumConstantValues.COOKED_MEAT}",
+        RagiumFoods.CANNED_COOKED_MEAT,
+    )
 
     // Sponge
     @JvmField

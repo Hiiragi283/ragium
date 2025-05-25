@@ -6,7 +6,7 @@
       "tag": "c:ingots/cooked_meat"
     },
     "B": {
-      "tag": "c:bones"
+      "item": "ragium:cooked_meat_ingot"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:cooked_meat_on_the_bone"
+    "id": "ragium:cooked_meat_block"
   }
 }

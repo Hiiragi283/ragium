@@ -185,16 +185,6 @@ object RagiumMaterialFamilies {
 
     // Others
     @JvmField
-    val CHEESE: HTMaterialFamily =
-        HTMaterialFamily.Builder
-            .ingot(RagiumItemTags.INGOTS_CHEESE, RagiumItems.CHEESE_INGOT)
-            .setEntry(
-                HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_CHEESE,
-                RagiumBlocks.CHEESE_BLOCK,
-            ).build()
-
-    @JvmField
     val CHOCOLATE: HTMaterialFamily =
         HTMaterialFamily.Builder
             .ingot(RagiumItemTags.INGOTS_CHOCOLATE, RagiumItems.CHOCOLATE_INGOT)
@@ -202,5 +192,25 @@ object RagiumMaterialFamilies {
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
                 RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE,
                 RagiumBlocks.CHOCOLATE_BLOCK,
+            ).build()
+
+    @JvmField
+    val MEAT: HTMaterialFamily =
+        HTMaterialFamily.Builder
+            .ingot(RagiumItemTags.INGOTS_MEAT, RagiumItems.MEAT_INGOT)
+            .setEntry(
+                HTMaterialFamily.Variant.STORAGE_BLOCK,
+                RagiumItemTags.STORAGE_BLOCKS_MEAT,
+                RagiumBlocks.MEAT_BLOCK,
+            ).build()
+
+    @JvmField
+    val COOKED_MEAT: HTMaterialFamily =
+        HTMaterialFamily.Builder
+            .ingot(RagiumItemTags.INGOTS_COOKED_MEAT, RagiumItems.COOKED_MEAT_INGOT)
+            .setEntry(
+                HTMaterialFamily.Variant.STORAGE_BLOCK,
+                RagiumItemTags.STORAGE_BLOCKS_COOKED_MEAT,
+                RagiumBlocks.COOKED_MEAT_BLOCK,
             ).build()
 }

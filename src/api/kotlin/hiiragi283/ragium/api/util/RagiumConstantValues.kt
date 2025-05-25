@@ -5,8 +5,8 @@ object RagiumConstantValues {
 
     const val ADVANCED_RAGI_ALLOY = "advanced_ragi_alloy"
     const val AZURE_STEEL = "azure_steel"
-    const val CHEESE = "cheese"
     const val CHOCOLATE = "chocolate"
+    const val COOKED_MEAT = "cooked_meat"
     const val CRIMSON_CRYSTAL = "crimson_crystal"
     const val DEEP_STEEL = "deep_steel"
     const val MEAT = "meat"

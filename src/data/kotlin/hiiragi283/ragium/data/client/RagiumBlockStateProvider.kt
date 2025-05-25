@@ -34,11 +34,12 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         buildList {
             add(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
             add(RagiumBlocks.AZURE_STEEL_BLOCK)
-            add(RagiumBlocks.CHEESE_BLOCK)
             add(RagiumBlocks.CHOCOLATE_BLOCK)
+            add(RagiumBlocks.COOKED_MEAT_BLOCK)
             add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
             add(RagiumBlocks.DEEP_STEEL_BLOCK)
             add(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
+            add(RagiumBlocks.MEAT_BLOCK)
             add(RagiumBlocks.RAGI_ALLOY_BLOCK)
             add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
             add(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
@@ -272,14 +273,14 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     if (block.hasLeftovers) {
                         "_leftover"
                     } else {
-                        "_state${property.possibleValues.size - 2}"
+                        "_stage${property.possibleValues.size - 2}"
                     }
                 } else {
                     "_stage${block.getMaxServings() - servings}"
                 }
             ConfiguredModel
                 .builder()
-                .modelFile(modelFile(holder.id.withSuffix(suffix)))
+                .modelFile(modelFile(holder.blockId.withSuffix(suffix)))
                 .rotationY(state)
                 .build()
         }

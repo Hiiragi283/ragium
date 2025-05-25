@@ -84,18 +84,20 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.DEEP_STEEL_BLOCK)
             add(RagiumItems.DEEP_STEEL_INGOT)
 
-            add(RagiumBlocks.CHEESE_BLOCK)
-            add(RagiumItems.CHEESE_INGOT)
-
             add(RagiumBlocks.CHOCOLATE_BLOCK)
             add(RagiumItems.CHOCOLATE_INGOT)
+
+            add(RagiumBlocks.MEAT_BLOCK)
+            add(RagiumItems.MEAT_INGOT)
+            add(RagiumItems.MINCED_MEAT)
+
+            add(RagiumBlocks.COOKED_MEAT_BLOCK)
+            add(RagiumItems.COOKED_MEAT_INGOT)
+            add(RagiumItems.CANNED_COOKED_MEAT)
             // Dusts
             addAll(RagiumBlocks.RAGINITE_ORES.getItems())
             add(RagiumItems.RAGINITE_DUST)
             add(RagiumItems.RAGI_COKE)
-
-            add(RagiumItems.SAWDUST)
-            add(RagiumItems.COMPRESSED_SAWDUST)
 
             add(RagiumBlocks.ASH_LOG)
             add(RagiumItems.ASH_DUST)
@@ -105,6 +107,9 @@ object RagiumCreativeTabs {
 
             add(RagiumItems.SALTPETER_DUST)
             add(RagiumItems.SULFUR_DUST)
+
+            add(RagiumItems.SAWDUST)
+            add(RagiumItems.COMPRESSED_SAWDUST)
 
             add(RagiumItems.TAR)
             // Decorations
@@ -142,10 +147,6 @@ object RagiumCreativeTabs {
             add(RagiumItems.ICE_CREAM)
             add(RagiumItems.ICE_CREAM_SODA)
 
-            add(RagiumItems.MINCED_MEAT)
-            add(RagiumItems.MEAT_INGOT)
-            add(RagiumItems.COOKED_MEAT_INGOT)
-            add(RagiumItems.CANNED_COOKED_MEAT)
             add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
 
             add(RagiumItems.MELON_PIE)

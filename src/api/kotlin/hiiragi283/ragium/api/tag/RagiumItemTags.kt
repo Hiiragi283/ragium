@@ -74,10 +74,30 @@ object RagiumItemTags {
     val INGOTS_DEEP_STEEL: TagKey<Item> = commonTag(RagiumConstantValues.INGOTS, RagiumConstantValues.DEEP_STEEL)
 
     @JvmField
-    val INGOTS_CHEESE: TagKey<Item> = commonTag(RagiumConstantValues.INGOTS, RagiumConstantValues.CHEESE)
+    val INGOTS_CHOCOLATE: TagKey<Item> = commonTag(RagiumConstantValues.INGOTS, RagiumConstantValues.CHOCOLATE)
 
     @JvmField
-    val INGOTS_CHOCOLATE: TagKey<Item> = commonTag(RagiumConstantValues.INGOTS, RagiumConstantValues.CHOCOLATE)
+    val INGOTS_MEAT: TagKey<Item> = commonTag(RagiumConstantValues.INGOTS, RagiumConstantValues.MEAT)
+
+    @JvmField
+    val INGOTS_COOKED_MEAT: TagKey<Item> = commonTag(RagiumConstantValues.INGOTS, RagiumConstantValues.COOKED_MEAT)
+
+    @JvmField
+    val BEACON_PAYMENTS: List<TagKey<Item>> = listOf(
+        // gems
+        GEMS_RAGI_CRYSTAL,
+        GEMS_CRIMSON_CRYSTAL,
+        GEMS_WARPED_CRYSTAL,
+        GEMS_ELDRITCH_PEARL,
+        // ingots
+        INGOTS_RAGI_ALLOY,
+        INGOTS_ADVANCED_RAGI_ALLOY,
+        INGOTS_AZURE_STEEL,
+        INGOTS_DEEP_STEEL,
+        INGOTS_CHOCOLATE,
+        INGOTS_MEAT,
+        INGOTS_COOKED_MEAT,
+    )
 
     //    Molds    //
 
@@ -146,10 +166,13 @@ object RagiumItemTags {
     val STORAGE_BLOCKS_DEEP_STEEL: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.DEEP_STEEL)
 
     @JvmField
-    val STORAGE_BLOCKS_CHEESE: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CHEESE)
+    val STORAGE_BLOCKS_CHOCOLATE: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CHOCOLATE)
 
     @JvmField
-    val STORAGE_BLOCKS_CHOCOLATE: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.CHOCOLATE)
+    val STORAGE_BLOCKS_MEAT: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.MEAT)
+
+    @JvmField
+    val STORAGE_BLOCKS_COOKED_MEAT: TagKey<Item> = commonTag(RagiumConstantValues.STORAGE_BLOCKS, RagiumConstantValues.COOKED_MEAT)
 
     //    Mekanism Integration    //
 
@@ -185,9 +208,6 @@ object RagiumItemTags {
 
     @JvmField
     val FLOURS: TagKey<Item> = commonTag("flours")
-
-    @JvmField
-    val FOODS_CHEESE: TagKey<Item> = commonTag("foods", RagiumConstantValues.CHEESE)
 
     @JvmField
     val FOODS_CHOCOLATE: TagKey<Item> = commonTag("foods", RagiumConstantValues.CHOCOLATE)

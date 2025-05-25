@@ -96,8 +96,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.AZURE_STEEL_BLOCK, "Block of Azure Steel")
         addBlock(RagiumBlocks.DEEP_STEEL_BLOCK, "Block of Deep Steel")
 
-        addBlock(RagiumBlocks.CHEESE_BLOCK, "Block of Cheese")
         addBlock(RagiumBlocks.CHOCOLATE_BLOCK, "Block of Chocolate")
+        addBlock(RagiumBlocks.MEAT_BLOCK, "Block of Meat")
+        addBlock(RagiumBlocks.COOKED_MEAT_BLOCK, "Block of Cooked Meat")
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationEn("Ragi-Stone", this)
         RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationEn("Ragi-Stone Brick", this)
@@ -219,7 +220,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.AZURE_STEEL_INGOT, "Azure Steel Ingot")
         addItem(RagiumItems.AZURE_STEEL_NUGGET, "Azure Steel Nugget")
         addItem(RagiumItems.DEEP_STEEL_INGOT, "Deep Steel Ingot")
-        addItem(RagiumItems.CHEESE_INGOT, "Cheese Ingot")
+
         addItem(RagiumItems.CHOCOLATE_INGOT, "Chocolate Ingot")
 
         addItem(RagiumItems.ASH_DUST, "Ash")
@@ -455,7 +456,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, "Forge Hammer")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
-        add(RagiumItemTags.FOODS_CHEESE, "Cheese")
         add(RagiumItemTags.FOODS_CHOCOLATE, "Chocolate")
 
         add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "Obsidian Glass")

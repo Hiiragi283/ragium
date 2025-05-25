@@ -99,19 +99,19 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
         HTCookingRecipeBuilder
             .smoking(RagiumItems.COOKED_MEAT_INGOT)
-            .addIngredient(RagiumItems.MEAT_INGOT)
+            .addIngredient(RagiumItemTags.INGOTS_MEAT)
             .setExp(0.35f)
             .save(output)
         // Canned Cooked Meat
         HTShapedRecipeBuilder(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
-            .define('A', RagiumItems.COOKED_MEAT_INGOT)
+            .define('A', RagiumItemTags.INGOTS_COOKED_MEAT)
             .define('B', Tags.Items.INGOTS_IRON)
             .save(output)
         // Cooked Meat on the Bone
         HTShapedRecipeBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
             .hollow8()
-            .define('A', RagiumItems.COOKED_MEAT_INGOT)
+            .define('A', RagiumItemTags.INGOTS_COOKED_MEAT)
             .define('B', Tags.Items.BONES)
             .save(output)
     }

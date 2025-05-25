@@ -82,8 +82,9 @@ class RagiumItemTagProvider(
         register(RagiumMaterialFamilies.AZURE_STEEL)
         register(RagiumMaterialFamilies.DEEP_STEEL)
 
-        register(RagiumMaterialFamilies.CHEESE)
         register(RagiumMaterialFamilies.CHOCOLATE)
+        register(RagiumMaterialFamilies.MEAT)
+        register(RagiumMaterialFamilies.COOKED_MEAT)
         // Dusts
         add(RagiumItemTags.DUSTS_ASH, RagiumItems.ASH_DUST)
         add(RagiumItemTags.DUSTS_OBSIDIAN, RagiumItems.OBSIDIAN_DUST)
@@ -140,7 +141,6 @@ class RagiumItemTagProvider(
         add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
         add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
-        add(Tags.Items.FOODS, RagiumItems.COOKED_MEAT_INGOT)
         add(Tags.Items.FOODS, RagiumItems.EXP_BERRIES)
         add(Tags.Items.FOODS, RagiumItems.FEVER_CHERRY)
         add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
@@ -152,9 +152,10 @@ class RagiumItemTagProvider(
         add(Tags.Items.FOODS_BERRY, RagiumItems.EXP_BERRIES)
         add(Tags.Items.FOODS_FRUIT, RagiumItems.FEVER_CHERRY)
         add(Tags.Items.FOODS_GOLDEN, RagiumItems.FEVER_CHERRY)
-        addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_CHEESE)
         addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_CHOCOLATE)
         addTag(Tags.Items.FOODS, RagiumItemTags.FOODS_JAMS)
+        addTag(Tags.Items.FOODS, RagiumItemTags.INGOTS_COOKED_MEAT)
+        addTag(Tags.Items.FOODS, RagiumItemTags.INGOTS_MEAT)
         addTag(Tags.Items.FOODS_FRUIT, RagiumItemTags.FOODS_CHERRY)
 
         add(RagiumItemTags.FOODS_RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
@@ -163,7 +164,6 @@ class RagiumItemTagProvider(
         addTag(RagiumItemTags.FOODS_CHERRY, RagiumItemTags.FOODS_RAGI_CHERRY)
         addTag(RagiumItemTags.FOODS_JAMS, RagiumItemTags.JAMS_RAGI_CHERRY)
 
-        addTag(RagiumItemTags.FOODS_CHEESE, RagiumItemTags.INGOTS_CHEESE)
         addTag(RagiumItemTags.FOODS_CHOCOLATE, RagiumItemTags.INGOTS_CHOCOLATE)
     }
 
@@ -275,16 +275,12 @@ class RagiumItemTagProvider(
         }
 
         // Other
-        add(ItemTags.MEAT, RagiumItems.COOKED_MEAT_INGOT)
-        add(ItemTags.MEAT, RagiumItems.MEAT_INGOT)
-        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.GEMS_CRIMSON_CRYSTAL)
-        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.GEMS_ELDRITCH_PEARL)
-        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.GEMS_RAGI_CRYSTAL)
-        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.GEMS_WARPED_CRYSTAL)
-        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY)
-        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.INGOTS_AZURE_STEEL)
-        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.INGOTS_DEEP_STEEL)
-        addTag(ItemTags.BEACON_PAYMENT_ITEMS, RagiumItemTags.INGOTS_RAGI_ALLOY)
+        for (tagKey: TagKey<Item> in RagiumItemTags.BEACON_PAYMENTS) {
+            addTag(ItemTags.BEACON_PAYMENT_ITEMS, tagKey)
+        }
+
+        addTag(ItemTags.MEAT, RagiumItemTags.INGOTS_COOKED_MEAT)
+        addTag(ItemTags.MEAT, RagiumItemTags.INGOTS_MEAT)
         addTag(ItemTags.PIGLIN_LOVED, RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY)
     }
 

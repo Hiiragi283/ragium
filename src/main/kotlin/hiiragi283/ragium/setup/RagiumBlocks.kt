@@ -202,12 +202,16 @@ object RagiumBlocks {
 
     // Others
     @JvmField
-    val CHEESE_BLOCK: DeferredBlock<Block> =
-        register("${RagiumConstantValues.CHEESE}_block", wooden().mapColor(MapColor.TERRACOTTA_YELLOW))
-
-    @JvmField
     val CHOCOLATE_BLOCK: DeferredBlock<Block> =
         register("${RagiumConstantValues.CHOCOLATE}_block", wooden().mapColor(MapColor.TERRACOTTA_BROWN))
+
+    @JvmField
+    val MEAT_BLOCK: DeferredBlock<Block> =
+        register("${RagiumConstantValues.MEAT}_block", copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK))
+
+    @JvmField
+    val COOKED_MEAT_BLOCK: DeferredBlock<Block> =
+        register("${RagiumConstantValues.COOKED_MEAT}_block", copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK))
 
     @JvmField
     val STORAGE_BLOCKS: List<DeferredBlock<Block>> = listOf(
@@ -222,8 +226,9 @@ object RagiumBlocks {
         AZURE_STEEL_BLOCK,
         DEEP_STEEL_BLOCK,
         // Others
-        CHEESE_BLOCK,
         CHOCOLATE_BLOCK,
+        MEAT_BLOCK,
+        COOKED_MEAT_BLOCK,
     )
 
     //    Buildings    //
@@ -321,7 +326,7 @@ object RagiumBlocks {
     @JvmField
     val COOKED_MEAT_ON_THE_BONE: DeferredBlock<HTMeatBlock> = register(
         "cooked_meat_on_the_bone",
-        copyOf(Blocks.MUD),
+        copyOf(Blocks.PACKED_MUD),
         ::HTMeatBlock,
     )
 

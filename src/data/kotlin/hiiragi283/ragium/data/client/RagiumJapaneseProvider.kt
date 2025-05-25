@@ -84,8 +84,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.AZURE_STEEL_BLOCK, "紺鉄ブロック")
         addBlock(RagiumBlocks.DEEP_STEEL_BLOCK, "深層鋼ブロック")
 
-        addBlock(RagiumBlocks.CHEESE_BLOCK, "チーズブロック")
         addBlock(RagiumBlocks.CHOCOLATE_BLOCK, "チョコレートブロック")
+        addBlock(RagiumBlocks.MEAT_BLOCK, "肉ブロック")
+        addBlock(RagiumBlocks.COOKED_MEAT_BLOCK, "焼肉ブロック")
 
         RagiumBlocks.RAGI_STONE_SETS.addTranslationJp("らぎストーン", this)
         RagiumBlocks.RAGI_STONE_BRICKS_SETS.addTranslationJp("らぎストーンレンガ", this)
@@ -210,7 +211,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.AZURE_STEEL_INGOT, "紺鉄インゴット")
         addItem(RagiumItems.AZURE_STEEL_NUGGET, "紺鉄ナゲット")
         addItem(RagiumItems.DEEP_STEEL_INGOT, "深層鋼インゴット")
-        addItem(RagiumItems.CHEESE_INGOT, "チーズインゴット")
         addItem(RagiumItems.CHOCOLATE_INGOT, "チョコレートインゴット")
 
         addItem(RagiumItems.ASH_DUST, "灰")
@@ -446,7 +446,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, "鍛造ハンマー")
 
         add(RagiumItemTags.CROPS_WARPED_WART, "歪んだウォート")
-        add(RagiumItemTags.FOODS_CHEESE, "チーズ")
         add(RagiumItemTags.FOODS_CHOCOLATE, "チョコレート")
 
         add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "黒曜石ガラス")

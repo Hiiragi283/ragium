@@ -145,8 +145,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         register(RagiumMaterialFamilies.AZURE_STEEL)
         register(RagiumMaterialFamilies.DEEP_STEEL)
 
-        register(RagiumMaterialFamilies.CHEESE)
         register(RagiumMaterialFamilies.CHOCOLATE)
+        register(RagiumMaterialFamilies.MEAT)
+        register(RagiumMaterialFamilies.COOKED_MEAT)
     }
 
     // Ore -> Raw/Gem
