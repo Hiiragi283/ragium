@@ -59,7 +59,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "不正な歪み", "歪んだ結晶を手に入れる")
         addAdvancement(RagiumAdvancements.TELEPORT_TICKET, "片道切符", "テレポートアンカーに紐づいたテレポートチケットを使う")
         // Eldritch
-        addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Tell Your World", "異質な真珠を手に入れる")
+        addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "始原ではない", "異質な真珠を手に入れる")
+        addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "隕石を落としているのは誰？", "泣く黒曜石に異質なチケットを使って神秘的な黒曜石を手に入れる")
     }
 
     private fun block() {

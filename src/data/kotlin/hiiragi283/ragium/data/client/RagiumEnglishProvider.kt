@@ -67,7 +67,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addAdvancement(RagiumAdvancements.WARPED_CRYSTAL, "Wrapped Warp", "Get Warped Crystal")
         addAdvancement(RagiumAdvancements.TELEPORT_TICKET, "One-way Ticket", "Use teleport ticket bound with Teleport Anchor")
         // Eldritch
-        addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Tell Your World", "Get Eldritch Pearl")
+        addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
+        addAdvancement(
+            RagiumAdvancements.MYSTERIOUS_OBSIDIAN,
+            "Who is Falling Meteorites？",
+            "Get Mysterious Obsidian by right-clicking Crying Obsidian with Eldritch Ticket",
+        )
     }
 
     private fun block() {

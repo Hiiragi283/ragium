@@ -13,6 +13,7 @@ import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.block.Blocks
+import net.neoforged.neoforge.common.Tags
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun createRoot(): AdvancementHolder = create(RagiumAdvancements.ROOT) {
@@ -120,5 +121,19 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumItems.ELDRITCH_PEARL,
             RagiumItemTags.GEMS_ELDRITCH_PEARL,
         )
+        val mysteriousObsidian: AdvancementHolder = create(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, eldritchPearl) {
+            display {
+                setIcon(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+                setTitleFromKey(RagiumAdvancements.MYSTERIOUS_OBSIDIAN)
+                setDescFromKey(RagiumAdvancements.MYSTERIOUS_OBSIDIAN)
+                setGoal()
+            }
+            addCriterion(
+                "interact_crying_obsidian",
+                HTBlockInteractionTrigger.TriggerInstance.interactBlock(Tags.Blocks.OBSIDIANS_CRYING),
+            )
+            hasItemsIn("has_mysterious_obsidian", RagiumItemTags.OBSIDIANS_MYSTERIOUS)
+            requirements(AdvancementRequirements.Strategy.OR)
+        }
     }
 }

@@ -52,6 +52,9 @@ object RagiumAdvancements {
     @JvmField
     val ELDRITCH_PEARL: ResourceKey<Advancement> = create("eldritch_pearl")
 
+    @JvmField
+    val MYSTERIOUS_OBSIDIAN: ResourceKey<Advancement> = create("mysterious_obsidian")
+
     @JvmStatic
     private fun create(path: String): ResourceKey<Advancement> = ResourceKey.create(Registries.ADVANCEMENT, RagiumAPI.id(path))
 }
