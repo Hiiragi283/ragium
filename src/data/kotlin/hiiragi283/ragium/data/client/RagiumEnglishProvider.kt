@@ -135,6 +135,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Cauldron
         addBlock(RagiumBlocks.TREE_TAP, "Tree Tap")
 
+        addBlock(RagiumBlocks.HONEY_CAULDRON, "Honey Cauldron")
+        addBlock(RagiumBlocks.MUSHROOM_STEW_CAULDRON, "Mushroom Stew Cauldron")
         addBlock(RagiumBlocks.CRIMSON_SAP_CAULDRON, "Crimson Sap Cauldron")
         addBlock(RagiumBlocks.WARPED_SAP_CAULDRON, "Warped Sap Cauldron")
         // Device
@@ -508,6 +510,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
         add(RagiumTranslationKeys.EMI_WARPED_WART, "Clear one bad effect randomly when eaten.")
 
+        add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING, "Cauldron Dropping")
         add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, "Minimum level needed for processing: %s")
     }
 }

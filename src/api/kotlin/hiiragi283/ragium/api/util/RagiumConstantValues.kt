@@ -19,6 +19,11 @@ object RagiumConstantValues {
     const val WARPED_CRYSTAL = "warped_crystal"
     const val ELDRITCH_PEARL = "eldritch_pearl"
 
+    const val HONEY = "honey"
+    const val MUSHROOM_STEW = "mushroom_stew"
+    const val CRIMSON_SAP = "crimson_sap"
+    const val WARPED_SAP = "warped_sap"
+
     //    Nbt    //
 
     const val ENCHANTMENT = "enchantment"

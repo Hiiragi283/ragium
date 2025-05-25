@@ -1,6 +1,8 @@
 {
   "values": [
     "ragium:crimson_sap_cauldron",
+    "ragium:honey_cauldron",
+    "ragium:mushroom_stew_cauldron",
     "ragium:warped_sap_cauldron"
   ]
 }

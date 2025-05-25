@@ -209,6 +209,16 @@ class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<Hold
         val builder: Builder<HTTreeTap, Fluid> = builder(RagiumDataMaps.TREE_TAP)
 
         builder.add(
+            RagiumFluidContents.MUSHROOM_STEW.stillHolder,
+            HTTreeTap(Blocks.MUSHROOM_STEM),
+            false,
+        )
+        builder.add(
+            RagiumFluidContents.HONEY.stillHolder,
+            HTTreeTap(Blocks.BEE_NEST),
+            false,
+        )
+        builder.add(
             RagiumFluidContents.CRIMSON_SAP.stillHolder,
             HTTreeTap(BlockTags.CRIMSON_STEMS),
             false,

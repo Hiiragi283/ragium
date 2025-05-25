@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTCustomPayload
-import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.setup.RagiumAdvancementTriggers
@@ -21,7 +20,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -29,11 +27,9 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -100,17 +96,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerCauldronContents(event: RegisterCauldronFluidContentEvent) {
-        fun register(cauldron: DeferredBlock<*>, content: HTFluidContent<*, *, *>) {
-            event.register(
-                cauldron.get(),
-                content.get(),
-                FluidType.BUCKET_VOLUME,
-                LayeredCauldronBlock.LEVEL,
-            )
-        }
-
-        register(RagiumBlocks.CRIMSON_SAP_CAULDRON, RagiumFluidContents.CRIMSON_SAP)
-        register(RagiumBlocks.WARPED_SAP_CAULDRON, RagiumFluidContents.WARPED_SAP)
+        RagiumCauldronInteractions.registerCauldronContents(event)
 
         LOGGER.info("Registered cauldron contents!")
     }

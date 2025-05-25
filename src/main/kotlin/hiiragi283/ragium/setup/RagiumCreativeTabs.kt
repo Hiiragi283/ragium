@@ -45,9 +45,8 @@ object RagiumCreativeTabs {
             // Fluid Buckets
             addAll(RagiumFluidContents.REGISTER.itemEntries)
             // Natural Resources
-            add(RagiumBlocks.ASH_LOG)
+            
             add(RagiumBlocks.SILT)
-            add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
             // Gems
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
             add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
@@ -98,8 +97,12 @@ object RagiumCreativeTabs {
             add(RagiumItems.SAWDUST)
             add(RagiumItems.COMPRESSED_SAWDUST)
 
+            add(RagiumBlocks.ASH_LOG)
             add(RagiumItems.ASH_DUST)
+
+            add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
             add(RagiumItems.OBSIDIAN_DUST)
+            
             add(RagiumItems.SALTPETER_DUST)
             add(RagiumItems.SULFUR_DUST)
 

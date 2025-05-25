@@ -40,7 +40,7 @@ class HTCauldronDroppingEmiRecipe(
             .appendTooltip(
                 Component.translatable(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, minLevel),
             )
-        widgets.addInput(EmiStack.of(Items.CAULDRON), 2.5, 1.0).drawBack(false)
+        widgets.addInput(EmiStack.of(Items.CAULDRON), 2.5, 1.0).catalyst(true).drawBack(false)
         // Result
         widgets.addOutput(result, 5.0, 1.0)
     }

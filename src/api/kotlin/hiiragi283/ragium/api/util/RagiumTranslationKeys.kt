@@ -27,5 +27,6 @@ object RagiumTranslationKeys {
     const val EMI_TRADER_CATALOG = "emi.ragium.trader_catalog"
     const val EMI_WARPED_WART = "emi.ragium.warped_wart"
 
+    const val EMI_CAULDRON_DROPPING = "emi.ragium.cauldron_dropping"
     const val EMI_CAULDRON_DROPPING_MIN_LEVEL = "emi.ragium.cauldron_dropping.min_level"
 }

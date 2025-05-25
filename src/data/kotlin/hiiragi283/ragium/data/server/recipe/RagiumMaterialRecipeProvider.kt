@@ -125,7 +125,15 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .define('C', RagiumItemTags.ELDRITCH_PEARL_BINDER)
             .save(output)
 
+        // Misc
         oreToRaw()
+
+        HTShapelessRecipeBuilder(Items.GUNPOWDER, 3)
+            .addIngredient(RagiumItemTags.DUSTS_SULFUR)
+            .addIngredient(RagiumItemTags.DUSTS_SALTPETER)
+            .addIngredient(Items.CHARCOAL)
+            .addIngredient(RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .saveSuffixed(output, "_with_hammer")
 
         register(RagiumMaterialFamilies.RAGI_CRYSTAL)
         register(RagiumMaterialFamilies.CRIMSON_CRYSTAL)

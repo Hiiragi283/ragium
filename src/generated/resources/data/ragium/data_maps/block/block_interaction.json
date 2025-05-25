@@ -64,13 +64,13 @@
         {
           "type": "c:drop_item",
           "stack": {
-            "count": 4,
-            "id": "ragium:azure_shard"
+            "count": 1,
+            "id": "minecraft:echo_shard"
           }
         }
       ],
       "ingredient": {
-        "item": "ragium:azure_ticket"
+        "item": "ragium:eldritch_ticket"
       }
     },
     "minecraft:lantern": {

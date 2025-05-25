@@ -441,13 +441,28 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val CRIMSON_SAP_CAULDRON: DeferredBlock<*> = registerCauldron("crimson_sap", RagiumCauldronInteractions.CRIMSON_SAP)
+    val HONEY_CAULDRON: DeferredBlock<*> =
+        registerCauldron(RagiumConstantValues.HONEY, RagiumCauldronInteractions.HONEY)
 
     @JvmField
-    val WARPED_SAP_CAULDRON: DeferredBlock<*> = registerCauldron("warped_sap", RagiumCauldronInteractions.WARPED_SAP)
+    val MUSHROOM_STEW_CAULDRON: DeferredBlock<*> =
+        registerCauldron(RagiumConstantValues.MUSHROOM_STEW, RagiumCauldronInteractions.MUSHROOM_STEW)
 
     @JvmField
-    val CAULDRONS: List<DeferredBlock<*>> = listOf(CRIMSON_SAP_CAULDRON, WARPED_SAP_CAULDRON)
+    val CRIMSON_SAP_CAULDRON: DeferredBlock<*> =
+        registerCauldron(RagiumConstantValues.CRIMSON_SAP, RagiumCauldronInteractions.CRIMSON_SAP)
+
+    @JvmField
+    val WARPED_SAP_CAULDRON: DeferredBlock<*> =
+        registerCauldron(RagiumConstantValues.WARPED_SAP, RagiumCauldronInteractions.WARPED_SAP)
+
+    @JvmField
+    val CAULDRONS: List<DeferredBlock<*>> = listOf(
+        HONEY_CAULDRON,
+        MUSHROOM_STEW_CAULDRON,
+        CRIMSON_SAP_CAULDRON,
+        WARPED_SAP_CAULDRON,
+    )
 
     // Basic
     @JvmStatic

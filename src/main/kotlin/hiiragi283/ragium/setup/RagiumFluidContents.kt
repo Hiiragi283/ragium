@@ -33,7 +33,7 @@ object RagiumFluidContents {
 
     @JvmField
     val HONEY: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("honey", defaultProperties())
+        register(RagiumConstantValues.HONEY, defaultProperties())
 
     @JvmField
     val EXPERIENCE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
@@ -45,7 +45,7 @@ object RagiumFluidContents {
 
     @JvmField
     val MUSHROOM_STEW: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("mushroom_stew", defaultProperties())
+        register(RagiumConstantValues.MUSHROOM_STEW, defaultProperties())
 
     //    Hydrogen    //
 
@@ -111,9 +111,9 @@ object RagiumFluidContents {
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("crimson_sap", defaultProperties())
+        register(RagiumConstantValues.CRIMSON_SAP, defaultProperties())
 
     @JvmField
     val WARPED_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("warped_sap", defaultProperties())
+        register(RagiumConstantValues.WARPED_SAP, defaultProperties())
 }

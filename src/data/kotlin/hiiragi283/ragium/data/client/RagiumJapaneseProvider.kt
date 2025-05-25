@@ -130,6 +130,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Cauldron
         addBlock(RagiumBlocks.TREE_TAP, "ツリータップ")
 
+        addBlock(RagiumBlocks.HONEY_CAULDRON, "蜂蜜入りの大釜")
+        addBlock(RagiumBlocks.MUSHROOM_STEW_CAULDRON, "キノコシチュー入りの大釜")
         addBlock(RagiumBlocks.CRIMSON_SAP_CAULDRON, "深紅の樹液入りの大釜")
         addBlock(RagiumBlocks.WARPED_SAP_CAULDRON, "歪んだ樹液入りの大釜")
         // Device
@@ -503,6 +505,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "行商人を倒すことでも入手できます。")
         add(RagiumTranslationKeys.EMI_WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
 
+        add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING, "大釜に投げ入れる")
         add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, "レシピの実行に必要な最小レベル: %s")
     }
 }

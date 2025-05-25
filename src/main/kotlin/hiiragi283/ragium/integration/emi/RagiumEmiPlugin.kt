@@ -330,6 +330,13 @@ class RagiumEmiPlugin : EmiPlugin {
                 rightInput(EmiIngredient.of(interaction.ingredient), false)
             }
         }
+
+        // Cauldron Interaction
+        addInteraction(EmiStack.of(Items.MUSHROOM_STEW), RagiumAPI.id("/world/cauldron/mushroom_stew")) {
+            leftInput(EmiStack.of(Items.BOWL))
+            rightInput(EmiStack.of(Items.CAULDRON), true)
+            rightInput(EmiStack.of(RagiumFluidContents.MUSHROOM_STEW.get()), false)
+        }
     }
 
     private fun addInteraction(

@@ -4,12 +4,18 @@ import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
 
 object RagiumEmiCategories {
     @JvmField
-    val CAULDRON_DROPPING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.CAULDRON_DROPPING), Items.CAULDRON)
+    val CAULDRON_DROPPING = HTEmiRecipeCategory(
+        RagiumAPI.id(RagiumConstantValues.CAULDRON_DROPPING),
+        EmiStack.of(Items.CAULDRON),
+        Component.translatable(RagiumTranslationKeys.EMI_CAULDRON_DROPPING),
+    )
 
     @JvmField
     val TREE_TAPPING = HTEmiRecipeCategory(RagiumAPI.id("tree_tapping"), RagiumBlocks.TREE_TAP)

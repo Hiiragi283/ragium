@@ -170,6 +170,18 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         RagiumBlocks.CAULDRONS.forEach(::cauldronBlock)
 
+        getVariantBuilder(RagiumBlocks.HONEY_CAULDRON.get())
+            .forAllStates { state: BlockState ->
+                val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)
+                val suffix: String = when (level) {
+                    3 -> "_full"
+                    else -> "_level$level"
+                }
+                ConfiguredModel
+                    .builder()
+                    .modelFile(modelFile(vanillaId("block/water_cauldron").withSuffix(suffix)))
+                    .build()
+            }
         // Device
         layeredBlock(
             RagiumBlocks.WATER_COLLECTOR,
@@ -235,6 +247,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         rotationY(state.getValue(HTBlockStateProperties.HORIZONTAL).getRotationY())
 
     private fun cauldronBlock(holder: DeferredBlock<*>) {
+        if (holder == RagiumBlocks.HONEY_CAULDRON) return
         getVariantBuilder(holder.get())
             .forAllStates { state: BlockState ->
                 val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)
