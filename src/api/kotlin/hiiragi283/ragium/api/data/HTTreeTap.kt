@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.blockHolderSet
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
@@ -34,7 +35,7 @@ class HTTreeTap(private val blocks: Either<List<Block>, TagKey<Block>>) {
 
     @Suppress("DEPRECATION")
     fun toHolderSet(): HolderSet<Block> = blocks.map(
-        { blocksIn: List<Block> -> HolderSet.direct(Block::builtInRegistryHolder, blocksIn) },
+        ::blockHolderSet,
         BuiltInRegistries.BLOCK::getOrCreateTag,
     )
 

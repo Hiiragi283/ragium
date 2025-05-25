@@ -1,0 +1,20 @@
+{
+  "type": "ragium:block_interacting",
+  "actions": [
+    {
+      "type": "c:break",
+      "drop_block": false
+    },
+    {
+      "type": "c:drop_item",
+      "stack": {
+        "count": 3,
+        "id": "ragium:azure_shard"
+      }
+    }
+  ],
+  "ingredient": {
+    "item": "ragium:azure_ticket"
+  },
+  "predicate": "minecraft:large_amethyst_bud"
+}

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:block_interacting",
+  "actions": [
+    {
+      "type": "c:replace",
+      "state": {
+        "Name": "minecraft:end_rod",
+        "Properties": {
+          "facing": "up"
+        }
+      }
+    }
+  ],
+  "ingredient": {
+    "item": "ragium:eldritch_ticket"
+  },
+  "predicate": "minecraft:lightning_rod"
+}

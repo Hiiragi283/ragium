@@ -1,0 +1,24 @@
+{
+  "type": "ragium:block_interacting",
+  "actions": [
+    {
+      "type": "c:play_sound",
+      "sound": "minecraft:block.sculk_shrieker.shriek"
+    },
+    {
+      "type": "c:replace",
+      "state": {
+        "Name": "minecraft:sculk_shrieker",
+        "Properties": {
+          "can_summon": "true",
+          "shrieking": "false",
+          "waterlogged": "false"
+        }
+      }
+    }
+  ],
+  "ingredient": {
+    "item": "ragium:eldritch_ticket"
+  },
+  "predicate": "minecraft:sculk_shrieker"
+}

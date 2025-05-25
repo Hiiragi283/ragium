@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.data.server.recipe.RagiumArsRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumBlockInteractingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDelightRecipeProvider
@@ -21,6 +22,7 @@ import java.util.concurrent.CompletableFuture
 class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     RecipeProvider(output, registries) {
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        RagiumBlockInteractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumExtractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)

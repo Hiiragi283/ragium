@@ -45,7 +45,7 @@ object RagiumCreativeTabs {
             // Fluid Buckets
             addAll(RagiumFluidContents.REGISTER.itemEntries)
             // Natural Resources
-            
+
             add(RagiumBlocks.SILT)
             // Gems
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
@@ -102,7 +102,7 @@ object RagiumCreativeTabs {
 
             add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
             add(RagiumItems.OBSIDIAN_DUST)
-            
+
             add(RagiumItems.SALTPETER_DUST)
             add(RagiumItems.SULFUR_DUST)
 

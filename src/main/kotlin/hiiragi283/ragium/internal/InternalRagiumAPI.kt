@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.addon.HTAddonCollector
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.item.HTFoodBuilder
+import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
@@ -153,5 +154,7 @@ class InternalRagiumAPI : RagiumAPI {
         )
     }
 
-    override fun getCauldronDropRecipeType(): RecipeType<HTCauldronDroppingRecipe> = RagiumRecipeTypes.CAULDRON_DROPPING.get()
+    override fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe> = RagiumRecipeTypes.BLOCK_INTERACTING.get()
+
+    override fun getCauldronDroppingRecipeType(): RecipeType<HTCauldronDroppingRecipe> = RagiumRecipeTypes.CAULDRON_DROPPING.get()
 }

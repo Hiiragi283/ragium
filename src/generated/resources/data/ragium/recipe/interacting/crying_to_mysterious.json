@@ -1,0 +1,15 @@
+{
+  "type": "ragium:block_interacting",
+  "actions": [
+    {
+      "type": "c:replace",
+      "state": {
+        "Name": "ragium:mysterious_obsidian"
+      }
+    }
+  ],
+  "ingredient": {
+    "item": "ragium:eldritch_ticket"
+  },
+  "predicate": "#c:obsidians/crying"
+}

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:block_interacting",
+  "actions": [
+    {
+      "type": "c:replace",
+      "state": {
+        "Name": "minecraft:sculk_catalyst",
+        "Properties": {
+          "bloom": "false"
+        }
+      }
+    }
+  ],
+  "ingredient": {
+    "item": "ragium:eldritch_ticket"
+  },
+  "predicate": "#c:storage_blocks/bone_meal"
+}

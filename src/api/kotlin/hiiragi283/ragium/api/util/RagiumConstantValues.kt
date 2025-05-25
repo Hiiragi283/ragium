@@ -39,6 +39,7 @@ object RagiumConstantValues {
     //    Recipes    //
 
     const val BEE_HIVE = "bee_hive"
+    const val BLOCK_INTERACTING = "block_interacting"
     const val CAULDRON_DROPPING = "cauldron_dropping"
     const val CRUSHING = "crushing"
     const val EXTRACTING = "extracting"

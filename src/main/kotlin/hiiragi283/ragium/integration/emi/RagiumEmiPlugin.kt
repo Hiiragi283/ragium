@@ -17,10 +17,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.data.HTTreeTap
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
-import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.createPotionStack
-import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
@@ -29,6 +28,7 @@ import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
@@ -55,7 +55,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -70,7 +69,6 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -119,7 +117,7 @@ class RagiumEmiPlugin : EmiPlugin {
             if (recipe is HTIceCreamSodaRecipe) {
                 EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
                     addRecipeSafe(
-                        holder.key().location().withPrefix("/shapeless/ice_cream_soda/"),
+                        holder.idOrThrow.withPrefix("/shapeless/ice_cream_soda/"),
                     ) { id: ResourceLocation ->
                         EmiCraftingRecipe(
                             listOf(
@@ -140,14 +138,11 @@ class RagiumEmiPlugin : EmiPlugin {
         addRecipeSafe(HTEternalTicketRecipe) { recipe: HTEternalTicketRecipe ->
             EmiSmithingTrimRecipe(
                 EmiStack.of(RagiumItems.ETERNAL_TICKET),
-                EmiIngredient.of(
-                    EmiPort
-                        .getItemRegistry()
-                        .holders()
-                        .filter { holder: Holder.Reference<Item> -> holder.value().defaultInstance.isDamageableItem }
-                        .map { holder: Holder.Reference<Item> -> EmiStack.of(holder.value()) }
-                        .toList(),
-                ),
+                EmiPort
+                    .getItemRegistry()
+                    .holders()
+                    .filter { holder: Holder<Item> -> holder.value().defaultInstance.isDamageableItem }
+                    .toEmi(),
                 EmiStack.EMPTY,
                 EmiStack.EMPTY,
                 recipe,
@@ -160,7 +155,7 @@ class RagiumEmiPlugin : EmiPlugin {
             addRecipeSafe(key.location().withPrefix("/")) { id: ResourceLocation ->
                 HTTreeTappingEmiRecipe(
                     id,
-                    EmiIngredient.of(treeTap.getBlocks().map(EmiStack::of)),
+                    treeTap.getBlocks().toEmi(),
                     output,
                 )
             }
@@ -176,6 +171,19 @@ class RagiumEmiPlugin : EmiPlugin {
                         EmiIngredient.of(recipe.ingredient),
                         EmiStack.of(recipe.getResultItem(registryAccess)),
                     )
+                }
+            }
+        }
+        // Block Action
+        forEachRecipes(RagiumRecipeTypes.BLOCK_INTERACTING.get()) { id: ResourceLocation, recipe: HTBlockInteractingRecipe ->
+            if (recipe is HTBlockInteractingRecipeImpl) {
+                val firstStack: ItemStack = recipe.actions
+                    .filterIsInstance<HTBlockAction.ItemPreview>()
+                    .firstOrNull()
+                    ?.getPreviewStack() ?: return@forEachRecipes
+                addInteraction(EmiStack.of(firstStack), id) {
+                    leftInput(recipe.blocks.toEmi())
+                    rightInput(EmiIngredient.of(recipe.ingredient), false)
                 }
             }
         }
@@ -315,20 +323,6 @@ class RagiumEmiPlugin : EmiPlugin {
         addInteraction(EmiStack.of(RagiumItems.BOTTLED_BEE)) {
             leftInput(EmiStack.of(Items.GLASS_BOTTLE))
             rightInput(EmiStack.of(Items.BEE_SPAWN_EGG), false)
-        }
-
-        // Block Action
-        for (holder: Holder.Reference<Block> in BuiltInRegistries.BLOCK.holders()) {
-            val id: ResourceLocation = holder.idOrNull ?: continue
-            val interaction: HTBlockInteraction = holder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: continue
-            val firstStack: ItemStack = interaction.actions
-                .filterIsInstance<HTBlockAction.ItemPreview>()
-                .firstOrNull()
-                ?.getPreviewStack() ?: continue
-            addInteraction(EmiStack.of(firstStack), id) {
-                leftInput(EmiStack.of(holder.value()))
-                rightInput(EmiIngredient.of(interaction.ingredient), false)
-            }
         }
 
         // Cauldron Interaction

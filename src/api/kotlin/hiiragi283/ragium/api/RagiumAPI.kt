@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
+import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
@@ -171,7 +172,12 @@ interface RagiumAPI {
     fun sendUpdatePayload(blockEntity: BlockEntity, serverLevel: ServerLevel)
 
     /**
+     * @see [HTBlockInteractingRecipe.getType]
+     */
+    fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe>
+
+    /**
      * @see [HTCauldronDroppingRecipe.getType]
      */
-    fun getCauldronDropRecipeType(): RecipeType<HTCauldronDroppingRecipe>
+    fun getCauldronDroppingRecipeType(): RecipeType<HTCauldronDroppingRecipe>
 }

@@ -102,7 +102,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.BLOCK_INTERACTION)
         event.register(RagiumDataMaps.TREE_TAP)
 
         LOGGER.info("Registered data map types!")

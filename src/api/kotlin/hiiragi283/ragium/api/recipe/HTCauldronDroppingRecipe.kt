@@ -1,24 +1,24 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.CauldronFluidContent
 
-interface HTCauldronDroppingRecipe : Recipe<HTCauldronDroppingRecipe.Input> {
+interface HTCauldronDroppingRecipe : Recipe<HTInteractRecipeInput> {
     val fluid: Fluid
     val minLevel: Int
     val ingredient: Ingredient
 
-    override fun matches(input: Input, level: Level): Boolean {
+    //    Recipe    //
+
+    override fun matches(input: HTInteractRecipeInput, level: Level): Boolean {
         // 大釜が一致しているか判定
         val cauldron: CauldronFluidContent = CauldronFluidContent.getForFluid(fluid) ?: return false
         val state: BlockState = level.getBlockState(input.pos)
@@ -36,13 +36,5 @@ interface HTCauldronDroppingRecipe : Recipe<HTCauldronDroppingRecipe.Input> {
 
     override fun getToastSymbol(): ItemStack = ItemStack(Items.CAULDRON)
 
-    override fun getType(): RecipeType<*> = RagiumAPI.getInstance().getCauldronDropRecipeType()
-
-    //    Input    //
-
-    data class Input(val pos: BlockPos, val item: ItemStack) : RecipeInput {
-        override fun getItem(index: Int): ItemStack = item
-
-        override fun size(): Int = 1
-    }
+    override fun getType(): RecipeType<*> = RagiumAPI.getInstance().getCauldronDroppingRecipeType()
 }

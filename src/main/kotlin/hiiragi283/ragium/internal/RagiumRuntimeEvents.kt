@@ -3,11 +3,11 @@ package hiiragi283.ragium.internal
 import com.mojang.datafixers.util.Either
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
-import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
+import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
 import hiiragi283.ragium.setup.RagiumComponentTypes
@@ -97,16 +97,17 @@ object RagiumRuntimeEvents {
         val level: Level = event.level
         val state: BlockState = level.getBlockState(hitResult.blockPos)
 
-        val interaction: HTBlockInteraction = state.blockHolder.getData(RagiumDataMaps.BLOCK_INTERACTION) ?: return
-        if (interaction.canPerformActions(stack, state)) {
-            val player: Player = event.entity
-            if (player is ServerPlayer) {
-                HTBlockInteractionTrigger.trigger(player, state)
-            }
-            interaction.applyActions(UseOnContext(level, player, hand, stack, hitResult))
-            event.isCanceled = true
-            event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
-        }
+        val input = HTInteractRecipeInput(hitResult.blockPos, stack)
+        val firstRecipe: HTBlockInteractingRecipe = level.recipeManager
+            .getRecipeFor(RagiumRecipeTypes.BLOCK_INTERACTING.get(), input, level)
+            .getOrNull()
+            ?.value ?: return
+
+        val player: Player = event.entity
+        if (player is ServerPlayer) HTBlockInteractionTrigger.trigger(player, state)
+        firstRecipe.applyActions(UseOnContext(level, player, hand, stack, hitResult))
+        event.isCanceled = true
+        event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
     }
 
     @SubscribeEvent
@@ -223,7 +224,7 @@ object RagiumRuntimeEvents {
         val stack: ItemStack = itemEntity.item
         val remainCount: Int = stack.count - 1
 
-        val input = HTCauldronDroppingRecipe.Input(pos, stack)
+        val input = HTInteractRecipeInput(pos, stack)
         val firstRecipe: HTCauldronDroppingRecipe? = level.recipeManager
             .getRecipeFor(RagiumRecipeTypes.CAULDRON_DROPPING.get(), input, level)
             .getOrNull()

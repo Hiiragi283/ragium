@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.advancements
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger.TriggerInstance
+import hiiragi283.ragium.api.extension.blockHolderSet
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.critereon.ContextAwarePredicate
 import net.minecraft.advancements.critereon.EntityPredicate
@@ -43,7 +44,7 @@ object HTBlockInteractionTrigger : SimpleCriterionTrigger<TriggerInstance>() {
 
             @Suppress("DEPRECATION")
             @JvmStatic
-            fun interactBlock(block: Block): Criterion<TriggerInstance> = interactBlock(HolderSet.direct(block.builtInRegistryHolder()))
+            fun interactBlock(block: Block): Criterion<TriggerInstance> = interactBlock(blockHolderSet(block))
 
             @JvmStatic
             fun interactBlock(tagKey: TagKey<Block>): Criterion<TriggerInstance> =

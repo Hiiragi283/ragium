@@ -71,6 +71,10 @@ val DeferredItem<*>.itemId: ResourceLocation get() = id.withPrefix("item/")
 
 //    HolderSet    //
 
+fun blockHolderSet(vararg blocks: Block): HolderSet.Direct<Block> = HolderSet.direct(Block::builtInRegistryHolder, *blocks)
+
+fun blockHolderSet(blocks: Collection<Block>): HolderSet.Direct<Block> = HolderSet.direct(Block::builtInRegistryHolder, blocks)
+
 /**
  * この[HolderSet]を[Component]に変換します。
  * @param transform 値を[Component]に変換するブロック

@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.streamCodec
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
+import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
@@ -51,9 +52,9 @@ class HTCauldronDroppingRecipeImpl(
         )
     }
 
-    override fun assemble(input: HTCauldronDroppingRecipe.Input, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
+    override fun assemble(input: HTInteractRecipeInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CAULDRON_DROP.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CAULDRON_DROPPING.get()
 }

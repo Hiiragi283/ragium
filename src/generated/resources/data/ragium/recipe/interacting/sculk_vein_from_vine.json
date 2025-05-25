@@ -1,0 +1,20 @@
+{
+  "type": "ragium:block_interacting",
+  "actions": [
+    {
+      "type": "c:break",
+      "drop_block": false
+    },
+    {
+      "type": "c:drop_item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:sculk_vein"
+      }
+    }
+  ],
+  "ingredient": {
+    "item": "ragium:eldritch_ticket"
+  },
+  "predicate": "minecraft:vine"
+}
