@@ -1,0 +1,12 @@
+{
+  "type": "ragium:cauldron_dropping",
+  "fluid": "ragium:warped_sap",
+  "ingredient": {
+    "tag": "c:gems/quartz"
+  },
+  "min_level": 3,
+  "result": {
+    "count": 1,
+    "id": "ragium:warped_crystal"
+  }
+}

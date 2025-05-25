@@ -7,17 +7,19 @@ import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
+import net.minecraft.tags.BlockTags
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
@@ -53,6 +55,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import org.slf4j.Logger
+import kotlin.jvm.optionals.getOrNull
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeEvents {
@@ -86,7 +89,6 @@ object RagiumRuntimeEvents {
 
     @SubscribeEvent
     fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
-        // イベントがキャンセルされている場合はパス
         if (event.isCanceled) return
         val hand: InteractionHand = event.hand
         val stack: ItemStack = event.itemStack
@@ -210,32 +212,32 @@ object RagiumRuntimeEvents {
     @SubscribeEvent
     fun onEntityTick(event: EntityTickEvent.Post) {
         val itemEntity: ItemEntity = event.entity as? ItemEntity ?: return
+        // 大釜の中にいない場合はパス
+        val stateIn: BlockState = itemEntity.inBlockState
+        if (stateIn.`is`(Blocks.CAULDRON) || !stateIn.`is`(BlockTags.CAULDRONS)) return
+        // 除外フラグを持っていたらパス
+        if (itemEntity.persistentData.getBoolean(RagiumConstantValues.IGNORE_CAULDRON_DROP)) return
+        // 最初に一致するレシピを取得する
         val level: Level = itemEntity.level()
         val pos: BlockPos = itemEntity.blockPosition()
-        val stateIn: BlockState = itemEntity.inBlockState
         val stack: ItemStack = itemEntity.item
         val remainCount: Int = stack.count - 1
 
-        if (stateIn.`is`(RagiumBlocks.CRIMSON_SAP_CAULDRON)) {
-            if (stack.`is`(RagiumItemTags.NUGGETS_RAGI_ALLOY)) {
-                itemEntity.item = RagiumItems.CRIMSON_CRYSTAL.toStack()
-                level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
-                if (remainCount > 0) {
-                    dropStackAt(itemEntity, stack.copyWithCount(remainCount))
-                }
-                return
+        val input = HTCauldronDroppingRecipe.Input(pos, stack)
+        val firstRecipe: HTCauldronDroppingRecipe? = level.recipeManager
+            .getRecipeFor(RagiumRecipeTypes.CAULDRON_DROPPING.get(), input, level)
+            .getOrNull()
+            ?.value
+        // レシピが存在する場合，処理を実行する
+        if (firstRecipe != null) {
+            itemEntity.item = firstRecipe.assemble(input, level.registryAccess()).copy()
+            level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
+            if (remainCount > 0) {
+                dropStackAt(itemEntity, stack.copyWithCount(remainCount))
             }
-        }
-
-        if (stateIn.`is`(RagiumBlocks.WARPED_SAP_CAULDRON)) {
-            if (stack.`is`(RagiumItemTags.NUGGETS_AZURE_STEEL)) {
-                itemEntity.item = RagiumItems.WARPED_CRYSTAL.toStack()
-                level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
-                if (remainCount > 0) {
-                    dropStackAt(itemEntity, stack.copyWithCount(remainCount))
-                }
-                return
-            }
+        } else {
+            // レシピが存在しない場合，拾いなおすまで再実行させない
+            itemEntity.persistentData.putBoolean(RagiumConstantValues.IGNORE_CAULDRON_DROP, true)
         }
     }
 

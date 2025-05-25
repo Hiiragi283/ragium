@@ -170,7 +170,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
-        addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
     }
@@ -503,5 +502,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.EMI_SOUL_GLASS, "プレイヤーのみ通過できます。")
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "行商人を倒すことでも入手できます。")
         add(RagiumTranslationKeys.EMI_WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
+
+        add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, "レシピの実行に必要な最小レベル: %s")
     }
 }

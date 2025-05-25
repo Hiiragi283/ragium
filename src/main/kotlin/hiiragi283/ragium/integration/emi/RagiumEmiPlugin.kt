@@ -21,6 +21,7 @@ import hiiragi283.ragium.api.data.interaction.HTBlockInteraction
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
@@ -28,6 +29,7 @@ import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
@@ -37,6 +39,7 @@ import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTCauldronDroppingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
@@ -48,8 +51,10 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
+import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -85,6 +90,9 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private lateinit var registry: EmiRegistry
     private lateinit var recipeManager: RecipeManager
+    private val registryAccess: RegistryAccess by lazy {
+        Minecraft.getInstance().level?.registryAccess() ?: error("Client Level not found!")
+    }
 
     override fun register(registry: EmiRegistry) {
         // Category, Workstation
@@ -155,6 +163,20 @@ class RagiumEmiPlugin : EmiPlugin {
                     EmiIngredient.of(treeTap.getBlocks().map(EmiStack::of)),
                     output,
                 )
+            }
+        }
+        // Cauldron Dropping
+        forEachRecipes(RagiumRecipeTypes.CAULDRON_DROPPING.get()) { id: ResourceLocation, recipe: HTCauldronDroppingRecipe ->
+            if (recipe is HTCauldronDroppingRecipeImpl) {
+                addRecipeSafe(id) { id1: ResourceLocation ->
+                    HTCauldronDroppingEmiRecipe(
+                        id1,
+                        EmiStack.of(recipe.fluid),
+                        recipe.minLevel,
+                        EmiIngredient.of(recipe.ingredient),
+                        EmiStack.of(recipe.getResultItem(registryAccess)),
+                    )
+                }
             }
         }
     }

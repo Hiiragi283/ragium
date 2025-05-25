@@ -147,7 +147,7 @@ class RagiumClient(eventBus: IEventBus) {
         // register(RagiumFluidContents.PLANT_OIL, Color(0x999933))
         // register(RagiumFluidContents.BIOMASS, Color(0x006600))
 
-        register(RagiumFluidContents.SAP, Color(0x996633))
+        // register(RagiumFluidContents.SAP, Color(0x996633))
         register(RagiumFluidContents.CRIMSON_SAP, Color(0x660000))
         register(RagiumFluidContents.WARPED_SAP, Color(0x006666))
 

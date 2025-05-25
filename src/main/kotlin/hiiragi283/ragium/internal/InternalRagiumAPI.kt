@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.addon.HTAddonCollector
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.item.HTFoodBuilder
+import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -26,6 +27,7 @@ import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
@@ -33,6 +35,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
@@ -149,4 +152,6 @@ class InternalRagiumAPI : RagiumAPI {
             HTBlockEntityUpdatePacket(pos, blockEntity.getUpdateTag(serverLevel.registryAccess())),
         )
     }
+
+    override fun getCauldronDropRecipeType(): RecipeType<HTCauldronDroppingRecipe> = RagiumRecipeTypes.CAULDRON_DROPPING.get()
 }

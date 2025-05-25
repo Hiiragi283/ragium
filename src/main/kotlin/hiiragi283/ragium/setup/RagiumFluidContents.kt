@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.sounds.SoundEvents
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
@@ -106,9 +107,7 @@ object RagiumFluidContents {
 
     //    Sap    //
 
-    @JvmField
-    val SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("sap", defaultProperties())
+    // val SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sap", defaultProperties())
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =

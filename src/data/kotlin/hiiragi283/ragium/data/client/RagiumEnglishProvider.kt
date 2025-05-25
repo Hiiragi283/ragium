@@ -175,7 +175,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
-        addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
     }
@@ -508,5 +507,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.EMI_SOUL_GLASS, "Only passable with Players.")
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
         add(RagiumTranslationKeys.EMI_WARPED_WART, "Clear one bad effect randomly when eaten.")
+
+        add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, "Minimum level needed for processing: %s")
     }
 }

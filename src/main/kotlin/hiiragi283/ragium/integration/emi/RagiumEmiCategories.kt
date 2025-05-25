@@ -5,8 +5,12 @@ import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlocks
+import net.minecraft.world.item.Items
 
 object RagiumEmiCategories {
+    @JvmField
+    val CAULDRON_DROPPING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.CAULDRON_DROPPING), Items.CAULDRON)
+
     @JvmField
     val TREE_TAPPING = HTEmiRecipeCategory(RagiumAPI.id("tree_tapping"), RagiumBlocks.TREE_TAP)
 
@@ -28,6 +32,7 @@ object RagiumEmiCategories {
 
     @JvmField
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
+        CAULDRON_DROPPING,
         TREE_TAPPING,
         // Machines
         CRUSHING,

@@ -26,4 +26,6 @@ object RagiumTranslationKeys {
     const val EMI_SOUL_GLASS = "emi.ragium.soul_glass"
     const val EMI_TRADER_CATALOG = "emi.ragium.trader_catalog"
     const val EMI_WARPED_WART = "emi.ragium.warped_wart"
+
+    const val EMI_CAULDRON_DROPPING_MIN_LEVEL = "emi.ragium.cauldron_dropping.min_level"
 }

@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
+import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
@@ -54,6 +55,10 @@ object RagiumRecipeSerializers {
     @JvmField
     val BEE_HIVE: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBeehiveRecipe>> =
         register(RagiumConstantValues.BEE_HIVE, HTBeehiveRecipe.CODEC, HTBeehiveRecipe.STREAM_CODEC)
+
+    @JvmField
+    val CAULDRON_DROP: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCauldronDroppingRecipeImpl>> =
+        register(RagiumConstantValues.CAULDRON_DROPPING, HTCauldronDroppingRecipeImpl.CODEC, HTCauldronDroppingRecipeImpl.STREAM_CODEC)
 
     @JvmField
     val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =

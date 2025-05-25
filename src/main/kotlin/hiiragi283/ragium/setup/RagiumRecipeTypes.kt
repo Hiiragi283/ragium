@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.registries.Registries
@@ -17,6 +18,10 @@ object RagiumRecipeTypes {
 
     @JvmField
     val BEE_HIVE: Supplier<RecipeType<HTMachineRecipe>> = register(RagiumConstantValues.BEE_HIVE)
+
+    @JvmField
+    val CAULDRON_DROPPING: Supplier<RecipeType<HTCauldronDroppingRecipe>> =
+        REGISTER.register(RagiumConstantValues.CAULDRON_DROPPING, RecipeType<*>::simple)
 
     @JvmField
     val CRUSHING: Supplier<RecipeType<HTMachineRecipe>> = register(RagiumConstantValues.CRUSHING)

@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.extension
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import io.netty.buffer.ByteBuf
+import net.minecraft.core.Registry
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -29,3 +30,8 @@ fun <T : Any> Codec<T>.toRegistryStream(): StreamCodec<RegistryFriendlyByteBuf, 
  * この[MapCodec]を[StreamCodec]に変換します。
  */
 fun <T : Any> MapCodec<T>.toRegistryStream(): StreamCodec<RegistryFriendlyByteBuf, T> = codec().toRegistryStream()
+
+/**
+ * この[Registry]を[StreamCodec]に変換します。
+ */
+fun <T : Any> Registry<T>.streamCodec(): StreamCodec<RegistryFriendlyByteBuf, T> = ByteBufCodecs.registry(this.key())
