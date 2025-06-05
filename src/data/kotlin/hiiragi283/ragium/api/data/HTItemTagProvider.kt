@@ -18,9 +18,9 @@ import java.util.concurrent.CompletableFuture
 abstract class HTItemTagProvider(
     output: PackOutput,
     provider: CompletableFuture<HolderLookup.Provider>,
-    blockTags: HTTagProvider<Block>,
+    blockTags: CompletableFuture<TagLookup<Block>>,
     helper: ExistingFileHelper,
-) : ItemTagsProvider(output, provider, blockTags.contentsGetter(), RagiumAPI.MOD_ID, helper),
+) : ItemTagsProvider(output, provider, blockTags, RagiumAPI.MOD_ID, helper),
     HTTagBuilder.ItemTag {
     final override fun addTags(provider: HolderLookup.Provider) {
         addTagsInternal(provider)

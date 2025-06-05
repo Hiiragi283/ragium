@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data
 
-import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.core.Holder
@@ -17,15 +16,6 @@ interface HTTagBuilder<T : Any> {
     val registryKey: ResourceKey<out Registry<T>>
 
     fun add(tagKey: TagKey<T>, entry: Entry)
-
-    fun add(
-        tagKey: TagKey<T>,
-        mod: IntegrationMods,
-        path: String,
-        type: DependType = DependType.REQUIRED,
-    ) {
-        add(tagKey, mod.id(path), type)
-    }
 
     fun add(tagKey: TagKey<T>, id: ResourceLocation, type: DependType = DependType.REQUIRED) {
         add(tagKey, Entry(id, false, type))

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.data.HTItemTagProvider
-import hiiragi283.ragium.api.data.HTTagProvider
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumBlockTags
@@ -32,7 +31,7 @@ import java.util.concurrent.CompletableFuture
 class RagiumItemTagProvider(
     output: PackOutput,
     provider: CompletableFuture<HolderLookup.Provider>,
-    blockTags: HTTagProvider<Block>,
+    blockTags: CompletableFuture<TagLookup<Block>>,
     helper: ExistingFileHelper,
 ) : HTItemTagProvider(output, provider, blockTags, helper) {
     override fun addTagsInternal(provider: HolderLookup.Provider) {

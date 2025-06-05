@@ -15,7 +15,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -79,15 +78,6 @@ class HTBuildingBlockSets(
     override fun init(eventBus: IEventBus) {
         blockRegister.register(eventBus)
         itemRegister.register(eventBus)
-    }
-
-    override fun appendBlockTags(builder: HTTagBuilder<Block>, mineableTag: TagKey<Block>) {
-        for (block: DeferredBlock<*> in blockHolders) {
-            builder.add(mineableTag, block)
-        }
-        builder.add(BlockTags.STAIRS, stairs)
-        builder.add(BlockTags.SLABS, slab)
-        builder.add(BlockTags.WALLS, wall)
     }
 
     override fun appendItemTags(builder: HTTagBuilder.ItemTag) {

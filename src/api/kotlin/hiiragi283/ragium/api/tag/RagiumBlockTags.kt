@@ -27,5 +27,13 @@ object RagiumBlockTags {
     val OBSIDIANS_MYSTERIOUS: TagKey<Block> = blockTagKey(commonId("obsidians/mysterious"))
 
     @JvmField
+    val ORES_RAGI_CRYSTAL: TagKey<Block> =
+        blockTagKey(commonId(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL))
+
+    @JvmField
+    val ORES_RAGINITE: TagKey<Block> =
+        blockTagKey(commonId(RagiumConstantValues.ORES, RagiumConstantValues.RAGINITE))
+
+    @JvmField
     val STONES_ROCK_GENERATIONS: TagKey<Block> = blockTagKey(RagiumAPI.id("stones/rock_generation"))
 }

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.IntegrationMods
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.data.server.recipe.RagiumArsRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumBlockInteractingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
@@ -32,8 +32,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumMiscRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
-        RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, IntegrationMods.ARS)
-        RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup, IntegrationMods.FD)
-        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup, IntegrationMods.MEK)
+        RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.ARS_NOUVEAU)
+        RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.FARMERS_DELIGHT)
+        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.MEKANISM)
     }
 }

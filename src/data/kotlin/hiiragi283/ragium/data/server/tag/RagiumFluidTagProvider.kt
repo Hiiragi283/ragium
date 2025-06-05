@@ -1,7 +1,8 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.ragium.api.data.HTTagBuilder
-import hiiragi283.ragium.api.data.HTTagProvider
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.addContent
+import hiiragi283.ragium.api.extension.asFluidHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumFluidTags
@@ -9,6 +10,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -16,13 +18,19 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
-    HTTagProvider<Fluid>(Registries.FLUID, output, provider, helper) {
+    IntrinsicHolderTagsProvider<Fluid>(
+        output,
+        Registries.FLUID,
+        provider,
+        { fluid: Fluid -> fluid.asFluidHolder().key() },
+        RagiumAPI.MOD_ID,
+        helper,
+    ) {
     private fun addFluid(tagKey: TagKey<Fluid>, content: HTFluidContent<*, *, *>) {
-        add(tagKey, content.stillHolder)
-        add(tagKey, content.flowHolder)
+        tag(tagKey).addContent(content)
     }
 
-    override fun addTagsInternal(provider: HolderLookup.Provider) {
+    override fun addTags(provider: HolderLookup.Provider) {
         contents()
         category()
 
@@ -45,21 +53,23 @@ class RagiumFluidTagProvider(output: PackOutput, provider: CompletableFuture<Hol
         // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_DIOXIDE)
         // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_TRIOXIDE)
 
-        add(RagiumFluidTags.CHOCOLATES, RagiumFluidContents.CHOCOLATE.stillHolder)
-        add(RagiumFluidTags.CHOCOLATES, RagiumFluidContents.CHOCOLATE.flowHolder)
+        tag(RagiumFluidTags.CHOCOLATES).addContent(RagiumFluidContents.CHOCOLATE)
 
-        addTag(RagiumFluidTags.NITRO_FUEL, commonId("boosted_diesel"), HTTagBuilder.DependType.OPTIONAL)
-        addTag(RagiumFluidTags.NITRO_FUEL, commonId("high_power_biodiesel"), HTTagBuilder.DependType.OPTIONAL)
+        tag(RagiumFluidTags.NITRO_FUEL)
+            .addOptionalTag(commonId("boosted_diesel"))
+            .addOptionalTag(commonId("high_power_biodiesel"))
         // addTag(RagiumFluidTags.NITRO_FUEL, RagiumFluidContents.NITRO_FUEL.commonTag)
 
-        addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("biofuel"), HTTagBuilder.DependType.OPTIONAL)
-        addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("heavy_fuel"), HTTagBuilder.DependType.OPTIONAL)
-        addTag(RagiumFluidTags.NON_NITRO_FUEL, commonId("light_fuel"), HTTagBuilder.DependType.OPTIONAL)
+        tag(RagiumFluidTags.NON_NITRO_FUEL)
+            .addOptionalTag(commonId("biofuel"))
+            .addOptionalTag(commonId("heavy_fuel"))
+            .addOptionalTag(commonId("light_fuel"))
         // addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluidContents.FUEL.commonTag)
 
-        addTag(RagiumFluidTags.THERMAL_FUEL, commonId("steam"), HTTagBuilder.DependType.OPTIONAL)
-        addTag(RagiumFluidTags.THERMAL_FUEL, commonId("superheated_sodium"), HTTagBuilder.DependType.OPTIONAL)
-        addTag(RagiumFluidTags.THERMAL_FUEL, Tags.Fluids.LAVA)
+        tag(RagiumFluidTags.THERMAL_FUEL)
+            .addOptionalTag(commonId("steam"))
+            .addOptionalTag(commonId("superheated_sodium"))
+            .addTag(Tags.Fluids.LAVA)
     }
 
     //    Integrations    //

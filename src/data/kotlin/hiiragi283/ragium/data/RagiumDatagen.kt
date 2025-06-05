@@ -26,6 +26,8 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
 import net.minecraft.data.loot.LootTableProvider
+import net.minecraft.data.tags.TagsProvider
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -91,8 +93,8 @@ object RagiumDatagen {
 
         generator.addProvider(event.includeServer(), RagiumEnchantmentTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
-        val blockTags: RagiumBlockTagProvider =
-            generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
+        val blockTags: CompletableFuture<TagsProvider.TagLookup<Block>> =
+            generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper)).contentsGetter()
         generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, blockTags, helper))
 
         generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))

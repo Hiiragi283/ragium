@@ -80,20 +80,6 @@ class HTOreSets(private val name: String) : HTBlockSet {
         itemRegister.register(eventBus)
     }
 
-    override fun appendBlockTags(builder: HTTagBuilder<Block>, mineableTag: TagKey<Block>) {
-        for (ore: DeferredBlock<*> in blockHolders) {
-            builder.add(mineableTag, ore)
-            // Material Tag
-            builder.addTag(Tags.Blocks.ORES, blockOreTag)
-            builder.add(blockOreTag, ore)
-        }
-        // Ores in ground
-        builder.add(Tags.Blocks.ORES_IN_GROUND_STONE, stoneOre)
-        builder.add(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, deepOre)
-        builder.add(Tags.Blocks.ORES_IN_GROUND_NETHERRACK, netherOre)
-        builder.add(blockTagKey(commonId("ores_in_ground/end_stone")), endOre)
-    }
-
     override fun appendItemTags(builder: HTTagBuilder.ItemTag) {
         builder.copyFromBlock(Tags.Blocks.ORES, Tags.Items.ORES)
         builder.copyFromBlock(blockOreTag, itemOreTag)

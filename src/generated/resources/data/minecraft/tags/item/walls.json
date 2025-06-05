@@ -1,11 +1,11 @@
 {
   "values": [
-    "ragium:azure_tile_wall",
-    "ragium:blue_nether_brick_wall",
-    "ragium:ember_stone_wall",
-    "ragium:plastic_block_wall",
+    "ragium:ragi_stone_wall",
     "ragium:ragi_stone_brick_wall",
     "ragium:ragi_stone_square_wall",
-    "ragium:ragi_stone_wall"
+    "ragium:azure_tile_wall",
+    "ragium:ember_stone_wall",
+    "ragium:plastic_block_wall",
+    "ragium:blue_nether_brick_wall"
   ]
 }

@@ -4,11 +4,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTFluidContent
 import net.minecraft.Util
 import net.minecraft.advancements.Advancement
+import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -28,6 +30,16 @@ private fun translationKey(key: ResourceKey<Advancement>): String = Util.makeDes
 fun ResourceKey<Advancement>.titleKey(): String = "${translationKey(this)}.title"
 
 fun ResourceKey<Advancement>.descKey(): String = "${translationKey(this)}.desc"
+
+//    TagAppender    //
+
+fun <T : Any> TagsProvider.TagAppender<T>.addHolder(vararg holders: DeferredHolder<T, out T>) {
+    holders.mapNotNull(DeferredHolder<T, out T>::getKey).forEach(::add)
+}
+
+fun TagsProvider.TagAppender<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
+    addHolder(content.stillHolder, content.flowHolder)
+}
 
 //    LanguageProvider    //
 

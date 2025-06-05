@@ -1,18 +1,20 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition
+import net.neoforged.neoforge.common.conditions.NotCondition
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
@@ -55,7 +57,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.GLASS_BOTTLE)
-            .save(output.withConditions(IntegrationMods.FD.notCondition))
+            .save(output.withConditions(NotCondition(ModLoadedCondition(RagiumConstantValues.FARMERS_DELIGHT))))
         // Fever Cherry
         HTShapedRecipeBuilder(RagiumItems.FEVER_CHERRY)
             .hollow8()

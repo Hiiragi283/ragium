@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data
 
-import hiiragi283.ragium.api.IntegrationMods
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.util.RagiumConstantValues
@@ -17,6 +16,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ICondition
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
 abstract class HTRecipeProvider {
     protected lateinit var provider: HolderLookup.Provider
@@ -33,8 +33,8 @@ abstract class HTRecipeProvider {
         buildRecipeInternal()
     }
 
-    fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider, mod: IntegrationMods) {
-        buildRecipes(output.withConditions(mod.condition), holderLookup)
+    fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider, modid: String) {
+        buildRecipes(output.withConditions(ModLoadedCondition(modid)), holderLookup)
     }
 
     protected abstract fun buildRecipeInternal()
