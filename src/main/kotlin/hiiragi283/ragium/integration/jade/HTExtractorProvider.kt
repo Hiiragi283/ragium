@@ -23,7 +23,11 @@ object HTExtractorProvider : HTProgressDataProvider() {
             .builder()
             .addItem(extractor.getItemSlot(0))
             .addItem(extractor.getItemSlot(1))
-            .build(extractor.totalTick % 200, 200)
+            .apply {
+                if (extractor is HTExtractorBlockEntity.Advanced) {
+                    addFluid(extractor.getFluidTank(0))
+                }
+            }.build(extractor.totalTick % 200, 200)
     }
 
     override fun getUid(): ResourceLocation = RagiumAPI.id("extractor")

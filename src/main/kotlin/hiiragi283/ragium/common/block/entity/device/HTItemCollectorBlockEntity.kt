@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.collect
+package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.storage.HTStorageIO

@@ -10,14 +10,12 @@ import hiiragi283.ragium.common.block.entity.HTChargerBlockEntity
 import hiiragi283.ragium.common.block.entity.HTCreativeEnergyUnitBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
-import hiiragi283.ragium.common.block.entity.HTSprinklerBlockEntity
-import hiiragi283.ragium.common.block.entity.collect.HTExpCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.collect.HTItemCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.collect.HTLavaCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.collect.HTMilkDrainBlockEntity
-import hiiragi283.ragium.common.block.entity.collect.HTWaterCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAdvancedCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAdvancedExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
@@ -49,25 +47,16 @@ object RagiumBlockEntityTypes {
     //    Machine    //
 
     @JvmField
-    val ADVANCED_CRUSHER: HTDeferredBlockEntityType<HTAdvancedCrusherBlockEntity> = registerTick(
-        "advanced_crusher",
-        ::HTAdvancedCrusherBlockEntity,
-    )
+    val ADVANCED_CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("advanced_crusher", HTCrusherBlockEntity::Advanced)
 
     @JvmField
-    val ADVANCED_EXTRACTOR: HTDeferredBlockEntityType<HTAdvancedExtractorBlockEntity> = registerTick(
-        "advanced_extractor",
-        ::HTAdvancedExtractorBlockEntity,
-    )
+    val ADVANCED_EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("advanced_extractor", HTExtractorBlockEntity::Advanced)
 
     @JvmField
-    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
+    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", HTCrusherBlockEntity::Basic)
 
     @JvmField
-    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick(
-        "extractor",
-        ::HTExtractorBlockEntity,
-    )
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", HTExtractorBlockEntity::Basic)
 
     @JvmField
     val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -26,7 +26,7 @@ import net.neoforged.neoforge.common.util.TriState
 class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state),
     HTFluidTankHandler {
-    private val inputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.INPUT_TANK, this) {
+    private val inputTank: HTFluidTank = HTFluidTank.Companion.create(RagiumConstantValues.INPUT_TANK, this) {
         validator = { variant: HTFluidVariant -> variant.isIn(Tags.Fluids.WATER) }
     }
 

@@ -15,6 +15,7 @@ object HTCrusherProvider : HTProgressDataProvider() {
 
     override fun appendOutputElement(helper: IElementHelper, data: HTProgressData, consumer: Consumer<IElement>) {
         consumer.accept(helper.item(data.getItem(1)))
+        consumer.accept(helper.item(data.getItem(2)))
     }
 
     override fun streamData(accessor: BlockAccessor): HTProgressData? {
@@ -23,6 +24,7 @@ object HTCrusherProvider : HTProgressDataProvider() {
             .builder()
             .addItem(crusher.getItemSlot(0))
             .addItem(crusher.getItemSlot(1))
+            .addItem(crusher.getItemSlot(2))
             .build(crusher.totalTick % 200, 200)
     }
 
