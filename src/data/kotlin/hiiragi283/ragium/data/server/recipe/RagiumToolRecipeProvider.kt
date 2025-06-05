@@ -31,7 +31,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "ABA",
                 "AAA",
             ).define('A', Tags.Items.LEATHERS)
-            .define('B', Tags.Items.CHESTS_ENDER)
+            .define('B', RagiumItemTags.GEMS_ELDRITCH_PEARL)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ITEM_MAGNET)

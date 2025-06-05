@@ -87,7 +87,7 @@ abstract class HTItemSlot :
     }
 
     class Builder internal constructor() {
-        var capacity: Int = Item.ABSOLUTE_MAX_STACK_SIZE
+        var capacity: Int = Item.DEFAULT_MAX_STACK_SIZE
         var validator: (HTItemVariant) -> Boolean = { true }
         var callback: () -> Unit = {}
 

@@ -20,14 +20,10 @@ class RagiumJadePlugin : IWailaPlugin {
     }
 
     override fun register(registration: IWailaCommonRegistration) {
-        registration.registerBlockDataProvider(HTCrusherProvider, Block::class.java)
         registration.registerBlockDataProvider(HTEnchantmentHolderProvider, Block::class.java)
-        registration.registerBlockDataProvider(HTExtractorProvider, Block::class.java)
     }
 
     override fun registerClient(registration: IWailaClientRegistration) {
-        registration.registerBlockComponent(HTCrusherProvider, Block::class.java)
         registration.registerBlockComponent(HTEnchantmentHolderProvider, Block::class.java)
-        registration.registerBlockComponent(HTExtractorProvider, Block::class.java)
     }
 }

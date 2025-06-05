@@ -5,11 +5,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.client.gui.HTClientFluidTooltipComponent
+import hiiragi283.ragium.client.gui.screen.HTCrusherScreen
 import hiiragi283.ragium.client.renderer.HTChargerRenderer
 import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
@@ -22,6 +24,7 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
@@ -42,6 +45,7 @@ class RagiumClient(eventBus: IEventBus) {
         eventBus.addListener(::registerBlockColor)
         eventBus.addListener(::registerItemColor)
         eventBus.addListener(::registerClientExtensions)
+        eventBus.addListener(::registerScreens)
         eventBus.addListener(::registerEntityRenderer)
         eventBus.addListener(::registerTooltipRenderer)
     }
@@ -152,6 +156,12 @@ class RagiumClient(eventBus: IEventBus) {
         register(RagiumFluidContents.WARPED_SAP, Color(0x006666))
 
         LOGGER.info("Registered client extensions!")
+    }
+
+    private fun registerScreens(event: RegisterMenuScreensEvent) {
+        event.register(RagiumMenuTypes.CRUSHER.get(), ::HTCrusherScreen)
+
+        LOGGER.info("Registered Screens!")
     }
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {

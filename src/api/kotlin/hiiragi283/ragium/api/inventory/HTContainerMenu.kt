@@ -1,21 +1,20 @@
 package hiiragi283.ragium.api.inventory
 
+import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.SlotItemHandler
-import java.util.function.Supplier
 
 abstract class HTContainerMenu(
-    menuType: Supplier<out MenuType<*>>,
+    menuType: HTDeferredMenuType<*>,
     containerId: Int,
     val inventory: Inventory,
     val pos: BlockPos,
@@ -101,7 +100,7 @@ abstract class HTContainerMenu(
                     inventory,
                     index + 9,
                     HTSlotPos.getSlotPosX(index % 9),
-                    HTSlotPos.getSlotPosY(3 + (index / 9)) + 16 + yOffset,
+                    HTSlotPos.getSlotPosY(3 + (index / 9)) + 12 + yOffset,
                 ),
             )
         }
@@ -111,7 +110,7 @@ abstract class HTContainerMenu(
                 when {
                     immovable && index == inventory.selected -> ::HTImmovableSlot
                     else -> ::Slot
-                }(inventory, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) + 2 + yOffset),
+                }(inventory, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) - 2 + yOffset),
             )
         }
     }

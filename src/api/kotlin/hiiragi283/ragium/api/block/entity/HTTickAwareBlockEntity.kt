@@ -3,6 +3,8 @@ package hiiragi283.ragium.api.block.entity
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
@@ -70,5 +72,24 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
      */
     abstract fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState
 
-    protected fun canProcess(maxTick: Int): Boolean = totalTick > 0 && totalTick % maxTick == 0
+    val containerData: ContainerData = object : ContainerData {
+        override fun get(index: Int): Int = when (index) {
+            0 -> totalTick
+            1 -> maxTicks
+            else -> -1
+        }
+
+        override fun set(index: Int, value: Int) {}
+
+        override fun getCount(): Int = 2
+    }
+
+    abstract val maxTicks: Int
+
+    val progress: Float get() {
+        val fixedTotalTicks: Int = totalTick % maxTicks
+        return Mth.clamp(fixedTotalTicks / maxTicks.toFloat(), 0f, 1f)
+    }
+
+    protected fun canProcess(): Boolean = totalTick > 0 && totalTick % maxTicks == 0
 }

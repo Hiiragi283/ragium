@@ -215,10 +215,22 @@ object RagiumItems {
     //    Tools    //
 
     @JvmField
+    val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
+
+    @JvmField
     val RAGI_ALLOY_HAMMER: DeferredItem<HTForgeHammerItem> = register(
         "${RagiumConstantValues.RAGI_ALLOY}_hammer",
         { prop: Item.Properties -> HTForgeHammerItem(RagiumToolTiers.RAGI_ALLOY, prop) },
     )
+
+    @JvmField
+    val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> = register("item_magnet", ::HTSimpleMagnetItem)
+
+    @JvmField
+    val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> = register("ragi_lantern", ::HTDynamicLanternItem)
+
+    @JvmField
+    val EXP_MAGNET: DeferredItem<HTExpMagnetItem> = register("exp_magnet", ::HTExpMagnetItem)
 
     @JvmField
     val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<HTAzureSteelTemplateItem> =
@@ -229,18 +241,6 @@ object RagiumItems {
 
     @JvmField
     val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))
-
-    @JvmField
-    val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> = register("item_magnet", ::HTSimpleMagnetItem)
-
-    @JvmField
-    val EXP_MAGNET: DeferredItem<HTExpMagnetItem> = register("exp_magnet", ::HTExpMagnetItem)
-
-    @JvmField
-    val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
-
-    @JvmField
-    val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> = register("ragi_lantern", ::HTDynamicLanternItem)
 
     @JvmField
     val ELDRITCH_EGG: DeferredItem<HTCaptureEggItem> = register("eldritch_egg", ::HTCaptureEggItem)

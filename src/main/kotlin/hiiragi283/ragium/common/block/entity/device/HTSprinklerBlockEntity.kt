@@ -50,7 +50,7 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (!canProcess(20)) return TriState.DEFAULT
+        if (!canProcess()) return TriState.DEFAULT
         // 高さを0~2の範囲でチェックする
         for (height: Int in (0..2)) {
             if (glowCrop(level, pos, height).isTrue) {
@@ -59,6 +59,8 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return TriState.DEFAULT
     }
+
+    override val maxTicks: Int = 100
 
     private fun glowCrop(level: ServerLevel, pos: BlockPos, height: Int): TriState {
         // 範囲内のランダムなブロックを対象とする

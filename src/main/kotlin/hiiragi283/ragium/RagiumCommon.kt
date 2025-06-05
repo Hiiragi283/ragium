@@ -18,6 +18,7 @@ import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.neoforged.api.distmarker.Dist
@@ -67,6 +68,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumRecipeTypes.REGISTER.register(eventBus)
         RagiumBlockActionSerializers.REGISTER.register(eventBus)
+
+        RagiumMenuTypes.REGISTER.register(eventBus)
 
         HTEnergyNetworkManagerImpl
 

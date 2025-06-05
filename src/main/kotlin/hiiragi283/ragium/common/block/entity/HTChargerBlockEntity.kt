@@ -77,7 +77,7 @@ class HTChargerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (!canProcess(20)) return TriState.DEFAULT
+        if (!canProcess()) return TriState.DEFAULT
         // エネルギーネットワークを取得
         val network: IEnergyStorage =
             RagiumAPI.getInstance().getEnergyNetworkManager().getNetworkFromServer(level)
@@ -97,6 +97,8 @@ class HTChargerBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return TriState.FALSE
     }
+
+    override val maxTicks: Int = 20
 
     fun canCharge(): Boolean {
         if (itemSlot.isEmpty) return false

@@ -39,4 +39,6 @@ class HTAutoBeehiveBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBl
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         TODO("Not yet implemented")
     }
+
+    override val maxTicks: Int = 200
 }

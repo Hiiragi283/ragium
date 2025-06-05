@@ -130,7 +130,7 @@ abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntity
         level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
     }
 
-    override fun getCloneItemStack(
+    final override fun getCloneItemStack(
         state: BlockState,
         target: HitResult,
         level: LevelReader,

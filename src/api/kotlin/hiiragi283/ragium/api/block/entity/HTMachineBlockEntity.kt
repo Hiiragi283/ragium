@@ -23,6 +23,8 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         return onServerTick(level, pos, state, network)
     }
 
+    override val maxTicks: Int = 200
+
     /**
      * [IEnergyStorage]を引数に加えた[onServerTick]の拡張メソッド
      */

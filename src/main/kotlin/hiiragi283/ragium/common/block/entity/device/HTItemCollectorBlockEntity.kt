@@ -50,7 +50,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (!canProcess(20)) return TriState.DEFAULT
+        if (!canProcess()) return TriState.DEFAULT
         // 範囲内のItem Entityを取得する
         val range = 5
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
@@ -89,6 +89,8 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return TriState.TRUE
     }
+
+    override val maxTicks: Int = 20
 
     //    Item    //
 

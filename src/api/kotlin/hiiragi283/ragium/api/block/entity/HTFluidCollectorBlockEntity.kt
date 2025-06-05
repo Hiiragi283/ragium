@@ -45,7 +45,7 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (!canProcess(20)) return TriState.DEFAULT
+        if (!canProcess()) return TriState.DEFAULT
         // 液体を生成できるかチェック
         val stack: FluidStack = getGeneratedFluid(level, pos)
         if (stack.isEmpty) return TriState.DEFAULT
@@ -55,6 +55,8 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
         playSound(level, pos)
         return TriState.TRUE
     }
+
+    final override val maxTicks: Int = 20
 
     protected abstract fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack
 

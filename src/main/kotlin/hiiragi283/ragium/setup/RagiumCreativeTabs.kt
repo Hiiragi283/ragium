@@ -51,6 +51,8 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
             add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
             add(RagiumItems.RAGI_CRYSTAL)
+            add(RagiumItems.ITEM_MAGNET)
+            add(RagiumItems.RAGI_LANTERN)
 
             add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
             add(RagiumItems.CRIMSON_CRYSTAL)
@@ -61,6 +63,8 @@ object RagiumCreativeTabs {
 
             add(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
             add(RagiumItems.ELDRITCH_PEARL)
+            add(RagiumItems.ENDER_BUNDLE)
+            add(RagiumItems.ELDRITCH_EGG)
             // Ingots
             add(RagiumBlocks.RAGI_ALLOY_BLOCK)
             add(RagiumItems.RAGI_ALLOY_COMPOUND)
@@ -72,6 +76,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
             add(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
+            add(RagiumItems.EXP_MAGNET)
 
             add(RagiumBlocks.AZURE_STEEL_BLOCK)
             add(RagiumItems.AZURE_STEEL_COMPOUND)
@@ -125,14 +130,7 @@ object RagiumCreativeTabs {
             addAll(RagiumBlocks.DEVICES)
             addAll(RagiumBlocks.DRUMS)
             // Tools
-            add(RagiumItems.ENDER_BUNDLE)
-            add(RagiumItems.ITEM_MAGNET)
-            add(RagiumItems.EXP_MAGNET)
             add(RagiumItems.TRADER_CATALOG)
-            add(RagiumItems.RAGI_LANTERN)
-            add(RagiumItems.ELDRITCH_EGG)
-
-            // addAll(RagiumItems.Molds.entries)
             // Tickets
             add(RagiumItems.BLANK_TICKET)
 
