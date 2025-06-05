@@ -1,10 +1,11 @@
 package hiiragi283.ragium.api.block.entity
 
+import com.mojang.logging.LogUtils
+import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
 import hiiragi283.ragium.api.extension.enchLookup
-import hiiragi283.ragium.api.extension.getData
-import hiiragi283.ragium.api.extension.putData
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
@@ -19,7 +20,6 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -36,9 +36,11 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
+import org.slf4j.Logger
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
@@ -47,6 +49,11 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     BlockEntity(type.get(), pos, state),
     HTEnchantmentHolder,
     HTNbtCodec {
+    companion object {
+        @JvmField
+        val LOGGER: Logger = LogUtils.getLogger()
+    }
+
     //    Save & Load    //
 
     /**
@@ -70,26 +77,44 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        val registryOps: RegistryOps<Tag> = registries.createSerializationContext(NbtOps.INSTANCE)
+        val writer: HTNbtCodec.Writer = object : HTNbtCodec.Writer {
+            override fun <T : Any> write(codec: Codec<T>, key: String, value: T) {
+                codec
+                    .encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), value)
+                    .ifSuccess { tag.put(key, it) }
+                    .ifError { error: DataResult.Error<Tag> -> LOGGER.error(error.message()) }
+            }
+
+            override fun write(key: String, serializable: INBTSerializable<CompoundTag>) {
+                tag.put(key, serializable.serializeNBT(registries))
+            }
+        }
         // Enchantment
         if (!itemEnchantments.isEmpty) {
-            tag.putData(RagiumConstantValues.ENCHANTMENT, itemEnchantments, ItemEnchantments.CODEC, registryOps)
+            writer.write(ItemEnchantments.CODEC, RagiumConstantValues.ENCHANTMENT, itemEnchantments)
         }
         // Custom
-        writeNbt(tag, registryOps)
+        writeNbt(writer)
     }
 
     final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        val registryOps: RegistryOps<Tag> = registries.createSerializationContext(NbtOps.INSTANCE)
+        val reader: HTNbtCodec.Reader = object : HTNbtCodec.Reader {
+            override fun <T : Any> read(codec: Codec<T>, key: String): DataResult<T> = codec
+                .parse(registries.createSerializationContext(NbtOps.INSTANCE), tag.get(key))
+
+            override fun read(key: String, serializable: INBTSerializable<CompoundTag>) {
+                serializable.deserializeNBT(registries, tag.getCompound(key))
+            }
+        }
         // Enchantment
-        tag
-            .getData(RagiumConstantValues.ENCHANTMENT, ItemEnchantments.CODEC, registryOps)
+        reader
+            .read(ItemEnchantments.CODEC, RagiumConstantValues.ENCHANTMENT)
             .result()
             .orElse(ItemEnchantments.EMPTY)
             .let(::loadEnchantment)
         // Custom
-        readNbt(tag, registryOps)
+        readNbt(reader)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {

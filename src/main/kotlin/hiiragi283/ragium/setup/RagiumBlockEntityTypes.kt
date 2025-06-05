@@ -50,7 +50,10 @@ object RagiumBlockEntityTypes {
     val ADVANCED_CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("advanced_crusher", HTCrusherBlockEntity::Advanced)
 
     @JvmField
-    val ADVANCED_EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("advanced_extractor", HTExtractorBlockEntity::Advanced)
+    val ADVANCED_EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick(
+        "advanced_extractor",
+        HTExtractorBlockEntity::Advanced,
+    )
 
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", HTCrusherBlockEntity::Basic)

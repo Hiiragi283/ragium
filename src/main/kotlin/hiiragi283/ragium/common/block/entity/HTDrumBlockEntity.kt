@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -10,9 +11,6 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
@@ -46,12 +44,12 @@ abstract class HTDrumBlockEntity(
 
     //    Save & Load    //
 
-    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        tank.writeNbt(nbt, registryOps)
+    override fun writeNbt(writer: HTNbtCodec.Writer) {
+        tank.writeNbt(writer)
     }
 
-    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        tank.readNbt(nbt, registryOps)
+    override fun readNbt(reader: HTNbtCodec.Reader) {
+        tank.readNbt(reader)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {

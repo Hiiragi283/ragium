@@ -1,12 +1,10 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
@@ -25,9 +23,9 @@ class HTCreativeEnergyUnitBlockEntity(pos: BlockPos, state: BlockState) : HTBloc
         override fun canReceive(): Boolean = true
     }
 
-    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {}
+    override fun writeNbt(writer: HTNbtCodec.Writer) {}
 
-    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {}
+    override fun readNbt(reader: HTNbtCodec.Reader) {}
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage = energyStorage
 }

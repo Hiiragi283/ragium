@@ -3,23 +3,27 @@ package hiiragi283.ragium.common.storage.item
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.extension.getLevel
 import hiiragi283.ragium.api.inventory.HTSlotPos
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.common.inventory.HTContainerItemSlot
 import hiiragi283.ragium.setup.RagiumEnchantments
+import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
+import net.minecraft.nbt.NbtOps
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.enchantment.ItemEnchantments
+import net.neoforged.neoforge.common.util.INBTSerializable
+import org.jetbrains.annotations.UnknownNullability
 
 open class HTItemSlotImpl(
     private val nbtKey: String,
     private val baseCapacity: Int,
     private val validator: (HTItemVariant) -> Boolean,
     private val callback: () -> Unit,
-) : HTItemSlot() {
+) : HTItemSlot(),
+    INBTSerializable<CompoundTag> {
     override var capacity: Int = baseCapacity
 
     final override fun isValid(variant: HTItemVariant): Boolean = validator(variant)
@@ -40,24 +44,28 @@ open class HTItemSlotImpl(
         capacity = level * baseCapacity
     }
 
-    final override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        nbt.put(
-            nbtKey,
-            buildNbt {
-                HTItemVariant.CODEC
-                    .encodeStart(registryOps, resource)
-                    .ifSuccess { put("item", it) }
-                putInt("amount", amount)
-            },
-        )
+    final override fun writeNbt(writer: HTNbtCodec.Writer) {
+        writer.write(nbtKey, this)
     }
 
-    final override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        val nbtIn: CompoundTag = nbt.getCompound(nbtKey)
+    final override fun readNbt(reader: HTNbtCodec.Reader) {
+        reader.read(nbtKey, this)
+    }
+
+    //    INBTSerializable    //
+
+    override fun serializeNBT(provider: HolderLookup.Provider): @UnknownNullability CompoundTag = buildNbt {
         HTItemVariant.CODEC
-            .parse(registryOps, nbtIn.get("item"))
+            .encodeStart(provider.createSerializationContext(NbtOps.INSTANCE), resource)
+            .ifSuccess { put("item", it) }
+        putInt("amount", amount)
+    }
+
+    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+        HTItemVariant.CODEC
+            .parse(provider.createSerializationContext(NbtOps.INSTANCE), nbt.get("item"))
             .ifSuccess { resource = it }
-        amount = nbtIn.getInt("amount")
+        amount = nbt.getInt("amount")
         onContentsChanged()
     }
 }

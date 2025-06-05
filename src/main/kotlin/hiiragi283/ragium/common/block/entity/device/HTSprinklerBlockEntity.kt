@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
@@ -8,9 +9,6 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -30,12 +28,12 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) :
         validator = { variant: HTFluidVariant -> variant.isIn(Tags.Fluids.WATER) }
     }
 
-    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        inputTank.writeNbt(nbt, registryOps)
+    override fun writeNbt(writer: HTNbtCodec.Writer) {
+        inputTank.writeNbt(writer)
     }
 
-    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        inputTank.readNbt(nbt, registryOps)
+    override fun readNbt(reader: HTNbtCodec.Reader) {
+        inputTank.readNbt(reader)
     }
 
     override fun onRightClickedWithItem(

@@ -1,14 +1,12 @@
 package hiiragi283.ragium.api.block.entity
 
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -25,12 +23,12 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
     HTFluidTankHandler {
     protected val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
 
-    final override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        outputTank.writeNbt(nbt, registryOps)
+    final override fun writeNbt(writer: HTNbtCodec.Writer) {
+        outputTank.writeNbt(writer)
     }
 
-    final override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        outputTank.readNbt(nbt, registryOps)
+    final override fun readNbt(reader: HTNbtCodec.Reader) {
+        outputTank.readNbt(reader)
     }
 
     override fun onRightClickedWithItem(

@@ -2,15 +2,13 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -31,12 +29,12 @@ class HTChargerBlockEntity(pos: BlockPos, state: BlockState) :
         capacity = 1
     }
 
-    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        itemSlot.writeNbt(nbt, registryOps)
+    override fun writeNbt(writer: HTNbtCodec.Writer) {
+        itemSlot.writeNbt(writer)
     }
 
-    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        itemSlot.readNbt(nbt, registryOps)
+    override fun readNbt(reader: HTNbtCodec.Reader) {
+        itemSlot.readNbt(reader)
     }
 
     override fun onRightClickedWithItem(

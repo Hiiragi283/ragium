@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
@@ -9,9 +10,6 @@ import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.level.block.state.BlockState
@@ -27,12 +25,12 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         capacity = Int.MAX_VALUE
     }
 
-    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        outputTank.writeNbt(nbt, registryOps)
+    override fun writeNbt(writer: HTNbtCodec.Writer) {
+        outputTank.writeNbt(writer)
     }
 
-    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        outputTank.readNbt(nbt, registryOps)
+    override fun readNbt(reader: HTNbtCodec.Reader) {
+        outputTank.readNbt(reader)
     }
 
     //    Ticking    //

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -12,9 +13,6 @@ import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -31,16 +29,16 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
     protected val outputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT, this)
     protected abstract val outputSlot1: HTItemSlot?
 
-    final override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        inputSlot.writeNbt(nbt, registryOps)
-        outputSlot.writeNbt(nbt, registryOps)
-        outputSlot1?.writeNbt(nbt, registryOps)
+    final override fun writeNbt(writer: HTNbtCodec.Writer) {
+        inputSlot.writeNbt(writer)
+        outputSlot.writeNbt(writer)
+        outputSlot1?.writeNbt(writer)
     }
 
-    final override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
-        inputSlot.readNbt(nbt, registryOps)
-        outputSlot.readNbt(nbt, registryOps)
-        outputSlot1?.readNbt(nbt, registryOps)
+    final override fun readNbt(reader: HTNbtCodec.Reader) {
+        inputSlot.readNbt(reader)
+        outputSlot.readNbt(reader)
+        outputSlot1?.readNbt(reader)
     }
 
     final override fun loadEnchantment(newEnchantments: ItemEnchantments) {

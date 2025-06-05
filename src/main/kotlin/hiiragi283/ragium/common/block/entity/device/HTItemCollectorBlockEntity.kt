@@ -1,14 +1,12 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
@@ -23,15 +21,15 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemSlotHandler {
     private val itemSlots: List<HTItemSlot> = (0..8).map { HTItemSlot.create("output_slot_$it", this) }
 
-    override fun writeNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+    override fun writeNbt(writer: HTNbtCodec.Writer) {
         for (slot: HTItemSlot in itemSlots) {
-            slot.writeNbt(nbt, registryOps)
+            slot.writeNbt(writer)
         }
     }
 
-    override fun readNbt(nbt: CompoundTag, registryOps: RegistryOps<Tag>) {
+    override fun readNbt(reader: HTNbtCodec.Reader) {
         for (slot: HTItemSlot in itemSlots) {
-            slot.readNbt(nbt, registryOps)
+            slot.readNbt(reader)
         }
     }
 
