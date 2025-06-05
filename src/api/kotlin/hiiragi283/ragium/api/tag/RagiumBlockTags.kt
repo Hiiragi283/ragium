@@ -24,6 +24,9 @@ object RagiumBlockTags {
         blockTagKey(commonId(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.SOUL))
 
     @JvmField
+    val LED_BLOCKS: TagKey<Block> = blockTagKey(RagiumAPI.id("led_blocks"))
+
+    @JvmField
     val OBSIDIANS_MYSTERIOUS: TagKey<Block> = blockTagKey(commonId("obsidians/mysterious"))
 
     @JvmField

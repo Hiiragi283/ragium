@@ -175,6 +175,7 @@
   "item.ragium.azure_steel_pickaxe": "Azure Steel Pickaxe",
   "item.ragium.azure_steel_shovel": "Azure Steel Shovel",
   "item.ragium.azure_steel_sword": "Azure Steel Sword",
+  "item.ragium.azure_steel_upgrade_smithing_template": "Azure Steel Upgrade",
   "item.ragium.azure_ticket": "Azure Ticket",
   "item.ragium.basic_circuit": "Basic Circuit",
   "item.ragium.blank_ticket": "Blank Ticket",
@@ -237,6 +238,10 @@
   "item.ragium.warped_crystal": "Warped Crystal",
   "item.ragium.warped_sap_bucket": "Warped Sap Bucket",
   "item.ragium.warped_wart": "Warped Wart",
+  "items.smithing_template.azure_steel_upgrade.additions_slot_description": "Add Azure Steel Ingot",
+  "items.smithing_template.azure_steel_upgrade.applies_to": "Azure Steel Equipment",
+  "items.smithing_template.azure_steel_upgrade.base_slot_description": "Add azure steel armor, weapon, ot tool",
+  "items.smithing_template.azure_steel_upgrade.ingredients": "Azure Steel Ingot",
   "tag.fluid.c.chocolates": "Chocolate",
   "tag.fluid.c.creosote": "Creosote",
   "tag.fluid.c.fuels.nitro": "Nitro Fuel",
@@ -265,5 +270,6 @@
   "tag.item.ragium.soils.nether": "Nether Soil",
   "text.ragium.effect_range": "Effect Radius: %s blocks",
   "text.ragium.fluid_capacity": "Capacity: %s mb",
-  "text.ragium.fluid_name": "%s : %s mb"
+  "text.ragium.fluid_name": "%s : %s mb",
+  "upgrade.azure_steel_upgrade": "Azure Steel Upgrade"
 }

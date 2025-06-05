@@ -17,11 +17,6 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumToolRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
-        // Armor
-        RagiumItems.AZURE_STEEL_ARMORS.addRecipes(output, provider)
-        // Tool
-        RagiumItems.AZURE_STEEL_TOOLS.addRecipes(output, provider)
-
         HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_HAMMER, category = CraftingBookCategory.EQUIPMENT)
             .pattern(" AA")
             .pattern("BBA")
@@ -72,6 +67,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         // molds()
+        azure()
         tickets()
     }
 
@@ -96,6 +92,73 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             )
         }
     }*/
+
+    private fun azure() {
+        // Armor
+        HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_HELMET, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "AAA",
+                "ABA",
+            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .save(output)
+        // Chestplate
+        HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_CHESTPLATE, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "ABA",
+                "AAA",
+                "AAA",
+            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .save(output)
+        // Leggings
+        HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_LEGGINGS, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "AAA",
+                "ABA",
+                "A A",
+            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .save(output)
+        // Boots
+        HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_BOOTS, category = CraftingBookCategory.EQUIPMENT)
+            .pattern(
+                "A A",
+                "ABA",
+            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
+            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .save(output)
+        // Tool
+        RagiumItems.AZURE_STEEL_TOOLS.addRecipes(output, provider)
+
+        // Iron -> Azure Steel
+        HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
+            .pattern(
+                "A A",
+                "A A",
+                " A ",
+            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
+            .save(output)
+
+        HTShapelessRecipeBuilder(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, 2)
+            .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
+            .addIngredient(RagiumItemTags.INGOTS_AZURE_STEEL)
+            .addIngredient(RagiumItemTags.INGOTS_AZURE_STEEL)
+            .saveSuffixed(output, "_duplicate")
+
+        mapOf(
+            Items.IRON_HELMET to RagiumItems.AZURE_STEEL_HELMET,
+            Items.IRON_CHESTPLATE to RagiumItems.AZURE_STEEL_CHESTPLATE,
+            Items.IRON_LEGGINGS to RagiumItems.AZURE_STEEL_LEGGINGS,
+            Items.IRON_BOOTS to RagiumItems.AZURE_STEEL_BOOTS,
+        ).forEach { (base: Item, result) ->
+            HTSmithingRecipeBuilder(result)
+                .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
+                .addIngredient(base)
+                .addIngredient(RagiumItemTags.INGOTS_AZURE_STEEL)
+                .save(output)
+        }
+    }
 
     private fun tickets() {
         // Blank

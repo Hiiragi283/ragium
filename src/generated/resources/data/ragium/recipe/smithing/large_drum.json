@@ -11,6 +11,6 @@
     "id": "ragium:large_drum"
   },
   "template": {
-    "tag": "c:plastics"
+    "tag": "c:circuits/advanced"
   }
 }

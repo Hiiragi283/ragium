@@ -8,20 +8,23 @@ import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
-import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
 import net.minecraft.ChatFormatting
+import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
+import net.minecraft.world.item.ArmorItem
+import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
@@ -49,7 +52,6 @@ object RagiumItems {
     fun init(eventBus: IEventBus) {
         REGISTER.register(eventBus)
 
-        AZURE_STEEL_ARMORS.init(eventBus)
         AZURE_STEEL_TOOLS.init(eventBus)
     }
 
@@ -174,11 +176,40 @@ object RagiumItems {
 
     //    Armors    //
 
+    @JvmStatic
+    private fun registerArmor(
+        name: String,
+        armorType: ArmorItem.Type,
+        material: Holder<ArmorMaterial>,
+        multiplier: Int,
+    ) = register(
+        "${name}_${armorType.serializedName}",
+        { properties: Item.Properties -> ArmorItem(material, armorType, properties) },
+        Item.Properties().durability(armorType.getDurability(multiplier)),
+    )
+
     @JvmField
-    val AZURE_STEEL_ARMORS = HTArmorSets(
-        RagiumArmorMaterials.AZURE_STEEL,
-        RagiumConstantValues.AZURE_STEEL,
-        RagiumItemTags.INGOTS_AZURE_STEEL,
+    val AZURE_STEEL_HELMET: DeferredItem<ArmorItem> =
+        registerArmor(RagiumConstantValues.AZURE_STEEL, ArmorItem.Type.HELMET, RagiumArmorMaterials.AZURE_STEEL, 20)
+
+    @JvmField
+    val AZURE_STEEL_CHESTPLATE: DeferredItem<ArmorItem> =
+        registerArmor(RagiumConstantValues.AZURE_STEEL, ArmorItem.Type.CHESTPLATE, RagiumArmorMaterials.AZURE_STEEL, 20)
+
+    @JvmField
+    val AZURE_STEEL_LEGGINGS: DeferredItem<ArmorItem> =
+        registerArmor(RagiumConstantValues.AZURE_STEEL, ArmorItem.Type.LEGGINGS, RagiumArmorMaterials.AZURE_STEEL, 20)
+
+    @JvmField
+    val AZURE_STEEL_BOOTS: DeferredItem<ArmorItem> =
+        registerArmor(RagiumConstantValues.AZURE_STEEL, ArmorItem.Type.BOOTS, RagiumArmorMaterials.AZURE_STEEL, 20)
+
+    @JvmField
+    val AZURE_ARMORS: List<DeferredItem<ArmorItem>> = listOf(
+        AZURE_STEEL_HELMET,
+        AZURE_STEEL_CHESTPLATE,
+        AZURE_STEEL_LEGGINGS,
+        AZURE_STEEL_BOOTS,
     )
 
     //    Tools    //
@@ -188,6 +219,10 @@ object RagiumItems {
         "${RagiumConstantValues.RAGI_ALLOY}_hammer",
         { prop: Item.Properties -> HTForgeHammerItem(RagiumToolTiers.RAGI_ALLOY, prop) },
     )
+
+    @JvmField
+    val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<HTAzureSteelTemplateItem> =
+        register("${RagiumConstantValues.AZURE_STEEL}_upgrade_smithing_template", { _: Item.Properties -> HTAzureSteelTemplateItem() })
 
     @JvmField
     val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolTiers.AZURE_STEEL, RagiumConstantValues.AZURE_STEEL, RagiumItemTags.INGOTS_AZURE_STEEL)

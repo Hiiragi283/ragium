@@ -11,6 +11,6 @@
     "id": "ragium:medium_drum"
   },
   "template": {
-    "tag": "c:glass_blocks/quartz"
+    "tag": "c:circuits/basic"
   }
 }

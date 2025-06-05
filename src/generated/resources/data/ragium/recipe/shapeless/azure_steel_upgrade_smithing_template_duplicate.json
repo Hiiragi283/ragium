@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:azure_steel_upgrade_smithing_template"
+    },
+    {
+      "tag": "c:ingots/azure_steel"
+    },
+    {
+      "tag": "c:ingots/azure_steel"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:azure_steel_upgrade_smithing_template"
+  }
+}

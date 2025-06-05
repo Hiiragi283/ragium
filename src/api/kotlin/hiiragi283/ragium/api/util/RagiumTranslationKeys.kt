@@ -1,6 +1,14 @@
 package hiiragi283.ragium.api.util
 
 object RagiumTranslationKeys {
+    //    Item    //
+
+    const val AZURE_STEEL_UPGRADE = "upgrade.azure_steel_upgrade"
+    const val AZURE_STEEL_UPGRADE_APPLIES_TO = "items.smithing_template.azure_steel_upgrade.applies_to"
+    const val AZURE_STEEL_UPGRADE_INGREDIENTS = "items.smithing_template.azure_steel_upgrade.ingredients"
+    const val AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION = "items.smithing_template.azure_steel_upgrade.base_slot_description"
+    const val AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION = "items.smithing_template.azure_steel_upgrade.additions_slot_description"
+
     //    Text    //
 
     const val TEXT_FLUID_NAME = "text.ragium.fluid_name"

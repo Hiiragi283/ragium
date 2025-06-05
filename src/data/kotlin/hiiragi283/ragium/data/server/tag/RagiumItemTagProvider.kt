@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.data.HTItemTagProvider
-import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -16,6 +15,7 @@ import mekanism.common.tags.MekanismTags
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -24,7 +24,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredBlock
 import top.theillusivec4.curios.api.CuriosTags
 import java.util.concurrent.CompletableFuture
 
@@ -47,13 +46,16 @@ class RagiumItemTagProvider(
     }
 
     private fun copy() {
-        copyFromBlock(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
+        copyFromBlock(BlockTags.SLABS, ItemTags.SLABS)
+        copyFromBlock(BlockTags.STAIRS, ItemTags.STAIRS)
+        copyFromBlock(BlockTags.WALLS, ItemTags.WALLS)
         copyFromBlock(RagiumBlockTags.GLASS_BLOCKS_OBSIDIAN, RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
         copyFromBlock(RagiumBlockTags.GLASS_BLOCKS_QUARTZ, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
         copyFromBlock(RagiumBlockTags.GLASS_BLOCKS_SOUL, RagiumItemTags.GLASS_BLOCKS_SOUL)
-
-        copyFromBlock(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
+        copyFromBlock(RagiumBlockTags.LED_BLOCKS, RagiumItemTags.LED_BLOCKS)
         copyFromBlock(RagiumBlockTags.OBSIDIANS_MYSTERIOUS, RagiumItemTags.OBSIDIANS_MYSTERIOUS)
+        copyFromBlock(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
+        copyFromBlock(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
     }
 
     //    Material    //
@@ -202,19 +204,14 @@ class RagiumItemTagProvider(
 
     @Suppress("DEPRECATION")
     private fun category() {
-        for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
-            sets.appendItemTags(this)
-        }
-
-        for (block: DeferredBlock<*> in RagiumBlocks.LED_BLOCKS.values) {
-            addItem(RagiumItemTags.LED_BLOCKS, block)
-        }
-
         addItem(RagiumItemTags.ELDRITCH_PEARL_BINDER, Items.GHAST_TEAR)
         addItem(RagiumItemTags.ELDRITCH_PEARL_BINDER, Items.PHANTOM_MEMBRANE)
         addItem(RagiumItemTags.ELDRITCH_PEARL_BINDER, Items.WIND_CHARGE)
 
-        RagiumItems.AZURE_STEEL_ARMORS.appendItemTags(this)
+        addItem(ItemTags.HEAD_ARMOR_ENCHANTABLE, RagiumItems.AZURE_STEEL_HELMET)
+        addItem(ItemTags.CHEST_ARMOR_ENCHANTABLE, RagiumItems.AZURE_STEEL_CHESTPLATE)
+        addItem(ItemTags.LEG_ARMOR_ENCHANTABLE, RagiumItems.AZURE_STEEL_LEGGINGS)
+        addItem(ItemTags.FOOT_ARMOR_ENCHANTABLE, RagiumItems.AZURE_STEEL_BOOTS)
         // Tools
         add(RagiumItemTags.TOOLS_FORGE_HAMMER, RagiumItems.RAGI_ALLOY_HAMMER)
         addTag(ItemTags.DURABILITY_ENCHANTABLE, RagiumItemTags.TOOLS_FORGE_HAMMER)

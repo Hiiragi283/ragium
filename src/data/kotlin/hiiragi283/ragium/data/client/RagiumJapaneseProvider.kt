@@ -216,9 +216,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.SULFUR_DUST, "硫黄の粉")
 
         // Armor
-        RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
+        addItem(RagiumItems.AZURE_STEEL_HELMET, "紺鉄のヘルメット")
+        addItem(RagiumItems.AZURE_STEEL_CHESTPLATE, "紺鉄のチェストプレート")
+        addItem(RagiumItems.AZURE_STEEL_LEGGINGS, "紺鉄のレギンス")
+        addItem(RagiumItems.AZURE_STEEL_BOOTS, "紺鉄のブーツ")
         // Tool
         addItem(RagiumItems.RAGI_ALLOY_HAMMER, "ラギ合金の鍛造ハンマー")
+
+        addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
 
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
@@ -457,6 +462,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun text() {
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE, "紺鉄強化")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_APPLIES_TO, "紺鉄の装備品")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_INGREDIENTS, "紺鉄インゴット")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "紺鉄製の防具，武器，道具を置いてください")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "紺鉄インゴットを置いてください")
+
         add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s: %s mb")
         add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "容量: %s mb")
 

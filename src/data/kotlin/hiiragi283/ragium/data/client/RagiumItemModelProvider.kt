@@ -84,7 +84,5 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         // Tool
         RagiumItems.AZURE_STEEL_TOOLS.addItemModels(this)
-        // Armor
-        RagiumItems.AZURE_STEEL_ARMORS.addItemModels(this)
     }
 }

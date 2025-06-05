@@ -36,7 +36,6 @@ class RagiumBlockTagProvider(output: PackOutput, provider: CompletableFuture<Hol
     //    Mineable    //
 
     private fun mineable() {
-        val pickaxe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
         // Axe
         tag(BlockTags.MINEABLE_WITH_AXE).addHolder(RagiumBlocks.EXP_BERRY_BUSH, RagiumBlocks.WOODEN_CASING)
         // Hoe
@@ -46,6 +45,9 @@ class RagiumBlockTagProvider(output: PackOutput, provider: CompletableFuture<Hol
             RagiumBlocks.SWEET_BERRIES_CAKE,
         )
         // Pickaxe
+        val pickaxe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        pickaxe.addTag(RagiumBlockTags.LED_BLOCKS)
+
         pickaxe.addHolder(RagiumBlocks.MYSTERIOUS_OBSIDIAN, RagiumBlocks.TREE_TAP)
 
         for (sets: HTOreSets in listOf(RagiumBlocks.RAGINITE_ORES, RagiumBlocks.RAGI_CRYSTAL_ORES)) {
@@ -71,7 +73,6 @@ class RagiumBlockTagProvider(output: PackOutput, provider: CompletableFuture<Hol
         }
 
         RagiumBlocks.GLASSES.forEach(pickaxe::addHolder)
-        RagiumBlocks.LED_BLOCKS.values.forEach(pickaxe::addHolder)
         RagiumBlocks.CASINGS.forEach(pickaxe::addHolder)
         RagiumBlocks.MACHINES.forEach(pickaxe::addHolder)
         RagiumBlocks.CAULDRONS.forEach(tag(BlockTags.CAULDRONS)::addHolder)
@@ -98,6 +99,8 @@ class RagiumBlockTagProvider(output: PackOutput, provider: CompletableFuture<Hol
         tag(RagiumBlockTags.GLASS_BLOCKS_OBSIDIAN).addHolder(RagiumBlocks.OBSIDIAN_GLASS)
         tag(RagiumBlockTags.GLASS_BLOCKS_QUARTZ).addHolder(RagiumBlocks.QUARTZ_GLASS)
         tag(RagiumBlockTags.GLASS_BLOCKS_SOUL).addHolder(RagiumBlocks.SOUL_GLASS)
+        // LED
+        RagiumBlocks.LED_BLOCKS.values.forEach(tag(RagiumBlockTags.LED_BLOCKS)::addHolder)
         // Stone
         tag(Tags.Blocks.OBSIDIANS).addTag(RagiumBlockTags.OBSIDIANS_MYSTERIOUS)
         tag(RagiumBlockTags.OBSIDIANS_MYSTERIOUS).addHolder(RagiumBlocks.MYSTERIOUS_OBSIDIAN)

@@ -226,9 +226,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.SULFUR_DUST, "Sulfur Dust")
 
         // Armor
-        RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
+        addItem(RagiumItems.AZURE_STEEL_HELMET, "Azure Steel Helmet")
+        addItem(RagiumItems.AZURE_STEEL_CHESTPLATE, "Azure Steel Chestplate")
+        addItem(RagiumItems.AZURE_STEEL_LEGGINGS, "Azure Steel Leggings")
+        addItem(RagiumItems.AZURE_STEEL_BOOTS, "Azure Steel Boots")
         // Tool
         addItem(RagiumItems.RAGI_ALLOY_HAMMER, "Ragi-Alloy Forge Hammer")
+
+        addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
 
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
@@ -467,6 +472,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun text() {
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE, "Azure Steel Upgrade")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_APPLIES_TO, "Azure Steel Equipment")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_INGREDIENTS, "Azure Steel Ingot")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add azure steel armor, weapon, ot tool")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Azure Steel Ingot")
+
         add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")
         add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "Capacity: %s mb")
 

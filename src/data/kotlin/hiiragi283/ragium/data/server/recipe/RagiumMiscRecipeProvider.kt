@@ -214,13 +214,13 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .save(output)
         // Medium
         HTSmithingRecipeBuilder(RagiumBlocks.MEDIUM_DRUM)
-            .addIngredient(RagiumItemTags.GLASS_BLOCKS_QUARTZ)
+            .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
             .addIngredient(RagiumBlocks.SMALL_DRUM)
             .addIngredient(Tags.Items.STORAGE_BLOCKS_GOLD)
             .save(output)
         // Large
         HTSmithingRecipeBuilder(RagiumBlocks.LARGE_DRUM)
-            .addIngredient(RagiumItemTags.PLASTICS)
+            .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)
             .addIngredient(RagiumBlocks.MEDIUM_DRUM)
             .addIngredient(Tags.Items.GEMS_DIAMOND)
             .save(output)

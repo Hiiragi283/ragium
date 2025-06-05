@@ -78,7 +78,8 @@ object RagiumCreativeTabs {
             add(RagiumItems.AZURE_STEEL_INGOT)
             add(RagiumItems.AZURE_STEEL_NUGGET)
             add(RagiumItems.AZURE_SHARD)
-            addAll(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
+            add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
+            addAll(RagiumItems.AZURE_ARMORS)
             addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
 
             add(RagiumBlocks.DEEP_STEEL_BLOCK)

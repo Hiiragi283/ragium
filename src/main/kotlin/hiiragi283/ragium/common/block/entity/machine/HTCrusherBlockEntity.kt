@@ -93,7 +93,7 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
         // 200 tickごとに実行する
         if (!canProcess(200)) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
-        val input: HTMachineInput = HTMachineInput.create {
+        val input: HTMachineInput = HTMachineInput.create(pos) {
             addInput(0, inputSlot)
             addOutput(0, outputSlot)
             outputSlot1?.let { addOutput(1, it) }

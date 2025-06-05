@@ -1,5 +1,6 @@
 {
   "values": [
+    "#ragium:led_blocks",
     "ragium:mysterious_obsidian",
     "ragium:tree_tap",
     "ragium:raginite_ore",
@@ -52,13 +53,6 @@
     "ragium:quartz_glass",
     "ragium:obsidian_glass",
     "ragium:soul_glass",
-    "ragium:red_led_block",
-    "ragium:green_led_block",
-    "ragium:blue_led_block",
-    "ragium:cyan_led_block",
-    "ragium:magenta_led_block",
-    "ragium:yellow_led_block",
-    "ragium:white_led_block",
     "ragium:wooden_casing",
     "ragium:stone_casing",
     "ragium:machine_casing",
