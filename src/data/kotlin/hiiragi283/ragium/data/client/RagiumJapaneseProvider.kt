@@ -5,11 +5,6 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
-import hiiragi283.ragium.api.extension.addMaterialKey
-import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.IntegrationMaterials
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -31,7 +26,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         entity()
         fluid()
         item()
-        material()
+        // material()
         // tagPrefix()
         tag()
         text()
@@ -286,7 +281,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.STONE_BOARD, "石版")
     }
 
-    private fun material() {
+    /*private fun material() {
         // Common
         addMaterialKey(CommonMaterials.ALUMINA, "アルミナ")
         addMaterialKey(CommonMaterials.ALUMINUM, "アルミニウム")
@@ -393,7 +388,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addMaterialKey(VanillaMaterials.WOOD, "木材")
     }
 
-    /*private fun tagPrefix() {
+    private fun tagPrefix() {
         addTagPrefix(HTTagPrefixes.CLUMP, "%sの凝塊")
         addTagPrefix(HTTagPrefixes.CRYSTAL, "%sの結晶")
         addTagPrefix(HTTagPrefixes.DIRTY_DUST, "汚れた%sの粉")

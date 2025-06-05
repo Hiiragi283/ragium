@@ -5,11 +5,6 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
-import hiiragi283.ragium.api.extension.addMaterialKey
-import hiiragi283.ragium.api.material.keys.CommonMaterials
-import hiiragi283.ragium.api.material.keys.IntegrationMaterials
-import hiiragi283.ragium.api.material.keys.RagiumMaterials
-import hiiragi283.ragium.api.material.keys.VanillaMaterials
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -31,7 +26,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         entity()
         fluid()
         item()
-        material()
+        // material()
         // tagPrefix()
         tag()
         text()
@@ -296,7 +291,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.STONE_BOARD, "Stone Board")
     }
 
-    private fun material() {
+    /*private fun material() {
         // Common
         addMaterialKey(CommonMaterials.ALUMINA, "Alumina")
         addMaterialKey(CommonMaterials.ALUMINUM, "Aluminum")
@@ -403,7 +398,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addMaterialKey(VanillaMaterials.WOOD, "Wood")
     }
 
-    /*private fun tagPrefix() {
+    private fun tagPrefix() {
         addTagPrefix(HTTagPrefixes.CLUMP, "%s Clump")
         addTagPrefix(HTTagPrefixes.CRYSTAL, "%s Crystal")
         addTagPrefix(HTTagPrefixes.DIRTY_DUST, "Dirty %s Dust")
