@@ -231,7 +231,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
-        addItem(RagiumItems.RAGI_EGG, "らぎエッグ")
+        addItem(RagiumItems.ELDRITCH_EGG, "異質な卵")
         // Food
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
         addItem(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
@@ -499,7 +499,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "範囲内のドロップアイテムを回収します。")
         add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "黒曜石とおなじ爆破耐性をもちます。")
         add(RagiumTranslationKeys.EMI_RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
-        add(RagiumTranslationKeys.EMI_RAGI_EGG, "モブに右クリックするとスポーンエッグになります。")
+        add(RagiumTranslationKeys.EMI_ELDRITCH_EGG, "モブに右クリックするとスポーンエッグになります。")
         add(RagiumTranslationKeys.EMI_RAGI_LANTERN, "範囲内の暗所に光源を設置します。")
         add(RagiumTranslationKeys.EMI_SOUL_GLASS, "プレイヤーのみ通過できます。")
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "行商人を倒すことでも入手できます。")

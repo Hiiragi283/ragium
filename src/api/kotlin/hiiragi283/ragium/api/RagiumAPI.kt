@@ -19,7 +19,6 @@ import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -63,10 +62,6 @@ interface RagiumAPI {
     //    Addon    //
 
     fun getAddons(): List<RagiumAddon>
-
-    //    Component    //
-
-    fun getActiveComponent(): DataComponentType<Boolean>
 
     //    Item    //
 

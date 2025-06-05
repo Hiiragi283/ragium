@@ -22,7 +22,7 @@ class HTDeferredMenuType<T : AbstractContainerMenu> private constructor(key: Res
     DeferredHolder<MenuType<*>, MenuType<T>>(key) {
         companion object {
             @JvmStatic
-            fun <T : AbstractContainerMenu> createType(key: ResourceLocation): HTDeferredMenuType<T> = createType<T>(
+            fun <T : AbstractContainerMenu> createType(key: ResourceLocation): HTDeferredMenuType<T> = createType(
                 ResourceKey.create(
                     Registries.MENU,
                     key,
@@ -30,7 +30,7 @@ class HTDeferredMenuType<T : AbstractContainerMenu> private constructor(key: Res
             )
 
             @JvmStatic
-            fun <T : AbstractContainerMenu> createType(key: ResourceKey<MenuType<*>>): HTDeferredMenuType<T> = HTDeferredMenuType<T>(key)
+            fun <T : AbstractContainerMenu> createType(key: ResourceKey<MenuType<*>>): HTDeferredMenuType<T> = HTDeferredMenuType(key)
         }
 
         /**

@@ -128,8 +128,8 @@ object RagiumCreativeTabs {
             add(RagiumItems.ITEM_MAGNET)
             add(RagiumItems.EXP_MAGNET)
             add(RagiumItems.TRADER_CATALOG)
-            add(RagiumItems.RAGI_EGG)
             add(RagiumItems.RAGI_LANTERN)
+            add(RagiumItems.ELDRITCH_EGG)
 
             // addAll(RagiumItems.Molds.entries)
             // Tickets

@@ -20,7 +20,7 @@ class HTMenuTypeRegister(namespace: String) : DeferredRegister<MenuType<*>>(Regi
      */
     fun <T : AbstractContainerMenu> registerType(name: String, constructor: MenuType.MenuSupplier<T>): HTDeferredMenuType<T> {
         val holder: HTDeferredMenuType<T> =
-            HTDeferredMenuType.createType<T>(ResourceLocation.fromNamespaceAndPath(namespace, name))
+            HTDeferredMenuType.createType(ResourceLocation.fromNamespaceAndPath(namespace, name))
         register(name) { _: ResourceLocation -> MenuType(constructor, FeatureFlags.VANILLA_SET) }
         return holder
     }
@@ -33,7 +33,7 @@ class HTMenuTypeRegister(namespace: String) : DeferredRegister<MenuType<*>>(Regi
      */
     fun <T : AbstractContainerMenu> registerType(name: String, constructor: IContainerFactory<T>): HTDeferredMenuType<T> {
         val holder: HTDeferredMenuType<T> =
-            HTDeferredMenuType.createType<T>(ResourceLocation.fromNamespaceAndPath(namespace, name))
+            HTDeferredMenuType.createType(ResourceLocation.fromNamespaceAndPath(namespace, name))
         register(name) { _: ResourceLocation -> MenuType(constructor, FeatureFlags.VANILLA_SET) }
         return holder
     }

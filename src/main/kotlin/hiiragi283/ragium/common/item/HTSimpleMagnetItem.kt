@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.item.HTMagnetItem
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player

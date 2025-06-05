@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.item.HTMagnetItem
 import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.player.Player
 

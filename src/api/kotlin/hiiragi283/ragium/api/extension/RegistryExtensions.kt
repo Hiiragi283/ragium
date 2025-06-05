@@ -21,7 +21,9 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
+import net.neoforged.neoforge.registries.DeferredRegister
 import kotlin.jvm.optionals.getOrNull
 
 /**
@@ -36,6 +38,10 @@ fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultName
 fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath("c", path)
 
 fun commonId(prefix: String, value: String): ResourceLocation = commonId("$prefix/$value")
+
+fun <T : Any, I : T> DeferredRegister<T>.register(holder: DeferredHolder<T, I>, function: (ResourceLocation) -> I) {
+    register(holder.id.path, function)
+}
 
 //    Holder    //
 

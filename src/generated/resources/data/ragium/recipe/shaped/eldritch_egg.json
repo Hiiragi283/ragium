@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/ragi_crystal"
+      "tag": "c:gems/eldritch_pearl"
     },
     "B": {
       "tag": "c:eggs"
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ragi_egg"
+    "id": "ragium:eldritch_egg"
   }
 }

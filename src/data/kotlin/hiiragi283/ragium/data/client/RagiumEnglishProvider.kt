@@ -241,7 +241,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
-        addItem(RagiumItems.RAGI_EGG, "Ragi-Egg")
+        addItem(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
         // Food
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
         addItem(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
@@ -509,7 +509,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items in the effective range")
         add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "As the same blast resistance as Obsidian.")
         add(RagiumTranslationKeys.EMI_RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
-        add(RagiumTranslationKeys.EMI_RAGI_EGG, "Right-click a mob then converts it into Spawn Egg.")
+        add(RagiumTranslationKeys.EMI_ELDRITCH_EGG, "Right-click a mob then converts it into Spawn Egg.")
         add(RagiumTranslationKeys.EMI_RAGI_LANTERN, "Light up darkness in range.")
         add(RagiumTranslationKeys.EMI_SOUL_GLASS, "Only passable with Players.")
         add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")

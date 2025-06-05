@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.item
+package hiiragi283.ragium.common.item
 
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player

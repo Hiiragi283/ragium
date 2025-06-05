@@ -205,10 +205,10 @@ object RagiumItems {
     val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
 
     @JvmField
-    val RAGI_EGG: DeferredItem<HTCaptureEggItem> = register("ragi_egg", ::HTCaptureEggItem)
+    val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> = register("ragi_lantern", ::HTDynamicLanternItem)
 
     @JvmField
-    val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> = register("ragi_lantern", ::HTDynamicLanternItem)
+    val ELDRITCH_EGG: DeferredItem<HTCaptureEggItem> = register("eldritch_egg", ::HTCaptureEggItem)
 
     //    Foods    //
 

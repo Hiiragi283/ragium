@@ -26,11 +26,9 @@ import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
 import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
-import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -74,10 +72,6 @@ class InternalRagiumAPI : RagiumAPI {
         }
         return addonCache
     }
-
-    //    Component    //
-
-    override fun getActiveComponent(): DataComponentType<Boolean> = RagiumComponentTypes.IS_ACTIVE.get()
 
     //    Item    //
 

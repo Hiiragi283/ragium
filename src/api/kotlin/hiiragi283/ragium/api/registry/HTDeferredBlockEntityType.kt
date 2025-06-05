@@ -23,7 +23,7 @@ class HTDeferredBlockEntityType<BE : BlockEntity> private constructor(key: Resou
 
             @JvmStatic
             fun <T : BlockEntity> createType(key: ResourceKey<BlockEntityType<*>>): HTDeferredBlockEntityType<T> =
-                HTDeferredBlockEntityType<T>(key)
+                HTDeferredBlockEntityType(key)
         }
 
         fun create(pos: BlockPos, state: BlockState): BE? = get().create(pos, state)

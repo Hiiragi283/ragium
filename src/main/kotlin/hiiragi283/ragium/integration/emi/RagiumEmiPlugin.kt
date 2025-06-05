@@ -366,10 +366,10 @@ class RagiumEmiPlugin : EmiPlugin {
         )
 
         addInfo(RagiumItems.AMBROSIA, Component.translatable(RagiumTranslationKeys.EMI_AMBROSIA))
+        addInfo(RagiumItems.ELDRITCH_EGG, Component.translatable(RagiumTranslationKeys.EMI_ELDRITCH_EGG))
         addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
         addInfo(RagiumItems.ITEM_MAGNET, Component.translatable(RagiumTranslationKeys.EMI_ITEM_MAGNET))
         addInfo(RagiumItems.RAGI_CHERRY, Component.translatable(RagiumTranslationKeys.EMI_RAGI_CHERRY))
-        addInfo(RagiumItems.RAGI_EGG, Component.translatable(RagiumTranslationKeys.EMI_RAGI_EGG))
         addInfo(RagiumItems.RAGI_LANTERN, Component.translatable(RagiumTranslationKeys.EMI_RAGI_LANTERN))
         addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
         addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))

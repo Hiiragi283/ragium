@@ -14,7 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
 class HTBlockEntityTypeRegister(namespace: String) : DeferredRegister<BlockEntityType<*>>(Registries.BLOCK_ENTITY_TYPE, namespace) {
     fun <T : BlockEntity> registerType(name: String, factory: BlockEntityType.BlockEntitySupplier<T>): HTDeferredBlockEntityType<T> {
         val holder: HTDeferredBlockEntityType<T> =
-            HTDeferredBlockEntityType.createType<T>(ResourceLocation.fromNamespaceAndPath(namespace, name))
+            HTDeferredBlockEntityType.createType(ResourceLocation.fromNamespaceAndPath(namespace, name))
         register(name) { _: ResourceLocation -> BlockEntityType.Builder.of(factory).build(null) }
         return holder
     }
