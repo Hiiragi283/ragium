@@ -11,6 +11,7 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.items.SlotItemHandler
 
 abstract class HTContainerMenu(
@@ -82,8 +83,8 @@ abstract class HTContainerMenu(
     protected fun addSlot(
         handler: IItemHandler,
         index: Int,
-        x: Int,
-        y: Int,
+        x: Double,
+        y: Double,
     ) {
         addSlot(SlotItemHandler(handler, index, HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y)))
     }
@@ -122,5 +123,8 @@ abstract class HTContainerMenu(
 
         @JvmStatic
         protected fun emptySlot(): HTItemSlot = HTItemSlot.create("")
+
+        @JvmStatic
+        protected fun emptyUpgrades(): IItemHandler = ItemStackHandler(4)
     }
 }

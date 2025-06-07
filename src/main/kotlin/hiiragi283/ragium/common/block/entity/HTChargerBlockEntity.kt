@@ -70,6 +70,7 @@ class HTChargerBlockEntity(pos: BlockPos, state: BlockState) :
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
+        super.onRemove(state, level, pos, newState, movedByPiston)
         itemSlot.dropStack(level, pos)
     }
 

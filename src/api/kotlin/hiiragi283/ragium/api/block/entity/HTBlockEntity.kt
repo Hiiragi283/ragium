@@ -4,8 +4,8 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.enchantment.HTEnchantmentHolder
-import hiiragi283.ragium.api.extension.enchLookup
+import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.forEachStacks
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
@@ -13,14 +13,10 @@ import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentMap
-import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
-import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -28,9 +24,6 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.EnchantmentInstance
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -40,6 +33,7 @@ import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.ItemStackHandler
 import org.slf4j.Logger
 
 /**
@@ -47,7 +41,6 @@ import org.slf4j.Logger
  */
 abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),
-    HTEnchantmentHolder,
     HTNbtCodec {
     companion object {
         @JvmField
@@ -75,6 +68,21 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         loadAdditional(tag, lookupProvider)
     }
 
+    val upgrades: ItemStackHandler = object : ItemStackHandler(4) {
+        override fun getStackLimit(slot: Int, stack: ItemStack): Int = super.getStackLimit(slot, stack)
+
+        override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+            super.deserializeNBT(provider, nbt)
+            reloadUpgrades()
+        }
+
+        override fun onContentsChanged(slot: Int) {
+            super.onContentsChanged(slot)
+            reloadUpgrades()
+            setChanged()
+        }
+    }
+
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
         val writer: HTNbtCodec.Writer = object : HTNbtCodec.Writer {
@@ -89,10 +97,8 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                 tag.put(key, serializable.serializeNBT(registries))
             }
         }
-        // Enchantment
-        if (!itemEnchantments.isEmpty) {
-            writer.write(ItemEnchantments.CODEC, RagiumConstantValues.ENCHANTMENT, itemEnchantments)
-        }
+        // Upgrades
+        writer.write(RagiumConstantValues.UPGRADES, upgrades)
         // Custom
         writeNbt(writer)
     }
@@ -107,22 +113,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                 serializable.deserializeNBT(registries, tag.getCompound(key))
             }
         }
-        // Enchantment
-        reader
-            .read(ItemEnchantments.CODEC, RagiumConstantValues.ENCHANTMENT)
-            .result()
-            .orElse(ItemEnchantments.EMPTY)
-            .let(::loadEnchantment)
+        // Upgrades
+        reader.read(RagiumConstantValues.UPGRADES, upgrades)
         // Custom
         readNbt(reader)
-    }
-
-    override fun applyImplicitComponents(componentInput: DataComponentInput) {
-        loadEnchantment(componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY))
-    }
-
-    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        components.set(DataComponents.ENCHANTMENTS, itemEnchantments)
     }
 
     @Deprecated("Deprecated in Java")
@@ -208,6 +202,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
+        upgrades.forEachStacks { stack: ItemStack -> dropStackAt(level, pos, stack) }
     }
 
     /**
@@ -229,19 +224,9 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     /**
-     * このブロックエンティティが生成されてからの経過時間
-     *
-     * セーブのたびにリセットされる
+     * アップグレードが更新されたときに呼び出されます。
      */
-    var totalTick: Int = 0
-        protected set
-
-    /**
-     * エンチャントが更新されたときに呼び出されます。
-     */
-    protected open fun loadEnchantment(newEnchantments: ItemEnchantments) {
-        this.itemEnchantments = newEnchantments
-    }
+    protected open fun reloadUpgrades() {}
 
     //    Capability    //
 
@@ -259,17 +244,4 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      * 指定した[direction]から[IEnergyStorage]を返します。
      */
     open fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
-
-    //    HTEnchantmentHolder    //
-
-    protected var itemEnchantments: ItemEnchantments = ItemEnchantments.EMPTY
-        private set
-
-    final override fun getEnchLevel(key: ResourceKey<Enchantment>): Int {
-        val lookup: HolderLookup.RegistryLookup<Enchantment> = level?.registryAccess()?.enchLookup() ?: return 0
-        return lookup.get(key).map(itemEnchantments::getLevel).orElse(0)
-    }
-
-    final override fun getEnchEntries(): Iterable<EnchantmentInstance> =
-        itemEnchantments.entrySet().map { (key: Holder<Enchantment>, value: Int) -> EnchantmentInstance(key, value) }
 }

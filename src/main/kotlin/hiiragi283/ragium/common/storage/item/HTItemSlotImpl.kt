@@ -39,6 +39,13 @@ open class HTItemSlotImpl(
         HTSlotPos.getSlotPosY(y),
     )
 
+    override fun createContainerSlot(x: Double, y: Double, storageIO: HTStorageIO): Slot = HTContainerItemSlot(
+        this,
+        storageIO,
+        HTSlotPos.getSlotPosX(x),
+        HTSlotPos.getSlotPosY(y),
+    )
+
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {
         val level: Int = newEnchantments.getLevel(RagiumEnchantments.CAPACITY) + 1
         capacity = level * baseCapacity

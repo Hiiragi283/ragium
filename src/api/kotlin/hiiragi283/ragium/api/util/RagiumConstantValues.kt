@@ -42,7 +42,7 @@ object RagiumConstantValues {
 
     //    Nbt    //
 
-    const val ENCHANTMENT = "enchantment"
+    const val UPGRADES = "upgrades"
 
     const val INPUT_SLOT = "input_slot"
     const val OUTPUT_SLOT = "output_slot"

@@ -18,7 +18,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
@@ -43,11 +42,11 @@ sealed class HTExtractorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         outputTank?.readNbt(reader)
     }
 
-    override fun loadEnchantment(newEnchantments: ItemEnchantments) {
-        super.loadEnchantment(newEnchantments)
-        inputSlot.onUpdateEnchantment(newEnchantments)
-        outputSlot.onUpdateEnchantment(newEnchantments)
-        outputTank?.onUpdateEnchantment(newEnchantments)
+    override fun reloadUpgrades() {
+        super.reloadUpgrades()
+        inputSlot
+        outputSlot
+        outputTank
     }
 
     override fun onRemove(

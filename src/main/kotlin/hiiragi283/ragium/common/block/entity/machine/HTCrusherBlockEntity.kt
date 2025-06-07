@@ -23,7 +23,6 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -50,11 +49,11 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
         outputSlot1?.readNbt(reader)
     }
 
-    final override fun loadEnchantment(newEnchantments: ItemEnchantments) {
-        super.loadEnchantment(newEnchantments)
-        inputSlot.onUpdateEnchantment(newEnchantments)
-        outputSlot.onUpdateEnchantment(newEnchantments)
-        outputSlot1?.onUpdateEnchantment(newEnchantments)
+    override fun reloadUpgrades() {
+        super.reloadUpgrades()
+        inputSlot
+        outputSlot
+        outputSlot1
     }
 
     final override fun onRemove(
@@ -143,7 +142,7 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
         override val outputSlot1: HTItemSlot? = null
 
         override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-            HTCrusherMenu(containerId, playerInventory, blockPos, inputSlot, outputSlot)
+            HTCrusherMenu(containerId, playerInventory, blockPos, upgrades, inputSlot, outputSlot)
     }
 
     //    Advanced    //

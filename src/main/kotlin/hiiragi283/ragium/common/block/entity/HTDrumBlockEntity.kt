@@ -15,7 +15,6 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -65,9 +64,9 @@ abstract class HTDrumBlockEntity(
         components.set(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.stack))
     }
 
-    override fun loadEnchantment(newEnchantments: ItemEnchantments) {
-        super.loadEnchantment(newEnchantments)
-        tank.onUpdateEnchantment(newEnchantments)
+    override fun reloadUpgrades() {
+        super.reloadUpgrades()
+        tank
     }
 
     //    Fluid    //

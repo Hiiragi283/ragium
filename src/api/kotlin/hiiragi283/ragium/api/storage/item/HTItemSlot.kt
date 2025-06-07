@@ -24,9 +24,9 @@ abstract class HTItemSlot :
 
     fun extract(maxAmount: Int, simulate: Boolean): Int = extract(resource, maxAmount, simulate)
 
-    fun createContainerSlot(x: Int, y: Int): Slot = createContainerSlot(x, y, HTStorageIO.GENERIC)
+    abstract fun createContainerSlot(x: Int, y: Int, storageIO: HTStorageIO = HTStorageIO.GENERIC): Slot
 
-    abstract fun createContainerSlot(x: Int, y: Int, storageIO: HTStorageIO): Slot
+    abstract fun createContainerSlot(x: Double, y: Double, storageIO: HTStorageIO = HTStorageIO.GENERIC): Slot
 
     fun dropStack(entity: Entity) {
         useStack { stack: ItemStack ->

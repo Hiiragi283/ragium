@@ -15,6 +15,19 @@ import net.neoforged.neoforge.common.util.TriState
 abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state) {
     /**
+     * このブロックエンティティが生成されてからの経過時間
+     *
+     * セーブのたびにリセットされる
+     */
+    var totalTick: Int = 0
+        protected set
+
+    /**
+     * このブロックエンティティが稼働する時間間隔
+     */
+    abstract val maxTicks: Int
+
+    /**
      * tick処理を行うかどうか判定します。
      * @see [setChanged]
      */
@@ -83,8 +96,6 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
         override fun getCount(): Int = 2
     }
-
-    abstract val maxTicks: Int
 
     val progress: Float get() {
         val fixedTotalTicks: Int = totalTick % maxTicks
