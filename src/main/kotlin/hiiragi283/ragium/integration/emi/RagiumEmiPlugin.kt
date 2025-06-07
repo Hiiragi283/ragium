@@ -190,10 +190,14 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addMachineRecipes() {
-        forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
-            if (recipe is HTCrushingRecipe) {
-                addRecipeSafe(id, recipe, ::HTCrushingEmiRecipe)
-            }
+        forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTCrushingRecipe ->
+            registry.addRecipe(
+                HTCrushingEmiRecipe(
+                    id,
+                    recipe.ingredient.toEmi(),
+                    recipe.outputs.associate(HTItemOutput::toChancedEmi),
+                ),
+            )
         }
 
         forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->

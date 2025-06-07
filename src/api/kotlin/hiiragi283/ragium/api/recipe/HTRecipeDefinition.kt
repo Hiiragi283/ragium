@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.listOf
+import hiiragi283.ragium.api.extension.listOrElement
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.Ingredient
@@ -23,22 +24,22 @@ class HTRecipeDefinition(
             instance
                 .group(
                     SizedIngredient.FLAT_CODEC
-                        .listOf()
+                        .listOrElement()
                         .optionalFieldOf("item_inputs", listOf())
                         .forGetter(HTRecipeDefinition::itemInputs),
                     SizedFluidIngredient.FLAT_CODEC
-                        .listOf()
+                        .listOrElement()
                         .optionalFieldOf("fluid_inputs", listOf())
                         .forGetter(HTRecipeDefinition::fluidInputs),
                     Ingredient.CODEC
                         .optionalFieldOf("catalyst", Ingredient.EMPTY)
                         .forGetter(HTRecipeDefinition::catalyst),
                     HTItemOutput.CODEC
-                        .listOf()
+                        .listOrElement()
                         .optionalFieldOf("item_outputs", listOf())
                         .forGetter(HTRecipeDefinition::itemOutputs),
                     HTFluidOutput.CODEC
-                        .listOf()
+                        .listOrElement()
                         .optionalFieldOf("fluid_outputs", listOf())
                         .forGetter(HTRecipeDefinition::fluidOutputs),
                 ).apply(instance, ::HTRecipeDefinition)

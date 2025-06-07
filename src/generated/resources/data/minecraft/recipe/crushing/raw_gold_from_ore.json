@@ -4,7 +4,7 @@
     "count": 1,
     "tag": "c:ores/gold"
   },
-  "output": {
+  "outputs": {
     "count": 2,
     "id": "minecraft:raw_gold"
   }

@@ -4,14 +4,10 @@
       "blocks": "#minecraft:crimson_stems"
     },
     "ragium:honey": {
-      "blocks": [
-        "minecraft:bee_nest"
-      ]
+      "blocks": "minecraft:bee_nest"
     },
     "ragium:mushroom_stew": {
-      "blocks": [
-        "minecraft:mushroom_stem"
-      ]
+      "blocks": "minecraft:mushroom_stem"
     },
     "ragium:warped_sap": {
       "blocks": "#minecraft:warped_stems"

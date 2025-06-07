@@ -4,12 +4,14 @@
     "count": 1,
     "tag": "c:ores/copper"
   },
-  "output": {
-    "count": 4,
-    "id": "minecraft:raw_copper"
-  },
-  "second_output": {
-    "count": 3,
-    "id": "minecraft:gold_nugget"
-  }
+  "outputs": [
+    {
+      "count": 4,
+      "id": "minecraft:raw_copper"
+    },
+    {
+      "count": 3,
+      "id": "minecraft:gold_nugget"
+    }
+  ]
 }

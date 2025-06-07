@@ -1,37 +1,12 @@
 package hiiragi283.ragium.api.extension
 
+import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
-import com.mojang.serialization.MapCodec
-import io.netty.buffer.ByteBuf
-import net.minecraft.core.Registry
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.network.codec.StreamCodec
-import java.util.*
+import java.util.function.Function
 
-//    StreamCodec    //
+//    Codec    //
 
-/**
- * [List]の[StreamCodec]に変換します。
- */
-fun <B : ByteBuf, V : Any> StreamCodec<B, V>.listOf(): StreamCodec<B, List<V>> = apply(ByteBufCodecs.list())
-
-/**
- * [Optional]の[StreamCodec]に変換します。
- */
-fun <B : ByteBuf, V : Any> StreamCodec<B, V>.toOptional(): StreamCodec<B, Optional<V>> = ByteBufCodecs.optional(this)
-
-/**
- * この[Codec]を[StreamCodec]に変換します。
- */
-fun <T : Any> Codec<T>.toRegistryStream(): StreamCodec<RegistryFriendlyByteBuf, T> = ByteBufCodecs.fromCodecWithRegistries(this)
-
-/**
- * この[MapCodec]を[StreamCodec]に変換します。
- */
-fun <T : Any> MapCodec<T>.toRegistryStream(): StreamCodec<RegistryFriendlyByteBuf, T> = codec().toRegistryStream()
-
-/**
- * この[Registry]を[StreamCodec]に変換します。
- */
-fun <T : Any> Registry<T>.streamCodec(): StreamCodec<RegistryFriendlyByteBuf, T> = ByteBufCodecs.registry(this.key())
+fun <A : Any> Codec<A>.listOrElement(): Codec<List<A>> = Codec.either(this.listOf(), this).xmap(
+    { either: Either<List<A>, A> -> either.map(Function.identity(), ::listOf) },
+    { list: List<A> -> if (list.size == 1) Either.right(list[0]) else Either.left(list) },
+)

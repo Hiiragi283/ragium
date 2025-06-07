@@ -1,8 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
-import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.forEachStacks
+import hiiragi283.ragium.api.extension.dropStacksAt
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -40,7 +39,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         movedByPiston: Boolean,
     ) {
         super.onRemove(state, level, pos, newState, movedByPiston)
-        outputs.forEachStacks { stack: ItemStack -> dropStackAt(level, pos, stack) }
+        outputs.dropStacksAt(level, pos)
     }
 
     //    Ticking    //

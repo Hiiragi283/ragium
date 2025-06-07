@@ -4,7 +4,7 @@
     "count": 1,
     "tag": "minecraft:wooden_doors"
   },
-  "output": {
+  "outputs": {
     "count": 2,
     "id": "ragium:sawdust"
   }

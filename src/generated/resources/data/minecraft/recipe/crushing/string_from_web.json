@@ -4,7 +4,7 @@
     "count": 1,
     "item": "minecraft:cobweb"
   },
-  "output": {
+  "outputs": {
     "count": 5,
     "id": "minecraft:string"
   }

@@ -4,8 +4,7 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.forEachStacks
+import hiiragi283.ragium.api.extension.dropStacksAt
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
@@ -202,7 +201,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
-        upgrades.forEachStacks { stack: ItemStack -> dropStackAt(level, pos, stack) }
+        upgrades.dropStacksAt(level, pos)
     }
 
     /**
@@ -227,6 +226,16 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      * アップグレードが更新されたときに呼び出されます。
      */
     protected open fun reloadUpgrades() {}
+
+    /**
+     * 内容物が更新された時にワールドへの保存を行う[ItemStackHandler]を返します。
+     */
+    protected fun itemHandler(size: Int): ItemStackHandler = object : ItemStackHandler(size) {
+        override fun onContentsChanged(slot: Int) {
+            super.onContentsChanged(slot)
+            this@HTBlockEntity.setChanged()
+        }
+    }
 
     //    Capability    //
 

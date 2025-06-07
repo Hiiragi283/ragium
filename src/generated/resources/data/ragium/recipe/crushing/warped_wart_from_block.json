@@ -4,7 +4,7 @@
     "count": 1,
     "item": "minecraft:warped_wart_block"
   },
-  "output": {
+  "outputs": {
     "count": 9,
     "id": "ragium:warped_wart"
   }

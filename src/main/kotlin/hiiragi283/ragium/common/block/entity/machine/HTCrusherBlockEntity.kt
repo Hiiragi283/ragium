@@ -1,19 +1,19 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.extension.consumeStackInSlot
+import hiiragi283.ragium.api.extension.dropStacksAt
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -23,37 +23,31 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.items.ItemStackHandler
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper
 
 sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state),
-    HTItemSlotHandler,
     MenuProvider {
-    protected val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this)
-    protected val outputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT, this)
-    protected abstract val outputSlot1: HTItemSlot?
+    protected val inputSlot: ItemStackHandler = itemHandler(1)
+    protected val outputSlots: ItemStackHandler = itemHandler(4)
 
     final override fun writeNbt(writer: HTNbtCodec.Writer) {
-        inputSlot.writeNbt(writer)
-        outputSlot.writeNbt(writer)
-        outputSlot1?.writeNbt(writer)
+        writer.write(RagiumConstantValues.INPUT_SLOT, inputSlot)
+        writer.write(RagiumConstantValues.OUTPUT_SLOT, outputSlots)
     }
 
     final override fun readNbt(reader: HTNbtCodec.Reader) {
-        inputSlot.readNbt(reader)
-        outputSlot.readNbt(reader)
-        outputSlot1?.readNbt(reader)
-    }
-
-    override fun reloadUpgrades() {
-        super.reloadUpgrades()
-        inputSlot
-        outputSlot
-        outputSlot1
+        reader.read(RagiumConstantValues.INPUT_SLOT, inputSlot)
+        reader.read(RagiumConstantValues.OUTPUT_SLOT, outputSlots)
     }
 
     final override fun onRemove(
@@ -64,14 +58,13 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
         movedByPiston: Boolean,
     ) {
         super.onRemove(state, level, pos, newState, movedByPiston)
-        inputSlot.dropStack(level, pos)
-        outputSlot.dropStack(level, pos)
-        outputSlot1?.dropStack(level, pos)
+        inputSlot.dropStacksAt(level, pos)
+        outputSlots.dropStacksAt(level, pos)
     }
 
     //    Ticking    //
 
-    protected val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
+    protected val recipeCache: HTRecipeCache<SingleRecipeInput, HTCrushingRecipe> =
         HTRecipeCache.simple(RagiumRecipeTypes.CRUSHING.get())
 
     final override fun onServerTick(
@@ -83,39 +76,35 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
         // 200 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
-        val input: HTMachineInput = HTMachineInput.create(pos, level.random) {
-            addInput(0, inputSlot)
-            addOutput(0, outputSlot)
-            outputSlot1?.let { addOutput(1, it) }
-        }
-        val recipe: HTMachineRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
+        val input = SingleRecipeInput(inputSlot.getStackInSlot(0))
+        val recipe: HTCrushingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
         // エネルギーを消費できるか判定する
         if (network.extractEnergy(6400, true) != 6400) return TriState.FALSE
-        // レシピを実行する
-        recipe.process(input)
+        // アウトプットに搬出できるか判定する
+        for (output: HTItemOutput in recipe.outputs) {
+            if (!ItemHandlerHelper.insertItem(outputSlots, output.get(), true).isEmpty) {
+                return TriState.FALSE
+            }
+        }
+        // 実際にアウトプットに搬出する
+        for (output: HTItemOutput in recipe.outputs) {
+            ItemHandlerHelper.insertItem(outputSlots, output.getChancedStack(level.random), false)
+        }
+        // インプットを減らす
+        inputSlot.consumeStackInSlot(0, recipe.ingredient.count())
+        // エネルギーを減らす
         network.extractEnergy(6400, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS)
         return TriState.TRUE
     }
 
-    //    Item    //
-
-    final override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
-        0 -> HTStorageIO.INPUT
-        1 -> HTStorageIO.OUTPUT
-        2 -> HTStorageIO.OUTPUT
-        else -> HTStorageIO.EMPTY
-    }
-
-    final override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
-        0 -> inputSlot
-        1 -> outputSlot
-        2 -> outputSlot1
+    override fun getItemHandler(direction: Direction?): IItemHandler? = when (direction) {
+        Direction.UP -> inputSlot
+        Direction.DOWN -> outputSlots
+        null -> CombinedInvWrapper(inputSlot, outputSlots)
         else -> null
     }
-
-    final override fun getSlots(): Int = 3
 
     //    Menu    //
 
@@ -139,17 +128,13 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
     class Basic(pos: BlockPos, state: BlockState) :
         HTCrusherBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state),
         MenuProvider {
-        override val outputSlot1: HTItemSlot? = null
-
         override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-            HTCrusherMenu(containerId, playerInventory, blockPos, upgrades, inputSlot, outputSlot)
+            HTCrusherMenu(containerId, playerInventory, blockPos, upgrades, inputSlot, outputSlots)
     }
 
     //    Advanced    //
 
     class Advanced(pos: BlockPos, state: BlockState) : HTCrusherBlockEntity(RagiumBlockEntityTypes.ADVANCED_CRUSHER, pos, state) {
-        override val outputSlot1: HTItemSlot = HTItemSlot.create(RagiumConstantValues.OUTPUT_SLOT + 1, this)
-
         override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
     }
 }

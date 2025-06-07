@@ -4,7 +4,7 @@
     "count": 1,
     "tag": "minecraft:logs_that_burn"
   },
-  "output": {
+  "outputs": {
     "count": 6,
     "id": "ragium:sawdust"
   }

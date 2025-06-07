@@ -89,6 +89,15 @@ abstract class HTContainerMenu(
         addSlot(SlotItemHandler(handler, index, HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y)))
     }
 
+    protected fun addOutputSlot(
+        handler: IItemHandler,
+        index: Int,
+        x: Double,
+        y: Double,
+    ) {
+        addSlot(HTOutputSlot(handler, index, HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y)))
+    }
+
     protected fun addFluidSlot(index: Int, x: Int, y: Int) {
         fluidSlots.put(index, x to y)
     }
@@ -125,6 +134,6 @@ abstract class HTContainerMenu(
         protected fun emptySlot(): HTItemSlot = HTItemSlot.create("")
 
         @JvmStatic
-        protected fun emptyUpgrades(): IItemHandler = ItemStackHandler(4)
+        protected fun emptyItemHandler(size: Int): IItemHandler = ItemStackHandler(size)
     }
 }

@@ -4,12 +4,14 @@
     "count": 1,
     "tag": "c:sandstone/red_blocks"
   },
-  "output": {
-    "count": 4,
-    "id": "minecraft:red_sand"
-  },
-  "second_output": {
-    "count": 1,
-    "id": "minecraft:redstone"
-  }
+  "outputs": [
+    {
+      "count": 4,
+      "id": "minecraft:red_sand"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:redstone"
+    }
+  ]
 }

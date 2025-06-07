@@ -4,12 +4,14 @@
     "count": 1,
     "tag": "c:ores/redstone"
   },
-  "output": {
-    "count": 12,
-    "id": "minecraft:redstone"
-  },
-  "second_output": {
-    "count": 2,
-    "id": "ragium:raginite_dust"
-  }
+  "outputs": [
+    {
+      "count": 12,
+      "id": "minecraft:redstone"
+    },
+    {
+      "count": 2,
+      "id": "ragium:raginite_dust"
+    }
+  ]
 }

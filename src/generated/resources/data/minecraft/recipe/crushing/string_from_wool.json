@@ -4,7 +4,7 @@
     "count": 1,
     "tag": "minecraft:wool"
   },
-  "output": {
+  "outputs": {
     "count": 4,
     "id": "minecraft:string"
   }

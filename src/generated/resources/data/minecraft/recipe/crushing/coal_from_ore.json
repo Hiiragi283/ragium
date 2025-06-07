@@ -4,12 +4,14 @@
     "count": 1,
     "tag": "c:ores/coal"
   },
-  "output": {
-    "count": 2,
-    "id": "minecraft:coal"
-  },
-  "second_output": {
-    "count": 1,
-    "id": "ragium:sulfur_dust"
-  }
+  "outputs": [
+    {
+      "count": 2,
+      "id": "minecraft:coal"
+    },
+    {
+      "count": 1,
+      "id": "ragium:sulfur_dust"
+    }
+  ]
 }

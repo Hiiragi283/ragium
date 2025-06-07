@@ -27,11 +27,27 @@ internal object RagiumRecipeFactories {
 
     @JvmStatic
     fun crushing(definition: HTRecipeDefinition): DataResult<HTCrushingRecipe> {
-        val ingredient: SizedIngredient =
-            definition.getItemIngredient(0).getOrNull() ?: return DataResult.error { "Required one item ingredient!" }
-        val output: HTItemOutput =
-            definition.getItemOutput(0).getOrNull() ?: return DataResult.error { "Required one item output!" }
-        return DataResult.success(HTCrushingRecipe(ingredient, output, definition.getItemOutput(1)))
+        // Item Input
+        val itemInputs: List<SizedIngredient> = definition.itemInputs
+        if (itemInputs.isEmpty()) {
+            return DataResult.error { "Crushing Recipe requires 1 item ingredient at least!" }
+        }
+        if (itemInputs.size > 1) {
+            return DataResult.error { "Crushing Recipe accepts only 1 item ingredient!" }
+        }
+        // Item Output
+        val itemOutputs: List<HTItemOutput> = definition.itemOutputs
+        if (itemOutputs.isEmpty()) {
+            return DataResult.error { "Crushing Recipe requires 1 item output at least!" }
+        }
+        if (itemOutputs.size > 4) {
+            return DataResult.error { "Crushing Recipe accepts 4 or less item outputs!" }
+        }
+        // Fluid
+        if (definition.fluidInputs.isNotEmpty() || definition.fluidOutputs.isNotEmpty()) {
+            return DataResult.error { "Crushing Recipe does not support fluids!" }
+        }
+        return DataResult.success(HTCrushingRecipe(itemInputs[0], itemOutputs))
     }
 
     @JvmStatic

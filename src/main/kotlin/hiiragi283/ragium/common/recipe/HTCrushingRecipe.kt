@@ -3,42 +3,37 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.toOptional
+import hiiragi283.ragium.api.extension.listOf
+import hiiragi283.ragium.api.extension.listOrElement
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.util.RandomSource
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
-import java.util.*
-import kotlin.jvm.optionals.getOrNull
 
-/**
- * アイテムを別のアイテムに変換するレシピ
- */
-class HTCrushingRecipe(
-    private val ingredient: SizedIngredient,
-    private val output: HTItemOutput,
-    private val secondOutput: Optional<HTItemOutput>,
-) : HTMachineRecipe(),
-    HTDefinitionRecipe<HTMachineInput> {
+class HTCrushingRecipe(val ingredient: SizedIngredient, val outputs: List<HTItemOutput>) :
+    Recipe<SingleRecipeInput>,
+    HTDefinitionRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTCrushingRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
                     SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTCrushingRecipe::ingredient),
-                    HTItemOutput.CODEC.fieldOf("output").forGetter(HTCrushingRecipe::output),
-                    HTItemOutput.CODEC.optionalFieldOf("second_output").forGetter(HTCrushingRecipe::secondOutput),
+                    HTItemOutput.CODEC
+                        .listOrElement()
+                        .fieldOf("outputs")
+                        .forGetter(HTCrushingRecipe::outputs),
                 ).apply(instance, ::HTCrushingRecipe)
         }
 
@@ -46,47 +41,30 @@ class HTCrushingRecipe(
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTCrushingRecipe> = StreamCodec.composite(
             SizedIngredient.STREAM_CODEC,
             HTCrushingRecipe::ingredient,
-            HTItemOutput.STREAM_CODEC,
-            HTCrushingRecipe::output,
-            HTItemOutput.STREAM_CODEC.toOptional(),
-            HTCrushingRecipe::secondOutput,
+            HTItemOutput.STREAM_CODEC.listOf(),
+            HTCrushingRecipe::outputs,
             ::HTCrushingRecipe,
         )
     }
 
-    override fun matches(input: HTMachineInput): Boolean = ingredient.test(input.getItemStack(HTStorageIO.INPUT, 0))
+    override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
 
-    override fun canProcess(input: HTMachineInput): Boolean {
-        // Item output
-        val outputSlot: HTItemSlot = input.getSlotOrNull(HTStorageIO.OUTPUT, 0) ?: return false
-        if (!outputSlot.canInsert(output.get())) return false
-        // Item input
-        val inputSlot: HTItemSlot = input.getSlotOrNull(HTStorageIO.INPUT, 0) ?: return false
-        return inputSlot.canExtract(ingredient.count())
-    }
+    override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = throw UnsupportedOperationException()
 
-    override fun process(input: HTMachineInput) {
-        val random: RandomSource = input.random
-        // Item output
-        input.getSlot(HTStorageIO.OUTPUT, 0).insert(output.getChancedStack(random), false)
-        // Second Item output
-        secondOutput.ifPresent { output: HTItemOutput ->
-            input.getSlotOrNull(HTStorageIO.OUTPUT, 1)?.insert(output.getChancedStack(random), false)
-        }
-        // Item input
-        input.getSlot(HTStorageIO.INPUT, 0).extract(ingredient.count(), false)
-    }
+    override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
+
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = throw UnsupportedOperationException()
+
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CRUSHING.get()
+
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CRUSHING.get()
 
     override fun getDefinition(): DataResult<HTRecipeDefinition> = DataResult.success(
         HTRecipeDefinition(
             listOf(ingredient),
             listOf(),
-            listOfNotNull(output, secondOutput.getOrNull()),
+            outputs,
             listOf(),
         ),
     )
-
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CRUSHING.get()
-
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CRUSHING.get()
 }

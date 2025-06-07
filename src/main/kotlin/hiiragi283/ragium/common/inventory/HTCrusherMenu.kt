@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.inventory.HTMachineMenu
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -14,25 +12,28 @@ class HTCrusherMenu(
     inventory: Inventory,
     pos: BlockPos,
     upgrades: IItemHandler,
-    inputSlot: HTItemSlot,
-    outputSlot: HTItemSlot,
+    inputSlot: IItemHandler,
+    outputsSlot: IItemHandler,
 ) : HTMachineMenu(RagiumMenuTypes.CRUSHER, containerId, inventory, pos, upgrades) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
-        emptyUpgrades(),
-        emptySlot(),
-        emptySlot(),
+        emptyItemHandler(4),
+        emptyItemHandler(1),
+        emptyItemHandler(4),
     )
 
     init {
         // inputs
-        addSlot(inputSlot.createContainerSlot(2, 0))
+        addSlot(inputSlot, 0, 2.0, 0.0)
         // upgrades
         addUpgradeSlots(upgrades)
         // outputs
-        addSlot(outputSlot.createContainerSlot(5.0, 0.5, HTStorageIO.OUTPUT))
+        addOutputSlot(outputsSlot, 0, 5.0, 0.5)
+        addOutputSlot(outputsSlot, 1, 6.0, 0.5)
+        addOutputSlot(outputsSlot, 2, 5.0, 1.5)
+        addOutputSlot(outputsSlot, 3, 6.0, 1.5)
         // player inventory
         addPlayerInv()
         // register property
@@ -40,5 +41,5 @@ class HTCrusherMenu(
     }
 
     override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = 5..5
+    override val outputSlots: IntRange = 5..8
 }

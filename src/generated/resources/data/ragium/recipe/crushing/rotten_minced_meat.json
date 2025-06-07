@@ -4,7 +4,7 @@
     "count": 1,
     "item": "minecraft:rotten_flesh"
   },
-  "output": {
+  "outputs": {
     "count": 1,
     "id": "ragium:minced_meat"
   }

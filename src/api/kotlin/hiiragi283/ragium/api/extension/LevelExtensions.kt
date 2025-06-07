@@ -12,7 +12,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.Vec3
-import net.neoforged.neoforge.items.IItemHandler
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
 
 fun BlockPos.toCenterVec3(): Vec3 = toVec3().add(0.5, 0.0, 0.5)
@@ -87,8 +86,4 @@ fun dropStackAt(
     itemEntity.deltaMovement = Vec3.ZERO
     itemEntity.setPickUpDelay(0)
     return level.addFreshEntity(itemEntity)
-}
-
-inline fun IItemHandler.forEachStacks(action: (ItemStack) -> Unit) {
-    (0 until slots).map(this::getStackInSlot).forEach(action)
 }

@@ -4,12 +4,14 @@
     "count": 1,
     "tag": "c:ores/iron"
   },
-  "output": {
-    "count": 2,
-    "id": "minecraft:raw_iron"
-  },
-  "second_output": {
-    "count": 1,
-    "id": "minecraft:flint"
-  }
+  "outputs": [
+    {
+      "count": 2,
+      "id": "minecraft:raw_iron"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:flint"
+    }
+  ]
 }

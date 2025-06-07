@@ -1,13 +1,18 @@
 package hiiragi283.ragium.api.extension
 
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.MutableDataComponentHolder
+import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 //    ItemLike    //
 
@@ -38,3 +43,26 @@ val ItemStack.restDamage: Int get() = maxDamage - damageValue
  * 現在の個数が[isMaxCount]と一致するか判定します。
  */
 val ItemStack.isMaxCount: Boolean get() = count == maxStackSize
+
+//    IItemHandler    //
+
+inline fun IItemHandler.forEachStacks(action: (ItemStack) -> Unit) {
+    (0 until slots).map(this::getStackInSlot).forEach(action)
+}
+
+fun IItemHandler.dropStacksAt(level: Level, pos: BlockPos) {
+    forEachStacks { stack: ItemStack -> dropStackAt(level, pos, stack) }
+}
+
+fun IItemHandler.dropStacksAt(entity: Entity) {
+    forEachStacks { stack: ItemStack -> dropStackAt(entity, stack) }
+}
+
+fun IItemHandlerModifiable.consumeStackInSlot(slot: Int, count: Int) {
+    val stack: ItemStack = getStackInSlot(slot)
+    if (stack.hasCraftingRemainingItem()) {
+        setStackInSlot(slot, stack.craftingRemainingItem)
+    } else {
+        stack.shrink(count)
+    }
+}

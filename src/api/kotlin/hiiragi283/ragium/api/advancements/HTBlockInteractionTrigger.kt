@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.advancements
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger.TriggerInstance
 import hiiragi283.ragium.api.extension.blockHolderSet
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.critereon.ContextAwarePredicate
@@ -18,7 +17,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import java.util.*
 
-object HTBlockInteractionTrigger : SimpleCriterionTrigger<TriggerInstance>() {
+object HTBlockInteractionTrigger : SimpleCriterionTrigger<HTBlockInteractionTrigger.TriggerInstance>() {
     override fun codec(): Codec<TriggerInstance> = TriggerInstance.CODEC
 
     fun trigger(player: ServerPlayer, state: BlockState) {

@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.blockHolderSet
+import hiiragi283.ragium.api.extension.listOrElement
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
@@ -16,7 +17,7 @@ class HTTreeTap(private val blocks: Either<List<Block>, TagKey<Block>>) {
     companion object {
         @JvmField
         val EITHER_CODEC: Codec<Either<List<Block>, TagKey<Block>>> =
-            Codec.either(BuiltInRegistries.BLOCK.byNameCodec().listOf(), TagKey.hashedCodec(Registries.BLOCK))
+            Codec.either(BuiltInRegistries.BLOCK.byNameCodec().listOrElement(), TagKey.hashedCodec(Registries.BLOCK))
 
         @JvmField
         val CODEC: Codec<HTTreeTap> = RecordCodecBuilder.create { instance ->

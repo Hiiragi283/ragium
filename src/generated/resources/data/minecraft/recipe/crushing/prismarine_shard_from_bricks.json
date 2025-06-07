@@ -4,7 +4,7 @@
     "count": 1,
     "item": "minecraft:prismarine_bricks"
   },
-  "output": {
+  "outputs": {
     "count": 9,
     "id": "minecraft:prismarine_shard"
   }

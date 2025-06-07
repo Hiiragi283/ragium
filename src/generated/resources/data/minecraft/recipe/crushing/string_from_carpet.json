@@ -4,7 +4,7 @@
     "count": 1,
     "tag": "minecraft:wool_carpets"
   },
-  "output": {
+  "outputs": {
     "count": 3,
     "id": "minecraft:string"
   }

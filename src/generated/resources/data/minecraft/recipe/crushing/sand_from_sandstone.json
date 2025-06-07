@@ -4,12 +4,14 @@
     "count": 1,
     "tag": "c:sandstone/uncolored_blocks"
   },
-  "output": {
-    "count": 4,
-    "id": "minecraft:sand"
-  },
-  "second_output": {
-    "count": 1,
-    "id": "ragium:saltpeter_dust"
-  }
+  "outputs": [
+    {
+      "count": 4,
+      "id": "minecraft:sand"
+    },
+    {
+      "count": 1,
+      "id": "ragium:saltpeter_dust"
+    }
+  ]
 }

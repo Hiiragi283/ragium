@@ -4,7 +4,7 @@
     "count": 1,
     "item": "minecraft:packed_ice"
   },
-  "output": {
+  "outputs": {
     "count": 9,
     "id": "minecraft:ice"
   }
