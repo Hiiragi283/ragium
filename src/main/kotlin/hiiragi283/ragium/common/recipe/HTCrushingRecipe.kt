@@ -15,6 +15,7 @@ import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.util.RandomSource
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -65,11 +66,12 @@ class HTCrushingRecipe(
     }
 
     override fun process(input: HTMachineInput) {
+        val random: RandomSource = input.random
         // Item output
-        input.getSlot(HTStorageIO.OUTPUT, 0).insert(output.get(), false)
+        input.getSlot(HTStorageIO.OUTPUT, 0).insert(output.getChancedStack(random), false)
         // Second Item output
         secondOutput.ifPresent { output: HTItemOutput ->
-            input.getSlotOrNull(HTStorageIO.OUTPUT, 1)?.insert(output.get(), false)
+            input.getSlotOrNull(HTStorageIO.OUTPUT, 1)?.insert(output.getChancedStack(random), false)
         }
         // Item input
         input.getSlot(HTStorageIO.INPUT, 0).extract(ingredient.count(), false)

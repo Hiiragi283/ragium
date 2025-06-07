@@ -6,13 +6,14 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
-import kotlin.apply
 
 class HTMachineInput private constructor(
     val pos: BlockPos?,
+    val random: RandomSource,
     private val slotTable: HTTable<HTStorageIO, Int, HTItemSlot>,
     private val tankTable: HTTable<HTStorageIO, Int, HTFluidTank>,
 ) : RecipeInput {
@@ -45,10 +46,11 @@ class HTMachineInput private constructor(
 
     companion object {
         @JvmStatic
-        fun create(pos: BlockPos?, builderAction: Builder.() -> Unit): HTMachineInput = Builder(pos).apply(builderAction).build()
+        fun create(pos: BlockPos?, random: RandomSource, builderAction: Builder.() -> Unit): HTMachineInput =
+            Builder(pos, random).apply(builderAction).build()
     }
 
-    class Builder internal constructor(val pos: BlockPos?) {
+    class Builder internal constructor(val pos: BlockPos?, val random: RandomSource) {
         private val slotTable: HTTable.Mutable<HTStorageIO, Int, HTItemSlot> = mutableTableOf()
         private val tankTable: HTTable.Mutable<HTStorageIO, Int, HTFluidTank> = mutableTableOf()
 
@@ -72,6 +74,6 @@ class HTMachineInput private constructor(
             tankTable.put(HTStorageIO.OUTPUT, index, tank)
         }
 
-        fun build(): HTMachineInput = HTMachineInput(pos, slotTable, tankTable)
+        fun build(): HTMachineInput = HTMachineInput(pos, random, slotTable, tankTable)
     }
 }

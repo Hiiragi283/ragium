@@ -53,7 +53,7 @@ class HTItemOutput(private val stack: ItemStack, val chance: Float) : Supplier<I
     override fun get(): ItemStack = stack.copy()
 
     fun getChancedStack(random: RandomSource): ItemStack = when {
-        random.nextFloat() >= chance -> get()
+        random.nextFloat() <= chance -> get()
         else -> ItemStack.EMPTY
     }
 }

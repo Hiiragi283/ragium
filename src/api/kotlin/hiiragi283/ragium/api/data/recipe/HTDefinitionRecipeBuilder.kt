@@ -81,9 +81,10 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(
 
     //    Item Output    //
 
-    fun itemOutput(item: ItemLike, count: Int = 1): HTDefinitionRecipeBuilder<R> = itemOutput(HTItemOutput.of(item, count))
+    fun itemOutput(item: ItemLike, count: Int = 1, chance: Float = 1f): HTDefinitionRecipeBuilder<R> =
+        itemOutput(HTItemOutput.of(item, count, chance))
 
-    fun itemOutput(stack: ItemStack): HTDefinitionRecipeBuilder<R> = itemOutput(HTItemOutput.of(stack))
+    fun itemOutput(stack: ItemStack, chance: Float = 1f): HTDefinitionRecipeBuilder<R> = itemOutput(HTItemOutput.of(stack, chance))
 
     private fun itemOutput(output: HTItemOutput): HTDefinitionRecipeBuilder<R> = apply {
         itemOutputs.add(output)

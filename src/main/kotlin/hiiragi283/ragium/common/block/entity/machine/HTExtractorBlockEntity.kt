@@ -75,7 +75,7 @@ sealed class HTExtractorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         // 200 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
-        val input: HTMachineInput = HTMachineInput.create(pos) {
+        val input: HTMachineInput = HTMachineInput.create(pos, level.random) {
             addInput(0, inputSlot)
             addOutput(0, outputSlot)
             outputTank?.let { addOutput(0, it) }
