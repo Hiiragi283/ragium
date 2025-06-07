@@ -241,6 +241,10 @@ class RagiumItemTagProvider(
         addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ADVANCED)
         addTag(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ELITE)
 
+        addTag(RagiumItemTags.ENI_UPGRADE_ADVANCED, RagiumItemTags.CIRCUITS_ADVANCED)
+        addTag(RagiumItemTags.ENI_UPGRADE_BASIC, RagiumItemTags.CIRCUITS_BASIC)
+        addTag(RagiumItemTags.ENI_UPGRADE_ELITE, RagiumItemTags.CIRCUITS_ELITE)
+
         // Soil
         addItem(RagiumItemTags.DIRT_SOILS, Items.DIRT)
         addItem(RagiumItemTags.DIRT_SOILS, Items.FARMLAND)

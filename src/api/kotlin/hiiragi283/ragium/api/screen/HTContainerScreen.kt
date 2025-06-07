@@ -1,6 +1,11 @@
 package hiiragi283.ragium.api.screen
 
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.fluidCapacityText
+import hiiragi283.ragium.api.extension.getSpriteAndColor
+import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.extension.intText
+import hiiragi283.ragium.api.extension.toFloatColor
 import hiiragi283.ragium.api.inventory.HTContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotPos
 import net.minecraft.ChatFormatting
@@ -10,6 +15,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.fml.ModList
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforgespi.language.IModInfo
 
@@ -60,12 +66,14 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         y: Int,
         mouseX: Int,
         mouseY: Int,
+        rangeX: Int = 18,
+        rangeY: Int = 18,
         action: () -> Unit,
     ) {
         val startX1: Int = startX + HTSlotPos.getSlotPosX(x)
         val startY1: Int = startY + HTSlotPos.getSlotPosY(y)
-        val xRange: IntRange = (startX1..startX1 + 18)
-        val yRange: IntRange = (startY1..startY1 + 18)
+        val xRange: IntRange = (startX1..startX1 + rangeX)
+        val yRange: IntRange = (startY1..startY1 + rangeY)
         if (mouseX in xRange && mouseY in yRange) {
             action()
         }
@@ -109,31 +117,27 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         }
     }
 
-    /*protected fun renderEnergyTooltip(
+    protected fun renderEnergyTooltip(
         guiGraphics: GuiGraphics,
         x: Int,
         y: Int,
         mouseX: Int,
         mouseY: Int,
     ) {
-        val network: IEnergyStorage =
-            RagiumAPI
-                .getInstance()
-                .getCurrentServer()
-                ?.getLevel(menu.level.dimension())
-                ?.let(RagiumAPI.getInstance()::getEnergyNetwork)
-                ?: return
-        renderTooltip(x, y, mouseX, mouseY) {
+        val network: IEnergyStorage = RagiumAPI
+            .getInstance()
+            .getEnergyNetworkManager()
+            .getNetworkFromKey(menu.level.dimension())
+            ?: return
+        renderTooltip(x, y, mouseX, mouseY, rangeY = 18 * 3) {
             guiGraphics.renderTooltip(
                 font,
                 Component
-                    .translatable(
-                        RagiumTranslationKeys.MACHINE_NETWORK_ENERGY,
-                        intText(network.energyStored).withStyle(ChatFormatting.RED),
-                    ).withStyle(ChatFormatting.GRAY),
+                    .literal("${network.energyStored}/${network.maxEnergyStored} FE")
+                    .withStyle(ChatFormatting.GRAY),
                 mouseX,
                 mouseY,
             )
         }
-    }*/
+    }
 }

@@ -32,7 +32,7 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
     ) {
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         // energy amount
-        // renderEnergyTooltip(guiGraphics, progressX, progressY, mouseX, mouseY)
+        renderEnergyTooltip(guiGraphics, 0, 0, mouseX, mouseY)
         // fluid tooltip
         menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             renderFluidTooltip(

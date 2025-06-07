@@ -42,12 +42,16 @@ object RagiumConstantValues {
 
     //    Nbt    //
 
+    const val NETWORK = "network"
     const val UPGRADES = "upgrades"
 
     const val INPUT_SLOT = "input_slot"
     const val OUTPUT_SLOT = "output_slot"
     const val INPUT_TANK = "input_tank"
     const val OUTPUT_TANK = "output_tank"
+
+    const val ENERGY_CAPACITY = "energy_capacity"
+    const val ENERGY_STORED = "energy_stored"
 
     const val IGNORE_CAULDRON_DROP = "IgnoreCauldronDrop"
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"

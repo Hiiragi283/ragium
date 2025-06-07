@@ -251,6 +251,19 @@ object RagiumItemTags {
     @JvmField
     val LED_BLOCKS: TagKey<Item> = itemTagKey(RagiumAPI.id("led_blocks"))
 
+    // ENI upgrades
+    @JvmField
+    val ENI_UPGRADE_BASIC: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrade/basic"))
+
+    @JvmField
+    val ENI_UPGRADE_ADVANCED: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrade/advanced"))
+
+    @JvmField
+    val ENI_UPGRADE_ELITE: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrade/elite"))
+
+    @JvmField
+    val ENI_UPGRADE_ULTIMATE: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrade/ultimate"))
+
     // Soils
     @JvmField
     val DIRT_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/dirt"))
