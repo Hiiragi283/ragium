@@ -27,8 +27,6 @@ fun SizedFluidIngredient.toEmi(): EmiIngredient = NeoForgeEmiIngredient.of(this)
 
 //    EmiStack    //
 
-fun HTItemOutput.toEmi(): EmiStack = EmiStack.of(this.get())
-
-fun HTItemOutput.toChancedEmi(): Pair<EmiStack, Float> = toEmi() to this.chance
+fun HTItemOutput.toEmi(): EmiStack = EmiStack.of(this.get()).setChance(this.chance)
 
 fun HTFluidOutput.toEmi(): EmiStack = NeoForgeEmiStack.of(this.get())

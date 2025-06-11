@@ -10,6 +10,7 @@
       "id": "minecraft:redstone"
     },
     {
+      "chance": 0.5,
       "count": 2,
       "id": "ragium:raginite_dust"
     }

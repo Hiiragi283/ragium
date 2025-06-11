@@ -10,6 +10,7 @@
       "id": "minecraft:red_sand"
     },
     {
+      "chance": 0.125,
       "count": 1,
       "id": "minecraft:redstone"
     }

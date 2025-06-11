@@ -155,30 +155,31 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Coal
         createCrushing()
             .itemOutput(Items.COAL, 2)
-            .itemOutput(RagiumItems.SULFUR_DUST)
+            .itemOutput(RagiumItems.SULFUR_DUST, chance = 1 / 4f)
             .itemInput(Tags.Items.ORES_COAL)
             .saveSuffixed(output, "_from_ore")
         // Copper
         createCrushing()
             .itemOutput(Items.RAW_COPPER, 4)
-            .itemOutput(Items.GOLD_NUGGET, 3)
+            .itemOutput(Items.RAW_GOLD, chance = 1 / 4f)
             .itemInput(Tags.Items.ORES_COPPER)
             .saveSuffixed(output, "_from_ore")
         // Iron
         createCrushing()
             .itemOutput(Items.RAW_IRON, 2)
-            .itemOutput(Items.FLINT)
+            .itemOutput(Items.FLINT, chance = 1 / 4f)
             .itemInput(Tags.Items.ORES_IRON)
             .saveSuffixed(output, "_from_ore")
         // Gold
         createCrushing()
             .itemOutput(Items.RAW_GOLD, 2)
+            .itemOutput(Items.RAW_COPPER, chance = 1 / 4f)
             .itemInput(Tags.Items.ORES_GOLD)
             .saveSuffixed(output, "_from_ore")
         // Redstone
         createCrushing()
             .itemOutput(Items.REDSTONE, 12)
-            .itemOutput(RagiumItems.RAGINITE_DUST, 2)
+            .itemOutput(RagiumItems.RAGINITE_DUST, 2, chance = 1 / 2f)
             .itemInput(Tags.Items.ORES_REDSTONE)
             .saveSuffixed(output, "_from_ore")
         // Lapis
@@ -189,7 +190,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Quartz
         createCrushing()
             .itemOutput(Items.QUARTZ, 4)
-            .itemOutput(Items.AMETHYST_SHARD)
             .itemInput(Tags.Items.ORES_QUARTZ)
             .saveSuffixed(output, "_from_ore")
         // Diamond

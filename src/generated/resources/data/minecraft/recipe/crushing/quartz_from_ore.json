@@ -4,14 +4,8 @@
     "count": 1,
     "tag": "c:ores/quartz"
   },
-  "outputs": [
-    {
-      "count": 4,
-      "id": "minecraft:quartz"
-    },
-    {
-      "count": 1,
-      "id": "minecraft:amethyst_shard"
-    }
-  ]
+  "outputs": {
+    "count": 4,
+    "id": "minecraft:quartz"
+  }
 }

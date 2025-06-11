@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.inventory.HTMachineMenu
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -12,28 +15,28 @@ class HTCrusherMenu(
     inventory: Inventory,
     pos: BlockPos,
     upgrades: IItemHandler,
-    inputSlot: IItemHandler,
-    outputsSlot: IItemHandler,
+    inputSlot: HTItemSlot,
+    outputSlots: List<HTItemSlot>,
 ) : HTMachineMenu(RagiumMenuTypes.CRUSHER, containerId, inventory, pos, upgrades) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
         emptyItemHandler(4),
-        emptyItemHandler(1),
-        emptyItemHandler(4),
+        emptySlot(),
+        HTItemSlotHelper.createEmptySlotList(4),
     )
 
     init {
         // inputs
-        addSlot(inputSlot, 0, 2.0, 0.0)
+        addSlot(inputSlot.createContainerSlot(2, 0))
         // upgrades
         addUpgradeSlots(upgrades)
         // outputs
-        addOutputSlot(outputsSlot, 0, 5.0, 0.5)
-        addOutputSlot(outputsSlot, 1, 6.0, 0.5)
-        addOutputSlot(outputsSlot, 2, 5.0, 1.5)
-        addOutputSlot(outputsSlot, 3, 6.0, 1.5)
+        addSlot(outputSlots[0].createContainerSlot(5.0, 0.5, HTStorageIO.OUTPUT))
+        addSlot(outputSlots[1].createContainerSlot(6.0, 0.5, HTStorageIO.OUTPUT))
+        addSlot(outputSlots[2].createContainerSlot(5.0, 1.5, HTStorageIO.OUTPUT))
+        addSlot(outputSlots[3].createContainerSlot(6.0, 1.5, HTStorageIO.OUTPUT))
         // player inventory
         addPlayerInv()
         // register property

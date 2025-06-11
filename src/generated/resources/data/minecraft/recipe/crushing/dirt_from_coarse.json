@@ -4,8 +4,15 @@
     "count": 1,
     "item": "minecraft:coarse_dirt"
   },
-  "outputs": {
-    "count": 1,
-    "id": "minecraft:dirt"
-  }
+  "outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:dirt"
+    },
+    {
+      "chance": 0.25,
+      "count": 1,
+      "id": "minecraft:flint"
+    }
+  ]
 }

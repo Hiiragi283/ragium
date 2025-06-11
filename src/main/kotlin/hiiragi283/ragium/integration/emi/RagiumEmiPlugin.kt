@@ -33,6 +33,7 @@ import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
@@ -195,7 +196,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTCrushingEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.outputs.associate(HTItemOutput::toChancedEmi),
+                    recipe.outputs.map(HTItemOutput::toEmi),
                 ),
             )
         }
@@ -214,6 +215,9 @@ class RagiumEmiPlugin : EmiPlugin {
 
                 is HTBucketFillingRecipe -> EmiPort.getFluidRegistry().holders().forEach(::addBucketFilling)
             }
+        }
+
+        forEachRecipes(RagiumRecipeTypes.PRESSING.get()) { id: ResourceLocation, recipe: HTPressingRecipe ->
         }
 
         forEachRecipes(RagiumRecipeTypes.REFINING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->

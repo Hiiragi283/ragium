@@ -4,8 +4,15 @@
     "count": 1,
     "tag": "c:ores/gold"
   },
-  "outputs": {
-    "count": 2,
-    "id": "minecraft:raw_gold"
-  }
+  "outputs": [
+    {
+      "count": 2,
+      "id": "minecraft:raw_gold"
+    },
+    {
+      "chance": 0.25,
+      "count": 1,
+      "id": "minecraft:raw_copper"
+    }
+  ]
 }

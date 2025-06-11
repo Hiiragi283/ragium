@@ -178,6 +178,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.DYES_RED)
             .define('C', RagiumItems.BLANK_TICKET)
             .saveSuffixed(output, "_from_redstone")
+        // Azure from Lapis
+        HTShapedRecipeBuilder(RagiumItems.AZURE_TICKET)
+            .cross8()
+            .define('A', Tags.Items.STORAGE_BLOCKS_LAPIS)
+            .define('B', Tags.Items.DYES_BLUE)
+            .define('C', RagiumItems.BLANK_TICKET)
+            .saveSuffixed(output, "_from_lapis")
 
         fun register(ticket: ItemLike, corner: TagKey<Item>, dye: TagKey<Item>) {
             HTShapedRecipeBuilder(ticket)
@@ -189,7 +196,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         }
 
         register(RagiumItems.RAGI_TICKET, RagiumItemTags.DUSTS_RAGINITE, Tags.Items.DYES_RED)
-        register(RagiumItems.AZURE_TICKET, Tags.Items.GLASS_BLOCKS, Tags.Items.DYES_BLUE)
+        register(RagiumItems.AZURE_TICKET, RagiumItemTags.INGOTS_AZURE_STEEL, Tags.Items.DYES_BLUE)
         register(RagiumItems.BLOODY_TICKET, RagiumItemTags.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
         register(RagiumItems.TELEPORT_TICKET, RagiumItemTags.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
         register(RagiumItems.ELDRITCH_TICKET, RagiumItemTags.GEMS_ELDRITCH_PEARL, Tags.Items.DYES_PURPLE)

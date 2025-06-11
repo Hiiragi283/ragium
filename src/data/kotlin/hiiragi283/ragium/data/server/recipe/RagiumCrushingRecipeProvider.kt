@@ -15,7 +15,8 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .itemInput(ItemTags.WOOL)
             .saveSuffixed(output, "_from_wool")
         createCrushing()
-            .itemOutput(Items.STRING, 3)
+            .itemOutput(Items.STRING, 2)
+            .itemOutput(Items.STRING, chance = 1 / 3f)
             .itemInput(ItemTags.WOOL_CARPETS)
             .saveSuffixed(output, "_from_carpet")
         createCrushing()
@@ -35,6 +36,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         createCrushing()
             .itemOutput(Items.MUD)
+            .itemOutput(Items.MANGROVE_ROOTS, chance = 1 / 4f)
             .itemInput(Items.MUDDY_MANGROVE_ROOTS)
             .saveSuffixed(output, "_from_roots")
 
@@ -54,10 +56,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         createCrushing()
             .itemOutput(Items.DIRT)
+            .itemOutput(Items.FLINT, chance = 1 / 4f)
             .itemInput(Items.COARSE_DIRT)
             .saveSuffixed(output, "_from_coarse")
         createCrushing()
             .itemOutput(Items.DIRT)
+            .itemOutput(Items.HANGING_ROOTS, chance = 1 / 4f)
             .itemInput(Items.ROOTED_DIRT)
             .saveSuffixed(output, "_from_rooted")
 
@@ -72,9 +76,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_block")
         // Ragium
         createCrushing()
-            .itemOutput(Items.GOLD_NUGGET, 6)
+            .itemOutput(Items.BLACKSTONE)
+            .itemOutput(Items.GOLD_NUGGET, 3)
+            .itemOutput(Items.GOLD_NUGGET, 3, 1 / 2f)
+            .itemOutput(Items.GOLD_NUGGET, 3, 1 / 4f)
             .itemInput(Items.GILDED_BLACKSTONE)
-            .saveSuffixed(output, "_from_blackstone")
+            .saveSuffixed(output, "_from_gilded")
 
         createCrushing()
             .itemOutput(RagiumItems.OBSIDIAN_DUST, 4)
@@ -158,7 +165,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         createCrushing()
             .itemOutput(Items.SAND, 4)
-            .itemOutput(RagiumItems.SALTPETER_DUST)
+            .itemOutput(RagiumItems.SALTPETER_DUST, chance = 1 / 4f)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             .saveSuffixed(output, "_from_sandstone")
 
@@ -169,7 +176,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
         // Red
         createCrushing()
             .itemOutput(Items.RED_SAND, 4)
-            .itemOutput(Items.REDSTONE)
+            .itemOutput(Items.REDSTONE, chance = 1 / 8f)
             .itemInput(Tags.Items.SANDSTONE_RED_BLOCKS)
             .saveSuffixed(output, "_from_sandstone")
     }
