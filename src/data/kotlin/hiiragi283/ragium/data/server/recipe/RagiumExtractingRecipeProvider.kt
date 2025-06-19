@@ -33,6 +33,11 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_block")
         // Ragium
         createExtracting()
+            .itemOutput(RagiumItems.CINNABAR_DUST, 3)
+            .itemInput(Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .saveSuffixed(output, "_from_redstone")
+
+        createExtracting()
             .itemOutput(RagiumItems.SALTPETER_DUST)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             .saveSuffixed(output, "_from_sandstone")

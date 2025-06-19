@@ -111,6 +111,7 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
             add(RagiumItems.OBSIDIAN_DUST)
 
+            add(RagiumItems.CINNABAR_DUST)
             add(RagiumItems.SALTPETER_DUST)
             add(RagiumItems.SULFUR_DUST)
 
@@ -153,7 +154,7 @@ object RagiumCreativeTabs {
             add(RagiumBlocks.SPONGE_CAKE)
             add(RagiumBlocks.SPONGE_CAKE_SLAB)
             add(RagiumBlocks.SWEET_BERRIES_CAKE)
-            add(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            add(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
 
             add(RagiumItems.RAGI_CHERRY)
             add(RagiumItems.RAGI_CHERRY_JAM)

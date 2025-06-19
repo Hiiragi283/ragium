@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:sweet_berries_cake_slice"
+    },
+    {
+      "item": "ragium:sweet_berries_cake_slice"
+    },
+    {
+      "item": "ragium:sweet_berries_cake_slice"
+    },
+    {
+      "item": "ragium:sweet_berries_cake_slice"
+    },
+    {
+      "item": "ragium:sweet_berries_cake_slice"
+    },
+    {
+      "item": "ragium:sweet_berries_cake_slice"
+    },
+    {
+      "item": "ragium:sweet_berries_cake_slice"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:sweet_berries_cake"
+  }
+}

@@ -129,6 +129,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
+        addBlock(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         addBlock(RagiumBlocks.INFUSER, "Infuser")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         // Cauldron
@@ -217,6 +218,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.CHOCOLATE_INGOT, "Chocolate Ingot")
 
         addItem(RagiumItems.ASH_DUST, "Ash")
+        addItem(RagiumItems.CINNABAR_DUST, "Cinnabar Dust")
         addItem(RagiumItems.OBSIDIAN_DUST, "Obsidian Dust")
         addItem(RagiumItems.RAGINITE_DUST, "Raginite Dust")
         addItem(RagiumItems.SALTPETER_DUST, "Saltpeter Dust")
@@ -249,7 +251,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
 
-        addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
+        addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE, "Slice of Sweet Berries Cake")
         addItem(RagiumItems.MELON_PIE, "Melon Pie")
 
         addItem(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")

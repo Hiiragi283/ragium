@@ -2,22 +2,22 @@
   "type": "ragium:crushing",
   "input": {
     "count": 1,
-    "tag": "c:ores/redstone"
+    "tag": "c:ores/raginite"
   },
   "outputs": [
     {
       "count": 8,
-      "id": "minecraft:redstone"
+      "id": "ragium:raginite_dust"
     },
     {
       "chance": 0.5,
       "count": 4,
-      "id": "minecraft:redstone"
+      "id": "ragium:raginite_dust"
     },
     {
-      "chance": 0.5,
+      "chance": 0.25,
       "count": 2,
-      "id": "ragium:cinnabar_dust"
+      "id": "ragium:ragi_crystal"
     }
   ]
 }

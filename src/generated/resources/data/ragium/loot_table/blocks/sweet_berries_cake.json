@@ -33,14 +33,14 @@
               "functions": [
                 {
                   "add": false,
-                  "count": 8.0,
+                  "count": 7.0,
                   "function": "minecraft:set_count"
                 },
                 {
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "ragium:sweet_berries_cake_piece"
+              "name": "ragium:sweet_berries_cake_slice"
             }
           ]
         }

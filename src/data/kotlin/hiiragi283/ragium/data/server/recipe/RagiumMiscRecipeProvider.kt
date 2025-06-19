@@ -114,6 +114,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.DISPENSER))
 
         // Advanced
+        advancedMachine(RagiumBlocks.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
         advancedMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.HOPPER), Items.POLISHED_BLACKSTONE_BRICKS)
         advancedMachine(RagiumBlocks.REFINERY, Ingredient.of(RagiumItemTags.GLASS_BLOCKS_QUARTZ), Items.POLISHED_BLACKSTONE_BRICKS)
     }

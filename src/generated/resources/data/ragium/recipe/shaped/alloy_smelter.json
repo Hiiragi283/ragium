@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/advanced_ragi_alloy"
+    },
+    "B": {
+      "item": "minecraft:furnace"
+    },
+    "C": {
+      "item": "ragium:advanced_machine_frame"
+    },
+    "D": {
+      "item": "minecraft:nether_bricks"
+    },
+    "E": {
+      "tag": "c:circuits/advanced"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DED"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:alloy_smelter"
+  }
+}

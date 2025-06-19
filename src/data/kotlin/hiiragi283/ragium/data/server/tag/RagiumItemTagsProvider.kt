@@ -104,6 +104,7 @@ class RagiumItemTagsProvider(
 
         // Dusts
         addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_ASH, RagiumItems.ASH_DUST)
+        addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_CINNABAR, RagiumItems.CINNABAR_DUST)
         addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_OBSIDIAN, RagiumItems.OBSIDIAN_DUST)
         addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_RAGINITE, RagiumItems.RAGINITE_DUST)
         addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SALTPETER, RagiumItems.SALTPETER_DUST)
@@ -132,7 +133,7 @@ class RagiumItemTagsProvider(
                 RagiumItems.ICE_CREAM_SODA,
                 RagiumItems.MEAT_INGOT,
                 RagiumItems.MELON_PIE,
-                RagiumItems.SWEET_BERRIES_CAKE_PIECE,
+                RagiumItems.SWEET_BERRIES_CAKE_SLICE,
                 RagiumItems.WARPED_WART,
             )
 

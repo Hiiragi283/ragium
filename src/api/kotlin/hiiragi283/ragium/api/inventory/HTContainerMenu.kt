@@ -29,7 +29,7 @@ abstract class HTContainerMenu(
     abstract val inputSlots: IntRange
     abstract val outputSlots: IntRange
 
-    private val playerStartIndex: Int get() = outputSlots.last + 1
+    val playerStartIndex: Int get() = outputSlots.last + 1
 
     override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY

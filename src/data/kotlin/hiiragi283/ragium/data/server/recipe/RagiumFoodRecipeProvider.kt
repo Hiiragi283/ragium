@@ -17,6 +17,8 @@ import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.conditions.NotCondition
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
+    val disabledByDelight = NotCondition(ModLoadedCondition(RagiumConstantValues.FARMERS_DELIGHT))
+
     override fun buildRecipeInternal() {
         // Chocolate
         createInfusing()
@@ -57,7 +59,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.GLASS_BOTTLE)
-            .save(output.withConditions(NotCondition(ModLoadedCondition(RagiumConstantValues.FARMERS_DELIGHT))))
+            .save(output.withConditions(disabledByDelight))
         // Fever Cherry
         HTShapedRecipeBuilder(RagiumItems.FEVER_CHERRY)
             .hollow8()
@@ -151,13 +153,18 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .define('D', RagiumBlocks.SPONGE_CAKE_SLAB)
             .saveSuffixed(output, "_with_sponge")
 
-        HTShapelessRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_PIECE, 8)
+        HTShapelessRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
             .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .save(output)
+            .save(output.withConditions(disabledByDelight))
 
-        HTShapedRecipeBuilder(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .hollow()
-            .define('A', RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+        HTShapelessRecipeBuilder(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            .addIngredient(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
             .save(output)
     }
 }

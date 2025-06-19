@@ -60,6 +60,7 @@
     "ragium:device_casing",
     "ragium:crusher",
     "ragium:extractor",
+    "ragium:alloy_smelter",
     "ragium:infuser",
     "ragium:refinery",
     "ragium:milk_drain",

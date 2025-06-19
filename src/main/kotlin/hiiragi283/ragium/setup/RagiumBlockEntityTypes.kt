@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
@@ -45,6 +46,9 @@ object RagiumBlockEntityTypes {
         REGISTER.registerType(name, factory, HTTickAwareBlockEntity::clientTick, HTTickAwareBlockEntity::serverTick)
 
     //    Machine    //
+
+    @JvmField
+    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTick("alloy_smelter", ::HTAlloySmelterBlockEntity)
 
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
@@ -138,6 +142,7 @@ object RagiumBlockEntityTypes {
         add(CRUSHER, RagiumBlocks.CRUSHER)
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
 
+        add(ALLOY_SMELTER, RagiumBlocks.ALLOY_SMELTER)
         add(INFUSER, RagiumBlocks.INFUSER)
         add(REFINERY, RagiumBlocks.REFINERY)
 
@@ -181,6 +186,7 @@ object RagiumBlockEntityTypes {
             )
         }
 
+        registerHandlers(ALLOY_SMELTER)
         registerHandlers(CRUSHER)
         registerHandlers(EXTRACTOR)
 

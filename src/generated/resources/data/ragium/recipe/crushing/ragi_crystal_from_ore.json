@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "input": {
+    "count": 1,
+    "tag": "c:ores/ragi_crystal"
+  },
+  "outputs": {
+    "count": 2,
+    "id": "ragium:ragi_crystal"
+  }
+}

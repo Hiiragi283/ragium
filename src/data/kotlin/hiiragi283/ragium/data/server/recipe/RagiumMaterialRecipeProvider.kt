@@ -213,8 +213,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_ore")
         // Redstone
         createCrushing()
-            .itemOutput(Items.REDSTONE, 12)
-            .itemOutput(RagiumItems.RAGINITE_DUST, 2, chance = 1 / 2f)
+            .itemOutput(Items.REDSTONE, 8)
+            .itemOutput(Items.REDSTONE, 4, 1 / 2f)
+            .itemOutput(RagiumItems.CINNABAR_DUST, 2, 1 / 2f)
             .itemInput(Tags.Items.ORES_REDSTONE)
             .saveSuffixed(output, "_from_ore")
         // Lapis
@@ -241,6 +242,19 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         createCrushing()
             .itemOutput(Items.NETHERITE_SCRAP, 2)
             .itemInput(Tags.Items.ORES_NETHERITE_SCRAP)
+            .saveSuffixed(output, "_from_ore")
+
+        // Raginite
+        createCrushing()
+            .itemOutput(RagiumItems.RAGINITE_DUST, 8)
+            .itemOutput(RagiumItems.RAGINITE_DUST, 4, 1 / 2f)
+            .itemOutput(RagiumItems.RAGI_CRYSTAL, 2, 1 / 4f)
+            .itemInput(RagiumItemTags.ORES_RAGINITE)
+            .saveSuffixed(output, "_from_ore")
+        // Ragi-Crystal
+        createCrushing()
+            .itemOutput(RagiumItems.RAGI_CRYSTAL, 2)
+            .itemInput(RagiumItemTags.ORES_RAGI_CRYSTAL)
             .saveSuffixed(output, "_from_ore")
     }
 

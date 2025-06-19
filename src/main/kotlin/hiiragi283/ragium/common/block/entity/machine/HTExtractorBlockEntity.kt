@@ -17,6 +17,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
@@ -110,5 +113,7 @@ sealed class HTExtractorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     class Basic(pos: BlockPos, state: BlockState) : HTExtractorBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state) {
         override val outputTank: HTFluidTank? = null
+
+        override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
     }
 }

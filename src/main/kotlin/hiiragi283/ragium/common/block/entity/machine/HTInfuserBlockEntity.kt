@@ -5,6 +5,9 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -22,4 +25,6 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnt
         state: BlockState,
         network: IEnergyStorage,
     ): TriState = TriState.DEFAULT
+
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 }

@@ -41,7 +41,7 @@ import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
-import hiiragi283.ragium.integration.emi.handler.CrushingRecipeHandler
+import hiiragi283.ragium.integration.emi.HTRecipeHandler
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCauldronDroppingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
@@ -205,6 +205,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        registry.addRecipeHandler(RagiumMenuTypes.ALLOY_SMELTER.get(), HTRecipeHandler(RagiumEmiCategories.ALLOYING))
         // Crushing
         forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTCrushingRecipe ->
             registry.addRecipe(
@@ -215,7 +216,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-        registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), CrushingRecipeHandler)
+        registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
         // Extracting
         forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             when (recipe) {

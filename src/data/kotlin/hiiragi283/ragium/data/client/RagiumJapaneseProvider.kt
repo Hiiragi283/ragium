@@ -113,13 +113,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "基本機械フレーム")
         addBlock(RagiumBlocks.STONE_CASING, "石材筐体")
         addBlock(RagiumBlocks.WOODEN_CASING, "木材筐体")
-
-        // addBlock(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
-        // addBlock(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
         // Machine
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
+        addBlock(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         addBlock(RagiumBlocks.INFUSER, "注入機")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         // Cauldron
@@ -207,6 +205,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.CHOCOLATE_INGOT, "チョコレートインゴット")
 
         addItem(RagiumItems.ASH_DUST, "灰")
+        addItem(RagiumItems.CINNABAR_DUST, "辰砂の粉")
         addItem(RagiumItems.OBSIDIAN_DUST, "黒曜石の粉")
         addItem(RagiumItems.RAGINITE_DUST, "ラギナイトの粉")
         addItem(RagiumItems.SALTPETER_DUST, "硝石の粉")
@@ -239,7 +238,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
         addItem(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
 
-        addItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
+        addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE, "カットスイートベリーケーキ")
         addItem(RagiumItems.MELON_PIE, "メロンパイ")
 
         addItem(RagiumItems.RAGI_CHERRY, "らぎチェリー")

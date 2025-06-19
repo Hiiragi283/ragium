@@ -44,8 +44,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                 applyExplosionDecay(
                     block,
                     LootItem
-                        .lootTableItem(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
-                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(8f))),
+                        .lootTableItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(7f))),
                 ),
             )
         }

@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -70,6 +71,14 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
                 Ingredient.of(CommonTags.TOOLS_KNIFE),
                 RagiumDelightAddon.RAGI_CHERRY_PULP,
                 2,
+            ).save(output)
+        // Sweet Berries Cake
+        CuttingBoardRecipeBuilder
+            .cuttingRecipe(
+                Ingredient.of(RagiumBlocks.SWEET_BERRIES_CAKE),
+                Ingredient.of(CommonTags.TOOLS_KNIFE),
+                RagiumItems.SWEET_BERRIES_CAKE_SLICE,
+                7,
             ).save(output)
     }
 }

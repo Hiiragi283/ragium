@@ -37,6 +37,9 @@ object RagiumItemTags {
     val DUSTS_RAGINITE: TagKey<Item> = commonTag(RagiumConstantValues.DUSTS, RagiumConstantValues.RAGINITE)
 
     @JvmField
+    val DUSTS_CINNABAR: TagKey<Item> = commonTag("${RagiumConstantValues.DUSTS}/cinnabar")
+
+    @JvmField
     val DUSTS_SALTPETER: TagKey<Item> = commonTag("${RagiumConstantValues.DUSTS}/saltpeter")
 
     @JvmField

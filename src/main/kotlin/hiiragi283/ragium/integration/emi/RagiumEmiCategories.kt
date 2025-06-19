@@ -22,7 +22,7 @@ object RagiumEmiCategories {
 
     // Machines
     @JvmField
-    val ALLOYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.ALLOYING), RagiumBlocks.CRUSHER)
+    val ALLOYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.ALLOYING), RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
     val CRUSHING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.CRUSHING), RagiumBlocks.CRUSHER)

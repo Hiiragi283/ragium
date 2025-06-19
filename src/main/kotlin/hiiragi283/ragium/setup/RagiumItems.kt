@@ -165,6 +165,9 @@ object RagiumItems {
     val OBSIDIAN_DUST: DeferredItem<Item> = register("obsidian_dust")
 
     @JvmField
+    val CINNABAR_DUST: DeferredItem<Item> = register("cinnabar_dust")
+
+    @JvmField
     val SALTPETER_DUST: DeferredItem<Item> = register("saltpeter_dust")
 
     @JvmField
@@ -287,7 +290,7 @@ object RagiumItems {
     val MELON_PIE: DeferredItem<HTConsumableItem> = registerFood("melon_pie", RagiumFoods.MELON_PIE)
 
     @JvmField
-    val SWEET_BERRIES_CAKE_PIECE: DeferredItem<HTConsumableItem> = registerFood("sweet_berries_cake_piece", RagiumFoods.SWEET_BERRIES_CAKE)
+    val SWEET_BERRIES_CAKE_SLICE: DeferredItem<HTConsumableItem> = registerFood("sweet_berries_cake_slice", RagiumFoods.SWEET_BERRIES_CAKE)
 
     // Cherry
     @JvmField

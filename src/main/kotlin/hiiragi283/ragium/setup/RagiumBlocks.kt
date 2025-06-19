@@ -403,6 +403,9 @@ object RagiumBlocks {
 
     // Advanced
     @JvmField
+    val ALLOY_SMELTER: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.ALLOY_SMELTER)
+
+    @JvmField
     val INFUSER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.INFUSER)
 
     @JvmField
@@ -414,6 +417,7 @@ object RagiumBlocks {
         CRUSHER,
         EXTRACTOR,
         // Advanced
+        ALLOY_SMELTER,
         INFUSER,
         REFINERY,
     )

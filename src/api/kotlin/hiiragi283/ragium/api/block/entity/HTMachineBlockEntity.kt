@@ -5,7 +5,9 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.MenuProvider
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
@@ -15,7 +17,8 @@ import net.neoforged.neoforge.energy.IEnergyStorage
  * エンチャント可能な[HTTickAwareBlockEntity]
  */
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTTickAwareBlockEntity(type, pos, state) {
+    HTTickAwareBlockEntity(type, pos, state),
+    MenuProvider {
     //    Ticking    //
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
@@ -51,4 +54,8 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     }
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
+
+    //    MenuProvider    //
+
+    final override fun getDisplayName(): Component = blockState.block.name
 }

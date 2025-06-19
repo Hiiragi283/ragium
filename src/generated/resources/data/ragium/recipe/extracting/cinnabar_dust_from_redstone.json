@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extracting",
+  "input": {
+    "count": 1,
+    "tag": "c:storage_blocks/redstone"
+  },
+  "item_output": {
+    "count": 3,
+    "id": "ragium:cinnabar_dust"
+  }
+}

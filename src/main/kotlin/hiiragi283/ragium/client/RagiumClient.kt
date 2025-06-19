@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.client.gui.HTClientFluidTooltipComponent
+import hiiragi283.ragium.client.gui.screen.HTAlloySmelterScreen
 import hiiragi283.ragium.client.gui.screen.HTCrusherScreen
 import hiiragi283.ragium.client.renderer.HTChargerRenderer
 import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
@@ -159,6 +160,7 @@ class RagiumClient(eventBus: IEventBus) {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
+        event.register(RagiumMenuTypes.ALLOY_SMELTER.get(), ::HTAlloySmelterScreen)
         event.register(RagiumMenuTypes.CRUSHER.get(), ::HTCrusherScreen)
 
         LOGGER.info("Registered Screens!")
