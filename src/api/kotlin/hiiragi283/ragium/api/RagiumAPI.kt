@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
+import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
@@ -27,6 +28,7 @@ import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
@@ -175,4 +177,9 @@ interface RagiumAPI {
      * @see [HTCauldronDroppingRecipe.getType]
      */
     fun getCauldronDroppingRecipeType(): RecipeType<HTCauldronDroppingRecipe>
+
+    /**
+     * @see [HTTransmuteRecipe.getSerializer]
+     */
+    fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe>
 }

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:transmute",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:medium_drum"
+    },
+    {
+      "tag": "c:gems/diamond"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:large_drum"
+  }
+}

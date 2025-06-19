@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTTransmuteRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -217,14 +218,12 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('C', Tags.Items.BUCKETS_EMPTY)
             .save(output)
         // Medium
-        HTSmithingRecipeBuilder(RagiumBlocks.MEDIUM_DRUM)
-            .addIngredient(RagiumItemTags.CIRCUITS_BASIC)
+        HTTransmuteRecipeBuilder(RagiumBlocks.MEDIUM_DRUM)
             .addIngredient(RagiumBlocks.SMALL_DRUM)
             .addIngredient(Tags.Items.STORAGE_BLOCKS_GOLD)
             .save(output)
         // Large
-        HTSmithingRecipeBuilder(RagiumBlocks.LARGE_DRUM)
-            .addIngredient(RagiumItemTags.CIRCUITS_ADVANCED)
+        HTTransmuteRecipeBuilder(RagiumBlocks.LARGE_DRUM)
             .addIngredient(RagiumBlocks.MEDIUM_DRUM)
             .addIngredient(Tags.Items.GEMS_DIAMOND)
             .save(output)
