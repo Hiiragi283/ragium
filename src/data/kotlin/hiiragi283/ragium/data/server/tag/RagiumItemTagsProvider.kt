@@ -160,6 +160,15 @@ class RagiumItemTagsProvider(
                 Items.WIND_CHARGE,
             )
 
+        tag(RagiumItemTags.ALLOY_SMELTER_FLUXES_BASIC)
+            .addTags(ItemTags.SMELTS_TO_GLASS)
+
+        tag(RagiumItemTags.ALLOY_SMELTER_FLUXES_ADVANCED)
+            .addTags(
+                RagiumItemTags.DUSTS_CINNABAR,
+                ItemTags.SOUL_FIRE_BASE_BLOCKS,
+            )
+
         // Armors
         tag(ItemTags.HEAD_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_HELMET)
         tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_CHESTPLATE)

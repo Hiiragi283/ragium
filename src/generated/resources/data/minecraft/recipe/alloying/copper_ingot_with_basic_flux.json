@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "inputs": [
+    {
+      "count": 2,
+      "tag": "c:raw_materials/copper"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:alloy_smelter_fluxes/basic"
+    }
+  ],
+  "outputs": {
+    "count": 3,
+    "id": "minecraft:copper_ingot"
+  }
+}

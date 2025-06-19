@@ -12,8 +12,11 @@ import hiiragi283.ragium.data.server.RagiumMaterialFamilies
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider() {
@@ -162,6 +165,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
         // Misc
         oreToRaw()
+        rawToIngot()
 
         HTShapelessRecipeBuilder(Items.GUNPOWDER, 3)
             .addIngredient(RagiumItemTags.DUSTS_SULFUR)
@@ -256,6 +260,27 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumItems.RAGI_CRYSTAL, 2)
             .itemInput(RagiumItemTags.ORES_RAGI_CRYSTAL)
             .saveSuffixed(output, "_from_ore")
+    }
+
+    // Raw -> Ingot
+    private fun rawToIngot() {
+        fun register(result: ItemLike, input: TagKey<Item>) {
+            createAlloying()
+                .itemOutput(result, 3)
+                .itemInput(input, 2)
+                .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_BASIC)
+                .saveSuffixed(output, "_with_basic_flux")
+
+            createAlloying()
+                .itemOutput(result, 2)
+                .itemInput(input)
+                .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_ADVANCED)
+                .saveSuffixed(output, "_with_advanced_flux")
+        }
+        
+        register(Items.COPPER_INGOT, Tags.Items.RAW_MATERIALS_COPPER)
+        register(Items.IRON_INGOT, Tags.Items.RAW_MATERIALS_IRON)
+        register(Items.GOLD_INGOT, Tags.Items.RAW_MATERIALS_GOLD)
     }
 
     private fun register(family: HTMaterialFamily) {

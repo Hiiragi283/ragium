@@ -65,7 +65,6 @@ object RagiumConstantValues {
     const val CRUSHING = "crushing"
     const val EXTRACTING = "extracting"
     const val INFUSING = "infusing"
-    const val PRESSING = "pressing"
     const val REFINING = "refining"
     const val SOLIDIFYING = "solidifying"
 
