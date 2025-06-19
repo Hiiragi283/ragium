@@ -6,10 +6,10 @@
         "items": [
           {
             "items": [
+              "ragium:azure_steel_shovel",
+              "ragium:azure_steel_pickaxe",
               "ragium:azure_steel_axe",
               "ragium:azure_steel_hoe",
-              "ragium:azure_steel_pickaxe",
-              "ragium:azure_steel_shovel",
               "ragium:azure_steel_sword",
               "ragium:azure_steel_hammer"
             ]

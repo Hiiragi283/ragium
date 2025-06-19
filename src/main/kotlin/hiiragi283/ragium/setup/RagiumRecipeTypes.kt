@@ -5,7 +5,9 @@ import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
@@ -21,6 +23,9 @@ object RagiumRecipeTypes {
 
     @JvmStatic
     private fun <R : Recipe<*>> register(name: String): Supplier<RecipeType<R>> = REGISTER.register(name, RecipeType<*>::simple)
+
+    @JvmField
+    val ALLOYING: Supplier<RecipeType<HTAlloyingRecipe>> = register(RagiumConstantValues.ALLOYING)
 
     @JvmField
     val BEE_HIVE: Supplier<RecipeType<HTMachineRecipe>> = registerMachine(RagiumConstantValues.BEE_HIVE)
@@ -39,6 +44,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val INFUSING: Supplier<RecipeType<HTMachineRecipe>> = registerMachine(RagiumConstantValues.INFUSING)
+
+    @JvmField
+    val PRESSING: Supplier<RecipeType<HTPressingRecipe>> = register(RagiumConstantValues.PRESSING)
 
     @JvmField
     val REFINING: Supplier<RecipeType<HTMachineRecipe>> = registerMachine(RagiumConstantValues.REFINING)

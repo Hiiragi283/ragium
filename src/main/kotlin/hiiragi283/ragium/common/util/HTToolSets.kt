@@ -37,7 +37,7 @@ class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>)
         { PickaxeItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, 1f, -2.8f)),
     )
-    
+
     val axeItem: DeferredItem<AxeItem> = itemRegister.registerItem(
         "${name}_axe",
         { AxeItem(material, it) },

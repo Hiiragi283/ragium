@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "inputs": [
+    {
+      "count": 1,
+      "tag": "c:ingots/iron"
+    },
+    {
+      "count": 3,
+      "item": "ragium:azure_shard"
+    }
+  ],
+  "outputs": {
+    "count": 1,
+    "id": "ragium:azure_steel_ingot"
+  }
+}

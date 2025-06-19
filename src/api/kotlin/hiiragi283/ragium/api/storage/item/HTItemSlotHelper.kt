@@ -6,13 +6,22 @@ import net.minecraft.world.level.block.entity.BlockEntity
 
 object HTItemSlotHelper {
     @JvmStatic
-    fun insertItem(slots: Iterable<HTItemSlot>, stack: ItemStack, simulate: Boolean): ItemStack {
-        val result: ItemStack = if (simulate) stack.copy() else stack
+    fun canInsertItem(slots: Iterable<HTItemSlot>, stack: ItemStack): Boolean {
+        val result: ItemStack = stack.copy()
         for (slot: HTItemSlot in slots) {
-            slot.insert(result, simulate)
-            if (result.isEmpty) return ItemStack.EMPTY
+            slot.insert(result, false)
+            if (result.isEmpty) return true
         }
-        return result
+        return false
+    }
+
+    @JvmStatic
+    fun insertItem(slots: Iterable<HTItemSlot>, stack: ItemStack, simulate: Boolean): ItemStack {
+        for (slot: HTItemSlot in slots) {
+            slot.insert(stack, simulate)
+            if (stack.isEmpty) return ItemStack.EMPTY
+        }
+        return stack
     }
 
     @JvmStatic
@@ -23,10 +32,10 @@ object HTItemSlotHelper {
         } else {
             if (player != null) {
                 stack.consume(count, player)
-                slot.replace(stack, true)
             } else {
                 stack.shrink(count)
             }
+            slot.replace(stack, true)
         }
     }
 

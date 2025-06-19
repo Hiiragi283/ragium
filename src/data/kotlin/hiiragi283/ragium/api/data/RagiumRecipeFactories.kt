@@ -1,15 +1,18 @@
 package hiiragi283.ragium.api.data
 
-import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.isNotEmpty
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
+import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
+import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
@@ -17,84 +20,101 @@ import kotlin.jvm.optionals.getOrNull
 
 internal object RagiumRecipeFactories {
     @JvmStatic
-    fun beehive(definition: HTRecipeDefinition): DataResult<HTBeehiveRecipe> {
-        val ingredient: SizedIngredient =
-            definition.getItemIngredient(0).getOrNull() ?: return DataResult.error { "Required one item ingredient!" }
-        val output: HTItemOutput =
-            definition.getItemOutput(0).getOrNull() ?: return DataResult.error { "Required one item output!" }
-        return DataResult.success(HTBeehiveRecipe(ingredient, definition.catalyst, output))
+    fun alloying(definition: HTRecipeDefinition): HTAlloyingRecipe {
+        // Item Input
+        val itemInputs: List<SizedIngredient> = definition.itemInputs
+        check(itemInputs.size == 2) { "Alloying Recipe requires 2 item ingredients!" }
+        // Item Output
+        val itemOutputs: List<HTItemOutput> = definition.itemOutputs
+        check(itemOutputs.isNotEmpty()) { "Alloying Recipe requires 1 item output at least!" }
+        check(itemOutputs.size <= 4) { "Alloying Recipe accepts 4 or less item outputs!" }
+        return HTAlloyingRecipe(itemInputs, itemOutputs)
     }
 
     @JvmStatic
-    fun crushing(definition: HTRecipeDefinition): DataResult<HTCrushingRecipe> {
+    fun beehive(definition: HTRecipeDefinition): HTBeehiveRecipe {
+        val ingredient: SizedIngredient =
+            checkPresent(definition.getItemIngredient(0), "Required one item ingredient!")
+        val output: HTItemOutput =
+            checkPresent(definition.getItemOutput(0), "Required one item output!")
+        return HTBeehiveRecipe(ingredient, definition.catalyst, output)
+    }
+
+    @JvmStatic
+    fun crushing(definition: HTRecipeDefinition): HTCrushingRecipe {
         // Item Input
         val itemInputs: List<SizedIngredient> = definition.itemInputs
-        if (itemInputs.isEmpty()) {
-            return DataResult.error { "Crushing Recipe requires 1 item ingredient at least!" }
-        }
-        if (itemInputs.size > 1) {
-            return DataResult.error { "Crushing Recipe accepts only 1 item ingredient!" }
+        check(itemInputs.size == 1) { "Crushing Recipe requires 1 item ingredient!" }
+        // Item Output
+        val itemOutputs: List<HTItemOutput> = definition.itemOutputs
+        check(itemOutputs.isNotEmpty()) { "Crushing Recipe requires 1 item output at least!" }
+        check(itemOutputs.size <= 4) { "Crushing Recipe accepts 4 or less item outputs!" }
+        // Fluid
+        check(definition.fluidInputs.isEmpty() && definition.fluidOutputs.isEmpty()) { "Crushing Recipe does not support fluids!" }
+        return HTCrushingRecipe(itemInputs[0], itemOutputs)
+    }
+
+    @JvmStatic
+    fun extracting(definition: HTRecipeDefinition): HTExtractingRecipe {
+        val ingredient: SizedIngredient =
+            checkPresent(definition.getItemIngredient(0), "Required one item ingredient!")
+        val itemOutput: Optional<HTItemOutput> = definition.getItemOutput(0)
+        val fluidOutput: Optional<HTFluidOutput> = definition.getFluidOutput(0)
+        check(itemOutput.isPresent || fluidOutput.isPresent) { "Either one fluid or item output required!" }
+        return HTExtractingRecipe(ingredient, itemOutput, fluidOutput)
+    }
+
+    @JvmStatic
+    fun infusing(definition: HTRecipeDefinition): HTInfusingRecipe {
+        val itemIng: SizedIngredient = checkPresent(definition.getItemIngredient(0), "Required one item ingredient!")
+        val fluidIng: SizedFluidIngredient = checkPresent(definition.getFluidIngredient(0), "Required one fluid ingredient!")
+        val output: HTItemOutput = checkPresent(definition.getItemOutput(0), "Required one item output!")
+        return HTInfusingRecipe(itemIng, fluidIng, output)
+    }
+
+    @JvmStatic
+    fun pressing(definition: HTRecipeDefinition): HTPressingRecipe {
+        // Item Input
+        val itemInputs: List<SizedIngredient> = definition.itemInputs
+        val bottom: SizedIngredient =
+            itemInputs.getOrNull(0) ?: error("Pressing Recipe requires bottom ingredient!")
+        val top: SizedIngredient? = itemInputs.getOrNull(1)
+        val mold: Optional<Ingredient> = Optional.of(definition.catalyst).filter(Ingredient::isNotEmpty)
+        if (itemInputs.size > 3) {
+            error("Pressing Recipe accepts only 3 item ingredients!")
         }
         // Item Output
         val itemOutputs: List<HTItemOutput> = definition.itemOutputs
         if (itemOutputs.isEmpty()) {
-            return DataResult.error { "Crushing Recipe requires 1 item output at least!" }
+            error("Pressing Recipe requires 1 item output at least!")
         }
-        if (itemOutputs.size > 4) {
-            return DataResult.error { "Crushing Recipe accepts 4 or less item outputs!" }
+        if (itemOutputs.size > 1) {
+            error("Pressing Recipe accepts only 1 item output!")
         }
         // Fluid
         if (definition.fluidInputs.isNotEmpty() || definition.fluidOutputs.isNotEmpty()) {
-            return DataResult.error { "Crushing Recipe does not support fluids!" }
+            error("Crushing Recipe does not support fluids!")
         }
-        return DataResult.success(HTCrushingRecipe(itemInputs[0], itemOutputs))
+        return TODO()
     }
 
     @JvmStatic
-    fun extracting(definition: HTRecipeDefinition): DataResult<HTExtractingRecipe> {
-        val ingredient: SizedIngredient =
-            definition.getItemIngredient(0).getOrNull() ?: return DataResult.error { "Required one item ingredient!" }
+    fun refining(definition: HTRecipeDefinition): HTRefiningRecipe {
+        val ingredient: SizedFluidIngredient = checkPresent(definition.getFluidIngredient(0), "Required one fluid ingredient!")
         val itemOutput: Optional<HTItemOutput> = definition.getItemOutput(0)
-        val fluidOutput: Optional<HTFluidOutput> = definition.getFluidOutput(0)
-        if (itemOutput.isEmpty && fluidOutput.isEmpty) {
-            return DataResult.error { "Either one fluid or item output required!" }
-        }
-        return DataResult.success(HTExtractingRecipe(ingredient, itemOutput, fluidOutput))
+        val fluidOutput: HTFluidOutput = checkPresent(definition.getFluidOutput(0), "Required one fluid output!")
+        return HTRefiningRecipe(ingredient, fluidOutput, itemOutput)
     }
 
     @JvmStatic
-    fun infusing(definition: HTRecipeDefinition): DataResult<HTInfusingRecipe> {
-        val itemIng: SizedIngredient =
-            definition.getItemIngredient(0).getOrNull() ?: return DataResult.error { "Required one item ingredient!" }
-        val fluidIng: SizedFluidIngredient =
-            definition.getFluidIngredient(0).getOrNull() ?: return DataResult.error { "Required one fluid ingredient!" }
-        val output: HTItemOutput =
-            definition.getItemOutput(0).getOrNull() ?: return DataResult.error { "Required one item output!" }
-        return DataResult.success(
-            HTInfusingRecipe(
-                itemIng,
-                fluidIng,
-                output,
-            ),
-        )
+    fun solidifying(definition: HTRecipeDefinition): HTSolidifyingRecipe {
+        val ingredient: SizedFluidIngredient = checkPresent(definition.getFluidIngredient(0), "Required one fluid ingredient!")
+        val output: HTItemOutput = checkPresent(definition.getItemOutput(0), "Required one item output!")
+        return HTSolidifyingRecipe(ingredient, definition.catalyst, output)
     }
 
-    @JvmStatic
-    fun refining(definition: HTRecipeDefinition): DataResult<HTRefiningRecipe> {
-        val ingredient: SizedFluidIngredient =
-            definition.getFluidIngredient(0).getOrNull() ?: return DataResult.error { "Required one fluid ingredient!" }
-        val itemOutput: Optional<HTItemOutput> = definition.getItemOutput(0)
-        val fluidOutput: HTFluidOutput =
-            definition.getFluidOutput(0).getOrNull() ?: return DataResult.error { "Required one fluid output!" }
-        return DataResult.success(HTRefiningRecipe(ingredient, fluidOutput, itemOutput))
-    }
+    //    Extension    //
 
     @JvmStatic
-    fun solidifying(definition: HTRecipeDefinition): DataResult<HTSolidifyingRecipe> {
-        val ingredient: SizedFluidIngredient =
-            definition.getFluidIngredient(0).getOrNull() ?: return DataResult.error { "Required one fluid ingredient!" }
-        val output: HTItemOutput =
-            definition.getItemOutput(0).getOrNull() ?: return DataResult.error { "Required one item output!" }
-        return DataResult.success(HTSolidifyingRecipe(ingredient, definition.catalyst, output))
-    }
+    private fun <T : Any> checkPresent(optional: Optional<T>, message: String): T = checkNotNull(optional.getOrNull()) { message }
 }

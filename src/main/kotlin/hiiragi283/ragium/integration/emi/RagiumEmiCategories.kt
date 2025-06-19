@@ -22,6 +22,9 @@ object RagiumEmiCategories {
 
     // Machines
     @JvmField
+    val ALLOYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.ALLOYING), RagiumBlocks.CRUSHER)
+
+    @JvmField
     val CRUSHING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.CRUSHING), RagiumBlocks.CRUSHER)
 
     @JvmField
@@ -41,6 +44,7 @@ object RagiumEmiCategories {
         CAULDRON_DROPPING,
         TREE_TAPPING,
         // Machines
+        ALLOYING,
         CRUSHING,
         EXTRACTING,
         INFUSING,

@@ -33,12 +33,12 @@ class RagiumItemTagsProvider(
     blockTags: CompletableFuture<TagLookup<Block>>,
     helper: ExistingFileHelper,
 ) : ItemTagsProvider(
-    output,
-    provider,
-    blockTags,
-    RagiumAPI.MOD_ID,
-    helper,
-) {
+        output,
+        provider,
+        blockTags,
+        RagiumAPI.MOD_ID,
+        helper,
+    ) {
     private fun IntrinsicTagAppender<Item>.addItem(vararg items: ItemLike) {
         items.map(ItemLike::asItem).map(::add)
     }
@@ -170,10 +170,10 @@ class RagiumItemTagsProvider(
         tag(ItemTags.PICKAXES).addItem(RagiumItems.AZURE_STEEL_TOOLS.pickaxeItem)
         tag(ItemTags.SHOVELS).addItem(RagiumItems.AZURE_STEEL_TOOLS.shovelItem)
         tag(ItemTags.SWORDS).addItem(RagiumItems.AZURE_STEEL_TOOLS.swordItem)
-        
+
         tag(RagiumItemTags.TOOLS_FORGE_HAMMER).addItem(
             RagiumItems.RAGI_ALLOY_HAMMER,
-            RagiumItems.AZURE_STEEL_TOOLS.hammerItem
+            RagiumItems.AZURE_STEEL_TOOLS.hammerItem,
         )
 
         listOf(

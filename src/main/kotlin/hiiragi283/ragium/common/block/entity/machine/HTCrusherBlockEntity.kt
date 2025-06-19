@@ -87,7 +87,7 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
         if (network.extractEnergy(6400, true) != 6400) return TriState.FALSE
         // アウトプットに搬出できるか判定する
         for (output: HTItemOutput in recipe.outputs) {
-            if (!HTItemSlotHelper.insertItem(outputSlots, output.get(), true).isEmpty) {
+            if (!HTItemSlotHelper.canInsertItem(outputSlots, output.get())) {
                 return TriState.FALSE
             }
         }

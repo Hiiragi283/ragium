@@ -1,13 +1,10 @@
 package hiiragi283.ragium.common.recipe
 
-import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.listOf
 import hiiragi283.ragium.api.extension.listOrElement
-import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
@@ -21,9 +18,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
-class HTCrushingRecipe(val ingredient: SizedIngredient, val outputs: List<HTItemOutput>) :
-    Recipe<SingleRecipeInput>,
-    HTDefinitionRecipe<SingleRecipeInput> {
+class HTCrushingRecipe(val ingredient: SizedIngredient, val outputs: List<HTItemOutput>) : Recipe<SingleRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTCrushingRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -58,13 +53,4 @@ class HTCrushingRecipe(val ingredient: SizedIngredient, val outputs: List<HTItem
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CRUSHING.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.CRUSHING.get()
-
-    override fun getDefinition(): DataResult<HTRecipeDefinition> = DataResult.success(
-        HTRecipeDefinition(
-            listOf(ingredient),
-            listOf(),
-            outputs,
-            listOf(),
-        ),
-    )
 }

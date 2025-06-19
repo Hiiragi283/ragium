@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.data.recipe
 
-import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
@@ -12,6 +10,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -21,10 +20,8 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
 
-class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(
-    private val prefix: String,
-    private val factory: (HTRecipeDefinition) -> DataResult<R>,
-) : HTRecipeBuilder<R> {
+class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, private val factory: (HTRecipeDefinition) -> R) :
+    HTRecipeBuilder<R> {
     private val itemInputs: MutableList<SizedIngredient> = mutableListOf()
     private val fluidInputs: MutableList<SizedFluidIngredient> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
@@ -116,7 +113,7 @@ class HTDefinitionRecipeBuilder<R : HTDefinitionRecipe<*>>(
             itemOutputs,
             fluidOutputs,
         ),
-    ).orThrow
+    )
 
     override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
 }

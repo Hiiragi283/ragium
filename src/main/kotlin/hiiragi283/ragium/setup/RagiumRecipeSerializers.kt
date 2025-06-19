@@ -3,12 +3,14 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
@@ -22,8 +24,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
-import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
+import java.util.function.Supplier
 
 object RagiumRecipeSerializers {
     @JvmField
@@ -31,7 +33,7 @@ object RagiumRecipeSerializers {
         DeferredRegister.create(Registries.RECIPE_SERIALIZER, RagiumAPI.MOD_ID)
 
     @JvmStatic
-    private fun <T : Recipe<*>, S : RecipeSerializer<T>> register(name: String, serializer: S): DeferredHolder<RecipeSerializer<*>, S> =
+    private fun <T : Recipe<*>, S : RecipeSerializer<T>> register(name: String, serializer: S): Supplier<S> =
         REGISTER.register(name) { _: ResourceLocation -> serializer }
 
     @JvmStatic
@@ -39,7 +41,7 @@ object RagiumRecipeSerializers {
         name: String,
         codec: MapCodec<T>,
         streamCodec: StreamCodec<RegistryFriendlyByteBuf, T>,
-    ): DeferredHolder<RecipeSerializer<*>, RecipeSerializer<T>> = REGISTER.register(name) { _: ResourceLocation ->
+    ): Supplier<RecipeSerializer<T>> = REGISTER.register(name) { _: ResourceLocation ->
         object : RecipeSerializer<T> {
             override fun codec(): MapCodec<T> = codec
 
@@ -48,58 +50,66 @@ object RagiumRecipeSerializers {
     }
 
     @JvmStatic
-    private fun <T : Recipe<*>> registerUnit(name: String, recipe: T): DeferredHolder<RecipeSerializer<*>, RecipeSerializer<T>> =
+    private fun <T : Recipe<*>> registerUnit(name: String, recipe: T): Supplier<RecipeSerializer<T>> =
         register(name, MapCodec.unit(recipe), StreamCodec.unit(recipe))
 
     //    Machine    //
 
     @JvmField
-    val BEE_HIVE: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBeehiveRecipe>> =
+    val ALLOYING: Supplier<RecipeSerializer<HTAlloyingRecipe>> =
+        register(RagiumConstantValues.ALLOYING, HTAlloyingRecipe.CODEC, HTAlloyingRecipe.STREAM_CODEC)
+
+    @JvmField
+    val BEE_HIVE: Supplier<RecipeSerializer<HTBeehiveRecipe>> =
         register(RagiumConstantValues.BEE_HIVE, HTBeehiveRecipe.CODEC, HTBeehiveRecipe.STREAM_CODEC)
 
     @JvmField
-    val BLOCK_INTERACTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBlockInteractingRecipeImpl>> =
+    val BLOCK_INTERACTING: Supplier<RecipeSerializer<HTBlockInteractingRecipeImpl>> =
         register(RagiumConstantValues.BLOCK_INTERACTING, HTBlockInteractingRecipeImpl.CODEC, HTBlockInteractingRecipeImpl.STREAM_CODEC)
 
     @JvmField
-    val CAULDRON_DROPPING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCauldronDroppingRecipeImpl>> =
+    val CAULDRON_DROPPING: Supplier<RecipeSerializer<HTCauldronDroppingRecipeImpl>> =
         register(RagiumConstantValues.CAULDRON_DROPPING, HTCauldronDroppingRecipeImpl.CODEC, HTCauldronDroppingRecipeImpl.STREAM_CODEC)
 
     @JvmField
-    val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =
+    val CRUSHING: Supplier<RecipeSerializer<HTCrushingRecipe>> =
         register(RagiumConstantValues.CRUSHING, HTCrushingRecipe.CODEC, HTCrushingRecipe.STREAM_CODEC)
 
     @JvmField
-    val EXTRACTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTExtractingRecipe>> =
+    val EXTRACTING: Supplier<RecipeSerializer<HTExtractingRecipe>> =
         register(RagiumConstantValues.EXTRACTING, HTExtractingRecipe.CODEC, HTExtractingRecipe.STREAM_CODEC)
 
     @JvmField
-    val INFUSING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTInfusingRecipe>> =
+    val INFUSING: Supplier<RecipeSerializer<HTInfusingRecipe>> =
         register(RagiumConstantValues.INFUSING, HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
 
     @JvmField
-    val REFINING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTRefiningRecipe>> =
+    val PRESSING: Supplier<RecipeSerializer<HTPressingRecipe>> =
+        register(RagiumConstantValues.PRESSING, HTPressingRecipe.CODEC, HTPressingRecipe.STREAM_CODEC)
+
+    @JvmField
+    val REFINING: Supplier<RecipeSerializer<HTRefiningRecipe>> =
         register(RagiumConstantValues.REFINING, HTRefiningRecipe.CODEC, HTRefiningRecipe.STREAM_CODEC)
 
     @JvmField
-    val SOLIDIFYING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTSolidifyingRecipe>> =
+    val SOLIDIFYING: Supplier<RecipeSerializer<HTSolidifyingRecipe>> =
         register(RagiumConstantValues.SOLIDIFYING, HTSolidifyingRecipe.CODEC, HTSolidifyingRecipe.STREAM_CODEC)
 
     //    Custom    //
 
     @JvmField
-    val BUCKET_EXTRACTING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBucketExtractingRecipe>> =
+    val BUCKET_EXTRACTING: Supplier<RecipeSerializer<HTBucketExtractingRecipe>> =
         registerUnit("bucket_extracting", HTBucketExtractingRecipe)
 
     @JvmField
-    val BUCKET_FILLING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTBucketFillingRecipe>> =
+    val BUCKET_FILLING: Supplier<RecipeSerializer<HTBucketFillingRecipe>> =
         registerUnit("bucket_filling", HTBucketFillingRecipe)
 
     @JvmField
-    val ETERNAL_TICKET: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTEternalTicketRecipe>> =
+    val ETERNAL_TICKET: Supplier<RecipeSerializer<HTEternalTicketRecipe>> =
         registerUnit("eternal_ticket", HTEternalTicketRecipe)
 
     @JvmField
-    val ICE_CREAM_SODA: DeferredHolder<RecipeSerializer<*>, SimpleCraftingRecipeSerializer<HTIceCreamSodaRecipe>> =
+    val ICE_CREAM_SODA: Supplier<SimpleCraftingRecipeSerializer<HTIceCreamSodaRecipe>> =
         register("ice_cream_soda", SimpleCraftingRecipeSerializer(::HTIceCreamSodaRecipe))
 }

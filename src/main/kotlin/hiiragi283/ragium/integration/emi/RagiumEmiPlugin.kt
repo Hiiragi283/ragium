@@ -28,6 +28,7 @@ import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -40,6 +41,7 @@ import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCauldronDroppingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
@@ -191,6 +193,17 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addMachineRecipes() {
+        // Alloying
+        forEachRecipes(RagiumRecipeTypes.ALLOYING.get()) { id: ResourceLocation, recipe: HTAlloyingRecipe ->
+            registry.addRecipe(
+                HTAlloyingEmiRecipe(
+                    id,
+                    recipe.ingredients.map(SizedIngredient::toEmi),
+                    recipe.outputs.map(HTItemOutput::toEmi),
+                ),
+            )
+        }
+        // Crushing
         forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTCrushingRecipe ->
             registry.addRecipe(
                 HTCrushingEmiRecipe(
@@ -200,7 +213,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-
+        // Extracting
         forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             when (recipe) {
                 is HTExtractingRecipe -> addRecipeSafe(id, recipe, ::HTExtractingEmiRecipe)
@@ -208,7 +221,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 is HTBucketExtractingRecipe -> EmiPort.getFluidRegistry().holders().forEach(::addBucketExtracting)
             }
         }
-
+        // Infusing
         forEachRecipes(RagiumRecipeTypes.INFUSING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             when (recipe) {
                 is HTInfusingRecipe -> addRecipeSafe(id, recipe, ::HTInfusingEmiRecipe)
@@ -216,16 +229,16 @@ class RagiumEmiPlugin : EmiPlugin {
                 is HTBucketFillingRecipe -> EmiPort.getFluidRegistry().holders().forEach(::addBucketFilling)
             }
         }
-
+        // Pressing
         forEachRecipes(RagiumRecipeTypes.PRESSING.get()) { id: ResourceLocation, recipe: HTPressingRecipe ->
         }
-
+        // Refining
         forEachRecipes(RagiumRecipeTypes.REFINING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             if (recipe is HTRefiningRecipe) {
                 addRecipeSafe(id, recipe, ::HTRefiningEmiRecipe)
             }
         }
-
+        // Solidifying
         forEachRecipes(RagiumRecipeTypes.SOLIDIFYING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             if (recipe is HTSolidifyingRecipe) {
                 addRecipeSafe(id, recipe, ::HTSolidifyingEmiRecipe)
