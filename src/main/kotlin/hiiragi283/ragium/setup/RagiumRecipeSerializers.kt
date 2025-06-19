@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
@@ -85,9 +84,7 @@ object RagiumRecipeSerializers {
     val INFUSING: Supplier<RecipeSerializer<HTInfusingRecipe>> =
         register(RagiumConstantValues.INFUSING, HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
 
-    @JvmField
-    val PRESSING: Supplier<RecipeSerializer<HTPressingRecipe>> =
-        register(RagiumConstantValues.PRESSING, HTPressingRecipe.CODEC, HTPressingRecipe.STREAM_CODEC)
+    // val PRESSING: Supplier<RecipeSerializer<HTPressingRecipe>>
 
     @JvmField
     val REFINING: Supplier<RecipeSerializer<HTRefiningRecipe>> =

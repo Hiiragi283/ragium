@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data
 
-import hiiragi283.ragium.api.extension.isNotEmpty
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
@@ -9,10 +8,8 @@ import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
@@ -72,8 +69,7 @@ internal object RagiumRecipeFactories {
         return HTInfusingRecipe(itemIng, fluidIng, output)
     }
 
-    @JvmStatic
-    fun pressing(definition: HTRecipeDefinition): HTPressingRecipe {
+    /*fun pressing(definition: HTRecipeDefinition): HTPressingRecipe {
         // Item Input
         val itemInputs: List<SizedIngredient> = definition.itemInputs
         val bottom: SizedIngredient =
@@ -96,7 +92,7 @@ internal object RagiumRecipeFactories {
             error("Crushing Recipe does not support fluids!")
         }
         return TODO()
-    }
+    }*/
 
     @JvmStatic
     fun refining(definition: HTRecipeDefinition): HTRefiningRecipe {

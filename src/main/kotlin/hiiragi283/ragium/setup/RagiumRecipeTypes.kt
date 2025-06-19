@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
@@ -45,8 +44,7 @@ object RagiumRecipeTypes {
     @JvmField
     val INFUSING: Supplier<RecipeType<HTMachineRecipe>> = registerMachine(RagiumConstantValues.INFUSING)
 
-    @JvmField
-    val PRESSING: Supplier<RecipeType<HTPressingRecipe>> = register(RagiumConstantValues.PRESSING)
+    // val PRESSING: Supplier<RecipeType<HTPressingRecipe>> = register(RagiumConstantValues.PRESSING)
 
     @JvmField
     val REFINING: Supplier<RecipeType<HTMachineRecipe>> = registerMachine(RagiumConstantValues.REFINING)
