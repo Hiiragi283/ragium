@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.inventory
 
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
@@ -11,7 +10,6 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.items.SlotItemHandler
 
 abstract class HTContainerMenu(
@@ -120,11 +118,5 @@ abstract class HTContainerMenu(
         @JvmStatic
         protected fun decodePos(registryBuf: RegistryFriendlyByteBuf?): BlockPos =
             registryBuf?.let(BlockPos.STREAM_CODEC::decode) ?: BlockPos.ZERO
-
-        @JvmStatic
-        protected fun emptySlot(): HTItemSlot = HTItemSlot.create("")
-
-        @JvmStatic
-        protected fun emptyItemHandler(size: Int): IItemHandler = ItemStackHandler(size)
     }
 }

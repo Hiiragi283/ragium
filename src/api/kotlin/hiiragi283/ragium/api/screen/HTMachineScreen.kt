@@ -20,9 +20,9 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
     open val progressSizeY: Int = 16
     open val progressTex: ResourceLocation = vanillaId("container/furnace/burn_progress")
 
-    protected fun getFluidStack(index: Int): FluidStack = menu.machine?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
+    protected fun getFluidStack(index: Int): FluidStack = menu.definition.getTank(index).stack
 
-    protected fun getFluidCapacity(index: Int): Int = menu.machine?.getFluidHandler(null)?.getTankCapacity(index) ?: 0
+    protected fun getFluidCapacity(index: Int): Int = menu.definition.getTank(index).capacity
 
     override fun render(
         guiGraphics: GuiGraphics,

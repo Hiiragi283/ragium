@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -129,6 +130,16 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         return InteractionResult.sidedSuccess(level.isClientSide)
     }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTCrusherMenu =
-        HTCrusherMenu(containerId, playerInventory, blockPos, upgrades, inputSlot, outputSlots, containerData)
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTCrusherMenu = HTCrusherMenu(
+        containerId,
+        playerInventory,
+        blockPos,
+        HTMenuDefinition(
+            listOf(inputSlot),
+            outputSlots,
+            listOf(),
+            upgrades,
+            containerData,
+        ),
+    )
 }
