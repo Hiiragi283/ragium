@@ -1,7 +1,0 @@
-{
-  "parent": "ragium:block/casing_base",
-  "textures": {
-    "bottom": "minecraft:block/deepslate_tiles",
-    "top": "ragium:block/ragi_alloy_block"
-  }
-}

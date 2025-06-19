@@ -1,7 +1,0 @@
-{
-  "parent": "ragium:block/casing_base",
-  "textures": {
-    "bottom": "ragium:block/azure_tiles",
-    "top": "ragium:block/advanced_ragi_alloy_block"
-  }
-}

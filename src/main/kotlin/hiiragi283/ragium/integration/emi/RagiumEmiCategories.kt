@@ -63,7 +63,5 @@ object RagiumEmiCategories {
         }
 
         CATEGORIES.forEach(::addWorkstation)
-        registry.addWorkstation(CRUSHING, EmiStack.of(RagiumBlocks.ADVANCED_CRUSHER))
-        registry.addWorkstation(EXTRACTING, EmiStack.of(RagiumBlocks.ADVANCED_EXTRACTOR))
     }
 }

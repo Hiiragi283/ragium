@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
@@ -31,29 +30,29 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(type, pos, state),
+class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state),
     HTItemSlotHandler,
     MenuProvider {
-    protected val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this)
-    protected val outputSlots: List<HTItemSlot> =
+    private val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this)
+    private val outputSlots: List<HTItemSlot> =
         HTItemSlotHelper.createSlotList(4, RagiumConstantValues.OUTPUT_SLOT, this)
 
-    final override fun writeNbt(writer: HTNbtCodec.Writer) {
+    override fun writeNbt(writer: HTNbtCodec.Writer) {
         inputSlot.writeNbt(writer)
         for (slot: HTItemSlot in outputSlots) {
             slot.writeNbt(writer)
         }
     }
 
-    final override fun readNbt(reader: HTNbtCodec.Reader) {
+    override fun readNbt(reader: HTNbtCodec.Reader) {
         inputSlot.readNbt(reader)
         for (slot: HTItemSlot in outputSlots) {
             slot.readNbt(reader)
         }
     }
 
-    final override fun onRemove(
+    override fun onRemove(
         state: BlockState,
         level: Level,
         pos: BlockPos,
@@ -69,10 +68,10 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
 
     //    Ticking    //
 
-    protected val recipeCache: HTRecipeCache<SingleRecipeInput, HTCrushingRecipe> =
+    private val recipeCache: HTRecipeCache<SingleRecipeInput, HTCrushingRecipe> =
         HTRecipeCache.simple(RagiumRecipeTypes.CRUSHING.get())
 
-    final override fun onServerTick(
+    override fun onServerTick(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
@@ -106,19 +105,19 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
 
     //    Item    //
 
-    final override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
+    override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
         0 -> HTStorageIO.INPUT
         in (1..4) -> HTStorageIO.OUTPUT
         else -> HTStorageIO.EMPTY
     }
 
-    final override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
+    override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
         0 -> inputSlot
         in (1..4) -> outputSlots[slot - 1]
         else -> null
     }
 
-    final override fun getSlots(): Int = 5
+    override fun getSlots(): Int = 5
 
     //    Menu    //
 
@@ -135,20 +134,8 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
         return InteractionResult.sidedSuccess(level.isClientSide)
     }
 
-    final override fun getDisplayName(): Component = blockState.block.name
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        HTCrusherMenu(containerId, playerInventory, blockPos, upgrades, inputSlot, outputSlots, containerData)
 
-    //    Basic    //
-
-    class Basic(pos: BlockPos, state: BlockState) :
-        HTCrusherBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state),
-        MenuProvider {
-        override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-            HTCrusherMenu(containerId, playerInventory, blockPos, upgrades, inputSlot, outputSlots, containerData)
-    }
-
-    //    Advanced    //
-
-    class Advanced(pos: BlockPos, state: BlockState) : HTCrusherBlockEntity(RagiumBlockEntityTypes.ADVANCED_CRUSHER, pos, state) {
-        override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
-    }
+    override fun getDisplayName(): Component = blockState.block.name
 }

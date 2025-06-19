@@ -3,22 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/advanced_ragi_alloy"
+      "tag": "c:ingots/iron"
     },
     "B": {
       "tag": "c:tools/forge_hammer"
-    },
-    "C": {
-      "item": "ragium:azure_tiles"
     }
   },
   "pattern": [
     "AAA",
     "ABA",
-    "CCC"
+    "AAA"
   ],
   "result": {
-    "count": 1,
-    "id": "ragium:advanced_machine_casing"
+    "count": 2,
+    "id": "ragium:basic_machine_frame"
   }
 }

@@ -120,17 +120,15 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
-        addBlock(RagiumBlocks.ADVANCED_MACHINE_CASING, "Advanced Machine Casing")
+        addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "Advanced Machine Frame")
         addBlock(RagiumBlocks.DEVICE_CASING, "Device Casing")
-        addBlock(RagiumBlocks.MACHINE_CASING, "Machine Casing")
+        addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "Basic Machine Frame")
         addBlock(RagiumBlocks.STONE_CASING, "Stone Casing")
         addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
         // Machine
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
-        addBlock(RagiumBlocks.ADVANCED_CRUSHER, "Advanced Crusher")
-        addBlock(RagiumBlocks.ADVANCED_EXTRACTOR, "Advanced Extractor")
         addBlock(RagiumBlocks.INFUSER, "Infuser")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         // Cauldron

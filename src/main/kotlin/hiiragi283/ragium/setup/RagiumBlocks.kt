@@ -360,14 +360,14 @@ object RagiumBlocks {
     val STONE_CASING: DeferredBlock<Block> = register("stone_casing", stone())
 
     @JvmField
-    val MACHINE_CASING: DeferredBlock<Block> = register(
-        "machine_casing",
+    val BASIC_MACHINE_FRAME: DeferredBlock<Block> = register(
+        "basic_machine_frame",
         lightMetal(),
     )
 
     @JvmField
-    val ADVANCED_MACHINE_CASING: DeferredBlock<Block> = register(
-        "advanced_machine_casing",
+    val ADVANCED_MACHINE_FRAME: DeferredBlock<Block> = register(
+        "advanced_machine_frame",
         heavyMetal(),
     )
 
@@ -381,8 +381,8 @@ object RagiumBlocks {
     val CASINGS: List<DeferredBlock<*>> = listOf(
         WOODEN_CASING,
         STONE_CASING,
-        MACHINE_CASING,
-        ADVANCED_MACHINE_CASING,
+        BASIC_MACHINE_FRAME,
+        ADVANCED_MACHINE_FRAME,
         DEVICE_CASING,
     )
 
@@ -403,12 +403,6 @@ object RagiumBlocks {
 
     // Advanced
     @JvmField
-    val ADVANCED_CRUSHER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.ADVANCED_CRUSHER)
-
-    @JvmField
-    val ADVANCED_EXTRACTOR: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.ADVANCED_EXTRACTOR)
-
-    @JvmField
     val INFUSER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.INFUSER)
 
     @JvmField
@@ -420,8 +414,6 @@ object RagiumBlocks {
         CRUSHER,
         EXTRACTOR,
         // Advanced
-        ADVANCED_CRUSHER,
-        ADVANCED_EXTRACTOR,
         INFUSER,
         REFINERY,
     )

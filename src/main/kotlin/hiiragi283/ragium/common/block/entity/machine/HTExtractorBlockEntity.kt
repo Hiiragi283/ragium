@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
@@ -111,21 +110,5 @@ sealed class HTExtractorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     class Basic(pos: BlockPos, state: BlockState) : HTExtractorBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state) {
         override val outputTank: HTFluidTank? = null
-    }
-
-    //    Advanced    //
-
-    class Advanced(pos: BlockPos, state: BlockState) :
-        HTExtractorBlockEntity(RagiumBlockEntityTypes.ADVANCED_EXTRACTOR, pos, state),
-        HTFluidTankHandler {
-        override val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
-
-        //    Fluid    //
-
-        override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.OUTPUT
-
-        override fun getFluidTank(tank: Int): HTFluidTank? = outputTank
-
-        override fun getTanks(): Int = 1
     }
 }

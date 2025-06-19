@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/advanced_ragi_alloy"
+    },
+    "B": {
+      "tag": "c:glass_blocks/quartz"
+    },
+    "C": {
+      "item": "ragium:advanced_machine_frame"
+    },
+    "D": {
+      "item": "minecraft:polished_blackstone_bricks"
+    },
+    "E": {
+      "tag": "c:circuits/advanced"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DED"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:refinery"
+  }
+}

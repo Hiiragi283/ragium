@@ -49,6 +49,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
             add(RagiumBlocks.SPONGE_CAKE)
 
+            add(RagiumBlocks.BASIC_MACHINE_FRAME)
+            add(RagiumBlocks.ADVANCED_MACHINE_FRAME)
             add(RagiumBlocks.DEVICE_CASING)
 
             add(RagiumBlocks.CEU)
@@ -119,52 +121,25 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             ),
         )
 
-        simpleBlock(
-            RagiumBlocks.MACHINE_CASING.get(),
-            models()
-                .withExistingParent("block/machine_casing", RagiumAPI.id("block/casing_base"))
-                .texture("top", RagiumAPI.id("block/ragi_alloy_block"))
-                .texture("bottom", vanillaId("block/deepslate_tiles")),
-        )
-
-        simpleBlock(
-            RagiumBlocks.ADVANCED_MACHINE_CASING.get(),
-            models()
-                .withExistingParent("block/advanced_machine_casing", RagiumAPI.id("block/casing_base"))
-                .texture("top", RagiumAPI.id("block/advanced_ragi_alloy_block"))
-                .texture("bottom", RagiumAPI.id("block/azure_tiles")),
-        )
-
         // Machine
-        fun basicMachine(holder: DeferredBlock<*>) {
+        fun machine(holder: DeferredBlock<*>, top: ResourceLocation, bottom: ResourceLocation) {
             horizontalBlock(
                 holder.get(),
                 models()
                     .withExistingParent("block/" + holder.id.path, RagiumAPI.id("block/machine_base"))
-                    .texture("top", RagiumAPI.id("block/ragi_alloy_block"))
-                    .texture("bottom", vanillaId("block/deepslate_tiles"))
+                    .texture("top", top)
+                    .texture("bottom", bottom)
                     .texture("front", holder.id.withPath { "block/${it}_front" }),
             )
         }
 
-        basicMachine(RagiumBlocks.CRUSHER)
-        basicMachine(RagiumBlocks.EXTRACTOR)
+        val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
+        machine(RagiumBlocks.CRUSHER, basicMachine, vanillaId("block/bricks"))
+        machine(RagiumBlocks.EXTRACTOR, basicMachine, vanillaId("block/bricks"))
 
-        fun advMachine(holder: DeferredBlock<*>) {
-            horizontalBlock(
-                holder.get(),
-                models()
-                    .withExistingParent("block/" + holder.id.path, RagiumAPI.id("block/machine_base"))
-                    .texture("top", RagiumAPI.id("block/advanced_ragi_alloy_block"))
-                    .texture("bottom", RagiumAPI.id("block/azure_tiles"))
-                    .texture("front", holder.id.withPath { "block/${it}_front" }),
-            )
-        }
-
-        advMachine(RagiumBlocks.ADVANCED_CRUSHER)
-        advMachine(RagiumBlocks.ADVANCED_EXTRACTOR)
-        advMachine(RagiumBlocks.INFUSER)
-        advMachine(RagiumBlocks.REFINERY)
+        val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
+        machine(RagiumBlocks.INFUSER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(RagiumBlocks.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
 
         // Cauldron
         horizontalBlock(RagiumBlocks.TREE_TAP.get(), modelFile(RagiumBlocks.TREE_TAP.blockId))

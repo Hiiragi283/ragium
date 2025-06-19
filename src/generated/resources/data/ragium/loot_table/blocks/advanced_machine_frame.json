@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:machine_casing"
+          "name": "ragium:advanced_machine_frame"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/machine_casing"
+  "random_sequence": "ragium:blocks/advanced_machine_frame"
 }

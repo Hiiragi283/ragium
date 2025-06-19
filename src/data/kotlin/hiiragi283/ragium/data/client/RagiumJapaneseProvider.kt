@@ -108,9 +108,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "スポンジケーキのハーフブロック")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
-        addBlock(RagiumBlocks.ADVANCED_MACHINE_CASING, "発展機械筐体")
+        addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "発展機械フレーム")
         addBlock(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
-        addBlock(RagiumBlocks.MACHINE_CASING, "機械筐体")
+        addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "基本機械フレーム")
         addBlock(RagiumBlocks.STONE_CASING, "石材筐体")
         addBlock(RagiumBlocks.WOODEN_CASING, "木材筐体")
 
@@ -120,8 +120,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
-        addBlock(RagiumBlocks.ADVANCED_CRUSHER, "発展型粉砕機")
-        addBlock(RagiumBlocks.ADVANCED_EXTRACTOR, "発展型抽出機")
         addBlock(RagiumBlocks.INFUSER, "注入機")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         // Cauldron
