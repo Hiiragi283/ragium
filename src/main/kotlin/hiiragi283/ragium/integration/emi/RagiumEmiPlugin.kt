@@ -41,6 +41,7 @@ import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
+import hiiragi283.ragium.integration.emi.handler.CrushingRecipeHandler
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCauldronDroppingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
@@ -53,6 +54,7 @@ import hiiragi283.ragium.integration.emi.recipe.HTTreeTappingEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
@@ -213,6 +215,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), CrushingRecipeHandler)
         // Extracting
         forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
             when (recipe) {

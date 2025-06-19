@@ -8,6 +8,8 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.inventory.SimpleContainerData
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTCrusherMenu(
@@ -17,7 +19,8 @@ class HTCrusherMenu(
     upgrades: IItemHandler,
     inputSlot: HTItemSlot,
     outputSlots: List<HTItemSlot>,
-) : HTMachineMenu(RagiumMenuTypes.CRUSHER, containerId, inventory, pos, upgrades) {
+    containerData: ContainerData,
+) : HTMachineMenu(RagiumMenuTypes.CRUSHER, containerId, inventory, pos, upgrades, containerData) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
@@ -25,6 +28,7 @@ class HTCrusherMenu(
         emptyItemHandler(4),
         emptySlot(),
         HTItemSlotHelper.createEmptySlotList(4),
+        SimpleContainerData(2),
     )
 
     init {
@@ -40,7 +44,7 @@ class HTCrusherMenu(
         // player inventory
         addPlayerInv()
         // register property
-        addDataSlots()
+        addDataSlots(containerData)
     }
 
     override val inputSlots: IntRange = 0..4

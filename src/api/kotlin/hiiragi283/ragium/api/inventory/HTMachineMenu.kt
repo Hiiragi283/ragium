@@ -3,8 +3,9 @@ package hiiragi283.ragium.api.inventory
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import net.minecraft.core.BlockPos
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.inventory.SimpleContainerData
+import net.minecraft.world.inventory.ContainerData
 import net.neoforged.neoforge.items.IItemHandler
 
 abstract class HTMachineMenu(
@@ -13,6 +14,7 @@ abstract class HTMachineMenu(
     inventory: Inventory,
     pos: BlockPos,
     upgrades: IItemHandler,
+    protected val containerData: ContainerData,
 ) : HTContainerMenu(
         menuType,
         containerId,
@@ -21,10 +23,12 @@ abstract class HTMachineMenu(
     ) {
     val machine: HTMachineBlockEntity? = level.getBlockEntity(pos) as? HTMachineBlockEntity
 
-    val progress: Float get() = machine?.progress ?: 0f
-
-    fun addDataSlots() {
-        addDataSlots(machine?.containerData ?: SimpleContainerData(2))
+    val progress: Float get() {
+        val totalTick: Int = containerData.get(0)
+        val maxTicks: Int = containerData.get(1)
+        if (maxTicks == 0) return 0f
+        val fixedTotalTicks: Int = totalTick % maxTicks
+        return Mth.clamp(fixedTotalTicks / maxTicks.toFloat(), 0f, 1f)
     }
 
     fun addUpgradeSlots(upgrades: IItemHandler) {

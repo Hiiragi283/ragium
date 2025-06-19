@@ -143,7 +143,7 @@ sealed class HTCrusherBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
         HTCrusherBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state),
         MenuProvider {
         override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
-            HTCrusherMenu(containerId, playerInventory, blockPos, upgrades, inputSlot, outputSlots)
+            HTCrusherMenu(containerId, playerInventory, blockPos, upgrades, inputSlot, outputSlots, containerData)
     }
 
     //    Advanced    //
