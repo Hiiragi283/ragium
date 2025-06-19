@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addHolder
+import hiiragi283.ragium.api.extension.asBlockHolder
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.tag.RagiumBlockTags
@@ -19,12 +20,12 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
 
-class RagiumBlockTagProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
+class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
     IntrinsicHolderTagsProvider<Block>(
         output,
         Registries.BLOCK,
         provider,
-        { block: Block -> block.builtInRegistryHolder().key },
+        { block: Block -> block.asBlockHolder().key },
         RagiumAPI.MOD_ID,
         helper,
     ) {

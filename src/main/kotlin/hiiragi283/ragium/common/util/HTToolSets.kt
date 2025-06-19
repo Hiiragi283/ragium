@@ -1,15 +1,12 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTItemSet
-import hiiragi283.ragium.api.tag.RagiumItemTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.AxeItem
 import net.minecraft.world.item.DiggerItem
@@ -29,6 +26,18 @@ import net.neoforged.neoforge.registries.DeferredItem
 class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>) : HTItemSet {
     private val itemRegister = HTItemRegister(RagiumAPI.MOD_ID)
 
+    val shovelItem: DeferredItem<ShovelItem> = itemRegister.registerItem(
+        "${name}_shovel",
+        { ShovelItem(material, it) },
+        Item.Properties().attributes(DiggerItem.createAttributes(material, 1.5f, -3f)),
+    )
+
+    val pickaxeItem: DeferredItem<PickaxeItem> = itemRegister.registerItem(
+        "${name}_pickaxe",
+        { PickaxeItem(material, it) },
+        Item.Properties().attributes(DiggerItem.createAttributes(material, 1f, -2.8f)),
+    )
+    
     val axeItem: DeferredItem<AxeItem> = itemRegister.registerItem(
         "${name}_axe",
         { AxeItem(material, it) },
@@ -39,18 +48,6 @@ class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>)
         "${name}_hoe",
         { HoeItem(material, it) },
         Item.Properties().attributes(DiggerItem.createAttributes(material, -2f, -1f)),
-    )
-
-    val pickaxeItem: DeferredItem<PickaxeItem> = itemRegister.registerItem(
-        "${name}_pickaxe",
-        { PickaxeItem(material, it) },
-        Item.Properties().attributes(DiggerItem.createAttributes(material, 1f, -2.8f)),
-    )
-
-    val shovelItem: DeferredItem<ShovelItem> = itemRegister.registerItem(
-        "${name}_shovel",
-        { ShovelItem(material, it) },
-        Item.Properties().attributes(DiggerItem.createAttributes(material, 1.5f, -3f)),
     )
 
     val swordItem: DeferredItem<SwordItem> = itemRegister.registerItem(
@@ -70,15 +67,6 @@ class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>)
 
     override fun init(eventBus: IEventBus) {
         itemRegister.register(eventBus)
-    }
-
-    override fun appendItemTags(builder: HTTagBuilder.ItemTag) {
-        builder.add(ItemTags.AXES, axeItem)
-        builder.add(ItemTags.HOES, hoeItem)
-        builder.add(ItemTags.PICKAXES, pickaxeItem)
-        builder.add(ItemTags.SHOVELS, shovelItem)
-        builder.add(ItemTags.SWORDS, swordItem)
-        builder.add(RagiumItemTags.TOOLS_FORGE_HAMMER, hammerItem)
     }
 
     override fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {

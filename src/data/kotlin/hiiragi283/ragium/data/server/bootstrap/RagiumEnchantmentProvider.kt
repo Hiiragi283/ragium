@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.bootstrap
 
+import hiiragi283.ragium.api.tag.RagiumEntityTypeTags
 import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.advancements.critereon.EntityPredicate
 import net.minecraft.core.HolderGetter
@@ -9,7 +10,6 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.EnchantmentTags
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantment
@@ -68,7 +68,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                         LootContext.EntityTarget.THIS,
                         EntityPredicate.Builder
                             .entity()
-                            .of(EntityType.WARDEN),
+                            .of(RagiumEntityTypeTags.SENSITIVE_TO_NOISE_CANCELLING),
                     ),
                 ),
         )

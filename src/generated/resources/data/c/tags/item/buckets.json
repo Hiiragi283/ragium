@@ -1,10 +1,10 @@
 {
   "values": [
-    "#c:buckets/chocolate",
-    "#c:buckets/crimson_sap",
-    "#c:buckets/experience",
     "#c:buckets/honey",
+    "#c:buckets/experience",
+    "#c:buckets/chocolate",
     "#c:buckets/mushroom_stew",
+    "#c:buckets/crimson_sap",
     "#c:buckets/warped_sap"
   ]
 }

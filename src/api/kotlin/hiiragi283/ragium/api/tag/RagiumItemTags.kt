@@ -83,7 +83,7 @@ object RagiumItemTags {
     val INGOTS_COOKED_MEAT: TagKey<Item> = commonTag(RagiumConstantValues.INGOTS, RagiumConstantValues.COOKED_MEAT)
 
     @JvmField
-    val BEACON_PAYMENTS: List<TagKey<Item>> = listOf(
+    val BEACON_PAYMENTS: Array<TagKey<Item>> = arrayOf(
         // gems
         GEMS_RAGI_CRYSTAL,
         GEMS_CRIMSON_CRYSTAL,
@@ -94,9 +94,6 @@ object RagiumItemTags {
         INGOTS_ADVANCED_RAGI_ALLOY,
         INGOTS_AZURE_STEEL,
         INGOTS_DEEP_STEEL,
-        INGOTS_CHOCOLATE,
-        INGOTS_MEAT,
-        INGOTS_COOKED_MEAT,
     )
 
     //    Molds    //
@@ -253,16 +250,19 @@ object RagiumItemTags {
 
     // ENI upgrades
     @JvmField
-    val ENI_UPGRADE_BASIC: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrade/basic"))
+    val ENI_UPGRADES: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrades"))
 
     @JvmField
-    val ENI_UPGRADE_ADVANCED: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrade/advanced"))
+    val ENI_UPGRADES_BASIC: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrades/basic"))
 
     @JvmField
-    val ENI_UPGRADE_ELITE: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrade/elite"))
+    val ENI_UPGRADES_ADVANCED: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrades/advanced"))
 
     @JvmField
-    val ENI_UPGRADE_ULTIMATE: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrade/ultimate"))
+    val ENI_UPGRADES_ELITE: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrades/elite"))
+
+    @JvmField
+    val ENI_UPGRADES_ULTIMATE: TagKey<Item> = itemTagKey(RagiumAPI.id("eni_upgrades/ultimate"))
 
     // Soils
     @JvmField

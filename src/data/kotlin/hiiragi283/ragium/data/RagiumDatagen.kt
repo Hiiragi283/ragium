@@ -16,10 +16,11 @@ import hiiragi283.ragium.data.server.bootstrap.RagiumPlacedProvider
 import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumCustomLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumGlobalLootProvider
-import hiiragi283.ragium.data.server.tag.RagiumBlockTagProvider
-import hiiragi283.ragium.data.server.tag.RagiumEnchantmentTagProvider
-import hiiragi283.ragium.data.server.tag.RagiumFluidTagProvider
-import hiiragi283.ragium.data.server.tag.RagiumItemTagProvider
+import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
+import hiiragi283.ragium.data.server.tag.RagiumEnchantmentTagsProvider
+import hiiragi283.ragium.data.server.tag.RagiumEntityTypeTagsProvider
+import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
+import hiiragi283.ragium.data.server.tag.RagiumItemTagsProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
@@ -91,11 +92,12 @@ object RagiumDatagen {
 
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
 
-        generator.addProvider(event.includeServer(), RagiumEnchantmentTagProvider(output, provider, helper))
-        generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
+        generator.addProvider(event.includeServer(), RagiumEnchantmentTagsProvider(output, provider, helper))
+        generator.addProvider(event.includeServer(), RagiumEntityTypeTagsProvider(output, provider, helper))
+        generator.addProvider(event.includeServer(), RagiumFluidTagsProvider(output, provider, helper))
         val blockTags: CompletableFuture<TagsProvider.TagLookup<Block>> =
-            generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper)).contentsGetter()
-        generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, blockTags, helper))
+            generator.addProvider(event.includeServer(), RagiumBlockTagsProvider(output, provider, helper)).contentsGetter()
+        generator.addProvider(event.includeServer(), RagiumItemTagsProvider(output, provider, blockTags, helper))
 
         generator.addProvider(event.includeServer(), RagiumDataMapProvider(output, provider))
 

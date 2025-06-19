@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
@@ -21,7 +20,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
@@ -78,11 +76,6 @@ class HTOreSets(private val name: String) : HTBlockSet {
     override fun init(eventBus: IEventBus) {
         blockRegister.register(eventBus)
         itemRegister.register(eventBus)
-    }
-
-    override fun appendItemTags(builder: HTTagBuilder.ItemTag) {
-        builder.copyFromBlock(Tags.Blocks.ORES, Tags.Items.ORES)
-        builder.copyFromBlock(blockOreTag, itemOreTag)
     }
 
     override fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {}

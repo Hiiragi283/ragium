@@ -18,7 +18,7 @@
           "condition": "minecraft:entity_properties",
           "entity": "this",
           "predicate": {
-            "type": "minecraft:warden"
+            "type": "#ragium:sensitive_to_noise_cancelling"
           }
         }
       }

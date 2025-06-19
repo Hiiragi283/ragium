@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTTagBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.blockId
@@ -13,8 +12,6 @@ import hiiragi283.ragium.api.registry.HTItemRegister
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.BlockTags
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -78,12 +75,6 @@ class HTBuildingBlockSets(
     override fun init(eventBus: IEventBus) {
         blockRegister.register(eventBus)
         itemRegister.register(eventBus)
-    }
-
-    override fun appendItemTags(builder: HTTagBuilder.ItemTag) {
-        builder.copyFromBlock(BlockTags.STAIRS, ItemTags.STAIRS)
-        builder.copyFromBlock(BlockTags.SLABS, ItemTags.SLABS)
-        builder.copyFromBlock(BlockTags.WALLS, ItemTags.WALLS)
     }
 
     override fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {

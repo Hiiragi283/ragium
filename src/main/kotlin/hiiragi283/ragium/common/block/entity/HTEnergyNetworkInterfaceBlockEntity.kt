@@ -35,10 +35,10 @@ class HTEnergyNetworkInterfaceBlockEntity(pos: BlockPos, state: BlockState) : HT
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
         val capacityAdd: Int = when {
-            stack.`is`(RagiumItemTags.ENI_UPGRADE_BASIC) -> 1_000_000 // 1M
-            stack.`is`(RagiumItemTags.ENI_UPGRADE_ADVANCED) -> 10_000_000 // 10M
-            stack.`is`(RagiumItemTags.ENI_UPGRADE_ELITE) -> 100_000_000 // 100M
-            stack.`is`(RagiumItemTags.ENI_UPGRADE_ULTIMATE) -> 1_000_000_000 // 1G
+            stack.`is`(RagiumItemTags.ENI_UPGRADES_BASIC) -> 1_000_000 // 1M
+            stack.`is`(RagiumItemTags.ENI_UPGRADES_ADVANCED) -> 10_000_000 // 10M
+            stack.`is`(RagiumItemTags.ENI_UPGRADES_ELITE) -> 100_000_000 // 100M
+            stack.`is`(RagiumItemTags.ENI_UPGRADES_ULTIMATE) -> 1_000_000_000 // 1G
             else -> return super.onRightClickedWithItem(stack, state, level, pos, player, hand, hitResult)
         }
         (network as? HTEnergyNetwork)?.let { network: HTEnergyNetwork ->

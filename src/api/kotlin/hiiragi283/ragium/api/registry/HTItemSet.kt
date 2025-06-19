@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.data.HTTagBuilder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Item
@@ -16,8 +15,6 @@ interface HTItemSet {
     fun getItems(): List<Item> = itemHolders.map(ItemLike::asItem)
 
     fun init(eventBus: IEventBus)
-
-    fun appendItemTags(builder: HTTagBuilder.ItemTag)
 
     fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
 

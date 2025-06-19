@@ -58,6 +58,8 @@ val <T : Any> Holder<T>.idOrNull: ResourceLocation? get() = unwrapKey().map(Reso
  */
 fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
 
+fun Block.asBlockHolder(): Holder.Reference<Block> = builtInRegistryHolder()
+
 fun Fluid.asFluidHolder(): Holder.Reference<Fluid> = builtInRegistryHolder()
 
 /**
@@ -77,9 +79,9 @@ val DeferredItem<*>.itemId: ResourceLocation get() = id.withPrefix("item/")
 
 //    HolderSet    //
 
-fun blockHolderSet(vararg blocks: Block): HolderSet.Direct<Block> = HolderSet.direct(Block::builtInRegistryHolder, *blocks)
+fun blockHolderSet(vararg blocks: Block): HolderSet.Direct<Block> = HolderSet.direct(Block::asBlockHolder, *blocks)
 
-fun blockHolderSet(blocks: Collection<Block>): HolderSet.Direct<Block> = HolderSet.direct(Block::builtInRegistryHolder, blocks)
+fun blockHolderSet(blocks: Collection<Block>): HolderSet.Direct<Block> = HolderSet.direct(Block::asBlockHolder, blocks)
 
 /**
  * この[HolderSet]を[Component]に変換します。
