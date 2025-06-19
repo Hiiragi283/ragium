@@ -38,7 +38,7 @@ abstract class HTFluidTank :
         }
     }
 
-    final override fun canInsert(stack: FluidStack): Boolean = insert(stack, true) == stack.amount
+    final override fun canInsert(stack: FluidStack): Boolean = insert(stack, true) > 0
 
     override fun insert(stack: FluidStack, simulate: Boolean): Int {
         val inserted: Int = insert(HTFluidVariant.of(stack), stack.amount, simulate)

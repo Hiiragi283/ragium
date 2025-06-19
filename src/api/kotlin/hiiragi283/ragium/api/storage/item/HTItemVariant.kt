@@ -41,7 +41,7 @@ data class HTItemVariant private constructor(val item: Item, override val compon
             val EMPTY: HTItemVariant = of(Items.AIR)
 
             @JvmStatic
-            fun of(stack: ItemStack): HTItemVariant = of(stack.item, stack.componentsPatch)
+            fun of(stack: ItemStack): HTItemVariant = if (stack.isEmpty) EMPTY else of(stack.item, stack.componentsPatch)
 
             @JvmStatic
             fun of(holder: Holder<Item>, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemVariant =

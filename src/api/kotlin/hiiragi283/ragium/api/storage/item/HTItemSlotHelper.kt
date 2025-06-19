@@ -9,7 +9,8 @@ object HTItemSlotHelper {
     fun canInsertItem(slots: Iterable<HTItemSlot>, stack: ItemStack): Boolean {
         val result: ItemStack = stack.copy()
         for (slot: HTItemSlot in slots) {
-            slot.insert(result, false)
+            val inserted: Int = slot.insert(result, true)
+            if (inserted > 0) result.count -= inserted
             if (result.isEmpty) return true
         }
         return false

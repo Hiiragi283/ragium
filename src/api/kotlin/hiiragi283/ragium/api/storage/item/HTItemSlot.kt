@@ -62,7 +62,7 @@ abstract class HTItemSlot :
         }
     }
 
-    final override fun canInsert(stack: ItemStack): Boolean = insert(stack, true) == stack.count
+    final override fun canInsert(stack: ItemStack): Boolean = insert(stack, true) > 0
 
     override fun insert(stack: ItemStack, simulate: Boolean): Int {
         val inserted: Int = insert(HTItemVariant.of(stack), stack.count, simulate)
