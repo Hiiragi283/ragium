@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "ragium:silt"
+  },
+  "input": {
+    "amount": 250,
+    "tag": "c:water"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:clay"
+  }
+}

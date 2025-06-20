@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
@@ -21,7 +22,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -64,7 +64,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    private val recipeCache: HTRecipeCache<SingleRecipeInput, HTCrushingRecipe> =
+    private val recipeCache: HTRecipeCache<HTUniversalRecipeInput, HTCrushingRecipe> =
         HTRecipeCache.simple(RagiumRecipeTypes.CRUSHING.get())
 
     override fun onServerTick(
@@ -76,7 +76,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // 200 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
-        val input = SingleRecipeInput(inputSlot.stack)
+        val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromSlots(listOf(inputSlot))
         val recipe: HTCrushingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
         // エネルギーを消費できるか判定する
         if (network.extractEnergy(6400, true) != 6400) return TriState.FALSE

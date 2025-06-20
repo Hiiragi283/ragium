@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:golden_apple"
+  },
+  "input": {
+    "amount": 8000,
+    "tag": "c:experience"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:enchanted_golden_apple"
+  }
+}

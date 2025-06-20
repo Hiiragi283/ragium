@@ -31,13 +31,16 @@ object RagiumEmiCategories {
     val EXTRACTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.EXTRACTING), RagiumBlocks.EXTRACTOR)
 
     @JvmField
-    val INFUSING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.INFUSING), RagiumBlocks.INFUSER)
+    val INFUSING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.INFUSING), Items.HOPPER)
+
+    @JvmField
+    val MELTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.MELTING), RagiumBlocks.CRUSHER)
 
     @JvmField
     val REFINING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.REFINING), RagiumBlocks.REFINERY)
 
     @JvmField
-    val SOLIDIFYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.SOLIDIFYING), RagiumBlocks.REFINERY)
+    val SOLIDIFYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.SOLIDIFYING), RagiumBlocks.SOLIDIFIER)
 
     @JvmField
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
@@ -48,6 +51,7 @@ object RagiumEmiCategories {
         CRUSHING,
         EXTRACTING,
         INFUSING,
+        MELTING,
         REFINING,
         SOLIDIFYING,
     )

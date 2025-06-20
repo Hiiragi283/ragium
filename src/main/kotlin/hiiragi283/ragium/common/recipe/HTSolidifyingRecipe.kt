@@ -1,14 +1,10 @@
 package hiiragi283.ragium.common.recipe
 
-import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.recipe.HTUniversalRecipe
+import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -17,14 +13,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
-class HTSolidifyingRecipe(
-    private val ingredient: SizedFluidIngredient,
-    private val catalyst: Ingredient,
-    private val output: HTItemOutput,
-) : HTMachineRecipe(),
-    HTDefinitionRecipe<HTMachineInput> {
+class HTSolidifyingRecipe(val ingredient: SizedFluidIngredient, val catalyst: Ingredient, val output: HTItemOutput) : HTUniversalRecipe {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTSolidifyingRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -48,9 +40,9 @@ class HTSolidifyingRecipe(
         )
     }
 
-    override fun matches(input: HTMachineInput): Boolean {
-        val bool1: Boolean = ingredient.test(input.getFluidStack(HTStorageIO.INPUT, 0))
-        val catalystStack: ItemStack = input.getItemStack(HTStorageIO.INPUT, 0)
+    override fun matches(input: HTUniversalRecipeInput, level: Level): Boolean {
+        val bool1: Boolean = ingredient.test(input.getFluid(0))
+        val catalystStack: ItemStack = input.getItem(0)
         val bool2: Boolean = when {
             catalyst.isEmpty -> catalystStack.isEmpty
             else -> catalyst.test(catalystStack)
@@ -58,25 +50,7 @@ class HTSolidifyingRecipe(
         return bool1 && bool2
     }
 
-    override fun canProcess(input: HTMachineInput): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun process(input: HTMachineInput) {
-        TODO("Not yet implemented")
-    }
-
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SOLIDIFYING.get()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.SOLIDIFYING.get()
-
-    override fun getDefinition(): DataResult<HTRecipeDefinition> = DataResult.success(
-        HTRecipeDefinition(
-            listOf(),
-            listOf(ingredient),
-            catalyst,
-            listOf(output),
-            listOf(),
-        ),
-    )
 }

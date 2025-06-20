@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "input": {
+    "count": 1,
+    "item": "minecraft:glass_bottle"
+  },
+  "outputs": {
+    "count": 1,
+    "id": "minecraft:honey_bottle"
+  }
+}

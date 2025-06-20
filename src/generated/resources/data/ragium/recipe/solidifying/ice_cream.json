@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:snowball"
+  },
+  "input": {
+    "amount": 250,
+    "tag": "c:milk"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:ice_cream"
+  }
+}

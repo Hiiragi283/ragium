@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "tag": "c:foods/berry"
+  },
+  "input": {
+    "amount": 1000,
+    "tag": "c:experience"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:exp_berries"
+  }
+}

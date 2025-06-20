@@ -1,0 +1,11 @@
+{
+  "type": "ragium:melting",
+  "input": {
+    "count": 1,
+    "tag": "minecraft:crimson_stems"
+  },
+  "output": {
+    "amount": 100,
+    "id": "ragium:crimson_sap"
+  }
+}

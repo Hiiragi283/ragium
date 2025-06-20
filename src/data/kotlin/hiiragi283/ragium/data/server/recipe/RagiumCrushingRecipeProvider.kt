@@ -160,6 +160,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         createCrushing()
             .itemOutput(Items.SAND)
+            .itemOutput(Items.FLINT, chance = 1 / 3f)
             .itemInput(Tags.Items.GRAVELS)
             .saveSuffixed(output, "_from_gravel")
 

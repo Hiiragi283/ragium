@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:glass_bottle"
+  },
+  "input": {
+    "amount": 250,
+    "tag": "c:honey"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:honey_bottle"
+  }
+}

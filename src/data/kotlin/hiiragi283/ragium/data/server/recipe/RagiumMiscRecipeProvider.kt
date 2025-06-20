@@ -116,8 +116,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
         // Advanced
         advancedMachine(RagiumBlocks.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
-        advancedMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.HOPPER), Items.POLISHED_BLACKSTONE_BRICKS)
         advancedMachine(RagiumBlocks.REFINERY, Ingredient.of(RagiumItemTags.GLASS_BLOCKS_QUARTZ), Items.POLISHED_BLACKSTONE_BRICKS)
+        advancedMachine(RagiumBlocks.SOLIDIFIER, Ingredient.of(ItemTags.TRIM_TEMPLATES), Items.POLISHED_BLACKSTONE_BRICKS)
     }
 
     private fun basicMachine(machine: ItemLike, input: Ingredient) {

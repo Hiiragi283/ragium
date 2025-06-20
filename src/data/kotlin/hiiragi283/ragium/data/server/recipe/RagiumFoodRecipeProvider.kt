@@ -21,9 +21,9 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     override fun buildRecipeInternal() {
         // Chocolate
-        createInfusing()
+        createSolidifying()
             .itemOutput(RagiumItems.CHOCOLATE_INGOT)
-            .itemInput(Tags.Items.CROPS_COCOA_BEAN)
+            .catalyst(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
             .save(output)
         // Melon Pie
@@ -40,10 +40,10 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         )
 
         // Ambrosia
-        createInfusing()
+        createAlloying()
             .itemOutput(RagiumItems.AMBROSIA)
             .itemInput(RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE, 64)
-            .fluidInput(Tags.Fluids.HONEY, 1000 * 64)
+            .itemInput(Items.HONEY_BLOCK, 64)
             .save(output)
 
         cherry()
@@ -70,12 +70,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     private fun honey() {
         // Beehive
-        createBeehive()
+        createCrushing()
             .itemOutput(Items.HONEYCOMB)
             .catalyst(Tags.Items.TOOLS_SHEAR)
         // .save(output)
 
-        createBeehive()
+        createCrushing()
             .itemOutput(Items.HONEY_BOTTLE)
             .itemInput(Items.GLASS_BOTTLE)
             .save(output)

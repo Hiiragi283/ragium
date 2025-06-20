@@ -19,8 +19,8 @@ import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -57,10 +57,10 @@ object RagiumBlockEntityTypes {
     val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", HTExtractorBlockEntity::Basic)
 
     @JvmField
-    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
 
     @JvmField
-    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
+    val SOLIDIFIER: HTDeferredBlockEntityType<HTSolidifierBlockEntity> = registerTick("solidifier", ::HTSolidifierBlockEntity)
 
     //    Device    //
 
@@ -143,8 +143,8 @@ object RagiumBlockEntityTypes {
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
 
         add(ALLOY_SMELTER, RagiumBlocks.ALLOY_SMELTER)
-        add(INFUSER, RagiumBlocks.INFUSER)
         add(REFINERY, RagiumBlocks.REFINERY)
+        add(SOLIDIFIER, RagiumBlocks.SOLIDIFIER)
 
         add(CHARGER, RagiumBlocks.CHARGER)
         add(ENI, RagiumBlocks.ENI)
@@ -190,8 +190,8 @@ object RagiumBlockEntityTypes {
         registerHandlers(CRUSHER)
         registerHandlers(EXTRACTOR)
 
-        registerHandlers(INFUSER)
         registerHandlers(REFINERY)
+        registerHandlers(SOLIDIFIER)
 
         registerHandlers(CHARGER)
         registerHandlers(ENI)

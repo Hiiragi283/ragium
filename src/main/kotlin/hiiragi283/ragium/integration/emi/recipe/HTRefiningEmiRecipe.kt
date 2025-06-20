@@ -1,22 +1,28 @@
 package hiiragi283.ragium.integration.emi.recipe
 
+import dev.emi.emi.api.recipe.EmiRecipeCategory
+import dev.emi.emi.api.stack.EmiIngredient
+import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 
-class HTRefiningEmiRecipe(id: ResourceLocation, definition: HTRecipeDefinition) :
-    HTMachineEmiRecipe(RagiumEmiCategories.REFINING, id, definition) {
-    override fun getDisplayWidth(): Int = getPosition(4.5)
+class HTRefiningEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val results: List<EmiStack>) :
+    HTEmiRecipe.Base(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
+    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.REFINING
 
-    override fun getDisplayHeight(): Int = getPosition(1)
+    override fun getInputs(): List<EmiIngredient> = listOf(ingredient)
+
+    override fun getOutputs(): List<EmiStack> = results
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(1.0, 0.0)
+        super.addWidgets(widgets)
         // Input
-        widgets.addFluidInput(0, 0.0, 0.0)
+        widgets.addInput(ingredient, 1.0, 1.0).drawBack(false)
         // Output
-        widgets.addItemOutput(0, 2.5, 0.0)
-        widgets.addFluidOutput(0, 3.5, 0.0)
+        widgets.addOutput(0, 4.0, 1.0)
+        widgets.addOutput(1, 5.0, 0.5)
+        widgets.addOutput(2, 5.0, 1.5)
     }
 }

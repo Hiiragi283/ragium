@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "tag": "c:crops/cocoa_bean"
+  },
+  "input": {
+    "amount": 250,
+    "tag": "c:milk"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:chocolate_ingot"
+  }
+}

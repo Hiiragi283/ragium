@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTListedRecipeInput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
@@ -66,7 +66,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    private val recipeCache: HTRecipeCache<HTListedRecipeInput, HTAlloyingRecipe> =
+    private val recipeCache: HTRecipeCache<HTUniversalRecipeInput, HTAlloyingRecipe> =
         HTRecipeCache.simple(RagiumRecipeTypes.ALLOYING.get())
 
     override fun onServerTick(
@@ -78,7 +78,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // 200 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
-        val input: HTListedRecipeInput = HTListedRecipeInput.fromSlots(inputSlots)
+        val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromSlots(inputSlots)
         val recipe: HTAlloyingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
         // エネルギーを消費できるか判定する
         if (network.extractEnergy(6400, true) != 6400) return TriState.FALSE

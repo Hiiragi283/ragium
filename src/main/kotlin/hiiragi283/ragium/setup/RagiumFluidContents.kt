@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
@@ -81,7 +82,7 @@ object RagiumFluidContents {
 
     //    Oil    //
 
-    /*val CRUDE_OIL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+    val CRUDE_OIL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
         "crude_oil",
         defaultProperties()
             .canSwim(false)
@@ -89,11 +90,23 @@ object RagiumFluidContents {
             .density(3000)
             .viscosity(6000)
             .motionScale(0.0001),
-    )*/
+    )
 
-    // val NAPHTHA: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("naphtha", defaultProperties())
+    val LPG: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("lpg", gaseous())
 
-    // val FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("fuel", defaultProperties())
+    val NAPHTHA: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("naphtha", defaultProperties())
+
+    val LIGHT_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+        "light_fuel",
+        defaultProperties(),
+    )
+
+    val HEAVY_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+        "heavy_fuel",
+        defaultProperties(),
+    )
+
+    val DIESEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("fuel", defaultProperties())
 
     // val NITRO_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("nitro_fuel", defaultProperties())
 
@@ -107,7 +120,7 @@ object RagiumFluidContents {
 
     //    Sap    //
 
-    // val SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sap", defaultProperties())
+    val SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sap", defaultProperties())
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =

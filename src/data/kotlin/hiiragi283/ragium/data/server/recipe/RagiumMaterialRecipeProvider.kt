@@ -1,21 +1,17 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
-import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.data.server.RagiumMaterialFamilies
-import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -130,26 +126,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")
-        // Crimson Crystal
-        save(
-            RagiumAPI.id("cauldron/crimson_crystal"),
-            HTCauldronDroppingRecipeImpl(
-                RagiumFluidContents.CRIMSON_SAP.get(),
-                3,
-                Ingredient.of(Tags.Items.GEMS_QUARTZ),
-                RagiumItems.CRIMSON_CRYSTAL.toStack(),
-            ),
-        )
-        // Warped Crystal
-        save(
-            RagiumAPI.id("cauldron/warped_crystal"),
-            HTCauldronDroppingRecipeImpl(
-                RagiumFluidContents.WARPED_SAP.get(),
-                3,
-                Ingredient.of(Tags.Items.GEMS_QUARTZ),
-                RagiumItems.WARPED_CRYSTAL.toStack(),
-            ),
-        )
         // Eldritch Pearl
         HTShapedRecipeBuilder(RagiumItems.ELDRITCH_PEARL)
             .cross4()
@@ -277,7 +253,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
                 .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_ADVANCED)
                 .saveSuffixed(output, "_with_advanced_flux")
         }
-        
+
         register(Items.COPPER_INGOT, Tags.Items.RAW_MATERIALS_COPPER)
         register(Items.IRON_INGOT, Tags.Items.RAW_MATERIALS_IRON)
         register(Items.GOLD_INGOT, Tags.Items.RAW_MATERIALS_GOLD)

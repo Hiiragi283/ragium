@@ -6,12 +6,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
-import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
@@ -61,16 +59,8 @@ object RagiumRecipeSerializers {
         register(RagiumConstantValues.ALLOYING, HTAlloyingRecipe.CODEC, HTAlloyingRecipe.STREAM_CODEC)
 
     @JvmField
-    val BEE_HIVE: Supplier<RecipeSerializer<HTBeehiveRecipe>> =
-        register(RagiumConstantValues.BEE_HIVE, HTBeehiveRecipe.CODEC, HTBeehiveRecipe.STREAM_CODEC)
-
-    @JvmField
     val BLOCK_INTERACTING: Supplier<RecipeSerializer<HTBlockInteractingRecipeImpl>> =
         register(RagiumConstantValues.BLOCK_INTERACTING, HTBlockInteractingRecipeImpl.CODEC, HTBlockInteractingRecipeImpl.STREAM_CODEC)
-
-    @JvmField
-    val CAULDRON_DROPPING: Supplier<RecipeSerializer<HTCauldronDroppingRecipeImpl>> =
-        register(RagiumConstantValues.CAULDRON_DROPPING, HTCauldronDroppingRecipeImpl.CODEC, HTCauldronDroppingRecipeImpl.STREAM_CODEC)
 
     @JvmField
     val CRUSHING: Supplier<RecipeSerializer<HTCrushingRecipe>> =
@@ -81,8 +71,8 @@ object RagiumRecipeSerializers {
         register(RagiumConstantValues.EXTRACTING, HTExtractingRecipe.CODEC, HTExtractingRecipe.STREAM_CODEC)
 
     @JvmField
-    val INFUSING: Supplier<RecipeSerializer<HTInfusingRecipe>> =
-        register(RagiumConstantValues.INFUSING, HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
+    val MELTING: Supplier<RecipeSerializer<HTMeltingRecipe>> =
+        register(RagiumConstantValues.MELTING, HTMeltingRecipe.CODEC, HTMeltingRecipe.STREAM_CODEC)
 
     // val PRESSING: Supplier<RecipeSerializer<HTPressingRecipe>>
 

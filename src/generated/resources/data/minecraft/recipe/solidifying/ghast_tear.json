@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:chiseled_quartz_block"
+  },
+  "input": {
+    "amount": 1000,
+    "tag": "c:experience"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:ghast_tear"
+  }
+}

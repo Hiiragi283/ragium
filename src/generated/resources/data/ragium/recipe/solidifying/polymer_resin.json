@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:clay_ball"
+  },
+  "input": {
+    "amount": 100,
+    "tag": "c:lpg"
+  },
+  "output": {
+    "count": 1,
+    "id": "ragium:polymer_resin"
+  }
+}

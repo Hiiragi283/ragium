@@ -4,8 +4,15 @@
     "count": 1,
     "tag": "c:gravels"
   },
-  "outputs": {
-    "count": 1,
-    "id": "minecraft:sand"
-  }
+  "outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:sand"
+    },
+    {
+      "chance": 0.33333334,
+      "count": 1,
+      "id": "minecraft:flint"
+    }
+  ]
 }

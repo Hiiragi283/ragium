@@ -250,7 +250,7 @@ object RagiumItemTags {
 
     @JvmField
     val LED_BLOCKS: TagKey<Item> = itemTagKey(RagiumAPI.id("led_blocks"))
-    
+
     @JvmField
     val ALLOY_SMELTER_FLUXES_BASIC: TagKey<Item> = itemTagKey(RagiumAPI.id("alloy_smelter_fluxes/basic"))
 

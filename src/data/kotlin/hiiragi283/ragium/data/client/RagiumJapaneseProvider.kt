@@ -118,8 +118,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "合金炉")
-        addBlock(RagiumBlocks.INFUSER, "注入機")
         addBlock(RagiumBlocks.REFINERY, "精製機")
+        addBlock(RagiumBlocks.SOLIDIFIER, "成型機")
         // Cauldron
         addBlock(RagiumBlocks.TREE_TAP, "ツリータップ")
 
@@ -165,6 +165,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
+        addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
+        addFluid(RagiumFluidContents.LPG, "LPG")
+        addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
+        addFluid(RagiumFluidContents.LIGHT_FUEL, "軽油")
+        addFluid(RagiumFluidContents.HEAVY_FUEL, "重油")
+        addFluid(RagiumFluidContents.DIESEL, "ディーゼル")
+
+        addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
     }

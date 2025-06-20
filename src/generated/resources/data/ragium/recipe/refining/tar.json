@@ -1,0 +1,21 @@
+{
+  "type": "ragium:refining",
+  "fluid_outputs": [
+    {
+      "amount": 20,
+      "id": "ragium:lpg"
+    },
+    {
+      "amount": 40,
+      "id": "ragium:naphtha"
+    }
+  ],
+  "input": {
+    "amount": 100,
+    "tag": "c:crude_oil"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:tar"
+  }
+}

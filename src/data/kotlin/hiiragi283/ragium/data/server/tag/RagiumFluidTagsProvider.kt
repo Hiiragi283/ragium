@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.setup.RagiumFluidContents
+import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -75,7 +76,10 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     //    Integrations    //
 
     private fun pneumatic() {
-        // addFluid(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
+        addFluid(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
+        addFluid(PneumaticCraftTags.Fluids.DIESEL, RagiumFluidContents.DIESEL)
+        addFluid(PneumaticCraftTags.Fluids.LPG, RagiumFluidContents.LPG)
+
         // addFluid(PneumaticCraftTags.Fluids.PLANT_OIL, RagiumFluidContents.PLANT_OIL)
     }
 }

@@ -20,7 +20,6 @@ import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
-import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
@@ -30,10 +29,9 @@ import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
-import hiiragi283.ragium.common.recipe.HTCauldronDroppingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
@@ -41,11 +39,11 @@ import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTCauldronDroppingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMachineEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTTreeTappingEmiRecipe
@@ -54,10 +52,8 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
-import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -91,9 +87,6 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private lateinit var registry: EmiRegistry
     private lateinit var recipeManager: RecipeManager
-    private val registryAccess: RegistryAccess by lazy {
-        Minecraft.getInstance().level?.registryAccess() ?: error("Client Level not found!")
-    }
 
     override fun register(registry: EmiRegistry) {
         // Category, Workstation
@@ -163,20 +156,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 )
             }
         }
-        // Cauldron Dropping
-        forEachRecipes(RagiumRecipeTypes.CAULDRON_DROPPING.get()) { id: ResourceLocation, recipe: HTCauldronDroppingRecipe ->
-            if (recipe is HTCauldronDroppingRecipeImpl) {
-                addRecipeSafe(id) { id1: ResourceLocation ->
-                    HTCauldronDroppingEmiRecipe(
-                        id1,
-                        EmiStack.of(recipe.fluid),
-                        recipe.minLevel,
-                        EmiIngredient.of(recipe.ingredient),
-                        EmiStack.of(recipe.getResultItem(registryAccess)),
-                    )
-                }
-            }
-        }
         // Block Action
         forEachRecipes(RagiumRecipeTypes.BLOCK_INTERACTING.get()) { id: ResourceLocation, recipe: HTBlockInteractingRecipe ->
             if (recipe is HTBlockInteractingRecipeImpl) {
@@ -225,24 +204,46 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         // Infusing
         forEachRecipes(RagiumRecipeTypes.INFUSING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
-            when (recipe) {
-                is HTInfusingRecipe -> addRecipeSafe(id, recipe, ::HTInfusingEmiRecipe)
-
-                is HTBucketFillingRecipe -> EmiPort.getFluidRegistry().holders().forEach(::addBucketFilling)
-            }
+            if (recipe is HTBucketFillingRecipe) EmiPort.getFluidRegistry().holders().forEach(::addBucketFilling)
+        }
+        // Melting
+        forEachRecipes(RagiumRecipeTypes.MELTING.get()) { id: ResourceLocation, recipe: HTMeltingRecipe ->
+            registry.addRecipe(
+                HTMeltingEmiRecipe(
+                    id,
+                    recipe.ingredient.toEmi(),
+                    recipe.output.toEmi(),
+                ),
+            )
         }
         // Pressing
         // Refining
-        forEachRecipes(RagiumRecipeTypes.REFINING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
-            if (recipe is HTRefiningRecipe) {
-                addRecipeSafe(id, recipe, ::HTRefiningEmiRecipe)
-            }
+        forEachRecipes(RagiumRecipeTypes.REFINING.get()) { id: ResourceLocation, recipe: HTRefiningRecipe ->
+            registry.addRecipe(
+                HTRefiningEmiRecipe(
+                    id,
+                    recipe.ingredient.toEmi(),
+                    buildList {
+                        add(
+                            recipe.itemOutput
+                                .map(HTItemOutput::toEmi)
+                                .orElse(EmiStack.EMPTY),
+                        )
+                        addAll(recipe.fluidOutputs.map(HTFluidOutput::toEmi))
+                    },
+                ),
+            )
         }
         // Solidifying
-        forEachRecipes(RagiumRecipeTypes.SOLIDIFYING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
-            if (recipe is HTSolidifyingRecipe) {
-                addRecipeSafe(id, recipe, ::HTSolidifyingEmiRecipe)
-            }
+        forEachRecipes(RagiumRecipeTypes.SOLIDIFYING.get()) { id: ResourceLocation, recipe: HTSolidifyingRecipe ->
+            registry.addRecipe(
+                HTSolidifyingEmiRecipe(
+                    id,
+                    recipe.ingredient.toEmi(),
+                    EmiIngredient.of(recipe.catalyst),
+                    recipe.output.toEmi(),
+                ),
+            )
         }
     }
 

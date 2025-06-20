@@ -5,20 +5,18 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.listOf
 import hiiragi283.ragium.api.extension.listOrElement
 import hiiragi283.ragium.api.recipe.HTItemOutput
+import hiiragi283.ragium.api.recipe.HTUniversalRecipe
+import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
-class HTCrushingRecipe(val ingredient: SizedIngredient, val outputs: List<HTItemOutput>) : Recipe<SingleRecipeInput> {
+class HTCrushingRecipe(val ingredient: SizedIngredient, val outputs: List<HTItemOutput>) : HTUniversalRecipe {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTCrushingRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -42,13 +40,7 @@ class HTCrushingRecipe(val ingredient: SizedIngredient, val outputs: List<HTItem
         )
     }
 
-    override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
-
-    override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = throw UnsupportedOperationException()
-
-    override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = throw UnsupportedOperationException()
+    override fun matches(input: HTUniversalRecipeInput, level: Level): Boolean = ingredient.test(input.getItem(0))
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CRUSHING.get()
 

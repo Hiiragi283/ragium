@@ -130,8 +130,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
-        addBlock(RagiumBlocks.INFUSER, "Infuser")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
+        addBlock(RagiumBlocks.SOLIDIFIER, "Solidifier")
         // Cauldron
         addBlock(RagiumBlocks.TREE_TAP, "Tree Tap")
 
@@ -177,6 +177,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
+        addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
+        addFluid(RagiumFluidContents.LPG, "LPG")
+        addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
+        addFluid(RagiumFluidContents.LIGHT_FUEL, "Light Fuel")
+        addFluid(RagiumFluidContents.HEAVY_FUEL, "heavy Fuel")
+        addFluid(RagiumFluidContents.DIESEL, "Diesel")
+
+        addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
     }

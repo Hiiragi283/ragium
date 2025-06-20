@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": {
+    "tag": "c:storage_blocks/warped_crystal"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:ender_pearl"
+  }
+}

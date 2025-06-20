@@ -1,0 +1,11 @@
+{
+  "type": "ragium:melting",
+  "input": {
+    "count": 1,
+    "item": "minecraft:honey_block"
+  },
+  "output": {
+    "amount": 1000,
+    "id": "ragium:honey"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:melting",
+  "input": {
+    "count": 1,
+    "item": "ragium:exp_berries"
+  },
+  "output": {
+    "amount": 50,
+    "id": "ragium:experience"
+  }
+}

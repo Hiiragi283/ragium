@@ -4,10 +4,9 @@ import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.core.HolderGetter
@@ -49,17 +48,14 @@ abstract class HTRecipeProvider {
     fun createAlloying(): HTDefinitionRecipeBuilder<HTAlloyingRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.ALLOYING, RagiumRecipeFactories::alloying)
 
-    fun createBeehive(): HTDefinitionRecipeBuilder<HTBeehiveRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConstantValues.BEE_HIVE, RagiumRecipeFactories::beehive)
-
     fun createCrushing(): HTDefinitionRecipeBuilder<HTCrushingRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.CRUSHING, RagiumRecipeFactories::crushing)
 
     fun createExtracting(): HTDefinitionRecipeBuilder<HTExtractingRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.EXTRACTING, RagiumRecipeFactories::extracting)
 
-    fun createInfusing(): HTDefinitionRecipeBuilder<HTInfusingRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConstantValues.INFUSING, RagiumRecipeFactories::infusing)
+    fun createMelting(): HTDefinitionRecipeBuilder<HTMeltingRecipe> =
+        HTDefinitionRecipeBuilder(RagiumConstantValues.MELTING, RagiumRecipeFactories::melting)
 
     fun createRefining(): HTDefinitionRecipeBuilder<HTRefiningRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.REFINING, RagiumRecipeFactories::refining)

@@ -406,10 +406,10 @@ object RagiumBlocks {
     val ALLOY_SMELTER: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.ALLOY_SMELTER)
 
     @JvmField
-    val INFUSER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.INFUSER)
+    val REFINERY: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.REFINERY)
 
     @JvmField
-    val REFINERY: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.REFINERY)
+    val SOLIDIFIER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.SOLIDIFIER)
 
     @JvmField
     val MACHINES: List<DeferredBlock<*>> = listOf(
@@ -418,8 +418,8 @@ object RagiumBlocks {
         EXTRACTOR,
         // Advanced
         ALLOY_SMELTER,
-        INFUSER,
         REFINERY,
+        SOLIDIFIER,
     )
 
     //    Devices    //

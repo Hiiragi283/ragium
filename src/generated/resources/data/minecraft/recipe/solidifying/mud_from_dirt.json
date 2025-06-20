@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:dirt"
+  },
+  "input": {
+    "amount": 250,
+    "tag": "c:water"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:mud"
+  }
+}

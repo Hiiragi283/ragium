@@ -4,10 +4,9 @@ import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBeehiveRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -26,15 +25,6 @@ internal object RagiumRecipeFactories {
         check(itemOutputs.isNotEmpty()) { "Alloying Recipe requires 1 item output at least!" }
         check(itemOutputs.size <= 4) { "Alloying Recipe accepts 4 or less item outputs!" }
         return HTAlloyingRecipe(itemInputs, itemOutputs)
-    }
-
-    @JvmStatic
-    fun beehive(definition: HTRecipeDefinition): HTBeehiveRecipe {
-        val ingredient: SizedIngredient =
-            checkPresent(definition.getItemIngredient(0), "Required one item ingredient!")
-        val output: HTItemOutput =
-            checkPresent(definition.getItemOutput(0), "Required one item output!")
-        return HTBeehiveRecipe(ingredient, definition.catalyst, output)
     }
 
     @JvmStatic
@@ -62,11 +52,13 @@ internal object RagiumRecipeFactories {
     }
 
     @JvmStatic
-    fun infusing(definition: HTRecipeDefinition): HTInfusingRecipe {
-        val itemIng: SizedIngredient = checkPresent(definition.getItemIngredient(0), "Required one item ingredient!")
-        val fluidIng: SizedFluidIngredient = checkPresent(definition.getFluidIngredient(0), "Required one fluid ingredient!")
-        val output: HTItemOutput = checkPresent(definition.getItemOutput(0), "Required one item output!")
-        return HTInfusingRecipe(itemIng, fluidIng, output)
+    fun melting(definition: HTRecipeDefinition): HTMeltingRecipe {
+        // Item Input
+        val itemInputs: List<SizedIngredient> = definition.itemInputs
+        check(itemInputs.size == 1) { "Crushing Recipe requires 1 item ingredient!" }
+        // Fluid Output
+        val fluidOutput: HTFluidOutput = checkPresent(definition.getFluidOutput(0), "Melting Recipe requires 1 fluid output!")
+        return HTMeltingRecipe(itemInputs[0], fluidOutput)
     }
 
     /*fun pressing(definition: HTRecipeDefinition): HTPressingRecipe {
@@ -97,9 +89,10 @@ internal object RagiumRecipeFactories {
     @JvmStatic
     fun refining(definition: HTRecipeDefinition): HTRefiningRecipe {
         val ingredient: SizedFluidIngredient = checkPresent(definition.getFluidIngredient(0), "Required one fluid ingredient!")
-        val itemOutput: Optional<HTItemOutput> = definition.getItemOutput(0)
-        val fluidOutput: HTFluidOutput = checkPresent(definition.getFluidOutput(0), "Required one fluid output!")
-        return HTRefiningRecipe(ingredient, fluidOutput, itemOutput)
+        val fluidOutputs: List<HTFluidOutput> = definition.fluidOutputs
+        check(fluidOutputs.isNotEmpty()) { "Crushing Recipe requires 1 fluid output at least!" }
+        check(fluidOutputs.size <= 2) { "Crushing Recipe accepts 2 or less fluid outputs!" }
+        return HTRefiningRecipe(ingredient, definition.getItemOutput(0), fluidOutputs)
     }
 
     @JvmStatic
