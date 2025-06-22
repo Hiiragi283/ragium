@@ -121,6 +121,9 @@ object RagiumItems {
     val WARPED_CRYSTAL: DeferredItem<Item> = register(RagiumConstantValues.WARPED_CRYSTAL)
 
     @JvmField
+    val ELDRITCH_ORB: DeferredItem<Item> = register("eldritch_orb")
+
+    @JvmField
     val ELDRITCH_PEARL: DeferredItem<Item> = register(RagiumConstantValues.ELDRITCH_PEARL)
 
     // Ingots

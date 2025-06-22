@@ -199,7 +199,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     private fun sap() {
         // XX Log -> Wood Dust + Sap
         createMelting()
-            .fluidOutput(RagiumFluidContents.SAP, 100)
+            .fluidOutput(RagiumFluidContents.SAP, 125)
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .saveSuffixed(output, "_from_log")
         // Sap -> Slime Ball
@@ -210,13 +210,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
         // Crimson Stem -> Crimson Sap
         createMelting()
-            .fluidOutput(RagiumFluidContents.CRIMSON_SAP, 100)
+            .fluidOutput(RagiumFluidContents.CRIMSON_SAP, 125)
             .itemInput(ItemTags.CRIMSON_STEMS)
             .saveSuffixed(output, "_from_stems")
         // Crimson Sap -> Sap + Crimson Crystal
         createRefining()
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
-            .fluidOutput(RagiumFluidContents.SAP, 100)
+            .fluidOutput(RagiumFluidContents.SAP, 125)
             .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
             .save(output)
         // Crimson Crystal -> Blaze Powder
@@ -227,19 +227,30 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
         // Warped Stem -> Warped Sap
         createMelting()
-            .fluidOutput(RagiumFluidContents.WARPED_SAP, 100)
+            .fluidOutput(RagiumFluidContents.WARPED_SAP, 125)
             .itemInput(ItemTags.WARPED_STEMS)
             .saveSuffixed(output, "_from_stems")
         // Warped Sap -> Sap + Warped Crystal
         createRefining()
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
-            .fluidOutput(RagiumFluidContents.SAP, 100)
+            .fluidOutput(RagiumFluidContents.SAP, 125)
             .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL)
             .addIngredient(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
+            .save(output)
+
+        // Eldritch Orb -> Eldritch Goo
+        createMelting()
+            .fluidOutput(RagiumFluidContents.ELDRITCH_GOO, 125)
+            .itemInput(RagiumItems.ELDRITCH_ORB)
+            .saveSuffixed(output, "_from_orb")
+        // Eldritch Goo -> Eldritch Pearl
+        createSolidifying()
+            .itemOutput(RagiumItems.ELDRITCH_PEARL)
+            .fluidInput(RagiumFluidContents.ELDRITCH_GOO, 500)
             .save(output)
     }
 

@@ -190,6 +190,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
+
+        addFluid(RagiumFluidContents.ELDRITCH_GOO, "Eldritch Goo")
     }
 
     private fun item() {
@@ -214,6 +216,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.RAGI_CRYSTAL, "Ragi-Crystal")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
         addItem(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
+        addItem(RagiumItems.ELDRITCH_ORB, "Eldritch Orb")
         addItem(RagiumItems.ELDRITCH_PEARL, "Eldritch Pearl")
 
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")

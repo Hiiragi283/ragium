@@ -178,6 +178,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
+
+        addFluid(RagiumFluidContents.ELDRITCH_GOO, "蕩けたエルドリッチ")
     }
 
     private fun item() {
@@ -202,6 +204,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_CRYSTAL, "ラギクリスタリル")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
         addItem(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
+        addItem(RagiumItems.ELDRITCH_ORB, "異質な宝玉")
         addItem(RagiumItems.ELDRITCH_PEARL, "異質な真珠")
 
         addItem(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")

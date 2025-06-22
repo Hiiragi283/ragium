@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "fluid_input": {
+    "amount": 500,
+    "tag": "c:eldritch_goo"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:eldritch_pearl"
+  }
+}

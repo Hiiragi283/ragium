@@ -62,6 +62,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.WARPED_CRYSTAL)
 
             add(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
+            add(RagiumItems.ELDRITCH_ORB)
             add(RagiumItems.ELDRITCH_PEARL)
             add(RagiumItems.ENDER_BUNDLE)
             add(RagiumItems.ELDRITCH_EGG)

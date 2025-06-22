@@ -127,7 +127,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")
         // Eldritch Pearl
-        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_PEARL)
+        HTShapedRecipeBuilder(RagiumItems.ELDRITCH_ORB)
             .cross4()
             .define('A', RagiumItemTags.GEMS_CRIMSON_CRYSTAL)
             .define('B', RagiumItemTags.GEMS_WARPED_CRYSTAL)
@@ -135,7 +135,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         createAlloying()
-            .itemOutput(RagiumItems.ELDRITCH_PEARL, 6)
+            .itemOutput(RagiumItems.ELDRITCH_ORB, 6)
             .itemInput(RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
             .itemInput(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)

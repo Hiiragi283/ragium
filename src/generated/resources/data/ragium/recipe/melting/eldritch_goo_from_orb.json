@@ -2,10 +2,10 @@
   "type": "ragium:melting",
   "fluid_output": {
     "amount": 125,
-    "id": "ragium:sap"
+    "id": "ragium:eldritch_goo"
   },
   "item_input": {
     "count": 1,
-    "tag": "minecraft:logs_that_burn"
+    "item": "ragium:eldritch_orb"
   }
 }
