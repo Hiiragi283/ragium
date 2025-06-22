@@ -1,11 +1,11 @@
 {
   "parent": "ragium:root",
   "criteria": {
-    "has_ragi_ticket": {
+    "has_ragi_ticket_fake": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_ticket"
+            "items": "ragium:ragi_ticket_fake"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_ticket"
+      "id": "ragium:ragi_ticket_fake"
     },
     "title": {
       "translate": "advancements.ragium.ragi_ticket.title"
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "has_ragi_ticket"
+      "has_ragi_ticket_fake"
     ]
   ],
   "sends_telemetry_event": true

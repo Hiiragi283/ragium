@@ -38,15 +38,8 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
         register(
             RagiumAPI.id("raginite_ore"),
             Tags.Blocks.ORES_REDSTONE,
-            Ingredient.of(RagiumItems.RAGI_TICKET),
+            Ingredient.of(RagiumItems.RAGI_TICKET_FAKE),
             HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES.stoneOre.get()),
-        )
-        register(
-            RagiumItems.RAGI_LANTERN.id,
-            Blocks.LANTERN,
-            Ingredient.of(RagiumItems.RAGI_TICKET),
-            HTBreakBlockAction(false),
-            HTDropItemBlockAction(RagiumItems.RAGI_LANTERN),
         )
     }
 

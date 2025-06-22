@@ -1,7 +1,7 @@
 {
   "parent": "ragium:block/machine_base",
   "textures": {
-    "bottom": "minecraft:block/smooth_stone",
+    "bottom": "minecraft:block/bricks",
     "front": "ragium:block/block_breaker_front",
     "top": "ragium:block/basic_machine_casing"
   }

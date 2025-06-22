@@ -171,8 +171,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.DYES_BLACK)
             .define('C', Tags.Items.GEMS_DIAMOND)
             .save(output)
-        // Ragi from Redstone
-        HTShapedRecipeBuilder(RagiumItems.RAGI_TICKET)
+        // Fake Ragi
+        HTShapedRecipeBuilder(RagiumItems.RAGI_TICKET_FAKE)
             .cross8()
             .define('A', Tags.Items.STORAGE_BLOCKS_REDSTONE)
             .define('B', Tags.Items.DYES_RED)
@@ -195,7 +195,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
-        register(RagiumItems.RAGI_TICKET, RagiumItemTags.DUSTS_RAGINITE, Tags.Items.DYES_RED)
+        register(RagiumItems.RAGI_TICKET, RagiumItemTags.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
         register(RagiumItems.AZURE_TICKET, RagiumItemTags.INGOTS_AZURE_STEEL, Tags.Items.DYES_BLUE)
         register(RagiumItems.BLOODY_TICKET, RagiumItemTags.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
         register(RagiumItems.TELEPORT_TICKET, RagiumItemTags.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)

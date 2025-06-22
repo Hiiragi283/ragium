@@ -9,7 +9,7 @@
     }
   ],
   "ingredient": {
-    "item": "ragium:ragi_ticket"
+    "item": "ragium:ragi_ticket_fake"
   },
   "predicate": "#c:ores/redstone"
 }

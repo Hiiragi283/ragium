@@ -184,6 +184,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Tickets
         addItem(RagiumItems.BLANK_TICKET, "ブランクチケット")
 
+        addItem(RagiumItems.RAGI_TICKET_FAKE, "らぎチケット…？")
         addItem(RagiumItems.RAGI_TICKET, "らぎチケット")
         addItem(RagiumItems.AZURE_TICKET, "紺碧のチケット")
         addItem(RagiumItems.BLOODY_TICKET, "血塗られたチケット")
