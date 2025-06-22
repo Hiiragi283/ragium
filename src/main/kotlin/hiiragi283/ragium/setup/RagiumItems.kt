@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.HTForgeHammerItem
@@ -395,22 +396,22 @@ object RagiumItems {
 
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
-            createDrumHandler(RagiumConstantValues.SMALL_DRUM),
+            createDrumHandler(RagiumConfig.COMMON.smallDrumCapacity.get()),
             RagiumBlocks.SMALL_DRUM,
         )
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
-            createDrumHandler(RagiumConstantValues.MEDIUM_DRUM),
+            createDrumHandler(RagiumConfig.COMMON.mediumDrumCapacity.get()),
             RagiumBlocks.MEDIUM_DRUM,
         )
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
-            createDrumHandler(RagiumConstantValues.LARGE_DRUM),
+            createDrumHandler(RagiumConfig.COMMON.largeDrumCapacity.get()),
             RagiumBlocks.LARGE_DRUM,
         )
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
-            createDrumHandler(RagiumConstantValues.HUGE_DRUM),
+            createDrumHandler(RagiumConfig.COMMON.hugeDrumCapacity.get()),
             RagiumBlocks.HUGE_DRUM,
         )
 

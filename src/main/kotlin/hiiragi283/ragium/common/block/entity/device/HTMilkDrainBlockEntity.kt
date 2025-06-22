@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.entity.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -16,7 +17,7 @@ class HTMilkDrainBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidCollectorBlockEntity(RagiumBlockEntityTypes.MILK_DRAIN, pos, state) {
     override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
         val cows: List<Cow> = level.getEntitiesOfClass(Cow::class.java, AABB(pos.above()))
-        return FluidStack(NeoForgeMod.MILK, cows.size * 50)
+        return FluidStack(NeoForgeMod.MILK, cows.size * RagiumConfig.COMMON.milkDrainMultiplier.get())
     }
 
     override fun playSound(level: ServerLevel, pos: BlockPos) {

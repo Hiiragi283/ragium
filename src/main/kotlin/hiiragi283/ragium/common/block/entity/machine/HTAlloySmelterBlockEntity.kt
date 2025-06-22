@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTItemOutput
@@ -34,6 +35,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         addAll(inputSlots)
         addAll(outputSlots)
     }
+
+    override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         for (slot: HTItemSlot in allSlots) {
@@ -77,7 +80,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromSlots(inputSlots)
         val recipe: HTAlloyingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
         // エネルギーを消費できるか判定する
-        if (network.extractEnergy(6400, true) != 6400) return TriState.FALSE
+        if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.FALSE
         // アウトプットに搬出できるか判定する
         for (output: HTItemOutput in recipe.outputs) {
             if (!HTItemSlotHelper.canInsertItem(outputSlots, output.get())) {
@@ -95,7 +98,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             HTItemSlotHelper.insertItem(outputSlots, output.getChancedStack(level.random), false)
         }
         // エネルギーを減らす
-        network.extractEnergy(6400, false)
+        network.extractEnergy(requiredEnergy, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
         return TriState.TRUE

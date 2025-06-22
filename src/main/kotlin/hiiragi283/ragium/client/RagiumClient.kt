@@ -24,6 +24,7 @@ import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
@@ -31,6 +32,8 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
+import net.neoforged.neoforge.client.gui.ConfigurationScreen
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
 import net.neoforged.neoforge.fluids.CauldronFluidContent
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -39,7 +42,7 @@ import org.slf4j.Logger
 import java.awt.Color
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
-class RagiumClient(eventBus: IEventBus) {
+class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
@@ -52,6 +55,8 @@ class RagiumClient(eventBus: IEventBus) {
         eventBus.addListener(::registerScreens)
         eventBus.addListener(::registerEntityRenderer)
         eventBus.addListener(::registerTooltipRenderer)
+
+        container.registerExtensionPoint(IConfigScreenFactory::class.java, IConfigScreenFactory(::ConfigurationScreen))
     }
 
     private fun registerBlockColor(event: RegisterColorHandlersEvent.Block) {

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.storage.energy
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.util.HTSavedDataType
 import hiiragi283.ragium.api.util.RagiumConstantValues
@@ -15,7 +16,8 @@ internal class HTEnergyNetwork(var amount: Int, var capacity: Int) :
     SavedData(),
     IEnergyStorage {
     companion object {
-        private const val INITIAL_CAPACITY = 1_000_000
+        @JvmStatic
+        private fun getInitialCapacity(): Int = RagiumConfig.COMMON.defaultNetworkCapacity.get()
 
         @JvmField
         val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> =
@@ -25,18 +27,18 @@ internal class HTEnergyNetwork(var amount: Int, var capacity: Int) :
         private fun fromTag(tag: CompoundTag, provider: HolderLookup.Provider): HTEnergyNetwork {
             var capacity: Int = tag.getInt(RagiumConstantValues.ENERGY_CAPACITY)
             if (capacity <= 0) {
-                capacity = INITIAL_CAPACITY
+                capacity = getInitialCapacity()
             }
             return HTEnergyNetwork(tag.getInt(RagiumConstantValues.ENERGY_STORED), capacity)
         }
     }
 
-    constructor() : this(0, INITIAL_CAPACITY)
+    constructor() : this(0, getInitialCapacity())
 
     override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag = buildNbt {
         putInt(RagiumConstantValues.ENERGY_STORED, amount)
         if (capacity <= 0) {
-            capacity = INITIAL_CAPACITY
+            capacity = getInitialCapacity()
         }
         putInt(RagiumConstantValues.ENERGY_CAPACITY, capacity)
     }

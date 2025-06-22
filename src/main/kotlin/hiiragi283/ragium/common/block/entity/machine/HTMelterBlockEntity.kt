@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -33,6 +34,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidTankHandler {
     private val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this)
     private val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
+
+    override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         inputSlot.writeNbt(writer)
@@ -72,7 +75,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromSlots(listOf(inputSlot))
         val recipe: HTMeltingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
         // エネルギーを消費できるか判定する
-        if (network.extractEnergy(6400, true) != 6400) return TriState.DEFAULT
+        if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
         // アウトプットに搬出できるか判定する
         if (!HTFluidTankHelper.canInsertFluid(outputTank, recipe.output.get())) {
             return TriState.FALSE
@@ -82,7 +85,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         // インプットを減らす
         HTItemSlotHelper.consumeItem(inputSlot, recipe.ingredient.count(), null)
         // エネルギーを減らす
-        network.extractEnergy(6400, false)
+        network.extractEnergy(requiredEnergy, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS)
         return TriState.TRUE

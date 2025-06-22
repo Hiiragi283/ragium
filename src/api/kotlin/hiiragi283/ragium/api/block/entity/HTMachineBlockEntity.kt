@@ -21,12 +21,23 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     MenuProvider {
     //    Ticking    //
 
+    override val maxTicks: Int = 200
+
+    /**
+     * このブロックエンティティがtick当たりで消費する電力の値
+     * @see [requiredEnergy]
+     */
+    protected abstract val energyUsage: Int
+
+    /**
+     * このブロックエンティティが稼働するたびに消費する電力の値
+     */
+    protected val requiredEnergy: Int get() = energyUsage * maxTicks
+
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         val network: IEnergyStorage = this.network ?: return TriState.FALSE
         return onServerTick(level, pos, state, network)
     }
-
-    override val maxTicks: Int = 200
 
     /**
      * [IEnergyStorage]を引数に加えた[onServerTick]の拡張メソッド

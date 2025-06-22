@@ -3,6 +3,7 @@ package hiiragi283.ragium.internal
 import com.mojang.datafixers.util.Either
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
@@ -273,100 +274,18 @@ object RagiumRuntimeEvents {
         }
         // 行商人がカタログを落とすように
         modify(EntityType.WANDERING_TRADER) {
-            addPool(
-                LootPool
-                    .lootPool()
-                    .setRolls(ConstantValue.exactly(1f))
-                    .add(LootItem.lootTableItem(RagiumItems.TRADER_CATALOG))
-                    .build(),
-            )
+            if (RagiumConfig.COMMON.dropTraderCatalog.get()) {
+                addPool(
+                    LootPool
+                        .lootPool()
+                        .setRolls(ConstantValue.exactly(1f))
+                        .add(LootItem.lootTableItem(RagiumItems.TRADER_CATALOG))
+                        .build(),
+                )
+            }
             LOGGER.info("Modified loot table for Wandering Trader!")
         }
     }
-
-    //    Machine Recipe    //
-
-    /*fun onMachineRecipesUpdated(event: HTRecipesUpdatedEvent) {
-        crushing(event)
-    }
-
-    private fun crushing(event: HTRecipesUpdatedEvent) {
-        event.register(
-            RagiumRecipeTypes.CRUSHING,
-            RagiumAPI.id("flour_from_wheat"),
-        ) { lookup: HolderGetter<Item> ->
-            val result: Item = event.getFirstItem(RagiumItemTags.FLOURS) ?: return@register null
-            HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
-                .itemInput(Tags.Items.CROPS_WHEAT)
-                .itemOutput(result)
-                .createRecipe()
-        }
-
-        // Material
-        val registry: HTMaterialRegistry = RagiumAPI.getInstance().getMaterialRegistry()
-        for ((key: HTMaterialKey, properties: HTPropertyMap) in registry) {
-            val name: String = key.name
-            val type: HTMaterialType = properties.getOrDefault(HTMaterialPropertyKeys.MATERIAL_TYPE)
-            val mainPrefix: HTTagPrefix? = type.getMainPrefix()
-            val resultPrefix: HTTagPrefix? = type.getOreResultPrefix()
-            // Ore
-            if (resultPrefix != null) {
-                event.register(
-                    RagiumRecipeTypes.CRUSHING,
-                    RagiumAPI.id("${name}_dust_from_ore"),
-                ) { lookup: HolderGetter<Item> ->
-                    val result: Item = event.getFirstItem(resultPrefix, key) ?: return@register null
-                    HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
-                        .itemInput(HTTagPrefixes.ORE, key)
-                        .itemOutput(result, properties.getOrDefault(HTMaterialPropertyKeys.ORE_CRUSHED_COUNT))
-                        .createRecipe()
-                }
-            }
-            val dust: Item = event.getFirstItem(HTTagPrefixes.DUST, key) ?: continue
-            // Gem/Ingot
-            if (mainPrefix != null) {
-                event.register(
-                    RagiumRecipeTypes.CRUSHING,
-                    RagiumAPI.id("${name}_dust_from_main"),
-                ) { lookup: HolderGetter<Item> ->
-                    HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
-                        .itemInput(mainPrefix, key)
-                        .itemOutput(dust)
-                        .createRecipe()
-                }
-            }
-            // Gear
-            event.register(
-                RagiumRecipeTypes.CRUSHING,
-                RagiumAPI.id("${name}_dust_from_gear"),
-            ) { lookup: HolderGetter<Item> ->
-                HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
-                    .itemInput(HTTagPrefixes.GEAR, key)
-                    .itemOutput(dust, 4)
-                    .createRecipe()
-            }
-            // Plate
-            event.register(
-                RagiumRecipeTypes.CRUSHING,
-                RagiumAPI.id("${name}_dust_from_plate"),
-            ) { lookup: HolderGetter<Item> ->
-                HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
-                    .itemInput(HTTagPrefixes.PLATE, key)
-                    .itemOutput(dust)
-                    .createRecipe()
-            }
-            // Raw
-            event.register(
-                RagiumRecipeTypes.CRUSHING,
-                RagiumAPI.id("${name}_dust_from_raw"),
-            ) { lookup: HolderGetter<Item> ->
-                HTDefinitionRecipeBuilder(RagiumRecipeTypes.CRUSHING)
-                    .itemInput(HTTagPrefixes.RAW_MATERIAL, key)
-                    .itemOutput(dust, 2)
-                    .createRecipe()
-            }
-        }
-    }*/
 
     //    Tooltip Component    //
 

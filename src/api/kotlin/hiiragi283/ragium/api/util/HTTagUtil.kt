@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.util
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -11,22 +11,22 @@ import kotlin.jvm.optionals.getOrNull
 
 object HTTagUtil {
     /**
-     * 指定した[tagKey]に含まれる[net.minecraft.core.Holder]を返します。
+     * 指定した[tagKey]に含まれる[Holder]を返します。
      * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
      */
     @JvmStatic
     fun getFirstHolder(lookup: HolderGetter<Item>, tagKey: TagKey<Item>): Holder<Item>? {
         val holderSet: HolderSet.Named<Item> = lookup.get(tagKey).getOrNull() ?: return null
-        // Find item from Ragium
-        var firstHolder: Holder<Item>? =
-            holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == RagiumAPI.MOD_ID }
-        // Find item from Vanilla
-        if (firstHolder == null) {
-            firstHolder = holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == RagiumConstantValues.MINECRAFT }
+        for (modId: String in RagiumConfig.COMMON.tagOutputModIds.get()) {
+            val foundHolder: Holder<Item>? = getFirstHolder(holderSet, modId)
+            if (foundHolder != null) return foundHolder
         }
-        // Return found item or first item
-        return firstHolder ?: holderSet.firstOrNull()
+        return holderSet.firstOrNull()
     }
+
+    @JvmStatic
+    private fun getFirstHolder(holderSet: HolderSet<Item>, namespace: String): Holder<Item>? =
+        holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == namespace }
 
     /**
      * 指定した[tagKey]に含まれる[Item]を返します。

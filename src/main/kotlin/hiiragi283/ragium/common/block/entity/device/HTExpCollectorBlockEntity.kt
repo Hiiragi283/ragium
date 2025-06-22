@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -41,7 +42,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // 20 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
         // 範囲内のExp Orbを取得する
-        val range = 5
+        val range: Int = RagiumConfig.COMMON.entityCollectorRange.get()
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
             ExperienceOrb::class.java,
             AABB.of(
@@ -58,7 +59,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         if (expOrbs.isEmpty()) return TriState.DEFAULT
         // それぞれのExp Orbに対して回収を行う
         for (entity: ExperienceOrb in expOrbs) {
-            val fluidAmount: Int = entity.value * 20
+            val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.get()
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
             if (HTFluidTankHelper.canInsertFluid(outputTank, stack)) {
                 HTFluidTankHelper.insertFluid(outputTank, stack, false)

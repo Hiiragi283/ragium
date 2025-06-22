@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import com.mojang.authlib.GameProfile
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
@@ -35,6 +36,8 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         capacity = 1
     }
 
+    override val energyUsage: Int get() = RagiumConfig.COMMON.basicMachineEnergyUsage.get()
+
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         toolSlot.writeNbt(writer)
     }
@@ -66,7 +69,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         // 200 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
         // エネルギーを消費できるか判定する
-        if (network.extractEnergy(6400, true) != 6400) return TriState.DEFAULT
+        if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
         // 採掘用のFake Playerを用意する
         val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(UUID.randomUUID(), "Fake Player"))
         val inventory: Inventory = player.inventory
@@ -106,7 +109,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
             EventHooks.onPlayerDestroyItem(player, toolStack1, InteractionHand.MAIN_HAND)
         }
         // エネルギーを減らす
-        network.extractEnergy(6400, false)
+        network.extractEnergy(requiredEnergy, false)
         // ツールを更新する
         toolSlot.replace(toolStack, true)
         return TriState.DEFAULT

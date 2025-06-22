@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -13,6 +14,8 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state) {
+    override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
+
     override fun writeNbt(writer: HTNbtCodec.Writer) {
     }
 

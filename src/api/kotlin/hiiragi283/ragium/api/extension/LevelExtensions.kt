@@ -12,9 +12,8 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.Vec3
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
 
-fun BlockPos.toCenterVec3(): Vec3 = toVec3().add(0.5, 0.0, 0.5)
+fun BlockPos.toCenterVec3(): Vec3 = Vec3(this.x.toDouble(), this.y.toDouble(), this.z.toDouble()).add(0.5, 0.0, 0.5)
 
 //    Level    //
 

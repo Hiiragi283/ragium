@@ -3,7 +3,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     idea
-    kotlin("jvm") version "2.1.0"
+    kotlin("jvm") version "2.1.20"
     alias(libs.plugins.neo.moddev)
     alias(libs.plugins.ktlint)
 }
@@ -53,7 +53,7 @@ repositories {
     }
     maven(url = "https://cursemaven.com")
     maven(url = "https://maven.parchmentmc.org")
-    maven(url = "https://modmaven.dev/")
+    maven(url = "https://modmaven.dev/") // Pneumatic
 
     maven(url = "https://maven4.bai.lol/") // WTHIT
     maven(url = "https://maven.architectury.dev/") // Arch

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.extension.dropStacksAt
 import hiiragi283.ragium.api.network.HTNbtCodec
@@ -48,7 +49,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // 20 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
         // 範囲内のItem Entityを取得する
-        val range = 5
+        val range: Int = RagiumConfig.COMMON.entityCollectorRange.get()
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
             ItemEntity::class.java,
             AABB.of(

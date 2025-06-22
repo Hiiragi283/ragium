@@ -16,26 +16,6 @@ import net.neoforged.neoforge.common.util.TriState
  */
 abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state) {
-    /**
-     * このブロックエンティティが生成されてからの経過時間
-     *
-     * セーブのたびにリセットされる
-     */
-    var totalTick: Int = 0
-        protected set
-
-    /**
-     * このブロックエンティティが稼働する時間間隔
-     */
-    abstract val maxTicks: Int
-
-    /**
-     * tick処理を行うかどうか判定します。
-     * @see [setChanged]
-     */
-    protected var shouldTick: Boolean = true
-        private set
-
     override fun setChanged() {
         super.setChanged()
         shouldTick = true
@@ -81,11 +61,40 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         }
     }
 
+    //    Ticking    //
+
+    /**
+     * このブロックエンティティが生成されてからの経過時間
+     *
+     * セーブのたびにリセットされる
+     */
+    var totalTick: Int = 0
+        protected set
+
+    /**
+     * このブロックエンティティが稼働する時間間隔
+     */
+    abstract val maxTicks: Int
+
+    /**
+     * このブロックエンティティが稼働できるかどうかを判定します
+     */
+    protected fun canProcess(): Boolean = totalTick > 0 && totalTick % maxTicks == 0
+
+    /**
+     * tick処理を行うかどうか判定します。
+     * @see [setChanged]
+     */
+    protected var shouldTick: Boolean = true
+        private set
+
     /**
      * サーバー側でのtick処理を行います。
      * @return 続けてtick処理を行う場合は[TriState.TRUE], 止める場合は[TriState.FALSE], 現在の状態を維持する場合は[TriState.DEFAULT]
      */
     abstract fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState
+
+    //    Menu    //
 
     protected val containerData: ContainerData = object : ContainerData {
         override fun get(index: Int): Int = when (index) {
@@ -104,6 +113,4 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         outputSlots: List<HTItemSlot>,
         tanks: List<HTFluidTank>,
     ): HTMenuDefinition = HTMenuDefinition(inputSlots, outputSlots, tanks, upgrades, containerData)
-
-    protected fun canProcess(): Boolean = totalTick > 0 && totalTick % maxTicks == 0
 }

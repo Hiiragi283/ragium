@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.item
 
+import com.google.common.base.Suppliers
 import net.minecraft.core.Holder
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
@@ -7,7 +8,6 @@ import net.minecraft.world.food.FoodConstants
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import thedarkcolour.kotlinforforge.neoforge.kotlin.supply
 import java.util.*
 import java.util.function.Supplier
 import kotlin.jvm.optionals.getOrNull
@@ -58,7 +58,7 @@ class HTFoodBuilder private constructor() {
     }
 
     fun addEffect(effect: MobEffectInstance, chance: Float = 1f) {
-        addEffect(supply(effect), chance)
+        addEffect(Suppliers.ofInstance(effect), chance)
     }
 
     fun addEffect(

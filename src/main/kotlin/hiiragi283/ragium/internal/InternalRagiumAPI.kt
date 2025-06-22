@@ -99,6 +99,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
 
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun wrapItemSlot(storageIO: HTStorageIO, slotIn: HTItemSlot): IItemHandlerModifiable = object : HTItemSlotHandler {
         override fun getItemIoFromSlot(slot: Int): HTStorageIO = storageIO
 
@@ -107,6 +108,7 @@ class InternalRagiumAPI : RagiumAPI {
         override fun getSlots(): Int = 1
     }
 
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun wrapFluidTank(storageIO: HTStorageIO, tankIn: HTFluidTank): IFluidHandler = object : HTFluidTankHandler {
         override fun getFluidIoFromSlot(tank: Int): HTStorageIO = storageIO
 
