@@ -1,6 +1,6 @@
 {
   "type": "ragium:extracting",
-  "input": {
+  "item_input": {
     "count": 1,
     "tag": "c:storage_blocks/redstone"
   },

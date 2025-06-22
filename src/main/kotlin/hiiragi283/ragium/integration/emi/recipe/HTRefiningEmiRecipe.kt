@@ -9,7 +9,7 @@ import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 
 class HTRefiningEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val results: List<EmiStack>) :
-    HTEmiRecipe.Base(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
+    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.REFINING
 
     override fun getInputs(): List<EmiIngredient> = listOf(ingredient)

@@ -9,7 +9,7 @@ import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 
 class HTAlloyingEmiRecipe(id: ResourceLocation, val ingredients: List<EmiIngredient>, val results: List<EmiStack>) :
-    HTEmiRecipe.Base(id, RagiumAPI.id("textures/gui/container/alloy_smelter.png")) {
+    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/alloy_smelter.png")) {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.ALLOYING
 
     override fun getInputs(): List<EmiIngredient> = ingredients

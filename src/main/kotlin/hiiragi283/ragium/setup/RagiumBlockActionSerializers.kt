@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.data.interaction.HTDropItemBlockAction
 import hiiragi283.ragium.api.data.interaction.HTPlaySoundBlockAction
 import hiiragi283.ragium.api.data.interaction.HTReplaceBlockAction
 import hiiragi283.ragium.api.data.interaction.HTSpawnEntityBlockAction
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
@@ -15,7 +16,7 @@ import java.util.function.Supplier
 object RagiumBlockActionSerializers {
     @JvmField
     val REGISTER: DeferredRegister<MapCodec<out HTBlockAction>> =
-        DeferredRegister.create(RagiumRegistries.Keys.BLOCK_ACTION_SERIALIZERS, "c")
+        DeferredRegister.create(RagiumRegistries.Keys.BLOCK_ACTION_SERIALIZERS, RagiumConstantValues.COMMON)
 
     @JvmStatic
     private fun <T : HTBlockAction> register(name: String, codec: MapCodec<T>): Supplier<MapCodec<T>> =

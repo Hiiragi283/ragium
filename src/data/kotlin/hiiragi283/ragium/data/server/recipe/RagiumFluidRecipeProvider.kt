@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -214,7 +212,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         createMelting()
             .fluidOutput(RagiumFluidContents.CRIMSON_SAP, 100)
             .itemInput(ItemTags.CRIMSON_STEMS)
-            .saveSuffixed(output, "_from_crimson")
+            .saveSuffixed(output, "_from_stems")
         // Crimson Sap -> Sap + Crimson Crystal
         createRefining()
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
@@ -231,7 +229,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         createMelting()
             .fluidOutput(RagiumFluidContents.WARPED_SAP, 100)
             .itemInput(ItemTags.WARPED_STEMS)
-            .saveSuffixed(output, "_from_warped")
+            .saveSuffixed(output, "_from_stems")
         // Warped Sap -> Sap + Warped Crystal
         createRefining()
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
@@ -259,15 +257,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.EXPERIENCE, 50)
             .itemInput(RagiumItems.EXP_BERRIES)
             .saveSuffixed(output, "_from_berries")
-
-        save(
-            RagiumAPI.id("extracting/buckets"),
-            HTBucketExtractingRecipe,
-        )
-        save(
-            RagiumAPI.id("infusing/buckets"),
-            HTBucketFillingRecipe,
-        )
     }
 
     //    Infusing    //

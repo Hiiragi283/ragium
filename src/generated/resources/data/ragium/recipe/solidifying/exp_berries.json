@@ -3,11 +3,11 @@
   "catalyst": {
     "tag": "c:foods/berry"
   },
-  "input": {
+  "fluid_input": {
     "amount": 1000,
     "tag": "c:experience"
   },
-  "output": {
+  "item_output": {
     "count": 1,
     "id": "ragium:exp_berries"
   }

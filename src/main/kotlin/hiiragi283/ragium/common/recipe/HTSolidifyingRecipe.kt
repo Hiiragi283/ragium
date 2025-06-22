@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -22,9 +23,15 @@ class HTSolidifyingRecipe(val ingredient: SizedFluidIngredient, val catalyst: In
         val CODEC: MapCodec<HTSolidifyingRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    SizedFluidIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTSolidifyingRecipe::ingredient),
-                    Ingredient.CODEC.optionalFieldOf("catalyst", Ingredient.EMPTY).forGetter(HTSolidifyingRecipe::catalyst),
-                    HTItemOutput.CODEC.fieldOf("output").forGetter(HTSolidifyingRecipe::output),
+                    SizedFluidIngredient.FLAT_CODEC
+                        .fieldOf(RagiumConstantValues.FLUID_INPUT)
+                        .forGetter(HTSolidifyingRecipe::ingredient),
+                    Ingredient.CODEC
+                        .optionalFieldOf("catalyst", Ingredient.EMPTY)
+                        .forGetter(HTSolidifyingRecipe::catalyst),
+                    HTItemOutput.CODEC
+                        .fieldOf(RagiumConstantValues.ITEM_OUTPUT)
+                        .forGetter(HTSolidifyingRecipe::output),
                 ).apply(instance, ::HTSolidifyingRecipe)
         }
 

@@ -54,7 +54,7 @@ object RagiumBlockEntityTypes {
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
 
     @JvmField
-    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", HTExtractorBlockEntity::Basic)
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
 
     @JvmField
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
@@ -186,10 +186,10 @@ object RagiumBlockEntityTypes {
             )
         }
 
-        registerHandlers(ALLOY_SMELTER)
         registerHandlers(CRUSHER)
         registerHandlers(EXTRACTOR)
 
+        registerHandlers(ALLOY_SMELTER)
         registerHandlers(REFINERY)
         registerHandlers(SOLIDIFIER)
 

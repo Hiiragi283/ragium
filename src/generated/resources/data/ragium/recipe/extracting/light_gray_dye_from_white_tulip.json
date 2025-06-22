@@ -1,0 +1,11 @@
+{
+  "type": "ragium:extracting",
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:white_tulip"
+  },
+  "item_output": {
+    "count": 2,
+    "id": "minecraft:light_gray_dye"
+  }
+}

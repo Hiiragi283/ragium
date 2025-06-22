@@ -1,7 +1,6 @@
 package hiiragi283.ragium.integration.emi
 
 import com.mojang.logging.LogUtils
-import com.mojang.serialization.DataResult
 import dev.emi.emi.EmiPort
 import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiPlugin
@@ -20,29 +19,20 @@ import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
-import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTMachineEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSolidifyingEmiRecipe
@@ -73,9 +63,6 @@ import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.SizedIngredient
-import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidUtil
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import org.slf4j.Logger
 
 @EmiEntrypoint
@@ -194,18 +181,6 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
-        // Extracting
-        forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
-            when (recipe) {
-                is HTExtractingRecipe -> addRecipeSafe(id, recipe, ::HTExtractingEmiRecipe)
-
-                is HTBucketExtractingRecipe -> EmiPort.getFluidRegistry().holders().forEach(::addBucketExtracting)
-            }
-        }
-        // Infusing
-        forEachRecipes(RagiumRecipeTypes.INFUSING.get()) { id: ResourceLocation, recipe: HTMachineRecipe ->
-            if (recipe is HTBucketFillingRecipe) EmiPort.getFluidRegistry().holders().forEach(::addBucketFilling)
-        }
         // Melting
         forEachRecipes(RagiumRecipeTypes.MELTING.get()) { id: ResourceLocation, recipe: HTMeltingRecipe ->
             registry.addRecipe(
@@ -247,7 +222,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
     }
 
-    private fun addBucketExtracting(holder: Holder.Reference<Fluid>) {
+    /*private fun addBucketExtracting(holder: Holder.Reference<Fluid>) {
         // 液体源でない場合はスキップ
         val fluid: Fluid = holder.value()
         if (!fluid.isSource(fluid.defaultFluidState())) return
@@ -297,7 +272,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
-    }
+    }*/
 
     private fun addInteractions() {
         // Water Well
@@ -419,20 +394,6 @@ class RagiumEmiPlugin : EmiPlugin {
             val recipe: R = holder.value
             action(id, recipe)
         }
-    }
-
-    private fun <R : HTDefinitionRecipe<*>> addRecipeSafe(
-        id: ResourceLocation,
-        recipe: R,
-        factory: (ResourceLocation, HTRecipeDefinition) -> HTMachineEmiRecipe,
-    ) {
-        recipe
-            .getDefinition()
-            .ifSuccess { definition: HTRecipeDefinition ->
-                addRecipeSafe(id) { factory(id, definition) }
-            }.ifError { error: DataResult.Error<HTRecipeDefinition> ->
-                LOGGER.warn("Error when parsing vanilla recipe: $id, {}", error.message())
-            }
     }
 
     /**

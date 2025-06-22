@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.util.RagiumConstantValues
@@ -9,6 +10,8 @@ import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
+import net.minecraft.advancements.Advancement
+import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
@@ -29,7 +32,24 @@ abstract class HTRecipeProvider {
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         provider = holderLookup
         lookup = provider.itemLookup()
-        this.output = output
+        this.output = object : RecipeOutput {
+            override fun accept(
+                id: ResourceLocation,
+                recipe: Recipe<*>,
+                advancement: AdvancementHolder?,
+                vararg conditions: ICondition,
+            ) {
+                val fixedId: ResourceLocation = when (id.namespace) {
+                    RagiumAPI.MOD_ID -> id
+                    RagiumConstantValues.COMMON -> RagiumAPI.id(id.path)
+                    RagiumConstantValues.MINECRAFT -> RagiumAPI.id(id.path)
+                    else -> id
+                }
+                output.accept(fixedId, recipe, advancement, *conditions)
+            }
+
+            override fun advancement(): Advancement.Builder = output.advancement()
+        }
         buildRecipeInternal()
     }
 

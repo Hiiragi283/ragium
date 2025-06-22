@@ -1,0 +1,11 @@
+{
+  "type": "ragium:melting",
+  "fluid_output": {
+    "amount": 250,
+    "id": "ragium:experience"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:experience_bottle"
+  }
+}

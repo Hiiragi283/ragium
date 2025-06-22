@@ -1,0 +1,11 @@
+{
+  "type": "ragium:melting",
+  "fluid_output": {
+    "amount": 125,
+    "id": "minecraft:lava"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:magma_block"
+  }
+}

@@ -9,7 +9,7 @@ import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 
 class HTCrushingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val results: List<EmiStack>) :
-    HTEmiRecipe.Base(id, RagiumAPI.id("textures/gui/container/crusher.png")) {
+    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/crusher.png")) {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.CRUSHING
 
     override fun getInputs(): List<EmiIngredient> = listOf(ingredient)

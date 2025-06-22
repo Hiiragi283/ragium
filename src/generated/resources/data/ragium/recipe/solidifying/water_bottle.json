@@ -3,11 +3,11 @@
   "catalyst": {
     "item": "minecraft:glass_bottle"
   },
-  "input": {
+  "fluid_input": {
     "amount": 250,
     "tag": "c:water"
   },
-  "output": {
+  "item_output": {
     "components": {
       "minecraft:potion_contents": {
         "potion": "minecraft:water"

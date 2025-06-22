@@ -12,8 +12,6 @@ import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBucketExtractingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import net.minecraft.core.registries.Registries
@@ -101,14 +99,6 @@ object RagiumRecipeSerializers {
             },
         RecipeSerializer.SHAPELESS_RECIPE.streamCodec().map(::HTTransmuteRecipe, HTTransmuteRecipe::internalRecipe),
     )
-
-    @JvmField
-    val BUCKET_EXTRACTING: Supplier<RecipeSerializer<HTBucketExtractingRecipe>> =
-        registerUnit("bucket_extracting", HTBucketExtractingRecipe)
-
-    @JvmField
-    val BUCKET_FILLING: Supplier<RecipeSerializer<HTBucketFillingRecipe>> =
-        registerUnit("bucket_filling", HTBucketFillingRecipe)
 
     @JvmField
     val ETERNAL_TICKET: Supplier<RecipeSerializer<HTEternalTicketRecipe>> =

@@ -19,10 +19,10 @@ object HTTagUtil {
         val holderSet: HolderSet.Named<Item> = lookup.get(tagKey).getOrNull() ?: return null
         // Find item from Ragium
         var firstHolder: Holder<Item>? =
-            holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == RagiumAPI.Companion.MOD_ID }
+            holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == RagiumAPI.MOD_ID }
         // Find item from Vanilla
         if (firstHolder == null) {
-            firstHolder = holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == "minecraft" }
+            firstHolder = holderSet.firstOrNull { holder: Holder<Item> -> holder.idOrThrow.namespace == RagiumConstantValues.MINECRAFT }
         }
         // Return found item or first item
         return firstHolder ?: holderSet.firstOrNull()

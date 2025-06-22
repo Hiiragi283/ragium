@@ -29,13 +29,15 @@ object RagiumConstantValues {
     const val ACTUALLY = "actuallyadditions"
     const val AE2 = "ae2"
     const val ARS_NOUVEAU = "ars_nouveau"
+    const val COMMON = "c"
     const val CREATE = "create"
     const val EIO = "enderio"
     const val EIO_BASE = "enderio_base"
     const val FARMERS_DELIGHT = "farmersdelight"
-    const val IMMERSIVE = "immersiveengineering"
     const val FOREGOING = "industrialforegoing"
+    const val IMMERSIVE = "immersiveengineering"
     const val MEKANISM = "mekanism"
+    const val MINECRAFT = "minecraft"
     const val MODERN = "modern_industrialization"
     const val RAILCRAFT = "railcraft"
     const val TWILIGHT = "twilightforest"
@@ -67,6 +69,11 @@ object RagiumConstantValues {
     const val MELTING = "melting"
     const val REFINING = "refining"
     const val SOLIDIFYING = "solidifying"
+
+    const val ITEM_INPUT = "item_input"
+    const val ITEM_OUTPUT = "item_output"
+    const val FLUID_INPUT = "fluid_input"
+    const val FLUID_OUTPUT = "fluid_output"
 
     //    Storages    //
 

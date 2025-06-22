@@ -3,47 +3,36 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.toOptional
-import hiiragi283.ragium.api.recipe.HTDefinitionRecipe
-import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.recipe.HTUniversalRecipe
+import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
-import java.util.*
 
-/**
- * アイテムを別のアイテムか液体に変換するレシピ
- */
-class HTExtractingRecipe(
-    private val ingredient: SizedIngredient,
-    private val itemOutput: Optional<HTItemOutput>,
-    private val fluidOutput: Optional<HTFluidOutput>,
-) : HTMachineRecipe(),
-    HTDefinitionRecipe<HTMachineInput> {
+class HTExtractingRecipe(val ingredient: SizedIngredient, val output: HTItemOutput) : HTUniversalRecipe {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTExtractingRecipe> = RecordCodecBuilder
             .mapCodec { instance ->
                 instance
                     .group(
-                        SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTExtractingRecipe::ingredient),
-                        HTItemOutput.CODEC.optionalFieldOf("item_output").forGetter(HTExtractingRecipe::itemOutput),
-                        HTFluidOutput.CODEC.optionalFieldOf("fluid_output").forGetter(HTExtractingRecipe::fluidOutput),
+                        SizedIngredient.FLAT_CODEC
+                            .fieldOf(RagiumConstantValues.ITEM_INPUT)
+                            .forGetter(HTExtractingRecipe::ingredient),
+                        HTItemOutput.CODEC
+                            .fieldOf(RagiumConstantValues.ITEM_OUTPUT)
+                            .forGetter(HTExtractingRecipe::output),
                     ).apply(instance, ::HTExtractingRecipe)
             }.validate { recipe: HTExtractingRecipe ->
-                if (recipe.itemOutput.isEmpty && recipe.fluidOutput.isEmpty) {
-                    return@validate DataResult.error { "Either item or fluid output is required!" }
+                if (recipe.output.chance != 1f) {
+                    return@validate DataResult.error { "Extracting recipe output is only allowed with chance of 100 %!" }
                 }
                 DataResult.success(recipe)
             }
@@ -52,58 +41,13 @@ class HTExtractingRecipe(
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTExtractingRecipe> = StreamCodec.composite(
             SizedIngredient.STREAM_CODEC,
             HTExtractingRecipe::ingredient,
-            HTItemOutput.STREAM_CODEC.toOptional(),
-            HTExtractingRecipe::itemOutput,
-            HTFluidOutput.STREAM_CODEC.toOptional(),
-            HTExtractingRecipe::fluidOutput,
+            HTItemOutput.STREAM_CODEC,
+            HTExtractingRecipe::output,
             ::HTExtractingRecipe,
         )
     }
 
-    override fun matches(input: HTMachineInput): Boolean = ingredient.test(input.getItemStack(HTStorageIO.INPUT, 0))
-
-    override fun canProcess(input: HTMachineInput): Boolean {
-        // Item output
-        if (itemOutput.isPresent) {
-            val outputSlot: HTItemSlot = input.getSlotOrNull(HTStorageIO.OUTPUT, 0) ?: return false
-            if (!outputSlot.canInsert(itemOutput.get().get())) return false
-        }
-        // Fluid output
-        if (fluidOutput.isPresent) {
-            val outputTank: HTFluidTank = input.getTankOrNull(HTStorageIO.OUTPUT, 0) ?: return false
-            if (!outputTank.canInsert(fluidOutput.get().get())) return false
-        }
-        // Item input
-        val inputSlot: HTItemSlot = input.getSlotOrNull(HTStorageIO.INPUT, 0) ?: return false
-        return inputSlot.canExtract(ingredient.count())
-    }
-
-    override fun process(input: HTMachineInput) {
-        // Item output
-        itemOutput.ifPresent { output: HTItemOutput ->
-            input.getSlot(HTStorageIO.OUTPUT, 0).insert(output.get(), false)
-        }
-        // Fluid output
-        fluidOutput.ifPresent { output: HTFluidOutput ->
-            input.getTank(HTStorageIO.OUTPUT, 0).insert(output.get(), false)
-        }
-        // Item input
-        input.getSlot(HTStorageIO.INPUT, 0).extract(ingredient.count(), false)
-    }
-
-    override fun getDefinition(): DataResult<HTRecipeDefinition> {
-        if (itemOutput.isEmpty && fluidOutput.isEmpty) {
-            return DataResult.error { "Either one fluid or item output required!" }
-        }
-        return DataResult.success(
-            HTRecipeDefinition(
-                listOf(ingredient),
-                listOf(),
-                itemOutput.stream().toList(),
-                fluidOutput.stream().toList(),
-            ),
-        )
-    }
+    override fun matches(input: HTUniversalRecipeInput, level: Level): Boolean = ingredient.test(input.getItem(0))
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.EXTRACTING.get()
 

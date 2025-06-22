@@ -1,0 +1,18 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:ores/copper"
+  },
+  "item_output": [
+    {
+      "count": 4,
+      "id": "minecraft:raw_copper"
+    },
+    {
+      "chance": 0.25,
+      "count": 1,
+      "id": "minecraft:raw_gold"
+    }
+  ]
+}

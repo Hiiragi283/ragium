@@ -1,0 +1,18 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:sandstone/red_blocks"
+  },
+  "item_output": [
+    {
+      "count": 4,
+      "id": "minecraft:red_sand"
+    },
+    {
+      "chance": 0.125,
+      "count": 1,
+      "id": "minecraft:redstone"
+    }
+  ]
+}

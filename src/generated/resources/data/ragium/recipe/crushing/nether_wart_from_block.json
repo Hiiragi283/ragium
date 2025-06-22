@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:nether_wart_block"
+  },
+  "item_output": {
+    "count": 9,
+    "id": "minecraft:nether_wart"
+  }
+}

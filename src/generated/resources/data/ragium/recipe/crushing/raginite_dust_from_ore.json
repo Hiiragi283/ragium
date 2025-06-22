@@ -1,10 +1,10 @@
 {
   "type": "ragium:crushing",
-  "input": {
+  "item_input": {
     "count": 1,
     "tag": "c:ores/raginite"
   },
-  "outputs": [
+  "item_output": [
     {
       "count": 8,
       "id": "ragium:raginite_dust"

@@ -27,11 +27,10 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
             .milkInput(250)
         // .save(output)
 
-        createExtracting()
-            .itemOutput(Items.GLASS_BOTTLE)
+        createMelting()
             .fluidOutput(NeoForgeMod.MILK, 250)
             .itemInput(ModItems.MILK_BOTTLE.get())
-        // .saveSuffixed(output, "_from_milk")
+            .saveSuffixed(output, "_from_bottle")
     }
 
     private fun crafting() {

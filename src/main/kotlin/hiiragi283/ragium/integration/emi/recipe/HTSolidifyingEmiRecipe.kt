@@ -13,7 +13,7 @@ class HTSolidifyingEmiRecipe(
     val ingredient: EmiIngredient,
     val catalyst: EmiIngredient,
     val results: EmiStack,
-) : HTEmiRecipe.Base(id, RagiumAPI.id("textures/gui/container/solidifier.png")) {
+) : HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/solidifier.png")) {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.SOLIDIFYING
 
     override fun getInputs(): List<EmiIngredient> = listOf(ingredient, catalyst)

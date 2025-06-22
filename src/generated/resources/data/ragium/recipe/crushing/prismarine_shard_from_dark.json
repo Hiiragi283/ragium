@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:dark_prismarine"
+  },
+  "item_output": {
+    "count": 8,
+    "id": "minecraft:prismarine_shard"
+  }
+}

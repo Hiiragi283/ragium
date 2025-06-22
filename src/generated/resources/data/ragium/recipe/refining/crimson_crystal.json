@@ -1,15 +1,15 @@
 {
   "type": "ragium:refining",
-  "fluid_outputs": [
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:crimson_sap"
+  },
+  "fluid_output": [
     {
       "amount": 100,
       "id": "ragium:sap"
     }
   ],
-  "input": {
-    "amount": 1000,
-    "tag": "c:crimson_sap"
-  },
   "item_output": {
     "count": 1,
     "id": "ragium:crimson_crystal"

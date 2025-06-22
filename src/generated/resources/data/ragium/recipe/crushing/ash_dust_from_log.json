@@ -1,10 +1,10 @@
 {
   "type": "ragium:crushing",
-  "input": {
+  "item_input": {
     "count": 1,
     "item": "ragium:ash_log"
   },
-  "outputs": {
+  "item_output": {
     "count": 3,
     "id": "ragium:ash_dust"
   }

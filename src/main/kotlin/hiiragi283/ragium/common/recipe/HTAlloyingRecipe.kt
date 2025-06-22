@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.listOrElement
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -24,11 +25,11 @@ class HTAlloyingRecipe(val ingredients: List<SizedIngredient>, val outputs: List
                 .group(
                     SizedIngredient.FLAT_CODEC
                         .listOf(2, 2)
-                        .fieldOf("inputs")
+                        .fieldOf(RagiumConstantValues.ITEM_INPUT)
                         .forGetter(HTAlloyingRecipe::ingredients),
                     HTItemOutput.CODEC
                         .listOrElement()
-                        .fieldOf("outputs")
+                        .fieldOf(RagiumConstantValues.ITEM_OUTPUT)
                         .forGetter(HTAlloyingRecipe::outputs),
                 ).apply(instance, ::HTAlloyingRecipe)
         }

@@ -1,6 +1,6 @@
 {
   "type": "ragium:alloying",
-  "inputs": [
+  "item_input": [
     {
       "count": 1,
       "tag": "c:storage_blocks/crimson_crystal"
@@ -10,7 +10,7 @@
       "tag": "c:storage_blocks/warped_crystal"
     }
   ],
-  "outputs": {
+  "item_output": {
     "count": 6,
     "id": "ragium:eldritch_pearl"
   }

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.listOrElement
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -22,10 +23,12 @@ class HTCrushingRecipe(val ingredient: SizedIngredient, val outputs: List<HTItem
         val CODEC: MapCodec<HTCrushingRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    SizedIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTCrushingRecipe::ingredient),
+                    SizedIngredient.FLAT_CODEC
+                        .fieldOf(RagiumConstantValues.ITEM_INPUT)
+                        .forGetter(HTCrushingRecipe::ingredient),
                     HTItemOutput.CODEC
                         .listOrElement()
-                        .fieldOf("outputs")
+                        .fieldOf(RagiumConstantValues.ITEM_OUTPUT)
                         .forGetter(HTCrushingRecipe::outputs),
                 ).apply(instance, ::HTCrushingRecipe)
         }

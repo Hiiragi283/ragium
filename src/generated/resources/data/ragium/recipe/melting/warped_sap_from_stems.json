@@ -1,0 +1,11 @@
+{
+  "type": "ragium:melting",
+  "fluid_output": {
+    "amount": 100,
+    "id": "ragium:warped_sap"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "minecraft:warped_stems"
+  }
+}

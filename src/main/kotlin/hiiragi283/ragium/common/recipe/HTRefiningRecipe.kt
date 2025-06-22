@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -31,11 +32,15 @@ class HTRefiningRecipe(
         val CODEC: MapCodec<HTRefiningRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    SizedFluidIngredient.FLAT_CODEC.fieldOf("input").forGetter(HTRefiningRecipe::ingredient),
-                    HTItemOutput.CODEC.optionalFieldOf("item_output").forGetter(HTRefiningRecipe::itemOutput),
+                    SizedFluidIngredient.FLAT_CODEC
+                        .fieldOf(RagiumConstantValues.FLUID_INPUT)
+                        .forGetter(HTRefiningRecipe::ingredient),
+                    HTItemOutput.CODEC
+                        .optionalFieldOf(RagiumConstantValues.ITEM_OUTPUT)
+                        .forGetter(HTRefiningRecipe::itemOutput),
                     HTFluidOutput.CODEC
                         .listOf(1, 2)
-                        .fieldOf("fluid_outputs")
+                        .fieldOf(RagiumConstantValues.FLUID_OUTPUT)
                         .forGetter(HTRefiningRecipe::fluidOutputs),
                 ).apply(instance, ::HTRefiningRecipe)
         }

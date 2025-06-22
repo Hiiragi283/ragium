@@ -3,11 +3,11 @@
   "catalyst": {
     "item": "minecraft:clay_ball"
   },
-  "input": {
+  "fluid_input": {
     "amount": 100,
     "tag": "c:lpg"
   },
-  "output": {
+  "item_output": {
     "count": 1,
     "id": "ragium:polymer_resin"
   }

@@ -3,11 +3,11 @@
   "catalyst": {
     "item": "minecraft:snowball"
   },
-  "input": {
+  "fluid_input": {
     "amount": 250,
     "tag": "c:milk"
   },
-  "output": {
+  "item_output": {
     "count": 1,
     "id": "ragium:ice_cream"
   }

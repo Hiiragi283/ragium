@@ -9,7 +9,7 @@ import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 
 class HTMeltingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val result: EmiStack) :
-    HTEmiRecipe.Base(id, RagiumAPI.id("textures/gui/container/melter.png")) {
+    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/melter.png")) {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.MELTING
 
     override fun getInputs(): List<EmiIngredient> = listOf(ingredient)

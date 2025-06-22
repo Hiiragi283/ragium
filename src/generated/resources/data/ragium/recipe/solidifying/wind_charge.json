@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:snowball"
+  },
+  "fluid_input": {
+    "amount": 250,
+    "tag": "c:experience"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:wind_charge"
+  }
+}

@@ -44,18 +44,17 @@ internal object RagiumRecipeFactories {
     @JvmStatic
     fun extracting(definition: HTRecipeDefinition): HTExtractingRecipe {
         val ingredient: SizedIngredient =
-            checkPresent(definition.getItemIngredient(0), "Required one item ingredient!")
-        val itemOutput: Optional<HTItemOutput> = definition.getItemOutput(0)
-        val fluidOutput: Optional<HTFluidOutput> = definition.getFluidOutput(0)
-        check(itemOutput.isPresent || fluidOutput.isPresent) { "Either one fluid or item output required!" }
-        return HTExtractingRecipe(ingredient, itemOutput, fluidOutput)
+            checkPresent(definition.getItemIngredient(0), "Extracting Recipe requires 1 item ingredient!")
+        val itemOutput: HTItemOutput =
+            checkPresent(definition.getItemOutput(0), "Extracting Recipe requires 1 item output!")
+        return HTExtractingRecipe(ingredient, itemOutput)
     }
 
     @JvmStatic
     fun melting(definition: HTRecipeDefinition): HTMeltingRecipe {
         // Item Input
         val itemInputs: List<SizedIngredient> = definition.itemInputs
-        check(itemInputs.size == 1) { "Crushing Recipe requires 1 item ingredient!" }
+        check(itemInputs.size == 1) { "Melting Recipe requires 1 item ingredient!" }
         // Fluid Output
         val fluidOutput: HTFluidOutput = checkPresent(definition.getFluidOutput(0), "Melting Recipe requires 1 fluid output!")
         return HTMeltingRecipe(itemInputs[0], fluidOutput)

@@ -1,6 +1,6 @@
 {
   "type": "ragium:alloying",
-  "inputs": [
+  "item_input": [
     {
       "count": 1,
       "tag": "c:gems/amethyst"
@@ -10,7 +10,7 @@
       "tag": "c:gems/lapis"
     }
   ],
-  "outputs": {
+  "item_output": {
     "count": 2,
     "id": "ragium:azure_shard"
   }

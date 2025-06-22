@@ -1,6 +1,10 @@
 {
   "type": "ragium:refining",
-  "fluid_outputs": [
+  "fluid_input": {
+    "amount": 100,
+    "tag": "c:naphtha"
+  },
+  "fluid_output": [
     {
       "amount": 40,
       "id": "ragium:light_fuel"
@@ -10,10 +14,6 @@
       "id": "ragium:heavy_fuel"
     }
   ],
-  "input": {
-    "amount": 100,
-    "tag": "c:naphtha"
-  },
   "item_output": {
     "count": 1,
     "id": "ragium:sulfur_dust"

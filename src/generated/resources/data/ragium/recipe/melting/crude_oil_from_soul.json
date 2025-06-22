@@ -1,11 +1,11 @@
 {
   "type": "ragium:melting",
-  "input": {
-    "count": 1,
-    "tag": "minecraft:soul_fire_base_blocks"
-  },
-  "output": {
+  "fluid_output": {
     "amount": 500,
     "id": "ragium:crude_oil"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "minecraft:soul_fire_base_blocks"
   }
 }

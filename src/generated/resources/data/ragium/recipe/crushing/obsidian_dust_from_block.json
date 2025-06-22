@@ -1,10 +1,10 @@
 {
   "type": "ragium:crushing",
-  "input": {
+  "item_input": {
     "count": 1,
     "tag": "c:obsidians/normal"
   },
-  "outputs": {
+  "item_output": {
     "count": 4,
     "id": "ragium:obsidian_dust"
   }

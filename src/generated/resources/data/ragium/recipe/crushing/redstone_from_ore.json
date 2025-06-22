@@ -1,0 +1,23 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:ores/redstone"
+  },
+  "item_output": [
+    {
+      "count": 8,
+      "id": "minecraft:redstone"
+    },
+    {
+      "chance": 0.5,
+      "count": 4,
+      "id": "minecraft:redstone"
+    },
+    {
+      "chance": 0.5,
+      "count": 2,
+      "id": "ragium:cinnabar_dust"
+    }
+  ]
+}

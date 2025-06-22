@@ -3,10 +3,10 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
@@ -19,9 +19,6 @@ import java.util.function.Supplier
 object RagiumRecipeTypes {
     @JvmField
     val REGISTER: DeferredRegister<RecipeType<*>> = DeferredRegister.create(Registries.RECIPE_TYPE, RagiumAPI.MOD_ID)
-
-    @JvmStatic
-    private fun registerMachine(name: String): Supplier<RecipeType<HTMachineRecipe>> = REGISTER.register(name, RecipeType<*>::simple)
 
     @JvmStatic
     private fun <R : Recipe<*>> register(name: String): Supplier<RecipeType<R>> = REGISTER.register(name, RecipeType<*>::simple)
@@ -39,10 +36,7 @@ object RagiumRecipeTypes {
     val CRUSHING: Supplier<RecipeType<HTCrushingRecipe>> = register(RagiumConstantValues.CRUSHING)
 
     @JvmField
-    val EXTRACTING: Supplier<RecipeType<HTMachineRecipe>> = registerMachine(RagiumConstantValues.EXTRACTING)
-
-    @JvmField
-    val INFUSING: Supplier<RecipeType<HTMachineRecipe>> = registerMachine(RagiumConstantValues.INFUSING)
+    val EXTRACTING: Supplier<RecipeType<HTExtractingRecipe>> = register(RagiumConstantValues.EXTRACTING)
 
     @JvmField
     val MELTING: Supplier<RecipeType<HTMeltingRecipe>> = register(RagiumConstantValues.MELTING)

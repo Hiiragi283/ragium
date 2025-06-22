@@ -1,0 +1,18 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "item": "minecraft:coarse_dirt"
+  },
+  "item_output": [
+    {
+      "count": 1,
+      "id": "minecraft:dirt"
+    },
+    {
+      "chance": 0.25,
+      "count": 1,
+      "id": "minecraft:flint"
+    }
+  ]
+}

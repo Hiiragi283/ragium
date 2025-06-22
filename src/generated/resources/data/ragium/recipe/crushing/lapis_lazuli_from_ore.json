@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:ores/lapis"
+  },
+  "item_output": {
+    "count": 8,
+    "id": "minecraft:lapis_lazuli"
+  }
+}
