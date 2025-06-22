@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -19,12 +18,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
@@ -32,8 +29,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.ALLOY_SMELTER, pos, state),
     HTItemSlotHandler {
     private val inputSlots: List<HTItemSlot> = HTItemSlotHelper.createSlotList(2, RagiumConstantValues.INPUT_SLOT, this)
-    private val outputSlots: List<HTItemSlot> =
-        HTItemSlotHelper.createSlotList(4, RagiumConstantValues.OUTPUT_SLOT, this)
+    private val outputSlots: List<HTItemSlot> = HTItemSlotHelper.createSlotList(4, RagiumConstantValues.OUTPUT_SLOT, this)
     private val allSlots: List<HTItemSlot> = buildList {
         addAll(inputSlots)
         addAll(outputSlots)
@@ -89,11 +85,33 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             }
         }
         // インプットから正確な個数を引けるか判定する
+        if (!consumeItem(input, recipe, 0, 1)) {
+            if (!consumeItem(input, recipe, 1, 0)) {
+                return TriState.FALSE
+            }
+        }
+        // 実際にアウトプットに搬出する
+        for (output: HTItemOutput in recipe.outputs) {
+            HTItemSlotHelper.insertItem(outputSlots, output.getChancedStack(level.random), false)
+        }
         // エネルギーを減らす
         network.extractEnergy(6400, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
         return TriState.TRUE
+    }
+
+    private fun consumeItem(
+        input: HTUniversalRecipeInput,
+        recipe: HTAlloyingRecipe,
+        first: Int,
+        second: Int,
+    ): Boolean = if (recipe.ingredients[0].test(input.getItem(first)) && recipe.ingredients[1].test(input.getItem(second))) {
+        HTItemSlotHelper.consumeItem(inputSlots[first], recipe.ingredients[0].count(), null)
+        HTItemSlotHelper.consumeItem(inputSlots[second], recipe.ingredients[1].count(), null)
+        true
+    } else {
+        false
     }
 
     //    Item    //
@@ -114,29 +132,14 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Menu    //
 
-    override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult {
-        if (!level.isClientSide) {
-            player.openMenu(this, pos)
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide)
-    }
-
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTAlloySmelterMenu = HTAlloySmelterMenu(
         containerId,
         playerInventory,
         blockPos,
-        HTMenuDefinition(
+        createDefinition(
             inputSlots,
             outputSlots,
             listOf(),
-            upgrades,
-            containerData,
         ),
     )
 }

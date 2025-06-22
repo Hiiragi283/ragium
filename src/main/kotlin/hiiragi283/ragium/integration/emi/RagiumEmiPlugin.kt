@@ -193,6 +193,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        registry.addRecipeHandler(RagiumMenuTypes.EXTRACTOR.get(), HTRecipeHandler(RagiumEmiCategories.EXTRACTING))
         // Melting
         forEachRecipes(RagiumRecipeTypes.MELTING.get()) { id: ResourceLocation, recipe: HTMeltingRecipe ->
             registry.addRecipe(
@@ -203,6 +204,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        registry.addRecipeHandler(RagiumMenuTypes.MELTER.get(), HTRecipeHandler(RagiumEmiCategories.MELTING))
         // Pressing
         // Refining
         forEachRecipes(RagiumRecipeTypes.REFINING.get()) { id: ResourceLocation, recipe: HTRefiningRecipe ->

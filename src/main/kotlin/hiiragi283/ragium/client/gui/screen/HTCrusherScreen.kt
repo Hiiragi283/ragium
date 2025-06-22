@@ -14,6 +14,4 @@ class HTCrusherScreen(menu: HTCrusherMenu, inventory: Inventory, title: Componen
 
     override val progressPosX: Int = HTSlotPos.getSlotPosX(3.5)
     override val progressPosY: Int = HTSlotPos.getSlotPosY(1)
-
-    override val progressSizeX: Int = 24
 }

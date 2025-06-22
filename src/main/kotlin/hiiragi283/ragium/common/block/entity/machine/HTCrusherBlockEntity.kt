@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -19,12 +18,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
@@ -33,17 +30,19 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemSlotHandler {
     private val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this)
     private val outputSlots: List<HTItemSlot> = HTItemSlotHelper.createSlotList(4, RagiumConstantValues.OUTPUT_SLOT, this)
+    private val allSlots: List<HTItemSlot> = buildList {
+        add(inputSlot)
+        addAll(outputSlots)
+    }
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        inputSlot.writeNbt(writer)
-        for (slot: HTItemSlot in outputSlots) {
+        for (slot: HTItemSlot in allSlots) {
             slot.writeNbt(writer)
         }
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        inputSlot.readNbt(reader)
-        for (slot: HTItemSlot in outputSlots) {
+        for (slot: HTItemSlot in allSlots) {
             slot.readNbt(reader)
         }
     }
@@ -56,8 +55,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         movedByPiston: Boolean,
     ) {
         super.onRemove(state, level, pos, newState, movedByPiston)
-        inputSlot.dropStack(level, pos)
-        for (slot: HTItemSlot in outputSlots) {
+        for (slot: HTItemSlot in allSlots) {
             slot.dropStack(level, pos)
         }
     }
@@ -117,29 +115,14 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Menu    //
 
-    override fun onRightClicked(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult,
-    ): InteractionResult {
-        if (!level.isClientSide) {
-            player.openMenu(this, pos)
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide)
-    }
-
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTCrusherMenu = HTCrusherMenu(
         containerId,
         playerInventory,
         blockPos,
-        HTMenuDefinition(
+        createDefinition(
             listOf(inputSlot),
             outputSlots,
             listOf(),
-            upgrades,
-            containerData,
         ),
     )
 }

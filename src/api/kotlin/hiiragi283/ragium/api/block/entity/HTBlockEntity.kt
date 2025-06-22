@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -155,7 +156,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         player: Player,
         hand: InteractionHand,
         hitResult: BlockHitResult,
-    ): ItemInteractionResult = ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    ): ItemInteractionResult = when (this) {
+        is HTFluidTankHandler -> interactWith(level, player, hand)
+        else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    }
 
     /**
      * ブロックが右クリックされたときに呼ばれます。
@@ -166,7 +170,15 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         pos: BlockPos,
         player: Player,
         hitResult: BlockHitResult,
-    ): InteractionResult = InteractionResult.PASS
+    ): InteractionResult {
+        if (this is MenuProvider) {
+            if (!level.isClientSide) {
+                player.openMenu(this, pos)
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide)
+        }
+        return InteractionResult.PASS
+    }
 
     /**
      * ブロックが左クリックされたときに呼ばれます。
@@ -226,16 +238,6 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      * アップグレードが更新されたときに呼び出されます。
      */
     protected open fun reloadUpgrades() {}
-
-    /**
-     * 内容物が更新された時にワールドへの保存を行う[ItemStackHandler]を返します。
-     */
-    protected fun itemHandler(size: Int): ItemStackHandler = object : ItemStackHandler(size) {
-        override fun onContentsChanged(slot: Int) {
-            super.onContentsChanged(slot)
-            this@HTBlockEntity.setChanged()
-        }
-    }
 
     //    Capability    //
 

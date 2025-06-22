@@ -29,7 +29,7 @@ data class HTMenuDefinition(
 
     fun getOutputSlot(index: Int): HTItemSlot = outputSlots.getOrNull(index) ?: HTItemSlot.create("")
 
-    fun getTank(index: Int): HTFluidTank = tanks[index]
+    fun getTank(index: Int): HTFluidTank? = tanks.getOrNull(index)
 
     fun getData(index: Int): Int = containerData.get(index)
 }

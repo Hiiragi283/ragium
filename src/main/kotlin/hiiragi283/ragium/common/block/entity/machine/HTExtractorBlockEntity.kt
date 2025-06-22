@@ -2,29 +2,122 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlotHelper
+import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.inventory.HTExtractorMenu
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state) {
+class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state),
+    HTItemSlotHandler {
+    private val inputSlot: HTItemSlot = HTItemSlot.create(RagiumConstantValues.INPUT_SLOT, this)
+    private val outputSlots: List<HTItemSlot> = HTItemSlotHelper.createSlotList(4, RagiumConstantValues.OUTPUT_SLOT, this)
+    private val allSlots: List<HTItemSlot> = buildList {
+        add(inputSlot)
+        addAll(outputSlots)
+    }
+
     override fun writeNbt(writer: HTNbtCodec.Writer) {
+        for (slot: HTItemSlot in allSlots) {
+            slot.writeNbt(writer)
+        }
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
+        for (slot: HTItemSlot in allSlots) {
+            slot.readNbt(reader)
+        }
     }
+
+    override fun onRemove(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        newState: BlockState,
+        movedByPiston: Boolean,
+    ) {
+        super.onRemove(state, level, pos, newState, movedByPiston)
+        for (slot: HTItemSlot in allSlots) {
+            slot.dropStack(level, pos)
+        }
+    }
+
+    //    Ticking    //
+
+    private val recipeCache: HTRecipeCache<HTUniversalRecipeInput, HTExtractingRecipe> =
+        HTRecipeCache.simple(RagiumRecipeTypes.EXTRACTING.get())
 
     override fun onServerTick(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         network: IEnergyStorage,
-    ): TriState = TriState.DEFAULT
+    ): TriState {
+        // 200 tickごとに実行する
+        if (!canProcess()) return TriState.DEFAULT
+        // インプットに一致するレシピを探索する
+        val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromSlots(listOf(inputSlot))
+        val recipe: HTExtractingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
+        // エネルギーを消費できるか判定する
+        if (network.extractEnergy(6400, true) != 6400) return TriState.DEFAULT
+        // アウトプットに搬出できるか判定する
+        if (!HTItemSlotHelper.canInsertItem(outputSlots, recipe.output.get())) {
+            return TriState.FALSE
+        }
+        // 実際にアウトプットに搬出する
+        HTItemSlotHelper.insertItem(outputSlots, recipe.output.getChancedStack(level.random), false)
+        // インプットを減らす
+        HTItemSlotHelper.consumeItem(inputSlot, recipe.ingredient.count(), null)
+        // エネルギーを減らす
+        network.extractEnergy(6400, false)
+        // サウンドを流す
+        level.playSound(null, pos, SoundEvents.SLIME_BLOCK_BREAK, SoundSource.BLOCKS)
+        return TriState.TRUE
+    }
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
+    //    Item    //
+
+    override fun getItemIoFromSlot(slot: Int): HTStorageIO = when (slot) {
+        0 -> HTStorageIO.INPUT
+        in (1..4) -> HTStorageIO.OUTPUT
+        else -> HTStorageIO.EMPTY
+    }
+
+    override fun getItemSlot(slot: Int): HTItemSlot? = when (slot) {
+        0 -> inputSlot
+        in (1..4) -> outputSlots[slot - 1]
+        else -> null
+    }
+
+    override fun getSlots(): Int = 5
+
+    //    Menu    //
+
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTExtractorMenu = HTExtractorMenu(
+        containerId,
+        playerInventory,
+        blockPos,
+        createDefinition(
+            listOf(inputSlot),
+            outputSlots,
+            listOf(),
+        ),
+    )
 }

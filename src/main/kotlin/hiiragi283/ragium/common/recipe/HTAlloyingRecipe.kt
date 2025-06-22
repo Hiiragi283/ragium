@@ -47,7 +47,7 @@ class HTAlloyingRecipe(val ingredients: List<SizedIngredient>, val outputs: List
     override fun matches(input: HTUniversalRecipeInput, level: Level): Boolean {
         val bool1: Boolean = ingredients[0].test(input.getItem(0)) && ingredients[1].test(input.getItem(1))
         val bool2: Boolean = ingredients[0].test(input.getItem(1)) && ingredients[1].test(input.getItem(0))
-        return bool1 && bool2
+        return bool1 || bool2
     }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ALLOYING.get()

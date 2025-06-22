@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -46,8 +47,10 @@ class HTChargerBlockEntity(pos: BlockPos, state: BlockState) :
         hand: InteractionHand,
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
-        itemSlot.dropStack(player)
-        itemSlot.replace(stack.copyWithCount(1), true)
+        itemSlot.useStack { stack ->
+            dropStackAt(player, stack)
+            stack.copyWithCount(1)
+        }
         stack.shrink(1)
         return ItemInteractionResult.sidedSuccess(level.isClientSide)
     }

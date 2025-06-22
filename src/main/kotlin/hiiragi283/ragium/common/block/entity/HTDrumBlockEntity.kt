@@ -11,13 +11,7 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 abstract class HTDrumBlockEntity(
@@ -30,16 +24,6 @@ abstract class HTDrumBlockEntity(
     private val tank: HTFluidTank = HTFluidTank.create("tank", this) {
         this.capacity = capacity
     }
-
-    override fun onRightClickedWithItem(
-        stack: ItemStack,
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hand: InteractionHand,
-        hitResult: BlockHitResult,
-    ): ItemInteractionResult = interactWith(level, player, hand)
 
     //    Save & Load    //
 

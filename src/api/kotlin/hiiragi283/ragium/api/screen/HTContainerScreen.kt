@@ -40,8 +40,8 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
     protected fun renderFluid(
         guiGraphics: GuiGraphics,
         stack: FluidStack,
-        x: Int,
-        y: Int,
+        x: Double,
+        y: Double,
     ) {
         if (stack.isEmpty) return
         val (sprite: TextureAtlasSprite, color: Int) = stack.getSpriteAndColor()
@@ -70,8 +70,8 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         rangeY: Int = 18,
         action: () -> Unit,
     ) {
-        val startX1: Int = startX + HTSlotPos.getSlotPosX(x)
-        val startY1: Int = startY + HTSlotPos.getSlotPosY(y)
+        val startX1: Int = startX + x
+        val startY1: Int = startY + y
         val xRange: IntRange = (startX1..startX1 + rangeX)
         val yRange: IntRange = (startY1..startY1 + rangeY)
         if (mouseX in xRange && mouseY in yRange) {
@@ -83,12 +83,12 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         guiGraphics: GuiGraphics,
         stack: FluidStack,
         capacity: Int,
-        x: Int,
-        y: Int,
+        x: Double,
+        y: Double,
         mouseX: Int,
         mouseY: Int,
     ) {
-        renderTooltip(x, y, mouseX, mouseY) {
+        renderTooltip(HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y), mouseX, mouseY) {
             guiGraphics.renderComponentTooltip(
                 font,
                 buildList {

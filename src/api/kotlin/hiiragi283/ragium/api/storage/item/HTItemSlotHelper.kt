@@ -27,16 +27,17 @@ object HTItemSlotHelper {
 
     @JvmStatic
     fun consumeItem(slot: HTItemSlot, count: Int, player: Player?) {
-        val stack: ItemStack = slot.stack
-        if (stack.hasCraftingRemainingItem()) {
-            slot.replace(stack.craftingRemainingItem, true)
-        } else {
-            if (player != null) {
-                stack.consume(count, player)
+        slot.useStack { stack: ItemStack ->
+            if (stack.hasCraftingRemainingItem()) {
+                stack.craftingRemainingItem
             } else {
-                stack.shrink(count)
+                if (player != null) {
+                    stack.consume(count, player)
+                } else {
+                    stack.shrink(count)
+                }
+                stack
             }
-            slot.replace(stack, true)
         }
     }
 
@@ -44,7 +45,4 @@ object HTItemSlotHelper {
     fun createSlotList(size: Int, prefix: String, blockEntity: BlockEntity): List<HTItemSlot> = (0 until size).map { index: Int ->
         HTItemSlot.create(prefix + "_$index", blockEntity)
     }
-
-    @JvmStatic
-    fun createEmptySlotList(size: Int): List<HTItemSlot> = (0 until size).map { _: Int -> HTItemSlot.create("") }
 }

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidTankHelper
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.common.util.TriState
+import net.neoforged.neoforge.fluids.FluidStack
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
@@ -57,8 +59,9 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // それぞれのExp Orbに対して回収を行う
         for (entity: ExperienceOrb in expOrbs) {
             val fluidAmount: Int = entity.value * 20
-            if (outputTank.canInsert(RagiumFluidContents.EXPERIENCE.toStack(fluidAmount))) {
-                outputTank.insert(RagiumFluidContents.EXPERIENCE.toStack(fluidAmount), false)
+            val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
+            if (HTFluidTankHelper.canInsertFluid(outputTank, stack)) {
+                HTFluidTankHelper.insertFluid(outputTank, stack, false)
                 entity.discard()
             }
         }
