@@ -139,6 +139,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
         machine(RagiumBlocks.ALLOY_SMELTER, advancedMachine, vanillaId("block/nether_bricks"))
+        machine(RagiumBlocks.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
 

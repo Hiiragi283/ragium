@@ -118,6 +118,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "合金炉")
+        addBlock(RagiumBlocks.MELTER, "溶融炉")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         addBlock(RagiumBlocks.SOLIDIFIER, "成型機")
         // Cauldron
@@ -171,6 +172,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addFluid(RagiumFluidContents.LIGHT_FUEL, "軽油")
         addFluid(RagiumFluidContents.HEAVY_FUEL, "重油")
         addFluid(RagiumFluidContents.DIESEL, "ディーゼル")
+        addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")

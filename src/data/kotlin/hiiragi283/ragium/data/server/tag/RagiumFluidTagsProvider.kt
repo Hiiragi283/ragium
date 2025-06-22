@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addContent
+import hiiragi283.ragium.api.extension.addHolder
 import hiiragi283.ragium.api.extension.asFluidHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -27,10 +27,6 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         RagiumAPI.MOD_ID,
         helper,
     ) {
-    private fun addFluid(tagKey: TagKey<Fluid>, content: HTFluidContent<*, *, *>) {
-        tag(tagKey).addContent(content)
-    }
-
     override fun addTags(provider: HolderLookup.Provider) {
         contents()
         category()
@@ -41,7 +37,7 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     private fun contents() {
         // Common Tag
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            addFluid(content.commonTag, content)
+            tag(content.commonTag).addContent(content)
         }
     }
 
@@ -76,10 +72,22 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     //    Integrations    //
 
     private fun pneumatic() {
-        addFluid(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
-        addFluid(PneumaticCraftTags.Fluids.DIESEL, RagiumFluidContents.DIESEL)
-        addFluid(PneumaticCraftTags.Fluids.LPG, RagiumFluidContents.LPG)
+        fun addTag(tagKey: TagKey<Fluid>, content: HTFluidContent<*, *, *>) {
+            tag(tagKey).addContent(content)
+            tag(content).addOptionalTag(tagKey)
+        }
 
-        // addFluid(PneumaticCraftTags.Fluids.PLANT_OIL, RagiumFluidContents.PLANT_OIL)
+        addTag(PneumaticCraftTags.Fluids.CRUDE_OIL, RagiumFluidContents.CRUDE_OIL)
+        addTag(PneumaticCraftTags.Fluids.DIESEL, RagiumFluidContents.DIESEL)
+        addTag(PneumaticCraftTags.Fluids.LPG, RagiumFluidContents.LPG)
+        addTag(PneumaticCraftTags.Fluids.LUBRICANT, RagiumFluidContents.LUBRICANT)
     }
+
+    //    Extensions    //
+
+    private fun IntrinsicTagAppender<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
+        addHolder(content.stillHolder, content.flowHolder)
+    }
+
+    private fun tag(content: HTFluidContent<*, *, *>): IntrinsicTagAppender<Fluid> = tag(content.commonTag)
 }

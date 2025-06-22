@@ -61,6 +61,7 @@
     "ragium:crusher",
     "ragium:extractor",
     "ragium:alloy_smelter",
+    "ragium:melter",
     "ragium:refinery",
     "ragium:solidifier",
     "ragium:milk_drain",

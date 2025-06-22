@@ -34,7 +34,7 @@ object RagiumEmiCategories {
     val INFUSING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.INFUSING), Items.HOPPER)
 
     @JvmField
-    val MELTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.MELTING), RagiumBlocks.CRUSHER)
+    val MELTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.MELTING), RagiumBlocks.MELTER)
 
     @JvmField
     val REFINING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.REFINING), RagiumBlocks.REFINERY)

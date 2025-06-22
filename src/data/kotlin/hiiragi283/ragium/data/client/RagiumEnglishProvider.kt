@@ -130,6 +130,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        addBlock(RagiumBlocks.MELTER, "Melter")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         addBlock(RagiumBlocks.SOLIDIFIER, "Solidifier")
         // Cauldron
@@ -183,6 +184,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluidContents.LIGHT_FUEL, "Light Fuel")
         addFluid(RagiumFluidContents.HEAVY_FUEL, "heavy Fuel")
         addFluid(RagiumFluidContents.DIESEL, "Diesel")
+        addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")

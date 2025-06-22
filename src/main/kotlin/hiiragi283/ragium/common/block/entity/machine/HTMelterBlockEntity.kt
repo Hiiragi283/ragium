@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.EXTRACTOR, pos, state) {
+class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.MELTER, pos, state) {
     override fun writeNbt(writer: HTNbtCodec.Writer) {
     }
 

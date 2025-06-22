@@ -6,25 +6,20 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
-import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.resources.ResourceLocation
 
-class HTCrushingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val results: List<EmiStack>) :
-    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/crusher.png")) {
-    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.CRUSHING
+class HTExtractingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val result: EmiStack) :
+    HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/extractor.png")) {
+    override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.EXTRACTING
 
     override fun getInputs(): List<EmiIngredient> = listOf(ingredient)
 
-    override fun getOutputs(): List<EmiStack> = results
+    override fun getOutputs(): List<EmiStack> = listOf(result)
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
         widgets.addInput(ingredient, 1.0, 0.0).drawBack(false)
-        widgets
-            .addInput(EmiIngredient.of(RagiumFluidContents.LUBRICANT.commonTag), 1.0, 2.0)
-            .catalyst(true)
-            .drawBack(false)
         // Output
         widgets.addOutput(0, 4.0, 0.5)
         widgets.addOutput(1, 5.0, 0.5)

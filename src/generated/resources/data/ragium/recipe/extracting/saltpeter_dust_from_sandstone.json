@@ -1,7 +1,7 @@
 {
   "type": "ragium:extracting",
   "item_input": {
-    "count": 1,
+    "count": 4,
     "tag": "c:sandstone/uncolored_blocks"
   },
   "item_output": {

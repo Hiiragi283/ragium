@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -55,6 +56,9 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
+
+    @JvmField
+    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick("melter", ::HTMelterBlockEntity)
 
     @JvmField
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
@@ -143,6 +147,7 @@ object RagiumBlockEntityTypes {
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
 
         add(ALLOY_SMELTER, RagiumBlocks.ALLOY_SMELTER)
+        add(MELTER, RagiumBlocks.MELTER)
         add(REFINERY, RagiumBlocks.REFINERY)
         add(SOLIDIFIER, RagiumBlocks.SOLIDIFIER)
 
@@ -190,6 +195,7 @@ object RagiumBlockEntityTypes {
         registerHandlers(EXTRACTOR)
 
         registerHandlers(ALLOY_SMELTER)
+        registerHandlers(MELTER)
         registerHandlers(REFINERY)
         registerHandlers(SOLIDIFIER)
 

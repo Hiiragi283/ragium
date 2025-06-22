@@ -1,6 +1,10 @@
 {
   "values": [
     "ragium:crude_oil",
-    "ragium:flowing_crude_oil"
+    "ragium:flowing_crude_oil",
+    {
+      "id": "#c:fuels/crude_oil",
+      "required": false
+    }
   ]
 }

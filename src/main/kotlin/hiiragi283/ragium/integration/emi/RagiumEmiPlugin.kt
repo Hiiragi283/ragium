@@ -26,6 +26,7 @@ import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
@@ -33,6 +34,7 @@ import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSolidifyingEmiRecipe
@@ -181,6 +183,16 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
+        // Extracting
+        forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTExtractingRecipe ->
+            registry.addRecipe(
+                HTExtractingEmiRecipe(
+                    id,
+                    recipe.ingredient.toEmi(),
+                    recipe.output.toEmi(),
+                ),
+            )
+        }
         // Melting
         forEachRecipes(RagiumRecipeTypes.MELTING.get()) { id: ResourceLocation, recipe: HTMeltingRecipe ->
             registry.addRecipe(

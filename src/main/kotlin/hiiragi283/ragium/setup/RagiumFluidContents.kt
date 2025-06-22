@@ -108,6 +108,8 @@ object RagiumFluidContents {
 
     val DIESEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("fuel", defaultProperties())
 
+    val LUBRICANT: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("lubricant", defaultProperties())
+
     // val NITRO_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("nitro_fuel", defaultProperties())
 
     // val AROMATIC_COMPOUND: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("aromatic_compound", defaultProperties())

@@ -10,7 +10,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.SlabBlock
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -35,10 +34,6 @@ fun ResourceKey<Advancement>.descKey(): String = "${translationKey(this)}.desc"
 
 fun <T : Any> TagsProvider.TagAppender<T>.addHolder(vararg holders: DeferredHolder<T, out T>) {
     holders.mapNotNull(DeferredHolder<T, out T>::getKey).forEach(::add)
-}
-
-fun TagsProvider.TagAppender<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
-    addHolder(content.stillHolder, content.flowHolder)
 }
 
 //    LanguageProvider    //

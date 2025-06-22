@@ -144,11 +144,12 @@ class RagiumClient(eventBus: IEventBus) {
         // register(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
 
         register(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
-        register(RagiumFluidContents.LPG, Color(0xcccccc))
+        register(RagiumFluidContents.LPG, Color(0xffcc99))
         register(RagiumFluidContents.NAPHTHA, Color(0xff9900))
         register(RagiumFluidContents.LIGHT_FUEL, Color(0xffff00))
         register(RagiumFluidContents.HEAVY_FUEL, Color(0xff6600))
         register(RagiumFluidContents.DIESEL, Color(0xff3300))
+        register(RagiumFluidContents.LUBRICANT, Color(0xff9900))
         // register(RagiumFluidContents.NITRO_FUEL, Color(0xff33333))
         // register(RagiumFluidContents.AROMATIC_COMPOUND, Color(0xcc6633))
 

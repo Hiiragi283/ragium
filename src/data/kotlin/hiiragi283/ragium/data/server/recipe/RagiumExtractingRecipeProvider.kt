@@ -39,7 +39,7 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider() {
 
         createExtracting()
             .itemOutput(RagiumItems.SALTPETER_DUST)
-            .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
+            .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, 4)
             .saveSuffixed(output, "_from_sandstone")
 
         createExtracting()
