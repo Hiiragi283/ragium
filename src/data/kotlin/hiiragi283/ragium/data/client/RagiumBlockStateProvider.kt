@@ -135,6 +135,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
         machine(RagiumBlocks.CRUSHER, basicMachine, vanillaId("block/bricks"))
+        machine(RagiumBlocks.BLOCK_BREAKER, basicMachine, vanillaId("block/bricks"))
         machine(RagiumBlocks.EXTRACTOR, basicMachine, vanillaId("block/bricks"))
 
         val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")

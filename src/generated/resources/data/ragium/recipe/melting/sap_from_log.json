@@ -1,7 +1,7 @@
 {
   "type": "ragium:melting",
   "fluid_output": {
-    "amount": 1000,
+    "amount": 100,
     "id": "ragium:sap"
   },
   "item_input": {

@@ -199,7 +199,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     private fun sap() {
         // XX Log -> Wood Dust + Sap
         createMelting()
-            .fluidOutput(RagiumFluidContents.SAP, 1000)
+            .fluidOutput(RagiumFluidContents.SAP, 100)
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .saveSuffixed(output, "_from_log")
         // Sap -> Slime Ball

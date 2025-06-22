@@ -72,8 +72,10 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             // 各スロットに対して搬入操作を行う
             val stackIn: ItemStack = entity.item.copy()
             val remainStack: ItemStack = ItemHandlerHelper.insertItem(outputs, stackIn, false)
-            if (!remainStack.isEmpty) {
-                entity.item.count == remainStack.count
+            if (remainStack.isEmpty) {
+                entity.discard()
+            } else {
+                entity.item.count = remainStack.count
             }
         }
         return TriState.TRUE

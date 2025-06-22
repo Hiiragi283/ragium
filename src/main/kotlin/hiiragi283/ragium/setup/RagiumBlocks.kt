@@ -399,6 +399,9 @@ object RagiumBlocks {
     val CRUSHER: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.CRUSHER)
 
     @JvmField
+    val BLOCK_BREAKER: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.BLOCK_BREAKER)
+
+    @JvmField
     val EXTRACTOR: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.EXTRACTOR)
 
     // Advanced
@@ -418,6 +421,7 @@ object RagiumBlocks {
     val MACHINES: List<DeferredBlock<*>> = listOf(
         // Basic
         CRUSHER,
+        BLOCK_BREAKER,
         EXTRACTOR,
         // Advanced
         ALLOY_SMELTER,

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:obsidians/normal"
+      "item": "minecraft:black_concrete"
     },
     "B": {
       "tag": "c:ingots/azure_steel"

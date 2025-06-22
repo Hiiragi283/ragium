@@ -56,7 +56,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         // Device
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
             .cross8()
-            .define('A', Tags.Items.OBSIDIANS_NORMAL)
+            .define('A', Items.BLACK_CONCRETE)
             .define('B', RagiumItemTags.INGOTS_AZURE_STEEL)
             .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
             .save(output)
@@ -64,9 +64,9 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING, 4)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
-            .define('B', RagiumItemTags.INGOTS_DEEP_STEEL)
+            .define('B', RagiumItemTags.INGOTS_AZURE_STEEL)
             .define('C', RagiumItemTags.TOOLS_FORGE_HAMMER)
-            .saveSuffixed(output, "_with_deep_steel")
+            .saveSuffixed(output, "_with_obsidian")
     }
 
     private fun circuits() {
@@ -112,6 +112,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
     private fun machines() {
         // Basic
         basicMachine(RagiumBlocks.CRUSHER, Ingredient.of(Items.FLINT))
+        basicMachine(RagiumBlocks.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
         basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.DISPENSER))
 
         // Advanced

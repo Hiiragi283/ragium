@@ -127,6 +127,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
         // Machine
         addBlock(RagiumBlocks.CRUSHER, "Crusher")
+        addBlock(RagiumBlocks.BLOCK_BREAKER, "Block Breaker")
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")

@@ -115,6 +115,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.WOODEN_CASING, "木材筐体")
         // Machine
         addBlock(RagiumBlocks.CRUSHER, "粉砕機")
+        addBlock(RagiumBlocks.BLOCK_BREAKER, "ブロック採掘機")
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "合金炉")

@@ -79,7 +79,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromSlots(listOf(inputSlot))
         val recipe: HTCrushingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
         // エネルギーを消費できるか判定する
-        if (network.extractEnergy(6400, true) != 6400) return TriState.FALSE
+        if (network.extractEnergy(6400, true) != 6400) return TriState.DEFAULT
         // アウトプットに搬出できるか判定する
         for (output: HTItemOutput in recipe.outputs) {
             if (!HTItemSlotHelper.canInsertItem(outputSlots, output.get())) {
