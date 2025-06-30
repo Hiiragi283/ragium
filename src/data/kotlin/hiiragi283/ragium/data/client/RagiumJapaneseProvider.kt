@@ -5,11 +5,13 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
+import hiiragi283.ragium.api.extension.addMatterType
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
+import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -32,9 +34,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         text()
 
         delight()
-        mekanism()
-        jade()
         emi()
+        jade()
+        mekanism()
+        replication()
     }
 
     private fun advancement() {
@@ -486,28 +489,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "有効半径: %s ブロック")
     }
 
-    private fun delight() {
-        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
-    }
-
-    private fun mekanism() {
-        add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "ラギナイト")
-        add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "紺碧エッセンス")
-        add(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP.translationKey, "深紅の樹液")
-        add(RagiumMekanismAddon.CHEMICAL_WARPED_SAP.translationKey, "歪んだ樹液")
-
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "濃縮紺碧エッセンス")
-    }
-
-    private fun jade() {
-        add("config.jade.plugin_ragium.advanced_crusher", "発展型粉砕機")
-        add("config.jade.plugin_ragium.advanced_extractor", "発展型抽出機")
-        add("config.jade.plugin_ragium.crusher", "粉砕機")
-        add("config.jade.plugin_ragium.enchantable_block", "エンチャント可能なブロック")
-        add("config.jade.plugin_ragium.extractor", "抽出機")
-    }
-
     private fun emi() {
         add(RagiumTranslationKeys.EMI_AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         add(RagiumTranslationKeys.EMI_ASH_LOG, "壊すと灰の粉が手に入ります。")
@@ -525,5 +506,31 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING, "大釜に投げ入れる")
         add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, "レシピの実行に必要な最小レベル: %s")
+    }
+
+    private fun delight() {
+        addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+    }
+
+    private fun jade() {
+        add("config.jade.plugin_ragium.advanced_crusher", "発展型粉砕機")
+        add("config.jade.plugin_ragium.advanced_extractor", "発展型抽出機")
+        add("config.jade.plugin_ragium.crusher", "粉砕機")
+        add("config.jade.plugin_ragium.enchantable_block", "エンチャント可能なブロック")
+        add("config.jade.plugin_ragium.extractor", "抽出機")
+    }
+
+    private fun mekanism() {
+        add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "ラギナイト")
+        add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "紺碧エッセンス")
+        add(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP.translationKey, "深紅の樹液")
+        add(RagiumMekanismAddon.CHEMICAL_WARPED_SAP.translationKey, "歪んだ樹液")
+
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "濃縮ラギナイト")
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "濃縮紺碧エッセンス")
+    }
+
+    private fun replication() {
+        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM.get(), "ラギウム")
     }
 }

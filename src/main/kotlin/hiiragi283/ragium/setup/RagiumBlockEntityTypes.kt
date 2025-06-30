@@ -32,7 +32,7 @@ import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
 
-@EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumBlockEntityTypes {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()

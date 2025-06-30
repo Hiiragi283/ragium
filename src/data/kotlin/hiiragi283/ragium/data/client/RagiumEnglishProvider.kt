@@ -5,11 +5,13 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
+import hiiragi283.ragium.api.extension.addMatterType
 import hiiragi283.ragium.api.tag.RagiumFluidTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
+import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -32,9 +34,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         text()
 
         delight()
-        mekanism()
-        jade()
         emi()
+        jade()
+        mekanism()
+        replication()
     }
 
     private fun advancement() {
@@ -503,24 +506,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
     }
 
-    private fun mekanism() {
-        add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "Raginite")
-        add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "Azure Essence")
-        add(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP.translationKey, "Crimson Sap")
-        add(RagiumMekanismAddon.CHEMICAL_WARPED_SAP.translationKey, "Warped Sap")
-
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
-        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")
-    }
-
-    private fun jade() {
-        add("config.jade.plugin_ragium.advanced_crusher", "Advanced Crusher")
-        add("config.jade.plugin_ragium.advanced_extractor", "Advanced Extractor")
-        add("config.jade.plugin_ragium.crusher", "Crusher")
-        add("config.jade.plugin_ragium.enchantable_block", "Enchantable Block")
-        add("config.jade.plugin_ragium.extractor", "Extractor")
-    }
-
     private fun emi() {
         add(RagiumTranslationKeys.EMI_AMBROSIA, "Always edible and not consumed!")
         add(RagiumTranslationKeys.EMI_ASH_LOG, "Drop Ash Dust when harvested.")
@@ -538,5 +523,27 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING, "Cauldron Dropping")
         add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, "Minimum level needed for processing: %s")
+    }
+
+    private fun jade() {
+        add("config.jade.plugin_ragium.advanced_crusher", "Advanced Crusher")
+        add("config.jade.plugin_ragium.advanced_extractor", "Advanced Extractor")
+        add("config.jade.plugin_ragium.crusher", "Crusher")
+        add("config.jade.plugin_ragium.enchantable_block", "Enchantable Block")
+        add("config.jade.plugin_ragium.extractor", "Extractor")
+    }
+
+    private fun mekanism() {
+        add(RagiumMekanismAddon.CHEMICAL_RAGINITE.translationKey, "Raginite")
+        add(RagiumMekanismAddon.CHEMICAL_AZURE.translationKey, "Azure Essence")
+        add(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP.translationKey, "Crimson Sap")
+        add(RagiumMekanismAddon.CHEMICAL_WARPED_SAP.translationKey, "Warped Sap")
+
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE, "Enriched Raginite")
+        addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE, "Enriched Azure Essence")
+    }
+
+    private fun replication() {
+        addMatterType(RagiumReplicationAddon.MATTER_RAGIUM.get(), "Ragium")
     }
 }

@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "replication"
+    }
+  ],
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:ores/replica"
+  },
+  "item_output": [
+    {
+      "count": 4,
+      "id": "replication:raw_replica"
+    },
+    {
+      "chance": 0.25,
+      "count": 1,
+      "id": "replication:raw_replica"
+    }
+  ]
+}

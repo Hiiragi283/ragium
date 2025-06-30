@@ -19,9 +19,9 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ICondition
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition
+import net.neoforged.neoforge.common.conditions.IConditionBuilder
 
-abstract class HTRecipeProvider {
+abstract class HTRecipeProvider : IConditionBuilder {
     protected lateinit var provider: HolderLookup.Provider
         private set
     protected lateinit var lookup: HolderGetter<Item>
@@ -54,7 +54,7 @@ abstract class HTRecipeProvider {
     }
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider, modid: String) {
-        buildRecipes(output.withConditions(ModLoadedCondition(modid)), holderLookup)
+        buildRecipes(output.withConditions(modLoaded(modid)), holderLookup)
     }
 
     protected abstract fun buildRecipeInternal()

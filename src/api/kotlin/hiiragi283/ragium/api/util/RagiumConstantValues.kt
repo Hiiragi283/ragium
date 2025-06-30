@@ -40,6 +40,7 @@ object RagiumConstantValues {
     const val MINECRAFT = "minecraft"
     const val MODERN = "modern_industrialization"
     const val RAILCRAFT = "railcraft"
+    const val REPLICATION = "replication"
     const val TWILIGHT = "twilightforest"
 
     //    Nbt    //

@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "replication"
+    }
+  ],
+  "type": "replication:matter_value",
+  "input": {
+    "tag": "c:foods/ragi_cherry"
+  },
+  "matter": [
+    {
+      "type": "replication:living",
+      "amount": 4.0
+    },
+    {
+      "type": "replication:organic",
+      "amount": 4.0
+    },
+    {
+      "type": "ragium:ragium",
+      "amount": 4.0
+    }
+  ]
+}

@@ -264,6 +264,7 @@
   "items.smithing_template.azure_steel_upgrade.applies_to": "紺鉄の装備品",
   "items.smithing_template.azure_steel_upgrade.base_slot_description": "紺鉄製の防具，武器，道具を置いてください",
   "items.smithing_template.azure_steel_upgrade.ingredients": "紺鉄インゴット",
+  "replication.matter_type.ragium": "ラギウム",
   "tag.fluid.c.chocolates": "チョコレート",
   "tag.fluid.c.creosote": "クレオソート",
   "tag.fluid.c.fuels.nitro": "ニトロ系燃料",

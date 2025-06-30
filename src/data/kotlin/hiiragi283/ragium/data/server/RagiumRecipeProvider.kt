@@ -12,6 +12,7 @@ import hiiragi283.ragium.data.server.recipe.RagiumFoodRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMiscRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumReplicationRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -35,5 +36,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.ARS_NOUVEAU)
         RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.FARMERS_DELIGHT)
         RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.MEKANISM)
+        RagiumReplicationRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.REPLICATION)
     }
 }

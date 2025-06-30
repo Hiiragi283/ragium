@@ -264,6 +264,7 @@
   "items.smithing_template.azure_steel_upgrade.applies_to": "Azure Steel Equipment",
   "items.smithing_template.azure_steel_upgrade.base_slot_description": "Add azure steel armor, weapon, ot tool",
   "items.smithing_template.azure_steel_upgrade.ingredients": "Azure Steel Ingot",
+  "replication.matter_type.ragium": "Ragium",
   "tag.fluid.c.chocolates": "Chocolate",
   "tag.fluid.c.creosote": "Creosote",
   "tag.fluid.c.fuels.nitro": "Nitro Fuel",

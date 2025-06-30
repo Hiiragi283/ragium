@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "replication"
+    }
+  ],
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 2,
+      "tag": "c:raw_materials/replica"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:alloy_smelter_fluxes/basic"
+    }
+  ],
+  "item_output": {
+    "count": 3,
+    "id": "replication:replica_ingot"
+  }
+}

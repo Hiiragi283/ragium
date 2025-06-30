@@ -1,7 +1,9 @@
 package hiiragi283.ragium.api.extension
 
+import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.Util
 import net.minecraft.advancements.Advancement
 import net.minecraft.data.tags.TagsProvider
@@ -64,6 +66,10 @@ fun LanguageProvider.addItem(item: ItemLike, value: String) {
 fun LanguageProvider.addAdvancement(key: ResourceKey<Advancement>, title: String, desc: String) {
     add(key.titleKey(), title)
     add(key.descKey(), desc)
+}
+
+fun LanguageProvider.addMatterType(type: IMatterType, value: String) {
+    add("${RagiumConstantValues.REPLICATION}.matter_type.${type.name}", value)
 }
 
 //    ModelFile    //

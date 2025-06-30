@@ -41,7 +41,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 import org.slf4j.Logger
 import java.util.concurrent.CompletableFuture
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = RagiumAPI.MOD_ID)
+@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumDatagen {
     @JvmField
     val LOGGER: Logger = LogUtils.getLogger()

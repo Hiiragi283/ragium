@@ -13,11 +13,10 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition
-import net.neoforged.neoforge.common.conditions.NotCondition
+import net.neoforged.neoforge.common.conditions.ICondition
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
-    val disabledByDelight = NotCondition(ModLoadedCondition(RagiumConstantValues.FARMERS_DELIGHT))
+    val disabledByDelight: ICondition = not(modLoaded(RagiumConstantValues.FARMERS_DELIGHT))
 
     override fun buildRecipeInternal() {
         // Chocolate
