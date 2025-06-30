@@ -17,16 +17,12 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
-import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
-import hiiragi283.ragium.api.storage.item.HTItemVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.common.storage.fluid.HTFluidTankImpl
-import hiiragi283.ragium.common.storage.item.HTItemSlotImpl
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -44,7 +40,6 @@ import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.network.PacketDistributor
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
@@ -100,15 +95,6 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun wrapItemSlot(storageIO: HTStorageIO, slotIn: HTItemSlot): IItemHandlerModifiable = object : HTItemSlotHandler {
-        override fun getItemIoFromSlot(slot: Int): HTStorageIO = storageIO
-
-        override fun getItemSlot(slot: Int): HTItemSlot? = slotIn
-
-        override fun getSlots(): Int = 1
-    }
-
-    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun wrapFluidTank(storageIO: HTStorageIO, tankIn: HTFluidTank): IFluidHandler = object : HTFluidTankHandler {
         override fun getFluidIoFromSlot(tank: Int): HTStorageIO = storageIO
 
@@ -119,18 +105,6 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage =
         HTLimitedEnergyStorage(storageIO, storage)
-
-    override fun buildItemSlot(
-        nbtKey: String,
-        capacity: Int,
-        validator: (HTItemVariant) -> Boolean,
-        callback: () -> Unit,
-    ): HTItemSlot = HTItemSlotImpl(
-        nbtKey,
-        capacity,
-        validator,
-        callback,
-    )
 
     override fun buildFluidTank(
         nbtKey: String,

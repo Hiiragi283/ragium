@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.SlotItemHandler
 
 abstract class HTMachineMenu(
     menuType: HTDeferredMenuType<*>,
@@ -29,6 +30,14 @@ abstract class HTMachineMenu(
         }
 
     val machine: HTMachineBlockEntity? = level.getBlockEntity(pos) as? HTMachineBlockEntity
+
+    fun addSlot(index: Int, x: Int, y: Int) {
+        addSlot(SlotItemHandler(definition.inventory, index, x, y))
+    }
+
+    fun addOutputSlot(index: Int, x: Int, y: Int) {
+        addSlot(HTOutputSlot(definition.inventory, index, x, y))
+    }
 
     fun addUpgradeSlots() {
         val upgrades: IItemHandler = definition.upgrades

@@ -2,7 +2,6 @@ package hiiragi283.ragium.integration.jade.base
 
 import hiiragi283.ragium.api.extension.listOf
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -41,9 +40,7 @@ class HTProgressData private constructor(
         private val items: MutableList<ItemStack> = mutableListOf()
         private val fluids: MutableList<FluidStack> = mutableListOf()
 
-        fun addEmpty(): Builder = addItem(null)
-
-        fun addItem(slot: HTItemSlot?): Builder = addItem(slot?.stack ?: ItemStack.EMPTY)
+        fun addEmpty(): Builder = addItem(ItemStack.EMPTY)
 
         fun addItem(stack: ItemStack): Builder = apply {
             items.add(stack.copy())

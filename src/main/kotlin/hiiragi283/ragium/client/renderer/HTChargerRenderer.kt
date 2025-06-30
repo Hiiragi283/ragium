@@ -26,7 +26,7 @@ class HTChargerRenderer(context: BlockEntityRendererProvider.Context) : BlockEnt
         poseStack.scale(0.75f, 0.75f, 0.75f)
         poseStack.mulPose(Axis.YP.rotationDegrees((partialTick + blockEntity.totalTick) * 3f))
         itemRenderer.renderStatic(
-            blockEntity.getStackInSlot(0),
+            blockEntity.stack,
             ItemDisplayContext.FIXED,
             LightTexture.FULL_BRIGHT,
             packedOverlay,

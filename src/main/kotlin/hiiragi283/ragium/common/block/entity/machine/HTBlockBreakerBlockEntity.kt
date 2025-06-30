@@ -4,10 +4,10 @@ import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemFilter
+import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemStackHandler
 import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -18,7 +18,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.GameType
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.CommonHooks
@@ -30,32 +29,9 @@ import net.neoforged.neoforge.event.EventHooks
 import java.util.*
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state),
-    HTItemSlotHandler {
-    private val toolSlot: HTItemSlot = HTItemSlot.create("tool", this) {
-        capacity = 1
-    }
-
+    HTMachineBlockEntity(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state) {
+    override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.basicMachineEnergyUsage.get()
-
-    override fun writeNbt(writer: HTNbtCodec.Writer) {
-        toolSlot.writeNbt(writer)
-    }
-
-    override fun readNbt(reader: HTNbtCodec.Reader) {
-        toolSlot.readNbt(reader)
-    }
-
-    override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        super.onRemove(state, level, pos, newState, movedByPiston)
-        toolSlot.dropStack(level, pos)
-    }
 
     /**
      * @see [com.hollingsworth.arsnouveau.api.util.BlockUtil.breakExtraBlock]
@@ -73,7 +49,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         // 採掘用のFake Playerを用意する
         val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(UUID.randomUUID(), "Fake Player"))
         val inventory: Inventory = player.inventory
-        val toolStack: ItemStack = toolSlot.stack
+        val toolStack: ItemStack = this.inventory.getStackInSlot(0)
         inventory.items[inventory.selected] = toolStack
         // 採掘対象のブロックを取得する
         val front: Direction = state.getValue(HTHorizontalEntityBlock.HORIZONTAL)
@@ -110,18 +86,10 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         }
         // エネルギーを減らす
         network.extractEnergy(requiredEnergy, false)
-        // ツールを更新する
-        toolSlot.replace(toolStack, true)
         return TriState.DEFAULT
     }
 
-    //    Item    //
-
-    override fun getItemIoFromSlot(slot: Int): HTStorageIO = HTStorageIO.INPUT
-
-    override fun getItemSlot(slot: Int): HTItemSlot? = toolSlot
-
-    override fun getSlots(): Int = 1
+    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, HTItemFilter.INSERT_ONLY)
 
     //    Menu    //
 
@@ -129,9 +97,6 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         containerId,
         playerInventory,
         blockPos,
-        createDefinition(
-            listOf(toolSlot),
-            listOf(),
-        ),
+        createDefinition(inventory),
     )
 }

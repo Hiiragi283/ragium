@@ -2,11 +2,9 @@ package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.util.StringRepresentable
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 /**
  * ストレージの搬入出を管理するクラス
@@ -37,11 +35,6 @@ enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) : String
      */
     GENERIC(true, true),
     ;
-
-    /**
-     * 指定した[slot]の搬入出を制限した[IItemHandlerModifiable]を返します。
-     */
-    fun wrapItemSlot(slot: HTItemSlot): IItemHandlerModifiable = RagiumAPI.getInstance().wrapItemSlot(this, slot)
 
     /**
      * 指定した[tank]の搬入出を制限した[IFluidHandler]を返します。

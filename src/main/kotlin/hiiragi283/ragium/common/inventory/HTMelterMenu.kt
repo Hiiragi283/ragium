@@ -18,12 +18,12 @@ class HTMelterMenu(
         containerId,
         inventory,
         decodePos(registryBuf),
-        HTMenuDefinition.EMPTY,
+        HTMenuDefinition.empty(1),
     )
 
     init {
         // inputs
-        addSlot(definition.getInputSlot(0).createContainerSlot(2, 1))
+        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         // upgrades
         addUpgradeSlots()
         // outputs

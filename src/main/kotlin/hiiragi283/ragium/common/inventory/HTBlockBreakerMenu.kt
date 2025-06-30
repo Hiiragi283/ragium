@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.inventory.HTMachineMenu
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -23,12 +24,12 @@ class HTBlockBreakerMenu(
         containerId,
         inventory,
         decodePos(registryBuf),
-        HTMenuDefinition.EMPTY,
+        HTMenuDefinition.empty(1),
     )
 
     init {
         // inputs
-        addSlot(definition.getInputSlot(0).createContainerSlot(4, 1))
+        addSlot(0, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(1))
         // upgrades
         addUpgradeSlots()
         // player inventory

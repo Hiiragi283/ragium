@@ -4,11 +4,10 @@ import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.dropStacksAt
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
-import hiiragi283.ragium.api.storage.item.HTItemSlotHandler
+import hiiragi283.ragium.api.storage.item.HTItemStackHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -17,6 +16,9 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -29,12 +31,13 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemStackHandler
 import org.slf4j.Logger
+import java.util.*
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
@@ -68,20 +71,13 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         loadAdditional(tag, lookupProvider)
     }
 
-    val upgrades: ItemStackHandler = object : ItemStackHandler(4) {
-        override fun getStackLimit(slot: Int, stack: ItemStack): Int = super.getStackLimit(slot, stack)
-
-        override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-            super.deserializeNBT(provider, nbt)
-            reloadUpgrades()
-        }
-
-        override fun onContentsChanged(slot: Int) {
-            super.onContentsChanged(slot)
-            reloadUpgrades()
-            setChanged()
-        }
+    val upgrades = HTItemStackHandler(4) { index: Int ->
+        reloadUpgrades()
+        setChanged()
     }
+
+    var targetSide: Direction? = null
+        protected set
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -93,10 +89,16 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                     .ifError { error: DataResult.Error<Tag> -> LOGGER.error(error.message()) }
             }
 
+            override fun <T : Any> writeNullable(codec: Codec<T>, key: String, value: T?) {
+                write(ExtraCodecs.optionalEmptyMap(codec), key, Optional.ofNullable(value))
+            }
+
             override fun write(key: String, serializable: INBTSerializable<CompoundTag>) {
                 tag.put(key, serializable.serializeNBT(registries))
             }
         }
+        // Target Side
+        writer.writeNullable(Direction.CODEC, RagiumConstantValues.TARGET_SIDE, targetSide)
         // Upgrades
         writer.write(RagiumConstantValues.UPGRADES, upgrades)
         // Custom
@@ -113,6 +115,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                 serializable.deserializeNBT(registries, tag.getCompound(key))
             }
         }
+        // Target Side
+        reader
+            .read(Direction.CODEC, RagiumConstantValues.TARGET_SIDE)
+            .ifSuccess { direction: Direction -> targetSide = direction }
         // Upgrades
         reader.read(RagiumConstantValues.UPGRADES, upgrades)
         // Custom
@@ -156,9 +162,16 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         player: Player,
         hand: InteractionHand,
         hitResult: BlockHitResult,
-    ): ItemInteractionResult = when (this) {
-        is HTFluidTankHandler -> interactWith(level, player, hand)
-        else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    ): ItemInteractionResult {
+        if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
+            this.targetSide = hitResult.direction
+            level.playSound(null, pos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS)
+            return ItemInteractionResult.sidedSuccess(level.isClientSide)
+        }
+        return when (this) {
+            is HTFluidTankHandler -> interactWith(level, player, hand)
+            else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+        }
     }
 
     /**
@@ -244,7 +257,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     /**
      * 指定した[direction]から[IItemHandler]を返します。
      */
-    open fun getItemHandler(direction: Direction?): IItemHandler? = this as? HTItemSlotHandler
+    open fun getItemHandler(direction: Direction?): IItemHandler? = null
 
     /**
      * 指定した[direction]から[IFluidHandler]を返します。

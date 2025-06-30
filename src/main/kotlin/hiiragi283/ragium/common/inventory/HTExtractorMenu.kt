@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.inventory.HTMachineMenu
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
-import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -18,19 +18,19 @@ class HTExtractorMenu(
         containerId,
         inventory,
         decodePos(registryBuf),
-        HTMenuDefinition.EMPTY,
+        HTMenuDefinition.empty(5),
     )
 
     init {
         // inputs
-        addSlot(definition.getInputSlot(0).createContainerSlot(2, 0))
+        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // upgrades
         addUpgradeSlots()
         // outputs
-        addSlot(definition.getOutputSlot(0).createContainerSlot(5.0, 0.5, HTStorageIO.OUTPUT))
-        addSlot(definition.getOutputSlot(1).createContainerSlot(6.0, 0.5, HTStorageIO.OUTPUT))
-        addSlot(definition.getOutputSlot(2).createContainerSlot(5.0, 1.5, HTStorageIO.OUTPUT))
-        addSlot(definition.getOutputSlot(3).createContainerSlot(6.0, 1.5, HTStorageIO.OUTPUT))
+        addOutputSlot(1, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5))
+        addOutputSlot(2, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5))
+        addOutputSlot(3, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5))
+        addOutputSlot(4, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5))
         // player inventory
         addPlayerInv()
         // register property

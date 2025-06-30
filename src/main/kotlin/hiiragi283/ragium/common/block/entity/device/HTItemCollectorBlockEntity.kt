@@ -2,8 +2,10 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
-import hiiragi283.ragium.api.extension.dropStacksAt
 import hiiragi283.ragium.api.network.HTNbtCodec
+import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
+import hiiragi283.ragium.api.storage.item.HTItemFilter
+import hiiragi283.ragium.api.storage.item.HTItemStackHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -18,18 +20,17 @@ import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
-import net.neoforged.neoforge.items.ItemStackHandler
 
 class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.ITEM_COLLECTOR, pos, state) {
-    private val outputs = ItemStackHandler(9)
+    private val inventory = HTItemStackHandler(9, this::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConstantValues.OUTPUT_SLOT, outputs)
+        writer.write(RagiumConstantValues.INVENTORY, inventory)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConstantValues.OUTPUT_SLOT, outputs)
+        reader.read(RagiumConstantValues.INVENTORY, inventory)
     }
 
     override fun onRemove(
@@ -40,7 +41,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         movedByPiston: Boolean,
     ) {
         super.onRemove(state, level, pos, newState, movedByPiston)
-        outputs.dropStacksAt(level, pos)
+        inventory.dropStacksAt(level, pos)
     }
 
     //    Ticking    //
@@ -72,7 +73,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             if (entity.hasPickUpDelay()) continue
             // 各スロットに対して搬入操作を行う
             val stackIn: ItemStack = entity.item.copy()
-            val remainStack: ItemStack = ItemHandlerHelper.insertItem(outputs, stackIn, false)
+            val remainStack: ItemStack = ItemHandlerHelper.insertItem(inventory, stackIn, false)
             if (remainStack.isEmpty) {
                 entity.discard()
             } else {
@@ -84,5 +85,5 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val maxTicks: Int = 20
 
-    override fun getItemHandler(direction: Direction?): IItemHandler? = outputs
+    override fun getItemHandler(direction: Direction?): IItemHandler? = HTFilteredItemHandler(inventory, HTItemFilter.EXTRACT_ONLY)
 }

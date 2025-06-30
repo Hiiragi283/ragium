@@ -21,6 +21,8 @@ interface HTNbtCodec {
     interface Writer {
         fun <T : Any> write(codec: Codec<T>, key: String, value: T)
 
+        fun <T : Any> writeNullable(codec: Codec<T>, key: String, value: T?)
+
         fun write(key: String, serializable: INBTSerializable<CompoundTag>)
     }
 
