@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.storage.item
 
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.extension.getLevel
-import hiiragi283.ragium.api.inventory.HTSlotPos
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -35,15 +35,15 @@ open class HTItemSlotImpl(
     override fun createContainerSlot(x: Int, y: Int, storageIO: HTStorageIO): Slot = HTContainerItemSlot(
         this,
         storageIO,
-        HTSlotPos.getSlotPosX(x),
-        HTSlotPos.getSlotPosY(y),
+        HTSlotHelper.getSlotPosX(x),
+        HTSlotHelper.getSlotPosY(y),
     )
 
     override fun createContainerSlot(x: Double, y: Double, storageIO: HTStorageIO): Slot = HTContainerItemSlot(
         this,
         storageIO,
-        HTSlotPos.getSlotPosX(x),
-        HTSlotPos.getSlotPosY(y),
+        HTSlotHelper.getSlotPosX(x),
+        HTSlotHelper.getSlotPosY(y),
     )
 
     override fun onUpdateEnchantment(newEnchantments: ItemEnchantments) {

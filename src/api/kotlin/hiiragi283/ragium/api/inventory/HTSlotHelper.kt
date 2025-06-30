@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.inventory
 
-object HTSlotPos {
+object HTSlotHelper {
     @JvmStatic
     fun getSlotPosX(index: Int): Int = 8 + index * 18
 
@@ -12,4 +12,7 @@ object HTSlotPos {
 
     @JvmStatic
     fun getSlotPosY(index: Double): Int = 18 + (index * 18).toInt()
+
+    @JvmStatic
+    fun isIn(value: Int, start: Int, range: Int): Boolean = value in (start..start + range)
 }

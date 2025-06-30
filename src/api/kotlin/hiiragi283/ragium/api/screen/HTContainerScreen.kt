@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.toFloatColor
 import hiiragi283.ragium.api.inventory.HTContainerMenu
-import hiiragi283.ragium.api.inventory.HTSlotPos
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
@@ -33,23 +33,23 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
 
     //    Extensions    //
 
-    protected val startX: Int get() = (width - imageWidth) / 2
+    val startX: Int get() = (width - imageWidth) / 2
 
-    protected val startY: Int get() = (height - imageHeight) / 2
+    val startY: Int get() = (height - imageHeight) / 2
 
     protected fun renderFluid(
         guiGraphics: GuiGraphics,
         stack: FluidStack,
-        x: Double,
-        y: Double,
+        x: Int,
+        y: Int,
     ) {
         if (stack.isEmpty) return
         val (sprite: TextureAtlasSprite, color: Int) = stack.getSpriteAndColor()
         val floatColor: Triple<Float, Float, Float> = toFloatColor(color)
 
         guiGraphics.blit(
-            startX + HTSlotPos.getSlotPosX(x),
-            startY + HTSlotPos.getSlotPosY(y),
+            startX + x,
+            startY + y,
             0,
             sprite.contents().width(),
             sprite.contents().height(),
@@ -70,11 +70,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         rangeY: Int = 18,
         action: () -> Unit,
     ) {
-        val startX1: Int = startX + x
-        val startY1: Int = startY + y
-        val xRange: IntRange = (startX1..startX1 + rangeX)
-        val yRange: IntRange = (startY1..startY1 + rangeY)
-        if (mouseX in xRange && mouseY in yRange) {
+        if (HTSlotHelper.isIn(mouseX, startX + x, rangeX) && HTSlotHelper.isIn(mouseY, startY + y, rangeY)) {
             action()
         }
     }
@@ -83,12 +79,12 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         guiGraphics: GuiGraphics,
         stack: FluidStack,
         capacity: Int,
-        x: Double,
-        y: Double,
+        x: Int,
+        y: Int,
         mouseX: Int,
         mouseY: Int,
     ) {
-        renderTooltip(HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y), mouseX, mouseY) {
+        renderTooltip(x, y, mouseX, mouseY) {
             guiGraphics.renderComponentTooltip(
                 font,
                 buildList {

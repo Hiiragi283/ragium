@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -108,9 +107,6 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         override fun getCount(): Int = 2
     }
 
-    protected fun createDefinition(
-        inputSlots: List<HTItemSlot>,
-        outputSlots: List<HTItemSlot>,
-        tanks: List<HTFluidTank>,
-    ): HTMenuDefinition = HTMenuDefinition(inputSlots, outputSlots, tanks, upgrades, containerData)
+    protected fun createDefinition(inputSlots: List<HTItemSlot>, outputSlots: List<HTItemSlot>): HTMenuDefinition =
+        HTMenuDefinition(inputSlots, outputSlots, upgrades, containerData)
 }

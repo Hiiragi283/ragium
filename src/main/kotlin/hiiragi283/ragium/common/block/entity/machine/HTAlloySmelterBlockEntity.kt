@@ -142,7 +142,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         createDefinition(
             inputSlots,
             outputSlots,
-            listOf(),
         ),
     )
 }

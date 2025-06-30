@@ -132,7 +132,6 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         createDefinition(
             listOf(toolSlot),
             listOf(),
-            listOf(),
         ),
     )
 }

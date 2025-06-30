@@ -116,7 +116,6 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         createDefinition(
             listOf(inputSlot),
             listOf(),
-            listOf(outputTank),
         ),
     )
 }

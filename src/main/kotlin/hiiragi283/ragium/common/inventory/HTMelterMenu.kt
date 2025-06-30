@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.inventory.HTMachineMenu
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -26,7 +27,7 @@ class HTMelterMenu(
         // upgrades
         addUpgradeSlots()
         // outputs
-        addFluidSlot(0, 5.5, 1.0)
+        addFluidSlot(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         // player inventory
         addPlayerInv()
         // register property

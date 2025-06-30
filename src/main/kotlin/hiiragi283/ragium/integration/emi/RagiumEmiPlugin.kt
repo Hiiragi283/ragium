@@ -86,6 +86,8 @@ class RagiumEmiPlugin : EmiPlugin {
 
         addRecipes()
         addInfos()
+        // Functions
+        registry.addGenericStackProvider(RagiumEmiStackProvider)
     }
 
     //    Recipes    //

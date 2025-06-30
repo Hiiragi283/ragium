@@ -1,6 +1,5 @@
 package hiiragi283.ragium.internal
 
-import com.mojang.datafixers.util.Either
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
@@ -10,7 +9,6 @@ import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.inventory.HTFluidTooltipComponent
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -294,6 +292,6 @@ object RagiumRuntimeEvents {
         val stack: ItemStack = event.itemStack
         val content: SimpleFluidContent = stack.get(RagiumComponentTypes.FLUID_CONTENT) ?: return
         if (content.isEmpty) return
-        event.tooltipElements.add(1, Either.right(HTFluidTooltipComponent(content)))
+        // event.tooltipElements.add(1, Either.right(HTFluidTooltipComponent(content)))
     }
 }

@@ -76,18 +76,18 @@ abstract class HTContainerMenu(
 
     //    Extensions    //
 
-    val fluidSlots: MutableMap<Int, Pair<Double, Double>> = mutableMapOf()
+    val fluidSlots: MutableMap<Int, Pair<Int, Int>> = mutableMapOf()
 
     protected fun addSlot(
         handler: IItemHandler,
         index: Int,
-        x: Double,
-        y: Double,
+        x: Int,
+        y: Int,
     ) {
-        addSlot(SlotItemHandler(handler, index, HTSlotPos.getSlotPosX(x), HTSlotPos.getSlotPosY(y)))
+        addSlot(SlotItemHandler(handler, index, x, y))
     }
 
-    protected fun addFluidSlot(index: Int, x: Double, y: Double) {
+    protected fun addFluidSlot(index: Int, x: Int, y: Int) {
         fluidSlots.put(index, x to y)
     }
 
@@ -98,8 +98,8 @@ abstract class HTContainerMenu(
                 Slot(
                     inventory,
                     index + 9,
-                    HTSlotPos.getSlotPosX(index % 9),
-                    HTSlotPos.getSlotPosY(3 + (index / 9)) + 12 + yOffset,
+                    HTSlotHelper.getSlotPosX(index % 9),
+                    HTSlotHelper.getSlotPosY(3 + (index / 9)) + 12 + yOffset,
                 ),
             )
         }
@@ -109,7 +109,7 @@ abstract class HTContainerMenu(
                 when {
                     immovable && index == inventory.selected -> ::HTImmovableSlot
                     else -> ::Slot
-                }(inventory, index, HTSlotPos.getSlotPosX(index), HTSlotPos.getSlotPosY(7) - 2 + yOffset),
+                }(inventory, index, HTSlotHelper.getSlotPosX(index), HTSlotHelper.getSlotPosY(7) - 2 + yOffset),
             )
         }
     }

@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.screen
 
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTMachineMenu
-import hiiragi283.ragium.api.inventory.HTSlotPos
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -21,10 +21,10 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
     open val progressSizeY: Int = 16
     open val progressTex: ResourceLocation = vanillaId("container/furnace/burn_progress")
 
-    protected fun getFluidStack(index: Int): FluidStack = menu.definition.getTank(index)?.stack ?: FluidStack.EMPTY
+    fun getFluidStack(index: Int): FluidStack = menu.machine?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
 
-    protected fun getFluidCapacity(index: Int): Int = menu.definition.getTank(index)?.capacity ?: 0
-
+    fun getFluidCapacity(index: Int): Int = menu.machine?.getFluidHandler(null)?.getTankCapacity(index) ?: 0
+    
     override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,
@@ -33,9 +33,9 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
     ) {
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         // energy amount
-        renderEnergyTooltip(guiGraphics, HTSlotPos.getSlotPosX(0), HTSlotPos.getSlotPosY(0), mouseX, mouseY)
+        renderEnergyTooltip(guiGraphics, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0), mouseX, mouseY)
         // fluid tooltip
-        menu.fluidSlots.forEach { index: Int, (slotX: Double, slotY: Double) ->
+        menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             renderFluidTooltip(
                 guiGraphics,
                 getFluidStack(index),
@@ -59,7 +59,7 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
         // progress bar
         renderProgress(guiGraphics)
         // fluids
-        menu.fluidSlots.forEach { index: Int, (slotX: Double, slotY: Double) ->
+        menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
         }
         // item slots

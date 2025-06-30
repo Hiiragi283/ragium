@@ -120,7 +120,6 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         createDefinition(
             listOf(inputSlot),
             outputSlots,
-            listOf(),
         ),
     )
 }

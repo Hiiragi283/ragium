@@ -4,7 +4,7 @@ import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.inventory.HTSlotPos
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import net.minecraft.resources.ResourceLocation
 
 abstract class HTMachineEmiRecipe(private val id: ResourceLocation, private val textureId: ResourceLocation) : HTEmiRecipe {
@@ -18,8 +18,8 @@ abstract class HTMachineEmiRecipe(private val id: ResourceLocation, private val 
         widgets.addTexture(
             EmiTexture(
                 textureId,
-                HTSlotPos.getSlotPosX(1) - 1,
-                HTSlotPos.getSlotPosY(0) - 1,
+                HTSlotHelper.getSlotPosX(1) - 1,
+                HTSlotHelper.getSlotPosY(0) - 1,
                 getPosition(6),
                 getPosition(3),
             ),
