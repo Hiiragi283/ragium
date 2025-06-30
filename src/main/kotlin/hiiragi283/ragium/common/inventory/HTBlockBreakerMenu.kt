@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.inventory
 
-import hiiragi283.ragium.api.inventory.HTMachineMenu
+import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -13,7 +13,7 @@ class HTBlockBreakerMenu(
     inventory: Inventory,
     pos: BlockPos,
     definition: HTMenuDefinition,
-) : HTMachineMenu(
+) : HTDefinitionContainerMenu(
         RagiumMenuTypes.BLOCK_BREAKER,
         containerId,
         inventory,

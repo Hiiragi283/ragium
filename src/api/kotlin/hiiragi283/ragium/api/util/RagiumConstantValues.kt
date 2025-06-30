@@ -52,9 +52,6 @@ object RagiumConstantValues {
     const val INVENTORY = "inventory"
     const val TANK = "tank"
 
-    const val INPUT_TANK = "input_tank"
-    const val OUTPUT_TANK = "output_tank"
-
     const val ENERGY_CAPACITY = "energy_capacity"
     const val ENERGY_STORED = "energy_stored"
 
@@ -77,13 +74,6 @@ object RagiumConstantValues {
     const val ITEM_OUTPUT = "item_output"
     const val FLUID_INPUT = "fluid_input"
     const val FLUID_OUTPUT = "fluid_output"
-
-    //    Storages    //
-
-    const val SMALL_DRUM = 32000
-    const val MEDIUM_DRUM = 64000
-    const val LARGE_DRUM = 128000
-    const val HUGE_DRUM = 256000
 
     //    Tag Prefixes    //
 

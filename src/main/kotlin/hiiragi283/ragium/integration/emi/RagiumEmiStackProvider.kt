@@ -6,7 +6,7 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.stack.EmiStackInteraction
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.screen.HTContainerScreen
-import hiiragi283.ragium.api.screen.HTMachineScreen
+import hiiragi283.ragium.api.screen.HTDefinitionContainerScreen
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.world.inventory.Slot
 
@@ -22,7 +22,7 @@ object RagiumEmiStackProvider : EmiStackProvider<Screen> {
                 }
             }
             // Get stack from tanks
-            if (screen is HTMachineScreen<*>) {
+            if (screen is HTDefinitionContainerScreen<*>) {
                 for ((index: Int, pos: Pair<Int, Int>) in screen.menu.fluidSlots) {
                     val (posX: Int, posY: Int) = pos
                     if (HTSlotHelper.isIn(x, screen.startX + posX, 18)) {

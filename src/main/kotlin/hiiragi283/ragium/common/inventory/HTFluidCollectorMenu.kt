@@ -8,29 +8,19 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTCrusherMenu(
-    containerId: Int,
-    inventory: Inventory,
-    pos: BlockPos,
-    definition: HTMenuDefinition,
-) : HTDefinitionContainerMenu(RagiumMenuTypes.CRUSHER, containerId, inventory, pos, definition) {
+class HTFluidCollectorMenu(containerId: Int, inventory: Inventory, pos: BlockPos) :
+    HTDefinitionContainerMenu(RagiumMenuTypes.FLUID_COLLECTOR, containerId, inventory, pos, HTMenuDefinition.empty(0)) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
-        HTMenuDefinition.empty(5),
     )
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        addFluidSlot(0, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(1))
         // upgrades
         addUpgradeSlots()
-        // outputs
-        addOutputSlot(1, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5))
-        addOutputSlot(2, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5))
-        addOutputSlot(3, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5))
-        addOutputSlot(4, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5))
         // player inventory
         addPlayerInv()
         // register property
@@ -38,5 +28,5 @@ class HTCrusherMenu(
     }
 
     override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = 5..8
+    override val outputSlots: IntRange = IntRange.EMPTY
 }

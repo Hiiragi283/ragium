@@ -8,6 +8,8 @@ import hiiragi283.ragium.client.gui.screen.HTAlloySmelterScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockBreakerScreen
 import hiiragi283.ragium.client.gui.screen.HTCrusherScreen
 import hiiragi283.ragium.client.gui.screen.HTExtractorScreen
+import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
+import hiiragi283.ragium.client.gui.screen.HTItemCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.renderer.HTChargerRenderer
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -176,6 +178,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.BLOCK_BREAKER.get(), ::HTBlockBreakerScreen)
         event.register(RagiumMenuTypes.CRUSHER.get(), ::HTCrusherScreen)
         event.register(RagiumMenuTypes.EXTRACTOR.get(), ::HTExtractorScreen)
+        event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
+        event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
 
         LOGGER.info("Registered Screens!")

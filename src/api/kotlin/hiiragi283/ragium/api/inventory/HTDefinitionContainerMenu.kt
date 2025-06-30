@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.SlotItemHandler
 
-abstract class HTMachineMenu(
+abstract class HTDefinitionContainerMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,
     inventory: Inventory,

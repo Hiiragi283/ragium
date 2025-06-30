@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.inventory
 
-import hiiragi283.ragium.api.inventory.HTMachineMenu
+import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -13,7 +13,7 @@ class HTMelterMenu(
     inventory: Inventory,
     pos: BlockPos,
     definition: HTMenuDefinition,
-) : HTMachineMenu(RagiumMenuTypes.MELTER, containerId, inventory, pos, definition) {
+) : HTDefinitionContainerMenu(RagiumMenuTypes.MELTER, containerId, inventory, pos, definition) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,

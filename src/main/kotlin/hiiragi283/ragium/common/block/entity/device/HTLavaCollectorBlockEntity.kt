@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

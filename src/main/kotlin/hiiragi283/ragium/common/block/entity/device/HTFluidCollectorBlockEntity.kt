@@ -7,17 +7,23 @@ import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTTickAwareBlockEntity(type, pos, state) {
+    HTTickAwareBlockEntity(type, pos, state),
+    MenuProvider {
     protected val tank = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
 
     final override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -55,4 +61,11 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
         listOf(tank),
         HTFluidFilter.Companion.DRAIN_ONLY,
     )
+
+    //    MenuProvider    //
+
+    final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTFluidCollectorMenu =
+        HTFluidCollectorMenu(containerId, playerInventory, blockPos)
+
+    final override fun getDisplayName(): Component = blockState.block.name
 }

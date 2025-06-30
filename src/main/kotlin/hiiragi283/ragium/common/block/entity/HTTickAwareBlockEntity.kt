@@ -47,15 +47,12 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
             blockEntity.totalTick++
             if (blockEntity.shouldTick && level is ServerLevel) {
                 val result: TriState = blockEntity.onServerTick(level, pos, state)
-                val oldFlag: Boolean = blockEntity.shouldTick
                 when (result) {
                     TriState.TRUE -> blockEntity.shouldTick = true
                     TriState.DEFAULT -> return
                     TriState.FALSE -> blockEntity.shouldTick = false
                 }
-                if (oldFlag != blockEntity.shouldTick) {
-                    blockEntity.sendUpdatePacket(level)
-                }
+                blockEntity.sendUpdatePacket(level)
             }
         }
     }

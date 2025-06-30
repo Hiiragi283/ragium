@@ -7,6 +7,8 @@ import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.inventory.HTExtractorMenu
+import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
+import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
 
 object RagiumMenuTypes {
@@ -24,6 +26,12 @@ object RagiumMenuTypes {
 
     @JvmField
     val EXTRACTOR: HTDeferredMenuType<HTExtractorMenu> = REGISTER.registerType("extractor", ::HTExtractorMenu)
+
+    @JvmField
+    val FLUID_COLLECTOR: HTDeferredMenuType<HTFluidCollectorMenu> = REGISTER.registerType("fluid_collector", ::HTFluidCollectorMenu)
+
+    @JvmField
+    val ITEM_COLLECTOR: HTDeferredMenuType<HTItemCollectorMenu> = REGISTER.registerType("item_collector", ::HTItemCollectorMenu)
 
     @JvmField
     val MELTER: HTDeferredMenuType<HTMelterMenu> = REGISTER.registerType("melter", ::HTMelterMenu)

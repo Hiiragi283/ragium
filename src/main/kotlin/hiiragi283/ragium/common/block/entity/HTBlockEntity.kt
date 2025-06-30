@@ -174,15 +174,18 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         hand: InteractionHand,
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
+        // レンチでクリックすると出力面を設定
         if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
             this.outputSide = hitResult.direction
             level.playSound(null, pos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS)
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
         } else if (stack.`is`(RagiumItemTags.PAPER)) {
+            // 紙でクリックすると出力面を消去
             this.outputSide = null
             level.playSound(null, pos, SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, SoundSource.BLOCKS)
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
+        // 液体コンテナで触ると搬出入を行う
         val fluidHandler: IFluidHandler? = getFluidHandler(null)
         return when (fluidHandler) {
             is HTFluidHandler -> fluidHandler.interactWith(level, player, hand)
