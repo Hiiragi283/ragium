@@ -24,7 +24,7 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
     fun getFluidStack(index: Int): FluidStack = menu.machine?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
 
     fun getFluidCapacity(index: Int): Int = menu.machine?.getFluidHandler(null)?.getTankCapacity(index) ?: 0
-    
+
     override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,

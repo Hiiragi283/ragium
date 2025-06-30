@@ -9,6 +9,7 @@ object RagiumConstantValues {
     const val COOKED_MEAT = "cooked_meat"
     const val CRIMSON_CRYSTAL = "crimson_crystal"
     const val DEEP_STEEL = "deep_steel"
+    const val ELDRITCH_PEARL = "eldritch_pearl"
     const val MEAT = "meat"
     const val OBSIDIAN = "obsidian"
     const val QUARTZ = "quartz"
@@ -17,7 +18,6 @@ object RagiumConstantValues {
     const val RAGINITE = "raginite"
     const val SOUL = "soul"
     const val WARPED_CRYSTAL = "warped_crystal"
-    const val ELDRITCH_PEARL = "eldritch_pearl"
 
     const val HONEY = "honey"
     const val MUSHROOM_STEW = "mushroom_stew"

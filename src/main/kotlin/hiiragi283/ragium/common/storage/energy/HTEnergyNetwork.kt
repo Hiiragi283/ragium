@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.storage.energy
 
+import com.mojang.serialization.Codec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.buildNbt
@@ -7,6 +9,7 @@ import hiiragi283.ragium.api.util.HTSavedDataType
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.ExtraCodecs
 import net.minecraft.util.Mth
 import net.minecraft.world.level.saveddata.SavedData
 import net.neoforged.neoforge.energy.IEnergyStorage
@@ -20,17 +23,21 @@ internal class HTEnergyNetwork(var amount: Int, var capacity: Int) :
         private fun getInitialCapacity(): Int = RagiumConfig.COMMON.defaultNetworkCapacity.get()
 
         @JvmField
-        val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> =
-            HTSavedDataType(RagiumAPI.id(RagiumConstantValues.NETWORK), ::HTEnergyNetwork, ::fromTag)
-
-        @JvmStatic
-        private fun fromTag(tag: CompoundTag, provider: HolderLookup.Provider): HTEnergyNetwork {
-            var capacity: Int = tag.getInt(RagiumConstantValues.ENERGY_CAPACITY)
-            if (capacity <= 0) {
-                capacity = getInitialCapacity()
-            }
-            return HTEnergyNetwork(tag.getInt(RagiumConstantValues.ENERGY_STORED), capacity)
+        val CODEC: Codec<HTEnergyNetwork> = RecordCodecBuilder.create { instance ->
+            instance
+                .group(
+                    ExtraCodecs.POSITIVE_INT
+                        .optionalFieldOf(RagiumConstantValues.ENERGY_CAPACITY, getInitialCapacity())
+                        .forGetter(HTEnergyNetwork::capacity),
+                    ExtraCodecs.NON_NEGATIVE_INT
+                        .optionalFieldOf(RagiumConstantValues.ENERGY_STORED, 0)
+                        .forGetter(HTEnergyNetwork::amount),
+                ).apply(instance, ::HTEnergyNetwork)
         }
+
+        @JvmField
+        val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> =
+            HTSavedDataType.create(RagiumAPI.id(RagiumConstantValues.NETWORK), CODEC, ::HTEnergyNetwork)
     }
 
     constructor() : this(0, getInitialCapacity())

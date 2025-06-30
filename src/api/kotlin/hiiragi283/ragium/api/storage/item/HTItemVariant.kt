@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.storage.item
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.storage.HTVariant
 import net.minecraft.core.Holder
@@ -17,21 +16,10 @@ import java.util.*
 data class HTItemVariant private constructor(val item: Item, override val components: DataComponentPatch = DataComponentPatch.EMPTY) :
     HTVariant<Item> {
         companion object {
-            @JvmStatic
-            private val RAW_CODEC: Codec<HTItemVariant> = RecordCodecBuilder.create { instance ->
-                instance
-                    .group(
-                        ItemStack.ITEM_NON_AIR_CODEC.fieldOf("id").forGetter(HTItemVariant::holder),
-                        DataComponentPatch.CODEC
-                            .optionalFieldOf("components", DataComponentPatch.EMPTY)
-                            .forGetter(HTItemVariant::components),
-                    ).apply(instance, ::of)
-            }
-
             @JvmField
-            val CODEC: Codec<HTItemVariant> = ExtraCodecs.optionalEmptyMap(RAW_CODEC).xmap(
-                { optional: Optional<HTItemVariant> -> optional.orElse(EMPTY) },
-                { variant: HTItemVariant -> if (variant.isEmpty) Optional.empty() else Optional.of(variant) },
+            val CODEC: Codec<HTItemVariant> = ExtraCodecs.optionalEmptyMap(ItemStack.SINGLE_ITEM_CODEC).xmap(
+                { optional: Optional<ItemStack> -> optional.map(::of).orElse(EMPTY) },
+                { variant: HTItemVariant -> if (variant.isEmpty) Optional.empty() else Optional.of(variant.toStack()) },
             )
 
             @JvmStatic

@@ -185,6 +185,10 @@ class RagiumItemTagsProvider(
             RagiumItems.RAGI_ALLOY_HAMMER,
             RagiumItems.AZURE_STEEL_TOOLS.hammerItem,
         )
+        tag(Tags.Items.TOOLS_WRENCH).addItem(
+            RagiumItems.RAGI_ALLOY_HAMMER,
+            RagiumItems.AZURE_STEEL_TOOLS.hammerItem,
+        )
 
         listOf(
             ItemTags.DURABILITY_ENCHANTABLE,
