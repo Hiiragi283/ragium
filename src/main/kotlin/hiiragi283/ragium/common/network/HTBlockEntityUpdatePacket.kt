@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.network
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.network.HTCustomPayload
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.RegistryFriendlyByteBuf

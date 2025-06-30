@@ -37,4 +37,8 @@ object RagiumTranslationKeys {
 
     const val EMI_CAULDRON_DROPPING = "emi.ragium.cauldron_dropping"
     const val EMI_CAULDRON_DROPPING_MIN_LEVEL = "emi.ragium.cauldron_dropping.min_level"
+
+    //    Jade    //
+
+    const val JADE_OUTPUT_SIDE = "text.ragium.output_side"
 }

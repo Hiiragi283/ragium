@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.block.entity.HTFluidCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel

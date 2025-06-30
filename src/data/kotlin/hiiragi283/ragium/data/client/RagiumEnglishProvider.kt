@@ -526,11 +526,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun jade() {
-        add("config.jade.plugin_ragium.advanced_crusher", "Advanced Crusher")
-        add("config.jade.plugin_ragium.advanced_extractor", "Advanced Extractor")
-        add("config.jade.plugin_ragium.crusher", "Crusher")
-        add("config.jade.plugin_ragium.enchantable_block", "Enchantable Block")
-        add("config.jade.plugin_ragium.extractor", "Extractor")
+        add("config.jade.plugin_ragium.output_side", "Output Side")
+
+        add(RagiumTranslationKeys.JADE_OUTPUT_SIDE, "Output Side: %s")
     }
 
     private fun mekanism() {

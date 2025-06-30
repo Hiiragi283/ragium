@@ -1,15 +1,16 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
+import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
+import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -19,33 +20,27 @@ abstract class HTDrumBlockEntity(
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
-) : HTBlockEntity(type, pos, state),
-    HTFluidTankHandler {
-    private val tank: HTFluidTank = HTFluidTank.create("tank", this) {
-        this.capacity = capacity
-    }
+) : HTBlockEntity(type, pos, state) {
+    private val tank = HTFluidTank(capacity, this::setChanged)
 
     //    Save & Load    //
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        tank.writeNbt(writer)
+        writer.write(RagiumConstantValues.TANK, tank)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        tank.readNbt(reader)
+        reader.read(RagiumConstantValues.TANK, tank)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
-        tank.replace(
-            componentInput.getOrDefault(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.EMPTY).copy(),
-            true,
-        )
+        tank.fluid = componentInput.getOrDefault(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.EMPTY).copy()
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.stack))
+        components.set(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.fluid))
     }
 
     override fun reloadUpgrades() {
@@ -53,13 +48,10 @@ abstract class HTDrumBlockEntity(
         tank
     }
 
-    //    Fluid    //
-
-    override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.GENERIC
-
-    override fun getFluidTank(tank: Int): HTFluidTank = this.tank
-
-    override fun getTanks(): Int = 1
+    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(
+        listOf(tank),
+        HTFluidFilter.ALWAYS,
+    )
 
     //    Impl    //
 

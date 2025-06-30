@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import net.minecraft.core.BlockPos

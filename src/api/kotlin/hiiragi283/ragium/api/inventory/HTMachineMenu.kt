@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.inventory
 
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import net.minecraft.core.BlockPos
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.SlotItemHandler
 
@@ -29,7 +29,7 @@ abstract class HTMachineMenu(
             return Mth.clamp(fixedTotalTicks / maxTicks.toFloat(), 0f, 1f)
         }
 
-    val machine: HTMachineBlockEntity? = level.getBlockEntity(pos) as? HTMachineBlockEntity
+    fun <T> usePosition(action: (Level, BlockPos) -> T): T = action(level, pos)
 
     fun addSlot(index: Int, x: Int, y: Int) {
         addSlot(SlotItemHandler(definition.inventory, index, x, y))

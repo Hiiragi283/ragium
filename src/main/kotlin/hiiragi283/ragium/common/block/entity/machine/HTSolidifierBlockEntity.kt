@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemStackHandler
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

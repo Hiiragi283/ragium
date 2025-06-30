@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos

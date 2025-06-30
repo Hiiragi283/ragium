@@ -1,8 +1,8 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.common.block
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult

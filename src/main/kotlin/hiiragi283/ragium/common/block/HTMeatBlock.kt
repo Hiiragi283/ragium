@@ -1,7 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.block.HTBlockStateProperties
-import hiiragi283.ragium.api.block.HTFeastBlock
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack

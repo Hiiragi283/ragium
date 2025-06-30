@@ -1,16 +1,15 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTEntityBlock
-import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.block.HTChargerBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
+import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
+import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSoulGlassBlock
@@ -18,6 +17,7 @@ import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeSlabBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTreeTapBlock
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
 import net.minecraft.core.cauldron.CauldronInteraction

@@ -1,21 +1,20 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidTankHelper
+import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemStackHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTMelterMenu
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.storage.fluid.HTFluidTank
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
@@ -28,23 +27,21 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.MELTER, pos, state),
-    HTFluidTankHandler {
+class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.MELTER, pos, state) {
     override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
-    private val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this)
+    private val tank = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         super.writeNbt(writer)
-        outputTank.writeNbt(writer)
+        writer.write(RagiumConstantValues.TANK, tank)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
         super.readNbt(reader)
-        outputTank.readNbt(reader)
+        reader.read(RagiumConstantValues.TANK, tank)
     }
 
     //    Ticking    //
@@ -58,19 +55,17 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         state: BlockState,
         network: IEnergyStorage,
     ): TriState {
-        // 200 tickごとに実行する
-        if (!canProcess()) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
         val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
         val recipe: HTMeltingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
         // エネルギーを消費できるか判定する
         if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
         // アウトプットに搬出できるか判定する
-        if (!HTFluidTankHelper.canInsertFluid(outputTank, recipe.output.get())) {
+        if (!tank.canFill(recipe.output.get(), true)) {
             return TriState.FALSE
         }
         // 実際にアウトプットに搬出する
-        HTFluidTankHelper.insertFluid(outputTank, recipe.output.get(), false)
+        tank.fill(recipe.output.get(), IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
         inventory.consumeStackInSlot(0, recipe.ingredient.count())
         // エネルギーを減らす
@@ -80,14 +75,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         return TriState.TRUE
     }
 
-    override fun getItemHandler(direction: Direction?): IItemHandler? = HTFilteredItemHandler(inventory, HTItemFilter.INSERT_ONLY)
-    //    Fluid    //
+    override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, HTItemFilter.INSERT_ONLY)
 
-    override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.OUTPUT
-
-    override fun getFluidTank(tank: Int): HTFluidTank? = outputTank
-
-    override fun getTanks(): Int = 1
+    override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler =
+        HTFilteredFluidHandler(listOf(tank), HTFluidFilter.DRAIN_ONLY)
 
     //    Menu    //
 

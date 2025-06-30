@@ -1,16 +1,16 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemStackHandler
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
@@ -43,8 +43,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         state: BlockState,
         network: IEnergyStorage,
     ): TriState {
-        // 200 tickごとに実行する
-        if (!canProcess()) return TriState.DEFAULT
         // インプットに一致するレシピを探索する
         val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0), inventory.getStackInSlot(1))
         val recipe: HTAlloyingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE

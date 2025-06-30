@@ -1,7 +1,7 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext

@@ -2,14 +2,14 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTChargerBlockEntity
 import hiiragi283.ragium.common.block.entity.HTCreativeEnergyUnitBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
+import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity

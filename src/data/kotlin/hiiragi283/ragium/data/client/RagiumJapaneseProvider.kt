@@ -513,11 +513,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun jade() {
-        add("config.jade.plugin_ragium.advanced_crusher", "発展型粉砕機")
-        add("config.jade.plugin_ragium.advanced_extractor", "発展型抽出機")
-        add("config.jade.plugin_ragium.crusher", "粉砕機")
-        add("config.jade.plugin_ragium.enchantable_block", "エンチャント可能なブロック")
-        add("config.jade.plugin_ragium.extractor", "抽出機")
+        add("config.jade.plugin_ragium.output_side", "搬出面")
+
+        add(RagiumTranslationKeys.JADE_OUTPUT_SIDE, "搬出面: %s")
     }
 
     private fun mekanism() {

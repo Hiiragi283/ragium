@@ -141,11 +141,7 @@
   "chemical.ragium.crimson_sap": "深紅の樹液",
   "chemical.ragium.raginite": "ラギナイト",
   "chemical.ragium.warped_sap": "歪んだ樹液",
-  "config.jade.plugin_ragium.advanced_crusher": "発展型粉砕機",
-  "config.jade.plugin_ragium.advanced_extractor": "発展型抽出機",
-  "config.jade.plugin_ragium.crusher": "粉砕機",
-  "config.jade.plugin_ragium.enchantable_block": "エンチャント可能なブロック",
-  "config.jade.plugin_ragium.extractor": "抽出機",
+  "config.jade.plugin_ragium.output_side": "搬出面",
   "emi.ragium.ambrosia": "いつでも食べられる上，いくら食べてもなくなりません！",
   "emi.ragium.ash_log": "壊すと灰の粉が手に入ります。",
   "emi.ragium.cauldron_dropping": "大釜に投げ入れる",
@@ -294,5 +290,6 @@
   "text.ragium.effect_range": "有効半径: %s ブロック",
   "text.ragium.fluid_capacity": "容量: %s mb",
   "text.ragium.fluid_name": "%s: %s mb",
+  "text.ragium.output_side": "搬出面: %s",
   "upgrade.azure_steel_upgrade": "紺鉄強化"
 }

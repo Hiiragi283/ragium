@@ -1,7 +1,6 @@
 package hiiragi283.ragium.integration.jade.base
 
 import hiiragi283.ragium.api.extension.listOf
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -45,8 +44,6 @@ class HTProgressData private constructor(
         fun addItem(stack: ItemStack): Builder = apply {
             items.add(stack.copy())
         }
-
-        fun addFluid(tank: HTFluidTank?): Builder = addFluid(tank?.stack ?: FluidStack.EMPTY)
 
         fun addFluid(stack: FluidStack): Builder = apply {
             fluids.add(stack.copy())

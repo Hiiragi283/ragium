@@ -141,11 +141,7 @@
   "chemical.ragium.crimson_sap": "Crimson Sap",
   "chemical.ragium.raginite": "Raginite",
   "chemical.ragium.warped_sap": "Warped Sap",
-  "config.jade.plugin_ragium.advanced_crusher": "Advanced Crusher",
-  "config.jade.plugin_ragium.advanced_extractor": "Advanced Extractor",
-  "config.jade.plugin_ragium.crusher": "Crusher",
-  "config.jade.plugin_ragium.enchantable_block": "Enchantable Block",
-  "config.jade.plugin_ragium.extractor": "Extractor",
+  "config.jade.plugin_ragium.output_side": "Output Side",
   "emi.ragium.ambrosia": "Always edible and not consumed!",
   "emi.ragium.ash_log": "Drop Ash Dust when harvested.",
   "emi.ragium.cauldron_dropping": "Cauldron Dropping",
@@ -294,5 +290,6 @@
   "text.ragium.effect_range": "Effect Radius: %s blocks",
   "text.ragium.fluid_capacity": "Capacity: %s mb",
   "text.ragium.fluid_name": "%s : %s mb",
+  "text.ragium.output_side": "Output Side: %s",
   "upgrade.azure_steel_upgrade": "Azure Steel Upgrade"
 }

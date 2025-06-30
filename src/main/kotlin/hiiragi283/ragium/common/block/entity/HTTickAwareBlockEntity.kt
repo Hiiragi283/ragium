@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.block.entity
+package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType

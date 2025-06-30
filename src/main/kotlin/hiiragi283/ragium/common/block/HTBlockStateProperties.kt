@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.common.block
 
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty

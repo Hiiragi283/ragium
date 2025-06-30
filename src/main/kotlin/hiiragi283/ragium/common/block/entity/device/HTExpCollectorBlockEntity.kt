@@ -1,17 +1,16 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
-import hiiragi283.ragium.api.storage.fluid.HTFluidTankHelper
-import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
+import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
+import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.level.block.state.BlockState
@@ -19,21 +18,18 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTTickAwareBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
-    HTFluidTankHandler {
-    private val outputTank: HTFluidTank = HTFluidTank.create(RagiumConstantValues.OUTPUT_TANK, this) {
-        validator = { variant: HTFluidVariant -> variant.isOf(RagiumFluidContents.EXPERIENCE.get()) }
-        capacity = Int.MAX_VALUE
-    }
+    HTTickAwareBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state) {
+    private val tank = HTFluidTank(Int.MAX_VALUE, this::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        outputTank.writeNbt(writer)
+        writer.write(RagiumConstantValues.TANK, tank)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        outputTank.readNbt(reader)
+        reader.read(RagiumConstantValues.TANK, tank)
     }
 
     //    Ticking    //
@@ -41,6 +37,8 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
+        // 自動搬出する
+        exportFluids(level, pos)
         // 範囲内のExp Orbを取得する
         val range: Int = RagiumConfig.COMMON.entityCollectorRange.get()
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
@@ -61,8 +59,8 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         for (entity: ExperienceOrb in expOrbs) {
             val fluidAmount: Int = entity.value * RagiumConfig.COMMON.expCollectorMultiplier.get()
             val stack: FluidStack = RagiumFluidContents.EXPERIENCE.toStack(fluidAmount)
-            if (HTFluidTankHelper.canInsertFluid(outputTank, stack)) {
-                HTFluidTankHelper.insertFluid(outputTank, stack, false)
+            if (tank.canFill(stack, true)) {
+                tank.fill(stack, IFluidHandler.FluidAction.EXECUTE)
                 entity.discard()
             }
         }
@@ -71,11 +69,5 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val maxTicks: Int = 20
 
-    //    Fluid    //
-
-    override fun getFluidIoFromSlot(tank: Int): HTStorageIO = HTStorageIO.OUTPUT
-
-    override fun getFluidTank(tank: Int): HTFluidTank? = outputTank
-
-    override fun getTanks(): Int = 1
+    override fun getFluidHandler(direction: Direction?): IFluidHandler? = HTFilteredFluidHandler(listOf(tank), HTFluidFilter.DRAIN_ONLY)
 }

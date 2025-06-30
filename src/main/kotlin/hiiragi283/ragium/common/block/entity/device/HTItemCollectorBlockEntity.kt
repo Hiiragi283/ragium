@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
-import hiiragi283.ragium.api.storage.item.HTItemStackHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -49,6 +49,8 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
         if (!canProcess()) return TriState.DEFAULT
+        // 自動搬出する
+        exportItems(level, pos)
         // 範囲内のItem Entityを取得する
         val range: Int = RagiumConfig.COMMON.entityCollectorRange.get()
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(

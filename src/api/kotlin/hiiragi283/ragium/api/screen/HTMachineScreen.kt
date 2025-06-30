@@ -3,12 +3,16 @@ package hiiragi283.ragium.api.screen
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTMachineMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory, title: Component) :
     HTContainerScreen<T>(menu, inventory, title) {
@@ -21,9 +25,13 @@ abstract class HTMachineScreen<T : HTMachineMenu>(menu: T, inventory: Inventory,
     open val progressSizeY: Int = 16
     open val progressTex: ResourceLocation = vanillaId("container/furnace/burn_progress")
 
-    fun getFluidStack(index: Int): FluidStack = menu.machine?.getFluidHandler(null)?.getFluidInTank(index) ?: FluidStack.EMPTY
+    private fun getFluidHandler(): IFluidHandler? = menu.usePosition { level: Level, pos: BlockPos ->
+        (level.getBlockEntity(pos) as? HTHandlerBlockEntity)?.getFluidHandler(null)
+    }
 
-    fun getFluidCapacity(index: Int): Int = menu.machine?.getFluidHandler(null)?.getTankCapacity(index) ?: 0
+    fun getFluidStack(index: Int): FluidStack = getFluidHandler()?.getFluidInTank(index) ?: FluidStack.EMPTY
+
+    fun getFluidCapacity(index: Int): Int = getFluidHandler()?.getTankCapacity(index) ?: 0
 
     override fun render(
         guiGraphics: GuiGraphics,

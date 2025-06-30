@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemStackHandler
+import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -42,8 +42,6 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         state: BlockState,
         network: IEnergyStorage,
     ): TriState {
-        // 200 tickごとに実行する
-        if (!canProcess()) return TriState.DEFAULT
         // エネルギーを消費できるか判定する
         if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
         // 採掘用のFake Playerを用意する

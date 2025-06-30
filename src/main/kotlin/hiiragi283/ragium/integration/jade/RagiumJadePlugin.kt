@@ -1,6 +1,7 @@
 package hiiragi283.ragium.integration.jade
 
 import com.mojang.logging.LogUtils
+import net.minecraft.world.level.block.Block
 import org.slf4j.Logger
 import snownee.jade.api.IWailaClientRegistration
 import snownee.jade.api.IWailaCommonRegistration
@@ -19,8 +20,10 @@ class RagiumJadePlugin : IWailaPlugin {
     }
 
     override fun register(registration: IWailaCommonRegistration) {
+        registration.registerBlockDataProvider(HTOutputSideDataProvider, Block::class.java)
     }
 
     override fun registerClient(registration: IWailaClientRegistration) {
+        registration.registerBlockComponent(HTOutputSideDataProvider, Block::class.java)
     }
 }

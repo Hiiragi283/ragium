@@ -4,16 +4,14 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
+import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
-import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.api.storage.fluid.HTFluidVariant
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
@@ -28,12 +26,10 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.*
 
 interface RagiumAPI {
@@ -126,29 +122,9 @@ interface RagiumAPI {
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
     /**
-     * @see [HTStorageIO.wrapFluidTank]
-     */
-    fun wrapFluidTank(storageIO: HTStorageIO, tank: HTFluidTank): IFluidHandler
-
-    /**
      * @see [HTStorageIO.wrapEnergyStorage]
      */
     fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
-
-    /**
-     * @see [HTFluidTank.Builder.build]
-     */
-    fun buildFluidTank(
-        nbtKey: String,
-        capacity: Int,
-        validator: (HTFluidVariant) -> Boolean,
-        callback: () -> Unit,
-    ): HTFluidTank
-
-    /**
-     * @see [HTBlockEntity.sendUpdatePacket]
-     */
-    fun sendUpdatePayload(blockEntity: BlockEntity, serverLevel: ServerLevel)
 
     /**
      * @see [HTBlockInteractingRecipe.getType]
@@ -164,4 +140,9 @@ interface RagiumAPI {
      * @see [HTTransmuteRecipe.getSerializer]
      */
     fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe>
+
+    /**
+     * @see [HTMenuDefinition.empty]
+     */
+    fun createEmptyMenuDefinition(size: Int): HTMenuDefinition
 }

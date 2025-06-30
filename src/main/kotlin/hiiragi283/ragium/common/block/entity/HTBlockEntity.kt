@@ -1,14 +1,16 @@
-package hiiragi283.ragium.api.block.entity
+package hiiragi283.ragium.common.block.entity
 
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.fluid.HTFluidTankHandler
-import hiiragi283.ragium.api.storage.item.HTItemStackHandler
+import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
+import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
+import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -26,16 +28,20 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.util.INBTSerializable
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.network.PacketDistributor
 import org.slf4j.Logger
 import java.util.*
 
@@ -44,6 +50,7 @@ import java.util.*
  */
 abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state),
+    HTHandlerBlockEntity,
     HTNbtCodec {
     companion object {
         @JvmField
@@ -61,7 +68,11 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      * クライアント側に同期パケットを送る
      */
     fun sendUpdatePacket(serverLevel: ServerLevel) {
-        RagiumAPI.getInstance().sendUpdatePayload(this, serverLevel)
+        PacketDistributor.sendToPlayersTrackingChunk(
+            serverLevel,
+            ChunkPos(blockPos),
+            HTBlockEntityUpdatePacket(blockPos, getUpdateTag(serverLevel.registryAccess())),
+        )
     }
 
     /**
@@ -76,7 +87,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         setChanged()
     }
 
-    var targetSide: Direction? = null
+    var outputSide: Direction? = null
         protected set
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -98,7 +109,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             }
         }
         // Target Side
-        writer.writeNullable(Direction.CODEC, RagiumConstantValues.TARGET_SIDE, targetSide)
+        writer.writeNullable(Direction.CODEC, RagiumConstantValues.TARGET_SIDE, outputSide)
         // Upgrades
         writer.write(RagiumConstantValues.UPGRADES, upgrades)
         // Custom
@@ -118,7 +129,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         // Target Side
         reader
             .read(Direction.CODEC, RagiumConstantValues.TARGET_SIDE)
-            .ifSuccess { direction: Direction -> targetSide = direction }
+            .ifSuccess { direction: Direction -> outputSide = direction }
         // Upgrades
         reader.read(RagiumConstantValues.UPGRADES, upgrades)
         // Custom
@@ -164,12 +175,17 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
         if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
-            this.targetSide = hitResult.direction
+            this.outputSide = hitResult.direction
             level.playSound(null, pos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS)
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
+        } else if (stack.`is`(RagiumItemTags.PAPER)) {
+            this.outputSide = null
+            level.playSound(null, pos, SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, SoundSource.BLOCKS)
+            return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
-        return when (this) {
-            is HTFluidTankHandler -> interactWith(level, player, hand)
+        val fluidHandler: IFluidHandler? = getFluidHandler(null)
+        return when (fluidHandler) {
+            is HTFluidHandler -> fluidHandler.interactWith(level, player, hand)
             else -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
         }
     }
@@ -252,20 +268,36 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
      */
     protected open fun reloadUpgrades() {}
 
-    //    Capability    //
+    /**
+     * 対象となるブロックにアイテムを移動します
+     */
+    protected fun exportItems(level: ServerLevel, pos: BlockPos) {
+        val handler: IItemHandler = getItemHandler(null) ?: return
+        val targetSide: Direction = this.outputSide ?: return
+        val outputHandler: IItemHandler? =
+            level.getCapability(Capabilities.ItemHandler.BLOCK, pos.relative(targetSide), targetSide.opposite)
+        if (outputHandler != null) {
+            for (slot: Int in (0 until handler.slots)) {
+                var stack: ItemStack = handler.extractItem(slot, 64, true)
+                if (stack.isEmpty) continue
+                stack = handler.getStackInSlot(slot)
+                if (ItemHandlerHelper.insertItem(outputHandler, stack, false).isEmpty) {
+                    handler.extractItem(slot, stack.count, false)
+                }
+            }
+        }
+    }
 
     /**
-     * 指定した[direction]から[IItemHandler]を返します。
+     * 対象となるブロックに液体を移動します
      */
-    open fun getItemHandler(direction: Direction?): IItemHandler? = null
-
-    /**
-     * 指定した[direction]から[IFluidHandler]を返します。
-     */
-    open fun getFluidHandler(direction: Direction?): IFluidHandler? = this as? HTFluidTankHandler
-
-    /**
-     * 指定した[direction]から[IEnergyStorage]を返します。
-     */
-    open fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
+    protected fun exportFluids(level: ServerLevel, pos: BlockPos) {
+        val handler: IFluidHandler = getFluidHandler(null) ?: return
+        val targetSide: Direction = this.outputSide ?: return
+        val outputHandler: IFluidHandler? =
+            level.getCapability(Capabilities.FluidHandler.BLOCK, pos.relative(targetSide), targetSide.opposite)
+        if (outputHandler != null) {
+            FluidUtil.tryFluidTransfer(outputHandler, handler, Int.MAX_VALUE, true)
+        }
+    }
 }

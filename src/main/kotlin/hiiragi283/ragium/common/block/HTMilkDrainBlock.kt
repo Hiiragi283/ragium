@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
