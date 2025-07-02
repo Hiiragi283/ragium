@@ -1,0 +1,28 @@
+{
+  "values": [
+    "#c:obsidians/mysterious",
+    "ragium:ash_log",
+    "ragium:cooked_meat_on_the_bone",
+    "ragium:wooden_casing",
+    "ragium:stone_casing",
+    "ragium:refinery",
+    "ragium:solidifier",
+    "ragium:tree_tap",
+    {
+      "id": "ragium:honey_cauldron",
+      "required": false
+    },
+    {
+      "id": "ragium:mushroom_stew_cauldron",
+      "required": false
+    },
+    {
+      "id": "ragium:crimson_sap_cauldron",
+      "required": false
+    },
+    {
+      "id": "ragium:warped_sap_cauldron",
+      "required": false
+    }
+  ]
+}

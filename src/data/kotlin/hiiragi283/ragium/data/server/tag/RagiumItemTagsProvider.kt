@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.addHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
@@ -74,6 +75,8 @@ class RagiumItemTagsProvider(
         copy(RagiumBlockTags.OBSIDIANS_MYSTERIOUS, RagiumItemTags.OBSIDIANS_MYSTERIOUS)
         copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
         copy(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
+
+        copy(RagiumBlockTags.WIP, RagiumItemTags.WIP)
     }
 
     //    Material    //
@@ -226,6 +229,20 @@ class RagiumItemTagsProvider(
         tag(ItemTags.PIGLIN_LOVED)
             .addTag(RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY)
             .addItem(RagiumItems.FEVER_CHERRY)
+
+        tag(RagiumItemTags.WIP)
+            .addTags(
+                RagiumItemTags.INGOTS_DEEP_STEEL,
+                RagiumItemTags.STORAGE_BLOCKS_DEEP_STEEL,
+            ).addHolder(
+                RagiumItems.ELDER_HEART,
+                RagiumItems.BOTTLED_BEE,
+                RagiumItems.EXP_BERRIES,
+                RagiumItems.LED,
+                RagiumItems.SOLAR_PANEL,
+                RagiumItems.STONE_BOARD,
+                RagiumItems.CRYSTAL_PROCESSOR,
+            )
     }
 
     private fun curios() {

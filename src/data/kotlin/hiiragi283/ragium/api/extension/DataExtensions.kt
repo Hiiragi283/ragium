@@ -34,7 +34,7 @@ fun ResourceKey<Advancement>.descKey(): String = "${translationKey(this)}.desc"
 
 //    TagAppender    //
 
-fun <T : Any> TagsProvider.TagAppender<T>.addHolder(vararg holders: DeferredHolder<T, out T>) {
+fun <T : Any, B : TagsProvider.TagAppender<T>> B.addHolder(vararg holders: DeferredHolder<T, out T>): B = apply {
     holders.mapNotNull(DeferredHolder<T, out T>::getKey).forEach(::add)
 }
 

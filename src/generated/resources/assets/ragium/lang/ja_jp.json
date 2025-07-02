@@ -291,5 +291,6 @@
   "text.ragium.fluid_capacity": "容量: %s mb",
   "text.ragium.fluid_name": "%s: %s mb",
   "text.ragium.output_side": "搬出面: %s",
+  "text.ragium.work_in_progress": "この要素は開発中です！！",
   "upgrade.azure_steel_upgrade": "紺鉄強化"
 }

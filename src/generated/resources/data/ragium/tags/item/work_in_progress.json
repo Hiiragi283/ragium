@@ -1,0 +1,37 @@
+{
+  "values": [
+    "#c:ingots/deep_steel",
+    "#c:storage_blocks/deep_steel",
+    "ragium:elder_heart",
+    "ragium:bottled_bee",
+    "ragium:exp_berries",
+    "ragium:led",
+    "ragium:solar_panel",
+    "ragium:stone_board",
+    "ragium:crystal_processor",
+    "#c:obsidians/mysterious",
+    "ragium:ash_log",
+    "ragium:cooked_meat_on_the_bone",
+    "ragium:wooden_casing",
+    "ragium:stone_casing",
+    "ragium:refinery",
+    "ragium:solidifier",
+    "ragium:tree_tap",
+    {
+      "id": "ragium:honey_cauldron",
+      "required": false
+    },
+    {
+      "id": "ragium:mushroom_stew_cauldron",
+      "required": false
+    },
+    {
+      "id": "ragium:crimson_sap_cauldron",
+      "required": false
+    },
+    {
+      "id": "ragium:warped_sap_cauldron",
+      "required": false
+    }
+  ]
+}

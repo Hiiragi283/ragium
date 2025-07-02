@@ -39,4 +39,7 @@ object RagiumBlockTags {
 
     @JvmField
     val STONES_ROCK_GENERATIONS: TagKey<Block> = blockTagKey(RagiumAPI.id("stones/rock_generation"))
+
+    @JvmField
+    val WIP: TagKey<Block> = blockTagKey(RagiumAPI.id("work_in_progress"))
 }

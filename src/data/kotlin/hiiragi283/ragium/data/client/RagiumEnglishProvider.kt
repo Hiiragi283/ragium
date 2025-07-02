@@ -500,6 +500,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "Capacity: %s mb")
 
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "Effect Radius: %s blocks")
+
+        add(RagiumTranslationKeys.TEXT_WIP, "This content is work in progress!!")
     }
 
     private fun delight() {

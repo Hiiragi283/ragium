@@ -118,5 +118,21 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         tag(BlockTags.INFINIBURN_OVERWORLD).addHolder(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
         tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addHolder(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
         tag(BlockTags.STRIDER_WARM_BLOCKS).addHolder(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
+
+        tag(RagiumBlockTags.WIP)
+            .addTags(RagiumBlockTags.OBSIDIANS_MYSTERIOUS)
+            .addHolder(
+                RagiumBlocks.ASH_LOG,
+                RagiumBlocks.COOKED_MEAT_ON_THE_BONE,
+                RagiumBlocks.WOODEN_CASING,
+                RagiumBlocks.STONE_CASING,
+                RagiumBlocks.REFINERY,
+                RagiumBlocks.SOLIDIFIER,
+                RagiumBlocks.TREE_TAP,
+            ).apply {
+                RagiumBlocks.CAULDRONS.forEach { holder: DeferredBlock<*> ->
+                    addOptional(holder.id)
+                }
+            }
     }
 }

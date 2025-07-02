@@ -487,6 +487,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "容量: %s mb")
 
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "有効半径: %s ブロック")
+
+        add(RagiumTranslationKeys.TEXT_WIP, "この要素は開発中です！！")
     }
 
     private fun emi() {

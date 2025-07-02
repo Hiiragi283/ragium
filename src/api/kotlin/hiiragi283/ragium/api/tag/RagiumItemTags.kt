@@ -285,4 +285,7 @@ object RagiumItemTags {
 
     @JvmField
     val END_SOILS: TagKey<Item> = itemTagKey(RagiumAPI.id("soils/end"))
+
+    @JvmField
+    val WIP: TagKey<Item> = itemTagKey(RagiumAPI.id("work_in_progress"))
 }

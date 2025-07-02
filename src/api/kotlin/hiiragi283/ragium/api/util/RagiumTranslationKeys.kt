@@ -19,6 +19,8 @@ object RagiumTranslationKeys {
     const val TEXT_MISSING_ANCHOR = "text.ragium.missing_anchor"
     const val TEXT_MISSING_POS = "text.ragium.missing_pos"
 
+    const val TEXT_WIP = "text.ragium.work_in_progress"
+
     //    EMI    //
 
     const val EMI_AMBROSIA = "emi.ragium.ambrosia"
