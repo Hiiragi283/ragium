@@ -22,28 +22,22 @@
 
 ### Optional
 
-- [CTM](https://www.curseforge.com/minecraft/mc-mods/ctm)
-  - Supports connected textures for some blocks
-- [Curios](https://modrinth.com/mod/curios)
-  - Supports curio for some utility items
-- [EMI](https://modrinth.com/mod/emi)
-  - Adds new categories and information
-- [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions)
-  - Adds descriptions for new enchantments
-- [Farmer's Delight](https://modrinth.com/mod/farmers-delight)
-  - Adds new foods and ingredients
-- [Jade 🔍](https://modrinth.com/mod/jade)
-  - Adds new information providers
-- [Mekanism](https://modrinth.com/mod/mekanism)
-  - Add new chemicals, ingredients, and recipes
-- [PneumaticCraft: Repressurized](https://modrinth.com/mod/pneumaticcraft-repressurized)
-  - Adds compat tags for some items
+|                                        Mod Name                                        | Recipe Integration | Tag Integration |                    Other                    |
+|:--------------------------------------------------------------------------------------:|:------------------:|:---------------:|:-------------------------------------------:|
+|                [CTM](https://www.curseforge.com/minecraft/mc-mods/ctm)                 |         ❌          |        ❌        | Supports connected textures for some blocks |
+|                       [Curios](https://modrinth.com/mod/curios)                        |         ❌          |        ⭕        |                                             |
+|                          [EMI](https://modrinth.com/mod/emi)                           |         ❌          |        ❌        |                                             |
+|     [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions)      |         ❌          |        ❌        |   Adds descriptions for new enchantments    |
+|              [Farmer's Delight](https://modrinth.com/mod/farmers-delight)              |         ⭕          |        ⭕        |       Adds new foods and ingredients        |
+|                        [Jade 🔍](https://modrinth.com/mod/jade)                        |         ❌          |        ❌        |       Adds new information providers        |
+|                     [Mekanism](https://modrinth.com/mod/mekanism)                      |         ⭕          |        ⭕        |         Add new items and chemicals         |
+| [PneumaticCraft: Repressurized](https://modrinth.com/mod/pneumaticcraft-repressurized) |         ❌          |        ⭕        |                                             |
+|                  [Replication](https://modrinth.com/mod/replication)                   |         ⭕          |        ❌        |             Add new matter type             |
 
 ## Features
 
-- No world generation for new resources
-- Basic tech machines (Crusher, Extractor, Refinery, ...) but work with wireless energy network!
-- Some utility Items
+- Basic tech machines (Crusher, Extractor, Refinery, ...) but WIRELESS BY DEFAULT!
+- Some utility Items (Item Magnet, Damage Trap, Teleporter, Spawn Egg converter, ...)
 
 ## Images
 
