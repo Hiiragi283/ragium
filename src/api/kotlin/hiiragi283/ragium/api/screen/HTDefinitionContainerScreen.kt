@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
@@ -40,8 +41,6 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
         partialTick: Float,
     ) {
         super.render(guiGraphics, mouseX, mouseY, partialTick)
-        // energy amount
-        renderEnergyTooltip(guiGraphics, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0), mouseX, mouseY)
         // fluid tooltip
         menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             renderFluidTooltip(
@@ -54,6 +53,8 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
                 mouseY,
             )
         }
+        // energy amount
+        renderEnergyTooltip(guiGraphics, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0), mouseX, mouseY)
     }
 
     override fun renderBg(
@@ -105,5 +106,9 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
             Mth.ceil(menu.progress * progressSizeX),
             progressSizeY,
         )
+    }
+
+    override fun getEnergyNetwork(menu: T): IEnergyStorage? = menu.usePosition { level: Level, pos: BlockPos ->
+        (level.getBlockEntity(pos) as? HTHandlerBlockEntity)?.getEnergyStorage(null)
     }
 }

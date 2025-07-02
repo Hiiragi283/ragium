@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.screen
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.fluidCapacityText
 import hiiragi283.ragium.api.extension.getSpriteAndColor
 import hiiragi283.ragium.api.extension.idOrThrow
@@ -120,11 +119,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         mouseX: Int,
         mouseY: Int,
     ) {
-        val network: IEnergyStorage = RagiumAPI
-            .getInstance()
-            .getEnergyNetworkManager()
-            .getNetworkFromKey(menu.level.dimension())
-            ?: return
+        val network: IEnergyStorage = getEnergyNetwork(menu) ?: return
         renderTooltip(x, y, mouseX, mouseY, rangeY = 18 * 3) {
             guiGraphics.renderTooltip(
                 font,
@@ -136,4 +131,6 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
             )
         }
     }
+
+    protected open fun getEnergyNetwork(menu: T): IEnergyStorage? = null
 }

@@ -6,10 +6,9 @@ import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTChargerBlockEntity
-import hiiragi283.ragium.common.block.entity.HTCreativeEnergyUnitBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
-import hiiragi283.ragium.common.block.entity.HTEnergyNetworkInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
@@ -44,8 +43,7 @@ object RagiumBlockEntityTypes {
     fun <T : HTTickAwareBlockEntity> registerTick(
         name: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,
-    ): HTDeferredBlockEntityType<T> =
-        REGISTER.registerType(name, factory, HTTickAwareBlockEntity::clientTick, HTTickAwareBlockEntity::serverTick)
+    ): HTDeferredBlockEntityType<T> = REGISTER.registerType(name, factory, HTTickAwareBlockEntity::serverTick)
 
     //    Machine    //
 
@@ -73,18 +71,18 @@ object RagiumBlockEntityTypes {
     //    Device    //
 
     @JvmField
-    val CEU: HTDeferredBlockEntityType<HTCreativeEnergyUnitBlockEntity> = REGISTER.registerType(
+    val CEU: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
         "creative_energy_unit",
-        ::HTCreativeEnergyUnitBlockEntity,
+        HTEnergyNetworkAccessBlockEntity::Creative,
     )
 
     @JvmField
     val CHARGER: HTDeferredBlockEntityType<HTChargerBlockEntity> = registerTick("charger", ::HTChargerBlockEntity)
 
     @JvmField
-    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkInterfaceBlockEntity> = REGISTER.registerType(
+    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
         "energy_network_interface",
-        ::HTEnergyNetworkInterfaceBlockEntity,
+        HTEnergyNetworkAccessBlockEntity::Simple,
     )
 
     @JvmField

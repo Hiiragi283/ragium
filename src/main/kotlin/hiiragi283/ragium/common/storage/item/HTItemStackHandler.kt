@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTItemStackHandler(size: Int = 1, private var callback: (Int) -> Unit = {}) :
+open class HTItemStackHandler(size: Int = 1, private var callback: (Int) -> Unit = {}) :
     ItemStackHandler(size),
     HTItemHandler {
     constructor(size: Int = 1, callback: () -> Unit = {}) : this(size, { _: Int -> callback() })

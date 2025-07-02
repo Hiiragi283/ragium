@@ -65,5 +65,5 @@ class HTTransmuteRecipe(
 
     override fun getGroup(): String = internalRecipe.group
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumAPI.Companion.getInstance().getTransmuteRecipeSerializer()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumAPI.getInstance().getTransmuteRecipeSerializer()
 }

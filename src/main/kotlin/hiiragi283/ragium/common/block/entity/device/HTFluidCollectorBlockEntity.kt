@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.wrapper.EmptyItemHandler
 
 abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
@@ -59,13 +60,13 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
 
     override fun getFluidHandler(direction: Direction?): HTFilteredFluidHandler = HTFilteredFluidHandler(
         listOf(tank),
-        HTFluidFilter.Companion.DRAIN_ONLY,
+        HTFluidFilter.DRAIN_ONLY,
     )
 
     //    MenuProvider    //
 
     final override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTFluidCollectorMenu =
-        HTFluidCollectorMenu(containerId, playerInventory, blockPos)
+        HTFluidCollectorMenu(containerId, playerInventory, blockPos, createDefinition(EmptyItemHandler.INSTANCE))
 
     final override fun getDisplayName(): Component = blockState.block.name
 }

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.internal
 
-import com.google.common.base.Functions
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
@@ -20,7 +19,6 @@ import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
-import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -98,7 +96,7 @@ class InternalRagiumAPI : RagiumAPI {
     override fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe> = RagiumRecipeSerializers.TRANSMUTE.get()
 
     override fun createEmptyMenuDefinition(size: Int): HTMenuDefinition = HTMenuDefinition(
-        HTItemStackHandler(size, Functions.constant(Unit)::apply),
+        ItemStackHandler(size),
         ItemStackHandler(4),
         SimpleContainerData(2),
     )

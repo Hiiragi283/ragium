@@ -29,7 +29,7 @@ class HTBlockBreakerMenu(
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(1))
+        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         // upgrades
         addUpgradeSlots()
         // player inventory

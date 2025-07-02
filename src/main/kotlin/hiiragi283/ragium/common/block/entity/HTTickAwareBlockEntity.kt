@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
+import net.neoforged.neoforge.items.IItemHandler
 
 /**
  * tick処理を行う[HTBlockEntity]
@@ -21,19 +21,6 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     }
 
     companion object {
-        /**
-         * クライアント側でのtick処理を行います。
-         */
-        @JvmStatic
-        fun clientTick(
-            level: Level,
-            pos: BlockPos,
-            state: BlockState,
-            blockEntity: HTTickAwareBlockEntity,
-        ) {
-            blockEntity.totalTick++
-        }
-
         /**
          * サーバー側でのtick処理を行います。
          */
@@ -99,10 +86,12 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
             else -> -1
         }
 
-        override fun set(index: Int, value: Int) {}
+        override fun set(index: Int, value: Int) {
+            if (index == 0) totalTick = value
+        }
 
         override fun getCount(): Int = 2
     }
 
-    protected fun createDefinition(inventory: HTItemHandler): HTMenuDefinition = HTMenuDefinition(inventory, upgrades, containerData)
+    protected fun createDefinition(inventory: IItemHandler): HTMenuDefinition = HTMenuDefinition(inventory, upgrades, containerData)
 }

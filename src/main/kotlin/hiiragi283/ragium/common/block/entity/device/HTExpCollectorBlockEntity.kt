@@ -24,6 +24,7 @@ import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.wrapper.EmptyItemHandler
 
 class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(RagiumBlockEntityTypes.EXP_COLLECTOR, pos, state),
@@ -80,7 +81,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     //    MenuProvider    //
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTFluidCollectorMenu =
-        HTFluidCollectorMenu(containerId, playerInventory, blockPos)
+        HTFluidCollectorMenu(containerId, playerInventory, blockPos, createDefinition(EmptyItemHandler.INSTANCE))
 
     override fun getDisplayName(): Component = blockState.block.name
 }

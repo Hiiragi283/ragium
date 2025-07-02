@@ -26,12 +26,12 @@ internal class HTEnergyNetwork(var amount: Int, var capacity: Int) :
         val CODEC: Codec<HTEnergyNetwork> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    ExtraCodecs.POSITIVE_INT
-                        .optionalFieldOf(RagiumConstantValues.ENERGY_CAPACITY, getInitialCapacity())
-                        .forGetter(HTEnergyNetwork::capacity),
                     ExtraCodecs.NON_NEGATIVE_INT
                         .optionalFieldOf(RagiumConstantValues.ENERGY_STORED, 0)
                         .forGetter(HTEnergyNetwork::amount),
+                    ExtraCodecs.POSITIVE_INT
+                        .optionalFieldOf(RagiumConstantValues.ENERGY_CAPACITY, getInitialCapacity())
+                        .forGetter(HTEnergyNetwork::capacity),
                 ).apply(instance, ::HTEnergyNetwork)
         }
 
@@ -42,11 +42,12 @@ internal class HTEnergyNetwork(var amount: Int, var capacity: Int) :
 
     constructor() : this(0, getInitialCapacity())
 
+    init {
+        amount = min(amount, capacity)
+    }
+
     override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag = buildNbt {
         putInt(RagiumConstantValues.ENERGY_STORED, amount)
-        if (capacity <= 0) {
-            capacity = getInitialCapacity()
-        }
         putInt(RagiumConstantValues.ENERGY_CAPACITY, capacity)
     }
 

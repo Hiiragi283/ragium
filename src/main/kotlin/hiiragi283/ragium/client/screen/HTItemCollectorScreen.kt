@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.gui.screen
+package hiiragi283.ragium.client.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.screen.HTContainerScreen

@@ -29,10 +29,9 @@ class HTDeferredBlockEntityType<BE : BlockEntity> private constructor(key: Resou
         fun create(pos: BlockPos, state: BlockState): BE? = get().create(pos, state)
 
         internal var serverTicker: BlockEntityTicker<in BE>? = null
-        internal var clientTicker: BlockEntityTicker<in BE>? = null
 
         fun getTicker(isClient: Boolean): BlockEntityTicker<in BE>? = when (isClient) {
-            true -> clientTicker
+            true -> null
             false -> serverTicker
         }
     }

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.registry.HTMenuTypeRegister
 import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
+import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.inventory.HTExtractorMenu
 import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
@@ -23,6 +24,10 @@ object RagiumMenuTypes {
 
     @JvmField
     val CRUSHER: HTDeferredMenuType<HTCrusherMenu> = REGISTER.registerType("crusher", ::HTCrusherMenu)
+
+    @JvmField
+    val ENERGY_NETWORK_ACCESS: HTDeferredMenuType<HTEnergyNetworkAccessMenu> =
+        REGISTER.registerType("energy_network_access", ::HTEnergyNetworkAccessMenu)
 
     @JvmField
     val EXTRACTOR: HTDeferredMenuType<HTExtractorMenu> = REGISTER.registerType("extractor", ::HTExtractorMenu)

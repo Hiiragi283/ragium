@@ -8,30 +8,30 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTFluidCollectorMenu(
+class HTEnergyNetworkAccessMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
     definition: HTMenuDefinition,
-) : HTDefinitionContainerMenu(RagiumMenuTypes.FLUID_COLLECTOR, containerId, inventory, pos, definition) {
+) : HTDefinitionContainerMenu(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, containerId, inventory, pos, definition) {
     constructor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?) : this(
         containerId,
         inventory,
         decodePos(registryBuf),
-        HTMenuDefinition.empty(0),
+        HTMenuDefinition.empty(2),
     )
 
     init {
         // inputs
-        addFluidSlot(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         // upgrades
         addUpgradeSlots()
+        // outputs
+        addSlot(1, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1))
         // player inventory
         addPlayerInv()
-        // register property
-        addDataSlots(definition.containerData)
     }
 
     override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = IntRange.EMPTY
+    override val outputSlots: IntRange = 5..5
 }

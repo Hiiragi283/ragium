@@ -3,21 +3,20 @@ package hiiragi283.ragium.client
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
+import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.client.gui.screen.HTAlloySmelterScreen
-import hiiragi283.ragium.client.gui.screen.HTBlockBreakerScreen
-import hiiragi283.ragium.client.gui.screen.HTCrusherScreen
-import hiiragi283.ragium.client.gui.screen.HTExtractorScreen
-import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
-import hiiragi283.ragium.client.gui.screen.HTItemCollectorScreen
-import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.renderer.HTChargerRenderer
+import hiiragi283.ragium.client.screen.HTBasicMachineScreen
+import hiiragi283.ragium.client.screen.HTEnergyNetworkAccessScreen
+import hiiragi283.ragium.client.screen.HTItemCollectorScreen
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.core.BlockPos
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.FoliageColor
@@ -174,13 +173,19 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
-        event.register(RagiumMenuTypes.ALLOY_SMELTER.get(), ::HTAlloySmelterScreen)
-        event.register(RagiumMenuTypes.BLOCK_BREAKER.get(), ::HTBlockBreakerScreen)
-        event.register(RagiumMenuTypes.CRUSHER.get(), ::HTCrusherScreen)
-        event.register(RagiumMenuTypes.EXTRACTOR.get(), ::HTExtractorScreen)
-        event.register(RagiumMenuTypes.FLUID_COLLECTOR.get(), ::HTFluidCollectorScreen)
+        fun registerBasic(menuType: HTDeferredMenuType<out HTDefinitionContainerMenu>, texture: ResourceLocation) {
+            event.register(menuType.get(), HTBasicMachineScreen.create(texture))
+        }
+
+        registerBasic(RagiumMenuTypes.ALLOY_SMELTER, RagiumAPI.id("textures/gui/container/alloy_smelter.png"))
+        registerBasic(RagiumMenuTypes.BLOCK_BREAKER, RagiumAPI.id("textures/gui/container/block_breaker.png"))
+        registerBasic(RagiumMenuTypes.CRUSHER, RagiumAPI.id("textures/gui/container/crusher.png"))
+        registerBasic(RagiumMenuTypes.EXTRACTOR, RagiumAPI.id("textures/gui/container/extractor.png"))
+        registerBasic(RagiumMenuTypes.FLUID_COLLECTOR, RagiumAPI.id("textures/gui/container/fluid_collector.png"))
+        registerBasic(RagiumMenuTypes.MELTER, RagiumAPI.id("textures/gui/container/melter.png"))
+
         event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
-        event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
+        event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
 
         LOGGER.info("Registered Screens!")
     }
