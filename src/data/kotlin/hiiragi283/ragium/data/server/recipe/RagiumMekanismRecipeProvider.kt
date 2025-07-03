@@ -67,13 +67,13 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
     private fun crystallizing() {
         ChemicalCrystallizerRecipeBuilder
             .crystallizing(
-                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, 1000),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, 125),
                 RagiumItems.CRIMSON_CRYSTAL.toStack(),
             ).build(output, RagiumAPI.id("crystallizing/crimson_crystal"))
 
         ChemicalCrystallizerRecipeBuilder
             .crystallizing(
-                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, 1000),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, 125),
                 RagiumItems.WARPED_CRYSTAL.toStack(),
             ).build(output, RagiumAPI.id("crystallizing/warped_crystal"))
     }

@@ -43,7 +43,10 @@ abstract class HTRecipeProvider : IConditionBuilder {
                     RagiumAPI.MOD_ID -> id
                     RagiumConstantValues.COMMON -> RagiumAPI.id(id.path)
                     RagiumConstantValues.MINECRAFT -> RagiumAPI.id(id.path)
-                    else -> id
+                    else -> {
+                        val path: List<String> = id.path.split("/", limit = 2)
+                        RagiumAPI.id(path[0] + "/${id.namespace}/" + path[1])
+                    }
                 }
                 output.accept(fixedId, recipe, advancement, *conditions)
             }

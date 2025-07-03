@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 1,
+      "tag": "c:ingots/gold"
+    },
+    {
+      "count": 3,
+      "tag": "c:dusts/raginite"
+    }
+  ],
+  "item_output": {
+    "count": 1,
+    "id": "#c:ingots/advanced_ragi_alloy"
+  }
+}

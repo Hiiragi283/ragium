@@ -21,22 +21,22 @@ import net.neoforged.neoforge.registries.DeferredItem
 object RagiumReplicationRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Ore -> Raw
+        val rawTagKey: TagKey<Item> = itemTagKey(commonId("raw_materials/replica"))
         createCrushing()
-            .itemOutput(ReplicationRegistry.Items.RAW_REPLICA.get(), 4)
-            .itemOutput(ReplicationRegistry.Items.RAW_REPLICA.get(), chance = 1 / 4f)
+            .itemOutput(rawTagKey, 4)
+            .itemOutput(rawTagKey, chance = 1 / 4f)
             .itemInput(itemTagKey(commonId("ores/replica")))
             .saveSuffixed(output, "_from_ore")
         // Raw -> Ingot
-        val ingot: Item = ReplicationRegistry.Items.REPLICA_INGOT.get()
-        val rawTagKey: TagKey<Item> = itemTagKey(commonId("raw_materials/replica"))
+        val ingotTagKey: TagKey<Item> = itemTagKey(commonId("ingots/replica"))
         createAlloying()
-            .itemOutput(ingot, 3)
+            .itemOutput(ingotTagKey, 3)
             .itemInput(rawTagKey, 2)
             .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_BASIC)
             .saveSuffixed(output, "_with_basic_flux")
 
         createAlloying()
-            .itemOutput(ingot, 2)
+            .itemOutput(ingotTagKey, 2)
             .itemInput(rawTagKey)
             .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_ADVANCED)
             .saveSuffixed(output, "_with_advanced_flux")

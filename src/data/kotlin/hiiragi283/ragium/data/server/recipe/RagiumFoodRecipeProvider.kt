@@ -21,7 +21,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Chocolate
         createSolidifying()
-            .itemOutput(RagiumItems.CHOCOLATE_INGOT)
+            .itemOutput(RagiumItemTags.INGOTS_CHOCOLATE)
             .catalyst(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
             .save(output)

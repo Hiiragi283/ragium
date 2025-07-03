@@ -98,7 +98,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         createRefining()
             .fluidOutput(RagiumFluidContents.LIGHT_FUEL, 40)
             .fluidOutput(RagiumFluidContents.HEAVY_FUEL, 40)
-            .itemOutput(RagiumItems.SULFUR_DUST)
+            .itemOutput(RagiumItemTags.DUSTS_SULFUR)
             .fluidInput(RagiumFluidContents.NAPHTHA, 100)
             .save(output)
         // Light Fuel + Heavy Fuel -> Diesel
@@ -215,7 +215,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_stems")
         // Crimson Sap -> Sap + Crimson Crystal
         createRefining()
-            .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
+            .itemOutput(RagiumItemTags.GEMS_CRIMSON_CRYSTAL)
             .fluidOutput(RagiumFluidContents.SAP, 125)
             .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
             .save(output)
@@ -232,7 +232,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_stems")
         // Warped Sap -> Sap + Warped Crystal
         createRefining()
-            .itemOutput(RagiumItems.WARPED_CRYSTAL)
+            .itemOutput(RagiumItemTags.GEMS_WARPED_CRYSTAL)
             .fluidOutput(RagiumFluidContents.SAP, 125)
             .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
             .save(output)
@@ -249,7 +249,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_orb")
         // Eldritch Goo -> Eldritch Pearl
         createSolidifying()
-            .itemOutput(RagiumItems.ELDRITCH_PEARL)
+            .itemOutput(RagiumItemTags.GEMS_ELDRITCH_PEARL)
             .fluidInput(RagiumFluidContents.ELDRITCH_GOO, 500)
             .save(output)
     }

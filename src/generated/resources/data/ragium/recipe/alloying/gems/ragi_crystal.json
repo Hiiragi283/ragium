@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 1,
+      "tag": "c:gems/diamond"
+    },
+    {
+      "count": 6,
+      "tag": "c:dusts/raginite"
+    }
+  ],
+  "item_output": {
+    "count": 1,
+    "id": "#c:gems/ragi_crystal"
+  }
+}

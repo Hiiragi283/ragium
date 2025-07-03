@@ -7,7 +7,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.NeoForgeMod
+import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
 import vectorwing.farmersdelight.common.registry.ModItems
 import vectorwing.farmersdelight.common.tag.CommonTags
@@ -28,7 +28,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
         // .save(output)
 
         createMelting()
-            .fluidOutput(NeoForgeMod.MILK, 250)
+            .fluidOutput(Tags.Fluids.MILK, 250)
             .itemInput(ModItems.MILK_BOTTLE.get())
             .saveSuffixed(output, "_from_bottle")
     }

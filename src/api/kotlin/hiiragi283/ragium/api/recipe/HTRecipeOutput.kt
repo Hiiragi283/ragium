@@ -19,17 +19,15 @@ abstract class HTRecipeOutput<T : Any, S : Any>(
 ) : Supplier<S> {
     val id: ResourceLocation = entry.map(Function.identity(), TagKey<*>::location)
 
-    protected fun getFirstHolder(): DataResult<out Holder<T>> = entry.map(
-        { id: ResourceLocation ->
-            registry.getHolder(id).toDataResult { "Missing id in ${registry.key()}: $id" }
-        },
-        { tagKey: TagKey<T> ->
-            registry
-                .getTag(tagKey)
-                .flatMap(HTTagUtil::getFirstHolder)
-                .toDataResult { "Missing tag in ${registry.key()}: ${tagKey.location}" }
-        },
-    )
+    protected fun getFirstHolder(): DataResult<out Holder<T>> = entry.map(::getFirstHolderFromId, ::getFirstHolderFromTag)
+
+    protected open fun getFirstHolderFromId(id: ResourceLocation): DataResult<out Holder<T>> =
+        registry.getHolder(id).toDataResult { "Missing id in ${registry.key()}: $id" }
+
+    protected open fun getFirstHolderFromTag(tagKey: TagKey<T>): DataResult<out Holder<T>> = registry
+        .getTag(tagKey)
+        .flatMap(HTTagUtil::getFirstHolder)
+        .toDataResult { "Missing tag in ${registry.key()}: ${tagKey.location}" }
 
     protected abstract val registry: Registry<T>
 

@@ -28,6 +28,7 @@ object RagiumConstantValues {
 
     const val ACTUALLY = "actuallyadditions"
     const val AE2 = "ae2"
+    const val ALMOST = "almostunified"
     const val ARS_NOUVEAU = "ars_nouveau"
     const val COMMON = "c"
     const val CREATE = "create"

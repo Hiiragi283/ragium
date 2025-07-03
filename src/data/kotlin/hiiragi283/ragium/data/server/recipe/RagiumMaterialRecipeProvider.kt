@@ -12,7 +12,6 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider() {
@@ -37,7 +36,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_compound")
 
         createAlloying()
-            .itemOutput(RagiumItems.RAGI_ALLOY_INGOT)
+            .itemOutput(RagiumItemTags.INGOTS_RAGI_ALLOY)
             .itemInput(Tags.Items.INGOTS_COPPER)
             .itemInput(RagiumItemTags.DUSTS_RAGINITE, 3)
             .save(output)
@@ -68,7 +67,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_compound")
 
         createAlloying()
-            .itemOutput(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
+            .itemOutput(RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY)
             .itemInput(Tags.Items.INGOTS_GOLD)
             .itemInput(RagiumItemTags.DUSTS_RAGINITE, 3)
             .save(output)
@@ -80,7 +79,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         createAlloying()
-            .itemOutput(RagiumItems.RAGI_CRYSTAL)
+            .itemOutput(RagiumItemTags.GEMS_RAGI_CRYSTAL)
             .itemInput(Tags.Items.GEMS_DIAMOND)
             .itemInput(RagiumItemTags.DUSTS_RAGINITE, 6)
             .save(output)
@@ -110,7 +109,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         createAlloying()
-            .itemOutput(RagiumItems.AZURE_STEEL_INGOT)
+            .itemOutput(RagiumItemTags.INGOTS_AZURE_STEEL)
             .itemInput(Tags.Items.INGOTS_IRON)
             .itemInput(RagiumItems.AZURE_SHARD, 3)
             .save(output)
@@ -195,7 +194,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         createCrushing()
             .itemOutput(Items.REDSTONE, 8)
             .itemOutput(Items.REDSTONE, 4, 1 / 2f)
-            .itemOutput(RagiumItems.CINNABAR_DUST, 2, 1 / 2f)
+            .itemOutput(RagiumItemTags.DUSTS_CINNABAR, 2, 1 / 2f)
             .itemInput(Tags.Items.ORES_REDSTONE)
             .saveSuffixed(output, "_from_ore")
         // Lapis
@@ -226,21 +225,21 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
 
         // Raginite
         createCrushing()
-            .itemOutput(RagiumItems.RAGINITE_DUST, 8)
-            .itemOutput(RagiumItems.RAGINITE_DUST, 4, 1 / 2f)
-            .itemOutput(RagiumItems.RAGI_CRYSTAL, 2, 1 / 4f)
+            .itemOutput(RagiumItemTags.DUSTS_RAGINITE, 8)
+            .itemOutput(RagiumItemTags.DUSTS_RAGINITE, 4, 1 / 2f)
+            .itemOutput(RagiumItemTags.GEMS_RAGI_CRYSTAL, 2, 1 / 4f)
             .itemInput(RagiumItemTags.ORES_RAGINITE)
             .saveSuffixed(output, "_from_ore")
         // Ragi-Crystal
         createCrushing()
-            .itemOutput(RagiumItems.RAGI_CRYSTAL, 2)
+            .itemOutput(RagiumItemTags.GEMS_RAGI_CRYSTAL, 2)
             .itemInput(RagiumItemTags.ORES_RAGI_CRYSTAL)
             .saveSuffixed(output, "_from_ore")
     }
 
     // Raw -> Ingot
     private fun rawToIngot() {
-        fun register(result: ItemLike, input: TagKey<Item>) {
+        fun register(result: TagKey<Item>, input: TagKey<Item>) {
             createAlloying()
                 .itemOutput(result, 3)
                 .itemInput(input, 2)
@@ -254,9 +253,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
                 .saveSuffixed(output, "_with_advanced_flux")
         }
 
-        register(Items.COPPER_INGOT, Tags.Items.RAW_MATERIALS_COPPER)
-        register(Items.IRON_INGOT, Tags.Items.RAW_MATERIALS_IRON)
-        register(Items.GOLD_INGOT, Tags.Items.RAW_MATERIALS_GOLD)
+        register(Tags.Items.INGOTS_COPPER, Tags.Items.RAW_MATERIALS_COPPER)
+        register(Tags.Items.INGOTS_IRON, Tags.Items.RAW_MATERIALS_IRON)
+        register(Tags.Items.INGOTS_GOLD, Tags.Items.RAW_MATERIALS_GOLD)
     }
 
     private fun register(family: HTMaterialFamily) {
