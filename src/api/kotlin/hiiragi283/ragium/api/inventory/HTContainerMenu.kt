@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.inventory
 
+import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
+import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
@@ -76,7 +78,7 @@ abstract class HTContainerMenu(
 
     //    Extensions    //
 
-    val fluidSlots: MutableMap<Int, Pair<Int, Int>> = mutableMapOf()
+    val fluidSlots: HTTable.Mutable<Int, Int, Int> = mutableTableOf()
 
     protected fun addSlot(
         handler: IItemHandler,
@@ -88,7 +90,7 @@ abstract class HTContainerMenu(
     }
 
     protected fun addFluidSlot(index: Int, x: Int, y: Int) {
-        fluidSlots.put(index, x to y)
+        fluidSlots.put(index, x, y)
     }
 
     protected fun addPlayerInv(yOffset: Int = 0, immovable: Boolean = false) {

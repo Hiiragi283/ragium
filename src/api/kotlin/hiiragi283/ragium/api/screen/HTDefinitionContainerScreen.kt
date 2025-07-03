@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.screen
 
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
@@ -42,7 +43,7 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
     ) {
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         // fluid tooltip
-        menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
+        menu.fluidSlots.forEach { (index: Int, slotX: Int, slotY: Int) ->
             renderFluidTooltip(
                 guiGraphics,
                 getFluidStack(index),
@@ -68,7 +69,7 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
         // progress bar
         renderProgress(guiGraphics)
         // fluids
-        menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
+        menu.fluidSlots.forEach { (index: Int, slotX: Int, slotY: Int) ->
             renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
         }
         // item slots
