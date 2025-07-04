@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.screen
 
 import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.extension.getClientTooltipFlag
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTSlotHelper
@@ -12,10 +13,13 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
+@OnlyIn(Dist.CLIENT)
 abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: T, inventory: Inventory, title: Component) :
     HTContainerScreen<T>(menu, inventory, title) {
     abstract val texture: ResourceLocation
@@ -48,6 +52,7 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
                 guiGraphics,
                 getFluidStack(index),
                 getFluidCapacity(index),
+                getClientTooltipFlag(),
                 slotX,
                 slotY,
                 mouseX,
@@ -72,27 +77,8 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
         menu.fluidSlots.forEach { (index: Int, slotX: Int, slotY: Int) ->
             renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
         }
-        // item slots
-        /*menu.itemSlots.forEach { (slotX: Int, slotY: Int) ->
-            guiGraphics.blitSprite(
-                RagiumAPI.id("item_slot"),
-                startX + getSlotPosX(slotX) - 1,
-                startY + getSlotPosY(slotY) - 1,
-                18,
-                18,
-            )
-        }
-        // fluid slots
-        menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
-            guiGraphics.blitSprite(
-                RagiumAPI.id("fluid_slot"),
-                startX + getSlotPosX(slotX) - 1,
-                startY + getSlotPosY(slotY) - 1,
-                18,
-                18,
-            )
-            renderFluid(guiGraphics, getFluidStack(index), slotX, slotY)
-        }*/
+        // energy
+        renderEnergy(guiGraphics, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(3))
     }
 
     protected open fun renderProgress(guiGraphics: GuiGraphics) {

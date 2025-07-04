@@ -10,8 +10,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.energy.IEnergyStorage
 
+@OnlyIn(Dist.CLIENT)
 class HTEnergyNetworkAccessScreen(menu: HTEnergyNetworkAccessMenu, inventory: Inventory, title: Component) :
     HTContainerScreen<HTEnergyNetworkAccessMenu>(menu, inventory, title) {
     override fun render(
@@ -31,6 +34,7 @@ class HTEnergyNetworkAccessScreen(menu: HTEnergyNetworkAccessMenu, inventory: In
         mouseX: Int,
         mouseY: Int,
     ) {
+        // background
         guiGraphics.blit(
             RagiumAPI.id("textures/gui/container/energy_network_access.png"),
             startX,
@@ -40,6 +44,8 @@ class HTEnergyNetworkAccessScreen(menu: HTEnergyNetworkAccessMenu, inventory: In
             imageWidth,
             imageHeight,
         )
+        // energy
+        renderEnergy(guiGraphics, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(3))
     }
 
     override fun getEnergyNetwork(menu: HTEnergyNetworkAccessMenu): IEnergyStorage? = menu.usePosition { level: Level, pos: BlockPos ->

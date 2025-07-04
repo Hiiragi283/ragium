@@ -146,7 +146,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.WARPED_SAP_CAULDRON, "Warped Sap Cauldron")
         // Device
         addBlock(RagiumBlocks.CEU, "C.E.U")
-        addBlock(RagiumBlocks.CHARGER, "Charger")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
         addBlock(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
@@ -496,8 +495,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add azure steel armor, weapon, ot tool")
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Azure Steel Ingot")
 
+        add(RagiumTranslationKeys.TEXT_ENERGY_PERCENTAGE, "%s / %s FE")
         add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")
-        add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "Capacity: %s mb")
+        add(RagiumTranslationKeys.TEXT_FLUID_NAME_EMPTY, "Empty")
 
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "Effect Radius: %s blocks")
 

@@ -5,7 +5,6 @@ import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.addon.HTAddonCollector
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.inventory.HTMenuDefinition

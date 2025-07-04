@@ -41,7 +41,6 @@
   "block.ragium.blue_nether_brick_stairs": "Blue Nether Bricks Stairs",
   "block.ragium.blue_nether_brick_wall": "Blue Nether Bricks Wall",
   "block.ragium.blue_nether_bricks": "Blue Nether Bricks",
-  "block.ragium.charger": "Charger",
   "block.ragium.chocolate": "Chocolate",
   "block.ragium.chocolate_block": "Block of Chocolate",
   "block.ragium.cooked_meat_block": "Block of Cooked Meat",
@@ -288,8 +287,9 @@
   "tag.item.ragium.soils.mushroom": "Mushroom Soil",
   "tag.item.ragium.soils.nether": "Nether Soil",
   "text.ragium.effect_range": "Effect Radius: %s blocks",
-  "text.ragium.fluid_capacity": "Capacity: %s mb",
+  "text.ragium.energy_percentage": "%s / %s FE",
   "text.ragium.fluid_name": "%s : %s mb",
+  "text.ragium.fluid_name.empty": "Empty",
   "text.ragium.output_side": "Output Side: %s",
   "text.ragium.work_in_progress": "This content is work in progress!!",
   "upgrade.azure_steel_upgrade": "Azure Steel Upgrade"

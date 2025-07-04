@@ -134,7 +134,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.WARPED_SAP_CAULDRON, "歪んだ樹液入りの大釜")
         // Device
         addBlock(RagiumBlocks.CEU, "C.E.U")
-        addBlock(RagiumBlocks.CHARGER, "チャージャー")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
         addBlock(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
@@ -483,8 +482,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "紺鉄製の防具，武器，道具を置いてください")
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "紺鉄インゴットを置いてください")
 
-        add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s: %s mb")
-        add(RagiumTranslationKeys.TEXT_FLUID_CAPACITY, "容量: %s mb")
+        add(RagiumTranslationKeys.TEXT_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")
+        add(RagiumTranslationKeys.TEXT_FLUID_NAME_EMPTY, "空")
 
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "有効半径: %s ブロック")
 

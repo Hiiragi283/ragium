@@ -199,7 +199,6 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
-        advDevice(RagiumBlocks.CHARGER, RagiumItemTags.GEMS_RAGI_CRYSTAL)
         advDevice(RagiumBlocks.ENI, Tags.Items.GEMS_DIAMOND)
         advDevice(RagiumBlocks.EXP_COLLECTOR, Items.HOPPER)
         advDevice(RagiumBlocks.LAVA_COLLECTOR, Tags.Items.BUCKETS_LAVA)

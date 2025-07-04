@@ -1,6 +1,7 @@
-package hiiragi283.ragium.api.addon
+package hiiragi283.ragium.internal
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.addon.HTAddon
 import net.neoforged.fml.ModList
 import net.neoforged.neoforgespi.language.ModFileScanData
 import org.objectweb.asm.Type
@@ -10,7 +11,7 @@ import java.lang.reflect.Constructor
 /**
  * @see [mezz.jei.neoforge.startup.ForgePluginFinder]
  */
-object HTAddonCollector {
+internal object HTAddonCollector {
     @JvmField
     val LOGGER: Logger = LogUtils.getLogger()
 

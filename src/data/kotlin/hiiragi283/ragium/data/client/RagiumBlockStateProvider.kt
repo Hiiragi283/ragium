@@ -175,7 +175,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         )
 
         simpleAltBlock(RagiumBlocks.MILK_DRAIN)
-        simpleAltBlock(RagiumBlocks.CHARGER)
 
         // Manual Machine
         /*getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {

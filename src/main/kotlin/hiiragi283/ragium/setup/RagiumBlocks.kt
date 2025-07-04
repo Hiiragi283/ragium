@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.block.HTChargerBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
@@ -491,9 +490,6 @@ object RagiumBlocks {
 
     // Advanced
     @JvmField
-    val CHARGER: DeferredBlock<*> = register("charger", heavyMetal(), ::HTChargerBlock)
-
-    @JvmField
     val ENI: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.ENI)
 
     @JvmField
@@ -512,7 +508,6 @@ object RagiumBlocks {
     @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
         MILK_DRAIN,
-        CHARGER,
         // 色でソート
         ITEM_COLLECTOR,
         LAVA_COLLECTOR,
