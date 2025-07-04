@@ -6,16 +6,19 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumBlockTags
 import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.data.server.RagiumMaterialFamilies
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -40,7 +43,7 @@ class RagiumItemTagsProvider(
         RagiumAPI.MOD_ID,
         helper,
     ) {
-    private fun IntrinsicTagAppender<Item>.addItem(vararg items: ItemLike) {
+    private fun IntrinsicTagAppender<Item>.addItem(vararg items: ItemLike): IntrinsicTagAppender<Item> = apply {
         items.map(ItemLike::asItem).map(::add)
     }
 
@@ -57,6 +60,7 @@ class RagiumItemTagsProvider(
         categories()
 
         curios()
+        pneumatic()
     }
 
     private fun copy() {
@@ -113,6 +117,9 @@ class RagiumItemTagsProvider(
         addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SALTPETER, RagiumItems.SALTPETER_DUST)
         addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SULFUR, RagiumItems.SULFUR_DUST)
         addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_WOOD, RagiumItems.SAWDUST)
+        // Plates
+        addItem(RagiumItemTags.PLATES, RagiumItemTags.PLATES_PLASTIC, RagiumItems.PLASTIC_PLATE)
+
         // Mekanism Addon
         tag(RagiumItemTags.ENRICHED_AZURE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
         tag(RagiumItemTags.ENRICHED_RAGINITE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
@@ -207,6 +214,12 @@ class RagiumItemTagsProvider(
         // Parts
         tag(Tags.Items.SLIME_BALLS).addItem(RagiumItems.TAR)
         tag(RagiumItemTags.PAPER).addItem(Items.PAPER)
+        tag(RagiumItemTags.POLYMER_RESIN)
+            .addItem(RagiumItems.POLYMER_RESIN)
+            .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConstantValues.ORITECH, "polymer_resin"))
+
+        tag(RagiumItemTags.PLASTICS).addOptionalTag(RagiumItemTags.PLATES_PLASTIC)
+        tag(RagiumItemTags.PLATES_PLASTIC).addOptionalTag(RagiumItemTags.PLASTICS)
         // Circuits
         addItem(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
         addItem(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
@@ -251,5 +264,13 @@ class RagiumItemTagsProvider(
             RagiumItems.ITEM_MAGNET,
             RagiumItems.RAGI_LANTERN,
         )
+    }
+
+    private fun pneumatic() {
+        tag(PneumaticCraftTags.Items.PLASTIC_SHEETS)
+            .addOptionalTags(
+                RagiumItemTags.PLASTICS,
+                RagiumItemTags.PLATES_PLASTIC,
+            )
     }
 }

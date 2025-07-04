@@ -294,7 +294,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.LED, "発光ダイオード")
-        // addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
+        addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")

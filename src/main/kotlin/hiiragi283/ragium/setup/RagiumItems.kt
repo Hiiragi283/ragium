@@ -371,7 +371,8 @@ object RagiumItems {
     @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
 
-    // val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
+    @JvmField
+    val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
 
     @JvmField
     val BASIC_CIRCUIT: DeferredItem<Item> = register("basic_circuit")

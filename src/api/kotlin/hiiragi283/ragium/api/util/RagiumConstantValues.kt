@@ -40,6 +40,7 @@ object RagiumConstantValues {
     const val MEKANISM = "mekanism"
     const val MINECRAFT = "minecraft"
     const val MODERN = "modern_industrialization"
+    const val ORITECH = "oritech"
     const val RAILCRAFT = "railcraft"
     const val REPLICATION = "replication"
     const val TWILIGHT = "twilightforest"
@@ -86,5 +87,6 @@ object RagiumConstantValues {
     const val MOLDS = "molds"
     const val NUGGETS = "nuggets"
     const val ORES = "ores"
+    const val PLATES = "plates"
     const val STORAGE_BLOCKS = "storage_blocks"
 }

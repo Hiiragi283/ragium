@@ -138,6 +138,14 @@ object RagiumItemTags {
     @JvmField
     val ORES_RAGI_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL)
 
+    //    Plates    //
+
+    @JvmField
+    val PLATES: TagKey<Item> = commonTag(RagiumConstantValues.PLATES)
+
+    @JvmField
+    val PLATES_PLASTIC: TagKey<Item> = commonTag(RagiumConstantValues.PLATES, "plastic")
+
     //    Storage Blocks    //
 
     @JvmField
@@ -251,6 +259,10 @@ object RagiumItemTags {
     @JvmField
     val LED_BLOCKS: TagKey<Item> = itemTagKey(RagiumAPI.id("led_blocks"))
 
+    @JvmField
+    val POLYMER_RESIN: TagKey<Item> = itemTagKey(RagiumAPI.id("polymer_resin"))
+
+    // Flux
     @JvmField
     val ALLOY_SMELTER_FLUXES_BASIC: TagKey<Item> = itemTagKey(RagiumAPI.id("alloy_smelter_fluxes/basic"))
 

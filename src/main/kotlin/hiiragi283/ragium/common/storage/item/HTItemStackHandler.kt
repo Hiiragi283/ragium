@@ -29,4 +29,6 @@ open class HTItemStackHandler(size: Int = 1, private var callback: (Int) -> Unit
             stack.shrink(count)
         }
     }
+
+    override fun getStackView(): Iterable<ItemStack> = stacks.map(ItemStack::copy)
 }

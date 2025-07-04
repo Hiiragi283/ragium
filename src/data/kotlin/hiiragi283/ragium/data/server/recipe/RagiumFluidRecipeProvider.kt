@@ -90,7 +90,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
         // LPG + Clay -> Polymer Resin
         createSolidifying()
-            .itemOutput(RagiumItems.POLYMER_RESIN)
+            .itemOutput(RagiumItemTags.POLYMER_RESIN)
             .catalyst(Items.CLAY_BALL)
             .fluidInput(RagiumFluidContents.LPG, 100)
             .save(output)
