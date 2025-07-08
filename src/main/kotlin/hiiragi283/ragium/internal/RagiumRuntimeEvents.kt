@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumComponentTypes
@@ -294,7 +294,7 @@ object RagiumRuntimeEvents {
     @SubscribeEvent
     fun itemTooltips(event: ItemTooltipEvent) {
         val stack: ItemStack = event.itemStack
-        if (stack.`is`(RagiumItemTags.WIP)) {
+        if (stack.`is`(RagiumModTags.Items.WIP)) {
             event.toolTip.add(Component.translatable(RagiumTranslationKeys.TEXT_WIP).withStyle(ChatFormatting.DARK_RED))
         }
     }

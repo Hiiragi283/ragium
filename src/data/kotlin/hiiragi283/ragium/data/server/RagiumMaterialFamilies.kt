@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -93,40 +93,40 @@ object RagiumMaterialFamilies {
     @JvmField
     val RAGI_CRYSTAL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItemTags.GEMS_RAGI_CRYSTAL, RagiumItems.RAGI_CRYSTAL)
+            .gem(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, RagiumItems.RAGI_CRYSTAL)
             .setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_RAGI_CRYSTAL,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_RAGI_CRYSTAL,
                 RagiumBlocks.RAGI_CRYSTAL_BLOCK,
             ).build()
 
     @JvmField
     val CRIMSON_CRYSTAL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItemTags.GEMS_CRIMSON_CRYSTAL, RagiumItems.CRIMSON_CRYSTAL)
+            .gem(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL, RagiumItems.CRIMSON_CRYSTAL)
             .setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL,
                 RagiumBlocks.CRIMSON_CRYSTAL_BLOCK,
             ).build()
 
     @JvmField
     val WARPED_CRYSTAL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItemTags.GEMS_WARPED_CRYSTAL, RagiumItems.WARPED_CRYSTAL)
+            .gem(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL, RagiumItems.WARPED_CRYSTAL)
             .setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL,
                 RagiumBlocks.WARPED_CRYSTAL_BLOCK,
             ).build()
 
     @JvmField
     val ELDRITCH_PEARL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItemTags.GEMS_ELDRITCH_PEARL, RagiumItems.ELDRITCH_PEARL)
+            .gem(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, RagiumItems.ELDRITCH_PEARL)
             .setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_ELDRITCH_PEARL,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_ELDRITCH_PEARL,
                 RagiumBlocks.ELDRITCH_PEARL_BLOCK,
             ).build()
 
@@ -134,52 +134,52 @@ object RagiumMaterialFamilies {
     @JvmField
     val RAGI_ALLOY: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingot(RagiumItemTags.INGOTS_RAGI_ALLOY, RagiumItems.RAGI_ALLOY_INGOT)
+            .ingot(RagiumCommonTags.Items.INGOTS_RAGI_ALLOY, RagiumItems.RAGI_ALLOY_INGOT)
             .setEntry(
                 HTMaterialFamily.Variant.NUGGETS,
-                RagiumItemTags.NUGGETS_RAGI_ALLOY,
+                RagiumCommonTags.Items.NUGGETS_RAGI_ALLOY,
                 RagiumItems.RAGI_ALLOY_NUGGET,
             ).setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_RAGI_ALLOY,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_RAGI_ALLOY,
                 RagiumBlocks.RAGI_ALLOY_BLOCK,
             ).build()
 
     @JvmField
     val ADVANCED_RAGI_ALLOY: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingot(RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY, RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
+            .ingot(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY, RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
             .setEntry(
                 HTMaterialFamily.Variant.NUGGETS,
-                RagiumItemTags.NUGGETS_ADVANCED_RAGI_ALLOY,
+                RagiumCommonTags.Items.NUGGETS_ADVANCED_RAGI_ALLOY,
                 RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET,
             ).setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_ADVANCED_RAGI_ALLOY,
                 RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK,
             ).build()
 
     @JvmField
     val AZURE_STEEL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingot(RagiumItemTags.INGOTS_AZURE_STEEL, RagiumItems.AZURE_STEEL_INGOT)
+            .ingot(RagiumCommonTags.Items.INGOTS_AZURE_STEEL, RagiumItems.AZURE_STEEL_INGOT)
             .setEntry(
                 HTMaterialFamily.Variant.NUGGETS,
-                RagiumItemTags.NUGGETS_AZURE_STEEL,
+                RagiumCommonTags.Items.NUGGETS_AZURE_STEEL,
                 RagiumItems.AZURE_STEEL_NUGGET,
             ).setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_AZURE_STEEL,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_AZURE_STEEL,
                 RagiumBlocks.AZURE_STEEL_BLOCK,
             ).build()
 
     @JvmField
     val DEEP_STEEL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingot(RagiumItemTags.INGOTS_DEEP_STEEL, RagiumItems.DEEP_STEEL_INGOT)
+            .ingot(RagiumCommonTags.Items.INGOTS_DEEP_STEEL, RagiumItems.DEEP_STEEL_INGOT)
             .setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_DEEP_STEEL,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_DEEP_STEEL,
                 RagiumBlocks.DEEP_STEEL_BLOCK,
             ).build()
 
@@ -187,30 +187,30 @@ object RagiumMaterialFamilies {
     @JvmField
     val CHOCOLATE: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingot(RagiumItemTags.INGOTS_CHOCOLATE, RagiumItems.CHOCOLATE_INGOT)
+            .ingot(RagiumCommonTags.Items.INGOTS_CHOCOLATE, RagiumItems.CHOCOLATE_INGOT)
             .setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_CHOCOLATE,
                 RagiumBlocks.CHOCOLATE_BLOCK,
             ).build()
 
     @JvmField
     val MEAT: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingot(RagiumItemTags.INGOTS_MEAT, RagiumItems.MEAT_INGOT)
+            .ingot(RagiumCommonTags.Items.INGOTS_MEAT, RagiumItems.MEAT_INGOT)
             .setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_MEAT,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_MEAT,
                 RagiumBlocks.MEAT_BLOCK,
             ).build()
 
     @JvmField
     val COOKED_MEAT: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingot(RagiumItemTags.INGOTS_COOKED_MEAT, RagiumItems.COOKED_MEAT_INGOT)
+            .ingot(RagiumCommonTags.Items.INGOTS_COOKED_MEAT, RagiumItems.COOKED_MEAT_INGOT)
             .setEntry(
                 HTMaterialFamily.Variant.STORAGE_BLOCK,
-                RagiumItemTags.STORAGE_BLOCKS_COOKED_MEAT,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_COOKED_MEAT,
                 RagiumBlocks.COOKED_MEAT_BLOCK,
             ).build()
 }

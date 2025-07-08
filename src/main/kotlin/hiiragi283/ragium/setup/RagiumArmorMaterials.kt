@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
@@ -54,7 +54,7 @@ object RagiumArmorMaterials {
         RagiumConstantValues.AZURE_STEEL,
         10,
         SoundEvents.ARMOR_EQUIP_IRON,
-        { Ingredient.of(RagiumItemTags.INGOTS_AZURE_STEEL) },
+        { Ingredient.of(RagiumCommonTags.Items.INGOTS_AZURE_STEEL) },
         1.2f,
         0f,
         ArmorItem.Type.BOOTS to 3,

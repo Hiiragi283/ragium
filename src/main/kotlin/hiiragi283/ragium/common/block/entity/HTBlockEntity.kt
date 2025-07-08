@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
@@ -179,7 +179,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             this.outputSide = hitResult.direction
             level.playSound(null, pos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS)
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
-        } else if (stack.`is`(RagiumItemTags.PAPER)) {
+        } else if (stack.`is`(RagiumCommonTags.Items.PAPER)) {
             // 紙でクリックすると出力面を消去
             this.outputSide = null
             level.playSound(null, pos, SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, SoundSource.BLOCKS)

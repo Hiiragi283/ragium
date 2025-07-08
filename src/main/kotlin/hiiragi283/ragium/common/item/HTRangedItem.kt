@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.extension.getHighestLevel
 import hiiragi283.ragium.api.extension.intText
-import hiiragi283.ragium.api.tag.RagiumEnchantmentTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import net.minecraft.ChatFormatting
@@ -29,7 +29,7 @@ abstract class HTRangedItem(properties: Properties) : Item(properties.stacksTo(1
 
     protected fun getRange(stack: ItemStack, level: Level?): Int {
         val enchLookup: HolderLookup.RegistryLookup<Enchantment> = level?.registryAccess()?.enchLookup() ?: return 0
-        val enchLevel: Int = stack.getAllEnchantments(enchLookup).getHighestLevel(RagiumEnchantmentTags.RANGE)
+        val enchLevel: Int = stack.getAllEnchantments(enchLookup).getHighestLevel(RagiumModTags.Enchantments.RANGE)
         return RagiumConfig.COMMON.entityCollectorRange.get() * (enchLevel + 1)
     }
 
@@ -60,5 +60,5 @@ abstract class HTRangedItem(properties: Properties) : Item(properties.stacksTo(1
     override fun isFoil(stack: ItemStack): Boolean = isActive(stack)
 
     override fun supportsEnchantment(stack: ItemStack, enchantment: Holder<Enchantment>): Boolean =
-        super.supportsEnchantment(stack, enchantment) || enchantment.`is`(RagiumEnchantmentTags.RANGE)
+        super.supportsEnchantment(stack, enchantment) || enchantment.`is`(RagiumModTags.Enchantments.RANGE)
 }

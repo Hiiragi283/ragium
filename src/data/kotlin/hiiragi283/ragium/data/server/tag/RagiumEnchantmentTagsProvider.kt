@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.RagiumEnchantmentTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -34,20 +34,20 @@ class RagiumEnchantmentTagsProvider(output: PackOutput, provider: CompletableFut
         ).forEach { it.add(RagiumEnchantments.NOISE_CANCELING) }
 
         // Charging
-        tag(RagiumEnchantmentTags.CHARGING).add(Enchantments.CHANNELING, Enchantments.WIND_BURST)
+        tag(RagiumModTags.Enchantments.CHARGING).add(Enchantments.CHANNELING, Enchantments.WIND_BURST)
         // Cooling
-        tag(RagiumEnchantmentTags.COOLING).add(Enchantments.FROST_WALKER)
+        tag(RagiumModTags.Enchantments.COOLING).add(Enchantments.FROST_WALKER)
         // Efficiency
-        tag(RagiumEnchantmentTags.EFFICIENCY).add(Enchantments.EFFICIENCY, Enchantments.LURE, Enchantments.QUICK_CHARGE)
+        tag(RagiumModTags.Enchantments.EFFICIENCY).add(Enchantments.EFFICIENCY, Enchantments.LURE, Enchantments.QUICK_CHARGE)
         // Extra Output
-        tag(RagiumEnchantmentTags.EXTRA_OUTPUT)
+        tag(RagiumModTags.Enchantments.EXTRA_OUTPUT)
             .addTags(Tags.Enchantments.INCREASE_BLOCK_DROPS, Tags.Enchantments.INCREASE_ENTITY_DROPS)
             .add(Enchantments.LUCK_OF_THE_SEA)
         // Heating
-        tag(RagiumEnchantmentTags.HEATING).add(Enchantments.FIRE_ASPECT, Enchantments.FLAME)
+        tag(RagiumModTags.Enchantments.HEATING).add(Enchantments.FIRE_ASPECT, Enchantments.FLAME)
         // Power Saving
-        tag(RagiumEnchantmentTags.POWER_SAVING).add(Enchantments.MENDING, Enchantments.UNBREAKING)
+        tag(RagiumModTags.Enchantments.POWER_SAVING).add(Enchantments.MENDING, Enchantments.UNBREAKING)
         // Range
-        tag(RagiumEnchantmentTags.RANGE).add(Enchantments.SWEEPING_EDGE)
+        tag(RagiumModTags.Enchantments.RANGE).add(Enchantments.SWEEPING_EDGE)
     }
 }

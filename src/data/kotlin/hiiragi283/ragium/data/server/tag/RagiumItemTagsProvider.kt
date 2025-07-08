@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumBlockTags
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.data.server.RagiumMaterialFamilies
@@ -69,18 +69,18 @@ class RagiumItemTagsProvider(
         copy(BlockTags.WALLS, ItemTags.WALLS)
 
         copy(Tags.Blocks.ORES, Tags.Items.ORES)
-        copy(RagiumBlockTags.ORES_RAGINITE, RagiumItemTags.ORES_RAGINITE)
-        copy(RagiumBlockTags.ORES_RAGI_CRYSTAL, RagiumItemTags.ORES_RAGI_CRYSTAL)
+        copy(RagiumCommonTags.Blocks.ORES_RAGINITE, RagiumCommonTags.Items.ORES_RAGINITE)
+        copy(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL, RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
 
-        copy(RagiumBlockTags.GLASS_BLOCKS_OBSIDIAN, RagiumItemTags.GLASS_BLOCKS_OBSIDIAN)
-        copy(RagiumBlockTags.GLASS_BLOCKS_QUARTZ, RagiumItemTags.GLASS_BLOCKS_QUARTZ)
-        copy(RagiumBlockTags.GLASS_BLOCKS_SOUL, RagiumItemTags.GLASS_BLOCKS_SOUL)
-        copy(RagiumBlockTags.LED_BLOCKS, RagiumItemTags.LED_BLOCKS)
-        copy(RagiumBlockTags.OBSIDIANS_MYSTERIOUS, RagiumItemTags.OBSIDIANS_MYSTERIOUS)
+        copy(RagiumCommonTags.Blocks.GLASS_BLOCKS_OBSIDIAN, RagiumCommonTags.Items.GLASS_BLOCKS_OBSIDIAN)
+        copy(RagiumCommonTags.Blocks.GLASS_BLOCKS_QUARTZ, RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ)
+        copy(RagiumCommonTags.Blocks.GLASS_BLOCKS_SOUL, RagiumCommonTags.Items.GLASS_BLOCKS_SOUL)
+        copy(RagiumModTags.Blocks.LED_BLOCKS, RagiumModTags.Items.LED_BLOCKS)
+        copy(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
         copy(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
 
-        copy(RagiumBlockTags.WIP, RagiumItemTags.WIP)
+        copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
     //    Material    //
@@ -110,31 +110,35 @@ class RagiumItemTagsProvider(
         register(RagiumMaterialFamilies.COOKED_MEAT)
 
         // Dusts
-        addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_ASH, RagiumItems.ASH_DUST)
-        addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_CINNABAR, RagiumItems.CINNABAR_DUST)
-        addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_OBSIDIAN, RagiumItems.OBSIDIAN_DUST)
-        addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_RAGINITE, RagiumItems.RAGINITE_DUST)
-        addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SALTPETER, RagiumItems.SALTPETER_DUST)
-        addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_SULFUR, RagiumItems.SULFUR_DUST)
-        addItem(Tags.Items.DUSTS, RagiumItemTags.DUSTS_WOOD, RagiumItems.SAWDUST)
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_ASH, RagiumItems.ASH_DUST)
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_CINNABAR, RagiumItems.CINNABAR_DUST)
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_OBSIDIAN, RagiumItems.OBSIDIAN_DUST)
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_RAGINITE, RagiumItems.RAGINITE_DUST)
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_SALTPETER, RagiumItems.SALTPETER_DUST)
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_SULFUR, RagiumItems.SULFUR_DUST)
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_WOOD, RagiumItems.SAWDUST)
         // Plates
-        addItem(RagiumItemTags.PLATES, RagiumItemTags.PLATES_PLASTIC, RagiumItems.PLASTIC_PLATE)
+        addItem(RagiumCommonTags.Items.PLATES, RagiumCommonTags.Items.PLATES_PLASTIC, RagiumItems.PLASTIC_PLATE)
 
         // Mekanism Addon
-        tag(RagiumItemTags.ENRICHED_AZURE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
-        tag(RagiumItemTags.ENRICHED_RAGINITE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
-        tag(MekanismTags.Items.ENRICHED).addTags(RagiumItemTags.ENRICHED_AZURE, RagiumItemTags.ENRICHED_RAGINITE)
+        tag(RagiumCommonTags.Items.ENRICHED_AZURE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
+        tag(RagiumCommonTags.Items.ENRICHED_RAGINITE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
+        tag(MekanismTags.Items.ENRICHED)
+            .addTags(
+                RagiumCommonTags.Items.ENRICHED_AZURE,
+                RagiumCommonTags.Items.ENRICHED_RAGINITE,
+            )
     }
 
     private fun foods() {
-        addItem(Tags.Items.CROPS, RagiumItemTags.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
+        addItem(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
 
         tag(Tags.Items.FOODS)
             .addTags(
-                RagiumItemTags.FOODS_CHOCOLATE,
-                RagiumItemTags.FOODS_JAMS,
-                RagiumItemTags.INGOTS_COOKED_MEAT,
-                RagiumItemTags.INGOTS_MEAT,
+                RagiumCommonTags.Items.FOODS_CHOCOLATE,
+                RagiumCommonTags.Items.FOODS_JAMS,
+                RagiumCommonTags.Items.INGOTS_COOKED_MEAT,
+                RagiumCommonTags.Items.INGOTS_MEAT,
             ).addItem(
                 RagiumItems.AMBROSIA,
                 RagiumItems.CANNED_COOKED_MEAT,
@@ -151,31 +155,31 @@ class RagiumItemTagsProvider(
         tag(Tags.Items.FOODS_GOLDEN).addItem(RagiumItems.FEVER_CHERRY)
 
         tag(Tags.Items.FOODS_FRUIT)
-            .addTag(RagiumItemTags.FOODS_CHERRY)
+            .addTag(RagiumCommonTags.Items.FOODS_CHERRY)
             .addItem(RagiumItems.FEVER_CHERRY)
-        tag(RagiumItemTags.FOODS_CHERRY).addTag(RagiumItemTags.FOODS_RAGI_CHERRY)
-        tag(RagiumItemTags.FOODS_RAGI_CHERRY).addItem(RagiumItems.RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
+        tag(RagiumCommonTags.Items.FOODS_CHERRY).addTag(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+        tag(RagiumCommonTags.Items.FOODS_RAGI_CHERRY).addItem(RagiumItems.RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
 
-        tag(RagiumItemTags.FOODS_JAMS).addTag(RagiumItemTags.JAMS_RAGI_CHERRY)
-        tag(RagiumItemTags.JAMS_RAGI_CHERRY).addItem(RagiumItems.RAGI_CHERRY_JAM)
+        tag(RagiumCommonTags.Items.FOODS_JAMS).addTag(RagiumCommonTags.Items.JAMS_RAGI_CHERRY)
+        tag(RagiumCommonTags.Items.JAMS_RAGI_CHERRY).addItem(RagiumItems.RAGI_CHERRY_JAM)
 
-        tag(RagiumItemTags.FOODS_CHOCOLATE).addTag(RagiumItemTags.INGOTS_CHOCOLATE)
+        tag(RagiumCommonTags.Items.FOODS_CHOCOLATE).addTag(RagiumCommonTags.Items.INGOTS_CHOCOLATE)
     }
 
     private fun categories() {
-        tag(RagiumItemTags.ELDRITCH_PEARL_BINDER)
+        tag(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .addItem(
                 Items.GHAST_TEAR,
                 Items.PHANTOM_MEMBRANE,
                 Items.WIND_CHARGE,
             )
 
-        tag(RagiumItemTags.ALLOY_SMELTER_FLUXES_BASIC)
+        tag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
             .addTags(ItemTags.SMELTS_TO_GLASS)
 
-        tag(RagiumItemTags.ALLOY_SMELTER_FLUXES_ADVANCED)
+        tag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
             .addTags(
-                RagiumItemTags.DUSTS_CINNABAR,
+                RagiumCommonTags.Items.DUSTS_CINNABAR,
                 ItemTags.SOUL_FIRE_BASE_BLOCKS,
             )
 
@@ -191,7 +195,7 @@ class RagiumItemTagsProvider(
         tag(ItemTags.SHOVELS).addItem(RagiumItems.AZURE_STEEL_TOOLS.shovelItem)
         tag(ItemTags.SWORDS).addItem(RagiumItems.AZURE_STEEL_TOOLS.swordItem)
 
-        tag(RagiumItemTags.TOOLS_FORGE_HAMMER).addItem(
+        tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(
             RagiumItems.RAGI_ALLOY_HAMMER,
             RagiumItems.AZURE_STEEL_TOOLS.hammerItem,
         )
@@ -204,7 +208,7 @@ class RagiumItemTagsProvider(
             ItemTags.DURABILITY_ENCHANTABLE,
             ItemTags.VANISHING_ENCHANTABLE,
             Tags.Items.TOOLS,
-        ).map(::tag).forEach { it.addTag(RagiumItemTags.TOOLS_FORGE_HAMMER) }
+        ).map(::tag).forEach { it.addTag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER) }
 
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
@@ -213,40 +217,40 @@ class RagiumItemTagsProvider(
 
         // Parts
         tag(Tags.Items.SLIME_BALLS).addItem(RagiumItems.TAR)
-        tag(RagiumItemTags.PAPER).addItem(Items.PAPER)
-        tag(RagiumItemTags.POLYMER_RESIN)
+        tag(RagiumCommonTags.Items.PAPER).addItem(Items.PAPER)
+        tag(RagiumModTags.Items.POLYMER_RESIN)
             .addItem(RagiumItems.POLYMER_RESIN)
             .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConstantValues.ORITECH, "polymer_resin"))
 
-        tag(RagiumItemTags.PLASTICS).addOptionalTag(RagiumItemTags.PLATES_PLASTIC)
-        tag(RagiumItemTags.PLATES_PLASTIC).addOptionalTag(RagiumItemTags.PLASTICS)
+        tag(RagiumCommonTags.Items.PLASTICS).addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
+        tag(RagiumCommonTags.Items.PLATES_PLASTIC).addOptionalTag(RagiumCommonTags.Items.PLASTICS)
         // Circuits
-        addItem(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
-        addItem(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
-        addItem(RagiumItemTags.CIRCUITS, RagiumItemTags.CIRCUITS_ELITE, RagiumItems.CRYSTAL_PROCESSOR)
+        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
+        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
+        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ELITE, RagiumItems.CRYSTAL_PROCESSOR)
 
-        tag(RagiumItemTags.ENI_UPGRADES)
+        tag(RagiumModTags.Items.ENI_UPGRADES)
             .addTags(
-                RagiumItemTags.ENI_UPGRADES_BASIC,
-                RagiumItemTags.ENI_UPGRADES_ADVANCED,
-                RagiumItemTags.ENI_UPGRADES_ELITE,
+                RagiumModTags.Items.ENI_UPGRADES_BASIC,
+                RagiumModTags.Items.ENI_UPGRADES_ADVANCED,
+                RagiumModTags.Items.ENI_UPGRADES_ELITE,
             )
-        tag(RagiumItemTags.ENI_UPGRADES_BASIC).addTag(RagiumItemTags.CIRCUITS_BASIC)
-        tag(RagiumItemTags.ENI_UPGRADES_ADVANCED).addTag(RagiumItemTags.CIRCUITS_ADVANCED)
-        tag(RagiumItemTags.ENI_UPGRADES_ELITE).addTag(RagiumItemTags.CIRCUITS_ELITE)
+        tag(RagiumModTags.Items.ENI_UPGRADES_BASIC).addTag(RagiumCommonTags.Items.CIRCUITS_BASIC)
+        tag(RagiumModTags.Items.ENI_UPGRADES_ADVANCED).addTag(RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+        tag(RagiumModTags.Items.ENI_UPGRADES_ELITE).addTag(RagiumCommonTags.Items.CIRCUITS_ELITE)
 
         // Other
-        tag(ItemTags.BEACON_PAYMENT_ITEMS).addTags(*RagiumItemTags.BEACON_PAYMENTS)
+        tag(ItemTags.BEACON_PAYMENT_ITEMS).addTags(*RagiumCommonTags.Items.BEACON_PAYMENTS)
 
-        tag(ItemTags.MEAT).addTags(RagiumItemTags.INGOTS_MEAT, RagiumItemTags.INGOTS_COOKED_MEAT)
+        tag(ItemTags.MEAT).addTags(RagiumCommonTags.Items.INGOTS_MEAT, RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
         tag(ItemTags.PIGLIN_LOVED)
-            .addTag(RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY)
+            .addTag(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
             .addItem(RagiumItems.FEVER_CHERRY)
 
-        tag(RagiumItemTags.WIP)
+        tag(RagiumModTags.Items.WIP)
             .addTags(
-                RagiumItemTags.INGOTS_DEEP_STEEL,
-                RagiumItemTags.STORAGE_BLOCKS_DEEP_STEEL,
+                RagiumCommonTags.Items.INGOTS_DEEP_STEEL,
+                RagiumCommonTags.Items.STORAGE_BLOCKS_DEEP_STEEL,
             ).addHolder(
                 RagiumItems.ELDER_HEART,
                 RagiumItems.BOTTLED_BEE,
@@ -269,8 +273,8 @@ class RagiumItemTagsProvider(
     private fun pneumatic() {
         tag(PneumaticCraftTags.Items.PLASTIC_SHEETS)
             .addOptionalTags(
-                RagiumItemTags.PLASTICS,
-                RagiumItemTags.PLATES_PLASTIC,
+                RagiumCommonTags.Items.PLASTICS,
+                RagiumCommonTags.Items.PLATES_PLASTIC,
             )
     }
 }

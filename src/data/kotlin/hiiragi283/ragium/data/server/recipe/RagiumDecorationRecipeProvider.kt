@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -22,7 +22,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumBlocks.RAGI_STONE_SETS.base, 8, CraftingBookCategory.BUILDING)
             .hollow8()
             .define('A', Tags.Items.STONES)
-            .define('B', RagiumItemTags.DUSTS_RAGINITE)
+            .define('B', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .save(output)
         // Ragi-Stone Bricks
         save(
@@ -57,15 +57,15 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
         // Plastic Block
         HTShapedRecipeBuilder(RagiumBlocks.PLASTIC_SETS.base, 4, CraftingBookCategory.BUILDING)
             .hollow4()
-            .define('A', RagiumItemTags.PLASTICS)
-            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .define('A', RagiumCommonTags.Items.PLASTICS)
+            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder(RagiumBlocks.BLUE_NETHER_BRICK_SETS.base, 1, CraftingBookCategory.BUILDING)
             .pattern(
                 "AB",
                 "BA",
-            ).define('A', RagiumItemTags.CROPS_WARPED_WART)
+            ).define('A', RagiumCommonTags.Items.CROPS_WARPED_WART)
             .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
 
@@ -90,7 +90,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
         // Obsidian Glass
         HTShapedRecipeBuilder(RagiumBlocks.OBSIDIAN_GLASS)
             .hollow4()
-            .define('A', RagiumItemTags.DUSTS_OBSIDIAN)
+            .define('A', RagiumCommonTags.Items.DUSTS_OBSIDIAN)
             .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
             .save(output)
     }

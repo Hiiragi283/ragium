@@ -6,8 +6,6 @@ import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.extension.addMatterType
-import hiiragi283.ragium.api.tag.RagiumFluidTags
-import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -441,52 +439,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addTagPrefix(HTTagPrefixes.WIRE, "%s Wire")
     }*/
 
-    private fun tag() {
-        // Fluid
-        add(RagiumFluidTags.CHOCOLATES, "Chocolate")
-        add(RagiumFluidTags.CREOSOTE, "Creosote")
-        add(RagiumFluidTags.MEAT, "Meat")
-        add(RagiumFluidTags.STEAM, "Steam")
-
-        add(RagiumFluidTags.NITRO_FUEL, "Nitro Fuel")
-        add(RagiumFluidTags.NON_NITRO_FUEL, "Non-Nitro Fuel")
-        add(RagiumFluidTags.THERMAL_FUEL, "Thermal Fuel")
-        // Item
-        add(RagiumItemTags.CIRCUITS, "Circuit")
-        add(RagiumItemTags.CIRCUITS_BASIC, "Basic Circuit")
-        add(RagiumItemTags.CIRCUITS_ADVANCED, "Advanced Circuit")
-        add(RagiumItemTags.CIRCUITS_ELITE, "Elite Circuit")
-
-        // add(RagiumItemTags.MOLDS, "Press Mold")
-        // add(RagiumItemTags.MOLDS_BALL, "Press Mold (Ball)")
-        // add(RagiumItemTags.MOLDS_BLANK, "Press Mold (Blank)")
-        // add(RagiumItemTags.MOLDS_BLOCK, "Press Mold (Block)")
-        // add(RagiumItemTags.MOLDS_GEAR, "Press Mold (Gear)")
-        // add(RagiumItemTags.MOLDS_INGOT, "Press Mold (Ingot)")
-        // add(RagiumItemTags.MOLDS_PLATE, "Press Mold (Plate)")
-        // add(RagiumItemTags.MOLDS_ROD, "Press Mold (Rod)")
-        // add(RagiumItemTags.MOLDS_WIRE, "Press Mold (Wire)")
-
-        add(RagiumItemTags.PAPER, "Paper")
-        add(RagiumItemTags.PLASTICS, "Plastic")
-        add(RagiumItemTags.SILICON, "Silicon")
-        add(RagiumItemTags.TOOLS_FORGE_HAMMER, "Forge Hammer")
-
-        add(RagiumItemTags.CROPS_WARPED_WART, "Warped Wart")
-        add(RagiumItemTags.FOODS_CHOCOLATE, "Chocolate")
-
-        add(RagiumItemTags.GLASS_BLOCKS_OBSIDIAN, "Obsidian Glass")
-        add(RagiumItemTags.GLASS_BLOCKS_QUARTZ, "Quartz Glass")
-
-        add(RagiumItemTags.DYNAMITES, "Dynamite")
-        add(RagiumItemTags.ELDRITCH_PEARL_BINDER, "Eldritch Pearl Binder")
-        add(RagiumItemTags.LED_BLOCKS, "LED Block")
-
-        add(RagiumItemTags.DIRT_SOILS, "Dirt Soil")
-        add(RagiumItemTags.END_SOILS, "End Soil")
-        add(RagiumItemTags.MUSHROOM_SOILS, "Mushroom Soil")
-        add(RagiumItemTags.NETHER_SOILS, "Nether Soil")
-    }
+    private fun tag() {}
 
     private fun text() {
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE, "Azure Steel Upgrade")

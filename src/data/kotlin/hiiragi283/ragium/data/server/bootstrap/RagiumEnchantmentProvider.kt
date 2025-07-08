@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.bootstrap
 
-import hiiragi283.ragium.api.tag.RagiumEntityTypeTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumEnchantments
 import net.minecraft.advancements.critereon.EntityPredicate
 import net.minecraft.core.HolderGetter
@@ -68,7 +68,7 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
                         LootContext.EntityTarget.THIS,
                         EntityPredicate.Builder
                             .entity()
-                            .of(RagiumEntityTypeTags.SENSITIVE_TO_NOISE_CANCELLING),
+                            .of(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING),
                     ),
                 ),
         )

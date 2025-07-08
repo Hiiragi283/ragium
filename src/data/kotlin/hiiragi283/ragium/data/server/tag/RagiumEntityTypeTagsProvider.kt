@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.RagiumEntityTypeTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -20,7 +20,7 @@ class RagiumEntityTypeTagsProvider(output: PackOutput, provider: CompletableFutu
         helper,
     ) {
     override fun addTags(provider: HolderLookup.Provider) {
-        tag(RagiumEntityTypeTags.SENSITIVE_TO_NOISE_CANCELLING)
+        tag(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING)
             .add(EntityType.WARDEN)
     }
 }

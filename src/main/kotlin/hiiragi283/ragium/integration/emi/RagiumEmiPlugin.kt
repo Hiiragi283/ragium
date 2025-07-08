@@ -21,7 +21,7 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
@@ -109,7 +109,7 @@ class RagiumEmiPlugin : EmiPlugin {
                         EmiCraftingRecipe(
                             listOf(
                                 EmiStack.of(RagiumItems.ICE_CREAM),
-                                EmiIngredient.of(RagiumItemTags.FOODS_CHERRY),
+                                EmiIngredient.of(RagiumCommonTags.Items.FOODS_CHERRY),
                                 EmiStack.of(createPotionStack(holder)),
                                 EmiIngredient.of(Tags.Items.DYES_GREEN),
                             ),

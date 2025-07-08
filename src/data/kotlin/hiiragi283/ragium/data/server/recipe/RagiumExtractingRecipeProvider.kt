@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrNull
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -33,17 +33,17 @@ object RagiumExtractingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_block")
         // Ragium
         createExtracting()
-            .itemOutput(RagiumItemTags.DUSTS_CINNABAR, 3)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_CINNABAR, 3)
             .itemInput(Tags.Items.STORAGE_BLOCKS_REDSTONE)
             .saveSuffixed(output, "_from_redstone")
 
         createExtracting()
-            .itemOutput(RagiumItemTags.DUSTS_SALTPETER)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_SALTPETER)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, 4)
             .saveSuffixed(output, "_from_sandstone")
 
         createExtracting()
-            .itemOutput(RagiumItemTags.DUSTS_SALTPETER)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_SALTPETER)
             .itemInput(Tags.Items.GUNPOWDERS)
             .saveSuffixed(output, "_from_gunpowder")
 

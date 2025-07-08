@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.TagKey
@@ -21,7 +21,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .pattern(" AA")
             .pattern("BBA")
             .pattern(" AA")
-            .define('A', RagiumItemTags.INGOTS_RAGI_ALLOY)
+            .define('A', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
             .save(output)
 
@@ -31,7 +31,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "ABA",
                 "AAA",
             ).define('A', Tags.Items.LEATHERS)
-            .define('B', RagiumItemTags.GEMS_ELDRITCH_PEARL)
+            .define('B', RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ITEM_MAGNET)
@@ -39,9 +39,9 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "A A",
                 "B B",
                 " C ",
-            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
-            .define('B', RagiumItemTags.INGOTS_RAGI_ALLOY)
-            .define('C', RagiumItemTags.GEMS_RAGI_CRYSTAL)
+            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
+            .define('C', RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
             .save(output)
 
         HTSmithingRecipeBuilder(RagiumItems.EXP_MAGNET)
@@ -56,13 +56,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
 
         HTShapedRecipeBuilder(RagiumItems.RAGI_LANTERN)
             .hollow4()
-            .define('A', RagiumItemTags.GEMS_RAGI_CRYSTAL)
+            .define('A', RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
             .define('B', Items.LANTERN)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ELDRITCH_EGG)
             .hollow4()
-            .define('A', RagiumItemTags.GEMS_ELDRITCH_PEARL)
+            .define('A', RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
             .define('B', Tags.Items.EGGS)
             .save(output)
 
@@ -77,8 +77,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "AA",
                 "AA",
                 "B ",
-            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
-            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
 
         for (mold: RagiumItems.Molds in RagiumItems.Molds.entries) {
@@ -99,8 +99,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .pattern(
                 "AAA",
                 "ABA",
-            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
-            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Chestplate
         HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_CHESTPLATE, category = CraftingBookCategory.EQUIPMENT)
@@ -108,8 +108,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "ABA",
                 "AAA",
                 "AAA",
-            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
-            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Leggings
         HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_LEGGINGS, category = CraftingBookCategory.EQUIPMENT)
@@ -117,16 +117,16 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "AAA",
                 "ABA",
                 "A A",
-            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
-            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Boots
         HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_BOOTS, category = CraftingBookCategory.EQUIPMENT)
             .pattern(
                 "A A",
                 "ABA",
-            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
-            .define('B', RagiumItemTags.TOOLS_FORGE_HAMMER)
+            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Tool
         RagiumItems.AZURE_STEEL_TOOLS.addRecipes(output, provider)
@@ -137,13 +137,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "A A",
                 "A A",
                 " A ",
-            ).define('A', RagiumItemTags.INGOTS_AZURE_STEEL)
+            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .save(output)
 
         HTShapelessRecipeBuilder(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, 2)
             .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            .addIngredient(RagiumItemTags.INGOTS_AZURE_STEEL)
-            .addIngredient(RagiumItemTags.INGOTS_AZURE_STEEL)
+            .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .saveSuffixed(output, "_duplicate")
 
         mapOf(
@@ -155,7 +155,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             HTSmithingRecipeBuilder(result)
                 .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
                 .addIngredient(base)
-                .addIngredient(RagiumItemTags.INGOTS_AZURE_STEEL)
+                .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
                 .save(output)
         }
     }
@@ -167,7 +167,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "AAA",
                 "BCB",
                 "AAA",
-            ).define('A', RagiumItemTags.PAPER)
+            ).define('A', RagiumCommonTags.Items.PAPER)
             .define('B', Tags.Items.DYES_BLACK)
             .define('C', Tags.Items.GEMS_DIAMOND)
             .save(output)
@@ -195,13 +195,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
-        register(RagiumItems.RAGI_TICKET, RagiumItemTags.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
-        register(RagiumItems.AZURE_TICKET, RagiumItemTags.INGOTS_AZURE_STEEL, Tags.Items.DYES_BLUE)
-        register(RagiumItems.BLOODY_TICKET, RagiumItemTags.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
-        register(RagiumItems.TELEPORT_TICKET, RagiumItemTags.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
-        register(RagiumItems.ELDRITCH_TICKET, RagiumItemTags.GEMS_ELDRITCH_PEARL, Tags.Items.DYES_PURPLE)
+        register(RagiumItems.RAGI_TICKET, RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
+        register(RagiumItems.AZURE_TICKET, RagiumCommonTags.Items.INGOTS_AZURE_STEEL, Tags.Items.DYES_BLUE)
+        register(RagiumItems.BLOODY_TICKET, RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
+        register(RagiumItems.TELEPORT_TICKET, RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
+        register(RagiumItems.ELDRITCH_TICKET, RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, Tags.Items.DYES_PURPLE)
 
-        register(RagiumItems.DAYBREAK_TICKET, RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY, Tags.Items.DYES_ORANGE)
+        register(RagiumItems.DAYBREAK_TICKET, RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY, Tags.Items.DYES_ORANGE)
         register(RagiumItems.ETERNAL_TICKET, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
 
         save(

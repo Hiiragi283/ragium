@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -55,8 +55,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
                 200,
                 0.35f,
                 Items.GLASS_BOTTLE,
-            ).addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
-            .addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
+            ).addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
             .addIngredient(Items.SUGAR)
             .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
             .save(output)

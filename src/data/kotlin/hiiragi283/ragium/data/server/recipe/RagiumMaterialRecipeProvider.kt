@@ -4,7 +4,8 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.data.server.RagiumMaterialFamilies
 import hiiragi283.ragium.setup.RagiumItems
@@ -19,7 +20,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Ragi-Alloy
         HTShapedRecipeBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow4()
-            .define('A', RagiumItemTags.DUSTS_RAGINITE)
+            .define('A', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .define('B', Tags.Items.INGOTS_COPPER)
             .save(output)
 
@@ -36,21 +37,21 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_compound")
 
         createAlloying()
-            .itemOutput(RagiumItemTags.INGOTS_RAGI_ALLOY)
+            .itemOutput(RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
             .itemInput(Tags.Items.INGOTS_COPPER)
-            .itemInput(RagiumItemTags.DUSTS_RAGINITE, 3)
+            .itemInput(RagiumCommonTags.Items.DUSTS_RAGINITE, 3)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.RAGI_COKE)
             .hollow4()
-            .define('A', RagiumItemTags.DUSTS_RAGINITE)
+            .define('A', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .define('B', ItemTags.COALS)
             .save(output)
         // Advanced Ragi-Alloy
         HTShapedRecipeBuilder(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             .cross8()
             .define('A', Tags.Items.DUSTS_GLOWSTONE)
-            .define('B', RagiumItemTags.DUSTS_RAGINITE)
+            .define('B', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .define('C', Tags.Items.INGOTS_GOLD)
             .save(output)
 
@@ -67,21 +68,21 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_compound")
 
         createAlloying()
-            .itemOutput(RagiumItemTags.INGOTS_ADVANCED_RAGI_ALLOY)
+            .itemOutput(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
             .itemInput(Tags.Items.INGOTS_GOLD)
-            .itemInput(RagiumItemTags.DUSTS_RAGINITE, 3)
+            .itemInput(RagiumCommonTags.Items.DUSTS_RAGINITE, 3)
             .save(output)
         // Ragi-Crystal
         HTShapedRecipeBuilder(RagiumItems.RAGI_CRYSTAL)
             .hollow8()
-            .define('A', RagiumItemTags.DUSTS_RAGINITE)
+            .define('A', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .define('B', Tags.Items.GEMS_DIAMOND)
             .save(output)
 
         createAlloying()
-            .itemOutput(RagiumItemTags.GEMS_RAGI_CRYSTAL)
+            .itemOutput(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
             .itemInput(Tags.Items.GEMS_DIAMOND)
-            .itemInput(RagiumItemTags.DUSTS_RAGINITE, 6)
+            .itemInput(RagiumCommonTags.Items.DUSTS_RAGINITE, 6)
             .save(output)
         // Azure Steel
         HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_COMPOUND)
@@ -109,14 +110,14 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         createAlloying()
-            .itemOutput(RagiumItemTags.INGOTS_AZURE_STEEL)
+            .itemOutput(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .itemInput(Tags.Items.INGOTS_IRON)
             .itemInput(RagiumItems.AZURE_SHARD, 3)
             .save(output)
         // Sawdust
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
-            .define('A', RagiumItemTags.DUSTS_WOOD)
+            .define('A', RagiumCommonTags.Items.DUSTS_WOOD)
             .define('B', RagiumItems.SAWDUST)
             .save(output)
 
@@ -128,25 +129,25 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Eldritch Pearl
         HTShapedRecipeBuilder(RagiumItems.ELDRITCH_ORB)
             .cross4()
-            .define('A', RagiumItemTags.GEMS_CRIMSON_CRYSTAL)
-            .define('B', RagiumItemTags.GEMS_WARPED_CRYSTAL)
-            .define('C', RagiumItemTags.ELDRITCH_PEARL_BINDER)
+            .define('A', RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
+            .define('B', RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)
+            .define('C', RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .save(output)
 
         createAlloying()
             .itemOutput(RagiumItems.ELDRITCH_ORB, 6)
-            .itemInput(RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
-            .itemInput(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
+            .itemInput(RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
+            .itemInput(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)
         // Misc
         oreToRaw()
         rawToIngot()
 
         HTShapelessRecipeBuilder(Items.GUNPOWDER, 3)
-            .addIngredient(RagiumItemTags.DUSTS_SULFUR)
-            .addIngredient(RagiumItemTags.DUSTS_SALTPETER)
+            .addIngredient(RagiumCommonTags.Items.DUSTS_SULFUR)
+            .addIngredient(RagiumCommonTags.Items.DUSTS_SALTPETER)
             .addIngredient(Items.CHARCOAL)
-            .addIngredient(RagiumItemTags.TOOLS_FORGE_HAMMER)
+            .addIngredient(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .saveSuffixed(output, "_with_hammer")
 
         register(RagiumMaterialFamilies.RAGI_CRYSTAL)
@@ -194,7 +195,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         createCrushing()
             .itemOutput(Items.REDSTONE, 8)
             .itemOutput(Items.REDSTONE, 4, 1 / 2f)
-            .itemOutput(RagiumItemTags.DUSTS_CINNABAR, 2, 1 / 2f)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_CINNABAR, 2, 1 / 2f)
             .itemInput(Tags.Items.ORES_REDSTONE)
             .saveSuffixed(output, "_from_ore")
         // Lapis
@@ -225,15 +226,15 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
 
         // Raginite
         createCrushing()
-            .itemOutput(RagiumItemTags.DUSTS_RAGINITE, 8)
-            .itemOutput(RagiumItemTags.DUSTS_RAGINITE, 4, 1 / 2f)
-            .itemOutput(RagiumItemTags.GEMS_RAGI_CRYSTAL, 2, 1 / 4f)
-            .itemInput(RagiumItemTags.ORES_RAGINITE)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_RAGINITE, 8)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_RAGINITE, 4, 1 / 2f)
+            .itemOutput(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2, 1 / 4f)
+            .itemInput(RagiumCommonTags.Items.ORES_RAGINITE)
             .saveSuffixed(output, "_from_ore")
         // Ragi-Crystal
         createCrushing()
-            .itemOutput(RagiumItemTags.GEMS_RAGI_CRYSTAL, 2)
-            .itemInput(RagiumItemTags.ORES_RAGI_CRYSTAL)
+            .itemOutput(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2)
+            .itemInput(RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
             .saveSuffixed(output, "_from_ore")
     }
 
@@ -243,13 +244,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             createAlloying()
                 .itemOutput(result, 3)
                 .itemInput(input, 2)
-                .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_BASIC)
+                .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
                 .saveSuffixed(output, "_with_basic_flux")
 
             createAlloying()
                 .itemOutput(result, 2)
                 .itemInput(input)
-                .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_ADVANCED)
+                .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
                 .saveSuffixed(output, "_with_advanced_flux")
         }
 

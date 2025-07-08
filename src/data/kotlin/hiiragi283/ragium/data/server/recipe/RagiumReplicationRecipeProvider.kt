@@ -7,7 +7,8 @@ import com.buuz135.replication.recipe.MatterValueRecipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumItems
@@ -32,13 +33,13 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
         createAlloying()
             .itemOutput(ingotTagKey, 3)
             .itemInput(rawTagKey, 2)
-            .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_BASIC)
+            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
             .saveSuffixed(output, "_with_basic_flux")
 
         createAlloying()
             .itemOutput(ingotTagKey, 2)
             .itemInput(rawTagKey)
-            .itemInput(RagiumItemTags.ALLOY_SMELTER_FLUXES_ADVANCED)
+            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
             .saveSuffixed(output, "_with_advanced_flux")
 
         matter()
@@ -47,7 +48,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
     private fun matter() {
         // Ragium
         register(
-            RagiumItemTags.DUSTS_RAGINITE,
+            RagiumCommonTags.Items.DUSTS_RAGINITE,
             RagiumReplicationAddon.MATTER_RAGIUM.toStack(9),
         )
         // Azure
@@ -59,19 +60,19 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
         )
         // Crimson
         register(
-            RagiumItemTags.GEMS_CRIMSON_CRYSTAL,
+            RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL,
             ReplicationRegistry.Matter.PRECIOUS.toStack(4),
             ReplicationRegistry.Matter.NETHER.toStack(4),
         )
         // Warped
         register(
-            RagiumItemTags.GEMS_WARPED_CRYSTAL,
+            RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL,
             ReplicationRegistry.Matter.PRECIOUS.toStack(4),
             ReplicationRegistry.Matter.ENDER.toStack(4),
         )
         // Eldritch
         register(
-            RagiumItemTags.GEMS_ELDRITCH_PEARL,
+            RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL,
             ReplicationRegistry.Matter.PRECIOUS.toStack(4),
             ReplicationRegistry.Matter.QUANTUM.toStack(9),
         )
@@ -83,7 +84,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
             ReplicationRegistry.Matter.ORGANIC.toStack(4),
         )
         register(
-            RagiumItemTags.FOODS_RAGI_CHERRY,
+            RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
             ReplicationRegistry.Matter.LIVING.toStack(4),
             ReplicationRegistry.Matter.ORGANIC.toStack(4),
             RagiumReplicationAddon.MATTER_RAGIUM.toStack(4),

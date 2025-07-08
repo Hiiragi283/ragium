@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.data.HTAdvancementGenerator
 import hiiragi283.ragium.api.data.RagiumAdvancements
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.AdvancementHolder
@@ -52,7 +52,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.RAGINITE_DUST,
             ragiTicket,
             RagiumItems.RAGINITE_DUST,
-            RagiumItemTags.DUSTS_RAGINITE,
+            RagiumCommonTags.Items.DUSTS_RAGINITE,
         )
     }
 
@@ -77,7 +77,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.CRIMSON_CRYSTAL,
             root,
             RagiumItems.CRIMSON_CRYSTAL,
-            RagiumItemTags.GEMS_CRIMSON_CRYSTAL,
+            RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL,
         )
         val crimsonSoil: AdvancementHolder = create(RagiumAdvancements.CRIMSON_SOIL, crimsonCrystal) {
             display {
@@ -100,7 +100,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.WARPED_CRYSTAL,
             root,
             RagiumItems.WARPED_CRYSTAL,
-            RagiumItemTags.GEMS_WARPED_CRYSTAL,
+            RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL,
         )
         val teleportTicket: AdvancementHolder = create(RagiumAdvancements.TELEPORT_TICKET, warpedCrystal) {
             display {
@@ -119,7 +119,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.ELDRITCH_PEARL,
             root,
             RagiumItems.ELDRITCH_PEARL,
-            RagiumItemTags.GEMS_ELDRITCH_PEARL,
+            RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL,
         )
         val mysteriousObsidian: AdvancementHolder = create(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, eldritchPearl) {
             display {
@@ -132,7 +132,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 "interact_crying_obsidian",
                 HTBlockInteractionTrigger.TriggerInstance.interactBlock(Tags.Blocks.OBSIDIANS_CRYING),
             )
-            hasItemsIn("has_mysterious_obsidian", RagiumItemTags.OBSIDIANS_MYSTERIOUS)
+            hasItemsIn("has_mysterious_obsidian", RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
             requirements(AdvancementRequirements.Strategy.OR)
         }
     }

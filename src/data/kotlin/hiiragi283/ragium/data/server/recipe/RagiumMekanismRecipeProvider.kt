@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -39,12 +39,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         fun toChemical(factory: (ItemStackIngredient, ChemicalStack) -> ItemStackToChemicalRecipeBuilder, prefix: String) {
             // Dust -> Chemical
             factory(
-                itemHelper.from(RagiumItemTags.DUSTS_RAGINITE),
+                itemHelper.from(RagiumCommonTags.Items.DUSTS_RAGINITE),
                 RagiumMekanismAddon.CHEMICAL_RAGINITE.asStack(10),
             ).build(output, RagiumAPI.id("$prefix/raginite/from_dust"))
             // Enriched -> Chemical
             factory(
-                itemHelper.from(RagiumItemTags.ENRICHED_RAGINITE),
+                itemHelper.from(RagiumCommonTags.Items.ENRICHED_RAGINITE),
                 RagiumMekanismAddon.CHEMICAL_RAGINITE.asStack(80),
             ).build(output, RagiumAPI.id("$prefix/raginite/from_enriched"))
 
@@ -55,7 +55,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             ).build(output, RagiumAPI.id("$prefix/azure/from_shard"))
             // Enriched -> Chemical
             factory(
-                itemHelper.from(RagiumItemTags.ENRICHED_AZURE),
+                itemHelper.from(RagiumCommonTags.Items.ENRICHED_AZURE),
                 RagiumMekanismAddon.CHEMICAL_AZURE.asStack(80),
             ).build(output, RagiumAPI.id("$prefix/azure/from_enriched"))
         }
@@ -81,7 +81,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
     private fun enriching() {
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(RagiumItemTags.DUSTS_RAGINITE),
+                itemHelper.from(RagiumCommonTags.Items.DUSTS_RAGINITE),
                 RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE.toStack(),
             ).build(output, RagiumAPI.id("enriching/enrich/raginite"))
 
@@ -93,13 +93,13 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
 
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(RagiumItemTags.ORES_RAGINITE),
+                itemHelper.from(RagiumCommonTags.Items.ORES_RAGINITE),
                 RagiumItems.RAGINITE_DUST.toStack(12),
             ).build(output, RagiumAPI.id("processing/raginite/from_ore"))
 
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(RagiumItemTags.ORES_RAGI_CRYSTAL),
+                itemHelper.from(RagiumCommonTags.Items.ORES_RAGI_CRYSTAL),
                 RagiumItems.RAGI_CRYSTAL.toStack(2),
             ).build(output, RagiumAPI.id("processing/ragi_crystal/from_ore"))
     }
