@@ -34,7 +34,7 @@ object RagiumFoods {
         nutrition = FoodConstants.MAX_FOOD
         alwaysEat = true
         eatSeconds = 3f
-        addEffect(MobEffects.HEALTH_BOOST, 10 * 20, 4)
+        addEffect(MobEffects.HEALTH_BOOST, 60 * 20, 4)
         addEffect(MobEffects.REGENERATION, 10 * 20, 4)
     }
 

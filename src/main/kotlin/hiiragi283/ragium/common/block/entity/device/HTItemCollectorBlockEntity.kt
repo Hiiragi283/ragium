@@ -20,7 +20,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.items.IItemHandler
@@ -58,18 +57,12 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // 自動搬出する
         exportItems(level, pos)
         // 範囲内のItem Entityを取得する
-        val range: Int = RagiumConfig.COMMON.entityCollectorRange.get()
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
             ItemEntity::class.java,
-            AABB.of(
-                BoundingBox(
-                    blockPos.x - range,
-                    blockPos.y - range,
-                    blockPos.z - range,
-                    blockPos.x + range,
-                    blockPos.y + range,
-                    blockPos.z + range,
-                ),
+            AABB(blockPos).inflate(
+                RagiumConfig.COMMON.entityCollectorRange
+                    .get()
+                    .toDouble(),
             ),
         )
         if (itemEntities.isEmpty()) return TriState.DEFAULT
