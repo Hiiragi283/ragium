@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.util.HTTagUtil
+import hiiragi283.ragium.api.tag.HTTagHelper
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
@@ -39,7 +39,7 @@ class HTFluidOutput(entry: Either<ResourceLocation, TagKey<Fluid>>, amount: Int,
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTFluidOutput> = StreamCodec.composite(
-            ByteBufCodecs.either(ResourceLocation.STREAM_CODEC, HTTagUtil.streamCodec(Registries.FLUID)),
+            ByteBufCodecs.either(ResourceLocation.STREAM_CODEC, HTTagHelper.streamCodec(Registries.FLUID)),
             HTFluidOutput::entry,
             ByteBufCodecs.VAR_INT,
             HTFluidOutput::amount,

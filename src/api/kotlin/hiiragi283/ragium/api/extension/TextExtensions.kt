@@ -8,13 +8,17 @@ import net.minecraft.core.GlobalPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.level.Level
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.client.ClientTooltipFlag
+import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforgespi.language.IModInfo
@@ -22,6 +26,10 @@ import java.text.NumberFormat
 import java.util.function.Consumer
 
 //    Text    //
+
+fun bracketText(text: Component): MutableComponent = Component.literal("[").append(text).append("]")
+
+fun joinedText(vararg texts: Component): Component = ComponentUtils.formatList(listOf(*texts), Component.literal(", "))
 
 /**
  * フォーマットされた[Int]の[Component]を返します。
@@ -53,21 +61,17 @@ fun boolText(value: Boolean): MutableComponent = stringText(value)
  */
 fun stringText(value: Any?): MutableComponent = Component.literal(value.toString())
 
-fun blockPosText(value: BlockPos): MutableComponent = Component.literal("[${value.x}, ${value.y}, ${value.z}]")
+fun blockPosText(value: BlockPos): MutableComponent = bracketText(joinedText(intText(value.x), intText(value.y), intText(value.z)))
 
-fun globalPosText(value: GlobalPos): MutableComponent = Component
-    .literal("[")
-    .append(
-        ComponentUtils.formatList(
-            listOf(
-                stringText(value.dimension.location()),
-                intText(value.pos.x),
-                intText(value.pos.y),
-                intText(value.pos.z),
-            ),
-            Component.literal(", "),
-        ),
-    ).append("]")
+fun levelText(key: ResourceKey<Level>): MutableComponent {
+    val location: ResourceLocation = key.location()
+    return Component.translatable(
+        location.toLanguageKey(ILevelExtension.TRANSLATION_PREFIX),
+        location.toString(),
+    )
+}
+
+fun globalPosText(value: GlobalPos): MutableComponent = bracketText(joinedText(levelText(value.dimension), blockPosText(value.pos)))
 
 /**
  * 指定した[stack]からツールチップを生成します

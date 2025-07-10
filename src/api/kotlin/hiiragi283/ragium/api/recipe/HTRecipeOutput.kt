@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.toDataResult
-import hiiragi283.ragium.api.util.HTTagUtil
+import hiiragi283.ragium.api.tag.HTTagHelper
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
@@ -26,7 +26,7 @@ abstract class HTRecipeOutput<T : Any, S : Any>(
 
     protected open fun getFirstHolderFromTag(tagKey: TagKey<T>): DataResult<out Holder<T>> = registry
         .getTag(tagKey)
-        .flatMap(HTTagUtil::getFirstHolder)
+        .flatMap(HTTagHelper::getFirstHolder)
         .toDataResult { "Missing tag in ${registry.key()}: ${tagKey.location}" }
 
     protected abstract val registry: Registry<T>

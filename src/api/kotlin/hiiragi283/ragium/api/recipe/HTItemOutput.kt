@@ -6,7 +6,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
-import hiiragi283.ragium.api.util.HTTagUtil
+import hiiragi283.ragium.api.tag.HTTagHelper
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
@@ -58,7 +58,7 @@ class HTItemOutput(
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemOutput> = StreamCodec.composite(
-            ByteBufCodecs.either(ResourceLocation.STREAM_CODEC, HTTagUtil.streamCodec(Registries.ITEM)),
+            ByteBufCodecs.either(ResourceLocation.STREAM_CODEC, HTTagHelper.streamCodec(Registries.ITEM)),
             HTItemOutput::entry,
             ByteBufCodecs.VAR_INT,
             HTItemOutput::amount,

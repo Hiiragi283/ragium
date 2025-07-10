@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.idOrThrow
@@ -14,9 +14,9 @@ import net.minecraft.tags.TagKey
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-object HTTagUtil {
+object HTTagHelper {
     /**
-     * 指定した[tagKey]に含まれる[Holder]を返します。
+     * 指定した[tagKey]に含まれる[net.minecraft.core.Holder]を返します。
      * @return 名前空間が`ragium`, `minecraft`の順に検索し，見つからない場合は最初の値を返す
      */
     @JvmStatic
