@@ -53,18 +53,18 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
         tag(RagiumCommonTags.Fluids.CHOCOLATES).addContent(RagiumFluidContents.CHOCOLATE)
 
-        tag(RagiumModTags.Fluids.NITRO_FUEL)
+        tag(RagiumModTags.Fluids.FUELS_NITRO)
             .addOptionalTag(commonId("boosted_diesel"))
             .addOptionalTag(commonId("high_power_biodiesel"))
         // addTag(RagiumFluidTags.NITRO_FUEL, RagiumFluidContents.NITRO_FUEL.commonTag)
 
-        tag(RagiumModTags.Fluids.NON_NITRO_FUEL)
+        tag(RagiumModTags.Fluids.FUELS_NON_NITRO)
             .addOptionalTag(commonId("biofuel"))
             .addOptionalTag(commonId("heavy_fuel"))
             .addOptionalTag(commonId("light_fuel"))
         // addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluidContents.FUEL.commonTag)
 
-        tag(RagiumModTags.Fluids.THERMAL_FUEL)
+        tag(RagiumModTags.Fluids.FUELS_THERMAL)
             .addOptionalTag(commonId("steam"))
             .addOptionalTag(commonId("superheated_sodium"))
             .addTag(Tags.Fluids.LAVA)

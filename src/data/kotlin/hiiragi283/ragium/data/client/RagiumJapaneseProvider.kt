@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.extension.addMatterType
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -28,7 +29,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         item()
         // material()
         // tagPrefix()
-        tag()
+        modTags()
         text()
 
         delight()
@@ -426,7 +427,30 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addTagPrefix(HTTagPrefixes.WIRE, "%sのワイヤー")
     }*/
 
-    private fun tag() {}
+    private fun modTags() {
+        add(RagiumModTags.Blocks.LED_BLOCKS, "LEDブロック")
+        add(RagiumModTags.Blocks.WIP, "開発中")
+
+        add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "ノイズキャンセリングに反応する")
+
+        add(RagiumModTags.Fluids.FUELS_NITRO, "ニトロ燃料")
+        add(RagiumModTags.Fluids.FUELS_NON_NITRO, "非ニトロ燃料")
+        add(RagiumModTags.Fluids.FUELS_THERMAL, "発熱燃料")
+
+        add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "異質な真珠の結合剤")
+        add(RagiumModTags.Items.LED_BLOCKS, "LEDブロック")
+        add(RagiumModTags.Items.POLYMER_RESIN, "高分子樹脂")
+        add(RagiumModTags.Items.WIP, "開発中")
+
+        add(RagiumModTags.Items.ENI_UPGRADES, "E.N.I.のアップグレード")
+        add(RagiumModTags.Items.ENI_UPGRADES_BASIC, "E.N.I.の基本アップグレード")
+        add(RagiumModTags.Items.ENI_UPGRADES_ADVANCED, "E.N.I.の発展アップグレード")
+        add(RagiumModTags.Items.ENI_UPGRADES_ELITE, "E.N.I.の精鋭アップグレード")
+        add(RagiumModTags.Items.ENI_UPGRADES_ULTIMATE, "E.N.I.の究極アップグレード")
+
+        add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "合金炉で使う基本融剤")
+        add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, "合金炉で使う発展融剤")
+    }
 
     private fun text() {
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE, "紺鉄強化")

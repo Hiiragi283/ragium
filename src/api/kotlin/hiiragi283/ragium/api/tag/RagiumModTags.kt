@@ -20,9 +20,6 @@ object RagiumModTags {
         val LED_BLOCKS: TagKey<Block> = blockTagKey(RagiumAPI.id("led_blocks"))
 
         @JvmField
-        val STONES_ROCK_GENERATIONS: TagKey<Block> = blockTagKey(RagiumAPI.id("stones/rock_generation"))
-
-        @JvmField
         val WIP: TagKey<Block> = blockTagKey(RagiumAPI.id("work_in_progress"))
     }
 
@@ -66,13 +63,13 @@ object RagiumModTags {
 
     object Fluids {
         @JvmField
-        val NITRO_FUEL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/nitro"))
+        val FUELS_NITRO: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/nitro"))
 
         @JvmField
-        val NON_NITRO_FUEL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/non_nitro"))
+        val FUELS_NON_NITRO: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/non_nitro"))
 
         @JvmField
-        val THERMAL_FUEL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/thermal"))
+        val FUELS_THERMAL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/thermal"))
     }
 
     //    Items    //

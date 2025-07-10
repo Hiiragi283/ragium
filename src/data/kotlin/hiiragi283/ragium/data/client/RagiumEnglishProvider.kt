@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.extension.addMatterType
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -28,7 +29,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         item()
         // material()
         // tagPrefix()
-        tag()
+        modTags()
         text()
 
         delight()
@@ -439,7 +440,30 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addTagPrefix(HTTagPrefixes.WIRE, "%s Wire")
     }*/
 
-    private fun tag() {}
+    private fun modTags() {
+        add(RagiumModTags.Blocks.LED_BLOCKS, "LED Blocks")
+        add(RagiumModTags.Blocks.WIP, "Work In Progress")
+
+        add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "Sensitive to Noise Canceling")
+
+        add(RagiumModTags.Fluids.FUELS_NITRO, "Nitro Fuels")
+        add(RagiumModTags.Fluids.FUELS_NON_NITRO, "Non-Nitro Fuels")
+        add(RagiumModTags.Fluids.FUELS_THERMAL, "Thermal Fuels")
+
+        add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "Eldritch Pearl Binders")
+        add(RagiumModTags.Items.LED_BLOCKS, "LED Blocks")
+        add(RagiumModTags.Items.POLYMER_RESIN, "Polymer Resins")
+        add(RagiumModTags.Items.WIP, "Work In Progress")
+
+        add(RagiumModTags.Items.ENI_UPGRADES, "E.N.I. Upgrades")
+        add(RagiumModTags.Items.ENI_UPGRADES_BASIC, "Basic E.N.I. Upgrades")
+        add(RagiumModTags.Items.ENI_UPGRADES_ADVANCED, "Advanced E.N.I. Upgrades")
+        add(RagiumModTags.Items.ENI_UPGRADES_ELITE, "Elite E.N.I. Upgrades")
+        add(RagiumModTags.Items.ENI_UPGRADES_ULTIMATE, "Ultimate E.N.I. Upgrades")
+
+        add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, "Basic Fluxes for Alloy Smelter")
+        add(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, "Advanced Fluxes for Alloy Smelter")
+    }
 
     private fun text() {
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE, "Azure Steel Upgrade")

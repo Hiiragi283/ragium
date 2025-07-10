@@ -16,17 +16,10 @@ abstract class HTMagnetItem<T : Entity>(properties: Properties) : HTRangedItem(p
     ) {
         val player: Player = entity as? Player ?: return
         if (!isActive(stack)) return
-        val range: Int = getRange(stack, level)
+        val range: Double = getRange(stack, level) * 2.0
         val entitiesInRange: List<T> = level.getEntitiesOfClass(
             entityClass,
-            AABB(
-                player.x - range,
-                player.y - range,
-                player.z - range,
-                player.x + range,
-                player.y + range,
-                player.z + range,
-            ),
+            AABB.ofSize(player.position(), range, range, range),
         )
         for (entity: T in entitiesInRange) {
             forEachEntity(entity, player)
