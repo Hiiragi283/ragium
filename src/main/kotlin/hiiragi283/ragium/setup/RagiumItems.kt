@@ -110,6 +110,9 @@ object RagiumItems {
     @JvmField
     val TAR: DeferredItem<Item> = register("tar")
 
+    @JvmField
+    val DEEP_SCRAP: DeferredItem<Item> = register("deep_scrap")
+
     // Gems
     @JvmField
     val RAGI_CRYSTAL: DeferredItem<Item> = register(RagiumConstantValues.RAGI_CRYSTAL)

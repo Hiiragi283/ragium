@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
@@ -83,9 +82,7 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         loadAdditional(tag, lookupProvider)
     }
 
-    val upgrades: HTItemStackHandler = object : HTItemStackHandler(4, ::onUpgradeUpdated) {
-        override fun isItemValid(slot: Int, stack: ItemStack): Boolean = stack.itemHolder.getData(RagiumDataMaps.UPGRADE) != null
-    }
+    val upgrades = HTItemStackHandler(4, ::onUpgradeUpdated)
 
     @Suppress("unused")
     private fun onUpgradeUpdated(index: Int) {

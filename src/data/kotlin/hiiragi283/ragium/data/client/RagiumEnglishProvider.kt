@@ -82,6 +82,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         RagiumBlocks.RAGINITE_ORES.addTranslationEn("Raginite", this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationEn("Ragi-Crystal", this)
+        addBlock(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
 
         addBlock(RagiumBlocks.RAGI_CRYSTAL_BLOCK, "Block of Ragi-Crystal")
         addBlock(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK, "Block of Crimson Crystal")
@@ -211,6 +212,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.AZURE_SHARD, "Azure Shard")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         addItem(RagiumItems.TAR, "Tar")
+        addItem(RagiumItems.DEEP_SCRAP, "Deep Scrap")
 
         addItem(RagiumItems.RAGI_CRYSTAL, "Ragi-Crystal")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")

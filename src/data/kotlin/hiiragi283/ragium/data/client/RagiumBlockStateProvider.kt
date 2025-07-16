@@ -81,6 +81,14 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.RAGINITE_ORES.addBlockStates(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addBlockStates(this)
 
+        simpleBlock(
+            RagiumBlocks.RESONANT_DEBRIS.get(),
+            models()
+                .withExistingParent(RagiumBlocks.RESONANT_DEBRIS.id.path, "cube_column")
+                .texture("end", RagiumBlocks.RESONANT_DEBRIS.blockId.withSuffix("_top"))
+                .texture("side", RagiumBlocks.RESONANT_DEBRIS.blockId.withSuffix("_side")),
+        )
+
         // Log
         logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
 

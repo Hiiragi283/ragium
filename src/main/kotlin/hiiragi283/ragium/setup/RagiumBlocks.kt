@@ -124,12 +124,6 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val RAGINITE_ORES = HTOreSets(RagiumConstantValues.RAGINITE)
-
-    @JvmField
-    val RAGI_CRYSTAL_ORES = HTOreSets(RagiumConstantValues.RAGI_CRYSTAL)
-
-    @JvmField
     val SILT: DeferredBlock<ColoredFallingBlock> = register(
         "silt",
         copyOf(Blocks.SAND),
@@ -159,6 +153,16 @@ object RagiumBlocks {
         ::HTExpBerriesBushBlock,
         copyOf(Blocks.SWEET_BERRY_BUSH),
     )
+
+    @JvmField
+    val RAGINITE_ORES = HTOreSets(RagiumConstantValues.RAGINITE)
+
+    @JvmField
+    val RAGI_CRYSTAL_ORES = HTOreSets(RagiumConstantValues.RAGI_CRYSTAL)
+
+    @JvmField
+    val RESONANT_DEBRIS: DeferredBlock<Block> =
+        register("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
 
     //    Materials    //
 

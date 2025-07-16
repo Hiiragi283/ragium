@@ -70,6 +70,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         RagiumBlocks.RAGINITE_ORES.addTranslationJp("ラギナイト", this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationJp("ラギクリスタリル", this)
+        addBlock(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
 
         addBlock(RagiumBlocks.RAGI_CRYSTAL_BLOCK, "ラギクリスタリルブロック")
         addBlock(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK, "深紅の結晶ブロック")
@@ -199,6 +200,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.AZURE_SHARD, "紺碧の欠片")
         addItem(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         addItem(RagiumItems.TAR, "タール")
+        addItem(RagiumItems.DEEP_SCRAP, "深層の欠片")
 
         addItem(RagiumItems.RAGI_CRYSTAL, "ラギクリスタリル")
         addItem(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")

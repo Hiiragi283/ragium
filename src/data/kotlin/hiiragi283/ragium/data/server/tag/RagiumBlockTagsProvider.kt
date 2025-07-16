@@ -48,9 +48,11 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         )
         // Pickaxe
         val pickaxe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        pickaxe.addTag(RagiumModTags.Blocks.LED_BLOCKS)
-
-        pickaxe.addHolder(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+        pickaxe
+            .addTags(
+                RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS,
+                RagiumModTags.Blocks.LED_BLOCKS,
+            ).addHolder(RagiumBlocks.RESONANT_DEBRIS)
 
         for (sets: HTOreSets in listOf(RagiumBlocks.RAGINITE_ORES, RagiumBlocks.RAGI_CRYSTAL_ORES)) {
             for (ore: DeferredBlock<*> in sets.blockHolders) {
@@ -63,7 +65,13 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             tag(Tags.Blocks.ORES_IN_GROUND_NETHERRACK).addHolder(sets.netherOre)
             tag(blockTagKey(commonId("ores_in_ground/end_stone"))).addHolder(sets.endOre)
         }
-        tag(Tags.Blocks.ORES).addTags(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL, RagiumCommonTags.Blocks.ORES_RAGINITE)
+        tag(Tags.Blocks.ORES)
+            .addTags(
+                RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL,
+                RagiumCommonTags.Blocks.ORES_RAGINITE,
+                RagiumCommonTags.Blocks.ORES_DEEP_SCRAP,
+            )
+        tag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP).addHolder(RagiumBlocks.RESONANT_DEBRIS)
 
         RagiumBlocks.STORAGE_BLOCKS.forEach(pickaxe::addHolder)
 

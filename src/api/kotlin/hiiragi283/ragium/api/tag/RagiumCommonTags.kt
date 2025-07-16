@@ -15,27 +15,31 @@ object RagiumCommonTags {
 
     object Blocks {
         @JvmField
-        val GLASS_BLOCKS_OBSIDIAN: TagKey<Block> =
-            blockTagKey(commonId(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.OBSIDIAN))
+        val GLASS_BLOCKS_OBSIDIAN: TagKey<Block> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.OBSIDIAN)
 
         @JvmField
-        val GLASS_BLOCKS_QUARTZ: TagKey<Block> =
-            blockTagKey(commonId(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.QUARTZ))
+        val GLASS_BLOCKS_QUARTZ: TagKey<Block> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.QUARTZ)
 
         @JvmField
-        val GLASS_BLOCKS_SOUL: TagKey<Block> =
-            blockTagKey(commonId(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.SOUL))
+        val GLASS_BLOCKS_SOUL: TagKey<Block> = commonTag(RagiumConstantValues.GLASS_BLOCKS, RagiumConstantValues.SOUL)
 
         @JvmField
-        val OBSIDIANS_MYSTERIOUS: TagKey<Block> = blockTagKey(commonId("obsidians", "mysterious"))
+        val OBSIDIANS_MYSTERIOUS: TagKey<Block> = commonTag("obsidians", "mysterious")
 
         @JvmField
-        val ORES_RAGI_CRYSTAL: TagKey<Block> =
-            blockTagKey(commonId(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL))
+        val ORES_RAGI_CRYSTAL: TagKey<Block> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL)
 
         @JvmField
-        val ORES_RAGINITE: TagKey<Block> =
-            blockTagKey(commonId(RagiumConstantValues.ORES, RagiumConstantValues.RAGINITE))
+        val ORES_RAGINITE: TagKey<Block> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGINITE)
+
+        @JvmField
+        val ORES_DEEP_SCRAP: TagKey<Block> = commonTag(RagiumConstantValues.ORES, "deep_scrap")
+
+        @JvmStatic
+        private fun commonTag(path: String): TagKey<Block> = blockTagKey(commonId(path))
+
+        @JvmStatic
+        private fun commonTag(prefix: String, value: String): TagKey<Block> = blockTagKey(commonId(prefix, value))
     }
 
     //    Fluids    //
@@ -210,6 +214,9 @@ object RagiumCommonTags {
 
         @JvmField
         val ORES_RAGI_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL)
+
+        @JvmField
+        val ORES_DEEP_SCRAP: TagKey<Item> = commonTag(RagiumConstantValues.ORES, "deep_scrap")
 
         // Plates
         @JvmField

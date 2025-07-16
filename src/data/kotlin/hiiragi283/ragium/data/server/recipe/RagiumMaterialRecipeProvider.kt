@@ -121,6 +121,22 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
             .itemInput(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)
+        // Deep Steel
+        HTCookingRecipeBuilder
+            .blasting(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
+            .save(output)
+
+        HTShapelessRecipeBuilder(RagiumItems.DEEP_STEEL_INGOT)
+            .addIngredient(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumItems.DEEP_SCRAP)
+            .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .addIngredient(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .save(output)
         // Misc
         oreToRaw()
         rawToIngot()

@@ -88,8 +88,10 @@ object RagiumCreativeTabs {
             addAll(RagiumItems.AZURE_ARMORS)
             addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
 
+            add(RagiumBlocks.RESONANT_DEBRIS)
             add(RagiumBlocks.DEEP_STEEL_BLOCK)
             add(RagiumItems.DEEP_STEEL_INGOT)
+            add(RagiumItems.DEEP_SCRAP)
 
             add(RagiumBlocks.CHOCOLATE_BLOCK)
             add(RagiumItems.CHOCOLATE_INGOT)

@@ -71,6 +71,7 @@ class RagiumItemTagsProvider(
         copy(Tags.Blocks.ORES, Tags.Items.ORES)
         copy(RagiumCommonTags.Blocks.ORES_RAGINITE, RagiumCommonTags.Items.ORES_RAGINITE)
         copy(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL, RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
+        copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
 
         copy(RagiumCommonTags.Blocks.GLASS_BLOCKS_OBSIDIAN, RagiumCommonTags.Items.GLASS_BLOCKS_OBSIDIAN)
         copy(RagiumCommonTags.Blocks.GLASS_BLOCKS_QUARTZ, RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ)
