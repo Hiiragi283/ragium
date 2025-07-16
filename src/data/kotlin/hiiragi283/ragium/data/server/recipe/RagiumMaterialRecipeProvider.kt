@@ -25,12 +25,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         HTCookingRecipeBuilder
-            .smelting(RagiumItems.RAGI_ALLOY_INGOT)
-            .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
-            .setExp(0.7f)
-            .saveSuffixed(output, "_from_compound")
-
-        HTCookingRecipeBuilder
             .blasting(RagiumItems.RAGI_ALLOY_INGOT)
             .addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
             .setExp(0.7f)
@@ -54,12 +48,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .define('B', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .define('C', Tags.Items.INGOTS_GOLD)
             .save(output)
-
-        HTCookingRecipeBuilder
-            .smelting(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
-            .addIngredient(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
-            .setExp(0.7f)
-            .saveSuffixed(output, "_from_compound")
 
         HTCookingRecipeBuilder
             .blasting(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
@@ -92,12 +80,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         HTCookingRecipeBuilder
-            .smelting(RagiumItems.AZURE_STEEL_INGOT)
-            .addIngredient(RagiumItems.AZURE_STEEL_COMPOUND)
-            .setExp(0.7f)
-            .saveSuffixed(output, "_from_compound")
-
-        HTCookingRecipeBuilder
             .blasting(RagiumItems.AZURE_STEEL_INGOT)
             .addIngredient(RagiumItems.AZURE_STEEL_COMPOUND)
             .setExp(0.7f)
@@ -122,7 +104,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         HTCookingRecipeBuilder
-            .smelting(Items.CHARCOAL)
+            .blasting(Items.CHARCOAL, onlyBlasting = true)
             .addIngredient(RagiumItems.COMPRESSED_SAWDUST)
             .setExp(0.15f)
             .saveSuffixed(output, "_from_pellet")

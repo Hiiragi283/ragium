@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -12,7 +13,7 @@ import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 
-class HTShapedRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) : HTRecipeBuilder<ShapedRecipe> {
+class HTShapedRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) : HTRecipeBuilder {
     constructor(item: ItemLike, count: Int = 1, category: CraftingBookCategory = CraftingBookCategory.MISC) : this(
         ItemStack(item, count),
         category,
@@ -63,13 +64,17 @@ class HTShapedRecipeBuilder(private val output: ItemStack, private val category:
         this.groupName = groupName
     }
 
-    override fun getPrefix(recipe: ShapedRecipe): String = "shaped"
-
-    override fun createRecipe(): ShapedRecipe = ShapedRecipe(
-        groupName ?: "",
-        category,
-        ShapedRecipePattern.of(symbols, patterns),
-        output,
-        true,
-    )
+    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+        recipeOutput.accept(
+            id.withPrefix("shaped/"),
+            ShapedRecipe(
+                groupName ?: "",
+                category,
+                ShapedRecipePattern.of(symbols, patterns),
+                output,
+                true,
+            ),
+            null,
+        )
+    }
 }

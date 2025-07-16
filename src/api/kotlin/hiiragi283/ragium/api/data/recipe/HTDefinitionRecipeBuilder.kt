@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTFluidContent
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.data.recipes.RecipeBuilder
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -25,7 +26,7 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
 
 class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, private val factory: (HTRecipeDefinition) -> R) :
-    HTRecipeBuilder<R> {
+    HTRecipeBuilder {
     private val itemInputs: MutableList<SizedIngredient> = mutableListOf()
     private val fluidInputs: MutableList<SizedFluidIngredient> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
@@ -151,17 +152,21 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         ?: fluidOutputs.firstOrNull()?.id
         ?: error("Either one item or fluid output required at least!")
 
-    override fun getPrefix(recipe: R): String = prefix
-
-    override fun createRecipe(): R = factory(
-        HTRecipeDefinition(
-            itemInputs,
-            fluidInputs,
-            catalyst,
-            itemOutputs,
-            fluidOutputs,
-        ),
-    )
+    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+        recipeOutput.accept(
+            id.withPrefix("$prefix/"),
+            factory(
+                HTRecipeDefinition(
+                    itemInputs,
+                    fluidInputs,
+                    catalyst,
+                    itemOutputs,
+                    fluidOutputs,
+                ),
+            ),
+            null,
+        )
+    }
 
     override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
 }

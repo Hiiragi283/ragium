@@ -5,13 +5,11 @@ import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.Recipe
 
 /**
  * Ragiumで使用する[RecipeBuilder]の拡張インターフェース
- * @param R レシピのクラス
  */
-interface HTRecipeBuilder<R : Recipe<*>> : RecipeBuilder {
+interface HTRecipeBuilder : RecipeBuilder {
     /**
      * 進捗はサポートしていません。
      */
@@ -51,24 +49,5 @@ interface HTRecipeBuilder<R : Recipe<*>> : RecipeBuilder {
 
     override fun save(recipeOutput: RecipeOutput) {
         save(recipeOutput, getPrimalId())
-    }
-
-    /**
-     * レシピIDの重複を回避するために使われる接頭辞
-     */
-    fun getPrefix(recipe: R): String
-
-    /**
-     * 生成したレシピのインスタンスを返します。
-     */
-    fun createRecipe(): R
-
-    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        val recipe: R = createRecipe()
-        recipeOutput.accept(
-            id.withPrefix("${getPrefix(recipe)}/"),
-            recipe,
-            null,
-        )
     }
 }

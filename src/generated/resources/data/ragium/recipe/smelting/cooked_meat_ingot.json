@@ -2,12 +2,12 @@
   "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 0.15,
+  "experience": 0.35,
   "ingredient": {
-    "item": "ragium:compressed_sawdust"
+    "tag": "c:ingots/meat"
   },
   "result": {
     "count": 1,
-    "id": "minecraft:charcoal"
+    "id": "ragium:cooked_meat_ingot"
   }
 }

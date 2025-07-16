@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.extension.idOrThrow
 import net.minecraft.core.NonNullList
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -10,7 +11,7 @@ import net.minecraft.world.item.crafting.ShapelessRecipe
 import net.minecraft.world.level.ItemLike
 
 class HTShapelessRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) :
-    HTIngredientRecipeBuilder<HTShapelessRecipeBuilder, ShapelessRecipe> {
+    HTIngredientRecipeBuilder<HTShapelessRecipeBuilder> {
     constructor(item: ItemLike, count: Int = 1, category: CraftingBookCategory = CraftingBookCategory.MISC) : this(
         ItemStack(item, count),
         category,
@@ -32,12 +33,16 @@ class HTShapelessRecipeBuilder(private val output: ItemStack, private val catego
         this.groupName = groupName
     }
 
-    override fun getPrefix(recipe: ShapelessRecipe): String = "shapeless"
-
-    override fun createRecipe(): ShapelessRecipe = ShapelessRecipe(
-        groupName ?: "",
-        category,
-        output,
-        ingredients,
-    )
+    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+        recipeOutput.accept(
+            id.withPrefix("shapeless/"),
+            ShapelessRecipe(
+                groupName ?: "",
+                category,
+                output,
+                ingredients,
+            ),
+            null,
+        )
+    }
 }

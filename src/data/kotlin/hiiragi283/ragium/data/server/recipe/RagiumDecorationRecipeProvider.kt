@@ -79,12 +79,12 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
     private fun glass() {
         // Quartz Glass
         HTCookingRecipeBuilder
-            .blasting(RagiumBlocks.QUARTZ_GLASS)
+            .blasting(RagiumBlocks.QUARTZ_GLASS, onlyBlasting = true)
             .addIngredient(Items.QUARTZ_BLOCK)
             .save(output)
         // Soul Glass
         HTCookingRecipeBuilder
-            .blasting(RagiumBlocks.SOUL_GLASS)
+            .blasting(RagiumBlocks.SOUL_GLASS, onlyBlasting = true)
             .addIngredient(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .save(output)
         // Obsidian Glass

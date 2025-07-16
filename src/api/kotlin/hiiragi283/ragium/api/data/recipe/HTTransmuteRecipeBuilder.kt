@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import net.minecraft.core.NonNullList
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -10,7 +11,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 
 class HTTransmuteRecipeBuilder(private val output: ItemStack, private val category: CraftingBookCategory) :
-    HTIngredientRecipeBuilder<HTTransmuteRecipeBuilder, HTTransmuteRecipe> {
+    HTIngredientRecipeBuilder<HTTransmuteRecipeBuilder> {
     constructor(item: ItemLike, count: Int = 1, category: CraftingBookCategory = CraftingBookCategory.MISC) : this(
         ItemStack(item, count),
         category,
@@ -33,13 +34,17 @@ class HTTransmuteRecipeBuilder(private val output: ItemStack, private val catego
         this.groupName = groupName
     }
 
-    override fun getPrefix(recipe: HTTransmuteRecipe): String = "transmute"
-
-    override fun createRecipe(): HTTransmuteRecipe = HTTransmuteRecipe(
-        groupName ?: "",
-        category,
-        output,
-        ingredients[0],
-        ingredients[1],
-    )
+    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+        recipeOutput.accept(
+            id.withPrefix("transmute/"),
+            HTTransmuteRecipe(
+                groupName ?: "",
+                category,
+                output,
+                ingredients[0],
+                ingredients[1],
+            ),
+            null,
+        )
+    }
 }

@@ -222,7 +222,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
-            .blasting(Items.BLAZE_POWDER)
+            .blasting(Items.BLAZE_POWDER, onlyBlasting = true)
             .addIngredient(RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
             .save(output)
 
@@ -239,7 +239,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
-            .blasting(Items.ENDER_PEARL)
+            .blasting(Items.ENDER_PEARL, onlyBlasting = true)
             .addIngredient(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)
 
