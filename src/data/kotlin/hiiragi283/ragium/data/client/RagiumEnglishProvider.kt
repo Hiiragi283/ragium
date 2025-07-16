@@ -137,8 +137,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         addBlock(RagiumBlocks.SOLIDIFIER, "Solidifier")
         // Cauldron
-        addBlock(RagiumBlocks.TREE_TAP, "Tree Tap")
-
         addBlock(RagiumBlocks.HONEY_CAULDRON, "Honey Cauldron")
         addBlock(RagiumBlocks.MUSHROOM_STEW_CAULDRON, "Mushroom Stew Cauldron")
         addBlock(RagiumBlocks.CRIMSON_SAP_CAULDRON, "Crimson Sap Cauldron")

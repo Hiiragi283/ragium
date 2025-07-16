@@ -50,7 +50,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         val pickaxe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
         pickaxe.addTag(RagiumModTags.Blocks.LED_BLOCKS)
 
-        pickaxe.addHolder(RagiumBlocks.MYSTERIOUS_OBSIDIAN, RagiumBlocks.TREE_TAP)
+        pickaxe.addHolder(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 
         for (sets: HTOreSets in listOf(RagiumBlocks.RAGINITE_ORES, RagiumBlocks.RAGI_CRYSTAL_ORES)) {
             for (ore: DeferredBlock<*> in sets.blockHolders) {
@@ -127,7 +127,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
                 RagiumBlocks.STONE_CASING,
                 RagiumBlocks.REFINERY,
                 RagiumBlocks.SOLIDIFIER,
-                RagiumBlocks.TREE_TAP,
             ).apply {
                 RagiumBlocks.CAULDRONS.forEach { holder: DeferredBlock<*> ->
                     addOptional(holder.id)

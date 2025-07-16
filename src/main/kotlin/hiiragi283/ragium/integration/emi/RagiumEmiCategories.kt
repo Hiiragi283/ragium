@@ -17,9 +17,6 @@ object RagiumEmiCategories {
         Component.translatable(RagiumTranslationKeys.EMI_CAULDRON_DROPPING),
     )
 
-    @JvmField
-    val TREE_TAPPING = HTEmiRecipeCategory(RagiumAPI.id("tree_tapping"), RagiumBlocks.TREE_TAP)
-
     // Machines
     @JvmField
     val ALLOYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.ALLOYING), RagiumBlocks.ALLOY_SMELTER)
@@ -45,7 +42,6 @@ object RagiumEmiCategories {
     @JvmField
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
         CAULDRON_DROPPING,
-        TREE_TAPPING,
         // Machines
         ALLOYING,
         CRUSHING,

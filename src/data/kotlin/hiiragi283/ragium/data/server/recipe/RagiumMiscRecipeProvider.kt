@@ -151,16 +151,6 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
     }
 
     private fun devices() {
-        // Tree Tap
-        HTShapedRecipeBuilder(RagiumBlocks.TREE_TAP)
-            .pattern(
-                " A ",
-                "BBB",
-                "B  ",
-            ).define('A', Items.TRIPWIRE_HOOK)
-            .define('B', Tags.Items.INGOTS_COPPER)
-            .save(output)
-
         // Milk Drain
         HTShapedRecipeBuilder(RagiumBlocks.MILK_DRAIN)
             .pattern("A", "B", "C")

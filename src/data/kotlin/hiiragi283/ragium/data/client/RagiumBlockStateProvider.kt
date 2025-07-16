@@ -145,8 +145,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(RagiumBlocks.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
 
         // Cauldron
-        horizontalBlock(RagiumBlocks.TREE_TAP.get(), modelFile(RagiumBlocks.TREE_TAP.blockId))
-
         RagiumBlocks.CAULDRONS.forEach(::cauldronBlock)
 
         getVariantBuilder(RagiumBlocks.HONEY_CAULDRON.get())

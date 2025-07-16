@@ -13,8 +13,6 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.recipe.special.EmiSmithingTrimRecipe
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumDataMaps
-import hiiragi283.ragium.api.data.HTTreeTap
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
@@ -38,16 +36,13 @@ import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSolidifyingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTTreeTappingEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
-import net.minecraft.core.Registry
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -60,7 +55,6 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
@@ -134,18 +128,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 EmiStack.EMPTY,
                 recipe,
             )
-        }
-        // Tree Tapping
-        val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
-        for ((key: ResourceKey<Fluid>, treeTap: HTTreeTap) in fluidRegistry.getDataMap(RagiumDataMaps.TREE_TAP)) {
-            val output: EmiStack = fluidRegistry.get(key)?.let(EmiStack::of) ?: continue
-            addRecipeSafe(key.location().withPrefix("/")) { id: ResourceLocation ->
-                HTTreeTappingEmiRecipe(
-                    id,
-                    treeTap.getBlocks().toEmi(),
-                    output,
-                )
-            }
         }
         // Block Action
         forEachRecipes(RagiumRecipeTypes.BLOCK_INTERACTING.get()) { id: ResourceLocation, recipe: HTBlockInteractingRecipe ->
