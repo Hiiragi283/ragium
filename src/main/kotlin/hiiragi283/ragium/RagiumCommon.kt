@@ -3,15 +3,12 @@ package hiiragi283.ragium
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
-import hiiragi283.ragium.setup.RagiumAdvancementTriggers
 import hiiragi283.ragium.setup.RagiumArmorMaterials
-import hiiragi283.ragium.setup.RagiumBlockActionSerializers
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCauldronInteractions
@@ -20,6 +17,7 @@ import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.neoforged.api.distmarker.Dist
@@ -49,6 +47,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         eventBus.addListener(::registerRegistries)
         eventBus.addListener(::construct)
+        eventBus.addListener(RagiumMiscRegister::onRegister)
         eventBus.addListener(::commonSetup)
         eventBus.addListener(::registerCauldronContents)
         eventBus.addListener(::registerDataMapTypes)
@@ -66,8 +65,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
 
-        RagiumAdvancementTriggers.REGISTER.register(eventBus)
-        RagiumBlockActionSerializers.REGISTER.register(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumRecipeTypes.REGISTER.register(eventBus)
 
@@ -109,8 +106,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.TREE_TAP)
-
         LOGGER.info("Registered data map types!")
     }
 
