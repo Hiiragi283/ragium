@@ -1,26 +1,53 @@
 package hiiragi283.ragium.data.server.bootstrap
 
+import hiiragi283.ragium.api.util.HTWorldGenData
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 
 object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>> {
     override fun run(context: BootstrapContext<ConfiguredFeature<*, *>>) {
         // Ore
-        /*register(
+        register(
             context,
             RagiumWorldGenData.ORE_RAGINITE,
             Feature.ORE,
             OreConfiguration(
                 listOf(
-                    TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES) to HTOreVariant.OVERWORLD,
-                    TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES) to HTOreVariant.DEEPSLATE,
-                ).map { (target: RuleTest, variant: HTOreVariant) ->
-                    OreConfiguration.target(target, RagiumBlocks.RAGINITE_ORES[variant].get().defaultBlockState())
-                },
-                16,
+                    OreConfiguration.target(
+                        TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES),
+                        RagiumBlocks.RAGINITE_ORES.stoneOre
+                            .get()
+                            .defaultBlockState(),
+                    ),
+                    OreConfiguration.target(
+                        TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
+                        RagiumBlocks.RAGINITE_ORES.deepOre
+                            .get()
+                            .defaultBlockState(),
+                    ),
+                ),
+                9,
             ),
-        )*/
+        )
+
+        register(
+            context,
+            RagiumWorldGenData.ORE_RESONANT_DEBRIS,
+            Feature.SCATTERED_ORE,
+            OreConfiguration(
+                TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
+                RagiumBlocks.RESONANT_DEBRIS.get().defaultBlockState(),
+                3,
+                1f,
+            ),
+        )
         // Geode
         /*register(
             context,
@@ -55,12 +82,12 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
         )*/
     }
 
-    /*private fun <FC : FeatureConfiguration> register(
+    private fun <FC : FeatureConfiguration> register(
         context: BootstrapContext<ConfiguredFeature<*, *>>,
         data: HTWorldGenData,
         feature: Feature<FC>,
         config: FC,
     ) {
         data.configuredHolder = context.register(data.configuredKey, ConfiguredFeature(feature, config))
-    }*/
+    }
 }

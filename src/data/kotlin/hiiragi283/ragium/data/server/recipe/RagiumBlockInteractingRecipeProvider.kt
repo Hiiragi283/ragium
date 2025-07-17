@@ -27,20 +27,10 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         blockGetter = provider.lookupOrThrow(Registries.BLOCK)
 
-        raginite()
         azure()
         bloody()
         eldritchSculk()
         eldritchEnder()
-    }
-
-    private fun raginite() {
-        register(
-            RagiumAPI.id("raginite_ore"),
-            Tags.Blocks.ORES_REDSTONE,
-            Ingredient.of(RagiumItems.RAGI_TICKET_FAKE),
-            HTReplaceBlockAction.update(RagiumBlocks.RAGINITE_ORES.stoneOre.get()),
-        )
     }
 
     private fun azure() {
@@ -60,6 +50,44 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
     }
 
     private fun bloody() {
+        register(
+            RagiumAPI.id("crimson_nylium_from_netherrack"),
+            Tags.Blocks.NETHERRACKS,
+            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            HTReplaceBlockAction.update(Blocks.CRIMSON_NYLIUM),
+        )
+        register(
+            RagiumAPI.id("crimson_fungus_from_mushroom"),
+            Blocks.RED_MUSHROOM,
+            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            HTReplaceBlockAction.update(Blocks.CRIMSON_FUNGUS),
+        )
+        register(
+            RagiumAPI.id("crimson_roots_from_grass"),
+            Blocks.SHORT_GRASS,
+            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            HTReplaceBlockAction.update(Blocks.CRIMSON_ROOTS),
+        )
+        register(
+            RagiumAPI.id("weeping_vines_from_grass"),
+            Blocks.VINE,
+            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            HTDropItemBlockAction(Blocks.WEEPING_VINES),
+        )
+
+        register(
+            RagiumAPI.id("nether_wart_from_moss"),
+            Blocks.BEETROOTS,
+            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            HTDropItemBlockAction(Items.NETHER_WART),
+        )
+        register(
+            RagiumAPI.id("nether_wart_block_from_moss"),
+            Blocks.MOSS_BLOCK,
+            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            HTReplaceBlockAction.update(Blocks.NETHER_WART_BLOCK),
+        )
+
         register(
             RagiumBlocks.CRIMSON_SOIL.id,
             Blocks.SOUL_SOIL,

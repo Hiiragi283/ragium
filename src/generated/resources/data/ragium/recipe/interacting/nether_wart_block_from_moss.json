@@ -1,0 +1,15 @@
+{
+  "type": "ragium:block_interacting",
+  "actions": [
+    {
+      "type": "c:replace",
+      "state": {
+        "Name": "minecraft:nether_wart_block"
+      }
+    }
+  ],
+  "ingredient": {
+    "item": "ragium:bloody_ticket"
+  },
+  "predicate": "minecraft:moss_block"
+}

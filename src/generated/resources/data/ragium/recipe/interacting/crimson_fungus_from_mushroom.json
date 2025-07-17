@@ -4,12 +4,12 @@
     {
       "type": "c:replace",
       "state": {
-        "Name": "ragium:raginite_ore"
+        "Name": "minecraft:crimson_fungus"
       }
     }
   ],
   "ingredient": {
-    "item": "ragium:ragi_ticket_fake"
+    "item": "ragium:bloody_ticket"
   },
-  "predicate": "#c:ores/redstone"
+  "predicate": "minecraft:red_mushroom"
 }

@@ -1,13 +1,16 @@
 package hiiragi283.ragium.data.server.bootstrap
 
+import hiiragi283.ragium.api.util.HTWorldGenData
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.placement.NetherPlacements
 import net.minecraft.tags.BiomeTags
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biomes
+import net.minecraft.world.level.levelgen.GenerationStep
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.world.BiomeModifier
 import net.neoforged.neoforge.common.world.BiomeModifiers
 
@@ -17,41 +20,35 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
     override fun run(context: BootstrapContext<BiomeModifier>) {
         biomeGetter = context.lookup(Registries.BIOME)
         // Ore
-        /*registerFeature(
+        registerFeature(
             context,
             RagiumWorldGenData.ORE_RAGINITE,
-            BiomeTags.IS_OVERWORLD,
+            biomeGetter.getOrThrow(BiomeTags.IS_OVERWORLD),
             GenerationStep.Decoration.UNDERGROUND_ORES,
-        )*/
-
-        // Remove Lava Springs
-        context.register(
-            RagiumWorldGenData.REMOVE_SPRING_NETHER.modifierKey,
-            BiomeModifiers.RemoveFeaturesBiomeModifier.allSteps(
-                biomeGetter.getOrThrow(BiomeTags.IS_NETHER),
-                HolderSet.direct(
-                    context.lookup(Registries.PLACED_FEATURE)::getOrThrow,
-                    NetherPlacements.SPRING_OPEN,
-                    NetherPlacements.SPRING_CLOSED,
-                    NetherPlacements.SPRING_CLOSED_DOUBLE,
-                ),
-            ),
         )
+
+        registerFeature(
+            context,
+            RagiumWorldGenData.ORE_RESONANT_DEBRIS,
+            HolderSet.direct(biomeGetter::getOrThrow, Biomes.DEEP_DARK),
+            GenerationStep.Decoration.UNDERGROUND_ORES,
+        )
+        Tags.Biomes.IS_DEAD
     }
 
-    /*private fun registerFeature(
+    private fun registerFeature(
         context: BootstrapContext<BiomeModifier>,
         data: HTWorldGenData,
-        biomeTag: TagKey<Biome>,
+        biomes: HolderSet<Biome>,
         step: GenerationStep.Decoration,
     ) {
         context.register(
             data.modifierKey,
             BiomeModifiers.AddFeaturesBiomeModifier(
-                biomeGetter.getOrThrow(biomeTag),
+                biomes,
                 HolderSet.direct(data.placedHolder),
                 step,
             ),
         )
-    }*/
+    }
 }

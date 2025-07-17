@@ -180,13 +180,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.DYES_BLACK)
             .define('C', Tags.Items.GEMS_DIAMOND)
             .save(output)
-        // Fake Ragi
-        HTShapedRecipeBuilder(RagiumItems.RAGI_TICKET_FAKE)
-            .cross8()
-            .define('A', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .define('B', Tags.Items.DYES_RED)
-            .define('C', RagiumItems.BLANK_TICKET)
-            .saveSuffixed(output, "_from_redstone")
         // Azure from Lapis
         HTShapedRecipeBuilder(RagiumItems.AZURE_TICKET)
             .cross8()

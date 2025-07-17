@@ -193,7 +193,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Tickets
         addItem(RagiumItems.BLANK_TICKET, "Blank Ticket")
 
-        addItem(RagiumItems.RAGI_TICKET_FAKE, "Ragi-Ticket...?")
         addItem(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         addItem(RagiumItems.AZURE_TICKET, "Azure Ticket")
         addItem(RagiumItems.BLOODY_TICKET, "Bloody Ticket")

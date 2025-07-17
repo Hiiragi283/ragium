@@ -47,10 +47,9 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun raginite() {
-        val ragiTicket: AdvancementHolder = createSimple(RagiumAdvancements.RAGI_TICKET, root, RagiumItems.RAGI_TICKET_FAKE)
         val raginite: AdvancementHolder = createSimple(
             RagiumAdvancements.RAGINITE_DUST,
-            ragiTicket,
+            root,
             RagiumItems.RAGINITE_DUST,
             RagiumCommonTags.Items.DUSTS_RAGINITE,
         )

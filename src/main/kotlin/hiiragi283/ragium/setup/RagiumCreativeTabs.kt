@@ -140,7 +140,6 @@ object RagiumCreativeTabs {
             // Tickets
             add(RagiumItems.BLANK_TICKET)
 
-            add(RagiumItems.RAGI_TICKET_FAKE)
             add(RagiumItems.RAGI_TICKET)
             add(RagiumItems.AZURE_TICKET)
             add(RagiumItems.BLOODY_TICKET)

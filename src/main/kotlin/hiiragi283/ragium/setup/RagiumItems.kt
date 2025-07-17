@@ -75,9 +75,6 @@ object RagiumItems {
     val BLANK_TICKET: DeferredItem<Item> = register("blank_ticket")
 
     @JvmField
-    val RAGI_TICKET_FAKE: DeferredItem<Item> = register("ragi_ticket_fake")
-
-    @JvmField
     val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket")
 
     @JvmField
@@ -422,7 +419,6 @@ object RagiumItems {
 
         setColor(BLANK_TICKET, ChatFormatting.DARK_GRAY)
 
-        setColor(RAGI_TICKET_FAKE, ChatFormatting.RED)
         setColor(RAGI_TICKET, ChatFormatting.RED)
         setColor(AZURE_TICKET, ChatFormatting.BLUE)
         setColor(BLOODY_TICKET, ChatFormatting.DARK_RED)

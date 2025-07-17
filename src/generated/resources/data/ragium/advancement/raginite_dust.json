@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:ragi_ticket",
+  "parent": "ragium:root",
   "criteria": {
     "has_c_dusts_raginite": {
       "conditions": {
