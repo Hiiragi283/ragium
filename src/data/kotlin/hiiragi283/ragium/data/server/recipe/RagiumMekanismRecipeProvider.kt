@@ -79,29 +79,37 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
     }
 
     private fun enriching() {
+        // Raginite
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(RagiumCommonTags.Items.DUSTS_RAGINITE),
                 RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE.toStack(),
             ).build(output, RagiumAPI.id("enriching/enrich/raginite"))
-
+        // Azure
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(RagiumItems.AZURE_SHARD),
                 RagiumMekanismAddon.ITEM_ENRICHED_AZURE.toStack(),
             ).build(output, RagiumAPI.id("enriching/enrich/azure"))
 
+        // Raginite Ore
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(RagiumCommonTags.Items.ORES_RAGINITE),
                 RagiumItems.RAGINITE_DUST.toStack(12),
             ).build(output, RagiumAPI.id("processing/raginite/from_ore"))
-
+        // Ragi-Crystal Ore
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(RagiumCommonTags.Items.ORES_RAGI_CRYSTAL),
                 RagiumItems.RAGI_CRYSTAL.toStack(2),
             ).build(output, RagiumAPI.id("processing/ragi_crystal/from_ore"))
+        // Resonant Debris
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(RagiumCommonTags.Items.ORES_DEEP_SCRAP),
+                RagiumItems.DEEP_SCRAP.toStack(2),
+            ).build(output, RagiumAPI.id("processing/deep_steel/resonant_debris_to_scrap"))
     }
 
     private fun infusing() {

@@ -84,5 +84,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         // Tool
         RagiumItems.AZURE_STEEL_TOOLS.addItemModels(this)
+        RagiumItems.DEEP_STEEL_TOOLS.addItemModels(this)
     }
 }

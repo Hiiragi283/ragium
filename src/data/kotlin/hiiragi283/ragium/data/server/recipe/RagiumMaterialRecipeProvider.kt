@@ -90,6 +90,11 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2)
             .itemInput(RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
             .saveSuffixed(output, "_from_ore")
+        // Deep Steel
+        createCrushing()
+            .itemOutput(RagiumItems.DEEP_SCRAP, 2)
+            .itemInput(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
+            .saveSuffixed(output, "_from_ore")
     }
 
     //    Family    //

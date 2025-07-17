@@ -12,10 +12,13 @@ import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
@@ -38,6 +41,9 @@ import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
@@ -46,6 +52,7 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
@@ -265,6 +272,29 @@ object RagiumRuntimeEvents {
                     }
                 }
             }
+        }
+    }
+
+    //    Enchantments    //
+
+    @SubscribeEvent
+    fun getEnchantmentLevel(event: GetEnchantmentLevelEvent) {
+        val stack: ItemStack = event.stack
+        val enchantments: ItemEnchantments.Mutable = event.enchantments
+        val lookup: HolderLookup.RegistryLookup<Enchantment> = event.lookup
+        // Add Noise Canceling V to Deep Steel Sword
+        if (stack.`is`(RagiumItems.DEEP_STEEL_TOOLS.swordItem)) {
+            lookup.get(RagiumEnchantments.NOISE_CANCELING).ifPresent { holder: Holder.Reference<Enchantment> ->
+                enchantments.upgrade(holder, 5)
+            }
+            return
+        }
+        // Set Fortune V to Deep Steel Pickaxe
+        if (stack.`is`(RagiumItems.DEEP_STEEL_TOOLS.pickaxeItem)) {
+            lookup.get(Enchantments.FORTUNE).ifPresent { holder: Holder.Reference<Enchantment> ->
+                enchantments.set(holder, 5)
+            }
+            return
         }
     }
 

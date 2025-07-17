@@ -237,7 +237,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.RAGI_ALLOY_HAMMER, "ラギ合金の鍛造ハンマー")
 
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
+        addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
+        RagiumItems.DEEP_STEEL_TOOLS.addTranslationJp("深層鋼", this)
 
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
         addItem(RagiumItems.EXP_MAGNET, "EXPマグネット")
@@ -458,8 +460,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE, "紺鉄強化")
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_APPLIES_TO, "紺鉄の装備品")
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_INGREDIENTS, "紺鉄インゴット")
-        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "紺鉄製の防具，武器，道具を置いてください")
+        add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "鉄製の防具，武器，道具を置いてください")
         add(RagiumTranslationKeys.AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "紺鉄インゴットを置いてください")
+
+        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE, "深層鋼強化")
+        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_APPLIES_TO, "深層鋼の装備品")
+        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_INGREDIENTS, "深層鋼インゴット")
+        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
+        add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
 
         add(RagiumTranslationKeys.TEXT_ENERGY_PERCENTAGE, "%s / %s FE")
         add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")

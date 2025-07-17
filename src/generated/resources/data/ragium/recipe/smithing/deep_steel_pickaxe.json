@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:ingots/deep_steel"
+  },
+  "base": {
+    "item": "minecraft:diamond_pickaxe"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:deep_steel_pickaxe"
+  },
+  "template": {
+    "item": "ragium:deep_steel_upgrade_smithing_template"
+  }
+}

@@ -24,4 +24,13 @@ object RagiumToolTiers {
         Tiers.IRON.attackDamageBonus,
         Tiers.IRON.enchantmentValue,
     ) { Ingredient.of(RagiumCommonTags.Items.INGOTS_AZURE_STEEL) }
+
+    @JvmField
+    val DEEP_STEEL = SimpleTier(
+        BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+        Tiers.NETHERITE.uses,
+        Tiers.NETHERITE.speed,
+        Tiers.NETHERITE.attackDamageBonus,
+        Tiers.NETHERITE.enchantmentValue,
+    ) { Ingredient.of(RagiumCommonTags.Items.INGOTS_DEEP_STEEL) }
 }

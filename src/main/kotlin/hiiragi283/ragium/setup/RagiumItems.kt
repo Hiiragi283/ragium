@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
+import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
@@ -54,6 +54,7 @@ object RagiumItems {
         REGISTER.register(eventBus)
 
         AZURE_STEEL_TOOLS.init(eventBus)
+        DEEP_STEEL_TOOLS.init(eventBus)
     }
 
     @JvmStatic
@@ -250,11 +251,14 @@ object RagiumItems {
         register("${RagiumConstantValues.AZURE_STEEL}_upgrade_smithing_template", { _: Item.Properties -> HTAzureSteelTemplateItem() })
 
     @JvmField
-    val AZURE_STEEL_TOOLS = HTToolSets(
-        RagiumToolTiers.AZURE_STEEL,
-        RagiumConstantValues.AZURE_STEEL,
-        RagiumCommonTags.Items.INGOTS_AZURE_STEEL,
-    )
+    val DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<HTDeepSteelTemplateItem> =
+        register("${RagiumConstantValues.DEEP_STEEL}_upgrade_smithing_template", { _: Item.Properties -> HTDeepSteelTemplateItem() })
+
+    @JvmField
+    val AZURE_STEEL_TOOLS = HTToolSets(RagiumToolTiers.AZURE_STEEL, RagiumConstantValues.AZURE_STEEL)
+
+    @JvmField
+    val DEEP_STEEL_TOOLS = HTToolSets(RagiumToolTiers.DEEP_STEEL, RagiumConstantValues.DEEP_STEEL)
 
     @JvmField
     val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))

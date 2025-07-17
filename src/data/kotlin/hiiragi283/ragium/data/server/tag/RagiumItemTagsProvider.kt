@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.util.HTToolSets
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -176,21 +177,22 @@ class RagiumItemTagsProvider(
         tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_CHESTPLATE)
         tag(ItemTags.LEG_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_LEGGINGS)
         tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_BOOTS)
-        // Tools
-        tag(ItemTags.AXES).addItem(RagiumItems.AZURE_STEEL_TOOLS.axeItem)
-        tag(ItemTags.HOES).addItem(RagiumItems.AZURE_STEEL_TOOLS.hoeItem)
-        tag(ItemTags.PICKAXES).addItem(RagiumItems.AZURE_STEEL_TOOLS.pickaxeItem)
-        tag(ItemTags.SHOVELS).addItem(RagiumItems.AZURE_STEEL_TOOLS.shovelItem)
-        tag(ItemTags.SWORDS).addItem(RagiumItems.AZURE_STEEL_TOOLS.swordItem)
 
-        tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(
-            RagiumItems.RAGI_ALLOY_HAMMER,
-            RagiumItems.AZURE_STEEL_TOOLS.hammerItem,
-        )
-        tag(Tags.Items.TOOLS_WRENCH).addItem(
-            RagiumItems.RAGI_ALLOY_HAMMER,
-            RagiumItems.AZURE_STEEL_TOOLS.hammerItem,
-        )
+        // Tools
+        fun registerTools(toolSets: HTToolSets) {
+            tag(ItemTags.AXES).addItem(toolSets.axeItem)
+            tag(ItemTags.HOES).addItem(toolSets.hoeItem)
+            tag(ItemTags.PICKAXES).addItem(toolSets.pickaxeItem)
+            tag(ItemTags.SHOVELS).addItem(toolSets.shovelItem)
+            tag(ItemTags.SWORDS).addItem(toolSets.swordItem)
+            tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(toolSets.hammerItem)
+            tag(Tags.Items.TOOLS_WRENCH).addItem(toolSets.hammerItem)
+        }
+        registerTools(RagiumItems.AZURE_STEEL_TOOLS)
+        registerTools(RagiumItems.DEEP_STEEL_TOOLS)
+
+        tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(RagiumItems.RAGI_ALLOY_HAMMER)
+        tag(Tags.Items.TOOLS_WRENCH).addItem(RagiumItems.RAGI_ALLOY_HAMMER)
 
         listOf(
             ItemTags.DURABILITY_ENCHANTABLE,

@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.api.extension.asItemHolder
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -69,10 +71,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
 
-        for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
-            sets.addRecipes(output, provider)
-        }
-
+        RagiumBlocks.DECORATIONS.forEach(::registerBuildings)
         glass()
     }
 
@@ -93,5 +92,59 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('A', RagiumCommonTags.Items.DUSTS_OBSIDIAN)
             .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
             .save(output)
+    }
+
+    private fun registerBuildings(sets: HTBuildingBlockSets) {
+        // Base -> Slab
+        HTShapedRecipeBuilder(sets.slab, 6)
+            .pattern("AAA")
+            .define('A', sets.base)
+            .save(output)
+
+        output.accept(
+            sets.slab
+                .asItemHolder()
+                .idOrThrow
+                .withPrefix("stonecutting/"),
+            StonecutterRecipe(
+                "",
+                Ingredient.of(sets.base),
+                sets.slab.toStack(2),
+            ),
+            null,
+        )
+        // Base -> Stairs
+        HTShapedRecipeBuilder(sets.stairs, 4, CraftingBookCategory.BUILDING)
+            .pattern("A  ")
+            .pattern("AA ")
+            .pattern("AAA")
+            .define('A', sets.base)
+            .save(output)
+
+        output.accept(
+            sets.stairs.id.withPrefix("stonecutting/"),
+            StonecutterRecipe(
+                "",
+                Ingredient.of(sets.base),
+                ItemStack(sets.stairs),
+            ),
+            null,
+        )
+        // Base -> Wall
+        HTShapedRecipeBuilder(sets.wall, 4, CraftingBookCategory.BUILDING)
+            .pattern("AAA")
+            .pattern("AAA")
+            .define('A', sets.base)
+            .save(output)
+
+        output.accept(
+            sets.wall.id.withPrefix("stonecutting/"),
+            StonecutterRecipe(
+                "",
+                Ingredient.of(sets.base),
+                ItemStack(sets.wall),
+            ),
+            null,
+        )
     }
 }

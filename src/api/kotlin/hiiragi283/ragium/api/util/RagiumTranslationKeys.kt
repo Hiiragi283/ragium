@@ -9,6 +9,12 @@ object RagiumTranslationKeys {
     const val AZURE_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION = "items.smithing_template.azure_steel_upgrade.base_slot_description"
     const val AZURE_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION = "items.smithing_template.azure_steel_upgrade.additions_slot_description"
 
+    const val DEEP_STEEL_UPGRADE = "upgrade.deep_steel_upgrade"
+    const val DEEP_STEEL_UPGRADE_APPLIES_TO = "items.smithing_template.deep_steel_upgrade.applies_to"
+    const val DEEP_STEEL_UPGRADE_INGREDIENTS = "items.smithing_template.deep_steel_upgrade.ingredients"
+    const val DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION = "items.smithing_template.deep_steel_upgrade.base_slot_description"
+    const val DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION = "items.smithing_template.deep_steel_upgrade.additions_slot_description"
+
     //    Text    //
 
     const val TEXT_ENERGY_PERCENTAGE = "text.ragium.energy_percentage"
