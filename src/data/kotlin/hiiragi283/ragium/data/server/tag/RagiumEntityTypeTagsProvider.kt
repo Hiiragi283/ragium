@@ -22,5 +22,8 @@ class RagiumEntityTypeTagsProvider(output: PackOutput, provider: CompletableFutu
     override fun addTags(provider: HolderLookup.Provider) {
         tag(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING)
             .add(EntityType.WARDEN)
+
+        tag(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)
+            .add(EntityType.WARDEN)
     }
 }

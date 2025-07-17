@@ -3,7 +3,6 @@ package hiiragi283.ragium.integration.delight
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.RagiumConstantValues
@@ -30,12 +29,8 @@ object RagiumDelightAddon : RagiumAddon {
     val ITEM_REGISTER = HTItemRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val RAGI_CHERRY_PULP: DeferredItem<HTConsumableItem> =
-        ITEM_REGISTER.registerItem(
-            "ragi_cherry_pulp",
-            HTConsumableItem.create(),
-            Item.Properties().food(RagiumFoods.RAGI_CHERRY_PULP),
-        )
+    val RAGI_CHERRY_PULP: DeferredItem<Item> =
+        ITEM_REGISTER.registerSimpleItem("ragi_cherry_pulp", Item.Properties().food(RagiumFoods.RAGI_CHERRY_PULP))
 
     //    RagiumAddon    //
 

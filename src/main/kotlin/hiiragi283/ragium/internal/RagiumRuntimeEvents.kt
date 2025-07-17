@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -22,6 +23,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
 import net.minecraft.tags.BlockTags
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
@@ -52,6 +54,7 @@ import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -242,6 +245,33 @@ object RagiumRuntimeEvents {
         } else {
             // レシピが存在しない場合，拾いなおすまで再実行させない
             itemEntity.persistentData.putBoolean(RagiumConstantValues.IGNORE_CAULDRON_DROP, true)
+        }
+    }
+
+    @SubscribeEvent
+    fun onEntityDeath(event: LivingDeathEvent) {
+        val entity: LivingEntity = event.entity
+        if (!entity.type.`is`(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)) return
+
+        val level: Level = entity.level()
+        if (level.isClientSide) return
+
+        val entityPos: BlockPos = entity.blockPosition()
+        val random: RandomSource = entity.random
+        val range: IntRange = -4..4
+        for (x: Int in range) {
+            for (y: Int in range) {
+                for (z: Int in range) {
+                    val pos: BlockPos = entityPos.offset(x, y, z)
+                    val state: BlockState = level.getBlockState(pos)
+                    if (state.`is`(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES)) {
+                        if (random.nextInt(15) == 0) {
+                            level.destroyBlock(pos, false)
+                            level.setBlockAndUpdate(pos, RagiumBlocks.RESONANT_DEBRIS.get().defaultBlockState())
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -17,10 +17,16 @@ object RagiumModTags {
 
     object Blocks {
         @JvmField
-        val LED_BLOCKS: TagKey<Block> = blockTagKey(RagiumAPI.id("led_blocks"))
+        val LED_BLOCKS: TagKey<Block> = create("led_blocks")
 
         @JvmField
-        val WIP: TagKey<Block> = blockTagKey(RagiumAPI.id("work_in_progress"))
+        val RESONANT_DEBRIS_REPLACEABLES: TagKey<Block> = create("deepslate_ore_replaceables")
+
+        @JvmField
+        val WIP: TagKey<Block> = create("work_in_progress")
+
+        @JvmStatic
+        private fun create(path: String): TagKey<Block> = blockTagKey(RagiumAPI.id(path))
     }
 
     //    Enchantments    //
@@ -55,8 +61,13 @@ object RagiumModTags {
 
     object EntityTypes {
         @JvmField
-        val SENSITIVE_TO_NOISE_CANCELLING: TagKey<EntityType<*>> =
-            TagKey.create(Registries.ENTITY_TYPE, RagiumAPI.id("sensitive_to_noise_cancelling"))
+        val SENSITIVE_TO_NOISE_CANCELLING: TagKey<EntityType<*>> = create("sensitive_to_noise_cancelling")
+
+        @JvmField
+        val GENERATE_RESONANT_DEBRIS: TagKey<EntityType<*>> = create("generate_resonant_debris")
+
+        @JvmStatic
+        private fun create(path: String): TagKey<EntityType<*>> = TagKey.create(Registries.ENTITY_TYPE, RagiumAPI.id(path))
     }
 
     //    Fluids    //

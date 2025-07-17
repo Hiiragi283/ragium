@@ -249,10 +249,7 @@ class RagiumItemTagsProvider(
             .addItem(RagiumItems.FEVER_CHERRY)
 
         tag(RagiumModTags.Items.WIP)
-            .addTags(
-                RagiumCommonTags.Items.INGOTS_DEEP_STEEL,
-                RagiumCommonTags.Items.STORAGE_BLOCKS_DEEP_STEEL,
-            ).addHolder(
+            .addHolder(
                 RagiumItems.ELDER_HEART,
                 RagiumItems.BOTTLED_BEE,
                 RagiumItems.EXP_BERRIES,

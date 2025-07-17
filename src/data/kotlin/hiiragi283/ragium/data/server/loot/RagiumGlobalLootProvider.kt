@@ -12,6 +12,7 @@ import java.util.concurrent.CompletableFuture
 class RagiumGlobalLootProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     GlobalLootModifierProvider(output, registries, RagiumAPI.MOD_ID) {
     override fun start() {
+        // Drops Ragi-Cherry from Cherry Leaves
         add(
             "drop_ragi_cherry",
             AddTableLootModifier(

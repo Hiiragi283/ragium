@@ -114,6 +114,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         // Stone
         tag(Tags.Blocks.OBSIDIANS).addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
         tag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS).addHolder(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+        tag(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES).addTags(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
         // Crop
         tag(BlockTags.BEE_GROWABLES).addHolder(RagiumBlocks.EXP_BERRY_BUSH)
         tag(BlockTags.FALL_DAMAGE_RESETTING).addHolder(RagiumBlocks.EXP_BERRY_BUSH)

@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.Tags
 /**
  * @see [net.minecraft.data.BlockFamily]
  */
-class HTMaterialFamily private constructor(val baseVariant: Variant, val variantMap: Map<Variant, Entry>, val isVanilla: Boolean) {
+class HTMaterialFamily private constructor(baseVariant: Variant, val variantMap: Map<Variant, Entry>, val isVanilla: Boolean) {
     val baseEntry: Entry = variantMap[baseVariant]!!
 
     operator fun get(variant: Variant): Entry? = variantMap[variant]
