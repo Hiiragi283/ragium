@@ -229,10 +229,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.SULFUR_DUST, "硫黄の粉")
 
         // Armor
-        addItem(RagiumItems.AZURE_STEEL_HELMET, "紺鉄のヘルメット")
-        addItem(RagiumItems.AZURE_STEEL_CHESTPLATE, "紺鉄のチェストプレート")
-        addItem(RagiumItems.AZURE_STEEL_LEGGINGS, "紺鉄のレギンス")
-        addItem(RagiumItems.AZURE_STEEL_BOOTS, "紺鉄のブーツ")
+        RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
         // Tool
         addItem(RagiumItems.RAGI_ALLOY_HAMMER, "ラギ合金の鍛造ハンマー")
 

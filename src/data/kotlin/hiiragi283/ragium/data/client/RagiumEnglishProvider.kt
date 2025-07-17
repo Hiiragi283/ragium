@@ -242,10 +242,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.SULFUR_DUST, "Sulfur Dust")
 
         // Armor
-        addItem(RagiumItems.AZURE_STEEL_HELMET, "Azure Steel Helmet")
-        addItem(RagiumItems.AZURE_STEEL_CHESTPLATE, "Azure Steel Chestplate")
-        addItem(RagiumItems.AZURE_STEEL_LEGGINGS, "Azure Steel Leggings")
-        addItem(RagiumItems.AZURE_STEEL_BOOTS, "Azure Steel Boots")
+        RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
         // Tool
         addItem(RagiumItems.RAGI_ALLOY_HAMMER, "Ragi-Alloy Forge Hammer")
 

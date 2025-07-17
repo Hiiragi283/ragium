@@ -16,16 +16,14 @@ import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
+import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
 import net.minecraft.ChatFormatting
-import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
-import net.minecraft.world.item.ArmorItem
-import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
@@ -52,6 +50,8 @@ object RagiumItems {
     @JvmStatic
     fun init(eventBus: IEventBus) {
         REGISTER.register(eventBus)
+
+        AZURE_STEEL_ARMORS.init(eventBus)
 
         AZURE_STEEL_TOOLS.init(eventBus)
         DEEP_STEEL_TOOLS.init(eventBus)
@@ -190,41 +190,8 @@ object RagiumItems {
 
     //    Armors    //
 
-    @JvmStatic
-    private fun registerArmor(
-        name: String,
-        armorType: ArmorItem.Type,
-        material: Holder<ArmorMaterial>,
-        multiplier: Int,
-    ) = register(
-        "${name}_${armorType.serializedName}",
-        { properties: Item.Properties -> ArmorItem(material, armorType, properties) },
-        Item.Properties().durability(armorType.getDurability(multiplier)),
-    )
-
     @JvmField
-    val AZURE_STEEL_HELMET: DeferredItem<ArmorItem> =
-        registerArmor(RagiumConstantValues.AZURE_STEEL, ArmorItem.Type.HELMET, RagiumArmorMaterials.AZURE_STEEL, 20)
-
-    @JvmField
-    val AZURE_STEEL_CHESTPLATE: DeferredItem<ArmorItem> =
-        registerArmor(RagiumConstantValues.AZURE_STEEL, ArmorItem.Type.CHESTPLATE, RagiumArmorMaterials.AZURE_STEEL, 20)
-
-    @JvmField
-    val AZURE_STEEL_LEGGINGS: DeferredItem<ArmorItem> =
-        registerArmor(RagiumConstantValues.AZURE_STEEL, ArmorItem.Type.LEGGINGS, RagiumArmorMaterials.AZURE_STEEL, 20)
-
-    @JvmField
-    val AZURE_STEEL_BOOTS: DeferredItem<ArmorItem> =
-        registerArmor(RagiumConstantValues.AZURE_STEEL, ArmorItem.Type.BOOTS, RagiumArmorMaterials.AZURE_STEEL, 20)
-
-    @JvmField
-    val AZURE_ARMORS: List<DeferredItem<ArmorItem>> = listOf(
-        AZURE_STEEL_HELMET,
-        AZURE_STEEL_CHESTPLATE,
-        AZURE_STEEL_LEGGINGS,
-        AZURE_STEEL_BOOTS,
-    )
+    val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, RagiumConstantValues.AZURE_STEEL, 20)
 
     //    Tools    //
 

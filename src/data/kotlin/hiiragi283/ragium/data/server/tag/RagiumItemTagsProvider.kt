@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.util.HTArmorSets
 import hiiragi283.ragium.common.util.HTToolSets
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -173,10 +174,13 @@ class RagiumItemTagsProvider(
             )
 
         // Armors
-        tag(ItemTags.HEAD_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_HELMET)
-        tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_CHESTPLATE)
-        tag(ItemTags.LEG_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_LEGGINGS)
-        tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).addItem(RagiumItems.AZURE_STEEL_BOOTS)
+        fun registerArmors(armorSets: HTArmorSets) {
+            tag(ItemTags.HEAD_ARMOR_ENCHANTABLE).addItem(armorSets.helmetItem)
+            tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).addItem(armorSets.chestplateItem)
+            tag(ItemTags.LEG_ARMOR_ENCHANTABLE).addItem(armorSets.leggingsItem)
+            tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).addItem(armorSets.bootsItem)
+        }
+        registerArmors(RagiumItems.AZURE_STEEL_ARMORS)
 
         // Tools
         fun registerTools(toolSets: HTToolSets) {

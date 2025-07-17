@@ -112,10 +112,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
 
         mapOf(
             // Armor
-            Items.IRON_HELMET to RagiumItems.AZURE_STEEL_HELMET,
-            Items.IRON_CHESTPLATE to RagiumItems.AZURE_STEEL_CHESTPLATE,
-            Items.IRON_LEGGINGS to RagiumItems.AZURE_STEEL_LEGGINGS,
-            Items.IRON_BOOTS to RagiumItems.AZURE_STEEL_BOOTS,
+            Items.IRON_HELMET to RagiumItems.AZURE_STEEL_ARMORS.helmetItem,
+            Items.IRON_CHESTPLATE to RagiumItems.AZURE_STEEL_ARMORS.chestplateItem,
+            Items.IRON_LEGGINGS to RagiumItems.AZURE_STEEL_ARMORS.leggingsItem,
+            Items.IRON_BOOTS to RagiumItems.AZURE_STEEL_ARMORS.bootsItem,
             // Tool
             Items.IRON_SHOVEL to RagiumItems.AZURE_STEEL_TOOLS.shovelItem,
             Items.IRON_PICKAXE to RagiumItems.AZURE_STEEL_TOOLS.pickaxeItem,
