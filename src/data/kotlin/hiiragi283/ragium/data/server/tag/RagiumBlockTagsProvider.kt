@@ -85,7 +85,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         RagiumBlocks.GLASSES.forEach(pickaxe::addHolder)
         RagiumBlocks.CASINGS.forEach(pickaxe::addHolder)
         RagiumBlocks.MACHINES.forEach(pickaxe::addHolder)
-        RagiumBlocks.CAULDRONS.forEach(tag(BlockTags.CAULDRONS)::addHolder)
         RagiumBlocks.DEVICES.forEach(pickaxe::addHolder)
         RagiumBlocks.DRUMS.forEach(pickaxe::addHolder)
 
@@ -136,10 +135,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
                 RagiumBlocks.STONE_CASING,
                 RagiumBlocks.REFINERY,
                 RagiumBlocks.SOLIDIFIER,
-            ).apply {
-                RagiumBlocks.CAULDRONS.forEach { holder: DeferredBlock<*> ->
-                    addOptional(holder.id)
-                }
-            }
+            )
     }
 }

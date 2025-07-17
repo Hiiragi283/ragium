@@ -125,11 +125,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.MELTER, "溶融炉")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         addBlock(RagiumBlocks.SOLIDIFIER, "成型機")
-        // Cauldron
-        addBlock(RagiumBlocks.HONEY_CAULDRON, "蜂蜜入りの大釜")
-        addBlock(RagiumBlocks.MUSHROOM_STEW_CAULDRON, "キノコシチュー入りの大釜")
-        addBlock(RagiumBlocks.CRIMSON_SAP_CAULDRON, "深紅の樹液入りの大釜")
-        addBlock(RagiumBlocks.WARPED_SAP_CAULDRON, "歪んだ樹液入りの大釜")
         // Device
         addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.ENI, "E.N.I.")

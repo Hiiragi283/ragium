@@ -18,14 +18,11 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
-import net.minecraft.core.cauldron.CauldronInteraction
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.ColoredFallingBlock
-import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TransparentBlock
@@ -436,37 +433,6 @@ object RagiumBlocks {
 
     @JvmField
     val MILK_DRAIN: DeferredBlock<*> = register("milk_drain", stone(), ::HTMilkDrainBlock)
-
-    @JvmStatic
-    private fun registerCauldron(name: String, interactions: CauldronInteraction.InteractionMap): DeferredBlock<*> = REGISTER.registerBlock(
-        "${name}_cauldron",
-        { prop: BlockBehaviour.Properties -> LayeredCauldronBlock(Biome.Precipitation.NONE, interactions, prop) },
-        copyOf(Blocks.CAULDRON),
-    )
-
-    @JvmField
-    val HONEY_CAULDRON: DeferredBlock<*> =
-        registerCauldron(RagiumConstantValues.HONEY, RagiumCauldronInteractions.HONEY)
-
-    @JvmField
-    val MUSHROOM_STEW_CAULDRON: DeferredBlock<*> =
-        registerCauldron(RagiumConstantValues.MUSHROOM_STEW, RagiumCauldronInteractions.MUSHROOM_STEW)
-
-    @JvmField
-    val CRIMSON_SAP_CAULDRON: DeferredBlock<*> =
-        registerCauldron(RagiumConstantValues.CRIMSON_SAP, RagiumCauldronInteractions.CRIMSON_SAP)
-
-    @JvmField
-    val WARPED_SAP_CAULDRON: DeferredBlock<*> =
-        registerCauldron(RagiumConstantValues.WARPED_SAP, RagiumCauldronInteractions.WARPED_SAP)
-
-    @JvmField
-    val CAULDRONS: List<DeferredBlock<*>> = listOf(
-        HONEY_CAULDRON,
-        MUSHROOM_STEW_CAULDRON,
-        CRIMSON_SAP_CAULDRON,
-        WARPED_SAP_CAULDRON,
-    )
 
     // Basic
     @JvmStatic

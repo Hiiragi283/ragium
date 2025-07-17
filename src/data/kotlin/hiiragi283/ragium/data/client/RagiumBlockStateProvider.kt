@@ -17,7 +17,6 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
@@ -152,21 +151,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(RagiumBlocks.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
 
-        // Cauldron
-        RagiumBlocks.CAULDRONS.forEach(::cauldronBlock)
-
-        getVariantBuilder(RagiumBlocks.HONEY_CAULDRON.get())
-            .forAllStates { state: BlockState ->
-                val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)
-                val suffix: String = when (level) {
-                    3 -> "_full"
-                    else -> "_level$level"
-                }
-                ConfiguredModel
-                    .builder()
-                    .modelFile(modelFile(vanillaId("block/water_cauldron").withSuffix(suffix)))
-                    .build()
-            }
         // Device
         layeredBlock(
             RagiumBlocks.WATER_COLLECTOR,
@@ -230,7 +214,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
         rotationY(state.getValue(HTBlockStateProperties.HORIZONTAL).getRotationY())
 
-    private fun cauldronBlock(holder: DeferredBlock<*>) {
+    /*private fun cauldronBlock(holder: DeferredBlock<*>) {
         if (holder == RagiumBlocks.HONEY_CAULDRON) return
         getVariantBuilder(holder.get())
             .forAllStates { state: BlockState ->
@@ -244,7 +228,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .modelFile(modelFile(vanillaId("block/water_cauldron").withSuffix(suffix)))
                     .build()
             }
-    }
+    }*/
 
     private fun feastBlock(holder: DeferredBlock<out HTFeastBlock>) {
         getVariantBuilder(holder.get()).forAllStates { state: BlockState ->

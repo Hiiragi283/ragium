@@ -11,7 +11,6 @@ import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumCauldronInteractions
 import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -28,7 +27,6 @@ import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
-import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NewRegistryEvent
@@ -49,7 +47,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(::construct)
         eventBus.addListener(RagiumMiscRegister::onRegister)
         eventBus.addListener(::commonSetup)
-        eventBus.addListener(::registerCauldronContents)
         eventBus.addListener(::registerDataMapTypes)
         eventBus.addListener(::registerPackets)
 
@@ -90,19 +87,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun construct(event: FMLConstructModEvent) {}
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
-        event.enqueueWork(RagiumCauldronInteractions::initDefaultInteractions)
         event.enqueueWork(RagiumFluidContents.REGISTER::registerDispensers)
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onCommonSetup(event)
         }
         LOGGER.info("Loaded common setup!")
-    }
-
-    private fun registerCauldronContents(event: RegisterCauldronFluidContentEvent) {
-        RagiumCauldronInteractions.registerCauldronContents(event)
-
-        LOGGER.info("Registered cauldron contents!")
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {

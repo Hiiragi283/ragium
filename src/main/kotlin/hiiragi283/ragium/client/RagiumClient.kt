@@ -28,13 +28,10 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
-import net.neoforged.neoforge.fluids.CauldronFluidContent
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 import java.awt.Color
@@ -82,7 +79,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             RagiumBlocks.WATER_COLLECTOR.get(),
         )
         // Cauldrons
-        for (cauldron: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
+        /*for (cauldron: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
             event.register(
                 { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
                     val content: CauldronFluidContent =
@@ -98,7 +95,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                 },
                 cauldron.get(),
             )
-        }
+        }*/
 
         LOGGER.info("Registered BlockColor!")
     }

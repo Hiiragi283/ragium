@@ -122,6 +122,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             Items.IRON_AXE to RagiumItems.AZURE_STEEL_TOOLS.axeItem,
             Items.IRON_HOE to RagiumItems.AZURE_STEEL_TOOLS.hoeItem,
             Items.IRON_SWORD to RagiumItems.AZURE_STEEL_TOOLS.swordItem,
+            RagiumItems.RAGI_ALLOY_HAMMER to RagiumItems.AZURE_STEEL_TOOLS.hammerItem,
         ).forEach { (base: ItemLike, result: ItemLike) ->
             HTSmithingRecipeBuilder(result)
                 .addIngredient(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
@@ -158,6 +159,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             Items.DIAMOND_AXE to RagiumItems.DEEP_STEEL_TOOLS.axeItem,
             Items.DIAMOND_HOE to RagiumItems.DEEP_STEEL_TOOLS.hoeItem,
             Items.DIAMOND_SWORD to RagiumItems.DEEP_STEEL_TOOLS.swordItem,
+            RagiumItems.AZURE_STEEL_TOOLS.hammerItem to RagiumItems.DEEP_STEEL_TOOLS.hammerItem,
         ).forEach { (base: ItemLike, result: ItemLike) ->
             HTSmithingRecipeBuilder(result)
                 .addIngredient(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
