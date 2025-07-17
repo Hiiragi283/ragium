@@ -209,14 +209,16 @@ object RagiumCommonTags {
         val OBSIDIANS_MYSTERIOUS: TagKey<Item> = commonTag("obsidians", "mysterious")
 
         // Ores
-        @JvmField
-        val ORES_RAGINITE: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGINITE)
+        private const val ORES: String = RagiumConstantValues.ORES
 
         @JvmField
-        val ORES_RAGI_CRYSTAL: TagKey<Item> = commonTag(RagiumConstantValues.ORES, RagiumConstantValues.RAGI_CRYSTAL)
+        val ORES_RAGINITE: TagKey<Item> = commonTag(ORES, RagiumConstantValues.RAGINITE)
 
         @JvmField
-        val ORES_DEEP_SCRAP: TagKey<Item> = commonTag(RagiumConstantValues.ORES, "deep_scrap")
+        val ORES_RAGI_CRYSTAL: TagKey<Item> = commonTag(ORES, RagiumConstantValues.RAGI_CRYSTAL)
+
+        @JvmField
+        val ORES_DEEP_SCRAP: TagKey<Item> = commonTag(ORES, "deep_scrap")
 
         // Plates
         @JvmField

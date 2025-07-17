@@ -4,23 +4,23 @@
       "type": "neoforge:not",
       "value": {
         "type": "neoforge:tag_empty",
-        "tag": "c:ingots/replica"
+        "tag": "c:ingots/osmium"
       }
     }
   ],
   "type": "ragium:alloying",
   "item_input": [
     {
-      "count": 2,
-      "tag": "c:raw_materials/replica"
+      "count": 1,
+      "tag": "c:raw_materials/osmium"
     },
     {
       "count": 1,
-      "tag": "ragium:alloy_smelter_fluxes/basic"
+      "tag": "ragium:alloy_smelter_fluxes/advanced"
     }
   ],
   "item_output": {
-    "count": 3,
-    "id": "#c:ingots/replica"
+    "count": 2,
+    "id": "#c:ingots/osmium"
   }
 }

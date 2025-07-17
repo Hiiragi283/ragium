@@ -4,7 +4,7 @@
       "type": "neoforge:not",
       "value": {
         "type": "neoforge:tag_empty",
-        "tag": "c:ingots/replica"
+        "tag": "c:ingots/chrome"
       }
     }
   ],
@@ -12,7 +12,7 @@
   "item_input": [
     {
       "count": 2,
-      "tag": "c:raw_materials/replica"
+      "tag": "c:raw_materials/chrome"
     },
     {
       "count": 1,
@@ -21,6 +21,6 @@
   ],
   "item_output": {
     "count": 3,
-    "id": "#c:ingots/replica"
+    "id": "#c:ingots/chrome"
   }
 }

@@ -18,6 +18,9 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.conditions.ICondition
+import net.neoforged.neoforge.common.conditions.NotCondition
+import net.neoforged.neoforge.common.conditions.TagEmptyCondition
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
@@ -32,6 +35,7 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
     private var catalyst: Ingredient = Ingredient.EMPTY
     private val itemOutputs: MutableList<HTItemOutput> = mutableListOf()
     private val fluidOutputs: MutableList<HTFluidOutput> = mutableListOf()
+    private val conditions: MutableList<ICondition> = mutableListOf()
 
     //    Item Input    //
 
@@ -103,7 +107,12 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         )
     }
 
-    fun itemOutput(tagKey: TagKey<Item>, count: Int = 1, chance: Float = 1f): HTDefinitionRecipeBuilder<R> = apply {
+    fun itemOutput(
+        tagKey: TagKey<Item>,
+        count: Int = 1,
+        chance: Float = 1f,
+        appendCondition: Boolean = false,
+    ): HTDefinitionRecipeBuilder<R> = apply {
         if (chance !in (0f..1f)) {
             error("Chance must be in 0f to 1f!")
         }
@@ -115,6 +124,9 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
                 chance,
             ),
         )
+        if (appendCondition) {
+            conditions.add(NotCondition(TagEmptyCondition(tagKey)))
+        }
     }
 
     //    Fluid Output    //
@@ -146,6 +158,12 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         )
     }
 
+    //    ICondition    //
+
+    fun condition(condition: ICondition): HTDefinitionRecipeBuilder<R> = apply {
+        this.conditions.add(condition)
+    }
+
     //    RecipeBuilder    //
 
     override fun getPrimalId(): ResourceLocation = itemOutputs.firstOrNull()?.id
@@ -165,6 +183,7 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
                 ),
             ),
             null,
+            *conditions.toTypedArray(),
         )
     }
 

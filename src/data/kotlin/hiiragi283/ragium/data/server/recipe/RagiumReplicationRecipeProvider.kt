@@ -5,10 +5,7 @@ import com.buuz135.replication.api.IMatterType
 import com.buuz135.replication.calculation.MatterValue
 import com.buuz135.replication.recipe.MatterValueRecipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumItems
@@ -21,27 +18,6 @@ import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumReplicationRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
-        // Ore -> Raw
-        val rawTagKey: TagKey<Item> = itemTagKey(commonId("raw_materials/replica"))
-        createCrushing()
-            .itemOutput(rawTagKey, 4)
-            .itemOutput(rawTagKey, chance = 1 / 4f)
-            .itemInput(itemTagKey(commonId("ores/replica")))
-            .saveSuffixed(output, "_from_ore")
-        // Raw -> Ingot
-        val ingotTagKey: TagKey<Item> = itemTagKey(commonId("ingots/replica"))
-        createAlloying()
-            .itemOutput(ingotTagKey, 3)
-            .itemInput(rawTagKey, 2)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
-            .saveSuffixed(output, "_with_basic_flux")
-
-        createAlloying()
-            .itemOutput(ingotTagKey, 2)
-            .itemInput(rawTagKey)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
-            .saveSuffixed(output, "_with_advanced_flux")
-
         matter()
     }
 

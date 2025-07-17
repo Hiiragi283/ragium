@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/diamond"
+      }
+    }
+  ],
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:gems/diamond"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "#c:dusts/diamond"
+  }
+}

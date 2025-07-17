@@ -7,14 +7,12 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.data.server.RagiumMaterialFamilies
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.tags.MekanismTags
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider
@@ -87,28 +85,17 @@ class RagiumItemTagsProvider(
     //    Material    //
 
     private fun materials() {
-        fun register(family: HTMaterialFamily) {
-            if (family.isVanilla) return
-            for ((variant: HTMaterialFamily.Variant, entry: HTMaterialFamily.Entry) in family.variantMap) {
-                val (tagKey: TagKey<Item>, holder: Holder<Item>) = entry
-                tag(variant.commonTag).addTag(tagKey)
-                tag(tagKey).addItem(holder.value())
+        for (family: HTMaterialFamily in HTMaterialFamily.instances.values) {
+            if (family.entryType == HTMaterialFamily.EntryType.RAGIUM) {
+                for ((variant: HTMaterialFamily.Variant, entry: Pair<TagKey<Item>, Item?>) in family.variantMap) {
+                    val (tagKey: TagKey<Item>, item: Item?) = entry
+                    if (item != null) {
+                        tag(variant.commonTag).addTag(tagKey)
+                        tag(tagKey).add(item)
+                    }
+                }
             }
         }
-
-        register(RagiumMaterialFamilies.RAGI_CRYSTAL)
-        register(RagiumMaterialFamilies.CRIMSON_CRYSTAL)
-        register(RagiumMaterialFamilies.WARPED_CRYSTAL)
-        register(RagiumMaterialFamilies.ELDRITCH_PEARL)
-
-        register(RagiumMaterialFamilies.RAGI_ALLOY)
-        register(RagiumMaterialFamilies.ADVANCED_RAGI_ALLOY)
-        register(RagiumMaterialFamilies.AZURE_STEEL)
-        register(RagiumMaterialFamilies.DEEP_STEEL)
-
-        register(RagiumMaterialFamilies.CHOCOLATE)
-        register(RagiumMaterialFamilies.MEAT)
-        register(RagiumMaterialFamilies.COOKED_MEAT)
 
         // Dusts
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_ASH, RagiumItems.ASH_DUST)
