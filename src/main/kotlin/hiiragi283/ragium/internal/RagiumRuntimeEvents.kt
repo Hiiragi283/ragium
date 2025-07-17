@@ -1,14 +1,11 @@
 package hiiragi283.ragium.internal
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
-import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumComponentTypes
@@ -24,7 +21,6 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
-import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -45,12 +41,10 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RenderTooltipEvent
+import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
@@ -58,20 +52,32 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
-import net.neoforged.neoforge.event.tick.EntityTickEvent
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import org.slf4j.Logger
 import kotlin.jvm.optionals.getOrNull
 
-@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
-object RagiumRuntimeEvents {
+internal object RagiumRuntimeEvents {
     @JvmStatic
     private val LOGGER: Logger = LogUtils.getLogger()
 
+    @JvmStatic
+    fun registerEvents() {
+        NeoForge.EVENT_BUS.addListener(::onClickedEntity)
+        NeoForge.EVENT_BUS.addListener(::onClickedBlock)
+        NeoForge.EVENT_BUS.addListener(::onUseItem)
+        NeoForge.EVENT_BUS.addListener(::onFinishUsingItem)
+
+        NeoForge.EVENT_BUS.addListener(::onEntityStruck)
+        NeoForge.EVENT_BUS.addListener(::onEntityDeath)
+
+        NeoForge.EVENT_BUS.addListener(::getEnchantmentLevel)
+        NeoForge.EVENT_BUS.addListener(::itemTooltips)
+        NeoForge.EVENT_BUS.addListener(::gatherComponents)
+    }
+
     //    Item Interaction    //
 
-    @SubscribeEvent
-    fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
+    private fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
         // イベントがキャンセルされている場合はパス
         if (event.isCanceled) return
         val stack: ItemStack = event.itemStack
@@ -93,8 +99,7 @@ object RagiumRuntimeEvents {
         }
     }
 
-    @SubscribeEvent
-    fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
+    private fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
         if (event.isCanceled) return
         val hand: InteractionHand = event.hand
         val stack: ItemStack = event.itemStack
@@ -116,8 +121,7 @@ object RagiumRuntimeEvents {
         event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
     }
 
-    @SubscribeEvent
-    fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
+    private fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
         if (event.isCanceled) return
         val stack: ItemStack = event.itemStack
         if (stack.isEmpty) return
@@ -165,8 +169,7 @@ object RagiumRuntimeEvents {
         }
     }
 
-    @SubscribeEvent
-    fun onFinishUsingItem(event: LivingEntityUseItemEvent.Finish) {
+    private fun onFinishUsingItem(event: LivingEntityUseItemEvent.Finish) {
         val stack: ItemStack = event.item
         if (stack.isEmpty) return
         val result: ItemStack = event.resultStack
@@ -192,8 +195,7 @@ object RagiumRuntimeEvents {
 
     //    Entity    //
 
-    @SubscribeEvent
-    fun onEntityStruck(event: EntityStruckByLightningEvent) {
+    private fun onEntityStruck(event: EntityStruckByLightningEvent) {
         if (event.isCanceled) return
         // プレイヤーによって召喚された落雷は無視される
         if (event.lightning.cause != null) return
@@ -216,40 +218,7 @@ object RagiumRuntimeEvents {
         }
     }
 
-    @SubscribeEvent
-    fun onEntityTick(event: EntityTickEvent.Post) {
-        val itemEntity: ItemEntity = event.entity as? ItemEntity ?: return
-        // 大釜の中にいない場合はパス
-        val stateIn: BlockState = itemEntity.inBlockState
-        if (stateIn.`is`(Blocks.CAULDRON) || !stateIn.`is`(BlockTags.CAULDRONS)) return
-        // 除外フラグを持っていたらパス
-        if (itemEntity.persistentData.getBoolean(RagiumConstantValues.IGNORE_CAULDRON_DROP)) return
-        // 最初に一致するレシピを取得する
-        val level: Level = itemEntity.level()
-        val pos: BlockPos = itemEntity.blockPosition()
-        val stack: ItemStack = itemEntity.item
-        val remainCount: Int = stack.count - 1
-
-        val input = HTInteractRecipeInput(pos, stack)
-        val firstRecipe: HTCauldronDroppingRecipe? = level.recipeManager
-            .getRecipeFor(RagiumRecipeTypes.CAULDRON_DROPPING.get(), input, level)
-            .getOrNull()
-            ?.value
-        // レシピが存在する場合，処理を実行する
-        if (firstRecipe != null) {
-            itemEntity.item = firstRecipe.assemble(input, level.registryAccess()).copy()
-            level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
-            if (remainCount > 0) {
-                dropStackAt(itemEntity, stack.copyWithCount(remainCount))
-            }
-        } else {
-            // レシピが存在しない場合，拾いなおすまで再実行させない
-            itemEntity.persistentData.putBoolean(RagiumConstantValues.IGNORE_CAULDRON_DROP, true)
-        }
-    }
-
-    @SubscribeEvent
-    fun onEntityDeath(event: LivingDeathEvent) {
+    private fun onEntityDeath(event: LivingDeathEvent) {
         val entity: LivingEntity = event.entity
         if (!entity.type.`is`(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)) return
 
@@ -277,8 +246,7 @@ object RagiumRuntimeEvents {
 
     //    Enchantments    //
 
-    @SubscribeEvent
-    fun getEnchantmentLevel(event: GetEnchantmentLevelEvent) {
+    private fun getEnchantmentLevel(event: GetEnchantmentLevelEvent) {
         val stack: ItemStack = event.stack
         val enchantments: ItemEnchantments.Mutable = event.enchantments
         val lookup: HolderLookup.RegistryLookup<Enchantment> = event.lookup
@@ -300,16 +268,14 @@ object RagiumRuntimeEvents {
 
     //    Tooltips    //
 
-    @SubscribeEvent
-    fun itemTooltips(event: ItemTooltipEvent) {
+    private fun itemTooltips(event: ItemTooltipEvent) {
         val stack: ItemStack = event.itemStack
         if (stack.`is`(RagiumModTags.Items.WIP)) {
             event.toolTip.add(Component.translatable(RagiumTranslationKeys.TEXT_WIP).withStyle(ChatFormatting.DARK_RED))
         }
     }
 
-    @SubscribeEvent
-    fun gatherComponents(event: RenderTooltipEvent.GatherComponents) {
+    private fun gatherComponents(event: RenderTooltipEvent.GatherComponents) {
         val stack: ItemStack = event.itemStack
         val content: SimpleFluidContent = stack.get(RagiumComponentTypes.FLUID_CONTENT) ?: return
         if (content.isEmpty) return

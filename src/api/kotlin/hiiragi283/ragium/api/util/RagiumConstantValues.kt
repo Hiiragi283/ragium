@@ -57,7 +57,6 @@ object RagiumConstantValues {
     const val ENERGY_CAPACITY = "energy_capacity"
     const val ENERGY_STORED = "energy_stored"
 
-    const val IGNORE_CAULDRON_DROP = "IgnoreCauldronDrop"
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 
     //    Recipes    //

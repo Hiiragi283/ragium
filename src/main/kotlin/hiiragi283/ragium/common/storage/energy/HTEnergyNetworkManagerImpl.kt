@@ -12,7 +12,8 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
 
 internal object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
-    init {
+    @JvmStatic
+    fun registerEvents() {
         NeoForge.EVENT_BUS.addListener(::onServerStarted)
         NeoForge.EVENT_BUS.addListener(::onServerStopped)
     }
