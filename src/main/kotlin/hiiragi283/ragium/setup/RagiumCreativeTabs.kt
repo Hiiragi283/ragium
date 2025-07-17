@@ -93,6 +93,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.DEEP_STEEL_INGOT)
             add(RagiumItems.DEEP_SCRAP)
             add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
+            addAll(RagiumItems.DEEP_STEEL_ARMORS.itemHolders)
             addAll(RagiumItems.DEEP_STEEL_TOOLS.itemHolders)
 
             add(RagiumBlocks.CHOCOLATE_BLOCK)

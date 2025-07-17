@@ -148,10 +148,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
 
         mapOf(
             // Armor
-            // Items.DIAMOND_HELMET to RagiumItems.AZURE_STEEL_HELMET,
-            // Items.DIAMOND_CHESTPLATE to RagiumItems.AZURE_STEEL_CHESTPLATE,
-            // Items.DIAMOND_LEGGINGS to RagiumItems.AZURE_STEEL_LEGGINGS,
-            // Items.DIAMOND_BOOTS to RagiumItems.AZURE_STEEL_LEGGINGS,
+            Items.DIAMOND_HELMET to RagiumItems.DEEP_STEEL_ARMORS.helmetItem,
+            Items.DIAMOND_CHESTPLATE to RagiumItems.DEEP_STEEL_ARMORS.chestplateItem,
+            Items.DIAMOND_LEGGINGS to RagiumItems.DEEP_STEEL_ARMORS.leggingsItem,
+            Items.DIAMOND_BOOTS to RagiumItems.DEEP_STEEL_ARMORS.bootsItem,
             // Tool
             Items.DIAMOND_SHOVEL to RagiumItems.DEEP_STEEL_TOOLS.shovelItem,
             Items.DIAMOND_PICKAXE to RagiumItems.DEEP_STEEL_TOOLS.pickaxeItem,

@@ -63,4 +63,19 @@ object RagiumArmorMaterials {
         ArmorItem.Type.BODY to 8,
         ArmorItem.Type.HELMET to 3,
     )
+
+    @JvmField
+    val DEEP_STEEL: Holder<ArmorMaterial> = register(
+        RagiumConstantValues.DEEP_STEEL,
+        15,
+        SoundEvents.ARMOR_EQUIP_NETHERITE,
+        { Ingredient.of(RagiumCommonTags.Items.INGOTS_DEEP_STEEL) },
+        3f,
+        0.1f,
+        ArmorItem.Type.BOOTS to 3,
+        ArmorItem.Type.LEGGINGS to 6,
+        ArmorItem.Type.CHESTPLATE to 8,
+        ArmorItem.Type.BODY to 11,
+        ArmorItem.Type.HELMET to 3,
+    )
 }

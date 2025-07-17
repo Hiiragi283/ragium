@@ -243,6 +243,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         // Armor
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
+        RagiumItems.DEEP_STEEL_ARMORS.addTranslationEn("Deep Steel", this)
         // Tool
         addItem(RagiumItems.RAGI_ALLOY_HAMMER, "Ragi-Alloy Forge Hammer")
 

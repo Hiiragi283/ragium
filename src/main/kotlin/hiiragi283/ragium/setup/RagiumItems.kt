@@ -52,6 +52,7 @@ object RagiumItems {
         REGISTER.register(eventBus)
 
         AZURE_STEEL_ARMORS.init(eventBus)
+        DEEP_STEEL_ARMORS.init(eventBus)
 
         AZURE_STEEL_TOOLS.init(eventBus)
         DEEP_STEEL_TOOLS.init(eventBus)
@@ -192,6 +193,9 @@ object RagiumItems {
 
     @JvmField
     val AZURE_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.AZURE_STEEL, RagiumConstantValues.AZURE_STEEL, 20)
+
+    @JvmField
+    val DEEP_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.DEEP_STEEL, RagiumConstantValues.DEEP_STEEL, 20)
 
     //    Tools    //
 

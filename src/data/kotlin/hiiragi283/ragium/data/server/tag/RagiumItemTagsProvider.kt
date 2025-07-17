@@ -181,6 +181,7 @@ class RagiumItemTagsProvider(
             tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).addItem(armorSets.bootsItem)
         }
         registerArmors(RagiumItems.AZURE_STEEL_ARMORS)
+        registerArmors(RagiumItems.DEEP_STEEL_ARMORS)
 
         // Tools
         fun registerTools(toolSets: HTToolSets) {
