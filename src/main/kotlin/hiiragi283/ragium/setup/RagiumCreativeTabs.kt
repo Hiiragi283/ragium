@@ -177,5 +177,7 @@ object RagiumCreativeTabs {
             add(RagiumItems.BASIC_CIRCUIT)
             add(RagiumItems.ADVANCED_CIRCUIT)
             add(RagiumItems.CRYSTAL_PROCESSOR)
+
+            add(RagiumItems.ELDER_HEART)
         }
 }

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
+@Suppress("DEPRECATION")
 class RagiumEntityTypeTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
     IntrinsicHolderTagsProvider<EntityType<*>>(
         output,

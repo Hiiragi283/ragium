@@ -74,7 +74,8 @@ object RagiumDatagen {
                 setOf(),
                 listOf(
                     LootTableProvider.SubProviderEntry(::RagiumBlockLootProvider, LootContextParamSets.BLOCK),
-                    LootTableProvider.SubProviderEntry(::RagiumCustomLootProvider, LootContextParamSets.BLOCK),
+                    LootTableProvider.SubProviderEntry(RagiumCustomLootProvider::Block, LootContextParamSets.BLOCK),
+                    LootTableProvider.SubProviderEntry(RagiumCustomLootProvider::Entity, LootContextParamSets.ENTITY),
                 ),
                 provider,
             ),

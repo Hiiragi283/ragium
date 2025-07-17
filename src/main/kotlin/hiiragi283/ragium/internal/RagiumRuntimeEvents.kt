@@ -2,7 +2,6 @@ package hiiragi283.ragium.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
@@ -40,19 +39,13 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.loot.LootPool
-import net.minecraft.world.level.storage.loot.LootTable
-import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.event.LootTableLoadEvent
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
@@ -272,50 +265,6 @@ object RagiumRuntimeEvents {
                     }
                 }
             }
-        }
-    }
-
-    //    Loot Table    //
-
-    @SubscribeEvent
-    fun onLoadLootTable(event: LootTableLoadEvent) {
-        val loot: LootTable = event.table
-
-        fun modify(entityType: EntityType<*>, function: LootTable.() -> Unit) {
-            if (loot.lootTableId == entityType.defaultLootTable.location()) {
-                function(loot)
-            }
-        }
-
-        fun modify(block: Block, function: LootTable.() -> Unit) {
-            if (loot.lootTableId == block.lootTable.location()) {
-                function(loot)
-            }
-        }
-
-        // エルダーガーディアンがエルダーの心臓を落とすように
-        modify(EntityType.ELDER_GUARDIAN) {
-            addPool(
-                LootPool
-                    .lootPool()
-                    .setRolls(ConstantValue.exactly(1f))
-                    .add(LootItem.lootTableItem(RagiumItems.ELDER_HEART))
-                    .build(),
-            )
-            LOGGER.info("Modified loot table for Elder Guardian!")
-        }
-        // 行商人がカタログを落とすように
-        modify(EntityType.WANDERING_TRADER) {
-            if (RagiumConfig.COMMON.dropTraderCatalog.get()) {
-                addPool(
-                    LootPool
-                        .lootPool()
-                        .setRolls(ConstantValue.exactly(1f))
-                        .add(LootItem.lootTableItem(RagiumItems.TRADER_CATALOG))
-                        .build(),
-                )
-            }
-            LOGGER.info("Modified loot table for Wandering Trader!")
         }
     }
 
