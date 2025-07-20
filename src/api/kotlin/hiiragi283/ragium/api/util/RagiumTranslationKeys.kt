@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.util
 
+import net.minecraft.world.item.ItemStack
+
 object RagiumTranslationKeys {
     //    Item    //
 
@@ -15,6 +17,9 @@ object RagiumTranslationKeys {
     const val DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION = "items.smithing_template.deep_steel_upgrade.base_slot_description"
     const val DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION = "items.smithing_template.deep_steel_upgrade.additions_slot_description"
 
+    @JvmStatic
+    fun getTooltipKey(stack: ItemStack): String = "text.ragium.${stack.descriptionId}"
+
     //    Text    //
 
     const val TEXT_ENERGY_PERCENTAGE = "text.ragium.energy_percentage"
@@ -28,26 +33,9 @@ object RagiumTranslationKeys {
     const val TEXT_MISSING_ANCHOR = "text.ragium.missing_anchor"
     const val TEXT_MISSING_POS = "text.ragium.missing_pos"
 
+    const val TEXT_SHOW_INFO = "text.ragium.show_info"
+
     const val TEXT_WIP = "text.ragium.work_in_progress"
-
-    //    EMI    //
-
-    const val EMI_AMBROSIA = "emi.ragium.ambrosia"
-    const val EMI_ASH_LOG = "emi.ragium.ash_log"
-    const val EMI_CRIMSON_SOIL = "emi.ragium.crimson_soil"
-    const val EMI_ELDRITCH_EGG = "emi.ragium.eldritch_egg"
-    const val EMI_HARVESTABLE_GLASS = "emi.ragium.harvestable_glass"
-    const val EMI_ICE_CREAM = "emi.ragium.ice_cream"
-    const val EMI_ITEM_MAGNET = "emi.ragium.item_magnet"
-    const val EMI_OBSIDIAN_GLASS = "emi.ragium.obsidian_glass"
-    const val EMI_RAGI_CHERRY = "emi.ragium.ragi_cherry"
-    const val EMI_RAGI_LANTERN = "emi.ragium.ragi_lantern"
-    const val EMI_SOUL_GLASS = "emi.ragium.soul_glass"
-    const val EMI_TRADER_CATALOG = "emi.ragium.trader_catalog"
-    const val EMI_WARPED_WART = "emi.ragium.warped_wart"
-
-    const val EMI_CAULDRON_DROPPING = "emi.ragium.cauldron_dropping"
-    const val EMI_CAULDRON_DROPPING_MIN_LEVEL = "emi.ragium.cauldron_dropping.min_level"
 
     //    Jade    //
 

@@ -6,13 +6,10 @@ import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -43,16 +40,13 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
-import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
-import net.neoforged.neoforge.fluids.SimpleFluidContent
 import org.slf4j.Logger
 import kotlin.jvm.optionals.getOrNull
 
@@ -71,8 +65,6 @@ internal object RagiumRuntimeEvents {
         NeoForge.EVENT_BUS.addListener(::onEntityDeath)
 
         NeoForge.EVENT_BUS.addListener(::getEnchantmentLevel)
-        NeoForge.EVENT_BUS.addListener(::itemTooltips)
-        NeoForge.EVENT_BUS.addListener(::gatherComponents)
     }
 
     //    Block    //
@@ -271,21 +263,5 @@ internal object RagiumRuntimeEvents {
             }
             return
         }
-    }
-
-    //    Tooltips    //
-
-    private fun itemTooltips(event: ItemTooltipEvent) {
-        val stack: ItemStack = event.itemStack
-        if (stack.`is`(RagiumModTags.Items.WIP)) {
-            event.toolTip.add(Component.translatable(RagiumTranslationKeys.TEXT_WIP).withStyle(ChatFormatting.DARK_RED))
-        }
-    }
-
-    private fun gatherComponents(event: RenderTooltipEvent.GatherComponents) {
-        val stack: ItemStack = event.itemStack
-        val content: SimpleFluidContent = stack.get(RagiumDataComponents.FLUID_CONTENT) ?: return
-        if (content.isEmpty) return
-        // event.tooltipElements.add(1, Either.right(HTFluidTooltipComponent(content)))
     }
 }

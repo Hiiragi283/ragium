@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
+import hiiragi283.ragium.api.extension.addInfo
 import hiiragi283.ragium.api.extension.addMatterType
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -27,13 +28,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         entity()
         fluid()
         item()
-        // material()
-        // tagPrefix()
         modTags()
         text()
+        information()
 
         delight()
-        emi()
         jade()
         mekanism()
         replication()
@@ -469,26 +468,25 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumTranslationKeys.TEXT_LOOT_TABLE_ID, "ルートテーブル: %s")
 
+        add(RagiumTranslationKeys.TEXT_SHOW_INFO, "シフトキーを押して情報を表示")
+
         add(RagiumTranslationKeys.TEXT_WIP, "この要素は開発中です！！")
     }
 
-    private fun emi() {
-        add(RagiumTranslationKeys.EMI_AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
-        add(RagiumTranslationKeys.EMI_ASH_LOG, "壊すと灰の粉が手に入ります。")
-        add(RagiumTranslationKeys.EMI_CRIMSON_SOIL, "上にいるモブにフェイクプレイヤー由来のダメージを与えます。")
-        add(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS, "このガラスはシルクタッチなしで回収することが可能です。")
-        add(RagiumTranslationKeys.EMI_ICE_CREAM, "食べると鎮火します。")
-        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "範囲内のドロップアイテムを回収します。")
-        add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "黒曜石とおなじ爆破耐性をもちます。")
-        add(RagiumTranslationKeys.EMI_RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
-        add(RagiumTranslationKeys.EMI_ELDRITCH_EGG, "モブに右クリックするとスポーンエッグになります。")
-        add(RagiumTranslationKeys.EMI_RAGI_LANTERN, "範囲内の暗所に光源を設置します。")
-        add(RagiumTranslationKeys.EMI_SOUL_GLASS, "プレイヤーのみ通過できます。")
-        add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "行商人を倒すことでも入手できます。")
-        add(RagiumTranslationKeys.EMI_WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
-
-        add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING, "大釜に投げ入れる")
-        add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, "レシピの実行に必要な最小レベル: %s")
+    private fun information() {
+        addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
+        addInfo(RagiumBlocks.ASH_LOG, "壊すと灰の粉が手に入ります。")
+        addInfo(RagiumBlocks.CRIMSON_SOIL, "上にいるモブにフェイクプレイヤー由来のダメージを与えます。")
+        addInfo(RagiumBlocks.QUARTZ_GLASS, "このガラスはシルクタッチなしで回収することが可能です。")
+        addInfo(RagiumItems.ICE_CREAM, "食べると鎮火します。")
+        addInfo(RagiumItems.ITEM_MAGNET, "範囲内のドロップアイテムを回収します。")
+        addInfo(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石とおなじ爆破耐性をもち，シルクタッチなしで回収することが可能です。")
+        addInfo(RagiumItems.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
+        addInfo(RagiumItems.ELDRITCH_EGG, "モブに右クリックするとスポーンエッグになります。")
+        addInfo(RagiumItems.RAGI_LANTERN, "範囲内の暗所に光源を設置します。")
+        addInfo(RagiumBlocks.SOUL_GLASS, "プレイヤーのみ通過でき，シルクタッチなしで回収することが可能です。")
+        addInfo(RagiumItems.TRADER_CATALOG, "行商人を倒すことでも入手できます。")
+        addInfo(RagiumItems.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
     }
 
     private fun delight() {

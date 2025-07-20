@@ -6,7 +6,6 @@ import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
-import dev.emi.emi.api.recipe.EmiInfoRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.Comparison
@@ -21,7 +20,6 @@ import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -44,7 +42,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -56,7 +53,6 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
@@ -81,7 +77,6 @@ class RagiumEmiPlugin : EmiPlugin {
         recipeManager = registry.recipeManager
 
         addRecipes()
-        addInfos()
         // Functions
         registry.addGenericStackProvider(RagiumEmiStackProvider)
 
@@ -347,47 +342,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 .id(id1)
                 .output(output)
                 .build()
-        }
-    }
-
-    //    Info    //
-
-    private fun addInfos() {
-        addInfo(RagiumBlocks.ASH_LOG, Component.translatable(RagiumTranslationKeys.EMI_ASH_LOG))
-        addInfo(RagiumBlocks.CRIMSON_SOIL, Component.translatable(RagiumTranslationKeys.EMI_CRIMSON_SOIL))
-        addInfo(
-            RagiumBlocks.OBSIDIAN_GLASS,
-            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
-            Component.translatable(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS),
-        )
-        addInfo(RagiumBlocks.QUARTZ_GLASS, Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS))
-        addInfo(
-            RagiumBlocks.SOUL_GLASS,
-            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
-            Component.translatable(RagiumTranslationKeys.EMI_SOUL_GLASS),
-        )
-
-        addInfo(RagiumItems.AMBROSIA, Component.translatable(RagiumTranslationKeys.EMI_AMBROSIA))
-        addInfo(RagiumItems.ELDRITCH_EGG, Component.translatable(RagiumTranslationKeys.EMI_ELDRITCH_EGG))
-        addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
-        addInfo(RagiumItems.ITEM_MAGNET, Component.translatable(RagiumTranslationKeys.EMI_ITEM_MAGNET))
-        addInfo(RagiumItems.RAGI_CHERRY, Component.translatable(RagiumTranslationKeys.EMI_RAGI_CHERRY))
-        addInfo(RagiumItems.RAGI_LANTERN, Component.translatable(RagiumTranslationKeys.EMI_RAGI_LANTERN))
-        addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
-        addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
-    }
-
-    private fun addInfo(icon: ItemLike, vararg texts: Component) {
-        addInfo(EmiStack.of(icon), *texts)
-    }
-
-    private fun addInfo(icon: EmiStack, vararg texts: Component) {
-        addRecipeSafe(icon.id.withPrefix("/")) { id: ResourceLocation ->
-            EmiInfoRecipe(
-                listOf(icon),
-                listOf(*texts),
-                id,
-            )
         }
     }
 

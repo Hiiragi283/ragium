@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
+import hiiragi283.ragium.api.extension.addInfo
 import hiiragi283.ragium.api.extension.addMatterType
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -27,13 +28,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         entity()
         fluid()
         item()
-        // material()
-        // tagPrefix()
         modTags()
         text()
+        information()
 
         delight()
-        emi()
         jade()
         mekanism()
         replication()
@@ -482,30 +481,29 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.TEXT_LOOT_TABLE_ID, "Loot Table: %s")
 
+        add(RagiumTranslationKeys.TEXT_SHOW_INFO, "Press Shift to show info")
+
         add(RagiumTranslationKeys.TEXT_WIP, "This content is work in progress!!")
+    }
+
+    private fun information() {
+        addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
+        addInfo(RagiumBlocks.ASH_LOG, "Drop Ash Dust when harvested.")
+        addInfo(RagiumBlocks.CRIMSON_SOIL, "Apply damages from fake player for above mobs.")
+        addInfo(RagiumBlocks.QUARTZ_GLASS, "This glass block can be harvested without Silk Touch.")
+        addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")
+        addInfo(RagiumItems.ITEM_MAGNET, "Collect dropped items in the effective range")
+        addInfo(RagiumBlocks.OBSIDIAN_GLASS, "As the same blast resistance as Obsidian, can be harvested without Silk Touch.")
+        addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
+        addInfo(RagiumItems.ELDRITCH_EGG, "Right-click a mob then converts it into Spawn Egg.")
+        addInfo(RagiumItems.RAGI_LANTERN, "Light up darkness in range.")
+        addInfo(RagiumBlocks.SOUL_GLASS, "Only passable with Players, can be harvested without Silk Touch.")
+        addInfo(RagiumItems.TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
+        addInfo(RagiumItems.WARPED_WART, "Clear one bad effect randomly when eaten.")
     }
 
     private fun delight() {
         addItem(RagiumDelightAddon.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
-    }
-
-    private fun emi() {
-        add(RagiumTranslationKeys.EMI_AMBROSIA, "Always edible and not consumed!")
-        add(RagiumTranslationKeys.EMI_ASH_LOG, "Drop Ash Dust when harvested.")
-        add(RagiumTranslationKeys.EMI_CRIMSON_SOIL, "Apply damages from fake player for above mobs.")
-        add(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS, "This glass block can be harvested without Silk Touch.")
-        add(RagiumTranslationKeys.EMI_ICE_CREAM, "Extinguish fire when eaten.")
-        add(RagiumTranslationKeys.EMI_ITEM_MAGNET, "Collect dropped items in the effective range")
-        add(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS, "As the same blast resistance as Obsidian.")
-        add(RagiumTranslationKeys.EMI_RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
-        add(RagiumTranslationKeys.EMI_ELDRITCH_EGG, "Right-click a mob then converts it into Spawn Egg.")
-        add(RagiumTranslationKeys.EMI_RAGI_LANTERN, "Light up darkness in range.")
-        add(RagiumTranslationKeys.EMI_SOUL_GLASS, "Only passable with Players.")
-        add(RagiumTranslationKeys.EMI_TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
-        add(RagiumTranslationKeys.EMI_WARPED_WART, "Clear one bad effect randomly when eaten.")
-
-        add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING, "Cauldron Dropping")
-        add(RagiumTranslationKeys.EMI_CAULDRON_DROPPING_MIN_LEVEL, "Minimum level needed for processing: %s")
     }
 
     private fun jade() {

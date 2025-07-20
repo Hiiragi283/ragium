@@ -4,11 +4,13 @@ import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.Util
 import net.minecraft.advancements.Advancement
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.SlabBlock
@@ -59,8 +61,8 @@ fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String
     add(material.translationKey, value)
 }*/
 
-fun LanguageProvider.addItem(item: ItemLike, value: String) {
-    addItem(item::asItem, value)
+fun LanguageProvider.addInfo(item: ItemLike, value: String) {
+    add(RagiumTranslationKeys.getTooltipKey(ItemStack(item)), value)
 }
 
 fun LanguageProvider.addAdvancement(key: ResourceKey<Advancement>, title: String, desc: String) {
