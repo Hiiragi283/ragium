@@ -175,10 +175,10 @@ class RagiumItemTagsProvider(
 
         // Armors
         fun registerArmors(armorSets: HTArmorSets) {
-            tag(ItemTags.HEAD_ARMOR_ENCHANTABLE).addItem(armorSets.helmetItem)
-            tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).addItem(armorSets.chestplateItem)
-            tag(ItemTags.LEG_ARMOR_ENCHANTABLE).addItem(armorSets.leggingsItem)
-            tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).addItem(armorSets.bootsItem)
+            tag(ItemTags.HEAD_ARMOR).addItem(armorSets.helmetItem)
+            tag(ItemTags.CHEST_ARMOR).addItem(armorSets.chestplateItem)
+            tag(ItemTags.LEG_ARMOR).addItem(armorSets.leggingsItem)
+            tag(ItemTags.FOOT_ARMOR).addItem(armorSets.bootsItem)
         }
         registerArmors(RagiumItems.AZURE_STEEL_ARMORS)
         registerArmors(RagiumItems.DEEP_STEEL_ARMORS)

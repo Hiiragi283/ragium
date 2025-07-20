@@ -1,11 +1,14 @@
 package hiiragi283.ragium.api.tag
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.fluidTagKey
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
+import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
@@ -40,6 +43,16 @@ object RagiumCommonTags {
 
         @JvmStatic
         private fun commonTag(prefix: String, value: String): TagKey<Block> = blockTagKey(commonId(prefix, value))
+    }
+
+    //    DamageTypes    //
+
+    object DamageTypes {
+        @JvmField
+        val IS_SONIC: TagKey<DamageType> = create("is_sonic")
+
+        @JvmStatic
+        private fun create(path: String): TagKey<DamageType> = TagKey.create(Registries.DAMAGE_TYPE, RagiumAPI.id(path))
     }
 
     //    Fluids    //

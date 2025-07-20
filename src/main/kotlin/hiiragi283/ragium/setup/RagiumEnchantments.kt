@@ -12,6 +12,9 @@ object RagiumEnchantments {
     @JvmField
     val NOISE_CANCELING: ResourceKey<Enchantment> = create("noise_canceling")
 
+    @JvmField
+    val SONIC_PROTECTION: ResourceKey<Enchantment> = create("sonic_protection")
+
     @JvmStatic
     private fun create(path: String): ResourceKey<Enchantment> = ResourceKey.create(Registries.ENCHANTMENT, RagiumAPI.id(path))
 }

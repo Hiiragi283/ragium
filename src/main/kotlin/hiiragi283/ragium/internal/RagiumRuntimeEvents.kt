@@ -62,11 +62,11 @@ internal object RagiumRuntimeEvents {
 
     @JvmStatic
     fun registerEvents() {
-        NeoForge.EVENT_BUS.addListener(::onClickedEntity)
         NeoForge.EVENT_BUS.addListener(::onClickedBlock)
         NeoForge.EVENT_BUS.addListener(::onUseItem)
         NeoForge.EVENT_BUS.addListener(::onFinishUsingItem)
 
+        NeoForge.EVENT_BUS.addListener(::onClickedEntity)
         NeoForge.EVENT_BUS.addListener(::onEntityStruck)
         NeoForge.EVENT_BUS.addListener(::onEntityDeath)
 
@@ -75,29 +75,7 @@ internal object RagiumRuntimeEvents {
         NeoForge.EVENT_BUS.addListener(::gatherComponents)
     }
 
-    //    Item Interaction    //
-
-    private fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
-        // イベントがキャンセルされている場合はパス
-        if (event.isCanceled) return
-        val stack: ItemStack = event.itemStack
-        // アイテムがガラス瓶の場合はハチを捕まえる
-        if (stack.`is`(Items.GLASS_BOTTLE)) {
-            val target: Bee = event.target as? Bee ?: return
-            if (target.isAlive) {
-                val player: Player = event.entity
-                target.level().playSound(player, target, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1f, 1f)
-                // ハチを瓶に詰める
-                if (!player.level().isClientSide) {
-                    target.discard()
-                    stack.shrink(1)
-                    dropStackAt(player, RagiumItems.BOTTLED_BEE)
-                }
-                event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
-                return
-            }
-        }
-    }
+    //    Block    //
 
     private fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
         if (event.isCanceled) return
@@ -195,6 +173,28 @@ internal object RagiumRuntimeEvents {
 
     //    Entity    //
 
+    private fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
+        // イベントがキャンセルされている場合はパス
+        if (event.isCanceled) return
+        val stack: ItemStack = event.itemStack
+        // アイテムがガラス瓶の場合はハチを捕まえる
+        if (stack.`is`(Items.GLASS_BOTTLE)) {
+            val target: Bee = event.target as? Bee ?: return
+            if (target.isAlive) {
+                val player: Player = event.entity
+                target.level().playSound(player, target, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1f, 1f)
+                // ハチを瓶に詰める
+                if (!player.level().isClientSide) {
+                    target.discard()
+                    stack.shrink(1)
+                    dropStackAt(player, RagiumItems.BOTTLED_BEE)
+                }
+                event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
+                return
+            }
+        }
+    }
+
     private fun onEntityStruck(event: EntityStruckByLightningEvent) {
         if (event.isCanceled) return
         // プレイヤーによって召喚された落雷は無視される
@@ -261,6 +261,13 @@ internal object RagiumRuntimeEvents {
         if (stack.`is`(RagiumItems.DEEP_STEEL_TOOLS.pickaxeItem)) {
             lookup.get(Enchantments.FORTUNE).ifPresent { holder: Holder.Reference<Enchantment> ->
                 enchantments.set(holder, 5)
+            }
+            return
+        }
+        // Set Sonic Protection to Deep Steel Armors
+        if (stack.`is`(RagiumItems.DEEP_STEEL_ARMORS.getItemHolderSet())) {
+            lookup.get(RagiumEnchantments.SONIC_PROTECTION).ifPresent { holder: Holder.Reference<Enchantment> ->
+                enchantments.set(holder, 1)
             }
             return
         }

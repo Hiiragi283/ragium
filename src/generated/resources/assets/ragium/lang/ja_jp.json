@@ -156,6 +156,8 @@
   "enchantment.ragium.capacity.desc": "アイテムや液体ストレージの容量を拡張します。",
   "enchantment.ragium.noise_canceling": "ノイズキャンセリング",
   "enchantment.ragium.noise_canceling.desc": "ウォーデンなどのスカルク系モンスターに対してのダメージを増加させます。",
+  "enchantment.ragium.sonic_protection": "音響耐性",
+  "enchantment.ragium.sonic_protection.desc": "ソニックブームなどの音響攻撃を無効にします。",
   "item.ragium.advanced_circuit": "発展回路",
   "item.ragium.advanced_ragi_alloy_compound": "発展ラギ合金混合物",
   "item.ragium.advanced_ragi_alloy_ingot": "発展ラギ合金インゴット",

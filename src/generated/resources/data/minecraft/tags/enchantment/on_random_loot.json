@@ -1,5 +1,7 @@
 {
   "values": [
-    "ragium:noise_canceling"
+    "ragium:capacity",
+    "ragium:noise_canceling",
+    "ragium:sonic_protection"
   ]
 }

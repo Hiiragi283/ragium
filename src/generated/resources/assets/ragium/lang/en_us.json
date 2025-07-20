@@ -156,6 +156,8 @@
   "enchantment.ragium.capacity.desc": "Increase the capacity of item or fluid storages.",
   "enchantment.ragium.noise_canceling": "Noise Canceling",
   "enchantment.ragium.noise_canceling.desc": "Increases damage against sculk mobs such as Warden.",
+  "enchantment.ragium.sonic_protection": "Sonic Protection",
+  "enchantment.ragium.sonic_protection.desc": "Immune damage from sonic boom.",
   "item.ragium.advanced_circuit": "Advanced Circuit",
   "item.ragium.advanced_ragi_alloy_compound": "Advanced Ragi-Alloy Compound",
   "item.ragium.advanced_ragi_alloy_ingot": "Advanced Ragi-Alloy Ingot",
