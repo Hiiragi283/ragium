@@ -7,7 +7,7 @@
   ],
   "type": "replication:matter_value",
   "input": {
-    "item": "ragium:minced_meat"
+    "tag": "c:dusts/meat"
   },
   "matter": [
     {

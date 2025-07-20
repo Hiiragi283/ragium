@@ -83,21 +83,21 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
     private fun meat() {
         // Minced Meat
         createCrushing()
-            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_MEAT)
             .saveSuffixed(output, "_from_meat")
         createCrushing()
-            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_FISH)
             .saveSuffixed(output, "_from_fish")
         createCrushing()
-            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
             .itemInput(Items.ROTTEN_FLESH)
-            .savePrefixed(output, "rotten_")
+            .saveSuffixed(output, "_from_rotten")
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.MEAT_INGOT, 3)
             .pattern("AAA")
-            .define('A', RagiumItems.MINCED_MEAT)
+            .define('A', RagiumCommonTags.Items.DUSTS_MEAT)
             .save(output)
 
         HTCookingRecipeBuilder

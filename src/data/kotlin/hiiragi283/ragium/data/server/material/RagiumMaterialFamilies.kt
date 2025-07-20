@@ -79,6 +79,7 @@ object RagiumMaterialFamilies {
     val MEAT: HTMaterialFamily =
         HTMaterialFamily.Builder
             .ingot(RagiumItems.MEAT_INGOT)
+            .setEntry(HTMaterialFamily.Variant.DUSTS, RagiumItems.MINCED_MEAT)
             .setEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.MEAT_BLOCK)
             .build(RagiumConstantValues.MEAT)
 

@@ -2,10 +2,10 @@
   "type": "ragium:crushing",
   "item_input": {
     "count": 1,
-    "tag": "c:foods/raw_meat"
+    "item": "minecraft:rotten_flesh"
   },
   "item_output": {
     "count": 1,
-    "id": "ragium:minced_meat"
+    "id": "#c:dusts/meat"
   }
 }

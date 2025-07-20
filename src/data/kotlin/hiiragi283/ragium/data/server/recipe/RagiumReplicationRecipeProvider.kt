@@ -55,7 +55,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
 
         // Foods
         register(
-            RagiumItems.MINCED_MEAT,
+            RagiumCommonTags.Items.DUSTS_MEAT,
             ReplicationRegistry.Matter.LIVING.toStack(4),
             ReplicationRegistry.Matter.ORGANIC.toStack(4),
         )
