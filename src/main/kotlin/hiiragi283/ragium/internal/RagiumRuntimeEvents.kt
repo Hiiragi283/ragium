@@ -1,18 +1,14 @@
 package hiiragi283.ragium.internal
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
@@ -22,11 +18,9 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.animal.Bee
-import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.npc.WanderingTrader
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -34,26 +28,16 @@ import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.context.UseOnContext
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.Enchantments
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.NeoForge
-import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
-import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
-import org.slf4j.Logger
 import kotlin.jvm.optionals.getOrNull
 
 internal object RagiumRuntimeEvents {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
-
     @JvmStatic
     fun registerEvents() {
         NeoForge.EVENT_BUS.addListener(::onClickedBlock)
@@ -61,38 +45,35 @@ internal object RagiumRuntimeEvents {
         NeoForge.EVENT_BUS.addListener(::onFinishUsingItem)
 
         NeoForge.EVENT_BUS.addListener(::onClickedEntity)
-        NeoForge.EVENT_BUS.addListener(::onEntityStruck)
         NeoForge.EVENT_BUS.addListener(::onEntityDeath)
-
-        NeoForge.EVENT_BUS.addListener(::getEnchantmentLevel)
     }
 
     //    Block    //
 
     private fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
-        if (event.isCanceled) return
         val hand: InteractionHand = event.hand
         val stack: ItemStack = event.itemStack
 
         val hitResult: BlockHitResult = event.hitVec
         val level: Level = event.level
         val state: BlockState = level.getBlockState(hitResult.blockPos)
-
+        // 有効な最初のレシピを取得
         val input = HTInteractRecipeInput(hitResult.blockPos, stack)
         val firstRecipe: HTBlockInteractingRecipe = level.recipeManager
             .getRecipeFor(RagiumRecipeTypes.BLOCK_INTERACTING.get(), input, level)
             .getOrNull()
             ?.value ?: return
-
+        // サーバー側のプレイヤーに進捗を付与
         val player: Player = event.entity
         if (player is ServerPlayer) HTBlockInteractionTrigger.trigger(player, state)
+        // レシピの処理を実行
         firstRecipe.applyActions(UseOnContext(level, player, hand, stack, hitResult))
+        // 次のイベントをキャンセルする
         event.isCanceled = true
         event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
     }
 
     private fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
-        if (event.isCanceled) return
         val stack: ItemStack = event.itemStack
         if (stack.isEmpty) return
         val player: Player = event.entity
@@ -166,8 +147,6 @@ internal object RagiumRuntimeEvents {
     //    Entity    //
 
     private fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
-        // イベントがキャンセルされている場合はパス
-        if (event.isCanceled) return
         val stack: ItemStack = event.itemStack
         // アイテムがガラス瓶の場合はハチを捕まえる
         if (stack.`is`(Items.GLASS_BOTTLE)) {
@@ -187,8 +166,7 @@ internal object RagiumRuntimeEvents {
         }
     }
 
-    private fun onEntityStruck(event: EntityStruckByLightningEvent) {
-        if (event.isCanceled) return
+    /*private fun onEntityStruck(event: EntityStruckByLightningEvent) {
         // プレイヤーによって召喚された落雷は無視される
         if (event.lightning.cause != null) return
 
@@ -208,60 +186,26 @@ internal object RagiumRuntimeEvents {
             itemEntity.persistentData.putBoolean("AlreadyStruck", true)
             event.isCanceled = true
         }
-    }
+    }*/
 
     private fun onEntityDeath(event: LivingDeathEvent) {
+        // 対象が共振の残骸を生成しない場合はスキップ
         val entity: LivingEntity = event.entity
         if (!entity.type.`is`(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)) return
-
+        // サーバー側のみで実行する
         val level: Level = entity.level()
         if (level.isClientSide) return
-
+        // 半径4 m以内のブロックに対して変換を試みる
         val entityPos: BlockPos = entity.blockPosition()
         val random: RandomSource = entity.random
-        val range: IntRange = -4..4
-        for (x: Int in range) {
-            for (y: Int in range) {
-                for (z: Int in range) {
-                    val pos: BlockPos = entityPos.offset(x, y, z)
-                    val state: BlockState = level.getBlockState(pos)
-                    if (state.`is`(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES)) {
-                        if (random.nextInt(15) == 0) {
-                            level.destroyBlock(pos, false)
-                            level.setBlockAndUpdate(pos, RagiumBlocks.RESONANT_DEBRIS.get().defaultBlockState())
-                        }
-                    }
+        BlockPos.betweenClosed(entityPos.offset(-4, -4, -4), entityPos.offset(4, 4, 4)).forEach { pos: BlockPos ->
+            val state: BlockState = level.getBlockState(pos)
+            if (state.`is`(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES)) {
+                if (random.nextInt(15) == 0) {
+                    level.destroyBlock(pos, false)
+                    level.setBlockAndUpdate(pos, RagiumBlocks.RESONANT_DEBRIS.get().defaultBlockState())
                 }
             }
-        }
-    }
-
-    //    Enchantments    //
-
-    private fun getEnchantmentLevel(event: GetEnchantmentLevelEvent) {
-        val stack: ItemStack = event.stack
-        val enchantments: ItemEnchantments.Mutable = event.enchantments
-        val lookup: HolderLookup.RegistryLookup<Enchantment> = event.lookup
-        // Add Noise Canceling V to Deep Steel Sword
-        if (stack.`is`(RagiumItems.DEEP_STEEL_TOOLS.swordItem)) {
-            lookup.get(RagiumEnchantments.NOISE_CANCELING).ifPresent { holder: Holder.Reference<Enchantment> ->
-                enchantments.upgrade(holder, 5)
-            }
-            return
-        }
-        // Set Fortune V to Deep Steel Pickaxe
-        if (stack.`is`(RagiumItems.DEEP_STEEL_TOOLS.pickaxeItem)) {
-            lookup.get(Enchantments.FORTUNE).ifPresent { holder: Holder.Reference<Enchantment> ->
-                enchantments.set(holder, 5)
-            }
-            return
-        }
-        // Set Sonic Protection to Deep Steel Armors
-        if (stack.`is`(RagiumItems.DEEP_STEEL_ARMORS.getItemHolderSet())) {
-            lookup.get(RagiumEnchantments.SONIC_PROTECTION).ifPresent { holder: Holder.Reference<Enchantment> ->
-                enchantments.set(holder, 1)
-            }
-            return
         }
     }
 }

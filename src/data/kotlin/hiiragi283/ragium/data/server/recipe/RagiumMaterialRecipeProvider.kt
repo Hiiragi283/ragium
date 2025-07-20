@@ -12,7 +12,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import java.util.function.Supplier
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
@@ -102,12 +101,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
     //    Family    //
 
     private fun registerFamilies(family: HTMaterialFamily) {
-        val (tagKey: TagKey<Item>, item: Supplier<out ItemLike>?) = family.baseEntry
+        val tagKey: TagKey<Item> = family.getBaseTagKey()
+        val item: ItemLike? = family.getBaseItem()
         if (item != null && family.entryType == HTMaterialFamily.EntryType.RAGIUM) {
             // Block <-> Base
-            blockToBase(family, tagKey, item.get())
+            blockToBase(family, tagKey, item)
             // Base <-> Nugget
-            nuggetToBase(family, tagKey, item.get())
+            nuggetToBase(family, tagKey, item)
         }
 
         // XXX -> Dust

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.server.recipe
+package hiiragi283.ragium.data.server.recipe.compat
 
 import com.buuz135.replication.ReplicationRegistry
 import com.buuz135.replication.api.IMatterType

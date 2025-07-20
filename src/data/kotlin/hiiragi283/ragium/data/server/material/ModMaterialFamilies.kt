@@ -73,8 +73,8 @@ object ModMaterialFamilies {
 
     @JvmField
     val REPLICA: HTMaterialFamily = HTMaterialFamily.Builder
-        .ingot(ReplicationRegistry.Items.REPLICA_INGOT.get())
-        .setEntry(HTMaterialFamily.Variant.RAW_MATERIALS, ReplicationRegistry.Items.RAW_REPLICA.get())
+        .ingot(ReplicationRegistry.Items.REPLICA_INGOT)
+        .setEntry(HTMaterialFamily.Variant.RAW_MATERIALS, ReplicationRegistry.Items.RAW_REPLICA)
         .setMod()
         .build("replica")
 }

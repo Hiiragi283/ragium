@@ -2,12 +2,20 @@ package hiiragi283.ragium.api.util
 
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.itemTagKey
+import hiiragi283.ragium.api.util.HTMaterialFamily.Variant
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import java.util.function.Supplier
 
-class HTMaterialFamily(val entryType: EntryType, baseVariant: Variant, val variantMap: Map<Variant, Pair<TagKey<Item>, Item?>>) {
+private typealias ItemSup = Supplier<out ItemLike>
+
+class HTMaterialFamily(
+    val entryType: EntryType,
+    private val baseVariant: Variant,
+    val variantMap: Map<Variant, Pair<TagKey<Item>, ItemSup?>>,
+) : Iterable<Triple<Variant, TagKey<Item>, ItemLike?>> {
     companion object {
         @JvmStatic
         val instances: Map<String, HTMaterialFamily> get() = _instances
@@ -16,34 +24,41 @@ class HTMaterialFamily(val entryType: EntryType, baseVariant: Variant, val varia
         private val _instances: MutableMap<String, HTMaterialFamily> = mutableMapOf()
     }
 
-    val baseEntry: Pair<TagKey<Item>, Item?> = getRawEntry(baseVariant)!!
-
-    fun getRawEntry(variant: Variant): Pair<TagKey<Item>, Item?>? = variantMap[variant]
+    private fun getRawEntry(variant: Variant): Pair<TagKey<Item>, ItemSup?>? = variantMap[variant]
 
     fun getTagKey(variant: Variant): TagKey<Item>? = getRawEntry(variant)?.first
 
-    fun getItem(variant: Variant): Item? = getRawEntry(variant)?.second
+    fun getBaseTagKey(): TagKey<Item> = getTagKey(baseVariant)!!
+
+    fun getItem(variant: Variant): ItemLike? = getRawEntry(variant)?.second?.get()
+
+    fun getBaseItem(): ItemLike? = getItem(baseVariant)
+
+    override fun iterator(): Iterator<Triple<Variant, TagKey<Item>, ItemLike?>> = variantMap
+        .map { (variant: Variant, pair: Pair<TagKey<Item>, ItemSup?>) ->
+            Triple(variant, pair.first, pair.second?.get())
+        }.iterator()
 
     //    Builder    //
 
-    class Builder private constructor(private val baseVariant: Variant, baseItem: ItemLike?) {
+    class Builder private constructor(private val baseVariant: Variant, baseItem: ItemSup?) {
         companion object {
             @JvmStatic
-            fun gem(baseItem: ItemLike?): Builder = Builder(Variant.GEMS, baseItem)
+            fun gem(baseItem: ItemSup?): Builder = Builder(Variant.GEMS, baseItem)
 
             @JvmStatic
-            fun ingot(baseItem: ItemLike?): Builder = Builder(Variant.INGOTS, baseItem)
+            fun ingot(baseItem: ItemSup?): Builder = Builder(Variant.INGOTS, baseItem)
         }
 
-        private val itemMap: MutableMap<Variant, Item?> = mutableMapOf()
+        private val itemMap: MutableMap<Variant, ItemSup?> = mutableMapOf()
         private var entryType: EntryType = EntryType.RAGIUM
 
         init {
             setEntry(baseVariant, baseItem)
         }
 
-        fun setEntry(variant: Variant, item: ItemLike?): Builder = apply {
-            check(itemMap.put(variant, item?.asItem()) == null) { "Duplicated entry found!" }
+        fun setEntry(variant: Variant, item: ItemSup?): Builder = apply {
+            check(itemMap.put(variant, item) == null) { "Duplicated entry found!" }
         }
 
         fun setVanilla(): Builder = apply {
@@ -55,9 +70,10 @@ class HTMaterialFamily(val entryType: EntryType, baseVariant: Variant, val varia
         }
 
         fun build(key: String): HTMaterialFamily {
-            val variantMap: Map<Variant, Pair<TagKey<Item>, Item?>> = itemMap.mapValues { (variant: Variant, item: Item?) ->
-                itemTagKey(commonId("${variant.name.lowercase()}/$key")) to item
-            }
+            val variantMap: Map<Variant, Pair<TagKey<Item>, ItemSup?>> =
+                itemMap.mapValues { (variant: Variant, item: ItemSup?) ->
+                    itemTagKey(commonId("${variant.name.lowercase()}/$key")) to item
+                }
             val family = HTMaterialFamily(entryType, baseVariant, variantMap)
             _instances[key] = family
             return family

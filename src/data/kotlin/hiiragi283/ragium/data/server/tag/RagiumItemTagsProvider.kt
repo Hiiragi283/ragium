@@ -89,11 +89,10 @@ class RagiumItemTagsProvider(
     private fun materials() {
         for (family: HTMaterialFamily in HTMaterialFamily.instances.values) {
             if (family.entryType == HTMaterialFamily.EntryType.RAGIUM) {
-                for ((variant: HTMaterialFamily.Variant, entry: Pair<TagKey<Item>, Item?>) in family.variantMap) {
-                    val (tagKey: TagKey<Item>, item: Item?) = entry
+                for ((variant: HTMaterialFamily.Variant, tagKey: TagKey<Item>, item: ItemLike?) in family) {
                     if (item != null) {
                         tag(variant.commonTag).addTag(tagKey)
-                        tag(tagKey).add(item)
+                        tag(tagKey).add(item.asItem())
                     }
                 }
             }

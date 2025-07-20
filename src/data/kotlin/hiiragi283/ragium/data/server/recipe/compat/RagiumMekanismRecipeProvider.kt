@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.server.recipe
+package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
@@ -17,6 +17,7 @@ import mekanism.api.recipes.ingredients.ItemStackIngredient
 import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
+import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider() {
@@ -110,6 +111,13 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
                 itemHelper.from(RagiumCommonTags.Items.ORES_DEEP_SCRAP),
                 RagiumItems.DEEP_SCRAP.toStack(2),
             ).build(output, RagiumAPI.id("processing/deep_steel/resonant_debris_to_scrap"))
+
+        // Eldritch Pearl
+        ItemStackToItemStackRecipeBuilder
+            .enriching(
+                itemHelper.from(RagiumItems.ELDRITCH_ORB),
+                RagiumItems.ELDRITCH_PEARL.toStack(),
+            ).build(output, RagiumAPI.id("enriching/eldritch_pearl"))
     }
 
     private fun infusing() {
@@ -146,6 +154,22 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
                 RagiumItems.AZURE_STEEL_INGOT.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/azure_steel"))
+        // Azure + Netherite Scrap -> Deep Scrap
+        ItemStackChemicalToItemStackRecipeBuilder
+            .metallurgicInfusing(
+                itemHelper.from(Items.NETHERITE_SCRAP),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 80),
+                RagiumItems.DEEP_SCRAP.toStack(),
+                false,
+            ).build(output, RagiumAPI.id("metallurgic_infusing/deep_scrap"))
+        // Azure + Netherite Ingot -> Deep Ingot
+        ItemStackChemicalToItemStackRecipeBuilder
+            .metallurgicInfusing(
+                itemHelper.from(Tags.Items.INGOTS_NETHERITE),
+                chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 160),
+                RagiumItems.DEEP_STEEL_INGOT.toStack(),
+                false,
+            ).build(output, RagiumAPI.id("metallurgic_infusing/deep_steel"))
     }
 
     private fun rotary() {
