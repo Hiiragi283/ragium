@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
@@ -35,12 +35,12 @@ abstract class HTDrumBlockEntity(
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
-        tank.fluid = componentInput.getOrDefault(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.EMPTY).copy()
+        tank.fluid = componentInput.getOrDefault(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.EMPTY).copy()
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.fluid))
+        components.set(RagiumDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(tank.fluid))
     }
 
     override fun reloadUpgrades() {

@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTExpMagnetItem
+import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
@@ -75,7 +76,7 @@ object RagiumItems {
     val BLANK_TICKET: DeferredItem<Item> = register("blank_ticket")
 
     @JvmField
-    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket")
+    val RAGI_TICKET: DeferredItem<HTLootTicketItem> = register("ragi_ticket", ::HTLootTicketItem)
 
     @JvmField
     val AZURE_TICKET: DeferredItem<Item> = register("azure_ticket")
@@ -374,7 +375,7 @@ object RagiumItems {
 
         fun createDrumHandler(capacity: Int): (ItemStack, Void?) -> FluidHandlerItemStack? = { stack: ItemStack, _: Void? ->
             val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-            FluidHandlerItemStack(RagiumComponentTypes.FLUID_CONTENT, stack, capacity * modifier)
+            FluidHandlerItemStack(RagiumDataComponents.FLUID_CONTENT, stack, capacity * modifier)
         }
 
         event.registerItem(

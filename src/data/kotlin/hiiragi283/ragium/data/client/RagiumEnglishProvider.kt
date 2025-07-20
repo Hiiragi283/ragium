@@ -480,6 +480,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "Effect Radius: %s blocks")
 
+        add(RagiumTranslationKeys.TEXT_LOOT_TABLE_ID, "Loot Table: %s")
+
         add(RagiumTranslationKeys.TEXT_WIP, "This content is work in progress!!")
     }
 

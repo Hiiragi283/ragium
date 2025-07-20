@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.common.block.HTBlockStateProperties
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
@@ -136,7 +136,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                 copyComponent(
                     it,
                     DataComponents.ENCHANTMENTS,
-                    RagiumComponentTypes.FLUID_CONTENT.get(),
+                    RagiumDataComponents.FLUID_CONTENT.get(),
                 )
             }
         }

@@ -295,6 +295,7 @@
   "text.ragium.energy_percentage": "%s / %s FE",
   "text.ragium.fluid_name": "%s : %s mb",
   "text.ragium.fluid_name.empty": "Empty",
+  "text.ragium.loot_table_id": "Loot Table: %s",
   "text.ragium.output_side": "Output Side: %s",
   "text.ragium.work_in_progress": "This content is work in progress!!",
   "upgrade.azure_steel_upgrade": "Azure Steel Upgrade",

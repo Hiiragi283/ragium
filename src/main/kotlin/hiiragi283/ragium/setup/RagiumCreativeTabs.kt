@@ -3,11 +3,12 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toStack
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
-import net.minecraft.core.HolderLookup
+import hiiragi283.ragium.common.util.HTLootTicketHelper
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -17,169 +18,174 @@ object RagiumCreativeTabs {
     val REGISTER: DeferredRegister<CreativeModeTab> =
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
 
-    @JvmStatic
-    fun register(
-        name: String,
-        title: String,
-        icon: ItemLike,
-        action: MutableList<ItemLike>.(HolderLookup.Provider) -> Unit,
-    ): DeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { _: ResourceLocation ->
-        CreativeModeTab
-            .builder()
-            .title(Component.literal(title))
-            .icon(icon::toStack)
-            .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-                buildList {
-                    this.action(parameters.holders)
-                }.forEach(output::accept)
-            }.build()
-    }
-
     @JvmField
     val COMMON: DeferredHolder<CreativeModeTab, CreativeModeTab> =
         register(
             "common",
             "Ragium",
             RagiumItems.RAGI_ALLOY_HAMMER,
-        ) { provider: HolderLookup.Provider ->
+        ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Fluid Buckets
-            addAll(RagiumFluidContents.REGISTER.itemEntries)
+            output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
             // Natural Resources
-
-            add(RagiumBlocks.SILT)
+            output.accept(RagiumBlocks.SILT)
             // Gems
-            addAll(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
-            add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
-            add(RagiumItems.RAGI_CRYSTAL)
-            add(RagiumItems.ITEM_MAGNET)
-            add(RagiumItems.RAGI_LANTERN)
+            output.acceptItems(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
+            output.accept(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
+            output.accept(RagiumItems.RAGI_CRYSTAL)
+            output.accept(RagiumItems.ITEM_MAGNET)
+            output.accept(RagiumItems.RAGI_LANTERN)
 
-            add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
-            add(RagiumItems.CRIMSON_CRYSTAL)
-            add(RagiumBlocks.CRIMSON_SOIL)
+            output.accept(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
+            output.accept(RagiumItems.CRIMSON_CRYSTAL)
+            output.accept(RagiumBlocks.CRIMSON_SOIL)
 
-            add(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
-            add(RagiumItems.WARPED_CRYSTAL)
+            output.accept(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
+            output.accept(RagiumItems.WARPED_CRYSTAL)
 
-            add(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
-            add(RagiumItems.ELDRITCH_ORB)
-            add(RagiumItems.ELDRITCH_PEARL)
-            add(RagiumItems.ENDER_BUNDLE)
-            add(RagiumItems.ELDRITCH_EGG)
+            output.accept(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
+            output.accept(RagiumItems.ELDRITCH_ORB)
+            output.accept(RagiumItems.ELDRITCH_PEARL)
+            output.accept(RagiumItems.ENDER_BUNDLE)
+            output.accept(RagiumItems.ELDRITCH_EGG)
             // Ingots
-            add(RagiumBlocks.RAGI_ALLOY_BLOCK)
-            add(RagiumItems.RAGI_ALLOY_COMPOUND)
-            add(RagiumItems.RAGI_ALLOY_INGOT)
-            add(RagiumItems.RAGI_ALLOY_NUGGET)
-            add(RagiumItems.RAGI_ALLOY_HAMMER)
+            output.accept(RagiumBlocks.RAGI_ALLOY_BLOCK)
+            output.accept(RagiumItems.RAGI_ALLOY_COMPOUND)
+            output.accept(RagiumItems.RAGI_ALLOY_INGOT)
+            output.accept(RagiumItems.RAGI_ALLOY_NUGGET)
+            output.accept(RagiumItems.RAGI_ALLOY_HAMMER)
 
-            add(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
-            add(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
-            add(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
-            add(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
-            add(RagiumItems.EXP_MAGNET)
+            output.accept(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
+            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
+            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
+            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
+            output.accept(RagiumItems.EXP_MAGNET)
 
-            add(RagiumBlocks.AZURE_STEEL_BLOCK)
-            add(RagiumItems.AZURE_STEEL_COMPOUND)
-            add(RagiumItems.AZURE_STEEL_INGOT)
-            add(RagiumItems.AZURE_STEEL_NUGGET)
-            add(RagiumItems.AZURE_SHARD)
-            add(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            addAll(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
-            addAll(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
+            output.accept(RagiumBlocks.AZURE_STEEL_BLOCK)
+            output.accept(RagiumItems.AZURE_STEEL_COMPOUND)
+            output.accept(RagiumItems.AZURE_STEEL_INGOT)
+            output.accept(RagiumItems.AZURE_STEEL_NUGGET)
+            output.accept(RagiumItems.AZURE_SHARD)
+            output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
+            output.acceptItems(RagiumItems.AZURE_STEEL_ARMORS.itemHolders)
+            output.acceptItems(RagiumItems.AZURE_STEEL_TOOLS.itemHolders)
 
-            add(RagiumBlocks.RESONANT_DEBRIS)
-            add(RagiumBlocks.DEEP_STEEL_BLOCK)
-            add(RagiumItems.DEEP_STEEL_INGOT)
-            add(RagiumItems.DEEP_SCRAP)
-            add(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            addAll(RagiumItems.DEEP_STEEL_ARMORS.itemHolders)
-            addAll(RagiumItems.DEEP_STEEL_TOOLS.itemHolders)
+            output.accept(RagiumBlocks.RESONANT_DEBRIS)
+            output.accept(RagiumBlocks.DEEP_STEEL_BLOCK)
+            output.accept(RagiumItems.DEEP_STEEL_INGOT)
+            output.accept(RagiumItems.DEEP_SCRAP)
+            output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
+            output.acceptItems(RagiumItems.DEEP_STEEL_ARMORS.itemHolders)
+            output.acceptItems(RagiumItems.DEEP_STEEL_TOOLS.itemHolders)
 
-            add(RagiumBlocks.CHOCOLATE_BLOCK)
-            add(RagiumItems.CHOCOLATE_INGOT)
+            output.accept(RagiumBlocks.CHOCOLATE_BLOCK)
+            output.accept(RagiumItems.CHOCOLATE_INGOT)
 
-            add(RagiumBlocks.MEAT_BLOCK)
-            add(RagiumItems.MEAT_INGOT)
-            add(RagiumItems.MINCED_MEAT)
+            output.accept(RagiumBlocks.MEAT_BLOCK)
+            output.accept(RagiumItems.MEAT_INGOT)
+            output.accept(RagiumItems.MINCED_MEAT)
 
-            add(RagiumBlocks.COOKED_MEAT_BLOCK)
-            add(RagiumItems.COOKED_MEAT_INGOT)
-            add(RagiumItems.CANNED_COOKED_MEAT)
+            output.accept(RagiumBlocks.COOKED_MEAT_BLOCK)
+            output.accept(RagiumItems.COOKED_MEAT_INGOT)
+            output.accept(RagiumItems.CANNED_COOKED_MEAT)
             // Dusts
-            addAll(RagiumBlocks.RAGINITE_ORES.getItems())
-            add(RagiumItems.RAGINITE_DUST)
-            add(RagiumItems.RAGI_COKE)
+            output.acceptItems(RagiumBlocks.RAGINITE_ORES.getItems())
+            output.accept(RagiumItems.RAGINITE_DUST)
+            output.accept(RagiumItems.RAGI_COKE)
 
-            add(RagiumBlocks.ASH_LOG)
-            add(RagiumItems.ASH_DUST)
+            output.accept(RagiumBlocks.ASH_LOG)
+            output.accept(RagiumItems.ASH_DUST)
 
-            add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
-            add(RagiumItems.OBSIDIAN_DUST)
+            output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+            output.accept(RagiumItems.OBSIDIAN_DUST)
 
-            add(RagiumItems.CINNABAR_DUST)
-            add(RagiumItems.SALTPETER_DUST)
-            add(RagiumItems.SULFUR_DUST)
+            output.accept(RagiumItems.CINNABAR_DUST)
+            output.accept(RagiumItems.SALTPETER_DUST)
+            output.accept(RagiumItems.SULFUR_DUST)
 
-            add(RagiumItems.SAWDUST)
-            add(RagiumItems.COMPRESSED_SAWDUST)
+            output.accept(RagiumItems.SAWDUST)
+            output.accept(RagiumItems.COMPRESSED_SAWDUST)
 
-            add(RagiumItems.TAR)
+            output.accept(RagiumItems.TAR)
             // Decorations
-            RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems).forEach(::addAll)
+            for (items: List<Item> in RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems)) {
+                output.acceptItems(items)
+            }
 
-            addAll(RagiumBlocks.GLASSES)
-            addAll(RagiumBlocks.LED_BLOCKS.values)
+            output.acceptItems(RagiumBlocks.GLASSES)
+            output.acceptItems(RagiumBlocks.LED_BLOCKS.values)
             // Machines
-            addAll(RagiumBlocks.CASINGS)
-            addAll(RagiumBlocks.MACHINES)
-            addAll(RagiumBlocks.DEVICES)
-            addAll(RagiumBlocks.DRUMS)
+            output.acceptItems(RagiumBlocks.CASINGS)
+            output.acceptItems(RagiumBlocks.MACHINES)
+            output.acceptItems(RagiumBlocks.DEVICES)
+            output.acceptItems(RagiumBlocks.DRUMS)
             // Tools
-            add(RagiumItems.TRADER_CATALOG)
+            output.accept(RagiumItems.TRADER_CATALOG)
             // Tickets
-            add(RagiumItems.BLANK_TICKET)
+            output.accept(RagiumItems.BLANK_TICKET)
 
-            add(RagiumItems.RAGI_TICKET)
-            add(RagiumItems.AZURE_TICKET)
-            add(RagiumItems.BLOODY_TICKET)
-            add(RagiumItems.TELEPORT_TICKET)
-            add(RagiumItems.ELDRITCH_TICKET)
+            output.accept(RagiumItems.RAGI_TICKET)
+            output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)
 
-            add(RagiumItems.DAYBREAK_TICKET)
-            add(RagiumItems.ETERNAL_TICKET)
+            output.accept(RagiumItems.AZURE_TICKET)
+            output.accept(RagiumItems.BLOODY_TICKET)
+            output.accept(RagiumItems.TELEPORT_TICKET)
+            output.accept(RagiumItems.ELDRITCH_TICKET)
+
+            output.accept(RagiumItems.DAYBREAK_TICKET)
+            output.accept(RagiumItems.ETERNAL_TICKET)
             // Foods
-            add(RagiumItems.ICE_CREAM)
-            add(RagiumItems.ICE_CREAM_SODA)
+            output.accept(RagiumItems.ICE_CREAM)
+            output.accept(RagiumItems.ICE_CREAM_SODA)
 
-            add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
+            output.accept(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
 
-            add(RagiumItems.MELON_PIE)
+            output.accept(RagiumItems.MELON_PIE)
 
-            add(RagiumBlocks.SPONGE_CAKE)
-            add(RagiumBlocks.SPONGE_CAKE_SLAB)
-            add(RagiumBlocks.SWEET_BERRIES_CAKE)
-            add(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            output.accept(RagiumBlocks.SPONGE_CAKE)
+            output.accept(RagiumBlocks.SPONGE_CAKE_SLAB)
+            output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
+            output.accept(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
 
-            add(RagiumItems.RAGI_CHERRY)
-            add(RagiumItems.RAGI_CHERRY_JAM)
-            add(RagiumItems.FEVER_CHERRY)
+            output.accept(RagiumItems.RAGI_CHERRY)
+            output.accept(RagiumItems.RAGI_CHERRY_JAM)
+            output.accept(RagiumItems.FEVER_CHERRY)
 
-            add(RagiumItems.BOTTLED_BEE)
-            add(RagiumItems.EXP_BERRIES)
-            add(RagiumItems.WARPED_WART)
-            add(RagiumItems.AMBROSIA)
+            output.accept(RagiumItems.BOTTLED_BEE)
+            output.accept(RagiumItems.EXP_BERRIES)
+            output.accept(RagiumItems.WARPED_WART)
+            output.accept(RagiumItems.AMBROSIA)
             // Ingredients
-            add(RagiumItems.LED)
-            add(RagiumItems.SOLAR_PANEL)
-            add(RagiumItems.STONE_BOARD)
+            output.accept(RagiumItems.LED)
+            output.accept(RagiumItems.SOLAR_PANEL)
+            output.accept(RagiumItems.STONE_BOARD)
 
-            add(RagiumItems.POLYMER_RESIN)
-            add(RagiumItems.PLASTIC_PLATE)
-            add(RagiumItems.BASIC_CIRCUIT)
-            add(RagiumItems.ADVANCED_CIRCUIT)
-            add(RagiumItems.CRYSTAL_PROCESSOR)
+            output.accept(RagiumItems.POLYMER_RESIN)
+            output.accept(RagiumItems.PLASTIC_PLATE)
+            output.accept(RagiumItems.BASIC_CIRCUIT)
+            output.accept(RagiumItems.ADVANCED_CIRCUIT)
+            output.accept(RagiumItems.CRYSTAL_PROCESSOR)
 
-            add(RagiumItems.ELDER_HEART)
+            output.accept(RagiumItems.ELDER_HEART)
         }
+
+    @JvmStatic
+    private fun register(
+        name: String,
+        title: String,
+        icon: ItemLike,
+        action: CreativeModeTab.DisplayItemsGenerator,
+    ): DeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.register(name) { _: ResourceLocation ->
+        CreativeModeTab
+            .builder()
+            .title(Component.literal(title))
+            .icon(icon::toStack)
+            .displayItems(action)
+            .build()
+    }
+
+    @JvmStatic
+    private fun CreativeModeTab.Output.acceptItems(items: Iterable<ItemLike>) {
+        items.forEach(this::accept)
+    }
 }

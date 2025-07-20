@@ -23,6 +23,8 @@ object RagiumTranslationKeys {
 
     const val TEXT_EFFECT_RANGE = "text.ragium.effect_range"
 
+    const val TEXT_LOOT_TABLE_ID = "text.ragium.loot_table_id"
+
     const val TEXT_MISSING_ANCHOR = "text.ragium.missing_anchor"
     const val TEXT_MISSING_POS = "text.ragium.missing_pos"
 

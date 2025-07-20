@@ -12,8 +12,8 @@ import hiiragi283.ragium.internal.RagiumRuntimeEvents
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumCreativeTabs
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -51,7 +51,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(::registerDataMapTypes)
         eventBus.addListener(::registerPackets)
 
-        RagiumComponentTypes.REGISTER.register(eventBus)
+        RagiumDataComponents.REGISTER.register(eventBus)
 
         RagiumFluidContents
         RagiumFluidContents.REGISTER.init(eventBus)

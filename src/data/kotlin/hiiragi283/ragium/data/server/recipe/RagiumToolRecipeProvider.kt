@@ -7,12 +7,17 @@ import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
+import hiiragi283.ragium.common.util.HTLootTicketHelper
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.storage.loot.BuiltInLootTables
+import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.common.Tags
 
 object RagiumToolRecipeProvider : HTRecipeProvider() {
@@ -71,6 +76,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         deepSteel()
 
         tickets()
+        lootTickets()
     }
 
     /*private fun molds() {
@@ -210,5 +216,36 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             RagiumAPI.id("smithing/eternal_ticket"),
             HTEternalTicketRecipe,
         )
+    }
+
+    private fun lootTickets() {
+        fun builder(lootTableKey: ResourceKey<LootTable>, builderAction: HTShapedRecipeBuilder.() -> Unit) {
+            HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey))
+                .cross8()
+                .apply(builderAction)
+                .define('C', RagiumItems.RAGI_TICKET)
+                .saveSuffixed(output, lootTableKey.location().path.removePrefix("chests"))
+        }
+
+        // End City
+        builder(BuiltInLootTables.END_CITY_TREASURE) {
+            define('A', Items.PURPUR_BLOCK)
+            define('B', Items.SHULKER_SHELL)
+        }
+        // Simple Dungeon
+        builder(BuiltInLootTables.SIMPLE_DUNGEON) {
+            define('A', Tags.Items.COBBLESTONES_MOSSY)
+            define('B', Items.ROTTEN_FLESH)
+        }
+        // Mineshaft
+        builder(BuiltInLootTables.ABANDONED_MINESHAFT) {
+            define('A', ItemTags.PLANKS)
+            define('B', ItemTags.RAILS)
+        }
+        // Nether Fortress
+        builder(BuiltInLootTables.NETHER_BRIDGE) {
+            define('A', Items.NETHER_BRICKS)
+            define('B', Tags.Items.CROPS_NETHER_WART)
+        }
     }
 }

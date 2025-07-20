@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -277,7 +277,7 @@ internal object RagiumRuntimeEvents {
 
     private fun gatherComponents(event: RenderTooltipEvent.GatherComponents) {
         val stack: ItemStack = event.itemStack
-        val content: SimpleFluidContent = stack.get(RagiumComponentTypes.FLUID_CONTENT) ?: return
+        val content: SimpleFluidContent = stack.get(RagiumDataComponents.FLUID_CONTENT) ?: return
         if (content.isEmpty) return
         // event.tooltipElements.add(1, Either.right(HTFluidTooltipComponent(content)))
     }

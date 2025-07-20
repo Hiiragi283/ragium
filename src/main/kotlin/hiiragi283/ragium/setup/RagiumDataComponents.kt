@@ -8,11 +8,13 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
 
-object RagiumComponentTypes {
+object RagiumDataComponents {
     @JvmField
     val REGISTER: DeferredRegister.DataComponents =
         DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, RagiumAPI.MOD_ID)
@@ -32,6 +34,13 @@ object RagiumComponentTypes {
 
     @JvmField
     val IS_ACTIVE: Supplier<DataComponentType<Boolean>> = register("is_active", Codec.BOOL, ByteBufCodecs.BOOL.cast())
+
+    @JvmField
+    val LOOT_TABLE_ID: Supplier<DataComponentType<ResourceKey<LootTable>>> = register(
+        "loot_table_id",
+        ResourceKey.codec(Registries.LOOT_TABLE),
+        ResourceKey.streamCodec(Registries.LOOT_TABLE).cast(),
+    )
 
     @JvmField
     val TELEPORT_POS: Supplier<DataComponentType<GlobalPos>> =

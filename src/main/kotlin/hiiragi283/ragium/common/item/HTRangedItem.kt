@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.extension.getHighestLevel
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -21,10 +21,10 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.Level
 
 abstract class HTRangedItem(properties: Properties) : Item(properties.stacksTo(1)) {
-    protected fun isActive(stack: ItemStack): Boolean = stack.getOrDefault(RagiumComponentTypes.IS_ACTIVE, false)
+    protected fun isActive(stack: ItemStack): Boolean = stack.getOrDefault(RagiumDataComponents.IS_ACTIVE, false)
 
     protected fun toggleActive(stack: ItemStack) {
-        stack.update(RagiumComponentTypes.IS_ACTIVE, false) { value: Boolean -> !value }
+        stack.update(RagiumDataComponents.IS_ACTIVE, false) { value: Boolean -> !value }
     }
 
     protected fun getRange(stack: ItemStack, level: Level?): Int {
