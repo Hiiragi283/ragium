@@ -94,11 +94,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
         registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RAGINITE_DUST)
 
-        // Machines
-        for (holder: DeferredBlock<*> in RagiumBlocks.MACHINES) {
-            add(holder.get()) { copyComponent(it, DataComponents.ENCHANTMENTS) }
-        }
-
         // Food
         add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
             val propertyCondition: LootItemBlockStatePropertyCondition.Builder =

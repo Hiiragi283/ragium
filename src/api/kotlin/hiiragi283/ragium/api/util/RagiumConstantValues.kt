@@ -63,11 +63,11 @@ object RagiumConstantValues {
 
     const val ALLOYING = "alloying"
     const val BLOCK_INTERACTING = "block_interacting"
-    const val CAULDRON_DROPPING = "cauldron_dropping"
     const val CRUSHING = "crushing"
     const val EXTRACTING = "extracting"
     const val INFUSING = "infusing"
     const val MELTING = "melting"
+    const val PRESSING = "pressing"
     const val REFINING = "refining"
     const val SOLIDIFYING = "solidifying"
 

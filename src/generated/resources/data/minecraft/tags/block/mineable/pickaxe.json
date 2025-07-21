@@ -62,6 +62,7 @@
     "ragium:block_breaker",
     "ragium:extractor",
     "ragium:alloy_smelter",
+    "ragium:forming_press",
     "ragium:melter",
     "ragium:refinery",
     "ragium:solidifier",

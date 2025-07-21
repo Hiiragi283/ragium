@@ -12,6 +12,7 @@ import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFoodRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMiscRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumPressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumArsRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumDelightRecipeProvider
@@ -39,6 +40,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumFoodRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMaterialRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMiscRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumPressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
         RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.ARS_NOUVEAU)

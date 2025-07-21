@@ -179,6 +179,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerBasic(RagiumMenuTypes.CRUSHER, RagiumAPI.id("textures/gui/container/crusher.png"))
         registerBasic(RagiumMenuTypes.EXTRACTOR, RagiumAPI.id("textures/gui/container/extractor.png"))
         registerBasic(RagiumMenuTypes.FLUID_COLLECTOR, RagiumAPI.id("textures/gui/container/fluid_collector.png"))
+        registerBasic(RagiumMenuTypes.FORMING_PRESS, RagiumAPI.id("textures/gui/container/forming_press.png"))
         registerBasic(RagiumMenuTypes.MELTER, RagiumAPI.id("textures/gui/container/melter.png"))
         registerBasic(RagiumMenuTypes.SOLIDIFIER, RagiumAPI.id("textures/gui/container/solidifier.png"))
 

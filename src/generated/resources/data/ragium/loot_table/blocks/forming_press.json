@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:crusher"
+          "name": "ragium:forming_press"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/crusher"
+  "random_sequence": "ragium:blocks/forming_press"
 }

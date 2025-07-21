@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.advancements.Advancement
@@ -79,6 +80,9 @@ abstract class HTRecipeProvider : IConditionBuilder {
 
     fun createMelting(): HTDefinitionRecipeBuilder<HTMeltingRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.MELTING, RagiumRecipeFactories::melting)
+
+    fun createPressing(): HTDefinitionRecipeBuilder<HTPressingRecipe> =
+        HTDefinitionRecipeBuilder(RagiumConstantValues.PRESSING, RagiumRecipeFactories::pressing)
 
     fun createRefining(): HTDefinitionRecipeBuilder<HTRefiningRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.REFINING, RagiumRecipeFactories::refining)

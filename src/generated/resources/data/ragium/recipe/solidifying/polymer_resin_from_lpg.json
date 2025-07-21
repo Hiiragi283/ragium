@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:coal"
+  },
+  "fluid_input": {
+    "amount": 100,
+    "tag": "c:lpg"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "#ragium:polymer_resin"
+  }
+}

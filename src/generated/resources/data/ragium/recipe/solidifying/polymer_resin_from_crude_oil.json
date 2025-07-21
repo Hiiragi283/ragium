@@ -5,7 +5,7 @@
   },
   "fluid_input": {
     "amount": 100,
-    "tag": "c:lpg"
+    "tag": "c:crude_oil"
   },
   "item_output": {
     "count": 1,

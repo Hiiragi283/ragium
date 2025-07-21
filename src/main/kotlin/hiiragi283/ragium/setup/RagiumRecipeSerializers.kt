@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
@@ -72,7 +73,9 @@ object RagiumRecipeSerializers {
     val MELTING: Supplier<RecipeSerializer<HTMeltingRecipe>> =
         register(RagiumConstantValues.MELTING, HTMeltingRecipe.CODEC, HTMeltingRecipe.STREAM_CODEC)
 
-    // val PRESSING: Supplier<RecipeSerializer<HTPressingRecipe>>
+    @JvmField
+    val PRESSING: Supplier<RecipeSerializer<HTPressingRecipe>> =
+        register(RagiumConstantValues.PRESSING, HTPressingRecipe.CODEC, HTPressingRecipe.STREAM_CODEC)
 
     @JvmField
     val REFINING: Supplier<RecipeSerializer<HTRefiningRecipe>> =

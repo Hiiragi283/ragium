@@ -135,6 +135,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        addBlock(RagiumBlocks.FORMING_PRESS, "Forming Press")
         addBlock(RagiumBlocks.MELTER, "Melter")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         addBlock(RagiumBlocks.SOLIDIFIER, "Solidifier")
