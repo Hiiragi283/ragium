@@ -16,8 +16,10 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.common.data.LanguageProvider
 
 class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
@@ -225,12 +227,17 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationJp("紺鉄", this)
         RagiumItems.DEEP_STEEL_ARMORS.addTranslationJp("深層鋼", this)
         // Tool
-        addItem(RagiumItems.RAGI_ALLOY_HAMMER, "ラギ合金の鍛造ハンマー")
-
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "紺鉄強化")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "深層鋼強化")
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
         RagiumItems.DEEP_STEEL_TOOLS.addTranslationJp("深層鋼", this)
+
+        addItem(RagiumItems.getForgeHammer(Tiers.IRON), "鉄の鍛造ハンマー")
+        addItem(RagiumItems.getForgeHammer(Tiers.DIAMOND), "ダイヤモンドの鍛造ハンマー")
+        addItem(RagiumItems.getForgeHammer(Tiers.NETHERITE), "ネザライトの鍛造ハンマー")
+        addItem(RagiumItems.getForgeHammer(RagiumToolTiers.RAGI_ALLOY), "ラギ合金の鍛造ハンマー")
+        addItem(RagiumItems.getForgeHammer(RagiumToolTiers.AZURE_STEEL), "紺鉄の鍛造ハンマー")
+        addItem(RagiumItems.getForgeHammer(RagiumToolTiers.DEEP_STEEL), "深層鋼の鍛造ハンマー")
 
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
         addItem(RagiumItems.EXP_MAGNET, "EXPマグネット")
@@ -460,31 +467,29 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "ダイヤモンド製の防具，武器，道具を置いてください")
         add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "深層鋼インゴットを置いてください")
 
-        add(RagiumTranslationKeys.TEXT_ENERGY_PERCENTAGE, "%s / %s FE")
-        add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")
-        add(RagiumTranslationKeys.TEXT_FLUID_NAME_EMPTY, "空")
-
-        add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "有効半径: %s ブロック")
-
-        add(RagiumTranslationKeys.TEXT_LOOT_TABLE_ID, "ルートテーブル: %s")
-
-        add(RagiumTranslationKeys.TEXT_SHOW_INFO, "シフトキーを押して情報を表示")
-
-        add(RagiumTranslationKeys.TEXT_WIP, "この要素は開発中です！！")
+        add(RagiumTranslationKeys.TOOLTIP_EFFECT_RANGE, "有効半径: %s ブロック")
+        add(RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslationKeys.TOOLTIP_FLUID_NAME, "%s : %s mb")
+        add(RagiumTranslationKeys.TOOLTIP_FLUID_NAME_EMPTY, "空")
+        add(RagiumTranslationKeys.TOOLTIP_INTRINSIC_ENCHANTMENT, "常に少なくとも%sがあります")
+        add(RagiumTranslationKeys.TOOLTIP_LOOT_TABLE_ID, "ルートテーブル: %s")
+        add(RagiumTranslationKeys.TOOLTIP_SHOW_INFO, "シフトキーを押して情報を表示")
+        add(RagiumTranslationKeys.TOOLTIP_WIP, "この要素は開発中です！！")
     }
 
     private fun information() {
-        addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         addInfo(RagiumBlocks.ASH_LOG, "壊すと灰の粉が手に入ります。")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "上にいるモブにフェイクプレイヤー由来のダメージを与えます。")
+        addInfo(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石とおなじ爆破耐性をもち，シルクタッチなしで回収することが可能です。")
         addInfo(RagiumBlocks.QUARTZ_GLASS, "このガラスはシルクタッチなしで回収することが可能です。")
+        addInfo(RagiumBlocks.SOUL_GLASS, "プレイヤーのみ通過でき，シルクタッチなしで回収することが可能です。")
+
+        addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
+        addInfo(RagiumItems.ELDRITCH_EGG, "モブに右クリックするとスポーンエッグになります。")
         addInfo(RagiumItems.ICE_CREAM, "食べると鎮火します。")
         addInfo(RagiumItems.ITEM_MAGNET, "範囲内のドロップアイテムを回収します。")
-        addInfo(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石とおなじ爆破耐性をもち，シルクタッチなしで回収することが可能です。")
         addInfo(RagiumItems.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
-        addInfo(RagiumItems.ELDRITCH_EGG, "モブに右クリックするとスポーンエッグになります。")
         addInfo(RagiumItems.RAGI_LANTERN, "範囲内の暗所に光源を設置します。")
-        addInfo(RagiumBlocks.SOUL_GLASS, "プレイヤーのみ通過でき，シルクタッチなしで回収することが可能です。")
         addInfo(RagiumItems.TRADER_CATALOG, "行商人を倒すことでも入手できます。")
         addInfo(RagiumItems.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
     }

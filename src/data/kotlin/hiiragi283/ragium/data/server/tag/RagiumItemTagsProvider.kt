@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addHolder
+import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -28,6 +28,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredItem
 import top.theillusivec4.curios.api.CuriosTags
 import java.util.concurrent.CompletableFuture
 
@@ -189,14 +190,14 @@ class RagiumItemTagsProvider(
             tag(ItemTags.PICKAXES).addItem(toolSets.pickaxeItem)
             tag(ItemTags.SHOVELS).addItem(toolSets.shovelItem)
             tag(ItemTags.SWORDS).addItem(toolSets.swordItem)
-            tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(toolSets.hammerItem)
-            tag(Tags.Items.TOOLS_WRENCH).addItem(toolSets.hammerItem)
         }
         registerTools(RagiumItems.AZURE_STEEL_TOOLS)
         registerTools(RagiumItems.DEEP_STEEL_TOOLS)
 
-        tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(RagiumItems.RAGI_ALLOY_HAMMER)
-        tag(Tags.Items.TOOLS_WRENCH).addItem(RagiumItems.RAGI_ALLOY_HAMMER)
+        for (hammer: DeferredItem<HTForgeHammerItem> in RagiumItems.FORGE_HAMMERS.values) {
+            tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(hammer)
+            tag(Tags.Items.TOOLS_WRENCH).addItem(hammer)
+        }
 
         listOf(
             ItemTags.DURABILITY_ENCHANTABLE,
@@ -242,7 +243,7 @@ class RagiumItemTagsProvider(
             .addItem(RagiumItems.FEVER_CHERRY)
 
         tag(RagiumModTags.Items.WIP)
-            .addHolder(
+            .addItem(
                 RagiumItems.ELDER_HEART,
                 RagiumItems.BOTTLED_BEE,
                 RagiumItems.EXP_BERRIES,

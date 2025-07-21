@@ -4,7 +4,7 @@
     "tag": "c:ingots/azure_steel"
   },
   "base": {
-    "item": "ragium:ragi_alloy_hammer"
+    "item": "ragium:iron_hammer"
   },
   "result": {
     "count": 1,

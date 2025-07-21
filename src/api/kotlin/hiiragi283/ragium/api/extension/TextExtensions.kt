@@ -91,13 +91,13 @@ fun addFluidTooltip(stack: ItemStack, consumer: Consumer<Component>, flag: Toolt
 fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>, flag: TooltipFlag) {
     // Empty name if stack is empty
     if (stack.isEmpty) {
-        consumer.accept(Component.translatable(RagiumTranslationKeys.TEXT_FLUID_NAME_EMPTY))
+        consumer.accept(Component.translatable(RagiumTranslationKeys.TOOLTIP_FLUID_NAME_EMPTY))
         return
     }
     // Fluid Name and Amount
     consumer.accept(
         Component.translatable(
-            RagiumTranslationKeys.TEXT_FLUID_NAME,
+            RagiumTranslationKeys.TOOLTIP_FLUID_NAME,
             stack.hoverName,
             intText(stack.amount),
         ),

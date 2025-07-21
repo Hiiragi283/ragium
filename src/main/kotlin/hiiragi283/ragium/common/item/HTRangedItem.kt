@@ -45,7 +45,7 @@ abstract class HTRangedItem(properties: Properties) : Item(properties.stacksTo(1
         tooltips.add(
             Component
                 .translatable(
-                    RagiumTranslationKeys.TEXT_EFFECT_RANGE,
+                    RagiumTranslationKeys.TOOLTIP_EFFECT_RANGE,
                     intText(getRange(stack, context.level())).withStyle(ChatFormatting.WHITE),
                 ).withStyle(ChatFormatting.GRAY),
         )

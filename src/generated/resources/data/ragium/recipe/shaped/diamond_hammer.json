@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:gems/diamond"
     },
     "B": {
       "tag": "c:rods/wooden"
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:ragi_alloy_hammer"
+    "id": "ragium:diamond_hammer"
   }
 }

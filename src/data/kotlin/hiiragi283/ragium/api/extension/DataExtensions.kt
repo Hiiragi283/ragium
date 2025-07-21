@@ -57,10 +57,6 @@ fun LanguageProvider.addEnchantment(key: ResourceKey<Enchantment>, value: String
     add("$translationKey.desc", desc)
 }
 
-/*fun LanguageProvider.addMaterialKey(material: HTMaterialKey, value: String) {
-    add(material.translationKey, value)
-}*/
-
 fun LanguageProvider.addInfo(item: ItemLike, value: String) {
     add(RagiumTranslationKeys.getTooltipKey(ItemStack(item)), value)
 }

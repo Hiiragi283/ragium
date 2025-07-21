@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "ragium:item/ragi_alloy_hammer"
+    "layer0": "ragium:item/diamond_hammer"
   }
 }

@@ -1,7 +1,10 @@
 {
   "values": [
+    "ragium:iron_hammer",
+    "ragium:diamond_hammer",
+    "ragium:netherite_hammer",
+    "ragium:ragi_alloy_hammer",
     "ragium:azure_steel_hammer",
-    "ragium:deep_steel_hammer",
-    "ragium:ragi_alloy_hammer"
+    "ragium:deep_steel_hammer"
   ]
 }

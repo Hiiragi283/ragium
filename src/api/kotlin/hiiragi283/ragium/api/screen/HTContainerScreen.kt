@@ -126,7 +126,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
             guiGraphics.renderTooltip(
                 font,
                 Component.translatable(
-                    RagiumTranslationKeys.TEXT_ENERGY_PERCENTAGE,
+                    RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE,
                     intText(network.energyStored),
                     intText(network.maxEnergyStored),
                 ),

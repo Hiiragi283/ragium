@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
+import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
@@ -29,6 +30,10 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.Tier
+import net.minecraft.world.item.Tiers
+import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -201,12 +206,6 @@ object RagiumItems {
     val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
 
     @JvmField
-    val RAGI_ALLOY_HAMMER: DeferredItem<HTForgeHammerItem> = register(
-        "${RagiumConstantValues.RAGI_ALLOY}_hammer",
-        { prop: Item.Properties -> HTForgeHammerItem(RagiumToolTiers.RAGI_ALLOY, prop) },
-    )
-
-    @JvmField
     val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> = register("item_magnet", ::HTSimpleMagnetItem)
 
     @JvmField
@@ -214,6 +213,12 @@ object RagiumItems {
 
     @JvmField
     val EXP_MAGNET: DeferredItem<HTExpMagnetItem> = register("exp_magnet", ::HTExpMagnetItem)
+
+    @JvmField
+    val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))
+
+    @JvmField
+    val ELDRITCH_EGG: DeferredItem<HTCaptureEggItem> = register("eldritch_egg", ::HTCaptureEggItem)
 
     @JvmField
     val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<HTAzureSteelTemplateItem> =
@@ -230,10 +235,30 @@ object RagiumItems {
     val DEEP_STEEL_TOOLS = HTToolSets(RagiumToolTiers.DEEP_STEEL, RagiumConstantValues.DEEP_STEEL)
 
     @JvmField
-    val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))
+    val FORGE_HAMMERS: Map<Tier, DeferredItem<HTForgeHammerItem>> = listOf(
+        Tiers.IRON,
+        Tiers.DIAMOND,
+        Tiers.NETHERITE,
+        RagiumToolTiers.RAGI_ALLOY,
+        RagiumToolTiers.AZURE_STEEL,
+        RagiumToolTiers.DEEP_STEEL,
+    ).associateWith { tier: Tier ->
+        val prefix: String = when (tier) {
+            Tiers.IRON -> "iron"
+            Tiers.DIAMOND -> "diamond"
+            Tiers.NETHERITE -> "netherite"
+            RagiumToolTiers.RAGI_ALLOY -> RagiumConstantValues.RAGI_ALLOY
+            RagiumToolTiers.AZURE_STEEL -> RagiumConstantValues.AZURE_STEEL
+            else -> RagiumConstantValues.DEEP_STEEL
+        }
+        register(
+            "${prefix}_hammer",
+            { prop: Item.Properties -> HTForgeHammerItem(tier, prop) },
+        )
+    }
 
-    @JvmField
-    val ELDRITCH_EGG: DeferredItem<HTCaptureEggItem> = register("eldritch_egg", ::HTCaptureEggItem)
+    @JvmStatic
+    fun getForgeHammer(tier: Tier): DeferredItem<HTForgeHammerItem> = FORGE_HAMMERS[tier]!!
 
     //    Foods    //
 
@@ -373,33 +398,28 @@ object RagiumItems {
             *RagiumFluidContents.REGISTER.itemEntries.toTypedArray(),
         )
 
-        fun createDrumHandler(capacity: Int): (ItemStack, Void?) -> FluidHandlerItemStack? = { stack: ItemStack, _: Void? ->
-            val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
-            FluidHandlerItemStack(RagiumDataComponents.FLUID_CONTENT, stack, capacity * modifier)
-        }
-
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            createDrumHandler(RagiumConfig.COMMON.smallDrumCapacity.get()),
-            RagiumBlocks.SMALL_DRUM,
-        )
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            createDrumHandler(RagiumConfig.COMMON.mediumDrumCapacity.get()),
-            RagiumBlocks.MEDIUM_DRUM,
-        )
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            createDrumHandler(RagiumConfig.COMMON.largeDrumCapacity.get()),
-            RagiumBlocks.LARGE_DRUM,
-        )
-        event.registerItem(
-            Capabilities.FluidHandler.ITEM,
-            createDrumHandler(RagiumConfig.COMMON.hugeDrumCapacity.get()),
-            RagiumBlocks.HUGE_DRUM,
-        )
+        registerDrums(event)
 
         LOGGER.info("Registered item capabilities!")
+    }
+
+    @JvmStatic
+    private fun registerDrums(event: RegisterCapabilitiesEvent) {
+        fun register(capacity: Int, item: ItemLike) {
+            event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                { stack: ItemStack, _: Void? ->
+                    val modifier: Int = stack.getEnchantmentLevel(RagiumEnchantments.CAPACITY) + 1
+                    FluidHandlerItemStack(RagiumDataComponents.FLUID_CONTENT, stack, capacity * modifier)
+                },
+                item,
+            )
+        }
+
+        register(RagiumConfig.COMMON.smallDrumCapacity.get(), RagiumBlocks.SMALL_DRUM)
+        register(RagiumConfig.COMMON.mediumDrumCapacity.get(), RagiumBlocks.MEDIUM_DRUM)
+        register(RagiumConfig.COMMON.largeDrumCapacity.get(), RagiumBlocks.LARGE_DRUM)
+        register(RagiumConfig.COMMON.hugeDrumCapacity.get(), RagiumBlocks.HUGE_DRUM)
     }
 
     @SubscribeEvent
@@ -428,6 +448,18 @@ object RagiumItems {
 
         setColor(DAYBREAK_TICKET, ChatFormatting.GOLD)
         setColor(ETERNAL_TICKET, ChatFormatting.YELLOW)
+        // Tools
+        event.modify(DEEP_STEEL_TOOLS.pickaxeItem) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(Enchantments.FORTUNE, 5))
+        }
+
+        event.modify(DEEP_STEEL_TOOLS.swordItem) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(RagiumEnchantments.NOISE_CANCELING, 5))
+        }
+
+        event.modify(DEEP_STEEL_ARMORS.chestplateItem) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(RagiumEnchantments.SONIC_PROTECTION))
+        }
         // Creative Item
         event.modify(RagiumBlocks.CEU) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)

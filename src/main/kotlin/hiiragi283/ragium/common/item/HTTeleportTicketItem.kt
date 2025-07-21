@@ -106,10 +106,10 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
 
     private fun canTeleportTo(serverLevel: ServerLevel, globalPos: GlobalPos): DataResult<Unit> {
         if (!serverLevel.isLoaded(globalPos.pos)) {
-            return DataResult.error(RagiumTranslationKeys::TEXT_MISSING_POS)
+            return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_POS)
         }
         if (!serverLevel.getBlockState(globalPos.pos.below()).`is`(RagiumBlocks.TELEPORT_ANCHOR)) {
-            return DataResult.error(RagiumTranslationKeys::TEXT_MISSING_ANCHOR)
+            return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_ANCHOR)
         }
         return DataResult.success(Unit)
     }

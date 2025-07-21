@@ -6,7 +6,7 @@ parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
 neo-moddev = "2.0.96"
-neo-version = "21.1.186"
+neo-version = "21.1.193"
 
 kff-version = "5.9.0"
 kff-version-range = "[5.9,)"

@@ -23,7 +23,7 @@ object RagiumCreativeTabs {
         register(
             "common",
             "Ragium",
-            RagiumItems.RAGI_ALLOY_HAMMER,
+            RagiumItems.getForgeHammer(RagiumToolTiers.RAGI_ALLOY),
         ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Fluid Buckets
             output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
@@ -53,7 +53,6 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.RAGI_ALLOY_COMPOUND)
             output.accept(RagiumItems.RAGI_ALLOY_INGOT)
             output.accept(RagiumItems.RAGI_ALLOY_NUGGET)
-            output.accept(RagiumItems.RAGI_ALLOY_HAMMER)
 
             output.accept(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
@@ -120,6 +119,8 @@ object RagiumCreativeTabs {
             output.acceptItems(RagiumBlocks.DEVICES)
             output.acceptItems(RagiumBlocks.DRUMS)
             // Tools
+            output.acceptItems(RagiumItems.FORGE_HAMMERS.values)
+
             output.accept(RagiumItems.TRADER_CATALOG)
             // Tickets
             output.accept(RagiumItems.BLANK_TICKET)

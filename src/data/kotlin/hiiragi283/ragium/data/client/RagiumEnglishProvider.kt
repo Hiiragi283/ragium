@@ -16,8 +16,10 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.common.data.LanguageProvider
 
 class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "en_us") {
@@ -238,12 +240,17 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
         RagiumItems.DEEP_STEEL_ARMORS.addTranslationEn("Deep Steel", this)
         // Tool
-        addItem(RagiumItems.RAGI_ALLOY_HAMMER, "Ragi-Alloy Forge Hammer")
-
         addItem(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE, "Azure Steel Upgrade")
         addItem(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE, "Deep Steel Upgrade")
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationEn("Azure Steel", this)
         RagiumItems.DEEP_STEEL_TOOLS.addTranslationEn("Deep Steel", this)
+
+        addItem(RagiumItems.getForgeHammer(Tiers.IRON), "Iron Forge Hammer")
+        addItem(RagiumItems.getForgeHammer(Tiers.DIAMOND), "Diamond Forge Hammer")
+        addItem(RagiumItems.getForgeHammer(Tiers.NETHERITE), "Netherite Forge Hammer")
+        addItem(RagiumItems.getForgeHammer(RagiumToolTiers.RAGI_ALLOY), "Ragi-Alloy Forge Hammer")
+        addItem(RagiumItems.getForgeHammer(RagiumToolTiers.AZURE_STEEL), "Azure Steel Forge Hammer")
+        addItem(RagiumItems.getForgeHammer(RagiumToolTiers.DEEP_STEEL), "Deep Steel Forge Hammer")
 
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
         addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
@@ -473,31 +480,29 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_BASE_SLOT_DESCRIPTION, "Add diamond armor, weapon, ot tool")
         add(RagiumTranslationKeys.DEEP_STEEL_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, "Add Deep Steel Ingot")
 
-        add(RagiumTranslationKeys.TEXT_ENERGY_PERCENTAGE, "%s / %s FE")
-        add(RagiumTranslationKeys.TEXT_FLUID_NAME, "%s : %s mb")
-        add(RagiumTranslationKeys.TEXT_FLUID_NAME_EMPTY, "Empty")
-
-        add(RagiumTranslationKeys.TEXT_EFFECT_RANGE, "Effect Radius: %s blocks")
-
-        add(RagiumTranslationKeys.TEXT_LOOT_TABLE_ID, "Loot Table: %s")
-
-        add(RagiumTranslationKeys.TEXT_SHOW_INFO, "Press Shift to show info")
-
-        add(RagiumTranslationKeys.TEXT_WIP, "This content is work in progress!!")
+        add(RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE, "%s / %s FE")
+        add(RagiumTranslationKeys.TOOLTIP_FLUID_NAME, "%s : %s mb")
+        add(RagiumTranslationKeys.TOOLTIP_FLUID_NAME_EMPTY, "Empty")
+        add(RagiumTranslationKeys.TOOLTIP_INTRINSIC_ENCHANTMENT, "Always has at least %s")
+        add(RagiumTranslationKeys.TOOLTIP_EFFECT_RANGE, "Effect Radius: %s blocks")
+        add(RagiumTranslationKeys.TOOLTIP_LOOT_TABLE_ID, "Loot Table: %s")
+        add(RagiumTranslationKeys.TOOLTIP_SHOW_INFO, "Press Shift to show info")
+        add(RagiumTranslationKeys.TOOLTIP_WIP, "This content is work in progress!!")
     }
 
     private fun information() {
-        addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         addInfo(RagiumBlocks.ASH_LOG, "Drop Ash Dust when harvested.")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "Apply damages from fake player for above mobs.")
+        addInfo(RagiumBlocks.OBSIDIAN_GLASS, "As the same blast resistance as Obsidian, can be harvested without Silk Touch.")
         addInfo(RagiumBlocks.QUARTZ_GLASS, "This glass block can be harvested without Silk Touch.")
+        addInfo(RagiumBlocks.SOUL_GLASS, "Only passable with Players, can be harvested without Silk Touch.")
+
+        addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
+        addInfo(RagiumItems.ELDRITCH_EGG, "Right-click a mob then converts it into Spawn Egg.")
         addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")
         addInfo(RagiumItems.ITEM_MAGNET, "Collect dropped items in the effective range")
-        addInfo(RagiumBlocks.OBSIDIAN_GLASS, "As the same blast resistance as Obsidian, can be harvested without Silk Touch.")
         addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
-        addInfo(RagiumItems.ELDRITCH_EGG, "Right-click a mob then converts it into Spawn Egg.")
         addInfo(RagiumItems.RAGI_LANTERN, "Light up darkness in range.")
-        addInfo(RagiumBlocks.SOUL_GLASS, "Only passable with Players, can be harvested without Silk Touch.")
         addInfo(RagiumItems.TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
         addInfo(RagiumItems.WARPED_WART, "Clear one bad effect randomly when eaten.")
     }

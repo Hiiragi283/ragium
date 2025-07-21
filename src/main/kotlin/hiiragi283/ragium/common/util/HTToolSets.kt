@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTItemSet
 import net.minecraft.world.item.AxeItem
@@ -50,8 +49,6 @@ class HTToolSets(material: Tier, name: String) : HTItemSet {
         Item.Properties().attributes(DiggerItem.createAttributes(material, 3f, -2.4f)),
     )
 
-    val hammerItem: DeferredItem<HTForgeHammerItem> = itemRegister.registerItem("${name}_hammer") { HTForgeHammerItem(material, it) }
-
     //    HTItemSet    //
 
     override val itemHolders: List<DeferredItem<*>> = itemRegister.entries
@@ -70,7 +67,6 @@ class HTToolSets(material: Tier, name: String) : HTItemSet {
         provider.addItem(pickaxeItem, "$name Pickaxe")
         provider.addItem(shovelItem, "$name Shovel")
         provider.addItem(swordItem, "$name Sword")
-        provider.addItem(hammerItem, "$name Forge Hammer")
     }
 
     override fun addTranslationJp(name: String, provider: LanguageProvider) {
@@ -79,6 +75,5 @@ class HTToolSets(material: Tier, name: String) : HTItemSet {
         provider.addItem(pickaxeItem, "${name}のツルハシ")
         provider.addItem(shovelItem, "${name}のシャベル")
         provider.addItem(swordItem, "${name}の剣")
-        provider.addItem(hammerItem, "${name}の鍛造ハンマー")
     }
 }

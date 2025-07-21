@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
@@ -18,7 +19,7 @@ import net.neoforged.neoforge.common.Tags
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun createRoot(): AdvancementHolder = create(RagiumAdvancements.ROOT) {
         display {
-            setIcon(RagiumItems.RAGI_ALLOY_HAMMER)
+            setIcon(RagiumItems.getForgeHammer(RagiumToolTiers.RAGI_ALLOY))
             title = Component.literal(RagiumAPI.MOD_NAME)
             setDescFromKey(RagiumAdvancements.ROOT)
             backGround = RagiumAPI.id("textures/block/ragi_stone.png")

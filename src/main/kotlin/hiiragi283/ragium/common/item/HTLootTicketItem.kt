@@ -61,7 +61,7 @@ class HTLootTicketItem(properties: Properties) : Item(properties) {
         tooltipComponents.add(
             Component
                 .translatable(
-                    RagiumTranslationKeys.TEXT_LOOT_TABLE_ID,
+                    RagiumTranslationKeys.TOOLTIP_LOOT_TABLE_ID,
                     lootTableKey.location().toString(),
                 ).withStyle(ChatFormatting.YELLOW),
         )
