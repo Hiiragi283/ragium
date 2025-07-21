@@ -30,6 +30,34 @@ object ModMaterialFamilies {
         "lead",
         // 7th
         "uranium",
+        // Draconic Evolution
+        "draconium",
+        "draconium_awakened",
+        // Just Dire Things
+        "ferricore",
+        "blazegold",
+        "eclipsealloy",
+        // Occultism
+        "iesnium",
+        // Replication
+        "replica",
+        // Twilight Forest
+        "ironwood",
+        "wrought_iron",
+        "knightmetal",
+    ).associateWith(::commonMetal)
+
+    @JvmStatic
+    private fun commonMetal(key: String): HTMaterialFamily = HTMaterialFamily.Builder
+        .ingot(null)
+        .setMod()
+        .build(key)
+
+    @JvmStatic
+    fun getMetal(key: String): HTMaterialFamily = METALS[key] ?: error("Unregistered material: $key")
+
+    @JvmField
+    val ALLOYS: Map<String, HTMaterialFamily> = listOf(
         // Alloys
         "steel",
         "invar",
@@ -40,48 +68,29 @@ object ModMaterialFamilies {
         "lumium",
         "signalum",
         "constantan",
-        // Draconic Evolution
-        "draconium",
-        "draconium_awakened",
         // Immersive Engineering,
         "hop_graphite",
-        // Just Dire Things
-        "ferricore",
-        "blazegold",
-        "eclipsealloy",
         // Mekanism
         "refined_obsidian",
         "refined_glowstone",
-        // Occultism
-        "iesnium",
         // Oritech
         "adamant",
         "duratium",
         "energite",
         "prometheum",
-        // Replication
-        "replica",
         // Twilight Forest
-        "ironwood",
         "steeleaf",
-        "wrought_iron",
-        "knightmetal",
         "fiery",
-    ).associateWith(::commonMetal)
+    ).associateWith(::commonAlloy)
 
     @JvmStatic
-    private fun commonMetal(key: String): HTMaterialFamily = HTMaterialFamily.Builder
-        .ingot(null)
-        .setEntry(HTMaterialFamily.Variant.DUSTS, null)
-        .setEntry(HTMaterialFamily.Variant.NUGGETS, null)
-        .setEntry(HTMaterialFamily.Variant.ORES, null)
-        .setEntry(HTMaterialFamily.Variant.RAW_MATERIALS, null)
-        .setEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, null)
+    private fun commonAlloy(key: String): HTMaterialFamily = HTMaterialFamily.Builder
+        .ingotAlloy(null)
         .setMod()
         .build(key)
 
     @JvmStatic
-    fun getMetal(key: String): HTMaterialFamily = METALS[key] ?: error("Unregistered material: $key")
+    fun getAlloy(key: String): HTMaterialFamily = ALLOYS[key] ?: error("Unregistered material: $key")
 
     //    Common Gem    //
 
@@ -114,9 +123,6 @@ object ModMaterialFamilies {
     @JvmStatic
     private fun commonGem(key: String): HTMaterialFamily = HTMaterialFamily.Builder
         .gem(null)
-        .setEntry(HTMaterialFamily.Variant.DUSTS, null)
-        .setEntry(HTMaterialFamily.Variant.ORES, null)
-        .setEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, null)
         .setMod()
         .build(key)
 

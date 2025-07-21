@@ -45,20 +45,45 @@ class HTMaterialFamily(
         companion object {
             @JvmStatic
             fun gem(baseItem: ItemSup?): Builder = Builder(Variant.GEMS, baseItem)
+                .setEmptyEntry(Variant.DUSTS)
+                .setEmptyEntry(Variant.ORES)
+                .setEmptyEntry(Variant.STORAGE_BLOCKS)
 
             @JvmStatic
             fun ingot(baseItem: ItemSup?): Builder = Builder(Variant.INGOTS, baseItem)
+                .setEmptyEntry(Variant.DUSTS)
+                .setEmptyEntry(Variant.NUGGETS)
+                .setEmptyEntry(Variant.ORES)
+                .setEmptyEntry(Variant.RAW_MATERIALS)
+                .setEmptyEntry(Variant.STORAGE_BLOCKS)
+
+            @JvmStatic
+            fun ingotAlloy(baseItem: ItemSup?): Builder = ingot(baseItem)
+                .removeEntry(Variant.ORES)
+                .removeEntry(Variant.RAW_MATERIALS)
         }
 
         private val itemMap: MutableMap<Variant, ItemSup?> = mutableMapOf()
         private var entryType: EntryType = EntryType.RAGIUM
 
         init {
-            setEntry(baseVariant, baseItem)
+            if (baseItem == null) {
+                setEmptyEntry(baseVariant)
+            } else {
+                setDefaultedEntry(baseVariant, baseItem)
+            }
         }
 
-        fun setEntry(variant: Variant, item: ItemSup?): Builder = apply {
+        fun setEmptyEntry(variant: Variant): Builder = apply {
+            check(itemMap.put(variant, null) == null) { "Duplicated entry found!" }
+        }
+
+        fun setDefaultedEntry(variant: Variant, item: ItemSup): Builder = apply {
             check(itemMap.put(variant, item) == null) { "Duplicated entry found!" }
+        }
+
+        fun removeEntry(variant: Variant): Builder = apply {
+            itemMap.remove(variant)
         }
 
         fun setVanilla(): Builder = apply {
@@ -72,7 +97,7 @@ class HTMaterialFamily(
         fun build(key: String): HTMaterialFamily {
             val variantMap: Map<Variant, Pair<TagKey<Item>, ItemSup?>> =
                 itemMap.mapValues { (variant: Variant, item: ItemSup?) ->
-                    itemTagKey(commonId("${variant.name.lowercase()}/$key")) to item
+                    itemTagKey(commonId(variant.tagFormat.replace("%s", key))) to item
                 }
             val family = HTMaterialFamily(entryType, baseVariant, variantMap)
             _instances[key] = family
@@ -90,13 +115,13 @@ class HTMaterialFamily(
 
     //    Variant    //
 
-    enum class Variant(val commonTag: TagKey<Item>?) {
-        DUSTS(Tags.Items.DUSTS),
-        GEMS(Tags.Items.GEMS),
-        INGOTS(Tags.Items.INGOTS),
-        NUGGETS(Tags.Items.NUGGETS),
-        ORES(Tags.Items.ORES),
-        RAW_MATERIALS(Tags.Items.RAW_MATERIALS),
-        STORAGE_BLOCKS(Tags.Items.STORAGE_BLOCKS),
+    enum class Variant(val commonTag: TagKey<Item>, val tagFormat: String) {
+        DUSTS(Tags.Items.DUSTS, "dusts/%s"),
+        GEMS(Tags.Items.GEMS, "gems/%s"),
+        INGOTS(Tags.Items.INGOTS, "ingots/%s"),
+        NUGGETS(Tags.Items.NUGGETS, "nuggets/%s"),
+        ORES(Tags.Items.ORES, "ores/%s"),
+        RAW_MATERIALS(Tags.Items.RAW_MATERIALS, "raw_materials/%s"),
+        STORAGE_BLOCKS(Tags.Items.STORAGE_BLOCKS, "storage_blocks/%s"),
     }
 }

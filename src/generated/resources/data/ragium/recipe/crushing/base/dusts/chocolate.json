@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:ingots/chocolate"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "#c:dusts/chocolate"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:ingots/azure_steel"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "#c:dusts/azure_steel"
+  }
+}
