@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/draconium_awakened"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 2,
+      "tag": "c:raw_materials/draconium_awakened"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:alloy_smelter_fluxes/basic"
+    }
+  ],
+  "item_output": {
+    "count": 3,
+    "id": "#c:ingots/draconium_awakened"
+  }
+}

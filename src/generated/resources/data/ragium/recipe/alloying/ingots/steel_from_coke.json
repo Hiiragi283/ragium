@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/steel"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 1,
+      "tag": "c:ingots/iron"
+    },
+    {
+      "count": 1,
+      "tag": "c:coal_cokes"
+    }
+  ],
+  "item_output": {
+    "count": 1,
+    "id": "#c:ingots/steel"
+  }
+}

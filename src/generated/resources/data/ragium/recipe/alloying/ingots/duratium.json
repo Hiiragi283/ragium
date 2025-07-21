@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/duratium"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 1,
+      "tag": "c:ingots/platinum"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/netherite"
+    }
+  ],
+  "item_output": {
+    "count": 1,
+    "id": "#c:ingots/duratium"
+  }
+}

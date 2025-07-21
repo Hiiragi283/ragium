@@ -75,6 +75,9 @@ object RagiumCommonTags {
 
     object Items {
         @JvmField
+        val COAL_COKES: TagKey<Item> = commonTag("coal_cokes")
+
+        @JvmField
         val PAPER: TagKey<Item> = commonTag("paper")
 
         @JvmField

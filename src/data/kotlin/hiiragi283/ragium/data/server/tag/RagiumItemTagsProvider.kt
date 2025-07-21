@@ -92,7 +92,7 @@ class RagiumItemTagsProvider(
             if (family.entryType == HTMaterialFamily.EntryType.RAGIUM) {
                 for ((variant: HTMaterialFamily.Variant, tagKey: TagKey<Item>, item: ItemLike?) in family) {
                     if (item != null) {
-                        tag(variant.commonTag).addTag(tagKey)
+                        variant.commonTag?.let(::tag)?.addTag(tagKey)
                         tag(tagKey).add(item.asItem())
                     }
                 }

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
+import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -18,6 +19,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         HTMaterialFamily.instances.values.forEach(::registerFamilies)
 
         oreToRaw()
+        alloying()
     }
 
     // Ore -> Raw/Gem
@@ -96,6 +98,70 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumItems.DEEP_SCRAP, 2)
             .itemInput(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
             .saveSuffixed(output, "_from_ore")
+    }
+
+    private fun alloying() {
+        // Steel
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("steel").getBaseTagKey(), appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_IRON)
+            .itemInput(Items.COAL, 2)
+            .saveSuffixed(output, "_from_coal")
+
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("steel").getBaseTagKey(), appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_IRON)
+            .itemInput(RagiumCommonTags.Items.COAL_COKES)
+            .saveSuffixed(output, "_from_coke")
+        // Invar
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("invar").getBaseTagKey(), 3, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_IRON, 2)
+            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+            .save(output)
+        // Electrum
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("electrum").getBaseTagKey(), 2, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_GOLD)
+            .itemInput(ModMaterialFamilies.getMetal("silver").getBaseTagKey())
+            .save(output)
+        // Bronze
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("bronze").getBaseTagKey(), 4, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_COPPER, 3)
+            .itemInput(ModMaterialFamilies.getMetal("tin").getBaseTagKey())
+            .save(output)
+        // Brass
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("brass").getBaseTagKey(), 4, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_COPPER, 3)
+            .itemInput(ModMaterialFamilies.getMetal("zinc").getBaseTagKey())
+            .save(output)
+        // Constantan
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("constantan").getBaseTagKey(), 2, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_COPPER)
+            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+            .save(output)
+
+        // Adamant
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("adamant").getBaseTagKey(), appendCondition = true)
+            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+            .itemInput(Tags.Items.GEMS_DIAMOND)
+            .save(output)
+        // Duratium
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("duratium").getBaseTagKey(), appendCondition = true)
+            .itemInput(ModMaterialFamilies.getMetal("platinum").getBaseTagKey())
+            .itemInput(Tags.Items.INGOTS_NETHERITE)
+            .save(output)
+        // Energite
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getMetal("energite").getBaseTagKey(), appendCondition = true)
+            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+            .itemInput(ModMaterialFamilies.getGem("fluxite").getBaseTagKey())
+            .save(output)
     }
 
     //    Family    //

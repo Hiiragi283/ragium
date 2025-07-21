@@ -1,11 +1,13 @@
 package hiiragi283.ragium.internal
 
+import com.almostreliable.unified.api.AlmostUnified
 import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
@@ -15,19 +17,25 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
+import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.inventory.SimpleContainerData
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.fml.LogicalSide
+import net.neoforged.fml.ModList
 import net.neoforged.fml.util.thread.EffectiveSide
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemStackHandler
@@ -96,4 +104,18 @@ class InternalRagiumAPI : RagiumAPI {
         ItemStackHandler(4),
         SimpleContainerData(2),
     )
+
+    override fun unifyItemFromId(holder: Holder<Item>, id: ResourceLocation): Holder<Item> {
+        if (ModList.get().isLoaded(RagiumConstantValues.ALMOST)) {
+            return AlmostUnified.INSTANCE.getVariantItemTarget(holder.value())?.asItemHolder() ?: holder
+        }
+        return holder
+    }
+
+    override fun unifyItemFromTag(holder: Holder<Item>, tagKey: TagKey<Item>): Holder<Item> {
+        if (ModList.get().isLoaded(RagiumConstantValues.ALMOST)) {
+            return AlmostUnified.INSTANCE.getTagTargetItem(tagKey)?.asItemHolder() ?: holder
+        }
+        return holder
+    }
 }

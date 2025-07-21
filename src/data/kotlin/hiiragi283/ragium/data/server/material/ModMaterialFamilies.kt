@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.material
 
-import com.buuz135.replication.ReplicationRegistry
 import hiiragi283.ragium.api.util.HTMaterialFamily
 
 object ModMaterialFamilies {
@@ -31,6 +30,43 @@ object ModMaterialFamilies {
         "lead",
         // 7th
         "uranium",
+        // Alloys
+        "steel",
+        "invar",
+        "electrum",
+        "bronze",
+        "brass",
+        "enderium",
+        "lumium",
+        "signalum",
+        "constantan",
+        // Draconic Evolution
+        "draconium",
+        "draconium_awakened",
+        // Immersive Engineering,
+        "hop_graphite",
+        // Just Dire Things
+        "ferricore",
+        "blazegold",
+        "eclipsealloy",
+        // Mekanism
+        "refined_obsidian",
+        "refined_glowstone",
+        // Occultism
+        "iesnium",
+        // Oritech
+        "adamant",
+        "duratium",
+        "energite",
+        "prometheum",
+        // Replication
+        "replica",
+        // Twilight Forest
+        "ironwood",
+        "steeleaf",
+        "wrought_iron",
+        "knightmetal",
+        "fiery",
     ).associateWith(::commonMetal)
 
     @JvmStatic
@@ -43,6 +79,9 @@ object ModMaterialFamilies {
         .setEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, null)
         .setMod()
         .build(key)
+
+    @JvmStatic
+    fun getMetal(key: String): HTMaterialFamily = METALS[key] ?: error("Unregistered material: $key")
 
     //    Common Gem    //
 
@@ -58,6 +97,18 @@ object ModMaterialFamilies {
         // AE2
         "certus_quartz",
         "fluix",
+        // Ars Nouveau
+        "source",
+        // EvilCraft
+        "dark_gem",
+        "dark_power",
+        // Forbidden
+        "arcane_crystal",
+        "corrupted_arcane_crystal",
+        // Oritech
+        "fluxite",
+        // Twilight Forest
+        "carminite",
     ).associateWith(::commonGem)
 
     @JvmStatic
@@ -69,12 +120,6 @@ object ModMaterialFamilies {
         .setMod()
         .build(key)
 
-    //    Replication    //
-
-    @JvmField
-    val REPLICA: HTMaterialFamily = HTMaterialFamily.Builder
-        .ingot(ReplicationRegistry.Items.REPLICA_INGOT)
-        .setEntry(HTMaterialFamily.Variant.RAW_MATERIALS, ReplicationRegistry.Items.RAW_REPLICA)
-        .setMod()
-        .build("replica")
+    @JvmStatic
+    fun getGem(key: String): HTMaterialFamily = GEMS[key] ?: error("Unregistered material: $key")
 }

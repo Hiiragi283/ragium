@@ -90,7 +90,7 @@ class HTMaterialFamily(
 
     //    Variant    //
 
-    enum class Variant(val commonTag: TagKey<Item>) {
+    enum class Variant(val commonTag: TagKey<Item>?) {
         DUSTS(Tags.Items.DUSTS),
         GEMS(Tags.Items.GEMS),
         INGOTS(Tags.Items.INGOTS),
