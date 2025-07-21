@@ -33,7 +33,7 @@ object RagiumCreativeTabs {
             output.acceptItems(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
             output.accept(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
             output.accept(RagiumItems.RAGI_CRYSTAL)
-            output.accept(RagiumItems.ITEM_MAGNET)
+            output.accept(RagiumItems.RAGI_MAGNET)
             output.accept(RagiumItems.RAGI_LANTERN)
 
             output.accept(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
@@ -58,7 +58,8 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
-            output.accept(RagiumItems.EXP_MAGNET)
+            output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
+            output.accept(RagiumItems.ADVANCED_RAGI_MAGNET)
 
             output.accept(RagiumBlocks.AZURE_STEEL_BLOCK)
             output.accept(RagiumItems.AZURE_STEEL_COMPOUND)

@@ -48,8 +48,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
             add(RagiumBlocks.SPONGE_CAKE)
 
-            add(RagiumBlocks.BASIC_MACHINE_FRAME)
-            add(RagiumBlocks.ADVANCED_MACHINE_FRAME)
             add(RagiumBlocks.DEVICE_CASING)
 
             add(RagiumBlocks.CEU)
@@ -127,6 +125,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 vanillaId("block/furnace_top"),
             ),
         )
+
+        cutoutSimpleBlock(RagiumBlocks.BASIC_MACHINE_FRAME)
+        cutoutSimpleBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME)
 
         // Machine
         fun machine(holder: DeferredBlock<*>, top: ResourceLocation, bottom: ResourceLocation) {

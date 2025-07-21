@@ -28,8 +28,8 @@ object RagiumCuriosAddon : RagiumAddon {
             )
         }
 
-        register(RagiumItems.ITEM_MAGNET, ::HTTickingCurio)
-        register(RagiumItems.EXP_MAGNET, ::HTTickingCurio)
+        register(RagiumItems.ADVANCED_RAGI_MAGNET, ::HTTickingCurio)
         register(RagiumItems.RAGI_LANTERN, ::HTTickingCurio)
+        register(RagiumItems.RAGI_MAGNET, ::HTTickingCurio)
     }
 }

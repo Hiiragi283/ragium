@@ -55,6 +55,9 @@ object RagiumItems {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
+        REGISTER.addAlias(RagiumAPI.id("item_magnet"), RagiumAPI.id("ragi_magnet"))
+        REGISTER.addAlias(RagiumAPI.id("exp_magnet"), RagiumAPI.id("advanced_ragi_magnet"))
+
         REGISTER.register(eventBus)
 
         AZURE_STEEL_ARMORS.init(eventBus)
@@ -206,19 +209,23 @@ object RagiumItems {
     val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
 
     @JvmField
-    val ITEM_MAGNET: DeferredItem<HTSimpleMagnetItem> = register("item_magnet", ::HTSimpleMagnetItem)
+    val RAGI_MAGNET: DeferredItem<HTSimpleMagnetItem> = register("ragi_magnet", ::HTSimpleMagnetItem)
 
     @JvmField
     val RAGI_LANTERN: DeferredItem<HTDynamicLanternItem> = register("ragi_lantern", ::HTDynamicLanternItem)
 
     @JvmField
-    val EXP_MAGNET: DeferredItem<HTExpMagnetItem> = register("exp_magnet", ::HTExpMagnetItem)
+    val ADVANCED_RAGI_MAGNET: DeferredItem<HTExpMagnetItem> = register("advanced_ragi_magnet", ::HTExpMagnetItem)
 
     @JvmField
     val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))
 
     @JvmField
     val ELDRITCH_EGG: DeferredItem<HTCaptureEggItem> = register("eldritch_egg", ::HTCaptureEggItem)
+
+    @JvmField
+    val ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE: DeferredItem<Item> =
+        register("${RagiumConstantValues.ADVANCED_RAGI_ALLOY}_upgrade_smithing_template")
 
     @JvmField
     val AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE: DeferredItem<HTAzureSteelTemplateItem> =

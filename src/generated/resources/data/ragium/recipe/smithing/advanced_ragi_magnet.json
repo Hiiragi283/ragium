@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:ingots/advanced_ragi_alloy"
+  },
+  "base": {
+    "item": "ragium:ragi_magnet"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_ragi_magnet"
+  },
+  "template": {
+    "item": "ragium:advanced_ragi_alloy_upgrade_smithing_template"
+  }
+}

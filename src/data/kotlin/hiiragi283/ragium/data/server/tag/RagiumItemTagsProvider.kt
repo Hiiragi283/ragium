@@ -256,9 +256,9 @@ class RagiumItemTagsProvider(
 
     private fun curios() {
         tag(CuriosTags.CHARM).addItem(
-            RagiumItems.EXP_MAGNET,
-            RagiumItems.ITEM_MAGNET,
+            RagiumItems.ADVANCED_RAGI_MAGNET,
             RagiumItems.RAGI_LANTERN,
+            RagiumItems.RAGI_MAGNET,
         )
     }
 
