@@ -220,6 +220,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 ),
             )
         }
+        registry.addRecipeHandler(RagiumMenuTypes.SOLIDIFIER.get(), HTRecipeHandler(RagiumEmiCategories.SOLIDIFYING))
     }
 
     /*private fun addBucketExtracting(holder: Holder.Reference<Fluid>) {

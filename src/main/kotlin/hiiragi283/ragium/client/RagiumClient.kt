@@ -180,6 +180,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerBasic(RagiumMenuTypes.EXTRACTOR, RagiumAPI.id("textures/gui/container/extractor.png"))
         registerBasic(RagiumMenuTypes.FLUID_COLLECTOR, RagiumAPI.id("textures/gui/container/fluid_collector.png"))
         registerBasic(RagiumMenuTypes.MELTER, RagiumAPI.id("textures/gui/container/melter.png"))
+        registerBasic(RagiumMenuTypes.SOLIDIFIER, RagiumAPI.id("textures/gui/container/solidifier.png"))
 
         event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)

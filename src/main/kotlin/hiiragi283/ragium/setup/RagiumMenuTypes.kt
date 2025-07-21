@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.inventory.HTExtractorMenu
 import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
+import hiiragi283.ragium.common.inventory.HTSolidifierMenu
 
 object RagiumMenuTypes {
     @JvmField
@@ -40,4 +41,7 @@ object RagiumMenuTypes {
 
     @JvmField
     val MELTER: HTDeferredMenuType<HTMelterMenu> = REGISTER.registerType("melter", ::HTMelterMenu)
+
+    @JvmField
+    val SOLIDIFIER: HTDeferredMenuType<HTSolidifierMenu> = REGISTER.registerType("solidifier", ::HTSolidifierMenu)
 }

@@ -134,7 +134,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
                 RagiumBlocks.WOODEN_CASING,
                 RagiumBlocks.STONE_CASING,
                 RagiumBlocks.REFINERY,
-                RagiumBlocks.SOLIDIFIER,
             )
     }
 }

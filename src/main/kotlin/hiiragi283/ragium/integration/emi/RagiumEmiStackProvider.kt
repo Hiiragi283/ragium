@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.screen.HTContainerScreen
 import hiiragi283.ragium.api.screen.HTDefinitionContainerScreen
 import net.minecraft.client.gui.screens.Screen
+import net.minecraft.core.Vec3i
 import net.minecraft.world.inventory.Slot
 
 object RagiumEmiStackProvider : EmiStackProvider<Screen> {
@@ -23,9 +24,9 @@ object RagiumEmiStackProvider : EmiStackProvider<Screen> {
             }
             // Get stack from tanks
             if (screen is HTDefinitionContainerScreen<*>) {
-                for ((index: Int, posX: Int, posY: Int) in screen.menu.fluidSlots.entries) {
-                    if (HTSlotHelper.isIn(x, screen.startX + posX, 18)) {
-                        if (HTSlotHelper.isIn(y, screen.startY + posY, 18)) {
+                for ((index: Int, vec: Vec3i) in screen.menu.fluidSlots.entries) {
+                    if (HTSlotHelper.isIn(x, screen.startX + vec.x, 18)) {
+                        if (HTSlotHelper.isIn(y, screen.startY + vec.y, 18)) {
                             return EmiStackInteraction(NeoForgeEmiStack.of(screen.getFluidStack(index)), null, false)
                         }
                     }
