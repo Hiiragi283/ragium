@@ -387,6 +387,12 @@ object RagiumItems {
     val PLASTIC_PLATE: DeferredItem<Item> = register("plastic_plate")
 
     @JvmField
+    val SYNTHETIC_FIBER: DeferredItem<Item> = register("synthetic_fiber")
+
+    @JvmField
+    val SYNTHETIC_LEATHER: DeferredItem<Item> = register("synthetic_leather")
+
+    @JvmField
     val BASIC_CIRCUIT: DeferredItem<Item> = register("basic_circuit")
 
     @JvmField

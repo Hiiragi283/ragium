@@ -219,6 +219,9 @@ class RagiumItemTagsProvider(
 
         tag(RagiumCommonTags.Items.PLASTICS).addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
         tag(RagiumCommonTags.Items.PLATES_PLASTIC).addOptionalTag(RagiumCommonTags.Items.PLASTICS)
+
+        tag(Tags.Items.LEATHERS).addItem(RagiumItems.SYNTHETIC_LEATHER)
+        tag(Tags.Items.STRINGS).addItem(RagiumItems.SYNTHETIC_FIBER)
         // Circuits
         addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
         addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)

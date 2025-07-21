@@ -299,6 +299,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         addItem(RagiumItems.STONE_BOARD, "石版")
+        addItem(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
+        addItem(RagiumItems.SYNTHETIC_LEATHER, "合成革")
     }
 
     /*private fun material() {

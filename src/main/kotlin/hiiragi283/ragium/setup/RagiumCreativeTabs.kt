@@ -164,6 +164,9 @@ object RagiumCreativeTabs {
 
             output.accept(RagiumItems.POLYMER_RESIN)
             output.accept(RagiumItems.PLASTIC_PLATE)
+            output.accept(RagiumItems.SYNTHETIC_FIBER)
+            output.accept(RagiumItems.SYNTHETIC_LEATHER)
+
             output.accept(RagiumItems.BASIC_CIRCUIT)
             output.accept(RagiumItems.ADVANCED_CIRCUIT)
             output.accept(RagiumItems.CRYSTAL_PROCESSOR)

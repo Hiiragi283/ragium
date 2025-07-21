@@ -312,6 +312,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
         addItem(RagiumItems.STONE_BOARD, "Stone Board")
+        addItem(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
+        addItem(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
     }
 
     /*private fun material() {
