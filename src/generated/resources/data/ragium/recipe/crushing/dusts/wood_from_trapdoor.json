@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "minecraft:wooden_trapdoors"
+  },
+  "item_output": {
+    "count": 3,
+    "id": "#c:dusts/wood"
+  }
+}

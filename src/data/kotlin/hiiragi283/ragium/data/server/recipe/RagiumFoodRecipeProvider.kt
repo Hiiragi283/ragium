@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -21,7 +21,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Chocolate
         createSolidifying()
-            .itemOutput(RagiumItems.CHOCOLATE_INGOT)
+            .itemOutput(RagiumCommonTags.Items.INGOTS_CHOCOLATE)
             .catalyst(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
             .save(output)
@@ -41,7 +41,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         // Ambrosia
         createAlloying()
             .itemOutput(RagiumItems.AMBROSIA)
-            .itemInput(RagiumItemTags.STORAGE_BLOCKS_CHOCOLATE, 64)
+            .itemInput(RagiumCommonTags.Items.STORAGE_BLOCKS_CHOCOLATE, 64)
             .itemInput(Items.HONEY_BLOCK, 64)
             .save(output)
 
@@ -54,8 +54,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
     private fun cherry() {
         // Cherry Jam
         HTShapelessRecipeBuilder(RagiumItems.RAGI_CHERRY_JAM)
-            .addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
-            .addIngredient(RagiumItemTags.FOODS_RAGI_CHERRY)
+            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .addIngredient(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.GLASS_BOTTLE)
             .save(output.withConditions(disabledByDelight))
@@ -83,38 +83,38 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
     private fun meat() {
         // Minced Meat
         createCrushing()
-            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_MEAT)
             .saveSuffixed(output, "_from_meat")
         createCrushing()
-            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
             .itemInput(Tags.Items.FOODS_RAW_FISH)
             .saveSuffixed(output, "_from_fish")
         createCrushing()
-            .itemOutput(RagiumItems.MINCED_MEAT)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
             .itemInput(Items.ROTTEN_FLESH)
-            .savePrefixed(output, "rotten_")
+            .saveSuffixed(output, "_from_rotten")
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.MEAT_INGOT, 3)
             .pattern("AAA")
-            .define('A', RagiumItems.MINCED_MEAT)
+            .define('A', RagiumCommonTags.Items.DUSTS_MEAT)
             .save(output)
 
         HTCookingRecipeBuilder
             .smoking(RagiumItems.COOKED_MEAT_INGOT)
-            .addIngredient(RagiumItemTags.INGOTS_MEAT)
+            .addIngredient(RagiumCommonTags.Items.INGOTS_MEAT)
             .setExp(0.35f)
             .save(output)
         // Canned Cooked Meat
         HTShapedRecipeBuilder(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
-            .define('A', RagiumItemTags.INGOTS_COOKED_MEAT)
+            .define('A', RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
             .define('B', Tags.Items.INGOTS_IRON)
             .save(output)
         // Cooked Meat on the Bone
         HTShapedRecipeBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
             .hollow8()
-            .define('A', RagiumItemTags.INGOTS_COOKED_MEAT)
+            .define('A', RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
             .define('B', Tags.Items.BONES)
             .save(output)
     }
@@ -146,7 +146,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
                 " A ",
                 "BCB",
                 " D ",
-            ).define('A', RagiumItemTags.FOODS_CHOCOLATE)
+            ).define('A', RagiumCommonTags.Items.FOODS_CHOCOLATE)
             .define('B', Tags.Items.FOODS_BERRY)
             .define('C', Tags.Items.EGGS)
             .define('D', RagiumBlocks.SPONGE_CAKE_SLAB)

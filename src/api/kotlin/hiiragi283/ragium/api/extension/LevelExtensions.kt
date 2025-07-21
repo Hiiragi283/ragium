@@ -11,9 +11,18 @@ import net.minecraft.world.level.CommonLevelAccessor
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 
-fun BlockPos.toCenterVec3(): Vec3 = Vec3(this.x.toDouble(), this.y.toDouble(), this.z.toDouble()).add(0.5, 0.0, 0.5)
+//    Position    //
+
+fun BlockPos.toVec3(): Vec3 = Vec3(this.x.toDouble(), this.y.toDouble(), this.z.toDouble())
+
+fun BlockPos.toCenterVec3(): Vec3 = toVec3().add(0.5, 0.0, 0.5)
+
+fun BlockPos.getRangedAABB(radius: Number): AABB = toCenterVec3().getRangedAABB(radius)
+
+fun Vec3.getRangedAABB(radius: Number): AABB = AABB.ofSize(this, radius.toDouble(), radius.toDouble(), radius.toDouble())
 
 //    Level    //
 

@@ -18,6 +18,7 @@ import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumCustomLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumGlobalLootProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
+import hiiragi283.ragium.data.server.tag.RagiumDamageTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumEnchantmentTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumEntityTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
@@ -74,7 +75,8 @@ object RagiumDatagen {
                 setOf(),
                 listOf(
                     LootTableProvider.SubProviderEntry(::RagiumBlockLootProvider, LootContextParamSets.BLOCK),
-                    LootTableProvider.SubProviderEntry(::RagiumCustomLootProvider, LootContextParamSets.BLOCK),
+                    LootTableProvider.SubProviderEntry(RagiumCustomLootProvider::Block, LootContextParamSets.BLOCK),
+                    LootTableProvider.SubProviderEntry(RagiumCustomLootProvider::Entity, LootContextParamSets.ENTITY),
                 ),
                 provider,
             ),
@@ -93,6 +95,7 @@ object RagiumDatagen {
 
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
 
+        generator.addProvider(event.includeServer(), RagiumDamageTypeTagsProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumEnchantmentTagsProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumEntityTypeTagsProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumFluidTagsProvider(output, provider, helper))

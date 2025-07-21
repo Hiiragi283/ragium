@@ -23,8 +23,7 @@ object RagiumEmiStackProvider : EmiStackProvider<Screen> {
             }
             // Get stack from tanks
             if (screen is HTDefinitionContainerScreen<*>) {
-                for ((index: Int, pos: Pair<Int, Int>) in screen.menu.fluidSlots) {
-                    val (posX: Int, posY: Int) = pos
+                for ((index: Int, posX: Int, posY: Int) in screen.menu.fluidSlots.entries) {
                     if (HTSlotHelper.isIn(x, screen.startX + posX, 18)) {
                         if (HTSlotHelper.isIn(y, screen.startY + posY, 18)) {
                             return EmiStackInteraction(NeoForgeEmiStack.of(screen.getFluidStack(index)), null, false)

@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/nickel"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 2,
+      "tag": "c:raw_materials/nickel"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:alloy_smelter_fluxes/basic"
+    }
+  ],
+  "item_output": {
+    "count": 3,
+    "id": "#c:ingots/nickel"
+  }
+}

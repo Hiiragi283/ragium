@@ -1,10 +1,14 @@
 package hiiragi283.ragium.api.data.recipe
 
+import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTFluidContent
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.data.recipes.RecipeBuilder
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -14,19 +18,24 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.conditions.ICondition
+import net.neoforged.neoforge.common.conditions.NotCondition
+import net.neoforged.neoforge.common.conditions.TagEmptyCondition
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
 
 class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, private val factory: (HTRecipeDefinition) -> R) :
-    HTRecipeBuilder<R> {
+    HTRecipeBuilder {
     private val itemInputs: MutableList<SizedIngredient> = mutableListOf()
     private val fluidInputs: MutableList<SizedFluidIngredient> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
     private val itemOutputs: MutableList<HTItemOutput> = mutableListOf()
     private val fluidOutputs: MutableList<HTFluidOutput> = mutableListOf()
+    private val conditions: MutableList<ICondition> = mutableListOf()
 
     //    Item Input    //
 
@@ -79,22 +88,80 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
     //    Item Output    //
 
     fun itemOutput(item: ItemLike, count: Int = 1, chance: Float = 1f): HTDefinitionRecipeBuilder<R> =
-        itemOutput(HTItemOutput.of(item, count, chance))
+        itemOutput(ItemStack(item, count), chance)
 
-    fun itemOutput(stack: ItemStack, chance: Float = 1f): HTDefinitionRecipeBuilder<R> = itemOutput(HTItemOutput.of(stack, chance))
+    fun itemOutput(stack: ItemStack, chance: Float = 1f): HTDefinitionRecipeBuilder<R> = apply {
+        if (stack.isEmpty) {
+            error("Empty ItemStack is not allowed for HTItemOutput!")
+        }
+        if (chance !in (0f..1f)) {
+            error("Chance must be in 0f to 1f!")
+        }
+        itemOutputs.add(
+            HTItemOutput(
+                Either.left(stack.itemHolder.idOrThrow),
+                stack.count,
+                stack.componentsPatch,
+                chance,
+            ),
+        )
+    }
 
-    private fun itemOutput(output: HTItemOutput): HTDefinitionRecipeBuilder<R> = apply {
-        itemOutputs.add(output)
+    fun itemOutput(
+        tagKey: TagKey<Item>,
+        count: Int = 1,
+        chance: Float = 1f,
+        appendCondition: Boolean = false,
+    ): HTDefinitionRecipeBuilder<R> = apply {
+        if (chance !in (0f..1f)) {
+            error("Chance must be in 0f to 1f!")
+        }
+        itemOutputs.add(
+            HTItemOutput(
+                Either.right(tagKey),
+                count,
+                DataComponentPatch.EMPTY,
+                chance,
+            ),
+        )
+        if (appendCondition) {
+            conditions.add(NotCondition(TagEmptyCondition(tagKey)))
+        }
     }
 
     //    Fluid Output    //
 
-    fun fluidOutput(fluid: Supplier<out Fluid>, count: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidOutput(fluid.get(), count)
+    fun fluidOutput(fluid: Supplier<out Fluid>, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidOutput(fluid.get(), amount)
 
-    fun fluidOutput(fluid: Fluid, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidOutput(HTFluidOutput.of(fluid, amount))
+    fun fluidOutput(fluid: Fluid, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidOutput(FluidStack(fluid, amount))
 
-    private fun fluidOutput(output: HTFluidOutput): HTDefinitionRecipeBuilder<R> = apply {
-        fluidOutputs.add(output)
+    fun fluidOutput(stack: FluidStack): HTDefinitionRecipeBuilder<R> = apply {
+        if (stack.isEmpty) {
+            error("Empty FluidStack is not allowed for HTFluidOutput!")
+        }
+        fluidOutputs.add(
+            HTFluidOutput(
+                Either.left(stack.fluidHolder.idOrThrow),
+                stack.amount,
+                stack.componentsPatch,
+            ),
+        )
+    }
+
+    fun fluidOutput(tagKey: TagKey<Fluid>, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = apply {
+        fluidOutputs.add(
+            HTFluidOutput(
+                Either.right(tagKey),
+                amount,
+                DataComponentPatch.EMPTY,
+            ),
+        )
+    }
+
+    //    ICondition    //
+
+    fun condition(condition: ICondition): HTDefinitionRecipeBuilder<R> = apply {
+        this.conditions.add(condition)
     }
 
     //    RecipeBuilder    //
@@ -103,17 +170,22 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         ?: fluidOutputs.firstOrNull()?.id
         ?: error("Either one item or fluid output required at least!")
 
-    override fun getPrefix(recipe: R): String = prefix
-
-    override fun createRecipe(): R = factory(
-        HTRecipeDefinition(
-            itemInputs,
-            fluidInputs,
-            catalyst,
-            itemOutputs,
-            fluidOutputs,
-        ),
-    )
+    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+        recipeOutput.accept(
+            id.withPrefix("$prefix/"),
+            factory(
+                HTRecipeDefinition(
+                    itemInputs,
+                    fluidInputs,
+                    catalyst,
+                    itemOutputs,
+                    fluidOutputs,
+                ),
+            ),
+            null,
+            *conditions.toTypedArray(),
+        )
+    }
 
     override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
 }

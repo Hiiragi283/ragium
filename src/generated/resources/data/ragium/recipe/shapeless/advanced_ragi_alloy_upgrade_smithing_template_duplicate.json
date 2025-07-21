@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:advanced_ragi_alloy_upgrade_smithing_template"
+    },
+    {
+      "tag": "c:ingots/advanced_ragi_alloy"
+    },
+    {
+      "tag": "c:ingots/advanced_ragi_alloy"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:advanced_ragi_alloy_upgrade_smithing_template"
+  }
+}

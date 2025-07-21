@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "ragium:item/deep_steel_pickaxe"
+  }
+}

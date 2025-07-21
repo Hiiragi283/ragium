@@ -8,7 +8,7 @@
   "type": "ragium:melting",
   "fluid_output": {
     "amount": 250,
-    "id": "minecraft:milk"
+    "id": "#c:milk"
   },
   "item_input": {
     "count": 1,

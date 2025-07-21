@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.energy
 
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
@@ -7,6 +8,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 
 /**
  * エネルギーネットワークを管理するマネージャ
+ * @see [RagiumAPI.getEnergyNetworkManager]
  */
 interface HTEnergyNetworkManager {
     /**

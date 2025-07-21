@@ -23,7 +23,7 @@ inline fun createItemStack(item: ItemLike, count: Int = 1, builderAction: Mutabl
     ItemStack(item, count).apply(builderAction)
 
 fun createPotionStack(potion: Holder<Potion>, count: Int = 1, item: ItemLike = Items.POTION): ItemStack =
-    createPotionStack(PotionContents(potion), count, item)
+    createPotionStack(PotionContents(potion.delegate), count, item)
 
 fun createPotionStack(content: PotionContents, count: Int = 1, item: ItemLike = Items.POTION): ItemStack = createItemStack(item, count) {
     set(DataComponents.POTION_CONTENTS, content)

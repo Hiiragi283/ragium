@@ -1,6 +1,8 @@
 {
   "entries": [
-    "ragium:drop_ragi_cherry"
+    "ragium:drop_ragi_cherry",
+    "ragium:drop_elder_heart",
+    "ragium:drop_trader_catalog"
   ],
   "replace": false
 }

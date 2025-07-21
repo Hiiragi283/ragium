@@ -7,5 +7,5 @@ object RagiumWorldGenData {
     val ORE_RAGINITE = HTWorldGenData("ore_raginite")
 
     @JvmField
-    val REMOVE_SPRING_NETHER = HTWorldGenData("remove/spring_nether")
+    val ORE_RESONANT_DEBRIS = HTWorldGenData("ore_resonant_debris")
 }

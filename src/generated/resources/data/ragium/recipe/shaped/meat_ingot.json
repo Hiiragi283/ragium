@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:minced_meat"
+      "tag": "c:dusts/meat"
     }
   },
   "pattern": [

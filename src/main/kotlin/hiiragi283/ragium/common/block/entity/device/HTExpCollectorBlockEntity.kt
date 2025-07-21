@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
@@ -19,8 +20,6 @@ import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.levelgen.structure.BoundingBox
-import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -47,19 +46,10 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // 自動搬出する
         exportFluids(level, pos)
         // 範囲内のExp Orbを取得する
-        val range: Int = RagiumConfig.COMMON.entityCollectorRange.get()
+        blockPos.getRangedAABB(RagiumConfig.COMMON.entityCollectorRange.get())
         val expOrbs: List<ExperienceOrb> = level.getEntitiesOfClass(
             ExperienceOrb::class.java,
-            AABB.of(
-                BoundingBox(
-                    blockPos.x - range,
-                    blockPos.y - range,
-                    blockPos.z - range,
-                    blockPos.x + range,
-                    blockPos.y + range,
-                    blockPos.z + range,
-                ),
-            ),
+            blockPos.getRangedAABB(RagiumConfig.COMMON.entityCollectorRange.get()),
         )
         if (expOrbs.isEmpty()) return TriState.DEFAULT
         // それぞれのExp Orbに対して回収を行う

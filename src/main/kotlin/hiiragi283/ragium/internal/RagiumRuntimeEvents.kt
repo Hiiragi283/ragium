@@ -1,35 +1,26 @@
 package hiiragi283.ragium.internal
 
-import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
-import hiiragi283.ragium.api.recipe.HTCauldronDroppingRecipe
 import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
-import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
-import net.minecraft.tags.BlockTags
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.animal.Bee
-import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.npc.WanderingTrader
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -38,84 +29,51 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.loot.LootPool
-import net.minecraft.world.level.storage.loot.LootTable
-import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.client.event.RenderTooltipEvent
-import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.event.LootTableLoadEvent
-import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent
+import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
-import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
-import net.neoforged.neoforge.event.tick.EntityTickEvent
-import net.neoforged.neoforge.fluids.SimpleFluidContent
-import org.slf4j.Logger
 import kotlin.jvm.optionals.getOrNull
 
-@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
-object RagiumRuntimeEvents {
+internal object RagiumRuntimeEvents {
     @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
+    fun registerEvents() {
+        NeoForge.EVENT_BUS.addListener(::onClickedBlock)
+        NeoForge.EVENT_BUS.addListener(::onUseItem)
+        NeoForge.EVENT_BUS.addListener(::onFinishUsingItem)
 
-    //    Item Interaction    //
-
-    @SubscribeEvent
-    fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
-        // イベントがキャンセルされている場合はパス
-        if (event.isCanceled) return
-        val stack: ItemStack = event.itemStack
-        // アイテムがガラス瓶の場合はハチを捕まえる
-        if (stack.`is`(Items.GLASS_BOTTLE)) {
-            val target: Bee = event.target as? Bee ?: return
-            if (target.isAlive) {
-                val player: Player = event.entity
-                target.level().playSound(player, target, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1f, 1f)
-                // ハチを瓶に詰める
-                if (!player.level().isClientSide) {
-                    target.discard()
-                    stack.shrink(1)
-                    dropStackAt(player, RagiumItems.BOTTLED_BEE)
-                }
-                event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
-                return
-            }
-        }
+        NeoForge.EVENT_BUS.addListener(::onClickedEntity)
+        NeoForge.EVENT_BUS.addListener(::onEntityDeath)
     }
 
-    @SubscribeEvent
-    fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
-        if (event.isCanceled) return
+    //    Block    //
+
+    private fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
         val hand: InteractionHand = event.hand
         val stack: ItemStack = event.itemStack
 
         val hitResult: BlockHitResult = event.hitVec
         val level: Level = event.level
         val state: BlockState = level.getBlockState(hitResult.blockPos)
-
+        // 有効な最初のレシピを取得
         val input = HTInteractRecipeInput(hitResult.blockPos, stack)
         val firstRecipe: HTBlockInteractingRecipe = level.recipeManager
             .getRecipeFor(RagiumRecipeTypes.BLOCK_INTERACTING.get(), input, level)
             .getOrNull()
             ?.value ?: return
-
+        // サーバー側のプレイヤーに進捗を付与
         val player: Player = event.entity
         if (player is ServerPlayer) HTBlockInteractionTrigger.trigger(player, state)
+        // レシピの処理を実行
         firstRecipe.applyActions(UseOnContext(level, player, hand, stack, hitResult))
+        // 次のイベントをキャンセルする
         event.isCanceled = true
         event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
     }
 
-    @SubscribeEvent
-    fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
-        if (event.isCanceled) return
+    private fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
         val stack: ItemStack = event.itemStack
         if (stack.isEmpty) return
         val player: Player = event.entity
@@ -162,8 +120,7 @@ object RagiumRuntimeEvents {
         }
     }
 
-    @SubscribeEvent
-    fun onFinishUsingItem(event: LivingEntityUseItemEvent.Finish) {
+    private fun onFinishUsingItem(event: LivingEntityUseItemEvent.Finish) {
         val stack: ItemStack = event.item
         if (stack.isEmpty) return
         val result: ItemStack = event.resultStack
@@ -189,9 +146,27 @@ object RagiumRuntimeEvents {
 
     //    Entity    //
 
-    @SubscribeEvent
-    fun onEntityStruck(event: EntityStruckByLightningEvent) {
-        if (event.isCanceled) return
+    private fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
+        val stack: ItemStack = event.itemStack
+        // アイテムがガラス瓶の場合はハチを捕まえる
+        if (stack.`is`(Items.GLASS_BOTTLE)) {
+            val target: Bee = event.target as? Bee ?: return
+            if (target.isAlive) {
+                val player: Player = event.entity
+                target.level().playSound(player, target, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1f, 1f)
+                // ハチを瓶に詰める
+                if (!player.level().isClientSide) {
+                    target.discard()
+                    stack.shrink(1)
+                    dropStackAt(player, RagiumItems.BOTTLED_BEE)
+                }
+                event.cancellationResult = InteractionResult.sidedSuccess(player.level().isClientSide)
+                return
+            }
+        }
+    }
+
+    /*private fun onEntityStruck(event: EntityStruckByLightningEvent) {
         // プレイヤーによって召喚された落雷は無視される
         if (event.lightning.cause != null) return
 
@@ -211,99 +186,26 @@ object RagiumRuntimeEvents {
             itemEntity.persistentData.putBoolean("AlreadyStruck", true)
             event.isCanceled = true
         }
-    }
+    }*/
 
-    @SubscribeEvent
-    fun onEntityTick(event: EntityTickEvent.Post) {
-        val itemEntity: ItemEntity = event.entity as? ItemEntity ?: return
-        // 大釜の中にいない場合はパス
-        val stateIn: BlockState = itemEntity.inBlockState
-        if (stateIn.`is`(Blocks.CAULDRON) || !stateIn.`is`(BlockTags.CAULDRONS)) return
-        // 除外フラグを持っていたらパス
-        if (itemEntity.persistentData.getBoolean(RagiumConstantValues.IGNORE_CAULDRON_DROP)) return
-        // 最初に一致するレシピを取得する
-        val level: Level = itemEntity.level()
-        val pos: BlockPos = itemEntity.blockPosition()
-        val stack: ItemStack = itemEntity.item
-        val remainCount: Int = stack.count - 1
-
-        val input = HTInteractRecipeInput(pos, stack)
-        val firstRecipe: HTCauldronDroppingRecipe? = level.recipeManager
-            .getRecipeFor(RagiumRecipeTypes.CAULDRON_DROPPING.get(), input, level)
-            .getOrNull()
-            ?.value
-        // レシピが存在する場合，処理を実行する
-        if (firstRecipe != null) {
-            itemEntity.item = firstRecipe.assemble(input, level.registryAccess()).copy()
-            level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState())
-            if (remainCount > 0) {
-                dropStackAt(itemEntity, stack.copyWithCount(remainCount))
-            }
-        } else {
-            // レシピが存在しない場合，拾いなおすまで再実行させない
-            itemEntity.persistentData.putBoolean(RagiumConstantValues.IGNORE_CAULDRON_DROP, true)
-        }
-    }
-
-    //    Loot Table    //
-
-    @SubscribeEvent
-    fun onLoadLootTable(event: LootTableLoadEvent) {
-        val loot: LootTable = event.table
-
-        fun modify(entityType: EntityType<*>, function: LootTable.() -> Unit) {
-            if (loot.lootTableId == entityType.defaultLootTable.location()) {
-                function(loot)
+    private fun onEntityDeath(event: LivingDeathEvent) {
+        // 対象が共振の残骸を生成しない場合はスキップ
+        val entity: LivingEntity = event.entity
+        if (!entity.type.`is`(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)) return
+        // サーバー側のみで実行する
+        val level: Level = entity.level()
+        if (level.isClientSide) return
+        // 半径4 m以内のブロックに対して変換を試みる
+        val entityPos: BlockPos = entity.blockPosition()
+        val random: RandomSource = entity.random
+        BlockPos.betweenClosed(entityPos.offset(-4, -4, -4), entityPos.offset(4, 4, 4)).forEach { pos: BlockPos ->
+            val state: BlockState = level.getBlockState(pos)
+            if (state.`is`(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES)) {
+                if (random.nextInt(15) == 0) {
+                    level.destroyBlock(pos, false)
+                    level.setBlockAndUpdate(pos, RagiumBlocks.RESONANT_DEBRIS.get().defaultBlockState())
+                }
             }
         }
-
-        fun modify(block: Block, function: LootTable.() -> Unit) {
-            if (loot.lootTableId == block.lootTable.location()) {
-                function(loot)
-            }
-        }
-
-        // エルダーガーディアンがエルダーの心臓を落とすように
-        modify(EntityType.ELDER_GUARDIAN) {
-            addPool(
-                LootPool
-                    .lootPool()
-                    .setRolls(ConstantValue.exactly(1f))
-                    .add(LootItem.lootTableItem(RagiumItems.ELDER_HEART))
-                    .build(),
-            )
-            LOGGER.info("Modified loot table for Elder Guardian!")
-        }
-        // 行商人がカタログを落とすように
-        modify(EntityType.WANDERING_TRADER) {
-            if (RagiumConfig.COMMON.dropTraderCatalog.get()) {
-                addPool(
-                    LootPool
-                        .lootPool()
-                        .setRolls(ConstantValue.exactly(1f))
-                        .add(LootItem.lootTableItem(RagiumItems.TRADER_CATALOG))
-                        .build(),
-                )
-            }
-            LOGGER.info("Modified loot table for Wandering Trader!")
-        }
-    }
-
-    //    Tooltips    //
-
-    @SubscribeEvent
-    fun itemTooltips(event: ItemTooltipEvent) {
-        val stack: ItemStack = event.itemStack
-        if (stack.`is`(RagiumItemTags.WIP)) {
-            event.toolTip.add(Component.translatable(RagiumTranslationKeys.TEXT_WIP).withStyle(ChatFormatting.DARK_RED))
-        }
-    }
-
-    @SubscribeEvent
-    fun gatherComponents(event: RenderTooltipEvent.GatherComponents) {
-        val stack: ItemStack = event.itemStack
-        val content: SimpleFluidContent = stack.get(RagiumComponentTypes.FLUID_CONTENT) ?: return
-        if (content.isEmpty) return
-        // event.tooltipElements.add(1, Either.right(HTFluidTooltipComponent(content)))
     }
 }

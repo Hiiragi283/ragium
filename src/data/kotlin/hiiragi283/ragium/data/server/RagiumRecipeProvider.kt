@@ -1,19 +1,23 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.data.server.recipe.RagiumArsRecipeProvider
+import hiiragi283.ragium.data.server.material.ModMaterialFamilies
+import hiiragi283.ragium.data.server.material.RagiumMaterialFamilies
+import hiiragi283.ragium.data.server.material.VanillaMaterialFamilies
 import hiiragi283.ragium.data.server.recipe.RagiumBlockInteractingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumDelightRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumExtractingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFoodRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMiscRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumReplicationRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumArsRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumDelightRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumMekanismRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumOritechRecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumReplicationRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
@@ -23,6 +27,10 @@ import java.util.concurrent.CompletableFuture
 class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     RecipeProvider(output, registries) {
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
+        VanillaMaterialFamilies
+        RagiumMaterialFamilies
+        ModMaterialFamilies
+
         RagiumBlockInteractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
@@ -36,6 +44,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.ARS_NOUVEAU)
         RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.FARMERS_DELIGHT)
         RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.MEKANISM)
+        RagiumOritechRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.ORITECH)
         RagiumReplicationRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.REPLICATION)
     }
 }

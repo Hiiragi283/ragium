@@ -3,23 +3,21 @@ package hiiragi283.ragium
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.RagiumDataMaps
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
-import hiiragi283.ragium.setup.RagiumAdvancementTriggers
+import hiiragi283.ragium.internal.RagiumRuntimeEvents
 import hiiragi283.ragium.setup.RagiumArmorMaterials
-import hiiragi283.ragium.setup.RagiumBlockActionSerializers
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumCauldronInteractions
-import hiiragi283.ragium.setup.RagiumComponentTypes
 import hiiragi283.ragium.setup.RagiumCreativeTabs
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.neoforged.api.distmarker.Dist
@@ -30,7 +28,6 @@ import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.common.NeoForgeMod
-import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NewRegistryEvent
@@ -49,12 +46,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         eventBus.addListener(::registerRegistries)
         eventBus.addListener(::construct)
+        eventBus.addListener(RagiumMiscRegister::onRegister)
         eventBus.addListener(::commonSetup)
-        eventBus.addListener(::registerCauldronContents)
         eventBus.addListener(::registerDataMapTypes)
         eventBus.addListener(::registerPackets)
 
-        RagiumComponentTypes.REGISTER.register(eventBus)
+        RagiumDataComponents.REGISTER.register(eventBus)
 
         RagiumFluidContents
         RagiumFluidContents.REGISTER.init(eventBus)
@@ -66,18 +63,17 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
 
-        RagiumAdvancementTriggers.REGISTER.register(eventBus)
-        RagiumBlockActionSerializers.REGISTER.register(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumRecipeTypes.REGISTER.register(eventBus)
 
         RagiumMenuTypes.REGISTER.register(eventBus)
 
-        HTEnergyNetworkManagerImpl
-
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onModConstruct(eventBus, dist)
         }
+
+        HTEnergyNetworkManagerImpl.registerEvents()
+        RagiumRuntimeEvents.registerEvents()
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
@@ -93,7 +89,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun construct(event: FMLConstructModEvent) {}
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
-        event.enqueueWork(RagiumCauldronInteractions::initDefaultInteractions)
         event.enqueueWork(RagiumFluidContents.REGISTER::registerDispensers)
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
@@ -102,15 +97,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         LOGGER.info("Loaded common setup!")
     }
 
-    private fun registerCauldronContents(event: RegisterCauldronFluidContentEvent) {
-        RagiumCauldronInteractions.registerCauldronContents(event)
-
-        LOGGER.info("Registered cauldron contents!")
-    }
-
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.TREE_TAP)
-
         LOGGER.info("Registered data map types!")
     }
 

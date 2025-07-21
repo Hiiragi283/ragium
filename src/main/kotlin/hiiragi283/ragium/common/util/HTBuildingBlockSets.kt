@@ -1,21 +1,12 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.blockId
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTItemRegister
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
@@ -75,57 +66,6 @@ class HTBuildingBlockSets(
     override fun init(eventBus: IEventBus) {
         blockRegister.register(eventBus)
         itemRegister.register(eventBus)
-    }
-
-    override fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        // Base -> Slab
-        HTShapedRecipeBuilder(slab, 6)
-            .pattern("AAA")
-            .define('A', base)
-            .save(output)
-
-        output.accept(
-            slab.asItemHolder().idOrThrow.withPrefix("stonecutting/"),
-            StonecutterRecipe(
-                "",
-                Ingredient.of(base),
-                slab.toStack(2),
-            ),
-            null,
-        )
-        // Base -> Stairs
-        HTShapedRecipeBuilder(stairs, 4, CraftingBookCategory.BUILDING)
-            .pattern("A  ")
-            .pattern("AA ")
-            .pattern("AAA")
-            .define('A', base)
-            .save(output)
-
-        output.accept(
-            stairs.id.withPrefix("stonecutting/"),
-            StonecutterRecipe(
-                "",
-                Ingredient.of(base),
-                ItemStack(stairs),
-            ),
-            null,
-        )
-        // Base -> Wall
-        HTShapedRecipeBuilder(wall, 4, CraftingBookCategory.BUILDING)
-            .pattern("AAA")
-            .pattern("AAA")
-            .define('A', base)
-            .save(output)
-
-        output.accept(
-            wall.id.withPrefix("stonecutting/"),
-            StonecutterRecipe(
-                "",
-                Ingredient.of(base),
-                ItemStack(wall),
-            ),
-            null,
-        )
     }
 
     override fun addBlockStates(provider: BlockStateProvider) {

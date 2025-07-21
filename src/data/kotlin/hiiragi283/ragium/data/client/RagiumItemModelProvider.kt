@@ -21,6 +21,7 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredItem
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
@@ -55,6 +56,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            removeAll(RagiumItems.FORGE_HAMMERS.values)
 
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
@@ -82,7 +84,15 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
                 .fluid(content.get())
         }
 
-        // Tool
+        // Armors
+        RagiumItems.AZURE_STEEL_ARMORS.addItemModels(this)
+        RagiumItems.DEEP_STEEL_ARMORS.addItemModels(this)
+        // Tools
         RagiumItems.AZURE_STEEL_TOOLS.addItemModels(this)
+        RagiumItems.DEEP_STEEL_TOOLS.addItemModels(this)
+
+        RagiumItems.FORGE_HAMMERS.values
+            .map(DeferredItem<*>::getId)
+            .forEach(::handheldItem)
     }
 }

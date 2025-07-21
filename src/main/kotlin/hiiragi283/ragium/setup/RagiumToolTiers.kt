@@ -1,6 +1,6 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.item.Tiers
 import net.minecraft.world.item.crafting.Ingredient
@@ -14,7 +14,7 @@ object RagiumToolTiers {
         Tiers.STONE.speed,
         Tiers.STONE.attackDamageBonus,
         Tiers.STONE.enchantmentValue,
-    ) { Ingredient.of(RagiumItemTags.INGOTS_RAGI_ALLOY) }
+    ) { Ingredient.of(RagiumCommonTags.Items.INGOTS_RAGI_ALLOY) }
 
     @JvmField
     val AZURE_STEEL = SimpleTier(
@@ -23,5 +23,14 @@ object RagiumToolTiers {
         Tiers.IRON.speed,
         Tiers.IRON.attackDamageBonus,
         Tiers.IRON.enchantmentValue,
-    ) { Ingredient.of(RagiumItemTags.INGOTS_AZURE_STEEL) }
+    ) { Ingredient.of(RagiumCommonTags.Items.INGOTS_AZURE_STEEL) }
+
+    @JvmField
+    val DEEP_STEEL = SimpleTier(
+        BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+        Tiers.NETHERITE.uses,
+        Tiers.NETHERITE.speed,
+        Tiers.NETHERITE.attackDamageBonus,
+        Tiers.NETHERITE.enchantmentValue,
+    ) { Ingredient.of(RagiumCommonTags.Items.INGOTS_DEEP_STEEL) }
 }

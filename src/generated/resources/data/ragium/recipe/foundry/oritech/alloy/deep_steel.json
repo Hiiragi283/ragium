@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "oritech"
+    }
+  ],
+  "type": "oritech:foundry",
+  "fluidInput": {
+    "amount": 0,
+    "fluid": "minecraft:empty"
+  },
+  "fluidOutputs": [],
+  "ingredients": [
+    {
+      "item": "ragium:deep_scrap"
+    },
+    {
+      "tag": "c:ingots/azure_steel"
+    }
+  ],
+  "results": [
+    {
+      "count": 1,
+      "id": "ragium:deep_steel_ingot"
+    }
+  ],
+  "time": 160
+}

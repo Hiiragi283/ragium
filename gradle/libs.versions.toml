@@ -1,30 +1,32 @@
 [versions]
 minecraft = "1.21.1"
-ragium = "0.6.0"
+ragium = "0.7.0"
 
 parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
 neo-moddev = "2.0.96"
-neo-version = "21.1.186"
+neo-version = "21.1.193"
 
 kff-version = "5.9.0"
 kff-version-range = "[5.9,)"
 ktlint = "12.3.0"
 
 aa = "1.3.19+mc1.21.1"
-ae2 = "19.2.12"
-ars = "5.8.6.1139"
+ae2 = "19.2.13"
+almost = "1.21.1-1.2.5"
+ars = "5.10.2.1197"
 curious = "9.5.1+1.21.1"
 delight = "1.21.1-1.2.8"
 dire = "6369120"
 emi = "1.1.22+1.21.1"
-guide = "21.1.12"
-jade = "15.10.1+neoforge"
+guide = "21.1.13"
+jade = "15.10.2+neoforge"
 mek = "1.21.1-10.7.14.79"
+oritech = "0.17.1"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
 pneuma = "8.2.12+mc1.21.1"
-replica = "1.21-1.1.27"
+replica = "1.21-1.2.0"
 rs2 = "2.0.0-beta.2"
 
 [libraries]
@@ -33,6 +35,7 @@ kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref =
 
 aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
 ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
+almost = { group = "com.almostreliable.mods", name = "almostunified-neoforge", version.ref = "almost" }
 ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
 curious = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curious" }
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
@@ -41,6 +44,7 @@ emi = { group = "dev.emi", name = "emi-neoforge", version.ref  = "emi" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
+oritech = { group = "maven.modrinth", name = "oritech", version.ref = "oritech" }
 patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 replica = { group = "maven.modrinth", name = "replication", version.ref = "replica" }
@@ -51,12 +55,14 @@ rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforg
 mods-impl = [
     "aa",
     "ae2",
+    "almost",
     "curious",
     "delight",
     "emi",
     "guide",
     "jade",
     "mek",
+    "oritech",
     "patchouli-gen",
     "pneuma",
     "replica",

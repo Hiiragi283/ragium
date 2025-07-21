@@ -6,23 +6,20 @@ import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
-import dev.emi.emi.api.recipe.EmiInfoRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
+import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.recipe.special.EmiSmithingTrimRecipe
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumDataMaps
-import hiiragi283.ragium.api.data.HTTreeTap
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.tag.RagiumItemTags
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -38,16 +35,13 @@ import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTSolidifyingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTTreeTappingEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
-import net.minecraft.core.Registry
-import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -59,8 +53,6 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
@@ -85,9 +77,13 @@ class RagiumEmiPlugin : EmiPlugin {
         recipeManager = registry.recipeManager
 
         addRecipes()
-        addInfos()
         // Functions
         registry.addGenericStackProvider(RagiumEmiStackProvider)
+
+        registry.setDefaultComparison(
+            RagiumItems.RAGI_TICKET.get(),
+            Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TABLE_ID.get()) },
+        )
     }
 
     //    Recipes    //
@@ -109,7 +105,7 @@ class RagiumEmiPlugin : EmiPlugin {
                         EmiCraftingRecipe(
                             listOf(
                                 EmiStack.of(RagiumItems.ICE_CREAM),
-                                EmiIngredient.of(RagiumItemTags.FOODS_CHERRY),
+                                EmiIngredient.of(RagiumCommonTags.Items.FOODS_CHERRY),
                                 EmiStack.of(createPotionStack(holder)),
                                 EmiIngredient.of(Tags.Items.DYES_GREEN),
                             ),
@@ -134,18 +130,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 EmiStack.EMPTY,
                 recipe,
             )
-        }
-        // Tree Tapping
-        val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
-        for ((key: ResourceKey<Fluid>, treeTap: HTTreeTap) in fluidRegistry.getDataMap(RagiumDataMaps.TREE_TAP)) {
-            val output: EmiStack = fluidRegistry.get(key)?.let(EmiStack::of) ?: continue
-            addRecipeSafe(key.location().withPrefix("/")) { id: ResourceLocation ->
-                HTTreeTappingEmiRecipe(
-                    id,
-                    treeTap.getBlocks().toEmi(),
-                    output,
-                )
-            }
         }
         // Block Action
         forEachRecipes(RagiumRecipeTypes.BLOCK_INTERACTING.get()) { id: ResourceLocation, recipe: HTBlockInteractingRecipe ->
@@ -358,47 +342,6 @@ class RagiumEmiPlugin : EmiPlugin {
                 .id(id1)
                 .output(output)
                 .build()
-        }
-    }
-
-    //    Info    //
-
-    private fun addInfos() {
-        addInfo(RagiumBlocks.ASH_LOG, Component.translatable(RagiumTranslationKeys.EMI_ASH_LOG))
-        addInfo(RagiumBlocks.CRIMSON_SOIL, Component.translatable(RagiumTranslationKeys.EMI_CRIMSON_SOIL))
-        addInfo(
-            RagiumBlocks.OBSIDIAN_GLASS,
-            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
-            Component.translatable(RagiumTranslationKeys.EMI_OBSIDIAN_GLASS),
-        )
-        addInfo(RagiumBlocks.QUARTZ_GLASS, Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS))
-        addInfo(
-            RagiumBlocks.SOUL_GLASS,
-            Component.translatable(RagiumTranslationKeys.EMI_HARVESTABLE_GLASS),
-            Component.translatable(RagiumTranslationKeys.EMI_SOUL_GLASS),
-        )
-
-        addInfo(RagiumItems.AMBROSIA, Component.translatable(RagiumTranslationKeys.EMI_AMBROSIA))
-        addInfo(RagiumItems.ELDRITCH_EGG, Component.translatable(RagiumTranslationKeys.EMI_ELDRITCH_EGG))
-        addInfo(RagiumItems.ICE_CREAM, Component.translatable(RagiumTranslationKeys.EMI_ICE_CREAM))
-        addInfo(RagiumItems.ITEM_MAGNET, Component.translatable(RagiumTranslationKeys.EMI_ITEM_MAGNET))
-        addInfo(RagiumItems.RAGI_CHERRY, Component.translatable(RagiumTranslationKeys.EMI_RAGI_CHERRY))
-        addInfo(RagiumItems.RAGI_LANTERN, Component.translatable(RagiumTranslationKeys.EMI_RAGI_LANTERN))
-        addInfo(RagiumItems.TRADER_CATALOG, Component.translatable(RagiumTranslationKeys.EMI_TRADER_CATALOG))
-        addInfo(RagiumItems.WARPED_WART, Component.translatable(RagiumTranslationKeys.EMI_WARPED_WART))
-    }
-
-    private fun addInfo(icon: ItemLike, vararg texts: Component) {
-        addInfo(EmiStack.of(icon), *texts)
-    }
-
-    private fun addInfo(icon: EmiStack, vararg texts: Component) {
-        addRecipeSafe(icon.id.withPrefix("/")) { id: ResourceLocation ->
-            EmiInfoRecipe(
-                listOf(icon),
-                listOf(*texts),
-                id,
-            )
         }
     }
 

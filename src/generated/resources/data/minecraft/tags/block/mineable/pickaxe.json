@@ -1,8 +1,8 @@
 {
   "values": [
+    "#c:obsidians/mysterious",
     "#ragium:led_blocks",
-    "ragium:mysterious_obsidian",
-    "ragium:tree_tap",
+    "ragium:resonant_debris",
     "ragium:raginite_ore",
     "ragium:deepslate_raginite_ore",
     "ragium:nether_raginite_ore",
@@ -66,7 +66,6 @@
     "ragium:refinery",
     "ragium:solidifier",
     "ragium:milk_drain",
-    "ragium:charger",
     "ragium:item_collector",
     "ragium:lava_collector",
     "ragium:exp_collector",

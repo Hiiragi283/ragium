@@ -1,25 +1,12 @@
 package hiiragi283.ragium.integration.emi
 
 import dev.emi.emi.api.EmiRegistry
-import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
 
 object RagiumEmiCategories {
-    @JvmField
-    val CAULDRON_DROPPING = HTEmiRecipeCategory(
-        RagiumAPI.id(RagiumConstantValues.CAULDRON_DROPPING),
-        EmiStack.of(Items.CAULDRON),
-        Component.translatable(RagiumTranslationKeys.EMI_CAULDRON_DROPPING),
-    )
-
-    @JvmField
-    val TREE_TAPPING = HTEmiRecipeCategory(RagiumAPI.id("tree_tapping"), RagiumBlocks.TREE_TAP)
-
     // Machines
     @JvmField
     val ALLOYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.ALLOYING), RagiumBlocks.ALLOY_SMELTER)
@@ -44,8 +31,6 @@ object RagiumEmiCategories {
 
     @JvmField
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(
-        CAULDRON_DROPPING,
-        TREE_TAPPING,
         // Machines
         ALLOYING,
         CRUSHING,

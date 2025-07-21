@@ -4,8 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.HTChargerBlockEntity
+import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
@@ -22,6 +21,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -75,9 +75,6 @@ object RagiumBlockEntityTypes {
         "creative_energy_unit",
         HTEnergyNetworkAccessBlockEntity::Creative,
     )
-
-    @JvmField
-    val CHARGER: HTDeferredBlockEntityType<HTChargerBlockEntity> = registerTick("charger", ::HTChargerBlockEntity)
 
     @JvmField
     val ENI: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
@@ -154,7 +151,6 @@ object RagiumBlockEntityTypes {
         add(REFINERY, RagiumBlocks.REFINERY)
         add(SOLIDIFIER, RagiumBlocks.SOLIDIFIER)
 
-        add(CHARGER, RagiumBlocks.CHARGER)
         add(ENI, RagiumBlocks.ENI)
         add(EXP_COLLECTOR, RagiumBlocks.EXP_COLLECTOR)
         add(ITEM_COLLECTOR, RagiumBlocks.ITEM_COLLECTOR)
@@ -175,22 +171,22 @@ object RagiumBlockEntityTypes {
 
     @SubscribeEvent
     fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        fun registerHandlers(holder: HTDeferredBlockEntityType<out HTBlockEntity>) {
-            val type: BlockEntityType<out HTBlockEntity> = holder.get()
+        fun <T> registerHandlers(holder: HTDeferredBlockEntityType<T>) where T : BlockEntity, T : HTHandlerBlockEntity {
+            val type: BlockEntityType<T> = holder.get()
             event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 type,
-                HTBlockEntity::getItemHandler,
+                HTHandlerBlockEntity::getItemHandler,
             )
             event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 type,
-                HTBlockEntity::getFluidHandler,
+                HTHandlerBlockEntity::getFluidHandler,
             )
             event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 type,
-                HTBlockEntity::getEnergyStorage,
+                HTHandlerBlockEntity::getEnergyStorage,
             )
         }
 
@@ -203,7 +199,6 @@ object RagiumBlockEntityTypes {
         registerHandlers(REFINERY)
         registerHandlers(SOLIDIFIER)
 
-        registerHandlers(CHARGER)
         registerHandlers(ENI)
         registerHandlers(EXP_COLLECTOR)
         registerHandlers(ITEM_COLLECTOR)

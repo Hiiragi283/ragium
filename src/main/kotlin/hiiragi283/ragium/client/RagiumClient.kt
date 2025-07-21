@@ -6,11 +6,9 @@ import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.client.renderer.HTChargerRenderer
 import hiiragi283.ragium.client.screen.HTBasicMachineScreen
 import hiiragi283.ragium.client.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.screen.HTItemCollectorScreen
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -22,6 +20,7 @@ import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
+import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -29,17 +28,15 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
-import net.neoforged.neoforge.fluids.CauldronFluidContent
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import org.slf4j.Logger
 import java.awt.Color
 
+@OnlyIn(Dist.CLIENT)
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     companion object {
@@ -82,7 +79,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             RagiumBlocks.WATER_COLLECTOR.get(),
         )
         // Cauldrons
-        for (cauldron: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
+        /*for (cauldron: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
             event.register(
                 { state: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
                     val content: CauldronFluidContent =
@@ -98,7 +95,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                 },
                 cauldron.get(),
             )
-        }
+        }*/
 
         LOGGER.info("Registered BlockColor!")
     }
@@ -191,8 +188,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CHARGER.get(), ::HTChargerRenderer)
-
         LOGGER.info("Registered BlockEntityRenderers!")
     }
 

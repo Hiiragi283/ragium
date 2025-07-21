@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.block.HTChargerBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
@@ -16,18 +15,14 @@ import hiiragi283.ragium.common.block.HTSoulGlassBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeSlabBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
-import hiiragi283.ragium.common.block.HTTreeTapBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.util.HTBuildingBlockSets
 import hiiragi283.ragium.common.util.HTOreSets
-import net.minecraft.core.cauldron.CauldronInteraction
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.ColoredFallingBlock
-import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TransparentBlock
@@ -126,12 +121,6 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val RAGINITE_ORES = HTOreSets(RagiumConstantValues.RAGINITE)
-
-    @JvmField
-    val RAGI_CRYSTAL_ORES = HTOreSets(RagiumConstantValues.RAGI_CRYSTAL)
-
-    @JvmField
     val SILT: DeferredBlock<ColoredFallingBlock> = register(
         "silt",
         copyOf(Blocks.SAND),
@@ -161,6 +150,16 @@ object RagiumBlocks {
         ::HTExpBerriesBushBlock,
         copyOf(Blocks.SWEET_BERRY_BUSH),
     )
+
+    @JvmField
+    val RAGINITE_ORES = HTOreSets(RagiumConstantValues.RAGINITE)
+
+    @JvmField
+    val RAGI_CRYSTAL_ORES = HTOreSets(RagiumConstantValues.RAGI_CRYSTAL)
+
+    @JvmField
+    val RESONANT_DEBRIS: DeferredBlock<Block> =
+        register("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
 
     //    Materials    //
 
@@ -435,44 +434,6 @@ object RagiumBlocks {
     @JvmField
     val MILK_DRAIN: DeferredBlock<*> = register("milk_drain", stone(), ::HTMilkDrainBlock)
 
-    @JvmField
-    val TREE_TAP: DeferredBlock<HTTreeTapBlock> = register(
-        "tree_tap",
-        lightMetal().randomTicks().noOcclusion(),
-        ::HTTreeTapBlock,
-    )
-
-    @JvmStatic
-    private fun registerCauldron(name: String, interactions: CauldronInteraction.InteractionMap): DeferredBlock<*> = REGISTER.registerBlock(
-        "${name}_cauldron",
-        { prop: BlockBehaviour.Properties -> LayeredCauldronBlock(Biome.Precipitation.NONE, interactions, prop) },
-        copyOf(Blocks.CAULDRON),
-    )
-
-    @JvmField
-    val HONEY_CAULDRON: DeferredBlock<*> =
-        registerCauldron(RagiumConstantValues.HONEY, RagiumCauldronInteractions.HONEY)
-
-    @JvmField
-    val MUSHROOM_STEW_CAULDRON: DeferredBlock<*> =
-        registerCauldron(RagiumConstantValues.MUSHROOM_STEW, RagiumCauldronInteractions.MUSHROOM_STEW)
-
-    @JvmField
-    val CRIMSON_SAP_CAULDRON: DeferredBlock<*> =
-        registerCauldron(RagiumConstantValues.CRIMSON_SAP, RagiumCauldronInteractions.CRIMSON_SAP)
-
-    @JvmField
-    val WARPED_SAP_CAULDRON: DeferredBlock<*> =
-        registerCauldron(RagiumConstantValues.WARPED_SAP, RagiumCauldronInteractions.WARPED_SAP)
-
-    @JvmField
-    val CAULDRONS: List<DeferredBlock<*>> = listOf(
-        HONEY_CAULDRON,
-        MUSHROOM_STEW_CAULDRON,
-        CRIMSON_SAP_CAULDRON,
-        WARPED_SAP_CAULDRON,
-    )
-
     // Basic
     @JvmStatic
     private fun registerEntityBlock(
@@ -490,9 +451,6 @@ object RagiumBlocks {
     val WATER_COLLECTOR: DeferredBlock<*> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.WATER_COLLECTOR)
 
     // Advanced
-    @JvmField
-    val CHARGER: DeferredBlock<*> = register("charger", heavyMetal(), ::HTChargerBlock)
-
     @JvmField
     val ENI: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.ENI)
 
@@ -512,7 +470,6 @@ object RagiumBlocks {
     @JvmField
     val DEVICES: List<DeferredBlock<*>> = listOf(
         MILK_DRAIN,
-        CHARGER,
         // 色でソート
         ITEM_COLLECTOR,
         LAVA_COLLECTOR,

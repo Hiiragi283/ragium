@@ -1,13 +1,8 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTItemSet
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.AxeItem
 import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.HoeItem
@@ -16,14 +11,12 @@ import net.minecraft.world.item.PickaxeItem
 import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.SwordItem
 import net.minecraft.world.item.Tier
-import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredItem
 
-class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>) : HTItemSet {
+class HTToolSets(material: Tier, name: String) : HTItemSet {
     private val itemRegister = HTItemRegister(RagiumAPI.MOD_ID)
 
     val shovelItem: DeferredItem<ShovelItem> = itemRegister.registerItem(
@@ -56,73 +49,12 @@ class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>)
         Item.Properties().attributes(DiggerItem.createAttributes(material, 3f, -2.4f)),
     )
 
-    val hammerItem: DeferredItem<HTForgeHammerItem> = itemRegister.registerItem(
-        "${name}_hammer",
-        { HTForgeHammerItem(material, it) },
-    )
-
     //    HTItemSet    //
 
     override val itemHolders: List<DeferredItem<*>> = itemRegister.entries
 
     override fun init(eventBus: IEventBus) {
         itemRegister.register(eventBus)
-    }
-
-    override fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        // Axe
-        HTShapedRecipeBuilder(axeItem, category = CraftingBookCategory.EQUIPMENT)
-            .pattern(
-                "A ",
-                "AB",
-                "BB",
-            ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', tagKey)
-            .save(output)
-        // Hoe
-        HTShapedRecipeBuilder(hoeItem, category = CraftingBookCategory.EQUIPMENT)
-            .pattern(
-                "A ",
-                "A ",
-                "BB",
-            ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', tagKey)
-            .save(output)
-        // Pickaxe
-        HTShapedRecipeBuilder(pickaxeItem, category = CraftingBookCategory.EQUIPMENT)
-            .pattern(
-                " A ",
-                " A ",
-                "BBB",
-            ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', tagKey)
-            .save(output)
-        // Shovel
-        HTShapedRecipeBuilder(shovelItem, category = CraftingBookCategory.EQUIPMENT)
-            .pattern(
-                "A",
-                "A",
-                "B",
-            ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', tagKey)
-            .save(output)
-        // Sword
-        HTShapedRecipeBuilder(swordItem, category = CraftingBookCategory.EQUIPMENT)
-            .pattern(
-                "A",
-                "B",
-                "B",
-            ).define('A', Tags.Items.RODS_WOODEN)
-            .define('B', tagKey)
-            .save(output)
-        // Forge Hammer
-        HTShapedRecipeBuilder(hammerItem, category = CraftingBookCategory.EQUIPMENT)
-            .pattern(" AA")
-            .pattern("BBA")
-            .pattern(" AA")
-            .define('A', tagKey)
-            .define('B', Tags.Items.RODS_WOODEN)
-            .save(output)
     }
 
     override fun addItemModels(provider: ItemModelProvider) {
@@ -135,7 +67,6 @@ class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>)
         provider.addItem(pickaxeItem, "$name Pickaxe")
         provider.addItem(shovelItem, "$name Shovel")
         provider.addItem(swordItem, "$name Sword")
-        provider.addItem(hammerItem, "$name Forge Hammer")
     }
 
     override fun addTranslationJp(name: String, provider: LanguageProvider) {
@@ -144,6 +75,5 @@ class HTToolSets(material: Tier, name: String, private val tagKey: TagKey<Item>)
         provider.addItem(pickaxeItem, "${name}のツルハシ")
         provider.addItem(shovelItem, "${name}のシャベル")
         provider.addItem(swordItem, "${name}の剣")
-        provider.addItem(hammerItem, "${name}の鍛造ハンマー")
     }
 }

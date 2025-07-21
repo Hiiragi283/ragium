@@ -1,0 +1,16 @@
+{
+  "type": "ragium:block_interacting",
+  "actions": [
+    {
+      "type": "c:drop_item",
+      "stack": {
+        "count": 1,
+        "id": "minecraft:weeping_vines"
+      }
+    }
+  ],
+  "ingredient": {
+    "item": "ragium:bloody_ticket"
+  },
+  "predicate": "minecraft:vine"
+}

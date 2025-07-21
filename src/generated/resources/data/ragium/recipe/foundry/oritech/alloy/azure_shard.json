@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "oritech"
+    }
+  ],
+  "type": "oritech:foundry",
+  "fluidInput": {
+    "amount": 0,
+    "fluid": "minecraft:empty"
+  },
+  "fluidOutputs": [],
+  "ingredients": [
+    {
+      "tag": "c:gems/amethyst"
+    },
+    {
+      "tag": "c:gems/lapis"
+    }
+  ],
+  "results": [
+    {
+      "count": 1,
+      "id": "ragium:azure_shard"
+    }
+  ],
+  "time": 160
+}

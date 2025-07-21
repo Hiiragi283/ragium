@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.extension.globalPosText
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumComponentTypes
+import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos
@@ -40,7 +40,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         // 右クリックしたブロックがテレポートアンカーの場合，その座標を保持する
         if (level.getBlockState(pos).`is`(RagiumBlocks.TELEPORT_ANCHOR)) {
             context.itemInHand.set(
-                RagiumComponentTypes.TELEPORT_POS,
+                RagiumDataComponents.TELEPORT_POS,
                 GlobalPos(level.dimension(), pos.above()),
             )
             return InteractionResult.sidedSuccess(level.isClientSide)
@@ -79,7 +79,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
     }
 
     private fun tryToTeleport(player: Player, stack: ItemStack): Boolean {
-        val globalPos: GlobalPos = stack.get(RagiumComponentTypes.TELEPORT_POS) ?: return false
+        val globalPos: GlobalPos = stack.get(RagiumDataComponents.TELEPORT_POS) ?: return false
         val targetLevel: ServerLevel =
             RagiumAPI.getInstance().getCurrentServer()?.getLevel(globalPos.dimension) ?: return false
         // テレポート可能か判定する
@@ -106,10 +106,10 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
 
     private fun canTeleportTo(serverLevel: ServerLevel, globalPos: GlobalPos): DataResult<Unit> {
         if (!serverLevel.isLoaded(globalPos.pos)) {
-            return DataResult.error(RagiumTranslationKeys::TEXT_MISSING_POS)
+            return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_POS)
         }
         if (!serverLevel.getBlockState(globalPos.pos.below()).`is`(RagiumBlocks.TELEPORT_ANCHOR)) {
-            return DataResult.error(RagiumTranslationKeys::TEXT_MISSING_ANCHOR)
+            return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_ANCHOR)
         }
         return DataResult.success(Unit)
     }
@@ -136,8 +136,8 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        stack.get(RagiumComponentTypes.TELEPORT_POS)?.let(::globalPosText)?.let(tooltips::add)
+        stack.get(RagiumDataComponents.TELEPORT_POS)?.let(::globalPosText)?.let(tooltips::add)
     }
 
-    override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(RagiumComponentTypes.TELEPORT_POS)
+    override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(RagiumDataComponents.TELEPORT_POS)
 }

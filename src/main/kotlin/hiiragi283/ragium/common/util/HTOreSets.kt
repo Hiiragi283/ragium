@@ -8,8 +8,6 @@ import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTItemRegister
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -77,8 +75,6 @@ class HTOreSets(private val name: String) : HTBlockSet {
         blockRegister.register(eventBus)
         itemRegister.register(eventBus)
     }
-
-    override fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {}
 
     override fun addBlockStates(provider: BlockStateProvider) {
         fun register(ore: DeferredBlock<*>, stonePath: String) {

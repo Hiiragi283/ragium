@@ -4,7 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.extension.createPotionStack
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -90,7 +91,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .save(output)
         // LPG + Clay -> Polymer Resin
         createSolidifying()
-            .itemOutput(RagiumItems.POLYMER_RESIN)
+            .itemOutput(RagiumModTags.Items.POLYMER_RESIN)
             .catalyst(Items.CLAY_BALL)
             .fluidInput(RagiumFluidContents.LPG, 100)
             .save(output)
@@ -98,7 +99,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         createRefining()
             .fluidOutput(RagiumFluidContents.LIGHT_FUEL, 40)
             .fluidOutput(RagiumFluidContents.HEAVY_FUEL, 40)
-            .itemOutput(RagiumItems.SULFUR_DUST)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_SULFUR)
             .fluidInput(RagiumFluidContents.NAPHTHA, 100)
             .save(output)
         // Light Fuel + Heavy Fuel -> Diesel
@@ -179,7 +180,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Blaze Powder
         createSolidifying()
             .itemOutput(Items.BLAZE_POWDER)
-            .catalyst(RagiumItemTags.DUSTS_SULFUR)
+            .catalyst(RagiumCommonTags.Items.DUSTS_SULFUR)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
             .save(output)
         // Wind Charge
@@ -215,14 +216,14 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_stems")
         // Crimson Sap -> Sap + Crimson Crystal
         createRefining()
-            .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
+            .itemOutput(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
             .fluidOutput(RagiumFluidContents.SAP, 125)
             .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
-            .blasting(Items.BLAZE_POWDER)
-            .addIngredient(RagiumItemTags.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
+            .blasting(Items.BLAZE_POWDER, onlyBlasting = true)
+            .addIngredient(RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
             .save(output)
 
         // Warped Stem -> Warped Sap
@@ -232,14 +233,14 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_stems")
         // Warped Sap -> Sap + Warped Crystal
         createRefining()
-            .itemOutput(RagiumItems.WARPED_CRYSTAL)
+            .itemOutput(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)
             .fluidOutput(RagiumFluidContents.SAP, 125)
             .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
             .save(output)
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
-            .blasting(Items.ENDER_PEARL)
-            .addIngredient(RagiumItemTags.STORAGE_BLOCKS_WARPED_CRYSTAL)
+            .blasting(Items.ENDER_PEARL, onlyBlasting = true)
+            .addIngredient(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)
 
         // Eldritch Orb -> Eldritch Goo
@@ -249,7 +250,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_orb")
         // Eldritch Goo -> Eldritch Pearl
         createSolidifying()
-            .itemOutput(RagiumItems.ELDRITCH_PEARL)
+            .itemOutput(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
             .fluidInput(RagiumFluidContents.ELDRITCH_GOO, 500)
             .save(output)
     }

@@ -1,0 +1,21 @@
+{
+  "type": "ragium:refining",
+  "fluid_input": {
+    "amount": 100,
+    "tag": "c:naphtha"
+  },
+  "fluid_output": [
+    {
+      "amount": 40,
+      "id": "ragium:light_fuel"
+    },
+    {
+      "amount": 40,
+      "id": "ragium:heavy_fuel"
+    }
+  ],
+  "item_output": {
+    "count": 1,
+    "id": "#c:dusts/sulfur"
+  }
+}

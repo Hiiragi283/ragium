@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.recipe.custom
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.RagiumItemTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
@@ -26,7 +26,7 @@ class HTIceCreamSodaRecipe(category: CraftingBookCategory) : CustomRecipe(catego
             if (stackIn.isEmpty) continue
             if (stackIn.`is`(RagiumItems.ICE_CREAM) && !isIceCream) {
                 isIceCream = true
-            } else if (stackIn.`is`(RagiumItemTags.FOODS_CHERRY) && !isCherry) {
+            } else if (stackIn.`is`(RagiumCommonTags.Items.FOODS_CHERRY) && !isCherry) {
                 isCherry = true
             } else if (stackIn.has(DataComponents.POTION_CONTENTS) && !isPotion) {
                 isPotion = true

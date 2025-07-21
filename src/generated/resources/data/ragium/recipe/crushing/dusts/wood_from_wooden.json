@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:barrels/wooden"
+  },
+  "item_output": {
+    "count": 7,
+    "id": "#c:dusts/wood"
+  }
+}

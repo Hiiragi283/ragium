@@ -5,7 +5,8 @@ import hiiragi283.ragium.api.extension.addHolder
 import hiiragi283.ragium.api.extension.asFluidHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumFluidTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumFluidContents
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
@@ -50,20 +51,20 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_DIOXIDE)
         // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_TRIOXIDE)
 
-        tag(RagiumFluidTags.CHOCOLATES).addContent(RagiumFluidContents.CHOCOLATE)
+        tag(RagiumCommonTags.Fluids.CHOCOLATES).addContent(RagiumFluidContents.CHOCOLATE)
 
-        tag(RagiumFluidTags.NITRO_FUEL)
+        tag(RagiumModTags.Fluids.FUELS_NITRO)
             .addOptionalTag(commonId("boosted_diesel"))
             .addOptionalTag(commonId("high_power_biodiesel"))
         // addTag(RagiumFluidTags.NITRO_FUEL, RagiumFluidContents.NITRO_FUEL.commonTag)
 
-        tag(RagiumFluidTags.NON_NITRO_FUEL)
+        tag(RagiumModTags.Fluids.FUELS_NON_NITRO)
             .addOptionalTag(commonId("biofuel"))
             .addOptionalTag(commonId("heavy_fuel"))
             .addOptionalTag(commonId("light_fuel"))
         // addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluidContents.FUEL.commonTag)
 
-        tag(RagiumFluidTags.THERMAL_FUEL)
+        tag(RagiumModTags.Fluids.FUELS_THERMAL)
             .addOptionalTag(commonId("steam"))
             .addOptionalTag(commonId("superheated_sodium"))
             .addTag(Tags.Fluids.LAVA)

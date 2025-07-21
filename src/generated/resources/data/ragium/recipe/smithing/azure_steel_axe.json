@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:ingots/azure_steel"
+  },
+  "base": {
+    "item": "minecraft:iron_axe"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:azure_steel_axe"
+  },
+  "template": {
+    "item": "ragium:azure_steel_upgrade_smithing_template"
+  }
+}

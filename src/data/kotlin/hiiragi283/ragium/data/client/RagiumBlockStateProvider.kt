@@ -17,7 +17,6 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
@@ -49,8 +48,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
             add(RagiumBlocks.SPONGE_CAKE)
 
-            add(RagiumBlocks.BASIC_MACHINE_FRAME)
-            add(RagiumBlocks.ADVANCED_MACHINE_FRAME)
             add(RagiumBlocks.DEVICE_CASING)
 
             add(RagiumBlocks.CEU)
@@ -80,6 +77,14 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // Ore
         RagiumBlocks.RAGINITE_ORES.addBlockStates(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addBlockStates(this)
+
+        simpleBlock(
+            RagiumBlocks.RESONANT_DEBRIS.get(),
+            models()
+                .withExistingParent(RagiumBlocks.RESONANT_DEBRIS.id.path, "cube_column")
+                .texture("end", RagiumBlocks.RESONANT_DEBRIS.blockId.withSuffix("_top"))
+                .texture("side", RagiumBlocks.RESONANT_DEBRIS.blockId.withSuffix("_side")),
+        )
 
         // Log
         logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
@@ -121,6 +126,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             ),
         )
 
+        cutoutSimpleBlock(RagiumBlocks.BASIC_MACHINE_FRAME)
+        cutoutSimpleBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME)
+
         // Machine
         fun machine(holder: DeferredBlock<*>, top: ResourceLocation, bottom: ResourceLocation) {
             horizontalBlock(
@@ -144,23 +152,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(RagiumBlocks.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
 
-        // Cauldron
-        horizontalBlock(RagiumBlocks.TREE_TAP.get(), modelFile(RagiumBlocks.TREE_TAP.blockId))
-
-        RagiumBlocks.CAULDRONS.forEach(::cauldronBlock)
-
-        getVariantBuilder(RagiumBlocks.HONEY_CAULDRON.get())
-            .forAllStates { state: BlockState ->
-                val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)
-                val suffix: String = when (level) {
-                    3 -> "_full"
-                    else -> "_level$level"
-                }
-                ConfiguredModel
-                    .builder()
-                    .modelFile(modelFile(vanillaId("block/water_cauldron").withSuffix(suffix)))
-                    .build()
-            }
         // Device
         layeredBlock(
             RagiumBlocks.WATER_COLLECTOR,
@@ -175,7 +166,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         )
 
         simpleAltBlock(RagiumBlocks.MILK_DRAIN)
-        simpleAltBlock(RagiumBlocks.CHARGER)
 
         // Manual Machine
         /*getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
@@ -225,7 +215,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
     private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
         rotationY(state.getValue(HTBlockStateProperties.HORIZONTAL).getRotationY())
 
-    private fun cauldronBlock(holder: DeferredBlock<*>) {
+    /*private fun cauldronBlock(holder: DeferredBlock<*>) {
         if (holder == RagiumBlocks.HONEY_CAULDRON) return
         getVariantBuilder(holder.get())
             .forAllStates { state: BlockState ->
@@ -239,7 +229,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .modelFile(modelFile(vanillaId("block/water_cauldron").withSuffix(suffix)))
                     .build()
             }
-    }
+    }*/
 
     private fun feastBlock(holder: DeferredBlock<out HTFeastBlock>) {
         getVariantBuilder(holder.get()).forAllStates { state: BlockState ->

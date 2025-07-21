@@ -28,6 +28,7 @@ object RagiumConstantValues {
 
     const val ACTUALLY = "actuallyadditions"
     const val AE2 = "ae2"
+    const val ALMOST = "almostunified"
     const val ARS_NOUVEAU = "ars_nouveau"
     const val COMMON = "c"
     const val CREATE = "create"
@@ -39,6 +40,7 @@ object RagiumConstantValues {
     const val MEKANISM = "mekanism"
     const val MINECRAFT = "minecraft"
     const val MODERN = "modern_industrialization"
+    const val ORITECH = "oritech"
     const val RAILCRAFT = "railcraft"
     const val REPLICATION = "replication"
     const val TWILIGHT = "twilightforest"
@@ -55,7 +57,6 @@ object RagiumConstantValues {
     const val ENERGY_CAPACITY = "energy_capacity"
     const val ENERGY_STORED = "energy_stored"
 
-    const val IGNORE_CAULDRON_DROP = "IgnoreCauldronDrop"
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 
     //    Recipes    //
@@ -85,5 +86,6 @@ object RagiumConstantValues {
     const val MOLDS = "molds"
     const val NUGGETS = "nuggets"
     const val ORES = "ores"
+    const val PLATES = "plates"
     const val STORAGE_BLOCKS = "storage_blocks"
 }

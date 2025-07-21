@@ -11,7 +11,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.item.context.UseOnContext
 
-class HTPlaySoundBlockAction(private val sound: Holder<SoundEvent>, private val volume: Float, private val pitch: Float) : HTBlockAction {
+class HTPlaySoundBlockAction(sound: Holder<SoundEvent>, private val volume: Float, private val pitch: Float) : HTBlockAction {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTPlaySoundBlockAction> = RecordCodecBuilder.mapCodec { instance ->
@@ -36,6 +36,8 @@ class HTPlaySoundBlockAction(private val sound: Holder<SoundEvent>, private val 
         volume: Float = 1f,
         pitch: Float = 1f,
     ) : this(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), volume, pitch)
+
+    private val sound: Holder<SoundEvent> = sound.delegate
 
     override val codec: MapCodec<out HTBlockAction> = CODEC
 

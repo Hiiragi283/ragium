@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.registry
 
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.core.HolderSet
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
@@ -12,11 +11,11 @@ import net.neoforged.neoforge.registries.DeferredItem
 interface HTItemSet {
     val itemHolders: List<DeferredItem<*>>
 
+    fun getItemHolderSet(): HolderSet.Direct<Item> = HolderSet.direct(DeferredItem<*>::getDelegate, itemHolders)
+
     fun getItems(): List<Item> = itemHolders.map(ItemLike::asItem)
 
     fun init(eventBus: IEventBus)
-
-    fun addRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
 
     fun addItemModels(provider: ItemModelProvider)
 
