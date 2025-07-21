@@ -32,7 +32,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     private fun biomass() {
         createSolidifying()
             .itemOutput(RagiumModTags.Items.POLYMER_RESIN)
-            .itemInput(RagiumCommonTags.Items.FUELS_BIO_BLOCK)
+            .catalyst(RagiumCommonTags.Items.FUELS_BIO_BLOCK)
             .waterInput(250)
             .saveSuffixed(output, "_from_bio")
     }

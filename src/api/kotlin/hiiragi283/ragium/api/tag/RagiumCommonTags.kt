@@ -81,7 +81,7 @@ object RagiumCommonTags {
         val FUELS_BIO: TagKey<Item> = commonTag("fuels/bio")
 
         @JvmField
-        val FUELS_BIO_BLOCK: TagKey<Item> = commonTag("fuels/bio/block")
+        val FUELS_BIO_BLOCK: TagKey<Item> = commonTag("fuels/block/bio")
 
         @JvmField
         val PAPER: TagKey<Item> = commonTag("paper")

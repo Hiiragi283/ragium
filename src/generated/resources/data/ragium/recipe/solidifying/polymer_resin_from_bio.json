@@ -1,5 +1,8 @@
 {
   "type": "ragium:solidifying",
+  "catalyst": {
+    "tag": "c:fuels/block/bio"
+  },
   "fluid_input": {
     "amount": 250,
     "tag": "c:water"
