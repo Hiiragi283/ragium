@@ -381,15 +381,21 @@ object RagiumItems {
 
     //    Machine Parts    //
 
+    // LED
+    @JvmField
+    val LUMINOUS_PASTE: DeferredItem<Item> = register("luminous_paste")
+
     @JvmField
     val LED: DeferredItem<Item> = register("led")
 
     @JvmField
     val SOLAR_PANEL: DeferredItem<Item> = register("solar_panel")
 
+    // Redstone
     @JvmField
     val REDSTONE_BOARD: DeferredItem<Item> = register("redstone_board")
 
+    // Plastics
     @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
 

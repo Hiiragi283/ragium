@@ -159,7 +159,9 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.WARPED_WART)
             output.accept(RagiumItems.AMBROSIA)
             // Ingredients
+            output.accept(RagiumItems.LUMINOUS_PASTE)
             output.accept(RagiumItems.LED)
+
             output.accept(RagiumItems.SOLAR_PANEL)
             output.accept(RagiumItems.REDSTONE_BOARD)
 

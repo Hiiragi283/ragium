@@ -1,0 +1,14 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": {
+    "tag": "c:ingots/copper"
+  },
+  "fluid_input": {
+    "count": 1,
+    "item": "ragium:luminous_paste"
+  },
+  "item_output": {
+    "count": 4,
+    "id": "ragium:led"
+  }
+}

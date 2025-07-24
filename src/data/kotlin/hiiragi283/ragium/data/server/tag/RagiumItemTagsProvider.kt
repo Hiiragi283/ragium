@@ -252,8 +252,6 @@ class RagiumItemTagsProvider(
                 RagiumItems.ELDER_HEART,
                 RagiumItems.BOTTLED_BEE,
                 RagiumItems.EXP_BERRIES,
-                RagiumItems.LED,
-                RagiumItems.SOLAR_PANEL,
             )
     }
 

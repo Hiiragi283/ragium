@@ -94,6 +94,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .itemInput(RagiumBlocks.ASH_LOG)
             .saveSuffixed(output, "_from_log")
 
+        createCrushing()
+            .itemOutput(RagiumItems.LUMINOUS_PASTE)
+            .itemOutput(Items.INK_SAC)
+            .itemInput(Items.GLOW_INK_SAC)
+            .save(output)
+
         woodDust()
         sand()
         prismarine()

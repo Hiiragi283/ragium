@@ -4,12 +4,15 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredBlock
 
 object RagiumPressingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
@@ -33,6 +36,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
 
         circuits()
         redStones()
+        diode()
     }
 
     private fun circuits() {
@@ -96,6 +100,40 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
             .itemOutput(Items.COMPARATOR)
             .itemInput(Items.REDSTONE_TORCH)
             .catalyst(Items.REPEATER)
+            .save(output)
+    }
+
+    private fun diode() {
+        // LED
+        createPressing()
+            .itemOutput(RagiumItems.LED, 4)
+            .itemInput(RagiumItems.LUMINOUS_PASTE)
+            .catalyst(Tags.Items.INGOTS_COPPER)
+            .save(output)
+        // LED Block
+        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(DyeColor.WHITE), 8)
+            .hollow8()
+            .define('A', Tags.Items.GLASS_BLOCKS)
+            .define('B', RagiumItems.LED)
+            .saveSuffixed(output, "_from_led")
+
+        for ((color: DyeColor, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
+            HTShapedRecipeBuilder(block, 8)
+                .hollow8()
+                .define('A', RagiumModTags.Items.LED_BLOCKS)
+                .define('B', color.tag)
+                .save(output)
+        }
+
+        // Solar Panel
+        HTShapedRecipeBuilder(RagiumItems.SOLAR_PANEL, 3)
+            .pattern(
+                "AAA",
+                "BBB",
+                "CCC",
+            ).define('A', Tags.Items.GLASS_BLOCKS)
+            .define('B', RagiumItems.LUMINOUS_PASTE)
+            .define('C', RagiumCommonTags.Items.PLATES_PLASTIC)
             .save(output)
     }
 }

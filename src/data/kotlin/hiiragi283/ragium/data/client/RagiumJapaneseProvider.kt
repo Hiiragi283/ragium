@@ -297,6 +297,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
         addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
         addItem(RagiumItems.LED, "発光ダイオード")
+        addItem(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         addItem(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")

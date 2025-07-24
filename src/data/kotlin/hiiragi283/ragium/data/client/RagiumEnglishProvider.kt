@@ -310,6 +310,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
         addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
         addItem(RagiumItems.LED, "Light Emitting Diode")
+        addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         addItem(RagiumItems.REDSTONE_BOARD, "Redstone Board")
