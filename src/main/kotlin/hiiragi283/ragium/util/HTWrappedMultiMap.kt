@@ -1,4 +1,4 @@
-package hiiragi283.ragium.internal
+package hiiragi283.ragium.util
 
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.util.HTMultiMap

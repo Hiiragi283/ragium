@@ -1,4 +1,4 @@
-package hiiragi283.ragium.internal
+package hiiragi283.ragium
 
 import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.extension.dropStackAt
@@ -35,6 +35,7 @@ import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
+import kotlin.collections.forEach
 import kotlin.jvm.optionals.getOrNull
 
 internal object RagiumRuntimeEvents {

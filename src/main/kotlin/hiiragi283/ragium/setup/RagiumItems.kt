@@ -19,8 +19,8 @@ import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
-import hiiragi283.ragium.common.util.HTArmorSets
-import hiiragi283.ragium.common.util.HTToolSets
+import hiiragi283.ragium.util.HTArmorSets
+import hiiragi283.ragium.util.HTToolSets
 import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents

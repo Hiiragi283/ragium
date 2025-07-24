@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.util.HTBuildingBlockSets
-import hiiragi283.ragium.common.util.HTOreSets
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTBuildingBlockSets
+import hiiragi283.ragium.util.HTOreSets
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput

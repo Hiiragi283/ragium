@@ -2,8 +2,8 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.common.util.HTBuildingBlockSets
-import hiiragi283.ragium.common.util.HTLootTicketHelper
+import hiiragi283.ragium.util.HTBuildingBlockSets
+import hiiragi283.ragium.util.HTLootTicketHelper
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.internal
+package hiiragi283.ragium
 
 import com.almostreliable.unified.api.AlmostUnified
 import com.google.common.collect.Multimap
@@ -23,6 +23,9 @@ import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import hiiragi283.ragium.util.HTAddonCollector
+import hiiragi283.ragium.util.HTWrappedMultiMap
+import hiiragi283.ragium.util.HTWrappedTable
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
@@ -41,15 +44,12 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
-import java.util.*
+import java.util.UUID
 
 class InternalRagiumAPI : RagiumAPI {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
-
-        @JvmStatic
-        private val GAME_PROFILE = GameProfile(UUID.nameUUIDFromBytes(RagiumAPI.MOD_ID.toByteArray()), "[${RagiumAPI.MOD_NAME}]")
     }
 
     //    Addon    //
@@ -78,7 +78,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     //    Server    //
 
-    override fun getRagiumGameProfile(): GameProfile = GAME_PROFILE
+    override fun getRandomGameProfile(): GameProfile = GameProfile(UUID.randomUUID(), "[${RagiumAPI.MOD_NAME}]")
 
     override fun getCurrentServer(): MinecraftServer? = ServerLifecycleHooks.getCurrentServer()
 

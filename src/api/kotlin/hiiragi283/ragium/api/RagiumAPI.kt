@@ -73,12 +73,12 @@ interface RagiumAPI {
     /**
      * Ragiumが使用する[FakePlayer]を返します。
      */
-    fun getFakePlayer(level: ServerLevel): FakePlayer = FakePlayerFactory.get(level, getRagiumGameProfile())
+    fun getFakePlayer(level: ServerLevel): FakePlayer = FakePlayerFactory.get(level, getRandomGameProfile())
 
     /**
      * Ragiumが内部で使用する[GameProfile]のインスタンスを返します。
      */
-    fun getRagiumGameProfile(): GameProfile
+    fun getRandomGameProfile(): GameProfile
 
     /**
      * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。

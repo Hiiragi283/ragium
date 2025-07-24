@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import com.mojang.authlib.GameProfile
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
@@ -22,11 +22,9 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.util.FakePlayer
-import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.EventHooks
-import java.util.*
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state) {
@@ -45,7 +43,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         // エネルギーを消費できるか判定する
         if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
         // 採掘用のFake Playerを用意する
-        val player: FakePlayer = FakePlayerFactory.get(level, GameProfile(UUID.randomUUID(), "Fake Player"))
+        val player: FakePlayer = RagiumAPI.getInstance().getFakePlayer(level)
         val inventory: Inventory = player.inventory
         val toolStack: ItemStack = this.inventory.getStackInSlot(0)
         inventory.items[inventory.selected] = toolStack
