@@ -70,7 +70,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
     private fun atomicForge() {
         AtomicForgeRecipeBuilder
             .build()
-            .input(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+            .input(Tags.Items.GEMS_DIAMOND)
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .result(RagiumItems.RAGI_CRYSTAL.get())

@@ -1,0 +1,14 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": {
+    "tag": "c:plates/plastic"
+  },
+  "fluid_input": {
+    "count": 1,
+    "tag": "c:dusts/quartz"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:circuit_board"
+  }
+}

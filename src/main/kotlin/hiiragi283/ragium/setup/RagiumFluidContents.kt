@@ -3,7 +3,6 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
-import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.neoforge.common.SoundActions
@@ -34,7 +33,7 @@ object RagiumFluidContents {
 
     @JvmField
     val HONEY: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register(RagiumConstantValues.HONEY, defaultProperties())
+        register("honey", defaultProperties())
 
     @JvmField
     val EXPERIENCE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
@@ -46,7 +45,7 @@ object RagiumFluidContents {
 
     @JvmField
     val MUSHROOM_STEW: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register(RagiumConstantValues.MUSHROOM_STEW, defaultProperties())
+        register("mushroom_stew", defaultProperties())
 
     //    Hydrogen    //
 
@@ -126,11 +125,11 @@ object RagiumFluidContents {
 
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register(RagiumConstantValues.CRIMSON_SAP, defaultProperties())
+        register("crimson_sap", defaultProperties())
 
     @JvmField
     val WARPED_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register(RagiumConstantValues.WARPED_SAP, defaultProperties())
+        register("warped_sap", defaultProperties())
 
     //    Other    //
 

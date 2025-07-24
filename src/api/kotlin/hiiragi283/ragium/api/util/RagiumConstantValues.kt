@@ -19,10 +19,10 @@ object RagiumConstantValues {
     const val SOUL = "soul"
     const val WARPED_CRYSTAL = "warped_crystal"
 
-    const val HONEY = "honey"
-    const val MUSHROOM_STEW = "mushroom_stew"
-    const val CRIMSON_SAP = "crimson_sap"
-    const val WARPED_SAP = "warped_sap"
+    const val BASIC = "basic"
+    const val ADVANCED = "advanced"
+    const val ELITE = "elite"
+    const val ULTIMATE = "ultimate"
 
     //    Mod ID    //
 
@@ -78,6 +78,7 @@ object RagiumConstantValues {
 
     //    Tag Prefixes    //
 
+    const val CIRCUITS = "circuits"
     const val DUSTS = "dusts"
     const val ENRICHED = "enriched"
     const val GEMS = "gems"

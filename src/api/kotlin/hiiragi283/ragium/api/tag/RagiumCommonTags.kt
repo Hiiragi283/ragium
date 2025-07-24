@@ -93,17 +93,22 @@ object RagiumCommonTags {
         val SILICON: TagKey<Item> = commonTag("silicon")
 
         // Circuits
-        @JvmField
-        val CIRCUITS: TagKey<Item> = commonTag("circuits")
+        private const val CIRCUITS_: String = RagiumConstantValues.CIRCUITS
 
         @JvmField
-        val CIRCUITS_BASIC: TagKey<Item> = commonTag("circuits", "basic")
+        val CIRCUITS: TagKey<Item> = commonTag(CIRCUITS_)
 
         @JvmField
-        val CIRCUITS_ADVANCED: TagKey<Item> = commonTag("circuits", "advanced")
+        val CIRCUITS_BASIC: TagKey<Item> = commonTag(CIRCUITS_, "basic")
 
         @JvmField
-        val CIRCUITS_ELITE: TagKey<Item> = commonTag("circuits", "elite")
+        val CIRCUITS_ADVANCED: TagKey<Item> = commonTag(CIRCUITS_, "advanced")
+
+        @JvmField
+        val CIRCUITS_ELITE: TagKey<Item> = commonTag(CIRCUITS_, "elite")
+
+        @JvmField
+        val CIRCUITS_ULTIMATE: TagKey<Item> = commonTag(CIRCUITS_, "ultimate")
 
         // Crops
         @JvmField
@@ -123,6 +128,9 @@ object RagiumCommonTags {
 
         @JvmField
         val DUSTS_CINNABAR: TagKey<Item> = commonTag(DUSTS, "cinnabar")
+
+        @JvmField
+        val DUSTS_QUARTZ: TagKey<Item> = commonTag(DUSTS, "quartz")
 
         @JvmField
         val DUSTS_SALTPETER: TagKey<Item> = commonTag(DUSTS, "saltpeter")

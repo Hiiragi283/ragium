@@ -103,6 +103,7 @@ class RagiumItemTagsProvider(
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_ASH, RagiumItems.ASH_DUST)
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_CINNABAR, RagiumItems.CINNABAR_DUST)
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_OBSIDIAN, RagiumItems.OBSIDIAN_DUST)
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_QUARTZ, RagiumItems.QUARTZ_DUST)
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_RAGINITE, RagiumItems.RAGINITE_DUST)
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_SALTPETER, RagiumItems.SALTPETER_DUST)
         addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_SULFUR, RagiumItems.SULFUR_DUST)
@@ -225,7 +226,8 @@ class RagiumItemTagsProvider(
         // Circuits
         addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
         addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
-        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ELITE, RagiumItems.CRYSTAL_PROCESSOR)
+        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ELITE, RagiumItems.ELITE_CIRCUIT)
+        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ULTIMATE, RagiumItems.ULTIMATE_CIRCUIT)
 
         tag(RagiumModTags.Items.ENI_UPGRADES)
             .addTags(
@@ -252,8 +254,6 @@ class RagiumItemTagsProvider(
                 RagiumItems.EXP_BERRIES,
                 RagiumItems.LED,
                 RagiumItems.SOLAR_PANEL,
-                RagiumItems.STONE_BOARD,
-                RagiumItems.CRYSTAL_PROCESSOR,
             )
     }
 

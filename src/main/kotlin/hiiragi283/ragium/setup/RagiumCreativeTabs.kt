@@ -100,6 +100,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.OBSIDIAN_DUST)
 
             output.accept(RagiumItems.CINNABAR_DUST)
+            output.accept(RagiumItems.QUARTZ_DUST)
             output.accept(RagiumItems.SALTPETER_DUST)
             output.accept(RagiumItems.SULFUR_DUST)
 
@@ -160,16 +161,18 @@ object RagiumCreativeTabs {
             // Ingredients
             output.accept(RagiumItems.LED)
             output.accept(RagiumItems.SOLAR_PANEL)
-            output.accept(RagiumItems.STONE_BOARD)
+            output.accept(RagiumItems.REDSTONE_BOARD)
 
             output.accept(RagiumItems.POLYMER_RESIN)
             output.accept(RagiumItems.PLASTIC_PLATE)
             output.accept(RagiumItems.SYNTHETIC_FIBER)
             output.accept(RagiumItems.SYNTHETIC_LEATHER)
 
+            output.accept(RagiumItems.CIRCUIT_BOARD)
             output.accept(RagiumItems.BASIC_CIRCUIT)
             output.accept(RagiumItems.ADVANCED_CIRCUIT)
-            output.accept(RagiumItems.CRYSTAL_PROCESSOR)
+            output.accept(RagiumItems.ELITE_CIRCUIT)
+            output.accept(RagiumItems.ULTIMATE_CIRCUIT)
 
             output.accept(RagiumItems.ELDER_HEART)
         }

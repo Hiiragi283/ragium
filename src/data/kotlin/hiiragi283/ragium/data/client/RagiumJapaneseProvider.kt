@@ -219,6 +219,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ASH_DUST, "灰")
         addItem(RagiumItems.CINNABAR_DUST, "辰砂の粉")
         addItem(RagiumItems.OBSIDIAN_DUST, "黒曜石の粉")
+        addItem(RagiumItems.QUARTZ_DUST, "水晶の粉")
         addItem(RagiumItems.RAGINITE_DUST, "ラギナイトの粉")
         addItem(RagiumItems.SALTPETER_DUST, "硝石の粉")
         addItem(RagiumItems.SAWDUST, "おがくず")
@@ -292,15 +293,17 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
-        addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
+        addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
+        addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
         addItem(RagiumItems.LED, "発光ダイオード")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
+        addItem(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
-        addItem(RagiumItems.STONE_BOARD, "石版")
         addItem(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         addItem(RagiumItems.SYNTHETIC_LEATHER, "合成革")
+        addItem(RagiumItems.ULTIMATE_CIRCUIT, "究極回路")
     }
 
     /*private fun material() {

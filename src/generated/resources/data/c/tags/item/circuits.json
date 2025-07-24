@@ -2,6 +2,7 @@
   "values": [
     "#c:circuits/basic",
     "#c:circuits/advanced",
-    "#c:circuits/elite"
+    "#c:circuits/elite",
+    "#c:circuits/ultimate"
   ]
 }

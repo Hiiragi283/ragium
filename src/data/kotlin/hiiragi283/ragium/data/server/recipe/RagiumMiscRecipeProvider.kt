@@ -23,7 +23,6 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         materials()
 
         casings()
-        circuits()
 
         machines()
         devices()
@@ -202,46 +201,6 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('B', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .define('C', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .saveSuffixed(output, "_with_obsidian")
-    }
-
-    private fun circuits() {
-        // Basic Circuit
-        HTShapedRecipeBuilder(RagiumItems.BASIC_CIRCUIT)
-            .pattern(
-                "AAA",
-                "BCB",
-                "AAA",
-            ).define('A', Tags.Items.INGOTS_COPPER)
-            .define('B', Tags.Items.DUSTS_REDSTONE)
-            .define('C', Tags.Items.INGOTS_IRON)
-            .save(output)
-
-        HTShapedRecipeBuilder(RagiumItems.BASIC_CIRCUIT, 2)
-            .pattern(
-                "AAA",
-                "BCB",
-                "AAA",
-            ).define('A', Tags.Items.INGOTS_COPPER)
-            .define('B', Tags.Items.DUSTS_REDSTONE)
-            .define('C', RagiumCommonTags.Items.PLASTICS)
-            .savePrefixed(output, "2x_")
-        // Advanced Circuit
-        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
-            .cross8()
-            .define('A', RagiumItems.AZURE_SHARD)
-            .define('B', Tags.Items.DUSTS_GLOWSTONE)
-            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
-            .saveSuffixed(output, "_from_basic")
-
-        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT, 2)
-            .pattern(
-                "AAA",
-                "BCB",
-                "AAA",
-            ).define('A', RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
-            .define('B', Tags.Items.DUSTS_GLOWSTONE)
-            .define('C', RagiumCommonTags.Items.PLASTICS)
-            .save(output)
     }
 
     private fun machines() {

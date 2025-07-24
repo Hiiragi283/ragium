@@ -14,7 +14,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 import java.util.Optional
 
-data class HTIntrinsicEnchantment(val key: ResourceKey<Enchantment>, val level: Int = 1) {
+data class HTIntrinsicEnchantment(val key: ResourceKey<Enchantment>, val level: Int) {
     companion object {
         @JvmField
         val CODEC: Codec<HTIntrinsicEnchantment> = RecordCodecBuilder.create { instance ->

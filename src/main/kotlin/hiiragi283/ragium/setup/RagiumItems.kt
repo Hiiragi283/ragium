@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
+import hiiragi283.ragium.api.upgrade.HTUpgrade
 import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
@@ -23,6 +24,7 @@ import hiiragi283.ragium.common.util.HTToolSets
 import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
@@ -32,6 +34,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.Tiers
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
@@ -66,6 +69,10 @@ object RagiumItems {
         AZURE_STEEL_TOOLS.init(eventBus)
         DEEP_STEEL_TOOLS.init(eventBus)
     }
+
+    @JvmStatic
+    private fun register(prefix: String, suffix: String, properties: Item.Properties = Item.Properties()): DeferredItem<Item> =
+        register("${prefix}_$suffix", properties)
 
     @JvmStatic
     private fun register(name: String, properties: Item.Properties = Item.Properties()): DeferredItem<Item> =
@@ -139,57 +146,60 @@ object RagiumItems {
 
     // Ingots
     @JvmField
-    val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("${RagiumConstantValues.RAGI_ALLOY}_compound")
+    val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register(RagiumConstantValues.RAGI_ALLOY, "compound")
 
     @JvmField
-    val RAGI_ALLOY_INGOT: DeferredItem<Item> = register("${RagiumConstantValues.RAGI_ALLOY}_ingot")
+    val RAGI_ALLOY_INGOT: DeferredItem<Item> = register(RagiumConstantValues.RAGI_ALLOY, "ingot")
 
     @JvmField
-    val ADVANCED_RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register("${RagiumConstantValues.ADVANCED_RAGI_ALLOY}_compound")
+    val ADVANCED_RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register(RagiumConstantValues.ADVANCED_RAGI_ALLOY, "compound")
 
     @JvmField
-    val ADVANCED_RAGI_ALLOY_INGOT: DeferredItem<Item> = register("${RagiumConstantValues.ADVANCED_RAGI_ALLOY}_ingot")
+    val ADVANCED_RAGI_ALLOY_INGOT: DeferredItem<Item> = register(RagiumConstantValues.ADVANCED_RAGI_ALLOY, "ingot")
 
     @JvmField
-    val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register("${RagiumConstantValues.AZURE_STEEL}_compound")
+    val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register(RagiumConstantValues.AZURE_STEEL, "compound")
 
     @JvmField
-    val AZURE_STEEL_INGOT: DeferredItem<Item> = register("${RagiumConstantValues.AZURE_STEEL}_ingot")
+    val AZURE_STEEL_INGOT: DeferredItem<Item> = register(RagiumConstantValues.AZURE_STEEL, "ingot")
 
     @JvmField
-    val DEEP_STEEL_INGOT: DeferredItem<Item> = register("${RagiumConstantValues.DEEP_STEEL}_ingot")
+    val DEEP_STEEL_INGOT: DeferredItem<Item> = register(RagiumConstantValues.DEEP_STEEL, "ingot")
 
     // Nuggets
     @JvmField
-    val RAGI_ALLOY_NUGGET: DeferredItem<Item> = register("${RagiumConstantValues.RAGI_ALLOY}_nugget")
+    val RAGI_ALLOY_NUGGET: DeferredItem<Item> = register(RagiumConstantValues.RAGI_ALLOY, "nugget")
 
     @JvmField
-    val ADVANCED_RAGI_ALLOY_NUGGET: DeferredItem<Item> = register("${RagiumConstantValues.ADVANCED_RAGI_ALLOY}_nugget")
+    val ADVANCED_RAGI_ALLOY_NUGGET: DeferredItem<Item> = register(RagiumConstantValues.ADVANCED_RAGI_ALLOY, "nugget")
 
     @JvmField
-    val AZURE_STEEL_NUGGET: DeferredItem<Item> = register("${RagiumConstantValues.AZURE_STEEL}_nugget")
+    val AZURE_STEEL_NUGGET: DeferredItem<Item> = register(RagiumConstantValues.AZURE_STEEL, "nugget")
 
     // Dusts
     @JvmField
     val SAWDUST: DeferredItem<Item> = register("sawdust")
 
     @JvmField
-    val ASH_DUST: DeferredItem<Item> = register("ash_dust")
+    val ASH_DUST: DeferredItem<Item> = register("ash", "dust")
 
     @JvmField
-    val RAGINITE_DUST: DeferredItem<Item> = register("${RagiumConstantValues.RAGINITE}_dust")
+    val RAGINITE_DUST: DeferredItem<Item> = register(RagiumConstantValues.RAGINITE, "dust")
 
     @JvmField
-    val OBSIDIAN_DUST: DeferredItem<Item> = register("obsidian_dust")
+    val OBSIDIAN_DUST: DeferredItem<Item> = register("obsidian", "dust")
 
     @JvmField
-    val CINNABAR_DUST: DeferredItem<Item> = register("cinnabar_dust")
+    val CINNABAR_DUST: DeferredItem<Item> = register("cinnabar", "dust")
 
     @JvmField
-    val SALTPETER_DUST: DeferredItem<Item> = register("saltpeter_dust")
+    val QUARTZ_DUST: DeferredItem<Item> = register("quartz", "dust")
 
     @JvmField
-    val SULFUR_DUST: DeferredItem<Item> = register("sulfur_dust")
+    val SALTPETER_DUST: DeferredItem<Item> = register("saltpeter", "dust")
+
+    @JvmField
+    val SULFUR_DUST: DeferredItem<Item> = register("sulfur", "dust")
 
     // Other
     @JvmField
@@ -378,7 +388,7 @@ object RagiumItems {
     val SOLAR_PANEL: DeferredItem<Item> = register("solar_panel")
 
     @JvmField
-    val STONE_BOARD: DeferredItem<Item> = register("stone_board")
+    val REDSTONE_BOARD: DeferredItem<Item> = register("redstone_board")
 
     @JvmField
     val POLYMER_RESIN: DeferredItem<Item> = register("polymer_resin")
@@ -393,13 +403,19 @@ object RagiumItems {
     val SYNTHETIC_LEATHER: DeferredItem<Item> = register("synthetic_leather")
 
     @JvmField
-    val BASIC_CIRCUIT: DeferredItem<Item> = register("basic_circuit")
+    val CIRCUIT_BOARD: DeferredItem<Item> = register("circuit_board")
 
     @JvmField
-    val ADVANCED_CIRCUIT: DeferredItem<Item> = register("advanced_circuit")
+    val BASIC_CIRCUIT: DeferredItem<Item> = register(RagiumConstantValues.BASIC, "circuit")
 
     @JvmField
-    val CRYSTAL_PROCESSOR: DeferredItem<Item> = register("crystal_processor")
+    val ADVANCED_CIRCUIT: DeferredItem<Item> = register(RagiumConstantValues.ADVANCED, "circuit")
+
+    @JvmField
+    val ELITE_CIRCUIT: DeferredItem<Item> = register(RagiumConstantValues.ELITE, "circuit")
+
+    @JvmField
+    val ULTIMATE_CIRCUIT: DeferredItem<Item> = register(RagiumConstantValues.ULTIMATE, "circuit")
 
     //    Event    //
 
@@ -461,18 +477,33 @@ object RagiumItems {
 
         setColor(DAYBREAK_TICKET, ChatFormatting.GOLD)
         setColor(ETERNAL_TICKET, ChatFormatting.YELLOW)
+
         // Tools
-        event.modify(DEEP_STEEL_TOOLS.pickaxeItem) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(Enchantments.FORTUNE, 5))
+        fun setEnch(item: DeferredItem<*>, ench: ResourceKey<Enchantment>, level: Int = 1) {
+            event.modify(item) { builder: DataComponentPatch.Builder ->
+                builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(ench, level))
+            }
+        }
+        setEnch(AZURE_STEEL_TOOLS.shovelItem, Enchantments.SILK_TOUCH)
+        setEnch(AZURE_STEEL_TOOLS.pickaxeItem, Enchantments.SILK_TOUCH)
+        setEnch(AZURE_STEEL_TOOLS.axeItem, Enchantments.SILK_TOUCH)
+        setEnch(AZURE_STEEL_TOOLS.hoeItem, Enchantments.SILK_TOUCH)
+
+        setEnch(DEEP_STEEL_TOOLS.pickaxeItem, Enchantments.FORTUNE, 5)
+        setEnch(DEEP_STEEL_TOOLS.swordItem, RagiumEnchantments.NOISE_CANCELING, 5)
+        setEnch(DEEP_STEEL_ARMORS.chestplateItem, RagiumEnchantments.SONIC_PROTECTION)
+
+        // Circuits
+        fun setUpgrade(item: DeferredItem<*>, base: Int) {
+            event.modify(item) { builder: DataComponentPatch.Builder ->
+                builder.set(RagiumDataComponents.UPGRADE.get(), HTUpgrade(base.toFloat()))
+            }
         }
 
-        event.modify(DEEP_STEEL_TOOLS.swordItem) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(RagiumEnchantments.NOISE_CANCELING, 5))
-        }
-
-        event.modify(DEEP_STEEL_ARMORS.chestplateItem) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.INTRINSIC_ENCHANTMENT.get(), HTIntrinsicEnchantment(RagiumEnchantments.SONIC_PROTECTION))
-        }
+        setUpgrade(BASIC_CIRCUIT, 1)
+        setUpgrade(ADVANCED_CIRCUIT, 2)
+        setUpgrade(ELITE_CIRCUIT, 3)
+        setUpgrade(ULTIMATE_CIRCUIT, 4)
         // Creative Item
         event.modify(RagiumBlocks.CEU) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)

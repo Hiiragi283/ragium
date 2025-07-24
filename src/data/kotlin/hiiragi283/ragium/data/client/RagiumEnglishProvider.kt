@@ -232,6 +232,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ASH_DUST, "Ash")
         addItem(RagiumItems.CINNABAR_DUST, "Cinnabar Dust")
         addItem(RagiumItems.OBSIDIAN_DUST, "Obsidian Dust")
+        addItem(RagiumItems.QUARTZ_DUST, "Quartz Dust")
         addItem(RagiumItems.RAGINITE_DUST, "Raginite Dust")
         addItem(RagiumItems.SALTPETER_DUST, "Saltpeter Dust")
         addItem(RagiumItems.SAWDUST, "Sawdust")
@@ -305,15 +306,17 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
-        addItem(RagiumItems.CRYSTAL_PROCESSOR, "Crystal Processor")
+        addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
+        addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
         addItem(RagiumItems.LED, "Light Emitting Diode")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
+        addItem(RagiumItems.REDSTONE_BOARD, "Redstone Board")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
-        addItem(RagiumItems.STONE_BOARD, "Stone Board")
         addItem(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         addItem(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
+        addItem(RagiumItems.ULTIMATE_CIRCUIT, "Ultimate Circuit")
     }
 
     /*private fun material() {

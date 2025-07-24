@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.upgrade.HTUpgrade
 import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
 import net.minecraft.core.GlobalPos
 import net.minecraft.core.component.DataComponentType
@@ -53,4 +54,8 @@ object RagiumDataComponents {
     @JvmField
     val TELEPORT_POS: Supplier<DataComponentType<GlobalPos>> =
         register("teleport_pos", GlobalPos.CODEC, GlobalPos.STREAM_CODEC.cast())
+
+    @JvmField
+    val UPGRADE: Supplier<DataComponentType<HTUpgrade>> =
+        register("upgrade", HTUpgrade.CODEC, HTUpgrade.STREAM_CODEC.cast())
 }
