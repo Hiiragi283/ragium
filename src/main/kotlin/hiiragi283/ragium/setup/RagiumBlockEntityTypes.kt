@@ -149,9 +149,9 @@ object RagiumBlockEntityTypes {
         add(CRUSHER, RagiumBlocks.CRUSHER)
         add(BLOCK_BREAKER, RagiumBlocks.BLOCK_BREAKER)
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
+        add(FORMING_PRESS, RagiumBlocks.FORMING_PRESS)
 
         add(ALLOY_SMELTER, RagiumBlocks.ALLOY_SMELTER)
-        add(FORMING_PRESS, RagiumBlocks.FORMING_PRESS)
         add(MELTER, RagiumBlocks.MELTER)
         add(REFINERY, RagiumBlocks.REFINERY)
         add(SOLIDIFIER, RagiumBlocks.SOLIDIFIER)

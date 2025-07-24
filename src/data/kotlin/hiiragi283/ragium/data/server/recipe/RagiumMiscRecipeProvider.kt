@@ -208,10 +208,10 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         basicMachine(RagiumBlocks.CRUSHER, Ingredient.of(Items.FLINT))
         basicMachine(RagiumBlocks.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
         basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.DISPENSER))
+        basicMachine(RagiumBlocks.FORMING_PRESS, Ingredient.of(Items.PISTON))
 
         // Advanced
         advancedMachine(RagiumBlocks.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
-        advancedMachine(RagiumBlocks.FORMING_PRESS, Ingredient.of(Items.PISTON), Items.NETHER_BRICKS)
         advancedMachine(RagiumBlocks.MELTER, Ingredient.of(Items.BLAST_FURNACE), Items.POLISHED_BLACKSTONE_BRICKS)
         advancedMachine(RagiumBlocks.REFINERY, Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ), Items.POLISHED_BLACKSTONE_BRICKS)
         advancedMachine(RagiumBlocks.SOLIDIFIER, Ingredient.of(ItemTags.TRIM_TEMPLATES), Items.POLISHED_BLACKSTONE_BRICKS)

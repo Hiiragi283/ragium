@@ -403,12 +403,12 @@ object RagiumBlocks {
     @JvmField
     val EXTRACTOR: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.EXTRACTOR)
 
+    @JvmField
+    val FORMING_PRESS: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.FORMING_PRESS)
+
     // Advanced
     @JvmField
     val ALLOY_SMELTER: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.ALLOY_SMELTER)
-
-    @JvmField
-    val FORMING_PRESS: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.FORMING_PRESS)
 
     @JvmField
     val MELTER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.MELTER)
@@ -425,9 +425,9 @@ object RagiumBlocks {
         CRUSHER,
         BLOCK_BREAKER,
         EXTRACTOR,
+        FORMING_PRESS,
         // Advanced
         ALLOY_SMELTER,
-        FORMING_PRESS,
         MELTER,
         REFINERY,
         SOLIDIFIER,
