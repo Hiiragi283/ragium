@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
+import hiiragi283.ragium.api.recipe.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
@@ -96,6 +97,8 @@ class InternalRagiumAPI : RagiumAPI {
         HTLimitedEnergyStorage(storageIO, storage)
 
     override fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe> = RagiumRecipeTypes.BLOCK_INTERACTING.get()
+
+    override fun getInfusingRecipeType(): RecipeType<HTInfusingRecipe> = RagiumRecipeTypes.INFUSING.get()
 
     override fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe> = RagiumRecipeSerializers.TRANSMUTE.get()
 

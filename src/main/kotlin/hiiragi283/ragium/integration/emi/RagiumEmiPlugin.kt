@@ -18,12 +18,14 @@ import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
+import hiiragi283.ragium.api.recipe.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTInfusingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -33,6 +35,7 @@ import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
@@ -182,6 +185,20 @@ class RagiumEmiPlugin : EmiPlugin {
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.EXTRACTOR.get(), HTRecipeHandler(RagiumEmiCategories.EXTRACTING))
+        // Infusing
+        forEachRecipes(RagiumRecipeTypes.INFUSING.get()) { id: ResourceLocation, recipe: HTInfusingRecipe ->
+            if (recipe is HTInfusingRecipeImpl) {
+                registry.addRecipe(
+                    HTInfusingEmiRecipe(
+                        id,
+                        EmiIngredient.of(recipe.ingredient),
+                        recipe.result.toEmi(),
+                        recipe.cost,
+                    ),
+                )
+            }
+        }
+        registry.addRecipeHandler(RagiumMenuTypes.INFUSER.get(), HTRecipeHandler(RagiumEmiCategories.INFUSING))
         // Melting
         forEachRecipes(RagiumRecipeTypes.MELTING.get()) { id: ResourceLocation, recipe: HTMeltingRecipe ->
             registry.addRecipe(

@@ -249,7 +249,6 @@ class RagiumItemTagsProvider(
 
         tag(RagiumModTags.Items.WIP)
             .addItem(
-                RagiumItems.ELDER_HEART,
                 RagiumItems.BOTTLED_BEE,
                 RagiumItems.EXP_BERRIES,
             )

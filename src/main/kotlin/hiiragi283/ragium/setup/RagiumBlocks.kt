@@ -93,11 +93,18 @@ object RagiumBlocks {
         .sound(SoundType.COPPER)
 
     @JvmStatic
-    private fun heavyMetal(): BlockBehaviour.Properties = BlockBehaviour.Properties
+    private fun metal(): BlockBehaviour.Properties = BlockBehaviour.Properties
         .of()
         .requiresCorrectToolForDrops()
         .strength(6f)
         .sound(SoundType.METAL)
+
+    @JvmStatic
+    private fun heavyMetal(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
+        .requiresCorrectToolForDrops()
+        .strength(50f, 1200f)
+        .sound(SoundType.NETHERITE_BLOCK)
 
     @JvmStatic
     private fun crystal(): BlockBehaviour.Properties = BlockBehaviour.Properties
@@ -189,11 +196,11 @@ object RagiumBlocks {
 
     @JvmField
     val ADVANCED_RAGI_ALLOY_BLOCK: DeferredBlock<Block> =
-        register("${RagiumConstantValues.ADVANCED_RAGI_ALLOY}_block", heavyMetal().mapColor(MapColor.COLOR_ORANGE))
+        register("${RagiumConstantValues.ADVANCED_RAGI_ALLOY}_block", metal().mapColor(MapColor.COLOR_ORANGE))
 
     @JvmField
     val AZURE_STEEL_BLOCK: DeferredBlock<Block> =
-        register("${RagiumConstantValues.AZURE_STEEL}_block", heavyMetal().mapColor(MapColor.TERRACOTTA_BLUE))
+        register("${RagiumConstantValues.AZURE_STEEL}_block", metal().mapColor(MapColor.TERRACOTTA_BLUE))
 
     @JvmField
     val DEEP_STEEL_BLOCK: DeferredBlock<Block> =
@@ -359,21 +366,30 @@ object RagiumBlocks {
     val STONE_CASING: DeferredBlock<Block> = register("stone_casing", stone())
 
     @JvmField
-    val BASIC_MACHINE_FRAME: DeferredBlock<Block> = register(
+    val BASIC_MACHINE_FRAME: DeferredBlock<TransparentBlock> = register(
         "basic_machine_frame",
-        lightMetal(),
+        lightMetal().noCollission(),
+        ::TransparentBlock,
     )
 
     @JvmField
-    val ADVANCED_MACHINE_FRAME: DeferredBlock<Block> = register(
+    val ADVANCED_MACHINE_FRAME: DeferredBlock<TransparentBlock> = register(
         "advanced_machine_frame",
-        heavyMetal(),
+        metal().noCollission(),
+        ::TransparentBlock,
+    )
+
+    @JvmField
+    val ELITE_MACHINE_FRAME: DeferredBlock<TransparentBlock> = register(
+        "elite_machine_frame",
+        heavyMetal().noCollission(),
+        ::TransparentBlock,
     )
 
     @JvmField
     val DEVICE_CASING: DeferredBlock<Block> = register(
         "device_casing",
-        heavyMetal(),
+        metal(),
     )
 
     @JvmField
@@ -382,6 +398,7 @@ object RagiumBlocks {
         STONE_CASING,
         BASIC_MACHINE_FRAME,
         ADVANCED_MACHINE_FRAME,
+        ELITE_MACHINE_FRAME,
         DEVICE_CASING,
     )
 
@@ -411,13 +428,17 @@ object RagiumBlocks {
     val ALLOY_SMELTER: DeferredBlock<*> = registerMachine(lightMetal(), RagiumBlockEntityTypes.ALLOY_SMELTER)
 
     @JvmField
-    val MELTER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.MELTER)
+    val MELTER: DeferredBlock<*> = registerMachine(metal(), RagiumBlockEntityTypes.MELTER)
 
     @JvmField
-    val REFINERY: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.REFINERY)
+    val REFINERY: DeferredBlock<*> = registerMachine(metal(), RagiumBlockEntityTypes.REFINERY)
 
     @JvmField
-    val SOLIDIFIER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.SOLIDIFIER)
+    val SOLIDIFIER: DeferredBlock<*> = registerMachine(metal(), RagiumBlockEntityTypes.SOLIDIFIER)
+
+    // Elite
+    @JvmField
+    val INFUSER: DeferredBlock<*> = registerMachine(heavyMetal(), RagiumBlockEntityTypes.INFUSER)
 
     @JvmField
     val MACHINES: List<DeferredBlock<*>> = listOf(
@@ -431,6 +452,8 @@ object RagiumBlocks {
         MELTER,
         REFINERY,
         SOLIDIFIER,
+        // Elite
+        INFUSER,
     )
 
     //    Devices    //
@@ -456,16 +479,16 @@ object RagiumBlocks {
 
     // Advanced
     @JvmField
-    val ENI: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.ENI)
+    val ENI: DeferredBlock<*> = registerEntityBlock(metal(), RagiumBlockEntityTypes.ENI)
 
     @JvmField
-    val EXP_COLLECTOR: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.EXP_COLLECTOR)
+    val EXP_COLLECTOR: DeferredBlock<*> = registerEntityBlock(metal(), RagiumBlockEntityTypes.EXP_COLLECTOR)
 
     @JvmField
-    val LAVA_COLLECTOR: DeferredBlock<*> = registerEntityBlock(heavyMetal(), RagiumBlockEntityTypes.LAVA_COLLECTOR)
+    val LAVA_COLLECTOR: DeferredBlock<*> = registerEntityBlock(metal(), RagiumBlockEntityTypes.LAVA_COLLECTOR)
 
     @JvmField
-    val TELEPORT_ANCHOR: DeferredBlock<Block> = register("teleport_anchor", heavyMetal())
+    val TELEPORT_ANCHOR: DeferredBlock<Block> = register("teleport_anchor", metal())
 
     // Creative
     @JvmField

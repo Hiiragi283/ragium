@@ -2,11 +2,13 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTInfusingRecipeBuilder
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTInfusingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -77,6 +79,8 @@ abstract class HTRecipeProvider : IConditionBuilder {
 
     fun createExtracting(): HTDefinitionRecipeBuilder<HTExtractingRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.EXTRACTING, RagiumRecipeFactories::extracting)
+
+    fun createInfusing(): HTInfusingRecipeBuilder = HTInfusingRecipeBuilder(::HTInfusingRecipeImpl)
 
     fun createMelting(): HTDefinitionRecipeBuilder<HTMeltingRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.MELTING, RagiumRecipeFactories::melting)

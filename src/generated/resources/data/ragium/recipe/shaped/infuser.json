@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/deep_steel"
+    },
+    "B": {
+      "item": "minecraft:enchanting_table"
+    },
+    "C": {
+      "item": "ragium:elite_machine_frame"
+    },
+    "D": {
+      "item": "minecraft:deepslate_tiles"
+    },
+    "E": {
+      "tag": "c:circuits/elite"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DED"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:infuser"
+  }
+}

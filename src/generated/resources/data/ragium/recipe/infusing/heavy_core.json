@@ -1,0 +1,11 @@
+{
+  "type": "ragium:infusing",
+  "cost": 30.0,
+  "ingredient": {
+    "tag": "c:storage_blocks/deep_steel"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:heavy_core"
+  }
+}

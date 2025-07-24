@@ -113,8 +113,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
         addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "発展機械フレーム")
-        addBlock(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
         addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "基本機械フレーム")
+        addBlock(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
+        addBlock(RagiumBlocks.ELITE_MACHINE_FRAME, "精鋭機械フレーム")
         addBlock(RagiumBlocks.STONE_CASING, "石材筐体")
         addBlock(RagiumBlocks.WOODEN_CASING, "木材筐体")
         // Machine
@@ -127,6 +128,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.MELTER, "溶融炉")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         addBlock(RagiumBlocks.SOLIDIFIER, "成型機")
+
+        addBlock(RagiumBlocks.INFUSER, "神秘的注入機")
         // Device
         addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.ENI, "E.N.I.")

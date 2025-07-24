@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFormingPressBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
@@ -59,6 +60,9 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
+
+    @JvmField
+    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
 
     @JvmField
     val FORMING_PRESS: HTDeferredBlockEntityType<HTFormingPressBlockEntity> = registerTick("forming_press", ::HTFormingPressBlockEntity)
@@ -156,6 +160,8 @@ object RagiumBlockEntityTypes {
         add(REFINERY, RagiumBlocks.REFINERY)
         add(SOLIDIFIER, RagiumBlocks.SOLIDIFIER)
 
+        add(INFUSER, RagiumBlocks.INFUSER)
+
         add(ENI, RagiumBlocks.ENI)
         add(EXP_COLLECTOR, RagiumBlocks.EXP_COLLECTOR)
         add(ITEM_COLLECTOR, RagiumBlocks.ITEM_COLLECTOR)
@@ -204,6 +210,8 @@ object RagiumBlockEntityTypes {
         registerHandlers(MELTER)
         registerHandlers(REFINERY)
         registerHandlers(SOLIDIFIER)
+
+        registerHandlers(INFUSER)
 
         registerHandlers(ENI)
         registerHandlers(EXP_COLLECTOR)

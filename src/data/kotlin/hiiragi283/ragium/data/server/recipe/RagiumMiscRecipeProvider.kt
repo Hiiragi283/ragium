@@ -187,6 +187,12 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
+        // Elite Machine
+        HTShapedRecipeBuilder(RagiumBlocks.ELITE_MACHINE_FRAME, 4)
+            .hollow8()
+            .define('A', Tags.Items.INGOTS_NETHERITE)
+            .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
+            .save(output)
         // Device
         HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
             .cross8()
@@ -209,12 +215,13 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         basicMachine(RagiumBlocks.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
         basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.DISPENSER))
         basicMachine(RagiumBlocks.FORMING_PRESS, Ingredient.of(Items.PISTON))
-
         // Advanced
         advancedMachine(RagiumBlocks.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
         advancedMachine(RagiumBlocks.MELTER, Ingredient.of(Items.BLAST_FURNACE), Items.POLISHED_BLACKSTONE_BRICKS)
         advancedMachine(RagiumBlocks.REFINERY, Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ), Items.POLISHED_BLACKSTONE_BRICKS)
         advancedMachine(RagiumBlocks.SOLIDIFIER, Ingredient.of(ItemTags.TRIM_TEMPLATES), Items.POLISHED_BLACKSTONE_BRICKS)
+        // Elite
+        eliteMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.ENCHANTING_TABLE), Items.DEEPSLATE_TILES)
     }
 
     private fun basicMachine(machine: ItemLike, input: Ingredient) {
@@ -242,6 +249,20 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('C', RagiumBlocks.ADVANCED_MACHINE_FRAME)
             .define('D', bottom)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .save(output)
+    }
+
+    private fun eliteMachine(machine: ItemLike, input: Ingredient, bottom: ItemLike) {
+        HTShapedRecipeBuilder(machine)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DED",
+            ).define('A', RagiumCommonTags.Items.INGOTS_DEEP_STEEL)
+            .define('B', input)
+            .define('C', RagiumBlocks.ELITE_MACHINE_FRAME)
+            .define('D', bottom)
+            .define('E', RagiumCommonTags.Items.CIRCUITS_ELITE)
             .save(output)
     }
 

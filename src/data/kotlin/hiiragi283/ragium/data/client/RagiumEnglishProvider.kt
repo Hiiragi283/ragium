@@ -125,8 +125,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "Advanced Machine Frame")
-        addBlock(RagiumBlocks.DEVICE_CASING, "Device Casing")
         addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "Basic Machine Frame")
+        addBlock(RagiumBlocks.DEVICE_CASING, "Device Casing")
+        addBlock(RagiumBlocks.ELITE_MACHINE_FRAME, "Elite Machine Frame")
         addBlock(RagiumBlocks.STONE_CASING, "Stone Casing")
         addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
         // Machine
@@ -139,6 +140,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.MELTER, "Melter")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         addBlock(RagiumBlocks.SOLIDIFIER, "Solidifier")
+
+        addBlock(RagiumBlocks.INFUSER, "Arcane Infuser")
         // Device
         addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.ENI, "E.N.I.")

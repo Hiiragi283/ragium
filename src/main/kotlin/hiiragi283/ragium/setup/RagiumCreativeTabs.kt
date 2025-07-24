@@ -159,6 +159,8 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.WARPED_WART)
             output.accept(RagiumItems.AMBROSIA)
             // Ingredients
+            output.accept(RagiumItems.ELDER_HEART)
+
             output.accept(RagiumItems.LUMINOUS_PASTE)
             output.accept(RagiumItems.LED)
 
@@ -175,8 +177,6 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ADVANCED_CIRCUIT)
             output.accept(RagiumItems.ELITE_CIRCUIT)
             output.accept(RagiumItems.ULTIMATE_CIRCUIT)
-
-            output.accept(RagiumItems.ELDER_HEART)
         }
 
     @JvmStatic

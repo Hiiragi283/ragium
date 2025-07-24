@@ -1,0 +1,11 @@
+{
+  "type": "ragium:infusing",
+  "cost": 15.0,
+  "ingredient": {
+    "item": "minecraft:amethyst_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:budding_amethyst"
+  }
+}

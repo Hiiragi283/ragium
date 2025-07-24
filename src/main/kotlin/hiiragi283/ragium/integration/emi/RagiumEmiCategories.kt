@@ -4,7 +4,6 @@ import dev.emi.emi.api.EmiRegistry
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.world.item.Items
 
 object RagiumEmiCategories {
     // Machines
@@ -18,7 +17,7 @@ object RagiumEmiCategories {
     val EXTRACTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.EXTRACTING), RagiumBlocks.EXTRACTOR)
 
     @JvmField
-    val INFUSING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.INFUSING), Items.HOPPER)
+    val INFUSING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.INFUSING), RagiumBlocks.INFUSER)
 
     @JvmField
     val MELTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.MELTING), RagiumBlocks.MELTER)

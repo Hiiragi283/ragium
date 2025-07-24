@@ -1,0 +1,11 @@
+{
+  "type": "ragium:infusing",
+  "cost": 60.0,
+  "ingredient": {
+    "tag": "c:eggs"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:dragon_egg"
+  }
+}

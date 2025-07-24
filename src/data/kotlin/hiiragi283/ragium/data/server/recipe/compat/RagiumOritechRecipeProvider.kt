@@ -38,7 +38,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .build()
             .input(Tags.Items.GEMS_AMETHYST)
             .input(Tags.Items.GEMS_LAPIS)
-            .result(RagiumItems.AZURE_SHARD.get())
+            .result(RagiumItems.AZURE_SHARD.get(), 2)
             .time(160)
             .export(output, "azure_shard")
 

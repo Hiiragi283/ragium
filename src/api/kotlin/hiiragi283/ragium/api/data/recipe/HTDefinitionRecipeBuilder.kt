@@ -29,7 +29,8 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
 
 class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, private val factory: (HTRecipeDefinition) -> R) :
-    HTRecipeBuilder {
+    HTRecipeBuilder,
+    HTItemOutputRecipeBuilder<HTDefinitionRecipeBuilder<R>> {
     private val itemInputs: MutableList<SizedIngredient> = mutableListOf()
     private val fluidInputs: MutableList<SizedFluidIngredient> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
@@ -87,16 +88,11 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
 
     //    Item Output    //
 
-    fun itemOutput(item: ItemLike, count: Int = 1, chance: Float = 1f): HTDefinitionRecipeBuilder<R> =
-        itemOutput(ItemStack(item, count), chance)
-
-    fun itemOutput(stack: ItemStack, chance: Float = 1f): HTDefinitionRecipeBuilder<R> = apply {
+    override fun itemOutput(stack: ItemStack, chance: Float): HTDefinitionRecipeBuilder<R> = apply {
         if (stack.isEmpty) {
             error("Empty ItemStack is not allowed for HTItemOutput!")
         }
-        if (chance !in (0f..1f)) {
-            error("Chance must be in 0f to 1f!")
-        }
+        validateChance(chance)
         itemOutputs.add(
             HTItemOutput(
                 Either.left(stack.itemHolder.idOrThrow),
@@ -107,15 +103,13 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         )
     }
 
-    fun itemOutput(
+    override fun itemOutput(
         tagKey: TagKey<Item>,
-        count: Int = 1,
-        chance: Float = 1f,
-        appendCondition: Boolean = false,
+        count: Int,
+        chance: Float,
+        appendCondition: Boolean,
     ): HTDefinitionRecipeBuilder<R> = apply {
-        if (chance !in (0f..1f)) {
-            error("Chance must be in 0f to 1f!")
-        }
+        validateChance(chance)
         itemOutputs.add(
             HTItemOutput(
                 Either.right(tagKey),
@@ -170,6 +164,8 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         ?: fluidOutputs.firstOrNull()?.id
         ?: error("Either one item or fluid output required at least!")
 
+    override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
+
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
         recipeOutput.accept(
             id.withPrefix("$prefix/"),
@@ -186,6 +182,4 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
             *conditions.toTypedArray(),
         )
     }
-
-    override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
 }

@@ -201,10 +201,6 @@ object RagiumItems {
     @JvmField
     val SULFUR_DUST: DeferredItem<Item> = register("sulfur", "dust")
 
-    // Other
-    @JvmField
-    val ELDER_HEART: DeferredItem<Item> = register("elder_heart")
-
     //    Armors    //
 
     @JvmField
@@ -380,6 +376,9 @@ object RagiumItems {
     }*/
 
     //    Machine Parts    //
+
+    @JvmField
+    val ELDER_HEART: DeferredItem<Item> = register("elder_heart")
 
     // LED
     @JvmField

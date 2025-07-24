@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
+import hiiragi283.ragium.api.recipe.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -132,6 +133,11 @@ interface RagiumAPI {
      * @see [HTBlockInteractingRecipe.getType]
      */
     fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe>
+
+    /**
+     * @see [HTInfusingRecipe.getType]
+     */
+    fun getInfusingRecipeType(): RecipeType<HTInfusingRecipe>
 
     /**
      * @see [HTTransmuteRecipe.getSerializer]

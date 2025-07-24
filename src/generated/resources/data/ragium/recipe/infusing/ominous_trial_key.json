@@ -1,0 +1,11 @@
+{
+  "type": "ragium:infusing",
+  "cost": 30.0,
+  "ingredient": {
+    "item": "minecraft:trial_key"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:ominous_trial_key"
+  }
+}

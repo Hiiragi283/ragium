@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
+import hiiragi283.ragium.api.recipe.HTInfusingRecipe
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -34,6 +35,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val EXTRACTING: Supplier<RecipeType<HTExtractingRecipe>> = register(RagiumConstantValues.EXTRACTING)
+
+    @JvmField
+    val INFUSING: Supplier<RecipeType<HTInfusingRecipe>> = register(RagiumConstantValues.INFUSING)
 
     @JvmField
     val MELTING: Supplier<RecipeType<HTMeltingRecipe>> = register(RagiumConstantValues.MELTING)

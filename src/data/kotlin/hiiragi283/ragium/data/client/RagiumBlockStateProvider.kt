@@ -128,6 +128,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         cutoutSimpleBlock(RagiumBlocks.BASIC_MACHINE_FRAME)
         cutoutSimpleBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME)
+        cutoutSimpleBlock(RagiumBlocks.ELITE_MACHINE_FRAME)
 
         // Machine
         fun machine(holder: DeferredBlock<*>, top: ResourceLocation, bottom: ResourceLocation) {
@@ -152,6 +153,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(RagiumBlocks.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+
+        val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
+        machine(RagiumBlocks.INFUSER, eliteMachine, vanillaId("block/deepslate_tiles"))
 
         // Device
         layeredBlock(
