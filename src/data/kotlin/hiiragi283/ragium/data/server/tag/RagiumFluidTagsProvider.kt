@@ -3,9 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addHolder
 import hiiragi283.ragium.api.extension.asFluidHolder
-import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumFluidContents
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import net.minecraft.core.HolderLookup
@@ -14,7 +12,6 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
@@ -42,29 +39,6 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     }
 
     private fun category() {
-        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.HYDROGEN)
-        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.NITROGEN)
-        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.AMMONIA)
-        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.OXYGEN)
-        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.ROCKET_FUEL)
-        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_DIOXIDE)
-        // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_TRIOXIDE)
-
-        tag(RagiumModTags.Fluids.FUELS_NITRO)
-            .addOptionalTag(commonId("boosted_diesel"))
-            .addOptionalTag(commonId("high_power_biodiesel"))
-        // addTag(RagiumFluidTags.NITRO_FUEL, RagiumFluidContents.NITRO_FUEL.commonTag)
-
-        tag(RagiumModTags.Fluids.FUELS_NON_NITRO)
-            .addOptionalTag(commonId("biofuel"))
-            .addOptionalTag(commonId("heavy_fuel"))
-            .addOptionalTag(commonId("light_fuel"))
-        // addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluidContents.FUEL.commonTag)
-
-        tag(RagiumModTags.Fluids.FUELS_THERMAL)
-            .addTag(Tags.Fluids.LAVA)
-            .addOptionalTag(commonId("steam"))
-            .addOptionalTag(commonId("superheated_sodium"))
     }
 
     //    Integrations    //

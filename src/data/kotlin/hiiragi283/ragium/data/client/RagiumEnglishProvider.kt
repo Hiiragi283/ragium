@@ -456,10 +456,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "Generate Resonant Debris")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "Sensitive to Noise Canceling")
 
-        add(RagiumModTags.Fluids.FUELS_NITRO, "Nitro Fuels")
-        add(RagiumModTags.Fluids.FUELS_NON_NITRO, "Non-Nitro Fuels")
-        add(RagiumModTags.Fluids.FUELS_THERMAL, "Thermal Fuels")
-
         add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "Eldritch Pearl Binders")
         add(RagiumModTags.Items.LED_BLOCKS, "LED Blocks")
         add(RagiumModTags.Items.POLYMER_RESIN, "Polymer Resins")

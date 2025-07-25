@@ -2,14 +2,12 @@ package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockTagKey
-import hiiragi283.ragium.api.extension.fluidTagKey
 import hiiragi283.ragium.api.extension.itemTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.material.Fluid
 
 object RagiumModTags {
     //    Blocks    //
@@ -45,17 +43,6 @@ object RagiumModTags {
     }
 
     //    Fluids    //
-
-    object Fluids {
-        @JvmField
-        val FUELS_NITRO: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/nitro"))
-
-        @JvmField
-        val FUELS_NON_NITRO: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/non_nitro"))
-
-        @JvmField
-        val FUELS_THERMAL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/thermal"))
-    }
 
     //    Items    //
 

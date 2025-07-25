@@ -35,7 +35,6 @@ import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
-import kotlin.collections.forEach
 import kotlin.jvm.optionals.getOrNull
 
 internal object RagiumRuntimeEvents {

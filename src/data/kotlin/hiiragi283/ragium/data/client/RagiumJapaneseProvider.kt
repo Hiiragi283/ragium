@@ -443,10 +443,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "共振の残骸を生成する")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "ノイズキャンセリングに反応する")
 
-        add(RagiumModTags.Fluids.FUELS_NITRO, "ニトロ燃料")
-        add(RagiumModTags.Fluids.FUELS_NON_NITRO, "非ニトロ燃料")
-        add(RagiumModTags.Fluids.FUELS_THERMAL, "発熱燃料")
-
         add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "異質な真珠の結合剤")
         add(RagiumModTags.Items.LED_BLOCKS, "LEDブロック")
         add(RagiumModTags.Items.POLYMER_RESIN, "高分子樹脂")
