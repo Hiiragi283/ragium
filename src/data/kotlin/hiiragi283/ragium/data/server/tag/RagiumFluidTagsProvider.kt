@@ -65,9 +65,9 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         // addTag(RagiumFluidTags.NON_NITRO_FUEL, RagiumFluidContents.FUEL.commonTag)
 
         tag(RagiumModTags.Fluids.FUELS_THERMAL)
+            .addTag(Tags.Fluids.LAVA)
             .addOptionalTag(commonId("steam"))
             .addOptionalTag(commonId("superheated_sodium"))
-            .addTag(Tags.Fluids.LAVA)
     }
 
     //    Integrations    //
@@ -87,7 +87,7 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     //    Extensions    //
 
     private fun IntrinsicTagAppender<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
-        addHolder(content.stillHolder, content.flowHolder)
+        addHolder(content.stillHolder).addHolder(content.flowHolder)
     }
 
     private fun tag(content: HTFluidContent<*, *, *>): IntrinsicTagAppender<Fluid> = tag(content.commonTag)

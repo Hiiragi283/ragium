@@ -39,20 +39,18 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     private fun mineable() {
         // Axe
-        tag(BlockTags.MINEABLE_WITH_AXE).addHolder(RagiumBlocks.EXP_BERRY_BUSH, RagiumBlocks.WOODEN_CASING)
+        tag(BlockTags.MINEABLE_WITH_AXE).addHolder(RagiumBlocks.EXP_BERRY_BUSH).addHolder(RagiumBlocks.WOODEN_CASING)
         // Hoe
-        tag(BlockTags.MINEABLE_WITH_HOE).addHolder(
-            RagiumBlocks.SPONGE_CAKE,
-            RagiumBlocks.SPONGE_CAKE_SLAB,
-            RagiumBlocks.SWEET_BERRIES_CAKE,
-        )
+        tag(BlockTags.MINEABLE_WITH_HOE)
+            .addHolder(RagiumBlocks.SPONGE_CAKE)
+            .addHolder(RagiumBlocks.SPONGE_CAKE_SLAB)
+            .addHolder(RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
         val pickaxe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
         pickaxe
-            .addTags(
-                RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS,
-                RagiumModTags.Blocks.LED_BLOCKS,
-            ).addHolder(RagiumBlocks.RESONANT_DEBRIS)
+            .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
+            .addTag(RagiumModTags.Blocks.LED_BLOCKS)
+            .addHolder(RagiumBlocks.RESONANT_DEBRIS)
 
         for (sets: HTOreSets in listOf(RagiumBlocks.RAGINITE_ORES, RagiumBlocks.RAGI_CRYSTAL_ORES)) {
             for (ore: DeferredBlock<*> in sets.blockHolders) {
@@ -66,11 +64,9 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             tag(blockTagKey(commonId("ores_in_ground/end_stone"))).addHolder(sets.endOre)
         }
         tag(Tags.Blocks.ORES)
-            .addTags(
-                RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL,
-                RagiumCommonTags.Blocks.ORES_RAGINITE,
-                RagiumCommonTags.Blocks.ORES_DEEP_SCRAP,
-            )
+            .addTag(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL)
+            .addTag(RagiumCommonTags.Blocks.ORES_RAGINITE)
+            .addTag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
         tag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP).addHolder(RagiumBlocks.RESONANT_DEBRIS)
 
         RagiumBlocks.STORAGE_BLOCKS.forEach(pickaxe::addHolder)
@@ -89,21 +85,19 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         RagiumBlocks.DRUMS.forEach(pickaxe::addHolder)
 
         // Shovel
-        tag(BlockTags.MINEABLE_WITH_SHOVEL).addHolder(
-            RagiumBlocks.ASH_LOG,
-            RagiumBlocks.CRIMSON_SOIL,
-            RagiumBlocks.SILT,
-        )
+        tag(BlockTags.MINEABLE_WITH_SHOVEL)
+            .addHolder(RagiumBlocks.ASH_LOG)
+            .addHolder(RagiumBlocks.CRIMSON_SOIL)
+            .addHolder(RagiumBlocks.SILT)
         // Other
     }
 
     private fun category() {
         // Glass
-        tag(Tags.Blocks.GLASS_BLOCKS).addTags(
-            RagiumCommonTags.Blocks.GLASS_BLOCKS_OBSIDIAN,
-            RagiumCommonTags.Blocks.GLASS_BLOCKS_QUARTZ,
-            RagiumCommonTags.Blocks.GLASS_BLOCKS_SOUL,
-        )
+        tag(Tags.Blocks.GLASS_BLOCKS)
+            .addTag(RagiumCommonTags.Blocks.GLASS_BLOCKS_OBSIDIAN)
+            .addTag(RagiumCommonTags.Blocks.GLASS_BLOCKS_QUARTZ)
+            .addTag(RagiumCommonTags.Blocks.GLASS_BLOCKS_SOUL)
 
         tag(RagiumCommonTags.Blocks.GLASS_BLOCKS_OBSIDIAN).addHolder(RagiumBlocks.OBSIDIAN_GLASS)
         tag(RagiumCommonTags.Blocks.GLASS_BLOCKS_QUARTZ).addHolder(RagiumBlocks.QUARTZ_GLASS)
@@ -113,7 +107,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         // Stone
         tag(Tags.Blocks.OBSIDIANS).addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
         tag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS).addHolder(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
-        tag(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES).addTags(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
+        tag(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES).addTag(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
         // Crop
         tag(BlockTags.BEE_GROWABLES).addHolder(RagiumBlocks.EXP_BERRY_BUSH)
         tag(BlockTags.FALL_DAMAGE_RESETTING).addHolder(RagiumBlocks.EXP_BERRY_BUSH)
@@ -127,13 +121,11 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         tag(BlockTags.STRIDER_WARM_BLOCKS).addHolder(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
 
         tag(RagiumModTags.Blocks.WIP)
-            .addTags(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
-            .addHolder(
-                RagiumBlocks.ASH_LOG,
-                RagiumBlocks.COOKED_MEAT_ON_THE_BONE,
-                RagiumBlocks.WOODEN_CASING,
-                RagiumBlocks.STONE_CASING,
-                RagiumBlocks.REFINERY,
-            )
+            .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
+            .addHolder(RagiumBlocks.ASH_LOG)
+            .addHolder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
+            .addHolder(RagiumBlocks.WOODEN_CASING)
+            .addHolder(RagiumBlocks.STONE_CASING)
+            .addHolder(RagiumBlocks.REFINERY)
     }
 }

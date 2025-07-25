@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.CommonLevelAccessor
 import net.minecraft.world.level.ItemLike
@@ -14,6 +15,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.ItemHandlerHelper
 
 //    Position    //
 
@@ -53,11 +57,20 @@ fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1) {
 }
 
 /**
- * 指定した[stack]を[entity]の足元にドロップします。
+ * 指定した[stack]を[entity]のインベントリに入れるか，足元にドロップします
  * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
 fun dropStackAt(entity: Entity, stack: ItemStack) {
-    dropStackAt(entity.level(), entity.position(), stack)
+    if (entity is Player) {
+        ItemHandlerHelper.giveItemToPlayer(entity, stack)
+    } else {
+        val handler: IItemHandler? = entity.getCapability(Capabilities.ItemHandler.ENTITY)
+        val remainStack: ItemStack = when {
+            handler != null -> ItemHandlerHelper.insertItem(handler, stack, false)
+            else -> stack
+        }
+        dropStackAt(entity.level(), entity.position(), remainStack)
+    }
 }
 
 /**

@@ -44,8 +44,8 @@ class RagiumItemTagsProvider(
         RagiumAPI.MOD_ID,
         helper,
     ) {
-    private fun IntrinsicTagAppender<Item>.addItem(vararg items: ItemLike): IntrinsicTagAppender<Item> = apply {
-        items.map(ItemLike::asItem).map(::add)
+    private fun IntrinsicTagAppender<Item>.addItem(item: ItemLike): IntrinsicTagAppender<Item> = apply {
+        add(item.asItem())
     }
 
     private fun addItem(parent: TagKey<Item>, child: TagKey<Item>, item: ItemLike) {
@@ -115,32 +115,27 @@ class RagiumItemTagsProvider(
         tag(RagiumCommonTags.Items.ENRICHED_AZURE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_AZURE)
         tag(RagiumCommonTags.Items.ENRICHED_RAGINITE).addItem(RagiumMekanismAddon.ITEM_ENRICHED_RAGINITE)
         tag(MekanismTags.Items.ENRICHED)
-            .addTags(
-                RagiumCommonTags.Items.ENRICHED_AZURE,
-                RagiumCommonTags.Items.ENRICHED_RAGINITE,
-            )
+            .addTag(RagiumCommonTags.Items.ENRICHED_AZURE)
+            .addTag(RagiumCommonTags.Items.ENRICHED_RAGINITE)
     }
 
     private fun foods() {
         addItem(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumItems.WARPED_WART)
 
         tag(Tags.Items.FOODS)
-            .addTags(
-                RagiumCommonTags.Items.FOODS_CHOCOLATE,
-                RagiumCommonTags.Items.FOODS_JAMS,
-                RagiumCommonTags.Items.INGOTS_COOKED_MEAT,
-                RagiumCommonTags.Items.INGOTS_MEAT,
-            ).addItem(
-                RagiumItems.AMBROSIA,
-                RagiumItems.CANNED_COOKED_MEAT,
-                RagiumItems.FEVER_CHERRY,
-                RagiumItems.ICE_CREAM,
-                RagiumItems.ICE_CREAM_SODA,
-                RagiumItems.MEAT_INGOT,
-                RagiumItems.MELON_PIE,
-                RagiumItems.SWEET_BERRIES_CAKE_SLICE,
-                RagiumItems.WARPED_WART,
-            )
+            .addTag(RagiumCommonTags.Items.FOODS_CHOCOLATE)
+            .addTag(RagiumCommonTags.Items.FOODS_JAMS)
+            .addTag(RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
+            .addTag(RagiumCommonTags.Items.INGOTS_MEAT)
+            .addItem(RagiumItems.AMBROSIA)
+            .addItem(RagiumItems.CANNED_COOKED_MEAT)
+            .addItem(RagiumItems.FEVER_CHERRY)
+            .addItem(RagiumItems.ICE_CREAM)
+            .addItem(RagiumItems.ICE_CREAM_SODA)
+            .addItem(RagiumItems.MEAT_INGOT)
+            .addItem(RagiumItems.MELON_PIE)
+            .addItem(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
+            .addItem(RagiumItems.WARPED_WART)
 
         tag(Tags.Items.FOODS_BERRY).addItem(RagiumItems.EXP_BERRIES)
         tag(Tags.Items.FOODS_GOLDEN).addItem(RagiumItems.FEVER_CHERRY)
@@ -149,7 +144,9 @@ class RagiumItemTagsProvider(
             .addTag(RagiumCommonTags.Items.FOODS_CHERRY)
             .addItem(RagiumItems.FEVER_CHERRY)
         tag(RagiumCommonTags.Items.FOODS_CHERRY).addTag(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
-        tag(RagiumCommonTags.Items.FOODS_RAGI_CHERRY).addItem(RagiumItems.RAGI_CHERRY, RagiumDelightAddon.RAGI_CHERRY_PULP)
+        tag(RagiumCommonTags.Items.FOODS_RAGI_CHERRY)
+            .addItem(RagiumItems.RAGI_CHERRY)
+            .addItem(RagiumDelightAddon.RAGI_CHERRY_PULP)
 
         tag(RagiumCommonTags.Items.FOODS_JAMS).addTag(RagiumCommonTags.Items.JAMS_RAGI_CHERRY)
         tag(RagiumCommonTags.Items.JAMS_RAGI_CHERRY).addItem(RagiumItems.RAGI_CHERRY_JAM)
@@ -159,20 +156,16 @@ class RagiumItemTagsProvider(
 
     private fun categories() {
         tag(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
-            .addItem(
-                Items.GHAST_TEAR,
-                Items.PHANTOM_MEMBRANE,
-                Items.WIND_CHARGE,
-            )
+            .addItem(Items.GHAST_TEAR)
+            .addItem(Items.PHANTOM_MEMBRANE)
+            .addItem(Items.WIND_CHARGE)
 
         tag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
-            .addTags(ItemTags.SMELTS_TO_GLASS)
+            .addTag(ItemTags.SMELTS_TO_GLASS)
 
         tag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
-            .addTags(
-                RagiumCommonTags.Items.DUSTS_CINNABAR,
-                ItemTags.SOUL_FIRE_BASE_BLOCKS,
-            )
+            .addTag(RagiumCommonTags.Items.DUSTS_CINNABAR)
+            .addTag(ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         // Armors
         fun registerArmors(armorSets: HTArmorSets) {
@@ -230,11 +223,9 @@ class RagiumItemTagsProvider(
         addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ULTIMATE, RagiumItems.ULTIMATE_CIRCUIT)
 
         tag(RagiumModTags.Items.ENI_UPGRADES)
-            .addTags(
-                RagiumModTags.Items.ENI_UPGRADES_BASIC,
-                RagiumModTags.Items.ENI_UPGRADES_ADVANCED,
-                RagiumModTags.Items.ENI_UPGRADES_ELITE,
-            )
+            .addTag(RagiumModTags.Items.ENI_UPGRADES_BASIC)
+            .addTag(RagiumModTags.Items.ENI_UPGRADES_ADVANCED)
+            .addTag(RagiumModTags.Items.ENI_UPGRADES_ELITE)
         tag(RagiumModTags.Items.ENI_UPGRADES_BASIC).addTag(RagiumCommonTags.Items.CIRCUITS_BASIC)
         tag(RagiumModTags.Items.ENI_UPGRADES_ADVANCED).addTag(RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         tag(RagiumModTags.Items.ENI_UPGRADES_ELITE).addTag(RagiumCommonTags.Items.CIRCUITS_ELITE)
@@ -242,31 +233,26 @@ class RagiumItemTagsProvider(
         // Other
         tag(ItemTags.BEACON_PAYMENT_ITEMS).addTags(*RagiumCommonTags.Items.BEACON_PAYMENTS)
 
-        tag(ItemTags.MEAT).addTags(RagiumCommonTags.Items.INGOTS_MEAT, RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
+        tag(ItemTags.MEAT).addTag(RagiumCommonTags.Items.INGOTS_MEAT).addTag(RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
         tag(ItemTags.PIGLIN_LOVED)
             .addTag(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
             .addItem(RagiumItems.FEVER_CHERRY)
 
         tag(RagiumModTags.Items.WIP)
-            .addItem(
-                RagiumItems.BOTTLED_BEE,
-                RagiumItems.EXP_BERRIES,
-            )
+            .addItem(RagiumItems.BOTTLED_BEE)
+            .addItem(RagiumItems.EXP_BERRIES)
     }
 
     private fun curios() {
-        tag(CuriosTags.CHARM).addItem(
-            RagiumItems.ADVANCED_RAGI_MAGNET,
-            RagiumItems.RAGI_LANTERN,
-            RagiumItems.RAGI_MAGNET,
-        )
+        tag(CuriosTags.CHARM)
+            .addItem(RagiumItems.ADVANCED_RAGI_MAGNET)
+            .addItem(RagiumItems.RAGI_LANTERN)
+            .addItem(RagiumItems.RAGI_MAGNET)
     }
 
     private fun pneumatic() {
         tag(PneumaticCraftTags.Items.PLASTIC_SHEETS)
-            .addOptionalTags(
-                RagiumCommonTags.Items.PLASTICS,
-                RagiumCommonTags.Items.PLATES_PLASTIC,
-            )
+            .addOptionalTag(RagiumCommonTags.Items.PLASTICS)
+            .addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
     }
 }

@@ -32,10 +32,13 @@ object RagiumModTags {
 
     object EntityTypes {
         @JvmField
-        val SENSITIVE_TO_NOISE_CANCELLING: TagKey<EntityType<*>> = create("sensitive_to_noise_cancelling")
+        val CAPTURE_BLACKLIST: TagKey<EntityType<*>> = create("capture_blacklist")
 
         @JvmField
         val GENERATE_RESONANT_DEBRIS: TagKey<EntityType<*>> = create("generate_resonant_debris")
+
+        @JvmField
+        val SENSITIVE_TO_NOISE_CANCELLING: TagKey<EntityType<*>> = create("sensitive_to_noise_cancelling")
 
         @JvmStatic
         private fun create(path: String): TagKey<EntityType<*>> = TagKey.create(Registries.ENTITY_TYPE, RagiumAPI.id(path))

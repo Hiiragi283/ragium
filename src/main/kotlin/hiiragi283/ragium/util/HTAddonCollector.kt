@@ -8,9 +8,6 @@ import org.objectweb.asm.Type
 import org.slf4j.Logger
 import java.lang.reflect.Constructor
 
-/**
- * @see [mezz.jei.neoforge.startup.ForgePluginFinder]
- */
 internal object HTAddonCollector {
     @JvmField
     val LOGGER: Logger = LogUtils.getLogger()
