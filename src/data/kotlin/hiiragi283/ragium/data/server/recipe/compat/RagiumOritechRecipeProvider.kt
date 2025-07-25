@@ -84,6 +84,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(RagiumCommonTags.Items.DUSTS_OBSIDIAN)
             .input(Items.DEEPSLATE)
             .result(RagiumItems.DEEP_SCRAP.get())
+            .time(2500)
             .export(output, "deep_scrap")
     }
 }

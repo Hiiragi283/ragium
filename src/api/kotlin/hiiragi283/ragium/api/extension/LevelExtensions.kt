@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.Containers
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
@@ -47,13 +48,17 @@ fun CommonLevelAccessor.emptyBlock(pos: BlockPos) {
  * 指定した[item]を[entity]の足元にドロップします。
  * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
-fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1): Boolean = dropStackAt(entity, ItemStack(item, count))
+fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1) {
+    dropStackAt(entity, ItemStack(item, count))
+}
 
 /**
  * 指定した[stack]を[entity]の足元にドロップします。
  * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
-fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.level(), entity.position(), stack)
+fun dropStackAt(entity: Entity, stack: ItemStack) {
+    dropStackAt(entity.level(), entity.position(), stack)
+}
 
 /**
  * 指定した[item]を[pos]にドロップします。
@@ -64,34 +69,22 @@ fun dropStackAt(
     pos: BlockPos,
     item: ItemLike,
     count: Int = 1,
-): Boolean = dropStackAt(level, pos, ItemStack(item, count))
+) {
+    dropStackAt(level, pos, ItemStack(item, count))
+}
 
 /**
  * 指定した[stack]を[pos]にドロップします。
  * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
-fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack): Boolean =
-    dropStackAt(level, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
+fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack) {
+    dropStackAt(level, pos.toVec3(), stack)
+}
 
 /**
  * 指定した[stack]を[pos]にドロップします。
  * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
  */
-fun dropStackAt(level: Level, pos: Vec3, stack: ItemStack): Boolean = dropStackAt(level, pos.x, pos.y, pos.z, stack)
-
-/**
- * 指定した[stack]を[x]，[y]，[z]にドロップします。
- * @return [ItemEntity]がスポーンした場合は`true`，それ以外の場合は`false`
- */
-fun dropStackAt(
-    level: Level,
-    x: Double,
-    y: Double,
-    z: Double,
-    stack: ItemStack,
-): Boolean {
-    val itemEntity = ItemEntity(level, x, y, z, stack.copy())
-    itemEntity.deltaMovement = Vec3.ZERO
-    itemEntity.setPickUpDelay(0)
-    return level.addFreshEntity(itemEntity)
+fun dropStackAt(level: Level, pos: Vec3, stack: ItemStack) {
+    Containers.dropItemStack(level, pos.x, pos.y, pos.z, stack)
 }

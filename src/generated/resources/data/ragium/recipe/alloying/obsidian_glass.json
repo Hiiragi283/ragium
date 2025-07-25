@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 4,
+      "tag": "c:dusts/obsidian"
+    },
+    {
+      "count": 1,
+      "tag": "ragium:alloy_smelter_fluxes/advanced"
+    }
+  ],
+  "item_output": {
+    "count": 1,
+    "id": "ragium:obsidian_glass"
+  }
+}

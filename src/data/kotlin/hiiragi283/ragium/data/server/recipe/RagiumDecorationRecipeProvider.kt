@@ -2,15 +2,14 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -77,20 +76,22 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
 
     private fun glass() {
         // Quartz Glass
-        HTCookingRecipeBuilder
-            .blasting(RagiumBlocks.QUARTZ_GLASS, onlyBlasting = true)
-            .addIngredient(Items.QUARTZ_BLOCK)
+        createAlloying()
+            .itemOutput(RagiumBlocks.QUARTZ_GLASS)
+            .itemInput(Items.QUARTZ_BLOCK)
+            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
             .save(output)
         // Soul Glass
-        HTCookingRecipeBuilder
-            .blasting(RagiumBlocks.SOUL_GLASS, onlyBlasting = true)
-            .addIngredient(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+        createAlloying()
+            .itemOutput(RagiumBlocks.SOUL_GLASS)
+            .itemInput(Items.SOUL_SAND)
+            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
             .save(output)
         // Obsidian Glass
-        HTShapedRecipeBuilder(RagiumBlocks.OBSIDIAN_GLASS)
-            .hollow4()
-            .define('A', RagiumCommonTags.Items.DUSTS_OBSIDIAN)
-            .define('B', Tags.Items.GLASS_BLOCKS_COLORLESS)
+        createAlloying()
+            .itemOutput(RagiumBlocks.OBSIDIAN_GLASS)
+            .itemInput(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4)
+            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
             .save(output)
     }
 

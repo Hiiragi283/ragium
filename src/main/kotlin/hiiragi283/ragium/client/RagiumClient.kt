@@ -170,19 +170,22 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
-        fun registerBasic(menuType: HTDeferredMenuType<out HTDefinitionContainerMenu>, texture: ResourceLocation) {
+        fun registerBasic(
+            menuType: HTDeferredMenuType<out HTDefinitionContainerMenu>,
+            texture: ResourceLocation = menuType.id.withPath { "textures/gui/container/$it.png" },
+        ) {
             event.register(menuType.get(), HTBasicMachineScreen.create(texture))
         }
 
-        registerBasic(RagiumMenuTypes.ALLOY_SMELTER, RagiumAPI.id("textures/gui/container/alloy_smelter.png"))
-        registerBasic(RagiumMenuTypes.BLOCK_BREAKER, RagiumAPI.id("textures/gui/container/block_breaker.png"))
-        registerBasic(RagiumMenuTypes.CRUSHER, RagiumAPI.id("textures/gui/container/crusher.png"))
-        registerBasic(RagiumMenuTypes.EXTRACTOR, RagiumAPI.id("textures/gui/container/extractor.png"))
-        registerBasic(RagiumMenuTypes.FLUID_COLLECTOR, RagiumAPI.id("textures/gui/container/fluid_collector.png"))
-        registerBasic(RagiumMenuTypes.FORMING_PRESS, RagiumAPI.id("textures/gui/container/forming_press.png"))
-        registerBasic(RagiumMenuTypes.INFUSER, RagiumAPI.id("textures/gui/container/infuser.png"))
-        registerBasic(RagiumMenuTypes.MELTER, RagiumAPI.id("textures/gui/container/melter.png"))
-        registerBasic(RagiumMenuTypes.SOLIDIFIER, RagiumAPI.id("textures/gui/container/solidifier.png"))
+        registerBasic(RagiumMenuTypes.ALLOY_SMELTER)
+        registerBasic(RagiumMenuTypes.BLOCK_BREAKER)
+        registerBasic(RagiumMenuTypes.CRUSHER)
+        registerBasic(RagiumMenuTypes.EXTRACTOR)
+        registerBasic(RagiumMenuTypes.FLUID_COLLECTOR)
+        registerBasic(RagiumMenuTypes.FORMING_PRESS)
+        registerBasic(RagiumMenuTypes.INFUSER)
+        registerBasic(RagiumMenuTypes.MELTER)
+        registerBasic(RagiumMenuTypes.SOLIDIFIER)
 
         event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS.get(), ::HTEnergyNetworkAccessScreen)
