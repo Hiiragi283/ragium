@@ -40,44 +40,8 @@ object RagiumFluidContents {
         register("experience", defaultProperties())
 
     @JvmField
-    val CHOCOLATE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("chocolate", defaultProperties())
-
-    @JvmField
     val MUSHROOM_STEW: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register("mushroom_stew", defaultProperties())
-
-    //    Hydrogen    //
-
-    // val HYDROGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("hydrogen", gaseous())
-
-    //    Nitrogen    //
-
-    // val NITROGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("nitrogen", gaseous())
-
-    // val AMMONIA: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("ammonia", gaseous())
-
-    // val NITRIC_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("nitric_acid", defaultProperties())
-
-    // val MIXTURE_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("mixture_acid", defaultProperties())
-
-    //    Oxygen    //
-
-    // val OXYGEN: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("oxygen", gaseous())
-
-    // val ROCKET_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("rocket_fuel", gaseous())
-
-    //    Alkali    //
-
-    // val ALKALI_SOLUTION: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("alkali_solution", defaultProperties())
-
-    //    Sulfur    //
-
-    // val SULFUR_DIOXIDE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sulfur_dioxide", gaseous())
-
-    // val SULFUR_TRIOXIDE: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sulfur_trioxide", gaseous())
-
-    // val SULFURIC_ACID: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sulfuric_acid", defaultProperties())
 
     //    Oil    //
 
@@ -95,29 +59,14 @@ object RagiumFluidContents {
 
     val NAPHTHA: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("naphtha", defaultProperties())
 
-    val LIGHT_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
-        "light_fuel",
-        defaultProperties(),
-    )
-
-    val HEAVY_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
-        "heavy_fuel",
-        defaultProperties(),
-    )
-
     val DIESEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("fuel", defaultProperties())
 
+    val CRIMSON_DIESEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(
+        "crimson_diesel",
+        defaultProperties(),
+    )
+
     val LUBRICANT: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("lubricant", defaultProperties())
-
-    // val NITRO_FUEL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("nitro_fuel", defaultProperties())
-
-    // val AROMATIC_COMPOUND: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("aromatic_compound", defaultProperties())
-
-    //    Bio    //
-
-    // val PLANT_OIL: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("plant_oil", defaultProperties())
-
-    // val BIOMASS: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("biomass", defaultProperties())
 
     //    Sap    //
 

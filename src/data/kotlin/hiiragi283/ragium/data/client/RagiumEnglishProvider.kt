@@ -176,15 +176,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun fluid() {
         addFluid(RagiumFluidContents.HONEY, "Honey")
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
-        addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluidContents.LPG, "LPG")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
-        addFluid(RagiumFluidContents.LIGHT_FUEL, "Light Fuel")
-        addFluid(RagiumFluidContents.HEAVY_FUEL, "heavy Fuel")
         addFluid(RagiumFluidContents.DIESEL, "Diesel")
+        addFluid(RagiumFluidContents.CRIMSON_DIESEL, "Crimson Diesel")
         addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluidContents.SAP, "Sap")

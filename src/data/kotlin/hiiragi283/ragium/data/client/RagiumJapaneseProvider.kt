@@ -164,15 +164,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun fluid() {
         addFluid(RagiumFluidContents.HONEY, "蜂蜜")
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
-        addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
         addFluid(RagiumFluidContents.LPG, "LPG")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
-        addFluid(RagiumFluidContents.LIGHT_FUEL, "軽油")
-        addFluid(RagiumFluidContents.HEAVY_FUEL, "重油")
         addFluid(RagiumFluidContents.DIESEL, "ディーゼル")
+        addFluid(RagiumFluidContents.CRIMSON_DIESEL, "深紅のディーゼル")
         addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluidContents.SAP, "樹液")

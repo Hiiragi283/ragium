@@ -1,14 +1,14 @@
 {
   "type": "ragium:solidifying",
   "catalyst": {
-    "item": "minecraft:clay_ball"
+    "tag": "c:crops/cocoa_bean"
   },
   "fluid_input": {
-    "amount": 125,
-    "tag": "c:crude_oil"
+    "amount": 250,
+    "tag": "c:milk"
   },
   "item_output": {
     "count": 1,
-    "id": "#ragium:polymer_resin"
+    "id": "#c:ingots/chocolate"
   }
 }

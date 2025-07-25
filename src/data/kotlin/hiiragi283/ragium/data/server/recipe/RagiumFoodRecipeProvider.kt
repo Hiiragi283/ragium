@@ -24,6 +24,11 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .itemOutput(RagiumCommonTags.Items.INGOTS_CHOCOLATE)
             .catalyst(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
+            .saveSuffixed(output, "_from_milk")
+
+        createSolidifying()
+            .itemOutput(RagiumCommonTags.Items.INGOTS_CHOCOLATE)
+            .fluidInput(RagiumCommonTags.Fluids.CHOCOLATES, 250)
             .save(output)
         // Melon Pie
         HTShapelessRecipeBuilder(RagiumItems.MELON_PIE)
@@ -98,6 +103,11 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumItems.MEAT_INGOT, 3)
             .pattern("AAA")
             .define('A', RagiumCommonTags.Items.DUSTS_MEAT)
+            .save(output)
+
+        createSolidifying()
+            .itemOutput(RagiumCommonTags.Items.INGOTS_MEAT)
+            .fluidInput(RagiumCommonTags.Fluids.MEAT, 250)
             .save(output)
 
         HTCookingRecipeBuilder

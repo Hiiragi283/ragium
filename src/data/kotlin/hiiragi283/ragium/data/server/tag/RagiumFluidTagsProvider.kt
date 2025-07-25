@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.extension.addHolder
 import hiiragi283.ragium.api.extension.asFluidHolder
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumFluidContents
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
@@ -50,8 +49,6 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.ROCKET_FUEL)
         // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_DIOXIDE)
         // addFluid(Tags.Fluids.GASEOUS, RagiumFluidContents.SULFUR_TRIOXIDE)
-
-        tag(RagiumCommonTags.Fluids.CHOCOLATES).addContent(RagiumFluidContents.CHOCOLATE)
 
         tag(RagiumModTags.Fluids.FUELS_NITRO)
             .addOptionalTag(commonId("boosted_diesel"))

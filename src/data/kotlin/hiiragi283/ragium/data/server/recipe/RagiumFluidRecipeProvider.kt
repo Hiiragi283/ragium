@@ -19,12 +19,10 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         extracting()
         infusing()
-        // solidifying()
 
         biomass()
         bottle()
         crudeOil()
-        // crystal()
         exp()
         sap()
     }
@@ -85,30 +83,29 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         createSolidifying()
             .itemOutput(RagiumModTags.Items.POLYMER_RESIN)
             .catalyst(Items.CLAY_BALL)
-            .fluidInput(RagiumFluidContents.CRUDE_OIL, 100)
+            .fluidInput(RagiumFluidContents.CRUDE_OIL, 125)
             .saveSuffixed(output, "_from_crude_oil")
 
         // Crude Oil -> LPG + Naphtha + Tar
         createRefining()
-            .fluidOutput(RagiumFluidContents.LPG, 20)
-            .fluidOutput(RagiumFluidContents.NAPHTHA, 40)
+            .fluidOutput(RagiumFluidContents.LPG, 375)
+            .fluidOutput(RagiumFluidContents.NAPHTHA, 375)
             .itemOutput(RagiumItems.TAR)
-            .fluidInput(RagiumFluidContents.CRUDE_OIL, 100)
+            .fluidInput(RagiumFluidContents.CRUDE_OIL, 1000)
             .save(output)
         // LPG + Coal -> 4x Polymer Resin
         createSolidifying()
             .itemOutput(RagiumModTags.Items.POLYMER_RESIN, 4)
             .catalyst(Items.COAL)
-            .fluidInput(RagiumFluidContents.LPG, 100)
+            .fluidInput(RagiumFluidContents.LPG, 125)
             .saveSuffixed(output, "_from_lpg")
-        // Naphtha -> Light Fuel + Heavy Fuel + Sulfur
+        // Naphtha -> Diesel + Sulfur
         createRefining()
-            .fluidOutput(RagiumFluidContents.LIGHT_FUEL, 40)
-            .fluidOutput(RagiumFluidContents.HEAVY_FUEL, 40)
+            .fluidOutput(RagiumFluidContents.DIESEL, 375)
             .itemOutput(RagiumCommonTags.Items.DUSTS_SULFUR)
-            .fluidInput(RagiumFluidContents.NAPHTHA, 100)
+            .fluidInput(RagiumFluidContents.NAPHTHA, 1000)
             .save(output)
-        // Light Fuel + Heavy Fuel -> Diesel
+        // Diesel + Crimson Crystal -> Crimson Fuel
     }
 
     private fun exp() {

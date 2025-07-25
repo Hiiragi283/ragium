@@ -1,5 +1,5 @@
 {
   "parent": "neoforge:item/bucket",
-  "fluid": "ragium:light_fuel",
+  "fluid": "ragium:crimson_diesel",
   "loader": "neoforge:fluid_container"
 }

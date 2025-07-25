@@ -4,7 +4,7 @@
     "item": "minecraft:coal"
   },
   "fluid_input": {
-    "amount": 100,
+    "amount": 125,
     "tag": "c:lpg"
   },
   "item_output": {

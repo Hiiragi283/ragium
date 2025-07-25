@@ -128,37 +128,14 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             event.registerFluidType(HTSimpleFluidExtensions(color), content.getType())
         }
         register(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
-        register(RagiumFluidContents.CHOCOLATE, Color(0x663333))
         register(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
-
-        // register(RagiumFluidContents.HYDROGEN, Color(0x3333ff))
-
-        // register(RagiumFluidContents.NITROGEN, Color(0x33ccff))
-        // register(RagiumFluidContents.AMMONIA, Color(0x9999ff))
-        // register(RagiumFluidContents.NITRIC_ACID, Color(0xcc99ff))
-        // register(RagiumFluidContents.MIXTURE_ACID, Color(0xff9900))
-
-        // register(RagiumFluidContents.OXYGEN, Color(0x66ccff))
-        // register(RagiumFluidContents.ROCKET_FUEL, Color(0x0066ff))
-
-        // register(RagiumFluidContents.ALKALI_SOLUTION, Color(0x0000cc))
-
-        // register(RagiumFluidContents.SULFUR_DIOXIDE, Color(0xff6600))
-        // register(RagiumFluidContents.SULFUR_TRIOXIDE, Color(0xff6600))
-        // register(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
 
         register(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
         register(RagiumFluidContents.LPG, Color(0xffcc99))
-        register(RagiumFluidContents.NAPHTHA, Color(0xff9900))
-        register(RagiumFluidContents.LIGHT_FUEL, Color(0xffff00))
-        register(RagiumFluidContents.HEAVY_FUEL, Color(0xff6600))
+        register(RagiumFluidContents.NAPHTHA, Color(0xff9966))
         register(RagiumFluidContents.DIESEL, Color(0xff3300))
+        register(RagiumFluidContents.CRIMSON_DIESEL, Color(0x663333))
         register(RagiumFluidContents.LUBRICANT, Color(0xff9900))
-        // register(RagiumFluidContents.NITRO_FUEL, Color(0xff33333))
-        // register(RagiumFluidContents.AROMATIC_COMPOUND, Color(0xcc6633))
-
-        // register(RagiumFluidContents.PLANT_OIL, Color(0x999933))
-        // register(RagiumFluidContents.BIOMASS, Color(0x006600))
 
         register(RagiumFluidContents.SAP, Color(0x996633))
         register(RagiumFluidContents.CRIMSON_SAP, Color(0x660000))

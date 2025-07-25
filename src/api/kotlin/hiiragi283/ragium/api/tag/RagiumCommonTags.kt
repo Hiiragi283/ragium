@@ -62,13 +62,7 @@ object RagiumCommonTags {
         val CHOCOLATES: TagKey<Fluid> = fluidTagKey(commonId("chocolates"))
 
         @JvmField
-        val CREOSOTE: TagKey<Fluid> = fluidTagKey(commonId("creosote"))
-
-        @JvmField
         val MEAT: TagKey<Fluid> = fluidTagKey(commonId("meat"))
-
-        @JvmField
-        val STEAM: TagKey<Fluid> = fluidTagKey(commonId("steam"))
     }
 
     //    Items    //
@@ -93,22 +87,20 @@ object RagiumCommonTags {
         val SILICON: TagKey<Item> = commonTag("silicon")
 
         // Circuits
-        private const val CIRCUITS_: String = RagiumConstantValues.CIRCUITS
+        @JvmField
+        val CIRCUITS: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS)
 
         @JvmField
-        val CIRCUITS: TagKey<Item> = commonTag(CIRCUITS_)
+        val CIRCUITS_BASIC: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "basic")
 
         @JvmField
-        val CIRCUITS_BASIC: TagKey<Item> = commonTag(CIRCUITS_, "basic")
+        val CIRCUITS_ADVANCED: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "advanced")
 
         @JvmField
-        val CIRCUITS_ADVANCED: TagKey<Item> = commonTag(CIRCUITS_, "advanced")
+        val CIRCUITS_ELITE: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "elite")
 
         @JvmField
-        val CIRCUITS_ELITE: TagKey<Item> = commonTag(CIRCUITS_, "elite")
-
-        @JvmField
-        val CIRCUITS_ULTIMATE: TagKey<Item> = commonTag(CIRCUITS_, "ultimate")
+        val CIRCUITS_ULTIMATE: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "ultimate")
 
         // Crops
         @JvmField
