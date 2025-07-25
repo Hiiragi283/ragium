@@ -190,8 +190,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
-
-        addFluid(RagiumFluidContents.ELDRITCH_GOO, "Eldritch Goo")
     }
 
     private fun item() {

@@ -130,10 +130,4 @@ object RagiumFluidContents {
     @JvmField
     val WARPED_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register("warped_sap", defaultProperties())
-
-    //    Other    //
-
-    @JvmField
-    val ELDRITCH_GOO: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
-        register("eldritch_goo", defaultProperties())
 }

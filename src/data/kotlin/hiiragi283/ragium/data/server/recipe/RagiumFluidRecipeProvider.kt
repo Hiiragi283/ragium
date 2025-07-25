@@ -189,17 +189,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .blasting(Items.ENDER_PEARL, onlyBlasting = true)
             .addIngredient(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
             .save(output)
-
-        // Eldritch Orb -> Eldritch Goo
-        createMelting()
-            .fluidOutput(RagiumFluidContents.ELDRITCH_GOO, 125)
-            .itemInput(RagiumItems.ELDRITCH_ORB)
-            .saveSuffixed(output, "_from_orb")
-        // Eldritch Goo -> Eldritch Pearl
-        createSolidifying()
-            .itemOutput(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
-            .fluidInput(RagiumFluidContents.ELDRITCH_GOO, 500)
-            .save(output)
     }
 
     //    Extracting    //

@@ -62,5 +62,11 @@ object RagiumInfusingRecipeProvider : HTRecipeProvider() {
             .addIngredient(Items.TRIAL_KEY)
             .setCost(15 * 2)
             .save(output)
+
+        createInfusing()
+            .itemOutput(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
+            .addIngredient(RagiumItems.ELDRITCH_ORB)
+            .setCost(15 * 2)
+            .save(output)
     }
 }
