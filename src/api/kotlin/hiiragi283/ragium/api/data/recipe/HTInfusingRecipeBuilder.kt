@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import net.minecraft.core.component.DataComponentPatch
@@ -10,7 +9,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.NotCondition
@@ -29,13 +27,17 @@ class HTInfusingRecipeBuilder(private val factory: (Ingredient, HTItemOutput, Fl
         this.ingredient = ingredient
     }
 
-    override fun itemOutput(stack: ItemStack, chance: Float): HTInfusingRecipeBuilder = apply {
+    override fun itemOutput(
+        id: ResourceLocation,
+        count: Int,
+        component: DataComponentPatch,
+        chance: Float,
+    ): HTInfusingRecipeBuilder = apply {
         check(!::result.isInitialized) { "Result has already been initialized!" }
-        validateStack(stack)
         result = HTItemOutput(
-            Either.left(stack.itemHolder.idOrThrow),
-            stack.count,
-            stack.componentsPatch,
+            Either.left(id),
+            count,
+            component,
             1f,
         )
     }

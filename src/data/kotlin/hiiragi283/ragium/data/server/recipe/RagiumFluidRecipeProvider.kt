@@ -20,14 +20,14 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         extracting()
         infusing()
 
-        biomass()
+        bio()
         bottle()
         crudeOil()
         exp()
         sap()
     }
 
-    private fun biomass() {
+    private fun bio() {
         createSolidifying()
             .itemOutput(RagiumModTags.Items.POLYMER_RESIN)
             .catalyst(RagiumCommonTags.Items.FUELS_BIO_BLOCK)

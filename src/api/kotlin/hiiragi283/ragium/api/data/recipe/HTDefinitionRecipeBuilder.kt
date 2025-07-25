@@ -12,7 +12,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
@@ -88,16 +87,18 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
 
     //    Item Output    //
 
-    override fun itemOutput(stack: ItemStack, chance: Float): HTDefinitionRecipeBuilder<R> = apply {
-        if (stack.isEmpty) {
-            error("Empty ItemStack is not allowed for HTItemOutput!")
-        }
+    override fun itemOutput(
+        id: ResourceLocation,
+        count: Int,
+        component: DataComponentPatch,
+        chance: Float,
+    ): HTDefinitionRecipeBuilder<R> = apply {
         validateChance(chance)
         itemOutputs.add(
             HTItemOutput(
-                Either.left(stack.itemHolder.idOrThrow),
-                stack.count,
-                stack.componentsPatch,
+                Either.left(id),
+                count,
+                component,
                 chance,
             ),
         )

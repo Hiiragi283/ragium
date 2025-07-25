@@ -111,7 +111,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         createAlloying()
             .itemOutput(ModMaterialFamilies.getAlloy("steel").getBaseTagKey(), appendCondition = true)
             .itemInput(Tags.Items.INGOTS_IRON)
-            .itemInput(RagiumCommonTags.Items.COAL_COKES)
+            .itemInput(RagiumCommonTags.Items.COAL_COKE)
             .saveSuffixed(output, "_from_coke")
         // Invar
         createAlloying()
