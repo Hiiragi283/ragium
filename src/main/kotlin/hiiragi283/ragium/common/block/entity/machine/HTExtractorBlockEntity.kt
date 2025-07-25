@@ -6,10 +6,11 @@ import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.inventory.HTExtractorMenu
+import hiiragi283.ragium.common.inventory.HTSingleProcessMenu
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -71,7 +72,8 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockE
 
     //    Menu    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTExtractorMenu = HTExtractorMenu(
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTSingleProcessMenu = HTSingleProcessMenu(
+        RagiumMenuTypes.EXTRACTOR,
         containerId,
         playerInventory,
         blockPos,
