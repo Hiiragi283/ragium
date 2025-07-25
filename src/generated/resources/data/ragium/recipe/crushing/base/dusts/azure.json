@@ -4,17 +4,17 @@
       "type": "neoforge:not",
       "value": {
         "type": "neoforge:tag_empty",
-        "tag": "c:dusts/azure_steel"
+        "tag": "c:dusts/azure"
       }
     }
   ],
   "type": "ragium:crushing",
   "item_input": {
     "count": 1,
-    "tag": "c:ingots/azure_steel"
+    "tag": "c:gems/azure"
   },
   "item_output": {
     "count": 1,
-    "id": "#c:dusts/azure_steel"
+    "id": "#c:dusts/azure"
   }
 }

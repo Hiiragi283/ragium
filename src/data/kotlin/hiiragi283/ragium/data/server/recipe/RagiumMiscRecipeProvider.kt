@@ -89,7 +89,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         // Azure Steel
         HTShapedRecipeBuilder(RagiumItems.AZURE_STEEL_COMPOUND)
             .hollow4()
-            .define('A', RagiumItems.AZURE_SHARD)
+            .define('A', RagiumCommonTags.Items.GEMS_AZURE)
             .define('B', Tags.Items.INGOTS_IRON)
             .save(output)
 
@@ -100,7 +100,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_compound")
 
         createAlloying()
-            .itemOutput(RagiumItems.AZURE_SHARD, 2)
+            .itemOutput(RagiumCommonTags.Items.GEMS_AZURE, 2)
             .itemInput(Tags.Items.GEMS_AMETHYST)
             .itemInput(Tags.Items.GEMS_LAPIS)
             .save(output)
@@ -108,7 +108,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         createAlloying()
             .itemOutput(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .itemInput(Tags.Items.INGOTS_IRON)
-            .itemInput(RagiumItems.AZURE_SHARD, 3)
+            .itemInput(RagiumCommonTags.Items.GEMS_AZURE, 3)
             .save(output)
         // Sawdust
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)

@@ -216,7 +216,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         val dust: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.DUSTS) ?: return
         // Base
         createCrushing()
-            .itemOutput(dust, appendCondition = family.entryType != HTMaterialFamily.EntryType.RAGIUM)
+            .itemOutput(dust, appendCondition = family.getItem(HTMaterialFamily.Variant.DUSTS) == null)
             .itemInput(tagKey)
             .savePrefixed(output, "base/")
         // Gear

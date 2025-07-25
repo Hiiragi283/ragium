@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -29,7 +28,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
         )
         // Azure
         register(
-            RagiumItems.AZURE_SHARD,
+            RagiumCommonTags.Items.GEMS_AZURE,
             ReplicationRegistry.Matter.ORGANIC.toStack(2),
             ReplicationRegistry.Matter.PRECIOUS.toStack(5),
             ReplicationRegistry.Matter.EARTH.toStack(3),

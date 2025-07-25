@@ -117,9 +117,6 @@ object RagiumItems {
     val RAGI_COKE: DeferredItem<Item> = register("ragi_coke")
 
     @JvmField
-    val AZURE_SHARD: DeferredItem<Item> = register("azure_shard")
-
-    @JvmField
     val COMPRESSED_SAWDUST: DeferredItem<Item> = register("compressed_sawdust")
 
     @JvmField
@@ -131,6 +128,9 @@ object RagiumItems {
     // Gems
     @JvmField
     val RAGI_CRYSTAL: DeferredItem<Item> = register(RagiumConstantValues.RAGI_CRYSTAL)
+
+    @JvmField
+    val AZURE_SHARD: DeferredItem<Item> = register("azure_shard")
 
     @JvmField
     val CRIMSON_CRYSTAL: DeferredItem<Item> = register(RagiumConstantValues.CRIMSON_CRYSTAL)

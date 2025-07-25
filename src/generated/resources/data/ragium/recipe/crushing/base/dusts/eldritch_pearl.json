@@ -1,4 +1,13 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/eldritch_pearl"
+      }
+    }
+  ],
   "type": "ragium:crushing",
   "item_input": {
     "count": 1,

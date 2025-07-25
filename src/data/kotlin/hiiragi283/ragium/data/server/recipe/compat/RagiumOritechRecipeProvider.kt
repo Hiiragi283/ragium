@@ -44,7 +44,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
 
         FoundryRecipeBuilder
             .build()
-            .input(RagiumItems.AZURE_SHARD)
+            .input(RagiumCommonTags.Items.GEMS_AZURE)
             .input(Tags.Items.INGOTS_IRON)
             .result(RagiumItems.AZURE_STEEL_INGOT.get())
             .time(160)

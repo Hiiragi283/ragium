@@ -51,7 +51,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
 
             // Azure Shard -> Chemical
             factory(
-                itemHelper.from(RagiumItems.AZURE_SHARD),
+                itemHelper.from(RagiumCommonTags.Items.GEMS_AZURE),
                 RagiumMekanismAddon.CHEMICAL_AZURE.asStack(10),
             ).build(output, RagiumAPI.id("$prefix/azure/from_shard"))
             // Enriched -> Chemical
@@ -89,7 +89,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         // Azure
         ItemStackToItemStackRecipeBuilder
             .enriching(
-                itemHelper.from(RagiumItems.AZURE_SHARD),
+                itemHelper.from(RagiumCommonTags.Items.GEMS_AZURE),
                 RagiumMekanismAddon.ITEM_ENRICHED_AZURE.toStack(),
             ).build(output, RagiumAPI.id("enriching/enrich/azure"))
 

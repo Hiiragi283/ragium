@@ -179,6 +179,9 @@ object RagiumCommonTags {
         val GEMS_RAGI_CRYSTAL: TagKey<Item> = commonTag(GEMS, RagiumConstantValues.RAGI_CRYSTAL)
 
         @JvmField
+        val GEMS_AZURE: TagKey<Item> = commonTag(GEMS, "azure")
+
+        @JvmField
         val GEMS_CRIMSON_CRYSTAL: TagKey<Item> = commonTag(GEMS, RagiumConstantValues.CRIMSON_CRYSTAL)
 
         @JvmField
@@ -215,6 +218,7 @@ object RagiumCommonTags {
         val BEACON_PAYMENTS: Array<TagKey<Item>> = arrayOf(
             // gems
             GEMS_RAGI_CRYSTAL,
+            GEMS_AZURE,
             GEMS_CRIMSON_CRYSTAL,
             GEMS_WARPED_CRYSTAL,
             GEMS_ELDRITCH_PEARL,

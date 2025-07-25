@@ -15,6 +15,12 @@ object RagiumMaterialFamilies {
             .build(RagiumConstantValues.RAGI_CRYSTAL)
 
     @JvmField
+    val AZURE: HTMaterialFamily =
+        HTMaterialFamily.Builder
+            .gem(RagiumItems.AZURE_SHARD)
+            .build("azure")
+
+    @JvmField
     val CRIMSON_CRYSTAL: HTMaterialFamily =
         HTMaterialFamily.Builder
             .gem(RagiumItems.CRIMSON_CRYSTAL)
