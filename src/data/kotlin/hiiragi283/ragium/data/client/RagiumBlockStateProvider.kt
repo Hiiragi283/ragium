@@ -17,6 +17,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
@@ -200,7 +201,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
 
         // Storages
-        for (drum: DeferredBlock<*> in RagiumBlocks.DRUMS) {
+        for (drum: DeferredBlock<Block> in RagiumBlocks.DRUMS) {
             val id: ResourceLocation = drum.blockId
             simpleBlock(
                 drum.get(),
