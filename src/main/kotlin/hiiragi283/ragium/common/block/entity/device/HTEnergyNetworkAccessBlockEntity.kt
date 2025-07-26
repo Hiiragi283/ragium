@@ -80,9 +80,13 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
         return ItemInteractionResult.sidedSuccess(level.isClientSide)
     }*/
 
-    override val maxTicks: Int = 20
+    override var maxTicks: Int = 20
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
+        // 20 tickごとに実行する
+        currentTicks++
+        if (currentTicks < maxTicks) return TriState.DEFAULT
+        currentTicks = 0
         // 左のスロットから電力を吸い取る
         val extractResult: TriState = extractFromItem()
         // 右のスロットに電力を渡す

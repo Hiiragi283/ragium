@@ -51,9 +51,13 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
+    override var maxTicks: Int = 20
+
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (!canProcess()) return TriState.DEFAULT
+        currentTicks++
+        if (currentTicks < maxTicks) return TriState.DEFAULT
+        currentTicks = 0
         // 自動搬出する
         exportItems(level, pos)
         // 範囲内のItem Entityを取得する
@@ -79,8 +83,6 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return TriState.TRUE
     }
-
-    override val maxTicks: Int = 20
 
     override fun getItemHandler(direction: Direction?): IItemHandler? = HTFilteredItemHandler(inventory, HTItemFilter.EXTRACT_ONLY)
 

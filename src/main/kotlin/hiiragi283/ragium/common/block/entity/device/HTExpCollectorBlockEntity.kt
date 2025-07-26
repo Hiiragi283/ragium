@@ -8,12 +8,14 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
+import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.ExperienceOrb
@@ -38,11 +40,20 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         reader.read(RagiumConstantValues.TANK, tank)
     }
 
+    override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {
+        super.sendUpdatePacket(serverLevel, consumer)
+        consumer(HTFluidSlotUpdatePacket(0, tank.fluid))
+    }
+
     //    Ticking    //
+
+    override var maxTicks: Int = 20
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する
-        if (!canProcess()) return TriState.DEFAULT
+        currentTicks++
+        if (currentTicks < maxTicks) return TriState.DEFAULT
+        currentTicks = 0
         // 自動搬出する
         exportFluids(level, pos)
         // 範囲内のExp Orbを取得する
@@ -63,8 +74,6 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return TriState.TRUE
     }
-
-    override val maxTicks: Int = 20
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? = HTFilteredFluidHandler(listOf(tank), HTFluidFilter.DRAIN_ONLY)
 
