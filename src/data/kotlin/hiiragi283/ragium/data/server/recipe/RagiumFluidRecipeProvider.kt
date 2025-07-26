@@ -88,8 +88,8 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
         // Crude Oil -> LPG + Naphtha + Tar
         createRefining()
-            .fluidOutput(RagiumFluidContents.LPG, 375)
             .fluidOutput(RagiumFluidContents.NAPHTHA, 375)
+            .fluidOutput(RagiumFluidContents.LPG, 375)
             .itemOutput(RagiumItems.TAR)
             .fluidInput(RagiumFluidContents.CRUDE_OIL, 1000)
             .save(output)
@@ -147,17 +147,28 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.SAP, 125)
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .saveSuffixed(output, "_from_log")
-        // Sap -> Slime Ball
-        /*HTMachineRecipeBuilder(RagiumRecipeSerializers.EXTRACTING)
-            .itemOutput(Items.SLIME_BALL)
-            .fluidInput(RagiumFluidContents.SAP.commonTag, 1000)
-            .saveSuffixed(output, "_from_sap")*/
+        // Sap -> Syrup
+        createRefining()
+            .fluidOutput(RagiumFluidContents.SYRUP, 750)
+            .fluidOutput(Fluids.WATER, 250)
+            .fluidInput(RagiumFluidContents.SAP, 1000)
+            .save(output)
+        // Syrup -> Sugar
+        createSolidifying()
+            .itemOutput(Items.SUGAR)
+            .fluidInput(RagiumFluidContents.SYRUP, 250)
+            .saveSuffixed(output, "_from_syrup")
 
         // Crimson Stem -> Crimson Sap
         createMelting()
             .fluidOutput(RagiumFluidContents.CRIMSON_SAP, 125)
             .itemInput(ItemTags.CRIMSON_STEMS)
             .saveSuffixed(output, "_from_stems")
+        // Crimson Sap -> Crimson Crystal
+        createSolidifying()
+            .itemOutput(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
+            .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
+            .save(output)
         // Crimson Sap -> Sap + Crimson Crystal
         createRefining()
             .itemOutput(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
@@ -175,6 +186,11 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.WARPED_SAP, 125)
             .itemInput(ItemTags.WARPED_STEMS)
             .saveSuffixed(output, "_from_stems")
+        // Warped Sap -> Warped Crystal
+        createSolidifying()
+            .itemOutput(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)
+            .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
+            .save(output)
         // Warped Sap -> Sap + Warped Crystal
         createRefining()
             .itemOutput(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)

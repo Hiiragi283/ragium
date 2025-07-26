@@ -29,8 +29,8 @@ class HTFilteredFluidHandler(private val delegate: List<FluidTank>, private val 
     override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = delegate[tank].isFluidValid(stack)
 
     override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int {
-        if (!filter.canFill(delegate, resource)) return 0
         for (tank: FluidTank in delegate) {
+            if (!filter.canFill(tank, resource)) continue
             val filled: Int = tank.fill(resource, action)
             if (filled > 0) return filled
         }
@@ -38,8 +38,8 @@ class HTFilteredFluidHandler(private val delegate: List<FluidTank>, private val 
     }
 
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
-        if (!filter.canDrain(delegate, resource)) return FluidStack.EMPTY
         for (tank: FluidTank in delegate) {
+            if (!filter.canDrain(tank, resource)) continue
             val drained: FluidStack = tank.drain(resource, action)
             if (!drained.isEmpty) return drained
         }
@@ -47,8 +47,8 @@ class HTFilteredFluidHandler(private val delegate: List<FluidTank>, private val 
     }
 
     override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack {
-        if (!filter.canDrain(delegate, maxDrain)) return FluidStack.EMPTY
         for (tank: FluidTank in delegate) {
+            if (!filter.canDrain(tank, maxDrain)) continue
             val drained: FluidStack = tank.drain(maxDrain, action)
             if (!drained.isEmpty) return drained
         }

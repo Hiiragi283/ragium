@@ -34,6 +34,7 @@ import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDecomposeEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTPressingEmiRecipe
@@ -225,19 +226,22 @@ class RagiumEmiPlugin : EmiPlugin {
         forEachRecipes(RagiumRecipeTypes.REFINING.get()) { id: ResourceLocation, recipe: HTRefiningRecipe ->
             registry.addRecipe(
                 HTRefiningEmiRecipe(
+                    id.withPrefix("/"),
+                    recipe.ingredient.toEmi(),
+                    recipe.fluidOutputs[0].toEmi(),
+                ),
+            )
+
+            registry.addRecipe(
+                HTDistillationEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
-                    buildList {
-                        add(
-                            recipe.itemOutput
-                                .map(HTItemOutput::toEmi)
-                                .orElse(EmiStack.EMPTY),
-                        )
-                        addAll(recipe.fluidOutputs.map(HTFluidOutput::toEmi))
-                    },
+                    recipe.itemOutput.map(HTItemOutput::toEmi),
+                    recipe.fluidOutputs.map(HTFluidOutput::toEmi),
                 ),
             )
         }
+        registry.addRecipeHandler(RagiumMenuTypes.REFINERY.get(), HTRecipeHandler(RagiumEmiCategories.REFINING))
         // Solidifying
         forEachRecipes(RagiumRecipeTypes.SOLIDIFYING.get()) { id: ResourceLocation, recipe: HTSolidifyingRecipe ->
             registry.addRecipe(

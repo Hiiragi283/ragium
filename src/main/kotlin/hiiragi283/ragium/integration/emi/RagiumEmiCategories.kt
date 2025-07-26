@@ -14,6 +14,9 @@ object RagiumEmiCategories {
     val CRUSHING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.CRUSHING), RagiumBlocks.CRUSHER)
 
     @JvmField
+    val DISTILLATION = HTEmiRecipeCategory(RagiumAPI.id("distillation"), RagiumBlocks.REFINERY)
+
+    @JvmField
     val EXTRACTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConstantValues.EXTRACTING), RagiumBlocks.EXTRACTOR)
 
     @JvmField
@@ -36,6 +39,7 @@ object RagiumEmiCategories {
         // Machines
         ALLOYING,
         CRUSHING,
+        DISTILLATION,
         EXTRACTING,
         INFUSING,
         MELTING,

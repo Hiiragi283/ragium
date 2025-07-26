@@ -8,6 +8,9 @@ data class HTUniversalRecipeInput(val items: List<ItemStack>, val fluids: List<F
     companion object {
         @JvmStatic
         fun fromItems(vararg stacks: ItemStack): HTUniversalRecipeInput = HTUniversalRecipeInput(listOf(*stacks), listOf())
+
+        @JvmStatic
+        fun fromFluids(vararg stacks: FluidStack): HTUniversalRecipeInput = HTUniversalRecipeInput(listOf(), listOf(*stacks))
     }
 
     override fun getItem(index: Int): ItemStack = items[index]

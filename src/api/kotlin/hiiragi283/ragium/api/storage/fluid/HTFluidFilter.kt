@@ -18,17 +18,17 @@ interface HTFluidFilter {
         val VIEW_ONLY: HTFluidFilter = Impl(canFill = false, canDrain = false)
     }
 
-    fun canFill(tanks: List<IFluidTank>, stack: FluidStack): Boolean
+    fun canFill(tank: IFluidTank, stack: FluidStack): Boolean
 
-    fun canDrain(tanks: List<IFluidTank>, stack: FluidStack): Boolean
+    fun canDrain(tank: IFluidTank, stack: FluidStack): Boolean
 
-    fun canDrain(tanks: List<IFluidTank>, maxDrain: Int): Boolean
+    fun canDrain(tank: IFluidTank, maxDrain: Int): Boolean
 
     private class Impl(private val canFill: Boolean, private val canDrain: Boolean) : HTFluidFilter {
-        override fun canFill(tanks: List<IFluidTank>, stack: FluidStack): Boolean = canFill
+        override fun canFill(tank: IFluidTank, stack: FluidStack): Boolean = canFill
 
-        override fun canDrain(tanks: List<IFluidTank>, stack: FluidStack): Boolean = canDrain
+        override fun canDrain(tank: IFluidTank, stack: FluidStack): Boolean = canDrain
 
-        override fun canDrain(tanks: List<IFluidTank>, maxDrain: Int): Boolean = canDrain
+        override fun canDrain(tank: IFluidTank, maxDrain: Int): Boolean = canDrain
     }
 }

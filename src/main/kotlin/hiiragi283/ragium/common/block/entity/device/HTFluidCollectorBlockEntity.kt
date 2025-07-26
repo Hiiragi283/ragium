@@ -41,7 +41,7 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
         super.sendUpdatePacket(serverLevel, consumer)
         consumer(HTFluidSlotUpdatePacket(0, tank.fluid))
     }
-    
+
     //    Ticking    //
 
     final override var maxTicks: Int = 20

@@ -8,21 +8,19 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.integration.emi.RagiumEmiCategories
 import net.minecraft.resources.ResourceLocation
 
-class HTRefiningEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val results: List<EmiStack>) :
+class HTRefiningEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, val result: EmiStack) :
     HTMachineEmiRecipe(id, RagiumAPI.id("textures/gui/container/refinery.png")) {
     override fun getCategory(): EmiRecipeCategory = RagiumEmiCategories.REFINING
 
     override fun getInputs(): List<EmiIngredient> = listOf(ingredient)
 
-    override fun getOutputs(): List<EmiStack> = results
+    override fun getOutputs(): List<EmiStack> = listOf(result)
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(ingredient, 1.0, 1.0).drawBack(false)
+        widgets.addInput(ingredient, 1.0, 0.5).drawBack(false)
         // Output
-        widgets.addOutput(0, 4.0, 1.0)
-        widgets.addOutput(1, 5.0, 0.5)
-        widgets.addOutput(2, 5.0, 1.5)
+        widgets.addOutput(result, getPosition(4.5), getPosition(1.0), true).drawBack(false)
     }
 }

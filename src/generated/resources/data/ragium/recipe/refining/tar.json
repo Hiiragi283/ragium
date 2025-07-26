@@ -7,11 +7,11 @@
   "fluid_output": [
     {
       "amount": 375,
-      "id": "ragium:lpg"
+      "id": "ragium:naphtha"
     },
     {
       "amount": 375,
-      "id": "ragium:naphtha"
+      "id": "ragium:lpg"
     }
   ],
   "item_output": {

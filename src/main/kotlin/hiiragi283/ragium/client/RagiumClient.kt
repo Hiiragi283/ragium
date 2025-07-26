@@ -138,6 +138,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         register(RagiumFluidContents.LUBRICANT, Color(0xff9900))
 
         register(RagiumFluidContents.SAP, Color(0x996633))
+        register(RagiumFluidContents.SYRUP, Color(0xcc9966))
         register(RagiumFluidContents.CRIMSON_SAP, Color(0x660000))
         register(RagiumFluidContents.WARPED_SAP, Color(0x006666))
 
@@ -160,6 +161,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerBasic(RagiumMenuTypes.FORMING_PRESS)
         registerBasic(RagiumMenuTypes.INFUSER)
         registerBasic(RagiumMenuTypes.MELTER)
+        registerBasic(RagiumMenuTypes.REFINERY)
         registerBasic(RagiumMenuTypes.SOLIDIFIER)
 
         event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)

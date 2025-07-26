@@ -71,11 +71,11 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBloc
     override fun getFluidHandler(direction: Direction?): IFluidHandler? = HTFilteredFluidHandler(
         listOf(tank),
         object : HTFluidFilter {
-            override fun canFill(tanks: List<IFluidTank>, stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
+            override fun canFill(tank: IFluidTank, stack: FluidStack): Boolean = stack.`is`(Tags.Fluids.WATER)
 
-            override fun canDrain(tanks: List<IFluidTank>, stack: FluidStack): Boolean = false
+            override fun canDrain(tank: IFluidTank, stack: FluidStack): Boolean = false
 
-            override fun canDrain(tanks: List<IFluidTank>, maxDrain: Int): Boolean = false
+            override fun canDrain(tank: IFluidTank, maxDrain: Int): Boolean = false
         },
     )
 }

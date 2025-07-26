@@ -72,6 +72,8 @@ object RagiumFluidContents {
 
     val SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("sap", defaultProperties())
 
+    val SYRUP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register("syrup", defaultProperties())
+
     @JvmField
     val CRIMSON_SAP: HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> =
         register("crimson_sap", defaultProperties())
