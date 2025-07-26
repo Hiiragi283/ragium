@@ -64,6 +64,7 @@ class HTMaterialFamily(
         }
 
         private val itemMap: MutableMap<Variant, ItemSup?> = mutableMapOf()
+        private val customTagMap: MutableMap<Variant, TagKey<Item>> = mutableMapOf()
         private var entryType: EntryType = EntryType.RAGIUM
 
         init {
@@ -86,6 +87,10 @@ class HTMaterialFamily(
             itemMap.remove(variant)
         }
 
+        fun setCustomTag(variant: Variant, tagKey: TagKey<Item>): Builder = apply {
+            customTagMap[variant] = tagKey
+        }
+
         fun setVanilla(): Builder = apply {
             this.entryType = EntryType.VANILLA
         }
@@ -97,7 +102,9 @@ class HTMaterialFamily(
         fun build(key: String): HTMaterialFamily {
             val variantMap: Map<Variant, Pair<TagKey<Item>, ItemSup?>> =
                 itemMap.mapValues { (variant: Variant, item: ItemSup?) ->
-                    itemTagKey(commonId(variant.tagFormat.replace("%s", key))) to item
+                    val tagKey: TagKey<Item> =
+                        customTagMap[variant] ?: itemTagKey(commonId(variant.tagFormat.replace("%s", key)))
+                    tagKey to item
                 }
             val family = HTMaterialFamily(entryType, baseVariant, variantMap)
             _instances[key] = family

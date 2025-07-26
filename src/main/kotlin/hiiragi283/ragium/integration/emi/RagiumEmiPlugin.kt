@@ -33,8 +33,7 @@ import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTCrushingEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTExtractingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTDecomposeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTPressingEmiRecipe
@@ -166,7 +165,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Crushing
         forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTCrushingRecipe ->
             registry.addRecipe(
-                HTCrushingEmiRecipe(
+                HTDecomposeEmiRecipe.crushing(
                     id,
                     recipe.ingredient.toEmi(),
                     recipe.outputs.map(HTItemOutput::toEmi),
@@ -177,7 +176,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Extracting
         forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTExtractingRecipe ->
             registry.addRecipe(
-                HTExtractingEmiRecipe(
+                HTDecomposeEmiRecipe.extracting(
                     id,
                     recipe.ingredient.toEmi(),
                     recipe.output.toEmi(),

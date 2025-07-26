@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTMenuTypeRegister
 import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
 import hiiragi283.ragium.common.inventory.HTCombineProcessMenu
+import hiiragi283.ragium.common.inventory.HTDecomposeProcessMenu
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
@@ -23,14 +24,14 @@ object RagiumMenuTypes {
     val BLOCK_BREAKER: HTDeferredMenuType<HTBlockBreakerMenu> = REGISTER.registerType("block_breaker", ::HTBlockBreakerMenu)
 
     @JvmField
-    val CRUSHER: HTDeferredMenuType<HTSingleProcessMenu> = REGISTER.registerType("crusher", HTSingleProcessMenu::crusher)
+    val CRUSHER: HTDeferredMenuType<HTDecomposeProcessMenu> = REGISTER.registerType("crusher", HTDecomposeProcessMenu::crusher)
 
     @JvmField
     val ENERGY_NETWORK_ACCESS: HTDeferredMenuType<HTEnergyNetworkAccessMenu> =
         REGISTER.registerType("energy_network_access", ::HTEnergyNetworkAccessMenu)
 
     @JvmField
-    val EXTRACTOR: HTDeferredMenuType<HTSingleProcessMenu> = REGISTER.registerType("extractor", HTSingleProcessMenu::extractor)
+    val EXTRACTOR: HTDeferredMenuType<HTDecomposeProcessMenu> = REGISTER.registerType("extractor", HTDecomposeProcessMenu::extractor)
 
     @JvmField
     val FLUID_COLLECTOR: HTDeferredMenuType<HTFluidCollectorMenu> = REGISTER.registerType("fluid_collector", ::HTFluidCollectorMenu)

@@ -30,7 +30,7 @@ import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.INFUSER, pos, state) {
-    override val inventory: HTItemHandler = HTItemStackHandler(5, this::setChanged)
+    override val inventory: HTItemHandler = HTItemStackHandler(2, this::setChanged)
     override val energyUsage: Int = 0
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {

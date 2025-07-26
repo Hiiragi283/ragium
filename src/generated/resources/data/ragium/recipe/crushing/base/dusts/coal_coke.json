@@ -4,17 +4,17 @@
       "type": "neoforge:not",
       "value": {
         "type": "neoforge:tag_empty",
-        "tag": "c:dusts/coal"
+        "tag": "c:dusts/coal_coke"
       }
     }
   ],
   "type": "ragium:crushing",
   "item_input": {
     "count": 1,
-    "tag": "minecraft:coals"
+    "tag": "c:coal_coke"
   },
   "item_output": {
     "count": 1,
-    "id": "#c:dusts/coal"
+    "id": "#c:dusts/coal_coke"
   }
 }

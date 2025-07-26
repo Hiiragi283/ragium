@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.inventory.HTSingleProcessMenu
+import hiiragi283.ragium.common.inventory.HTDecomposeProcessMenu
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -72,7 +72,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockE
 
     //    Menu    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTSingleProcessMenu = HTSingleProcessMenu(
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTDecomposeProcessMenu = HTDecomposeProcessMenu(
         RagiumMenuTypes.EXTRACTOR,
         containerId,
         playerInventory,

@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTSingleProcessMenu(
+class HTDecomposeProcessMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,
     inventory: Inventory,
@@ -29,20 +29,28 @@ class HTSingleProcessMenu(
             containerId: Int,
             inventory: Inventory,
             registryBuf: RegistryFriendlyByteBuf?,
-        ): HTSingleProcessMenu = HTSingleProcessMenu(menuType, containerId, inventory, decodePos(registryBuf), HTMenuDefinition.empty(2))
+        ): HTDecomposeProcessMenu =
+            HTDecomposeProcessMenu(menuType, containerId, inventory, decodePos(registryBuf), HTMenuDefinition.empty(5))
 
         @JvmStatic
-        fun infuser(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTSingleProcessMenu =
-            empty(RagiumMenuTypes.INFUSER, containerId, inventory, registryBuf)
+        fun crusher(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTDecomposeProcessMenu =
+            empty(RagiumMenuTypes.CRUSHER, containerId, inventory, registryBuf)
+
+        @JvmStatic
+        fun extractor(containerId: Int, inventory: Inventory, registryBuf: RegistryFriendlyByteBuf?): HTDecomposeProcessMenu =
+            empty(RagiumMenuTypes.EXTRACTOR, containerId, inventory, registryBuf)
     }
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0.5))
+        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // upgrades
         addUpgradeSlots()
         // outputs
-        addOutputSlot(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        addOutputSlot(1, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5))
+        addOutputSlot(2, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5))
+        addOutputSlot(3, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5))
+        addOutputSlot(4, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5))
         // player inventory
         addPlayerInv()
         // register property
@@ -50,5 +58,5 @@ class HTSingleProcessMenu(
     }
 
     override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = 5..5
+    override val outputSlots: IntRange = 5..8
 }

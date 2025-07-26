@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.material
 
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 
 object ModMaterialFamilies {
@@ -128,4 +129,13 @@ object ModMaterialFamilies {
 
     @JvmStatic
     fun getGem(key: String): HTMaterialFamily = GEMS[key] ?: error("Unregistered material: $key")
+
+    //    Other    //
+
+    @JvmField
+    val COAL_COKE: HTMaterialFamily = HTMaterialFamily.Builder
+        .gem(null)
+        .setCustomTag(HTMaterialFamily.Variant.GEMS, RagiumCommonTags.Items.COAL_COKE)
+        .setMod()
+        .build("coal_coke")
 }

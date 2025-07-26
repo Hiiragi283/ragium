@@ -34,6 +34,19 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
             .catalyst(Tags.Items.LEATHERS)
             .save(output)
 
+        // Blaze Rod
+        createPressing()
+            .itemOutput(Items.BLAZE_ROD)
+            .itemInput(Items.BLAZE_POWDER, 4)
+            .catalyst(Tags.Items.RODS_WOODEN)
+            .save(output)
+        // Breeze Rod
+        createPressing()
+            .itemOutput(Items.BREEZE_ROD)
+            .itemInput(Items.WIND_CHARGE, 6)
+            .catalyst(Tags.Items.RODS_WOODEN)
+            .save(output)
+
         circuits()
         redStones()
         diode()

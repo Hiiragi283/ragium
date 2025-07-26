@@ -1,0 +1,14 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": {
+    "tag": "c:rods/wooden"
+  },
+  "fluid_input": {
+    "count": 4,
+    "item": "minecraft:blaze_powder"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:blaze_rod"
+  }
+}

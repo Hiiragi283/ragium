@@ -51,7 +51,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .itemInput(Tags.Items.RODS_BLAZE)
             .saveSuffixed(output, "_from_rod")
         createCrushing()
-            .itemOutput(Items.WIND_CHARGE, 4)
+            .itemOutput(Items.WIND_CHARGE, 6)
             .itemInput(Tags.Items.RODS_BREEZE)
             .saveSuffixed(output, "_from_rod")
 

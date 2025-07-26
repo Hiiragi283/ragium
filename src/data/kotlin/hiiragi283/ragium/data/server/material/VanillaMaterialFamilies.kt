@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.material
 
 import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 
 object VanillaMaterialFamilies {
@@ -40,6 +41,7 @@ object VanillaMaterialFamilies {
         .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::COAL_ORE)
         .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::COAL)
         .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, Items::COAL_BLOCK)
+        .setCustomTag(HTMaterialFamily.Variant.GEMS, ItemTags.COALS)
         .setVanilla()
         .build("coal")
 
