@@ -17,6 +17,13 @@ interface HTEmiRecipe : EmiRecipe {
     fun WidgetHolder.addInput(ingredient: EmiIngredient, x: Double, y: Double): SlotWidget =
         addSlot(ingredient, getPosition(x), getPosition(y))
 
-    fun WidgetHolder.addOutput(stack: EmiStack, x: Double, y: Double): SlotWidget =
-        addSlot(stack, getPosition(x), getPosition(y)).recipeContext(this@HTEmiRecipe)
+    fun WidgetHolder.addOutput(
+        stack: EmiStack,
+        x: Int,
+        y: Int,
+        large: Boolean = false,
+    ): SlotWidget = when {
+        large -> addSlot(stack, x - 4, y - 4).large(true)
+        else -> addSlot(stack, x, y)
+    }.recipeContext(this@HTEmiRecipe)
 }

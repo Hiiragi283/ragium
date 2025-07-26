@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.getSpriteAndColor
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.toFloatColor
 import hiiragi283.ragium.api.inventory.HTContainerMenu
+import hiiragi283.ragium.api.inventory.HTFluidSlot
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.client.gui.GuiGraphics
@@ -39,22 +40,17 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
 
     val startY: Int get() = (height - imageHeight) / 2
 
-    protected fun renderFluid(
-        guiGraphics: GuiGraphics,
-        stack: FluidStack,
-        x: Int,
-        y: Int,
-    ) {
+    protected fun renderFluid(guiGraphics: GuiGraphics, stack: FluidStack, slot: HTFluidSlot) {
         if (stack.isEmpty) return
         val (sprite: TextureAtlasSprite, color: Int) = stack.getSpriteAndColor()
         val floatColor: Triple<Float, Float, Float> = toFloatColor(color)
 
         guiGraphics.blit(
-            startX + x,
-            startY + y,
+            startX + slot.x,
+            startY + slot.y,
             0,
-            sprite.contents().width(),
-            sprite.contents().height(),
+            slot.width,
+            slot.height,
             sprite,
             floatColor.first,
             floatColor.second,
@@ -99,12 +95,11 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         stack: FluidStack,
         capacity: Int,
         flag: TooltipFlag,
-        x: Int,
-        y: Int,
+        slot: HTFluidSlot,
         mouseX: Int,
         mouseY: Int,
     ) {
-        renderTooltip(x, y, mouseX, mouseY) {
+        renderTooltip(slot.x, slot.y, mouseX, mouseY, rangeX = slot.width, rangeY = slot.height) {
             guiGraphics.renderComponentTooltip(
                 font,
                 buildList { addFluidTooltip(stack, this::add, flag) },

@@ -35,6 +35,6 @@ class HTInfusingEmiRecipe(
             18,
         )
         // Output
-        widgets.addOutput(0, 4.5, 1.0)
+        widgets.addOutput(0, 4.5, 1.0, true)
     }
 }

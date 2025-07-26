@@ -39,7 +39,6 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
                     TriState.DEFAULT -> return
                     TriState.FALSE -> blockEntity.shouldTick = false
                 }
-                blockEntity.sendUpdatePacket(level)
             }
         }
     }

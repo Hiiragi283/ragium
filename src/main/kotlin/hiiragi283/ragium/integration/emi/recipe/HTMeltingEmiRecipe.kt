@@ -21,6 +21,6 @@ class HTMeltingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, va
         // Input
         widgets.addInput(ingredient, 1.0, 0.5).drawBack(false)
         // Output
-        widgets.addOutput(result, 4.5, 1.0).drawBack(false)
+        widgets.addOutput(result, getPosition(4.5), getPosition(1.0), true).drawBack(false)
     }
 }

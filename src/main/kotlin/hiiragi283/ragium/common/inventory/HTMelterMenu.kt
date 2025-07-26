@@ -27,7 +27,7 @@ class HTMelterMenu(
         // upgrades
         addUpgradeSlots()
         // outputs
-        addFluidSlot(0, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
+        addFluidSlot(0, HTSlotHelper.getSlotPosX(5.5) - 4, HTSlotHelper.getSlotPosY(1) - 4, 24, 24)
         // player inventory
         addPlayerInv()
         // register property

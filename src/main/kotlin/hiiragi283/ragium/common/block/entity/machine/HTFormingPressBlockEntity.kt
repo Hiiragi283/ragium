@@ -31,7 +31,7 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemStackHandler(6, this::setChanged)
+    override val inventory: HTItemHandler = HTItemStackHandler(3, this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
 
     //    Ticking    //
@@ -48,11 +48,11 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTPressingRecipe,
     ): TriState {
         // アウトプットに搬出できるか判定する
-        if (!insertToOutput(2..5, recipe.output.get(), true).isEmpty) {
+        if (!insertToOutput(2..2, recipe.output.get(), true).isEmpty) {
             return TriState.FALSE
         }
         // 実際にアウトプットに搬出する
-        insertToOutput(2..5, recipe.output.getChancedStack(level.random), false)
+        insertToOutput(2..2, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
         inventory.consumeStackInSlot(0, 1)
         inventory.consumeStackInSlot(1, 1)
@@ -66,7 +66,7 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
         object : HTItemFilter {
             override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot <= 1
 
-            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot >= 2
+            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot == 2
         },
     )
 

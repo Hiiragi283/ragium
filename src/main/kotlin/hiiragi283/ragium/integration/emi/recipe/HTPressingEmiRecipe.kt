@@ -26,9 +26,6 @@ class HTPressingEmiRecipe(
         widgets.addInput(ingredient, 1.0, 0.0).drawBack(false)
         widgets.addInput(catalyst, 1.0, 2.0).drawBack(false)
         // Output
-        widgets.addOutput(0, 4.0, 0.5)
-        widgets.addOutput(1, 5.0, 0.5)
-        widgets.addOutput(2, 4.0, 1.5)
-        widgets.addOutput(3, 5.0, 1.5)
+        widgets.addOutput(0, 4.5, 1.0, true)
     }
 }

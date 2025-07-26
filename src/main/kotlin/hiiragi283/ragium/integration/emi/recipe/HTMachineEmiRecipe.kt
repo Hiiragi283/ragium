@@ -29,6 +29,10 @@ abstract class HTMachineEmiRecipe(private val id: ResourceLocation, private val 
         widgets.addArrow(2.5, 1.0)
     }
 
-    protected fun WidgetHolder.addOutput(index: Int, x: Double, y: Double): SlotWidget =
-        addOutput(outputs.getOrNull(index) ?: EmiStack.EMPTY, x, y).drawBack(false)
+    protected fun WidgetHolder.addOutput(
+        index: Int,
+        x: Double,
+        y: Double,
+        large: Boolean = false,
+    ): SlotWidget = addOutput(outputs.getOrNull(index) ?: EmiStack.EMPTY, getPosition(x), getPosition(y), large).drawBack(false)
 }

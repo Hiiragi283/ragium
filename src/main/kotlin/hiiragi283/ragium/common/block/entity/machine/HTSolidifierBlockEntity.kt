@@ -38,7 +38,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemStackHandler(5, this::setChanged)
+    override val inventory: HTItemHandler = HTItemStackHandler(2, this::setChanged)
     private val tank = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
 
@@ -71,11 +71,11 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTSolidifyingRecipe,
     ): TriState {
         // アウトプットに搬出できるか判定する
-        if (!insertToOutput(1..4, recipe.output.get(), true).isEmpty) {
+        if (!insertToOutput(1..1, recipe.output.get(), true).isEmpty) {
             return TriState.FALSE
         }
         // 実際にアウトプットに搬出する
-        insertToOutput(1..4, recipe.output.getChancedStack(level.random), false)
+        insertToOutput(1..1, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
         tank.drain(recipe.ingredient.amount(), IFluidHandler.FluidAction.EXECUTE)
         inventory.consumeStackInSlot(0, 1)
@@ -89,7 +89,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         object : HTItemFilter {
             override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot == 0
 
-            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot >= 0
+            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot == 1
         },
     )
 

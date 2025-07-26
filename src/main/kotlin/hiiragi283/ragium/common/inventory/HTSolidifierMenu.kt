@@ -27,10 +27,7 @@ class HTSolidifierMenu(
         // upgrades
         addUpgradeSlots()
         // outputs
-        addOutputSlot(1, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(0.5))
-        addOutputSlot(2, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0.5))
-        addOutputSlot(3, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5))
-        addOutputSlot(4, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5))
+        addOutputSlot(1, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         // player inventory
         addPlayerInv()
         // register property
@@ -38,5 +35,5 @@ class HTSolidifierMenu(
     }
 
     override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = 5..8
+    override val outputSlots: IntRange = 5..5
 }

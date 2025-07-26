@@ -32,7 +32,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override val inventory: HTItemHandler = HTItemStackHandler(6, this::setChanged)
+    override val inventory: HTItemHandler = HTItemStackHandler(3, this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
 
     //    Ticking    //
@@ -50,7 +50,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     ): TriState {
         // アウトプットに搬出できるか判定する
         for (output: HTItemOutput in recipe.outputs) {
-            if (!insertToOutput(2..5, output.get(), true).isEmpty) {
+            if (!insertToOutput(2..2, output.get(), true).isEmpty) {
                 return TriState.FALSE
             }
         }
@@ -62,7 +62,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         }
         // 実際にアウトプットに搬出する
         for (output: HTItemOutput in recipe.outputs) {
-            insertToOutput(2..5, output.getChancedStack(level.random), false)
+            insertToOutput(2..2, output.getChancedStack(level.random), false)
         }
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
@@ -87,7 +87,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         object : HTItemFilter {
             override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot <= 1
 
-            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot >= 2
+            override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot == 2
         },
     )
 

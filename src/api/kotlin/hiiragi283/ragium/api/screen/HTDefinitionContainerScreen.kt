@@ -3,11 +3,11 @@ package hiiragi283.ragium.api.screen
 import hiiragi283.ragium.api.extension.getClientTooltipFlag
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
+import hiiragi283.ragium.api.inventory.HTFluidSlot
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Vec3i
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
@@ -61,14 +61,13 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
     ) {
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         // fluid tooltip
-        menu.fluidSlots.forEach { (index: Int, vec: Vec3i) ->
+        menu.fluidSlots.forEach { (index: Int, slot: HTFluidSlot) ->
             renderFluidTooltip(
                 guiGraphics,
                 getFluidStack(index),
                 0,
                 getClientTooltipFlag(),
-                vec.x,
-                vec.y,
+                slot,
                 mouseX,
                 mouseY,
             )
@@ -88,8 +87,8 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
         // progress bar
         renderProgress(guiGraphics)
         // fluids
-        menu.fluidSlots.forEach { (index: Int, vec: Vec3i) ->
-            renderFluid(guiGraphics, getFluidStack(index), vec.x, vec.y)
+        menu.fluidSlots.forEach { (index: Int, slot: HTFluidSlot) ->
+            renderFluid(guiGraphics, getFluidStack(index), slot)
         }
         // energy
         renderEnergy(guiGraphics, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(3))

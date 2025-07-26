@@ -22,9 +22,6 @@ class HTAlloyingEmiRecipe(id: ResourceLocation, val ingredients: List<EmiIngredi
         widgets.addInput(ingredients[0], 0.5, 0.0).drawBack(false)
         widgets.addInput(ingredients[1], 1.5, 0.0).drawBack(false)
         // Output
-        widgets.addOutput(0, 4.0, 0.5)
-        widgets.addOutput(1, 5.0, 0.5)
-        widgets.addOutput(2, 4.0, 1.5)
-        widgets.addOutput(3, 5.0, 1.5)
+        widgets.addOutput(0, 4.5, 1.0, true)
     }
 }
