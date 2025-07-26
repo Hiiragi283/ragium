@@ -18,6 +18,8 @@ import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTFormingPressBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
@@ -58,6 +60,12 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
+
+    @JvmField
+    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
+
+    @JvmField
+    val FORMING_PRESS: HTDeferredBlockEntityType<HTFormingPressBlockEntity> = registerTick("forming_press", ::HTFormingPressBlockEntity)
 
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick("melter", ::HTMelterBlockEntity)
@@ -145,11 +153,14 @@ object RagiumBlockEntityTypes {
         add(CRUSHER, RagiumBlocks.CRUSHER)
         add(BLOCK_BREAKER, RagiumBlocks.BLOCK_BREAKER)
         add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
+        add(FORMING_PRESS, RagiumBlocks.FORMING_PRESS)
 
         add(ALLOY_SMELTER, RagiumBlocks.ALLOY_SMELTER)
         add(MELTER, RagiumBlocks.MELTER)
         add(REFINERY, RagiumBlocks.REFINERY)
         add(SOLIDIFIER, RagiumBlocks.SOLIDIFIER)
+
+        add(INFUSER, RagiumBlocks.INFUSER)
 
         add(ENI, RagiumBlocks.ENI)
         add(EXP_COLLECTOR, RagiumBlocks.EXP_COLLECTOR)
@@ -195,9 +206,12 @@ object RagiumBlockEntityTypes {
         registerHandlers(EXTRACTOR)
 
         registerHandlers(ALLOY_SMELTER)
+        registerHandlers(FORMING_PRESS)
         registerHandlers(MELTER)
         registerHandlers(REFINERY)
         registerHandlers(SOLIDIFIER)
+
+        registerHandlers(INFUSER)
 
         registerHandlers(ENI)
         registerHandlers(EXP_COLLECTOR)

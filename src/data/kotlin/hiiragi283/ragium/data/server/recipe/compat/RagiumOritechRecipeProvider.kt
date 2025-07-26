@@ -38,13 +38,13 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .build()
             .input(Tags.Items.GEMS_AMETHYST)
             .input(Tags.Items.GEMS_LAPIS)
-            .result(RagiumItems.AZURE_SHARD.get())
+            .result(RagiumItems.AZURE_SHARD.get(), 2)
             .time(160)
             .export(output, "azure_shard")
 
         FoundryRecipeBuilder
             .build()
-            .input(RagiumItems.AZURE_SHARD)
+            .input(RagiumCommonTags.Items.GEMS_AZURE)
             .input(Tags.Items.INGOTS_IRON)
             .result(RagiumItems.AZURE_STEEL_INGOT.get())
             .time(160)
@@ -70,7 +70,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
     private fun atomicForge() {
         AtomicForgeRecipeBuilder
             .build()
-            .input(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
+            .input(Tags.Items.GEMS_DIAMOND)
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .result(RagiumItems.RAGI_CRYSTAL.get())
@@ -84,6 +84,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(RagiumCommonTags.Items.DUSTS_OBSIDIAN)
             .input(Items.DEEPSLATE)
             .result(RagiumItems.DEEP_SCRAP.get())
+            .time(2500)
             .export(output, "deep_scrap")
     }
 }

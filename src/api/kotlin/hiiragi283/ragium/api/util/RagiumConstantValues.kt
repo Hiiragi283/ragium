@@ -19,10 +19,10 @@ object RagiumConstantValues {
     const val SOUL = "soul"
     const val WARPED_CRYSTAL = "warped_crystal"
 
-    const val HONEY = "honey"
-    const val MUSHROOM_STEW = "mushroom_stew"
-    const val CRIMSON_SAP = "crimson_sap"
-    const val WARPED_SAP = "warped_sap"
+    const val BASIC = "basic"
+    const val ADVANCED = "advanced"
+    const val ELITE = "elite"
+    const val ULTIMATE = "ultimate"
 
     //    Mod ID    //
 
@@ -63,11 +63,11 @@ object RagiumConstantValues {
 
     const val ALLOYING = "alloying"
     const val BLOCK_INTERACTING = "block_interacting"
-    const val CAULDRON_DROPPING = "cauldron_dropping"
     const val CRUSHING = "crushing"
     const val EXTRACTING = "extracting"
     const val INFUSING = "infusing"
     const val MELTING = "melting"
+    const val PRESSING = "pressing"
     const val REFINING = "refining"
     const val SOLIDIFYING = "solidifying"
 
@@ -78,6 +78,7 @@ object RagiumConstantValues {
 
     //    Tag Prefixes    //
 
+    const val CIRCUITS = "circuits"
     const val DUSTS = "dusts"
     const val ENRICHED = "enriched"
     const val GEMS = "gems"

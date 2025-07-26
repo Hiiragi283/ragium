@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
+import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -18,6 +19,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         HTMaterialFamily.instances.values.forEach(::registerFamilies)
 
         oreToRaw()
+        alloying()
     }
 
     // Ore -> Raw/Gem
@@ -98,6 +100,70 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_ore")
     }
 
+    private fun alloying() {
+        // Steel
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("steel").getBaseTagKey(), appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_IRON)
+            .itemInput(Items.COAL, 2)
+            .saveSuffixed(output, "_from_coal")
+
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("steel").getBaseTagKey(), appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_IRON)
+            .itemInput(RagiumCommonTags.Items.COAL_COKE)
+            .saveSuffixed(output, "_from_coke")
+        // Invar
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("invar").getBaseTagKey(), 3, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_IRON, 2)
+            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+            .save(output)
+        // Electrum
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey(), 2, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_GOLD)
+            .itemInput(ModMaterialFamilies.getMetal("silver").getBaseTagKey())
+            .save(output)
+        // Bronze
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey(), 4, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_COPPER, 3)
+            .itemInput(ModMaterialFamilies.getMetal("tin").getBaseTagKey())
+            .save(output)
+        // Brass
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("brass").getBaseTagKey(), 4, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_COPPER, 3)
+            .itemInput(ModMaterialFamilies.getMetal("zinc").getBaseTagKey())
+            .save(output)
+        // Constantan
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey(), 2, appendCondition = true)
+            .itemInput(Tags.Items.INGOTS_COPPER)
+            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+            .save(output)
+
+        // Adamant
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey(), appendCondition = true)
+            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+            .itemInput(Tags.Items.GEMS_DIAMOND)
+            .save(output)
+        // Duratium
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey(), appendCondition = true)
+            .itemInput(ModMaterialFamilies.getMetal("platinum").getBaseTagKey())
+            .itemInput(Tags.Items.INGOTS_NETHERITE)
+            .save(output)
+        // Energite
+        createAlloying()
+            .itemOutput(ModMaterialFamilies.getAlloy("energite").getBaseTagKey(), appendCondition = true)
+            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+            .itemInput(ModMaterialFamilies.getGem("fluxite").getBaseTagKey())
+            .save(output)
+    }
+
     //    Family    //
 
     private fun registerFamilies(family: HTMaterialFamily) {
@@ -150,7 +216,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         val dust: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.DUSTS) ?: return
         // Base
         createCrushing()
-            .itemOutput(dust, appendCondition = family.entryType != HTMaterialFamily.EntryType.RAGIUM)
+            .itemOutput(dust, appendCondition = family.getItem(HTMaterialFamily.Variant.DUSTS) == null)
             .itemInput(tagKey)
             .savePrefixed(output, "base/")
         // Gear

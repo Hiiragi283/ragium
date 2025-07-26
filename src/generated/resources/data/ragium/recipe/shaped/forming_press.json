@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_alloy"
+    },
+    "B": {
+      "item": "minecraft:piston"
+    },
+    "C": {
+      "item": "ragium:basic_machine_frame"
+    },
+    "D": {
+      "item": "minecraft:bricks"
+    },
+    "E": {
+      "tag": "c:circuits/basic"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DED"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:forming_press"
+  }
+}

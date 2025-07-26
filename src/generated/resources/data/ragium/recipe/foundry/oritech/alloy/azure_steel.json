@@ -13,7 +13,7 @@
   "fluidOutputs": [],
   "ingredients": [
     {
-      "item": "ragium:azure_shard"
+      "tag": "c:gems/azure"
     },
     {
       "tag": "c:ingots/iron"

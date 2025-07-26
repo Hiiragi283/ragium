@@ -23,7 +23,7 @@ class HTMelterMenu(
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0.5))
         // upgrades
         addUpgradeSlots()
         // outputs

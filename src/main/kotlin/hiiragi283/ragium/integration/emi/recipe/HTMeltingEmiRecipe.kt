@@ -19,7 +19,7 @@ class HTMeltingEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, va
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(ingredient, 1.0, 1.0).drawBack(false)
+        widgets.addInput(ingredient, 1.0, 0.5).drawBack(false)
         // Output
         widgets.addOutput(result, 4.5, 1.0).drawBack(false)
     }

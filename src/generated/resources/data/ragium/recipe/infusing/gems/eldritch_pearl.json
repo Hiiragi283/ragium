@@ -1,0 +1,11 @@
+{
+  "type": "ragium:infusing",
+  "cost": 30.0,
+  "ingredient": {
+    "item": "ragium:eldritch_orb"
+  },
+  "result": {
+    "count": 1,
+    "id": "#c:gems/eldritch_pearl"
+  }
+}

@@ -2,14 +2,12 @@ package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockTagKey
-import hiiragi283.ragium.api.extension.fluidTagKey
 import hiiragi283.ragium.api.extension.itemTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.material.Fluid
 
 object RagiumModTags {
     //    Blocks    //
@@ -32,27 +30,19 @@ object RagiumModTags {
 
     object EntityTypes {
         @JvmField
-        val SENSITIVE_TO_NOISE_CANCELLING: TagKey<EntityType<*>> = create("sensitive_to_noise_cancelling")
+        val CAPTURE_BLACKLIST: TagKey<EntityType<*>> = create("capture_blacklist")
 
         @JvmField
         val GENERATE_RESONANT_DEBRIS: TagKey<EntityType<*>> = create("generate_resonant_debris")
+
+        @JvmField
+        val SENSITIVE_TO_NOISE_CANCELLING: TagKey<EntityType<*>> = create("sensitive_to_noise_cancelling")
 
         @JvmStatic
         private fun create(path: String): TagKey<EntityType<*>> = TagKey.create(Registries.ENTITY_TYPE, RagiumAPI.id(path))
     }
 
     //    Fluids    //
-
-    object Fluids {
-        @JvmField
-        val FUELS_NITRO: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/nitro"))
-
-        @JvmField
-        val FUELS_NON_NITRO: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/non_nitro"))
-
-        @JvmField
-        val FUELS_THERMAL: TagKey<Fluid> = fluidTagKey(RagiumAPI.id("fuels/thermal"))
-    }
 
     //    Items    //
 

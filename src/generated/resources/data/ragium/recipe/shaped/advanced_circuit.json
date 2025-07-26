@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/advanced_ragi_alloy"
+      "tag": "c:ingots/gold"
     },
     "B": {
       "tag": "c:dusts/glowstone"
     },
     "C": {
-      "tag": "c:plastics"
+      "tag": "c:circuits/basic"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "AAA"
   ],
   "result": {
-    "count": 2,
+    "count": 1,
     "id": "ragium:advanced_circuit"
   }
 }

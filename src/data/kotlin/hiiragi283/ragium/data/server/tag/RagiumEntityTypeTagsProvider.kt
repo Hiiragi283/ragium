@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider
 import net.minecraft.world.entity.EntityType
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
@@ -21,10 +22,14 @@ class RagiumEntityTypeTagsProvider(output: PackOutput, provider: CompletableFutu
         helper,
     ) {
     override fun addTags(provider: HolderLookup.Provider) {
-        tag(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING)
-            .add(EntityType.WARDEN)
+        tag(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST)
+            .addTag(Tags.EntityTypes.BOSSES)
+            .addTag(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED)
 
         tag(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)
+            .add(EntityType.WARDEN)
+
+        tag(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING)
             .add(EntityType.WARDEN)
     }
 }

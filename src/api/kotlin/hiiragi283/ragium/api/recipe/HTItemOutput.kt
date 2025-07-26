@@ -1,13 +1,11 @@
 package hiiragi283.ragium.api.recipe
 
-import com.almostreliable.unified.api.AlmostUnified
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.asItemHolder
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTTagHelper
-import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponentPatch
@@ -22,7 +20,6 @@ import net.minecraft.util.ExtraCodecs
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.neoforged.fml.ModList
 
 class HTItemOutput(
     entry: Either<ResourceLocation, TagKey<Item>>,
@@ -72,29 +69,11 @@ class HTItemOutput(
 
     override fun getFirstHolderFromId(id: ResourceLocation): DataResult<out Holder<Item>> = super
         .getFirstHolderFromId(id)
-        .map { holder: Holder<Item> ->
-            (
-                when {
-                    ModList.get().isLoaded(RagiumConstantValues.ALMOST) ->
-                        AlmostUnified.INSTANCE.getVariantItemTarget(holder.value())
-
-                    else -> null
-                }
-            ) ?: holder.value()
-        }.map(Item::asItemHolder)
+        .map { holder: Holder<Item> -> RagiumAPI.getInstance().unifyItemFromId(holder, id) }
 
     override fun getFirstHolderFromTag(tagKey: TagKey<Item>): DataResult<out Holder<Item>> = super
         .getFirstHolderFromTag(tagKey)
-        .map { holder: Holder<Item> ->
-            (
-                when {
-                    ModList.get().isLoaded(RagiumConstantValues.ALMOST) ->
-                        AlmostUnified.INSTANCE.getTagTargetItem(tagKey)
-
-                    else -> null
-                }
-            ) ?: holder.value()
-        }.map(Item::asItemHolder)
+        .map { holder: Holder<Item> -> RagiumAPI.getInstance().unifyItemFromTag(holder, tagKey) }
 
     override val registry: Registry<Item> get() = BuiltInRegistries.ITEM
 

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:infusing",
+  "cost": 5.0,
+  "ingredient": {
+    "item": "minecraft:blackstone"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:gilded_blackstone"
+  }
+}

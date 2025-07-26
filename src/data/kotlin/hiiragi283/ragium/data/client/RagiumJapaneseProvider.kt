@@ -113,8 +113,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
         addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "発展機械フレーム")
-        addBlock(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
         addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "基本機械フレーム")
+        addBlock(RagiumBlocks.DEVICE_CASING, "デバイス筐体")
+        addBlock(RagiumBlocks.ELITE_MACHINE_FRAME, "精鋭機械フレーム")
         addBlock(RagiumBlocks.STONE_CASING, "石材筐体")
         addBlock(RagiumBlocks.WOODEN_CASING, "木材筐体")
         // Machine
@@ -123,9 +124,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.EXTRACTOR, "抽出機")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "合金炉")
+        addBlock(RagiumBlocks.FORMING_PRESS, "成型機")
         addBlock(RagiumBlocks.MELTER, "溶融炉")
         addBlock(RagiumBlocks.REFINERY, "精製機")
         addBlock(RagiumBlocks.SOLIDIFIER, "成型機")
+
+        addBlock(RagiumBlocks.INFUSER, "神秘的注入機")
         // Device
         addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
@@ -160,22 +164,18 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun fluid() {
         addFluid(RagiumFluidContents.HONEY, "蜂蜜")
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
-        addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
         addFluid(RagiumFluidContents.LPG, "LPG")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
-        addFluid(RagiumFluidContents.LIGHT_FUEL, "軽油")
-        addFluid(RagiumFluidContents.HEAVY_FUEL, "重油")
         addFluid(RagiumFluidContents.DIESEL, "ディーゼル")
+        addFluid(RagiumFluidContents.CRIMSON_DIESEL, "深紅のディーゼル")
         addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
-
-        addFluid(RagiumFluidContents.ELDRITCH_GOO, "蕩けたエルドリッチ")
     }
 
     private fun item() {
@@ -218,6 +218,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ASH_DUST, "灰")
         addItem(RagiumItems.CINNABAR_DUST, "辰砂の粉")
         addItem(RagiumItems.OBSIDIAN_DUST, "黒曜石の粉")
+        addItem(RagiumItems.QUARTZ_DUST, "水晶の粉")
         addItem(RagiumItems.RAGINITE_DUST, "ラギナイトの粉")
         addItem(RagiumItems.SALTPETER_DUST, "硝石の粉")
         addItem(RagiumItems.SAWDUST, "おがくず")
@@ -291,13 +292,18 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         addItem(RagiumItems.BASIC_CIRCUIT, "基本回路")
-        addItem(RagiumItems.CRYSTAL_PROCESSOR, "クリスタルプロセッサ")
+        addItem(RagiumItems.CIRCUIT_BOARD, "回路基板")
         addItem(RagiumItems.ELDER_HEART, "エルダーの心臓")
+        addItem(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
         addItem(RagiumItems.LED, "発光ダイオード")
+        addItem(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
         addItem(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         addItem(RagiumItems.POLYMER_RESIN, "高分子樹脂")
+        addItem(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")
         addItem(RagiumItems.SOLAR_PANEL, "太陽光パネル")
-        addItem(RagiumItems.STONE_BOARD, "石版")
+        addItem(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
+        addItem(RagiumItems.SYNTHETIC_LEATHER, "合成革")
+        addItem(RagiumItems.ULTIMATE_CIRCUIT, "究極回路")
     }
 
     /*private fun material() {
@@ -433,12 +439,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES, "共振の残骸で置換可能")
         add(RagiumModTags.Blocks.WIP, "開発中")
 
-        add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "ノイズキャンセリングに反応する")
+        add(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST, "捕獲できるモブのブラックリスト")
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "共振の残骸を生成する")
-
-        add(RagiumModTags.Fluids.FUELS_NITRO, "ニトロ燃料")
-        add(RagiumModTags.Fluids.FUELS_NON_NITRO, "非ニトロ燃料")
-        add(RagiumModTags.Fluids.FUELS_THERMAL, "発熱燃料")
+        add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "ノイズキャンセリングに反応する")
 
         add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "異質な真珠の結合剤")
         add(RagiumModTags.Items.LED_BLOCKS, "LEDブロック")

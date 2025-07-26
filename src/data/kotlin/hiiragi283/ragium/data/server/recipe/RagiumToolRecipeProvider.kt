@@ -9,9 +9,9 @@ import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
-import hiiragi283.ragium.common.util.HTLootTicketHelper
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
+import hiiragi283.ragium.util.HTLootTicketHelper
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey

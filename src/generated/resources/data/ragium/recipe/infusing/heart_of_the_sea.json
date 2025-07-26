@@ -1,0 +1,11 @@
+{
+  "type": "ragium:infusing",
+  "cost": 60.0,
+  "ingredient": {
+    "item": "ragium:elder_heart"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:heart_of_the_sea"
+  }
+}

@@ -5,7 +5,6 @@
 		"particle": "block/furnace_side",
 		"side": "block/furnace_side",
 		"bottom": "block/furnace_top",
-		"top": "basic_grate",
 		"wall": "block/barrel_side",
 		"drain": "ragium:block/copper_drain"
 	},
@@ -78,7 +77,7 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [2, 12, 2]},
 			"faces": {
 				"up": {"uv": [2, 2, 14, 14], "texture": "#drain"},
-				"down": {"uv": [2, 2, 14, 14], "texture": "#top"}
+				"down": {"uv": [2, 2, 14, 14], "texture": "#drain"}
 			}
 		}
 	],

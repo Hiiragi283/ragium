@@ -2,8 +2,8 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toStack
-import hiiragi283.ragium.common.util.HTBuildingBlockSets
-import hiiragi283.ragium.common.util.HTLootTicketHelper
+import hiiragi283.ragium.util.HTBuildingBlockSets
+import hiiragi283.ragium.util.HTLootTicketHelper
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -100,6 +100,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.OBSIDIAN_DUST)
 
             output.accept(RagiumItems.CINNABAR_DUST)
+            output.accept(RagiumItems.QUARTZ_DUST)
             output.accept(RagiumItems.SALTPETER_DUST)
             output.accept(RagiumItems.SULFUR_DUST)
 
@@ -158,17 +159,24 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.WARPED_WART)
             output.accept(RagiumItems.AMBROSIA)
             // Ingredients
+            output.accept(RagiumItems.ELDER_HEART)
+
+            output.accept(RagiumItems.LUMINOUS_PASTE)
             output.accept(RagiumItems.LED)
+
             output.accept(RagiumItems.SOLAR_PANEL)
-            output.accept(RagiumItems.STONE_BOARD)
+            output.accept(RagiumItems.REDSTONE_BOARD)
 
             output.accept(RagiumItems.POLYMER_RESIN)
             output.accept(RagiumItems.PLASTIC_PLATE)
+            output.accept(RagiumItems.SYNTHETIC_FIBER)
+            output.accept(RagiumItems.SYNTHETIC_LEATHER)
+
+            output.accept(RagiumItems.CIRCUIT_BOARD)
             output.accept(RagiumItems.BASIC_CIRCUIT)
             output.accept(RagiumItems.ADVANCED_CIRCUIT)
-            output.accept(RagiumItems.CRYSTAL_PROCESSOR)
-
-            output.accept(RagiumItems.ELDER_HEART)
+            output.accept(RagiumItems.ELITE_CIRCUIT)
+            output.accept(RagiumItems.ULTIMATE_CIRCUIT)
         }
 
     @JvmStatic

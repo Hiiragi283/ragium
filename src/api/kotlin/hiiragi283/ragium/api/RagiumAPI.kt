@@ -8,6 +8,8 @@ import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
+import hiiragi283.ragium.api.recipe.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
@@ -19,7 +21,9 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
@@ -70,12 +74,12 @@ interface RagiumAPI {
     /**
      * Ragiumが使用する[FakePlayer]を返します。
      */
-    fun getFakePlayer(level: ServerLevel): FakePlayer = FakePlayerFactory.get(level, getRagiumGameProfile())
+    fun getFakePlayer(level: ServerLevel): FakePlayer = FakePlayerFactory.get(level, getRandomGameProfile())
 
     /**
      * Ragiumが内部で使用する[GameProfile]のインスタンスを返します。
      */
-    fun getRagiumGameProfile(): GameProfile
+    fun getRandomGameProfile(): GameProfile
 
     /**
      * [getCurrentServer]に基づいて，[uuid]から[ServerPlayer]を返します。
@@ -131,6 +135,11 @@ interface RagiumAPI {
     fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe>
 
     /**
+     * @see [HTInfusingRecipe.getType]
+     */
+    fun getInfusingRecipeType(): RecipeType<HTInfusingRecipe>
+
+    /**
      * @see [HTTransmuteRecipe.getSerializer]
      */
     fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe>
@@ -139,4 +148,14 @@ interface RagiumAPI {
      * @see [HTMenuDefinition.empty]
      */
     fun createEmptyMenuDefinition(size: Int): HTMenuDefinition
+
+    /**
+     * @see [HTItemOutput.getFirstHolderFromId]
+     */
+    fun unifyItemFromId(holder: Holder<Item>, id: ResourceLocation): Holder<Item>
+
+    /**
+     * @see [HTItemOutput.getFirstHolderFromTag]
+     */
+    fun unifyItemFromTag(holder: Holder<Item>, tagKey: TagKey<Item>): Holder<Item>
 }

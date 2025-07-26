@@ -7,6 +7,7 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -60,30 +61,21 @@ internal object RagiumRecipeFactories {
         return HTMeltingRecipe(itemInputs[0], fluidOutput)
     }
 
-    /*fun pressing(definition: HTRecipeDefinition): HTPressingRecipe {
+    fun pressing(definition: HTRecipeDefinition): HTPressingRecipe {
         // Item Input
         val itemInputs: List<SizedIngredient> = definition.itemInputs
-        val bottom: SizedIngredient =
-            itemInputs.getOrNull(0) ?: error("Pressing Recipe requires bottom ingredient!")
-        val top: SizedIngredient? = itemInputs.getOrNull(1)
-        val mold: Optional<Ingredient> = Optional.of(definition.catalyst).filter(Ingredient::isNotEmpty)
-        if (itemInputs.size > 3) {
-            error("Pressing Recipe accepts only 3 item ingredients!")
+        val top: SizedIngredient = itemInputs.getOrNull(0) ?: error("Pressing Recipe requires 2 ingredient!")
+        if (itemInputs.size > 2) {
+            error("Pressing Recipe accepts only 2 item ingredients!")
         }
         // Item Output
-        val itemOutputs: List<HTItemOutput> = definition.itemOutputs
-        if (itemOutputs.isEmpty()) {
-            error("Pressing Recipe requires 1 item output at least!")
-        }
-        if (itemOutputs.size > 1) {
-            error("Pressing Recipe accepts only 1 item output!")
-        }
+        val output: HTItemOutput = checkPresent(definition.getItemOutput(0), "Required one item output!")
         // Fluid
         if (definition.fluidInputs.isNotEmpty() || definition.fluidOutputs.isNotEmpty()) {
             error("Crushing Recipe does not support fluids!")
         }
-        return TODO()
-    }*/
+        return HTPressingRecipe(top, definition.catalyst, output)
+    }
 
     @JvmStatic
     fun refining(definition: HTRecipeDefinition): HTRefiningRecipe {

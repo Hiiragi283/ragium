@@ -19,24 +19,21 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         extracting()
         infusing()
-        // solidifying()
 
-        // biomass()
+        bio()
         bottle()
         crudeOil()
-        // crystal()
         exp()
         sap()
     }
 
-    /*private fun biomass() {
-        // Biomass -> Ethanol
-        createRefining()
-            .fluidOutput(RagiumFluidContents.FUEL, 500)
-            .fluidInput(RagiumFluidContents.BIOMASS)
-            .saveSuffixed(output, "_from_biomass")
-        // Ethanol + Plant Oil -> Fuel + Glycerol
-    }*/
+    private fun bio() {
+        createSolidifying()
+            .itemOutput(RagiumModTags.Items.POLYMER_RESIN)
+            .catalyst(RagiumCommonTags.Items.FUELS_BIO_BLOCK)
+            .waterInput(250)
+            .saveSuffixed(output, "_from_bio")
+    }
 
     private fun bottle() {
         // Exp Bottle
@@ -82,87 +79,34 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
             .saveSuffixed(output, "_from_soul")
 
-        // Crude Oil -> LPG + Naphtha + Tar
-        createRefining()
-            .fluidOutput(RagiumFluidContents.LPG, 20)
-            .fluidOutput(RagiumFluidContents.NAPHTHA, 40)
-            .itemOutput(RagiumItems.TAR)
-            .fluidInput(RagiumFluidContents.CRUDE_OIL, 100)
-            .save(output)
-        // LPG + Clay -> Polymer Resin
+        // Crude Oil + clay -> Polymer Resin
         createSolidifying()
             .itemOutput(RagiumModTags.Items.POLYMER_RESIN)
             .catalyst(Items.CLAY_BALL)
-            .fluidInput(RagiumFluidContents.LPG, 100)
-            .save(output)
-        // Naphtha -> Light Fuel + Heavy Fuel + Sulfur
-        createRefining()
-            .fluidOutput(RagiumFluidContents.LIGHT_FUEL, 40)
-            .fluidOutput(RagiumFluidContents.HEAVY_FUEL, 40)
-            .itemOutput(RagiumCommonTags.Items.DUSTS_SULFUR)
-            .fluidInput(RagiumFluidContents.NAPHTHA, 100)
-            .save(output)
-        // Light Fuel + Heavy Fuel -> Diesel
-    }
+            .fluidInput(RagiumFluidContents.CRUDE_OIL, 125)
+            .saveSuffixed(output, "_from_crude_oil")
 
-    /*private fun crudeOil() {
-        // Coal -> Crude Oil
-        createExtracting()
-            .fluidOutput(RagiumFluidContents.CRUDE_OIL, 125)
-            .itemInput(Items.COAL)
-            .saveSuffixed(output, "_from_coal")
-        // Soul XX -> Crude Oil
-        createExtracting()
-            .fluidOutput(RagiumFluidContents.CRUDE_OIL, 500)
-            .itemInput(ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            .saveSuffixed(output, "_from_soul")
-
-        // Crude Oil -> Naphtha + Tar
+        // Crude Oil -> LPG + Naphtha + Tar
         createRefining()
+            .fluidOutput(RagiumFluidContents.LPG, 375)
+            .fluidOutput(RagiumFluidContents.NAPHTHA, 375)
             .itemOutput(RagiumItems.TAR)
-            .fluidOutput(RagiumFluidContents.NAPHTHA, 750)
-            .fluidInput(RagiumFluidContents.CRUDE_OIL)
-            .save(output, RagiumAPI.id("naphtha_from_crude_oil"))
-        // Naphtha -> Fuel + Sulfur
-        createRefining()
-            .itemOutput(RagiumItems.SULFUR_DUST)
-            .fluidOutput(RagiumFluidContents.FUEL, 750)
-            .fluidInput(RagiumFluidContents.NAPHTHA)
-            .save(output, RagiumAPI.id("fuel_from_naphtha"))
-        // Naphtha + Coal -> Polymer Resin
-        createInfusing()
-            .itemOutput(RagiumItems.POLYMER_RESIN)
-            .itemInput(Items.COAL)
-            .fluidInput(RagiumFluidContents.NAPHTHA, 500)
-            .save(output, RagiumAPI.id("polymer_resin_from_naphtha"))
-
-        // Tar -> Aromatic Compound
-        createExtracting()
-            .fluidOutput(RagiumFluidContents.AROMATIC_COMPOUND, 200)
-            .itemInput(RagiumItems.TAR)
-            .saveSuffixed(output, "_from_tar")
-        // Aromatic Compound + Sand -> TNT
-        createInfusing()
-            .itemOutput(Items.TNT, 8)
-            .itemInput(Tags.Items.SANDS)
-            .fluidInput(RagiumFluidContents.AROMATIC_COMPOUND, 200)
+            .fluidInput(RagiumFluidContents.CRUDE_OIL, 1000)
             .save(output)
-    }*/
-
-    /*private fun crystal() {
-        // Quartz
-        createInfusing()
-            .itemOutput(Items.QUARTZ, 2)
-            .itemInput(Tags.Items.GEMS_QUARTZ)
-            .waterInput(250)
-            .saveSuffixed(output, "_from_water")
-        // Amethyst
-        createInfusing()
-            .itemOutput(Items.AMETHYST_SHARD, 2)
-            .itemInput(Tags.Items.GEMS_AMETHYST)
-            .waterInput(250)
-            .saveSuffixed(output, "_from_water")
-    }*/
+        // LPG + Coal -> 4x Polymer Resin
+        createSolidifying()
+            .itemOutput(RagiumModTags.Items.POLYMER_RESIN, 4)
+            .catalyst(Items.COAL)
+            .fluidInput(RagiumFluidContents.LPG, 125)
+            .saveSuffixed(output, "_from_lpg")
+        // Naphtha -> Diesel + Sulfur
+        createRefining()
+            .fluidOutput(RagiumFluidContents.DIESEL, 375)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_SULFUR)
+            .fluidInput(RagiumFluidContents.NAPHTHA, 1000)
+            .save(output)
+        // Diesel + Crimson Crystal -> Crimson Fuel
+    }
 
     private fun exp() {
         // Golden Apple
@@ -241,17 +185,6 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, onlyBlasting = true)
             .addIngredient(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
-            .save(output)
-
-        // Eldritch Orb -> Eldritch Goo
-        createMelting()
-            .fluidOutput(RagiumFluidContents.ELDRITCH_GOO, 125)
-            .itemInput(RagiumItems.ELDRITCH_ORB)
-            .saveSuffixed(output, "_from_orb")
-        // Eldritch Goo -> Eldritch Pearl
-        createSolidifying()
-            .itemOutput(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
-            .fluidInput(RagiumFluidContents.ELDRITCH_GOO, 500)
             .save(output)
     }
 

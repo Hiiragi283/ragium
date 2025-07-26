@@ -11,7 +11,7 @@
   "type": "ragium:crushing",
   "item_input": {
     "count": 1,
-    "tag": "c:gems/coal"
+    "tag": "minecraft:coals"
   },
   "item_output": {
     "count": 1,

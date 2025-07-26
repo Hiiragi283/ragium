@@ -1,0 +1,14 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": {
+    "item": "ragium:circuit_board"
+  },
+  "fluid_input": {
+    "count": 1,
+    "tag": "c:ingots/gold"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:advanced_circuit"
+  }
+}

@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "ragium:azure_shard"
+      "tag": "c:gems/azure"
     },
     "B": {
       "item": "minecraft:deepslate_tiles"

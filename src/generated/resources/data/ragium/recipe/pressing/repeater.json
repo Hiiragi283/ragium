@@ -1,0 +1,14 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": {
+    "item": "ragium:redstone_board"
+  },
+  "fluid_input": {
+    "count": 1,
+    "item": "minecraft:redstone_torch"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:repeater"
+  }
+}

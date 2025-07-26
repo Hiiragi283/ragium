@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/bronze"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "item_input": [
+    {
+      "count": 3,
+      "tag": "c:ingots/copper"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/tin"
+    }
+  ],
+  "item_output": {
+    "count": 4,
+    "id": "#c:ingots/bronze"
+  }
+}

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server.material
 
-import com.buuz135.replication.ReplicationRegistry
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 
 object ModMaterialFamilies {
@@ -31,18 +31,67 @@ object ModMaterialFamilies {
         "lead",
         // 7th
         "uranium",
+        // Draconic Evolution
+        "draconium",
+        "draconium_awakened",
+        // Just Dire Things
+        "ferricore",
+        "blazegold",
+        "eclipsealloy",
+        // Occultism
+        "iesnium",
+        // Replication
+        "replica",
+        // Twilight Forest
+        "ironwood",
+        "wrought_iron",
+        "knightmetal",
     ).associateWith(::commonMetal)
 
     @JvmStatic
     private fun commonMetal(key: String): HTMaterialFamily = HTMaterialFamily.Builder
         .ingot(null)
-        .setEntry(HTMaterialFamily.Variant.DUSTS, null)
-        .setEntry(HTMaterialFamily.Variant.NUGGETS, null)
-        .setEntry(HTMaterialFamily.Variant.ORES, null)
-        .setEntry(HTMaterialFamily.Variant.RAW_MATERIALS, null)
-        .setEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, null)
         .setMod()
         .build(key)
+
+    @JvmStatic
+    fun getMetal(key: String): HTMaterialFamily = METALS[key] ?: error("Unregistered material: $key")
+
+    @JvmField
+    val ALLOYS: Map<String, HTMaterialFamily> = listOf(
+        // Alloys
+        "steel",
+        "invar",
+        "electrum",
+        "bronze",
+        "brass",
+        "enderium",
+        "lumium",
+        "signalum",
+        "constantan",
+        // Immersive Engineering,
+        "hop_graphite",
+        // Mekanism
+        "refined_obsidian",
+        "refined_glowstone",
+        // Oritech
+        "adamant",
+        "duratium",
+        "energite",
+        "prometheum",
+        // Twilight Forest
+        "steeleaf",
+        "fiery",
+    ).associateWith(::commonAlloy)
+
+    @JvmStatic
+    private fun commonAlloy(key: String): HTMaterialFamily = HTMaterialFamily.Builder
+        .ingotAlloy(null)
+        .setMod()
+        .build(key)
+
+    @JvmStatic
+    fun getAlloy(key: String): HTMaterialFamily = ALLOYS[key] ?: error("Unregistered material: $key")
 
     //    Common Gem    //
 
@@ -58,23 +107,35 @@ object ModMaterialFamilies {
         // AE2
         "certus_quartz",
         "fluix",
+        // Ars Nouveau
+        "source",
+        // EvilCraft
+        "dark_gem",
+        "dark_power",
+        // Forbidden
+        "arcane_crystal",
+        "corrupted_arcane_crystal",
+        // Oritech
+        "fluxite",
+        // Twilight Forest
+        "carminite",
     ).associateWith(::commonGem)
 
     @JvmStatic
     private fun commonGem(key: String): HTMaterialFamily = HTMaterialFamily.Builder
         .gem(null)
-        .setEntry(HTMaterialFamily.Variant.DUSTS, null)
-        .setEntry(HTMaterialFamily.Variant.ORES, null)
-        .setEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, null)
         .setMod()
         .build(key)
 
-    //    Replication    //
+    @JvmStatic
+    fun getGem(key: String): HTMaterialFamily = GEMS[key] ?: error("Unregistered material: $key")
+
+    //    Other    //
 
     @JvmField
-    val REPLICA: HTMaterialFamily = HTMaterialFamily.Builder
-        .ingot(ReplicationRegistry.Items.REPLICA_INGOT)
-        .setEntry(HTMaterialFamily.Variant.RAW_MATERIALS, ReplicationRegistry.Items.RAW_REPLICA)
+    val COAL_COKE: HTMaterialFamily = HTMaterialFamily.Builder
+        .gem(null)
+        .setCustomTag(HTMaterialFamily.Variant.GEMS, RagiumCommonTags.Items.COAL_COKE)
         .setMod()
-        .build("replica")
+        .build("coal_coke")
 }

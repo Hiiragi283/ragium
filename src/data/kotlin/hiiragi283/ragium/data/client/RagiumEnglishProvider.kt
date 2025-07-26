@@ -125,8 +125,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "Advanced Machine Frame")
-        addBlock(RagiumBlocks.DEVICE_CASING, "Device Casing")
         addBlock(RagiumBlocks.BASIC_MACHINE_FRAME, "Basic Machine Frame")
+        addBlock(RagiumBlocks.DEVICE_CASING, "Device Casing")
+        addBlock(RagiumBlocks.ELITE_MACHINE_FRAME, "Elite Machine Frame")
         addBlock(RagiumBlocks.STONE_CASING, "Stone Casing")
         addBlock(RagiumBlocks.WOODEN_CASING, "Wooden Casing")
         // Machine
@@ -135,9 +136,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.EXTRACTOR, "Extractor")
 
         addBlock(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        addBlock(RagiumBlocks.FORMING_PRESS, "Forming Press")
         addBlock(RagiumBlocks.MELTER, "Melter")
         addBlock(RagiumBlocks.REFINERY, "Refinery")
         addBlock(RagiumBlocks.SOLIDIFIER, "Solidifier")
+
+        addBlock(RagiumBlocks.INFUSER, "Arcane Infuser")
         // Device
         addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
@@ -172,22 +176,18 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun fluid() {
         addFluid(RagiumFluidContents.HONEY, "Honey")
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
-        addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluidContents.LPG, "LPG")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
-        addFluid(RagiumFluidContents.LIGHT_FUEL, "Light Fuel")
-        addFluid(RagiumFluidContents.HEAVY_FUEL, "heavy Fuel")
         addFluid(RagiumFluidContents.DIESEL, "Diesel")
+        addFluid(RagiumFluidContents.CRIMSON_DIESEL, "Crimson Diesel")
         addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
-
-        addFluid(RagiumFluidContents.ELDRITCH_GOO, "Eldritch Goo")
     }
 
     private fun item() {
@@ -231,6 +231,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ASH_DUST, "Ash")
         addItem(RagiumItems.CINNABAR_DUST, "Cinnabar Dust")
         addItem(RagiumItems.OBSIDIAN_DUST, "Obsidian Dust")
+        addItem(RagiumItems.QUARTZ_DUST, "Quartz Dust")
         addItem(RagiumItems.RAGINITE_DUST, "Raginite Dust")
         addItem(RagiumItems.SALTPETER_DUST, "Saltpeter Dust")
         addItem(RagiumItems.SAWDUST, "Sawdust")
@@ -304,13 +305,18 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
-        addItem(RagiumItems.CRYSTAL_PROCESSOR, "Crystal Processor")
+        addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
+        addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
         addItem(RagiumItems.LED, "Light Emitting Diode")
+        addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
         addItem(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         addItem(RagiumItems.POLYMER_RESIN, "Polymer Resin")
+        addItem(RagiumItems.REDSTONE_BOARD, "Redstone Board")
         addItem(RagiumItems.SOLAR_PANEL, "Solar Panel")
-        addItem(RagiumItems.STONE_BOARD, "Stone Board")
+        addItem(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
+        addItem(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
+        addItem(RagiumItems.ULTIMATE_CIRCUIT, "Ultimate Circuit")
     }
 
     /*private fun material() {
@@ -446,12 +452,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES, "Replaceable by Resonant Debris")
         add(RagiumModTags.Blocks.WIP, "Work In Progress")
 
-        add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "Sensitive to Noise Canceling")
+        add(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST, "Blacklisted mobs for capturing")
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "Generate Resonant Debris")
-
-        add(RagiumModTags.Fluids.FUELS_NITRO, "Nitro Fuels")
-        add(RagiumModTags.Fluids.FUELS_NON_NITRO, "Non-Nitro Fuels")
-        add(RagiumModTags.Fluids.FUELS_THERMAL, "Thermal Fuels")
+        add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "Sensitive to Noise Canceling")
 
         add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, "Eldritch Pearl Binders")
         add(RagiumModTags.Items.LED_BLOCKS, "LED Blocks")

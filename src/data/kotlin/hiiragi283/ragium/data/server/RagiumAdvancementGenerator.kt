@@ -60,7 +60,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val azureTicket: AdvancementHolder =
             createSimple(RagiumAdvancements.AZURE_TICKET, root, RagiumItems.AZURE_TICKET)
         val azureShard: AdvancementHolder =
-            createSimple(RagiumAdvancements.AZURE_SHARD, azureTicket, RagiumItems.AZURE_SHARD)
+            createSimple(RagiumAdvancements.AZURE_SHARD, azureTicket, RagiumItems.AZURE_SHARD, RagiumCommonTags.Items.GEMS_AZURE)
         val azureGears: AdvancementHolder = create(RagiumAdvancements.AZURE_GEARS, azureShard) {
             display {
                 setIcon(RagiumItems.AZURE_STEEL_TOOLS.pickaxeItem)

@@ -1,18 +1,12 @@
 {
   "values": [
-    "ragium:elder_heart",
     "ragium:bottled_bee",
     "ragium:exp_berries",
-    "ragium:led",
-    "ragium:solar_panel",
-    "ragium:stone_board",
-    "ragium:crystal_processor",
     "#c:obsidians/mysterious",
     "ragium:ash_log",
     "ragium:cooked_meat_on_the_bone",
     "ragium:wooden_casing",
     "ragium:stone_casing",
-    "ragium:refinery",
-    "ragium:solidifier"
+    "ragium:refinery"
   ]
 }

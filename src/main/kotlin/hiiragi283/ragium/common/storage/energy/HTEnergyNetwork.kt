@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.buildNbt
+import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
 import hiiragi283.ragium.api.util.HTSavedDataType
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import net.minecraft.core.HolderLookup
@@ -12,12 +13,11 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.util.Mth
 import net.minecraft.world.level.saveddata.SavedData
-import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.min
 
-internal class HTEnergyNetwork(var amount: Int, var capacity: Int) :
+internal class HTEnergyNetwork(private var amount: Int, private var capacity: Int) :
     SavedData(),
-    IEnergyStorage {
+    IEnergyStorageModifiable {
     companion object {
         @JvmStatic
         private fun getInitialCapacity(): Int = RagiumConfig.COMMON.defaultNetworkCapacity.get()
@@ -75,7 +75,15 @@ internal class HTEnergyNetwork(var amount: Int, var capacity: Int) :
 
     override fun getEnergyStored(): Int = amount
 
+    override fun setEnergyStored(amount: Int) {
+        this.amount = amount
+    }
+
     override fun getMaxEnergyStored(): Int = capacity
+
+    override fun setMaxEnergyStored(capacity: Int) {
+        this.capacity = capacity
+    }
 
     override fun canExtract(): Boolean = true
 

@@ -1,5 +1,53 @@
 # Changelog
 
+## v0.8.0
+
+- Added many compat recipes for common materials
+
+### Added
+
+- API: `IEnergyStorageModifiable` for mutable `IEnergyStorage`
+
+- Block: Added `Forming Press` and its recipe type
+- Block: Added `Arcane Infuser` and its recipe type
+
+- Fluid: Added `Crimson Diesel`
+
+- Game Play: Added recipes for `LED` and `LED Block`s
+
+- Item: `Synthetic Fiber/Leather` for alternative to `String` and `Leather`
+- Item: Added `Quartz Dust`
+- Item: Added `Circuit Board`
+- Item: Added `Elite/Ultimate Circuit`
+- Item: Added `Luminous Paste`
+
+### Fixed
+
+- Render: Removed unused texture reference in `Milk Drain`
+
+### Changed
+
+- Block: Added functionality to `Solidifier`
+
+- Game Play: Applied `Silk Touch` to `Azure Steel Tools`
+- Game Play: Chanced recipes for custom glasses
+- Game Play: Changed behavior when items are dropped
+- Game Play: Changed gui layout for `Melter`
+
+- Item: Changed textures and recipes for `Basic/Advanced Circuit`
+- Item: Renamed `Stone Board` to `Redstone Board`
+
+- Tag: Added new tag `#c:gems/azure` to `Azure Shard`
+
+### Removed
+
+- Fluid: Removed `Eldritch Goo`
+- Fluid: Removed `Chocolate`
+- Fluid: Removed `Light Fuel`
+- Fluid: Removed `Heavy Fuel`
+
+- Tags: Removed unused fluid tags
+
 ## v0.7.0
 
 - Added recipes and usages for Deep Steel!

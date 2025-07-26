@@ -2,18 +2,15 @@
   "values": [
     "#c:buckets/honey",
     "#c:buckets/experience",
-    "#c:buckets/chocolate",
     "#c:buckets/mushroom_stew",
     "#c:buckets/crude_oil",
     "#c:buckets/lpg",
     "#c:buckets/naphtha",
-    "#c:buckets/light_fuel",
-    "#c:buckets/heavy_fuel",
     "#c:buckets/fuel",
+    "#c:buckets/crimson_diesel",
     "#c:buckets/lubricant",
     "#c:buckets/sap",
     "#c:buckets/crimson_sap",
-    "#c:buckets/warped_sap",
-    "#c:buckets/eldritch_goo"
+    "#c:buckets/warped_sap"
   ]
 }

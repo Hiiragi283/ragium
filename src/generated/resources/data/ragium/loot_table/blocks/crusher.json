@@ -11,15 +11,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:copy_components",
-              "include": [
-                "minecraft:enchantments"
-              ],
-              "source": "block_entity"
-            }
-          ],
           "name": "ragium:crusher"
         }
       ],

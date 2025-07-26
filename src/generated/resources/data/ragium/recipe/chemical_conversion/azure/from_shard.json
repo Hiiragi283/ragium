@@ -8,7 +8,7 @@
   "type": "mekanism:chemical_conversion",
   "input": {
     "count": 1,
-    "item": "ragium:azure_shard"
+    "tag": "c:gems/azure"
   },
   "output": {
     "amount": 10,

@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/advanced_ragi_alloy"
+      }
+    }
+  ],
+  "type": "ragium:crushing",
+  "item_input": {
+    "count": 1,
+    "tag": "c:ingots/advanced_ragi_alloy"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "#c:dusts/advanced_ragi_alloy"
+  }
+}

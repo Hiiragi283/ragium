@@ -17,6 +17,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
@@ -128,6 +129,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         cutoutSimpleBlock(RagiumBlocks.BASIC_MACHINE_FRAME)
         cutoutSimpleBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME)
+        cutoutSimpleBlock(RagiumBlocks.ELITE_MACHINE_FRAME)
 
         // Machine
         fun machine(holder: DeferredBlock<*>, top: ResourceLocation, bottom: ResourceLocation) {
@@ -145,12 +147,16 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         machine(RagiumBlocks.CRUSHER, basicMachine, vanillaId("block/bricks"))
         machine(RagiumBlocks.BLOCK_BREAKER, basicMachine, vanillaId("block/bricks"))
         machine(RagiumBlocks.EXTRACTOR, basicMachine, vanillaId("block/bricks"))
+        machine(RagiumBlocks.FORMING_PRESS, basicMachine, vanillaId("block/bricks"))
 
         val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
         machine(RagiumBlocks.ALLOY_SMELTER, advancedMachine, vanillaId("block/nether_bricks"))
         machine(RagiumBlocks.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
         machine(RagiumBlocks.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+
+        val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
+        machine(RagiumBlocks.INFUSER, eliteMachine, vanillaId("block/deepslate_tiles"))
 
         // Device
         layeredBlock(
@@ -195,7 +201,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
 
         // Storages
-        for (drum: DeferredBlock<*> in RagiumBlocks.DRUMS) {
+        for (drum: DeferredBlock<Block> in RagiumBlocks.DRUMS) {
             val id: ResourceLocation = drum.blockId
             simpleBlock(
                 drum.get(),

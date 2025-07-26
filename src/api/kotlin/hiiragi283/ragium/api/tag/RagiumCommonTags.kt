@@ -59,21 +59,27 @@ object RagiumCommonTags {
 
     object Fluids {
         @JvmField
-        val CHOCOLATES: TagKey<Fluid> = fluidTagKey(commonId("chocolates"))
-
-        @JvmField
         val CREOSOTE: TagKey<Fluid> = fluidTagKey(commonId("creosote"))
 
         @JvmField
-        val MEAT: TagKey<Fluid> = fluidTagKey(commonId("meat"))
+        val CHOCOLATES: TagKey<Fluid> = fluidTagKey(commonId("chocolates"))
 
         @JvmField
-        val STEAM: TagKey<Fluid> = fluidTagKey(commonId("steam"))
+        val MEAT: TagKey<Fluid> = fluidTagKey(commonId("meat"))
     }
 
     //    Items    //
 
     object Items {
+        @JvmField
+        val COAL_COKE: TagKey<Item> = commonTag("coal_coke")
+
+        @JvmField
+        val FUELS_BIO: TagKey<Item> = commonTag("fuels/bio")
+
+        @JvmField
+        val FUELS_BIO_BLOCK: TagKey<Item> = commonTag("fuels/block/bio")
+
         @JvmField
         val PAPER: TagKey<Item> = commonTag("paper")
 
@@ -85,16 +91,19 @@ object RagiumCommonTags {
 
         // Circuits
         @JvmField
-        val CIRCUITS: TagKey<Item> = commonTag("circuits")
+        val CIRCUITS: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS)
 
         @JvmField
-        val CIRCUITS_BASIC: TagKey<Item> = commonTag("circuits", "basic")
+        val CIRCUITS_BASIC: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "basic")
 
         @JvmField
-        val CIRCUITS_ADVANCED: TagKey<Item> = commonTag("circuits", "advanced")
+        val CIRCUITS_ADVANCED: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "advanced")
 
         @JvmField
-        val CIRCUITS_ELITE: TagKey<Item> = commonTag("circuits", "elite")
+        val CIRCUITS_ELITE: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "elite")
+
+        @JvmField
+        val CIRCUITS_ULTIMATE: TagKey<Item> = commonTag(RagiumConstantValues.CIRCUITS, "ultimate")
 
         // Crops
         @JvmField
@@ -114,6 +123,9 @@ object RagiumCommonTags {
 
         @JvmField
         val DUSTS_CINNABAR: TagKey<Item> = commonTag(DUSTS, "cinnabar")
+
+        @JvmField
+        val DUSTS_QUARTZ: TagKey<Item> = commonTag(DUSTS, "quartz")
 
         @JvmField
         val DUSTS_SALTPETER: TagKey<Item> = commonTag(DUSTS, "saltpeter")
@@ -162,6 +174,9 @@ object RagiumCommonTags {
         val GEMS_RAGI_CRYSTAL: TagKey<Item> = commonTag(GEMS, RagiumConstantValues.RAGI_CRYSTAL)
 
         @JvmField
+        val GEMS_AZURE: TagKey<Item> = commonTag(GEMS, "azure")
+
+        @JvmField
         val GEMS_CRIMSON_CRYSTAL: TagKey<Item> = commonTag(GEMS, RagiumConstantValues.CRIMSON_CRYSTAL)
 
         @JvmField
@@ -198,6 +213,7 @@ object RagiumCommonTags {
         val BEACON_PAYMENTS: Array<TagKey<Item>> = arrayOf(
             // gems
             GEMS_RAGI_CRYSTAL,
+            GEMS_AZURE,
             GEMS_CRIMSON_CRYSTAL,
             GEMS_WARPED_CRYSTAL,
             GEMS_ELDRITCH_PEARL,
