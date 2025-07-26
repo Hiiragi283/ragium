@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
+import hiiragi283.ragium.common.block.HTFeastBlock
 import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.ColoredFallingBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -330,7 +332,7 @@ object RagiumBlocks {
     //    Foods    //
 
     @JvmField
-    val COOKED_MEAT_ON_THE_BONE: DeferredBlock<Block> = register(
+    val COOKED_MEAT_ON_THE_BONE: DeferredBlock<HTFeastBlock> = register(
         "cooked_meat_on_the_bone",
         copyOf(Blocks.PACKED_MUD),
         ::HTMeatBlock,
@@ -344,7 +346,7 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val SPONGE_CAKE_SLAB: DeferredBlock<Block> = register(
+    val SPONGE_CAKE_SLAB: DeferredBlock<SlabBlock> = register(
         "sponge_cake_slab",
         soft().mapColor(MapColor.COLOR_YELLOW),
         ::HTSpongeCakeSlabBlock,

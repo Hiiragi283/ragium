@@ -17,7 +17,6 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 @OnlyIn(Dist.CLIENT)
 abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: T, inventory: Inventory, title: Component) :
@@ -31,13 +30,28 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
     open val progressSizeY: Int = 16
     open val progressTex: ResourceLocation = vanillaId("container/furnace/burn_progress")
 
-    private fun getFluidHandler(): IFluidHandler? = menu.usePosition { level: Level, pos: BlockPos ->
-        (level.getBlockEntity(pos) as? HTHandlerBlockEntity)?.getFluidHandler(null)
+    private var fluidCache: MutableMap<Int, FluidStack> = mutableMapOf()
+
+    override fun init() {
+        super.init()
+        for ((index: Int, _) in menu.fluidSlots) {
+            val stack: FluidStack = menu
+                .usePosition { level: Level, pos: BlockPos ->
+                    (level.getBlockEntity(pos) as? HTHandlerBlockEntity)?.getFluidHandler(null)
+                }?.getFluidInTank(index) ?: continue
+            fluidCache.put(index, stack)
+        }
     }
 
-    fun getFluidStack(index: Int): FluidStack = getFluidHandler()?.getFluidInTank(index) ?: FluidStack.EMPTY
+    fun getFluidStack(index: Int): FluidStack = fluidCache[index] ?: FluidStack.EMPTY
 
-    fun getFluidCapacity(index: Int): Int = getFluidHandler()?.getTankCapacity(index) ?: 0
+    fun setFluidStack(index: Int, stack: FluidStack) {
+        if (stack.isEmpty) {
+            fluidCache.remove(index)
+        } else {
+            fluidCache[index] = stack
+        }
+    }
 
     override fun render(
         guiGraphics: GuiGraphics,
@@ -51,7 +65,7 @@ abstract class HTDefinitionContainerScreen<T : HTDefinitionContainerMenu>(menu: 
             renderFluidTooltip(
                 guiGraphics,
                 getFluidStack(index),
-                getFluidCapacity(index),
+                0,
                 getClientTooltipFlag(),
                 vec.x,
                 vec.y,

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
+import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -105,6 +106,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         registrar.playToClient(
             HTBlockEntityUpdatePacket.TYPE,
             HTBlockEntityUpdatePacket.STREAM_CODEC,
+            HTCustomPayload::handle,
+        )
+        registrar.playToClient(
+            HTFluidSlotUpdatePacket.TYPE,
+            HTFluidSlotUpdatePacket.STREAM_CODEC,
             HTCustomPayload::handle,
         )
 

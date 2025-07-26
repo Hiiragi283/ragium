@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntityNew
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -16,11 +17,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-/**
- * エンチャント可能な[HTTickAwareBlockEntity]
- */
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTTickAwareBlockEntity(type, pos, state),
+    HTTickAwareBlockEntityNew(type, pos, state),
     MenuProvider {
     //    Storage    //
 
@@ -47,28 +45,22 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Ticking    //
 
-    override val maxTicks: Int = 200
-
     /**
      * このブロックエンティティがtick当たりで消費する電力の値
-     * @see [requiredEnergy]
      */
     protected abstract val energyUsage: Int
 
-    /**
-     * このブロックエンティティが稼働するたびに消費する電力の値
-     */
-    protected val requiredEnergy: Int get() = energyUsage * maxTicks
+    override var maxTicks: Int = 200
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 一定間隔で実行する
-        if (!canProcess()) return TriState.DEFAULT
         // 自動搬出する
         exportItems(level, pos)
         exportFluids(level, pos)
         // 処理を行う
         val network: IEnergyStorage = this.network ?: return TriState.FALSE
-        return onServerTick(level, pos, state, network)
+        val triState = onServerTick(level, pos, state, network)
+
+        return triState
     }
 
     /**
@@ -88,7 +80,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     private var externalNetwork: IEnergyStorage? = null
 
     override fun afterLevelInit(level: Level) {
-        val network: IEnergyStorage = RagiumAPI
+        val network: IEnergyStorage = RagiumAPI.Companion
             .getInstance()
             .getEnergyNetworkManager()
             .getNetwork(level) ?: return

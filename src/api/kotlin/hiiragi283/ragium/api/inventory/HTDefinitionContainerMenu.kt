@@ -24,7 +24,7 @@ abstract class HTDefinitionContainerMenu(
         get() {
             val totalTick: Int = definition.getData(0)
             val maxTicks: Int = definition.getData(1)
-            if (maxTicks == 0) return 0f
+            if (maxTicks <= 0) return 0f
             val fixedTotalTicks: Int = totalTick % maxTicks
             return Mth.clamp(fixedTotalTicks / maxTicks.toFloat(), 0f, 1f)
         }

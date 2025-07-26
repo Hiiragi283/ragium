@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
@@ -10,8 +9,8 @@ import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTMelterMenu
+import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
@@ -19,6 +18,7 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -29,7 +29,13 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.MELTER, pos, state) {
+class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity<HTUniversalRecipeInput, HTMeltingRecipe>(
+        RagiumRecipeTypes.MELTING.get(),
+        RagiumBlockEntityTypes.MELTER,
+        pos,
+        state,
+    ) {
     override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
     private val tank = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
@@ -44,22 +50,23 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
         reader.read(RagiumConstantValues.TANK, tank)
     }
 
+    override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {
+        super.sendUpdatePacket(serverLevel, consumer)
+        consumer(HTFluidSlotUpdatePacket(0, tank.fluid))
+    }
+
     //    Ticking    //
 
-    private val recipeCache: HTRecipeCache<HTUniversalRecipeInput, HTMeltingRecipe> =
-        HTRecipeCache.simple(RagiumRecipeTypes.MELTING.get())
+    override fun createRecipeInput(): HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
 
-    override fun onServerTick(
+    override fun completeProcess(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         network: IEnergyStorage,
+        input: HTUniversalRecipeInput,
+        recipe: HTMeltingRecipe,
     ): TriState {
-        // インプットに一致するレシピを探索する
-        val input: HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
-        val recipe: HTMeltingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
-        // エネルギーを消費できるか判定する
-        if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
         // アウトプットに搬出できるか判定する
         if (!tank.canFill(recipe.output.get(), true)) {
             return TriState.FALSE
@@ -68,8 +75,6 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
         tank.fill(recipe.output.get(), IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
         inventory.consumeStackInSlot(0, recipe.ingredient.count())
-        // エネルギーを減らす
-        network.extractEnergy(requiredEnergy, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS)
         return TriState.TRUE

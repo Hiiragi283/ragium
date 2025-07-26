@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -41,7 +40,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         network: IEnergyStorage,
     ): TriState {
         // エネルギーを消費できるか判定する
-        if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
+        if (network.extractEnergy(energyUsage, true) != energyUsage) return TriState.DEFAULT
         // 採掘用のFake Playerを用意する
         val player: FakePlayer = RagiumAPI.getInstance().getFakePlayer(level)
         val inventory: Inventory = player.inventory
@@ -63,6 +62,10 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         if (CommonHooks.fireBlockBreak(level, GameType.SURVIVAL, player, posTo, stateTo).isCanceled) {
             return TriState.DEFAULT
         }
+        // 進行度が最大でなければスキップ
+        currentTicks++
+        if (currentTicks < maxTicks) return TriState.DEFAULT
+        currentTicks = 0
         // ブロックを採掘する
         val blockTo: Block = stateTo.block
         val newStateTo: BlockState = blockTo.playerWillDestroy(level, posTo, stateTo, player)
@@ -81,7 +84,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
             EventHooks.onPlayerDestroyItem(player, toolStack1, InteractionHand.MAIN_HAND)
         }
         // エネルギーを減らす
-        network.extractEnergy(requiredEnergy, false)
+        network.extractEnergy(energyUsage, false)
         return TriState.DEFAULT
     }
 

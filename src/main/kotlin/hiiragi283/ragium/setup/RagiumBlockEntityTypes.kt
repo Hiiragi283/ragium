@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntityNew
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
@@ -47,34 +48,40 @@ object RagiumBlockEntityTypes {
         factory: BlockEntityType.BlockEntitySupplier<T>,
     ): HTDeferredBlockEntityType<T> = REGISTER.registerType(name, factory, HTTickAwareBlockEntity::serverTick)
 
+    @JvmStatic
+    fun <T : HTTickAwareBlockEntityNew> registerTickNew(
+        name: String,
+        factory: BlockEntityType.BlockEntitySupplier<T>,
+    ): HTDeferredBlockEntityType<T> = REGISTER.registerType(name, factory, HTTickAwareBlockEntityNew::serverTick)
+
     //    Machine    //
 
     @JvmField
-    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTick("alloy_smelter", ::HTAlloySmelterBlockEntity)
+    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTickNew("alloy_smelter", ::HTAlloySmelterBlockEntity)
 
     @JvmField
-    val BLOCK_BREAKER: HTDeferredBlockEntityType<HTBlockBreakerBlockEntity> = registerTick("block_breaker", ::HTBlockBreakerBlockEntity)
+    val BLOCK_BREAKER: HTDeferredBlockEntityType<HTBlockBreakerBlockEntity> = registerTickNew("block_breaker", ::HTBlockBreakerBlockEntity)
 
     @JvmField
-    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick("crusher", ::HTCrusherBlockEntity)
+    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTickNew("crusher", ::HTCrusherBlockEntity)
 
     @JvmField
-    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTickNew("extractor", ::HTExtractorBlockEntity)
 
     @JvmField
-    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTick("infuser", ::HTInfuserBlockEntity)
+    val INFUSER: HTDeferredBlockEntityType<HTInfuserBlockEntity> = registerTickNew("infuser", ::HTInfuserBlockEntity)
 
     @JvmField
-    val FORMING_PRESS: HTDeferredBlockEntityType<HTFormingPressBlockEntity> = registerTick("forming_press", ::HTFormingPressBlockEntity)
+    val FORMING_PRESS: HTDeferredBlockEntityType<HTFormingPressBlockEntity> = registerTickNew("forming_press", ::HTFormingPressBlockEntity)
 
     @JvmField
-    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick("melter", ::HTMelterBlockEntity)
+    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTickNew("melter", ::HTMelterBlockEntity)
 
     @JvmField
-    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTickNew("refinery", ::HTRefineryBlockEntity)
 
     @JvmField
-    val SOLIDIFIER: HTDeferredBlockEntityType<HTSolidifierBlockEntity> = registerTick("solidifier", ::HTSolidifierBlockEntity)
+    val SOLIDIFIER: HTDeferredBlockEntityType<HTSolidifierBlockEntity> = registerTickNew("solidifier", ::HTSolidifierBlockEntity)
 
     //    Device    //
 

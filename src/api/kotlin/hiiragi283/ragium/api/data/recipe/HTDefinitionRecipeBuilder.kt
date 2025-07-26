@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.registry.HTFluidContent
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.data.recipes.RecipeBuilder

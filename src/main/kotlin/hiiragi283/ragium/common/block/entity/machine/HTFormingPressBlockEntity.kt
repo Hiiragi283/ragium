@@ -1,12 +1,10 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTCombineProcessMenu
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
@@ -25,51 +23,42 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(RagiumBlockEntityTypes.FORMING_PRESS, pos, state) {
+    HTProcessorBlockEntity<HTUniversalRecipeInput, HTPressingRecipe>(
+        RagiumRecipeTypes.PRESSING.get(),
+        RagiumBlockEntityTypes.FORMING_PRESS,
+        pos,
+        state,
+    ) {
     override val inventory: HTItemHandler = HTItemStackHandler(6, this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
 
     //    Ticking    //
 
-    private val recipeCache: HTRecipeCache<HTUniversalRecipeInput, HTPressingRecipe> =
-        HTRecipeCache.simple(RagiumRecipeTypes.PRESSING.get())
+    override fun createRecipeInput(): HTUniversalRecipeInput =
+        HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0), inventory.getStackInSlot(1))
 
-    override fun onServerTick(
+    override fun completeProcess(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         network: IEnergyStorage,
+        input: HTUniversalRecipeInput,
+        recipe: HTPressingRecipe,
     ): TriState {
-        // インプットに一致するレシピを探索する
-        val input: HTUniversalRecipeInput =
-            HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0), inventory.getStackInSlot(1))
-        val recipe: HTPressingRecipe = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
-        // エネルギーを消費できるか判定する
-        if (network.extractEnergy(requiredEnergy, true) != requiredEnergy) return TriState.DEFAULT
         // アウトプットに搬出できるか判定する
-        val fixedInventory = HTFilteredItemHandler(inventory, recipeFilter)
-        if (!ItemHandlerHelper.insertItem(fixedInventory, recipe.output.get(), true).isEmpty) {
+        if (!insertToOutput(2..5, recipe.output.get(), true).isEmpty) {
             return TriState.FALSE
         }
         // 実際にアウトプットに搬出する
-        ItemHandlerHelper.insertItem(fixedInventory, recipe.output.getChancedStack(level.random), false)
+        insertToOutput(2..5, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
         inventory.consumeStackInSlot(0, 1)
         inventory.consumeStackInSlot(1, 1)
-        // エネルギーを減らす
-        network.extractEnergy(requiredEnergy, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS)
         return TriState.DEFAULT
-    }
-
-    private val recipeFilter: HTItemFilter = object : HTItemFilter {
-        override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot >= 2
-
-        override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = false
     }
 
     override fun getItemHandler(direction: Direction?): IItemHandler? = HTFilteredItemHandler(

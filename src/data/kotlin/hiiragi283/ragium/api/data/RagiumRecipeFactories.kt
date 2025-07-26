@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.data.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTRecipeDefinition
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
