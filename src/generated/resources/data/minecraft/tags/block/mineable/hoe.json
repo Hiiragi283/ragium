@@ -1,7 +1,9 @@
 {
   "values": [
+    "ragium:sweet_berries_cake",
     "ragium:sponge_cake",
+    "ragium:sponge_cake_stairs",
     "ragium:sponge_cake_slab",
-    "ragium:sweet_berries_cake"
+    "ragium:sponge_cake_wall"
   ]
 }

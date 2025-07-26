@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.extension.layeredModel
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.simpleAltBlock
 import hiiragi283.ragium.api.extension.simpleBlock
-import hiiragi283.ragium.api.extension.slabBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.common.block.HTBlockStateProperties
@@ -47,8 +46,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.CRIMSON_SOIL)
             add(RagiumBlocks.SILT)
 
-            add(RagiumBlocks.SPONGE_CAKE)
-
             add(RagiumBlocks.DEVICE_CASING)
 
             add(RagiumBlocks.CEU)
@@ -66,8 +63,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             vanillaId("block/obsidian"),
             RagiumAPI.id("block/mysterious_obsidian"),
         )
-
-        slabBlock(RagiumBlocks.SPONGE_CAKE_SLAB, RagiumBlocks.SPONGE_CAKE)
 
         RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)
 

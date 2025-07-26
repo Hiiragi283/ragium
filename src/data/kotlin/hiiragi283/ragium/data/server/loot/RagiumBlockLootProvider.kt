@@ -36,8 +36,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     override fun generate() {
         RagiumBlocks.REGISTER.entries.forEach(::dropSelf)
 
-        add(RagiumBlocks.SPONGE_CAKE_SLAB.get(), ::createSlabItemTable)
-
         add(RagiumBlocks.SWEET_BERRIES_CAKE.get()) { block: Block ->
             createSilkTouchDispatchTable(
                 block,

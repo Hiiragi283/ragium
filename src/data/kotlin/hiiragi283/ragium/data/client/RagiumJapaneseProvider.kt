@@ -94,6 +94,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumBlocks.EMBER_STONE_SETS.addTranslationJp("熾火石", this)
         RagiumBlocks.PLASTIC_SETS.addTranslationJp("プラスチックブロック", this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addTranslationJp("青いネザーレンガ", this)
+        RagiumBlocks.SPONGE_CAKE_SETS.addTranslationJp("スポンジケーキ", this)
 
         addBlock(RagiumBlocks.OBSIDIAN_GLASS, "黒曜石ガラス")
         addBlock(RagiumBlocks.QUARTZ_GLASS, "クォーツガラス")
@@ -108,8 +109,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
 
         addBlock(RagiumBlocks.COOKED_MEAT_ON_THE_BONE, "骨付き焼肉ブロック")
-        addBlock(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
-        addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "スポンジケーキのハーフブロック")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
         addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "発展機械フレーム")

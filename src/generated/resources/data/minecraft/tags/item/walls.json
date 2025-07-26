@@ -6,6 +6,7 @@
     "ragium:azure_tile_wall",
     "ragium:ember_stone_wall",
     "ragium:plastic_block_wall",
-    "ragium:blue_nether_brick_wall"
+    "ragium:blue_nether_brick_wall",
+    "ragium:sponge_cake_wall"
   ]
 }

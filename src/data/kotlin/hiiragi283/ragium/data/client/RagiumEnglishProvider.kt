@@ -106,6 +106,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         RagiumBlocks.EMBER_STONE_SETS.addTranslationEn("Ember Stone", this)
         RagiumBlocks.PLASTIC_SETS.addTranslationEn("Plastic Block", this)
         RagiumBlocks.BLUE_NETHER_BRICK_SETS.addTranslationEn("Blue Nether Bricks", this)
+        RagiumBlocks.SPONGE_CAKE_SETS.addTranslationEn("Sponge Cake", this)
 
         addBlock(RagiumBlocks.OBSIDIAN_GLASS, "Obsidian Glass")
         addBlock(RagiumBlocks.QUARTZ_GLASS, "Quartz Glass")
@@ -120,8 +121,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LED Block")
 
         addBlock(RagiumBlocks.COOKED_MEAT_ON_THE_BONE, "Cooked Meat on the Bone")
-        addBlock(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
-        addBlock(RagiumBlocks.SPONGE_CAKE_SLAB, "Sponge Cake Slab")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "Advanced Machine Frame")

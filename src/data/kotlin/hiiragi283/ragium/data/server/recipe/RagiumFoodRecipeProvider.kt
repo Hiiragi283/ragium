@@ -130,15 +130,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
     }
 
     private fun sponge() {
-        // Sponge
-        HTShapedRecipeBuilder(RagiumBlocks.SPONGE_CAKE, 4)
-            .cross8()
-            .define('A', Tags.Items.CROPS_WHEAT)
-            .define('B', Items.SUGAR)
-            .define('C', Tags.Items.EGGS)
-            .save(output)
-
-        // addSlab(output, RagiumBlocks.SPONGE_CAKE, RagiumBlocks.SPONGE_CAKE_SLAB)
         // Cakes
         HTShapedRecipeBuilder(Items.CAKE)
             .pattern(
@@ -148,7 +139,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             ).define('A', Tags.Items.BUCKETS_MILK)
             .define('B', Items.SUGAR)
             .define('C', Tags.Items.EGGS)
-            .define('D', RagiumBlocks.SPONGE_CAKE_SLAB)
+            .define('D', RagiumBlocks.SPONGE_CAKE_SETS.slab)
             .saveSuffixed(output, "_with_sponge")
 
         HTShapedRecipeBuilder(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -159,7 +150,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             ).define('A', RagiumCommonTags.Items.FOODS_CHOCOLATE)
             .define('B', Tags.Items.FOODS_BERRY)
             .define('C', Tags.Items.EGGS)
-            .define('D', RagiumBlocks.SPONGE_CAKE_SLAB)
+            .define('D', RagiumBlocks.SPONGE_CAKE_SETS.slab)
             .saveSuffixed(output, "_with_sponge")
 
         HTShapelessRecipeBuilder(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)

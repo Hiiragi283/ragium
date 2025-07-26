@@ -41,10 +41,8 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         // Axe
         tag(BlockTags.MINEABLE_WITH_AXE).addHolder(RagiumBlocks.EXP_BERRY_BUSH).addHolder(RagiumBlocks.WOODEN_CASING)
         // Hoe
-        tag(BlockTags.MINEABLE_WITH_HOE)
-            .addHolder(RagiumBlocks.SPONGE_CAKE)
-            .addHolder(RagiumBlocks.SPONGE_CAKE_SLAB)
-            .addHolder(RagiumBlocks.SWEET_BERRIES_CAKE)
+        val hoe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_HOE)
+        hoe.addHolder(RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
         val pickaxe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
         pickaxe
@@ -72,7 +70,11 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         RagiumBlocks.STORAGE_BLOCKS.forEach(pickaxe::addHolder)
 
         for (sets: HTBuildingBlockSets in RagiumBlocks.DECORATIONS) {
-            sets.blockHolders.forEach(pickaxe::addHolder)
+            val builder: IntrinsicTagAppender<Block> = when (sets) {
+                RagiumBlocks.SPONGE_CAKE_SETS -> hoe
+                else -> pickaxe
+            }
+            sets.blockHolders.forEach(builder::addHolder)
             tag(BlockTags.STAIRS).addHolder(sets.stairs)
             tag(BlockTags.SLABS).addHolder(sets.slab)
             tag(BlockTags.WALLS).addHolder(sets.wall)

@@ -145,8 +145,6 @@ object RagiumCreativeTabs {
 
             output.accept(RagiumItems.MELON_PIE)
 
-            output.accept(RagiumBlocks.SPONGE_CAKE)
-            output.accept(RagiumBlocks.SPONGE_CAKE_SLAB)
             output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
             output.accept(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
 

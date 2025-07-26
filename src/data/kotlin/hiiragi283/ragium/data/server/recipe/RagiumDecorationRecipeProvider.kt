@@ -68,6 +68,13 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             ).define('A', RagiumCommonTags.Items.CROPS_WARPED_WART)
             .define('B', Tags.Items.BRICKS_NETHER)
             .save(output)
+        // Sponge Cake
+        HTShapedRecipeBuilder(RagiumBlocks.SPONGE_CAKE_SETS.base, 4)
+            .cross8()
+            .define('A', Tags.Items.CROPS_WHEAT)
+            .define('B', Items.SUGAR)
+            .define('C', Tags.Items.EGGS)
+            .save(output)
 
         RagiumBlocks.DECORATIONS.forEach(::registerBuildings)
         glass()

@@ -13,8 +13,6 @@ import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSoulGlassBlock
-import hiiragi283.ragium.common.block.HTSpongeCakeBlock
-import hiiragi283.ragium.common.block.HTSpongeCakeSlabBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.util.HTBuildingBlockSets
@@ -25,7 +23,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.ColoredFallingBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
-import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -281,6 +278,12 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val SPONGE_CAKE_SETS = HTBuildingBlockSets(
+        "sponge_cake",
+        soft().mapColor(MapColor.COLOR_YELLOW),
+    )
+
+    @JvmField
     val DECORATIONS: List<HTBuildingBlockSets> = listOf(
         RAGI_STONE_SETS,
         RAGI_STONE_BRICKS_SETS,
@@ -289,6 +292,7 @@ object RagiumBlocks {
         EMBER_STONE_SETS,
         PLASTIC_SETS,
         BLUE_NETHER_BRICK_SETS,
+        SPONGE_CAKE_SETS,
     )
 
     @JvmField
@@ -336,20 +340,6 @@ object RagiumBlocks {
         "cooked_meat_on_the_bone",
         copyOf(Blocks.PACKED_MUD),
         ::HTMeatBlock,
-    )
-
-    @JvmField
-    val SPONGE_CAKE: DeferredBlock<Block> = register(
-        "sponge_cake",
-        soft().mapColor(MapColor.COLOR_YELLOW),
-        ::HTSpongeCakeBlock,
-    )
-
-    @JvmField
-    val SPONGE_CAKE_SLAB: DeferredBlock<SlabBlock> = register(
-        "sponge_cake_slab",
-        soft().mapColor(MapColor.COLOR_YELLOW),
-        ::HTSpongeCakeSlabBlock,
     )
 
     @JvmField
