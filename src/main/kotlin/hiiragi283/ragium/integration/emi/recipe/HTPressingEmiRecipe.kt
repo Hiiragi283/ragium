@@ -23,9 +23,9 @@ class HTPressingEmiRecipe(
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(ingredient, 1.0, 0.0).drawBack(false)
-        widgets.addInput(catalyst, 1.0, 2.0).drawBack(false)
+        widgets.addInput(ingredient, getPosition(1), getPosition(0)).drawBack(false)
+        widgets.addInput(catalyst, getPosition(1), getPosition(2)).drawBack(false)
         // Output
-        widgets.addOutput(0, 4.5, 1.0, true)
+        widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
     }
 }

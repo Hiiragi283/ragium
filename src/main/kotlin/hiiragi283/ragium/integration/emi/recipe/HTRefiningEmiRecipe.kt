@@ -19,8 +19,8 @@ class HTRefiningEmiRecipe(id: ResourceLocation, val ingredient: EmiIngredient, v
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(ingredient, 1.0, 0.5).drawBack(false)
+        widgets.addInput(ingredient, getPosition(1), getPosition(0.5)).drawBack(false)
         // Output
-        widgets.addOutput(result, getPosition(4.5), getPosition(1.0), true).drawBack(false)
+        widgets.addOutput(result, getPosition(4.5), getPosition(1), true).drawBack(false)
     }
 }

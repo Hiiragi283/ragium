@@ -24,7 +24,7 @@ class HTInfusingEmiRecipe(
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(ingredient, 1.0, 0.5).drawBack(false)
+        widgets.addInput(ingredient, getPosition(1), getPosition(0.5)).drawBack(false)
         widgets.addTooltipText(
             listOf(
                 Component.literal("Required Cost: $cost"),
@@ -35,6 +35,6 @@ class HTInfusingEmiRecipe(
             18,
         )
         // Output
-        widgets.addOutput(0, 4.5, 1.0, true)
+        widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
     }
 }

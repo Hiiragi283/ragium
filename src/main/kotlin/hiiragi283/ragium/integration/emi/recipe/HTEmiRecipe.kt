@@ -12,18 +12,17 @@ interface HTEmiRecipe : EmiRecipe {
 
     fun getPosition(index: Double): Int = (index * 18).toInt()
 
-    fun WidgetHolder.addArrow(x: Double, y: Double): FillingArrowWidget = addFillingArrow(getPosition(x), getPosition(y), 2000)
+    fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
 
-    fun WidgetHolder.addInput(ingredient: EmiIngredient, x: Double, y: Double): SlotWidget =
-        addSlot(ingredient, getPosition(x), getPosition(y))
+    fun WidgetHolder.addInput(ingredient: EmiIngredient, x: Int, y: Int): SlotWidget = addSlot(ingredient, x, y)
 
     fun WidgetHolder.addOutput(
-        stack: EmiStack,
+        stack: EmiStack?,
         x: Int,
         y: Int,
         large: Boolean = false,
     ): SlotWidget = when {
-        large -> addSlot(stack, x - 4, y - 4).large(true)
-        else -> addSlot(stack, x, y)
+        large -> addSlot(stack ?: EmiStack.EMPTY, x - 4, y - 4).large(true)
+        else -> addSlot(stack ?: EmiStack.EMPTY, x, y)
     }.recipeContext(this@HTEmiRecipe)
 }

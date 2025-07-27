@@ -19,9 +19,9 @@ class HTAlloyingEmiRecipe(id: ResourceLocation, val ingredients: List<EmiIngredi
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         // Input
-        widgets.addInput(ingredients[0], 0.5, 0.0).drawBack(false)
-        widgets.addInput(ingredients[1], 1.5, 0.0).drawBack(false)
+        widgets.addInput(ingredients[0], getPosition(0.5), getPosition(0)).drawBack(false)
+        widgets.addInput(ingredients[1], getPosition(1.5), getPosition(0)).drawBack(false)
         // Output
-        widgets.addOutput(0, 4.5, 1.0, true)
+        widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
     }
 }
