@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityNew
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
@@ -22,10 +23,11 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
-) : HTMachineBlockEntity(type, pos, state) {
+) : HTMachineBlockEntityNew(type, pos, state) {
     private val recipeCache: HTRecipeCache<I, R> = HTRecipeCache(recipeType)
+    private var lastRecipe: R? = null
 
-    final override fun onServerTick(
+    override fun serverTickPre(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
@@ -35,33 +37,60 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         val input: I = createRecipeInput()
         val lastRecipe: ResourceLocation? = recipeCache.lastRecipe
         val recipe: R = recipeCache.getFirstRecipe(input, level) ?: return resetProgress()
+        val recipeEnergy: Int = getRequiredEnergy(recipe)
         // レシピの進行度を確認する
+        if (this.requiredEnergy != recipeEnergy) {
+            this.requiredEnergy = recipeEnergy
+            resetProgress()
+        }
         if (recipeCache.lastRecipe != lastRecipe) {
             resetProgress()
         }
-        // エネルギーを消費しようとする
-        if (network.extractEnergy(energyUsage, true) != energyUsage) return TriState.DEFAULT
-        network.extractEnergy(energyUsage, false)
-        // 進行度が最大でなければスキップ
-        currentTicks++
-        if (currentTicks < maxTicks) return TriState.DEFAULT
-        currentTicks = 0
-        return completeProcess(level, pos, state, network, input, recipe)
+        this.lastRecipe = recipe
+        // エネルギーを消費する
+        if (usedEnergy < requiredEnergy) {
+            usedEnergy += network.extractEnergy(energyUsage, false)
+        }
+        if (usedEnergy < requiredEnergy) return TriState.DEFAULT
+        usedEnergy -= requiredEnergy
+        // レシピを正常に扱えるか判定する
+        if (!canProgressRecipe(level, input, recipe)) return TriState.FALSE
+        return TriState.TRUE
     }
 
     protected abstract fun createRecipeInput(): I
 
-    protected abstract fun completeProcess(
+    protected open fun getRequiredEnergy(recipe: R): Int = 2000 // TODO
+
+    protected abstract fun canProgressRecipe(level: ServerLevel, input: I, recipe: R): Boolean
+
+    final override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
-        input: I,
+        result: TriState,
+    ) {
+        if (!result.isFalse) {
+            exportItems(level, pos)
+            exportFluids(level, pos)
+        }
+        if (result.isTrue) {
+            val recipe: R = this.lastRecipe ?: return
+            serverTickPost(level, pos, state, recipe)
+            this.lastRecipe = null
+        }
+    }
+
+    protected abstract fun serverTickPost(
+        level: ServerLevel,
+        pos: BlockPos,
+        state: BlockState,
         recipe: R,
-    ): TriState
+    )
 
     protected fun resetProgress(): TriState {
-        this.currentTicks = 0
+        this.usedEnergy = 0
+        this.lastRecipe = null
         return TriState.FALSE
     }
 

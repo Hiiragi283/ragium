@@ -20,8 +20,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
@@ -38,20 +36,22 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(): HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
 
-    override fun completeProcess(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        network: IEnergyStorage,
-        input: HTUniversalRecipeInput,
-        recipe: HTCrushingRecipe,
-    ): TriState {
+    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTCrushingRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         for (output: HTItemOutput in recipe.outputs) {
             if (!insertToOutput(1..4, output.get(), true).isEmpty) {
-                return TriState.FALSE
+                return false
             }
         }
+        return true
+    }
+
+    override fun serverTickPost(
+        level: ServerLevel,
+        pos: BlockPos,
+        state: BlockState,
+        recipe: HTCrushingRecipe,
+    ) {
         // 実際にアウトプットに搬出する
         for (output: HTItemOutput in recipe.outputs) {
             insertToOutput(1..4, output.getChancedStack(level.random), false)
@@ -60,7 +60,6 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         inventory.consumeStackInSlot(0, recipe.ingredient.count(), false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS)
-        return TriState.TRUE
     }
 
     override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(

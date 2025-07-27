@@ -32,12 +32,13 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         ) {
             val serverLevel: ServerLevel = level as? ServerLevel ?: return
             if (blockEntity.shouldTick) {
-                val result: TriState = blockEntity.onServerTick(serverLevel, pos, state)
+                val result: TriState = blockEntity.serverTickPre(serverLevel, pos, state)
                 when (result) {
                     TriState.TRUE -> blockEntity.shouldTick = true
                     TriState.DEFAULT -> return
                     TriState.FALSE -> blockEntity.shouldTick = false
                 }
+                blockEntity.serverTickPost(serverLevel, pos, state, result)
             }
             if (blockEntity.shouldSync) {
                 blockEntity.sendUpdatePacket(level)
@@ -56,18 +57,22 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         private set
 
     /**
-     * このブロックエンティティが稼働する時間間隔
-     */
-    abstract val maxTicks: Int
-
-    var currentTicks: Int = 0
-        protected set
-
-    /**
      * サーバー側でのtick処理を行います。
      * @return 続けてtick処理を行う場合は[TriState.TRUE], 止める場合は[TriState.FALSE], 現在の状態を維持する場合は[TriState.DEFAULT]
      */
-    abstract fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState
+    abstract fun serverTickPre(level: ServerLevel, pos: BlockPos, state: BlockState): TriState
+
+    /**
+     * サーバー側でのtick処理を行います。
+     *
+     * [serverTickPre]の後で呼び出されます。
+     */
+    open fun serverTickPost(
+        level: ServerLevel,
+        pos: BlockPos,
+        state: BlockState,
+        result: TriState,
+    ) {}
 
     //    Sync    //
 
@@ -98,22 +103,7 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    Menu    //
 
-    protected val containerData: ContainerData = object : ContainerData {
-        override fun get(index: Int): Int = when (index) {
-            0 -> currentTicks
-            1 -> maxTicks
-            else -> -1
-        }
-
-        override fun set(index: Int, value: Int) {
-            when (index) {
-                0 -> currentTicks = value
-                else -> {}
-            }
-        }
-
-        override fun getCount(): Int = 2
-    }
+    protected abstract val containerData: ContainerData
 
     protected fun createDefinition(inventory: IItemHandler): HTMenuDefinition = HTMenuDefinition(inventory, upgrades, containerData)
 }

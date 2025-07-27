@@ -4,17 +4,16 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -24,8 +23,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import kotlin.math.min
 
 sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTTickAwareBlockEntity(type, pos, state),
-    MenuProvider {
+    HTDeviceBlockEntity(type, pos, state) {
     private val inventory: HTItemStackHandler = object : HTItemStackHandler(2, this::setChanged) {
         override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
             val energyStorage: IEnergyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM) ?: return false
@@ -80,13 +78,7 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
         return ItemInteractionResult.sidedSuccess(level.isClientSide)
     }*/
 
-    override val maxTicks: Int = 20
-
-    override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 20 tickごとに実行する
-        currentTicks++
-        if (currentTicks < maxTicks) return TriState.DEFAULT
-        currentTicks = 0
+    override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 左のスロットから電力を吸い取る
         val extractResult: TriState = extractFromItem()
         // 右のスロットに電力を渡す
@@ -142,7 +134,9 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = network
 
-    //    MenuProvider    //
+    //    Menu    //
+
+    override val containerData: ContainerData = SimpleContainerData(2)
 
     override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTEnergyNetworkAccessMenu =
         HTEnergyNetworkAccessMenu(
@@ -151,8 +145,6 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
             blockPos,
             createDefinition(inventory),
         )
-
-    override fun getDisplayName(): Component = blockState.block.name
 
     //    Creative    //
 

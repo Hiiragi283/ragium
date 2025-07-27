@@ -20,8 +20,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
@@ -39,18 +37,20 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(): HTUniversalRecipeInput =
         HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0), inventory.getStackInSlot(1))
 
-    override fun completeProcess(
+    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTPressingRecipe): Boolean {
+        // アウトプットに搬出できるか判定する
+        if (!insertToOutput(2..2, recipe.output.get(), true).isEmpty) {
+            return false
+        }
+        return true
+    }
+
+    override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
-        input: HTUniversalRecipeInput,
         recipe: HTPressingRecipe,
-    ): TriState {
-        // アウトプットに搬出できるか判定する
-        if (!insertToOutput(2..2, recipe.output.get(), true).isEmpty) {
-            return TriState.FALSE
-        }
+    ) {
         // 実際にアウトプットに搬出する
         insertToOutput(2..2, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
@@ -58,7 +58,6 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
         inventory.consumeStackInSlot(1, 1, true)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS)
-        return TriState.DEFAULT
     }
 
     override fun getItemHandler(direction: Direction?): IItemHandler? = HTFilteredItemHandler(

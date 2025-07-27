@@ -20,8 +20,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.EnchantingTableBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
@@ -41,14 +39,18 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
 
-    override fun completeProcess(
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTInfusingRecipe): Boolean {
+        // アウトプットに搬出できるか判定する
+        val output: ItemStack = recipe.assemble(input, level.registryAccess())
+        return insertToOutput(1..1, output, true).isEmpty
+    }
+
+    override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
-        input: SingleRecipeInput,
         recipe: HTInfusingRecipe,
-    ): TriState {
+    ) {
         // コストが異なる場合，再指定する
         val recipeCost: Float = recipe.cost
         if (requiredCost != recipeCost) {
@@ -69,11 +71,9 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         if (aroundCost > 0f) {
             level.playSound(null, pos, SoundEvents.CHISELED_BOOKSHELF_INSERT_ENCHANTED, SoundSource.BLOCKS)
         }
-        if (currentCost < requiredCost) return TriState.DEFAULT
-        // アウトプットに搬出できるか判定する
-        val output: ItemStack = recipe.assemble(input, level.registryAccess())
-        if (!insertToOutput(1..1, output, true).isEmpty) return TriState.FALSE
+        if (currentCost < requiredCost) return
         // 実際にアウトプットに搬出する
+        val output: ItemStack = recipe.assemble(createRecipeInput(), level.registryAccess())
         insertToOutput(1..1, output, false)
         // インプットを減らす
         inventory.consumeStackInSlot(0, 1, false)
@@ -81,13 +81,11 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         currentCost = 0f
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS)
-        return TriState.TRUE
     }
 
-    private fun resetCost(newCost: Float): TriState {
+    private fun resetCost(newCost: Float) {
         requiredCost = newCost
         currentCost = 0f
-        return TriState.FALSE
     }
 
     override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(

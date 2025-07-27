@@ -19,8 +19,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
@@ -37,25 +35,26 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(): HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
 
-    override fun completeProcess(
+    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTExtractingRecipe): Boolean {
+        // アウトプットに搬出できるか判定する
+        if (!insertToOutput(1..4, recipe.output.get(), true).isEmpty) {
+            return false
+        }
+        return true
+    }
+
+    override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
-        input: HTUniversalRecipeInput,
         recipe: HTExtractingRecipe,
-    ): TriState {
-        // アウトプットに搬出できるか判定する
-        if (!insertToOutput(1..4, recipe.output.get(), true).isEmpty) {
-            return TriState.FALSE
-        }
+    ) {
         // 実際にアウトプットに搬出する
         insertToOutput(1..4, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
         inventory.consumeStackInSlot(0, recipe.ingredient.count(), false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.SLIME_BLOCK_BREAK, SoundSource.BLOCKS)
-        return TriState.TRUE
     }
 
     override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(

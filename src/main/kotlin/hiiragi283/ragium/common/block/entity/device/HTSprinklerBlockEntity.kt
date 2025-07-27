@@ -5,12 +5,15 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.BoneMealItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
@@ -20,7 +23,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state) {
+class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.SPRINKLER, pos, state) {
     private val tank = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -33,13 +36,7 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBloc
 
     //    Ticking    //
 
-    override val maxTicks: Int = 100
-
-    override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 20 tickごとに実行する
-        currentTicks++
-        if (currentTicks < maxTicks) return TriState.DEFAULT
-        currentTicks = 0
+    override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 高さを0~2の範囲でチェックする
         for (height: Int in (0..2)) {
             if (glowCrop(level, pos, height).isTrue) {
@@ -78,4 +75,10 @@ class HTSprinklerBlockEntity(pos: BlockPos, state: BlockState) : HTTickAwareBloc
             override fun canDrain(tank: IFluidTank, maxDrain: Int): Boolean = false
         },
     )
+
+    //    Menu    //
+
+    override val containerData: ContainerData = createData()
+
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
 }

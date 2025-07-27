@@ -21,7 +21,7 @@ internal object HTAddonCollector {
                 for (data: ModFileScanData.AnnotationData in scanData.annotations) {
                     if (data.annotationType == annotationType) {
                         val modId: String = data.annotationData["value"] as String
-                        val priority: Int = data.annotationData["priority"] as Int
+                        val priority: Int = data.annotationData["priority"] as? Int ?: 0
                         if (modList.isLoaded(modId)) {
                             add(data.memberName to priority)
                         }

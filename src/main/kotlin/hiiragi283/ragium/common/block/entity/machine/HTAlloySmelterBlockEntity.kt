@@ -21,8 +21,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
@@ -40,33 +38,34 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(): HTUniversalRecipeInput =
         HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0), inventory.getStackInSlot(1))
 
-    override fun completeProcess(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        network: IEnergyStorage,
-        input: HTUniversalRecipeInput,
-        recipe: HTAlloyingRecipe,
-    ): TriState {
+    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTAlloyingRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         for (output: HTItemOutput in recipe.outputs) {
             if (!insertToOutput(2..2, output.get(), true).isEmpty) {
-                return TriState.FALSE
+                return false
             }
         }
         // インプットから正確な個数を引けるか判定する
         if (!consumeItem(input, recipe, 0, 1)) {
             if (!consumeItem(input, recipe, 1, 0)) {
-                return TriState.FALSE
+                return false
             }
         }
+        return true
+    }
+
+    override fun serverTickPost(
+        level: ServerLevel,
+        pos: BlockPos,
+        state: BlockState,
+        recipe: HTAlloyingRecipe,
+    ) {
         // 実際にアウトプットに搬出する
         for (output: HTItemOutput in recipe.outputs) {
             insertToOutput(2..2, output.getChancedStack(level.random), false)
         }
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
-        return TriState.TRUE
     }
 
     private fun consumeItem(

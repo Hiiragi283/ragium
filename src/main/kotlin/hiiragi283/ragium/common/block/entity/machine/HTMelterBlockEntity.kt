@@ -25,8 +25,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
@@ -59,25 +57,26 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(): HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
 
-    override fun completeProcess(
+    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTMeltingRecipe): Boolean {
+        // アウトプットに搬出できるか判定する
+        if (!tank.canFill(recipe.output.get(), true)) {
+            return false
+        }
+        return true
+    }
+
+    override fun serverTickPost(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        network: IEnergyStorage,
-        input: HTUniversalRecipeInput,
         recipe: HTMeltingRecipe,
-    ): TriState {
-        // アウトプットに搬出できるか判定する
-        if (!tank.canFill(recipe.output.get(), true)) {
-            return TriState.FALSE
-        }
+    ) {
         // 実際にアウトプットに搬出する
         tank.fill(recipe.output.get(), IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
         inventory.consumeStackInSlot(0, recipe.ingredient.count(), false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS)
-        return TriState.TRUE
     }
 
     override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(inventory, HTItemFilter.INSERT_ONLY)

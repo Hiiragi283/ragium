@@ -23,8 +23,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.util.TriState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -61,26 +59,28 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(): HTUniversalRecipeInput = HTUniversalRecipeInput.fromFluids(tankIn.fluid)
 
-    override fun completeProcess(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        network: IEnergyStorage,
-        input: HTUniversalRecipeInput,
-        recipe: HTRefiningRecipe,
-    ): TriState {
+    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTRefiningRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         val firstOutput: FluidStack = recipe.fluidOutputs[0].get()
         if (!tankOut.canFill(firstOutput, true)) {
-            return TriState.FALSE
+            return false
         }
+        return true
+    }
+
+    override fun serverTickPost(
+        level: ServerLevel,
+        pos: BlockPos,
+        state: BlockState,
+        recipe: HTRefiningRecipe,
+    ) {
         // 実際にアウトプットに搬出する
+        val firstOutput: FluidStack = recipe.fluidOutputs[0].get()
         tankOut.fill(firstOutput, IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
         tankIn.drain(recipe.ingredient.amount(), IFluidHandler.FluidAction.EXECUTE)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.LAVA_POP, SoundSource.BLOCKS)
-        return TriState.DEFAULT
     }
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? = HTFilteredFluidHandler(

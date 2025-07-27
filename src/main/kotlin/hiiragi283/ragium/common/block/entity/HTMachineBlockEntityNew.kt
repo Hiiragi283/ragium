@@ -1,25 +1,23 @@
-package hiiragi283.ragium.common.block.entity.machine
+package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.util.RagiumConstantValues
-import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.util.Mth
 import net.minecraft.world.MenuProvider
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTMachineBlockEntityNew(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
     MenuProvider {
     //    Storage    //
@@ -52,28 +50,37 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
      */
     protected abstract val energyUsage: Int
 
-    override val maxTicks: Int get() = Mth.ceil(200 / (getAllUpgrade(RagiumUpgradeKeys.MACHINE_SPEED) + 1f))
+    protected var requiredEnergy: Int = 0
+    protected var usedEnergy: Int = 0
 
-    override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
-        // 自動搬出する
-        exportItems(level, pos)
-        exportFluids(level, pos)
-        // 処理を行う
+    final override fun serverTickPre(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         val network: IEnergyStorage = this.network ?: return TriState.FALSE
-        val triState = onServerTick(level, pos, state, network)
-
-        return triState
+        return serverTickPre(level, pos, state, network)
     }
 
-    /**
-     * [IEnergyStorage]を引数に加えた[onServerTick]の拡張メソッド
-     */
-    protected abstract fun onServerTick(
+    protected abstract fun serverTickPre(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
         network: IEnergyStorage,
     ): TriState
+
+    override val containerData: ContainerData = object : ContainerData {
+        override fun get(index: Int): Int = when (index) {
+            0 -> usedEnergy
+            1 -> requiredEnergy
+            else -> -1
+        }
+
+        override fun set(index: Int, value: Int) {
+            when (index) {
+                0 -> usedEnergy = value
+                1 -> requiredEnergy = value
+            }
+        }
+
+        override fun getCount(): Int = 2
+    }
 
     //    HTHandlerBlockEntity    //
 
@@ -92,7 +99,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
 
-    //    MenuProvider    //
+    //    Menu    //
 
     final override fun getDisplayName(): Component = blockState.block.name
 }
