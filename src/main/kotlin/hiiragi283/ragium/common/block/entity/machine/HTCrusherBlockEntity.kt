@@ -34,7 +34,8 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(): HTUniversalRecipeInput = HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
+        HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
 
     override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTCrushingRecipe): Boolean {
         // アウトプットに搬出できるか判定する

@@ -39,6 +39,7 @@ object RagiumCreativeTabs {
             output.accept(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
             output.accept(RagiumItems.CRIMSON_CRYSTAL)
             output.accept(RagiumBlocks.CRIMSON_SOIL)
+            output.accept(RagiumItems.BLAST_CHARGE)
 
             output.accept(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
             output.accept(RagiumItems.WARPED_CRYSTAL)

@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
@@ -36,6 +37,12 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)
             .addIngredient(Tags.Items.GEMS_EMERALD)
+            .save(output)
+
+        HTShapedRecipeBuilder(RagiumItems.BLAST_CHARGE, 8)
+            .hollow8()
+            .define('A', RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
+            .define('B', Tags.Items.GUNPOWDERS)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
@@ -185,6 +192,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         addTicket(RagiumItems.DAYBREAK_TICKET, RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY, Tags.Items.DYES_ORANGE)
         addTicket(RagiumItems.ETERNAL_TICKET, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
 
+        save(
+            RagiumAPI.id("shapeless/blast_charge"),
+            HTBlastChargeRecipe(CraftingBookCategory.EQUIPMENT),
+        )
         save(
             RagiumAPI.id("smithing/eternal_ticket"),
             HTEternalTicketRecipe,

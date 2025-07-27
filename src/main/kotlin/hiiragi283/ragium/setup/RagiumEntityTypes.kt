@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.entity.HTBlastCharge
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -26,6 +27,15 @@ object RagiumEntityTypes {
             .apply(builderAction)
             .build(id.path)
     }
+
+    @JvmField
+    val BLAST_CHARGE: Supplier<EntityType<HTBlastCharge>> =
+        register("blast_charge", ::HTBlastCharge, MobCategory.MISC) { builder: EntityType.Builder<HTBlastCharge> ->
+            builder
+                .sized(0.25f, 0.25f)
+                .clientTrackingRange(4)
+                .updateInterval(10)
+        }
 
     @JvmField
     val ELDRITCH_EGG: Supplier<EntityType<HTThrownCaptureEgg>> =

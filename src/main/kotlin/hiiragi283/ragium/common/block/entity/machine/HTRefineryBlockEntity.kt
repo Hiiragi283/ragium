@@ -57,7 +57,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(): HTUniversalRecipeInput = HTUniversalRecipeInput.fromFluids(tankIn.fluid)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
+        HTUniversalRecipeInput.fromFluids(tankIn.fluid)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTRefiningRecipe): Boolean {
         // アウトプットに搬出できるか判定する

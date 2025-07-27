@@ -166,8 +166,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun entity() {
+        addEntityType(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
         addEntityType(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
-        
+
         // addEntityType(RagiumEntityTypes.DYNAMITE, "Dynamite")
         // addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
         // addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
@@ -257,6 +258,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.getForgeHammer(RagiumToolTiers.DEEP_STEEL), "Deep Steel Forge Hammer")
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "Advanced Ragi-Magnet")
+        addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")
         addItem(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
@@ -483,6 +485,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addInfo(RagiumBlocks.SOUL_GLASS, "Only passable with Players, can be harvested without Silk Touch.")
 
         addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
+        addInfo(RagiumItems.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")
         addInfo(RagiumItems.ELDER_HEART, "Dropped from Elder Guardian.")
         addInfo(RagiumItems.ELDRITCH_EGG, "Can be throwable by right-click，then capture mobs when hit.")
         addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")

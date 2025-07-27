@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import net.minecraft.core.registries.Registries
@@ -107,6 +108,10 @@ object RagiumRecipeSerializers {
             },
         RecipeSerializer.SHAPELESS_RECIPE.streamCodec().map(::HTTransmuteRecipe, HTTransmuteRecipe::internalRecipe),
     )
+
+    @JvmField
+    val BLAST_CHARGE: Supplier<RecipeSerializer<HTBlastChargeRecipe>> =
+        register("blast_charge", SimpleCraftingRecipeSerializer(::HTBlastChargeRecipe))
 
     @JvmField
     val ETERNAL_TICKET: Supplier<RecipeSerializer<HTEternalTicketRecipe>> =

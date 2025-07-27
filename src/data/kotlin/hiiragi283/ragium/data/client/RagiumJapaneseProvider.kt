@@ -154,8 +154,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun entity() {
+        addEntityType(RagiumEntityTypes.BLAST_CHARGE, "ブラストチャージ")
         addEntityType(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
-        
+
         // addEntityType(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
         // addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
         // addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
@@ -245,6 +246,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.getForgeHammer(RagiumToolTiers.DEEP_STEEL), "深層鋼の鍛造ハンマー")
 
         addItem(RagiumItems.ADVANCED_RAGI_MAGNET, "発展らぎマグネット")
+        addItem(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
         addItem(RagiumItems.ELDRITCH_EGG, "異質な卵")
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
@@ -493,6 +495,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addInfo(RagiumBlocks.SOUL_GLASS, "プレイヤーのみ通過でき，シルクタッチなしで回収することが可能です。")
 
         addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
+        addInfo(RagiumItems.BLAST_CHARGE, "作業台で火薬を用いて強化することができます。")
         addInfo(RagiumItems.ELDER_HEART, "エルダーガーディアンからドロップします。")
         addInfo(RagiumItems.ELDRITCH_EGG, "右クリックで投げることができ，モブに当たるとスポーンエッグになります。")
         addInfo(RagiumItems.ICE_CREAM, "食べると鎮火します。")

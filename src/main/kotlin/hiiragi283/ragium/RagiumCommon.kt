@@ -21,6 +21,11 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.core.dispenser.ProjectileDispenseBehavior
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ProjectileItem
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -90,7 +95,15 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun construct(event: FMLConstructModEvent) {}
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
-        event.enqueueWork(RagiumFluidContents.REGISTER::registerDispensers)
+        event.enqueueWork {
+            RagiumFluidContents.REGISTER.registerDispensers()
+
+            RagiumItems.REGISTER.entries
+                .map(ItemLike::asItem)
+                .filter { item: Item -> item is ProjectileItem }
+                .associateWith(::ProjectileDispenseBehavior)
+                .forEach(DispenserBlock::registerBehavior)
+        }
 
         for (addon: RagiumAddon in RagiumAPI.getInstance().getAddons()) {
             addon.onCommonSetup(event)

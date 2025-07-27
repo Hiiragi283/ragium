@@ -30,9 +30,11 @@ import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDecomposeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
@@ -101,7 +103,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addCustomRecipe() {
         // Crafting
-        forEachRecipes(RecipeType.CRAFTING) { _: ResourceLocation, recipe: CraftingRecipe? ->
+        forEachRecipes(RecipeType.CRAFTING) { id: ResourceLocation, recipe: CraftingRecipe? ->
             if (recipe is HTIceCreamSodaRecipe) {
                 EmiPort.getPotionRegistry().holders().forEach { holder: Holder.Reference<Potion> ->
                     addRecipeSafe(
@@ -120,6 +122,9 @@ class RagiumEmiPlugin : EmiPlugin {
                         )
                     }
                 }
+            }
+            if (recipe is HTBlastChargeRecipe) {
+                addRecipeSafe(id, ::HTBlastChargeEmiRecipe)
             }
         }
         // Smithing

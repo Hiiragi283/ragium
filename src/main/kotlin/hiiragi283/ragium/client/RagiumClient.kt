@@ -173,6 +173,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+        event.registerEntityRenderer(RagiumEntityTypes.BLAST_CHARGE.get(), ::ThrownItemRenderer)
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
 
         LOGGER.info("Registered BlockEntityRenderers!")

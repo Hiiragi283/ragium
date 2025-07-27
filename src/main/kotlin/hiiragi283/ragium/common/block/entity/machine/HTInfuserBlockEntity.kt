@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.recipe.HTInfusingRecipe
+import hiiragi283.ragium.api.recipe.HTInfusingRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
@@ -17,13 +18,12 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.EnchantingTableBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<SingleRecipeInput, HTInfusingRecipe>(
+    HTProcessorBlockEntity<HTInfusingRecipeInput, HTInfusingRecipe>(
         RagiumRecipeTypes.INFUSING.get(),
         RagiumBlockEntityTypes.INFUSER,
         pos,
@@ -34,12 +34,20 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    private var requiredCost: Float = 0f
-    private var currentCost: Float = 0f
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTInfusingRecipeInput {
+        val aroundCost: Float = EnchantingTableBlock.BOOKSHELF_OFFSETS
+            .map { posIn: BlockPos ->
+                if (EnchantingTableBlock.isValidBookShelf(level, pos, posIn)) {
+                    val posTo: BlockPos = pos.offset(posIn)
+                    level.getBlockState(posTo).getEnchantPowerBonus(level, posTo)
+                } else {
+                    0f
+                }
+            }.sum()
+        return HTInfusingRecipeInput(inventory.getStackInSlot(0), aroundCost)
+    }
 
-    override fun createRecipeInput(): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
-
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTInfusingRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: HTInfusingRecipeInput, recipe: HTInfusingRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         val output: ItemStack = recipe.assemble(input, level.registryAccess())
         return insertToOutput(1..1, output, true).isEmpty
@@ -51,41 +59,13 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         state: BlockState,
         recipe: HTInfusingRecipe,
     ) {
-        // コストが異なる場合，再指定する
-        val recipeCost: Float = recipe.cost
-        if (requiredCost != recipeCost) {
-            resetCost(recipeCost)
-        }
-        // 周囲のブロックからエンチャントパワーを得る
-        val aroundCost: Float = EnchantingTableBlock.BOOKSHELF_OFFSETS
-            .map { posIn: BlockPos ->
-                if (EnchantingTableBlock.isValidBookShelf(level, pos, posIn)) {
-                    val posTo: BlockPos = pos.offset(posIn)
-                    level.getBlockState(posTo).getEnchantPowerBonus(level, posTo)
-                } else {
-                    0f
-                }
-            }.sum()
-        // コストを加算する
-        currentCost += aroundCost
-        if (aroundCost > 0f) {
-            level.playSound(null, pos, SoundEvents.CHISELED_BOOKSHELF_INSERT_ENCHANTED, SoundSource.BLOCKS)
-        }
-        if (currentCost < requiredCost) return
         // 実際にアウトプットに搬出する
-        val output: ItemStack = recipe.assemble(createRecipeInput(), level.registryAccess())
+        val output: ItemStack = recipe.assemble(createRecipeInput(level, pos), level.registryAccess())
         insertToOutput(1..1, output, false)
         // インプットを減らす
         inventory.consumeStackInSlot(0, 1, false)
-        // コストをリセットする
-        currentCost = 0f
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS)
-    }
-
-    private fun resetCost(newCost: Float) {
-        requiredCost = newCost
-        currentCost = 0f
     }
 
     override fun getItemHandler(direction: Direction?): HTFilteredItemHandler = HTFilteredItemHandler(

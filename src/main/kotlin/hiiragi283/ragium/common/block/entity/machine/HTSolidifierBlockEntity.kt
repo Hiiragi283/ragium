@@ -57,7 +57,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(): HTUniversalRecipeInput =
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
         HTUniversalRecipeInput(listOf(inventory.getStackInSlot(0)), listOf(tank.fluid))
 
     override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTSolidifyingRecipe): Boolean {

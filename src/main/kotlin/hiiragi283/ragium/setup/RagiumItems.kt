@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.upgrade.HTUpgrade
 import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
+import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
@@ -226,6 +227,9 @@ object RagiumItems {
 
     @JvmField
     val ADVANCED_RAGI_MAGNET: DeferredItem<HTExpMagnetItem> = register("advanced_ragi_magnet", ::HTExpMagnetItem)
+
+    @JvmField
+    val BLAST_CHARGE: DeferredItem<HTBlastChargeItem> = register("blast_charge", ::HTBlastChargeItem)
 
     @JvmField
     val ENDER_BUNDLE: DeferredItem<Item> = register("ender_bundle", Item.Properties().stacksTo(1))

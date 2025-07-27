@@ -11,6 +11,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
+import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.level.storage.loot.LootTable
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -29,6 +30,10 @@ object RagiumDataComponents {
     ): Supplier<DataComponentType<T>> = REGISTER.registerComponentType<T>(name) { builder: DataComponentType.Builder<T> ->
         builder.persistent(codec).networkSynchronized(streamCodec)
     }
+
+    @JvmField
+    val BLAST_POWER: Supplier<DataComponentType<Float>> =
+        register("blast_power", ExtraCodecs.POSITIVE_FLOAT, ByteBufCodecs.FLOAT.cast())
 
     @JvmField
     val FLUID_CONTENT: Supplier<DataComponentType<SimpleFluidContent>> =

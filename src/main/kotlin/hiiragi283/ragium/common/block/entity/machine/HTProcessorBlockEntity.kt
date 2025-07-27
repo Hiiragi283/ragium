@@ -34,7 +34,7 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         network: IEnergyStorage,
     ): TriState {
         // インプットに一致するレシピを探索する
-        val input: I = createRecipeInput()
+        val input: I = createRecipeInput(level, pos)
         val lastRecipe: ResourceLocation? = recipeCache.lastRecipe
         val recipe: R = recipeCache.getFirstRecipe(input, level) ?: return resetProgress()
         val recipeEnergy: Int = getRequiredEnergy(recipe)
@@ -58,7 +58,7 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         return TriState.TRUE
     }
 
-    protected abstract fun createRecipeInput(): I
+    protected abstract fun createRecipeInput(level: ServerLevel, pos: BlockPos): I
 
     protected open fun getRequiredEnergy(recipe: R): Int = 2000 // TODO
 

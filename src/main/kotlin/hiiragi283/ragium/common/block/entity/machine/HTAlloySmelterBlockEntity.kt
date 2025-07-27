@@ -35,7 +35,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(): HTUniversalRecipeInput =
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
         HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0), inventory.getStackInSlot(1))
 
     override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTAlloyingRecipe): Boolean {
