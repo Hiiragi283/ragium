@@ -29,8 +29,6 @@ object RagiumReplicationAddon : RagiumAddon {
 
     //    RagiumAddon    //
 
-    override val priority: Int = 0
-
     override fun onModConstruct(eventBus: IEventBus, dist: Dist) {
         MATTER_REGISTER.register(eventBus)
     }

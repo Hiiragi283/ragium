@@ -62,7 +62,6 @@ class InternalRagiumAPI : RagiumAPI {
             LOGGER.info("Collecting addons for Ragium...")
             addonCache = HTAddonCollector
                 .collectInstances<RagiumAddon>()
-                .sortedBy(RagiumAddon::priority)
                 .onEach { addon: RagiumAddon ->
                     LOGGER.info("Loaded addon from ${addon::class.qualifiedName}!")
                 }

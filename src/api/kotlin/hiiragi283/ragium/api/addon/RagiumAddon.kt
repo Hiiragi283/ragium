@@ -13,13 +13,6 @@ import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent
  */
 interface RagiumAddon {
     /**
-     * アドオンの優先度を返します。
-     *
-     * 値が大きいほど優先して読み込まれます。
-     */
-    val priority: Int
-
-    /**
      * modのコンストラクタで呼び出されます。
      */
     fun onModConstruct(eventBus: IEventBus, dist: Dist) {}

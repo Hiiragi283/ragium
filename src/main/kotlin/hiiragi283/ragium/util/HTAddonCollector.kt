@@ -21,27 +21,30 @@ internal object HTAddonCollector {
                 for (data: ModFileScanData.AnnotationData in scanData.annotations) {
                     if (data.annotationType == annotationType) {
                         val modId: String = data.annotationData["value"] as String
+                        val priority: Int = data.annotationData["priority"] as Int
                         if (modList.isLoaded(modId)) {
-                            add(data.memberName)
+                            add(data.memberName to priority)
                         }
                     }
                 }
             }
-        }.mapNotNull { className: String ->
-            runCatching {
-                val clazz: Class<*> = Class.forName(className)
-                // Try to load from singleton instance
-                if (clazz.kotlin.objectInstance != null) {
-                    return@runCatching clazz.kotlin.objectInstance as? T
-                }
-                // Try to load from constructor with no parameter
-                val asmClazz: Class<out T> = clazz.asSubclass(T::class.java)
-                val constructor: Constructor<out T> = asmClazz.getDeclaredConstructor()
-                val instance: T = constructor.newInstance()
-                instance
-            }.onFailure { throwable: Throwable ->
-                LOGGER.error("Failed to construct {}", className, throwable)
-            }.getOrNull()
-        }
+        }.sortedBy { (_, priority: Int) -> priority }
+            .map(Pair<String, Int>::first)
+            .mapNotNull { className: String ->
+                runCatching {
+                    val clazz: Class<*> = Class.forName(className)
+                    // Try to load from singleton instance
+                    if (clazz.kotlin.objectInstance != null) {
+                        return@runCatching clazz.kotlin.objectInstance as? T
+                    }
+                    // Try to load from constructor with no parameter
+                    val asmClazz: Class<out T> = clazz.asSubclass(T::class.java)
+                    val constructor: Constructor<out T> = asmClazz.getDeclaredConstructor()
+                    val instance: T = constructor.newInstance()
+                    instance
+                }.onFailure { throwable: Throwable ->
+                    LOGGER.error("Failed to construct {}", className, throwable)
+                }.getOrNull()
+            }
     }
 }

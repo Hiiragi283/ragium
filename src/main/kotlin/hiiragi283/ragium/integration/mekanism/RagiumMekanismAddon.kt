@@ -56,8 +56,6 @@ object RagiumMekanismAddon : RagiumAddon {
 
     //    RagiumAddon    //
 
-    override val priority: Int = 0
-
     override fun onModConstruct(eventBus: IEventBus, dist: Dist) {
         eventBus.addListener(::buildCreativeTabs)
         eventBus.addListener(::modifyComponent)

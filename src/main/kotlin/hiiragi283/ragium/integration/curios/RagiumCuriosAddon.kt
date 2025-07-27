@@ -13,8 +13,6 @@ import top.theillusivec4.curios.api.type.capability.ICurio
 
 @HTAddon("curios")
 object RagiumCuriosAddon : RagiumAddon {
-    override val priority: Int = 0
-
     override fun onModConstruct(eventBus: IEventBus, dist: Dist) {
         eventBus.addListener(::registerCurios)
     }
