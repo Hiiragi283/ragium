@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.extension.descKey
 import hiiragi283.ragium.api.extension.titleKey
-import hiiragi283.ragium.api.extension.toStack
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
@@ -29,7 +28,7 @@ class HTDisplayInfoBuilder {
     var hidden: Boolean = false
 
     fun setIcon(item: ItemLike) {
-        icon = item.toStack()
+        icon = ItemStack(item)
     }
 
     fun setTitleFromKey(key: ResourceKey<Advancement>): HTDisplayInfoBuilder = apply {

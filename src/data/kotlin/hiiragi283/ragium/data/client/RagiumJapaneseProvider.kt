@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.extension.addInfo
+import hiiragi283.ragium.api.extension.addItemGroup
 import hiiragi283.ragium.api.extension.addMatterType
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -13,6 +14,7 @@ import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -31,6 +33,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         entity()
         fluid()
         item()
+        itemGroup()
         modTags()
         text()
         information()
@@ -275,18 +278,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.WARPED_WART, "歪んだウォート")
         addItem(RagiumItems.AMBROSIA, "アンブロシア")
 
-        /*addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
-        addItem(RagiumItems.DURALUMIN_CASE, "ジュラルミンケース")
-        addItem(RagiumItems.SILKY_PICKAXE, "シルキーピッケル")
-
-        addItem(RagiumItems.ITEM_MAGNET, "アイテムマグネット")
-        addItem(RagiumItems.EXP_MAGNET, "経験値マグネット")
-
-        addItem(RagiumItems.DYNAMITE, "ダイナマイト")
-        addItem(RagiumItems.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
-        addItem(RagiumItems.FLATTEN_DYNAMITE, "整地用ダイナマイト")
-        addItem(RagiumItems.NAPALM_DYNAMITE, "ナパームダイナマイト")
-        addItem(RagiumItems.POISON_DYNAMITE, "毒ガスダイナマイト")*/
         // Mold
         // addItem(RagiumItems.Molds.BLANK, "成形型（なし）")
         // addItem(RagiumItems.Molds.BALL, "成形型（ボール）")
@@ -311,6 +302,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         addItem(RagiumItems.SYNTHETIC_LEATHER, "合成革")
         addItem(RagiumItems.ULTIMATE_CIRCUIT, "究極回路")
+    }
+
+    private fun itemGroup() {
+        addItemGroup(RagiumCreativeTabs.BLOCKS, "Ragium - ブロック")
+        addItemGroup(RagiumCreativeTabs.INGREDIENTS, "Ragium - 素材")
+        addItemGroup(RagiumCreativeTabs.ITEMS, "Ragium - アイテム")
     }
 
     /*private fun material() {

@@ -56,6 +56,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.AZURE_STEEL_COMPOUND)
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+
+            remove(RagiumItems.BLAST_CHARGE)
             removeAll(RagiumItems.FORGE_HAMMERS.values)
 
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
@@ -90,6 +92,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         // Tools
         RagiumItems.AZURE_STEEL_TOOLS.addItemModels(this)
         RagiumItems.DEEP_STEEL_TOOLS.addItemModels(this)
+
+        handheldItem(RagiumItems.BLAST_CHARGE.asItem())
 
         RagiumItems.FORGE_HAMMERS.values
             .map(DeferredItem<*>::getId)

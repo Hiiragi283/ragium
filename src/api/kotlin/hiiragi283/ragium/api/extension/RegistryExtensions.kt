@@ -50,9 +50,15 @@ fun <T : Any, I : T> DeferredRegister<T>.register(holder: DeferredHolder<T, I>, 
  * [Holder]から[ResourceLocation]を返します。
  * @throws [Holder.unwrapKey]が空の場合
  */
-val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = unwrapKey().orElseThrow().location()
+val <T : Any> Holder<T>.idOrThrow: ResourceLocation get() = when (this) {
+    is DeferredHolder<T, *> -> this.id
+    else -> unwrapKey().orElseThrow().location()
+}
 
-val <T : Any> Holder<T>.idOrNull: ResourceLocation? get() = unwrapKey().map(ResourceKey<T>::location).getOrNull()
+val <T : Any> Holder<T>.idOrNull: ResourceLocation? get() = when (this) {
+    is DeferredHolder<T, *> -> this.id
+    else -> unwrapKey().map(ResourceKey<T>::location).getOrNull()
+}
 
 /**
  * 指定した[value]が一致するか判定します。

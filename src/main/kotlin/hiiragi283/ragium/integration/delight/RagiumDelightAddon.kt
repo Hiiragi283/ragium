@@ -42,7 +42,7 @@ object RagiumDelightAddon : RagiumAddon {
     }
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {
+        if (RagiumCreativeTabs.ITEMS.`is`(event.tabKey)) {
             event.insertAfter(
                 RagiumItems.RAGI_CHERRY.toStack(),
                 RAGI_CHERRY_PULP.toStack(),

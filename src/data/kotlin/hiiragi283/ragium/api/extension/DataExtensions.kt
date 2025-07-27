@@ -10,10 +10,10 @@ import net.minecraft.advancements.Advancement
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.SlabBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -70,6 +70,10 @@ fun LanguageProvider.addMatterType(type: IMatterType, value: String) {
     add("${RagiumConstantValues.REPLICATION}.matter_type.${type.name}", value)
 }
 
+fun LanguageProvider.addItemGroup(group: DeferredHolder<CreativeModeTab, CreativeModeTab>, value: String) {
+    add(Util.makeDescriptionId("itemGroup", group.id), value)
+}
+
 //    ModelFile    //
 
 fun modelFile(id: ResourceLocation): ModelFile = ModelFile.UncheckedModelFile(id)
@@ -119,10 +123,6 @@ fun BlockStateProvider.cutoutSimpleBlock(holder: DeferredBlock<*>) {
         holder.get(),
         ConfiguredModel(models().cubeAll(holder.id.path, holder.blockId).renderType("cutout")),
     )
-}
-
-fun BlockStateProvider.slabBlock(holder: DeferredBlock<out SlabBlock>, base: DeferredBlock<*>) {
-    slabBlock(holder.get(), base.blockId, base.blockId)
 }
 
 //    ItemModelProvider    //

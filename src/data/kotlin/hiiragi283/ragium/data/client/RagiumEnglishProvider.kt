@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.addAdvancement
 import hiiragi283.ragium.api.extension.addEnchantment
 import hiiragi283.ragium.api.extension.addFluid
 import hiiragi283.ragium.api.extension.addInfo
+import hiiragi283.ragium.api.extension.addItemGroup
 import hiiragi283.ragium.api.extension.addMatterType
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -13,6 +14,7 @@ import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -31,6 +33,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         entity()
         fluid()
         item()
+        itemGroup()
         modTags()
         text()
         information()
@@ -301,6 +304,12 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         addItem(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         addItem(RagiumItems.ULTIMATE_CIRCUIT, "Ultimate Circuit")
+    }
+
+    private fun itemGroup() {
+        addItemGroup(RagiumCreativeTabs.BLOCKS, "Ragium - Blocks")
+        addItemGroup(RagiumCreativeTabs.INGREDIENTS, "Ragium - Ingredients")
+        addItemGroup(RagiumCreativeTabs.ITEMS, "Ragium - Items")
     }
 
     /*private fun material() {

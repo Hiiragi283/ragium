@@ -71,7 +71,7 @@ object RagiumMekanismAddon : RagiumAddon {
     }
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        if (RagiumCreativeTabs.COMMON.`is`(event.tabKey)) {
+        if (RagiumCreativeTabs.INGREDIENTS.`is`(event.tabKey)) {
             // Raginite
             event.insertAfter(
                 RagiumItems.RAGI_COKE.toStack(),
