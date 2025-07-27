@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.upgrade.HTUpgrade
 import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.util.HTPotionBundle
 import net.minecraft.core.GlobalPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
@@ -55,6 +56,10 @@ object RagiumDataComponents {
         ResourceKey.codec(Registries.LOOT_TABLE),
         ResourceKey.streamCodec(Registries.LOOT_TABLE).cast(),
     )
+
+    @JvmField
+    val POTION_BUNDLE: Supplier<DataComponentType<HTPotionBundle>> =
+        register("potion_bundle", HTPotionBundle.CODEC, HTPotionBundle.STREAM_CODEC)
 
     @JvmField
     val TELEPORT_POS: Supplier<DataComponentType<GlobalPos>> =

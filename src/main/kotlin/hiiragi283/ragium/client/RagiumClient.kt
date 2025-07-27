@@ -6,9 +6,11 @@ import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.util.HTPotionBundle
 import hiiragi283.ragium.client.screen.HTBasicMachineScreen
 import hiiragi283.ragium.client.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.screen.HTItemCollectorScreen
+import hiiragi283.ragium.client.screen.tooltip.HTClientPotionTooltip
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -180,7 +182,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerTooltipRenderer(event: RegisterClientTooltipComponentFactoriesEvent) {
-        // event.register(HTFluidTooltipComponent::class.java, ::HTClientFluidTooltipComponent)
+        event.register(HTPotionBundle::class.java, ::HTClientPotionTooltip)
 
         LOGGER.info("Registered ClientTooltipComponents!")
     }

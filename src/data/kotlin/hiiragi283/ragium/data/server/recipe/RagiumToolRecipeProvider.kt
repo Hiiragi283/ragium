@@ -30,6 +30,14 @@ import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumToolRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
+        HTShapedRecipeBuilder(RagiumItems.POTION_BUNDLE)
+            .pattern(
+                " A ",
+                "BBB",
+            ).define('A', Tags.Items.STRINGS)
+            .define('B', Items.GLASS_BOTTLE)
+            .save(output)
+
         HTStonecuttingRecipeBuilder(RagiumItems.SLOT_COVER, 3)
             .addIngredient(Items.SMOOTH_STONE_SLAB)
             .save(output)

@@ -261,6 +261,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.BLAST_CHARGE, "Blast Charge")
         addItem(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
+        addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.RAGI_MAGNET, "Ragi-Magnet")
         addItem(RagiumItems.SLOT_COVER, "Slot Cover")

@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.upgrade.HTUpgrade
 import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.util.HTPotionBundle
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
@@ -17,6 +18,7 @@ import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
+import hiiragi283.ragium.common.item.HTPotionBundleItem
 import hiiragi283.ragium.common.item.HTSimpleMagnetItem
 import hiiragi283.ragium.common.item.HTTeleportTicketItem
 import hiiragi283.ragium.common.item.HTWarpedWartItem
@@ -212,6 +214,13 @@ object RagiumItems {
     val DEEP_STEEL_ARMORS = HTArmorSets(RagiumArmorMaterials.DEEP_STEEL, RagiumConstantValues.DEEP_STEEL, 20)
 
     //    Tools    //
+
+    @JvmField
+    val POTION_BUNDLE: DeferredItem<Item> = register(
+        "potion_bundle",
+        ::HTPotionBundleItem,
+        Item.Properties().stacksTo(1),
+    )
 
     @JvmField
     val SLOT_COVER: DeferredItem<Item> = register("slot_cover")
@@ -517,7 +526,11 @@ object RagiumItems {
         setUpgrade(ADVANCED_CIRCUIT, 2)
         setUpgrade(ELITE_CIRCUIT, 3)
         setUpgrade(ULTIMATE_CIRCUIT, 4)
-        // Creative Item
+        // Other
+        event.modify(POTION_BUNDLE) { builder: DataComponentPatch.Builder ->
+            builder.set(RagiumDataComponents.POTION_BUNDLE.get(), HTPotionBundle.EMPTY)
+        }
+
         event.modify(RagiumBlocks.CEU) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }

@@ -249,6 +249,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
         addItem(RagiumItems.ELDRITCH_EGG, "異質な卵")
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
+        addItem(RagiumItems.POTION_BUNDLE, "ポーションバンドル")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
         addItem(RagiumItems.RAGI_MAGNET, "らぎマグネット")
         addItem(RagiumItems.SLOT_COVER, "スロットカバー")
