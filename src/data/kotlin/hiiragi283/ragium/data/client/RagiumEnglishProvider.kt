@@ -259,6 +259,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.RAGI_MAGNET, "Ragi-Magnet")
+        addItem(RagiumItems.SLOT_COVER, "slot Cover")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         // Food
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
@@ -507,6 +508,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addInfo(RagiumItems.RAGI_MAGNET, "Collect dropped items in the effective range")
         addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
         addInfo(RagiumItems.RAGI_LANTERN, "Light up darkness in range.")
+        addInfo(RagiumItems.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
         addInfo(RagiumItems.TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
         addInfo(RagiumItems.WARPED_WART, "Clear one bad effect randomly when eaten.")
     }

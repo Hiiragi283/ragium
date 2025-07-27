@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.RagiumConstantValues
@@ -28,6 +29,15 @@ import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumToolRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
+        HTStonecuttingRecipeBuilder(RagiumItems.SLOT_COVER, 3)
+            .addIngredient(Items.SMOOTH_STONE_SLAB)
+            .save(output)
+
+        HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
+            .addIngredient(Items.BOOK)
+            .addIngredient(Tags.Items.GEMS_EMERALD)
+            .save(output)
+
         HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)
             .pattern(
                 " A ",
@@ -35,11 +45,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 "AAA",
             ).define('A', Tags.Items.LEATHERS)
             .define('B', RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL)
-            .save(output)
-
-        HTShapelessRecipeBuilder(RagiumItems.TRADER_CATALOG)
-            .addIngredient(Items.BOOK)
-            .addIngredient(Tags.Items.GEMS_EMERALD)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ELDRITCH_EGG)

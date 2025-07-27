@@ -1,19 +1,14 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.api.extension.asItemHolder
-import hiiragi283.ragium.api.extension.idOrThrow
+import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.neoforged.neoforge.common.Tags
 
 object RagiumDecorationRecipeProvider : HTRecipeProvider() {
@@ -25,23 +20,13 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('B', RagiumCommonTags.Items.DUSTS_RAGINITE)
             .save(output)
         // Ragi-Stone Bricks
-        save(
-            RagiumAPI.id("stonecutting/ragi_stone_bricks"),
-            StonecutterRecipe(
-                "",
-                Ingredient.of(RagiumBlocks.RAGI_STONE_SETS.base),
-                ItemStack(RagiumBlocks.RAGI_STONE_BRICKS_SETS.base),
-            ),
-        )
+        HTStonecuttingRecipeBuilder(RagiumBlocks.RAGI_STONE_BRICKS_SETS.base)
+            .addIngredient(RagiumBlocks.RAGI_STONE_SETS.base)
+            .save(output)
         // Ragi-Stone Square
-        save(
-            RagiumAPI.id("stonecutting/ragi_stone_square"),
-            StonecutterRecipe(
-                "",
-                Ingredient.of(RagiumBlocks.RAGI_STONE_SETS.base),
-                ItemStack(RagiumBlocks.RAGI_STONE_SQUARE_SETS.base),
-            ),
-        )
+        HTStonecuttingRecipeBuilder(RagiumBlocks.RAGI_STONE_SQUARE_SETS.base)
+            .addIngredient(RagiumBlocks.RAGI_STONE_SETS.base)
+            .save(output)
         // Azure Tiles
         HTShapedRecipeBuilder(RagiumBlocks.AZURE_TILE_SETS.base, 8, CraftingBookCategory.BUILDING)
             .hollow4()
@@ -108,18 +93,9 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('A', sets.base)
             .save(output)
 
-        output.accept(
-            sets.slab
-                .asItemHolder()
-                .idOrThrow
-                .withPrefix("stonecutting/"),
-            StonecutterRecipe(
-                "",
-                Ingredient.of(sets.base),
-                sets.slab.toStack(2),
-            ),
-            null,
-        )
+        HTStonecuttingRecipeBuilder(sets.slab, 2)
+            .addIngredient(sets.base)
+            .save(output)
         // Base -> Stairs
         HTShapedRecipeBuilder(sets.stairs, 4, CraftingBookCategory.BUILDING)
             .pattern("A  ")
@@ -128,15 +104,9 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('A', sets.base)
             .save(output)
 
-        output.accept(
-            sets.stairs.id.withPrefix("stonecutting/"),
-            StonecutterRecipe(
-                "",
-                Ingredient.of(sets.base),
-                ItemStack(sets.stairs),
-            ),
-            null,
-        )
+        HTStonecuttingRecipeBuilder(sets.stairs)
+            .addIngredient(sets.base)
+            .save(output)
         // Base -> Wall
         HTShapedRecipeBuilder(sets.wall, 4, CraftingBookCategory.BUILDING)
             .pattern("AAA")
@@ -144,14 +114,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
             .define('A', sets.base)
             .save(output)
 
-        output.accept(
-            sets.wall.id.withPrefix("stonecutting/"),
-            StonecutterRecipe(
-                "",
-                Ingredient.of(sets.base),
-                ItemStack(sets.wall),
-            ),
-            null,
-        )
+        HTStonecuttingRecipeBuilder(sets.wall)
+            .addIngredient(sets.base)
+            .save(output)
     }
 }

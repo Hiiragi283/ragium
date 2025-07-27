@@ -212,6 +212,9 @@ object RagiumItems {
     //    Tools    //
 
     @JvmField
+    val SLOT_COVER: DeferredItem<Item> = register("slot_cover")
+
+    @JvmField
     val TRADER_CATALOG: DeferredItem<Item> = register("trader_catalog", Item.Properties().stacksTo(1))
 
     @JvmField

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage.item
 
+import hiiragi283.ragium.api.extension.isEmptyOrIgnored
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.ItemStackHandler
@@ -23,6 +24,7 @@ open class HTItemStackHandler(size: Int = 1, private var callback: (Int) -> Unit
 
     override fun consumeStackInSlot(slot: Int, count: Int, applyDamage: Boolean) {
         val stack: ItemStack = getStackInSlot(slot)
+        if (stack.isEmptyOrIgnored) return
         when {
             stack.hasCraftingRemainingItem() -> setStackInSlot(slot, stack.craftingRemainingItem)
             stack.isDamageableItem && applyDamage -> stack.damageValue += 1

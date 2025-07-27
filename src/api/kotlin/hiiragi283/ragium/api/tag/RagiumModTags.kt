@@ -51,6 +51,9 @@ object RagiumModTags {
         val ELDRITCH_PEARL_BINDER: TagKey<Item> = create("eldritch_pearl_binder")
 
         @JvmField
+        val IGNORED_IN_RECIPES: TagKey<Item> = create("ignored_in_recipes")
+
+        @JvmField
         val LED_BLOCKS: TagKey<Item> = create("led_blocks")
 
         @JvmField

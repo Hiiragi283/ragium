@@ -123,6 +123,7 @@ object RagiumCreativeTabs {
             // Tools
             output.acceptItems(RagiumItems.FORGE_HAMMERS.values)
 
+            output.accept(RagiumItems.SLOT_COVER)
             output.accept(RagiumItems.TRADER_CATALOG)
             // Tickets
             output.accept(RagiumItems.BLANK_TICKET)

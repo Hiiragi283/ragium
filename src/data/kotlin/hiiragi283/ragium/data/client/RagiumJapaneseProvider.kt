@@ -246,6 +246,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.ENDER_BUNDLE, "エンダーバンドル")
         addItem(RagiumItems.RAGI_LANTERN, "らぎランタン")
         addItem(RagiumItems.RAGI_MAGNET, "らぎマグネット")
+        addItem(RagiumItems.SLOT_COVER, "スロットカバー")
         addItem(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         // Food
         addItem(RagiumItems.ICE_CREAM, "アイスクリーム")
@@ -494,6 +495,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addInfo(RagiumItems.RAGI_MAGNET, "範囲内のドロップアイテムを回収します。")
         addInfo(RagiumItems.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
         addInfo(RagiumItems.RAGI_LANTERN, "範囲内の暗所に光源を設置します。")
+        addInfo(RagiumItems.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
         addInfo(RagiumItems.TRADER_CATALOG, "行商人を倒すことでも入手できます。")
         addInfo(RagiumItems.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
     }

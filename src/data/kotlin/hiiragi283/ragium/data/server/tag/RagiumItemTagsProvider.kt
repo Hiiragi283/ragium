@@ -160,6 +160,9 @@ class RagiumItemTagsProvider(
             .addItem(Items.PHANTOM_MEMBRANE)
             .addItem(Items.WIND_CHARGE)
 
+        tag(RagiumModTags.Items.IGNORED_IN_RECIPES)
+            .addItem(RagiumItems.SLOT_COVER)
+
         tag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
             .addTag(ItemTags.SMELTS_TO_GLASS)
 
