@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:buckets/lava"
+    },
+    "B": {
+      "tag": "c:glass_blocks/quartz"
+    },
+    "C": {
+      "item": "ragium:device_casing"
+    },
+    "D": {
+      "tag": "c:plates/plastic"
+    },
+    "E": {
+      "tag": "c:circuits/advanced"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BCB",
+    "DED"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:lava_collector"
+  }
+}

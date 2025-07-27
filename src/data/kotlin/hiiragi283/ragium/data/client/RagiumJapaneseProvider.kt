@@ -133,7 +133,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
-        addBlock(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
+        addBlock(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
         addBlock(RagiumBlocks.LAVA_COLLECTOR, "溶岩収集機")
         addBlock(RagiumBlocks.MILK_DRAIN, "牛乳シンク")
         addBlock(RagiumBlocks.SPRINKLER, "スプリンクラー")
@@ -490,13 +490,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addInfo(RagiumBlocks.SOUL_GLASS, "プレイヤーのみ通過でき，シルクタッチなしで回収することが可能です。")
 
         addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
+        addInfo(RagiumItems.ELDER_HEART, "エルダーガーディアンからドロップします。")
         addInfo(RagiumItems.ELDRITCH_EGG, "モブに右クリックするとスポーンエッグになります。")
         addInfo(RagiumItems.ICE_CREAM, "食べると鎮火します。")
-        addInfo(RagiumItems.RAGI_MAGNET, "範囲内のドロップアイテムを回収します。")
         addInfo(RagiumItems.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
         addInfo(RagiumItems.RAGI_LANTERN, "範囲内の暗所に光源を設置します。")
+        addInfo(RagiumItems.RAGI_MAGNET, "範囲内のドロップアイテムを回収します。")
         addInfo(RagiumItems.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
-        addInfo(RagiumItems.TRADER_CATALOG, "行商人を倒すことでも入手できます。")
+        addInfo(RagiumItems.TRADER_CATALOG, "行商人からドロップします。")
         addInfo(RagiumItems.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
     }
 

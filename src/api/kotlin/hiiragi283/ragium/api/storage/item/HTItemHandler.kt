@@ -30,4 +30,15 @@ interface HTItemHandler :
     fun consumeStackInSlot(slot: Int, count: Int, applyDamage: Boolean)
 
     fun getStackView(): Iterable<ItemStack>
+
+    fun hasStack(filter: (ItemStack) -> Boolean): Boolean {
+        for (stackIn: ItemStack in getStackView()) {
+            if (filter(stackIn)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    operator fun get(slot: Int): ItemStack = getStackInSlot(slot)
 }

@@ -145,20 +145,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         crafting(Tiers.DIAMOND, Tags.Items.GEMS_DIAMOND)
         crafting(RagiumToolTiers.RAGI_ALLOY, RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
 
-        fun smithing(
-            tier: Tier,
-            upgrade: ItemLike,
-            oldTier: Tier,
-            input: TagKey<Item>,
-        ) {
-            HTSmithingRecipeBuilder(RagiumItems.getForgeHammer(tier))
-                .addIngredient(upgrade)
-                .addIngredient(RagiumItems.getForgeHammer(oldTier))
-                .addIngredient(input)
-                .save(output)
-        }
-
-        smithing(Tiers.NETHERITE, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, Tiers.DIAMOND, Tags.Items.INGOTS_NETHERITE)
+        createNetheriteUpgrade(RagiumItems.getForgeHammer(Tiers.NETHERITE), RagiumItems.getForgeHammer(Tiers.DIAMOND))
+            .save(output)
         addAzureSmithing(
             RagiumItems.getForgeHammer(RagiumToolTiers.AZURE_STEEL),
             RagiumItems.getForgeHammer(Tiers.IRON),

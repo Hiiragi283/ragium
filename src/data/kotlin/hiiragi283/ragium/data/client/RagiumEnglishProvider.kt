@@ -145,7 +145,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.CEU, "C.E.U")
         addBlock(RagiumBlocks.ENI, "E.N.I.")
         addBlock(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
-        addBlock(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
+        addBlock(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
         addBlock(RagiumBlocks.LAVA_COLLECTOR, "Lava Collector")
         addBlock(RagiumBlocks.MILK_DRAIN, "Milk Drain")
         addBlock(RagiumBlocks.SPRINKLER, "Sprinkler")
@@ -236,7 +236,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.SALTPETER_DUST, "Saltpeter Dust")
         addItem(RagiumItems.SAWDUST, "Sawdust")
         addItem(RagiumItems.SULFUR_DUST, "Sulfur Dust")
-
         // Armor
         RagiumItems.AZURE_STEEL_ARMORS.addTranslationEn("Azure Steel", this)
         RagiumItems.DEEP_STEEL_ARMORS.addTranslationEn("Deep Steel", this)
@@ -259,7 +258,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.ENDER_BUNDLE, "Ender Bundle")
         addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
         addItem(RagiumItems.RAGI_MAGNET, "Ragi-Magnet")
-        addItem(RagiumItems.SLOT_COVER, "slot Cover")
+        addItem(RagiumItems.SLOT_COVER, "Slot Cover")
         addItem(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         // Food
         addItem(RagiumItems.ICE_CREAM, "Ice Cream")
@@ -281,33 +280,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.EXP_BERRIES, "Exp Berries")
         addItem(RagiumItems.WARPED_WART, "Warped Wart")
         addItem(RagiumItems.AMBROSIA, "Ambrosia")
-
-        /*addItem(RagiumItems.POTION_BUNDLE, "Potion Bundle")
-        addItem(RagiumItems.DURALUMIN_CASE, "Duralumin Case")
-        addItem(RagiumItems.RAGI_LANTERN, "Ragi-Lantern")
-
-        addItem(RagiumItems.ITEM_MAGNET, "Item Magnet")
-        addItem(RagiumItems.EXP_MAGNET, "Exp Magnet")
-
-        addItem(RagiumItems.DYNAMITE, "Dynamite")
-        addItem(RagiumItems.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
-        addItem(RagiumItems.FLATTEN_DYNAMITE, "Flatten Dynamite")
-        addItem(RagiumItems.NAPALM_DYNAMITE, "Napalm Dynamite")
-        addItem(RagiumItems.POISON_DYNAMITE, "Poison Dynamite")*/
-        // Mold
-        // addItem(RagiumItems.Molds.BLANK, "Mold (Blank)")
-        // addItem(RagiumItems.Molds.BALL, "Mold (Ball)")
-        // addItem(RagiumItems.Molds.BLOCK, "Mold (Block)")
-        // addItem(RagiumItems.Molds.GEAR, "Mold (Gear)")
-        // addItem(RagiumItems.Molds.INGOT, "Mold (Ingot)")
-        // addItem(RagiumItems.Molds.PLATE, "Mold (Plate)")
-        // addItem(RagiumItems.Molds.ROD, "Mold (Rod)")
-        // addItem(RagiumItems.Molds.WIRE, "Mold (Wire)")
         // Parts
         addItem(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         addItem(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         addItem(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        addItem(RagiumItems.ELDER_HEART, "Heart fo the Elder")
+        addItem(RagiumItems.ELDER_HEART, "Heart of the Elder")
         addItem(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
         addItem(RagiumItems.LED, "Light Emitting Diode")
         addItem(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
@@ -503,13 +480,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addInfo(RagiumBlocks.SOUL_GLASS, "Only passable with Players, can be harvested without Silk Touch.")
 
         addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
+        addInfo(RagiumItems.ELDER_HEART, "Dropped from Elder Guardian.")
         addInfo(RagiumItems.ELDRITCH_EGG, "Right-click a mob then converts it into Spawn Egg.")
         addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")
-        addInfo(RagiumItems.RAGI_MAGNET, "Collect dropped items in the effective range")
         addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
         addInfo(RagiumItems.RAGI_LANTERN, "Light up darkness in range.")
+        addInfo(RagiumItems.RAGI_MAGNET, "Collect dropped items in the effective range")
         addInfo(RagiumItems.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
-        addInfo(RagiumItems.TRADER_CATALOG, "Also obtained by killing Wandering Trader.")
+        addInfo(RagiumItems.TRADER_CATALOG, "Dropped from Wandering Trader.")
         addInfo(RagiumItems.WARPED_WART, "Clear one bad effect randomly when eaten.")
     }
 

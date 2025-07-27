@@ -69,7 +69,7 @@
     "ragium:solidifier",
     "ragium:infuser",
     "ragium:milk_drain",
-    "ragium:item_collector",
+    "ragium:item_buffer",
     "ragium:lava_collector",
     "ragium:exp_collector",
     "ragium:teleport_anchor",

@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTInfusingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -20,7 +21,10 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.IConditionBuilder
 
@@ -93,4 +97,9 @@ abstract class HTRecipeProvider : IConditionBuilder {
 
     fun createSolidifying(): HTDefinitionRecipeBuilder<HTSolidifyingRecipe> =
         HTDefinitionRecipeBuilder(RagiumConstantValues.SOLIDIFYING, RagiumRecipeFactories::solidifying)
+
+    fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
+        .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
+        .addIngredient(input)
+        .addIngredient(Tags.Items.INGOTS_NETHERITE)
 }

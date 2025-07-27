@@ -4,15 +4,12 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTTransmuteRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
@@ -209,6 +206,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_with_obsidian")
     }
 
+    //    Machines    //
+
     private fun machines() {
         // Basic
         basicMachine(RagiumBlocks.CRUSHER, Ingredient.of(Items.FLINT))
@@ -266,6 +265,8 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
+    //    Devices    //
+
     private fun devices() {
         // Milk Drain
         HTShapedRecipeBuilder(RagiumBlocks.MILK_DRAIN)
@@ -276,41 +277,57 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         // Basic
-        fun basicDevice(device: ItemLike, part: Ingredient) {
-            HTSmithingRecipeBuilder(device)
-                .addIngredient(RagiumCommonTags.Items.CIRCUITS_BASIC)
-                .addIngredient(RagiumBlocks.DEVICE_CASING)
-                .addIngredient(part)
-                .save(output)
-        }
-
-        basicDevice(RagiumBlocks.ITEM_COLLECTOR, Ingredient.of(Items.HOPPER))
+        basicDevice(RagiumBlocks.ITEM_BUFFER, Ingredient.of(Tags.Items.CHESTS))
         basicDevice(RagiumBlocks.SPRINKLER, Ingredient.of(Tags.Items.STORAGE_BLOCKS_BONE_MEAL))
         basicDevice(RagiumBlocks.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
-
         // Advanced
-        fun advDevice(device: ItemLike, part: TagKey<Item>) {
-            HTSmithingRecipeBuilder(device)
-                .addIngredient(RagiumCommonTags.Items.CIRCUITS_ADVANCED)
-                .addIngredient(RagiumBlocks.DEVICE_CASING)
-                .addIngredient(part)
-                .save(output)
-        }
-
-        fun advDevice(device: ItemLike, part: ItemLike) {
-            HTSmithingRecipeBuilder(device)
-                .addIngredient(RagiumCommonTags.Items.CIRCUITS_ADVANCED)
-                .addIngredient(RagiumBlocks.DEVICE_CASING)
-                .addIngredient(part)
-                .save(output)
-        }
-
-        advDevice(RagiumBlocks.ENI, Tags.Items.GEMS_DIAMOND)
-        advDevice(RagiumBlocks.EXP_COLLECTOR, Items.HOPPER)
-        advDevice(RagiumBlocks.LAVA_COLLECTOR, Tags.Items.BUCKETS_LAVA)
-        advDevice(RagiumBlocks.TELEPORT_ANCHOR, RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
-
+        advancedDevice(RagiumBlocks.ENI, Ingredient.of(Tags.Items.GEMS_DIAMOND))
+        advancedDevice(RagiumBlocks.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
+        advancedDevice(RagiumBlocks.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
+        advancedDevice(RagiumBlocks.TELEPORT_ANCHOR, Ingredient.of(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL))
         // Elite
+    }
+
+    private fun basicDevice(device: ItemLike, input: Ingredient) {
+        HTShapedRecipeBuilder(device)
+            .pattern(
+                " A ",
+                "BCB",
+                "DED",
+            ).define('A', input)
+            .define('B', Tags.Items.GLASS_BLOCKS_CHEAP)
+            .define('C', RagiumBlocks.DEVICE_CASING)
+            .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
+            .define('E', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .save(output)
+    }
+
+    private fun advancedDevice(device: ItemLike, input: Ingredient) {
+        HTShapedRecipeBuilder(device)
+            .pattern(
+                " A ",
+                "BCB",
+                "DED",
+            ).define('A', input)
+            .define('B', RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ)
+            .define('C', RagiumBlocks.DEVICE_CASING)
+            .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
+            .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .save(output)
+    }
+
+    private fun eliteDevice(device: ItemLike, input: Ingredient) {
+        HTShapedRecipeBuilder(device)
+            .pattern(
+                " A ",
+                "BCB",
+                "DED",
+            ).define('A', input)
+            .define('B', RagiumCommonTags.Items.GLASS_BLOCKS_OBSIDIAN)
+            .define('C', RagiumBlocks.DEVICE_CASING)
+            .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
+            .define('E', RagiumCommonTags.Items.CIRCUITS_ELITE)
+            .save(output)
     }
 
     private fun drums() {
@@ -335,10 +352,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .addIngredient(Tags.Items.GEMS_DIAMOND)
             .save(output)
         // Huge
-        HTSmithingRecipeBuilder(RagiumBlocks.HUGE_DRUM)
-            .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
-            .addIngredient(RagiumBlocks.LARGE_DRUM)
-            .addIngredient(Tags.Items.INGOTS_NETHERITE)
+        createNetheriteUpgrade(RagiumBlocks.HUGE_DRUM, RagiumBlocks.LARGE_DRUM)
             .save(output)
     }
 }

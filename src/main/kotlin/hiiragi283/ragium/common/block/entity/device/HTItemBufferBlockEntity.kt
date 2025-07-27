@@ -3,12 +3,11 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
-import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -23,8 +22,7 @@ import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
-class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDeviceBlockEntity(RagiumBlockEntityTypes.ITEM_COLLECTOR, pos, state) {
+class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity(RagiumBlockEntityTypes.ITEM_BUFFER, pos, state) {
     private val inventory = HTItemStackHandler(9, this::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
@@ -49,6 +47,8 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun serverTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
+        // アップグレードにマグネットが入っている場合のみ機能する
+        if (!upgrades.hasStack { stack: ItemStack -> stack.`is`(RagiumItems.RAGI_MAGNET) }) return TriState.FALSE
         // 範囲内のItem Entityを取得する
         val itemEntities: List<ItemEntity> = level.getEntitiesOfClass(
             ItemEntity::class.java,
@@ -73,7 +73,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         return TriState.TRUE
     }
 
-    override fun getItemHandler(direction: Direction?): IItemHandler? = HTFilteredItemHandler(inventory, HTItemFilter.EXTRACT_ONLY)
+    override fun getItemHandler(direction: Direction?): IItemHandler? = inventory
 
     //    Menu    //
 

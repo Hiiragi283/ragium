@@ -51,7 +51,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.CEU)
             add(RagiumBlocks.ENI)
             add(RagiumBlocks.EXP_COLLECTOR)
-            add(RagiumBlocks.ITEM_COLLECTOR)
+            add(RagiumBlocks.ITEM_BUFFER)
             add(RagiumBlocks.SPRINKLER)
             add(RagiumBlocks.TELEPORT_ANCHOR)
 

@@ -60,6 +60,7 @@ object RagiumItems {
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias(RagiumAPI.id("item_magnet"), RagiumAPI.id("ragi_magnet"))
         REGISTER.addAlias(RagiumAPI.id("exp_magnet"), RagiumAPI.id("advanced_ragi_magnet"))
+        REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
 
         REGISTER.register(eventBus)
 

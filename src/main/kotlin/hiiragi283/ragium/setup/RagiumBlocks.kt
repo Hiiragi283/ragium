@@ -39,6 +39,8 @@ object RagiumBlocks {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
+        REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
+
         REGISTER.register(eventBus)
         ITEM_REGISTER.register(eventBus)
 
@@ -461,7 +463,7 @@ object RagiumBlocks {
     ): DeferredBlock<Block> = register(type.id.path, properties, HTEntityBlock.create(type))
 
     @JvmField
-    val ITEM_COLLECTOR: DeferredBlock<Block> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.ITEM_COLLECTOR)
+    val ITEM_BUFFER: DeferredBlock<Block> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.ITEM_BUFFER)
 
     @JvmField
     val SPRINKLER: DeferredBlock<Block> = registerEntityBlock(lightMetal(), RagiumBlockEntityTypes.SPRINKLER)
@@ -490,7 +492,7 @@ object RagiumBlocks {
     val DEVICES: List<DeferredBlock<Block>> = listOf(
         MILK_DRAIN,
         // 色でソート
-        ITEM_COLLECTOR,
+        ITEM_BUFFER,
         LAVA_COLLECTOR,
         EXP_COLLECTOR,
         TELEPORT_ANCHOR,

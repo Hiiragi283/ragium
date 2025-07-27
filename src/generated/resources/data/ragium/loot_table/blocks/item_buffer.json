@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:item_collector"
+          "name": "ragium:item_buffer"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/item_collector"
+  "random_sequence": "ragium:blocks/item_buffer"
 }

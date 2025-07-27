@@ -9,7 +9,7 @@ import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -40,6 +41,13 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val REGISTER = HTBlockEntityTypeRegister(RagiumAPI.MOD_ID)
+
+    @JvmStatic
+    fun init(eventBus: IEventBus) {
+        REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
+
+        REGISTER.register(eventBus)
+    }
 
     @JvmStatic
     fun <T : HTTickAwareBlockEntity> registerTick(
@@ -97,10 +105,7 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
-    val ITEM_COLLECTOR: HTDeferredBlockEntityType<HTItemCollectorBlockEntity> = registerTick(
-        "item_collector",
-        ::HTItemCollectorBlockEntity,
-    )
+    val ITEM_BUFFER: HTDeferredBlockEntityType<HTItemBufferBlockEntity> = registerTick("item_buffer", ::HTItemBufferBlockEntity)
 
     @JvmField
     val LAVA_COLLECTOR: HTDeferredBlockEntityType<HTLavaCollectorBlockEntity> = registerTick(
@@ -164,7 +169,7 @@ object RagiumBlockEntityTypes {
 
         add(ENI, RagiumBlocks.ENI)
         add(EXP_COLLECTOR, RagiumBlocks.EXP_COLLECTOR)
-        add(ITEM_COLLECTOR, RagiumBlocks.ITEM_COLLECTOR)
+        add(ITEM_BUFFER, RagiumBlocks.ITEM_BUFFER)
         add(LAVA_COLLECTOR, RagiumBlocks.LAVA_COLLECTOR)
         add(MILK_DRAIN, RagiumBlocks.MILK_DRAIN)
         add(SPRINKLER, RagiumBlocks.SPRINKLER)
@@ -215,7 +220,7 @@ object RagiumBlockEntityTypes {
 
         registerHandlers(ENI)
         registerHandlers(EXP_COLLECTOR)
-        registerHandlers(ITEM_COLLECTOR)
+        registerHandlers(ITEM_BUFFER)
         registerHandlers(LAVA_COLLECTOR)
         registerHandlers(MILK_DRAIN)
         registerHandlers(SPRINKLER)
