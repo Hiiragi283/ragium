@@ -1,48 +1,54 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.tag.RagiumModTags
-import net.minecraft.client.Minecraft
-import net.minecraft.core.particles.ParticleTypes
+import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
+import net.minecraft.core.Direction
+import net.minecraft.core.Position
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.stats.Stats
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.EntityType
-import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.entity.projectile.Projectile
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.SpawnEggItem
+import net.minecraft.world.item.ProjectileItem
 import net.minecraft.world.level.Level
 
-class HTCaptureEggItem(properties: Properties) : Item(properties) {
-    override fun interactLivingEntity(
-        stack: ItemStack,
-        player: Player,
-        interactionTarget: LivingEntity,
-        usedHand: InteractionHand,
-    ): InteractionResult {
-        val entityType: EntityType<*> = interactionTarget.type
-        // エンティティがブラックリストに入っていたらパス
-        if (entityType.`is`(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST)) {
-            return super.interactLivingEntity(stack, player, interactionTarget, usedHand)
+class HTCaptureEggItem(properties: Properties) :
+    Item(properties),
+    ProjectileItem {
+    override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
+        val stack: ItemStack = player.getItemInHand(usedHand)
+        level.playSound(
+            null,
+            player.x,
+            player.y,
+            player.z,
+            SoundEvents.EGG_THROW,
+            SoundSource.PLAYERS,
+            0.5f,
+            0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f),
+        )
+        if (!level.isClientSide) {
+            val egg = HTThrownCaptureEgg(level, player)
+            egg.item = stack
+            egg.shootFromRotation(player, player.xRot, player.yRot, 0.0f, 1.5f, 1.0f)
+            level.addFreshEntity(egg)
         }
-        // クリックしたモブのスポーンエッグを取得する
-        val spawnEgg: ItemStack = SpawnEggItem.byId(entityType)?.let(::ItemStack)
-            ?: return super.interactLivingEntity(stack, player, interactionTarget, usedHand)
-        // SEを鳴らす
-        player.playSound(SoundEvents.FIREWORK_ROCKET_BLAST)
-        // パーティクルを出す
-        val level: Level = player.level()
-        if (level.isClientSide) {
-            Minecraft.getInstance().particleEngine.createTrackingEmitter(interactionTarget, ParticleTypes.FIREWORK)
-        }
-        // モブを消す
-        interactionTarget.discard()
-        // このアイテムを減らす
+        player.awardStat(Stats.ITEM_USED.get(this))
         stack.consume(1, player)
-        // スポーンエッグをプレイヤーに渡す
-        dropStackAt(player, spawnEgg)
-        return InteractionResult.sidedSuccess(player.level().isClientSide)
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
+    }
+
+    override fun asProjectile(
+        level: Level,
+        pos: Position,
+        stack: ItemStack,
+        direction: Direction,
+    ): Projectile {
+        val egg = HTThrownCaptureEgg(level, pos.x(), pos.y(), pos.z())
+        egg.item = stack
+        return egg
     }
 }

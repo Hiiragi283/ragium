@@ -14,6 +14,7 @@ import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
+import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumToolTiers
@@ -165,6 +166,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun entity() {
+        addEntityType(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
+        
         // addEntityType(RagiumEntityTypes.DYNAMITE, "Dynamite")
         // addEntityType(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
         // addEntityType(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
@@ -481,7 +484,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         addInfo(RagiumItems.ELDER_HEART, "Dropped from Elder Guardian.")
-        addInfo(RagiumItems.ELDRITCH_EGG, "Right-click a mob then converts it into Spawn Egg.")
+        addInfo(RagiumItems.ELDRITCH_EGG, "Can be throwable by right-click，then capture mobs when hit.")
         addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")
         addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
         addInfo(RagiumItems.RAGI_LANTERN, "Light up darkness in range.")

@@ -10,9 +10,11 @@ import hiiragi283.ragium.client.screen.HTBasicMachineScreen
 import hiiragi283.ragium.client.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.screen.HTItemCollectorScreen
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.client.renderer.BiomeColors
+import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
@@ -171,6 +173,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+        event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
+
         LOGGER.info("Registered BlockEntityRenderers!")
     }
 
