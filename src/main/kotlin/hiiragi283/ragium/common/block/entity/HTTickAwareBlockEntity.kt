@@ -58,8 +58,7 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     /**
      * このブロックエンティティが稼働する時間間隔
      */
-    abstract var maxTicks: Int
-        protected set
+    abstract val maxTicks: Int
 
     var currentTicks: Int = 0
         protected set
@@ -109,7 +108,6 @@ abstract class HTTickAwareBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         override fun set(index: Int, value: Int) {
             when (index) {
                 0 -> currentTicks = value
-                1 -> maxTicks = value
                 else -> {}
             }
         }

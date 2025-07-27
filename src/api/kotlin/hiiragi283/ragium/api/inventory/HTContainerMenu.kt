@@ -10,8 +10,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.SlotItemHandler
 
 abstract class HTContainerMenu(
     menuType: HTDeferredMenuType<*>,
@@ -30,7 +28,7 @@ abstract class HTContainerMenu(
 
     val playerStartIndex: Int get() = outputSlots.last + 1
 
-    override fun quickMoveStack(player: Player, index: Int): ItemStack {
+    final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
         val slotIn: Slot = slots[index]
         if (slotIn.hasItem()) {
@@ -78,15 +76,6 @@ abstract class HTContainerMenu(
     //    Extensions    //
 
     val fluidSlots: MutableMap<Int, HTFluidSlot> = mutableMapOf()
-
-    protected fun addSlot(
-        handler: IItemHandler,
-        index: Int,
-        x: Int,
-        y: Int,
-    ) {
-        addSlot(SlotItemHandler(handler, index, x, y))
-    }
 
     protected fun addFluidSlot(
         index: Int,

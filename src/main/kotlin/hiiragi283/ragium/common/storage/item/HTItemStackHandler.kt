@@ -21,12 +21,12 @@ open class HTItemStackHandler(size: Int = 1, private var callback: (Int) -> Unit
 
     override val isEmpty: Boolean get() = stacks.isEmpty() || stacks.all(ItemStack::isEmpty)
 
-    override fun consumeStackInSlot(slot: Int, count: Int) {
+    override fun consumeStackInSlot(slot: Int, count: Int, applyDamage: Boolean) {
         val stack: ItemStack = getStackInSlot(slot)
-        if (stack.hasCraftingRemainingItem()) {
-            setStackInSlot(slot, stack.craftingRemainingItem)
-        } else {
-            stack.shrink(count)
+        when {
+            stack.hasCraftingRemainingItem() -> setStackInSlot(slot, stack.craftingRemainingItem)
+            stack.isDamageableItem && applyDamage -> stack.damageValue += 1
+            else -> stack.shrink(count)
         }
     }
 

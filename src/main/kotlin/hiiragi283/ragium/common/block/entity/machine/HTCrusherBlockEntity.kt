@@ -57,7 +57,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             insertToOutput(1..4, output.getChancedStack(level.random), false)
         }
         // インプットを減らす
-        inventory.consumeStackInSlot(0, recipe.ingredient.count())
+        inventory.consumeStackInSlot(0, recipe.ingredient.count(), false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS)
         return TriState.TRUE

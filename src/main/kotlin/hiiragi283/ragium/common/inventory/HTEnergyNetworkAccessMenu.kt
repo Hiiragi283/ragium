@@ -23,15 +23,12 @@ class HTEnergyNetworkAccessMenu(
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         // upgrades
         addUpgradeSlots()
         // outputs
-        addSlot(1, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1))
+        addInputSlot(1, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1))
         // player inventory
         addPlayerInv()
     }
-
-    override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = 5..5
 }

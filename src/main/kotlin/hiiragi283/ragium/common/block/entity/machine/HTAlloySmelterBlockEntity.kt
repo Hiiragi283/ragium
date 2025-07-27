@@ -75,8 +75,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         first: Int,
         second: Int,
     ): Boolean = if (recipe.ingredients[0].test(input.getItem(first)) && recipe.ingredients[1].test(input.getItem(second))) {
-        inventory.consumeStackInSlot(first, recipe.ingredients[0].count())
-        inventory.consumeStackInSlot(second, recipe.ingredients[1].count())
+        inventory.consumeStackInSlot(first, recipe.ingredients[0].count(), false)
+        inventory.consumeStackInSlot(second, recipe.ingredients[1].count(), false)
         true
     } else {
         false

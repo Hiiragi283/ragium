@@ -76,7 +76,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         insertToOutput(1..1, output, false)
         // インプットを減らす
-        inventory.consumeStackInSlot(0, 1)
+        inventory.consumeStackInSlot(0, 1, false)
         // コストをリセットする
         currentCost = 0f
         // サウンドを流す

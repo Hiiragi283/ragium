@@ -24,7 +24,7 @@ class HTItemCollectorMenu(
     init {
         // inputs
         for (index: Int in (0..8)) {
-            addSlot(index, HTSlotHelper.getSlotPosX(3 + index % 3), HTSlotHelper.getSlotPosY(index / 3))
+            addInputSlot(index, HTSlotHelper.getSlotPosX(3 + index % 3), HTSlotHelper.getSlotPosY(index / 3))
         }
         // upgrades
         addUpgradeSlots()
@@ -33,7 +33,4 @@ class HTItemCollectorMenu(
         // register property
         addDataSlots(definition.containerData)
     }
-
-    override val inputSlots: IntRange = 0..12
-    override val outputSlots: IntRange = IntRange.EMPTY
 }

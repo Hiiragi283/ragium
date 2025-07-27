@@ -5,12 +5,14 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -50,7 +52,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
      */
     protected abstract val energyUsage: Int
 
-    override var maxTicks: Int = 200
+    override val maxTicks: Int get() = Mth.ceil(200 / (getAllUpgrade(RagiumUpgradeKeys.MACHINE_SPEED) + 1f))
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 自動搬出する

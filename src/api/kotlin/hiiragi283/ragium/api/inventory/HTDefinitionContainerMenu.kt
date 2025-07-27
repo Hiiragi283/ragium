@@ -31,19 +31,47 @@ abstract class HTDefinitionContainerMenu(
 
     fun <T> usePosition(action: (Level, BlockPos) -> T): T = action(level, pos)
 
-    fun addSlot(index: Int, x: Int, y: Int) {
-        addSlot(SlotItemHandler(definition.inventory, index, x, y))
+    private var slotCount: Int = 0
+    private val inputSlot: MutableList<Int> = mutableListOf()
+    private val outputSlot: MutableList<Int> = mutableListOf()
+
+    fun addInputSlot(
+        handler: IItemHandler,
+        index: Int,
+        x: Int,
+        y: Int,
+    ) {
+        addSlot(SlotItemHandler(handler, index, x, y))
+        inputSlot.add(slotCount)
+        slotCount++
+    }
+
+    fun addInputSlot(index: Int, x: Int, y: Int) {
+        addInputSlot(definition.inventory, index, x, y)
     }
 
     fun addOutputSlot(index: Int, x: Int, y: Int) {
         addSlot(HTOutputSlot(definition.inventory, index, x, y))
+        outputSlot.add(slotCount)
+        slotCount++
     }
 
     fun addUpgradeSlots() {
         val upgrades: IItemHandler = definition.upgrades
-        addSlot(upgrades, 0, HTSlotHelper.getSlotPosX(8.0), HTSlotHelper.getSlotPosY(-0.5))
-        addSlot(upgrades, 1, HTSlotHelper.getSlotPosX(8.0), HTSlotHelper.getSlotPosY(0.5))
-        addSlot(upgrades, 2, HTSlotHelper.getSlotPosX(8.0), HTSlotHelper.getSlotPosY(1.5))
-        addSlot(upgrades, 3, HTSlotHelper.getSlotPosX(8.0), HTSlotHelper.getSlotPosY(2.5))
+        addInputSlot(upgrades, 0, HTSlotHelper.getSlotPosX(8.0), HTSlotHelper.getSlotPosY(-0.5))
+        addInputSlot(upgrades, 1, HTSlotHelper.getSlotPosX(8.0), HTSlotHelper.getSlotPosY(0.5))
+        addInputSlot(upgrades, 2, HTSlotHelper.getSlotPosX(8.0), HTSlotHelper.getSlotPosY(1.5))
+        addInputSlot(upgrades, 3, HTSlotHelper.getSlotPosX(8.0), HTSlotHelper.getSlotPosY(2.5))
     }
+
+    final override val inputSlots: IntRange
+        get() = when {
+            inputSlot.isEmpty() -> IntRange.EMPTY
+            else -> inputSlot.min()..inputSlot.max()
+        }
+    final override val outputSlots: IntRange
+        get() = when {
+            outputSlot.isEmpty() -> IntRange.EMPTY
+            else -> outputSlot.min()..outputSlot.max()
+        }
 }

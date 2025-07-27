@@ -27,7 +27,7 @@ interface HTItemHandler :
         }
     }
 
-    fun consumeStackInSlot(slot: Int, count: Int)
+    fun consumeStackInSlot(slot: Int, count: Int, applyDamage: Boolean)
 
     fun getStackView(): Iterable<ItemStack>
 }

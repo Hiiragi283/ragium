@@ -38,7 +38,7 @@ class HTSingleProcessMenu(
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0.5))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0.5))
         // upgrades
         addUpgradeSlots()
         // outputs
@@ -48,7 +48,4 @@ class HTSingleProcessMenu(
         // register property
         addDataSlots(definition.containerData)
     }
-
-    override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = 5..5
 }

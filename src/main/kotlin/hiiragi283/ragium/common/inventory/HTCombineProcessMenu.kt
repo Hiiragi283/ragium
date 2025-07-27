@@ -51,8 +51,8 @@ class HTCombineProcessMenu(
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(slotPos[0]), HTSlotHelper.getSlotPosY(slotPos[1]))
-        addSlot(1, HTSlotHelper.getSlotPosX(slotPos[2]), HTSlotHelper.getSlotPosY(slotPos[3]))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(slotPos[0]), HTSlotHelper.getSlotPosY(slotPos[1]))
+        addInputSlot(1, HTSlotHelper.getSlotPosX(slotPos[2]), HTSlotHelper.getSlotPosY(slotPos[3]))
         // upgrades
         addUpgradeSlots()
         // outputs
@@ -62,7 +62,4 @@ class HTCombineProcessMenu(
         // register property
         addDataSlots(definition.containerData)
     }
-
-    override val inputSlots: IntRange = 0..5
-    override val outputSlots: IntRange = 6..6
 }

@@ -33,7 +33,4 @@ class HTRefineryMenu(
         // register property
         addDataSlots(definition.containerData)
     }
-
-    override val inputSlots: IntRange = 0..3
-    override val outputSlots: IntRange = IntRange.EMPTY
 }

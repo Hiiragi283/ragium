@@ -44,7 +44,7 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
 
     //    Ticking    //
 
-    final override var maxTicks: Int = 20
+    final override val maxTicks: Int = 20
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する

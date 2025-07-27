@@ -78,7 +78,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         insertToOutput(1..1, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
         tank.drain(recipe.ingredient.amount(), IFluidHandler.FluidAction.EXECUTE)
-        inventory.consumeStackInSlot(0, 1)
+        inventory.consumeStackInSlot(0, 1, true)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
         return TriState.DEFAULT

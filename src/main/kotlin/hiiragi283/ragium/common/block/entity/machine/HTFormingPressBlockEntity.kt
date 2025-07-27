@@ -54,8 +54,8 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         insertToOutput(2..2, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
-        inventory.consumeStackInSlot(0, 1)
-        inventory.consumeStackInSlot(1, 1)
+        inventory.consumeStackInSlot(0, 1, false)
+        inventory.consumeStackInSlot(1, 1, true)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS)
         return TriState.DEFAULT

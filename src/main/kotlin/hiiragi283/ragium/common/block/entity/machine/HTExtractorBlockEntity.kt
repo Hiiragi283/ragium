@@ -52,7 +52,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         insertToOutput(1..4, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
-        inventory.consumeStackInSlot(0, recipe.ingredient.count())
+        inventory.consumeStackInSlot(0, recipe.ingredient.count(), false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.SLIME_BLOCK_BREAK, SoundSource.BLOCKS)
         return TriState.TRUE

@@ -74,7 +74,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         tank.fill(recipe.output.get(), IFluidHandler.FluidAction.EXECUTE)
         // インプットを減らす
-        inventory.consumeStackInSlot(0, recipe.ingredient.count())
+        inventory.consumeStackInSlot(0, recipe.ingredient.count(), false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS)
         return TriState.TRUE

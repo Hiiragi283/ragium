@@ -47,7 +47,7 @@ class HTExpCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override var maxTicks: Int = 20
+    override val maxTicks: Int = 20
 
     override fun onServerTick(level: ServerLevel, pos: BlockPos, state: BlockState): TriState {
         // 20 tickごとに実行する

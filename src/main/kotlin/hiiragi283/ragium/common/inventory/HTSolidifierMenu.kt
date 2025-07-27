@@ -23,7 +23,7 @@ class HTSolidifierMenu(
 
     init {
         addFluidSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
-        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         // upgrades
         addUpgradeSlots()
         // outputs
@@ -33,7 +33,4 @@ class HTSolidifierMenu(
         // register property
         addDataSlots(definition.containerData)
     }
-
-    override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = 5..5
 }

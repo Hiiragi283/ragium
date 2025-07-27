@@ -34,10 +34,10 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         // インプットに一致するレシピを探索する
         val input: I = createRecipeInput()
         val lastRecipe: ResourceLocation? = recipeCache.lastRecipe
-        val recipe: R = recipeCache.getFirstRecipe(input, level) ?: return TriState.FALSE
+        val recipe: R = recipeCache.getFirstRecipe(input, level) ?: return resetProgress()
         // レシピの進行度を確認する
         if (recipeCache.lastRecipe != lastRecipe) {
-            this.currentTicks = 0
+            resetProgress()
         }
         // エネルギーを消費しようとする
         if (network.extractEnergy(energyUsage, true) != energyUsage) return TriState.DEFAULT
@@ -59,6 +59,11 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         input: I,
         recipe: R,
     ): TriState
+
+    protected fun resetProgress(): TriState {
+        this.currentTicks = 0
+        return TriState.FALSE
+    }
 
     protected fun insertToOutput(range: IntRange, output: ItemStack, simulate: Boolean): ItemStack {
         val filter: HTItemFilter = object : HTItemFilter {

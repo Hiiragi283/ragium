@@ -29,7 +29,7 @@ class HTBlockBreakerMenu(
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         // upgrades
         addUpgradeSlots()
         // player inventory
@@ -37,7 +37,4 @@ class HTBlockBreakerMenu(
         // register property
         addDataSlots(definition.containerData)
     }
-
-    override val inputSlots: IntRange = 0..0
-    override val outputSlots: IntRange = IntRange.EMPTY
 }

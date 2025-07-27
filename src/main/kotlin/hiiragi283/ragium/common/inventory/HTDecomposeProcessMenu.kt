@@ -43,7 +43,7 @@ class HTDecomposeProcessMenu(
 
     init {
         // inputs
-        addSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
+        addInputSlot(0, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         // upgrades
         addUpgradeSlots()
         // outputs
@@ -56,7 +56,4 @@ class HTDecomposeProcessMenu(
         // register property
         addDataSlots(definition.containerData)
     }
-
-    override val inputSlots: IntRange = 0..4
-    override val outputSlots: IntRange = 5..8
 }
