@@ -1,0 +1,14 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": {
+    "item": "minecraft:brown_concrete_powder"
+  },
+  "fluid_input": {
+    "amount": 125,
+    "tag": "c:water"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "minecraft:brown_concrete"
+  }
+}

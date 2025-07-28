@@ -39,13 +39,14 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
 
     private fun mineable() {
         // Axe
-        tag(BlockTags.MINEABLE_WITH_AXE).addHolder(RagiumBlocks.EXP_BERRY_BUSH).addHolder(RagiumBlocks.WOODEN_CASING)
+        tag(BlockTags.MINEABLE_WITH_AXE)
+            .addHolder(RagiumBlocks.EXP_BERRY_BUSH)
+            .addHolder(RagiumBlocks.WOODEN_CASING)
         // Hoe
         val hoe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_HOE)
-        hoe.addHolder(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .addHolder(RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
         val pickaxe: IntrinsicTagAppender<Block> = tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        pickaxe
             .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
             .addTag(RagiumModTags.Blocks.LED_BLOCKS)
             .addHolder(RagiumBlocks.RESONANT_DEBRIS)

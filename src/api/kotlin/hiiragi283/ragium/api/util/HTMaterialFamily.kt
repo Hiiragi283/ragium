@@ -11,6 +11,9 @@ import java.util.function.Supplier
 
 private typealias ItemSup = Supplier<out ItemLike>
 
+/**
+ * @see [net.minecraft.data.BlockFamily]
+ */
 class HTMaterialFamily(
     val entryType: EntryType,
     private val baseVariant: Variant,

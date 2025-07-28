@@ -12,16 +12,15 @@ import hiiragi283.ragium.common.block.HTFeastBlock
 import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
+import hiiragi283.ragium.common.block.HTSiltBlock
 import hiiragi283.ragium.common.block.HTSoulGlassBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.util.HTBuildingBlockSets
 import hiiragi283.ragium.util.HTOreSets
-import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.ColoredFallingBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TransparentBlock
@@ -129,10 +128,7 @@ object RagiumBlocks {
     //    Natural Resources    //
 
     @JvmField
-    val SILT: DeferredBlock<ColoredFallingBlock> = register(
-        "silt",
-        copyOf(Blocks.SAND),
-    ) { prop: BlockBehaviour.Properties -> ColoredFallingBlock(ColorRGBA(0xccccff), prop) }
+    val SILT: DeferredBlock<Block> = register("silt", copyOf(Blocks.SAND), ::HTSiltBlock)
 
     @JvmField
     val MYSTERIOUS_OBSIDIAN: DeferredBlock<Block> = register("mysterious_obsidian", copyOf(Blocks.OBSIDIAN))
@@ -333,7 +329,7 @@ object RagiumBlocks {
     }
 
     @JvmStatic
-    fun getLedBlock(color: DyeColor): DeferredBlock<*> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
+    fun getLedBlock(color: DyeColor): DeferredBlock<Block> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
 
     //    Foods    //
 

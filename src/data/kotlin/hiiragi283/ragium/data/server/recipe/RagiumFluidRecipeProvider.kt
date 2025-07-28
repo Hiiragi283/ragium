@@ -4,21 +4,25 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.extension.createPotionStack
+import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumFluidRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         extracting()
-        infusing()
+        solidifying()
 
         bio()
         bottle()
@@ -222,7 +226,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
 
     //    Infusing    //
 
-    private fun infusing() {
+    private fun solidifying() {
         // Dirt -> Mud
         createSolidifying()
             .itemOutput(Items.MUD)
@@ -242,36 +246,13 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .catalyst(Items.SNOWBALL)
             .milkInput(250)
             .save(output)
+
+        for (color: DyeColor in DyeColor.entries) {
+            createSolidifying()
+                .itemOutput(DeferredItem.createItem<Item>(vanillaId("${color.serializedName}_concrete")))
+                .catalyst(DeferredItem.createItem<Item>(vanillaId("${color.serializedName}_concrete_powder")))
+                .waterInput(125)
+                .saveSuffixed(output, "_from_powder")
+        }
     }
-
-    //    Solidifying    //
-
-    /*private fun solidifying() {
-        // Water -> Ice
-        createSolidifying()
-            .itemOutput(Items.ICE)
-            .waterInput()
-            .catalyst(RagiumItemTags.MOLDS_BLOCK)
-            .save(output)
-        // Water -> Snowball
-        createSolidifying()
-            .itemOutput(Items.SNOWBALL)
-            .waterInput(250)
-            .catalyst(RagiumItemTags.MOLDS_BALL)
-            .save(output)
-
-        // Honey -> Honey Block
-        createSolidifying()
-            .itemOutput(Items.HONEY_BLOCK)
-            .fluidInput(RagiumFluidContents.HONEY)
-            .catalyst(RagiumItemTags.MOLDS_BLOCK)
-            .save(output)
-
-        // Sap -> Slimeball
-        createSolidifying()
-            .itemOutput(Items.SLIME_BALL)
-            .fluidInput(RagiumFluidContents.SAP)
-            .catalyst(RagiumItemTags.MOLDS_BALL)
-            .save(output)
-    }*/
 }
