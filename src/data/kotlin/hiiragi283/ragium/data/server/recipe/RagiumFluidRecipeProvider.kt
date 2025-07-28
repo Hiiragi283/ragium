@@ -120,10 +120,10 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidInput(RagiumFluidContents.EXPERIENCE, 8000)
             .save(output)
         // Exp Berries
-        createSolidifying()
+        createPressing()
             .itemOutput(RagiumItems.EXP_BERRIES)
-            .itemInput(Tags.Items.FOODS_BERRY)
-            .fluidInput(RagiumFluidContents.EXPERIENCE, 1000)
+            .itemInput(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, 4)
+            .catalyst(Tags.Items.FOODS_BERRY)
             .save(output)
         // Blaze Powder
         createSolidifying()

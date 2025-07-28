@@ -1,12 +1,11 @@
 {
-  "type": "ragium:solidifying",
+  "type": "ragium:pressing",
   "catalyst": {
-    "count": 1,
     "tag": "c:foods/berry"
   },
   "fluid_input": {
-    "amount": 1000,
-    "tag": "c:experience"
+    "count": 4,
+    "tag": "c:gems/eldritch_pearl"
   },
   "item_output": {
     "count": 1,

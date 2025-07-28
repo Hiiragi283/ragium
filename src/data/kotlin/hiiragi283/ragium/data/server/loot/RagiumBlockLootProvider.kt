@@ -2,10 +2,12 @@ package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.registry.HTBlockSet
+import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTBuildingBlockSets
+import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
@@ -23,8 +25,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import net.neoforged.neoforge.registries.DeferredBlock
 
@@ -51,17 +53,48 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         // Log
-        fortuneDrop(
-            RagiumBlocks.ASH_LOG,
-            UniformGenerator.between(1f, 3f),
-            RagiumItems.Dusts.ASH,
-        )
+        add(RagiumBlocks.ASH_LOG.get()) { block: Block ->
+            applyExplosionDecay(
+                block,
+                LootTable
+                    .lootTable()
+                    .withPool(
+                        LootPool
+                            .lootPool()
+                            .add(LootItem.lootTableItem(RagiumItems.Dusts.ASH))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(2f, 3f)))
+                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
+                    ),
+            )
+        }
 
         // Bush
         add(RagiumBlocks.EXP_BERRY_BUSH.get()) { block: Block ->
-            createSingleItemTableWithSilkTouch(
+            applyExplosionDecay(
                 block,
-                RagiumItems.EXP_BERRIES,
+                LootTable
+                    .lootTable()
+                    .withPool(
+                        LootPool
+                            .lootPool()
+                            .`when`(
+                                LootItemBlockStatePropertyCondition
+                                    .hasBlockStateProperties(block)
+                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 3)),
+                            ).add(LootItem.lootTableItem(RagiumItems.EXP_BERRIES))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(2f, 3f)))
+                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
+                    ).withPool(
+                        LootPool
+                            .lootPool()
+                            .`when`(
+                                LootItemBlockStatePropertyCondition
+                                    .hasBlockStateProperties(block)
+                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 2)),
+                            ).add(LootItem.lootTableItem(RagiumItems.EXP_BERRIES))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)))
+                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
+                    ),
             )
         }
 
@@ -143,25 +176,10 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
     //    Extensions    //
 
-    private fun getFortune(): Holder.Reference<Enchantment> = registries.enchLookup().getOrThrow(Enchantments.FORTUNE)
+    private val fortune: Holder.Reference<Enchantment> get() = registries.enchLookup().getOrThrow(Enchantments.FORTUNE)
 
     private fun dropSelf(holder: DeferredBlock<*>) {
         dropSelf(holder.get())
-    }
-
-    private fun fortuneDrop(holder: DeferredBlock<*>, range: NumberProvider, drop: ItemLike = holder) {
-        add(holder.get()) { block: Block ->
-            createSilkTouchDispatchTable(
-                block,
-                applyExplosionDecay(
-                    block,
-                    LootItem
-                        .lootTableItem(drop)
-                        .apply(SetItemCountFunction.setCount(range))
-                        .apply(ApplyBonusCount.addOreBonusCount(getFortune())),
-                ),
-            )
-        }
     }
 
     private fun copyComponent(block: Block, vararg types: DataComponentType<*>): LootTable.Builder = LootTable

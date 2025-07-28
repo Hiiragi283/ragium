@@ -4,18 +4,16 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockId
 import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.layeredBlock
-import hiiragi283.ragium.api.extension.layeredModel
 import hiiragi283.ragium.api.extension.simpleAltBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTBlockSet
+import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -74,24 +72,18 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
 
         // Bush
-        val expBerryModel: BlockModelBuilder = models()
-            .leaves(
-                RagiumAPI.id("block/exp_berry_bush").toString(),
-                vanillaId("block/oak_leaves"),
-            ).renderType("cutout")
-
         getVariantBuilder(RagiumBlocks.EXP_BERRY_BUSH.get())
             .forAllStates { state: BlockState ->
-                val modelId: BlockModelBuilder = when (state.getValue(BlockStateProperties.AGE_3)) {
-                    3 -> models().layeredModel(
-                        "block/exp_berry_bush_mature",
-                        vanillaId("block/oak_leaves"),
-                        RagiumAPI.id("item/exp_berries"),
+                val age: Int = state.getValue(HTCropBlock.AGE)
+                val id: ResourceLocation = RagiumBlocks.EXP_BERRY_BUSH.id.withSuffix("_stage$age")
+                ConfiguredModel.builder()
+                    .modelFile(
+                        models()
+                            .withExistingParent(id.path, "cross")
+                            .texture("cross", id.withPrefix("block/"))
+                            .renderType("cutout")
                     )
-
-                    else -> expBerryModel
-                }
-                ConfiguredModel.builder().modelFile(modelId).build()
+                    .build()
             }
 
         // Food

@@ -5,7 +5,6 @@
     "tag": "c:sap"
   },
   "item_output": {
-    "chance": 0.25,
     "count": 1,
     "id": "minecraft:slime_ball"
   }

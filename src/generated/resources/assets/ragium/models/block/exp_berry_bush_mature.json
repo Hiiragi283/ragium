@@ -1,8 +1,0 @@
-{
-  "parent": "ragium:block/layered",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "layer0": "minecraft:block/oak_leaves",
-    "layer1": "ragium:item/exp_berries"
-  }
-}

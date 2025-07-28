@@ -36,8 +36,9 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         // Blocks
         buildList {
             addAll(RagiumBlocks.REGISTER.entries)
+            
+            remove(RagiumBlocks.EXP_BERRY_BUSH)
         }.map(Supplier<out Block>::get).forEach(::simpleBlockItem)
-
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)
 
