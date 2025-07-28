@@ -97,7 +97,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(RagiumCommonTags.Items.ORES_RAGINITE),
-                RagiumItems.RAGINITE_DUST.toStack(12),
+                RagiumItems.Dusts.RAGINITE.toStack(12),
             ).build(output, RagiumAPI.id("processing/raginite/from_ore"))
         // Ragi-Crystal Ore
         ItemStackToItemStackRecipeBuilder

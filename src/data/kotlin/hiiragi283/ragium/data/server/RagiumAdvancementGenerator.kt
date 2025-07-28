@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumToolTiers
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
@@ -19,14 +18,14 @@ import net.neoforged.neoforge.common.Tags
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun createRoot(): AdvancementHolder = create(RagiumAdvancements.ROOT) {
         display {
-            setIcon(RagiumItems.getForgeHammer(RagiumToolTiers.RAGI_ALLOY))
+            setIcon(RagiumItems.ForgeHammers.RAGI_ALLOY)
             title = Component.literal(RagiumAPI.MOD_NAME)
             setDescFromKey(RagiumAdvancements.ROOT)
             backGround = RagiumAPI.id("textures/block/ragi_stone.png")
             showToast = false
             showChat = false
         }
-        hasAllItem("has_blank_ticket", RagiumItems.BLANK_TICKET)
+        hasAllItem("has_blank_ticket", RagiumItems.Tickets.BLANK)
     }
 
     override fun generate(registries: HolderLookup.Provider) {
@@ -38,12 +37,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
         val eternalTicket: AdvancementHolder = create(RagiumAdvancements.ETERNAL_TICKET, root) {
             display {
-                setIcon(RagiumItems.ETERNAL_TICKET)
+                setIcon(RagiumItems.Tickets.ETERNAL)
                 setTitleFromKey(RagiumAdvancements.ETERNAL_TICKET)
                 setDescFromKey(RagiumAdvancements.ETERNAL_TICKET)
                 setChallenge()
             }
-            hasAllItem("has_ticket", RagiumItems.ETERNAL_TICKET)
+            hasAllItem("has_ticket", RagiumItems.Tickets.ETERNAL)
         }
     }
 
@@ -51,14 +50,14 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val raginite: AdvancementHolder = createSimple(
             RagiumAdvancements.RAGINITE_DUST,
             root,
-            RagiumItems.RAGINITE_DUST,
+            RagiumItems.Dusts.RAGINITE,
             RagiumCommonTags.Items.DUSTS_RAGINITE,
         )
     }
 
     private fun azure() {
         val azureTicket: AdvancementHolder =
-            createSimple(RagiumAdvancements.AZURE_TICKET, root, RagiumItems.AZURE_TICKET)
+            createSimple(RagiumAdvancements.AZURE_TICKET, root, RagiumItems.Tickets.AZURE)
         val azureShard: AdvancementHolder =
             createSimple(RagiumAdvancements.AZURE_SHARD, azureTicket, RagiumItems.AZURE_SHARD, RagiumCommonTags.Items.GEMS_AZURE)
         val azureGears: AdvancementHolder = create(RagiumAdvancements.AZURE_GEARS, azureShard) {
@@ -104,12 +103,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         )
         val teleportTicket: AdvancementHolder = create(RagiumAdvancements.TELEPORT_TICKET, warpedCrystal) {
             display {
-                setIcon(RagiumItems.TELEPORT_TICKET)
+                setIcon(RagiumItems.Tickets.TELEPORT)
                 setTitleFromKey(RagiumAdvancements.TELEPORT_TICKET)
                 setDescFromKey(RagiumAdvancements.TELEPORT_TICKET)
                 setGoal()
             }
-            addCriterion("use_teleport_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.TELEPORT_TICKET))
+            addCriterion("use_teleport_ticket", ConsumeItemTrigger.TriggerInstance.usedItem(RagiumItems.Tickets.TELEPORT))
             requirements(AdvancementRequirements.Strategy.OR)
         }
     }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.addHolder
 import hiiragi283.ragium.api.extension.asFluidHolder
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -58,7 +57,8 @@ class RagiumFluidTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
     //    Extensions    //
 
     private fun IntrinsicTagAppender<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
-        addHolder(content.stillHolder).addHolder(content.flowHolder)
+        content.stillHolder.unwrapKey().ifPresent(this::add)
+        content.flowHolder.unwrapKey().ifPresent(this::add)
     }
 
     private fun tag(content: HTFluidContent<*, *, *>): IntrinsicTagAppender<Fluid> = tag(content.commonTag)

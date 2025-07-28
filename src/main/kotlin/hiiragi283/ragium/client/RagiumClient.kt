@@ -80,7 +80,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                 }
                 -1
             },
-            RagiumBlocks.WATER_COLLECTOR.get(),
+            RagiumBlocks.Devices.WATER_COLLECTOR.get(),
         )
         // Cauldrons
         /*for (cauldron: DeferredBlock<*> in RagiumBlocks.CAULDRONS) {
@@ -110,7 +110,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             { stack: ItemStack, tint: Int ->
                 if (tint == 0) 0x3f76e4 else -1
             },
-            RagiumBlocks.WATER_COLLECTOR,
+            RagiumBlocks.Devices.WATER_COLLECTOR,
         )
 
         // Crude Oil Bucket

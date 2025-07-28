@@ -1,14 +1,13 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.basicItem
 import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
-import hiiragi283.ragium.api.extension.simpleBlockItem
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -16,12 +15,14 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredItem
+import java.util.function.Supplier
 
 class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, RagiumAPI.MOD_ID, existingFileHelper) {
@@ -36,7 +37,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         // Blocks
         buildList {
             addAll(RagiumBlocks.REGISTER.entries)
-        }.forEach(::simpleBlockItem)
+        }.map(Supplier<out Block>::get).forEach(::simpleBlockItem)
 
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)
@@ -55,11 +56,11 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
             remove(RagiumItems.BLAST_CHARGE)
-            removeAll(RagiumItems.FORGE_HAMMERS.values)
+            removeAll(RagiumItems.ForgeHammers.entries.map(HTItemHolderLike::holder))
 
             addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
-        }.forEach(::basicItem)
+        }.map(Supplier<out Item>::get).forEach(::basicItem)
 
         getBuilder(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
             .parent(generated)
@@ -92,8 +93,8 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
         handheldItem(RagiumItems.BLAST_CHARGE.asItem())
 
-        RagiumItems.FORGE_HAMMERS.values
-            .map(DeferredItem<*>::getId)
+        RagiumItems.ForgeHammers.entries
+            .map(HTItemHolderLike::id)
             .forEach(::handheldItem)
     }
 }

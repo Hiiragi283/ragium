@@ -4,6 +4,7 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.api.extension.globalPosText
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -38,7 +39,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         val level: Level = context.level
         val pos: BlockPos = context.clickedPos
         // 右クリックしたブロックがテレポートアンカーの場合，その座標を保持する
-        if (level.getBlockState(pos).`is`(RagiumBlocks.TELEPORT_ANCHOR)) {
+        if (level.getBlockState(pos).isOf(RagiumBlocks.Devices.TELEPORT_ANCHOR)) {
             context.itemInHand.set(
                 RagiumDataComponents.TELEPORT_POS,
                 GlobalPos(level.dimension(), pos.above()),
@@ -108,7 +109,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
         if (!serverLevel.isLoaded(globalPos.pos)) {
             return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_POS)
         }
-        if (!serverLevel.getBlockState(globalPos.pos.below()).`is`(RagiumBlocks.TELEPORT_ANCHOR)) {
+        if (!serverLevel.getBlockState(globalPos.pos.below()).isOf(RagiumBlocks.Devices.TELEPORT_ANCHOR)) {
             return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_ANCHOR)
         }
         return DataResult.success(Unit)

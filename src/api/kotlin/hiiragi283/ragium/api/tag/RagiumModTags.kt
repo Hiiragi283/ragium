@@ -62,22 +62,6 @@ object RagiumModTags {
         @JvmField
         val WIP: TagKey<Item> = create("work_in_progress")
 
-        // ENI Upgrades
-        @JvmField
-        val ENI_UPGRADES: TagKey<Item> = create("eni_upgrades")
-
-        @JvmField
-        val ENI_UPGRADES_BASIC: TagKey<Item> = create("eni_upgrades/basic")
-
-        @JvmField
-        val ENI_UPGRADES_ADVANCED: TagKey<Item> = create("eni_upgrades/advanced")
-
-        @JvmField
-        val ENI_UPGRADES_ELITE: TagKey<Item> = create("eni_upgrades/elite")
-
-        @JvmField
-        val ENI_UPGRADES_ULTIMATE: TagKey<Item> = create("eni_upgrades/ultimate")
-
         // Flux
         @JvmField
         val ALLOY_SMELTER_FLUXES_BASIC: TagKey<Item> = create("alloy_smelter_fluxes/basic")

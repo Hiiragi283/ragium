@@ -27,7 +27,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         // Coal
         createCrushing()
             .itemOutput(Items.COAL, 2)
-            .itemOutput(RagiumItems.SULFUR_DUST, chance = 1 / 4f)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_SULFUR, chance = 1 / 4f)
             .itemInput(Tags.Items.ORES_COAL)
             .saveSuffixed(output, "_from_ore")
         // Copper

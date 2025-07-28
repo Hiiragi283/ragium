@@ -12,15 +12,12 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumToolTiers
 import hiiragi283.ragium.util.HTLootTicketHelper
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.Tier
-import net.minecraft.world.item.Tiers
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
@@ -145,8 +142,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
     }
 
     private fun forgeHammers() {
-        fun crafting(tier: Tier, input: TagKey<Item>) {
-            HTShapedRecipeBuilder(RagiumItems.getForgeHammer(tier), category = CraftingBookCategory.EQUIPMENT)
+        fun crafting(hammer: ItemLike, input: TagKey<Item>) {
+            HTShapedRecipeBuilder(hammer, category = CraftingBookCategory.EQUIPMENT)
                 .pattern(
                     " AA",
                     "BBA",
@@ -156,25 +153,19 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
                 .save(output)
         }
 
-        crafting(Tiers.IRON, Tags.Items.INGOTS_IRON)
-        crafting(Tiers.DIAMOND, Tags.Items.GEMS_DIAMOND)
-        crafting(RagiumToolTiers.RAGI_ALLOY, RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
+        crafting(RagiumItems.ForgeHammers.IRON, Tags.Items.INGOTS_IRON)
+        crafting(RagiumItems.ForgeHammers.DIAMOND, Tags.Items.GEMS_DIAMOND)
+        crafting(RagiumItems.ForgeHammers.RAGI_ALLOY, RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
 
-        createNetheriteUpgrade(RagiumItems.getForgeHammer(Tiers.NETHERITE), RagiumItems.getForgeHammer(Tiers.DIAMOND))
+        createNetheriteUpgrade(RagiumItems.ForgeHammers.NETHERITE, RagiumItems.ForgeHammers.DIAMOND)
             .save(output)
-        addAzureSmithing(
-            RagiumItems.getForgeHammer(RagiumToolTiers.AZURE_STEEL),
-            RagiumItems.getForgeHammer(Tiers.IRON),
-        )
-        addDeepSmithing(
-            RagiumItems.getForgeHammer(RagiumToolTiers.DEEP_STEEL),
-            RagiumItems.getForgeHammer(RagiumToolTiers.AZURE_STEEL),
-        )
+        addAzureSmithing(RagiumItems.ForgeHammers.AZURE_STEEL, RagiumItems.ForgeHammers.IRON)
+        addDeepSmithing(RagiumItems.ForgeHammers.DEEP_STEEL, RagiumItems.ForgeHammers.AZURE_STEEL)
     }
 
     private fun tickets() {
         // Blank
-        HTShapedRecipeBuilder(RagiumItems.BLANK_TICKET, 6)
+        HTShapedRecipeBuilder(RagiumItems.Tickets.BLANK, 6)
             .pattern(
                 "AAA",
                 "BCB",
@@ -184,21 +175,21 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .define('C', Tags.Items.GEMS_DIAMOND)
             .save(output)
         // Azure from Lapis
-        HTShapedRecipeBuilder(RagiumItems.AZURE_TICKET)
+        HTShapedRecipeBuilder(RagiumItems.Tickets.AZURE)
             .cross8()
             .define('A', Tags.Items.STORAGE_BLOCKS_LAPIS)
             .define('B', Tags.Items.DYES_BLUE)
-            .define('C', RagiumItems.BLANK_TICKET)
+            .define('C', RagiumItems.Tickets.BLANK)
             .saveSuffixed(output, "_from_lapis")
 
-        addTicket(RagiumItems.RAGI_TICKET, RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
-        addTicket(RagiumItems.AZURE_TICKET, RagiumCommonTags.Items.INGOTS_AZURE_STEEL, Tags.Items.DYES_BLUE)
-        addTicket(RagiumItems.BLOODY_TICKET, RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
-        addTicket(RagiumItems.TELEPORT_TICKET, RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
-        addTicket(RagiumItems.ELDRITCH_TICKET, RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, Tags.Items.DYES_PURPLE)
+        addTicket(RagiumItems.Tickets.RAGI, RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, Tags.Items.DYES_RED)
+        addTicket(RagiumItems.Tickets.AZURE, RagiumCommonTags.Items.INGOTS_AZURE_STEEL, Tags.Items.DYES_BLUE)
+        addTicket(RagiumItems.Tickets.BLOODY, RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL, Tags.Items.DYES_BROWN)
+        addTicket(RagiumItems.Tickets.TELEPORT, RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL, Tags.Items.DYES_CYAN)
+        addTicket(RagiumItems.Tickets.ELDRITCH, RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, Tags.Items.DYES_PURPLE)
 
-        addTicket(RagiumItems.DAYBREAK_TICKET, RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY, Tags.Items.DYES_ORANGE)
-        addTicket(RagiumItems.ETERNAL_TICKET, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
+        addTicket(RagiumItems.Tickets.DAYBREAK, RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY, Tags.Items.DYES_ORANGE)
+        addTicket(RagiumItems.Tickets.ETERNAL, Tags.Items.NETHER_STARS, Tags.Items.DYES_WHITE)
 
         save(
             RagiumAPI.id("shapeless/blast_charge"),
@@ -291,7 +282,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             .cross8()
             .define('A', corner)
             .define('B', dye)
-            .define('C', RagiumItems.BLANK_TICKET)
+            .define('C', RagiumItems.Tickets.BLANK)
             .save(output)
     }
 
@@ -300,7 +291,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(HTLootTicketHelper.getLootTicket(lootTableKey))
             .cross8()
             .apply(builderAction)
-            .define('C', RagiumItems.RAGI_TICKET)
+            .define('C', RagiumItems.Tickets.RAGI)
             .saveSuffixed(output, lootTableKey.location().path.removePrefix("chests"))
     }
 }

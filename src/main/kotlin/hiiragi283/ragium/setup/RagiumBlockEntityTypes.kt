@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
+import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
@@ -31,7 +32,6 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
-import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -151,36 +151,36 @@ object RagiumBlockEntityTypes {
 
     @SubscribeEvent
     fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
-        fun add(type: HTDeferredBlockEntityType<*>, block: DeferredBlock<*>) {
+        fun add(type: HTDeferredBlockEntityType<*>, block: HTBlockHolderLike) {
             event.modify(type.get(), block.get())
         }
 
-        add(CRUSHER, RagiumBlocks.CRUSHER)
-        add(BLOCK_BREAKER, RagiumBlocks.BLOCK_BREAKER)
-        add(EXTRACTOR, RagiumBlocks.EXTRACTOR)
-        add(FORMING_PRESS, RagiumBlocks.FORMING_PRESS)
+        add(CRUSHER, RagiumBlocks.Machines.CRUSHER)
+        add(BLOCK_BREAKER, RagiumBlocks.Machines.BLOCK_BREAKER)
+        add(EXTRACTOR, RagiumBlocks.Machines.EXTRACTOR)
+        add(FORMING_PRESS, RagiumBlocks.Machines.FORMING_PRESS)
 
-        add(ALLOY_SMELTER, RagiumBlocks.ALLOY_SMELTER)
-        add(MELTER, RagiumBlocks.MELTER)
-        add(REFINERY, RagiumBlocks.REFINERY)
-        add(SOLIDIFIER, RagiumBlocks.SOLIDIFIER)
+        add(ALLOY_SMELTER, RagiumBlocks.Machines.ALLOY_SMELTER)
+        add(MELTER, RagiumBlocks.Machines.MELTER)
+        add(REFINERY, RagiumBlocks.Machines.REFINERY)
+        add(SOLIDIFIER, RagiumBlocks.Machines.SOLIDIFIER)
 
-        add(INFUSER, RagiumBlocks.INFUSER)
+        add(INFUSER, RagiumBlocks.Machines.INFUSER)
 
-        add(ENI, RagiumBlocks.ENI)
-        add(EXP_COLLECTOR, RagiumBlocks.EXP_COLLECTOR)
-        add(ITEM_BUFFER, RagiumBlocks.ITEM_BUFFER)
-        add(LAVA_COLLECTOR, RagiumBlocks.LAVA_COLLECTOR)
-        add(MILK_DRAIN, RagiumBlocks.MILK_DRAIN)
-        add(SPRINKLER, RagiumBlocks.SPRINKLER)
-        add(WATER_COLLECTOR, RagiumBlocks.WATER_COLLECTOR)
+        add(ENI, RagiumBlocks.Devices.ENI)
+        add(EXP_COLLECTOR, RagiumBlocks.Devices.EXP_COLLECTOR)
+        add(ITEM_BUFFER, RagiumBlocks.Devices.ITEM_BUFFER)
+        add(LAVA_COLLECTOR, RagiumBlocks.Devices.LAVA_COLLECTOR)
+        add(MILK_DRAIN, RagiumBlocks.Devices.MILK_DRAIN)
+        add(SPRINKLER, RagiumBlocks.Devices.SPRINKLER)
+        add(WATER_COLLECTOR, RagiumBlocks.Devices.WATER_COLLECTOR)
 
-        add(CEU, RagiumBlocks.CEU)
+        add(CEU, RagiumBlocks.Devices.CEU)
 
-        add(SMALL_DRUM, RagiumBlocks.SMALL_DRUM)
-        add(MEDIUM_DRUM, RagiumBlocks.MEDIUM_DRUM)
-        add(LARGE_DRUM, RagiumBlocks.LARGE_DRUM)
-        add(HUGE_DRUM, RagiumBlocks.HUGE_DRUM)
+        add(SMALL_DRUM, RagiumBlocks.Drums.SMALL)
+        add(MEDIUM_DRUM, RagiumBlocks.Drums.MEDIUM)
+        add(LARGE_DRUM, RagiumBlocks.Drums.LARGE)
+        add(HUGE_DRUM, RagiumBlocks.Drums.HUGE)
 
         LOGGER.info("Added supported blocks to BlockEntityType!")
     }

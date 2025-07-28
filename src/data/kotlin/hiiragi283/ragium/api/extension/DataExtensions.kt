@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.extension
 
 import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
@@ -14,17 +15,15 @@ import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
 
 //    Advancement    //
 
@@ -36,7 +35,11 @@ fun ResourceKey<Advancement>.descKey(): String = "${translationKey(this)}.desc"
 
 //    TagAppender    //
 
-fun <T : Any, B : TagsProvider.TagAppender<T>> B.addHolder(holder: DeferredHolder<T, out T>): B = apply {
+fun <B : TagsProvider.TagAppender<Block>> B.addBlock(holderLike: HTBlockHolderLike): B = apply {
+    addBlock(holderLike.holder)
+}
+
+fun <B : TagsProvider.TagAppender<Block>> B.addBlock(holder: DeferredBlock<*>): B = apply {
     holder.unwrapKey().ifPresent(::add)
 }
 
@@ -84,21 +87,26 @@ fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(path: String, layer0: Re
         .texture("layer1", layer1)
         .renderType("cutout")
 
-fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(
-    holder: DeferredHolder<*, *>,
-    layer0: ResourceLocation,
-    layer1: ResourceLocation,
-): T = layeredModel(holder.id.path, layer0, layer1)
+fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(id: ResourceLocation, layer0: ResourceLocation, layer1: ResourceLocation): T =
+    layeredModel(id.path, layer0, layer1)
+
+fun <T : ModelBuilder<T>> ModelProvider<T>.layeredModel(holder: HTBlockHolderLike, layer0: ResourceLocation, layer1: ResourceLocation): T =
+    layeredModel(holder.id.path, layer0, layer1)
 
 //    BlockModelProvider    //
 
 fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, *>): T = getBuilder(holder.id.toString())
 
-fun BlockStateProvider.simpleBlock(holder: DeferredBlock<*>) {
-    simpleBlock(holder.get())
+fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation) {
+    simpleBlock(
+        holder.get(),
+        ConfiguredModel(
+            models().layeredModel(holder.id, layer0, layer1),
+        ),
+    )
 }
 
-fun BlockStateProvider.layeredBlock(holder: DeferredBlock<*>, layer0: ResourceLocation, layer1: ResourceLocation) {
+fun BlockStateProvider.layeredBlock(holder: HTBlockHolderLike, layer0: ResourceLocation, layer1: ResourceLocation) {
     simpleBlock(
         holder.get(),
         ConfiguredModel(
@@ -111,22 +119,20 @@ fun BlockStateProvider.simpleAltBlock(holder: DeferredBlock<*>) {
     simpleBlock(holder.get(), modelFile(holder.blockId))
 }
 
-fun BlockStateProvider.simpleAltBlock(holder: DeferredBlock<*>, all: ResourceLocation) {
+fun BlockStateProvider.simpleAltBlock(holder: HTBlockHolderLike) {
+    simpleBlock(holder.get(), modelFile(holder.blockId))
+}
+
+fun BlockStateProvider.simpleAltBlock(holder: HTBlockHolderLike, all: ResourceLocation) {
     simpleBlock(
         holder.get(),
         ConfiguredModel(models().cubeAll(holder.id.path, all)),
     )
 }
 
-fun BlockStateProvider.cutoutSimpleBlock(holder: DeferredBlock<*>) {
+fun BlockStateProvider.cutoutSimpleBlock(holder: HTBlockHolderLike) {
     simpleBlock(
         holder.get(),
         ConfiguredModel(models().cubeAll(holder.id.path, holder.blockId).renderType("cutout")),
     )
 }
-
-//    ItemModelProvider    //
-
-fun ItemModelProvider.basicItem(holder: DeferredItem<*>): ItemModelBuilder = basicItem(holder.id)
-
-fun ItemModelProvider.simpleBlockItem(holder: DeferredBlock<*>): ItemModelBuilder = getBuilder(holder).parent(modelFile(holder.blockId))

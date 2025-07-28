@@ -1,13 +1,16 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTTaggedHolder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTArmorSets
@@ -27,7 +30,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredItem
 import top.theillusivec4.curios.api.CuriosTags
 import java.util.concurrent.CompletableFuture
 
@@ -52,6 +54,10 @@ class RagiumItemTagsProvider(
         tag(child).addItem(item)
     }
 
+    private fun copyTo(tagKey: TagKey<Block>) {
+        copy(tagKey, itemTagKey(tagKey.location))
+    }
+
     override fun addTags(provider: HolderLookup.Provider) {
         copy()
 
@@ -73,9 +79,10 @@ class RagiumItemTagsProvider(
         copy(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL, RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
         copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
 
-        copy(RagiumCommonTags.Blocks.GLASS_BLOCKS_OBSIDIAN, RagiumCommonTags.Items.GLASS_BLOCKS_OBSIDIAN)
-        copy(RagiumCommonTags.Blocks.GLASS_BLOCKS_QUARTZ, RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ)
-        copy(RagiumCommonTags.Blocks.GLASS_BLOCKS_SOUL, RagiumCommonTags.Items.GLASS_BLOCKS_SOUL)
+        buildList {
+            addAll(RagiumBlocks.Glasses.entries)
+        }.map(HTTaggedHolder<Block>::tagKey).forEach(::copyTo)
+
         copy(RagiumModTags.Blocks.LED_BLOCKS, RagiumModTags.Items.LED_BLOCKS)
         copy(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
@@ -99,13 +106,9 @@ class RagiumItemTagsProvider(
         }
 
         // Dusts
-        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_ASH, RagiumItems.ASH_DUST)
-        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_CINNABAR, RagiumItems.CINNABAR_DUST)
-        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_OBSIDIAN, RagiumItems.OBSIDIAN_DUST)
-        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_RAGINITE, RagiumItems.RAGINITE_DUST)
-        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_SALTPETER, RagiumItems.SALTPETER_DUST)
-        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_SULFUR, RagiumItems.SULFUR_DUST)
-        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_WOOD, RagiumItems.SAWDUST)
+        for (dust: RagiumItems.Dusts in RagiumItems.Dusts.entries) {
+            addItem(Tags.Items.DUSTS, dust.tagKey, dust)
+        }
         // Plates
         addItem(RagiumCommonTags.Items.PLATES, RagiumCommonTags.Items.PLATES_PLASTIC, RagiumItems.PLASTIC_PLATE)
 
@@ -189,7 +192,7 @@ class RagiumItemTagsProvider(
         registerTools(RagiumItems.AZURE_STEEL_TOOLS)
         registerTools(RagiumItems.DEEP_STEEL_TOOLS)
 
-        for (hammer: DeferredItem<Item> in RagiumItems.FORGE_HAMMERS.values) {
+        for (hammer: RagiumItems.ForgeHammers in RagiumItems.ForgeHammers.entries) {
             tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(hammer)
             tag(Tags.Items.TOOLS_WRENCH).addItem(hammer)
         }
@@ -218,19 +221,9 @@ class RagiumItemTagsProvider(
         tag(Tags.Items.LEATHERS).addItem(RagiumItems.SYNTHETIC_LEATHER)
         tag(Tags.Items.STRINGS).addItem(RagiumItems.SYNTHETIC_FIBER)
         // Circuits
-        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_BASIC, RagiumItems.BASIC_CIRCUIT)
-        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ADVANCED, RagiumItems.ADVANCED_CIRCUIT)
-        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ELITE, RagiumItems.ELITE_CIRCUIT)
-        addItem(RagiumCommonTags.Items.CIRCUITS, RagiumCommonTags.Items.CIRCUITS_ULTIMATE, RagiumItems.ULTIMATE_CIRCUIT)
-
-        tag(RagiumModTags.Items.ENI_UPGRADES)
-            .addTag(RagiumModTags.Items.ENI_UPGRADES_BASIC)
-            .addTag(RagiumModTags.Items.ENI_UPGRADES_ADVANCED)
-            .addTag(RagiumModTags.Items.ENI_UPGRADES_ELITE)
-        tag(RagiumModTags.Items.ENI_UPGRADES_BASIC).addTag(RagiumCommonTags.Items.CIRCUITS_BASIC)
-        tag(RagiumModTags.Items.ENI_UPGRADES_ADVANCED).addTag(RagiumCommonTags.Items.CIRCUITS_ADVANCED)
-        tag(RagiumModTags.Items.ENI_UPGRADES_ELITE).addTag(RagiumCommonTags.Items.CIRCUITS_ELITE)
-
+        for (circuit: RagiumItems.Circuits in RagiumItems.Circuits.entries) {
+            addItem(RagiumCommonTags.Items.CIRCUITS, circuit.tagKey, circuit)
+        }
         // Other
         tag(ItemTags.BEACON_PAYMENT_ITEMS).addTags(*RagiumCommonTags.Items.BEACON_PAYMENTS)
 

@@ -111,7 +111,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
             .define('A', RagiumCommonTags.Items.DUSTS_WOOD)
-            .define('B', RagiumItems.SAWDUST)
+            .define('B', RagiumItems.Dusts.SAW)
             .save(output)
 
         HTCookingRecipeBuilder
@@ -159,46 +159,46 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
     private fun casings() {
         // Wooden
-        HTShapedRecipeBuilder(RagiumBlocks.WOODEN_CASING, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.Casings.WOODEN, 4)
             .cross8()
             .define('A', ItemTags.LOGS)
             .define('B', ItemTags.PLANKS)
             .define('C', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Stone
-        HTShapedRecipeBuilder(RagiumBlocks.STONE_CASING, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.Casings.STONE, 4)
             .casing()
             .define('A', Tags.Items.COBBLESTONES_NORMAL)
             .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .define('C', Items.SMOOTH_STONE)
             .save(output)
         // Machine
-        HTShapedRecipeBuilder(RagiumBlocks.BASIC_MACHINE_FRAME, 2)
+        HTShapedRecipeBuilder(RagiumBlocks.Frames.BASIC, 2)
             .hollow8()
             .define('A', Tags.Items.INGOTS_IRON)
             .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Advanced Machine
-        HTShapedRecipeBuilder(RagiumBlocks.ADVANCED_MACHINE_FRAME, 2)
+        HTShapedRecipeBuilder(RagiumBlocks.Frames.ADVANCED, 2)
             .hollow8()
             .define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Elite Machine
-        HTShapedRecipeBuilder(RagiumBlocks.ELITE_MACHINE_FRAME, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.Frames.ELITE, 4)
             .hollow8()
             .define('A', Tags.Items.INGOTS_NETHERITE)
             .define('B', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
         // Device
-        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING)
+        HTShapedRecipeBuilder(RagiumBlocks.Casings.DEVICE)
             .cross8()
             .define('A', Items.BLACK_CONCRETE)
             .define('B', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .define('C', RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
             .save(output)
 
-        HTShapedRecipeBuilder(RagiumBlocks.DEVICE_CASING, 4)
+        HTShapedRecipeBuilder(RagiumBlocks.Casings.DEVICE, 4)
             .cross8()
             .define('A', Tags.Items.OBSIDIANS_NORMAL)
             .define('B', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
@@ -210,17 +210,21 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
     private fun machines() {
         // Basic
-        basicMachine(RagiumBlocks.CRUSHER, Ingredient.of(Items.FLINT))
-        basicMachine(RagiumBlocks.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
-        basicMachine(RagiumBlocks.EXTRACTOR, Ingredient.of(Items.DISPENSER))
-        basicMachine(RagiumBlocks.FORMING_PRESS, Ingredient.of(Items.PISTON))
+        basicMachine(RagiumBlocks.Machines.CRUSHER, Ingredient.of(Items.FLINT))
+        basicMachine(RagiumBlocks.Machines.BLOCK_BREAKER, Ingredient.of(ItemTags.PICKAXES))
+        basicMachine(RagiumBlocks.Machines.EXTRACTOR, Ingredient.of(Items.DISPENSER))
+        basicMachine(RagiumBlocks.Machines.FORMING_PRESS, Ingredient.of(Items.PISTON))
         // Advanced
-        advancedMachine(RagiumBlocks.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
-        advancedMachine(RagiumBlocks.MELTER, Ingredient.of(Items.BLAST_FURNACE), Items.POLISHED_BLACKSTONE_BRICKS)
-        advancedMachine(RagiumBlocks.REFINERY, Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ), Items.POLISHED_BLACKSTONE_BRICKS)
-        advancedMachine(RagiumBlocks.SOLIDIFIER, Ingredient.of(ItemTags.TRIM_TEMPLATES), Items.POLISHED_BLACKSTONE_BRICKS)
+        advancedMachine(RagiumBlocks.Machines.ALLOY_SMELTER, Ingredient.of(Items.FURNACE), Items.NETHER_BRICKS)
+        advancedMachine(RagiumBlocks.Machines.MELTER, Ingredient.of(Items.BLAST_FURNACE), Items.POLISHED_BLACKSTONE_BRICKS)
+        advancedMachine(
+            RagiumBlocks.Machines.REFINERY,
+            Ingredient.of(RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ),
+            Items.POLISHED_BLACKSTONE_BRICKS,
+        )
+        advancedMachine(RagiumBlocks.Machines.SOLIDIFIER, Ingredient.of(ItemTags.TRIM_TEMPLATES), Items.POLISHED_BLACKSTONE_BRICKS)
         // Elite
-        eliteMachine(RagiumBlocks.INFUSER, Ingredient.of(Items.ENCHANTING_TABLE), Items.DEEPSLATE_TILES)
+        eliteMachine(RagiumBlocks.Machines.INFUSER, Ingredient.of(Items.ENCHANTING_TABLE), Items.DEEPSLATE_TILES)
     }
 
     private fun basicMachine(machine: ItemLike, input: Ingredient) {
@@ -231,7 +235,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
             .define('B', input)
-            .define('C', RagiumBlocks.BASIC_MACHINE_FRAME)
+            .define('C', RagiumBlocks.Frames.BASIC)
             .define('D', Items.BRICKS)
             .define('E', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .save(output)
@@ -245,7 +249,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
             .define('B', input)
-            .define('C', RagiumBlocks.ADVANCED_MACHINE_FRAME)
+            .define('C', RagiumBlocks.Frames.ADVANCED)
             .define('D', bottom)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
             .save(output)
@@ -259,7 +263,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', RagiumCommonTags.Items.INGOTS_DEEP_STEEL)
             .define('B', input)
-            .define('C', RagiumBlocks.ELITE_MACHINE_FRAME)
+            .define('C', RagiumBlocks.Frames.ELITE)
             .define('D', bottom)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ELITE)
             .save(output)
@@ -269,22 +273,22 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
     private fun devices() {
         // Milk Drain
-        HTShapedRecipeBuilder(RagiumBlocks.MILK_DRAIN)
+        HTShapedRecipeBuilder(RagiumBlocks.Devices.MILK_DRAIN)
             .pattern("A", "B", "C")
             .define('A', Tags.Items.INGOTS_COPPER)
             .define('B', Tags.Items.BARRELS_WOODEN)
-            .define('C', RagiumBlocks.STONE_CASING)
+            .define('C', RagiumBlocks.Casings.STONE)
             .save(output)
 
         // Basic
-        basicDevice(RagiumBlocks.ITEM_BUFFER, Ingredient.of(Tags.Items.CHESTS))
-        basicDevice(RagiumBlocks.SPRINKLER, Ingredient.of(Tags.Items.STORAGE_BLOCKS_BONE_MEAL))
-        basicDevice(RagiumBlocks.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
+        basicDevice(RagiumBlocks.Devices.ITEM_BUFFER, Ingredient.of(Tags.Items.CHESTS))
+        basicDevice(RagiumBlocks.Devices.SPRINKLER, Ingredient.of(Tags.Items.STORAGE_BLOCKS_BONE_MEAL))
+        basicDevice(RagiumBlocks.Devices.WATER_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_WATER))
         // Advanced
-        advancedDevice(RagiumBlocks.ENI, Ingredient.of(Tags.Items.GEMS_DIAMOND))
-        advancedDevice(RagiumBlocks.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
-        advancedDevice(RagiumBlocks.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
-        advancedDevice(RagiumBlocks.TELEPORT_ANCHOR, Ingredient.of(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL))
+        advancedDevice(RagiumBlocks.Devices.ENI, Ingredient.of(Tags.Items.GEMS_DIAMOND))
+        advancedDevice(RagiumBlocks.Devices.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
+        advancedDevice(RagiumBlocks.Devices.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
+        advancedDevice(RagiumBlocks.Devices.TELEPORT_ANCHOR, Ingredient.of(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL))
         // Elite
     }
 
@@ -296,7 +300,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', input)
             .define('B', Tags.Items.GLASS_BLOCKS_CHEAP)
-            .define('C', RagiumBlocks.DEVICE_CASING)
+            .define('C', RagiumBlocks.Casings.DEVICE)
             .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
             .define('E', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .save(output)
@@ -310,7 +314,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', input)
             .define('B', RagiumCommonTags.Items.GLASS_BLOCKS_QUARTZ)
-            .define('C', RagiumBlocks.DEVICE_CASING)
+            .define('C', RagiumBlocks.Casings.DEVICE)
             .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
             .save(output)
@@ -324,7 +328,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
                 "DED",
             ).define('A', input)
             .define('B', RagiumCommonTags.Items.GLASS_BLOCKS_OBSIDIAN)
-            .define('C', RagiumBlocks.DEVICE_CASING)
+            .define('C', RagiumBlocks.Casings.DEVICE)
             .define('D', RagiumCommonTags.Items.PLATES_PLASTIC)
             .define('E', RagiumCommonTags.Items.CIRCUITS_ELITE)
             .save(output)
@@ -332,7 +336,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
 
     private fun drums() {
         // Small
-        HTShapedRecipeBuilder(RagiumBlocks.SMALL_DRUM)
+        HTShapedRecipeBuilder(RagiumBlocks.Drums.SMALL)
             .pattern(
                 "ABA",
                 "ACA",
@@ -342,17 +346,17 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('C', Tags.Items.BUCKETS_EMPTY)
             .save(output)
         // Medium
-        HTTransmuteRecipeBuilder(RagiumBlocks.MEDIUM_DRUM)
-            .addIngredient(RagiumBlocks.SMALL_DRUM)
+        HTTransmuteRecipeBuilder(RagiumBlocks.Drums.MEDIUM)
+            .addIngredient(RagiumBlocks.Drums.SMALL)
             .addIngredient(Tags.Items.STORAGE_BLOCKS_GOLD)
             .save(output)
         // Large
-        HTTransmuteRecipeBuilder(RagiumBlocks.LARGE_DRUM)
-            .addIngredient(RagiumBlocks.MEDIUM_DRUM)
+        HTTransmuteRecipeBuilder(RagiumBlocks.Drums.LARGE)
+            .addIngredient(RagiumBlocks.Drums.MEDIUM)
             .addIngredient(Tags.Items.GEMS_DIAMOND)
             .save(output)
         // Huge
-        createNetheriteUpgrade(RagiumBlocks.HUGE_DRUM, RagiumBlocks.LARGE_DRUM)
+        createNetheriteUpgrade(RagiumBlocks.Drums.HUGE, RagiumBlocks.Drums.LARGE)
             .save(output)
     }
 }

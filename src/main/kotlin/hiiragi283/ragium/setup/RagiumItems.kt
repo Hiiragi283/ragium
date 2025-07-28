@@ -3,9 +3,13 @@ package hiiragi283.ragium.setup
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.getEnchantmentLevel
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.item.HTConsumableItem
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTItemRegister
+import hiiragi283.ragium.api.registry.HTTaggedHolder
 import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.util.HTPotionBundle
 import hiiragi283.ragium.api.util.RagiumConst
@@ -28,6 +32,7 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
@@ -64,6 +69,13 @@ object RagiumItems {
         REGISTER.addAlias(RagiumAPI.id("exp_magnet"), RagiumAPI.id("advanced_ragi_magnet"))
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
 
+        Dusts.entries
+
+        ForgeHammers.entries
+        Tickets.entries
+
+        Circuits.entries
+
         REGISTER.register(eventBus)
 
         AZURE_STEEL_ARMORS.init(eventBus)
@@ -87,32 +99,6 @@ object RagiumItems {
         factory: (Item.Properties) -> T,
         properties: Item.Properties = Item.Properties(),
     ): DeferredItem<T> = REGISTER.registerItem(name, factory, properties)
-
-    //    Tickets    //
-
-    @JvmField
-    val BLANK_TICKET: DeferredItem<Item> = register("blank_ticket")
-
-    @JvmField
-    val RAGI_TICKET: DeferredItem<Item> = register("ragi_ticket", ::HTLootTicketItem)
-
-    @JvmField
-    val AZURE_TICKET: DeferredItem<Item> = register("azure_ticket")
-
-    @JvmField
-    val BLOODY_TICKET: DeferredItem<Item> = register("bloody_ticket")
-
-    @JvmField
-    val TELEPORT_TICKET: DeferredItem<Item> = register("teleport_ticket", ::HTTeleportTicketItem)
-
-    @JvmField
-    val ELDRITCH_TICKET: DeferredItem<Item> = register("eldritch_ticket")
-
-    @JvmField
-    val DAYBREAK_TICKET: DeferredItem<Item> = register("daybreak_ticket")
-
-    @JvmField
-    val ETERNAL_TICKET: DeferredItem<Item> = register("eternal_ticket")
 
     //    Materials    //
 
@@ -183,26 +169,21 @@ object RagiumItems {
     val DEEP_STEEL_NUGGET: DeferredItem<Item> = register(RagiumConst.DEEP_STEEL, "nugget")
 
     // Dusts
-    @JvmField
-    val SAWDUST: DeferredItem<Item> = register("sawdust")
+    enum class Dusts(path: String? = null, tagPath: String? = null) :
+        HTItemHolderLike,
+        HTTaggedHolder<Item> {
+        SAW("sawdust", "wood"),
+        ASH,
+        RAGINITE,
+        OBSIDIAN,
+        CINNABAR,
+        SALTPETER,
+        SULFUR,
+        ;
 
-    @JvmField
-    val ASH_DUST: DeferredItem<Item> = register("ash", "dust")
-
-    @JvmField
-    val RAGINITE_DUST: DeferredItem<Item> = register(RagiumConst.RAGINITE, "dust")
-
-    @JvmField
-    val OBSIDIAN_DUST: DeferredItem<Item> = register("obsidian", "dust")
-
-    @JvmField
-    val CINNABAR_DUST: DeferredItem<Item> = register("cinnabar", "dust")
-
-    @JvmField
-    val SALTPETER_DUST: DeferredItem<Item> = register("saltpeter", "dust")
-
-    @JvmField
-    val SULFUR_DUST: DeferredItem<Item> = register("sulfur", "dust")
+        override val holder: DeferredItem<*> = register(path ?: "${name.lowercase()}_dust")
+        override val tagKey: TagKey<Item> = itemTagKey(commonId(RagiumConst.DUSTS, tagPath ?: name.lowercase()))
+    }
 
     //    Armors    //
 
@@ -259,31 +240,36 @@ object RagiumItems {
     @JvmField
     val DEEP_STEEL_TOOLS = HTToolSets(RagiumToolTiers.DEEP_STEEL, RagiumConst.DEEP_STEEL)
 
-    @JvmField
-    val FORGE_HAMMERS: Map<Tier, DeferredItem<Item>> = listOf(
-        Tiers.IRON,
-        Tiers.DIAMOND,
-        Tiers.NETHERITE,
-        RagiumToolTiers.RAGI_ALLOY,
-        RagiumToolTiers.AZURE_STEEL,
-        RagiumToolTiers.DEEP_STEEL,
-    ).associateWith { tier: Tier ->
-        val prefix: String = when (tier) {
-            Tiers.IRON -> "iron"
-            Tiers.DIAMOND -> "diamond"
-            Tiers.NETHERITE -> "netherite"
-            RagiumToolTiers.RAGI_ALLOY -> RagiumConst.RAGI_ALLOY
-            RagiumToolTiers.AZURE_STEEL -> RagiumConst.AZURE_STEEL
-            else -> RagiumConst.DEEP_STEEL
-        }
-        register(
-            "${prefix}_hammer",
+    enum class ForgeHammers(tier: Tier) : HTItemHolderLike {
+        IRON(Tiers.IRON),
+        DIAMOND(Tiers.DIAMOND),
+        NETHERITE(Tiers.NETHERITE),
+        RAGI_ALLOY(RagiumToolTiers.RAGI_ALLOY),
+        AZURE_STEEL(RagiumToolTiers.AZURE_STEEL),
+        DEEP_STEEL(RagiumToolTiers.DEEP_STEEL),
+        ;
+
+        override val holder: DeferredItem<*> = register(
+            "${name.lowercase()}_hammer",
             { prop: Item.Properties -> HTForgeHammerItem(tier, prop) },
         )
     }
 
-    @JvmStatic
-    fun getForgeHammer(tier: Tier): DeferredItem<Item> = FORGE_HAMMERS[tier]!!
+    //    Tickets    //
+
+    enum class Tickets(factory: (Item.Properties) -> Item = ::Item) : HTItemHolderLike {
+        BLANK,
+        RAGI(::HTLootTicketItem),
+        AZURE,
+        BLOODY,
+        TELEPORT(::HTTeleportTicketItem),
+        ELDRITCH,
+        DAYBREAK,
+        ETERNAL,
+        ;
+
+        override val holder: DeferredItem<*> = register("${name.lowercase()}_ticket", factory)
+    }
 
     //    Foods    //
 
@@ -411,17 +397,18 @@ object RagiumItems {
     @JvmField
     val CIRCUIT_BOARD: DeferredItem<Item> = register("circuit_board")
 
-    @JvmField
-    val BASIC_CIRCUIT: DeferredItem<Item> = register(RagiumConst.BASIC, "circuit")
+    enum class Circuits :
+        HTItemHolderLike,
+        HTTaggedHolder<Item> {
+        BASIC,
+        ADVANCED,
+        ELITE,
+        ULTIMATE,
+        ;
 
-    @JvmField
-    val ADVANCED_CIRCUIT: DeferredItem<Item> = register(RagiumConst.ADVANCED, "circuit")
-
-    @JvmField
-    val ELITE_CIRCUIT: DeferredItem<Item> = register(RagiumConst.ELITE, "circuit")
-
-    @JvmField
-    val ULTIMATE_CIRCUIT: DeferredItem<Item> = register(RagiumConst.ULTIMATE, "circuit")
+        override val holder: DeferredItem<*> = register(name.lowercase(), "circuit")
+        override val tagKey: TagKey<Item> = itemTagKey(commonId(RagiumConst.CIRCUITS, name.lowercase()))
+    }
 
     //    Event    //
 
@@ -451,16 +438,16 @@ object RagiumItems {
             )
         }
 
-        register(RagiumConfig.COMMON.smallDrumCapacity.get(), RagiumBlocks.SMALL_DRUM)
-        register(RagiumConfig.COMMON.mediumDrumCapacity.get(), RagiumBlocks.MEDIUM_DRUM)
-        register(RagiumConfig.COMMON.largeDrumCapacity.get(), RagiumBlocks.LARGE_DRUM)
-        register(RagiumConfig.COMMON.hugeDrumCapacity.get(), RagiumBlocks.HUGE_DRUM)
+        register(RagiumConfig.COMMON.smallDrumCapacity.get(), RagiumBlocks.Drums.SMALL)
+        register(RagiumConfig.COMMON.mediumDrumCapacity.get(), RagiumBlocks.Drums.MEDIUM)
+        register(RagiumConfig.COMMON.largeDrumCapacity.get(), RagiumBlocks.Drums.LARGE)
+        register(RagiumConfig.COMMON.hugeDrumCapacity.get(), RagiumBlocks.Drums.HUGE)
     }
 
     @SubscribeEvent
     fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         // Tickets
-        fun setColor(item: DeferredItem<*>, color: ChatFormatting) {
+        fun setColor(item: HTItemHolderLike, color: ChatFormatting) {
             event.modify(item) { builder: DataComponentPatch.Builder ->
                 builder.set(
                     DataComponents.ITEM_NAME,
@@ -473,16 +460,16 @@ object RagiumItems {
             }
         }
 
-        setColor(BLANK_TICKET, ChatFormatting.DARK_GRAY)
+        setColor(Tickets.BLANK, ChatFormatting.DARK_GRAY)
 
-        setColor(RAGI_TICKET, ChatFormatting.RED)
-        setColor(AZURE_TICKET, ChatFormatting.BLUE)
-        setColor(BLOODY_TICKET, ChatFormatting.DARK_RED)
-        setColor(TELEPORT_TICKET, ChatFormatting.DARK_AQUA)
-        setColor(ELDRITCH_TICKET, ChatFormatting.LIGHT_PURPLE)
+        setColor(Tickets.RAGI, ChatFormatting.RED)
+        setColor(Tickets.AZURE, ChatFormatting.BLUE)
+        setColor(Tickets.BLOODY, ChatFormatting.DARK_RED)
+        setColor(Tickets.TELEPORT, ChatFormatting.DARK_AQUA)
+        setColor(Tickets.ELDRITCH, ChatFormatting.LIGHT_PURPLE)
 
-        setColor(DAYBREAK_TICKET, ChatFormatting.GOLD)
-        setColor(ETERNAL_TICKET, ChatFormatting.YELLOW)
+        setColor(Tickets.DAYBREAK, ChatFormatting.GOLD)
+        setColor(Tickets.ETERNAL, ChatFormatting.YELLOW)
 
         // Tools
         fun setEnch(item: DeferredItem<*>, ench: ResourceKey<Enchantment>, level: Int = 1) {
@@ -503,7 +490,7 @@ object RagiumItems {
             builder.set(RagiumDataComponents.POTION_BUNDLE.get(), HTPotionBundle.EMPTY)
         }
 
-        event.modify(RagiumBlocks.CEU) { builder: DataComponentPatch.Builder ->
+        event.modify(RagiumBlocks.Devices.CEU) { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
 

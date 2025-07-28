@@ -87,7 +87,7 @@ class RagiumEmiPlugin : EmiPlugin {
         registry.addGenericStackProvider(RagiumEmiStackProvider)
 
         registry.setDefaultComparison(
-            RagiumItems.RAGI_TICKET.get(),
+            RagiumItems.Tickets.RAGI.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TABLE_ID.get()) },
         )
     }
@@ -314,7 +314,7 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.WATER_COLLECTOR))
+                .leftInput(EmiStack.of(RagiumBlocks.Devices.WATER_COLLECTOR))
                 .rightInput(EmiStack.EMPTY, false)
                 .output(EmiStack.of(Fluids.WATER))
                 .build()
@@ -324,7 +324,7 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.LAVA_COLLECTOR))
+                .leftInput(EmiStack.of(RagiumBlocks.Devices.LAVA_COLLECTOR))
                 .rightInput(EmiStack.EMPTY, false)
                 .output(EmiStack.of(Fluids.LAVA))
                 .build()
@@ -334,7 +334,7 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.MILK_DRAIN))
+                .leftInput(EmiStack.of(RagiumBlocks.Devices.MILK_DRAIN))
                 .rightInput(EmiStack.of(Items.COW_SPAWN_EGG), true)
                 .output(EmiStack.of(NeoForgeMod.MILK.get()))
                 .build()
@@ -344,7 +344,7 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiWorldInteractionRecipe
                 .builder()
                 .id(id)
-                .leftInput(EmiStack.of(RagiumBlocks.EXP_COLLECTOR))
+                .leftInput(EmiStack.of(RagiumBlocks.Devices.EXP_COLLECTOR))
                 .rightInput(EmiStack.EMPTY, false)
                 .output(EmiStack.of(RagiumFluidContents.EXPERIENCE.get()))
                 .build()

@@ -38,7 +38,7 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
             register(
                 RagiumAPI.id("azure_shard_from_").withSuffix(suffix),
                 block,
-                Ingredient.of(RagiumItems.AZURE_TICKET),
+                Ingredient.of(RagiumItems.Tickets.AZURE),
                 HTBreakBlockAction(false),
                 HTDropItemBlockAction(RagiumItems.AZURE_SHARD, count),
             )
@@ -53,45 +53,45 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
         register(
             RagiumAPI.id("crimson_nylium_from_netherrack"),
             Tags.Blocks.NETHERRACKS,
-            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            Ingredient.of(RagiumItems.Tickets.BLOODY),
             HTReplaceBlockAction.update(Blocks.CRIMSON_NYLIUM),
         )
         register(
             RagiumAPI.id("crimson_fungus_from_mushroom"),
             Blocks.RED_MUSHROOM,
-            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            Ingredient.of(RagiumItems.Tickets.BLOODY),
             HTReplaceBlockAction.update(Blocks.CRIMSON_FUNGUS),
         )
         register(
             RagiumAPI.id("crimson_roots_from_grass"),
             Blocks.SHORT_GRASS,
-            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            Ingredient.of(RagiumItems.Tickets.BLOODY),
             HTReplaceBlockAction.update(Blocks.CRIMSON_ROOTS),
         )
         register(
             RagiumAPI.id("weeping_vines_from_grass"),
             Blocks.VINE,
-            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            Ingredient.of(RagiumItems.Tickets.BLOODY),
             HTDropItemBlockAction(Blocks.WEEPING_VINES),
         )
 
         register(
             RagiumAPI.id("nether_wart_from_moss"),
             Blocks.BEETROOTS,
-            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            Ingredient.of(RagiumItems.Tickets.BLOODY),
             HTDropItemBlockAction(Items.NETHER_WART),
         )
         register(
             RagiumAPI.id("nether_wart_block_from_moss"),
             Blocks.MOSS_BLOCK,
-            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            Ingredient.of(RagiumItems.Tickets.BLOODY),
             HTReplaceBlockAction.update(Blocks.NETHER_WART_BLOCK),
         )
 
         register(
             RagiumBlocks.CRIMSON_SOIL.id,
             Blocks.SOUL_SOIL,
-            Ingredient.of(RagiumItems.BLOODY_TICKET),
+            Ingredient.of(RagiumItems.Tickets.BLOODY),
             HTReplaceBlockAction.update(RagiumBlocks.CRIMSON_SOIL.get()),
         )
     }
@@ -100,33 +100,33 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
         register(
             RagiumAPI.id("sculk_from_moss"),
             Blocks.MOSS_BLOCK,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTReplaceBlockAction.update(Blocks.SCULK),
         )
         register(
             RagiumAPI.id("sculk_vein_from_vine"),
             Blocks.VINE,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTBreakBlockAction(false),
             HTDropItemBlockAction(Blocks.SCULK_VEIN),
         )
         register(
             RagiumAPI.id("echo_shard_from_amethyst"),
             Blocks.AMETHYST_CLUSTER,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTBreakBlockAction(false),
             HTDropItemBlockAction(Items.ECHO_SHARD),
         )
         register(
             RagiumAPI.id("sculk_catalyst_from_bone_blocks"),
             Tags.Blocks.STORAGE_BLOCKS_BONE_MEAL,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTReplaceBlockAction.update(Blocks.SCULK_CATALYST),
         )
         register(
             RagiumAPI.id("activate_sculk_shrieker"),
             Blocks.SCULK_SHRIEKER,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTPlaySoundBlockAction(SoundEvents.SCULK_SHRIEKER_SHRIEK),
             HTReplaceBlockAction.update(
                 Blocks.SCULK_SHRIEKER
@@ -140,19 +140,19 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
         register(
             RagiumAPI.id("end_stone_from_cobblestones"),
             Tags.Blocks.COBBLESTONES,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTReplaceBlockAction.update(Blocks.END_STONE),
         )
         register(
             RagiumAPI.id("end_rod_from_lightning_rod"),
             Blocks.LIGHTNING_ROD,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTReplaceBlockAction.update(Blocks.END_ROD),
         )
         register(
             RagiumAPI.id("chorus_fruit_from_melon"),
             Blocks.MELON,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTBreakBlockAction(false),
             HTDropItemBlockAction(Items.CHORUS_FRUIT, 3),
         )
@@ -160,7 +160,7 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
         register(
             RagiumAPI.id("crying_to_mysterious"),
             Tags.Blocks.OBSIDIANS_CRYING,
-            Ingredient.of(RagiumItems.ELDRITCH_TICKET),
+            Ingredient.of(RagiumItems.Tickets.ELDRITCH),
             HTReplaceBlockAction.update(RagiumBlocks.MYSTERIOUS_OBSIDIAN.get()),
         )
     }

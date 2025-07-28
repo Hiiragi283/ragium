@@ -1,38 +1,37 @@
 package hiiragi283.ragium.integration.emi
 
 import dev.emi.emi.api.EmiRegistry
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumBlocks
 
 object RagiumEmiCategories {
     // Machines
     @JvmField
-    val ALLOYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConst.ALLOYING), RagiumBlocks.ALLOY_SMELTER)
+    val ALLOYING = HTEmiRecipeCategory(RagiumConst.ALLOYING, RagiumBlocks.Machines.ALLOY_SMELTER)
 
     @JvmField
-    val CRUSHING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConst.CRUSHING), RagiumBlocks.CRUSHER)
+    val CRUSHING = HTEmiRecipeCategory(RagiumConst.CRUSHING, RagiumBlocks.Machines.CRUSHER)
 
     @JvmField
-    val DISTILLATION = HTEmiRecipeCategory(RagiumAPI.id("distillation"), RagiumBlocks.REFINERY)
+    val DISTILLATION = HTEmiRecipeCategory("distillation", RagiumBlocks.Machines.REFINERY)
 
     @JvmField
-    val EXTRACTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConst.EXTRACTING), RagiumBlocks.EXTRACTOR)
+    val EXTRACTING = HTEmiRecipeCategory(RagiumConst.EXTRACTING, RagiumBlocks.Machines.EXTRACTOR)
 
     @JvmField
-    val INFUSING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConst.INFUSING), RagiumBlocks.INFUSER)
+    val INFUSING = HTEmiRecipeCategory(RagiumConst.INFUSING, RagiumBlocks.Machines.INFUSER)
 
     @JvmField
-    val MELTING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConst.MELTING), RagiumBlocks.MELTER)
+    val MELTING = HTEmiRecipeCategory(RagiumConst.MELTING, RagiumBlocks.Machines.MELTER)
 
     @JvmField
-    val PRESSING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConst.PRESSING), RagiumBlocks.FORMING_PRESS)
+    val PRESSING = HTEmiRecipeCategory(RagiumConst.PRESSING, RagiumBlocks.Machines.FORMING_PRESS)
 
     @JvmField
-    val REFINING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConst.REFINING), RagiumBlocks.REFINERY)
+    val REFINING = HTEmiRecipeCategory(RagiumConst.REFINING, RagiumBlocks.Machines.REFINERY)
 
     @JvmField
-    val SOLIDIFYING = HTEmiRecipeCategory(RagiumAPI.id(RagiumConst.SOLIDIFYING), RagiumBlocks.SOLIDIFIER)
+    val SOLIDIFYING = HTEmiRecipeCategory(RagiumConst.SOLIDIFYING, RagiumBlocks.Machines.SOLIDIFIER)
 
     @JvmField
     val CATEGORIES: List<HTEmiRecipeCategory> = listOf(

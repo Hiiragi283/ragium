@@ -54,7 +54,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         fortuneDrop(
             RagiumBlocks.ASH_LOG,
             UniformGenerator.between(1f, 3f),
-            RagiumItems.ASH_DUST,
+            RagiumItems.Dusts.ASH,
         )
 
         // Bush
@@ -87,7 +87,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                 }
             }
         }
-        registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RAGINITE_DUST)
+        registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.Dusts.RAGINITE)
 
         // Food
         /*add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
@@ -121,7 +121,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }*/
 
         // Storages
-        for (holder: DeferredBlock<Block> in RagiumBlocks.DRUMS) {
+        for (holder: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {
             add(holder.get()) {
                 copyComponent(
                     it,

@@ -68,19 +68,19 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
     private fun glass() {
         // Quartz Glass
         createAlloying()
-            .itemOutput(RagiumBlocks.QUARTZ_GLASS)
+            .itemOutput(RagiumBlocks.Glasses.QUARTZ)
             .itemInput(Items.QUARTZ_BLOCK)
             .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
             .save(output)
         // Soul Glass
         createAlloying()
-            .itemOutput(RagiumBlocks.SOUL_GLASS)
+            .itemOutput(RagiumBlocks.Glasses.SOUL)
             .itemInput(Items.SOUL_SAND)
             .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
             .save(output)
         // Obsidian Glass
         createAlloying()
-            .itemOutput(RagiumBlocks.OBSIDIAN_GLASS)
+            .itemOutput(RagiumBlocks.Glasses.OBSIDIAN)
             .itemInput(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4)
             .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
             .save(output)

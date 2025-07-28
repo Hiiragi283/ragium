@@ -85,12 +85,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
             .saveSuffixed(output, "_from_gilded")
 
         createCrushing()
-            .itemOutput(RagiumItems.OBSIDIAN_DUST, 4)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4)
             .itemInput(Tags.Items.OBSIDIANS_NORMAL)
             .saveSuffixed(output, "_from_block")
 
         createCrushing()
-            .itemOutput(RagiumItems.ASH_DUST, 3)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_ASH, 3)
             .itemInput(RagiumBlocks.ASH_LOG)
             .saveSuffixed(output, "_from_log")
 
@@ -173,7 +173,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider() {
 
         createCrushing()
             .itemOutput(Items.SAND, 4)
-            .itemOutput(RagiumItems.SALTPETER_DUST, chance = 1 / 4f)
+            .itemOutput(RagiumCommonTags.Items.DUSTS_SALTPETER, chance = 1 / 4f)
             .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             .saveSuffixed(output, "_from_sandstone")
 

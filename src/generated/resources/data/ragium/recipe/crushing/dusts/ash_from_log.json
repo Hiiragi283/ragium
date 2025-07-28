@@ -2,10 +2,10 @@
   "type": "ragium:crushing",
   "item_input": {
     "count": 1,
-    "tag": "c:obsidians/normal"
+    "item": "ragium:ash_log"
   },
   "item_output": {
-    "count": 4,
-    "id": "ragium:obsidian_dust"
+    "count": 3,
+    "id": "#c:dusts/ash"
   }
 }

@@ -7,12 +7,9 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.DeferredBlock
 
 object RagiumPressingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
@@ -54,7 +51,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
 
     private fun circuits() {
         // Basic
-        HTShapedRecipeBuilder(RagiumItems.BASIC_CIRCUIT)
+        HTShapedRecipeBuilder(RagiumItems.Circuits.BASIC)
             .pattern(
                 "AAA",
                 "BCB",
@@ -64,7 +61,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
             .define('C', Tags.Items.INGOTS_IRON)
             .save(output)
         // Advanced
-        HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
+        HTShapedRecipeBuilder(RagiumItems.Circuits.ADVANCED)
             .cross4()
             .define('A', Tags.Items.INGOTS_GOLD)
             .define('B', Tags.Items.DUSTS_GLOWSTONE)
@@ -78,12 +75,13 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
             .catalyst(RagiumCommonTags.Items.PLATES_PLASTIC)
             .save(output)
 
-        mapOf(
-            Tags.Items.INGOTS_COPPER to RagiumItems.BASIC_CIRCUIT,
-            Tags.Items.INGOTS_GOLD to RagiumItems.ADVANCED_CIRCUIT,
-            RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL to RagiumItems.ELITE_CIRCUIT,
-            RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL to RagiumItems.ULTIMATE_CIRCUIT,
-        ).forEach { (input: TagKey<Item>, circuit: ItemLike) ->
+        for (circuit: RagiumItems.Circuits in RagiumItems.Circuits.entries) {
+            val input: TagKey<Item> = when (circuit) {
+                RagiumItems.Circuits.BASIC -> Tags.Items.INGOTS_COPPER
+                RagiumItems.Circuits.ADVANCED -> Tags.Items.INGOTS_GOLD
+                RagiumItems.Circuits.ELITE -> RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL
+                RagiumItems.Circuits.ULTIMATE -> RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL
+            }
             createPressing()
                 .itemOutput(circuit)
                 .itemInput(input)
@@ -121,17 +119,17 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
             .catalyst(Tags.Items.INGOTS_COPPER)
             .save(output)
         // LED Block
-        HTShapedRecipeBuilder(RagiumBlocks.getLedBlock(DyeColor.WHITE), 8)
+        HTShapedRecipeBuilder(RagiumBlocks.LEDBlocks.WHITE, 8)
             .hollow8()
             .define('A', Tags.Items.GLASS_BLOCKS)
             .define('B', RagiumItems.LED)
             .saveSuffixed(output, "_from_led")
 
-        for ((color: DyeColor, block: DeferredBlock<*>) in RagiumBlocks.LED_BLOCKS) {
-            HTShapedRecipeBuilder(block, 8)
+        for (holderLike: RagiumBlocks.LEDBlocks in RagiumBlocks.LEDBlocks.entries) {
+            HTShapedRecipeBuilder(holderLike, 8)
                 .hollow8()
                 .define('A', RagiumModTags.Items.LED_BLOCKS)
-                .define('B', color.tag)
+                .define('B', holderLike.color.tag)
                 .save(output)
         }
 

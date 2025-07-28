@@ -5,14 +5,11 @@ import hiiragi283.ragium.api.extension.blockId
 import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.layeredModel
-import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.simpleAltBlock
-import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTBlockSet
-import hiiragi283.ragium.common.block.HTBlockStateProperties
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -22,39 +19,32 @@ import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredBlock
+import java.util.function.Supplier
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
     override fun registerStatesAndModels() {
         // Simple Blocks
-        buildList {
-            add(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
-            add(RagiumBlocks.AZURE_STEEL_BLOCK)
-            add(RagiumBlocks.CHOCOLATE_BLOCK)
-            add(RagiumBlocks.COOKED_MEAT_BLOCK)
-            add(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
-            add(RagiumBlocks.DEEP_STEEL_BLOCK)
-            add(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
-            add(RagiumBlocks.MEAT_BLOCK)
-            add(RagiumBlocks.RAGI_ALLOY_BLOCK)
-            add(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
-            add(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
+        val holderLikes: List<HTBlockHolderLike> = buildList {
+            addAll(RagiumBlocks.StorageBlocks.entries)
+            addAll(RagiumBlocks.LEDBlocks.entries)
 
+            add(RagiumBlocks.Devices.CEU)
+            add(RagiumBlocks.Devices.ENI)
+            add(RagiumBlocks.Devices.EXP_COLLECTOR)
+            add(RagiumBlocks.Devices.ITEM_BUFFER)
+            add(RagiumBlocks.Devices.SPRINKLER)
+            add(RagiumBlocks.Devices.TELEPORT_ANCHOR)
+        }
+
+        buildList {
             add(RagiumBlocks.CRIMSON_SOIL)
             add(RagiumBlocks.SILT)
 
-            add(RagiumBlocks.DEVICE_CASING)
+            add(RagiumBlocks.Casings.DEVICE.holder)
 
-            add(RagiumBlocks.CEU)
-            add(RagiumBlocks.ENI)
-            add(RagiumBlocks.EXP_COLLECTOR)
-            add(RagiumBlocks.ITEM_BUFFER)
-            add(RagiumBlocks.SPRINKLER)
-            add(RagiumBlocks.TELEPORT_ANCHOR)
-
-            addAll(RagiumBlocks.LED_BLOCKS.values)
-        }.forEach(::simpleBlock)
+            addAll(holderLikes.map(HTBlockHolderLike::holder))
+        }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
         layeredBlock(
             RagiumBlocks.MYSTERIOUS_OBSIDIAN,
@@ -62,7 +52,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             RagiumAPI.id("block/mysterious_obsidian"),
         )
 
-        RagiumBlocks.GLASSES.forEach(::cutoutSimpleBlock)
+        RagiumBlocks.Glasses.entries.forEach(::cutoutSimpleBlock)
 
         for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
             sets.addBlockStates(this)
@@ -108,10 +98,10 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         simpleAltBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Machine Frame
-        simpleAltBlock(RagiumBlocks.WOODEN_CASING, vanillaId("block/note_block"))
+        simpleAltBlock(RagiumBlocks.Casings.WOODEN, vanillaId("block/note_block"))
 
         simpleBlock(
-            RagiumBlocks.STONE_CASING.get(),
+            RagiumBlocks.Casings.STONE.get(),
             models().cubeColumn(
                 "block/stone_casing",
                 vanillaId("block/furnace_side"),
@@ -119,12 +109,12 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             ),
         )
 
-        cutoutSimpleBlock(RagiumBlocks.BASIC_MACHINE_FRAME)
-        cutoutSimpleBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME)
-        cutoutSimpleBlock(RagiumBlocks.ELITE_MACHINE_FRAME)
+        cutoutSimpleBlock(RagiumBlocks.Frames.BASIC)
+        cutoutSimpleBlock(RagiumBlocks.Frames.ADVANCED)
+        cutoutSimpleBlock(RagiumBlocks.Frames.ELITE)
 
         // Machine
-        fun machine(holder: DeferredBlock<*>, top: ResourceLocation, bottom: ResourceLocation) {
+        fun machine(holder: HTBlockHolderLike, top: ResourceLocation, bottom: ResourceLocation) {
             horizontalBlock(
                 holder.get(),
                 models()
@@ -136,34 +126,34 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         val basicMachine: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
-        machine(RagiumBlocks.CRUSHER, basicMachine, vanillaId("block/bricks"))
-        machine(RagiumBlocks.BLOCK_BREAKER, basicMachine, vanillaId("block/bricks"))
-        machine(RagiumBlocks.EXTRACTOR, basicMachine, vanillaId("block/bricks"))
-        machine(RagiumBlocks.FORMING_PRESS, basicMachine, vanillaId("block/bricks"))
+        machine(RagiumBlocks.Machines.CRUSHER, basicMachine, vanillaId("block/bricks"))
+        machine(RagiumBlocks.Machines.BLOCK_BREAKER, basicMachine, vanillaId("block/bricks"))
+        machine(RagiumBlocks.Machines.EXTRACTOR, basicMachine, vanillaId("block/bricks"))
+        machine(RagiumBlocks.Machines.FORMING_PRESS, basicMachine, vanillaId("block/bricks"))
 
         val advancedMachine: ResourceLocation = RagiumAPI.id("block/advanced_machine_casing")
-        machine(RagiumBlocks.ALLOY_SMELTER, advancedMachine, vanillaId("block/nether_bricks"))
-        machine(RagiumBlocks.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
-        machine(RagiumBlocks.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
-        machine(RagiumBlocks.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(RagiumBlocks.Machines.ALLOY_SMELTER, advancedMachine, vanillaId("block/nether_bricks"))
+        machine(RagiumBlocks.Machines.MELTER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(RagiumBlocks.Machines.REFINERY, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
+        machine(RagiumBlocks.Machines.SOLIDIFIER, advancedMachine, vanillaId("block/polished_blackstone_bricks"))
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block/elite_machine_casing")
-        machine(RagiumBlocks.INFUSER, eliteMachine, vanillaId("block/deepslate_tiles"))
+        machine(RagiumBlocks.Machines.INFUSER, eliteMachine, vanillaId("block/deepslate_tiles"))
 
         // Device
         layeredBlock(
-            RagiumBlocks.WATER_COLLECTOR,
+            RagiumBlocks.Devices.WATER_COLLECTOR,
             vanillaId("block/water_still"),
             RagiumAPI.id("block/device_overlay"),
         )
 
         layeredBlock(
-            RagiumBlocks.LAVA_COLLECTOR,
+            RagiumBlocks.Devices.LAVA_COLLECTOR,
             vanillaId("block/lava_still"),
             RagiumAPI.id("block/device_overlay"),
         )
 
-        simpleAltBlock(RagiumBlocks.MILK_DRAIN)
+        simpleAltBlock(RagiumBlocks.Devices.MILK_DRAIN)
 
         // Manual Machine
         /*getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
@@ -193,7 +183,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
 
         // Storages
-        for (drum: DeferredBlock<Block> in RagiumBlocks.DRUMS) {
+        for (drum: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {
             val id: ResourceLocation = drum.blockId
             simpleBlock(
                 drum.get(),
@@ -208,12 +198,12 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
     //    Extensions    //
 
-    private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
+    /*private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
 
     private fun <T : Any> ConfiguredModel.Builder<T>.rotationY(state: BlockState): ConfiguredModel.Builder<T> =
         rotationY(state.getValue(HTBlockStateProperties.HORIZONTAL).getRotationY())
 
-    /*private fun cauldronBlock(holder: DeferredBlock<*>) {
+    private fun cauldronBlock(holder: DeferredBlock<*>) {
         if (holder == RagiumBlocks.HONEY_CAULDRON) return
         getVariantBuilder(holder.get())
             .forAllStates { state: BlockState ->

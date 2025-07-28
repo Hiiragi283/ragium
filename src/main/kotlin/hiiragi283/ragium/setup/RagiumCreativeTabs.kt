@@ -33,33 +33,22 @@ object RagiumCreativeTabs {
         output.acceptItems(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
         output.accept(RagiumBlocks.RESONANT_DEBRIS)
         // Storage Blocks
-        output.accept(RagiumBlocks.RAGI_ALLOY_BLOCK)
-        output.accept(RagiumBlocks.ADVANCED_RAGI_ALLOY_BLOCK)
-
-        output.accept(RagiumBlocks.AZURE_STEEL_BLOCK)
-        output.accept(RagiumBlocks.DEEP_STEEL_BLOCK)
-
-        output.accept(RagiumBlocks.RAGI_CRYSTAL_BLOCK)
-        output.accept(RagiumBlocks.CRIMSON_CRYSTAL_BLOCK)
-        output.accept(RagiumBlocks.WARPED_CRYSTAL_BLOCK)
-
-        output.accept(RagiumBlocks.ELDRITCH_PEARL_BLOCK)
-
-        output.accept(RagiumBlocks.CHOCOLATE_BLOCK)
-        output.accept(RagiumBlocks.MEAT_BLOCK)
-        output.accept(RagiumBlocks.COOKED_MEAT_BLOCK)
+        output.acceptItems(RagiumBlocks.StorageBlocks.entries)
         // Machines
-        output.acceptItems(RagiumBlocks.CASINGS)
-        output.acceptItems(RagiumBlocks.MACHINES)
-        output.acceptItems(RagiumBlocks.DEVICES)
-        output.acceptItems(RagiumBlocks.DRUMS)
+        output.acceptItems(RagiumBlocks.Frames.entries)
+        output.acceptItems(RagiumBlocks.Machines.entries)
+
+        output.acceptItems(RagiumBlocks.Casings.entries)
+        output.acceptItems(RagiumBlocks.Devices.entries)
+
+        output.acceptItems(RagiumBlocks.Drums.entries)
         // Decorations
         for (items: List<Item> in RagiumBlocks.DECORATIONS.map(HTBuildingBlockSets::getItems)) {
             output.acceptItems(items)
         }
 
-        output.acceptItems(RagiumBlocks.GLASSES)
-        output.acceptItems(RagiumBlocks.LED_BLOCKS.values)
+        output.acceptItems(RagiumBlocks.Glasses.entries)
+        output.acceptItems(RagiumBlocks.LEDBlocks.entries)
     }
 
     @JvmField
@@ -99,21 +88,12 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.MINCED_MEAT)
         output.accept(RagiumItems.MEAT_INGOT)
         output.accept(RagiumItems.COOKED_MEAT_INGOT)
-        // Dusts
-        output.accept(RagiumItems.RAGINITE_DUST)
-        output.accept(RagiumItems.RAGI_COKE)
 
-        output.accept(RagiumItems.ASH_DUST)
-        output.accept(RagiumItems.CINNABAR_DUST)
-        output.accept(RagiumItems.OBSIDIAN_DUST)
-        output.accept(RagiumItems.SALTPETER_DUST)
-        output.accept(RagiumItems.SULFUR_DUST)
-
-        output.accept(RagiumItems.SAWDUST)
-        output.accept(RagiumItems.COMPRESSED_SAWDUST)
-
-        output.accept(RagiumItems.TAR)
+        output.acceptItems(RagiumItems.Dusts.entries)
         // Ingredients
+        output.accept(RagiumItems.RAGI_COKE)
+        output.accept(RagiumItems.COMPRESSED_SAWDUST)
+        output.accept(RagiumItems.TAR)
         output.accept(RagiumItems.ELDER_HEART)
 
         output.accept(RagiumItems.LUMINOUS_PASTE)
@@ -127,11 +107,7 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.SYNTHETIC_FIBER)
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 
-        output.accept(RagiumItems.CIRCUIT_BOARD)
-        output.accept(RagiumItems.BASIC_CIRCUIT)
-        output.accept(RagiumItems.ADVANCED_CIRCUIT)
-        output.accept(RagiumItems.ELITE_CIRCUIT)
-        output.accept(RagiumItems.ULTIMATE_CIRCUIT)
+        output.acceptItems(RagiumItems.Circuits.entries)
     }
 
     @JvmField
@@ -141,7 +117,7 @@ object RagiumCreativeTabs {
             "ragi_ticket",
         ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
-            output.acceptItems(RagiumItems.FORGE_HAMMERS.values)
+            output.acceptItems(RagiumItems.ForgeHammers.entries)
             output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_UPGRADE_SMITHING_TEMPLATE)
 
             output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
@@ -184,18 +160,8 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.WARPED_WART)
             output.accept(RagiumItems.AMBROSIA)
             // Tickets
-            output.accept(RagiumItems.BLANK_TICKET)
-
-            output.accept(RagiumItems.RAGI_TICKET)
+            output.acceptItems(RagiumItems.Tickets.entries)
             output.acceptAll(HTLootTicketHelper.DEFAULT_LOOT_TICKETS.values)
-
-            output.accept(RagiumItems.AZURE_TICKET)
-            output.accept(RagiumItems.BLOODY_TICKET)
-            output.accept(RagiumItems.TELEPORT_TICKET)
-            output.accept(RagiumItems.ELDRITCH_TICKET)
-
-            output.accept(RagiumItems.DAYBREAK_TICKET)
-            output.accept(RagiumItems.ETERNAL_TICKET)
         }
 
     @JvmStatic
