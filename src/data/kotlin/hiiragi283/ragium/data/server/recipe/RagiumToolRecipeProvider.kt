@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.setup.RagiumItems
@@ -118,7 +118,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
 
         EQUIPMENT_SUFFIXES
             .associate { suffix: String ->
-                "iron$suffix" to RagiumConstantValues.AZURE_STEEL + suffix
+                "iron$suffix" to RagiumConst.AZURE_STEEL + suffix
             }.forEach { (base: String, result: String) ->
                 addAzureSmithing(
                     DeferredItem.createItem<Item>(RagiumAPI.id(result)),
@@ -135,7 +135,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
 
         EQUIPMENT_SUFFIXES
             .associate { suffix: String ->
-                "diamond$suffix" to RagiumConstantValues.DEEP_STEEL + suffix
+                "diamond$suffix" to RagiumConst.DEEP_STEEL + suffix
             }.forEach { (base: String, result: String) ->
                 addDeepSmithing(
                     DeferredItem.createItem<Item>(RagiumAPI.id(result)),

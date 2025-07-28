@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
@@ -27,11 +27,11 @@ abstract class HTFluidCollectorBlockEntity(type: HTDeferredBlockEntityType<*>, p
     protected val tank = HTFluidTank(RagiumConfig.COMMON.machineTankCapacity.get(), this::setChanged)
 
     final override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConstantValues.TANK, tank)
+        writer.write(RagiumConst.TANK, tank)
     }
 
     final override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConstantValues.TANK, tank)
+        reader.read(RagiumConst.TANK, tank)
     }
 
     override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {

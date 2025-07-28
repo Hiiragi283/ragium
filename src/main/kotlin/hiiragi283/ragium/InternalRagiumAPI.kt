@@ -19,7 +19,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
@@ -112,14 +112,14 @@ class InternalRagiumAPI : RagiumAPI {
     )
 
     override fun unifyItemFromId(holder: Holder<Item>, id: ResourceLocation): Holder<Item> {
-        if (ModList.get().isLoaded(RagiumConstantValues.ALMOST)) {
+        if (ModList.get().isLoaded(RagiumConst.ALMOST)) {
             return AlmostUnified.INSTANCE.getVariantItemTarget(holder.value())?.asItemHolder() ?: holder
         }
         return holder
     }
 
     override fun unifyItemFromTag(holder: Holder<Item>, tagKey: TagKey<Item>): Holder<Item> {
-        if (ModList.get().isLoaded(RagiumConstantValues.ALMOST)) {
+        if (ModList.get().isLoaded(RagiumConst.ALMOST)) {
             return AlmostUnified.INSTANCE.getTagTargetItem(tagKey)?.asItemHolder() ?: holder
         }
         return holder

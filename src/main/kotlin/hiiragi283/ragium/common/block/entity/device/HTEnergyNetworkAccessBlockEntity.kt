@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -37,11 +37,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
     protected abstract val network: IEnergyStorage?
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConstantValues.INVENTORY, inventory)
+        writer.write(RagiumConst.INVENTORY, inventory)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConstantValues.INVENTORY, inventory)
+        reader.read(RagiumConst.INVENTORY, inventory)
     }
 
     override fun onRemove(

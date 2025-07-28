@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -25,11 +25,11 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected abstract val inventory: HTItemHandler
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConstantValues.INVENTORY, inventory)
+        writer.write(RagiumConst.INVENTORY, inventory)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConstantValues.INVENTORY, inventory)
+        reader.read(RagiumConst.INVENTORY, inventory)
     }
 
     override fun onRemove(

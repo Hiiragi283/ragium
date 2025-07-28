@@ -2,7 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
@@ -25,29 +25,29 @@ object RagiumRecipeTypes {
     private fun <R : Recipe<*>> register(name: String): Supplier<RecipeType<R>> = REGISTER.register(name, RecipeType<*>::simple)
 
     @JvmField
-    val ALLOYING: Supplier<RecipeType<HTAlloyingRecipe>> = register(RagiumConstantValues.ALLOYING)
+    val ALLOYING: Supplier<RecipeType<HTAlloyingRecipe>> = register(RagiumConst.ALLOYING)
 
     @JvmField
-    val BLOCK_INTERACTING: Supplier<RecipeType<HTBlockInteractingRecipe>> = register(RagiumConstantValues.BLOCK_INTERACTING)
+    val BLOCK_INTERACTING: Supplier<RecipeType<HTBlockInteractingRecipe>> = register(RagiumConst.BLOCK_INTERACTING)
 
     @JvmField
-    val CRUSHING: Supplier<RecipeType<HTCrushingRecipe>> = register(RagiumConstantValues.CRUSHING)
+    val CRUSHING: Supplier<RecipeType<HTCrushingRecipe>> = register(RagiumConst.CRUSHING)
 
     @JvmField
-    val EXTRACTING: Supplier<RecipeType<HTExtractingRecipe>> = register(RagiumConstantValues.EXTRACTING)
+    val EXTRACTING: Supplier<RecipeType<HTExtractingRecipe>> = register(RagiumConst.EXTRACTING)
 
     @JvmField
-    val INFUSING: Supplier<RecipeType<HTInfusingRecipe>> = register(RagiumConstantValues.INFUSING)
+    val INFUSING: Supplier<RecipeType<HTInfusingRecipe>> = register(RagiumConst.INFUSING)
 
     @JvmField
-    val MELTING: Supplier<RecipeType<HTMeltingRecipe>> = register(RagiumConstantValues.MELTING)
+    val MELTING: Supplier<RecipeType<HTMeltingRecipe>> = register(RagiumConst.MELTING)
 
     @JvmField
-    val PRESSING: Supplier<RecipeType<HTPressingRecipe>> = register(RagiumConstantValues.PRESSING)
+    val PRESSING: Supplier<RecipeType<HTPressingRecipe>> = register(RagiumConst.PRESSING)
 
     @JvmField
-    val REFINING: Supplier<RecipeType<HTRefiningRecipe>> = register(RagiumConstantValues.REFINING)
+    val REFINING: Supplier<RecipeType<HTRefiningRecipe>> = register(RagiumConst.REFINING)
 
     @JvmField
-    val SOLIDIFYING: Supplier<RecipeType<HTSolidifyingRecipe>> = register(RagiumConstantValues.SOLIDIFYING)
+    val SOLIDIFYING: Supplier<RecipeType<HTSolidifyingRecipe>> = register(RagiumConst.SOLIDIFYING)
 }

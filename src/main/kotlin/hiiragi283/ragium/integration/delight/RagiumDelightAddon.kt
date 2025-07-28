@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.addon.HTAddon
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.registry.HTBlockRegister
 import hiiragi283.ragium.api.registry.HTItemRegister
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
@@ -16,7 +16,7 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.registries.DeferredItem
 
-@HTAddon(RagiumConstantValues.FARMERS_DELIGHT)
+@HTAddon(RagiumConst.FARMERS_DELIGHT)
 object RagiumDelightAddon : RagiumAddon {
     //    Block    //
 

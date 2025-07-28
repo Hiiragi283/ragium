@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
@@ -24,7 +24,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(Tags.Items.INGOTS_COPPER)
             .result(RagiumItems.RAGI_ALLOY_INGOT.get())
             .time(160)
-            .export(output, RagiumConstantValues.RAGI_ALLOY)
+            .export(output, RagiumConst.RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
@@ -32,7 +32,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(Tags.Items.INGOTS_GOLD)
             .result(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT.get())
             .time(160)
-            .export(output, RagiumConstantValues.ADVANCED_RAGI_ALLOY)
+            .export(output, RagiumConst.ADVANCED_RAGI_ALLOY)
 
         FoundryRecipeBuilder
             .build()
@@ -48,7 +48,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(Tags.Items.INGOTS_IRON)
             .result(RagiumItems.AZURE_STEEL_INGOT.get())
             .time(160)
-            .export(output, RagiumConstantValues.AZURE_STEEL)
+            .export(output, RagiumConst.AZURE_STEEL)
 
         FoundryRecipeBuilder
             .build()
@@ -56,7 +56,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
             .result(RagiumItems.DEEP_STEEL_INGOT.get())
             .time(160)
-            .export(output, RagiumConstantValues.DEEP_STEEL)
+            .export(output, RagiumConst.DEEP_STEEL)
 
         FoundryRecipeBuilder
             .build()
@@ -75,7 +75,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .result(RagiumItems.RAGI_CRYSTAL.get())
             .time(20)
-            .export(output, RagiumConstantValues.RAGI_CRYSTAL)
+            .export(output, RagiumConst.RAGI_CRYSTAL)
     }
 
     private fun particle() {

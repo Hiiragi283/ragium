@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.data.server.material.RagiumMaterialFamilies
 import hiiragi283.ragium.data.server.material.VanillaMaterialFamilies
@@ -45,10 +45,10 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumPressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
-        RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.ARS_NOUVEAU)
-        RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.FARMERS_DELIGHT)
-        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.MEKANISM)
-        RagiumOritechRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.ORITECH)
-        RagiumReplicationRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConstantValues.REPLICATION)
+        RagiumArsRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.ARS_NOUVEAU)
+        RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.FARMERS_DELIGHT)
+        RagiumMekanismRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.MEKANISM)
+        RagiumOritechRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.ORITECH)
+        RagiumReplicationRecipeProvider.buildRecipes(recipeOutput, holderLookup, RagiumConst.REPLICATION)
     }
 }

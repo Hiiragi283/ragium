@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -24,10 +24,10 @@ class HTExtractingRecipe(val ingredient: SizedIngredient, val output: HTItemOutp
                 instance
                     .group(
                         SizedIngredient.FLAT_CODEC
-                            .fieldOf(RagiumConstantValues.ITEM_INPUT)
+                            .fieldOf(RagiumConst.ITEM_INPUT)
                             .forGetter(HTExtractingRecipe::ingredient),
                         HTItemOutput.CODEC
-                            .fieldOf(RagiumConstantValues.ITEM_OUTPUT)
+                            .fieldOf(RagiumConst.ITEM_OUTPUT)
                             .forGetter(HTExtractingRecipe::output),
                     ).apply(instance, ::HTExtractingRecipe)
             }.validate { recipe: HTExtractingRecipe ->

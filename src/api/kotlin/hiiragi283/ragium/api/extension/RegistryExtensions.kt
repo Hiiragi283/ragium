@@ -2,7 +2,7 @@
 
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -36,7 +36,7 @@ fun vanillaId(path: String): ResourceLocation = ResourceLocation.withDefaultName
 /**
  * 名前空間が`c`となる[ResourceLocation]を返します。
  */
-fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(RagiumConstantValues.COMMON, path)
+fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(RagiumConst.COMMON, path)
 
 fun commonId(prefix: String, value: String): ResourceLocation = commonId("$prefix/$value")
 

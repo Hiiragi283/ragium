@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.HTMaterialFamily
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -210,7 +210,7 @@ class RagiumItemTagsProvider(
         tag(RagiumCommonTags.Items.PAPER).addItem(Items.PAPER)
         tag(RagiumModTags.Items.POLYMER_RESIN)
             .addItem(RagiumItems.POLYMER_RESIN)
-            .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConstantValues.ORITECH, "polymer_resin"))
+            .addOptional(ResourceLocation.fromNamespaceAndPath(RagiumConst.ORITECH, "polymer_resin"))
 
         tag(RagiumCommonTags.Items.PLASTICS).addOptionalTag(RagiumCommonTags.Items.PLATES_PLASTIC)
         tag(RagiumCommonTags.Items.PLATES_PLASTIC).addOptionalTag(RagiumCommonTags.Items.PLASTICS)

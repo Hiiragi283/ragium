@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import net.neoforged.neoforge.common.ModConfigSpec
 import org.apache.commons.lang3.tuple.Pair
 
@@ -125,7 +125,7 @@ object RagiumConfig {
                     "tagOutputModIds",
                     listOf(
                         RagiumAPI.MOD_ID,
-                        RagiumConstantValues.MINECRAFT,
+                        RagiumConst.MINECRAFT,
                         "alltheores",
                     ),
                     { "" },

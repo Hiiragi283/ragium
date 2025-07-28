@@ -4,7 +4,7 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -53,39 +53,39 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val ALLOYING: Supplier<RecipeSerializer<HTAlloyingRecipe>> =
-        register(RagiumConstantValues.ALLOYING, HTAlloyingRecipe.CODEC, HTAlloyingRecipe.STREAM_CODEC)
+        register(RagiumConst.ALLOYING, HTAlloyingRecipe.CODEC, HTAlloyingRecipe.STREAM_CODEC)
 
     @JvmField
     val BLOCK_INTERACTING: Supplier<RecipeSerializer<HTBlockInteractingRecipeImpl>> =
-        register(RagiumConstantValues.BLOCK_INTERACTING, HTBlockInteractingRecipeImpl.CODEC, HTBlockInteractingRecipeImpl.STREAM_CODEC)
+        register(RagiumConst.BLOCK_INTERACTING, HTBlockInteractingRecipeImpl.CODEC, HTBlockInteractingRecipeImpl.STREAM_CODEC)
 
     @JvmField
     val CRUSHING: Supplier<RecipeSerializer<HTCrushingRecipe>> =
-        register(RagiumConstantValues.CRUSHING, HTCrushingRecipe.CODEC, HTCrushingRecipe.STREAM_CODEC)
+        register(RagiumConst.CRUSHING, HTCrushingRecipe.CODEC, HTCrushingRecipe.STREAM_CODEC)
 
     @JvmField
     val EXTRACTING: Supplier<RecipeSerializer<HTExtractingRecipe>> =
-        register(RagiumConstantValues.EXTRACTING, HTExtractingRecipe.CODEC, HTExtractingRecipe.STREAM_CODEC)
+        register(RagiumConst.EXTRACTING, HTExtractingRecipe.CODEC, HTExtractingRecipe.STREAM_CODEC)
 
     @JvmField
     val INFUSING: Supplier<RecipeSerializer<HTInfusingRecipe>> =
-        register(RagiumConstantValues.INFUSING, HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
+        register(RagiumConst.INFUSING, HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
 
     @JvmField
     val MELTING: Supplier<RecipeSerializer<HTMeltingRecipe>> =
-        register(RagiumConstantValues.MELTING, HTMeltingRecipe.CODEC, HTMeltingRecipe.STREAM_CODEC)
+        register(RagiumConst.MELTING, HTMeltingRecipe.CODEC, HTMeltingRecipe.STREAM_CODEC)
 
     @JvmField
     val PRESSING: Supplier<RecipeSerializer<HTPressingRecipe>> =
-        register(RagiumConstantValues.PRESSING, HTPressingRecipe.CODEC, HTPressingRecipe.STREAM_CODEC)
+        register(RagiumConst.PRESSING, HTPressingRecipe.CODEC, HTPressingRecipe.STREAM_CODEC)
 
     @JvmField
     val REFINING: Supplier<RecipeSerializer<HTRefiningRecipe>> =
-        register(RagiumConstantValues.REFINING, HTRefiningRecipe.CODEC, HTRefiningRecipe.STREAM_CODEC)
+        register(RagiumConst.REFINING, HTRefiningRecipe.CODEC, HTRefiningRecipe.STREAM_CODEC)
 
     @JvmField
     val SOLIDIFYING: Supplier<RecipeSerializer<HTSolidifyingRecipe>> =
-        register(RagiumConstantValues.SOLIDIFYING, HTSolidifyingRecipe.CODEC, HTSolidifyingRecipe.STREAM_CODEC)
+        register(RagiumConst.SOLIDIFYING, HTSolidifyingRecipe.CODEC, HTSolidifyingRecipe.STREAM_CODEC)
 
     //    Custom    //
 

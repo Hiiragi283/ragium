@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -26,11 +26,11 @@ abstract class HTDrumBlockEntity(
     //    Save & Load    //
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConstantValues.TANK, tank)
+        writer.write(RagiumConst.TANK, tank)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConstantValues.TANK, tank)
+        reader.read(RagiumConst.TANK, tank)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {

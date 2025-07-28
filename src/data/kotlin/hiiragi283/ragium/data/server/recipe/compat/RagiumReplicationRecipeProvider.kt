@@ -6,7 +6,7 @@ import com.buuz135.replication.calculation.MatterValue
 import com.buuz135.replication.recipe.MatterValueRecipe
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.integration.replication.RagiumReplicationAddon
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -71,7 +71,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
         val id: ResourceLocation = holder.id
         register(
             ResourceLocation.fromNamespaceAndPath(
-                RagiumConstantValues.REPLICATION,
+                RagiumConst.REPLICATION,
                 "matter_values/${id.namespace}/items/${id.path}",
             ),
             Ingredient.of(holder),
@@ -84,7 +84,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider() {
         val id: ResourceLocation = tagKey.location
         register(
             ResourceLocation.fromNamespaceAndPath(
-                RagiumConstantValues.REPLICATION,
+                RagiumConst.REPLICATION,
                 "matter_values/${id.namespace}/tags/${id.path}",
             ),
             Ingredient.of(tagKey),

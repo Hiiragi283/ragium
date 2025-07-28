@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider
@@ -63,7 +63,7 @@ object RagiumDatagen {
                         .add(Registries.CONFIGURED_FEATURE, RagiumConfiguredProvider)
                         .add(Registries.PLACED_FEATURE, RagiumPlacedProvider)
                         .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifierProvider),
-                    setOf(RagiumConstantValues.MINECRAFT, RagiumAPI.MOD_ID),
+                    setOf(RagiumConst.MINECRAFT, RagiumAPI.MOD_ID),
                 ),
             ).registryProvider
 

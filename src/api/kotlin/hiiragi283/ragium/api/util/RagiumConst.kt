@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.util
 
-object RagiumConstantValues {
+object RagiumConst {
     //    Materials    //
 
     const val ADVANCED_RAGI_ALLOY = "advanced_ragi_alloy"
@@ -71,10 +71,11 @@ object RagiumConstantValues {
     const val REFINING = "refining"
     const val SOLIDIFYING = "solidifying"
 
-    const val ITEM_INPUT = "item_input"
-    const val ITEM_OUTPUT = "item_output"
+    const val CATALYST = "catalyst"
     const val FLUID_INPUT = "fluid_input"
     const val FLUID_OUTPUT = "fluid_output"
+    const val ITEM_INPUT = "item_input"
+    const val ITEM_OUTPUT = "item_output"
 
     //    Tag Prefixes    //
 

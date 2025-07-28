@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTRefineryMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -40,13 +40,13 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override val energyUsage: Int get() = RagiumConfig.COMMON.advancedMachineEnergyUsage.get()
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write("${RagiumConstantValues.TANK}_in", tankIn)
-        writer.write("${RagiumConstantValues.TANK}_out", tankOut)
+        writer.write("${RagiumConst.TANK}_in", tankIn)
+        writer.write("${RagiumConst.TANK}_out", tankOut)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read("${RagiumConstantValues.TANK}_in", tankIn)
-        reader.read("${RagiumConstantValues.TANK}_out", tankOut)
+        reader.read("${RagiumConst.TANK}_in", tankIn)
+        reader.read("${RagiumConst.TANK}_out", tankOut)
     }
 
     override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {

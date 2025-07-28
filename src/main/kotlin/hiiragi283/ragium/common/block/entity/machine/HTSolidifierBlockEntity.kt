@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTSolidifierMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
@@ -42,12 +42,12 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
         super.writeNbt(writer)
-        writer.write(RagiumConstantValues.TANK, tank)
+        writer.write(RagiumConst.TANK, tank)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
         super.readNbt(reader)
-        reader.read(RagiumConstantValues.TANK, tank)
+        reader.read(RagiumConst.TANK, tank)
     }
 
     override fun sendUpdatePacket(serverLevel: ServerLevel, consumer: (CustomPacketPayload) -> Unit) {

@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.extension
 import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.Util
 import net.minecraft.advancements.Advancement
@@ -67,7 +67,7 @@ fun LanguageProvider.addAdvancement(key: ResourceKey<Advancement>, title: String
 }
 
 fun LanguageProvider.addMatterType(type: IMatterType, value: String) {
-    add("${RagiumConstantValues.REPLICATION}.matter_type.${type.name}", value)
+    add("${RagiumConst.REPLICATION}.matter_type.${type.name}", value)
 }
 
 fun LanguageProvider.addItemGroup(group: DeferredHolder<CreativeModeTab, CreativeModeTab>, value: String) {

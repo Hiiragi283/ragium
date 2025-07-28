@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -26,11 +26,11 @@ class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockE
     private val inventory = HTItemStackHandler(9, this::setChanged)
 
     override fun writeNbt(writer: HTNbtCodec.Writer) {
-        writer.write(RagiumConstantValues.INVENTORY, inventory)
+        writer.write(RagiumConst.INVENTORY, inventory)
     }
 
     override fun readNbt(reader: HTNbtCodec.Reader) {
-        reader.read(RagiumConstantValues.INVENTORY, inventory)
+        reader.read(RagiumConst.INVENTORY, inventory)
     }
 
     override fun onRemove(

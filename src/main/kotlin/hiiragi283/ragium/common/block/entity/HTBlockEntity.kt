@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -98,9 +98,9 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             }
         }
         // Target Side
-        writer.writeNullable(Direction.CODEC, RagiumConstantValues.TARGET_SIDE, outputSide)
+        writer.writeNullable(Direction.CODEC, RagiumConst.TARGET_SIDE, outputSide)
         // Upgrades
-        writer.write(RagiumConstantValues.UPGRADES, upgrades)
+        writer.write(RagiumConst.UPGRADES, upgrades)
         // Custom
         writeNbt(writer)
     }
@@ -117,10 +117,10 @@ abstract class HTBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         }
         // Target Side
         reader
-            .read(Direction.CODEC, RagiumConstantValues.TARGET_SIDE)
+            .read(Direction.CODEC, RagiumConst.TARGET_SIDE)
             .ifSuccess { direction: Direction -> outputSide = direction }
         // Upgrades
-        reader.read(RagiumConstantValues.UPGRADES, upgrades)
+        reader.read(RagiumConst.UPGRADES, upgrades)
         // Custom
         readNbt(reader)
     }

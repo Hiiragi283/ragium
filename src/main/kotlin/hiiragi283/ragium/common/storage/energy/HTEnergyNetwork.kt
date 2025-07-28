@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.storage.energy.IEnergyStorageModifiable
 import hiiragi283.ragium.api.util.HTSavedDataType
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.ExtraCodecs
@@ -26,18 +26,18 @@ internal class HTEnergyNetwork(private var amount: Int, private var capacity: In
         val CODEC: Codec<HTEnergyNetwork> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    ExtraCodecs.NON_NEGATIVE_INT
-                        .optionalFieldOf(RagiumConstantValues.ENERGY_STORED, 0)
-                        .forGetter(HTEnergyNetwork::amount),
+                    ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf(RagiumConst.ENERGY_STORED, 0).forGetter(HTEnergyNetwork::amount),
                     ExtraCodecs.POSITIVE_INT
-                        .optionalFieldOf(RagiumConstantValues.ENERGY_CAPACITY, getInitialCapacity())
-                        .forGetter(HTEnergyNetwork::capacity),
+                        .optionalFieldOf(
+                            RagiumConst.ENERGY_CAPACITY,
+                            getInitialCapacity(),
+                        ).forGetter(HTEnergyNetwork::capacity),
                 ).apply(instance, ::HTEnergyNetwork)
         }
 
         @JvmField
         val DATA_FACTORY: HTSavedDataType<HTEnergyNetwork> =
-            HTSavedDataType.create(RagiumAPI.id(RagiumConstantValues.NETWORK), CODEC, ::HTEnergyNetwork)
+            HTSavedDataType.create(RagiumAPI.id(RagiumConst.NETWORK), CODEC, ::HTEnergyNetwork)
     }
 
     constructor() : this(0, getInitialCapacity())
@@ -47,8 +47,8 @@ internal class HTEnergyNetwork(private var amount: Int, private var capacity: In
     }
 
     override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag = buildNbt {
-        putInt(RagiumConstantValues.ENERGY_STORED, amount)
-        putInt(RagiumConstantValues.ENERGY_CAPACITY, capacity)
+        putInt(RagiumConst.ENERGY_STORED, amount)
+        putInt(RagiumConst.ENERGY_CAPACITY, capacity)
     }
 
     //    IEnergyStorage    //

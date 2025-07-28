@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.RagiumConstantValues
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -16,7 +16,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 
 object RagiumFoodRecipeProvider : HTRecipeProvider() {
-    val disabledByDelight: ICondition = not(modLoaded(RagiumConstantValues.FARMERS_DELIGHT))
+    val disabledByDelight: ICondition = not(modLoaded(RagiumConst.FARMERS_DELIGHT))
 
     override fun buildRecipeInternal() {
         // Chocolate
