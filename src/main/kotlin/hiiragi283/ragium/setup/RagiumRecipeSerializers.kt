@@ -49,10 +49,6 @@ object RagiumRecipeSerializers {
         }
     }
 
-    @JvmStatic
-    private fun <T : Recipe<*>> registerUnit(name: String, recipe: T): Supplier<RecipeSerializer<T>> =
-        register(name, MapCodec.unit(recipe), StreamCodec.unit(recipe))
-
     //    Machine    //
 
     @JvmField
@@ -114,8 +110,8 @@ object RagiumRecipeSerializers {
         register("blast_charge", SimpleCraftingRecipeSerializer(::HTBlastChargeRecipe))
 
     @JvmField
-    val ETERNAL_TICKET: Supplier<RecipeSerializer<HTEternalTicketRecipe>> =
-        registerUnit("eternal_ticket", HTEternalTicketRecipe)
+    val ETERNAL_TICKET: Supplier<SimpleCraftingRecipeSerializer<HTEternalTicketRecipe>> =
+        register("eternal_ticket", SimpleCraftingRecipeSerializer(::HTEternalTicketRecipe))
 
     @JvmField
     val ICE_CREAM_SODA: Supplier<SimpleCraftingRecipeSerializer<HTIceCreamSodaRecipe>> =

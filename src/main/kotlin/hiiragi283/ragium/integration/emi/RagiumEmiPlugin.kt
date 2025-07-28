@@ -11,7 +11,6 @@ import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
-import dev.emi.emi.recipe.special.EmiSmithingTrimRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.extension.createPotionStack
@@ -36,6 +35,7 @@ import hiiragi283.ragium.integration.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDecomposeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTPressingEmiRecipe
@@ -125,20 +125,18 @@ class RagiumEmiPlugin : EmiPlugin {
             if (recipe is HTBlastChargeRecipe) {
                 addRecipeSafe(id, ::HTBlastChargeEmiRecipe)
             }
-        }
-        // Smithing
-        addRecipeSafe(HTEternalTicketRecipe) { recipe: HTEternalTicketRecipe ->
-            EmiSmithingTrimRecipe(
-                EmiStack.of(RagiumItems.ETERNAL_TICKET),
+            if (recipe is HTEternalTicketRecipe) {
                 EmiPort
                     .getItemRegistry()
                     .holders()
-                    .filter { holder: Holder<Item> -> holder.value().defaultInstance.isDamageableItem }
-                    .toEmi(),
-                EmiStack.EMPTY,
-                EmiStack.EMPTY,
-                recipe,
-            )
+                    .forEach { holder: Holder.Reference<Item> ->
+                        val item: Item = holder.value()
+                        if (!item.defaultInstance.isDamageableItem) return@forEach
+                        addRecipeSafe(
+                            holder.idOrThrow.withPrefix("/shapeless/eternal_ticket/"),
+                        ) { id: ResourceLocation -> HTEternalTicketEmiRecipe(item, id) }
+                    }
+            }
         }
         // Block Action
         forEachRecipes(RagiumRecipeTypes.BLOCK_INTERACTING.get()) { id: ResourceLocation, recipe: HTBlockInteractingRecipe ->

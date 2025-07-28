@@ -205,8 +205,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
             HTBlastChargeRecipe(CraftingBookCategory.EQUIPMENT),
         )
         save(
-            RagiumAPI.id("smithing/eternal_ticket"),
-            HTEternalTicketRecipe,
+            RagiumAPI.id("shapeless/eternal_ticket"),
+            HTEternalTicketRecipe(CraftingBookCategory.MISC),
         )
     }
 
