@@ -26,6 +26,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 
@@ -79,7 +80,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         insertToOutput(1..1, recipe.output.getChancedStack(level.random), false)
         // インプットを減らす
         tank.drain(recipe.ingredient.amount(), IFluidHandler.FluidAction.EXECUTE)
-        inventory.consumeStackInSlot(0, 1, true)
+        inventory.consumeStackInSlot(0, recipe.catalyst.map(SizedIngredient::count).orElse(0), true)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }

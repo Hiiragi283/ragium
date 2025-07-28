@@ -91,7 +91,7 @@ internal object RagiumRecipeFactories {
     fun solidifying(definition: HTRecipeDefinition): HTSolidifyingRecipe {
         val ingredient: SizedFluidIngredient = checkPresent(definition.getFluidIngredient(0), "Required one fluid ingredient!")
         val output: HTItemOutput = checkPresent(definition.getItemOutput(0), "Required one item output!")
-        return HTSolidifyingRecipe(ingredient, definition.catalyst, output)
+        return HTSolidifyingRecipe(ingredient, definition.getItemIngredient(0), output)
     }
 
     //    Extension    //

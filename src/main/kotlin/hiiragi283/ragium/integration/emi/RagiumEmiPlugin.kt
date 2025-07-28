@@ -248,7 +248,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTSolidifyingEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
-                    EmiIngredient.of(recipe.catalyst),
+                    recipe.catalyst.map(SizedIngredient::toEmi).orElse(EmiStack.EMPTY),
                     recipe.output.toEmi(),
                 ),
             )

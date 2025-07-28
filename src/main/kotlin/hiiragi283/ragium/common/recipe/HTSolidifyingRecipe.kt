@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
@@ -11,13 +12,15 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import java.util.Optional
 
-class HTSolidifyingRecipe(val ingredient: SizedFluidIngredient, val catalyst: Ingredient, val output: HTItemOutput) : HTUniversalRecipe {
+class HTSolidifyingRecipe(val ingredient: SizedFluidIngredient, val catalyst: Optional<SizedIngredient>, val output: HTItemOutput) :
+    HTUniversalRecipe {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTSolidifyingRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -26,8 +29,8 @@ class HTSolidifyingRecipe(val ingredient: SizedFluidIngredient, val catalyst: In
                     SizedFluidIngredient.FLAT_CODEC
                         .fieldOf(RagiumConst.FLUID_INPUT)
                         .forGetter(HTSolidifyingRecipe::ingredient),
-                    Ingredient.CODEC
-                        .optionalFieldOf(RagiumConst.CATALYST, Ingredient.EMPTY)
+                    SizedIngredient.FLAT_CODEC
+                        .optionalFieldOf(RagiumConst.CATALYST)
                         .forGetter(HTSolidifyingRecipe::catalyst),
                     HTItemOutput.CODEC
                         .fieldOf(RagiumConst.ITEM_OUTPUT)
@@ -39,7 +42,7 @@ class HTSolidifyingRecipe(val ingredient: SizedFluidIngredient, val catalyst: In
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTSolidifyingRecipe> = StreamCodec.composite(
             SizedFluidIngredient.STREAM_CODEC,
             HTSolidifyingRecipe::ingredient,
-            Ingredient.CONTENTS_STREAM_CODEC,
+            SizedIngredient.STREAM_CODEC.toOptional(),
             HTSolidifyingRecipe::catalyst,
             HTItemOutput.STREAM_CODEC,
             HTSolidifyingRecipe::output,
@@ -52,7 +55,7 @@ class HTSolidifyingRecipe(val ingredient: SizedFluidIngredient, val catalyst: In
         val catalystStack: ItemStack = input.getItem(0)
         val bool2: Boolean = when {
             catalyst.isEmpty -> catalystStack.isEmpty
-            else -> catalyst.test(catalystStack)
+            else -> catalyst.get().test(catalystStack)
         }
         return bool1 && bool2
     }

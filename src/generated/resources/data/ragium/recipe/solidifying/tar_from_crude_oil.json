@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:crude_oil"
+  },
+  "item_output": {
+    "count": 1,
+    "id": "ragium:tar"
+  }
+}

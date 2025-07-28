@@ -22,7 +22,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         // Chocolate
         createSolidifying()
             .itemOutput(RagiumCommonTags.Items.INGOTS_CHOCOLATE)
-            .catalyst(Tags.Items.CROPS_COCOA_BEAN)
+            .itemInput(Tags.Items.CROPS_COCOA_BEAN)
             .milkInput(250)
             .saveSuffixed(output, "_from_milk")
 

@@ -1,6 +1,7 @@
 {
   "type": "ragium:solidifying",
   "catalyst": {
+    "count": 1,
     "item": "minecraft:clay_ball"
   },
   "fluid_input": {

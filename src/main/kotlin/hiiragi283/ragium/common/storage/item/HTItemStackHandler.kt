@@ -27,7 +27,7 @@ open class HTItemStackHandler(size: Int = 1, private var callback: (Int) -> Unit
         if (stack.isEmptyOrIgnored) return
         when {
             stack.hasCraftingRemainingItem() -> setStackInSlot(slot, stack.craftingRemainingItem)
-            stack.isDamageableItem && applyDamage -> stack.damageValue += 1
+            stack.isDamageableItem && applyDamage -> stack.damageValue += count
             else -> stack.shrink(count)
         }
     }

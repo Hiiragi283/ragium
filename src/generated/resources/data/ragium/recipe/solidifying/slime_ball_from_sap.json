@@ -1,0 +1,12 @@
+{
+  "type": "ragium:solidifying",
+  "fluid_input": {
+    "amount": 1000,
+    "tag": "c:sap"
+  },
+  "item_output": {
+    "chance": 0.25,
+    "count": 1,
+    "id": "minecraft:slime_ball"
+  }
+}

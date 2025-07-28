@@ -5,13 +5,6 @@ import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderGetter
@@ -73,26 +66,32 @@ abstract class HTRecipeProvider : IConditionBuilder {
         output.accept(recipeId, recipe, null, *conditions)
     }
 
-    fun createAlloying(): HTDefinitionRecipeBuilder<HTAlloyingRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConst.ALLOYING, RagiumRecipeFactories::alloying)
+    fun createAlloying(): HTDefinitionRecipeBuilder =
+        HTDefinitionRecipeBuilder.create(RagiumConst.ALLOYING, RagiumRecipeFactories::alloying)
 
-    fun createCrushing(): HTDefinitionRecipeBuilder<HTCrushingRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConst.CRUSHING, RagiumRecipeFactories::crushing)
+    fun createCrushing(): HTDefinitionRecipeBuilder =
+        HTDefinitionRecipeBuilder.create(RagiumConst.CRUSHING, RagiumRecipeFactories::crushing)
 
-    fun createExtracting(): HTDefinitionRecipeBuilder<HTExtractingRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConst.EXTRACTING, RagiumRecipeFactories::extracting)
+    fun createExtracting(): HTDefinitionRecipeBuilder =
+        HTDefinitionRecipeBuilder.create(RagiumConst.EXTRACTING, RagiumRecipeFactories::extracting)
 
-    fun createMelting(): HTDefinitionRecipeBuilder<HTMeltingRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConst.MELTING, RagiumRecipeFactories::melting)
+    fun createMelting(): HTDefinitionRecipeBuilder = HTDefinitionRecipeBuilder.create(RagiumConst.MELTING, RagiumRecipeFactories::melting)
 
-    fun createPressing(): HTDefinitionRecipeBuilder<HTPressingRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConst.PRESSING, RagiumRecipeFactories::pressing)
+    fun createPressing(): HTDefinitionRecipeBuilder =
+        HTDefinitionRecipeBuilder.create(RagiumConst.PRESSING, RagiumRecipeFactories::pressing)
 
-    fun createRefining(): HTDefinitionRecipeBuilder<HTRefiningRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConst.REFINING, RagiumRecipeFactories::refining)
+    fun createRefining(): HTDefinitionRecipeBuilder =
+        HTDefinitionRecipeBuilder.create(RagiumConst.REFINING, RagiumRecipeFactories::refining)
 
-    fun createSolidifying(): HTDefinitionRecipeBuilder<HTSolidifyingRecipe> =
-        HTDefinitionRecipeBuilder(RagiumConst.SOLIDIFYING, RagiumRecipeFactories::solidifying)
+    fun createSolidifying(): HTDefinitionRecipeBuilder =
+        HTDefinitionRecipeBuilder.create(RagiumConst.SOLIDIFYING, RagiumRecipeFactories::solidifying)
+
+    fun createDistillation(): HTDefinitionRecipeBuilder = HTDefinitionRecipeBuilder(
+        listOf(
+            HTDefinitionRecipeBuilder.Context(RagiumConst.REFINING, RagiumRecipeFactories::refining),
+            HTDefinitionRecipeBuilder.Context(RagiumConst.SOLIDIFYING, RagiumRecipeFactories::solidifying),
+        ),
+    )
 
     fun createNetheriteUpgrade(output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder(output)
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)

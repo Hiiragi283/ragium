@@ -34,7 +34,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     private fun bio() {
         createSolidifying()
             .itemOutput(RagiumModTags.Items.POLYMER_RESIN)
-            .catalyst(RagiumCommonTags.Items.FUELS_BIO_BLOCK)
+            .itemInput(RagiumCommonTags.Items.FUELS_BIO_BLOCK)
             .waterInput(250)
             .saveSuffixed(output, "_from_bio")
     }
@@ -43,7 +43,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Exp Bottle
         createSolidifying()
             .itemOutput(Items.EXPERIENCE_BOTTLE)
-            .catalyst(Items.GLASS_BOTTLE)
+            .itemInput(Items.GLASS_BOTTLE)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
             .save(output)
 
@@ -55,7 +55,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Honey Bottle
         createSolidifying()
             .itemOutput(Items.HONEY_BOTTLE)
-            .catalyst(Items.GLASS_BOTTLE)
+            .itemInput(Items.GLASS_BOTTLE)
             .fluidInput(RagiumFluidContents.HONEY, 250)
             .save(output)
 
@@ -66,7 +66,7 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Water Bottle
         createSolidifying()
             .itemOutput(createPotionStack(Potions.WATER))
-            .catalyst(Items.GLASS_BOTTLE)
+            .itemInput(Items.GLASS_BOTTLE)
             .waterInput(250)
             .save(output, RagiumAPI.id("water_bottle"))
     }
@@ -86,29 +86,29 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Crude Oil + clay -> Polymer Resin
         createSolidifying()
             .itemOutput(RagiumModTags.Items.POLYMER_RESIN)
-            .catalyst(Items.CLAY_BALL)
+            .itemInput(Items.CLAY_BALL)
             .fluidInput(RagiumFluidContents.CRUDE_OIL, 125)
             .saveSuffixed(output, "_from_crude_oil")
 
         // Crude Oil -> LPG + Naphtha + Tar
-        createRefining()
+        createDistillation()
             .fluidOutput(RagiumFluidContents.NAPHTHA, 375)
             .fluidOutput(RagiumFluidContents.LPG, 375)
             .itemOutput(RagiumItems.TAR)
             .fluidInput(RagiumFluidContents.CRUDE_OIL, 1000)
-            .save(output)
+            .saveSuffixed(output, "_from_crude_oil")
         // LPG + Coal -> 4x Polymer Resin
         createSolidifying()
             .itemOutput(RagiumModTags.Items.POLYMER_RESIN, 4)
-            .catalyst(Items.COAL)
+            .itemInput(Items.COAL)
             .fluidInput(RagiumFluidContents.LPG, 125)
             .saveSuffixed(output, "_from_lpg")
         // Naphtha -> Diesel + Sulfur
-        createRefining()
+        createDistillation()
             .fluidOutput(RagiumFluidContents.DIESEL, 375)
             .itemOutput(RagiumCommonTags.Items.DUSTS_SULFUR)
             .fluidInput(RagiumFluidContents.NAPHTHA, 1000)
-            .save(output)
+            .saveSuffixed(output, "_from_naphtha")
         // Diesel + Crimson Crystal -> Crimson Fuel
     }
 
@@ -116,31 +116,31 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
         // Golden Apple
         createSolidifying()
             .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
-            .catalyst(Items.GOLDEN_APPLE)
+            .itemInput(Items.GOLDEN_APPLE)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 8000)
             .save(output)
         // Exp Berries
         createSolidifying()
             .itemOutput(RagiumItems.EXP_BERRIES)
-            .catalyst(Tags.Items.FOODS_BERRY)
+            .itemInput(Tags.Items.FOODS_BERRY)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 1000)
             .save(output)
         // Blaze Powder
         createSolidifying()
             .itemOutput(Items.BLAZE_POWDER)
-            .catalyst(RagiumCommonTags.Items.DUSTS_SULFUR)
+            .itemInput(RagiumCommonTags.Items.DUSTS_SULFUR)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
             .save(output)
         // Wind Charge
         createSolidifying()
             .itemOutput(Items.WIND_CHARGE)
-            .catalyst(Items.SNOWBALL)
+            .itemInput(Items.SNOWBALL)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 250)
             .save(output)
         // Ghast Tear
         createSolidifying()
             .itemOutput(Items.GHAST_TEAR)
-            .catalyst(Items.CHISELED_QUARTZ_BLOCK)
+            .itemInput(Items.CHISELED_QUARTZ_BLOCK)
             .fluidInput(RagiumFluidContents.EXPERIENCE, 1000)
             .save(output)
     }
@@ -152,11 +152,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .itemInput(ItemTags.LOGS_THAT_BURN)
             .saveSuffixed(output, "_from_log")
         // Sap -> Syrup
-        createRefining()
+        createDistillation()
+            .itemOutput(Items.SLIME_BALL)
             .fluidOutput(RagiumFluidContents.SYRUP, 750)
             .fluidOutput(Fluids.WATER, 250)
             .fluidInput(RagiumFluidContents.SAP, 1000)
-            .save(output)
+            .saveSuffixed(output, "_from_sap")
         // Syrup -> Sugar
         createSolidifying()
             .itemOutput(Items.SUGAR)
@@ -168,17 +169,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.CRIMSON_SAP, 125)
             .itemInput(ItemTags.CRIMSON_STEMS)
             .saveSuffixed(output, "_from_stems")
-        // Crimson Sap -> Crimson Crystal
-        createSolidifying()
-            .itemOutput(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
-            .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
-            .save(output)
         // Crimson Sap -> Sap + Crimson Crystal
-        createRefining()
+        createDistillation()
             .itemOutput(RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
             .fluidOutput(RagiumFluidContents.SAP, 125)
             .fluidInput(RagiumFluidContents.CRIMSON_SAP.commonTag, 1000)
-            .save(output)
+            .saveSuffixed(output, "_from_crimson_sap")
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, onlyBlasting = true)
@@ -190,17 +186,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidOutput(RagiumFluidContents.WARPED_SAP, 125)
             .itemInput(ItemTags.WARPED_STEMS)
             .saveSuffixed(output, "_from_stems")
-        // Warped Sap -> Warped Crystal
-        createSolidifying()
-            .itemOutput(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)
-            .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
-            .save(output)
         // Warped Sap -> Sap + Warped Crystal
-        createRefining()
+        createDistillation()
             .itemOutput(RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL)
             .fluidOutput(RagiumFluidContents.SAP, 125)
             .fluidInput(RagiumFluidContents.WARPED_SAP.commonTag, 1000)
-            .save(output)
+            .saveSuffixed(output, "_from_warped_sap")
         // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, onlyBlasting = true)
@@ -229,29 +220,29 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
     private fun solidifying() {
         // Dirt -> Mud
         createSolidifying()
-            .itemOutput(Items.MUD)
-            .catalyst(Items.DIRT)
-            .waterInput(250)
+            .itemOutput(Items.MUD, 8)
+            .itemInput(Items.DIRT, 8)
+            .waterInput()
             .saveSuffixed(output, "_from_dirt")
         // Silt -> Clay
         createSolidifying()
-            .itemOutput(Items.CLAY)
-            .catalyst(RagiumBlocks.SILT)
-            .waterInput(250)
+            .itemOutput(Items.CLAY, 8)
+            .itemInput(RagiumBlocks.SILT)
+            .waterInput()
             .saveSuffixed(output, "_from_silt")
 
         // Milk + Snow -> Ice Cream
         createSolidifying()
             .itemOutput(RagiumItems.ICE_CREAM)
-            .catalyst(Items.SNOWBALL)
+            .itemInput(Items.SNOWBALL)
             .milkInput(250)
             .save(output)
 
         for (color: DyeColor in DyeColor.entries) {
             createSolidifying()
-                .itemOutput(DeferredItem.createItem<Item>(vanillaId("${color.serializedName}_concrete")))
-                .catalyst(DeferredItem.createItem<Item>(vanillaId("${color.serializedName}_concrete_powder")))
-                .waterInput(125)
+                .itemOutput(DeferredItem.createItem<Item>(vanillaId("${color.serializedName}_concrete")), 8)
+                .itemInput(DeferredItem.createItem<Item>(vanillaId("${color.serializedName}_concrete_powder")), 8)
+                .waterInput()
                 .saveSuffixed(output, "_from_powder")
         }
     }

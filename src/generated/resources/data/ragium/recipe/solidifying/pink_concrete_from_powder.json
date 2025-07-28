@@ -1,14 +1,15 @@
 {
   "type": "ragium:solidifying",
   "catalyst": {
+    "count": 8,
     "item": "minecraft:pink_concrete_powder"
   },
   "fluid_input": {
-    "amount": 125,
+    "amount": 1000,
     "tag": "c:water"
   },
   "item_output": {
-    "count": 1,
+    "count": 8,
     "id": "minecraft:pink_concrete"
   }
 }

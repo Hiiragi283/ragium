@@ -26,9 +26,15 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
 
-class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, private val factory: (HTRecipeDefinition) -> R) :
+class HTDefinitionRecipeBuilder(private val contexts: List<Context>) :
     HTRecipeBuilder,
-    HTItemOutputRecipeBuilder<HTDefinitionRecipeBuilder<R>> {
+    HTItemOutputRecipeBuilder<HTDefinitionRecipeBuilder> {
+    companion object {
+        @JvmStatic
+        fun create(prefix: String, factory: (HTRecipeDefinition) -> Recipe<*>): HTDefinitionRecipeBuilder =
+            HTDefinitionRecipeBuilder(listOf(Context(prefix, factory)))
+    }
+
     private val itemInputs: MutableList<SizedIngredient> = mutableListOf()
     private val fluidInputs: MutableList<SizedFluidIngredient> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
@@ -38,48 +44,47 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
 
     //    Item Input    //
 
-    fun itemInput(item: ItemLike, count: Int = 1): HTDefinitionRecipeBuilder<R> = itemInput(SizedIngredient.of(item, count))
+    fun itemInput(item: ItemLike, count: Int = 1): HTDefinitionRecipeBuilder = itemInput(SizedIngredient.of(item, count))
 
-    fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTDefinitionRecipeBuilder<R> = itemInput(SizedIngredient.of(tagKey, count))
+    fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTDefinitionRecipeBuilder = itemInput(SizedIngredient.of(tagKey, count))
 
-    fun itemInput(ingredient: ICustomIngredient, count: Int = 1): HTDefinitionRecipeBuilder<R> =
+    fun itemInput(ingredient: ICustomIngredient, count: Int = 1): HTDefinitionRecipeBuilder =
         itemInput(SizedIngredient(ingredient.toVanilla(), count))
 
-    fun itemInput(ingredient: Ingredient, count: Int = 1): HTDefinitionRecipeBuilder<R> = itemInput(SizedIngredient(ingredient, count))
+    fun itemInput(ingredient: Ingredient, count: Int = 1): HTDefinitionRecipeBuilder = itemInput(SizedIngredient(ingredient, count))
 
-    private fun itemInput(ingredient: SizedIngredient): HTDefinitionRecipeBuilder<R> = apply {
+    private fun itemInput(ingredient: SizedIngredient): HTDefinitionRecipeBuilder = apply {
         itemInputs.add(ingredient)
     }
 
     //    Fluid Input    //
 
-    fun fluidInput(fluid: HTFluidContent<*, *, *>, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidInput(fluid.commonTag, amount)
+    fun fluidInput(fluid: HTFluidContent<*, *, *>, amount: Int = 1000): HTDefinitionRecipeBuilder = fluidInput(fluid.commonTag, amount)
 
-    fun fluidInput(fluid: Fluid, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidInput(FluidIngredient.of(fluid), amount)
+    fun fluidInput(fluid: Fluid, amount: Int = 1000): HTDefinitionRecipeBuilder = fluidInput(FluidIngredient.of(fluid), amount)
 
-    fun fluidInput(tagKey: TagKey<Fluid>, amount: Int = 1000): HTDefinitionRecipeBuilder<R> =
-        fluidInput(FluidIngredient.tag(tagKey), amount)
+    fun fluidInput(tagKey: TagKey<Fluid>, amount: Int = 1000): HTDefinitionRecipeBuilder = fluidInput(FluidIngredient.tag(tagKey), amount)
 
-    fun fluidInput(ingredient: FluidIngredient, amount: Int = 1000): HTDefinitionRecipeBuilder<R> =
+    fun fluidInput(ingredient: FluidIngredient, amount: Int = 1000): HTDefinitionRecipeBuilder =
         fluidInput(SizedFluidIngredient(ingredient, amount))
 
-    private fun fluidInput(ingredient: SizedFluidIngredient): HTDefinitionRecipeBuilder<R> = apply {
+    private fun fluidInput(ingredient: SizedFluidIngredient): HTDefinitionRecipeBuilder = apply {
         fluidInputs.add(ingredient)
     }
 
-    fun waterInput(amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidInput(Tags.Fluids.WATER, amount)
+    fun waterInput(amount: Int = 1000): HTDefinitionRecipeBuilder = fluidInput(Tags.Fluids.WATER, amount)
 
-    fun milkInput(amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidInput(Tags.Fluids.MILK, amount)
+    fun milkInput(amount: Int = 1000): HTDefinitionRecipeBuilder = fluidInput(Tags.Fluids.MILK, amount)
 
     //    Catalyst    //
 
-    fun catalyst(item: ItemLike): HTDefinitionRecipeBuilder<R> = catalyst(Ingredient.of(item))
+    fun catalyst(item: ItemLike): HTDefinitionRecipeBuilder = catalyst(Ingredient.of(item))
 
-    fun catalyst(tagKey: TagKey<Item>): HTDefinitionRecipeBuilder<R> = catalyst(Ingredient.of(tagKey))
+    fun catalyst(tagKey: TagKey<Item>): HTDefinitionRecipeBuilder = catalyst(Ingredient.of(tagKey))
 
-    fun catalyst(ingredient: ICustomIngredient): HTDefinitionRecipeBuilder<R> = catalyst(ingredient.toVanilla())
+    fun catalyst(ingredient: ICustomIngredient): HTDefinitionRecipeBuilder = catalyst(ingredient.toVanilla())
 
-    fun catalyst(catalyst: Ingredient): HTDefinitionRecipeBuilder<R> = apply {
+    fun catalyst(catalyst: Ingredient): HTDefinitionRecipeBuilder = apply {
         check(!catalyst.isEmpty) { "Setting empty ingredient is not allowed!" }
         this.catalyst = catalyst
     }
@@ -91,7 +96,7 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         count: Int,
         component: DataComponentPatch,
         chance: Float,
-    ): HTDefinitionRecipeBuilder<R> = apply {
+    ): HTDefinitionRecipeBuilder = apply {
         validateChance(chance)
         itemOutputs.add(
             HTItemOutput(
@@ -108,7 +113,7 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         count: Int,
         chance: Float,
         appendCondition: Boolean,
-    ): HTDefinitionRecipeBuilder<R> = apply {
+    ): HTDefinitionRecipeBuilder = apply {
         validateChance(chance)
         itemOutputs.add(
             HTItemOutput(
@@ -125,11 +130,11 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
 
     //    Fluid Output    //
 
-    fun fluidOutput(fluid: Supplier<out Fluid>, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidOutput(fluid.get(), amount)
+    fun fluidOutput(fluid: Supplier<out Fluid>, amount: Int = 1000): HTDefinitionRecipeBuilder = fluidOutput(fluid.get(), amount)
 
-    fun fluidOutput(fluid: Fluid, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = fluidOutput(FluidStack(fluid, amount))
+    fun fluidOutput(fluid: Fluid, amount: Int = 1000): HTDefinitionRecipeBuilder = fluidOutput(FluidStack(fluid, amount))
 
-    fun fluidOutput(stack: FluidStack): HTDefinitionRecipeBuilder<R> = apply {
+    fun fluidOutput(stack: FluidStack): HTDefinitionRecipeBuilder = apply {
         if (stack.isEmpty) {
             error("Empty FluidStack is not allowed for HTFluidOutput!")
         }
@@ -142,7 +147,7 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
         )
     }
 
-    fun fluidOutput(tagKey: TagKey<Fluid>, amount: Int = 1000): HTDefinitionRecipeBuilder<R> = apply {
+    fun fluidOutput(tagKey: TagKey<Fluid>, amount: Int = 1000): HTDefinitionRecipeBuilder = apply {
         fluidOutputs.add(
             HTFluidOutput(
                 Either.right(tagKey),
@@ -154,7 +159,7 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
 
     //    ICondition    //
 
-    fun condition(condition: ICondition): HTDefinitionRecipeBuilder<R> = apply {
+    fun condition(condition: ICondition): HTDefinitionRecipeBuilder = apply {
         this.conditions.add(condition)
     }
 
@@ -167,19 +172,28 @@ class HTDefinitionRecipeBuilder<R : Recipe<*>>(private val prefix: String, priva
     override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        recipeOutput.accept(
-            id.withPrefix("$prefix/"),
-            factory(
-                HTRecipeDefinition(
-                    itemInputs,
-                    fluidInputs,
-                    catalyst,
-                    itemOutputs,
-                    fluidOutputs,
-                ),
-            ),
-            null,
-            *conditions.toTypedArray(),
+        val definition = HTRecipeDefinition(
+            itemInputs,
+            fluidInputs,
+            catalyst,
+            itemOutputs,
+            fluidOutputs,
         )
+        for (context: Context in contexts) {
+            context.save(recipeOutput, id, definition, *conditions.toTypedArray())
+        }
+    }
+
+    //    Context    //
+
+    data class Context(private val prefix: String, private val factory: (HTRecipeDefinition) -> Recipe<*>) {
+        fun save(
+            recipeOutput: RecipeOutput,
+            id: ResourceLocation,
+            definition: HTRecipeDefinition,
+            vararg conditions: ICondition,
+        ) {
+            recipeOutput.accept(id.withPrefix("$prefix/"), factory(definition), null, *conditions)
+        }
     }
 }

@@ -1,6 +1,7 @@
 {
   "type": "ragium:solidifying",
   "catalyst": {
+    "count": 1,
     "tag": "c:dusts/sulfur"
   },
   "fluid_input": {
