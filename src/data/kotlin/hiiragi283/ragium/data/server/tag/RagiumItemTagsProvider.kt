@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -190,7 +189,7 @@ class RagiumItemTagsProvider(
         registerTools(RagiumItems.AZURE_STEEL_TOOLS)
         registerTools(RagiumItems.DEEP_STEEL_TOOLS)
 
-        for (hammer: DeferredItem<HTForgeHammerItem> in RagiumItems.FORGE_HAMMERS.values) {
+        for (hammer: DeferredItem<Item> in RagiumItems.FORGE_HAMMERS.values) {
             tag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER).addItem(hammer)
             tag(Tags.Items.TOOLS_WRENCH).addItem(hammer)
         }

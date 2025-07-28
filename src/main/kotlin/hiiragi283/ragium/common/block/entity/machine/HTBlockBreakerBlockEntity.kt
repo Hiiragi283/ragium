@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityNew
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -27,7 +27,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntityNew(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state) {
+    HTMachineBlockEntity(RagiumBlockEntityTypes.BLOCK_BREAKER, pos, state) {
     override val inventory: HTItemHandler = HTItemStackHandler(1, this::setChanged)
     override val energyUsage: Int get() = RagiumConfig.COMMON.basicMachineEnergyUsage.get()
 

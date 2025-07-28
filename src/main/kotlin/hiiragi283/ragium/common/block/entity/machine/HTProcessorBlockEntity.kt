@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityNew
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
@@ -23,7 +23,7 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
-) : HTMachineBlockEntityNew(type, pos, state) {
+) : HTMachineBlockEntity(type, pos, state) {
     private val recipeCache: HTRecipeCache<I, R> = HTRecipeCache(recipeType)
     private var lastInput: I? = null
     private var lastRecipe: R? = null

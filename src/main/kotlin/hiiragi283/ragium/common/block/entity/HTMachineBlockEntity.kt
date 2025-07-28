@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-abstract class HTMachineBlockEntityNew(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
     MenuProvider {
     //    Storage    //
