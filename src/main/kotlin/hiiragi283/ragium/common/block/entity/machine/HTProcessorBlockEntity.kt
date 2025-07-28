@@ -25,6 +25,7 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
     state: BlockState,
 ) : HTMachineBlockEntityNew(type, pos, state) {
     private val recipeCache: HTRecipeCache<I, R> = HTRecipeCache(recipeType)
+    private var lastInput: I? = null
     private var lastRecipe: R? = null
 
     override fun serverTickPre(
@@ -46,6 +47,7 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         if (recipeCache.lastRecipe != lastRecipe) {
             resetProgress()
         }
+        this.lastInput = input
         this.lastRecipe = recipe
         // エネルギーを消費する
         if (usedEnergy < requiredEnergy) {
@@ -75,9 +77,10 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
             exportFluids(level, pos)
         }
         if (result.isTrue) {
+            val input: I = this.lastInput ?: return
             val recipe: R = this.lastRecipe ?: return
-            serverTickPost(level, pos, state, recipe)
-            this.lastRecipe = null
+            serverTickPost(level, pos, state, input, recipe)
+            resetProgress()
         }
     }
 
@@ -85,11 +88,12 @@ abstract class HTProcessorBlockEntity<I : RecipeInput, R : Recipe<I>>(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
+        input: I,
         recipe: R,
     )
 
     protected fun resetProgress(): TriState {
-        this.usedEnergy = 0
+        this.lastInput = null
         this.lastRecipe = null
         return TriState.FALSE
     }

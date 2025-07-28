@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.recipe.HTInfusingRecipe
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.data.recipes.RecipeBuilder
@@ -14,7 +14,7 @@ import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.NotCondition
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition
 
-class HTInfusingRecipeBuilder(private val factory: (Ingredient, HTItemOutput, Float) -> HTInfusingRecipe) :
+class HTInfusingRecipeBuilder :
     HTIngredientRecipeBuilder<HTInfusingRecipeBuilder>,
     HTItemOutputRecipeBuilder<HTInfusingRecipeBuilder> {
     private lateinit var ingredient: Ingredient
@@ -72,7 +72,7 @@ class HTInfusingRecipeBuilder(private val factory: (Ingredient, HTItemOutput, Fl
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
         recipeOutput.accept(
             id.withPrefix("infusing/"),
-            factory(ingredient, result, cost),
+            RagiumAPI.getInstance().createInfusingRecipe(ingredient, result, cost),
             null,
             *listOfNotNull(condition).toTypedArray(),
         )

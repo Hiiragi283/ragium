@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.getEnchantmentLevel
 import hiiragi283.ragium.api.item.HTConsumableItem
 import hiiragi283.ragium.api.item.HTForgeHammerItem
 import hiiragi283.ragium.api.registry.HTItemRegister
-import hiiragi283.ragium.api.upgrade.HTUpgrade
 import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.util.HTPotionBundle
 import hiiragi283.ragium.api.util.RagiumConstantValues
@@ -514,18 +513,6 @@ object RagiumItems {
         setEnch(DEEP_STEEL_TOOLS.pickaxeItem, Enchantments.FORTUNE, 5)
         setEnch(DEEP_STEEL_TOOLS.swordItem, RagiumEnchantments.NOISE_CANCELING, 5)
         setEnch(DEEP_STEEL_ARMORS.chestplateItem, RagiumEnchantments.SONIC_PROTECTION)
-
-        // Circuits
-        fun setUpgrade(item: DeferredItem<*>, base: Int) {
-            event.modify(item) { builder: DataComponentPatch.Builder ->
-                builder.set(RagiumDataComponents.UPGRADE.get(), HTUpgrade(base.toFloat()))
-            }
-        }
-
-        setUpgrade(BASIC_CIRCUIT, 1)
-        setUpgrade(ADVANCED_CIRCUIT, 2)
-        setUpgrade(ELITE_CIRCUIT, 3)
-        setUpgrade(ULTIMATE_CIRCUIT, 4)
         // Other
         event.modify(POTION_BUNDLE) { builder: DataComponentPatch.Builder ->
             builder.set(RagiumDataComponents.POTION_BUNDLE.get(), HTPotionBundle.EMPTY)

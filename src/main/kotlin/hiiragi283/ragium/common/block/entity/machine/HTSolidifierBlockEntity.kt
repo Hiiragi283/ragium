@@ -72,6 +72,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
+        input: HTUniversalRecipeInput,
         recipe: HTSolidifyingRecipe,
     ) {
         // 実際にアウトプットに搬出する

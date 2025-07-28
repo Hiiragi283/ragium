@@ -48,6 +48,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
+        input: HTUniversalRecipeInput,
         recipe: HTExtractingRecipe,
     ) {
         // 実際にアウトプットに搬出する

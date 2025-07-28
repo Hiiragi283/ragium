@@ -58,6 +58,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
+        input: HTUniversalRecipeInput,
         recipe: HTAlloyingRecipe,
     ) {
         // 実際にアウトプットに搬出する

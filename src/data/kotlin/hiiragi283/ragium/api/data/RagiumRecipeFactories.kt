@@ -61,12 +61,13 @@ internal object RagiumRecipeFactories {
         return HTMeltingRecipe(itemInputs[0], fluidOutput)
     }
 
+    @JvmStatic
     fun pressing(definition: HTRecipeDefinition): HTPressingRecipe {
         // Item Input
         val itemInputs: List<SizedIngredient> = definition.itemInputs
         val top: SizedIngredient = itemInputs.getOrNull(0) ?: error("Pressing Recipe requires 2 ingredient!")
-        if (itemInputs.size > 2) {
-            error("Pressing Recipe accepts only 2 item ingredients!")
+        if (itemInputs.size > 1) {
+            error("Pressing Recipe accepts only 1 item ingredients!")
         }
         // Item Output
         val output: HTItemOutput = checkPresent(definition.getItemOutput(0), "Required one item output!")

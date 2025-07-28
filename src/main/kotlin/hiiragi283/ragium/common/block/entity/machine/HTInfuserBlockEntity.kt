@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.recipe.HTInfusingRecipe
-import hiiragi283.ragium.api.recipe.HTInfusingRecipeInput
+import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTSingleProcessMenu
+import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTInfusingRecipeInput, HTInfusingRecipe>(
+    HTProcessorBlockEntity<HTUniversalRecipeInput, HTInfusingRecipe>(
         RagiumRecipeTypes.INFUSING.get(),
         RagiumBlockEntityTypes.INFUSER,
         pos,
@@ -34,20 +34,21 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTInfusingRecipeInput {
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
+        HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
+
+    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTInfusingRecipe): Boolean {
+        // 周囲のエンチャントパワーを計算する
         val aroundCost: Float = EnchantingTableBlock.BOOKSHELF_OFFSETS
             .map { posIn: BlockPos ->
-                if (EnchantingTableBlock.isValidBookShelf(level, pos, posIn)) {
-                    val posTo: BlockPos = pos.offset(posIn)
+                if (EnchantingTableBlock.isValidBookShelf(level, blockPos, posIn)) {
+                    val posTo: BlockPos = blockPos.offset(posIn)
                     level.getBlockState(posTo).getEnchantPowerBonus(level, posTo)
                 } else {
                     0f
                 }
             }.sum()
-        return HTInfusingRecipeInput(inventory.getStackInSlot(0), aroundCost)
-    }
-
-    override fun canProgressRecipe(level: ServerLevel, input: HTInfusingRecipeInput, recipe: HTInfusingRecipe): Boolean {
+        if (aroundCost < recipe.cost) return false
         // アウトプットに搬出できるか判定する
         val output: ItemStack = recipe.assemble(input, level.registryAccess())
         return insertToOutput(1..1, output, true).isEmpty
@@ -57,10 +58,11 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
+        input: HTUniversalRecipeInput,
         recipe: HTInfusingRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        val output: ItemStack = recipe.assemble(createRecipeInput(level, pos), level.registryAccess())
+        val output: ItemStack = recipe.assemble(input, level.registryAccess())
         insertToOutput(1..1, output, false)
         // インプットを減らす
         inventory.consumeStackInSlot(0, 1, false)

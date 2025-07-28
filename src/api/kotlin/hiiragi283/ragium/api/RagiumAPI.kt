@@ -4,13 +4,14 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.data.recipe.HTInfusingRecipeBuilder
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
-import hiiragi283.ragium.api.recipe.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
+import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
@@ -27,6 +28,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.fml.LogicalSide
@@ -135,14 +137,14 @@ interface RagiumAPI {
     fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe>
 
     /**
-     * @see [HTInfusingRecipe.getType]
-     */
-    fun getInfusingRecipeType(): RecipeType<HTInfusingRecipe>
-
-    /**
      * @see [HTTransmuteRecipe.getSerializer]
      */
     fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe>
+
+    /**
+     * @see [HTInfusingRecipeBuilder]
+     */
+    fun createInfusingRecipe(ingredient: Ingredient, output: HTItemOutput, cost: Float): HTUniversalRecipe
 
     /**
      * @see [HTMenuDefinition.empty]

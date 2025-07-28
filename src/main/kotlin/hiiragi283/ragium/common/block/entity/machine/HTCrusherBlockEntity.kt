@@ -51,6 +51,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
+        input: HTUniversalRecipeInput,
         recipe: HTCrushingRecipe,
     ) {
         // 実際にアウトプットに搬出する

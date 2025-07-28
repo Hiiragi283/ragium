@@ -49,6 +49,7 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
+        input: HTUniversalRecipeInput,
         recipe: HTPressingRecipe,
     ) {
         // 実際にアウトプットに搬出する
