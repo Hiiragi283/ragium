@@ -112,7 +112,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.getLedBlock(DyeColor.YELLOW), "LEDブロック（黄色）")
         addBlock(RagiumBlocks.getLedBlock(DyeColor.WHITE), "LEDブロック")
 
-        addBlock(RagiumBlocks.COOKED_MEAT_ON_THE_BONE, "骨付き焼肉ブロック")
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
         addBlock(RagiumBlocks.ADVANCED_MACHINE_FRAME, "発展機械フレーム")

@@ -121,12 +121,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .define('A', RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
             .define('B', Tags.Items.INGOTS_IRON)
             .save(output)
-        // Cooked Meat on the Bone
-        HTShapedRecipeBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
-            .hollow8()
-            .define('A', RagiumCommonTags.Items.INGOTS_COOKED_MEAT)
-            .define('B', Tags.Items.BONES)
-            .save(output)
     }
 
     private fun sponge() {

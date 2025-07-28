@@ -44,9 +44,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
             sets.addItemModels(this)
         }
-
-        getBuilder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
-            .parent(modelFile(RagiumAPI.id("block/cooked_meat_on_the_bone_stage0")))
     }
 
     private fun registerItems() {

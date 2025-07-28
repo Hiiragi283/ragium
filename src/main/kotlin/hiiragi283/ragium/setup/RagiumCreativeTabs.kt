@@ -48,7 +48,6 @@ object RagiumCreativeTabs {
         output.accept(RagiumBlocks.CHOCOLATE_BLOCK)
         output.accept(RagiumBlocks.MEAT_BLOCK)
         output.accept(RagiumBlocks.COOKED_MEAT_BLOCK)
-        output.accept(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
         // Machines
         output.acceptItems(RagiumBlocks.CASINGS)
         output.acceptItems(RagiumBlocks.MACHINES)

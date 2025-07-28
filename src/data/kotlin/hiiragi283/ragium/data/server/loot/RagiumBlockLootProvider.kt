@@ -2,12 +2,10 @@ package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.extension.enchLookup
 import hiiragi283.ragium.api.registry.HTBlockSet
-import hiiragi283.ragium.common.block.HTBlockStateProperties
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
@@ -25,7 +23,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
@@ -93,7 +90,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.RAGINITE_DUST)
 
         // Food
-        add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
+        /*add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
             val propertyCondition: LootItemBlockStatePropertyCondition.Builder =
                 LootItemBlockStatePropertyCondition
                     .hasBlockStateProperties(block)
@@ -121,7 +118,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                         .`when`(propertyCondition.invert())
                         .add(LootItem.lootTableItem(Items.BONE)),
                 )
-        }
+        }*/
 
         // Storages
         for (holder: DeferredBlock<Block> in RagiumBlocks.DRUMS) {

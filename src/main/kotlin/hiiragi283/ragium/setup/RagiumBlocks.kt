@@ -8,9 +8,7 @@ import hiiragi283.ragium.api.util.RagiumConstantValues
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
-import hiiragi283.ragium.common.block.HTFeastBlock
 import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
-import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
 import hiiragi283.ragium.common.block.HTSoulGlassBlock
@@ -332,13 +330,6 @@ object RagiumBlocks {
     fun getLedBlock(color: DyeColor): DeferredBlock<Block> = LED_BLOCKS[color] ?: error("Unregistered color: ${color.serializedName}")
 
     //    Foods    //
-
-    @JvmField
-    val COOKED_MEAT_ON_THE_BONE: DeferredBlock<HTFeastBlock> = register(
-        "cooked_meat_on_the_bone",
-        copyOf(Blocks.PACKED_MUD),
-        ::HTMeatBlock,
-    )
 
     @JvmField
     val SWEET_BERRIES_CAKE: DeferredBlock<Block> = register(

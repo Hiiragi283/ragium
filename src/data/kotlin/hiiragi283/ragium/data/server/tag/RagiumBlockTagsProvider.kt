@@ -126,7 +126,6 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         tag(RagiumModTags.Blocks.WIP)
             .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
             .addHolder(RagiumBlocks.ASH_LOG)
-            .addHolder(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
             .addHolder(RagiumBlocks.WOODEN_CASING)
             .addHolder(RagiumBlocks.STONE_CASING)
             .addHolder(RagiumBlocks.REFINERY)

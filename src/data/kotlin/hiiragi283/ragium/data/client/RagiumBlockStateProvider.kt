@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.extension.simpleBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.common.block.HTBlockStateProperties
-import hiiragi283.ragium.common.block.HTFeastBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
@@ -19,7 +18,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
@@ -108,7 +106,6 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Food
         simpleAltBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
-        feastBlock(RagiumBlocks.COOKED_MEAT_ON_THE_BONE)
 
         // Machine Frame
         simpleAltBlock(RagiumBlocks.WOODEN_CASING, vanillaId("block/note_block"))
@@ -230,7 +227,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .modelFile(modelFile(vanillaId("block/water_cauldron").withSuffix(suffix)))
                     .build()
             }
-    }*/
+    }
 
     private fun feastBlock(holder: DeferredBlock<out HTFeastBlock>) {
         getVariantBuilder(holder.get()).forAllStates { state: BlockState ->
@@ -253,5 +250,5 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 .rotationY(state)
                 .build()
         }
-    }
+    }*/
 }
