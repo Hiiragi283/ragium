@@ -33,7 +33,7 @@ class HTBlockBreakerMenu(
         // upgrades
         addUpgradeSlots()
         // player inventory
-        addPlayerInv()
+        addPlayerInv(inventory)
         // register property
         addDataSlots(definition.containerData)
     }

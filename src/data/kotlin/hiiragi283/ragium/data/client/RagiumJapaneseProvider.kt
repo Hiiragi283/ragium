@@ -220,12 +220,12 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addItem(RagiumItems.AZURE_STEEL_INGOT, "紺鉄インゴット")
         addItem(RagiumItems.AZURE_STEEL_NUGGET, "紺鉄ナゲット")
         addItem(RagiumItems.DEEP_STEEL_INGOT, "深層鋼インゴット")
+        addItem(RagiumItems.DEEP_STEEL_NUGGET, "深層鋼ナゲット")
         addItem(RagiumItems.CHOCOLATE_INGOT, "チョコレートインゴット")
 
         addItem(RagiumItems.ASH_DUST, "灰")
         addItem(RagiumItems.CINNABAR_DUST, "辰砂の粉")
         addItem(RagiumItems.OBSIDIAN_DUST, "黒曜石の粉")
-        addItem(RagiumItems.QUARTZ_DUST, "水晶の粉")
         addItem(RagiumItems.RAGINITE_DUST, "ラギナイトの粉")
         addItem(RagiumItems.SALTPETER_DUST, "硝石の粉")
         addItem(RagiumItems.SAWDUST, "おがくず")

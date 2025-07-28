@@ -180,6 +180,9 @@ object RagiumItems {
     @JvmField
     val AZURE_STEEL_NUGGET: DeferredItem<Item> = register(RagiumConstantValues.AZURE_STEEL, "nugget")
 
+    @JvmField
+    val DEEP_STEEL_NUGGET: DeferredItem<Item> = register(RagiumConstantValues.DEEP_STEEL, "nugget")
+
     // Dusts
     @JvmField
     val SAWDUST: DeferredItem<Item> = register("sawdust")
@@ -195,9 +198,6 @@ object RagiumItems {
 
     @JvmField
     val CINNABAR_DUST: DeferredItem<Item> = register("cinnabar", "dust")
-
-    @JvmField
-    val QUARTZ_DUST: DeferredItem<Item> = register("quartz", "dust")
 
     @JvmField
     val SALTPETER_DUST: DeferredItem<Item> = register("saltpeter", "dust")

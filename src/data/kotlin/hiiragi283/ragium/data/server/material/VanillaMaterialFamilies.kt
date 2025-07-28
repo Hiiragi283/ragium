@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.material
 
 import hiiragi283.ragium.api.util.HTMaterialFamily
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 
@@ -57,7 +56,6 @@ object VanillaMaterialFamilies {
     @JvmField
     val QUARTZ: HTMaterialFamily = HTMaterialFamily.Builder
         .gem(Items::QUARTZ)
-        .setDefaultedEntry(HTMaterialFamily.Variant.DUSTS, RagiumItems.QUARTZ_DUST)
         .setDefaultedEntry(HTMaterialFamily.Variant.ORES, Items::NETHER_QUARTZ_ORE)
         .setDefaultedEntry(HTMaterialFamily.Variant.RAW_MATERIALS, Items::QUARTZ)
         .setVanilla()

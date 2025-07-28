@@ -86,13 +86,14 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
         output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
 
+        output.accept(RagiumItems.AZURE_SHARD)
         output.accept(RagiumItems.AZURE_STEEL_COMPOUND)
         output.accept(RagiumItems.AZURE_STEEL_INGOT)
         output.accept(RagiumItems.AZURE_STEEL_NUGGET)
-        output.accept(RagiumItems.AZURE_SHARD)
 
-        output.accept(RagiumItems.DEEP_STEEL_INGOT)
         output.accept(RagiumItems.DEEP_SCRAP)
+        output.accept(RagiumItems.DEEP_STEEL_INGOT)
+        output.accept(RagiumItems.DEEP_STEEL_NUGGET)
 
         output.accept(RagiumItems.CHOCOLATE_INGOT)
 
@@ -106,7 +107,6 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.ASH_DUST)
         output.accept(RagiumItems.CINNABAR_DUST)
         output.accept(RagiumItems.OBSIDIAN_DUST)
-        output.accept(RagiumItems.QUARTZ_DUST)
         output.accept(RagiumItems.SALTPETER_DUST)
         output.accept(RagiumItems.SULFUR_DUST)
 

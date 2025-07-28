@@ -29,6 +29,6 @@ class HTEnergyNetworkAccessMenu(
         // outputs
         addInputSlot(1, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1))
         // player inventory
-        addPlayerInv()
+        addPlayerInv(inventory)
     }
 }

@@ -52,7 +52,7 @@ class HTDecomposeProcessMenu(
         addOutputSlot(3, HTSlotHelper.getSlotPosX(5), HTSlotHelper.getSlotPosY(1.5))
         addOutputSlot(4, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5))
         // player inventory
-        addPlayerInv()
+        addPlayerInv(inventory)
         // register property
         addDataSlots(definition.containerData)
     }

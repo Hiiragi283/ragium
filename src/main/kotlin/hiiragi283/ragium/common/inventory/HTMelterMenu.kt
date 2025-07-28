@@ -29,7 +29,7 @@ class HTMelterMenu(
         // outputs
         addFluidSlot(0, HTSlotHelper.getSlotPosX(5.5) - 4, HTSlotHelper.getSlotPosY(1) - 4, 24, 24)
         // player inventory
-        addPlayerInv()
+        addPlayerInv(inventory)
         // register property
         addDataSlots(definition.containerData)
     }

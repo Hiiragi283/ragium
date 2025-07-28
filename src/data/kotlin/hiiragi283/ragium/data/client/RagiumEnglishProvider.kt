@@ -232,13 +232,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addItem(RagiumItems.AZURE_STEEL_INGOT, "Azure Steel Ingot")
         addItem(RagiumItems.AZURE_STEEL_NUGGET, "Azure Steel Nugget")
         addItem(RagiumItems.DEEP_STEEL_INGOT, "Deep Steel Ingot")
+        addItem(RagiumItems.DEEP_STEEL_NUGGET, "Deep Steel Nugget")
 
         addItem(RagiumItems.CHOCOLATE_INGOT, "Chocolate Ingot")
 
         addItem(RagiumItems.ASH_DUST, "Ash")
         addItem(RagiumItems.CINNABAR_DUST, "Cinnabar Dust")
         addItem(RagiumItems.OBSIDIAN_DUST, "Obsidian Dust")
-        addItem(RagiumItems.QUARTZ_DUST, "Quartz Dust")
         addItem(RagiumItems.RAGINITE_DUST, "Raginite Dust")
         addItem(RagiumItems.SALTPETER_DUST, "Saltpeter Dust")
         addItem(RagiumItems.SAWDUST, "Sawdust")

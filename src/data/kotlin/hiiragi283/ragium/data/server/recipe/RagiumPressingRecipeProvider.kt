@@ -65,11 +65,8 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
             .save(output)
         // Advanced
         HTShapedRecipeBuilder(RagiumItems.ADVANCED_CIRCUIT)
-            .pattern(
-                "AAA",
-                "BCB",
-                "AAA",
-            ).define('A', Tags.Items.INGOTS_GOLD)
+            .cross4()
+            .define('A', Tags.Items.INGOTS_GOLD)
             .define('B', Tags.Items.DUSTS_GLOWSTONE)
             .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .save(output)
@@ -77,7 +74,7 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
         // Circuit Board
         createPressing()
             .itemOutput(RagiumItems.CIRCUIT_BOARD)
-            .itemInput(RagiumCommonTags.Items.DUSTS_QUARTZ)
+            .itemInput(Tags.Items.DUSTS_REDSTONE)
             .catalyst(RagiumCommonTags.Items.PLATES_PLASTIC)
             .save(output)
 

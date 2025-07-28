@@ -58,7 +58,7 @@ class HTCombineProcessMenu(
         // outputs
         addOutputSlot(2, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1))
         // player inventory
-        addPlayerInv()
+        addPlayerInv(inventory)
         // register property
         addDataSlots(definition.containerData)
     }

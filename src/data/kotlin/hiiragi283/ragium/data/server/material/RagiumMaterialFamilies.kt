@@ -70,6 +70,7 @@ object RagiumMaterialFamilies {
     val DEEP_STEEL: HTMaterialFamily =
         HTMaterialFamily.Builder
             .ingotAlloy(RagiumItems.DEEP_STEEL_INGOT)
+            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.DEEP_STEEL_NUGGET)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.DEEP_STEEL_BLOCK)
             .build(RagiumConstantValues.DEEP_STEEL)
 

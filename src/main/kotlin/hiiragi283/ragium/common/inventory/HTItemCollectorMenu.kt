@@ -29,7 +29,7 @@ class HTItemCollectorMenu(
         // upgrades
         addUpgradeSlots()
         // player inventory
-        addPlayerInv()
+        addPlayerInv(inventory)
         // register property
         addDataSlots(definition.containerData)
     }

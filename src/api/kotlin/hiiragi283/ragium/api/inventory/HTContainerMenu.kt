@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level
 abstract class HTContainerMenu(
     menuType: HTDeferredMenuType<*>,
     containerId: Int,
-    val inventory: Inventory,
+    inventory: Inventory,
     val pos: BlockPos,
 ) : AbstractContainerMenu(menuType.get(), containerId) {
     @JvmField
@@ -88,7 +88,7 @@ abstract class HTContainerMenu(
         fluidSlots.put(index, HTFluidSlot(x, y, width, height, capacity))
     }
 
-    protected fun addPlayerInv(yOffset: Int = 0, immovable: Boolean = false) {
+    protected fun addPlayerInv(inventory: Inventory, yOffset: Int = 0, immovable: Boolean = false) {
         // inventory
         for (index: Int in 0..26) {
             addSlot(

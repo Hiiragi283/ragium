@@ -13,9 +13,9 @@
     }
   },
   "pattern": [
-    "AAA",
+    " A ",
     "BCB",
-    "AAA"
+    " A "
   ],
   "result": {
     "count": 1,
