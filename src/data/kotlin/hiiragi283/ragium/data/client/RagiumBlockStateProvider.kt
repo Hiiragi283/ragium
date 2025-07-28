@@ -13,6 +13,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
@@ -71,7 +72,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // Log
         logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
 
-        // Bush
+        // Crop
         getVariantBuilder(RagiumBlocks.EXP_BERRY_BUSH.get())
             .forAllStates { state: BlockState ->
                 val age: Int = state.getValue(HTCropBlock.AGE)
@@ -81,6 +82,26 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                         models()
                             .withExistingParent(id.path, "cross")
                             .texture("cross", id.withPrefix("block/"))
+                            .renderType("cutout")
+                    )
+                    .build()
+            }
+
+        getVariantBuilder(RagiumBlocks.WARPED_WART.get())
+            .forAllStates { state: BlockState ->
+                Blocks.NETHER_WART
+                val age: Int = when (state.getValue(HTCropBlock.AGE)) {
+                    0 -> 0
+                    1 -> 1
+                    2 -> 1
+                    else -> 2
+                }
+                val id: ResourceLocation = RagiumBlocks.WARPED_WART.id.withSuffix("_stage$age")
+                ConfiguredModel.builder()
+                    .modelFile(
+                        models()
+                            .withExistingParent(id.path, "crop")
+                            .texture("crop", id.withPrefix("block/"))
                             .renderType("cutout")
                     )
                     .build()

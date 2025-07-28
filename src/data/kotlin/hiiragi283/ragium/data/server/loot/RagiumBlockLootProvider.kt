@@ -68,36 +68,9 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             )
         }
 
-        // Bush
-        add(RagiumBlocks.EXP_BERRY_BUSH.get()) { block: Block ->
-            applyExplosionDecay(
-                block,
-                LootTable
-                    .lootTable()
-                    .withPool(
-                        LootPool
-                            .lootPool()
-                            .`when`(
-                                LootItemBlockStatePropertyCondition
-                                    .hasBlockStateProperties(block)
-                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 3)),
-                            ).add(LootItem.lootTableItem(RagiumItems.EXP_BERRIES))
-                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(2f, 3f)))
-                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
-                    ).withPool(
-                        LootPool
-                            .lootPool()
-                            .`when`(
-                                LootItemBlockStatePropertyCondition
-                                    .hasBlockStateProperties(block)
-                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 2)),
-                            ).add(LootItem.lootTableItem(RagiumItems.EXP_BERRIES))
-                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)))
-                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
-                    ),
-            )
-        }
-
+        // Crop
+        addCrop(RagiumBlocks.EXP_BERRY_BUSH, RagiumItems.EXP_BERRIES)
+        addCrop(RagiumBlocks.WARPED_WART, RagiumItems.WARPED_WART)
         // Ore
         fun registerOres(oreSets: HTBlockSet, drop: ItemLike) {
             for (ore: DeferredBlock<*> in oreSets.blockHolders) {
@@ -180,6 +153,41 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
     private fun dropSelf(holder: DeferredBlock<*>) {
         dropSelf(holder.get())
+    }
+
+    private fun addCrop(holder: DeferredBlock<*>, crop: ItemLike) {
+        add(holder.get()) { block: Block ->
+            applyExplosionDecay(
+                block,
+                LootTable
+                    .lootTable()
+                    .withPool(
+                        LootPool
+                            .lootPool()
+                            .`when`(
+                                LootItemBlockStatePropertyCondition
+                                    .hasBlockStateProperties(block)
+                                    .setProperties(
+                                        StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 3)
+                                    ),
+                            ).add(LootItem.lootTableItem(crop))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(2f, 3f)))
+                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
+                    ).withPool(
+                        LootPool
+                            .lootPool()
+                            .`when`(
+                                LootItemBlockStatePropertyCondition
+                                    .hasBlockStateProperties(block)
+                                    .setProperties(
+                                        StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 2)
+                                    ),
+                            ).add(LootItem.lootTableItem(crop))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)))
+                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
+                    ),
+            )
+        }
     }
 
     private fun copyComponent(block: Block, vararg types: DataComponentType<*>): LootTable.Builder = LootTable

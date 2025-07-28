@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
 import hiiragi283.ragium.common.block.HTSoulGlassBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
+import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.util.HTBuildingBlockSets
 import hiiragi283.ragium.util.HTOreSets
@@ -134,6 +135,13 @@ object RagiumBlocks {
         "exp_berry_bush",
         ::HTExpBerriesBushBlock,
         copyOf(Blocks.SWEET_BERRY_BUSH),
+    )
+
+    @JvmField
+    val WARPED_WART: DeferredBlock<Block> = REGISTER.registerBlock(
+        "warped_wart",
+        ::HTWarpedWartBlock,
+        copyOf(Blocks.NETHER_WART),
     )
 
     @JvmField

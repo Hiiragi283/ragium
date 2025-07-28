@@ -81,6 +81,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addBlock(RagiumBlocks.ASH_LOG, "Ash Log")
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
+        addBlock(RagiumBlocks.WARPED_WART, "Warped Wart")
 
         RagiumBlocks.RAGINITE_ORES.addTranslationEn("Raginite", this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationEn("Ragi-Crystal", this)
