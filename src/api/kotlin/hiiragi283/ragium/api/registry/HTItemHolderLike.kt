@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.itemId
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
@@ -20,7 +19,7 @@ interface HTItemHolderLike :
     val holder: DeferredItem<*>
 
     val id: ResourceLocation get() = holder.id
-    val itemId: ResourceLocation get() = holder.itemId
+    val itemId: ResourceLocation get() = id.withPrefix("item/")
 
     fun toStack(count: Int = 1): ItemStack = ItemStack(get(), count)
 

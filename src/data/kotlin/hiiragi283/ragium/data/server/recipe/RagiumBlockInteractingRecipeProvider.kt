@@ -40,7 +40,7 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
                 block,
                 Ingredient.of(RagiumItems.Tickets.AZURE),
                 HTBreakBlockAction(false),
-                HTDropItemBlockAction(RagiumItems.AZURE_SHARD, count),
+                HTDropItemBlockAction(RagiumItems.Gems.AZURE_SHARD, count),
             )
         }
         shard("cluster", Blocks.AMETHYST_CLUSTER, 4)

@@ -22,7 +22,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .build()
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(Tags.Items.INGOTS_COPPER)
-            .result(RagiumItems.RAGI_ALLOY_INGOT.get())
+            .result(RagiumItems.Ingots.RAGI_ALLOY.get())
             .time(160)
             .export(output, RagiumConst.RAGI_ALLOY)
 
@@ -30,7 +30,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .build()
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(Tags.Items.INGOTS_GOLD)
-            .result(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT.get())
+            .result(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY.get())
             .time(160)
             .export(output, RagiumConst.ADVANCED_RAGI_ALLOY)
 
@@ -38,7 +38,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .build()
             .input(Tags.Items.GEMS_AMETHYST)
             .input(Tags.Items.GEMS_LAPIS)
-            .result(RagiumItems.AZURE_SHARD.get(), 2)
+            .result(RagiumItems.Gems.AZURE_SHARD.get(), 2)
             .time(160)
             .export(output, "azure_shard")
 
@@ -46,7 +46,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .build()
             .input(RagiumCommonTags.Items.GEMS_AZURE)
             .input(Tags.Items.INGOTS_IRON)
-            .result(RagiumItems.AZURE_STEEL_INGOT.get())
+            .result(RagiumItems.Ingots.AZURE_STEEL.get())
             .time(160)
             .export(output, RagiumConst.AZURE_STEEL)
 
@@ -54,7 +54,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .build()
             .input(RagiumItems.DEEP_SCRAP)
             .input(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
-            .result(RagiumItems.DEEP_STEEL_INGOT.get())
+            .result(RagiumItems.Ingots.DEEP_STEEL.get())
             .time(160)
             .export(output, RagiumConst.DEEP_STEEL)
 
@@ -73,7 +73,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider() {
             .input(Tags.Items.GEMS_DIAMOND)
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
             .input(RagiumCommonTags.Items.DUSTS_RAGINITE)
-            .result(RagiumItems.RAGI_CRYSTAL.get())
+            .result(RagiumItems.Gems.RAGI_CRYSTAL.get())
             .time(20)
             .export(output, RagiumConst.RAGI_CRYSTAL)
     }

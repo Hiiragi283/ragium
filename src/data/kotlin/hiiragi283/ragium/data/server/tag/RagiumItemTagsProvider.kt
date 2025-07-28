@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTTaggedHolder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.util.HTMaterialFamily
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.integration.mekanism.RagiumMekanismAddon
@@ -70,23 +69,25 @@ class RagiumItemTagsProvider(
     }
 
     private fun copy() {
-        copy(BlockTags.SLABS, ItemTags.SLABS)
-        copy(BlockTags.STAIRS, ItemTags.STAIRS)
-        copy(BlockTags.WALLS, ItemTags.WALLS)
-
         copy(Tags.Blocks.ORES, Tags.Items.ORES)
         copy(RagiumCommonTags.Blocks.ORES_RAGINITE, RagiumCommonTags.Items.ORES_RAGINITE)
         copy(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL, RagiumCommonTags.Items.ORES_RAGI_CRYSTAL)
         copy(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumCommonTags.Items.ORES_DEEP_SCRAP)
 
+        copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
+        copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
         buildList {
             addAll(RagiumBlocks.Glasses.entries)
+            addAll(RagiumBlocks.StorageBlocks.entries)
         }.map(HTTaggedHolder<Block>::tagKey).forEach(::copyTo)
 
-        copy(RagiumModTags.Blocks.LED_BLOCKS, RagiumModTags.Items.LED_BLOCKS)
-        copy(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
-        copy(Tags.Blocks.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS)
         copy(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
+        copy(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
+
+        copy(BlockTags.SLABS, ItemTags.SLABS)
+        copy(BlockTags.STAIRS, ItemTags.STAIRS)
+        copy(BlockTags.WALLS, ItemTags.WALLS)
+        copy(RagiumModTags.Blocks.LED_BLOCKS, RagiumModTags.Items.LED_BLOCKS)
 
         copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
@@ -94,17 +95,22 @@ class RagiumItemTagsProvider(
     //    Material    //
 
     private fun materials() {
-        for (family: HTMaterialFamily in HTMaterialFamily.instances.values) {
-            if (family.entryType == HTMaterialFamily.EntryType.RAGIUM) {
-                for ((variant: HTMaterialFamily.Variant, tagKey: TagKey<Item>, item: ItemLike?) in family) {
-                    if (item != null) {
-                        tag(variant.commonTag).addTag(tagKey)
-                        tag(tagKey).add(item.asItem())
-                    }
-                }
-            }
+        // Gems
+        for (gem: RagiumItems.Gems in RagiumItems.Gems.entries) {
+            addItem(Tags.Items.GEMS, gem.tagKey, gem)
         }
-
+        addItem(Tags.Items.DUSTS, RagiumCommonTags.Items.DUSTS_MEAT, RagiumItems.MINCED_MEAT)
+        // Ingots
+        for (ingot: RagiumItems.Ingots in RagiumItems.Ingots.entries) {
+            addItem(Tags.Items.INGOTS, ingot.tagKey, ingot)
+        }
+        addItem(Tags.Items.INGOTS, RagiumCommonTags.Items.INGOTS_CHOCOLATE, RagiumItems.CHOCOLATE_INGOT)
+        addItem(Tags.Items.INGOTS, RagiumCommonTags.Items.INGOTS_MEAT, RagiumItems.MEAT_INGOT)
+        addItem(Tags.Items.INGOTS, RagiumCommonTags.Items.INGOTS_COOKED_MEAT, RagiumItems.COOKED_MEAT_INGOT)
+        // Nuggets
+        for (nugget: RagiumItems.Nuggets in RagiumItems.Nuggets.entries) {
+            addItem(Tags.Items.NUGGETS, nugget.tagKey, nugget)
+        }
         // Dusts
         for (dust: RagiumItems.Dusts in RagiumItems.Dusts.entries) {
             addItem(Tags.Items.DUSTS, dust.tagKey, dust)

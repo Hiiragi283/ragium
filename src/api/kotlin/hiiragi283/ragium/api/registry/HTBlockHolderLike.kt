@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.extension.blockId
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
@@ -20,7 +19,7 @@ interface HTBlockHolderLike :
     val holder: DeferredBlock<*>
 
     val id: ResourceLocation get() = holder.id
-    val blockId: ResourceLocation get() = holder.blockId
+    val blockId: ResourceLocation get() = id.withPrefix("block/")
 
     override fun get(): Block = holder.get()
 

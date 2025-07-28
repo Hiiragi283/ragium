@@ -10,34 +10,34 @@ object RagiumMaterialFamilies {
     @JvmField
     val RAGI_CRYSTAL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItems.RAGI_CRYSTAL)
+            .gem(RagiumItems.Gems.RAGI_CRYSTAL)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.StorageBlocks.RAGI_CRYSTAL)
             .build(RagiumConst.RAGI_CRYSTAL)
 
     @JvmField
     val AZURE: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItems.AZURE_SHARD)
+            .gem(RagiumItems.Gems.AZURE_SHARD)
             .build("azure")
 
     @JvmField
     val CRIMSON_CRYSTAL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItems.CRIMSON_CRYSTAL)
+            .gem(RagiumItems.Gems.CRIMSON_CRYSTAL)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL)
             .build(RagiumConst.CRIMSON_CRYSTAL)
 
     @JvmField
     val WARPED_CRYSTAL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItems.WARPED_CRYSTAL)
+            .gem(RagiumItems.Gems.WARPED_CRYSTAL)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.StorageBlocks.WARPED_CRYSTAL)
             .build(RagiumConst.WARPED_CRYSTAL)
 
     @JvmField
     val ELDRITCH_PEARL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .gem(RagiumItems.ELDRITCH_PEARL)
+            .gem(RagiumItems.Gems.ELDRITCH_PEARL)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.StorageBlocks.ELDRITCH_PEARL)
             .build(RagiumConst.ELDRITCH_PEARL)
 
@@ -45,32 +45,32 @@ object RagiumMaterialFamilies {
     @JvmField
     val RAGI_ALLOY: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingotAlloy(RagiumItems.RAGI_ALLOY_INGOT)
-            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.RAGI_ALLOY_NUGGET)
+            .ingotAlloy(RagiumItems.Ingots.RAGI_ALLOY)
+            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.Nuggets.RAGI_ALLOY)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.StorageBlocks.RAGI_ALLOY)
             .build(RagiumConst.RAGI_ALLOY)
 
     @JvmField
     val ADVANCED_RAGI_ALLOY: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingotAlloy(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
-            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
+            .ingotAlloy(RagiumItems.Ingots.ADVANCED_RAGI_ALLOY)
+            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.Nuggets.ADVANCED_RAGI_ALLOY)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.StorageBlocks.ADVANCED_RAGI_ALLOY)
             .build(RagiumConst.ADVANCED_RAGI_ALLOY)
 
     @JvmField
     val AZURE_STEEL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingotAlloy(RagiumItems.AZURE_STEEL_INGOT)
-            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.AZURE_STEEL_NUGGET)
+            .ingotAlloy(RagiumItems.Ingots.AZURE_STEEL)
+            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.Nuggets.AZURE_STEEL)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.StorageBlocks.AZURE_STEEL)
             .build(RagiumConst.AZURE_STEEL)
 
     @JvmField
     val DEEP_STEEL: HTMaterialFamily =
         HTMaterialFamily.Builder
-            .ingotAlloy(RagiumItems.DEEP_STEEL_INGOT)
-            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.DEEP_STEEL_NUGGET)
+            .ingotAlloy(RagiumItems.Ingots.DEEP_STEEL)
+            .setDefaultedEntry(HTMaterialFamily.Variant.NUGGETS, RagiumItems.Nuggets.DEEP_STEEL)
             .setDefaultedEntry(HTMaterialFamily.Variant.STORAGE_BLOCKS, RagiumBlocks.StorageBlocks.DEEP_STEEL)
             .build(RagiumConst.DEEP_STEEL)
 

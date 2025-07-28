@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getBuilder
-import hiiragi283.ragium.api.extension.itemId
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockSet
@@ -51,9 +50,7 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         buildList {
             addAll(RagiumItems.REGISTER.entries)
 
-            remove(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
-            remove(RagiumItems.AZURE_STEEL_COMPOUND)
-            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            removeAll(RagiumItems.Compounds.entries.map(HTItemHolderLike::holder))
 
             remove(RagiumItems.BLAST_CHARGE)
             removeAll(RagiumItems.ForgeHammers.entries.map(HTItemHolderLike::holder))
@@ -62,20 +59,21 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
             addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
         }.map(Supplier<out Item>::get).forEach(::basicItem)
 
-        getBuilder(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
-            .parent(generated)
-            .texture("layer0", "minecraft:item/gold_ingot")
-            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
-
-        getBuilder(RagiumItems.AZURE_STEEL_COMPOUND)
-            .parent(generated)
-            .texture("layer0", "minecraft:item/iron_ingot")
-            .texture("layer1", RagiumItems.AZURE_STEEL_COMPOUND.itemId)
-
-        getBuilder(RagiumItems.RAGI_ALLOY_COMPOUND)
-            .parent(generated)
-            .texture("layer0", "minecraft:item/copper_ingot")
-            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
+        for (compound: RagiumItems.Compounds in RagiumItems.Compounds.entries) {
+            val baseId: String = when (compound) {
+                RagiumItems.Compounds.RAGI_ALLOY -> "copper_ingot"
+                RagiumItems.Compounds.ADVANCED_RAGI_ALLOY -> "gold_ingot"
+                RagiumItems.Compounds.AZURE_STEEL -> "iron_ingot"
+            }
+            val layerId: ResourceLocation = when (compound) {
+                RagiumItems.Compounds.ADVANCED_RAGI_ALLOY -> RagiumItems.Compounds.RAGI_ALLOY
+                else -> compound
+            }.itemId
+            getBuilder(compound.id.path)
+                .parent(generated)
+                .texture("layer0", "minecraft:item/$baseId")
+                .texture("layer1", layerId)
+        }
 
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
             getBuilder(content.bucketHolder)

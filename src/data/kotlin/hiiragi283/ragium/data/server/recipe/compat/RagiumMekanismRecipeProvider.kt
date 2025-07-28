@@ -69,13 +69,13 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         ChemicalCrystallizerRecipeBuilder
             .crystallizing(
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_CRIMSON_SAP, 1000),
-                RagiumItems.CRIMSON_CRYSTAL.toStack(),
+                RagiumItems.Gems.CRIMSON_CRYSTAL.toStack(),
             ).build(output, RagiumAPI.id("crystallizing/crimson_crystal"))
 
         ChemicalCrystallizerRecipeBuilder
             .crystallizing(
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_WARPED_SAP, 1000),
-                RagiumItems.WARPED_CRYSTAL.toStack(),
+                RagiumItems.Gems.WARPED_CRYSTAL.toStack(),
             ).build(output, RagiumAPI.id("crystallizing/warped_crystal"))
     }
 
@@ -103,7 +103,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(RagiumCommonTags.Items.ORES_RAGI_CRYSTAL),
-                RagiumItems.RAGI_CRYSTAL.toStack(2),
+                RagiumItems.Gems.RAGI_CRYSTAL.toStack(2),
             ).build(output, RagiumAPI.id("processing/ragi_crystal/from_ore"))
         // Resonant Debris
         ItemStackToItemStackRecipeBuilder
@@ -116,7 +116,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
         ItemStackToItemStackRecipeBuilder
             .enriching(
                 itemHelper.from(RagiumItems.ELDRITCH_ORB),
-                RagiumItems.ELDRITCH_PEARL.toStack(),
+                RagiumItems.Gems.ELDRITCH_PEARL.toStack(),
             ).build(output, RagiumAPI.id("enriching/eldritch_pearl"))
     }
 
@@ -126,7 +126,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             .metallurgicInfusing(
                 itemHelper.from(Tags.Items.INGOTS_COPPER),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 40),
-                RagiumItems.RAGI_ALLOY_INGOT.toStack(),
+                RagiumItems.Ingots.RAGI_ALLOY.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/ragi_alloy"))
         // Raginite + Gold -> Advanced Ragi-Alloy
@@ -134,7 +134,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             .metallurgicInfusing(
                 itemHelper.from(Tags.Items.INGOTS_GOLD),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 80),
-                RagiumItems.ADVANCED_RAGI_ALLOY_INGOT.toStack(),
+                RagiumItems.Ingots.ADVANCED_RAGI_ALLOY.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/advanced_ragi_alloy"))
         // Raginite + Diamond -> Ragi-Crystal
@@ -142,7 +142,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             .metallurgicInfusing(
                 itemHelper.from(Tags.Items.GEMS_DIAMOND),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_RAGINITE, 60),
-                RagiumItems.RAGI_CRYSTAL.toStack(),
+                RagiumItems.Gems.RAGI_CRYSTAL.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/ragi_crystal"))
 
@@ -151,7 +151,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             .metallurgicInfusing(
                 itemHelper.from(Tags.Items.INGOTS_IRON),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 40),
-                RagiumItems.AZURE_STEEL_INGOT.toStack(),
+                RagiumItems.Ingots.AZURE_STEEL.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/azure_steel"))
         // Azure + Netherite Scrap -> Deep Scrap
@@ -167,7 +167,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider() {
             .metallurgicInfusing(
                 itemHelper.from(Tags.Items.INGOTS_NETHERITE),
                 chemicalHelper.fromHolder(RagiumMekanismAddon.CHEMICAL_AZURE, 160),
-                RagiumItems.DEEP_STEEL_INGOT.toStack(),
+                RagiumItems.Ingots.DEEP_STEEL.toStack(),
                 false,
             ).build(output, RagiumAPI.id("metallurgic_infusing/deep_steel"))
     }

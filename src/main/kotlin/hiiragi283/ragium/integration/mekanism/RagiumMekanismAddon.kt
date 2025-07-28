@@ -81,7 +81,7 @@ object RagiumMekanismAddon : RagiumAddon {
 
             // Azure
             event.insertAfter(
-                RagiumItems.AZURE_SHARD.toStack(),
+                RagiumItems.Gems.AZURE_SHARD.toStack(),
                 ITEM_ENRICHED_AZURE.toStack(),
                 CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
             )

@@ -59,7 +59,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val azureTicket: AdvancementHolder =
             createSimple(RagiumAdvancements.AZURE_TICKET, root, RagiumItems.Tickets.AZURE)
         val azureShard: AdvancementHolder =
-            createSimple(RagiumAdvancements.AZURE_SHARD, azureTicket, RagiumItems.AZURE_SHARD, RagiumCommonTags.Items.GEMS_AZURE)
+            createSimple(RagiumAdvancements.AZURE_SHARD, azureTicket, RagiumItems.Gems.AZURE_SHARD, RagiumCommonTags.Items.GEMS_AZURE)
         val azureGears: AdvancementHolder = create(RagiumAdvancements.AZURE_GEARS, azureShard) {
             display {
                 setIcon(RagiumItems.AZURE_STEEL_TOOLS.pickaxeItem)
@@ -75,7 +75,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val crimsonCrystal: AdvancementHolder = createSimple(
             RagiumAdvancements.CRIMSON_CRYSTAL,
             root,
-            RagiumItems.CRIMSON_CRYSTAL,
+            RagiumItems.Gems.CRIMSON_CRYSTAL,
             RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL,
         )
         val crimsonSoil: AdvancementHolder = create(RagiumAdvancements.CRIMSON_SOIL, crimsonCrystal) {
@@ -98,7 +98,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val warpedCrystal: AdvancementHolder = createSimple(
             RagiumAdvancements.WARPED_CRYSTAL,
             root,
-            RagiumItems.WARPED_CRYSTAL,
+            RagiumItems.Gems.WARPED_CRYSTAL,
             RagiumCommonTags.Items.GEMS_WARPED_CRYSTAL,
         )
         val teleportTicket: AdvancementHolder = create(RagiumAdvancements.TELEPORT_TICKET, warpedCrystal) {
@@ -117,7 +117,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         val eldritchPearl: AdvancementHolder = createSimple(
             RagiumAdvancements.ELDRITCH_PEARL,
             root,
-            RagiumItems.ELDRITCH_PEARL,
+            RagiumItems.Gems.ELDRITCH_PEARL,
             RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL,
         )
         val mysteriousObsidian: AdvancementHolder = create(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, eldritchPearl) {

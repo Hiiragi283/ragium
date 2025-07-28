@@ -69,6 +69,10 @@ object RagiumItems {
         REGISTER.addAlias(RagiumAPI.id("exp_magnet"), RagiumAPI.id("advanced_ragi_magnet"))
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
 
+        Gems.entries
+        Compounds.entries
+        Ingots.entries
+        Nuggets.entries
         Dusts.entries
 
         ForgeHammers.entries
@@ -112,61 +116,62 @@ object RagiumItems {
     val TAR: DeferredItem<Item> = register("tar")
 
     @JvmField
-    val DEEP_SCRAP: DeferredItem<Item> = register("deep_scrap")
-
-    // Gems
-    @JvmField
-    val RAGI_CRYSTAL: DeferredItem<Item> = register(RagiumConst.RAGI_CRYSTAL)
-
-    @JvmField
-    val AZURE_SHARD: DeferredItem<Item> = register("azure_shard")
-
-    @JvmField
-    val CRIMSON_CRYSTAL: DeferredItem<Item> = register(RagiumConst.CRIMSON_CRYSTAL)
-
-    @JvmField
-    val WARPED_CRYSTAL: DeferredItem<Item> = register(RagiumConst.WARPED_CRYSTAL)
-
-    @JvmField
     val ELDRITCH_ORB: DeferredItem<Item> = register("eldritch_orb")
 
     @JvmField
-    val ELDRITCH_PEARL: DeferredItem<Item> = register(RagiumConst.ELDRITCH_PEARL)
+    val DEEP_SCRAP: DeferredItem<Item> = register("deep_scrap")
+
+    // Gems
+    enum class Gems(tagPath: String? = null) :
+        HTItemHolderLike,
+        HTTaggedHolder<Item> {
+        AZURE_SHARD("azure"),
+        RAGI_CRYSTAL,
+        CRIMSON_CRYSTAL,
+        WARPED_CRYSTAL,
+        ELDRITCH_PEARL,
+        ;
+
+        override val holder: DeferredItem<*> = register(name.lowercase())
+        override val tagKey: TagKey<Item> = itemTagKey(commonId(RagiumConst.GEMS, tagPath ?: name.lowercase()))
+    }
 
     // Ingots
-    @JvmField
-    val RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register(RagiumConst.RAGI_ALLOY, "compound")
+    enum class Compounds : HTItemHolderLike {
+        RAGI_ALLOY,
+        ADVANCED_RAGI_ALLOY,
+        AZURE_STEEL,
+        ;
 
-    @JvmField
-    val RAGI_ALLOY_INGOT: DeferredItem<Item> = register(RagiumConst.RAGI_ALLOY, "ingot")
+        override val holder: DeferredItem<*> = register(name.lowercase(), "compound")
+    }
 
-    @JvmField
-    val ADVANCED_RAGI_ALLOY_COMPOUND: DeferredItem<Item> = register(RagiumConst.ADVANCED_RAGI_ALLOY, "compound")
+    enum class Ingots :
+        HTItemHolderLike,
+        HTTaggedHolder<Item> {
+        RAGI_ALLOY,
+        ADVANCED_RAGI_ALLOY,
+        AZURE_STEEL,
+        DEEP_STEEL,
+        ;
 
-    @JvmField
-    val ADVANCED_RAGI_ALLOY_INGOT: DeferredItem<Item> = register(RagiumConst.ADVANCED_RAGI_ALLOY, "ingot")
-
-    @JvmField
-    val AZURE_STEEL_COMPOUND: DeferredItem<Item> = register(RagiumConst.AZURE_STEEL, "compound")
-
-    @JvmField
-    val AZURE_STEEL_INGOT: DeferredItem<Item> = register(RagiumConst.AZURE_STEEL, "ingot")
-
-    @JvmField
-    val DEEP_STEEL_INGOT: DeferredItem<Item> = register(RagiumConst.DEEP_STEEL, "ingot")
+        override val holder: DeferredItem<*> = register(name.lowercase(), "ingot")
+        override val tagKey: TagKey<Item> = itemTagKey(commonId(RagiumConst.INGOTS, name.lowercase()))
+    }
 
     // Nuggets
-    @JvmField
-    val RAGI_ALLOY_NUGGET: DeferredItem<Item> = register(RagiumConst.RAGI_ALLOY, "nugget")
+    enum class Nuggets :
+        HTItemHolderLike,
+        HTTaggedHolder<Item> {
+        RAGI_ALLOY,
+        ADVANCED_RAGI_ALLOY,
+        AZURE_STEEL,
+        DEEP_STEEL,
+        ;
 
-    @JvmField
-    val ADVANCED_RAGI_ALLOY_NUGGET: DeferredItem<Item> = register(RagiumConst.ADVANCED_RAGI_ALLOY, "nugget")
-
-    @JvmField
-    val AZURE_STEEL_NUGGET: DeferredItem<Item> = register(RagiumConst.AZURE_STEEL, "nugget")
-
-    @JvmField
-    val DEEP_STEEL_NUGGET: DeferredItem<Item> = register(RagiumConst.DEEP_STEEL, "nugget")
+        override val holder: DeferredItem<*> = register(name.lowercase(), "nugget")
+        override val tagKey: TagKey<Item> = itemTagKey(commonId(RagiumConst.NUGGETS, name.lowercase()))
+    }
 
     // Dusts
     enum class Dusts(path: String? = null, tagPath: String? = null) :

@@ -59,41 +59,19 @@ object RagiumCreativeTabs {
         // Fluid Buckets
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
         // Gems
-        output.accept(RagiumItems.RAGI_CRYSTAL)
-        output.accept(RagiumItems.CRIMSON_CRYSTAL)
-        output.accept(RagiumItems.WARPED_CRYSTAL)
-
-        output.accept(RagiumItems.ELDRITCH_ORB)
-        output.accept(RagiumItems.ELDRITCH_PEARL)
+        output.acceptItems(RagiumItems.Gems.entries)
         // Ingots
-        output.accept(RagiumItems.RAGI_ALLOY_COMPOUND)
-        output.accept(RagiumItems.RAGI_ALLOY_INGOT)
-        output.accept(RagiumItems.RAGI_ALLOY_NUGGET)
-
-        output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_COMPOUND)
-        output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_INGOT)
-        output.accept(RagiumItems.ADVANCED_RAGI_ALLOY_NUGGET)
-
-        output.accept(RagiumItems.AZURE_SHARD)
-        output.accept(RagiumItems.AZURE_STEEL_COMPOUND)
-        output.accept(RagiumItems.AZURE_STEEL_INGOT)
-        output.accept(RagiumItems.AZURE_STEEL_NUGGET)
-
-        output.accept(RagiumItems.DEEP_SCRAP)
-        output.accept(RagiumItems.DEEP_STEEL_INGOT)
-        output.accept(RagiumItems.DEEP_STEEL_NUGGET)
-
-        output.accept(RagiumItems.CHOCOLATE_INGOT)
-
-        output.accept(RagiumItems.MINCED_MEAT)
-        output.accept(RagiumItems.MEAT_INGOT)
-        output.accept(RagiumItems.COOKED_MEAT_INGOT)
+        output.acceptItems(RagiumItems.Compounds.entries)
+        output.acceptItems(RagiumItems.Ingots.entries)
+        output.acceptItems(RagiumItems.Nuggets.entries)
 
         output.acceptItems(RagiumItems.Dusts.entries)
         // Ingredients
         output.accept(RagiumItems.RAGI_COKE)
         output.accept(RagiumItems.COMPRESSED_SAWDUST)
         output.accept(RagiumItems.TAR)
+        output.accept(RagiumItems.DEEP_SCRAP)
+        output.accept(RagiumItems.ELDRITCH_ORB)
         output.accept(RagiumItems.ELDER_HEART)
 
         output.accept(RagiumItems.LUMINOUS_PASTE)
@@ -107,6 +85,7 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.SYNTHETIC_FIBER)
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 
+        output.accept(RagiumItems.CIRCUIT_BOARD)
         output.acceptItems(RagiumItems.Circuits.entries)
     }
 
@@ -141,10 +120,15 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ENDER_BUNDLE)
             output.accept(RagiumItems.ELDRITCH_EGG)
             // Foods
-            output.accept(RagiumItems.CANNED_COOKED_MEAT)
+            output.accept(RagiumItems.CHOCOLATE_INGOT)
 
             output.accept(RagiumItems.ICE_CREAM)
             output.accept(RagiumItems.ICE_CREAM_SODA)
+
+            output.accept(RagiumItems.MINCED_MEAT)
+            output.accept(RagiumItems.MEAT_INGOT)
+            output.accept(RagiumItems.COOKED_MEAT_INGOT)
+            output.accept(RagiumItems.CANNED_COOKED_MEAT)
 
             output.accept(RagiumItems.MELON_PIE)
 
