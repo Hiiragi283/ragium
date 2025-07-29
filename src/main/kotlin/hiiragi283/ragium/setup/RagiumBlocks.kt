@@ -1,6 +1,9 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTEntityBlock
+import hiiragi283.ragium.api.block.HTFacingEntityBlock
+import hiiragi283.ragium.api.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
@@ -10,9 +13,7 @@ import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTTaggedHolder
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
-import hiiragi283.ragium.common.block.HTEntityBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
-import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
 import hiiragi283.ragium.common.block.HTSoulGlassBlock
@@ -52,6 +53,7 @@ object RagiumBlocks {
         Casings.entries
         Devices.entries
 
+        Dynamos.entries
         Frames.entries
         Machines.entries
 
@@ -113,9 +115,6 @@ object RagiumBlocks {
     val SILT: DeferredBlock<Block> = register("silt", copyOf(Blocks.SAND), ::HTSiltBlock)
 
     @JvmField
-    val MYSTERIOUS_OBSIDIAN: DeferredBlock<Block> = register("mysterious_obsidian", copyOf(Blocks.OBSIDIAN))
-
-    @JvmField
     val CRIMSON_SOIL: DeferredBlock<Block> =
         register("crimson_soil", copyOf(Blocks.SOUL_SOIL), ::HTCrimsonSoilBlock)
 
@@ -154,6 +153,11 @@ object RagiumBlocks {
     val RESONANT_DEBRIS: DeferredBlock<Block> =
         register("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
 
+    @JvmField
+    val MYSTERIOUS_OBSIDIAN: DeferredBlock<Block> = register("mysterious_obsidian", copyOf(Blocks.OBSIDIAN))
+
+    // val ELDRITCH_PORTAL: DeferredBlock<Block> = REGISTER.registerBlock("eldritch_portal", ::HTEldritchPortalBlock, copyOf(Blocks.END_GATEWAY))
+
     //    Materials    //
 
     enum class StorageBlocks(properties: BlockBehaviour.Properties) :
@@ -163,7 +167,7 @@ object RagiumBlocks {
         RAGI_CRYSTAL(copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_PINK)),
         CRIMSON_CRYSTAL(copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.CRIMSON_STEM)),
         WARPED_CRYSTAL(copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.WARPED_STEM)),
-        ELDRITCH_PEARL(copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_PURPLE)),
+        ELDRITCH_PEARL(copyOf(Blocks.SHROOMLIGHT).mapColor(MapColor.COLOR_PURPLE)),
 
         // Ingots
         RAGI_ALLOY(copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_RED)),
@@ -270,6 +274,16 @@ object RagiumBlocks {
         copyOf(Blocks.YELLOW_WOOL).forceSolidOn(),
         ::HTSweetBerriesCakeBlock,
     )
+
+    //    Dynamos    //
+
+    enum class Dynamos(type: HTDeferredBlockEntityType<out HTBlockEntity>) : HTBlockHolderLike {
+        STIRLING(RagiumBlockEntityTypes.STIRLING_DYNAMO),
+        ;
+
+        override val holder: DeferredBlock<*> =
+            registerEntity(type, machineProperty(), HTFacingEntityBlock.create(type))
+    }
 
     //    Machines    //
 

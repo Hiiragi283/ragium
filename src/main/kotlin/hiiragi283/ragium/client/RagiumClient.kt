@@ -158,7 +158,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         }
 
         registerBasic(RagiumMenuTypes.ALLOY_SMELTER)
-        registerBasic(RagiumMenuTypes.BLOCK_BREAKER)
         registerBasic(RagiumMenuTypes.CRUSHER)
         registerBasic(RagiumMenuTypes.EXTRACTOR)
         registerBasic(RagiumMenuTypes.FLUID_COLLECTOR)
@@ -166,6 +165,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         registerBasic(RagiumMenuTypes.INFUSER)
         registerBasic(RagiumMenuTypes.MELTER)
         registerBasic(RagiumMenuTypes.REFINERY)
+        registerBasic(RagiumMenuTypes.SINGLE_ITEM)
         registerBasic(RagiumMenuTypes.SOLIDIFIER)
 
         event.register(RagiumMenuTypes.ITEM_COLLECTOR.get(), ::HTItemCollectorScreen)

@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:gems/crimson_crystal"
+      "tag": "c:gunpowders"
     },
     "B": {
-      "tag": "c:gunpowders"
+      "tag": "c:gems/crimson_crystal"
     }
   },
   "pattern": [

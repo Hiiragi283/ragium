@@ -2,12 +2,12 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.block.HTBlockStateProperties
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
+import hiiragi283.ragium.common.inventory.HTSingleItemMenu
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -46,7 +46,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         val toolStack: ItemStack = this.inventory.getStackInSlot(0)
         inventory.items[inventory.selected] = toolStack
         // 採掘対象のブロックを取得する
-        val front: Direction = state.getValue(HTHorizontalEntityBlock.HORIZONTAL)
+        val front: Direction = state.getValue(HTBlockStateProperties.HORIZONTAL)
         val posTo: BlockPos = pos.relative(front)
         val stateTo: BlockState = level.getBlockState(posTo)
         // 採掘速度が0未満の場合はスキップ
@@ -96,7 +96,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Menu    //
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTBlockBreakerMenu = HTBlockBreakerMenu(
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTSingleItemMenu = HTSingleItemMenu(
         containerId,
         playerInventory,
         blockPos,

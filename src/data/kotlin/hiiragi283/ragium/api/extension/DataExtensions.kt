@@ -115,24 +115,36 @@ fun BlockStateProvider.layeredBlock(holder: HTBlockHolderLike, layer0: ResourceL
     )
 }
 
-fun BlockStateProvider.simpleAltBlock(holder: DeferredBlock<*>) {
+fun BlockStateProvider.cubeColumn(
+    holder: DeferredBlock<*>,
+    side: ResourceLocation = holder.blockId.withSuffix("_side"),
+    end: ResourceLocation = holder.blockId.withSuffix("_top"),
+) {
+    simpleBlock(holder.get(), models().cubeColumn(holder.blockId.path, side, end))
+}
+
+fun BlockStateProvider.cubeColumn(holder: HTBlockHolderLike, side: ResourceLocation, top: ResourceLocation) {
+    simpleBlock(holder.get(), models().cubeColumn(holder.blockId.path, side, top))
+}
+
+fun BlockStateProvider.altModelBlock(holder: DeferredBlock<*>) {
     simpleBlock(holder.get(), modelFile(holder.blockId))
 }
 
-fun BlockStateProvider.simpleAltBlock(holder: HTBlockHolderLike) {
+fun BlockStateProvider.altModelBlock(holder: HTBlockHolderLike) {
     simpleBlock(holder.get(), modelFile(holder.blockId))
 }
 
-fun BlockStateProvider.simpleAltBlock(holder: HTBlockHolderLike, all: ResourceLocation) {
+fun BlockStateProvider.altTextureBlock(holder: HTBlockHolderLike, all: ResourceLocation) {
     simpleBlock(
         holder.get(),
         ConfiguredModel(models().cubeAll(holder.id.path, all)),
     )
 }
 
-fun BlockStateProvider.cutoutSimpleBlock(holder: HTBlockHolderLike) {
+fun BlockStateProvider.cutoutSimpleBlock(holder: HTBlockHolderLike, texId: ResourceLocation = holder.blockId) {
     simpleBlock(
         holder.get(),
-        ConfiguredModel(models().cubeAll(holder.id.path, holder.blockId).renderType("cutout")),
+        ConfiguredModel(models().cubeAll(holder.id.path, texId).renderType("cutout")),
     )
 }

@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.raginite_dust.desc"
+      "translate": "advancements.ragium.raginite.desc"
     },
     "icon": {
       "count": 1,
       "id": "ragium:raginite_dust"
     },
     "title": {
-      "translate": "advancements.ragium.raginite_dust.title"
+      "translate": "advancements.ragium.raginite.title"
     }
   },
   "requirements": [

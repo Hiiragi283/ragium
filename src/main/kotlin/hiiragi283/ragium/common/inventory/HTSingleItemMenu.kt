@@ -8,13 +8,13 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.player.Inventory
 
-class HTBlockBreakerMenu(
+class HTSingleItemMenu(
     containerId: Int,
     inventory: Inventory,
     pos: BlockPos,
     definition: HTMenuDefinition,
 ) : HTDefinitionContainerMenu(
-        RagiumMenuTypes.BLOCK_BREAKER,
+        RagiumMenuTypes.SINGLE_ITEM,
         containerId,
         inventory,
         pos,

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getBuilder
 import hiiragi283.ragium.api.extension.modelFile
 import hiiragi283.ragium.api.extension.vanillaId
+import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -36,9 +37,11 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
         // Blocks
         buildList {
             addAll(RagiumBlocks.REGISTER.entries)
-            
+
             remove(RagiumBlocks.EXP_BERRY_BUSH)
             remove(RagiumBlocks.WARPED_WART)
+
+            removeAll(RagiumBlocks.Dynamos.entries.map(HTBlockHolderLike::holder))
         }.map(Supplier<out Block>::get).forEach(::simpleBlockItem)
         RagiumBlocks.RAGINITE_ORES.addItemModels(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)

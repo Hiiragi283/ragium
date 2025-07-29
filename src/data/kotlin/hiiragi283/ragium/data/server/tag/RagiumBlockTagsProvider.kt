@@ -96,6 +96,7 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             addAll(RagiumBlocks.Casings.entries)
             addAll(RagiumBlocks.Devices.entries)
             addAll(RagiumBlocks.Drums.entries)
+            addAll(RagiumBlocks.Dynamos.entries)
             addAll(RagiumBlocks.Frames.entries)
             addAll(RagiumBlocks.Glasses.entries)
             addAll(RagiumBlocks.Machines.entries)

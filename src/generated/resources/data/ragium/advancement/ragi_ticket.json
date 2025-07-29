@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:ragi_crystal",
+  "criteria": {
+    "has_ragi_ticket": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ragi_ticket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.ragi_ticket.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_ticket"
+    },
+    "title": {
+      "translate": "advancements.ragium.ragi_ticket.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_ragi_ticket"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -262,18 +262,18 @@ object RagiumItems {
 
     //    Tickets    //
 
-    enum class Tickets(factory: (Item.Properties) -> Item = ::Item) : HTItemHolderLike {
+    enum class Tickets(factory: (Item.Properties) -> Item = ::Item, properties: Item.Properties = Item.Properties()) : HTItemHolderLike {
         BLANK,
         RAGI(::HTLootTicketItem),
         AZURE,
         BLOODY,
-        TELEPORT(::HTTeleportTicketItem),
+        TELEPORT(::HTTeleportTicketItem, Item.Properties().durability(63)),
         ELDRITCH,
         DAYBREAK,
         ETERNAL,
         ;
 
-        override val holder: DeferredItem<*> = register("${name.lowercase()}_ticket", factory)
+        override val holder: DeferredItem<*> = register("${name.lowercase()}_ticket", factory, properties)
     }
 
     //    Foods    //

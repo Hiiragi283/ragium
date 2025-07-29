@@ -42,11 +42,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     }
 
     private fun advancement() {
-        addAdvancement(RagiumAdvancements.ROOT, "Ragium", "ブランクチケットを手に入れてRagiumを始めよう")
+        addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to ようこそ Ragium へ！")
         addAdvancement(RagiumAdvancements.ETERNAL_TICKET, "さあ，地獄を楽しみな！", "ツールを不可壊にするために永遠のチケットを手に入れる")
         // Raginite
-        addAdvancement(RagiumAdvancements.RAGI_TICKET, "赤い彗星", "らぎチケットを手に入れる")
-        addAdvancement(RagiumAdvancements.RAGINITE_DUST, "0xFF003F", "レッドストーン鉱石にらぎチケットを使ってラギナイトの粉を手に入れる")
+        addAdvancement(RagiumAdvancements.RAGINITE, "0xFF003F", "地下にあるラギナイト鉱石からラギナイトの粉を手に入れる")
+        addAdvancement(RagiumAdvancements.RAGI_ALLOY, "赤い彗星", "ラギ合金インゴットを手に入れる")
+        addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
+        addAdvancement(RagiumAdvancements.RAGI_TICKET, "古き良きあの頃", "らぎチケットを手に入れてお宝チェストを開く")
         // Azure
         addAdvancement(RagiumAdvancements.AZURE_TICKET, "チケットは青かった", "紺碧のチケットを手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "アメジストの塊にラピスを使って紺碧の欠片を手に入れる")
@@ -111,14 +113,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.LEDBlocks.WHITE, "LEDブロック")
 
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
-
-        addBlock(RagiumBlocks.Casings.DEVICE, "デバイス筐体")
-        addBlock(RagiumBlocks.Casings.STONE, "石材筐体")
-        addBlock(RagiumBlocks.Casings.WOODEN, "木材筐体")
+        // Dynamo
+        addBlock(RagiumBlocks.Dynamos.STIRLING, "スターリングダイナモ")
+        // Machine
         addBlock(RagiumBlocks.Frames.ADVANCED, "発展機械フレーム")
         addBlock(RagiumBlocks.Frames.BASIC, "基本機械フレーム")
         addBlock(RagiumBlocks.Frames.ELITE, "精鋭機械フレーム")
-        // Machine
+
         addBlock(RagiumBlocks.Machines.CRUSHER, "粉砕機")
         addBlock(RagiumBlocks.Machines.BLOCK_BREAKER, "ブロック採掘機")
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "抽出機")
@@ -131,6 +132,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         addBlock(RagiumBlocks.Machines.INFUSER, "神秘的注入機")
         // Device
+        addBlock(RagiumBlocks.Casings.DEVICE, "デバイス筐体")
+        addBlock(RagiumBlocks.Casings.STONE, "石材筐体")
+        addBlock(RagiumBlocks.Casings.WOODEN, "木材筐体")
+
         addBlock(RagiumBlocks.Devices.CEU, "C.E.U")
         addBlock(RagiumBlocks.Devices.ENI, "E.N.I.")
         addBlock(RagiumBlocks.Devices.EXP_COLLECTOR, "経験値収集機")
@@ -480,7 +485,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
     private fun information() {
         addInfo(RagiumBlocks.ASH_LOG, "壊すと灰の粉が手に入ります。")
-        addInfo(RagiumBlocks.CRIMSON_SOIL, "上にいるモブにフェイクプレイヤー由来のダメージを与えます。")
+        addInfo(RagiumBlocks.CRIMSON_SOIL, "このブロックの上で倒されたモブは経験値も落とします。")
         addInfo(RagiumBlocks.Glasses.OBSIDIAN, "黒曜石とおなじ爆破耐性をもち，シルクタッチなしで回収することが可能です。")
         addInfo(RagiumBlocks.Glasses.QUARTZ, "このガラスはシルクタッチなしで回収することが可能です。")
         addInfo(RagiumBlocks.Glasses.SOUL, "プレイヤーのみ通過でき，シルクタッチなしで回収することが可能です。")

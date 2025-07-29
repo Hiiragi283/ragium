@@ -1,9 +1,7 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
@@ -88,22 +86,6 @@ object RagiumRecipeSerializers {
         register(RagiumConst.SOLIDIFYING, HTSolidifyingRecipe.CODEC, HTSolidifyingRecipe.STREAM_CODEC)
 
     //    Custom    //
-
-    @Suppress("DEPRECATION")
-    @JvmField
-    val TRANSMUTE: Supplier<RecipeSerializer<HTTransmuteRecipe>> = register(
-        "transmute",
-        RecipeSerializer.SHAPELESS_RECIPE
-            .codec()
-            .xmap(::HTTransmuteRecipe, HTTransmuteRecipe::internalRecipe)
-            .validate { recipe: HTTransmuteRecipe ->
-                if (recipe.ingredients.size != 2) {
-                    return@validate DataResult.error { "Transmute Recipe requires only 2 ingredients!" }
-                }
-                DataResult.success(recipe)
-            },
-        RecipeSerializer.SHAPELESS_RECIPE.streamCodec().map(::HTTransmuteRecipe, HTTransmuteRecipe::internalRecipe),
-    )
 
     @JvmField
     val BLAST_CHARGE: Supplier<RecipeSerializer<HTBlastChargeRecipe>> =

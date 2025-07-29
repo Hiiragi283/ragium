@@ -42,11 +42,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     }
 
     private fun advancement() {
-        addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Start Ragium by getting Blank Ticket")
+        addAdvancement(RagiumAdvancements.ROOT, "Ragium", "Welcome to Ragium!")
         addAdvancement(RagiumAdvancements.ETERNAL_TICKET, "Eternal Requiem", "Get Eternal Ticket for making tools unbreakable")
         // Raginite
-        addAdvancement(RagiumAdvancements.RAGI_TICKET, "The Red Comet", "Get Ragi-Ticket")
-        addAdvancement(RagiumAdvancements.RAGINITE_DUST, "0xFF003F", "Get Raginite Dust by right-clicking Redstone Ore with Ragi-Ticket")
+        addAdvancement(RagiumAdvancements.RAGINITE, "0xFF003F", "Get Raginite Dust from Raginite Ores in underground")
+        addAdvancement(RagiumAdvancements.RAGI_ALLOY, "The Red Comet", "Get Ragi-Alloy Ingot")
+        addAdvancement(RagiumAdvancements.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
+        addAdvancement(RagiumAdvancements.RAGI_TICKET, "Good Old Halcyon Days?", "Get Ragi-Ticket to roll treasure chests")
         // Azure
         addAdvancement(RagiumAdvancements.AZURE_TICKET, "The ticket is bluish.", "Get Azure Ticket")
         addAdvancement(
@@ -69,7 +71,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
         addAdvancement(
             RagiumAdvancements.MYSTERIOUS_OBSIDIAN,
-            "Who is Falling Meteorites？",
+            "Who is Falling Meteorites?",
             "Get Mysterious Obsidian by right-clicking Crying Obsidian with Eldritch Ticket",
         )
     }
@@ -124,13 +126,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addBlock(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
-        addBlock(RagiumBlocks.Casings.DEVICE, "Device Casing")
-        addBlock(RagiumBlocks.Casings.STONE, "Stone Casing")
-        addBlock(RagiumBlocks.Casings.WOODEN, "Wooden Casing")
+        // Dynamo
+        addBlock(RagiumBlocks.Dynamos.STIRLING, "Stirling Dynamo")
+        // Machine
         addBlock(RagiumBlocks.Frames.ADVANCED, "Advanced Machine Frame")
         addBlock(RagiumBlocks.Frames.BASIC, "Basic Machine Frame")
         addBlock(RagiumBlocks.Frames.ELITE, "Elite Machine Frame")
-        // Machine
+
         addBlock(RagiumBlocks.Machines.CRUSHER, "Crusher")
         addBlock(RagiumBlocks.Machines.BLOCK_BREAKER, "Block Breaker")
         addBlock(RagiumBlocks.Machines.EXTRACTOR, "Extractor")
@@ -143,6 +145,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         addBlock(RagiumBlocks.Machines.INFUSER, "Arcane Infuser")
         // Device
+        addBlock(RagiumBlocks.Casings.DEVICE, "Device Casing")
+        addBlock(RagiumBlocks.Casings.STONE, "Stone Casing")
+        addBlock(RagiumBlocks.Casings.WOODEN, "Wooden Casing")
+
         addBlock(RagiumBlocks.Devices.CEU, "C.E.U")
         addBlock(RagiumBlocks.Devices.ENI, "E.N.I.")
         addBlock(RagiumBlocks.Devices.EXP_COLLECTOR, "Exp Collector")
@@ -481,7 +487,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
     private fun information() {
         addInfo(RagiumBlocks.ASH_LOG, "Drop Ash Dust when harvested.")
-        addInfo(RagiumBlocks.CRIMSON_SOIL, "Apply damages from fake player for above mobs.")
+        addInfo(RagiumBlocks.CRIMSON_SOIL, "Mobs killed on this block also drop experience.")
         addInfo(RagiumBlocks.Glasses.OBSIDIAN, "As the same blast resistance as Obsidian, can be harvested without Silk Touch.")
         addInfo(RagiumBlocks.Glasses.QUARTZ, "This glass block can be harvested without Silk Touch.")
         addInfo(RagiumBlocks.Glasses.SOUL, "Only passable with Players, can be harvested without Silk Touch.")

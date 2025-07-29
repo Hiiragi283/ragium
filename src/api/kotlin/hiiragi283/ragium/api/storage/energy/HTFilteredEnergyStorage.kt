@@ -1,16 +1,15 @@
-package hiiragi283.ragium.common.storage.energy
+package hiiragi283.ragium.api.storage.energy
 
-import hiiragi283.ragium.api.storage.HTStorageIO
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-class HTLimitedEnergyStorage(val storageIO: HTStorageIO, val delegate: IEnergyStorage) : IEnergyStorage {
+class HTFilteredEnergyStorage(val delegate: IEnergyStorage, val filter: HTEnergyFilter) : IEnergyStorage {
     override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int {
-        if (!storageIO.canInsert) return 0
+        if (!filter.canReceive) return 0
         return delegate.receiveEnergy(toReceive, simulate)
     }
 
     override fun extractEnergy(toExtract: Int, simulate: Boolean): Int {
-        if (!storageIO.canExtract) return 0
+        if (!filter.canExtract) return 0
         return delegate.extractEnergy(toExtract, simulate)
     }
 
@@ -18,7 +17,7 @@ class HTLimitedEnergyStorage(val storageIO: HTStorageIO, val delegate: IEnergySt
 
     override fun getMaxEnergyStored(): Int = delegate.maxEnergyStored
 
-    override fun canExtract(): Boolean = delegate.canExtract() && storageIO.canExtract
+    override fun canExtract(): Boolean = delegate.canExtract() && filter.canExtract
 
-    override fun canReceive(): Boolean = delegate.canReceive() && storageIO.canInsert
+    override fun canReceive(): Boolean = delegate.canReceive() && filter.canReceive
 }

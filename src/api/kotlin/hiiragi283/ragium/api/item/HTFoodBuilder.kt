@@ -41,7 +41,7 @@ class HTFoodBuilder private constructor() {
     var nutrition: Int = 0
     var saturation: Float = 1f
     var alwaysEat: Boolean = false
-    var eatSeconds: Float = 1f
+    var eatSeconds: Float = 1.6f
     var convertTo: ItemStack? = null
     private val effects: MutableList<FoodProperties.PossibleEffect> = mutableListOf()
 

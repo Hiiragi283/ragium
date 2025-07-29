@@ -2,10 +2,9 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
@@ -15,6 +14,7 @@ import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMilkDrainBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTSprinklerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.dynamo.HTStirlingDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
@@ -24,6 +24,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTInfuserBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
@@ -33,6 +34,7 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import org.slf4j.Logger
+import java.util.function.Supplier
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumBlockEntityTypes {
@@ -54,6 +56,14 @@ object RagiumBlockEntityTypes {
         name: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,
     ): HTDeferredBlockEntityType<T> = REGISTER.registerType(name, factory, HTTickAwareBlockEntity::serverTick)
+
+    //    Dynamo    //
+
+    @JvmField
+    val STIRLING_DYNAMO: HTDeferredBlockEntityType<HTStirlingDynamoBlockEntity> = registerTick(
+        "stirling_dynamo",
+        ::HTStirlingDynamoBlockEntity,
+    )
 
     //    Machine    //
 
@@ -151,9 +161,11 @@ object RagiumBlockEntityTypes {
 
     @SubscribeEvent
     fun addSupportedBlock(event: BlockEntityTypeAddBlocksEvent) {
-        fun add(type: HTDeferredBlockEntityType<*>, block: HTBlockHolderLike) {
+        fun add(type: HTDeferredBlockEntityType<*>, block: Supplier<out Block>) {
             event.modify(type.get(), block.get())
         }
+
+        add(STIRLING_DYNAMO, RagiumBlocks.Dynamos.STIRLING)
 
         add(CRUSHER, RagiumBlocks.Machines.CRUSHER)
         add(BLOCK_BREAKER, RagiumBlocks.Machines.BLOCK_BREAKER)
@@ -205,6 +217,7 @@ object RagiumBlockEntityTypes {
                 HTHandlerBlockEntity::getEnergyStorage,
             )
         }
+        registerHandlers(STIRLING_DYNAMO)
 
         registerHandlers(CRUSHER)
         registerHandlers(BLOCK_BREAKER)

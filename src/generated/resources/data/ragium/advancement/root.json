@@ -1,19 +1,12 @@
 {
   "criteria": {
-    "has_blank_ticket": {
-      "conditions": {
-        "items": [
-          {
-            "items": "ragium:blank_ticket"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
+    "automatic": {
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
     "announce_to_chat": false,
-    "background": "ragium:textures/block/ragi_stone.png",
+    "background": "ragium:textures/block/plastic_block.png",
     "description": {
       "translate": "advancements.ragium.root.desc"
     },
@@ -26,7 +19,7 @@
   },
   "requirements": [
     [
-      "has_blank_ticket"
+      "automatic"
     ]
   ],
   "sends_telemetry_event": true

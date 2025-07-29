@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.screen
 
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.extension.getClientTooltipFlag
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.inventory.HTDefinitionContainerMenu
 import hiiragi283.ragium.api.inventory.HTFluidSlot
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component

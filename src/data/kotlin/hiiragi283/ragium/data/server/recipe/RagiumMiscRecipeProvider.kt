@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.api.data.recipe.HTTransmuteRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -346,14 +346,14 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('C', Tags.Items.BUCKETS_EMPTY)
             .save(output)
         // Medium
-        HTTransmuteRecipeBuilder(RagiumBlocks.Drums.MEDIUM)
+        HTSmithingRecipeBuilder(RagiumBlocks.Drums.MEDIUM)
+            .addIngredient(Tags.Items.INGOTS_GOLD)
             .addIngredient(RagiumBlocks.Drums.SMALL)
-            .addIngredient(Tags.Items.STORAGE_BLOCKS_GOLD)
             .save(output)
         // Large
-        HTTransmuteRecipeBuilder(RagiumBlocks.Drums.LARGE)
-            .addIngredient(RagiumBlocks.Drums.MEDIUM)
+        HTSmithingRecipeBuilder(RagiumBlocks.Drums.LARGE)
             .addIngredient(Tags.Items.GEMS_DIAMOND)
+            .addIngredient(RagiumBlocks.Drums.MEDIUM)
             .save(output)
         // Huge
         createNetheriteUpgrade(RagiumBlocks.Drums.HUGE, RagiumBlocks.Drums.LARGE)

@@ -1,10 +1,11 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.blockId
+import hiiragi283.ragium.api.extension.altModelBlock
+import hiiragi283.ragium.api.extension.altTextureBlock
+import hiiragi283.ragium.api.extension.cubeColumn
 import hiiragi283.ragium.api.extension.cutoutSimpleBlock
 import hiiragi283.ragium.api.extension.layeredBlock
-import hiiragi283.ragium.api.extension.simpleAltBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTBlockSet
@@ -61,14 +62,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         RagiumBlocks.RAGINITE_ORES.addBlockStates(this)
         RagiumBlocks.RAGI_CRYSTAL_ORES.addBlockStates(this)
 
-        simpleBlock(
-            RagiumBlocks.RESONANT_DEBRIS.get(),
-            models()
-                .withExistingParent(RagiumBlocks.RESONANT_DEBRIS.id.path, "cube_column")
-                .texture("end", RagiumBlocks.RESONANT_DEBRIS.blockId.withSuffix("_top"))
-                .texture("side", RagiumBlocks.RESONANT_DEBRIS.blockId.withSuffix("_side")),
-        )
-
+        cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
         // Log
         logBlockWithRenderType(RagiumBlocks.ASH_LOG.get(), "cutout")
 
@@ -77,14 +71,14 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             .forAllStates { state: BlockState ->
                 val age: Int = state.getValue(HTCropBlock.AGE)
                 val id: ResourceLocation = RagiumBlocks.EXP_BERRY_BUSH.id.withSuffix("_stage$age")
-                ConfiguredModel.builder()
+                ConfiguredModel
+                    .builder()
                     .modelFile(
                         models()
                             .withExistingParent(id.path, "cross")
                             .texture("cross", id.withPrefix("block/"))
-                            .renderType("cutout")
-                    )
-                    .build()
+                            .renderType("cutout"),
+                    ).build()
             }
 
         getVariantBuilder(RagiumBlocks.WARPED_WART.get())
@@ -97,34 +91,29 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     else -> 2
                 }
                 val id: ResourceLocation = RagiumBlocks.WARPED_WART.id.withSuffix("_stage$age")
-                ConfiguredModel.builder()
+                ConfiguredModel
+                    .builder()
                     .modelFile(
                         models()
                             .withExistingParent(id.path, "crop")
                             .texture("crop", id.withPrefix("block/"))
-                            .renderType("cutout")
-                    )
-                    .build()
+                            .renderType("cutout"),
+                    ).build()
             }
 
         // Food
-        simpleAltBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
+        altModelBlock(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         // Machine Frame
-        simpleAltBlock(RagiumBlocks.Casings.WOODEN, vanillaId("block/note_block"))
+        altTextureBlock(RagiumBlocks.Casings.WOODEN, vanillaId("block/note_block"))
 
-        simpleBlock(
-            RagiumBlocks.Casings.STONE.get(),
-            models().cubeColumn(
-                "block/stone_casing",
-                vanillaId("block/furnace_side"),
-                vanillaId("block/furnace_top"),
-            ),
+        cubeColumn(
+            RagiumBlocks.Casings.STONE,
+            vanillaId("block/furnace_side"),
+            vanillaId("block/furnace_top"),
         )
 
-        cutoutSimpleBlock(RagiumBlocks.Frames.BASIC)
-        cutoutSimpleBlock(RagiumBlocks.Frames.ADVANCED)
-        cutoutSimpleBlock(RagiumBlocks.Frames.ELITE)
+        RagiumBlocks.Frames.entries.forEach(::cutoutSimpleBlock)
 
         // Machine
         fun machine(holder: HTBlockHolderLike, top: ResourceLocation, bottom: ResourceLocation) {
@@ -166,34 +155,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             RagiumAPI.id("block/device_overlay"),
         )
 
-        simpleAltBlock(RagiumBlocks.Devices.MILK_DRAIN)
-
-        // Manual Machine
-        /*getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
-            for (step: Int in BlockStateProperties.AGE_7.possibleValues) {
-                val modelId: ResourceLocation = RagiumAPI.id(
-                    when (step % 2 == 0) {
-                        true -> "block/manual_grinder"
-                        false -> "block/manual_grinder_diagonal"
-                    },
-                )
-                val direction: Direction = when (step / 2) {
-                    0 -> Direction.NORTH
-                    1 -> Direction.EAST
-                    2 -> Direction.SOUTH
-                    3 -> Direction.WEST
-                    else -> error("")
-                }
-
-                this
-                    .modelFile(ModelFile.UncheckedModelFile(modelId))
-                    .rotationY(direction.getRotationY())
-                    .addModel()
-                    .condition(BlockStateProperties.AGE_7, step)
-            }
-        }*/
-
-        // uncheckedSimpleBlock(RagiumBlocks.DISENCHANTING_TABLE)
+        altModelBlock(RagiumBlocks.Devices.MILK_DRAIN)
 
         // Storages
         for (drum: RagiumBlocks.Drums in RagiumBlocks.Drums.entries) {

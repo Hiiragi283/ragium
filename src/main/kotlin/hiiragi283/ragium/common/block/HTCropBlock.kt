@@ -32,12 +32,12 @@ open class HTCropBlock(private val seed: Supplier<Item>, properties: Properties)
             box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
             box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
             box(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
-            box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)
+            box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
         )
     }
 
     override fun getAgeProperty(): IntegerProperty = AGE
-    
+
     override fun getMaxAge(): Int = 3
 
     override fun getBaseSeedId(): ItemLike = seed.get()
@@ -46,8 +46,12 @@ open class HTCropBlock(private val seed: Supplier<Item>, properties: Properties)
         builder.add(AGE)
     }
 
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape =
-        SHAPE_BY_AGE[getAge(state)]
+    override fun getShape(
+        state: BlockState,
+        level: BlockGetter,
+        pos: BlockPos,
+        context: CollisionContext,
+    ): VoxelShape = SHAPE_BY_AGE[getAge(state)]
 
     /**
      * @see [de.ellpeck.actuallyadditions.mod.blocks.base.AACrops.useItemOn]

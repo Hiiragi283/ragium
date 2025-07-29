@@ -1,8 +1,8 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -26,11 +26,13 @@ import net.minecraft.world.phys.HitResult
 /**
  * `Ragium`で使用する[BaseEntityBlock]の拡張クラス
  */
-abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntityType<BE>, properties: Properties) :
-    BaseEntityBlock(properties) {
+abstract class HTEntityBlock<BE>(val type: HTDeferredBlockEntityType<BE>, properties: Properties) :
+    BaseEntityBlock(properties) where BE : BlockEntity, BE : HTBlockEntityExtension {
     companion object {
         @JvmStatic
-        fun <BE : HTBlockEntity> create(type: HTDeferredBlockEntityType<BE>): (Properties) -> HTEntityBlock<*> = { prop: Properties ->
+        fun <BE> create(
+            type: HTDeferredBlockEntityType<BE>,
+        ): (Properties) -> HTEntityBlock<*> where BE : BlockEntity, BE : HTBlockEntityExtension = { prop: Properties ->
             object : HTEntityBlock<BE>(type, prop) {
                 override fun initDefaultState(): BlockState = stateDefinition.any()
             }
@@ -46,7 +48,7 @@ abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntity
      */
     protected abstract fun initDefaultState(): BlockState
 
-    protected fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
+    protected fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntityExtension? = getBlockEntity(pos) as? HTBlockEntityExtension
 
     //    Block    //
 
@@ -130,6 +132,7 @@ abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntity
         level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
     }
 
+    @Suppress("UNCHECKED_CAST")
     final override fun getCloneItemStack(
         state: BlockState,
         target: HitResult,
@@ -137,7 +140,7 @@ abstract class HTEntityBlock<BE : HTBlockEntity>(val type: HTDeferredBlockEntity
         pos: BlockPos,
         player: Player,
     ): ItemStack = super.getCloneItemStack(state, target, level, pos, player).apply {
-        level.getHTBlockEntity(pos)?.collectComponents()?.let(this::applyComponents)
+        (level.getHTBlockEntity(pos) as? BE)?.collectComponents()?.let(this::applyComponents)
     }
 
     final override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.create(pos, state)

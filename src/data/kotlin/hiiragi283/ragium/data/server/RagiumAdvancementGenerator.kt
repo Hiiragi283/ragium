@@ -10,6 +10,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
+import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.block.Blocks
@@ -21,11 +22,11 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             setIcon(RagiumItems.ForgeHammers.RAGI_ALLOY)
             title = Component.literal(RagiumAPI.MOD_NAME)
             setDescFromKey(RagiumAdvancements.ROOT)
-            backGround = RagiumAPI.id("textures/block/ragi_stone.png")
+            backGround = RagiumAPI.id("textures/block/plastic_block.png")
             showToast = false
             showChat = false
         }
-        hasAllItem("has_blank_ticket", RagiumItems.Tickets.BLANK)
+        addCriterion("automatic", PlayerTrigger.TriggerInstance.tick())
     }
 
     override fun generate(registries: HolderLookup.Provider) {
@@ -35,7 +36,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         warped()
         eldritch()
 
-        val eternalTicket: AdvancementHolder = create(RagiumAdvancements.ETERNAL_TICKET, root) {
+        create(RagiumAdvancements.ETERNAL_TICKET, root) {
             display {
                 setIcon(RagiumItems.Tickets.ETERNAL)
                 setTitleFromKey(RagiumAdvancements.ETERNAL_TICKET)
@@ -48,11 +49,31 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
     private fun raginite() {
         val raginite: AdvancementHolder = createSimple(
-            RagiumAdvancements.RAGINITE_DUST,
+            RagiumAdvancements.RAGINITE,
             root,
             RagiumItems.Dusts.RAGINITE,
             RagiumCommonTags.Items.DUSTS_RAGINITE,
         )
+        // Basic
+        val ragiAlloy: AdvancementHolder = createSimple(
+            RagiumAdvancements.RAGI_ALLOY,
+            raginite,
+            RagiumItems.Ingots.RAGI_ALLOY,
+            RagiumCommonTags.Items.INGOTS_RAGI_ALLOY,
+        )
+        // Advanced
+        // Elite
+        val ragiCrystal: AdvancementHolder = createSimple(
+            RagiumAdvancements.RAGI_CRYSTAL,
+            raginite,
+            RagiumItems.Gems.RAGI_CRYSTAL,
+            RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL,
+        )
+        val ragiTicket: AdvancementHolder = createSimple(
+            RagiumAdvancements.RAGI_TICKET,
+            ragiCrystal,
+            RagiumItems.Tickets.RAGI,
+        ) { setGoal() }
     }
 
     private fun azure() {

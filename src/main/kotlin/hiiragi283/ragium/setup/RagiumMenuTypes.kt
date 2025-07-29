@@ -3,7 +3,6 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.HTMenuTypeRegister
-import hiiragi283.ragium.common.inventory.HTBlockBreakerMenu
 import hiiragi283.ragium.common.inventory.HTCombineProcessMenu
 import hiiragi283.ragium.common.inventory.HTDecomposeProcessMenu
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
@@ -11,6 +10,7 @@ import hiiragi283.ragium.common.inventory.HTFluidCollectorMenu
 import hiiragi283.ragium.common.inventory.HTItemCollectorMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
 import hiiragi283.ragium.common.inventory.HTRefineryMenu
+import hiiragi283.ragium.common.inventory.HTSingleItemMenu
 import hiiragi283.ragium.common.inventory.HTSingleProcessMenu
 import hiiragi283.ragium.common.inventory.HTSolidifierMenu
 
@@ -20,9 +20,6 @@ object RagiumMenuTypes {
 
     @JvmField
     val ALLOY_SMELTER: HTDeferredMenuType<HTCombineProcessMenu> = REGISTER.registerType("alloy_smelter", HTCombineProcessMenu::alloy)
-
-    @JvmField
-    val BLOCK_BREAKER: HTDeferredMenuType<HTBlockBreakerMenu> = REGISTER.registerType("block_breaker", ::HTBlockBreakerMenu)
 
     @JvmField
     val CRUSHER: HTDeferredMenuType<HTDecomposeProcessMenu> = REGISTER.registerType("crusher", HTDecomposeProcessMenu::crusher)
@@ -51,6 +48,9 @@ object RagiumMenuTypes {
 
     @JvmField
     val REFINERY: HTDeferredMenuType<HTRefineryMenu> = REGISTER.registerType("refinery", ::HTRefineryMenu)
+
+    @JvmField
+    val SINGLE_ITEM: HTDeferredMenuType<HTSingleItemMenu> = REGISTER.registerType("single_item", ::HTSingleItemMenu)
 
     @JvmField
     val SOLIDIFIER: HTDeferredMenuType<HTSolidifierMenu> = REGISTER.registerType("solidifier", ::HTSolidifierMenu)

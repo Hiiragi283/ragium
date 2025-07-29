@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.screen
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTHandlerBlockEntity
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.screen.HTContainerScreen
-import hiiragi283.ragium.api.storage.HTHandlerBlockEntity
 import hiiragi283.ragium.common.inventory.HTEnergyNetworkAccessMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.BlockPos

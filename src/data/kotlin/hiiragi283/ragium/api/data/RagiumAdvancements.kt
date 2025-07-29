@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -15,10 +16,16 @@ object RagiumAdvancements {
     //    Raginite    //
 
     @JvmField
-    val RAGI_TICKET: ResourceKey<Advancement> = create("ragi_ticket")
+    val RAGINITE: ResourceKey<Advancement> = create(RagiumConst.RAGINITE)
 
     @JvmField
-    val RAGINITE_DUST: ResourceKey<Advancement> = create("raginite_dust")
+    val RAGI_ALLOY: ResourceKey<Advancement> = create(RagiumConst.RAGI_ALLOY)
+
+    @JvmField
+    val RAGI_CRYSTAL: ResourceKey<Advancement> = create(RagiumConst.RAGI_CRYSTAL)
+
+    @JvmField
+    val RAGI_TICKET: ResourceKey<Advancement> = create("ragi_ticket")
 
     //    Azure    //
 
@@ -34,7 +41,7 @@ object RagiumAdvancements {
     //    Crimson    //
 
     @JvmField
-    val CRIMSON_CRYSTAL: ResourceKey<Advancement> = create("crimson_crystal")
+    val CRIMSON_CRYSTAL: ResourceKey<Advancement> = create(RagiumConst.CRIMSON_CRYSTAL)
 
     @JvmField
     val CRIMSON_SOIL: ResourceKey<Advancement> = create("crimson_soil")
@@ -42,7 +49,7 @@ object RagiumAdvancements {
     //    Warped    //
 
     @JvmField
-    val WARPED_CRYSTAL: ResourceKey<Advancement> = create("warped_crystal")
+    val WARPED_CRYSTAL: ResourceKey<Advancement> = create(RagiumConst.WARPED_CRYSTAL)
 
     @JvmField
     val TELEPORT_TICKET: ResourceKey<Advancement> = create("teleport_ticket")
@@ -50,7 +57,7 @@ object RagiumAdvancements {
     //    Eldritch    //
 
     @JvmField
-    val ELDRITCH_PEARL: ResourceKey<Advancement> = create("eldritch_pearl")
+    val ELDRITCH_PEARL: ResourceKey<Advancement> = create(RagiumConst.ELDRITCH_PEARL)
 
     @JvmField
     val MYSTERIOUS_OBSIDIAN: ResourceKey<Advancement> = create("mysterious_obsidian")

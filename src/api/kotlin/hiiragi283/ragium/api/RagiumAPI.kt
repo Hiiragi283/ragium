@@ -10,9 +10,7 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
-import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
@@ -29,12 +27,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.*
 
 interface RagiumAPI {
@@ -127,19 +123,9 @@ interface RagiumAPI {
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
     /**
-     * @see [HTStorageIO.wrapEnergyStorage]
-     */
-    fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage
-
-    /**
      * @see [HTBlockInteractingRecipe.getType]
      */
     fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe>
-
-    /**
-     * @see [HTTransmuteRecipe.getSerializer]
-     */
-    fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe>
 
     /**
      * @see [HTInfusingRecipeBuilder]

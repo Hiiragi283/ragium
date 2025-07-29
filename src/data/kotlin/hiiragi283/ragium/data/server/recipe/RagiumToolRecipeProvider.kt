@@ -46,8 +46,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider() {
 
         HTShapedRecipeBuilder(RagiumItems.BLAST_CHARGE, 8)
             .hollow8()
-            .define('A', RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
-            .define('B', Tags.Items.GUNPOWDERS)
+            .define('A', Tags.Items.GUNPOWDERS)
+            .define('B', RagiumCommonTags.Items.GEMS_CRIMSON_CRYSTAL)
             .save(output)
 
         HTShapedRecipeBuilder(RagiumItems.ENDER_BUNDLE)

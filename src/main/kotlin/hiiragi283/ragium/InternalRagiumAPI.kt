@@ -13,18 +13,14 @@ import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
 import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTTransmuteRecipe
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
-import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
-import hiiragi283.ragium.common.storage.energy.HTLimitedEnergyStorage
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import hiiragi283.ragium.util.HTAddonCollector
 import hiiragi283.ragium.util.HTWrappedMultiMap
@@ -39,12 +35,10 @@ import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.fml.LogicalSide
 import net.neoforged.fml.ModList
 import net.neoforged.fml.util.thread.EffectiveSide
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import org.slf4j.Logger
@@ -95,12 +89,7 @@ class InternalRagiumAPI : RagiumAPI {
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
 
-    override fun wrapEnergyStorage(storageIO: HTStorageIO, storage: IEnergyStorage): IEnergyStorage =
-        HTLimitedEnergyStorage(storageIO, storage)
-
     override fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe> = RagiumRecipeTypes.BLOCK_INTERACTING.get()
-
-    override fun getTransmuteRecipeSerializer(): RecipeSerializer<HTTransmuteRecipe> = RagiumRecipeSerializers.TRANSMUTE.get()
 
     override fun createInfusingRecipe(ingredient: Ingredient, output: HTItemOutput, cost: Float): HTUniversalRecipe =
         HTInfusingRecipe(ingredient, output, cost)

@@ -23,6 +23,7 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -57,7 +58,7 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
             // テレポートに成功したらチケットを消費
             val sound: SoundEvent = when {
                 tryToTeleport(livingEntity, stack) -> {
-                    stack.consume(1, livingEntity)
+                    stack.hurtAndBreak(1, livingEntity, EquipmentSlot.MAINHAND)
                     if (livingEntity is ServerPlayer) {
                         CriteriaTriggers.CONSUME_ITEM.trigger(livingEntity, stack)
                     }

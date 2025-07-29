@@ -17,7 +17,7 @@ object RagiumFoods {
     }
 
     @JvmField
-    val CANNED_COOKED_MEAT: FoodProperties = HTFoodBuilder.copyOf(Foods.BEEF) {
+    val CANNED_COOKED_MEAT: FoodProperties = HTFoodBuilder.copyOf(Foods.COOKED_BEEF) {
         fastFood()
         convertTo(Items.IRON_NUGGET)
     }

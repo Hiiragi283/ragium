@@ -3,7 +3,8 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.network.HTNbtCodec
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.energy.HTEnergyFilter
+import hiiragi283.ragium.api.storage.energy.HTFilteredEnergyStorage
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.core.BlockPos
@@ -94,10 +95,13 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             .getEnergyNetworkManager()
             .getNetwork(level) ?: return
         this.network = network
-        this.externalNetwork = HTStorageIO.INPUT.wrapEnergyStorage(network)
+        this.externalNetwork = wrapNetworkToExternal(network)
     }
 
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
+    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = externalNetwork
+
+    protected open fun wrapNetworkToExternal(network: IEnergyStorage): IEnergyStorage =
+        HTFilteredEnergyStorage(network, HTEnergyFilter.RECEIVE_ONLY)
 
     //    Menu    //
 

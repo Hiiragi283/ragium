@@ -35,6 +35,8 @@ object RagiumCreativeTabs {
         // Storage Blocks
         output.acceptItems(RagiumBlocks.StorageBlocks.entries)
         // Machines
+        output.acceptItems(RagiumBlocks.Dynamos.entries)
+
         output.acceptItems(RagiumBlocks.Frames.entries)
         output.acceptItems(RagiumBlocks.Machines.entries)
 

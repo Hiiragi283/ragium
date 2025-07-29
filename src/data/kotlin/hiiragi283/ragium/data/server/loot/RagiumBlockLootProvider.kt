@@ -71,6 +71,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         // Crop
         addCrop(RagiumBlocks.EXP_BERRY_BUSH, RagiumItems.EXP_BERRIES)
         addCrop(RagiumBlocks.WARPED_WART, RagiumItems.WARPED_WART)
+
         // Ore
         fun registerOres(oreSets: HTBlockSet, drop: ItemLike) {
             for (ore: DeferredBlock<*> in oreSets.blockHolders) {
@@ -168,7 +169,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                                 LootItemBlockStatePropertyCondition
                                     .hasBlockStateProperties(block)
                                     .setProperties(
-                                        StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 3)
+                                        StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 3),
                                     ),
                             ).add(LootItem.lootTableItem(crop))
                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(2f, 3f)))
@@ -180,7 +181,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                                 LootItemBlockStatePropertyCondition
                                     .hasBlockStateProperties(block)
                                     .setProperties(
-                                        StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 2)
+                                        StatePropertiesPredicate.Builder.properties().hasProperty(HTCropBlock.AGE, 2),
                                     ),
                             ).add(LootItem.lootTableItem(crop))
                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)))
