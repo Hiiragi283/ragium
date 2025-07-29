@@ -79,7 +79,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         }
 
         HTEnergyNetworkManagerImpl.registerEvents()
-        RagiumRuntimeEvents.registerEvents()
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 

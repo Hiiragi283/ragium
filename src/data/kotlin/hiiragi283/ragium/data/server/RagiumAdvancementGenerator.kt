@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.data.HTAdvancementGenerator
 import hiiragi283.ragium.api.data.RagiumAdvancements
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -13,8 +12,6 @@ import net.minecraft.advancements.critereon.ConsumeItemTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
-import net.minecraft.world.level.block.Blocks
-import net.neoforged.neoforge.common.Tags
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun createRoot(): AdvancementHolder = create(RagiumAdvancements.ROOT) {
@@ -106,12 +103,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.CRIMSON_SOIL)
                 setGoal()
             }
-            addCriterion(
-                "interact_soul_soil",
-                HTBlockInteractionTrigger.TriggerInstance.interactBlock(Blocks.SOUL_SOIL),
-            )
             hasAllItem("has_crimson_soil", RagiumBlocks.CRIMSON_SOIL)
-            requirements(AdvancementRequirements.Strategy.OR)
         }
     }
 
@@ -148,12 +140,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.MYSTERIOUS_OBSIDIAN)
                 setGoal()
             }
-            addCriterion(
-                "interact_crying_obsidian",
-                HTBlockInteractionTrigger.TriggerInstance.interactBlock(Tags.Blocks.OBSIDIANS_CRYING),
-            )
             hasItemsIn("has_mysterious_obsidian", RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
-            requirements(AdvancementRequirements.Strategy.OR)
         }
     }
 }

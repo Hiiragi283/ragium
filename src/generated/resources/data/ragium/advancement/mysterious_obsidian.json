@@ -10,12 +10,6 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "interact_crying_obsidian": {
-      "conditions": {
-        "blocks": "#c:obsidians/crying"
-      },
-      "trigger": "ragium:block_interaction"
     }
   },
   "display": {
@@ -33,7 +27,6 @@
   },
   "requirements": [
     [
-      "interact_crying_obsidian",
       "has_mysterious_obsidian"
     ]
   ],

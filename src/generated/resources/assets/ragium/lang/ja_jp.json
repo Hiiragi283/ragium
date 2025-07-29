@@ -154,7 +154,7 @@
   "entity.ragium.blast_charge": "ブラストチャージ",
   "entity.ragium.eldritch_egg": "異質な卵",
   "gui.tooltip.block.ragium.ash_log": "壊すと灰の粉が手に入ります。",
-  "gui.tooltip.block.ragium.crimson_soil": "上にいるモブにフェイクプレイヤー由来のダメージを与えます。",
+  "gui.tooltip.block.ragium.crimson_soil": "このブロックの上で倒されたモブは経験値も落とします。",
   "gui.tooltip.block.ragium.obsidian_glass": "黒曜石とおなじ爆破耐性をもち，シルクタッチなしで回収することが可能です。",
   "gui.tooltip.block.ragium.quartz_glass": "このガラスはシルクタッチなしで回収することが可能です。",
   "gui.tooltip.block.ragium.soul_glass": "プレイヤーのみ通過でき，シルクタッチなしで回収することが可能です。",

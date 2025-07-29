@@ -1,39 +1,18 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
-import hiiragi283.ragium.api.data.interaction.HTBlockAction
-import hiiragi283.ragium.api.data.interaction.HTBreakBlockAction
-import hiiragi283.ragium.api.data.interaction.HTDropItemBlockAction
-import hiiragi283.ragium.api.data.interaction.HTPlaySoundBlockAction
-import hiiragi283.ragium.api.data.interaction.HTReplaceBlockAction
-import hiiragi283.ragium.api.extension.blockHolderSet
-import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
-import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.HolderGetter
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.neoforged.neoforge.common.Tags
 
 object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
-        blockGetter = provider.lookupOrThrow(Registries.BLOCK)
+        // blockGetter = provider.lookupOrThrow(Registries.BLOCK)
 
-        azure()
-        bloody()
-        eldritchSculk()
-        eldritchEnder()
+        // azure()
+        // bloody()
+        // eldritchSculk()
+        // eldritchEnder()
     }
 
-    private fun azure() {
+    /*private fun azure() {
         fun shard(suffix: String, block: Block, count: Int) {
             register(
                 RagiumAPI.id("azure_shard_from_").withSuffix(suffix),
@@ -202,5 +181,5 @@ object RagiumBlockInteractingRecipeProvider : HTRecipeProvider() {
                 listOf(*actions),
             ),
         )
-    }
+    }*/
 }

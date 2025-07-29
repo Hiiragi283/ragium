@@ -10,12 +10,6 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "interact_soul_soil": {
-      "conditions": {
-        "blocks": "minecraft:soul_soil"
-      },
-      "trigger": "ragium:block_interaction"
     }
   },
   "display": {
@@ -33,7 +27,6 @@
   },
   "requirements": [
     [
-      "interact_soul_soil",
       "has_crimson_soil"
     ]
   ],

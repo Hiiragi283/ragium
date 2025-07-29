@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -27,8 +26,7 @@ object RagiumRecipeTypes {
     @JvmField
     val ALLOYING: Supplier<RecipeType<HTAlloyingRecipe>> = register(RagiumConst.ALLOYING)
 
-    @JvmField
-    val BLOCK_INTERACTING: Supplier<RecipeType<HTBlockInteractingRecipe>> = register(RagiumConst.BLOCK_INTERACTING)
+    // val BLOCK_INTERACTING: Supplier<RecipeType<HTBlockInteractingRecipe>> = register(RagiumConst.BLOCK_INTERACTING)
 
     @JvmField
     val CRUSHING: Supplier<RecipeType<HTCrushingRecipe>> = register(RagiumConst.CRUSHING)

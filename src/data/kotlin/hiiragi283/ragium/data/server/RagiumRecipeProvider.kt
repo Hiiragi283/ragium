@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.data.server.material.ModMaterialFamilies
 import hiiragi283.ragium.data.server.material.RagiumMaterialFamilies
 import hiiragi283.ragium.data.server.material.VanillaMaterialFamilies
-import hiiragi283.ragium.data.server.recipe.RagiumBlockInteractingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumExtractingRecipeProvider
@@ -33,7 +32,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         RagiumMaterialFamilies
         ModMaterialFamilies
 
-        RagiumBlockInteractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        // RagiumBlockInteractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumExtractingRecipeProvider.buildRecipes(recipeOutput, holderLookup)

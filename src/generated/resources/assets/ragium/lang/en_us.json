@@ -154,7 +154,7 @@
   "entity.ragium.blast_charge": "Blast Charge",
   "entity.ragium.eldritch_egg": "Thrown Eldritch Egg",
   "gui.tooltip.block.ragium.ash_log": "Drop Ash Dust when harvested.",
-  "gui.tooltip.block.ragium.crimson_soil": "Apply damages from fake player for above mobs.",
+  "gui.tooltip.block.ragium.crimson_soil": "Mobs killed on this block also drop experience.",
   "gui.tooltip.block.ragium.obsidian_glass": "As the same blast resistance as Obsidian, can be harvested without Silk Touch.",
   "gui.tooltip.block.ragium.quartz_glass": "This glass block can be harvested without Silk Touch.",
   "gui.tooltip.block.ragium.soul_glass": "Only passable with Players, can be harvested without Silk Touch.",

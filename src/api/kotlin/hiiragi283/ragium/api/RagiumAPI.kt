@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.data.recipe.HTInfusingRecipeBuilder
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
-import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
@@ -27,8 +26,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.fml.LogicalSide
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import java.util.*
@@ -101,11 +98,6 @@ interface RagiumAPI {
     fun getCurrentServer(): MinecraftServer?
 
     /**
-     * 現在の物理サイドを返します。
-     */
-    fun getCurrentSide(): LogicalSide
-
-    /**
      * エネルギーネットワークのマネージャを返します。
      */
     fun getEnergyNetworkManager(): HTEnergyNetworkManager
@@ -121,11 +113,6 @@ interface RagiumAPI {
      * @see [mutableTableOf]
      */
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
-
-    /**
-     * @see [HTBlockInteractingRecipe.getType]
-     */
-    fun getBlockInteractingRecipeType(): RecipeType<HTBlockInteractingRecipe>
 
     /**
      * @see [HTInfusingRecipeBuilder]

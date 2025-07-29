@@ -12,15 +12,12 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
-import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBlockInteractingRecipeImpl
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
@@ -50,7 +47,6 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.CraftingRecipe
@@ -139,7 +135,7 @@ class RagiumEmiPlugin : EmiPlugin {
             }
         }
         // Block Action
-        forEachRecipes(RagiumRecipeTypes.BLOCK_INTERACTING.get()) { id: ResourceLocation, recipe: HTBlockInteractingRecipe ->
+        /*forEachRecipes(RagiumRecipeTypes.BLOCK_INTERACTING.get()) { id: ResourceLocation, recipe: HTBlockInteractingRecipe ->
             if (recipe is HTBlockInteractingRecipeImpl) {
                 val firstStack: ItemStack = recipe.actions
                     .filterIsInstance<HTBlockAction.ItemPreview>()
@@ -150,7 +146,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     rightInput(EmiIngredient.of(recipe.ingredient), false)
                 }
             }
-        }
+        }*/
     }
 
     private fun addMachineRecipes() {

@@ -1,9 +1,7 @@
 package hiiragi283.ragium.setup
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
 import hiiragi283.ragium.api.data.interaction.HTBlockAction
 import hiiragi283.ragium.api.data.interaction.HTBreakBlockAction
 import hiiragi283.ragium.api.data.interaction.HTDropItemBlockAction
@@ -24,7 +22,7 @@ object RagiumMiscRegister {
 
     @JvmStatic
     private fun advancementTriggers(helper: RegisterEvent.RegisterHelper<CriterionTrigger<*>>) {
-        helper.register(RagiumAPI.id("block_interaction"), HTBlockInteractionTrigger)
+        // helper.register(RagiumAPI.id("block_interaction"), HTBlockInteractionTrigger)
     }
 
     @JvmStatic

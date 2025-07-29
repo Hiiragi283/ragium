@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "ragium:small_drum"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:medium_drum"
+  },
+  "template": {
+    "tag": "c:ingots/gold"
+  }
+}

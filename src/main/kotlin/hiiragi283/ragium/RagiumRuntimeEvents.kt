@@ -1,16 +1,12 @@
 package hiiragi283.ragium
 
-import hiiragi283.ragium.api.advancements.HTBlockInteractionTrigger
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.recipe.HTBlockInteractingRecipe
-import hiiragi283.ragium.api.recipe.HTInteractRecipeInput
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
@@ -27,30 +23,19 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
-import kotlin.jvm.optionals.getOrNull
 
-internal object RagiumRuntimeEvents {
-    @JvmStatic
-    fun registerEvents() {
-        NeoForge.EVENT_BUS.addListener(::onClickedBlock)
-        NeoForge.EVENT_BUS.addListener(::onUseItem)
-        NeoForge.EVENT_BUS.addListener(::onFinishUsingItem)
-
-        NeoForge.EVENT_BUS.addListener(::onClickedEntity)
-        NeoForge.EVENT_BUS.addListener(::onEntityDeath)
-    }
-
+@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
+object RagiumRuntimeEvents {
     //    Block    //
 
-    private fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
+    /*fun onClickedBlock(event: PlayerInteractEvent.RightClickBlock) {
         val hand: InteractionHand = event.hand
         val stack: ItemStack = event.itemStack
 
@@ -71,9 +56,10 @@ internal object RagiumRuntimeEvents {
         // 次のイベントをキャンセルする
         event.isCanceled = true
         event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
-    }
+    }*/
 
-    private fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
+    @SubscribeEvent
+    fun onUseItem(event: PlayerInteractEvent.RightClickItem) {
         val stack: ItemStack = event.itemStack
         if (stack.isEmpty) return
         val player: Player = event.entity
@@ -120,7 +106,8 @@ internal object RagiumRuntimeEvents {
         }
     }
 
-    private fun onFinishUsingItem(event: LivingEntityUseItemEvent.Finish) {
+    @SubscribeEvent
+    fun onFinishUsingItem(event: LivingEntityUseItemEvent.Finish) {
         val stack: ItemStack = event.item
         if (stack.isEmpty) return
         val result: ItemStack = event.resultStack
@@ -146,7 +133,8 @@ internal object RagiumRuntimeEvents {
 
     //    Entity    //
 
-    private fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
+    @SubscribeEvent
+    fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {
         val stack: ItemStack = event.itemStack
         // アイテムがガラス瓶の場合はハチを捕まえる
         if (stack.`is`(Items.GLASS_BOTTLE)) {
@@ -166,7 +154,7 @@ internal object RagiumRuntimeEvents {
         }
     }
 
-    /*private fun onEntityStruck(event: EntityStruckByLightningEvent) {
+    /*fun onEntityStruck(event: EntityStruckByLightningEvent) {
         // プレイヤーによって召喚された落雷は無視される
         if (event.lightning.cause != null) return
 
@@ -188,7 +176,8 @@ internal object RagiumRuntimeEvents {
         }
     }*/
 
-    private fun onEntityDeath(event: LivingDeathEvent) {
+    @SubscribeEvent
+    fun onEntityDeath(event: LivingDeathEvent) {
         // 対象が共振の残骸を生成しない場合はスキップ
         val entity: LivingEntity = event.entity
         if (!entity.type.`is`(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)) return
