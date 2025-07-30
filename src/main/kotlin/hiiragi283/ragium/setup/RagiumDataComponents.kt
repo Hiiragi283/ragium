@@ -36,6 +36,10 @@ object RagiumDataComponents {
         register("blast_power", ExtraCodecs.POSITIVE_FLOAT, ByteBufCodecs.FLOAT.cast())
 
     @JvmField
+    val ENERGY: Supplier<DataComponentType<Int>> =
+        register("energy", ExtraCodecs.NON_NEGATIVE_INT, ByteBufCodecs.VAR_INT.cast())
+
+    @JvmField
     val FLUID_CONTENT: Supplier<DataComponentType<SimpleFluidContent>> =
         register("fluid_content", SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
 

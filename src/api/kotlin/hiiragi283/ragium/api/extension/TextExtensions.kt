@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.item.HTEnergyItem
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -19,6 +20,7 @@ import net.neoforged.fml.ModList
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.client.ClientTooltipFlag
 import net.neoforged.neoforge.common.extensions.ILevelExtension
+import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import net.neoforged.neoforgespi.language.IModInfo
@@ -73,6 +75,12 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
 
 fun globalPosText(value: GlobalPos): MutableComponent = bracketText(joinedText(levelText(value.dimension), blockPosText(value.pos)))
 
+fun energyText(storage: IEnergyStorage): MutableComponent = Component.translatable(
+    RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE,
+    intText(storage.energyStored),
+    intText(storage.maxEnergyStored),
+)
+
 /**
  * 指定した[stack]からツールチップを生成します
  * @param consumer 生成したツールチップを受けとるブロック
@@ -113,6 +121,10 @@ fun addFluidTooltip(stack: FluidStack, consumer: Consumer<Component>, flag: Tool
         .mods
         .firstOrNull() ?: return
     consumer.accept(Component.literal(firstMod.displayName).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC))
+}
+
+fun addEnergyTooltip(stack: ItemStack, consumer: Consumer<Component>) {
+    HTEnergyItem.getStorage(stack)?.let(::energyText)?.let(consumer::accept)
 }
 
 //    TooltipFlag    //

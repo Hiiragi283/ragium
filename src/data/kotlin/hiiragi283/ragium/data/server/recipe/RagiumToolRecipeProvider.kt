@@ -27,6 +27,16 @@ import net.neoforged.neoforge.registries.DeferredItem
 
 object RagiumToolRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
+        HTShapedRecipeBuilder(RagiumItems.DRILL)
+            .pattern(
+                " A ",
+                "ABA",
+                "ACA",
+            ).define('A', RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
+            .define('B', RagiumCommonTags.Items.DUSTS_RAGINITE)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .save(output)
+
         HTShapedRecipeBuilder(RagiumItems.POTION_BUNDLE)
             .pattern(
                 " A ",

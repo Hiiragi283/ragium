@@ -245,6 +245,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumItems.AZURE_STEEL_TOOLS.addTranslationJp("紺鉄", this)
         RagiumItems.DEEP_STEEL_TOOLS.addTranslationJp("深層鋼", this)
 
+        addItem(RagiumItems.DRILL, "電動ドリル")
+
         addItem(RagiumItems.ForgeHammers.IRON, "鉄の鍛造ハンマー")
         addItem(RagiumItems.ForgeHammers.DIAMOND, "ダイヤモンドの鍛造ハンマー")
         addItem(RagiumItems.ForgeHammers.NETHERITE, "ネザライトの鍛造ハンマー")

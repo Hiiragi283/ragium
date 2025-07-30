@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.item.HTAzureSteelTemplateItem
 import hiiragi283.ragium.common.item.HTBlastChargeItem
 import hiiragi283.ragium.common.item.HTCaptureEggItem
 import hiiragi283.ragium.common.item.HTDeepSteelTemplateItem
+import hiiragi283.ragium.common.item.HTDrillItem
 import hiiragi283.ragium.common.item.HTDynamicLanternItem
 import hiiragi283.ragium.common.item.HTExpMagnetItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
@@ -49,6 +50,7 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.energy.ComponentEnergyStorage
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper
@@ -245,6 +247,9 @@ object RagiumItems {
     @JvmField
     val DEEP_STEEL_TOOLS = HTToolSets(RagiumToolTiers.DEEP_STEEL, RagiumConst.DEEP_STEEL)
 
+    @JvmField
+    val DRILL: DeferredItem<Item> = register("drill", ::HTDrillItem)
+
     enum class ForgeHammers(tier: Tier) : HTItemHolderLike {
         IRON(Tiers.IRON),
         DIAMOND(Tiers.DIAMOND),
@@ -425,9 +430,20 @@ object RagiumItems {
             *RagiumFluidContents.REGISTER.itemEntries.toTypedArray(),
         )
 
+        registerEnergy(event, DRILL, 16000)
+
         registerDrums(event)
 
         LOGGER.info("Registered item capabilities!")
+    }
+
+    @JvmStatic
+    fun registerEnergy(event: RegisterCapabilitiesEvent, item: ItemLike, capacity: Int) {
+        event.registerItem(
+            Capabilities.EnergyStorage.ITEM,
+            { stack: ItemStack, _: Void? -> ComponentEnergyStorage(stack, RagiumDataComponents.ENERGY.get(), capacity) },
+            item,
+        )
     }
 
     @JvmStatic

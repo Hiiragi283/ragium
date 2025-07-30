@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/azure_steel"
+    },
+    "B": {
+      "tag": "c:dusts/raginite"
+    },
+    "C": {
+      "tag": "c:circuits/basic"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    "ACA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:drill"
+  }
+}

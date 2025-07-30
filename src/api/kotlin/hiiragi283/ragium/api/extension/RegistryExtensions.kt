@@ -25,6 +25,7 @@ import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
+import java.util.function.Supplier
 import kotlin.jvm.optionals.getOrNull
 
 /**
@@ -43,6 +44,8 @@ fun commonId(prefix: String, value: String): ResourceLocation = commonId("$prefi
 fun <T : Any, I : T> DeferredRegister<T>.register(holder: DeferredHolder<T, I>, function: (ResourceLocation) -> I) {
     register(holder.id.path, function)
 }
+
+val <T : Any> DeferredRegister<T>.values: List<T> get() = entries.map(Supplier<out T>::get)
 
 //    Holder    //
 

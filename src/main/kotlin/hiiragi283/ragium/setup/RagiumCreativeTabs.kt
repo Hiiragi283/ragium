@@ -109,6 +109,8 @@ object RagiumCreativeTabs {
             output.acceptItems(RagiumItems.DEEP_STEEL_ARMORS.itemHolders)
             output.acceptItems(RagiumItems.DEEP_STEEL_TOOLS.itemHolders)
 
+            output.accept(RagiumItems.DRILL)
+
             output.accept(RagiumItems.POTION_BUNDLE)
             output.accept(RagiumItems.SLOT_COVER)
             output.accept(RagiumItems.TRADER_CATALOG)

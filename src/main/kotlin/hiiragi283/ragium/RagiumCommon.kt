@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.addon.RagiumAddon
+import hiiragi283.ragium.api.extension.values
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
@@ -24,7 +25,6 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ProjectileItem
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -97,8 +97,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.enqueueWork {
             RagiumFluidContents.REGISTER.registerDispensers()
 
-            RagiumItems.REGISTER.entries
-                .map(ItemLike::asItem)
+            RagiumItems.REGISTER.values
                 .filter { item: Item -> item is ProjectileItem }
                 .associateWith(::ProjectileDispenseBehavior)
                 .forEach(DispenserBlock::registerBehavior)

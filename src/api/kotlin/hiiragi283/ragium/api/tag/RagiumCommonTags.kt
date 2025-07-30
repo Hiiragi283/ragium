@@ -294,6 +294,9 @@ object RagiumCommonTags {
 
         // Tools
         @JvmField
+        val TOOLS_DRILL: TagKey<Item> = commonTag("tools", "drill")
+
+        @JvmField
         val TOOLS_FORGE_HAMMER: TagKey<Item> = commonTag("tools", "forge_hammer")
 
         // Mekanism Integration

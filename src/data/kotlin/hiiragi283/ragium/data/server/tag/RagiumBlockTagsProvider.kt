@@ -131,6 +131,10 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         tag(BlockTags.SOUL_FIRE_BASE_BLOCKS).addBlock(RagiumBlocks.StorageBlocks.WARPED_CRYSTAL)
         tag(BlockTags.STRIDER_WARM_BLOCKS).addBlock(RagiumBlocks.StorageBlocks.CRIMSON_CRYSTAL)
 
+        tag(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)
+            .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .addTag(BlockTags.MINEABLE_WITH_SHOVEL)
+
         tag(RagiumModTags.Blocks.WIP)
             .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
             .addBlock(RagiumBlocks.ASH_LOG)

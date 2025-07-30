@@ -2,13 +2,12 @@ package hiiragi283.ragium.api.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.addFluidTooltip
+import hiiragi283.ragium.api.extension.energyText
 import hiiragi283.ragium.api.extension.getSpriteAndColor
-import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.toFloatColor
 import hiiragi283.ragium.api.inventory.HTContainerMenu
 import hiiragi283.ragium.api.inventory.HTFluidSlot
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.util.RagiumTranslationKeys
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -120,11 +119,7 @@ abstract class HTContainerScreen<T : HTContainerMenu>(menu: T, inventory: Invent
         renderTooltip(x, y, mouseX, mouseY, rangeY = 18 * 3) {
             guiGraphics.renderTooltip(
                 font,
-                Component.translatable(
-                    RagiumTranslationKeys.TOOLTIP_ENERGY_PERCENTAGE,
-                    intText(network.energyStored),
-                    intText(network.maxEnergyStored),
-                ),
+                energyText(network),
                 mouseX,
                 mouseY,
             )

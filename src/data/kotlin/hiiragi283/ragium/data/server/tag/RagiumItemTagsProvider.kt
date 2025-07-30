@@ -203,11 +203,19 @@ class RagiumItemTagsProvider(
             tag(Tags.Items.TOOLS_WRENCH).addItem(hammer)
         }
 
-        listOf(
-            ItemTags.DURABILITY_ENCHANTABLE,
-            ItemTags.VANISHING_ENCHANTABLE,
-            Tags.Items.TOOLS,
-        ).map(::tag).forEach { it.addTag(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER) }
+        tag(RagiumCommonTags.Items.TOOLS_DRILL)
+            .addItem(RagiumItems.DRILL)
+
+        fun setupTool(tagKey: TagKey<Item>) {
+            tag(ItemTags.BREAKS_DECORATED_POTS).addTag(tagKey)
+            tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(tagKey)
+            tag(ItemTags.MINING_ENCHANTABLE).addTag(tagKey)
+            tag(ItemTags.MINING_LOOT_ENCHANTABLE).addTag(tagKey)
+            tag(Tags.Items.TOOLS).addTag(tagKey)
+        }
+
+        setupTool(RagiumCommonTags.Items.TOOLS_DRILL)
+        setupTool(RagiumCommonTags.Items.TOOLS_FORGE_HAMMER)
 
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {

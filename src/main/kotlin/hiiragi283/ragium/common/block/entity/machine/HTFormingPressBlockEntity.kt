@@ -64,7 +64,11 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getItemHandler(direction: Direction?): IItemHandler? = HTFilteredItemHandler(
         inventory,
         object : HTItemFilter {
-            override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = slot <= 1
+            override fun canInsert(handler: IItemHandler, slot: Int, stack: ItemStack): Boolean = when (slot) {
+                0 -> !ItemStack.isSameItemSameComponents(stack, handler.getStackInSlot(1))
+                1 -> !ItemStack.isSameItemSameComponents(stack, handler.getStackInSlot(0))
+                else -> false
+            }
 
             override fun canExtract(handler: IItemHandler, slot: Int, amount: Int): Boolean = slot == 2
         },

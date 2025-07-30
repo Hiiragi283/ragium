@@ -3,9 +3,12 @@ package hiiragi283.ragium
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.HTIntrinsicEnchantment
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -23,10 +26,14 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentInstance
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -128,6 +135,20 @@ object RagiumRuntimeEvents {
                 user.extinguishFire()
             }
             return
+        }
+    }
+
+    //    Enchantment    //
+
+    @SubscribeEvent
+    fun getEnchantmentLevel(event: GetEnchantmentLevelEvent) {
+        val stack: ItemStack = event.stack
+        val enchantments: ItemEnchantments.Mutable = event.enchantments
+        val lookup: HolderLookup.RegistryLookup<Enchantment> = event.lookup
+
+        val enchantment: HTIntrinsicEnchantment = stack.get(RagiumDataComponents.INTRINSIC_ENCHANTMENT) ?: return
+        enchantment.getInstance(lookup).ifPresent { instance: EnchantmentInstance ->
+            enchantments.set(instance.enchantment, instance.level)
         }
     }
 

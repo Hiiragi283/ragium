@@ -17,6 +17,9 @@ object RagiumModTags {
         val LED_BLOCKS: TagKey<Block> = create("led_blocks")
 
         @JvmField
+        val MINEABLE_WITH_DRILL: TagKey<Block> = create("mineable/drill")
+
+        @JvmField
         val RESONANT_DEBRIS_REPLACEABLES: TagKey<Block> = create("deepslate_ore_replaceables")
 
         @JvmField
