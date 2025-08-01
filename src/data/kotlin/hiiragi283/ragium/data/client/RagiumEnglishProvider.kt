@@ -158,13 +158,13 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.Casings.WOODEN, "Wooden Casing")
 
         addBlock(RagiumBlocks.Devices.CEU, "C.E.U")
+        addBlock(RagiumBlocks.Devices.DIM_ANCHOR, "Dimensional Anchor")
         addBlock(RagiumBlocks.Devices.ENI, "E.N.I.")
         addBlock(RagiumBlocks.Devices.EXP_COLLECTOR, "Exp Collector")
         addBlock(RagiumBlocks.Devices.ITEM_BUFFER, "Item Buffer")
         addBlock(RagiumBlocks.Devices.LAVA_COLLECTOR, "Lava Collector")
         addBlock(RagiumBlocks.Devices.MILK_DRAIN, "Milk Drain")
         addBlock(RagiumBlocks.Devices.SPRINKLER, "Sprinkler")
-        addBlock(RagiumBlocks.Devices.TELEPORT_ANCHOR, "Teleport Anchor")
         addBlock(RagiumBlocks.Devices.WATER_COLLECTOR, "Water Collector")
         // Storage
         addBlock(RagiumBlocks.Drums.SMALL, "Small Drum")
@@ -498,14 +498,39 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     private fun information() {
         addInfo(RagiumBlocks.ASH_LOG, "Drop Ash Dust when harvested.")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "Mobs killed on this block also drop experience.")
-        addInfo(RagiumBlocks.Glasses.OBSIDIAN, "As the same blast resistance as Obsidian, can be harvested without Silk Touch.")
-        addInfo(RagiumBlocks.Glasses.QUARTZ, "This glass block can be harvested without Silk Touch.")
-        addInfo(RagiumBlocks.Glasses.SOUL, "Only passable with Players, can be harvested without Silk Touch.")
 
+        addInfo(RagiumBlocks.Devices.CEU, "Unlimited Power")
+        addInfo(RagiumBlocks.Devices.DIM_ANCHOR, "Always load chunk which placed in.")
+        addInfo(RagiumBlocks.Devices.ENI, "Enabled to access Energy Network.")
+        addInfo(RagiumBlocks.Devices.EXP_COLLECTOR, "Collects around Exp Orbs.")
+        addInfo(RagiumBlocks.Devices.ITEM_BUFFER, "Item buffer with 9 slots.")
+        addInfo(
+            RagiumBlocks.Devices.LAVA_COLLECTOR,
+            "Generates Lava when ALL below conditions are met.",
+            "- Placed in the Nether",
+            "- Surrounded by 4 Lava sources",
+        )
+        addInfo(RagiumBlocks.Devices.MILK_DRAIN, "Milking a cow on this.")
+        addInfo(
+            RagiumBlocks.Devices.WATER_COLLECTOR,
+            "Generates Lava when ANY below conditions are met.",
+            "- Placed in Ocean-like or River-like biomes",
+            "- Surrounded by 2 or more Water Sources",
+        )
+        
+        val nonSilkTouch = "Can be harvested without Silk Touch."
+        addInfo(RagiumBlocks.Glasses.OBSIDIAN, "As the same blast resistance as Obsidian.", "And $nonSilkTouch")
+        addInfo(RagiumBlocks.Glasses.QUARTZ, nonSilkTouch)
+        addInfo(RagiumBlocks.Glasses.SOUL, "Only passable with Players.", "And $nonSilkTouch")
+        
         addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         addInfo(RagiumItems.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")
         addInfo(RagiumItems.ELDER_HEART, "Dropped from Elder Guardian.")
-        addInfo(RagiumItems.ELDRITCH_EGG, "Can be throwable by right-click，then capture mobs when hit.")
+        addInfo(
+            RagiumItems.ELDRITCH_EGG,
+            "Can be throwable by right-click，and capture mobs when hit.",
+            "Dropped Spawn Egg will teleport your inventory."
+        )
         addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")
         addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
         addInfo(RagiumItems.RAGI_LANTERN, "Light up darkness in range.")

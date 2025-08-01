@@ -6,18 +6,14 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
 
-internal object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
-    @JvmStatic
-    fun registerEvents() {
-        NeoForge.EVENT_BUS.addListener(::onServerStarted)
-        NeoForge.EVENT_BUS.addListener(::onServerStopped)
-    }
-
+@EventBusSubscriber(modid = RagiumAPI.MOD_ID)
+object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
     @JvmStatic
     private val networkMap: MutableMap<ResourceKey<Level>, IEnergyStorage> = mutableMapOf()
 
@@ -57,13 +53,15 @@ internal object HTEnergyNetworkManagerImpl : HTEnergyNetworkManager {
 
     //    Event    //
 
-    private fun onServerStarted(event: ServerStartedEvent) {
+    @SubscribeEvent
+    fun onServerStarted(event: ServerStartedEvent) {
         for (level: ServerLevel in event.server.allLevels) {
             networkMap.put(level.dimension(), level.getServerSavedData(HTEnergyNetwork.DATA_FACTORY))
         }
     }
 
-    private fun onServerStopped(event: ServerStoppedEvent) {
+    @SubscribeEvent
+    fun onServerStopped(event: ServerStoppedEvent) {
         networkMap.clear()
     }
 }

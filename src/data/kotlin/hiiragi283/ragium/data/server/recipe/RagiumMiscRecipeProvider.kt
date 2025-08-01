@@ -288,7 +288,7 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
         advancedDevice(RagiumBlocks.Devices.ENI, Ingredient.of(Tags.Items.GEMS_DIAMOND))
         advancedDevice(RagiumBlocks.Devices.EXP_COLLECTOR, Ingredient.of(Items.HOPPER))
         advancedDevice(RagiumBlocks.Devices.LAVA_COLLECTOR, Ingredient.of(Tags.Items.BUCKETS_LAVA))
-        advancedDevice(RagiumBlocks.Devices.TELEPORT_ANCHOR, Ingredient.of(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL))
+        advancedDevice(RagiumBlocks.Devices.DIM_ANCHOR, Ingredient.of(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL))
         // Elite
     }
 

@@ -145,13 +145,13 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.Casings.WOODEN, "木材筐体")
 
         addBlock(RagiumBlocks.Devices.CEU, "C.E.U")
+        addBlock(RagiumBlocks.Devices.DIM_ANCHOR, "次元アンカー")
         addBlock(RagiumBlocks.Devices.ENI, "E.N.I.")
         addBlock(RagiumBlocks.Devices.EXP_COLLECTOR, "経験値収集機")
         addBlock(RagiumBlocks.Devices.ITEM_BUFFER, "アイテムバッファ")
         addBlock(RagiumBlocks.Devices.LAVA_COLLECTOR, "溶岩収集機")
         addBlock(RagiumBlocks.Devices.MILK_DRAIN, "牛乳シンク")
         addBlock(RagiumBlocks.Devices.SPRINKLER, "スプリンクラー")
-        addBlock(RagiumBlocks.Devices.TELEPORT_ANCHOR, "テレポートアンカー")
         addBlock(RagiumBlocks.Devices.WATER_COLLECTOR, "水収集機")
         // Storage
         addBlock(RagiumBlocks.Drums.SMALL, "ドラム（小）")
@@ -496,14 +496,39 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
     private fun information() {
         addInfo(RagiumBlocks.ASH_LOG, "壊すと灰の粉が手に入ります。")
         addInfo(RagiumBlocks.CRIMSON_SOIL, "このブロックの上で倒されたモブは経験値も落とします。")
-        addInfo(RagiumBlocks.Glasses.OBSIDIAN, "黒曜石とおなじ爆破耐性をもち，シルクタッチなしで回収することが可能です。")
-        addInfo(RagiumBlocks.Glasses.QUARTZ, "このガラスはシルクタッチなしで回収することが可能です。")
-        addInfo(RagiumBlocks.Glasses.SOUL, "プレイヤーのみ通過でき，シルクタッチなしで回収することが可能です。")
+
+        addInfo(RagiumBlocks.Devices.CEU, "無限のパワー")
+        addInfo(RagiumBlocks.Devices.DIM_ANCHOR, "設置されたチャンクを常に読み込みます。")
+        addInfo(RagiumBlocks.Devices.ENI, "エネルギーネットワークにアクセスできます。")
+        addInfo(RagiumBlocks.Devices.EXP_COLLECTOR, "周囲の経験値オーブを回収します。")
+        addInfo(RagiumBlocks.Devices.ITEM_BUFFER, "9スロットのアイテムバッファとして機能します。")
+        addInfo(
+            RagiumBlocks.Devices.LAVA_COLLECTOR,
+            "次の条件のうち全てを満たすとき，溶岩を生産します。",
+            "- ネザーに設置されている",
+            "- 周囲4ブロックが溶岩源で囲われている",
+        )
+        addInfo(RagiumBlocks.Devices.MILK_DRAIN, "牛を乗せると牛乳を搾り取ります。")
+        addInfo(
+            RagiumBlocks.Devices.WATER_COLLECTOR,
+            "次の条件のうちいずれかを満たすとき，水を生産します。",
+            "- 海洋または河川系バイオームに設置されている",
+            "- 周囲2ブロック以上が水源で囲われている",
+        )
+
+        val nonSilkTouch = "シルクタッチなしで回収することが可能です。"
+        addInfo(RagiumBlocks.Glasses.OBSIDIAN, "黒曜石とおなじ爆破耐性をもちます。", "また，$nonSilkTouch")
+        addInfo(RagiumBlocks.Glasses.QUARTZ, nonSilkTouch)
+        addInfo(RagiumBlocks.Glasses.SOUL, "プレイヤーのみ通過できます。", "また，$nonSilkTouch")
 
         addInfo(RagiumItems.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         addInfo(RagiumItems.BLAST_CHARGE, "作業台で火薬を用いて強化することができます。")
         addInfo(RagiumItems.ELDER_HEART, "エルダーガーディアンからドロップします。")
-        addInfo(RagiumItems.ELDRITCH_EGG, "右クリックで投げることができ，モブに当たるとスポーンエッグになります。")
+        addInfo(
+            RagiumItems.ELDRITCH_EGG,
+            "右クリックで投げることができ，モブに当たるとスポーンエッグになります。",
+            "ドロップしたスポーンエッグは直接インベントリに入ります。",
+        )
         addInfo(RagiumItems.ICE_CREAM, "食べると鎮火します。")
         addInfo(RagiumItems.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
         addInfo(RagiumItems.RAGI_LANTERN, "範囲内の暗所に光源を設置します。")

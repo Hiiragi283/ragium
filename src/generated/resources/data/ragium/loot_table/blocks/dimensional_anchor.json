@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:teleport_anchor"
+          "name": "ragium:dimensional_anchor"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/teleport_anchor"
+  "random_sequence": "ragium:blocks/dimensional_anchor"
 }

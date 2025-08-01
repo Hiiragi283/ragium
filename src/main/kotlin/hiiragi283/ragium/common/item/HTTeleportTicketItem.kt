@@ -4,10 +4,8 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.api.extension.globalPosText
-import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.toCenterVec3
 import hiiragi283.ragium.api.util.RagiumTranslationKeys
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
@@ -36,18 +34,16 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.portal.DimensionTransition
 
 class HTTeleportTicketItem(properties: Properties) : Item(properties) {
-    override fun useOn(context: UseOnContext): InteractionResult {
+    override fun onItemUseFirst(stack: ItemStack, context: UseOnContext): InteractionResult {
         val level: Level = context.level
+        if (level.isClientSide) return InteractionResult.PASS
         val pos: BlockPos = context.clickedPos
-        // 右クリックしたブロックがテレポートアンカーの場合，その座標を保持する
-        if (level.getBlockState(pos).isOf(RagiumBlocks.Devices.TELEPORT_ANCHOR)) {
-            context.itemInHand.set(
-                RagiumDataComponents.TELEPORT_POS,
-                GlobalPos(level.dimension(), pos.above()),
-            )
-            return InteractionResult.sidedSuccess(level.isClientSide)
-        }
-        return super.useOn(context)
+        // 右クリックしたブロックの座標を保持する
+        context.itemInHand.set(
+            RagiumDataComponents.TELEPORT_POS,
+            GlobalPos(level.dimension(), pos.above()),
+        )
+        return InteractionResult.sidedSuccess(false)
     }
 
     override fun finishUsingItem(stack: ItemStack, level: Level, livingEntity: LivingEntity): ItemStack {
@@ -107,11 +103,9 @@ class HTTeleportTicketItem(properties: Properties) : Item(properties) {
     }
 
     private fun canTeleportTo(serverLevel: ServerLevel, globalPos: GlobalPos): DataResult<Unit> {
+        // 指定した座標が読み込まれていなければエラー
         if (!serverLevel.isLoaded(globalPos.pos)) {
             return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_POS)
-        }
-        if (!serverLevel.getBlockState(globalPos.pos.below()).isOf(RagiumBlocks.Devices.TELEPORT_ANCHOR)) {
-            return DataResult.error(RagiumTranslationKeys::TOOLTIP_MISSING_ANCHOR)
         }
         return DataResult.success(Unit)
     }

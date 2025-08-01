@@ -36,7 +36,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             add(RagiumBlocks.Devices.EXP_COLLECTOR)
             add(RagiumBlocks.Devices.ITEM_BUFFER)
             add(RagiumBlocks.Devices.SPRINKLER)
-            add(RagiumBlocks.Devices.TELEPORT_ANCHOR)
+            add(RagiumBlocks.Devices.DIM_ANCHOR)
         }
 
         buildList {

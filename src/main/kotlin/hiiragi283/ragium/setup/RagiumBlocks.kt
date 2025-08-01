@@ -360,7 +360,7 @@ object RagiumBlocks {
         ENI(RagiumBlockEntityTypes.ENI),
         EXP_COLLECTOR(RagiumBlockEntityTypes.EXP_COLLECTOR),
         LAVA_COLLECTOR(RagiumBlockEntityTypes.LAVA_COLLECTOR),
-        TELEPORT_ANCHOR({ register("teleport_anchor", machineProperty()) }),
+        DIM_ANCHOR(RagiumBlockEntityTypes.DIM_ANCHOR),
 
         // Creative
         CEU(RagiumBlockEntityTypes.CEU),

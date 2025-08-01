@@ -3,13 +3,11 @@ package hiiragi283.ragium
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.extension.values
 import hiiragi283.ragium.api.network.HTCustomPayload
 import hiiragi283.ragium.common.network.HTBlockEntityUpdatePacket
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
-import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.setup.RagiumArmorMaterials
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -22,6 +20,7 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import hiiragi283.ragium.util.RagiumChunkLoader
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ProjectileItem
@@ -50,12 +49,13 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     init {
         NeoForgeMod.enableMilkFluid()
 
-        eventBus.addListener(::registerRegistries)
-        eventBus.addListener(::construct)
-        eventBus.addListener(RagiumMiscRegister::onRegister)
         eventBus.addListener(::commonSetup)
+        eventBus.addListener(::construct)
         eventBus.addListener(::registerDataMapTypes)
         eventBus.addListener(::registerPackets)
+        eventBus.addListener(::registerRegistries)
+        eventBus.addListener(RagiumChunkLoader::registerController)
+        eventBus.addListener(RagiumMiscRegister::onRegister)
 
         RagiumDataComponents.REGISTER.register(eventBus)
 
@@ -78,16 +78,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             addon.onModConstruct(eventBus, dist)
         }
 
-        HTEnergyNetworkManagerImpl.registerEvents()
-
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
         LOGGER.info("Ragium loaded!")
     }
 
     private fun registerRegistries(event: NewRegistryEvent) {
-        event.register(RagiumRegistries.BLOCK_ACTION_SERIALIZERS)
-
         LOGGER.info("Registered new registries!")
     }
 

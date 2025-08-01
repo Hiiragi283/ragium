@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.HTBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.HTTickAwareBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
@@ -103,6 +104,12 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
+    val DIM_ANCHOR: HTDeferredBlockEntityType<HTDimensionalAnchorBlockEntity> = REGISTER.registerType(
+        "dimensional_anchor",
+        ::HTDimensionalAnchorBlockEntity,
+    )
+
+    @JvmField
     val ENI: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
         "energy_network_interface",
         HTEnergyNetworkAccessBlockEntity::Simple,
@@ -179,6 +186,7 @@ object RagiumBlockEntityTypes {
 
         add(INFUSER, RagiumBlocks.Machines.INFUSER)
 
+        add(DIM_ANCHOR, RagiumBlocks.Devices.DIM_ANCHOR)
         add(ENI, RagiumBlocks.Devices.ENI)
         add(EXP_COLLECTOR, RagiumBlocks.Devices.EXP_COLLECTOR)
         add(ITEM_BUFFER, RagiumBlocks.Devices.ITEM_BUFFER)
