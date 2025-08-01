@@ -1,12 +1,9 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.extension.blockLookup
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
@@ -15,10 +12,10 @@ import java.util.concurrent.CompletableFuture
 @Suppress("DEPRECATION")
 class RagiumDataMapProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(output, provider) {
-    private lateinit var blockLookup: HolderGetter<Block>
+    private lateinit var provider: HolderLookup.Provider
 
     override fun gather(provider: HolderLookup.Provider) {
-        blockLookup = provider.blockLookup()
+        this.provider = provider
 
         fuels()
         // mekanism()

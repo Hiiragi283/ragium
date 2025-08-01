@@ -85,8 +85,16 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "Exp Berries Bush")
         addBlock(RagiumBlocks.WARPED_WART, "Warped Wart")
 
-        RagiumBlocks.RAGINITE_ORES.addTranslationEn("Raginite", this)
-        RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationEn("Ragi-Crystal", this)
+        addBlock(RagiumBlocks.RaginiteOres.STONE, "Raginite Ore")
+        addBlock(RagiumBlocks.RaginiteOres.DEEP, "Deepslate Raginite Ore")
+        addBlock(RagiumBlocks.RaginiteOres.NETHER, "Nether Raginite Ore")
+        addBlock(RagiumBlocks.RaginiteOres.END, "End Raginite Ore")
+
+        addBlock(RagiumBlocks.RagiCrystalOres.STONE, "Ragi-Crystal Ore")
+        addBlock(RagiumBlocks.RagiCrystalOres.DEEP, "Deepslate Ragi-Crystal Ore")
+        addBlock(RagiumBlocks.RagiCrystalOres.NETHER, "Nether Ragi-Crystal Ore")
+        addBlock(RagiumBlocks.RagiCrystalOres.END, "End Ragi-Crystal Ore")
+
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
 
         addBlock(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL, "Block of Ragi-Crystal")

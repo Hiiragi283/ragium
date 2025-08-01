@@ -9,8 +9,10 @@ import hiiragi283.ragium.api.extension.layeredBlock
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.registry.HTBlockSet
+import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTOreVariants
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
@@ -59,8 +61,27 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Ore
-        RagiumBlocks.RAGINITE_ORES.addBlockStates(this)
-        RagiumBlocks.RAGI_CRYSTAL_ORES.addBlockStates(this)
+        val ores: List<HTOreVariants.HolderLike> = buildList {
+            addAll(RagiumBlocks.RaginiteOres.entries)
+            addAll(RagiumBlocks.RagiCrystalOres.entries)
+        }
+        for (ore: HTOreVariants.HolderLike in ores) {
+            val textureId: String = when (ore) {
+                is RagiumBlocks.RaginiteOres -> RagiumConst.RAGINITE
+                is RagiumBlocks.RagiCrystalOres -> RagiumConst.RAGI_CRYSTAL
+                else -> continue
+            }.let(RagiumAPI::id).withPrefix("block/").toString()
+            simpleBlock(
+                ore.get(),
+                ConfiguredModel(
+                    models()
+                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
+                        .texture("layer0", vanillaId(ore.variant.stoneTex))
+                        .texture("layer1", textureId)
+                        .renderType("cutout"),
+                ),
+            )
+        }
 
         cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
         // Log

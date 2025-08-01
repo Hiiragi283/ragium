@@ -43,8 +43,6 @@ class RagiumItemModelProvider(output: PackOutput, existingFileHelper: ExistingFi
 
             removeAll(RagiumBlocks.Dynamos.entries.map(HTBlockHolderLike::holder))
         }.map(Supplier<out Block>::get).forEach(::simpleBlockItem)
-        RagiumBlocks.RAGINITE_ORES.addItemModels(this)
-        RagiumBlocks.RAGI_CRYSTAL_ORES.addItemModels(this)
 
         for (sets: HTBlockSet in RagiumBlocks.DECORATIONS) {
             sets.addItemModels(this)

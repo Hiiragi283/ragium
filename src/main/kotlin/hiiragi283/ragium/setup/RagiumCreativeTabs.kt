@@ -29,8 +29,8 @@ object RagiumCreativeTabs {
         output.accept(RagiumBlocks.CRIMSON_SOIL)
         output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
 
-        output.acceptItems(RagiumBlocks.RAGINITE_ORES.getItems())
-        output.acceptItems(RagiumBlocks.RAGI_CRYSTAL_ORES.getItems())
+        output.acceptItems(RagiumBlocks.RaginiteOres.entries)
+        output.acceptItems(RagiumBlocks.RagiCrystalOres.entries)
         output.accept(RagiumBlocks.RESONANT_DEBRIS)
         // Storage Blocks
         output.acceptItems(RagiumBlocks.StorageBlocks.entries)

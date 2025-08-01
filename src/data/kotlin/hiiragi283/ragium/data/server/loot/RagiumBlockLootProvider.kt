@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.extension.enchLookup
-import hiiragi283.ragium.api.registry.HTBlockSet
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -28,7 +27,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import net.neoforged.neoforge.registries.DeferredBlock
+import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
     BlockLootSubProvider(setOf(Items.BEDROCK), FeatureFlags.REGISTRY.allFlags(), provider) {
@@ -73,28 +72,28 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         addCrop(RagiumBlocks.WARPED_WART, RagiumItems.WARPED_WART)
 
         // Ore
-        fun registerOres(oreSets: HTBlockSet, drop: ItemLike) {
-            for (ore: DeferredBlock<*> in oreSets.blockHolders) {
-                add(ore.get()) { block: Block ->
-                    createSilkTouchDispatchTable(
+        RagiumBlocks.RaginiteOres.entries.forEach { ores: RagiumBlocks.RaginiteOres ->
+            add(ores.get()) { block: Block ->
+                createSilkTouchDispatchTable(
+                    block,
+                    applyExplosionDecay(
                         block,
-                        applyExplosionDecay(
-                            block,
-                            LootItem
-                                .lootTableItem(drop.asItem())
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4f, 5f)))
-                                .apply(
-                                    ApplyBonusCount.addUniformBonusCount(
-                                        registries.enchLookup().getOrThrow(Enchantments.FORTUNE),
-                                    ),
-                                ),
-                        ),
-                    )
-                    // createOreDrop(block, drop.asItem())
-                }
+                        LootItem
+                            .lootTableItem(RagiumItems.Dusts.RAGINITE)
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(4f, 5f)))
+                            .apply(ApplyBonusCount.addUniformBonusCount(fortune)),
+                    ),
+                )
             }
         }
-        registerOres(RagiumBlocks.RAGINITE_ORES, RagiumItems.Dusts.RAGINITE)
+        RagiumBlocks.RagiCrystalOres.entries.forEach { ores: RagiumBlocks.RagiCrystalOres ->
+            add(ores.get()) { block: Block ->
+                createOreDrop(
+                    block,
+                    RagiumItems.Gems.RAGI_CRYSTAL.get(),
+                )
+            }
+        }
 
         // Food
         /*add(RagiumBlocks.COOKED_MEAT_ON_THE_BONE.get()) { block: Block ->
@@ -104,7 +103,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                     .setProperties(
                         StatePropertiesPredicate.Builder
                             .properties()
-                            .hasProperty(HTBlockStateProperties.MEAT_SERVINGS, 8),
+                            .hasProperty(HTBlockStateProperties.MEAT_SERVINGS, 8)
                     )
 
             LootTable
@@ -152,11 +151,11 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
 
     private val fortune: Holder.Reference<Enchantment> get() = registries.enchLookup().getOrThrow(Enchantments.FORTUNE)
 
-    private fun dropSelf(holder: DeferredBlock<*>) {
+    private fun dropSelf(holder: Supplier<out Block>) {
         dropSelf(holder.get())
     }
 
-    private fun addCrop(holder: DeferredBlock<*>, crop: ItemLike) {
+    private fun addCrop(holder: Supplier<out Block>, crop: ItemLike) {
         add(holder.get()) { block: Block ->
             applyExplosionDecay(
                 block,

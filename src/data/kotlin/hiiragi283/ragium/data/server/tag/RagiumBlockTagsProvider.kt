@@ -5,12 +5,11 @@ import hiiragi283.ragium.api.extension.addBlock
 import hiiragi283.ragium.api.extension.asBlockHolder
 import hiiragi283.ragium.api.extension.blockTagKey
 import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.registry.HTBlockHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.HTOreSets
+import hiiragi283.ragium.util.HTOreVariants
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -20,8 +19,8 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
+import java.util.function.Supplier
 
 class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<HolderLookup.Provider>, helper: ExistingFileHelper) :
     IntrinsicHolderTagsProvider<Block>(
@@ -32,9 +31,9 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
         RagiumAPI.MOD_ID,
         helper,
     ) {
-    private fun addBlock(parent: TagKey<Block>, child: TagKey<Block>, block: HTBlockHolderLike) {
+    private fun addBlock(parent: TagKey<Block>, child: TagKey<Block>, block: Supplier<out Block>) {
         tag(parent).addTag(child)
-        tag(child).addBlock(block)
+        tag(child).add(block.get())
     }
 
     override fun addTags(provider: HolderLookup.Provider) {
@@ -58,22 +57,25 @@ class RagiumBlockTagsProvider(output: PackOutput, provider: CompletableFuture<Ho
             .addTag(RagiumModTags.Blocks.LED_BLOCKS)
             .addBlock(RagiumBlocks.RESONANT_DEBRIS)
 
-        for (sets: HTOreSets in listOf(RagiumBlocks.RAGINITE_ORES, RagiumBlocks.RAGI_CRYSTAL_ORES)) {
-            for (ore: DeferredBlock<*> in sets.blockHolders) {
+        fun setupOres(ores: Iterable<HTOreVariants.HolderLike>, tagKey: TagKey<Block>) {
+            for (ore: HTOreVariants.HolderLike in ores) {
                 pickaxe.addBlock(ore)
-                tag(sets.blockOreTag).addBlock(ore)
+                tag(tagKey).addBlock(ore)
+
+                when (ore.variant) {
+                    HTOreVariants.STONE -> Tags.Blocks.ORES_IN_GROUND_STONE
+                    HTOreVariants.DEEP -> Tags.Blocks.ORES_IN_GROUND_DEEPSLATE
+                    HTOreVariants.NETHER -> Tags.Blocks.ORES_IN_GROUND_NETHERRACK
+                    HTOreVariants.END -> blockTagKey(commonId("ores_in_ground/end_stone"))
+                }.let(::tag).addBlock(ore)
             }
-            // Ores in ground
-            tag(Tags.Blocks.ORES_IN_GROUND_STONE).addBlock(sets.stoneOre)
-            tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).addBlock(sets.deepOre)
-            tag(Tags.Blocks.ORES_IN_GROUND_NETHERRACK).addBlock(sets.netherOre)
-            tag(blockTagKey(commonId("ores_in_ground/end_stone"))).addBlock(sets.endOre)
+
+            tag(Tags.Blocks.ORES).addTag(tagKey)
         }
-        tag(Tags.Blocks.ORES)
-            .addTag(RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL)
-            .addTag(RagiumCommonTags.Blocks.ORES_RAGINITE)
-            .addTag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP)
-        tag(RagiumCommonTags.Blocks.ORES_DEEP_SCRAP).addBlock(RagiumBlocks.RESONANT_DEBRIS)
+        setupOres(RagiumBlocks.RagiCrystalOres.entries, RagiumCommonTags.Blocks.ORES_RAGI_CRYSTAL)
+        setupOres(RagiumBlocks.RaginiteOres.entries, RagiumCommonTags.Blocks.ORES_RAGINITE)
+
+        addBlock(Tags.Blocks.ORES, RagiumCommonTags.Blocks.ORES_DEEP_SCRAP, RagiumBlocks.RESONANT_DEBRIS)
 
         for (block: RagiumBlocks.StorageBlocks in RagiumBlocks.StorageBlocks.entries) {
             pickaxe.addBlock(block)

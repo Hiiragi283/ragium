@@ -73,8 +73,16 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         addBlock(RagiumBlocks.EXP_BERRY_BUSH, "経験値ベリーの茂み")
         addBlock(RagiumBlocks.WARPED_WART, "歪んだウォート")
 
-        RagiumBlocks.RAGINITE_ORES.addTranslationJp("ラギナイト", this)
-        RagiumBlocks.RAGI_CRYSTAL_ORES.addTranslationJp("ラギクリスタリル", this)
+        addBlock(RagiumBlocks.RaginiteOres.STONE, "ラギナイト鉱石")
+        addBlock(RagiumBlocks.RaginiteOres.DEEP, "深層ラギナイト鉱石")
+        addBlock(RagiumBlocks.RaginiteOres.NETHER, "ネザーラギナイト鉱石")
+        addBlock(RagiumBlocks.RaginiteOres.END, "エンドラギナイト鉱石")
+
+        addBlock(RagiumBlocks.RagiCrystalOres.STONE, "ラギクリスタリル鉱石")
+        addBlock(RagiumBlocks.RagiCrystalOres.DEEP, "深層ラギクリスタリル鉱石")
+        addBlock(RagiumBlocks.RagiCrystalOres.NETHER, "ネザーラギクリスタリル鉱石")
+        addBlock(RagiumBlocks.RagiCrystalOres.END, "エンドラギクリスタリル鉱石")
+
         addBlock(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
 
         addBlock(RagiumBlocks.StorageBlocks.RAGI_CRYSTAL, "ラギクリスタリルブロック")

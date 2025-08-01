@@ -14,7 +14,6 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
@@ -63,11 +62,6 @@ val <T : Any> Holder<T>.idOrNull: ResourceLocation? get() = when (this) {
     else -> unwrapKey().map(ResourceKey<T>::location).getOrNull()
 }
 
-/**
- * 指定した[value]が一致するか判定します。
- */
-fun <T : Any> Holder<T>.isOf(value: T): Boolean = value() == value
-
 fun Block.asBlockHolder(): Holder.Reference<Block> = builtInRegistryHolder()
 
 fun Fluid.asFluidHolder(): Holder.Reference<Fluid> = builtInRegistryHolder()
@@ -108,12 +102,6 @@ operator fun <T> HolderGetter<T>.contains(tagKey: TagKey<T>): Boolean = get(tagK
 
 //    HolderLookup    //
 
-fun HolderLookup.Provider.blockLookup(): HolderLookup.RegistryLookup<Block> = lookupOrThrow(Registries.BLOCK)
-
-fun HolderLookup.Provider.fluidLookup(): HolderLookup.RegistryLookup<Fluid> = lookupOrThrow(Registries.FLUID)
-
-fun HolderLookup.Provider.itemLookup(): HolderLookup.RegistryLookup<Item> = lookupOrThrow(Registries.ITEM)
-
 fun HolderLookup.Provider.enchLookup(): HolderLookup.RegistryLookup<Enchantment> = lookupOrThrow(Registries.ENCHANTMENT)
 
 //    TagKey    //
@@ -132,11 +120,6 @@ fun fluidTagKey(id: ResourceLocation): TagKey<Fluid> = TagKey.create(Registries.
  * 指定した[id]から[TagKey]を返します。
  */
 fun itemTagKey(id: ResourceLocation): TagKey<Item> = TagKey.create(Registries.ITEM, id)
-
-/**
- * この[DyeColor]から染料のタグを返します。
- */
-val DyeColor.commonTag: TagKey<Item> get() = itemTagKey(commonId("dyes/${this.serializedName}"))
 
 /**
  * [TagKey]の名前を返します。

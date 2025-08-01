@@ -21,7 +21,7 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.util.HTBuildingBlockSets
-import hiiragi283.ragium.util.HTOreSets
+import hiiragi283.ragium.util.HTOreVariants
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
@@ -45,6 +45,8 @@ object RagiumBlocks {
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias(RagiumAPI.id("item_collector"), RagiumAPI.id("item_buffer"))
 
+        RaginiteOres.entries
+        RagiCrystalOres.entries
         StorageBlocks.entries
 
         Glasses.entries
@@ -58,9 +60,6 @@ object RagiumBlocks {
         Machines.entries
 
         Drums.entries
-
-        RAGINITE_ORES.init(eventBus)
-        RAGI_CRYSTAL_ORES.init(eventBus)
 
         for (sets: HTBuildingBlockSets in DECORATIONS) {
             sets.init(eventBus)
@@ -144,12 +143,6 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val RAGINITE_ORES = HTOreSets(RagiumConst.RAGINITE)
-
-    @JvmField
-    val RAGI_CRYSTAL_ORES = HTOreSets(RagiumConst.RAGI_CRYSTAL)
-
-    @JvmField
     val RESONANT_DEBRIS: DeferredBlock<Block> =
         register("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
 
@@ -159,6 +152,32 @@ object RagiumBlocks {
     // val ELDRITCH_PORTAL: DeferredBlock<Block> = REGISTER.registerBlock("eldritch_portal", ::HTEldritchPortalBlock, copyOf(Blocks.END_GATEWAY))
 
     //    Materials    //
+
+    enum class RaginiteOres(override val variant: HTOreVariants) : HTOreVariants.HolderLike {
+        STONE(HTOreVariants.STONE),
+        DEEP(HTOreVariants.DEEP),
+        NETHER(HTOreVariants.NETHER),
+        END(HTOreVariants.END),
+        ;
+
+        override val holder: DeferredBlock<*> = register(
+            variant.pattern.replace("%s", RagiumConst.RAGINITE),
+            variant.createProperties(),
+        )
+    }
+
+    enum class RagiCrystalOres(override val variant: HTOreVariants) : HTOreVariants.HolderLike {
+        STONE(HTOreVariants.STONE),
+        DEEP(HTOreVariants.DEEP),
+        NETHER(HTOreVariants.NETHER),
+        END(HTOreVariants.END),
+        ;
+
+        override val holder: DeferredBlock<*> = register(
+            variant.pattern.replace("%s", RagiumConst.RAGI_CRYSTAL),
+            variant.createProperties(),
+        )
+    }
 
     enum class StorageBlocks(properties: BlockBehaviour.Properties) :
         HTBlockHolderLike,

@@ -3,15 +3,12 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTDefinitionRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.api.extension.itemLookup
 import hiiragi283.ragium.api.util.RagiumConst
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
@@ -22,14 +19,11 @@ import net.neoforged.neoforge.common.conditions.IConditionBuilder
 abstract class HTRecipeProvider : IConditionBuilder {
     protected lateinit var provider: HolderLookup.Provider
         private set
-    protected lateinit var lookup: HolderGetter<Item>
-        private set
     protected lateinit var output: RecipeOutput
         private set
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         provider = holderLookup
-        lookup = provider.itemLookup()
         this.output = object : RecipeOutput {
             override fun accept(
                 id: ResourceLocation,
