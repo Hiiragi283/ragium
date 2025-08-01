@@ -13,10 +13,13 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.ItemHandlerHelper
+import kotlin.collections.forEach
 
 abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTickAwareBlockEntity(type, pos, state),
@@ -33,16 +36,13 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         reader.read(RagiumConst.INVENTORY, inventory)
     }
 
-    override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        super.onRemove(state, level, pos, newState, movedByPiston)
-        inventory.dropStacksAt(level, pos)
+    final override fun dropInventory(consumer: (ItemStack) -> Unit) {
+        super.dropInventory(consumer)
+        inventory.getStackView().forEach(consumer)
     }
+
+    final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
+        ItemHandlerHelper.calcRedstoneFromInventory(inventory)
 
     //    Ticking    //
 

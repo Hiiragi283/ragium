@@ -44,15 +44,9 @@ sealed class HTEnergyNetworkAccessBlockEntity(type: HTDeferredBlockEntityType<*>
         reader.read(RagiumConst.INVENTORY, inventory)
     }
 
-    override fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        super.onRemove(state, level, pos, newState, movedByPiston)
-        inventory.dropStacksAt(level, pos)
+    override fun dropInventory(consumer: (ItemStack) -> Unit) {
+        super.dropInventory(consumer)
+        inventory.getStackView().forEach(consumer)
     }
 
     /*override fun onRightClickedWithItem(

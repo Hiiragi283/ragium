@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.registry.HTItemRegister
 import hiiragi283.ragium.api.registry.HTTaggedHolder
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
+import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
 import hiiragi283.ragium.common.block.HTMilkDrainBlock
 import hiiragi283.ragium.common.block.HTSiltBlock
@@ -20,6 +21,7 @@ import hiiragi283.ragium.common.block.HTSoulGlassBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.util.HTBuildingBlockSets
 import hiiragi283.ragium.util.HTOreVariants
 import net.minecraft.tags.TagKey
@@ -375,13 +377,13 @@ object RagiumBlocks {
 
     //    Storages    //
 
-    enum class Drums(base: Block, type: HTDeferredBlockEntityType<out HTBlockEntity>) : HTBlockHolderLike {
+    enum class Drums(base: Block, type: HTDeferredBlockEntityType<out HTDrumBlockEntity>) : HTBlockHolderLike {
         SMALL(Blocks.IRON_BLOCK, RagiumBlockEntityTypes.SMALL_DRUM),
         MEDIUM(Blocks.GOLD_BLOCK, RagiumBlockEntityTypes.MEDIUM_DRUM),
         LARGE(Blocks.DIAMOND_BLOCK, RagiumBlockEntityTypes.LARGE_DRUM),
         HUGE(Blocks.NETHERITE_BLOCK, RagiumBlockEntityTypes.HUGE_DRUM),
         ;
 
-        override val holder: DeferredBlock<*> = registerEntity(type, copyOf(base), HTEntityBlock.create(type))
+        override val holder: DeferredBlock<*> = registerEntity(type, copyOf(base), HTDrumBlock.create(type))
     }
 }

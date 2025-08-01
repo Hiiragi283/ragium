@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.block.entity.HTBlockEntityExtension
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -12,7 +13,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.phys.HitResult
 
 /**
  * `Ragium`で使用する[BaseEntityBlock]の拡張クラス
@@ -109,9 +108,22 @@ abstract class HTEntityBlock<BE>(val type: HTDeferredBlockEntityType<BE>, proper
         movedByPiston: Boolean,
     ) {
         if (!state.`is`(newState.block)) {
-            level.getHTBlockEntity(pos)?.onRemove(state, level, pos, newState, movedByPiston)
+            level.getHTBlockEntity(pos)?.dropInventory { stack: ItemStack ->
+                dropStackAt(level, pos, stack)
+            }
         }
         super.onRemove(state, level, pos, newState, movedByPiston)
+    }
+
+    override fun triggerEvent(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        id: Int,
+        param: Int,
+    ): Boolean {
+        super.triggerEvent(state, level, pos, id, param)
+        return (level.getHTBlockEntity(pos) as? BlockEntity)?.triggerEvent(id, param) ?: false
     }
 
     final override fun hasAnalogOutputSignal(state: BlockState): Boolean = true
@@ -130,17 +142,6 @@ abstract class HTEntityBlock<BE>(val type: HTDeferredBlockEntityType<BE>, proper
     ) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
         level.getHTBlockEntity(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    final override fun getCloneItemStack(
-        state: BlockState,
-        target: HitResult,
-        level: LevelReader,
-        pos: BlockPos,
-        player: Player,
-    ): ItemStack = super.getCloneItemStack(state, target, level, pos, player).apply {
-        (level.getHTBlockEntity(pos) as? BE)?.collectComponents()?.let(this::applyComponents)
     }
 
     final override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.create(pos, state)

@@ -7,17 +7,17 @@ import net.neoforged.neoforge.items.IItemHandler
 
 interface HTHandlerBlockEntity {
     /**
-     * 指定した[direction]から[net.neoforged.neoforge.items.IItemHandler]を返します。
+     * 指定した[direction]から[IItemHandler]を返します。
      */
     fun getItemHandler(direction: Direction?): IItemHandler? = null
 
     /**
-     * 指定した[direction]から[net.neoforged.neoforge.fluids.capability.IFluidHandler]を返します。
+     * 指定した[direction]から[IFluidHandler]を返します。
      */
     fun getFluidHandler(direction: Direction?): IFluidHandler? = null
 
     /**
-     * 指定した[direction]から[net.neoforged.neoforge.energy.IEnergyStorage]を返します。
+     * 指定した[direction]から[IEnergyStorage]を返します。
      */
     fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 }

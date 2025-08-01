@@ -111,16 +111,10 @@ interface HTBlockEntityExtension : HTHandlerBlockEntity {
     }
 
     /**
-     * ブロックが置換されたときに呼ばれます。
+     * ブロックが破壊されたときにインベントリの中身をドロップします。
      */
-    fun onRemove(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        newState: BlockState,
-        movedByPiston: Boolean,
-    ) {
-        upgrades.dropStacksAt(level, pos)
+    fun dropInventory(consumer: (ItemStack) -> Unit) {
+        upgrades.getStackView().forEach(consumer)
     }
 
     /**

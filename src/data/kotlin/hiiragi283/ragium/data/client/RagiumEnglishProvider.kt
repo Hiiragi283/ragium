@@ -517,19 +517,19 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "- Placed in Ocean-like or River-like biomes",
             "- Surrounded by 2 or more Water Sources",
         )
-        
+
         val nonSilkTouch = "Can be harvested without Silk Touch."
         addInfo(RagiumBlocks.Glasses.OBSIDIAN, "As the same blast resistance as Obsidian.", "And $nonSilkTouch")
         addInfo(RagiumBlocks.Glasses.QUARTZ, nonSilkTouch)
         addInfo(RagiumBlocks.Glasses.SOUL, "Only passable with Players.", "And $nonSilkTouch")
-        
+
         addInfo(RagiumItems.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         addInfo(RagiumItems.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")
         addInfo(RagiumItems.ELDER_HEART, "Dropped from Elder Guardian.")
         addInfo(
             RagiumItems.ELDRITCH_EGG,
             "Can be throwable by right-click，and capture mobs when hit.",
-            "Dropped Spawn Egg will teleport your inventory."
+            "Dropped Spawn Egg will teleport your inventory.",
         )
         addInfo(RagiumItems.ICE_CREAM, "Extinguish fire when eaten.")
         addInfo(RagiumItems.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
