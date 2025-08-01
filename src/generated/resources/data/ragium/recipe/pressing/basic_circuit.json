@@ -1,13 +1,14 @@
 {
   "type": "ragium:pressing",
   "catalyst": {
+    "count": 1,
     "item": "ragium:circuit_board"
   },
-  "fluid_input": {
+  "ingredient": {
     "count": 1,
     "tag": "c:ingots/copper"
   },
-  "item_output": {
+  "result": {
     "count": 1,
     "id": "ragium:basic_circuit"
   }

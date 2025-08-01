@@ -1,13 +1,14 @@
 {
   "type": "ragium:pressing",
   "catalyst": {
+    "count": 1,
     "item": "minecraft:repeater"
   },
-  "fluid_input": {
+  "ingredient": {
     "count": 1,
     "item": "minecraft:redstone_torch"
   },
-  "item_output": {
+  "result": {
     "count": 1,
     "id": "minecraft:comparator"
   }

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
 import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -56,6 +57,11 @@ object RagiumMiscRegister {
             RagiumRecipeCodecs.itemToItem(::HTExtractingRecipe),
             RagiumRecipeStreamCodecs.itemToItem(::HTExtractingRecipe),
         )
+        register(
+            RagiumRecipeSerializers.PRESSING,
+            RagiumRecipeCodecs.itemWithCatalystToItem(::HTPressingRecipe),
+            RagiumRecipeStreamCodecs.itemWithCatalystToItem(::HTPressingRecipe),
+        )
     }
 
     @JvmStatic
@@ -67,5 +73,6 @@ object RagiumMiscRegister {
         register(RagiumRecipeTypesNew.ALLOYING)
         register(RagiumRecipeTypesNew.CRUSHING)
         register(RagiumRecipeTypesNew.EXTRACTING)
+        register(RagiumRecipeTypesNew.PRESSING)
     }
 }

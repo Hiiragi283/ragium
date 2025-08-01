@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.Recipe
 
 class HTItemToItemRecipeBuilder<R : HTItemToItemRecipe>(
     prefix: String,
-    private val factory: (HTItemIngredient, HTItemResult) -> R,
+    private val factory: Factory<R>,
     val ingredient: HTItemIngredient,
     val result: HTItemResult,
 ) : HTRecipeBuilder.Prefixed(prefix) {
@@ -22,5 +22,9 @@ class HTItemToItemRecipeBuilder<R : HTItemToItemRecipe>(
 
     override fun getPrimalId(): ResourceLocation = result.id
 
-    override fun createRecipe(): Recipe<*> = factory(ingredient, result)
+    override fun createRecipe(): Recipe<*> = factory.create(ingredient, result)
+
+    fun interface Factory<R : HTItemToItemRecipe> {
+        fun create(ingredient: HTItemIngredient, result: HTItemResult): R
+    }
 }

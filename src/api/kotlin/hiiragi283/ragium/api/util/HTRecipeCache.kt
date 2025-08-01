@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.util
 
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
@@ -18,7 +18,7 @@ class HTRecipeCache<I : RecipeInput, R : Recipe<I>>(val recipeType: RecipeType<R
     fun getFirstRecipe(input: I, level: Level): R? = getFirstHolder(input, level)?.value
 
     /**
-     * 指定した[input]と[level]から最初に一致する[RecipeHolder]を返します。
+     * 指定した[input]と[level]から最初に一致する[net.minecraft.world.item.crafting.RecipeHolder]を返します。
      * @return 見つからなかった場合は`null`
      */
     fun getFirstHolder(input: I, level: Level): RecipeHolder<R>? = level.recipeManager

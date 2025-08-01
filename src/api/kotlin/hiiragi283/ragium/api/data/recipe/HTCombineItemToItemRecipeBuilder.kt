@@ -10,9 +10,9 @@ import net.minecraft.world.item.crafting.Recipe
 
 class HTCombineItemToItemRecipeBuilder<R : HTCombineItemToItemRecipe>(
     prefix: String,
-    private val factory: (List<HTItemIngredient>, HTItemResult) -> R,
-    val ingredients: List<HTItemIngredient>,
-    val result: HTItemResult,
+    private val factory: Factory<R>,
+    private val ingredients: List<HTItemIngredient>,
+    private val result: HTItemResult,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
@@ -26,5 +26,9 @@ class HTCombineItemToItemRecipeBuilder<R : HTCombineItemToItemRecipe>(
 
     override fun getPrimalId(): ResourceLocation = result.id
 
-    override fun createRecipe(): Recipe<*> = factory(ingredients, result)
+    override fun createRecipe(): Recipe<*> = factory.create(ingredients, result)
+
+    fun interface Factory<R : HTCombineItemToItemRecipe> {
+        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult): R
+    }
 }

@@ -1,6 +1,10 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -14,35 +18,41 @@ import net.neoforged.neoforge.common.Tags
 object RagiumPressingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Plastic Plate
-        createPressing()
-            .itemOutput(RagiumCommonTags.Items.PLATES_PLASTIC)
-            .itemInput(RagiumModTags.Items.POLYMER_RESIN)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(RagiumModTags.Items.POLYMER_RESIN),
+                null,
+                HTResultHelper.item(RagiumCommonTags.Items.PLATES_PLASTIC),
+            ).save(output)
         // Synthetic Fiber
-        createPressing()
-            .itemOutput(RagiumItems.SYNTHETIC_FIBER, 2)
-            .itemInput(RagiumModTags.Items.POLYMER_RESIN)
-            .catalyst(Tags.Items.STRINGS)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(RagiumModTags.Items.POLYMER_RESIN),
+                HTIngredientHelper.item(Tags.Items.STRINGS),
+                HTResultHelper.item(RagiumItems.SYNTHETIC_FIBER, 2),
+            ).save(output)
         // Synthetic Leather
-        createPressing()
-            .itemOutput(RagiumItems.SYNTHETIC_LEATHER, 2)
-            .itemInput(RagiumModTags.Items.POLYMER_RESIN)
-            .catalyst(Tags.Items.LEATHERS)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(RagiumModTags.Items.POLYMER_RESIN),
+                HTIngredientHelper.item(Tags.Items.LEATHERS),
+                HTResultHelper.item(RagiumItems.SYNTHETIC_LEATHER, 2),
+            ).save(output)
 
         // Blaze Rod
-        createPressing()
-            .itemOutput(Items.BLAZE_ROD)
-            .itemInput(Items.BLAZE_POWDER, 4)
-            .catalyst(Tags.Items.RODS_WOODEN)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(Items.BLAZE_POWDER, 4),
+                HTIngredientHelper.item(Tags.Items.RODS_WOODEN),
+                HTResultHelper.item(Items.BLAZE_ROD),
+            ).save(output)
         // Breeze Rod
-        createPressing()
-            .itemOutput(Items.BREEZE_ROD)
-            .itemInput(Items.WIND_CHARGE, 6)
-            .catalyst(Tags.Items.RODS_WOODEN)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(Items.WIND_CHARGE, 6),
+                HTIngredientHelper.item(Tags.Items.RODS_WOODEN),
+                HTResultHelper.item(Items.BREEZE_ROD),
+            ).save(output)
 
         circuits()
         redStones()
@@ -69,11 +79,12 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         // Circuit Board
-        createPressing()
-            .itemOutput(RagiumItems.CIRCUIT_BOARD)
-            .itemInput(Tags.Items.DUSTS_REDSTONE)
-            .catalyst(RagiumCommonTags.Items.PLATES_PLASTIC)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(RagiumCommonTags.Items.PLATES_PLASTIC),
+                HTIngredientHelper.item(Tags.Items.DUSTS_REDSTONE),
+                HTResultHelper.item(RagiumItems.CIRCUIT_BOARD),
+            ).save(output)
 
         for (circuit: RagiumItems.Circuits in RagiumItems.Circuits.entries) {
             val input: TagKey<Item> = when (circuit) {
@@ -82,42 +93,48 @@ object RagiumPressingRecipeProvider : HTRecipeProvider() {
                 RagiumItems.Circuits.ELITE -> RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL
                 RagiumItems.Circuits.ULTIMATE -> RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL
             }
-            createPressing()
-                .itemOutput(circuit)
-                .itemInput(input)
-                .catalyst(RagiumItems.CIRCUIT_BOARD)
-                .save(output)
+
+            HTItemWithCatalystToItemRecipeBuilder
+                .pressing(
+                    HTIngredientHelper.item(input),
+                    HTIngredientHelper.item(RagiumItems.CIRCUIT_BOARD),
+                    HTResultHelper.item(circuit),
+                ).save(output)
         }
     }
 
     private fun redStones() {
         // Redstone Board
-        createPressing()
-            .itemOutput(RagiumItems.REDSTONE_BOARD, 4)
-            .itemInput(Tags.Items.DUSTS_REDSTONE)
-            .catalyst(Items.SMOOTH_STONE_SLAB)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(Tags.Items.DUSTS_REDSTONE),
+                HTIngredientHelper.item(Items.SMOOTH_STONE_SLAB),
+                HTResultHelper.item(RagiumItems.REDSTONE_BOARD, 4),
+            ).save(output)
         // Repeater
-        createPressing()
-            .itemOutput(Items.REPEATER)
-            .itemInput(Items.REDSTONE_TORCH)
-            .catalyst(RagiumItems.REDSTONE_BOARD)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(Items.REDSTONE_TORCH, 2),
+                HTIngredientHelper.item(RagiumItems.REDSTONE_BOARD),
+                HTResultHelper.item(Items.REPEATER, 2),
+            ).save(output)
         // Comparator
-        createPressing()
-            .itemOutput(Items.COMPARATOR)
-            .itemInput(Items.REDSTONE_TORCH)
-            .catalyst(Items.REPEATER)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(Items.REDSTONE_TORCH),
+                HTIngredientHelper.item(Items.REPEATER),
+                HTResultHelper.item(Items.COMPARATOR),
+            ).save(output)
     }
 
     private fun diode() {
         // LED
-        createPressing()
-            .itemOutput(RagiumItems.LED, 4)
-            .itemInput(RagiumItems.LUMINOUS_PASTE)
-            .catalyst(Tags.Items.INGOTS_COPPER)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(RagiumItems.LUMINOUS_PASTE),
+                HTIngredientHelper.item(Tags.Items.INGOTS_COPPER),
+                HTResultHelper.item(RagiumItems.LED, 4),
+            ).save(output)
         // LED Block
         HTShapedRecipeBuilder(RagiumBlocks.LEDBlocks.WHITE, 8)
             .hollow8()

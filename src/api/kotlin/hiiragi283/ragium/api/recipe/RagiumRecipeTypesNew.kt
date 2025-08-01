@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
 import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
 import hiiragi283.ragium.api.util.RagiumConst
@@ -20,6 +21,9 @@ object RagiumRecipeTypesNew {
 
     @JvmField
     val EXTRACTING: HTDeferredRecipeType<SingleRecipeInput, HTExtractingRecipe> = create(RagiumConst.EXTRACTING)
+
+    @JvmField
+    val PRESSING: HTDeferredRecipeType<HTDoubleRecipeInput, HTPressingRecipe> = create(RagiumConst.PRESSING)
 
     @JvmStatic
     private fun <I : RecipeInput, R : Recipe<I>> create(path: String): HTDeferredRecipeType<I, R> =

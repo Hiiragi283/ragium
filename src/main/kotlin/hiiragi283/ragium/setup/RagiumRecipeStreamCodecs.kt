@@ -1,9 +1,15 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
 import hiiragi283.ragium.api.extension.listOf
+import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -13,7 +19,7 @@ import net.minecraft.network.codec.StreamCodec
 object RagiumRecipeStreamCodecs {
     @JvmStatic
     fun <R : HTItemToChancedItemRecipe> itemToChancedItem(
-        factory: (HTItemIngredient, List<HTItemResult>, List<Float>) -> R,
+        factory: HTItemToChancedItemRecipeBuilder.Factory<R>,
     ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
         HTItemIngredient.STREAM_CODEC,
         HTItemToChancedItemRecipe::ingredient,
@@ -21,27 +27,40 @@ object RagiumRecipeStreamCodecs {
         HTItemToChancedItemRecipe::results,
         ByteBufCodecs.FLOAT.listOf(),
         HTItemToChancedItemRecipe::chances,
-        factory,
+        factory::create,
     )
 
     @JvmStatic
-    fun <R : HTItemToItemRecipe> itemToItem(factory: (HTItemIngredient, HTItemResult) -> R): StreamCodec<RegistryFriendlyByteBuf, R> =
+    fun <R : HTItemToItemRecipe> itemToItem(factory: HTItemToItemRecipeBuilder.Factory<R>): StreamCodec<RegistryFriendlyByteBuf, R> =
         StreamCodec.composite(
             HTItemIngredient.STREAM_CODEC,
             HTItemToItemRecipe::ingredient,
             HTItemResult.STREAM_CODEC,
             HTItemToItemRecipe::result,
-            factory,
+            factory::create,
         )
 
     @JvmStatic
     fun <R : HTCombineItemToItemRecipe> combineItemToItem(
-        factory: (List<HTItemIngredient>, HTItemResult) -> R,
+        factory: HTCombineItemToItemRecipeBuilder.Factory<R>,
     ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
         HTItemIngredient.STREAM_CODEC.listOf(),
         HTCombineItemToItemRecipe::ingredients,
         HTItemResult.STREAM_CODEC,
         HTCombineItemToItemRecipe::result,
-        factory,
+        factory::create,
+    )
+
+    @JvmStatic
+    fun <R : HTItemWithCatalystToItemRecipe> itemWithCatalystToItem(
+        factory: HTItemWithCatalystToItemRecipeBuilder.Factory<R>,
+    ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
+        HTItemIngredient.STREAM_CODEC,
+        HTItemWithCatalystToItemRecipe::ingredient,
+        HTItemIngredient.STREAM_CODEC.toOptional(),
+        HTItemWithCatalystToItemRecipe::catalyst,
+        HTItemResult.STREAM_CODEC,
+        HTItemWithCatalystToItemRecipe::result,
+        factory::create,
     )
 }

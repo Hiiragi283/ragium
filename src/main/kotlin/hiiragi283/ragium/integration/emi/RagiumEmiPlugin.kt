@@ -20,12 +20,12 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
 import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
@@ -218,13 +218,13 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.MELTER.get(), HTRecipeHandler(RagiumEmiCategories.MELTING))
         // Pressing
-        forEachRecipes(RagiumRecipeTypes.PRESSING.get()) { id: ResourceLocation, recipe: HTPressingRecipe ->
+        RagiumRecipeTypesNew.PRESSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTPressingRecipe ->
             registry.addRecipe(
                 HTPressingEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
-                    EmiIngredient.of(recipe.catalyst),
-                    recipe.output.toEmi(),
+                    recipe.catalyst.toEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }

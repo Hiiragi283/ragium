@@ -1,10 +1,10 @@
 {
   "type": "ragium:pressing",
-  "fluid_input": {
+  "ingredient": {
     "count": 1,
     "tag": "ragium:polymer_resin"
   },
-  "item_output": {
+  "result": {
     "count": 1,
     "id": "#c:plates/plastic"
   }

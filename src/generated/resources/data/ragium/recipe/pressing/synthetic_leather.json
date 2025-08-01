@@ -1,13 +1,14 @@
 {
   "type": "ragium:pressing",
   "catalyst": {
+    "count": 1,
     "tag": "c:leathers"
   },
-  "fluid_input": {
+  "ingredient": {
     "count": 1,
     "tag": "ragium:polymer_resin"
   },
-  "item_output": {
+  "result": {
     "count": 2,
     "id": "ragium:synthetic_leather"
   }

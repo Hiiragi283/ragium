@@ -3,15 +3,15 @@
   "ingredients": [
     {
       "count": 1,
-      "item": "minecraft:soul_sand"
+      "tag": "c:plates/plastic"
     },
     {
       "count": 1,
-      "tag": "ragium:alloy_smelter_fluxes/basic"
+      "tag": "c:dusts/redstone"
     }
   ],
   "result": {
     "count": 1,
-    "id": "ragium:soul_glass"
+    "id": "ragium:circuit_board"
   }
 }

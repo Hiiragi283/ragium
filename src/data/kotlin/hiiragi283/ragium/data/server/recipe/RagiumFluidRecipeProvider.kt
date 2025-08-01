@@ -3,6 +3,9 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.vanillaId
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -120,11 +123,12 @@ object RagiumFluidRecipeProvider : HTRecipeProvider() {
             .fluidInput(RagiumFluidContents.EXPERIENCE, 8000)
             .save(output)
         // Exp Berries
-        createPressing()
-            .itemOutput(RagiumItems.EXP_BERRIES)
-            .itemInput(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, 4)
-            .catalyst(Tags.Items.FOODS_BERRY)
-            .save(output)
+        HTItemWithCatalystToItemRecipeBuilder
+            .pressing(
+                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_ELDRITCH_PEARL, 4),
+                HTIngredientHelper.item(Tags.Items.FOODS_BERRY),
+                HTResultHelper.item(RagiumItems.EXP_BERRIES),
+            ).save(output)
         // Blaze Powder
         createSolidifying()
             .itemOutput(Items.BLAZE_POWDER)

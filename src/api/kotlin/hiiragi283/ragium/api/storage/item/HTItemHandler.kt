@@ -5,12 +5,17 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.items.IItemHandler
+import java.util.Optional
 
 interface HTItemHandler :
     IItemHandler,
     INBTSerializable<CompoundTag> {
     val isEmpty: Boolean
     val slotRange: IntRange get() = (0 until slots)
+
+    fun consumeStackInSlot(slot: Int, catalyst: Optional<HTItemIngredient>, applyDamage: Boolean) {
+        catalyst.ifPresent { ingredient: HTItemIngredient -> consumeStackInSlot(slot, ingredient, applyDamage) }
+    }
 
     fun consumeStackInSlot(slot: Int, ingredient: HTItemIngredient, applyDamage: Boolean)
 

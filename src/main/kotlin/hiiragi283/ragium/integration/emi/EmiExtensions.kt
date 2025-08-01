@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import java.util.Optional
 
 //    EmiIngredient    //
 
@@ -38,6 +39,12 @@ fun HTItemOutput.toEmi(): EmiStack = this
         { stack: ItemStack -> EmiStack.of(stack).setChance(this.chance) },
         ::createErrorStack,
     )
+
+fun Optional<HTItemIngredient>.toEmi(): EmiIngredient = map(HTItemIngredient::toEmi).orElse(EmiStack.EMPTY)
+
+fun Optional<HTItemIngredient>.toCatalystEmi(): EmiIngredient = map(HTItemIngredient::toEmi)
+    .map { stack: EmiIngredient -> stack.setAmount(1) }
+    .orElse(EmiStack.EMPTY)
 
 fun HTFluidOutput.toEmi(): EmiStack = this.getStackResult().mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
 

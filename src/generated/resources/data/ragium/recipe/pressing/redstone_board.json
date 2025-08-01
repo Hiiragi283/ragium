@@ -1,13 +1,14 @@
 {
   "type": "ragium:pressing",
   "catalyst": {
+    "count": 1,
     "item": "minecraft:smooth_stone_slab"
   },
-  "fluid_input": {
+  "ingredient": {
     "count": 1,
     "tag": "c:dusts/redstone"
   },
-  "item_output": {
+  "result": {
     "count": 4,
     "id": "ragium:redstone_board"
   }

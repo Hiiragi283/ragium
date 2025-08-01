@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
+import hiiragi283.ragium.api.util.HTRecipeCache
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation

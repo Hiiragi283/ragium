@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
@@ -52,10 +51,6 @@ object RagiumRecipeSerializers {
     @JvmField
     val MELTING: Supplier<RecipeSerializer<HTMeltingRecipe>> =
         register(RagiumConst.MELTING, HTMeltingRecipe.CODEC, HTMeltingRecipe.STREAM_CODEC)
-
-    @JvmField
-    val PRESSING: Supplier<RecipeSerializer<HTPressingRecipe>> =
-        register(RagiumConst.PRESSING, HTPressingRecipe.CODEC, HTPressingRecipe.STREAM_CODEC)
 
     @JvmField
     val REFINING: Supplier<RecipeSerializer<HTRefiningRecipe>> =

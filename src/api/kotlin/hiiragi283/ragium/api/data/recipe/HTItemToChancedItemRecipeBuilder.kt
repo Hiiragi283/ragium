@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.Recipe
 
 class HTItemToChancedItemRecipeBuilder<R : HTItemToChancedItemRecipe>(
     prefix: String,
-    private val factory: (HTItemIngredient, List<HTItemResult>, List<Float>) -> R,
+    private val factory: Factory<R>,
     val ingredient: HTItemIngredient,
 ) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
@@ -29,5 +29,9 @@ class HTItemToChancedItemRecipeBuilder<R : HTItemToChancedItemRecipe>(
 
     override fun getPrimalId(): ResourceLocation = results[0].id
 
-    override fun createRecipe(): Recipe<*> = factory(ingredient, results, chances)
+    override fun createRecipe(): Recipe<*> = factory.create(ingredient, results, chances)
+
+    fun interface Factory<R : HTItemToChancedItemRecipe> {
+        fun create(ingredient: HTItemIngredient, results: List<HTItemResult>, chances: List<Float>): R
+    }
 }

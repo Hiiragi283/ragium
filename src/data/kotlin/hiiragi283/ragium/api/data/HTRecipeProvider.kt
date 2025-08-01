@@ -62,9 +62,6 @@ abstract class HTRecipeProvider : IConditionBuilder {
 
     fun createMelting(): HTDefinitionRecipeBuilder = HTDefinitionRecipeBuilder.create(RagiumConst.MELTING, RagiumRecipeFactories::melting)
 
-    fun createPressing(): HTDefinitionRecipeBuilder =
-        HTDefinitionRecipeBuilder.create(RagiumConst.PRESSING, RagiumRecipeFactories::pressing)
-
     fun createRefining(): HTDefinitionRecipeBuilder =
         HTDefinitionRecipeBuilder.create(RagiumConst.REFINING, RagiumRecipeFactories::refining)
 

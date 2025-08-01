@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.core.registries.Registries
@@ -27,9 +26,6 @@ object RagiumRecipeTypes {
 
     @JvmField
     val MELTING: Supplier<RecipeType<HTMeltingRecipe>> = register(RagiumConst.MELTING)
-
-    @JvmField
-    val PRESSING: Supplier<RecipeType<HTPressingRecipe>> = register(RagiumConst.PRESSING)
 
     @JvmField
     val REFINING: Supplier<RecipeType<HTRefiningRecipe>> = register(RagiumConst.REFINING)

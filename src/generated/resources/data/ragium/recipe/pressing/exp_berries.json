@@ -1,13 +1,14 @@
 {
   "type": "ragium:pressing",
   "catalyst": {
+    "count": 1,
     "tag": "c:foods/berry"
   },
-  "fluid_input": {
+  "ingredient": {
     "count": 4,
     "tag": "c:gems/eldritch_pearl"
   },
-  "item_output": {
+  "result": {
     "count": 1,
     "id": "ragium:exp_berries"
   }
