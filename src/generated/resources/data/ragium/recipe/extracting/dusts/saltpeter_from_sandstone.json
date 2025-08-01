@@ -1,10 +1,10 @@
 {
   "type": "ragium:extracting",
-  "item_input": {
-    "count": 4,
+  "ingredient": {
+    "count": 1,
     "tag": "c:sandstone/uncolored_blocks"
   },
-  "item_output": {
+  "result": {
     "count": 1,
     "id": "#c:dusts/saltpeter"
   }

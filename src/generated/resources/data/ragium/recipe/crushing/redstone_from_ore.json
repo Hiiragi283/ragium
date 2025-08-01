@@ -1,22 +1,25 @@
 {
   "type": "ragium:crushing",
-  "item_input": {
+  "chances": [
+    1.0,
+    0.5,
+    0.5
+  ],
+  "ingredient": {
     "count": 1,
     "tag": "c:ores/redstone"
   },
-  "item_output": [
+  "results": [
     {
       "count": 8,
       "id": "minecraft:redstone"
     },
     {
-      "chance": 0.5,
       "count": 4,
       "id": "minecraft:redstone"
     },
     {
-      "chance": 0.5,
-      "count": 2,
+      "count": 4,
       "id": "#c:dusts/cinnabar"
     }
   ]

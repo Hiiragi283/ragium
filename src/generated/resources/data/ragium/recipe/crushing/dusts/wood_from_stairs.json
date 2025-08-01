@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 4,
+    "tag": "minecraft:wooden_stairs"
+  },
+  "results": {
+    "count": 3,
+    "id": "#c:dusts/wood"
+  }
+}

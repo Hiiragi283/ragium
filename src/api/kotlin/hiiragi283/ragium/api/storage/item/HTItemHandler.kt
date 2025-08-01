@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage.item
 
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.util.INBTSerializable
@@ -10,6 +11,8 @@ interface HTItemHandler :
     INBTSerializable<CompoundTag> {
     val isEmpty: Boolean
     val slotRange: IntRange get() = (0 until slots)
+
+    fun consumeStackInSlot(slot: Int, ingredient: HTItemIngredient, applyDamage: Boolean)
 
     fun consumeStackInSlot(slot: Int, count: Int, applyDamage: Boolean)
 

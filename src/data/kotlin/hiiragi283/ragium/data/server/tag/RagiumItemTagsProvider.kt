@@ -246,7 +246,9 @@ class RagiumItemTagsProvider(
             .addTag(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
             .addItem(RagiumItems.FEVER_CHERRY)
 
-        tag(RagiumModTags.Items.WIP).addItem(RagiumItems.BOTTLED_BEE)
+        tag(RagiumModTags.Items.WIP)
+            .addItem(RagiumItems.BOTTLED_BEE)
+            .addItem(RagiumItems.DRILL)
     }
 
     private fun curios() {

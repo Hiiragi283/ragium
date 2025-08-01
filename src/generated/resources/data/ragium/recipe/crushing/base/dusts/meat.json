@@ -1,10 +1,19 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/meat"
+      }
+    }
+  ],
   "type": "ragium:crushing",
-  "item_input": {
+  "ingredient": {
     "count": 1,
     "tag": "c:ingots/meat"
   },
-  "item_output": {
+  "results": {
     "count": 1,
     "id": "#c:dusts/meat"
   }

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.result
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.DataResult
@@ -12,7 +12,7 @@ import net.minecraft.tags.TagKey
 import java.util.function.Function
 import java.util.function.Supplier
 
-abstract class HTRecipeOutput<T : Any, S : Any>(
+abstract class HTRecipeResult<T : Any, S : Any>(
     protected val entry: Either<ResourceLocation, TagKey<T>>,
     protected val amount: Int,
     protected val components: DataComponentPatch,
@@ -33,7 +33,7 @@ abstract class HTRecipeOutput<T : Any, S : Any>(
 
     fun getStackResult(): DataResult<S> = getFirstHolder().map { holder: Holder<T> -> createStack(holder, amount, components) }
 
-    val isValid: Boolean get() = getStackResult().isSuccess
+    val hasNoMatchingStack: Boolean get() = getStackResult().isError
 
     protected abstract fun createStack(holder: Holder<T>, amount: Int, components: DataComponentPatch): S
 

@@ -1,16 +1,19 @@
 {
   "type": "ragium:crushing",
-  "item_input": {
+  "chances": [
+    1.0,
+    0.33333334
+  ],
+  "ingredient": {
     "count": 1,
     "tag": "minecraft:wool_carpets"
   },
-  "item_output": [
+  "results": [
     {
       "count": 2,
       "id": "minecraft:string"
     },
     {
-      "chance": 0.33333334,
       "count": 1,
       "id": "minecraft:string"
     }

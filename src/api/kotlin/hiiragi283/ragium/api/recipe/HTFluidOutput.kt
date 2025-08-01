@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.tag.HTTagHelper
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
@@ -19,7 +20,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTFluidOutput(entry: Either<ResourceLocation, TagKey<Fluid>>, amount: Int, components: DataComponentPatch) :
-    HTRecipeOutput<Fluid, FluidStack>(entry, amount, components) {
+    HTRecipeResult<Fluid, FluidStack>(entry, amount, components) {
     companion object {
         @JvmField
         val CODEC: Codec<HTFluidOutput> = RecordCodecBuilder

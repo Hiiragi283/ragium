@@ -3,6 +3,9 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -51,7 +54,6 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .save(output)
 
         cherry()
-        honey()
         meat()
         sponge()
     }
@@ -72,32 +74,19 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .save(output)
     }
 
-    private fun honey() {
-        // Beehive
-        createCrushing()
-            .itemOutput(Items.HONEYCOMB)
-            .catalyst(Tags.Items.TOOLS_SHEAR)
-        // .save(output)
-
-        createCrushing()
-            .itemOutput(Items.HONEY_BOTTLE)
-            .itemInput(Items.GLASS_BOTTLE)
-            .save(output)
-    }
-
     private fun meat() {
         // Minced Meat
-        createCrushing()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
-            .itemInput(Tags.Items.FOODS_RAW_MEAT)
+        HTItemToChancedItemRecipeBuilder
+            .crushing(HTIngredientHelper.item(Tags.Items.FOODS_RAW_MEAT))
+            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
             .saveSuffixed(output, "_from_meat")
-        createCrushing()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
-            .itemInput(Tags.Items.FOODS_RAW_FISH)
+        HTItemToChancedItemRecipeBuilder
+            .crushing(HTIngredientHelper.item(Tags.Items.FOODS_RAW_FISH))
+            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
             .saveSuffixed(output, "_from_fish")
-        createCrushing()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_MEAT)
-            .itemInput(Items.ROTTEN_FLESH)
+        HTItemToChancedItemRecipeBuilder
+            .crushing(HTIngredientHelper.item(Items.ROTTEN_FLESH))
+            .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_MEAT))
             .saveSuffixed(output, "_from_rotten")
         // Meat Ingot
         HTShapedRecipeBuilder(RagiumItems.MEAT_INGOT, 3)

@@ -4,8 +4,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
@@ -51,14 +49,6 @@ object RagiumRecipeSerializers {
     @JvmField
     val ALLOYING: Supplier<RecipeSerializer<HTAlloyingRecipe>> =
         register(RagiumConst.ALLOYING, HTAlloyingRecipe.CODEC, HTAlloyingRecipe.STREAM_CODEC)
-
-    @JvmField
-    val CRUSHING: Supplier<RecipeSerializer<HTCrushingRecipe>> =
-        register(RagiumConst.CRUSHING, HTCrushingRecipe.CODEC, HTCrushingRecipe.STREAM_CODEC)
-
-    @JvmField
-    val EXTRACTING: Supplier<RecipeSerializer<HTExtractingRecipe>> =
-        register(RagiumConst.EXTRACTING, HTExtractingRecipe.CODEC, HTExtractingRecipe.STREAM_CODEC)
 
     @JvmField
     val INFUSING: Supplier<RecipeSerializer<HTInfusingRecipe>> =

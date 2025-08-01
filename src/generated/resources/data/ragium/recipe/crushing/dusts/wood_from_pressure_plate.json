@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "tag": "minecraft:wooden_pressure_plates"
+  },
+  "results": {
+    "count": 2,
+    "id": "#c:dusts/wood"
+  }
+}

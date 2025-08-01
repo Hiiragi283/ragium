@@ -3,8 +3,6 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
@@ -27,12 +25,6 @@ object RagiumRecipeTypes {
     val ALLOYING: Supplier<RecipeType<HTAlloyingRecipe>> = register(RagiumConst.ALLOYING)
 
     // val BLOCK_INTERACTING: Supplier<RecipeType<HTBlockInteractingRecipe>> = register(RagiumConst.BLOCK_INTERACTING)
-
-    @JvmField
-    val CRUSHING: Supplier<RecipeType<HTCrushingRecipe>> = register(RagiumConst.CRUSHING)
-
-    @JvmField
-    val EXTRACTING: Supplier<RecipeType<HTExtractingRecipe>> = register(RagiumConst.EXTRACTING)
 
     @JvmField
     val INFUSING: Supplier<RecipeType<HTInfusingRecipe>> = register(RagiumConst.INFUSING)

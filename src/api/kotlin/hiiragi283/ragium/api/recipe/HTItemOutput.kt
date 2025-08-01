@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.tag.HTTagHelper
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
@@ -26,7 +27,7 @@ class HTItemOutput(
     amount: Int,
     components: DataComponentPatch,
     val chance: Float,
-) : HTRecipeOutput<Item, ItemStack>(
+) : HTRecipeResult<Item, ItemStack>(
         entry,
         amount,
         components,

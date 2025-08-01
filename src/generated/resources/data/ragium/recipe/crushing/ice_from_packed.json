@@ -1,10 +1,10 @@
 {
   "type": "ragium:crushing",
-  "item_input": {
+  "ingredient": {
     "count": 1,
     "item": "minecraft:packed_ice"
   },
-  "item_output": {
+  "results": {
     "count": 9,
     "id": "minecraft:ice"
   }

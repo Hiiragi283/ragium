@@ -63,12 +63,6 @@ abstract class HTRecipeProvider : IConditionBuilder {
     fun createAlloying(): HTDefinitionRecipeBuilder =
         HTDefinitionRecipeBuilder.create(RagiumConst.ALLOYING, RagiumRecipeFactories::alloying)
 
-    fun createCrushing(): HTDefinitionRecipeBuilder =
-        HTDefinitionRecipeBuilder.create(RagiumConst.CRUSHING, RagiumRecipeFactories::crushing)
-
-    fun createExtracting(): HTDefinitionRecipeBuilder =
-        HTDefinitionRecipeBuilder.create(RagiumConst.EXTRACTING, RagiumRecipeFactories::extracting)
-
     fun createMelting(): HTDefinitionRecipeBuilder = HTDefinitionRecipeBuilder.create(RagiumConst.MELTING, RagiumRecipeFactories::melting)
 
     fun createPressing(): HTDefinitionRecipeBuilder =

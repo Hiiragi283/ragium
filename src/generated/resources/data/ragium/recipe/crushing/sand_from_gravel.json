@@ -1,16 +1,19 @@
 {
   "type": "ragium:crushing",
-  "item_input": {
+  "chances": [
+    1.0,
+    0.33333334
+  ],
+  "ingredient": {
     "count": 1,
     "tag": "c:gravels"
   },
-  "item_output": [
+  "results": [
     {
       "count": 1,
       "id": "minecraft:sand"
     },
     {
-      "chance": 0.33333334,
       "count": 1,
       "id": "minecraft:flint"
     }

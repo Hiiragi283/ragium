@@ -1,9 +1,15 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.extension.asItemHolder
+import hiiragi283.ragium.api.extension.buildTable
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.idOrNull
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.util.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -12,86 +18,87 @@ import net.neoforged.neoforge.common.Tags
 object RagiumExtractingRecipeProvider : HTRecipeProvider() {
     override fun buildRecipeInternal() {
         // Vanilla
-        createExtracting()
-            .itemOutput(Items.FLINT)
-            .itemInput(Tags.Items.GRAVELS)
-            .saveSuffixed(output, "_from_gravel")
+        HTItemToItemRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Tags.Items.GRAVELS),
+                HTResultHelper.item(Items.FLINT),
+            ).saveSuffixed(output, "_from_gravel")
 
-        createExtracting()
-            .itemOutput(Items.REDSTONE)
-            .itemInput(Tags.Items.SANDSTONE_RED_BLOCKS)
-            .saveSuffixed(output, "_from_red_sandstone")
+        HTItemToItemRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Tags.Items.SANDSTONE_RED_BLOCKS),
+                HTResultHelper.item(Items.REDSTONE),
+            ).saveSuffixed(output, "_from_red_sandstone")
 
-        createExtracting()
-            .itemOutput(Items.BROWN_MUSHROOM, 3)
-            .itemInput(Items.BROWN_MUSHROOM_BLOCK)
-            .saveSuffixed(output, "_from_block")
+        HTItemToItemRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Items.BROWN_MUSHROOM_BLOCK),
+                HTResultHelper.item(Items.BROWN_MUSHROOM, 3),
+            ).saveSuffixed(output, "_from_block")
 
-        createExtracting()
-            .itemOutput(Items.RED_MUSHROOM, 3)
-            .itemInput(Items.RED_MUSHROOM_BLOCK)
-            .saveSuffixed(output, "_from_block")
+        HTItemToItemRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Items.RED_MUSHROOM_BLOCK),
+                HTResultHelper.item(Items.RED_MUSHROOM, 3),
+            ).saveSuffixed(output, "_from_block")
         // Ragium
-        createExtracting()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_CINNABAR, 3)
-            .itemInput(Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .saveSuffixed(output, "_from_redstone")
+        HTItemToItemRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Tags.Items.STORAGE_BLOCKS_REDSTONE),
+                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_CINNABAR, 3),
+            ).saveSuffixed(output, "_from_redstone")
 
-        createExtracting()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_SALTPETER)
-            .itemInput(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS, 4)
-            .saveSuffixed(output, "_from_sandstone")
+        HTItemToItemRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
+                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SALTPETER),
+            ).saveSuffixed(output, "_from_sandstone")
 
-        createExtracting()
-            .itemOutput(RagiumCommonTags.Items.DUSTS_SALTPETER)
-            .itemInput(Tags.Items.GUNPOWDERS)
-            .saveSuffixed(output, "_from_gunpowder")
+        HTItemToItemRecipeBuilder
+            .extracting(
+                HTIngredientHelper.item(Tags.Items.GUNPOWDERS),
+                HTResultHelper.item(RagiumCommonTags.Items.DUSTS_SULFUR),
+            ).saveSuffixed(output, "_from_gunpowder")
 
         flower()
     }
 
     private fun flower() {
-        val small: Map<Item, Item> = mapOf(
-            Items.DANDELION to Items.YELLOW_DYE,
-            Items.POPPY to Items.RED_DYE,
-            Items.BLUE_ORCHID to Items.LIGHT_BLUE_DYE,
-            Items.ALLIUM to Items.MAGENTA_DYE,
-            Items.AZURE_BLUET to Items.LIGHT_GRAY_DYE,
-            Items.RED_TULIP to Items.RED_DYE,
-            Items.ORANGE_TULIP to Items.ORANGE_DYE,
-            Items.WHITE_TULIP to Items.LIGHT_GRAY_DYE,
-            Items.PINK_TULIP to Items.PINK_DYE,
-            Items.OXEYE_DAISY to Items.LIGHT_GRAY_DYE,
-            Items.CORNFLOWER to Items.BLUE_DYE,
-            Items.LILY_OF_THE_VALLEY to Items.WHITE_DYE,
-            Items.WITHER_ROSE to Items.BLACK_DYE,
-            Items.PINK_PETALS to Items.PINK_DYE,
-            Items.CACTUS to Items.GREEN_DYE,
-        )
-        for ((flower: Item, dye: Item) in small) {
-            val holder: Holder.Reference<Item> = flower.asItemHolder()
-            val flowerName: String = holder.idOrNull?.path ?: continue
-            createExtracting()
-                .itemOutput(dye, 2)
-                .itemInput(flower)
-                .saveSuffixed(output, "_from_$flowerName")
+        val table: HTTable<Item, Item, Int> = buildTable {
+            // Small
+            put(Items.DANDELION, Items.YELLOW_DYE, 2)
+            put(Items.POPPY, Items.RED_DYE, 2)
+            put(Items.BLUE_ORCHID, Items.LIGHT_BLUE_DYE, 2)
+            put(Items.ALLIUM, Items.MAGENTA_DYE, 2)
+            put(Items.AZURE_BLUET, Items.LIGHT_GRAY_DYE, 2)
+            put(Items.RED_TULIP, Items.RED_DYE, 2)
+            put(Items.ORANGE_TULIP, Items.ORANGE_DYE, 2)
+            put(Items.WHITE_TULIP, Items.LIGHT_GRAY_DYE, 2)
+            put(Items.PINK_TULIP, Items.PINK_DYE, 2)
+            put(Items.OXEYE_DAISY, Items.LIGHT_GRAY_DYE, 2)
+            put(Items.CORNFLOWER, Items.BLUE_DYE, 2)
+            put(Items.LILY_OF_THE_VALLEY, Items.WHITE_DYE, 2)
+            put(Items.WITHER_ROSE, Items.BLACK_DYE, 2)
+            put(Items.PINK_PETALS, Items.PINK_DYE, 2)
+            put(Items.CACTUS, Items.GREEN_DYE, 2)
+            // Large
+            put(Items.TORCHFLOWER, Items.ORANGE_DYE, 4)
+            put(Items.SUNFLOWER, Items.YELLOW_DYE, 4)
+            put(Items.LILAC, Items.MAGENTA_DYE, 4)
+            put(Items.ROSE_BUSH, Items.RED_DYE, 4)
+            put(Items.PEONY, Items.PINK_DYE, 4)
+            put(Items.PITCHER_PLANT, Items.CYAN_DYE, 4)
         }
 
-        val large: Map<Item, Item> = mapOf(
-            Items.TORCHFLOWER to Items.ORANGE_DYE,
-            Items.SUNFLOWER to Items.YELLOW_DYE,
-            Items.LILAC to Items.MAGENTA_DYE,
-            Items.ROSE_BUSH to Items.RED_DYE,
-            Items.PEONY to Items.PINK_DYE,
-            Items.PITCHER_PLANT to Items.CYAN_DYE,
-        )
-        for ((flower: Item, dye: Item) in large) {
-            val holder: Holder.Reference<Item> = flower.asItemHolder()
-            val flowerName: String = holder.idOrNull?.path ?: continue
-            createExtracting()
-                .itemOutput(dye, 4)
-                .itemInput(flower)
-                .saveSuffixed(output, "_from_$flowerName")
+        table.forEach { (flower: Item, dye: Item, count: Int) ->
+            val flowerHolder: Holder.Reference<Item> = flower.asItemHolder()
+            val flowerName: String = flowerHolder.idOrNull?.path ?: return@forEach
+
+            HTItemToItemRecipeBuilder
+                .extracting(
+                    HTIngredientHelper.item(flower),
+                    HTResultHelper.item(dye, count),
+                ).saveSuffixed(output, "_from_$flowerName")
         }
     }
 }

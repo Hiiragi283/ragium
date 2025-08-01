@@ -41,6 +41,9 @@ interface RagiumAPI {
         @JvmStatic
         fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
 
+        @JvmStatic
+        fun id(prefix: String, suffix: String): ResourceLocation = id("$prefix/$suffix")
+
         private lateinit var instance: RagiumAPI
 
         @JvmStatic

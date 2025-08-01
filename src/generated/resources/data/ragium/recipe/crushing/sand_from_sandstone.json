@@ -1,16 +1,19 @@
 {
   "type": "ragium:crushing",
-  "item_input": {
+  "chances": [
+    1.0,
+    0.25
+  ],
+  "ingredient": {
     "count": 1,
     "tag": "c:sandstone/uncolored_blocks"
   },
-  "item_output": [
+  "results": [
     {
       "count": 4,
       "id": "minecraft:sand"
     },
     {
-      "chance": 0.25,
       "count": 1,
       "id": "#c:dusts/saltpeter"
     }

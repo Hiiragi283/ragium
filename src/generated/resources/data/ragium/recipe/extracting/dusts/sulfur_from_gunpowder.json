@@ -1,11 +1,11 @@
 {
   "type": "ragium:extracting",
-  "item_input": {
+  "ingredient": {
     "count": 1,
     "tag": "c:gunpowders"
   },
-  "item_output": {
+  "result": {
     "count": 1,
-    "id": "#c:dusts/saltpeter"
+    "id": "#c:dusts/sulfur"
   }
 }

@@ -16,10 +16,12 @@ import hiiragi283.ragium.api.extension.createPotionStack
 import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
+import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
@@ -47,6 +49,7 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.CraftingRecipe
@@ -162,23 +165,30 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.ALLOY_SMELTER.get(), HTRecipeHandler(RagiumEmiCategories.ALLOYING))
         // Crushing
-        forEachRecipes(RagiumRecipeTypes.CRUSHING.get()) { id: ResourceLocation, recipe: HTCrushingRecipe ->
+        RagiumRecipeTypesNew.CRUSHING.forEach(recipeManager) { id: ResourceLocation, recipe: HTCrushingRecipe ->
             registry.addRecipe(
                 HTDecomposeEmiRecipe.crushing(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.outputs.map(HTItemOutput::toEmi),
+                    recipe.resultMap.map { (result: HTItemResult, chance: Float) ->
+                        result
+                            .getStackResult()
+                            .mapOrElse(
+                                { stack: ItemStack -> EmiStack.of(stack).setChance(chance) },
+                                ::createErrorStack,
+                            )
+                    },
                 ),
             )
         }
         registry.addRecipeHandler(RagiumMenuTypes.CRUSHER.get(), HTRecipeHandler(RagiumEmiCategories.CRUSHING))
         // Extracting
-        forEachRecipes(RagiumRecipeTypes.EXTRACTING.get()) { id: ResourceLocation, recipe: HTExtractingRecipe ->
+        RagiumRecipeTypesNew.EXTRACTING.forEach(recipeManager) { id: ResourceLocation, recipe: HTExtractingRecipe ->
             registry.addRecipe(
                 HTDecomposeEmiRecipe.extracting(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.output.toEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }

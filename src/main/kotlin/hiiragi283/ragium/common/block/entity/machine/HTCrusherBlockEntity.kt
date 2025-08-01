@@ -1,16 +1,15 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.common.inventory.HTDecomposeProcessMenu
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -19,12 +18,13 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTUniversalRecipeInput, HTCrushingRecipe>(
-        RagiumRecipeTypes.CRUSHING.get(),
+    HTProcessorBlockEntity<SingleRecipeInput, HTCrushingRecipe>(
+        RagiumRecipeTypesNew.CRUSHING.get(),
         RagiumBlockEntityTypes.CRUSHER,
         pos,
         state,
@@ -34,13 +34,12 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
-        HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput = SingleRecipeInput(inventory.getStackInSlot(0))
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTCrushingRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTCrushingRecipe): Boolean {
         // アウトプットに搬出できるか判定する
-        for (output: HTItemOutput in recipe.outputs) {
-            if (!insertToOutput(1..4, output.get(), true).isEmpty) {
+        for (result: HTItemResult in recipe.results) {
+            if (!insertToOutput(1..4, result.get(), true).isEmpty) {
                 return false
             }
         }
@@ -51,15 +50,15 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTUniversalRecipeInput,
+        input: SingleRecipeInput,
         recipe: HTCrushingRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        for (output: HTItemOutput in recipe.outputs) {
-            insertToOutput(1..4, output.getChancedStack(level.random), false)
+        for (index: Int in recipe.results.indices) {
+            insertToOutput(1..4, recipe.getChancedResult(index), false)
         }
         // インプットを減らす
-        inventory.consumeStackInSlot(0, recipe.ingredient.count(), false)
+        inventory.consumeStackInSlot(0, recipe.ingredient, false)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS)
     }

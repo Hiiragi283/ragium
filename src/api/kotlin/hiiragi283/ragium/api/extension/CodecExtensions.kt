@@ -13,6 +13,11 @@ fun <A : Any> Codec<A>.listOrElement(): Codec<List<A>> = Codec.either(this.listO
     { list: List<A> -> if (list.size == 1) Either.right(list[0]) else Either.left(list) },
 )
 
+fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> = Codec.either(this.listOf(min, max), this).xmap(
+    { either: Either<List<A>, A> -> either.map(Function.identity(), ::listOf) },
+    { list: List<A> -> if (list.size == 1) Either.right(list[0]) else Either.left(list) },
+)
+
 //    DataResult    //
 
 fun <T : Any> Optional<T>.toDataResult(message: () -> String): DataResult<T> = map(DataResult<*>::success).orElse(DataResult.error(message))

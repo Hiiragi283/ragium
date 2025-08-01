@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -26,29 +24,6 @@ internal object RagiumRecipeFactories {
         check(itemOutputs.isNotEmpty()) { "Alloying Recipe requires 1 item output at least!" }
         check(itemOutputs.size <= 4) { "Alloying Recipe accepts 4 or less item outputs!" }
         return HTAlloyingRecipe(itemInputs, itemOutputs)
-    }
-
-    @JvmStatic
-    fun crushing(definition: HTRecipeDefinition): HTCrushingRecipe {
-        // Item Input
-        val itemInputs: List<SizedIngredient> = definition.itemInputs
-        check(itemInputs.size == 1) { "Crushing Recipe requires 1 item ingredient!" }
-        // Item Output
-        val itemOutputs: List<HTItemOutput> = definition.itemOutputs
-        check(itemOutputs.isNotEmpty()) { "Crushing Recipe requires 1 item output at least!" }
-        check(itemOutputs.size <= 4) { "Crushing Recipe accepts 4 or less item outputs!" }
-        // Fluid
-        check(definition.fluidInputs.isEmpty() && definition.fluidOutputs.isEmpty()) { "Crushing Recipe does not support fluids!" }
-        return HTCrushingRecipe(itemInputs[0], itemOutputs)
-    }
-
-    @JvmStatic
-    fun extracting(definition: HTRecipeDefinition): HTExtractingRecipe {
-        val ingredient: SizedIngredient =
-            checkPresent(definition.getItemIngredient(0), "Extracting Recipe requires 1 item ingredient!")
-        val itemOutput: HTItemOutput =
-            checkPresent(definition.getItemOutput(0), "Extracting Recipe requires 1 item output!")
-        return HTExtractingRecipe(ingredient, itemOutput)
     }
 
     @JvmStatic
