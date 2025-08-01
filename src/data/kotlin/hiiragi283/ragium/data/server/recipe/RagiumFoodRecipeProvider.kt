@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
@@ -47,11 +48,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
         )
 
         // Ambrosia
-        createAlloying()
-            .itemOutput(RagiumItems.AMBROSIA)
-            .itemInput(RagiumCommonTags.Items.STORAGE_BLOCKS_CHOCOLATE, 64)
-            .itemInput(Items.HONEY_BLOCK, 64)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(RagiumCommonTags.Items.STORAGE_BLOCKS_CHOCOLATE, 64),
+                HTIngredientHelper.item(Items.HONEY_BLOCK, 64),
+                HTResultHelper.item(RagiumItems.AMBROSIA),
+            ).save(output)
 
         cherry()
         meat()

@@ -1,7 +1,10 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTSmithingRecipeBuilder
@@ -41,11 +44,12 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
 
-        createAlloying()
-            .itemOutput(RagiumCommonTags.Items.INGOTS_RAGI_ALLOY)
-            .itemInput(Tags.Items.INGOTS_COPPER)
-            .itemInput(RagiumCommonTags.Items.DUSTS_RAGINITE, 3)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_COPPER),
+                HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 2),
+                HTResultHelper.item(RagiumCommonTags.Items.INGOTS_RAGI_ALLOY),
+            ).save(output)
 
         HTShapedRecipeBuilder(RagiumItems.RAGI_COKE)
             .hollow4()
@@ -66,11 +70,12 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
 
-        createAlloying()
-            .itemOutput(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY)
-            .itemInput(Tags.Items.INGOTS_GOLD)
-            .itemInput(RagiumCommonTags.Items.DUSTS_RAGINITE, 3)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_GOLD),
+                HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 4),
+                HTResultHelper.item(RagiumCommonTags.Items.INGOTS_ADVANCED_RAGI_ALLOY),
+            ).save(output)
         // Ragi-Crystal
         HTShapedRecipeBuilder(RagiumItems.Gems.RAGI_CRYSTAL)
             .hollow8()
@@ -78,11 +83,12 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('B', Tags.Items.GEMS_DIAMOND)
             .save(output)
 
-        createAlloying()
-            .itemOutput(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL)
-            .itemInput(Tags.Items.GEMS_DIAMOND)
-            .itemInput(RagiumCommonTags.Items.DUSTS_RAGINITE, 6)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.GEMS_DIAMOND),
+                HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 6),
+                HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL),
+            ).save(output)
         // Azure Steel
         HTShapedRecipeBuilder(RagiumItems.Compounds.AZURE_STEEL)
             .hollow4()
@@ -96,17 +102,19 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .setExp(0.7f)
             .saveSuffixed(output, "_from_compound")
 
-        createAlloying()
-            .itemOutput(RagiumCommonTags.Items.GEMS_AZURE, 2)
-            .itemInput(Tags.Items.GEMS_AMETHYST)
-            .itemInput(Tags.Items.GEMS_LAPIS)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.GEMS_AMETHYST),
+                HTIngredientHelper.item(Tags.Items.GEMS_LAPIS),
+                HTResultHelper.item(RagiumCommonTags.Items.GEMS_AZURE, 2),
+            ).save(output)
 
-        createAlloying()
-            .itemOutput(RagiumCommonTags.Items.INGOTS_AZURE_STEEL)
-            .itemInput(Tags.Items.INGOTS_IRON)
-            .itemInput(RagiumCommonTags.Items.GEMS_AZURE, 3)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_IRON),
+                HTIngredientHelper.item(RagiumCommonTags.Items.GEMS_AZURE, 2),
+                HTResultHelper.item(RagiumCommonTags.Items.INGOTS_AZURE_STEEL),
+            ).save(output)
         // Sawdust
         HTShapedRecipeBuilder(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
@@ -127,11 +135,12 @@ object RagiumMiscRecipeProvider : HTRecipeProvider() {
             .define('C', RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
             .save(output)
 
-        createAlloying()
-            .itemOutput(RagiumItems.ELDRITCH_ORB, 6)
-            .itemInput(RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL)
-            .itemInput(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(RagiumCommonTags.Items.STORAGE_BLOCKS_CRIMSON_CRYSTAL),
+                HTIngredientHelper.item(RagiumCommonTags.Items.STORAGE_BLOCKS_WARPED_CRYSTAL),
+                HTResultHelper.item(RagiumItems.ELDRITCH_ORB, 6),
+            ).save(output)
         // Deep Steel
         HTCookingRecipeBuilder
             .blasting(RagiumItems.DEEP_SCRAP)

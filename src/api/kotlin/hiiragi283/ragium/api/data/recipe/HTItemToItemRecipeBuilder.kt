@@ -5,16 +5,15 @@ import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.RagiumConst
-import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.crafting.Recipe
 
 class HTItemToItemRecipeBuilder<R : HTItemToItemRecipe>(
-    private val prefix: String,
+    prefix: String,
     private val factory: (HTItemIngredient, HTItemResult) -> R,
     val ingredient: HTItemIngredient,
     val result: HTItemResult,
-) : HTRecipeBuilder {
+) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
         fun extracting(ingredient: HTItemIngredient, result: HTItemResult): HTItemToItemRecipeBuilder<HTExtractingRecipe> =
@@ -23,9 +22,5 @@ class HTItemToItemRecipeBuilder<R : HTItemToItemRecipe>(
 
     override fun getPrimalId(): ResourceLocation = result.id
 
-    override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
-
-    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        recipeOutput.accept(id.withPrefix("$prefix/"), factory(ingredient, result), null)
-    }
+    override fun createRecipe(): Recipe<*> = factory(ingredient, result)
 }

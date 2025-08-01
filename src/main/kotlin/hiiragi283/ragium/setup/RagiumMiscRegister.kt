@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.registry.HTDeferredRecipeType
@@ -41,6 +42,11 @@ object RagiumMiscRegister {
         }
 
         register(
+            RagiumRecipeSerializers.ALLOYING,
+            RagiumRecipeCodecs.combineItemToItem(::HTAlloyingRecipe),
+            RagiumRecipeStreamCodecs.combineItemToItem(::HTAlloyingRecipe),
+        )
+        register(
             RagiumRecipeSerializers.CRUSHING,
             RagiumRecipeCodecs.itemToChancedItem(::HTCrushingRecipe),
             RagiumRecipeStreamCodecs.itemToChancedItem(::HTCrushingRecipe),
@@ -58,6 +64,7 @@ object RagiumMiscRegister {
             helper.register(holder.id, RecipeType.simple<R>(holder.id))
         }
 
+        register(RagiumRecipeTypesNew.ALLOYING)
         register(RagiumRecipeTypesNew.CRUSHING)
         register(RagiumRecipeTypesNew.EXTRACTING)
     }

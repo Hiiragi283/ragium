@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
@@ -86,7 +87,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
 
         // Raginite
         HTItemToChancedItemRecipeBuilder
-            .crushing(HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE))
+            .crushing(HTIngredientHelper.item(RagiumCommonTags.Items.ORES_RAGINITE))
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 8))
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.DUSTS_RAGINITE, 4), 1 / 2f)
             .addResult(HTResultHelper.item(RagiumCommonTags.Items.GEMS_RAGI_CRYSTAL, 2), 1 / 4f)
@@ -105,65 +106,86 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
 
     private fun alloying() {
         // Steel
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("steel").getBaseTagKey(), appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_IRON)
-            .itemInput(Items.COAL, 2)
+        val steelTag: TagKey<Item> = ModMaterialFamilies.getAlloy("steel").getBaseTagKey()
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_IRON),
+                HTIngredientHelper.item(Items.COAL, 2),
+                HTResultHelper.item(steelTag),
+            ).setTagCondition(steelTag)
             .saveSuffixed(output, "_from_coal")
 
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("steel").getBaseTagKey(), appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_IRON)
-            .itemInput(RagiumCommonTags.Items.COAL_COKE)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_IRON),
+                HTIngredientHelper.item(RagiumCommonTags.Items.COAL_COKE),
+                HTResultHelper.item(steelTag),
+            ).setTagCondition(steelTag)
             .saveSuffixed(output, "_from_coke")
         // Invar
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("invar").getBaseTagKey(), 3, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_IRON, 2)
-            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_IRON, 2),
+                HTIngredientHelper.item(ModMaterialFamilies.getMetal("nickel").getBaseTagKey()),
+                HTResultHelper.item(ModMaterialFamilies.getAlloy("invar").getBaseTagKey(), 3),
+            ).setTagCondition(ModMaterialFamilies.getAlloy("invar").getBaseTagKey())
             .save(output)
         // Electrum
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey(), 2, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_GOLD)
-            .itemInput(ModMaterialFamilies.getMetal("silver").getBaseTagKey())
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_GOLD),
+                HTIngredientHelper.item(ModMaterialFamilies.getMetal("silver").getBaseTagKey()),
+                HTResultHelper.item(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey(), 2),
+            ).setTagCondition(ModMaterialFamilies.getAlloy("electrum").getBaseTagKey())
             .save(output)
         // Bronze
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey(), 4, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_COPPER, 3)
-            .itemInput(ModMaterialFamilies.getMetal("tin").getBaseTagKey())
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_COPPER, 3),
+                HTIngredientHelper.item(ModMaterialFamilies.getMetal("tin").getBaseTagKey()),
+                HTResultHelper.item(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey(), 4),
+            ).setTagCondition(ModMaterialFamilies.getAlloy("bronze").getBaseTagKey())
             .save(output)
         // Brass
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("brass").getBaseTagKey(), 4, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_COPPER, 3)
-            .itemInput(ModMaterialFamilies.getMetal("zinc").getBaseTagKey())
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_COPPER, 3),
+                HTIngredientHelper.item(ModMaterialFamilies.getMetal("zinc").getBaseTagKey()),
+                HTResultHelper.item(ModMaterialFamilies.getAlloy("brass").getBaseTagKey(), 4),
+            ).setTagCondition(ModMaterialFamilies.getAlloy("brass").getBaseTagKey())
             .save(output)
         // Constantan
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey(), 2, appendCondition = true)
-            .itemInput(Tags.Items.INGOTS_COPPER)
-            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Tags.Items.INGOTS_COPPER),
+                HTIngredientHelper.item(ModMaterialFamilies.getMetal("nickel").getBaseTagKey()),
+                HTResultHelper.item(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey(), 2),
+            ).setTagCondition(ModMaterialFamilies.getAlloy("constantan").getBaseTagKey())
             .save(output)
 
         // Adamant
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey(), appendCondition = true)
-            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
-            .itemInput(Tags.Items.GEMS_DIAMOND)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(ModMaterialFamilies.getMetal("nickel").getBaseTagKey()),
+                HTIngredientHelper.item(Tags.Items.GEMS_DIAMOND),
+                HTResultHelper.item(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey(), 2),
+            ).setTagCondition(ModMaterialFamilies.getAlloy("adamant").getBaseTagKey())
             .save(output)
         // Duratium
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey(), appendCondition = true)
-            .itemInput(ModMaterialFamilies.getMetal("platinum").getBaseTagKey())
-            .itemInput(Tags.Items.INGOTS_NETHERITE)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(ModMaterialFamilies.getMetal("platinum").getBaseTagKey()),
+                HTIngredientHelper.item(Tags.Items.INGOTS_NETHERITE),
+                HTResultHelper.item(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey(), 2),
+            ).setTagCondition(ModMaterialFamilies.getAlloy("duratium").getBaseTagKey())
             .save(output)
         // Energite
-        createAlloying()
-            .itemOutput(ModMaterialFamilies.getAlloy("energite").getBaseTagKey(), appendCondition = true)
-            .itemInput(ModMaterialFamilies.getMetal("nickel").getBaseTagKey())
-            .itemInput(ModMaterialFamilies.getGem("fluxite").getBaseTagKey())
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(ModMaterialFamilies.getMetal("nickel").getBaseTagKey()),
+                HTIngredientHelper.item(ModMaterialFamilies.getGem("fluxite").getBaseTagKey()),
+                HTResultHelper.item(ModMaterialFamilies.getAlloy("energite").getBaseTagKey(), 2),
+            ).setTagCondition(ModMaterialFamilies.getAlloy("energite").getBaseTagKey())
             .save(output)
     }
 
@@ -231,16 +253,20 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider() {
         val ingot: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.INGOTS) ?: return
         val raw: TagKey<Item> = family.getTagKey(HTMaterialFamily.Variant.RAW_MATERIALS) ?: return
         // Basic
-        createAlloying()
-            .itemOutput(ingot, 3, appendCondition = family.entryType.isMod)
-            .itemInput(raw, 2)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(raw, 2),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                HTResultHelper.item(ingot, 3),
+            ).setTagCondition(ingot)
             .saveSuffixed(output, "_with_basic_flux")
         // Advanced
-        createAlloying()
-            .itemOutput(ingot, 2, appendCondition = family.entryType.isMod)
-            .itemInput(raw)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(raw),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
+                HTResultHelper.item(ingot, 2),
+            ).setTagCondition(ingot)
             .saveSuffixed(output, "_with_advanced_flux")
     }
 }

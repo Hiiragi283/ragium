@@ -4,7 +4,12 @@ import net.minecraft.advancements.Criterion
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Recipe
+import net.neoforged.neoforge.common.conditions.ICondition
+import net.neoforged.neoforge.common.conditions.NotCondition
+import net.neoforged.neoforge.common.conditions.TagEmptyCondition
 
 /**
  * Ragiumで使用する[RecipeBuilder]の拡張インターフェース
@@ -49,5 +54,30 @@ interface HTRecipeBuilder : RecipeBuilder {
 
     override fun save(recipeOutput: RecipeOutput) {
         save(recipeOutput, getPrimalId())
+    }
+
+    //    Prefixed    //
+
+    abstract class Prefixed(val prefix: String) : HTRecipeBuilder {
+        protected abstract fun createRecipe(): Recipe<*>
+
+        private val conditions: MutableList<ICondition> = mutableListOf()
+
+        fun setTagCondition(tagKey: TagKey<Item>): Prefixed = addCondition(NotCondition(TagEmptyCondition(tagKey)))
+
+        fun addCondition(condition: ICondition): Prefixed = apply {
+            this.conditions.add(condition)
+        }
+
+        override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
+
+        final override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+            recipeOutput.accept(
+                id.withPrefix("$prefix/"),
+                createRecipe(),
+                null,
+                *conditions.toTypedArray(),
+            )
+        }
     }
 }

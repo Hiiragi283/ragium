@@ -17,11 +17,12 @@ import hiiragi283.ragium.api.extension.idOrThrow
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
@@ -154,12 +155,12 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addMachineRecipes() {
         // Alloying
-        forEachRecipes(RagiumRecipeTypes.ALLOYING.get()) { id: ResourceLocation, recipe: HTAlloyingRecipe ->
+        RagiumRecipeTypesNew.ALLOYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTAlloyingRecipe ->
             registry.addRecipe(
                 HTAlloyingEmiRecipe(
                     id,
-                    recipe.ingredients.map(SizedIngredient::toEmi),
-                    recipe.outputs.map(HTItemOutput::toEmi),
+                    recipe.ingredients.map(HTItemIngredient::toEmi),
+                    recipe.result.toEmi(),
                 ),
             )
         }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
 import hiiragi283.ragium.api.util.RagiumConst
@@ -10,6 +11,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.neoforged.neoforge.registries.DeferredHolder
 
 object RagiumRecipeSerializers {
+    @JvmField
+    val ALLOYING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTAlloyingRecipe>> =
+        create(RagiumConst.ALLOYING)
+
     @JvmField
     val CRUSHING: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTCrushingRecipe>> =
         create(RagiumConst.CRUSHING)

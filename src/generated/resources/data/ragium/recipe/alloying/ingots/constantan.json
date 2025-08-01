@@ -9,7 +9,7 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 1,
       "tag": "c:ingots/copper"
@@ -19,7 +19,7 @@
       "tag": "c:ingots/nickel"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 2,
     "id": "#c:ingots/constantan"
   }

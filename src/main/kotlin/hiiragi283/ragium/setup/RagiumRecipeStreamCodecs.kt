@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.extension.listOf
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -32,4 +33,15 @@ object RagiumRecipeStreamCodecs {
             HTItemToItemRecipe::result,
             factory,
         )
+
+    @JvmStatic
+    fun <R : HTCombineItemToItemRecipe> combineItemToItem(
+        factory: (List<HTItemIngredient>, HTItemResult) -> R,
+    ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
+        HTItemIngredient.STREAM_CODEC.listOf(),
+        HTCombineItemToItemRecipe::ingredients,
+        HTItemResult.STREAM_CODEC,
+        HTCombineItemToItemRecipe::result,
+        factory,
+    )
 }

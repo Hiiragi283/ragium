@@ -1,6 +1,6 @@
 {
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 1,
       "tag": "c:storage_blocks/crimson_crystal"
@@ -10,7 +10,7 @@
       "tag": "c:storage_blocks/warped_crystal"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 6,
     "id": "ragium:eldritch_orb"
   }

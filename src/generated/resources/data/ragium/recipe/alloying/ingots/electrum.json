@@ -9,7 +9,7 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 1,
       "tag": "c:ingots/gold"
@@ -19,7 +19,7 @@
       "tag": "c:ingots/silver"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 2,
     "id": "#c:ingots/electrum"
   }

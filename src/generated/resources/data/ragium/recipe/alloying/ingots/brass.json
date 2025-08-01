@@ -9,7 +9,7 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 3,
       "tag": "c:ingots/copper"
@@ -19,7 +19,7 @@
       "tag": "c:ingots/zinc"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 4,
     "id": "#c:ingots/brass"
   }

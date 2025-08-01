@@ -9,7 +9,7 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 2,
       "tag": "c:ingots/iron"
@@ -19,7 +19,7 @@
       "tag": "c:ingots/nickel"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 3,
     "id": "#c:ingots/invar"
   }

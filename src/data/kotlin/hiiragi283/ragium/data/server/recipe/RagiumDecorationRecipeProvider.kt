@@ -1,6 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -67,23 +70,26 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider() {
 
     private fun glass() {
         // Quartz Glass
-        createAlloying()
-            .itemOutput(RagiumBlocks.Glasses.QUARTZ)
-            .itemInput(Items.QUARTZ_BLOCK)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Items.QUARTZ_BLOCK),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                HTResultHelper.item(RagiumBlocks.Glasses.QUARTZ),
+            ).save(output)
         // Soul Glass
-        createAlloying()
-            .itemOutput(RagiumBlocks.Glasses.SOUL)
-            .itemInput(Items.SOUL_SAND)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(Items.SOUL_SAND),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                HTResultHelper.item(RagiumBlocks.Glasses.SOUL),
+            ).save(output)
         // Obsidian Glass
-        createAlloying()
-            .itemOutput(RagiumBlocks.Glasses.OBSIDIAN)
-            .itemInput(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4)
-            .itemInput(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
-            .save(output)
+        HTCombineItemToItemRecipeBuilder
+            .alloying(
+                HTIngredientHelper.item(RagiumCommonTags.Items.DUSTS_OBSIDIAN, 4),
+                HTIngredientHelper.item(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
+                HTResultHelper.item(RagiumBlocks.Glasses.OBSIDIAN),
+            ).save(output)
     }
 
     private fun registerBuildings(sets: HTBuildingBlockSets) {

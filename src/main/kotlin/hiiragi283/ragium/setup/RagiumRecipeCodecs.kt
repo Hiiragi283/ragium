@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.listOrElement
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
+import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 
@@ -46,4 +47,19 @@ object RagiumRecipeCodecs {
                 }
                 DataResult.success(recipe)
             }
+
+    @JvmStatic
+    fun <R : HTCombineItemToItemRecipe> combineItemToItem(factory: (List<HTItemIngredient>, HTItemResult) -> R): MapCodec<R> =
+        RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTItemIngredient.CODEC
+                        .listOf(2, 2)
+                        .fieldOf("ingredients")
+                        .forGetter(HTCombineItemToItemRecipe::ingredients),
+                    HTItemResult.CODEC
+                        .fieldOf("results")
+                        .forGetter(HTCombineItemToItemRecipe::result),
+                ).apply(instance, factory)
+        }
 }

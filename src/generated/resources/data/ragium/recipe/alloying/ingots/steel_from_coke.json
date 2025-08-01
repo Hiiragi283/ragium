@@ -9,7 +9,7 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 1,
       "tag": "c:ingots/iron"
@@ -19,7 +19,7 @@
       "tag": "c:coal_coke"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 1,
     "id": "#c:ingots/steel"
   }

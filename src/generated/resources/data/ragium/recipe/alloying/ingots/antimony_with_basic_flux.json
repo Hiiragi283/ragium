@@ -9,7 +9,7 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 2,
       "tag": "c:raw_materials/antimony"
@@ -19,7 +19,7 @@
       "tag": "ragium:alloy_smelter_fluxes/basic"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 3,
     "id": "#c:ingots/antimony"
   }

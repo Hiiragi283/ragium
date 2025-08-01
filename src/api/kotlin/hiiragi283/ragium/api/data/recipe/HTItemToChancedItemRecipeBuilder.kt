@@ -5,15 +5,14 @@ import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.RagiumConst
-import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.crafting.Recipe
 
 class HTItemToChancedItemRecipeBuilder<R : HTItemToChancedItemRecipe>(
-    private val prefix: String,
+    prefix: String,
     private val factory: (HTItemIngredient, List<HTItemResult>, List<Float>) -> R,
     val ingredient: HTItemIngredient,
-) : HTRecipeBuilder {
+) : HTRecipeBuilder.Prefixed(prefix) {
     companion object {
         @JvmStatic
         fun crushing(ingredient: HTItemIngredient): HTItemToChancedItemRecipeBuilder<HTCrushingRecipe> =
@@ -30,9 +29,5 @@ class HTItemToChancedItemRecipeBuilder<R : HTItemToChancedItemRecipe>(
 
     override fun getPrimalId(): ResourceLocation = results[0].id
 
-    override fun group(groupName: String?): RecipeBuilder = throw UnsupportedOperationException()
-
-    override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        recipeOutput.accept(id.withPrefix("$prefix/"), factory(ingredient, results, chances), null)
-    }
+    override fun createRecipe(): Recipe<*> = factory(ingredient, results, chances)
 }

@@ -9,7 +9,7 @@
     }
   ],
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 1,
       "tag": "c:ingots/nickel"
@@ -19,8 +19,8 @@
       "tag": "c:gems/fluxite"
     }
   ],
-  "item_output": {
-    "count": 1,
+  "results": {
+    "count": 2,
     "id": "#c:ingots/energite"
   }
 }

@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.data.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.recipe.HTFluidOutput
 import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -14,18 +13,6 @@ import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 internal object RagiumRecipeFactories {
-    @JvmStatic
-    fun alloying(definition: HTRecipeDefinition): HTAlloyingRecipe {
-        // Item Input
-        val itemInputs: List<SizedIngredient> = definition.itemInputs
-        check(itemInputs.size == 2) { "Alloying Recipe requires 2 item ingredients!" }
-        // Item Output
-        val itemOutputs: List<HTItemOutput> = definition.itemOutputs
-        check(itemOutputs.isNotEmpty()) { "Alloying Recipe requires 1 item output at least!" }
-        check(itemOutputs.size <= 4) { "Alloying Recipe accepts 4 or less item outputs!" }
-        return HTAlloyingRecipe(itemInputs, itemOutputs)
-    }
-
     @JvmStatic
     fun melting(definition: HTRecipeDefinition): HTMeltingRecipe {
         // Item Input

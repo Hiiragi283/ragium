@@ -1,16 +1,16 @@
 {
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 1,
       "tag": "c:ingots/copper"
     },
     {
-      "count": 3,
+      "count": 2,
       "tag": "c:dusts/raginite"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 1,
     "id": "#c:ingots/ragi_alloy"
   }

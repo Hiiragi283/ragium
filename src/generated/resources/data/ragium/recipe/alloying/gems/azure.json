@@ -1,6 +1,6 @@
 {
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 1,
       "tag": "c:gems/amethyst"
@@ -10,7 +10,7 @@
       "tag": "c:gems/lapis"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 2,
     "id": "#c:gems/azure"
   }

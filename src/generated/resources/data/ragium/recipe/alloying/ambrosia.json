@@ -1,6 +1,6 @@
 {
   "type": "ragium:alloying",
-  "item_input": [
+  "ingredients": [
     {
       "count": 64,
       "tag": "c:storage_blocks/chocolate"
@@ -10,7 +10,7 @@
       "item": "minecraft:honey_block"
     }
   ],
-  "item_output": {
+  "results": {
     "count": 1,
     "id": "ragium:ambrosia"
   }

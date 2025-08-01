@@ -430,7 +430,7 @@ object RagiumItems {
             *RagiumFluidContents.REGISTER.itemEntries.toTypedArray(),
         )
 
-        registerEnergy(event, DRILL, 16000)
+        registerEnergy(event, DRILL, 160000)
 
         registerDrums(event)
 
