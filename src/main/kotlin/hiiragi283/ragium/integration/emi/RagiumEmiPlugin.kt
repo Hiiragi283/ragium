@@ -20,14 +20,14 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
 import hiiragi283.ragium.api.recipe.base.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.base.HTCrushingRecipe
 import hiiragi283.ragium.api.recipe.base.HTExtractingRecipe
+import hiiragi283.ragium.api.recipe.base.HTInfusingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPressingRecipe
+import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
@@ -36,11 +36,10 @@ import hiiragi283.ragium.integration.emi.recipe.HTBlastChargeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDecomposeEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTDistillationEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTEternalTicketEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTInfusingEmiRecipe
+import hiiragi283.ragium.integration.emi.recipe.HTItemWithFluidToItemEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.integration.emi.recipe.HTRefiningEmiRecipe
-import hiiragi283.ragium.integration.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -62,7 +61,6 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import org.slf4j.Logger
 
 @EmiEntrypoint
@@ -195,13 +193,13 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.EXTRACTOR.get(), HTRecipeHandler(RagiumEmiCategories.EXTRACTING))
         // Infusing
-        forEachRecipes(RagiumRecipeTypes.INFUSING.get()) { id: ResourceLocation, recipe: HTInfusingRecipe ->
+        RagiumRecipeTypesNew.INFUSING.forEach(recipeManager) { id: ResourceLocation, recipe: HTInfusingRecipe ->
             registry.addRecipe(
-                HTInfusingEmiRecipe(
+                HTItemWithFluidToItemEmiRecipe.infusing(
                     id,
-                    EmiIngredient.of(recipe.ingredient),
+                    recipe.fluidIngredient.toFluidEmi(),
+                    recipe.itemIngredient.toItemEmi(),
                     recipe.result.toEmi(),
-                    recipe.cost,
                 ),
             )
         }
@@ -223,7 +221,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTPressingEmiRecipe(
                     id,
                     recipe.ingredient.toEmi(),
-                    recipe.catalyst.toEmi(),
+                    recipe.catalyst.toItemEmi(),
                     recipe.result.toEmi(),
                 ),
             )
@@ -250,13 +248,13 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         registry.addRecipeHandler(RagiumMenuTypes.REFINERY.get(), HTRecipeHandler(RagiumEmiCategories.REFINING))
         // Solidifying
-        forEachRecipes(RagiumRecipeTypes.SOLIDIFYING.get()) { id: ResourceLocation, recipe: HTSolidifyingRecipe ->
+        RagiumRecipeTypesNew.SOLIDIFYING.forEach(recipeManager) { id: ResourceLocation, recipe: HTSolidifyingRecipe ->
             registry.addRecipe(
-                HTSolidifyingEmiRecipe(
+                HTItemWithFluidToItemEmiRecipe.solidifying(
                     id,
-                    recipe.ingredient.toEmi(),
-                    recipe.catalyst.map(SizedIngredient::toEmi).orElse(EmiStack.EMPTY),
-                    recipe.output.toEmi(),
+                    recipe.fluidIngredient.toFluidEmi(),
+                    recipe.itemIngredient.toCatalystEmi(),
+                    recipe.result.toEmi(),
                 ),
             )
         }

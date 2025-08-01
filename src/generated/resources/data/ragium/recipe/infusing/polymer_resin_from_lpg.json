@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infusing",
+  "fluid_ingredient": {
+    "amount": 125,
+    "tag": "c:lpg"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "item": "minecraft:coal"
+  },
+  "result": {
+    "count": 4,
+    "id": "#ragium:polymer_resin"
+  }
+}

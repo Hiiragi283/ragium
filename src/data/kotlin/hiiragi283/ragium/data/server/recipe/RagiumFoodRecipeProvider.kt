@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeBuilder
@@ -24,16 +25,19 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
 
     override fun buildRecipeInternal() {
         // Chocolate
-        createSolidifying()
-            .itemOutput(RagiumCommonTags.Items.INGOTS_CHOCOLATE)
-            .itemInput(Tags.Items.CROPS_COCOA_BEAN)
-            .milkInput(250)
-            .saveSuffixed(output, "_from_milk")
+        HTItemWithFluidToItemRecipeBuilder
+            .infusing(
+                HTIngredientHelper.item(Tags.Items.CROPS_COCOA_BEAN),
+                HTIngredientHelper.milk(250),
+                HTResultHelper.item(RagiumCommonTags.Items.INGOTS_CHOCOLATE),
+            ).saveSuffixed(output, "_from_milk")
 
-        createSolidifying()
-            .itemOutput(RagiumCommonTags.Items.INGOTS_CHOCOLATE)
-            .fluidInput(RagiumCommonTags.Fluids.CHOCOLATES, 250)
-            .save(output)
+        HTItemWithFluidToItemRecipeBuilder
+            .solidifying(
+                null,
+                HTIngredientHelper.fluid(RagiumCommonTags.Fluids.CHOCOLATES, 250),
+                HTResultHelper.item(RagiumCommonTags.Items.INGOTS_CHOCOLATE),
+            ).save(output)
         // Melon Pie
         HTShapelessRecipeBuilder(RagiumItems.MELON_PIE)
             .addIngredient(Tags.Items.CROPS_MELON)
@@ -96,10 +100,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider() {
             .define('A', RagiumCommonTags.Items.DUSTS_MEAT)
             .save(output)
 
-        createSolidifying()
-            .itemOutput(RagiumCommonTags.Items.INGOTS_MEAT)
-            .fluidInput(RagiumCommonTags.Fluids.MEAT, 250)
-            .save(output)
+        HTItemWithFluidToItemRecipeBuilder
+            .solidifying(
+                null,
+                HTIngredientHelper.fluid(RagiumCommonTags.Fluids.MEAT, 250),
+                HTResultHelper.item(RagiumCommonTags.Items.INGOTS_MEAT),
+            ).save(output)
 
         HTCookingRecipeBuilder
             .smoking(RagiumItems.COOKED_MEAT_INGOT)

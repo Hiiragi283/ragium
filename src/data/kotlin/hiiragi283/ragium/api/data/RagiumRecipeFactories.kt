@@ -2,10 +2,8 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeDefinition
 import hiiragi283.ragium.api.recipe.HTFluidOutput
-import hiiragi283.ragium.api.recipe.HTItemOutput
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.*
@@ -29,13 +27,6 @@ internal object RagiumRecipeFactories {
         check(fluidOutputs.isNotEmpty()) { "Crushing Recipe requires 1 fluid output at least!" }
         check(fluidOutputs.size <= 2) { "Crushing Recipe accepts 2 or less fluid outputs!" }
         return HTRefiningRecipe(ingredient, definition.getItemOutput(0), fluidOutputs)
-    }
-
-    @JvmStatic
-    fun solidifying(definition: HTRecipeDefinition): HTSolidifyingRecipe {
-        val ingredient: SizedFluidIngredient = checkPresent(definition.getFluidIngredient(0), "Required one fluid ingredient!")
-        val output: HTItemOutput = checkPresent(definition.getItemOutput(0), "Required one item output!")
-        return HTSolidifyingRecipe(ingredient, definition.getItemIngredient(0), output)
     }
 
     //    Extension    //

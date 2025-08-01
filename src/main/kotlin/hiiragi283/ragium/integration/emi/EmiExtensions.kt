@@ -25,6 +25,14 @@ fun HTItemIngredient.toEmi(): EmiIngredient = EmiIngredient.of(this.getMatchingS
 
 fun HTFluidIngredient.toEmi(): EmiIngredient = EmiIngredient.of(this.getMatchingStacks().map(NeoForgeEmiStack::of))
 
+fun Optional<HTItemIngredient>.toItemEmi(): EmiIngredient = map(HTItemIngredient::toEmi).orElse(EmiStack.EMPTY)
+
+fun Optional<HTFluidIngredient>.toFluidEmi(): EmiIngredient = map(HTFluidIngredient::toEmi).orElse(EmiStack.EMPTY)
+
+fun Optional<HTItemIngredient>.toCatalystEmi(): EmiIngredient = map(HTItemIngredient::toEmi)
+    .map { stack: EmiIngredient -> stack.setAmount(1) }
+    .orElse(EmiStack.EMPTY)
+
 fun SizedIngredient.toEmi(): EmiIngredient = NeoForgeEmiIngredient.of(this)
 
 fun SizedFluidIngredient.toEmi(): EmiIngredient = NeoForgeEmiIngredient.of(this)
@@ -39,12 +47,6 @@ fun HTItemOutput.toEmi(): EmiStack = this
         { stack: ItemStack -> EmiStack.of(stack).setChance(this.chance) },
         ::createErrorStack,
     )
-
-fun Optional<HTItemIngredient>.toEmi(): EmiIngredient = map(HTItemIngredient::toEmi).orElse(EmiStack.EMPTY)
-
-fun Optional<HTItemIngredient>.toCatalystEmi(): EmiIngredient = map(HTItemIngredient::toEmi)
-    .map { stack: EmiIngredient -> stack.setAmount(1) }
-    .orElse(EmiStack.EMPTY)
 
 fun HTFluidOutput.toEmi(): EmiStack = this.getStackResult().mapOrElse(NeoForgeEmiStack::of, ::createErrorStack)
 

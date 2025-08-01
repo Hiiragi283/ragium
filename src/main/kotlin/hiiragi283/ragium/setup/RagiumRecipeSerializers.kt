@@ -3,10 +3,8 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBlastChargeRecipe
 import hiiragi283.ragium.common.recipe.custom.HTEternalTicketRecipe
 import hiiragi283.ragium.common.recipe.custom.HTIceCreamSodaRecipe
@@ -45,20 +43,12 @@ object RagiumRecipeSerializers {
     //    Machine    //
 
     @JvmField
-    val INFUSING: Supplier<RecipeSerializer<HTInfusingRecipe>> =
-        register(RagiumConst.INFUSING, HTInfusingRecipe.CODEC, HTInfusingRecipe.STREAM_CODEC)
-
-    @JvmField
     val MELTING: Supplier<RecipeSerializer<HTMeltingRecipe>> =
         register(RagiumConst.MELTING, HTMeltingRecipe.CODEC, HTMeltingRecipe.STREAM_CODEC)
 
     @JvmField
     val REFINING: Supplier<RecipeSerializer<HTRefiningRecipe>> =
         register(RagiumConst.REFINING, HTRefiningRecipe.CODEC, HTRefiningRecipe.STREAM_CODEC)
-
-    @JvmField
-    val SOLIDIFYING: Supplier<RecipeSerializer<HTSolidifyingRecipe>> =
-        register(RagiumConst.SOLIDIFYING, HTSolidifyingRecipe.CODEC, HTSolidifyingRecipe.STREAM_CODEC)
 
     //    Custom    //
 

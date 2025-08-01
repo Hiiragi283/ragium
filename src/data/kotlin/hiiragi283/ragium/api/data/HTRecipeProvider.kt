@@ -62,16 +62,10 @@ abstract class HTRecipeProvider : IConditionBuilder {
 
     fun createMelting(): HTDefinitionRecipeBuilder = HTDefinitionRecipeBuilder.create(RagiumConst.MELTING, RagiumRecipeFactories::melting)
 
-    fun createRefining(): HTDefinitionRecipeBuilder =
-        HTDefinitionRecipeBuilder.create(RagiumConst.REFINING, RagiumRecipeFactories::refining)
-
-    fun createSolidifying(): HTDefinitionRecipeBuilder =
-        HTDefinitionRecipeBuilder.create(RagiumConst.SOLIDIFYING, RagiumRecipeFactories::solidifying)
-
     fun createDistillation(): HTDefinitionRecipeBuilder = HTDefinitionRecipeBuilder(
         listOf(
             HTDefinitionRecipeBuilder.Context(RagiumConst.REFINING, RagiumRecipeFactories::refining),
-            HTDefinitionRecipeBuilder.Context(RagiumConst.SOLIDIFYING, RagiumRecipeFactories::solidifying),
+            // HTDefinitionRecipeBuilder.Context(RagiumConst.SOLIDIFYING, RagiumRecipeFactories::solidifying),
         ),
     )
 

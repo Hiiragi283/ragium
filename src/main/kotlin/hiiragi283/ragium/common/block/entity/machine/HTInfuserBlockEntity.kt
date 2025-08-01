@@ -5,11 +5,10 @@ import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemFilter
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.inventory.HTSingleProcessMenu
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
+import hiiragi283.ragium.common.recipe.HTInfusingRecipeOld
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumMenuTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -23,8 +22,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTUniversalRecipeInput, HTInfusingRecipe>(
-        RagiumRecipeTypes.INFUSING.get(),
+    HTProcessorBlockEntity<HTUniversalRecipeInput, HTInfusingRecipeOld>(
+        TODO(),
         RagiumBlockEntityTypes.INFUSER,
         pos,
         state,
@@ -37,7 +36,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
         HTUniversalRecipeInput.fromItems(inventory.getStackInSlot(0))
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTInfusingRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTInfusingRecipeOld): Boolean {
         // 周囲のエンチャントパワーを計算する
         val aroundCost: Float = EnchantingTableBlock.BOOKSHELF_OFFSETS
             .map { posIn: BlockPos ->
@@ -59,7 +58,7 @@ class HTInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTUniversalRecipeInput,
-        recipe: HTInfusingRecipe,
+        recipe: HTInfusingRecipeOld,
     ) {
         // 実際にアウトプットに搬出する
         val output: ItemStack = recipe.assemble(input, level.registryAccess())

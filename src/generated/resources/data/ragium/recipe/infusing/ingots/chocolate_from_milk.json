@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infusing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:milk"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "tag": "c:crops/cocoa_bean"
+  },
+  "result": {
+    "count": 1,
+    "id": "#c:ingots/chocolate"
+  }
+}

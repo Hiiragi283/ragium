@@ -1,7 +1,11 @@
 {
   "type": "ragium:infusing",
-  "cost": 60.0,
-  "ingredient": {
+  "fluid_ingredient": {
+    "amount": 8000,
+    "tag": "c:experience"
+  },
+  "item_ingredient": {
+    "count": 1,
     "item": "minecraft:golden_apple"
   },
   "result": {

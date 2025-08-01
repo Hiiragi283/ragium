@@ -4,12 +4,15 @@ import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToItemRecipeBuilder
 import hiiragi283.ragium.api.extension.listOf
 import hiiragi283.ragium.api.extension.toOptional
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
+import hiiragi283.ragium.api.recipe.HTItemWithFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
+import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -61,6 +64,19 @@ object RagiumRecipeStreamCodecs {
         HTItemWithCatalystToItemRecipe::catalyst,
         HTItemResult.STREAM_CODEC,
         HTItemWithCatalystToItemRecipe::result,
+        factory::create,
+    )
+
+    @JvmStatic
+    fun <R : HTItemWithFluidToItemRecipe> itemWithFluidToItem(
+        factory: HTItemWithFluidToItemRecipeBuilder.Factory<R>,
+    ): StreamCodec<RegistryFriendlyByteBuf, R> = StreamCodec.composite(
+        HTItemIngredient.STREAM_CODEC.toOptional(),
+        HTItemWithFluidToItemRecipe::itemIngredient,
+        HTFluidIngredient.STREAM_CODEC.toOptional(),
+        HTItemWithFluidToItemRecipe::fluidIngredient,
+        HTItemResult.STREAM_CODEC,
+        HTItemWithFluidToItemRecipe::result,
         factory::create,
     )
 }

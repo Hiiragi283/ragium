@@ -1,0 +1,15 @@
+{
+  "type": "ragium:infusing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:experience"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "item": "minecraft:snowball"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:wind_charge"
+  }
+}

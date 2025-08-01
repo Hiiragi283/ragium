@@ -1,6 +1,9 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
 import hiiragi283.ragium.api.data.HTRecipeProvider
+import hiiragi283.ragium.api.data.recipe.HTIngredientHelper
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.integration.delight.RagiumDelightAddon
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -21,11 +24,12 @@ object RagiumDelightRecipeProvider : HTRecipeProvider() {
         cutting()
 
         // Milk Bottle
-        createSolidifying()
-            .itemOutput(ModItems.MILK_BOTTLE.get())
-            .itemInput(Items.GLASS_BOTTLE)
-            .milkInput(250)
-        // .save(output)
+        HTItemWithFluidToItemRecipeBuilder
+            .infusing(
+                HTIngredientHelper.item(Items.GLASS_BOTTLE),
+                HTIngredientHelper.milk(250),
+                HTResultHelper.item(ModItems.MILK_BOTTLE.get()),
+            ).save(output)
 
         createMelting()
             .fluidOutput(Tags.Fluids.MILK, 250)

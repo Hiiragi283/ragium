@@ -11,13 +11,10 @@ import hiiragi283.ragium.api.extension.asItemHolder
 import hiiragi283.ragium.api.extension.createItemStack
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
 import hiiragi283.ragium.api.item.HTFoodBuilder
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTUniversalRecipe
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.RagiumConst
-import hiiragi283.ragium.common.recipe.HTInfusingRecipe
 import hiiragi283.ragium.common.storage.energy.HTEnergyNetworkManagerImpl
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTAddonCollector
@@ -32,7 +29,6 @@ import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
@@ -81,9 +77,6 @@ class InternalRagiumAPI : RagiumAPI {
     override fun <K : Any, V : Any> createMultiMap(multimap: Multimap<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(multimap)
 
     override fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V> = HTWrappedTable.Mutable(table)
-
-    override fun createInfusingRecipe(ingredient: Ingredient, output: HTItemOutput, cost: Float): HTUniversalRecipe =
-        HTInfusingRecipe(ingredient, output, cost)
 
     override fun createEmptyMenuDefinition(size: Int): HTMenuDefinition = HTMenuDefinition(
         ItemStackHandler(size),

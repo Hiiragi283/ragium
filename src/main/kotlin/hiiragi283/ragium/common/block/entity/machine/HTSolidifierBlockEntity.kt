@@ -2,7 +2,9 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.network.HTNbtCodec
-import hiiragi283.ragium.api.recipe.HTUniversalRecipeInput
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypesNew
+import hiiragi283.ragium.api.recipe.base.HTSolidifyingRecipe
+import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.fluid.HTFilteredFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidFilter
 import hiiragi283.ragium.api.storage.item.HTFilteredItemHandler
@@ -11,11 +13,9 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.util.RagiumConst
 import hiiragi283.ragium.common.inventory.HTSolidifierMenu
 import hiiragi283.ragium.common.network.HTFluidSlotUpdatePacket
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.storage.fluid.HTFluidTank
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
@@ -26,13 +26,12 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 
 class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTUniversalRecipeInput, HTSolidifyingRecipe>(
-        RagiumRecipeTypes.SOLIDIFYING.get(),
+    HTProcessorBlockEntity<HTItemWithFluidRecipeInput, HTSolidifyingRecipe>(
+        RagiumRecipeTypesNew.SOLIDIFYING.get(),
         RagiumBlockEntityTypes.SOLIDIFIER,
         pos,
         state,
@@ -58,12 +57,12 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTUniversalRecipeInput =
-        HTUniversalRecipeInput(listOf(inventory.getStackInSlot(0)), listOf(tank.fluid))
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
+        HTItemWithFluidRecipeInput(inventory.getStackInSlot(0), tank.fluid)
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTUniversalRecipeInput, recipe: HTSolidifyingRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTSolidifyingRecipe): Boolean {
         // アウトプットに搬出できるか判定する
-        if (!insertToOutput(1..1, recipe.output.get(), true).isEmpty) {
+        if (!insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), true).isEmpty) {
             return false
         }
         return true
@@ -73,14 +72,13 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTUniversalRecipeInput,
+        input: HTItemWithFluidRecipeInput,
         recipe: HTSolidifyingRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        insertToOutput(1..1, recipe.output.getChancedStack(level.random), false)
+        insertToOutput(1..1, recipe.assemble(input, level.registryAccess()), false)
         // インプットを減らす
-        tank.drain(recipe.ingredient.amount(), IFluidHandler.FluidAction.EXECUTE)
-        inventory.consumeStackInSlot(0, recipe.catalyst.map(SizedIngredient::count).orElse(0), true)
+        tank.drain(recipe.fluidIngredient, IFluidHandler.FluidAction.EXECUTE)
         // サウンドを流す
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS)
     }

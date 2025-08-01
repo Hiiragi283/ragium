@@ -19,11 +19,6 @@ object RagiumConst {
     const val SOUL = "soul"
     const val WARPED_CRYSTAL = "warped_crystal"
 
-    const val BASIC = "basic"
-    const val ADVANCED = "advanced"
-    const val ELITE = "elite"
-    const val ULTIMATE = "ultimate"
-
     //    Mod ID    //
 
     const val ACTUALLY = "actuallyadditions"
@@ -62,7 +57,6 @@ object RagiumConst {
     //    Recipes    //
 
     const val ALLOYING = "alloying"
-    const val BLOCK_INTERACTING = "block_interacting"
     const val CRUSHING = "crushing"
     const val EXTRACTING = "extracting"
     const val INFUSING = "infusing"

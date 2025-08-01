@@ -8,11 +8,14 @@ import hiiragi283.ragium.api.data.recipe.HTCombineItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.api.data.recipe.HTItemWithFluidToItemRecipeBuilder
 import hiiragi283.ragium.api.extension.listOrElement
 import hiiragi283.ragium.api.recipe.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
+import hiiragi283.ragium.api.recipe.HTItemWithFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemWithCatalystToItemRecipe
+import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 
@@ -79,4 +82,15 @@ object RagiumRecipeCodecs {
                 HTItemResult.CODEC.fieldOf("result").forGetter(HTItemWithCatalystToItemRecipe::result),
             ).apply(instance, factory::create)
     }
+
+    @JvmStatic
+    fun <R : HTItemWithFluidToItemRecipe> itemWithFluidToItem(factory: HTItemWithFluidToItemRecipeBuilder.Factory<R>): MapCodec<R> =
+        RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTItemIngredient.CODEC.optionalFieldOf("item_ingredient").forGetter(HTItemWithFluidToItemRecipe::itemIngredient),
+                    HTFluidIngredient.CODEC.optionalFieldOf("fluid_ingredient").forGetter(HTItemWithFluidToItemRecipe::fluidIngredient),
+                    HTItemResult.CODEC.fieldOf("result").forGetter(HTItemWithFluidToItemRecipe::result),
+                ).apply(instance, factory::create)
+        }
 }

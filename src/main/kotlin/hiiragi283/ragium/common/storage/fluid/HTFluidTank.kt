@@ -1,12 +1,14 @@
 package hiiragi283.ragium.common.storage.fluid
 
 import hiiragi283.ragium.api.extension.buildNbt
+import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.neoforged.neoforge.common.util.INBTSerializable
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
+import java.util.Optional
 
 class HTFluidTank(capacity: Int, private val callback: () -> Unit) :
     FluidTank(capacity),
@@ -34,4 +36,10 @@ class HTFluidTank(capacity: Int, private val callback: () -> Unit) :
         val drained: FluidStack = drain(fluid.copyWithAmount(maxDrain), IFluidHandler.FluidAction.SIMULATE)
         return if (forceMax) drained.amount == maxDrain else !drained.isEmpty
     }
+
+    fun drain(ingredient: Optional<HTFluidIngredient>, action: IFluidHandler.FluidAction): FluidStack =
+        ingredient.map { ingredient1: HTFluidIngredient -> drain(ingredient1, action) }.orElse(FluidStack.EMPTY)
+
+    fun drain(ingredient: HTFluidIngredient, action: IFluidHandler.FluidAction): FluidStack =
+        drain(ingredient.getRequiredAmount(fluid), action)
 }

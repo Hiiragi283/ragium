@@ -4,12 +4,10 @@ import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import com.mojang.authlib.GameProfile
 import hiiragi283.ragium.api.addon.RagiumAddon
-import hiiragi283.ragium.api.data.recipe.HTInfusingRecipeBuilder
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.inventory.HTMenuDefinition
-import hiiragi283.ragium.api.recipe.HTItemOutput
-import hiiragi283.ragium.api.recipe.HTUniversalRecipe
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.storage.energy.HTEnergyNetworkManager
 import hiiragi283.ragium.api.util.HTMultiMap
 import hiiragi283.ragium.api.util.HTTable
@@ -25,7 +23,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import java.util.*
@@ -118,22 +115,17 @@ interface RagiumAPI {
     fun <R : Any, C : Any, V : Any> createTable(table: Table<R, C, V>): HTTable.Mutable<R, C, V>
 
     /**
-     * @see [HTInfusingRecipeBuilder]
-     */
-    fun createInfusingRecipe(ingredient: Ingredient, output: HTItemOutput, cost: Float): HTUniversalRecipe
-
-    /**
      * @see [HTMenuDefinition.empty]
      */
     fun createEmptyMenuDefinition(size: Int): HTMenuDefinition
 
     /**
-     * @see [HTItemOutput.getFirstHolderFromId]
+     * @see [HTItemResult.getFirstHolderFromId]
      */
     fun unifyItemFromId(holder: Holder<Item>, id: ResourceLocation): Holder<Item>
 
     /**
-     * @see [HTItemOutput.getFirstHolderFromTag]
+     * @see [HTItemResult.getFirstHolderFromTag]
      */
     fun unifyItemFromTag(holder: Holder<Item>, tagKey: TagKey<Item>): Holder<Item>
 }
